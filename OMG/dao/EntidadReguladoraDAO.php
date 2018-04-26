@@ -46,9 +46,23 @@ class EntidadReguladoraDAO{
     public function insertarEntidadReguladora($clave_entidad,$descripcion,$direccion,$telefono,$extension,$email,$direccion_web){
         
         try{
-            $query="INSERT INTO ENTIDAD_REGULADORA(ID_ENTIDAD, CLAVE_ENTIDAD, DESCRIPCION, DIRECCION, TELEFONO, EXTENSION, EMAIL, DIRECCION_WEB)VALUES('$clave_entidad','$descripcion','$direccion','$telefono','$extension','$email','$direccion_web')";
+            
+            $query_obtenerMaximo_mas_uno="SELECT max(ID_ENTIDAD)+1 as ID_ENTIDAD from ENTIDAD_REGULADORA";
+            $db_obtenerMaximo_mas_uno=AccesoDB::getInstancia();
+            $lista_id_nuevo_autoincrementado=$db_obtenerMaximo_mas_uno->executeQuery($query_obtenerMaximo_mas_uno);
+            $id_nuevo=0;
+            
+            foreach ($lista_id_nuevo_autoincrementado as $value) {
+               $id_nuevo= $value["ID_ENTIDAD"];
+            }
+            
+            
+            
+            $query="INSERT INTO ENTIDAD_REGULADORA(ID_ENTIDAD, CLAVE_ENTIDAD, DESCRIPCION, DIRECCION, TELEFONO, EXTENSION, EMAIL, DIRECCION_WEB)"
+                    . "VALUES($id_nuevo,'$clave_entidad','$descripcion','$direccion','$telefono','$extension','$email','$direccion_web')";
+            
             $db=  AccesoDB::getInstancia();
-            $db->executeQuery($query);
+            $db->executeQueryUpdate($query);
         } catch (Exception $ex) {
                 throw $ex;
         }   
