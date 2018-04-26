@@ -95,9 +95,11 @@ $Usuario=  Session::getSesion("user");
                 
                 
             function loadVista(bclose){
+//                consultarInformacion("../Controller/DocumentosController.php?Op=Listar");
                     var dhxWins = new dhtmlXWindows();
                     dhxWins.attachViewportTo("winVP");
         //var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
+       
                     var layoutWin=dhxWins.createWindow({id:"documentos", text:"OMG VISUALIZACION DOCUMENTOS", left: 20, top: -30,width:330,  height:250,  center:true,resize: true,park:true,modal:true	});
                     layoutWin.attachURL("DocumentosModalView.php");
             } 
