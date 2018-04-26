@@ -576,30 +576,7 @@ $Usuario=  Session::getSesion("user");
                                                                       
                         });
                         
-                        
-                        
-                        function saveToDatabaseDatosFormulario(datos){
-//                    alert("datos nombre "+datos[0]);
-                    
-                    	$.ajax({
-                                url: "../Controller/AsignacionDocumentosTemasController.php?Op=Guardar",
-				type: "POST",
-				data:'ID_DOCUMENTO='+datos[0]+'&ID_ASIGNACION_TEMA_REQUISITO='+datos[1],
-                                
-				success: function(data){
-                                    alert("se guardo");
-                                    
-//					$(editableObj).css("background","#FDFDFD");
-                                        swal("Guardado Exitoso!", "Ok!", "success")
-                                         consultarInformacion("../Controller/AsignacionDocumentosTemasController.php?Op=Listar");
-                                         consultarInformacion("../Controller/AsignacionDocumentosTemasController.php?Op=Listar");
-                                        window.location.href("AsignacionDocumentosTemasView.php");
-				}   
-        		});
-//                                         window.location.href("EmpleadosView.php");
-                        }
-                        
-  
+ 
   
   
                       });   //CIERRE FUNCTION
@@ -631,6 +608,28 @@ $Usuario=  Session::getSesion("user");
                
                
                
+               function saveToDatabaseDatosFormulario(datos){
+//                    alert("datos nombre "+datos[0]);
+                    
+                    	$.ajax({
+                                url: "../Controller/AsignacionDocumentosTemasController.php?Op=Guardar",
+				type: "POST",
+				data:'ID_DOCUMENTO='+datos[0]+'&ID_ASIGNACION_TEMA_REQUISITO='+datos[1],
+                                
+				success: function(data){
+                                    alert("se guardo");
+                                    
+//					$(editableObj).css("background","#FDFDFD");
+                                        swal("Guardado Exitoso!", "Ok!", "success")
+                                         consultarInformacion("../Controller/AsignacionDocumentosTemasController.php?Op=Listar");
+                                         consultarInformacion("../Controller/AsignacionDocumentosTemasController.php?Op=Listar");
+                                        window.location.href("AsignacionDocumentosTemasView.php");
+				}   
+        		});
+//                                         window.location.href("EmpleadosView.php");
+                        }
+               
+        
                
                
                function consultarInformacion(url){

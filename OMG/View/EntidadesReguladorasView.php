@@ -376,16 +376,27 @@ require_once '../util/Session.php';
                                   //alert("entro aqui");
                                   
         
-                                    var ID_DOCUMENTOMODAL=$("#ID_DOCUMENTOMODAL").val();
-                                    var ID_ASIGNACION_TEMA_REQUISITO_MODAL=$("#ID_ASIGNACION_TEMA_REQUISITO_MODAL").val();
+                                    var CLAVE_ENTIDAD=$("#CLAVE_ENTIDAD").val();
+                                    var DESCRIPCION=$("#DESCRIPCION").val();
+                                    var DIRECCION=$("#DIRECCION").val();
+                                    var TELEFONO=$("#TELEFONO").val();
+                                    var EXTENSION=$("#EXTENSION").val();
+                                    var EMAIL=$("#EMAIL").val();
+                                    var DIRECCION_WEB=$("#DIRECCION_WEB").val();
 
-                                    alert("ID_DOCUMENTOMODAL :"+ID_DOCUMENTOMODAL+ "ID_ASIGNACION_TEMA_REQUISITO_MODAL :"+ID_ASIGNACION_TEMA_REQUISITO_MODAL );
+                                    alert("CLAVE_ENTIDAD :"+CLAVE_ENTIDAD+ "DESCRIPCION :"+DESCRIPCION+ "DIRECCION :"+DIRECCION
+                                           + "TELEFONO :"+TELEFONO+ "EXTENSION :"+EXTENSION+ "EMAIL :"+EMAIL+ "DIRECCION_WEB :"+DIRECCION_WEB);
                                   
                                     
 
                                     datos=[];
-                                    datos.push(ID_DOCUMENTOMODAL);
-                                    datos.push(ID_ASIGNACION_TEMA_REQUISITO_MODAL);
+                                    datos.push(CLAVE_ENTIDAD);
+                                    datos.push(DESCRIPCION);
+                                    datos.push(DIRECCION);
+                                    datos.push(TELEFONO);
+                                    datos.push(EXTENSION);
+                                    datos.push(EMAIL);
+                                    datos.push(DIRECCION_WEB);
                                     saveToDatabaseDatosFormulario(datos);
                                     
                         });
@@ -396,33 +407,16 @@ require_once '../util/Session.php';
                             
                            alert("entro aqui");
                             
-                                  $("#ID_DOCUMENTOMODAL").val("");
-                                  $("#ID_ASIGNACION_TEMA_REQUISITO_MODAL").val("");
+                                  $("#CLAVE_ENTIDAD").val("");
+                                  $("#DESCRIPCION").val("");
+                                  $("#DIRECCION").val("");
+                                  $("#TELEFONO").val("");
+                                  $("#EXTENSION").val("");
+                                  $("#EMAIL").val("");
+                                  $("#DIRECCION_WEB").val("");
                                                                       
                         });
-                        
-                        
-                        
-                        function saveToDatabaseDatosFormulario(datos){
-//                    alert("datos nombre "+datos[0]);
-                    
-                    	$.ajax({
-                                url: "../Controller/AsignacionDocumentosTemasController.php?Op=Guardar",
-				type: "POST",
-				data:'ID_DOCUMENTO='+datos[0]+'&ID_ASIGNACION_TEMA_REQUISITO='+datos[1],
-                                
-				success: function(data){
-                                    alert("se guardo");
-                                    
-//					$(editableObj).css("background","#FDFDFD");
-                                        swal("Guardado Exitoso!", "Ok!", "success")
-                                         consultarInformacion("../Controller/AsignacionDocumentosTemasController.php?Op=Listar");
-                                         consultarInformacion("../Controller/AsignacionDocumentosTemasController.php?Op=Listar");
-                                        window.location.href("AsignacionDocumentosTemasView.php");
-				}   
-        		});
-//                                         window.location.href("EmpleadosView.php");
-                        }
+          
                         
   
   
@@ -452,6 +446,29 @@ require_once '../util/Session.php';
 		}
                 
 		
+                
+                function saveToDatabaseDatosFormulario(datos){
+//                    alert("datos nombre "+datos[0]);
+                    
+                    	$.ajax({
+                                url: "../Controller/EntidadesReguladorasController.php?Op=Guardar",
+				type: "POST",
+				data:'CLAVE_ENTIDAD='+datos[0]+'&DESCRIPCION='+datos[1]+'&DIRECCION='+datos[2]+'&TELEFONO='+datos[3]
+                                      +'&EXTENSION='+datos[4]+'&EMAIL='+datos[5]+'&DIRECCION_WEB='+datos[6],
+                                
+				success: function(data){
+                                    alert("se guardo");
+                                    
+//					$(editableObj).css("background","#FDFDFD");
+                                        swal("Guardado Exitoso!", "Ok!", "success")
+                                         consultarInformacion("../Controller/EntidadesReguladorasController.php?Op=Listar");
+                                         consultarInformacion("../Controller/EntidadesReguladorasController.php?Op=Listar");
+                                        window.location.href("EntidadesReguladorasView.php");
+				}   
+        		});
+//                                         window.location.href("EmpleadosView.php");
+                        }
+                
 
                 
 		</script>

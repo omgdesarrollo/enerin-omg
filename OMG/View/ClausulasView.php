@@ -501,7 +501,7 @@ $Usuario=  Session::getSesion("user");
                         });
                         
   
-                      });
+                      }); //Se cierra el function
                       
                       
                       
