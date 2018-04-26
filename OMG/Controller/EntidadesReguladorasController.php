@@ -57,6 +57,17 @@ switch ($Op) {
 	case 'Guardar':
                   
 		# code...
+            
+                  $pojo->setClaveEntidad($_REQUEST['CLAVE_ENTIDAD']);
+                  $pojo->setDescripcion($_REQUEST['DESCRIPCION']);
+                  $pojo->setDireccion($_REQUEST['DIRECCION']);
+                  $pojo->setTelefono($_REQUEST['TELEFONO']);
+                  $pojo->setExtension($_REQUEST['EXTENSION']);
+                  $pojo->setEmail($_REQUEST['EMAIL']);
+                  $pojo->setDireccionWeb($_REQUEST['DIRECCION_WEB']);
+                  
+                  $model->insertar($pojo);
+                        
 		break;
 
 	case 'Modificar':
