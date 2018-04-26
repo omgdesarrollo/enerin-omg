@@ -38,14 +38,51 @@ require_once '../util/Session.php';
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
                 
-             <script src="../../js/jquery.js" type="text/javascript"></script>
+                <script src="../../js/jquery.js" type="text/javascript"></script>
 
 		<script src="../../assets/probando/js/ace-extra.min.js"></script>
-   <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
-                     <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                 
-   <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-	</head>
+                
+                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+                
+	
+                <style>
+                    .modal
+                    {
+                        overflow: hidden;
+                    }
+                    .modal-dialog{
+                        margin-right: 0;
+                        margin-left: 0;
+                    }
+                    .modal-header{
+                      height:30px;background-color:#444;
+                      color:#ddd;
+                    }
+                    .modal-title{
+                      margin-top:-10px;
+                      font-size:16px;
+                    }
+                    .modal-header .close{
+                      margin-top:-10px;
+                      color:#fff;
+                    }
+                    .modal-body{
+                      color:#888;
+                       /*max-height: calc(100vh - 210px);*/
+                      max-height: calc(100vh - 110px);
+                      overflow-y: auto;
+                    }
+                    .modal-body p {
+                      text-align:center;
+                      padding-top:10px;
+                    }
+                </style>
+     
+   
+   
+   
+</head>
 
         <body class="no-skin" >
 	  <div id="navbar" class="navbar navbar-default          ace-save-state">
@@ -181,7 +218,11 @@ require_once '../util/Session.php';
             </div>
         </div>
 
-		
+            
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
+		Agregar Entidad Reguladora
+</button>
+            
 
         <div class="contenedortable">   
 
@@ -189,7 +230,7 @@ require_once '../util/Session.php';
 		  <!--<thead>-->
 			  <tr>
 				<th class="table-header" >NO.</th>
-                                <th class="table-header">CLAVE</th>
+                                <th class="table-header">CLAVE ENTIDAD</th>
 				<th class="table-header">DESCRIPCION</th>				
 				<th class="table-header">DIRECCION</th>				
 				<th class="table-header">TELEFONO</th>				
@@ -241,12 +282,157 @@ require_once '../util/Session.php';
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 			</a>-->
 		</div>
+            
+            
+            
+            
+            <!-- Inicio de Seccion Modal -->
+       <div class="modal draggable fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Crear Nueva Entidad Reguladora</h4>
+		      </div>
+
+		      <div class="modal-body">
+                                    
+                                                
+                                                <div class="form-group">
+							<label class="control-label" for="title">Clave Entidad:</label>
+                                                        <input type="text"  id="CLAVE_ENTIDAD" class="form-control" data-error="Ingrese la clave de la Entidad" required />
+							<div class="help-block with-errors"></div>
+						</div>
+
+                                    
+						<div class="form-group">
+							<label class="control-label" for="title">Descripcion:</label>
+                                                        <textarea  id="DESCRIPCION" class="form-control" data-error="Ingrese la Descripcion" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+                                    
+                                    
+                                                <div class="form-group">
+							<label class="control-label" for="title">Direccion:</label>
+                                                        <textarea  id="DIRECCION" class="form-control" data-error="Ingrese la Direccion" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+                                    
+                                    
+                                                <div class="form-group">
+							<label class="control-label" for="title">Telefono:</label>
+                                                        <textarea  id="TELEFONO" class="form-control" data-error="Ingrese el Telefono" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+                                    
+                                    
+                                                <div class="form-group">
+							<label class="control-label" for="title">Extension:</label>
+                                                        <textarea  id="EXTENSION" class="form-control" data-error="Ingrese la Extension" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+                                    
+                                    
+                                                <div class="form-group">
+							<label class="control-label" for="title">Email:</label>
+                                                        <textarea  id="EMAIL" class="form-control" data-error="Ingrese el Email" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+                                    
+                                    
+                                                <div class="form-group">
+							<label class="control-label" for="title">Direccion Web:</label>
+                                                        <textarea  id="DIRECCION_WEB" class="form-control" data-error="Ingrese la Direccion Web" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+
+                                                                                                
+                                    
+						<div class="form-group">
+                                                    <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
+                                                    <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
+						</div>
+
+		      		<!--</form>-->
+
+		      </div>
+		    </div>
+
+		  </div>
+		</div>
+       <!--Final de Seccion Modal-->
 
                 
                 
                 
                 
 		<script>
+                    
+                
+                $(function(){
+
+                                                                                            
+                        $("#btn_guardar").click(function(){
+                                  //alert("entro aqui");
+                                  
+        
+                                    var ID_DOCUMENTOMODAL=$("#ID_DOCUMENTOMODAL").val();
+                                    var ID_ASIGNACION_TEMA_REQUISITO_MODAL=$("#ID_ASIGNACION_TEMA_REQUISITO_MODAL").val();
+
+                                    alert("ID_DOCUMENTOMODAL :"+ID_DOCUMENTOMODAL+ "ID_ASIGNACION_TEMA_REQUISITO_MODAL :"+ID_ASIGNACION_TEMA_REQUISITO_MODAL );
+                                  
+                                    
+
+                                    datos=[];
+                                    datos.push(ID_DOCUMENTOMODAL);
+                                    datos.push(ID_ASIGNACION_TEMA_REQUISITO_MODAL);
+                                    saveToDatabaseDatosFormulario(datos);
+                                    
+                        });
+                        
+                        
+                        
+                        $("#btn_limpiar").click(function(){
+                            
+                           alert("entro aqui");
+                            
+                                  $("#ID_DOCUMENTOMODAL").val("");
+                                  $("#ID_ASIGNACION_TEMA_REQUISITO_MODAL").val("");
+                                                                      
+                        });
+                        
+                        
+                        
+                        function saveToDatabaseDatosFormulario(datos){
+//                    alert("datos nombre "+datos[0]);
+                    
+                    	$.ajax({
+                                url: "../Controller/AsignacionDocumentosTemasController.php?Op=Guardar",
+				type: "POST",
+				data:'ID_DOCUMENTO='+datos[0]+'&ID_ASIGNACION_TEMA_REQUISITO='+datos[1],
+                                
+				success: function(data){
+                                    alert("se guardo");
+                                    
+//					$(editableObj).css("background","#FDFDFD");
+                                        swal("Guardado Exitoso!", "Ok!", "success")
+                                         consultarInformacion("../Controller/AsignacionDocumentosTemasController.php?Op=Listar");
+                                         consultarInformacion("../Controller/AsignacionDocumentosTemasController.php?Op=Listar");
+                                        window.location.href("AsignacionDocumentosTemasView.php");
+				}   
+        		});
+//                                         window.location.href("EmpleadosView.php");
+                        }
+                        
+  
+  
+  
+                      });   //CIERRE FUNCTION
+                    
+                    
+                    
+                    
+                    
                                  
 		function showEdit(editableObj) {
 			$(editableObj).css("background","#FFF");
@@ -269,6 +455,18 @@ require_once '../util/Session.php';
 
                 
 		</script>
+                
+                
+                <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+                <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+                                     
+                <!--en esta seccion es para poder abrir el modal--> 
+                <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
+                <!--aqui termina la seccion para poder abrir el modal--> 
+                <script src="../../codebase/dhtmlx.js"></script>
+                <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
+                <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
                 
                 
                 
