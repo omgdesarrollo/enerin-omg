@@ -1,7 +1,7 @@
 <?php
 
 require_once '../dao/EntidadReguladoraDAO.php';
-//require_once '../Pojo/EntidadReguladoraPojo.php';
+require_once '../Pojo/EntidadReguladoraPojo.php';
 
 class EntidadReguladoraModel{
 
@@ -47,7 +47,8 @@ class EntidadReguladoraModel{
             
             $dao=new EntidadReguladoraDAO();
             
-            $dao->insertarEntidadesReguladoras($pojo->getClaveEntidad(),$pojo->getDescripcion(),$pojo->getDireccion(),$pojo->getTelefono(),$pojo->getExtension(),$pojo->getEmail(),$pojo->getDireccionWeb());
+            $dao->insertarEntidadReguladora($pojo->getClaveEntidad(),$pojo->getDescripcion(),$pojo->getDireccion(),$pojo->getTelefono(),
+                                               $pojo->getExtension(),$pojo->getEmail(),$pojo->getDireccionWeb());
         } catch (Exception $ex) {
                 throw $ex;
         }
