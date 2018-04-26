@@ -324,6 +324,8 @@ $Usuario=  Session::getSesion("user");
                   $Lista = Session::getSesion("listarAsignacionDocumentosTemas");
                   $cbxDoc= Session::getSesion("listarDocumentosComboBox");
                   $cbxATR= Session::getSesion("listarAsignacionTemasRequisitosComboBox");
+                  $ListaTemas = Session::getSesion("listarClausulas");
+                  
                   
                   $numeracion = 1;
                   
@@ -402,9 +404,9 @@ $Usuario=  Session::getSesion("user");
                                     <td contenteditable="false" onBlur="saveToDatabase(this,'DESCRIPCION_CLAUSULA','<?php echo $filas["ID_ASIGNACION_DOCUMENTO_TEMA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["DESCRIPCION_CLAUSULA"]; ?></td>
                                     
                                     <td>
-                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#create-item">
+                                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#edit-item">
                                     Ver Detalles
-                                    <i class="ace-icon fa fa-edit" style="color: #0099ff;font-size: 20px;"></i>
+                                    <i class="ace-icon fa fa-book" style="color: #0099ff;font-size: 20px;"></i>
                                     </button>
                                     </td>    
                   
@@ -428,7 +430,7 @@ $Usuario=  Session::getSesion("user");
                 </div>
         
         
-        <!-- Inicio de Seccion Modal -->
+        <!-- Inicio de Seccion Modal-Crear-->
        <div class="modal draggable fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
@@ -438,8 +440,7 @@ $Usuario=  Session::getSesion("user");
 		      </div>
 
 		      <div class="modal-body">
-		      		<!--<form data-toggle="validator" action="api/create.php" method="POST">-->
-                                    <!--<form data-toggle="validator"  >-->
+
                                     
                                                 <div class="form-group">
 							<label class="control-label" for="title">Clave del Documento:</label>
@@ -474,7 +475,7 @@ $Usuario=  Session::getSesion("user");
                                                                 foreach ($cbxATR as $value) {
                                                                 ?>
                                                                 
-                                                                <option value="<?php echo "".$value["ID_ASIGNACION_TEMA_REQUISITO"] ?>"  ><?php echo "".$value["CLAUSULA"]; ?></option>
+                                                                <option value="<?php //echo "".$value["ID_ASIGNACION_TEMA_REQUISITO"] ?>"  ><?php echo "".$value["CLAUSULA"]; ?></option>
                                                                 
                                                                     <?php
                                                                 
@@ -505,8 +506,70 @@ $Usuario=  Session::getSesion("user");
 		</div>
        <!--Final de Seccion Modal-->
         
+       
+       
         
-    
+       <!-- Inicio de Seccion Modal-Edit-->
+       <div class="modal draggable fade" id="edit-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      
+                      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Agregar Requisitos</h4>
+		      </div>
+
+		      <div class="modal-body">
+		  
+                  <table class="tbl-qa">
+		  <!--<thead>-->
+			  <tr>				
+				<th class="table-header">CLAVE DEL TEMA</th>									
+                                <th class="table-header">DESCRIPCION DEL TEMA</th>																		
+				<th class="table-header">REQUISITO</th>									
+			  </tr>
+		  
+		  <tbody>
+		 
+                  <?php
+
+                                                       
+
+                  foreach ($ListaTemas as $filas) { 
+		  ?>
+			  <tr class="table-row">
+				
+                            
+                                
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'CLAUSULA','<?php echo $filas["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["CLAUSULA"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'DESCRIPCION_CLAUSULA','<?php echo $filas["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["DESCRIPCION_CLAUSULA"]; ?></td>                                                         
+                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'REQUISITO','<?php echo $filas["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["REQUISITO"]; ?></td>-->                                                                                                                                     
+                                                    
+			  </tr>
+		<?php
+		}
+                
+		?>
+		  </tbody>
+		</table>
+
+                                                                                                                                                           
+						<div class="form-group">
+                                                    <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
+                                                    <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
+						</div>
+                          
+
+		      </div>
+                        
+		    </div>
+
+		  </div>
+	</div>
+       <!--Final de Seccion Modal-->
+        
+ 
+       
 
         <script>
                     
