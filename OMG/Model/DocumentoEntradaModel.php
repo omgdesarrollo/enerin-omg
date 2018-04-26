@@ -41,7 +41,15 @@ class DocumentoEntradaModel{
     }
     
     
-    
+    public function traer_ultimo_insertado(){
+        try{
+             $dao=new DocumentoEntradaDAO();
+             $rec=$dao->traer_ultimo_insertado();
+             return $rec;
+        } catch (Exception $ex) {
+
+        }
+    }
     
     
     

@@ -33,7 +33,26 @@ class SeguimientoEntradaDAO{
     }
     
     
-    
+    public function insertar($id_documento_entrada){
+        try{
+             $query_obtenerMaximo_mas_uno="SELECT max(ID_SEGUIMIENTO_ENTRADA)+1 as ID_SEGUIMIENTO_ENTRADA from SEGUIMIENTO_ENTRADA";
+            $db_obtenerMaximo_mas_uno=AccesoDB::getInstancia();
+            $lista_id_nuevo_autoincrementado=$db_obtenerMaximo_mas_uno->executeQuery($query_obtenerMaximo_mas_uno);
+            $id_nuevo_seguimiento_entrada=0;
+            
+            foreach ($lista_id_nuevo_autoincrementado as $value) {
+               $id_nuevo_seguimiento_entrada= $value["ID_SEGUIMIENTO_ENTRADA"];
+            }
+            
+                                                                                                                                        
+            
+            $query="INSERT INTO SEGUIMIENTO_ENTRADA (ID_SEGUIMIENTO_ENTRADA,ID_DOCUMENTO_ENTRADA,ID_EMPLEADO)VALUES($id_nuevo_seguimiento_entrada,$id_documento_entrada,0)";
+            $db=  AccesoDB::getInstancia();
+            $db->executeQueryUpdate($query);
+         } catch (Exception $ex) {
+
+        }
+    }
     
     public function actualizarSeguimientoEntradaPorColumna($COLUMNA,$VALOR,$ID_SEGUIMIENTO_ENTRADA){
          

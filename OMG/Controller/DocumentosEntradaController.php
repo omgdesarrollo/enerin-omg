@@ -8,6 +8,9 @@
 
 session_start();
 require_once '../Model/DocumentoEntradaModel.php';
+require_once '../Pojo/DocumentoEntradaPojo.php';
+require_once '../Model/SeguimientoEntradaModel.php';
+require_once '../Pojo/SeguimientoEntradaPojo.php';
 require_once '../util/Session.php';
 
 
@@ -15,6 +18,11 @@ require_once '../util/Session.php';
 $Op=$_REQUEST["Op"];
 $model=new DocumentoEntradaModel();
 $pojo= new DocumentoEntradaPojo();
+
+$modelSeguimientoEntrada=new SeguimientoEntradaModel();
+$pojoSeguimientoEntrada= new SeguimientoEntradaPojo();
+
+
 
 switch ($Op) {
 	case 'Listar':
@@ -24,6 +32,8 @@ switch ($Op) {
 //    	$tarjet="../view/principalmodulos.php";
     	header('Content-type: application/json; charset=utf-8');
 		echo json_encode( $Lista);
+//                 $traerultimoinsertado=$model->traer_ultimo_insertado();
+//                       echo json_encode($traerultimoinsertado);
 		//header("location: login.php");
 //echo $json = json_encode(array("n" => "".$Lista.NOMBRE_EMPLEADO, "a" => "apellido",  "c" => "test"));
 		return $Lista;
@@ -77,9 +87,13 @@ switch ($Op) {
                   
                   
                   $model->insertar($pojo);
-            
+                  
+                  $traerultimoinsertado=$model->traer_ultimo_insertado();  
+                  $modelSeguimientoEntrada->insertar($traerultimoinsertado);
+                  
+                        
 		break;
-
+        
 	case 'Modificar':
 		# code...
    					

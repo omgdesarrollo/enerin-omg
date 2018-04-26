@@ -1,13 +1,10 @@
 <?php
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 require_once '../dao/SeguimientoEntradaDAO.php';
 require_once '../Pojo/SeguimientoEntradaPojo.php';
+
+
 class SeguimientoEntradaModel{
     
     public function  listarSeguimientoEntradas(){
@@ -22,7 +19,15 @@ class SeguimientoEntradaModel{
     }
     }
     
-    
+//    public function insert
+    public function insertar($id_documento_entrada){
+        try{
+                $dao=new SeguimientoEntradaDAO();
+                $dao->insertar($id_documento_entrada);
+        }catch (Exception $ex) {
+                 throw  $ex;
+        }
+    }
 
     
     

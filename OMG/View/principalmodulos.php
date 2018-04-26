@@ -490,10 +490,10 @@ ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: 
     <!--<div id="treeboxbox_tree" class="treeboxbox_tree" style="height:100%;"></div>-->
     <div id="sidebarObj"> </div>
     
+    
+ 
     <div id="sidebarObjV">
-        
-        
-        
+  
     </div>
 
     
