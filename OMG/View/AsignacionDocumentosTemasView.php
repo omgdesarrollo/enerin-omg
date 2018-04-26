@@ -283,13 +283,14 @@ $Usuario=  Session::getSesion("user");
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
 		Asignar Documento-Tema
             </button>
-        
-        
+                  
         
             <button type="button" id="btn_lista_documentos" class="btn btn-success" data-toggle="modal">
 					  Lista de Documentos
                                           <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
 	    </button>
+        
+        
             <button type="button" id="btn_lista_temas" class="btn btn-success" data-toggle="modal">
                                               Lista de Temas
                                               <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
@@ -307,9 +308,10 @@ $Usuario=  Session::getSesion("user");
 				<th class="table-header" >NO.</th>
                                 <th class="table-header">CLAVE DEL DOCUMENTO</th>
                                 <th class="table-header">DOCUMENTO</th>
-				<th class="table-header">TEMA</th>									
+				<th class="table-header">CLAVE DEL TEMA</th>									
                                 <th class="table-header">DESCRIPCION DEL TEMA</th>									
-				<th class="table-header">REQUISITO</th>									
+				<th class="table-header">OPCION</th>									
+				<!--<th class="table-header">REQUISITO</th>-->									
 
 			  </tr>
 		  <!--</thead>-->
@@ -366,38 +368,47 @@ $Usuario=  Session::getSesion("user");
 
                                 
                                 
-                                <td> 
+                                
+<!--                                <td> 
                                     <select id="id_asignacion_tema_requisito" class="select" onchange="saveComboToDatabase('ID_ASIGNACION_TEMA_REQUISITO', <?php echo $filas["ID_ASIGNACION_DOCUMENTO_TEMA"]; ?> )">
                                     <?php
                                     $s="";
-                                                foreach ($cbxATR as $value) {
-                                                    if($value["ID_ASIGNACION_TEMA_REQUISITO"]=="".$filas["ID_ASIGNACION_TEMA_REQUISITO"]){
+//                                                foreach ($cbxATR as $value) {
+//                                                    if($value["ID_ASIGNACION_TEMA_REQUISITO"]=="".$filas["ID_ASIGNACION_TEMA_REQUISITO"]){
 //                                                        $s="selected";
                                                     
                                                     ?>
                                     
-                                        <option value="<?php echo "".$value["ID_ASIGNACION_TEMA_REQUISITO"] ?>"  selected ><?php echo "".$value["CLAUSULA"]; ?></option>
+                                        <option value="<?php // echo "".$value["ID_ASIGNACION_TEMA_REQUISITO"] ?>"  selected ><?php // echo "".$value["CLAUSULA"]; ?></option>
                                         
                                                         <?php
-                                                        }
-                                                        else{
+//                                                        }
+//                                                        else{
                                                             ?>
                                                         }
-                                                             <option value="<?php echo "".$value["ID_ASIGNACION_TEMA_REQUISITO"] ?>"  ><?php echo "".$value["CLAUSULA"]; ?></option>
+                                                             <option value="<?php // echo "".$value["ID_ASIGNACION_TEMA_REQUISITO"] ?>"  ><?php // echo "".$value["CLAUSULA"]; ?></option>
                                                              <?php
-                                                        }
-                                                }
+//                                                        }
+//                                                }
                                     
                                     ?>
-                                    </select>
-                                   <!--<div id="combo_zone" style="width:230px;"></div>-->
-                                    
-                                </td>
+                                    </select>                                    
+                                </td>-->
                                 
                                   
+                                
                                    
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'DESCRIPCION_CLAUSULA','<?php echo $filas["ID_ASIGNACION_DOCUMENTO_TEMA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["DESCRIPCION_CLAUSULA"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'REQUISITO','<?php echo $filas["ID_ASIGNACION_DOCUMENTO_TEMA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["REQUISITO"]; ?></td>   
+                                    <td contenteditable="false" onBlur="saveToDatabase(this,'CLAUSULA','<?php echo $filas["ID_ASIGNACION_DOCUMENTO_TEMA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["CLAUSULA"]; ?></td>
+                                    <td contenteditable="false" onBlur="saveToDatabase(this,'DESCRIPCION_CLAUSULA','<?php echo $filas["ID_ASIGNACION_DOCUMENTO_TEMA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["DESCRIPCION_CLAUSULA"]; ?></td>
+                                    
+                                    <td>
+                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#create-item">
+                                    Ver Detalles
+                                    <i class="ace-icon fa fa-edit" style="color: #0099ff;font-size: 20px;"></i>
+                                    </button>
+                                    </td>    
+                  
+<!--                                <td contenteditable="false" onBlur="saveToDatabase(this,'REQUISITO','<?php echo $filas["ID_ASIGNACION_DOCUMENTO_TEMA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["REQUISITO"]; ?></td>   -->
                                                                                                                                       
                                                     
 			  </tr>
@@ -454,7 +465,7 @@ $Usuario=  Session::getSesion("user");
                                     
                                     
                                     
-                                                <div class="form-group">
+<!--                                                <div class="form-group">
 							<label class="control-label" for="title">Tema:</label>
                                                         
                                                         <select   id="ID_ASIGNACION_TEMA_REQUISITO_MODAL" class="select2">
@@ -473,7 +484,7 @@ $Usuario=  Session::getSesion("user");
                                                         </select>
                                                         
 							<div class="help-block with-errors"></div>
-						</div>
+						</div>-->
                                     
                                     
                                     
