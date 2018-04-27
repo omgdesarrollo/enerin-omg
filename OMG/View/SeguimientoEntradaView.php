@@ -266,12 +266,12 @@ require_once '../util/Session.php';
                                                         
                                                         
                                                         foreach($cbxEmpleadoPlan1 as $value1){
-                                                               
+                                                               if($value1["ID_EMPLEADO"]!=$filas["ID_EMPLEADOPLAN"]){
                                                          ?>
                                                             <option value="<?php echo "".$value1["ID_EMPLEADO"] ?>"  ><?php echo "".$value1["NOMBRE_EMPLEADO"]." ".$value1["APELLIDO_PATERNO"]." ".$value1["APELLIDO_MATERNO"]; ?></option>
 
                                                          <?php
-                                                            
+                                                               }
                                                         
                                         
                                                             }
