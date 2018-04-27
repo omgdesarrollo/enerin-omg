@@ -93,9 +93,10 @@ class DocumentoEntradaDAO{
             }
             
             
-            if($id_nuevo==NULL){
+            if($id_nuevo==null){
                 $id_nuevo=0;
             } 
+            return $id_nuevo; 
     }
     
     

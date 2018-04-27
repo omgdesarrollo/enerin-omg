@@ -89,6 +89,7 @@ switch ($Op) {
                   $model->insertar($pojo);
                   
                   $traerultimoinsertado=$model->traer_ultimo_insertado();  
+                  echo json_encode($traerultimoinsertado);
                   $modelSeguimientoEntrada->insertar($traerultimoinsertado);
                   
                         
