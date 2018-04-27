@@ -52,17 +52,20 @@ class SeguimientoEntradaDAO{
                $id_nuevo_seguimiento_entrada= $value["ID_SEGUIMIENTO_ENTRADA"];
             }
             
-            if($id_nuevo==NULL){
-                $id_nuevo=0;
+            if($id_nuevo_seguimiento_entrada==NULL){
+                $id_nuevo_seguimiento_entrada=0;
             }                                                                                                                           
             
-            $query="INSERT INTO SEGUIMIENTO_ENTRADA (ID_SEGUIMIENTO_ENTRADA,ID_DOCUMENTO_ENTRADA,ID_EMPLEADO)VALUES($id_nuevo_seguimiento_entrada,$id_documento_entrada,0)";
+            $query="INSERT INTO SEGUIMIENTO_ENTRADA (ID_SEGUIMIENTO_ENTRADA,ID_DOCUMENTO_ENTRADA,ID_EMPLEADO)VALUES"
+                    . "($id_nuevo_seguimiento_entrada,$id_documento_entrada,0)";
+            
             $db=  AccesoDB::getInstancia();
             $db->executeQueryUpdate($query);
          } catch (Exception $ex) {
 
         }
     }
+    
     
     public function actualizarSeguimientoEntradaPorColumna($COLUMNA,$VALOR,$ID_SEGUIMIENTO_ENTRADA){
          
