@@ -63,7 +63,9 @@ class AsignacionTemaRequisitoDAO {
             foreach ($lista_id_nuevo_autoincrementado as $value) {
                $id_nuevo= $value["ID_ASIGNACION_TEMA_REQUISITO"];
             }
-            
+             if($id_nuevo==NULL){
+                $id_nuevo=0;
+            }
             $query="INSERT INTO ASIGNACION_TEMA_REQUISITO(ID_ASIGNACION_TEMA_REQUISITO,ID_CLAUSULA,REQUISITO)"
                     . "VALUES($id_nuevo,$id_clausula,'$requisito')";
             
