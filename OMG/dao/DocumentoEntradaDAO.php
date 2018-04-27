@@ -92,6 +92,7 @@ class DocumentoEntradaDAO{
                $id_nuevo= $value["ID_DOCUMENTO_ENTRADA"];
             }
             return $id_nuevo;
+            
     }
     
     
