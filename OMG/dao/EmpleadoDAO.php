@@ -4,8 +4,8 @@ class EmpleadoDAO{
     //consulta los datos de un empleado por su nombre de usuario
     public function mostrarEmpleados(){
         try{
-            $query="SELECT ID_EMPLEADO ID_EMPLEADO, NOMBRE_EMPLEADO, CATEGORIA, APELLIDO_PATERNO, APELLIDO_MATERNO, CORREO, FECHA_CREACION 
-                            FROM EMPLEADOS ORDER BY NOMBRE_EMPLEADO  ";
+            $query="SELECT ID_EMPLEADO, NOMBRE_EMPLEADO, CATEGORIA, APELLIDO_PATERNO, APELLIDO_MATERNO, CORREO, FECHA_CREACION 
+                            FROM EMPLEADOS ORDER BY NOMBRE_EMPLEADO";
 //            $query="SELECT ID_EMPLEADO  FROM EMPLEADOS";
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
