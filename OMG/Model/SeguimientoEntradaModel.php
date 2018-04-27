@@ -52,6 +52,7 @@ class SeguimientoEntradaModel{
             throw $ex;
         }
     }
+    
 }
 
 ?>
