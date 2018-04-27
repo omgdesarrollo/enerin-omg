@@ -51,11 +51,13 @@ class EntidadReguladoraDAO{
             $db_obtenerMaximo_mas_uno=AccesoDB::getInstancia();
             $lista_id_nuevo_autoincrementado=$db_obtenerMaximo_mas_uno->executeQuery($query_obtenerMaximo_mas_uno);
             $id_nuevo=0;
-            
+          
             foreach ($lista_id_nuevo_autoincrementado as $value) {
                $id_nuevo= $value["ID_ENTIDAD"];
             }
-            
+            if($id_nuevo==NULL){
+                $id_nuevo=0;
+            }
             
             
             $query="INSERT INTO ENTIDAD_REGULADORA(ID_ENTIDAD, CLAVE_ENTIDAD, DESCRIPCION, DIRECCION, TELEFONO, EXTENSION, EMAIL, DIRECCION_WEB)"
