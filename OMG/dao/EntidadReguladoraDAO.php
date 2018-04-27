@@ -55,6 +55,7 @@ class EntidadReguladoraDAO{
             foreach ($lista_id_nuevo_autoincrementado as $value) {
                $id_nuevo= $value["ID_ENTIDAD"];
             }
+            
             if($id_nuevo==NULL){
                 $id_nuevo=0;
             }

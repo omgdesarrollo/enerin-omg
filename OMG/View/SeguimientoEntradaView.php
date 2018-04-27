@@ -183,7 +183,9 @@ require_once '../util/Session.php';
             </div>
         </div>
 
-		 <div style="display:none;" id="myDiv" class="animate-bottom"> 
+
+             
+             <div style="display:none;" id="myDiv" class="animate-bottom"> 
                      <div class="contenedortable">
                            <table class="tbl-qa">
 		  <!--<thead>-->
@@ -207,22 +209,23 @@ require_once '../util/Session.php';
                     
                   
 //		  foreach($faq as $k=>$v) {
-                    $Lista = Session::getSesion("listarSeguimientoEntradas");
+                      $Lista = Session::getSesion("listarSeguimientoEntradas");
 //                    $Lista = PaginacionController::show_rows("ID_ASIGNACION_TEMA_REQUISITO");
 //                    $cbxCump= Session::getSesion("listarCumplimientosComboBox");
 //                    $cbxEnt= Session::getSesion("listarEntidadesReguladorasComboBox");
 //                    $cbxClau= Session::getSesion("listarClausulasComboBox");
-                      $cbxE= Session::getSesion("listarEmpleadosComboBox");
+                      $cbxEmp= Session::getSesion("listarEmpleadosComboBox");
+                      $cbxEmpleadoPlan= Session::getSesion("listarEmpleadosComboBox");
+                      $cbxEmpleadoPlan1= Session::getSesion("listarEmpleadosComboBox");
                   
-//                  $datostema
-                  $numeracion = 1;
+
+                      $numeracion = 1;
                   
-//		foreach ($Lista as $k=>$filas) { 
-//                   $valorid= $Lista[$k]["ID_EMPLEADO"];
-//                   $nombreempleado=$Lista[$k]["NOMBRE_EMPLEADO"];
-                  foreach ($Lista as $filas) { 
-		  ?>
-			  <tr class="table-row">
+
+                      foreach ($Lista as $filas) { 
+                        ?>
+			 
+                        <tr class="table-row">
 
                                 <!--<td><?php //echo $numeracion++;   ?></td -->
                                 
@@ -232,42 +235,54 @@ require_once '../util/Session.php';
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'FOLIO_ENTRADA','<?php echo $filas["ID_SEGUIMIENTO_ENTRADA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["FOLIO_ENTRADA"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'CLAVE_ENTIDAD','<?php echo $filas["ID_SEGUIMIENTO_ENTRADA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["CLAVE_ENTIDAD"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'ASUNTO','<?php echo $filas["ID_SEGUIMIENTO_ENTRADA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["ASUNTO"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'NOMBRE_EMPLEADO','<?php echo $filas["ID_SEGUIMIENTO_ENTRADA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["NOMBRE_EMPLEADO"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'NOMBRE_EMPLEADOTEMA','<?php echo $filas["ID_SEGUIMIENTO_ENTRADA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["NOMBRE_EMPLEADOTEMA"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'FECHA_LIMITE_ATENCION','<?php echo $filas["ID_SEGUIMIENTO_ENTRADA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["FECHA_LIMITE_ATENCION"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'STATUS_DOC','<?php echo $filas["ID_SEGUIMIENTO_ENTRADA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["STATUS_DOC"]; ?></td>
+                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'NOMBRE_EMPLEADOPLAN','<?php echo $filas["ID_SEGUIMIENTO_ENTRADA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["NOMBRE_EMPLEADOPLAN"]; ?></td>-->
                                                                                                                              
-                                                                <td> 
-<!--                                    <select  class="empleado" name="n_empleado" onchange="saveComboToDatabase('ID_EMPLEADO', <?php //echo $filas["ID_CLAUSULA"]; ?> )">-->
+                                <td> 
                                     <select   id="id_empleado" class="select"  onchange="saveComboToDatabase('ID_EMPLEADO', <?php echo $filas["ID_SEGUIMIENTO_ENTRADA"]; ?> )">
-                                    <!--<select name="name_empleado">-->
+                                    
                                     <?php
                                     $s="";
-                                                foreach ($cbxE as $value) {
-                                                    if($value["ID_EMPLEADO"]=="".$filas["ID_EMPLEADO"]){
+                                                foreach ($cbxEmpleadoPlan as $value) {
+                                                    
+                                                    if($value["ID_EMPLEADOPLAN"]=="".$filas["ID_EMPLEADO"]){
 //                                                        $s="selected";
                                                     ?>
                                     
-                                        <option value="<?php echo "".$filas["ID_EMPLEADO"] ?>"  selected ><?php echo "".$filas["NOMBRE_EMPLEADO"]." ".$filas["APELLIDO_PATERNO"]." ".$filas["APELLIDO_MATERNO"]; ?></option>
+                                        <option value="<?php echo "".$filas["ID_EMPLEADOPLAN"] ?>"  selected ><?php echo "".$filas["NOMBRE_EMPLEADOPLAN"]." ".$filas["APELLIDO_PATERNOPLAN"]." ".$filas["APELLIDO_MATERNOPLAN"]; ?></option>
                                         
                                                         <?php
                                                         }
                                                         else{
-                                                            ?>
-                                                        }
-                                                             <option value="<?php echo "".$value["ID_EMPLEADO"] ?>"  ><?php echo "".$value["NOMBRE_EMPLEADO"]." ".$value["APELLIDO_PATERNO"]." ".$value["APELLIDO_MATERNO"]; ?></option>
+                                                            
+                                                            
+                                                            
+                                                        ?>
+                                                        
                                                              <?php
                                                         }
+                                                        
+                                                        
+                                                        foreach($cbxEmpleadoPlan1 as $value1){
+                                                               
+                                                         ?>
+                                                            <option value="<?php echo "".$value1["ID_EMPLEADO"] ?>"  ><?php echo "".$value1["NOMBRE_EMPLEADO"]." ".$value1["APELLIDO_PATERNO"]." ".$value1["APELLIDO_MATERNO"]; ?></option>
+
+                                                         <?php
+                                                            
+                                                        
+                                        
+                                                            }
+                                                             break;
                                                 }
                                     
                                     ?>
-                                    </select>
-                                        
-                                  
-                                   <!--<div id="combo_zone" style="width:230px;"></div>-->
-                                    
+                                    </select>                                                                    
                                 </td>
                                 
-                                    
+                                                                    
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'DOCUMENTO','<?php echo $filas["ID_SEGUIMIENTO_ENTRADA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["DOCUMENTO"]; ?></td>
                                 <td ><button class="btn btn-info">Cargar Programa</button></td>
                                 
@@ -320,58 +335,23 @@ require_once '../util/Session.php';
                     
                 var id_seguimiento_entrada;
                 
-//                      $(function(){
-//                        $('.select').on('change', function() {
-////                          console.log( $(this).prop('value') );
-////                          alert("el value que va a viajar es "+ $(this).prop('value'));
-//                          
-//                        if (cualmodificar == "ID_EMPLEADO") {
-//    
-//                        column="ID_EMPLEADO";
-//    
-//                        } else {
-//                            
-//                        column="ID_ENTIDAD";
-//                            
-//                        }
-//                            
-//                         
-//                          val=$(this).prop('value');
-//                          alert("el value que va a viajar es "+val+" i el id de la clausula : "+id_seguimiento_entrada);
-//                          $.ajax({
-//                                url: "../Controller/SeguimientoEntradasController.php?Op=Modificar",
-//				type: "POST",
-//				data:'column='+column+'&editval='+val+'&id='+id_seguimiento_entrada,
-//				success: function(data){
-////                                    window.location.href="AsignacionTemasRequisitosView.php?page=1";
-//					//$(editableObj).css("background","#FDFDFD");
-//                                        consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
-//                                        consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
-//                                        window.location.href="SeguimientoEntradaView.php";
-//				}   
-//                           });
-//                          
-//                          
-//                        });
-//  
-//  
-//                      });
-                      
-                      
-                      
+                                            
                       $(function(){
+                          
                         $('.select').on('change', function() {
-//                          console.log( $(this).prop('value') );
-//                          alert("el value que va a viajar es "+ $(this).prop('value'));
+                          console.log( $(this).prop('value') );
+                          
                           column="ID_EMPLEADO";
                           val=$(this).prop('value');
-                          alert("el value que va a viajar es "+val+" i el id de la clausula : "+id_seguimiento_entrada);
+                          alert("el value que va a viajar es "+val+" y el id del seguimiento : "+id_seguimiento_entrada);
+                          
                           $.ajax({
                                 url: "../Controller/SeguimientoEntradasController.php?Op=Modificar",
 				type: "POST",
 				data:'column='+column+'&editval='+val+'&id='+id_seguimiento_entrada,
+				
 				success: function(data){
-//                                    window.location.href="AsignacionTemasRequisitosView.php?page=1";
+                                    window.location.href="AsignacionTemasRequisitosView.php?page=1";
 					//$(editableObj).css("background","#FDFDFD");
                                         consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
                                         consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
@@ -391,6 +371,7 @@ require_once '../util/Session.php';
 			$(editableObj).css("background","#FFF");
 		} 
 		
+                
 		function saveToDatabase(editableObj,column,id) {
                     //alert("entraste aqui ");
 			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
@@ -407,19 +388,8 @@ require_once '../util/Session.php';
                 
                 
                 function saveComboToDatabase(column,id){
-//                   value= $("#id_clausula").val();
-//                    //alert("esta es la columna" + column + "este es el" + id);
-//                    alert("este es el id de la clausula " + id + " esta es la columna que se va a editar " + column + " el nuevo dato que va a viajar a la BD " + value);
-//                   //$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
-//                   $.ajax({
-//                                url: "../Controller/AsignacionTemasRequisitosController.php?Op=Modificar",
-//				type: "POST",
-//				data:'column='+column+'&editval='+value+'&id='+id,
-//				success: function(data){
-//                                    
-//					//$(editableObj).css("background","#FDFDFD");
-//				}   
-//		   });
+
+
                         id_seguimiento_entrada=id;
                         
                }

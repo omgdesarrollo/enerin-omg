@@ -81,6 +81,7 @@ class DocumentoEntradaDAO{
         throw $ex;
     }
     }
+    
     public function traer_ultimo_insertado(){
          $query_obtenerMaximo_mas_uno="SELECT max(ID_DOCUMENTO_ENTRADA) as ID_DOCUMENTO_ENTRADA from DOCUMENTO_ENTRADA";
             $db_obtenerMaximo_mas_uno=AccesoDB::getInstancia();
@@ -108,6 +109,10 @@ class DocumentoEntradaDAO{
             
             foreach ($lista_id_nuevo_autoincrementado as $value) {
                $id_nuevo= $value["ID_DOCUMENTO_ENTRADA"];
+            }
+            
+            if($id_nuevo==NULL){
+                $id_nuevo=0;
             }
             
             $query="INSERT INTO DOCUMENTO_ENTRADA (ID_DOCUMENTO_ENTRADA,ID_CUMPLIMIENTO,FOLIO_REFERENCIA,FOLIO_ENTRADA,FECHA_RECEPCION,ASUNTO,REMITENTE,

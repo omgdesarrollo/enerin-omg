@@ -607,7 +607,7 @@ $Usuario=  Session::getSesion("user");
                         
                           
                           val=$(this).prop('value');
-                          alert("el value que va a viajar es "+val+" i el id de la clausula : "+id_documento_entrada);
+                          alert("el value que va a viajar es "+val+" y el id del documento de entrada : "+id_documento_entrada);
                           $.ajax({
                                 url: "../Controller/DocumentosEntradaController.php?Op=Modificar",
 				type: "POST",

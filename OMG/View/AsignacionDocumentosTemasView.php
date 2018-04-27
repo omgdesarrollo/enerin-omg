@@ -589,7 +589,7 @@ $Usuario=  Session::getSesion("user");
                         }     
                           
                           val=$(this).prop('value');
-                          alert("el value que va a viajar es "+val+" i el id de la clausula : "+id_asignacion_documento_tema);
+                          alert("el value que va a viajar es "+val+" y el id de la clausula : "+id_asignacion_documento_tema);
                           $.ajax({
                                 url: "../Controller/AsignacionDocumentosTemasController.php?Op=Modificar",
 				type: "POST",

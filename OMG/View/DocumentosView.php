@@ -398,7 +398,7 @@ $Usuario=  Session::getSesion("user");
                           alert("el value que va a viajar es "+ $(this).prop('value'));
                           column="ID_EMPLEADO";
                           val=$(this).prop('value');
-                          alert("el value que va a viajar es "+val+" i el id de la clausula : "+id_clausula);
+                          alert("el value que va a viajar es "+val+" y el id de la claus : "+id_clausula);
                           $.ajax({
                                 url: "../Controller/DocumentosController.php?Op=Modificar",
 				type: "POST",

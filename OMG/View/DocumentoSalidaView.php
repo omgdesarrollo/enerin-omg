@@ -526,7 +526,7 @@ require_once '../util/Session.php';
                         
                           
                           val=$(this).prop('value');
-                          alert("el value que va a viajar es "+val+" i el id de la clausula : "+id_documento_salida);
+                          alert("el value que va a viajar es "+val+" y el id de la clausula : "+id_documento_salida);
                           $.ajax({
                                 url: "../Controller/DocumentosSalidaController.php?Op=Modificar",
 				type: "POST",
