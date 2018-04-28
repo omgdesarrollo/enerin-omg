@@ -549,7 +549,17 @@ require_once '../util/Session.php';
        
         
                                     var ID_DOCUMENTO_ENTRADA_MODAL=$("#ID_DOCUMENTO_ENTRADA_MODAL").val();
+                                    
+                                    //if(FOLIO_SALIDA === '') {
+                                        //alert("Ingrese el Folio de Salida");
+
+                                    //} else {
+                                        
                                     var FOLIO_SALIDA=$("#FOLIO_SALIDA").val();
+                                            
+                                    //}
+                                        
+                                    
                                     var FECHA_ENVIO=$("#FECHA_ENVIO").val();
                                     var ASUNTO=$("#ASUNTO").val();
                                     var DESTINATARIO=$("#DESTINATARIO").val();

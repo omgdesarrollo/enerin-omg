@@ -50,6 +50,11 @@ class DocumentoSalidaDAO{
                $id_nuevo= $value["ID_DOCUMENTO_SALIDA"];
             }
             
+            if ($id_nuevo==NULL) {
+                $id_nuevo=0;
+            }
+            
+            
             $query="INSERT INTO DOCUMENTO_SALIDA (ID_DOCUMENTO_SALIDA,ID_DOCUMENTO_ENTRADA,FOLIO_SALIDA,FECHA_ENVIO,ASUNTO,DESTINATARIO,
 						  DOCUMENTO,OBSERVACIONES)
 										
