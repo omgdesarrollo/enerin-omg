@@ -33,14 +33,22 @@ $Usuario=  Session::getSesion("user");
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
                 
-             <script src="../../js/jquery.js" type="text/javascript"></script>
+                <script src="../../js/jquery.js" type="text/javascript"></script>
 
 		<script src="../../assets/probando/js/ace-extra.min.js"></script>
                 
-               <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-                     
+                <link href="style.css" rel="stylesheet" type="text/css"/>
+                
+                <!--Modal requisitos-->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+                <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css'>
+
+                
                   <style>
+                      
                     .modal
                     {
                         overflow: hidden;
@@ -80,6 +88,146 @@ $Usuario=  Session::getSesion("user");
 			border: 1px solid #dfdfdf;
 			margin: 10px;
 		}
+                
+                
+                /*Estilos checkbox*/
+                
+/*                 body {
+  font-size: 16px;
+}*/
+
+.header {
+  height: 8rem;
+  background: #009688;
+}
+
+.content {
+  width: 20rem;
+  margin: -4rem auto 0 auto;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 0.125rem;
+  box-shadow: 0 0.125rem 0.3125rem 0 rgba(0, 0, 0, 0.25);
+}
+
+.list {
+  margin: .5rem;
+}
+
+.list__item {
+  margin: 0 0 .5rem 0;
+  padding: 0;
+}
+
+.label--checkbox {
+  position: relative;
+  margin: .5rem;
+  font-family: Arial, sans-serif;
+  line-height: 135%;
+  cursor: pointer;
+}
+
+.checkbox {
+  position: relative;
+  top: -0.375rem;
+  margin: 0 1rem 0 0;
+  cursor: pointer;
+}
+.checkbox:before {
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  content: "";
+  position: absolute;
+  left: 0;
+  z-index: 1;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid #f2f2f2;
+}
+.checkbox:checked:before {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  height: .5rem;
+  border-color: #009688;
+  border-top-style: none;
+  border-right-style: none;
+}
+.checkbox:after {
+  content: "";
+  position: absolute;
+  top: -0.125rem;
+  left: 0;
+  width: 1.1rem;
+  height: 1.1rem;
+  background: #fff;
+  cursor: pointer;
+}
+
+.button--round {
+  -webkit-transition: 0.3s background ease-in-out;
+  -moz-transition: 0.3s background ease-in-out;
+  transition: 0.3s background ease-in-out;
+  width: 2rem;
+  height: 2rem;
+  background: #5677fc;
+  border-radius: 50%;
+  box-shadow: 0 0.125rem 0.3125rem 0 rgba(0, 0, 0, 0.25);
+  color: #fff;
+  text-decoration: none;
+  text-align: center;
+}
+.button--round i {
+  font-size: 1rem;
+  line-height: 220%;
+  vertical-align: middle;
+}
+.button--round:hover {
+  background: #3b50ce;
+}
+
+.button--sticky {
+  position: fixed;
+  right: 2rem;
+  top: 16rem;
+}
+
+.content {
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-name: slideUp;
+  animation-name: slideUp;
+  -webkit-animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@-webkit-keyframes slideUp {
+  0% {
+    -webkit-transform: translateY(6.25rem);
+    transform: translateY(6.25rem);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+@keyframes slideUp {
+  0% {
+    -webkit-transform: translateY(6.25rem);
+    transform: translateY(6.25rem);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+                
+                
                 </style>
                 
             <script>
@@ -286,13 +434,13 @@ $Usuario=  Session::getSesion("user");
                   
         
             <button type="button" id="btn_lista_documentos" class="btn btn-success" data-toggle="modal">
-					  Lista de Documentos
+		Lista de Documentos
                                           <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
 	    </button>
         
         
             <button type="button" id="btn_lista_temas" class="btn btn-success" data-toggle="modal">
-                                              Lista de Temas
+                Lista de Temas
                                               <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
             </button>
         
@@ -324,7 +472,9 @@ $Usuario=  Session::getSesion("user");
                   $Lista = Session::getSesion("listarAsignacionDocumentosTemas");
                   $cbxDoc= Session::getSesion("listarDocumentosComboBox");
                   $cbxATR= Session::getSesion("listarAsignacionTemasRequisitosComboBox");
+                  $ListaReqisitos = Session::getSesion("listarAsignacionTemasRequisitos");
                   $ListaTemas = Session::getSesion("listarClausulas");
+                  
                   
                   
                   $numeracion = 1;
@@ -343,6 +493,7 @@ $Usuario=  Session::getSesion("user");
                                     <?php
                                     $s="";
                                                 foreach ($cbxDoc as $value) {
+                                                    
                                                     if($value["ID_DOCUMENTO"]=="".$filas["ID_DOCUMENTO"]){
 //                                                        $s="selected";
                                                     
@@ -352,9 +503,10 @@ $Usuario=  Session::getSesion("user");
                                         
                                                         <?php
                                                         }
+                                                        
                                                         else{
                                                             ?>
-                                                        }
+                                                        <!--}-->
                                                              <option value="<?php echo "".$value["ID_DOCUMENTO"] ?>"  ><?php echo "".$value["CLAVE_DOCUMENTO"]; ?></option>
                                                              <?php
                                                         }
@@ -403,6 +555,7 @@ $Usuario=  Session::getSesion("user");
                                     <td contenteditable="false" onBlur="saveToDatabase(this,'CLAUSULA','<?php echo $filas["ID_ASIGNACION_DOCUMENTO_TEMA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["CLAUSULA"]; ?></td>
                                     <td contenteditable="false" onBlur="saveToDatabase(this,'DESCRIPCION_CLAUSULA','<?php echo $filas["ID_ASIGNACION_DOCUMENTO_TEMA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["DESCRIPCION_CLAUSULA"]; ?></td>
                                     
+                                    
                                     <td>
                                     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#edit-item">
                                     Ver Detalles
@@ -436,7 +589,7 @@ $Usuario=  Session::getSesion("user");
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Crear Nuevo Tema</h4>
+		        <h4 class="modal-title" id="myModalLabel">Asignar Nuevo Documento-Tema</h4>
 		      </div>
 
 		      <div class="modal-body">
@@ -516,17 +669,20 @@ $Usuario=  Session::getSesion("user");
 		      
                       <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Agregar Requisitos</h4>
+		        <h4 class="modal-title" id="myModalLabel">Temas</h4>
 		      </div>
 
 		      <div class="modal-body">
-		  
+                          <div class="contenedor">
+                          <div class="row">
+                              
+                              <div class="col-6">
                   <table class="tbl-qa">
-		  <!--<thead>-->
+		 
 			  <tr>				
 				<th class="table-header">CLAVE DEL TEMA</th>									
                                 <th class="table-header">DESCRIPCION DEL TEMA</th>																		
-				<th class="table-header">REQUISITO</th>									
+				<!--<th class="table-header">REQUISITO</th>-->									
 			  </tr>
 		  
 		  <tbody>
@@ -541,7 +697,13 @@ $Usuario=  Session::getSesion("user");
 				
                             
                                 
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'CLAUSULA','<?php echo $filas["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["CLAUSULA"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'CLAUSULA','<?php echo $filas["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);">                            
+                                <!--<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#caja"><?php //echo $filas["CLAUSULA"]; ?></button>-->
+                                    <button type="button" class="btn btn-secondary"  value="Mostrar" href="#caja-requisito"><?php echo $filas["CLAUSULA"]; ?></button>
+                                    
+                                    <input type="submit" value="Mostrar" onclick="Mostrar()"/>
+                                </td>
+                                
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'DESCRIPCION_CLAUSULA','<?php echo $filas["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["DESCRIPCION_CLAUSULA"]; ?></td>                                                         
                                 <!--<td contenteditable="false" onBlur="saveToDatabase(this,'REQUISITO','<?php echo $filas["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["REQUISITO"]; ?></td>-->                                                                                                                                     
                                                     
@@ -552,7 +714,46 @@ $Usuario=  Session::getSesion("user");
 		?>
 		  </tbody>
 		</table>
+                                  
+            </div>      
+                                  
+            
+            <div class="col-6">
 
+                               <table class="tbl-qa">
+		 
+			  <tr>				
+				<th class="table-header">REQUISITO</th>																		
+			  </tr>
+		  
+		  <tbody>
+		 
+                  <?php
+
+                                                       
+
+                  foreach ($ListaTemas as $filas) { 
+		  ?>
+			  <tr class="table-row">
+                                
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'DESCRIPCION_CLAUSULA','<?php echo $filas["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["DESCRIPCION_CLAUSULA"]; ?></td>                                                         
+                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'REQUISITO','<?php echo $filas["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["REQUISITO"]; ?></td>-->                                                                                                                                     
+                                                    
+			  </tr>
+		<?php
+		}
+                
+		?>
+		  </tbody>
+		</table>                     
+                                                                                                      
+                                  
+            </div>    
+                                                            
+        </div>
+                              
+                              
+                          </div>    
                                                                                                                                                            
 						<div class="form-group">
                                                     <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
@@ -566,9 +767,135 @@ $Usuario=  Session::getSesion("user");
 
 		  </div>
 	</div>
-       <!--Final de Seccion Modal-->
+       <!--Final de Seccion Modal-Edit-->
         
- 
+
+
+       
+
+     
+       
+<section  id="caja-requisito">
+  
+    
+    <?php
+                                                       
+    foreach ($ListaReqisitos as $value) { 
+   
+    
+    if($value["ID_CLAUSULA"]=="".$filas["ID_CLAUSULA"]){
+        
+     ?>    
+         
+    <ul class="list">
+      
+        <li class="list__item">
+            <label class="label--checkbox">
+                <input type="checkbox" class="checkbox" checked>
+                <?php echo $value["REQUISITO"]; ?>
+            </label>
+        </li>
+    </ul>
+    
+    <?php
+    } else {
+        
+      echo "No hay requisitos";
+      
+      ?>   
+    
+    
+    <?php
+    
+    }
+  
+    }
+    
+    ?>
+    
+    
+</section>
+
+       
+             
+       
+       
+       <!-- Inicio de Seccion Modal-Edit-->
+<!--       <div class="modal draggable fade" id="add-requirement" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      
+                      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Agregar Requisitos</h4>
+		      </div>
+                        
+                        
+<header class="header">
+  	
+</header>
+<section class="content">
+  
+    
+    //<?php
+//                                                       
+//    foreach ($ListaReqisitos as $value) { 
+//   
+//    
+//    if($value["ID_CLAUSULA"]=="".$filas["ID_CLAUSULA"]){
+//        
+//     ?>    
+         
+    <ul class="list">
+      
+        <li class="list__item">
+            <label class="label--checkbox">
+                <input type="checkbox" class="checkbox" checked>
+                <?php //echo $value["REQUISITO"]; ?>
+            </label>
+        </li>
+    </ul>
+    
+    <?php
+//    } else {
+        
+      //echo "No hay requisitos";
+      
+      ?>   
+       
+      
+    
+    <?php
+    
+//    }
+//  
+//    }
+    
+    ?>
+    
+  
+  
+</section>
+                            
+                        
+
+
+                                                                                                                                                           
+                            <div class="form-group">
+                                <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
+                                <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
+                            </div>
+                          
+
+		      </div>
+                        
+		    </div>
+
+		  </div>
+	</div>-->
+       <!--Final de Seccion Modal-Edit-->
+       
+       
        
 
         <script>
@@ -694,7 +1021,8 @@ $Usuario=  Session::getSesion("user");
                                     alert("se guardo");
                                     
 //					$(editableObj).css("background","#FDFDFD");
-                                        swal("Guardado Exitoso!", "Ok!", "success")
+         
+        swal("Guardado Exitoso!", "Ok!", "success")
                                          consultarInformacion("../Controller/AsignacionDocumentosTemasController.php?Op=Listar");
                                          consultarInformacion("../Controller/AsignacionDocumentosTemasController.php?Op=Listar");
                                         window.location.href("AsignacionDocumentosTemasView.php");
@@ -766,6 +1094,23 @@ $Usuario=  Session::getSesion("user");
                 <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
                 <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
                 <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+               
+                <!--Modal requisitos-->
+                <script src="../../js/indexcheckbox.js" type="text/javascript"></script>
+                
+              
+                
+                
+                <script type="text/javascript">
+                
+                function Mostrar(){
+		document.getElementById("caja-requisito");
+                }
+                </script>
+                
+                
+                
+                
 	</body>
         
         
