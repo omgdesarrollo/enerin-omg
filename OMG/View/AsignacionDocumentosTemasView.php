@@ -663,7 +663,7 @@ $Usuario=  Session::getSesion("user");
        
         
        <!-- Inicio de Seccion Modal-Edit-->
-       <div class="modal draggable fade" id="edit-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+       <div class="modal draggable fade" id="edit-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      
@@ -671,12 +671,31 @@ $Usuario=  Session::getSesion("user");
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 		        <h4 class="modal-title" id="myModalLabel">Temas</h4>
 		      </div>
-
+                        <div class="row">
+<!--                            <div class="col-2" >
+                                d
+                            </div>
+                            <div class="col-2" >
+                                s
+                            </div>-->
+<!--                     <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12" style="background: #cc6600;width: 50%"> 
+                         
+                         
+                         nuestro bloque1 
+                     
+                     
+                     </div>-->
+<!--                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" style="background: #ccff99;width: 50%">
+                        
+                        nuestro bloque 2
+                    
+                    </div>-->
+                        </div>
 		      <div class="modal-body">
-                          <div class="contenedor">
+                          <!--<div class="contenedor">-->
                           <div class="row">
-                              
-                              <div class="col-6">
+                             <!--<div class="col-lg-6 col-md-4 col-sm-6 col-xs-12" style="background: #cc6600;width: 50%">-->  
+            <div class="col-md-8">
                   <table class="tbl-qa">
 		 
 			  <tr>				
@@ -712,13 +731,16 @@ $Usuario=  Session::getSesion("user");
 		}
                 
 		?>
+                          
+                          
+                 
 		  </tbody>
 		</table>
-                                  
+                                      
             </div>      
-                                  
+                             <!--</div>-->                    
             
-            <div class="col-6">
+            <div class="col-md-4">
 
                                <table class="tbl-qa">
 		 
@@ -753,7 +775,7 @@ $Usuario=  Session::getSesion("user");
         </div>
                               
                               
-                          </div>    
+                          <!--</div>-->    
                                                                                                                                                            
 						<div class="form-group">
                                                     <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>

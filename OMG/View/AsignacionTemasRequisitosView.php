@@ -399,7 +399,9 @@ $Usuario=  Session::getSesion("user");
 					//$(editableObj).css("background","#FDFDFD");
                                         consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
                                         consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
+                                        alert("entron ");
                                         window.location.href="AsignacionTemasRequisitosView.php";
+                                       
 				}   
                            });
                           

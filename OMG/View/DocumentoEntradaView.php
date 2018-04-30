@@ -544,12 +544,17 @@ $Usuario=  Session::getSesion("user");
 						</div>
 
                           
-                                                <div class="form-group">
+<!--                                                <div class="form-group">
 							<label class="control-label" for="title">Documento:</label>
                                                         <textarea  id="DOCUMENTO" class="form-control" data-error="Ingrese el Documento" required></textarea>
 							<div class="help-block with-errors"></div>
+						</div>-->
+                                                <div class="form-group">
+							<label class="control-label" for="title">Documento:</label>
+                                                        <input id="DOCUMENTO" name="uploadfile" type="file" />
+                                                        <input type="submit" value="Subir Archivo"/>
+							<!--<div class="help-block with-errors"></div>-->
 						</div>
-                          
                                                 
                                                 <div class="form-group">
 							<label class="control-label" for="title">Observaciones:</label>

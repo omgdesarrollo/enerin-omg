@@ -51,8 +51,6 @@ class DocumentoEntradaModel{
         }
     }
     
-    
-    
     public function insertar($pojo){
         try{
             $dao=new DocumentoEntradaDAO();

@@ -544,7 +544,6 @@ require_once '../util/Session.php';
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'CATEGORIA','<?php echo $filas["ID_EMPLEADO"]; ?>')" onClick="showEdit(this);"><?php echo $filas["CATEGORIA"]; ?></td>
                                  <td contenteditable="true" onBlur="saveToDatabase(this,'CORREO','<?php echo $filas["ID_EMPLEADO"]; ?>')" onClick="showEdit(this);"><?php echo $filas["CORREO"]; ?></td>
                                  <td contenteditable="false" onBlur="saveToDatabase(this,'FECHA_CREACION','<?php echo $filas["ID_EMPLEADO"]; ?>')" onClick="showEdit(this);"><?php echo $filas["FECHA_CREACION"]; ?></td>
-                                 
 			  </tr>
                           
 		<?php

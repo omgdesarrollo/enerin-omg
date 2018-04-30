@@ -2,6 +2,17 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/xampp/htdocs/OMG/trunk/OMG/dao/SeguimientoEntradaDAO.php</file>
+            <file>file:/C:/xampp/htdocs/OMG/trunk/OMG/View/DocumentoEntradaView.php</file>
+            <file>file:/C:/xampp/htdocs/OMG/trunk/OMG/Model/SeguimientoEntradaModel.php</file>
+            <file>file:/C:/xampp/htdocs/OMG/trunk/OMG/View/SeguimientoEntradaView.php</file>
+            <file>file:/C:/xampp/htdocs/OMG/trunk/OMG/View/EmpleadosView.php</file>
+            <file>file:/C:/xampp/htdocs/OMG/trunk/OMG/dao/DocumentoEntradaDAO.php</file>
+            <file>file:/C:/xampp/htdocs/OMG/trunk/OMG/dao/EmpleadoDAO.php</file>
+            <file>file:/C:/xampp/htdocs/OMG/trunk/OMG/Model/DocumentoEntradaModel.php</file>
+            <file>file:/C:/xampp/htdocs/OMG/trunk/OMG/View/InformeGerencialView.php</file>
+            <file>file:/C:/xampp/htdocs/OMG/trunk/OMG/Controller/DocumentosEntradaController.php</file>
+        </group>
     </open-files>
 </project-private>

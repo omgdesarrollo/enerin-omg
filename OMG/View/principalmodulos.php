@@ -287,21 +287,6 @@ ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: 
 
     }
 
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-    
     function consultarInformacion(url){
                $.ajax({  
                      url: ""+url,  

@@ -226,10 +226,7 @@ require_once '../util/Session.php';
 			  <tr class="table-row">
 
                                 <!--<td><?php //echo $numeracion++;   ?></td -->
-                                
-                                
-                                
-                                
+                        
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'FOLIO_ENTRADA','<?php echo $filas["ID_INFORME_GERENCIAL"]; ?>')" onClick="showEdit(this);"><?php echo $filas["FOLIO_ENTRADA"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'CLAVE_ENTIDAD','<?php echo $filas["ID_INFORME_GERENCIAL"]; ?>')" onClick="showEdit(this);"><?php echo $filas["CLAVE_ENTIDAD"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'ASUNTO','<?php echo $filas["ID_INFORME_GERENCIAL"]; ?>')" onClick="showEdit(this);"><?php echo $filas["ASUNTO"]; ?></td>
