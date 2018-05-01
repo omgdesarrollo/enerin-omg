@@ -46,7 +46,8 @@ $Usuario=  Session::getSesion("user");
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
                 <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css'>
 
-                
+                <!--Modal requisitos2-->
+                <link href="bootstrap.min.css" rel="stylesheet" type="text/css"/>
                   <style>
                       
                     .modal
@@ -663,20 +664,17 @@ $Usuario=  Session::getSesion("user");
        
         
        <!-- Inicio de Seccion Modal-Edit-->
-       <div class="modal draggable fade" id="edit-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
-            <div class="modal-dialog" role="document">
-		<div class="modal-content">
+       <div class="modal draggable fade" id="edit-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
 		      
-                    <div class="modal-header">
+                      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 		        <h4 class="modal-title" id="myModalLabel">Temas</h4>
-		    </div>
+		      </div>
 
-                    
-                    <div class="modal-body">
-                          
-                        <div class="row">                              
-                            <div class="col-md-8">
+		      <div class="modal-body">
+		  
                   <table class="tbl-qa">
 		 
 			  <tr>				
@@ -698,8 +696,7 @@ $Usuario=  Session::getSesion("user");
                             
                                 
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'CLAUSULA','<?php echo $filas["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);">                            
-                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#add-requirement"><?php echo $filas["CLAUSULA"]; ?></button>
-                                    
+                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#add-requirement"><?php echo $filas["CLAUSULA"]; ?></button>                                                              
                                 </td>
                                 
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'DESCRIPCION_CLAUSULA','<?php echo $filas["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["DESCRIPCION_CLAUSULA"]; ?></td>                                                         
@@ -710,91 +707,25 @@ $Usuario=  Session::getSesion("user");
 		}
                 
 		?>
-                          
-                          
-                 
 		  </tbody>
 		</table>
-                                      
-            </div>      
-                                                 
-            
-                            <div class="col-md-4">
 
-                               <table class="tbl-qa">
-		 
-			  <tr>				
-				<th class="table-header">REQUISITO</th>																		
-			  </tr>
-		  
-		  <tbody>
-                      
-                <?php
-                                                       
-                                            foreach ($ListaReqisitos as $value) { 
-   
-    
-                                            if($value["ID_CLAUSULA"]=="".$filas["ID_CLAUSULA"]){
-        
-                                         ?>  
-                      
-                                <tr class="table-row">  
-                                    <td>
-					<form action="" class="mt-3">
-                                            
-
-						<div class="custom-control custom-checkbox">
-							<input type="checkbox" name="" id="checkboxPersonalizado1" class="custom-control-input">
-							<label for="checkboxPersonalizado1" class="custom-control-label"><?php echo $value["REQUISITO"]; ?></label>
-						</div>
-
-					</form>
-                                    </td>    
-                               </tr>            
-                                    
-                                        <?php
-                                            } else {
-                                        ?>        
-                                <tr class="table-row">  
-                                    <td>
-                                            <?php echo "No hay requisitos";?>
-                                    </td>        
-                                </tr>
-      
-                                      <?php
-    
-                                            }
-  
-                                        }
-    
-                                        ?>      
-
-              
-		  </tbody>
-		</table>                     
-                                                                                                      
-                                  
-            </div>                                                               
-                        </div>
-                              
-
-                            <div class="form-group">
-                                <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
-                                <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
-                            </div>
-                                
-                           
+                                                                                                                                                           
+<!--						<div class="form-group">
+                                                    <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
+                                                    <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
+						</div>-->
                           
-		    </div>
-                        
-		</div>
 
-            </div>
-       </div>
+		      </div>
+                        
+		    </div>
+
+		  </div>
+	</div>
        <!--Final de Seccion Modal-Edit-->
         
-
-          
+ 
        
        
        <!-- Inicio de Seccion Modal-Edit-->
@@ -807,55 +738,52 @@ $Usuario=  Session::getSesion("user");
 		        <h4 class="modal-title" id="myModalLabel">Agregar Requisitos</h4>
 		      </div>
                         
-                        
-<header class="header">
-  	
-</header>
-<section class="content">
-  
-    
-    <?php
+                
+                <div class="container">
+			
+			<div class="row">
+				
+				<div class="col">
+                                    
+					<?php
                                                        
-    foreach ($ListaReqisitos as $value) { 
+                                            foreach ($ListaReqisitos as $value) { 
    
     
-    if($value["ID_CLAUSULA"]=="".$filas["ID_CLAUSULA"]){
+                                            if($value["ID_CLAUSULA"]=="".$filas["ID_CLAUSULA"]){
         
-     ?>    
-         
-    <ul class="list">
-      
-        <li class="list__item">
-            <label class="label--checkbox">
-                <input type="checkbox" class="checkbox" checked>
-                <?php echo $value["REQUISITO"]; ?>
-            </label>
-        </li>
-    </ul>
-    
-    <?php
-    } else {
+                                         ?>  
+					<form action="" class="mt-3">
+                                            
+
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" name="" id="checkboxPersonalizado1" class="custom-control-input">
+							<label for="checkboxPersonalizado1" class="custom-control-label"><?php echo $value["REQUISITO"]; ?></label>
+						</div>
+
+					</form>
+                                    
+                                        <?php
+                                            } else {
         
-    echo "No hay requisitos";
+                                            echo "No hay requisitos";
       
-      ?>   
+                                            ?>   
        
       
     
-    <?php
+                                         <?php
     
-    }
+                                            }
   
-    }
+                                        }
     
-    ?>
-    
-  
-  
-</section>
-                            
-                        
+                                        ?>
+                                 
+				</div>				
+			</div>
 
+		</div>
 
                                                                                                                                                            
                             <div class="form-group">
@@ -998,8 +926,7 @@ $Usuario=  Session::getSesion("user");
                                     alert("se guardo");
                                     
 //					$(editableObj).css("background","#FDFDFD");
-         
-        swal("Guardado Exitoso!", "Ok!", "success")
+                                        swal("Guardado Exitoso!", "Ok!", "success")
                                          consultarInformacion("../Controller/AsignacionDocumentosTemasController.php?Op=Listar");
                                          consultarInformacion("../Controller/AsignacionDocumentosTemasController.php?Op=Listar");
                                         window.location.href("AsignacionDocumentosTemasView.php");
@@ -1071,25 +998,15 @@ $Usuario=  Session::getSesion("user");
                 <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
                 <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
                 <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
-               
                 <!--Modal requisitos-->
                 <script src="../../js/indexcheckbox.js" type="text/javascript"></script>
                 
-              
-                
-                
-                <script type="text/javascript">
-                
-                function Mostrar(){
-		document.getElementById("caja-requisito");
-                }
-                </script>
-                
-                
-                
-                
+                <!--Modal requisitos-->
+                <!--<script src="../../js/bootstrap.min.js" type="text/javascript"></script>-->
+<!--                <script src="../../js/jquery-3.3.1.min.js" type="text/javascript"></script>
+                <script src="../../js/popper.min.js" type="text/javascript"></script>-->
+
 	</body>
-        
         
         
 </html>
