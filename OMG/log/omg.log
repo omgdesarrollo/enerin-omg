@@ -4,3 +4,15 @@ Code: 0
 Message: No se tiene acceso al servidor o la Base de datos no existe.
 Query: call iniciarSesion('admin','adin')
 
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
