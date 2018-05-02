@@ -30,6 +30,7 @@ plugins/ios.json
 www/
 $RECYCLE.BIN/
 OMG/log/omg.txt
+OMG/conf/conexion.ini
 
 .DS_Store
 Thumbs.db
