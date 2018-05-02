@@ -1,27 +1,45 @@
 <?php
 session_start();
 require_once '../util/Session.php';
-setlocale(LC_ALL,'es_MX');
+// setlocale(LC_ALL,'es_RA');
+date_default_timezone_set("America/Mexico_city");
 $Usuario=  Session::getSesion("user");
 $Alarmas = Session::getSesion("Alarmas");
 $alarma;
+$NotificacionesAlarma = array();
+$numeroAlarmas = 0;
 foreach($Alarmas as $alarma)
 {
 	print_r($alarma);
+	if($alarma['FECHA_ALARMA'] != "")
+	{
+		$alarm = new Datetime($alarma['FECHA_ALARMA']);
+		$flimite = new Datetime($alarma['FECHA_LIMITE_ATENCION']);
+		$hoy = new Datetime();
+		$al = strftime("%d - %B - %y");
+		$hoy = new Datetime($al);
+		$NotificacionesAlarma[$numeroAlarmas]["AFECTADO"] = "ALARMA EN CONTRATO ".$alarma['CLAVE_CUMPLIMIENTO']." EN FOLIO ".$alarma['FOLIO_ENTRADA'];
+		if($flimite>$hoy)
+		{
+			$NotificacionesAlarma[$numeroAlarmas]["MENSAJE"] = "";//agregar campoDB para que el usuario ingrese su mensaje
+		}
+		else//retraso en alarma
+		{
+			if($flimite == $hoy)
+			{
+				$NotificacionesAlarma[$numeroAlarmas]["MENSAJE"] = "HOY FECHA LIMITE";//mensaje automatico
+			}
+			else
+			{
+				$dias = strtotime(strftime("%d-%B-%y",$hoy -> getTimestamp())) - strtotime(strftime("%d-%B-%y",$flimite -> getTimestamp()));
+				$dias = $dias / 86400;
+				$NotificacionesAlarma[$numeroAlarmas]["MENSAJE"] = "ATRASADO POR ".$dias." DIAS";//mensaje automatico	
+			}
+		}
+		$numeroAlarmas++;
+		// print_r($va);
+	}
 }
-// $alarma['fecha_alarma'];
-$alarm = new Datetime($alarma[FECHA_ALARMA]);
-$hoy = new Datetime();
-// if($alarma['FECHA_ALARMA'] == "")
-// {
-	print_r($hoy);
-// }
-// else
-// {
-	// print_r("con alarma 2");
-	// print_r("Fecha hoy".$time = time());
-// }
-// if($alarma['FECHA_ALARMA'])
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -117,31 +135,31 @@ $hoy = new Datetime();
                         <li class="purple dropdown-modal">
 				<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 				    <i class="ace-icon fa fa-bell icon-animated-bell"></i>
-					<span class="badge badge-important">0</span>
+					<span class="badge badge-important"><?php echo $numeroAlarmas;?></span>
 				</a>
 
 				<ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
 					<li class="dropdown-header">
 					     <i class="ace-icon fa fa-exclamation-triangle"></i>
-						1 NOTIFICACIONES
+						<?php echo $numeroAlarmas." NOTIFICACIONES"; ?>
 					</li>
 
 						<li class="dropdown-content">
 							<ul class="dropdown-menu dropdown-navbar navbar-pink">
+							<?php foreach($NotificacionesAlarma as $item)
+							{ ?>
 								<li>
 									<a href="#">
-									     <div class="clearfix">
+									    <div class="clearfix">
 										<span class="pull-left">
 										    <i class="btn btn-xs no-hover btn-pink fa fa-user"></i>
-											<?php foreach($Alarmas as $alarma)
-													echo "ALARMA EN ".$alarma['CLAVE_CUMPLIMIENTO']."<br> CON FOLIO ".$alarma['FOLIO_ENTRADA']; ?>
+											<?php echo $item['AFECTADO']." - ".$item['MENSAJE']; ?>
 										</span>
 										<span class="pull-right badge badge-info">+1</span>
 									      </div>
 									</a>
 								</li>
-
-										
+							<?php } ?>
 							</ul>
 						</li>
 
