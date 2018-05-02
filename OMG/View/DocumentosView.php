@@ -17,11 +17,8 @@ foreach($Alarmas as $alarma)
 	$al = strftime("%d - %B - %y");
 	$hoy = new Datetime($al);
 	if($flimite<=$hoy)
-	// if($alarma['FECHA_ALARMA'] != "")
 	{
 		$NotificacionesAlarma[$numeroAlarmas]["AFECTADO"] = "ALARMA EN CONTRATO ".$alarma['CLAVE_CUMPLIMIENTO']." EN FOLIO ".$alarma['FOLIO_ENTRADA'];
-		// else//retraso en alarma
-		// {
 			if($flimite == $hoy)
 			{
 				$NotificacionesAlarma[$numeroAlarmas]["MENSAJE"] = "HOY FECHA LIMITE";//mensaje automatico
@@ -32,16 +29,14 @@ foreach($Alarmas as $alarma)
 				$dias = $dias / 86400;
 				$NotificacionesAlarma[$numeroAlarmas]["MENSAJE"] = "ATRASADO POR ".$dias." DIAS";//mensaje automatico	
 			}
-		// }
 		$numeroAlarmas++;
-		// print_r($va);
 	}
 	else
 	{
 		if($alarm == $hoy)
 		{
 			$NotificacionesAlarma[$numeroAlarmas]["AFECTADO"] = "ALARMA EN CONTRATO ".$alarma['CLAVE_CUMPLIMIENTO']." EN FOLIO ".$alarma['FOLIO_ENTRADA'];
-			$NotificacionesAlarma[$numeroAlarmas]["MENSAJE"] = "usuario";//agregar campoDB para que el usuario ingrese su mensaje
+			$NotificacionesAlarma[$numeroAlarmas]["MENSAJE"] = "";//agregar campoDB para que el usuario ingrese su mensaje
 			$numeroAlarmas++;
 		}
 	}
