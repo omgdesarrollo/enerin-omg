@@ -2,7 +2,127 @@ File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
 Line: 33
 Code: 0
 Message: No se tiene acceso al servidor o la Base de datos no existe.
-Query: call iniciarSesion('admin','adin')
+Query: call iniciarSesion('dsa','dsa')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('dsa','dsa')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('dsa','dsa')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('dsa','dsa')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('dsa','dsa')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('dsa','dsa')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('dsa','dsa')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: SELECT tbcumplimientos.CLAVE_CUMPLIMIENTO FROM USUARIOS  JOIN CUMPLIMIENTOS tbcumplimientos ON usuarios.ID_USUARIO=tbcumplimientos.ID_USUARIO where usuarios.NOMBRE_USUARIO='admin'
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
 
 File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
 Line: 33
