@@ -551,7 +551,7 @@ $Usuario=  Session::getSesion("user");
                                                 <div class="form-group">
 							<label class="control-label" for="title">Documento:</label>
                                                         <input id="DOCUMENTO" name="uploadfile" type="file" />
-                                                        <input type="submit" value="Subir Archivo"/>
+                                                        <!-- <input type="submit" value="Subir Archivo"/> -->
 							<!--<div class="help-block with-errors"></div>-->
 						</div>
                                                 

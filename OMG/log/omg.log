@@ -1640,3 +1640,404 @@ Query: SELECT TBINFORME_GERENCIAL.ID_INFORME_GERENCIAL, TBDOCUMENTO_ENTRADA.ID_D
 
                     JOIN EMPLEADOS TBEMPLEADOS ON TBEMPLEADOS.ID_EMPLEADO=TBCLAUSULAS.ID_EMPLEADO
 
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: SELECT tbcumplimientos.CLAVE_CUMPLIMIENTO FROM USUARIOS  JOIN CUMPLIMIENTOS tbcumplimientos ON usuarios.ID_USUARIO=tbcumplimientos.ID_USUARIO where usuarios.NOMBRE_USUARIO='admin'
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: SELECT TBDOCUMENTOS.ID_DOCUMENTO, TBDOCUMENTOS.CLAVE_DOCUMENTO, TBDOCUMENTOS.DOCUMENTO,
+                    TBEMPLEADOS.ID_EMPLEADO, TBEMPLEADOS.NOMBRE_EMPLEADO, TBEMPLEADOS.APELLIDO_PATERNO,
+                    TBEMPLEADOS.APELLIDO_MATERNO FROM DOCUMENTOS TBDOCUMENTOS
+
+                    JOIN EMPLEADOS TBEMPLEADOS ON TBEMPLEADOS.ID_EMPLEADO=TBDOCUMENTOS.ID_EMPLEADO
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: select tbdocumento_entrada.FOLIO_ENTRADA,tbcumplimientos.CLAVE_CUMPLIMIENTO,
+            tbdocumento_entrada.FECHA_LIMITE_ATENCION,tbdocumento_entrada.FECHA_ALARMA
+            from documento_entrada tbdocumento_entrada join cumplimientos tbcumplimientos on 
+            tbcumplimientos.ID_CUMPLIMIENTO = tbdocumento_entrada.ID_CUMPLIMIENTO
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: SELECT tbcumplimientos.CLAVE_CUMPLIMIENTO FROM USUARIOS  JOIN CUMPLIMIENTOS tbcumplimientos ON usuarios.ID_USUARIO=tbcumplimientos.ID_USUARIO where usuarios.NOMBRE_USUARIO='admin'
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: SELECT ID_CLAUSULA, CLAUSULA, SUB_CLAUSULA, DESCRIPCION_CLAUSULA, DESCRIPCION_SUB_CLAUSULA FROM CLAUSULAS
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: SELECT TBASIGNACION_TEMA_REQUISITO.ID_ASIGNACION_TEMA_REQUISITO, 
+                    TBCLAUSULAS.ID_CLAUSULA, TBCLAUSULAS.CLAUSULA, TBCLAUSULAS.DESCRIPCION_CLAUSULA,
+                    TBASIGNACION_TEMA_REQUISITO.REQUISITO FROM ASIGNACION_TEMA_REQUISITO TBASIGNACION_TEMA_REQUISITO
+		 
+                    JOIN CLAUSULAS TBCLAUSULAS ON TBCLAUSULAS.ID_CLAUSULA=TBASIGNACION_TEMA_REQUISITO.ID_CLAUSULA
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: SELECT TBDOCUMENTOS.ID_DOCUMENTO, TBDOCUMENTOS.CLAVE_DOCUMENTO, TBDOCUMENTOS.DOCUMENTO,
+                    TBEMPLEADOS.ID_EMPLEADO, TBEMPLEADOS.NOMBRE_EMPLEADO, TBEMPLEADOS.APELLIDO_PATERNO,
+                    TBEMPLEADOS.APELLIDO_MATERNO FROM DOCUMENTOS TBDOCUMENTOS
+
+                    JOIN EMPLEADOS TBEMPLEADOS ON TBEMPLEADOS.ID_EMPLEADO=TBDOCUMENTOS.ID_EMPLEADO
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: select tbdocumento_entrada.FOLIO_ENTRADA,tbcumplimientos.CLAVE_CUMPLIMIENTO,
+            tbdocumento_entrada.FECHA_LIMITE_ATENCION,tbdocumento_entrada.FECHA_ALARMA
+            from documento_entrada tbdocumento_entrada join cumplimientos tbcumplimientos on 
+            tbcumplimientos.ID_CUMPLIMIENTO = tbdocumento_entrada.ID_CUMPLIMIENTO
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: SELECT tbcumplimientos.CLAVE_CUMPLIMIENTO FROM USUARIOS  JOIN CUMPLIMIENTOS tbcumplimientos ON usuarios.ID_USUARIO=tbcumplimientos.ID_USUARIO where usuarios.NOMBRE_USUARIO='admin'
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: SELECT TBDOCUMENTOS.ID_DOCUMENTO, TBDOCUMENTOS.CLAVE_DOCUMENTO, TBDOCUMENTOS.DOCUMENTO,
+                    TBEMPLEADOS.ID_EMPLEADO, TBEMPLEADOS.NOMBRE_EMPLEADO, TBEMPLEADOS.APELLIDO_PATERNO,
+                    TBEMPLEADOS.APELLIDO_MATERNO FROM DOCUMENTOS TBDOCUMENTOS
+
+                    JOIN EMPLEADOS TBEMPLEADOS ON TBEMPLEADOS.ID_EMPLEADO=TBDOCUMENTOS.ID_EMPLEADO
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: select tbdocumento_entrada.FOLIO_ENTRADA,tbcumplimientos.CLAVE_CUMPLIMIENTO,
+            tbdocumento_entrada.FECHA_LIMITE_ATENCION,tbdocumento_entrada.FECHA_ALARMA
+            from documento_entrada tbdocumento_entrada join cumplimientos tbcumplimientos on 
+            tbcumplimientos.ID_CUMPLIMIENTO = tbdocumento_entrada.ID_CUMPLIMIENTO
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: SELECT tbcumplimientos.CLAVE_CUMPLIMIENTO FROM USUARIOS  JOIN CUMPLIMIENTOS tbcumplimientos ON usuarios.ID_USUARIO=tbcumplimientos.ID_USUARIO where usuarios.NOMBRE_USUARIO='admin'
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: SELECT TBDOCUMENTOS.ID_DOCUMENTO, TBDOCUMENTOS.CLAVE_DOCUMENTO, TBDOCUMENTOS.DOCUMENTO,
+                    TBEMPLEADOS.ID_EMPLEADO, TBEMPLEADOS.NOMBRE_EMPLEADO, TBEMPLEADOS.APELLIDO_PATERNO,
+                    TBEMPLEADOS.APELLIDO_MATERNO FROM DOCUMENTOS TBDOCUMENTOS
+
+                    JOIN EMPLEADOS TBEMPLEADOS ON TBEMPLEADOS.ID_EMPLEADO=TBDOCUMENTOS.ID_EMPLEADO
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: select tbdocumento_entrada.FOLIO_ENTRADA,tbcumplimientos.CLAVE_CUMPLIMIENTO,
+            tbdocumento_entrada.FECHA_LIMITE_ATENCION,tbdocumento_entrada.FECHA_ALARMA
+            from documento_entrada tbdocumento_entrada join cumplimientos tbcumplimientos on 
+            tbcumplimientos.ID_CUMPLIMIENTO = tbdocumento_entrada.ID_CUMPLIMIENTO
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: SELECT tbcumplimientos.CLAVE_CUMPLIMIENTO FROM USUARIOS  JOIN CUMPLIMIENTOS tbcumplimientos ON usuarios.ID_USUARIO=tbcumplimientos.ID_USUARIO where usuarios.NOMBRE_USUARIO='admin'
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: SELECT tbcumplimientos.CLAVE_CUMPLIMIENTO FROM USUARIOS  JOIN CUMPLIMIENTOS tbcumplimientos ON usuarios.ID_USUARIO=tbcumplimientos.ID_USUARIO where usuarios.NOMBRE_USUARIO='admin'
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: SELECT TBDOCUMENTOS.ID_DOCUMENTO, TBDOCUMENTOS.CLAVE_DOCUMENTO, TBDOCUMENTOS.DOCUMENTO,
+                    TBEMPLEADOS.ID_EMPLEADO, TBEMPLEADOS.NOMBRE_EMPLEADO, TBEMPLEADOS.APELLIDO_PATERNO,
+                    TBEMPLEADOS.APELLIDO_MATERNO FROM DOCUMENTOS TBDOCUMENTOS
+
+                    JOIN EMPLEADOS TBEMPLEADOS ON TBEMPLEADOS.ID_EMPLEADO=TBDOCUMENTOS.ID_EMPLEADO
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: select tbdocumento_entrada.FOLIO_ENTRADA,tbcumplimientos.CLAVE_CUMPLIMIENTO,
+            tbdocumento_entrada.FECHA_LIMITE_ATENCION,tbdocumento_entrada.FECHA_ALARMA
+            from documento_entrada tbdocumento_entrada join cumplimientos tbcumplimientos on 
+            tbcumplimientos.ID_CUMPLIMIENTO = tbdocumento_entrada.ID_CUMPLIMIENTO
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('ad','ad')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('ad','ad')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('ad','ad')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: call iniciarSesion('admin','admin')
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: SELECT tbcumplimientos.CLAVE_CUMPLIMIENTO FROM USUARIOS  JOIN CUMPLIMIENTOS tbcumplimientos ON usuarios.ID_USUARIO=tbcumplimientos.ID_USUARIO where usuarios.NOMBRE_USUARIO='admin'
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: SELECT TBDOCUMENTOS.ID_DOCUMENTO, TBDOCUMENTOS.CLAVE_DOCUMENTO, TBDOCUMENTOS.DOCUMENTO,
+                    TBEMPLEADOS.ID_EMPLEADO, TBEMPLEADOS.NOMBRE_EMPLEADO, TBEMPLEADOS.APELLIDO_PATERNO,
+                    TBEMPLEADOS.APELLIDO_MATERNO FROM DOCUMENTOS TBDOCUMENTOS
+
+                    JOIN EMPLEADOS TBEMPLEADOS ON TBEMPLEADOS.ID_EMPLEADO=TBDOCUMENTOS.ID_EMPLEADO
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: select tbdocumento_entrada.FOLIO_ENTRADA,tbcumplimientos.CLAVE_CUMPLIMIENTO,
+            tbdocumento_entrada.FECHA_LIMITE_ATENCION,tbdocumento_entrada.FECHA_ALARMA
+            from documento_entrada tbdocumento_entrada join cumplimientos tbcumplimientos on 
+            tbcumplimientos.ID_CUMPLIMIENTO = tbdocumento_entrada.ID_CUMPLIMIENTO
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: SELECT tbcumplimientos.CLAVE_CUMPLIMIENTO FROM USUARIOS  JOIN CUMPLIMIENTOS tbcumplimientos ON usuarios.ID_USUARIO=tbcumplimientos.ID_USUARIO where usuarios.NOMBRE_USUARIO='admin'
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: SELECT TBDOCUMENTOS.ID_DOCUMENTO, TBDOCUMENTOS.CLAVE_DOCUMENTO, TBDOCUMENTOS.DOCUMENTO,
+                    TBEMPLEADOS.ID_EMPLEADO, TBEMPLEADOS.NOMBRE_EMPLEADO, TBEMPLEADOS.APELLIDO_PATERNO,
+                    TBEMPLEADOS.APELLIDO_MATERNO FROM DOCUMENTOS TBDOCUMENTOS
+
+                    JOIN EMPLEADOS TBEMPLEADOS ON TBEMPLEADOS.ID_EMPLEADO=TBDOCUMENTOS.ID_EMPLEADO
+
+File: C:\xampp\htdocs\enerin-omg\OMG\ds\AccesoDB.php
+Line: 33
+Code: 0
+Message: No se tiene acceso al servidor o la Base de datos no existe.
+Query: select tbdocumento_entrada.FOLIO_ENTRADA,tbcumplimientos.CLAVE_CUMPLIMIENTO,
+            tbdocumento_entrada.FECHA_LIMITE_ATENCION,tbdocumento_entrada.FECHA_ALARMA
+            from documento_entrada tbdocumento_entrada join cumplimientos tbcumplimientos on 
+            tbcumplimientos.ID_CUMPLIMIENTO = tbdocumento_entrada.ID_CUMPLIMIENTO
+

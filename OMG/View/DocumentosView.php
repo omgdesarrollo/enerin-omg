@@ -10,7 +10,7 @@ $NotificacionesAlarma = array();
 $numeroAlarmas = 0;
 foreach($Alarmas as $alarma)
 {
-	print_r($alarma);
+	// print_r($alarma);
 	$alarm = new Datetime($alarma['FECHA_ALARMA']);
 	$flimite = new Datetime($alarma['FECHA_LIMITE_ATENCION']);
 	$hoy = new Datetime();

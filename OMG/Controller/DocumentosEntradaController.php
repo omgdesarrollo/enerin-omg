@@ -79,13 +79,14 @@ switch ($Op) {
                   $pojo->setFechaAlarma($_REQUEST['FECHA_ALARMA']);
                   $pojo->setDocumento($_REQUEST['DOCUMENTO']);
                   $pojo->setObservaciones($_REQUEST['OBSERVACIONES']);
+				  
+				//   print_r($_REQUEST['DOCUMENTO']);
                   
+                //   $model->insertar($pojo);
                   
-                  $model->insertar($pojo);
-                  
-                  $traerultimoinsertado=$model->traer_ultimo_insertado();  
-                  echo json_encode($traerultimoinsertado);
-                  $modelSeguimientoEntrada->insertar($traerultimoinsertado);
+                //   $traerultimoinsertado=$model->traer_ultimo_insertado();  
+                  echo json_encode($_REQUEST['DOCUMENTO']);
+                //   $modelSeguimientoEntrada->insertar($traerultimoinsertado);
                   
                         
 		break;
