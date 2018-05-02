@@ -2,6 +2,26 @@
 require_once '../ds/AccesoDB.php';
 class DocumentoEntradaDAO{
 
+    public function getFechaAlarma()
+    {
+        try
+        {
+            $query = "select tbdocumento_entrada.FOLIO_ENTRADA,tbcumplimientos.CLAVE_CUMPLIMIENTO,
+            tbdocumento_entrada.FECHA_LIMITE_ATENCION,tbdocumento_entrada.FECHA_ALARMA
+            from documento_entrada tbdocumento_entrada join cumplimientos tbcumplimientos on 
+            tbcumplimientos.ID_CUMPLIMIENTO = tbdocumento_entrada.ID_CUMPLIMIENTO";
+
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            
+            return $lista;
+        }
+        catch(Exception $ex)
+        {
+            throw $ex;
+        }
+    }
+    
     public function mostrarDocumentosEntrada(){
         try{
             $query="SELECT TBCUMPLIMIENTOS.ID_CUMPLIMIENTO, TBCUMPLIMIENTOS.CLAVE_CUMPLIMIENTO, 

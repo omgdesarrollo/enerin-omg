@@ -10,6 +10,20 @@ require_once '../dao/DocumentoEntradaDAO.php';
 require_once '../Pojo/DocumentoEntradaPojo.php';
 class DocumentoEntradaModel{
     
+    public function getFechaAlarma()
+    {
+        try
+        {
+            $dao = new DocumentoEntradaDAO();
+            $rec = $dao->getFechaAlarma();
+
+            return $rec;
+        }catch(Exception $e)
+        {
+            throw $e;
+        }
+    }
+
     public function  listarDocumentosEntrada(){
         try{
             $dao=new DocumentoEntradaDAO();

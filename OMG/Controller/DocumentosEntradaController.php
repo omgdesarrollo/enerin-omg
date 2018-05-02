@@ -124,6 +124,13 @@ switch ($Op) {
                   
 	break;
 
+	case 'Alarmas':
+
+				$Lista = $model->getFechaAlarma();
+				Session::setSesion("Alarmas",$Lista);
+				header('Content-type: application/json; charset=utf-8');
+				// echo json_encode($Lista);
+				break;
 	case 'Eliminar':
 		# code...
 		break;	

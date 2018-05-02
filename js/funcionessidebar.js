@@ -43,6 +43,7 @@ function loadDataSideBarCatalogoInformacion(){
 
                                        case "documentos":
                                              consultarInformacion("../Controller/DocumentosController.php?Op=Listar");
+                                             consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Alarmas");
                                             $("#sidebarObjV").load('InyectarVistasView.php #documentos');
                                        break;
                                        
@@ -145,6 +146,7 @@ function loadDataSideBarOficiosDocumentacion(){
                                             consultarInformacion("../Controller/CumplimientosController.php?Op=mostrarcombo");
                                             consultarInformacion("../Controller/EntidadesReguladorasController.php?Op=mostrarcombo");
                                             consultarInformacion("../Controller/ClausulasController.php?Op=mostrarcombo");
+                                            consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Alarmas");
                                             $("#sidebarObjV").load('InyectarVistasView.php #documentosEntrada');
                                        break;  
                                        

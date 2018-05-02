@@ -1,10 +1,27 @@
 <?php
 session_start();
 require_once '../util/Session.php';
-
+setlocale(LC_ALL,'es_MX');
 $Usuario=  Session::getSesion("user");
-
-
+$Alarmas = Session::getSesion("Alarmas");
+$alarma;
+foreach($Alarmas as $alarma)
+{
+	print_r($alarma);
+}
+// $alarma['fecha_alarma'];
+$alarm = new Datetime($alarma[FECHA_ALARMA]);
+$hoy = new Datetime();
+// if($alarma['FECHA_ALARMA'] == "")
+// {
+	print_r($hoy);
+// }
+// else
+// {
+	// print_r("con alarma 2");
+	// print_r("Fecha hoy".$time = time());
+// }
+// if($alarma['FECHA_ALARMA'])
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -116,7 +133,8 @@ $Usuario=  Session::getSesion("user");
 									     <div class="clearfix">
 										<span class="pull-left">
 										    <i class="btn btn-xs no-hover btn-pink fa fa-user"></i>
-											Urgentes
+											<?php foreach($Alarmas as $alarma)
+													echo "ALARMA EN ".$alarma['CLAVE_CUMPLIMIENTO']."<br> CON FOLIO ".$alarma['FOLIO_ENTRADA']; ?>
 										</span>
 										<span class="pull-right badge badge-info">+1</span>
 									      </div>
