@@ -29,8 +29,8 @@ plugins/android.json
 plugins/ios.json
 www/
 $RECYCLE.BIN/
-OMG/log/omg.txt
-OMG/conf/conexion.ini
+omg.txt
+*.ini
 
 .DS_Store
 Thumbs.db
