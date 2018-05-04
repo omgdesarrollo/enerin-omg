@@ -18,26 +18,34 @@ foreach($Alarmas as $alarma)
 	$hoy = new Datetime($al);
 	if($flimite<=$hoy)
 	{
-		$NotificacionesAlarma[$numeroAlarmas]["AFECTADO"] = "ALARMA EN CONTRATO ".$alarma['CLAVE_CUMPLIMIENTO']." EN FOLIO ".$alarma['FOLIO_ENTRADA'];
+		$NotificacionesAlarma[$numeroAlarmas]["AFECTADO"] = "FOLIO ".$alarma['FOLIO_ENTRADA']." DEL ".$alarma['CLAVE_CUMPLIMIENTO'];
 			if($flimite == $hoy)
 			{
-				$NotificacionesAlarma[$numeroAlarmas]["MENSAJE"] = "HOY FECHA LIMITE";//mensaje automatico
+				$NotificacionesAlarma[$numeroAlarmas]["MENSAJE"] = "TIEMPO VENCIDO";//mensaje automatico
 			}
 			else
 			{
 				$dias = strtotime(strftime("%d-%B-%y",$hoy -> getTimestamp())) - strtotime(strftime("%d-%B-%y",$flimite -> getTimestamp()));
 				$dias = $dias / 86400;
-				$NotificacionesAlarma[$numeroAlarmas]["MENSAJE"] = "ATRASADO POR ".$dias." DIAS";//mensaje automatico	
+				$NotificacionesAlarma[$numeroAlarmas]["MENSAJE"] = "TIEMPO VENCIDO ".$dias." DIA(S)";//mensaje automatico	
 			}
 		$numeroAlarmas++;
 	}
 	else
 	{
-		if($alarm == $hoy)
+		if($alarma['FECHA_ALARMA'] != "0000-00-00")
 		{
-			$NotificacionesAlarma[$numeroAlarmas]["AFECTADO"] = "ALARMA EN CONTRATO ".$alarma['CLAVE_CUMPLIMIENTO']." EN FOLIO ".$alarma['FOLIO_ENTRADA'];
-			$NotificacionesAlarma[$numeroAlarmas]["MENSAJE"] = "";//agregar campoDB para que el usuario ingrese su mensaje
-			$numeroAlarmas++;
+			$NotificacionesAlarma[$numeroAlarmas]["AFECTADO"] = "FOLIO ".$alarma['FOLIO_ENTRADA']." DEL ".$alarma['CLAVE_CUMPLIMIENTO'];
+			if($alarm == $hoy)
+			{
+				$NotificacionesAlarma[$numeroAlarmas]["MENSAJE"] = "ALARMA - ".$alarma['MENSAJE_ALERTA'];//agregar campoDB para que el usuario ingrese su mensaje
+			}
+			else
+			{
+				$diasA = strtotime(strftime("%d-%B-%y",$alarm -> getTimestamp())) - strtotime(strftime("%d-%B-%y",$hoy -> getTimestamp()));
+				$NotificacionesAlarma[$numeroAlarmas]["MENSAJE"] = " ALARMA VENCIADA ".$dias." DIA(S)"." - ".$alarma['MENSAJE_ALERTA'];				
+			}
+		$numeroAlarmas++;
 		}
 	}
 }

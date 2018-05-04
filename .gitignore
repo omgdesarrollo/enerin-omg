@@ -4,4 +4,4 @@
 *~
 *.sw[mnpcod]
 OMG/conf/*.ini
-OMG/log/omg.txt
+OMG/log/omg.log

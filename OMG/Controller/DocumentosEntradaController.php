@@ -64,6 +64,7 @@ switch ($Op) {
 	case 'Guardar':
                   
 		# code...
+				
                   $pojo->setIdCumplimiento($_REQUEST['ID_CUMPLIMIENTO']);
                   $pojo->setFolioReferencia($_REQUEST['FOLIO_REFERENCIA']);
                   $pojo->setFolioEntrada($_REQUEST['FOLIO_ENTRADA']);
@@ -78,14 +79,18 @@ switch ($Op) {
                   $pojo->setFechaLimiteAtencion($_REQUEST['FECHA_LIMITE_ATENCION']);
                   $pojo->setFechaAlarma($_REQUEST['FECHA_ALARMA']);
                   $pojo->setDocumento($_REQUEST['DOCUMENTO']);
-                  $pojo->setObservaciones($_REQUEST['OBSERVACIONES']);
+				  $pojo->setObservaciones($_REQUEST['OBSERVACIONES']);
 				  
+				//   if ($_REQUEST['DOCUMENTO']['type']=="text/plain"){
+					//movemos el achivo al directorio destino
+					// mode_uploaded_file("../../../archivos/");
+					// }
 				//   print_r($_REQUEST['DOCUMENTO']);
-                  
-                //   $model->insertar($pojo);
+				//   print_r($_FILEs['DOCUMENTO']); 
+                  $model->insertar($pojo);
                   
                 //   $traerultimoinsertado=$model->traer_ultimo_insertado();  
-                  echo json_encode($_REQUEST['DOCUMENTO']);
+                //   echo json_encode("guarda documento");
                 //   $modelSeguimientoEntrada->insertar($traerultimoinsertado);
                   
                         

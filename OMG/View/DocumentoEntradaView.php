@@ -23,6 +23,9 @@ $Usuario=  Session::getSesion("user");
                 <!--<link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>-->
                 <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
                 
+                <!-- clase para la subida de archivos -->
+                <link href="../../assets/probando/css/subir.css" rel="stylesheet" type="text/css"/>
+
 		<!--<link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" />-->
                 <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 		<!-- page specific plugin styles -->
@@ -402,7 +405,8 @@ $Usuario=  Session::getSesion("user");
 
 		      <div class="modal-body">
 
-                                    
+                                        <!-- jjrl -->
+                                    <!-- <form action="" id="form_subir"> -->
                                                 <div class="form-group">
 							<label class="control-label" for="title">Contrato:</label>
                                                         
@@ -551,9 +555,16 @@ $Usuario=  Session::getSesion("user");
                                                 <div class="form-group">
 							<label class="control-label" for="title">Documento:</label>
                                                         <input id="DOCUMENTO" name="uploadfile" type="file" />
-                                                        <!-- <input type="submit" value="Subir Archivo"/> -->
-							<!--<div class="help-block with-errors"></div>-->
+                                                        <!-- <input type="submit" class="btn" value="Cargar"/> -->
+                                                        <!-- <input type="button" id="cancelar" value="Cancelar"/> -->
+							<!-- <div class="help-block with-errors"></div> -->
 						</div>
+                                                
+                                                <!-- <div class="barra">
+                                                        <div class="barra_azul" id="barra_estado">
+                                                        <span></span>
+                                                        </div>
+                                                </div> -->
                                                 
                                                 <div class="form-group">
 							<label class="control-label" for="title">Observaciones:</label>
@@ -562,12 +573,12 @@ $Usuario=  Session::getSesion("user");
 						</div>
                                                                         
                                     
-						<div class="form-group">
+						<div class="form-group" method="post" >
                                                     <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
                                                     <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
 						</div>
 
-		      		<!--</form>-->
+		      		<!-- </form> -->
 
 		      </div>
 		    </div>
@@ -586,7 +597,54 @@ $Usuario=  Session::getSesion("user");
                     
                 var id_documento_entrada;
                 var cualmodificar;
-                
+                // alert("aaaa");
+                // document.addEventListener("DOMContentLoaded;",()=>
+                // {
+                //         alert("aquiiii");
+                //         let form = document.getElementById('form_subir');
+                //         form.addEventListener("submit",function(event)
+                //         {
+                //                 event.preventDefault();
+                //                 // console.log("aqui");
+                //                 alert(aqui);
+                //                 // subir_archivos(this);
+                //         });
+                // });
+                // function subir_archivos(form){
+                //         alert("wtf");
+                //         let barra_estado = form.children[14].children[0];
+                //         span = barra_estado.children[0];
+                //         boton_cancelar = form.children[13].children[2];
+
+                //         barra_estadp.classList.remove('barra_verde','barra_roja');
+                //         let peticion = new XMLHttpRequest();
+                //         //progreso
+                //         peticion.upload.addEventListener("Progress",(event)=>
+                //         {
+                //                 let porcentaje = Math.round((event.loaded/event.total) * 100);
+                //                 console.log(porcentaje);
+                //                 barra_estado.style.width = porcentaje+'%';
+                //                 span.innerHTML = porcentaje+'%';
+                //         });
+                //         //finalizar
+                //         peticion.addEventListener("load",()=>
+                //         {
+                //                 barra_estado.classList.add('barra_verde');
+                //                 console.log("Proceso completado");
+                //         });
+                //         peticion.open('post','../../../subir.php');
+                //         peticion.send(new FormData());
+                //         //cancelar
+                //         botton_cancelar.addEventListener("click",()=>
+                //         {
+                //                 peticion.abort();
+                //                 barra_estado.classList.remove('barra_verde');
+                //                 barra_estado.classList.add('barra_roja');
+                //                 span.innerHTML = "proceso Cancelado";
+                //         });
+                //                 // saveToDatabaseDatosFormulario(datos);
+                // }
+                        
                       $(function(){
                           
                           
@@ -628,9 +686,8 @@ $Usuario=  Session::getSesion("user");
                           
                         });
   
-                        
                         $("#btn_guardar").click(function(){
-                                  //alert("entro");
+                                  alert("entro");
        
         
                                     var ID_CUMPLIMIENTOMODAL=$("#ID_CUMPLIMIENTOMODAL").val();
@@ -674,10 +731,37 @@ $Usuario=  Session::getSesion("user");
                                     datos.push(FECHA_ALARMA);
                                     datos.push(DOCUMENTO);
                                     datos.push(OBSERVACIONES);
-                                    saveToDatabaseDatosFormulario(datos);
-                                    
+                                // console.log("entro ");
+                                // var peticion = new XMLHttpRequest();
+                                // console.log("2");
+                                //progreso
+                                // peticion.upload.addEventListener("Progress",(event)=>
+                                // {
+                                //         var porcentaje = Math.round((event.loaded/event.total) * 100);
+                                //         console.log(porcentaje);
+                                        // barra_estado.style.width = porcentaje+'%';
+                                        // span.innerHTML = porcentaje+'%';
+                                // });
+                                // console.log("3");
+                                //finalizar
+                                // peticion.addEventListener("load",()=>
+                                // {
+                                        // barra_estado.classList.add('barra_verde');
+                                        // console.log("Proceso completado");
+                                // });
+                                // peticion.open('post','../../subir.php');
+                                // peticion.send(new FormData());
+                                //cancelar
+                                // botton_cancelar.addEventListener("click",()=>
+                                // {
+                                //         peticion.abort();
+                                //         barra_estado.classList.remove('barra_verde');
+                                //         barra_estado.classList.add('barra_roja');
+                                //         span.innerHTML = "proceso Cancelado";
+                                // });
+                                    saveToDatabaseDatosFormulario(datos);         
+                        // });
                         });
-                        
                         
                         
                         $("#btn_limpiar").click(function(){
