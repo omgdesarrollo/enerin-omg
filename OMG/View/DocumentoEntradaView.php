@@ -546,6 +546,12 @@ $Usuario=  Session::getSesion("user");
                                                         <div class="help-block with-errors"></div>
 						</div>
 
+                                                <div class="form-group">
+							<label class="control-label" for="title">Mensaje para alerta:</label>
+                                                        <textarea  id="MENSAJE_ALERTA" class="form-control"></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+
                           
 <!--                                                <div class="form-group">
 							<label class="control-label" for="title">Documento:</label>
@@ -705,6 +711,7 @@ $Usuario=  Session::getSesion("user");
                                     var FECHA_ALARMA=$("#FECHA_ALARMA").val();
                                     var DOCUMENTO=$("#DOCUMENTO").val();
                                     var OBSERVACIONES=$("#OBSERVACIONES").val();
+                                    var MENSAJE_ALERTA=$("#MENSAJE_ALERTA").VAL();
                                                                       
                                   
                                 //   alert("ID_CUMPLIMIENTOMODAL :"+ID_CUMPLIMIENTOMODAL+"FOLIO_REFERENCIA :"+FOLIO_REFERENCIA
@@ -731,6 +738,7 @@ $Usuario=  Session::getSesion("user");
                                     datos.push(FECHA_ALARMA);
                                     datos.push(DOCUMENTO);
                                     datos.push(OBSERVACIONES);
+                                    datos.push(MENSAJE_ALERTA);
                                 // console.log("entro ");
                                 // var peticion = new XMLHttpRequest();
                                 // console.log("2");
@@ -871,11 +879,11 @@ $Usuario=  Session::getSesion("user");
 				data:'ID_CUMPLIMIENTO='+datos[0]+'&FOLIO_REFERENCIA='+datos[1]+'&FOLIO_ENTRADA='+datos[2]+'&FECHA_RECEPCION='+datos[3]
                                     +'&ASUNTO='+datos[4]+'&REMITENTE='+datos[5]+'&ID_ENTIDAD='+datos[6]+'&ID_CLAUSULA='+datos[7]+'&CLASIFICACION='+datos[8]
                                     +'&STATUS_DOC='+datos[9]+'&FECHA_ASIGNACION='+datos[10]+'&FECHA_LIMITE_ATENCION='+datos[11]+'&FECHA_ALARMA='+datos[12]
-                                    +'&DOCUMENTO='+datos[13]+'&OBSERVACIONES='+datos[14],
+                                    +'&DOCUMENTO='+datos[13]+'&OBSERVACIONES='+datos[14]+'&MENSAJE_ALERTA='+datos[15],
                             
                             
 				success: function(data){
-                                    alert("se guardo");
+                                //     alert("se guardo");
                                     
 //					$(editableObj).css("background","#FDFDFD");
                                         swal("Guardado Exitoso!", "Ok!", "success")

@@ -9,7 +9,7 @@ class DocumentoEntradaDAO{
             $query = "select tbdocumento_entrada.FOLIO_ENTRADA,tbcumplimientos.CLAVE_CUMPLIMIENTO,
             tbdocumento_entrada.FECHA_LIMITE_ATENCION,tbdocumento_entrada.FECHA_ALARMA, tbdocumento_entrada.MENSAJE_ALERTA
             from documento_entrada tbdocumento_entrada join cumplimientos tbcumplimientos on 
-            tbcumplimientos.ID_CUMPLIMIENTO = tbdocumento_entrada.ID_CUMPLIMIENTO";
+            tbcumplimientos.ID_CUMPLIMIENTO = tbdocumento_entrada.ID_CUMPLIMIENTO where tbdocumento_entrada.STATUS = 1";
 
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
@@ -122,7 +122,7 @@ class DocumentoEntradaDAO{
     
     public function insertarDocumentosEntrada($id_cumplimiento,$folio_referencia,$folio_entrada,$fecha_recepcion,$asunto,$remitente,$id_entidad,
                                              $id_clausula,$clasificacion,$status_doc,$fecha_asignacion,$fecha_limite_atencion,$fecha_alarma,
-                                             $documento,$observaciones){
+                                             $documento,$observaciones,$mensaje_alerta){
         
         try{
             
@@ -141,11 +141,11 @@ class DocumentoEntradaDAO{
             
             $query="INSERT INTO DOCUMENTO_ENTRADA (ID_DOCUMENTO_ENTRADA,ID_CUMPLIMIENTO,FOLIO_REFERENCIA,FOLIO_ENTRADA,FECHA_RECEPCION,ASUNTO,REMITENTE,
 					           ID_ENTIDAD,ID_CLAUSULA,CLASIFICACION,STATUS_DOC,FECHA_ASIGNACION,FECHA_LIMITE_ATENCION,FECHA_ALARMA,
-					           DOCUMENTO,OBSERVACIONES)
+					           DOCUMENTO,OBSERVACIONES,MENSAJE_ALERTA)
 							 
                                     VALUES($id_nuevo,$id_cumplimiento,'$folio_referencia','$folio_entrada','$fecha_recepcion','$asunto','$remitente',$id_entidad,
                                            $id_clausula,'$clasificacion','$status_doc','$fecha_asignacion','$fecha_limite_atencion',
-                                          '$fecha_alarma','$documento','$observaciones');";
+                                          '$fecha_alarma','$documento','$observaciones','$mensaje_alerta');";
             
             $db=  AccesoDB::getInstancia();
             $db->executeQueryUpdate($query);

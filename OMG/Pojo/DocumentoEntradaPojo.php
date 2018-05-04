@@ -30,9 +30,17 @@ class DocumentoEntradaPojo {
     private $fecha_alarma='';
     private $documento='';
     private $observaciones='';
-
+    private $mensaje_alerta='';
     
-     
+    
+    public function getMensajeAlerta()
+    {
+        return $this->$mensaje_alerta;
+    }
+    public function setMensajeAlerta($mensaje_alerta)
+    {
+        $this->mensaje_alerta = $mensaje_alerta;
+    }
     
     public function getIdDocumentoEntrada(){
         return $this->Id_Documento_Entrada;

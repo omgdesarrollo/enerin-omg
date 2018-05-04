@@ -73,7 +73,7 @@ class DocumentoEntradaModel{
                    $pojo->getFolioEntrada(),$pojo->getFechaRecepcion(),$pojo->getAsunto(),$pojo->geRemitente(),
                    $pojo->getIdEntidad(),$pojo->getIdClausula(),$pojo->getClasificacion(),$pojo->getStatusDoc(),
                    $pojo->getFechaAsignacion(),$pojo->getFechaLimiteAtencion(),$pojo->getFechaAlarma(),
-                   $pojo->getDocumento(),$pojo->getObservaciones());
+                   $pojo->getDocumento(),$pojo->getObservaciones(),$pojo->getMensajeAlerta());
         } catch (Exception $ex) {
                 throw $ex;
         }

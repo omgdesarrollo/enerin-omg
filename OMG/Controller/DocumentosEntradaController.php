@@ -80,6 +80,7 @@ switch ($Op) {
                   $pojo->setFechaAlarma($_REQUEST['FECHA_ALARMA']);
                   $pojo->setDocumento($_REQUEST['DOCUMENTO']);
 				  $pojo->setObservaciones($_REQUEST['OBSERVACIONES']);
+				  $pojo->setMensajeAlerta($_REQUEST['MENSAJE_ALERTA']);
 				  
 				//   if ($_REQUEST['DOCUMENTO']['type']=="text/plain"){
 					//movemos el achivo al directorio destino
