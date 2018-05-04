@@ -711,7 +711,7 @@ $Usuario=  Session::getSesion("user");
                                     var FECHA_ALARMA=$("#FECHA_ALARMA").val();
                                     var DOCUMENTO=$("#DOCUMENTO").val();
                                     var OBSERVACIONES=$("#OBSERVACIONES").val();
-                                    var MENSAJE_ALERTA=$("#MENSAJE_ALERTA").VAL();
+                                    var MENSAJE_ALERTA=$("#MENSAJE_ALERTA").val();
                                                                       
                                   
                                 //   alert("ID_CUMPLIMIENTOMODAL :"+ID_CUMPLIMIENTOMODAL+"FOLIO_REFERENCIA :"+FOLIO_REFERENCIA
@@ -720,7 +720,6 @@ $Usuario=  Session::getSesion("user");
                                 //        +"CLASIFICACION :"+CLASIFICACION+"STATUS_DOC :"+STATUS_DOC+"STATUS_DOC :"+STATUS_DOC
                                 //        +"FECHA_ASIGNACION :"+FECHA_ASIGNACION+"FECHA_LIMITE_ATENCION :"+FECHA_LIMITE_ATENCION
                                 //        +"FECHA_ALARMA :"+FECHA_ALARMA+"DOCUMENTO :"+DOCUMENTO+"OBSERVACIONES :"+OBSERVACIONES);
-                                    
 
                                     datos=[];
                                     datos.push(ID_CUMPLIMIENTOMODAL);
@@ -739,7 +738,6 @@ $Usuario=  Session::getSesion("user");
                                     datos.push(DOCUMENTO);
                                     datos.push(OBSERVACIONES);
                                     datos.push(MENSAJE_ALERTA);
-                                    alert("siguiendo");
                                 // console.log("entro ");
                                 // var peticion = new XMLHttpRequest();
                                 // console.log("2");

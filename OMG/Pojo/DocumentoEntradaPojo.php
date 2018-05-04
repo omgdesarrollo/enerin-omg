@@ -35,7 +35,7 @@ class DocumentoEntradaPojo {
     
     public function getMensajeAlerta()
     {
-        return $this->$mensaje_alerta;
+        return $this->mensaje_alerta;
     }
     public function setMensajeAlerta($mensaje_alerta)
     {

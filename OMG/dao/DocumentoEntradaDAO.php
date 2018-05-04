@@ -9,7 +9,7 @@ class DocumentoEntradaDAO{
             $query = "select tbdocumento_entrada.FOLIO_ENTRADA,tbcumplimientos.CLAVE_CUMPLIMIENTO,
             tbdocumento_entrada.FECHA_LIMITE_ATENCION,tbdocumento_entrada.FECHA_ALARMA, tbdocumento_entrada.MENSAJE_ALERTA
             from documento_entrada tbdocumento_entrada join cumplimientos tbcumplimientos on 
-            tbcumplimientos.ID_CUMPLIMIENTO = tbdocumento_entrada.ID_CUMPLIMIENTO where tbdocumento_entrada.STATUS = 1";
+            tbcumplimientos.ID_CUMPLIMIENTO = tbdocumento_entrada.ID_CUMPLIMIENTO where tbdocumento_entrada.STATUS_DOC = 1";
 
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
