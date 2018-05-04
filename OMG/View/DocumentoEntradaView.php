@@ -549,7 +549,7 @@ $Usuario=  Session::getSesion("user");
                                                 <div class="form-group">
 							<label class="control-label" for="title">Mensaje para alerta:</label>
                                                         <textarea  id="MENSAJE_ALERTA" class="form-control"></textarea>
-							<div class="help-block with-errors"></div>
+							<!-- <div class="help-block with-errors"></div> -->
 						</div>
 
                           
@@ -768,7 +768,7 @@ $Usuario=  Session::getSesion("user");
                                 //         barra_estado.classList.add('barra_roja');
                                 //         span.innerHTML = "proceso Cancelado";
                                 // });
-                                    saveToDatabaseDatosFormulario(datos);         
+                                    saveToDatabaseDatosFormulario(datos);
                         // });
                         });
                         
