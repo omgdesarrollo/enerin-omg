@@ -739,6 +739,7 @@ $Usuario=  Session::getSesion("user");
                                     datos.push(DOCUMENTO);
                                     datos.push(OBSERVACIONES);
                                     datos.push(MENSAJE_ALERTA);
+                                    alert("siguiendo");
                                 // console.log("entro ");
                                 // var peticion = new XMLHttpRequest();
                                 // console.log("2");

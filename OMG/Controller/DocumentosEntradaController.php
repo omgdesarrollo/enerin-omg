@@ -86,7 +86,7 @@ switch ($Op) {
 					//movemos el achivo al directorio destino
 					// mode_uploaded_file("../../../archivos/");
 					// }
-				//   print_r($_REQUEST['DOCUMENTO']);
+				//   print_r($_REQUEST['MENSAJE_DOCUMENTO']);
 				//   print_r($_FILEs['DOCUMENTO']); 
                   $model->insertar($pojo);
                   
