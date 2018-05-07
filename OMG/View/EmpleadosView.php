@@ -106,11 +106,21 @@ require_once '../util/Session.php';
                              handle: ".modal-header"
                          });
                         $("#btn_guardar").click(function(){
+                            
+                          
+                            
+                            
+                            
+                            
+                            
+                            
                                   var NOMBRE_EMPLEADO=$("#NOMBRE_EMPLEADO").val();
                                   var APELLIDO_PATERNO=$("#APELLIDO_PATERNO").val();
                                   var APELLIDO_MATERNO=$("#APELLIDO_MATERNO").val();
                                   var CATEGORIA=$("#CATEGORIA").val();
                                   var CORREO=$("#CORREO").val();
+                                  
+                                  
 //                                  alert("nombre :"+NOMBRE_EMPLEADO+" APELLIDO PATERNO :   "+APELLIDO_PATERNO
 //                                    +" APELLIDO MATERNO : "+APELLIDO_MATERNO+" CATEGORIA : "+CATEGORIA+" CORREO :"      
 //                                    +CORREO);
@@ -120,7 +130,14 @@ require_once '../util/Session.php';
                                     datos.push(APELLIDO_MATERNO);
                                     datos.push(CATEGORIA);
                                     datos.push(CORREO);
+                                    correcto=validarCamposVacios(datos);
+                                    alert("e  : "+correcto);
+                                    if(correcto!==false){
+  
                                     saveToDatabaseDatosFormulario(datos);
+                                }else{
+                                    alert("no paso ");
+                                }
                                     
                         });
                         
@@ -137,39 +154,115 @@ require_once '../util/Session.php';
 
 
 
- $("#btn_guardar").validate({
-        rules: {
-            NOMBRE_EMPLEADO: { required: true, minlength: 2},
-            APELLIDO_PATERNO: { required: true, minlength: 2},
-            APELLIDO_MATERNO: { required:true},
-            CATEGORIA: { minlength: 2, maxlength: 15},
-            CORREO: { required: true,email: true}
-        },
-        messages: {
-            NOMBRE_EMPLEADO: "Debe introducir su nombre.",
-            APELLIDO_PATERNO: "Debe introducir su apellido paterno",
-            APELLIDO_MATERNO : "Debe introducir su apellido materno",
-            CATEGORIA :"Debe introducir su categoria",
-            CORREO : "Debe introducir su correo ",
-        },
-        submitHandler: function(form){
-            var dataString = 'name='+$('#name').val()+'&lastname='+$('#lastname').val()+'...';
-            $.ajax({
-                type: "POST",
-                url:"send.php",
-                data: dataString,
-                success: function(data){
-                    $("#ok").html(data);
-                    $("#ok").show();
-                    $("#formid").hide();
-                }
-            });
-        }
-    });
+
+    
+    
+    
+    
+    
+//    validaciones campos 
+   
+       
+
+           
+//           alert("Estamos aqui");
+           
+        
+             
+            
+               
+               
+     
+
+
+         
+
+
+
+
+//termina validacione de campos 
+    
+    
+    
     
     
     
                     });
+                    
+                    
+                    function validarCamposVacios(datos){
+                         correcto=false;
+//                                    datos.push(NOMBRE_EMPLEADO);
+//                                    datos.push(APELLIDO_PATERNO);
+//                                    datos.push(APELLIDO_MATERNO);
+//                                    datos.push(CATEGORIA);
+//                                    datos.push(CORREO);
+                        var expr = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
+                        alert("entro "+datos[0]+"   "+datos[1]+"ddf   "+datos[2]+"   "+datos[3]+""+datos[4]+"");
+                        
+                 if(datos[0] == ""){
+                   $("#mensaje1").fadeIn();
+                   $("#mensaje1").append("Ingrese El Nombre");
+//                   $("#mensaje1").animate({left: '250px'});
+                   $("#mensaje1").css("background-color","red");
+                   $("#mensaje1").css("width", "35%");
+                   // $("#div2").fadeIn("slow");
+                   // $("#div3").fadeIn(3000);
+                   correcto=false;
+                  
+                   
+                } 
+                
+        else{
+                      $("#mensaje1").fadeOut();
+                    correcto=true;
+                      if(datos[1] == ""){
+                          $("#mensaje2").fadeIn();
+                   $("#mensaje2").append("Ingrese El Apellido Paterno");
+                   correcto=false;
+                          
+                   
+                      } else {
+                             $("#mensaje2").fadeOut();
+                                  correcto=true;
+                             if(datos[2] == ""){
+                             $("#mensaje3").fadeIn();
+                                $("#mensaje3").append("Ingrese El Apeliido Materno");
+                            correcto=false;
+                            
+                             } else {
+                                    $("#mensaje3").fadeOut();
+                                     correcto=true;
+                                    if(datos[3] == ""){
+                                    $("#mensaje4").fadeIn();
+                  $("#mensaje4").append("Ingrese Categoria");
+                   correcto=false;
+                                    
+                                    } else {
+                                           $("#mensaje4").fadeOut();
+                                            correcto=true;
+                                           if(datos[4] == "" || !expr.test(datos[4])){
+                                           $("#mensaje5").fadeIn();
+                                            $("#mensaje5").html("Ingrese Correo");
+                                             correcto=false;
+                                            
+                                           }else{
+                                                $("#mensaje5").fadeOut();
+                                               correcto=true;
+                                               
+                                           }
+                                               
+                                           }
+                                           
+                                    }// tercer else
+               
+                    }//segundo else
+                   
+               
+               } //primer else
+                        alert("co  "+correcto);
+                    return correcto;    
+                    }
                     
                 function saveToDatabaseDatosFormulario(datos){
 //                    alert("datos nombre "+datos[0]);
@@ -599,7 +692,7 @@ require_once '../util/Session.php';
 		      			<div class="form-group">
 							<label class="control-label" for="title">Nombre:</label>
                                                         <input type="text"  id="NOMBRE_EMPLEADO" class="form-control" data-error="Ingrese Nombre" required />
-                                                        <div id="mensaje1" class="help-block with-errors">Pon tu nombre</div>
+                                                        <div id="mensaje1" class="help-block with-errors" ></div>
 						</div>
 
 						<div class="form-group">
@@ -640,68 +733,10 @@ require_once '../util/Session.php';
 		</div>
        <!--Final de Seccion Modal-->
   
-       <script>
-           
-       var expr = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
-       $(document).ready(function(){
-           
-           alert("Estamos aqui");
-           
-           $("#btn_guardar").click(function(){
-               var NOMBRE_EMPLEADO = $("#NOMBRE_EMPLEADO").val();
-               var APELLIDO_PATERNO = $("#APELLIDO_PATERNO").val();
-               var APELLIDO_MATERNO = $("#APELLIDO_MATERNO").val();
-               var CATEGORIA = $("#CATEGORIA").val();
-               var CORREO = $("#CORREO").val();
-               
-               if(NOMBRE_EMPLEADO == ""){
-                   $("#mensaje1").fadeIn();
-                   
-                   return false();
-                   
-                } else{
-                      $("#mensaje1").fadeOut();
-                   
-                      if(APELLIDO_PATERNO == ""){
-                          $("#mensaje2").fadeIn();
-                   
-                          return false();
-                   
-                      } else {
-                             $("#mensaje2").fadeOut();
-                   
-                             if(APELLIDO_MATERNO == ""){
-                             $("#mensaje3").fadeIn();
-                   
-                             return false();
-                             } else {
-                                    $("#mensaje3").fadeOut();
-                                    
-                                    if(CATEGORIA == ""){
-                                    $("#mensaje4").fadeIn();
-                   
-                                    return false();
-                                    } else {
-                                           $("#mensaje4").fadeOut();
-                                           if(CORREO == "" || !expr.test(CORREO)){
-                                           $("#mensaje2").fadeIn();
-                                           }
-                                           return false();
-                                           }
-                                           
-                                    }// tercer else
-               
-                    }//segundo else
-                   
-               
-               } //primer else
+       
+        
      
-
-
-           });
-       });
-             
-       </script>
+     
        
        
        
