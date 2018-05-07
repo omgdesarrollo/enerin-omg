@@ -52,7 +52,7 @@ require_once '../util/Session.php';
                      <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
                      <script src="../../codebase/dhtmlx.js"></script>
                      <!--aqui termina la seccion para poder abrir el modal--> 
-                     
+                    
                      <!--<script src="../../assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>-->
                 
 <!--		<style>
@@ -592,35 +592,38 @@ require_once '../util/Session.php';
 		        <h4 class="modal-title" id="myModalLabel">Crear Nuevo Empleado</h4>
 		      </div>
 
-		      <div class="modal-body">
+		      <div id="validacion_empleado" class="modal-body">
 		      		<!--<form data-toggle="validator" action="api/create.php" method="POST">-->
                                     <!--<form data-toggle="validator"  >-->
                                     <div id="ok"></div>
 		      			<div class="form-group">
 							<label class="control-label" for="title">Nombre:</label>
                                                         <input type="text"  id="NOMBRE_EMPLEADO" class="form-control" data-error="Ingrese Nombre" required />
-							<div class="help-block with-errors"></div>
+                                                        <div id="mensaje1" class="help-block with-errors">Pon tu nombre</div>
 						</div>
 
 						<div class="form-group">
 							<label class="control-label" for="title">Apellido Paterno:</label>
                                                         <textarea  id="APELLIDO_PATERNO" class="form-control" data-error="Ingrese Apellido Paterno." required></textarea>
-							<div class="help-block with-errors"></div>
+							<div id="mensaje2"class="help-block with-errors"></div>
 						</div>
+                                    
                                                 <div class="form-group">
 							<label class="control-label" for="title">Apellido Materno:</label>
                                                         <textarea  id="APELLIDO_MATERNO" class="form-control" data-error="Ingrese Apellido Materno." required></textarea>
-							<div class="help-block with-errors"></div>
+							<div id="mensaje3" class="help-block with-errors"></div>
 						</div>
+                                    
                                                 <div class="form-group">
 							<label class="control-label" for="title">Categoria:</label>
                                                         <textarea  id="CATEGORIA" class="form-control" data-error="Ingrese Categoria." required></textarea>
-							<div class="help-block with-errors"></div>
+							<div id="mensaje4" class="help-block with-errors"></div>
 						</div>
+                                    
                                                 <div class="form-group">
 							<label class="control-label" for="title">Email:</label>
                                                         <textarea  id="CORREO" class="form-control" data-error="Ingrese Email" required></textarea>
-							<div class="help-block with-errors"></div>
+							<div id="mensaje5"class="help-block with-errors"></div>
 						</div>
                                     
 						<div class="form-group">
@@ -637,9 +640,76 @@ require_once '../util/Session.php';
 		</div>
        <!--Final de Seccion Modal-->
   
+       <script>
+           
+       var expr = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
+       $(document).ready(function(){
+           
+           alert("Estamos aqui");
+           
+           $("#btn_guardar").click(function(){
+               var NOMBRE_EMPLEADO = $("#NOMBRE_EMPLEADO").val();
+               var APELLIDO_PATERNO = $("#APELLIDO_PATERNO").val();
+               var APELLIDO_MATERNO = $("#APELLIDO_MATERNO").val();
+               var CATEGORIA = $("#CATEGORIA").val();
+               var CORREO = $("#CORREO").val();
+               
+               if(NOMBRE_EMPLEADO == ""){
+                   $("#mensaje1").fadeIn();
+                   
+                   return false();
+                   
+                } else{
+                      $("#mensaje1").fadeOut();
+                   
+                      if(APELLIDO_PATERNO == ""){
+                          $("#mensaje2").fadeIn();
+                   
+                          return false();
+                   
+                      } else {
+                             $("#mensaje2").fadeOut();
+                   
+                             if(APELLIDO_MATERNO == ""){
+                             $("#mensaje3").fadeIn();
+                   
+                             return false();
+                             } else {
+                                    $("#mensaje3").fadeOut();
+                                    
+                                    if(CATEGORIA == ""){
+                                    $("#mensaje4").fadeIn();
+                   
+                                    return false();
+                                    } else {
+                                           $("#mensaje4").fadeOut();
+                                           if(CORREO == "" || !expr.test(CORREO)){
+                                           $("#mensaje2").fadeIn();
+                                           }
+                                           return false();
+                                           }
+                                           
+                                    }// tercer else
+               
+                    }//segundo else
+                   
+               
+               } //primer else
+     
+
+
+           });
+       });
+             
+       </script>
+       
+       
        
        
          <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
          <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+         
+         
+         
     </body>
 </html>
