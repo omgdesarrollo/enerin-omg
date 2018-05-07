@@ -445,6 +445,10 @@ $Usuario=  Session::getSesion("user");
 				data:'column='+column+'&editval='+val+'&id='+idclausula,
 				success: function(data){
                                     
+                                        consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
+                                        consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
+                                        window.location.href="ClausulasView.php";    
+                                    
 					//$(editableObj).css("background","#FDFDFD");
 				}   
                            });
@@ -545,8 +549,9 @@ $Usuario=  Session::getSesion("user");
                                     
 //					$(editableObj).css("background","#FDFDFD");
                                         swal("Guardado Exitoso!", "Ok!", "success")
-                                         consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
-//                                        window.location.href("EmpleadosView.php");
+                                        consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
+                                        consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
+                                        window.location.href("ClausulasView.php");
 				}   
 		   });
 //                   window.location.href("EmpleadosView.php");

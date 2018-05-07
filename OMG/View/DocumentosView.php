@@ -450,6 +450,10 @@ foreach($Alarmas as $alarma)
 				data:'column='+column+'&editval='+val+'&id='+id_clausula,
 				success: function(data){
                                     
+                                        consultarInformacion("../Controller/DocumentosController.php?Op=Listar");
+                                        consultarInformacion("../Controller/DocumentosController.php?Op=Listar");
+                                        window.location.href="DocumentosView.php";
+                                    
 					//$(editableObj).css("background","#FDFDFD");
 				}   
                            });
