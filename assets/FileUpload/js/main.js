@@ -13,12 +13,12 @@
 
 $(function () {
     'use strict';
-
+    // alert("1");
     // Initialize the jQuery File Upload widget:
     $('#fileupload').fileupload({
         // Uncomment the following to send cross-domain cookies:
         //xhrFields: {withCredentials: true},
-        url: 'server/php/'
+        url: '../../archivos/documentos/'
     });
 
     // Enable iframe cross-domain access via redirect option:
@@ -33,6 +33,7 @@ $(function () {
 
     if (window.location.hostname === 'blueimp.github.io') {
         // Demo settings:
+        // alert("2");
         $('#fileupload').fileupload('option', {
             url: '//jquery-file-upload.appspot.com/',
             // Enable image resizing, except for Android and Opera,
@@ -44,20 +45,22 @@ $(function () {
             acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
         });
         // Upload server status check for browsers with CORS support:
-        if ($.support.cors) {
-            $.ajax({
-                url: '//jquery-file-upload.appspot.com/',
-                type: 'HEAD'
-            }).fail(function () {
-                $('<div class="alert alert-danger"/>')
-                    .text('Upload server currently unavailable - ' +
-                            new Date())
-                    .appendTo('#fileupload');
-            });
-        }
+        // if ($.support.cors) {
+        //     alert("XD");
+        //     $.ajax({
+        //         url: '//jquery-file-upload.appspot.com/',
+        //         type: 'HEAD'
+        //     }).fail(function () {
+        //         $('<div class="alert alert-danger"/>')
+        //             .text('Upload server currently unavailable - ' +
+        //                     new Date())
+        //             .appendTo('#fileupload');
+        //     });
+        // }
     } else {
         // Load existing files:
         $('#fileupload').addClass('fileupload-processing');
+        // alert("3");
         $.ajax({
             // Uncomment the following to send cross-domain cookies:
             //xhrFields: {withCredentials: true},
@@ -67,8 +70,9 @@ $(function () {
         }).always(function () {
             $(this).removeClass('fileupload-processing');
         }).done(function (result) {
+            alert("eject");
             $(this).fileupload('option', 'done')
-                .call(this, $.Event('done'), {result: result});
+                // .call(this, $.Event('done'), {result: result});
         });
     }
 

@@ -52,8 +52,12 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                 
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-                     
- 
+
+                <!-- cargar archivo -->
+                <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
+                <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
+                <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
+                <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
             <style>
                     .modal
                     {
@@ -559,11 +563,33 @@ $Usuario=  Session::getSesion("user");
 							<div class="help-block with-errors"></div>
 						</div>-->
                                                 <div class="form-group">
-							<label class="control-label" for="title">Documento:</label>
-                                                        <input id="DOCUMENTO" name="uploadfile" type="file" />
-                                                        <!-- <input type="submit" class="btn" value="Cargar"/> -->
-                                                        <!-- <input type="button" id="cancelar" value="Cancelar"/> -->
-							<!-- <div class="help-block with-errors"></div> -->
+                                                        <form id="fileupload" method="POST" enctype="multipart/form-data">
+                                                                <div class="fileupload-buttonbar">
+                                                                        <div class="fileupload-buttons">
+                                                                                <span class="fileinput-button">
+                                                                                        <span><a >Agregar documentos(Click o Arrastrar)...</a></span>
+                                                                                        <input type="file" name="files[]" multiple>
+                                                                                </span>
+                                                                                <!-- <button type="submit" class="start">Start upload</button>
+                                                                                <button type="reset" class="cancel">Cancel upload</button>
+                                                                                <button type="button" class="delete">Delete</button> -->
+                                                                                <!-- <input type="checkbox" class="toggle"> -->
+                                                                                <span class="fileupload-process"></span>
+                                                                        </div>
+                                                                        <div class="fileupload-progress" style="display:none">
+                                                                                <!-- The global progress bar -->
+                                                                                <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                                <!-- The extended global progress state -->
+                                                                                <div class="progress-extended">&nbsp;</div>
+                                                                        </div>
+                                                                </div>
+                                                                <table role="presentation"><tbody class="files"></tbody></table>
+                                                                                <!-- <label class="control-label" for="title">Documento:</label> -->
+                                                                                <!-- <input id="DOCUMENTO" name="uploadfile" type="file" /> -->
+                                                                                <!-- <input type="submit" class="btn" value="Cargar"/> -->
+                                                                                <!-- <input type="button" id="cancelar" value="Cancelar"/> -->
+                                                                                <!-- <div class="help-block with-errors"></div> -->
+                                                        </form>
 						</div>
                                                 
                                                 <!-- <div class="barra">
@@ -783,9 +809,7 @@ $Usuario=  Session::getSesion("user");
                                   $("#FECHA_LIMITE_ATENCION").val("");
                                   $("#FECHA_ALARMA").val("");
                                   $("#DOCUMENTO").val("");
-                                  $("#OBSERVACIONES").val("");
-                                  
-                                                                      
+                                  $("#OBSERVACIONES").val("");        
                         });
   
   
@@ -881,22 +905,96 @@ $Usuario=  Session::getSesion("user");
                                     +'&DOCUMENTO='+datos[13]+'&OBSERVACIONES='+datos[14]+'&MENSAJE_ALERTA='+datos[15],
                             
                             
-				success: function(data){
+                                success: function(data)
+                                {
                                 //     alert("se guardo");
                                     
 //					$(editableObj).css("background","#FDFDFD");
-                                        swal("Guardado Exitoso!", "Ok!", "success")
-                                         consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
+                                        consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
 //                                        window.location.href("EmpleadosView.php");
-				}   
-		   });
+                                        // $('#fileupload').addClass('fileupload-processing');
+                                        // $(this).removeClass('fileupload-processing');                                        
+                                        // $.ajax({
+                                        // // Uncomment the following to send cross-domain cookies:
+                                        // //xhrFields: {withCredentials: true},
+                                        //         url: $('#fileupload').fileupload('option', 'url'),
+                                        //         dataType: 'json',
+                                        //         context: $('#fileupload')[0],
+                                        // // }).always(function ()
+                                        // // {
+                                        // // }).done(function (result)
+                                        // success:function(data)
+                                        // {
+                                        //         alert("3");                                                
+                                        //         swal("Guardado Exitoso!", "Ok!", "success")
+                                        //         $(this).fileupload('option', 'done')
+                                        //         // .call(this, $.Event('done'), {result: result});
+                                        // }
+                                        // });
+                                        $('.start').click();
+                                }
+                        // }).done(function(result)
+                        // {
+                        });
 //                   window.location.href("EmpleadosView.php");
                 }
                 
                 
-                
 		</script>
-                
+                <script id="template-upload" type="text/x-tmpl">
+                        {% for (var i=0, file; file=o.files[i]; i++) { %}
+                        <tr class="template-upload" style="width:100%">
+                                <td>
+                                <span class="preview"></span>
+                                </td>
+                                <td>
+                                <p class="name">{%=file.name%}</p>
+                                <strong class="error"></strong>
+                                </td>
+                                <td>
+                                <p class="size">Processing...</p>
+                                <!-- <div class="progress"></div> -->
+                                </td>
+                                <td>
+                                {% if (!i && !o.options.autoUpload) { %}
+                                        <button class="start" style="display:none;padding: 0px 4px 0px 4px;" disabled>Start</button>
+                                {% } %}
+                                {% if (!i) { %}
+                                        <!-- <button class="cancel" style="padding: 0px 4px 0px 4px;color:white">Cancel</button> -->
+                                {% } %}
+                                </td>
+                        </tr>
+                        {% } %}
+                </script>
+                <script id="template-download" type="text/x-tmpl">
+                        {% for (var i=0, file; file=o.files[i]; i++) { %}
+                        <tr class="template-download">
+                                <td>
+                                <span class="preview">
+                                        {% if (file.thumbnailUrl) { %}
+                                        <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                                        {% } %}
+                                </span>
+                                </td>
+                                <td>
+                                <p class="name">
+                                        <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+                                </p>
+                                {% if (file.error) { %}
+                                        <div><span class="error">Error</span> {%=file.error%}</div>
+                                {% } %}
+                                </td>
+                                <td>
+                                <span class="size">{%=o.formatFileSize(file.size)%}</span>
+                                </td>
+                                <!-- <td> -->
+                                <!-- <button class="delete" style="padding: 0px 4px 0px 4px;" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>Delete</button> -->
+                                <!-- <input type="checkbox" name="delete" value="1" class="toggle"> -->
+                                <!-- </td> -->
+                        </tr>
+                        {% } %}
+                </script>
+
                 <!--Aqui abre para la ventana de guardado ok-->
                 <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
                 <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
@@ -907,7 +1005,23 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../assets/probando/js/bootstrap.min.js"></script>
                 <!--Aqui cierra para abrir el modal de insertar-->
 
-                
+                <!-- js cargar archivo -->
+                <script src="../../assets/FileUpload/js/jquery.min.js"></script>
+                <script src="../../assets/FileUpload/js/jquery-ui.min.js"></script>
+                <script src="../../assets/FileUpload/js/tmpl.min.js"></script>
+                <script src="../../assets/FileUpload/js/load-image.all.min.js"></script>
+                <script src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.blueimp-gallery.min.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.iframe-transport.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.fileupload.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.fileupload-process.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.fileupload-image.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.fileupload-audio.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.fileupload-video.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
+                <script src="../../assets/FileUpload/js/main.js"></script>
 	</body>
         
         
