@@ -18,8 +18,10 @@ function loadDataSideBarCatalogoInformacion(){
 
         ]
       });
+      
                                  
                          mySidebar.attachEvent("onSelect", function(id, value){
+                             
                                    switch(id){
                                        case "empleados":
                                             consultarInformacion("../Controller/EmpleadosController.php?Op=Listar");                                           
@@ -31,17 +33,18 @@ function loadDataSideBarCatalogoInformacion(){
                                        case "clausulas":
                                             consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
                                             consultarInformacion("../Controller/EmpleadosController.php?Op=mostrarcombo");
-                                           $("#sidebarObjV").load('InyectarVistasView.php #clausulas');
+                                            $("#sidebarObjV").load('InyectarVistasView.php #clausulas');
                                        break;
                                        
 
-                                       case "requisitos":
-                                            consultarInformacion("../Controller/RequisitosController.php?Op=Listar");
-                                            $("#sidebarObjV").load('InyectarVistasView.php #requisitos');
-                                       break;
+//                                       case "requisitos":
+//                                            consultarInformacion("../Controller/RequisitosController.php?Op=Listar");
+//                                            $("#sidebarObjV").load('InyectarVistasView.php #requisitos');
+//                                       break;
                                        
 
-                                       case "documentos":
+                                       case "documentos":             
+                                             consultarInformacion("../Controller/EmpleadosController.php?Op=mostrarcombo");
                                              consultarInformacion("../Controller/DocumentosController.php?Op=Listar");
                                              consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Alarmas");
                                             $("#sidebarObjV").load('InyectarVistasView.php #documentos');
@@ -56,15 +59,22 @@ function loadDataSideBarCatalogoInformacion(){
 
 
                                        case "asignaciondocumentostemas":
-                                             consultarInformacion("../Controller/AsignacionDocumentosTemasController.php?Op=Listar");
+                                             
+                                             consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=mostrarcombo");                                          
                                              consultarInformacion("../Controller/DocumentosController.php?Op=mostrarcombo");
-                                             consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=mostrarcombo");
+                                             consultarInformacion("../Controller/ClausulasController.php?Op=mostrarcombo");
+                                             consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
+                                             consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
+                                             consultarInformacion("../Controller/AsignacionDocumentosTemasController.php?Op=Listar");
+                                             
                                             $("#sidebarObjV").load('InyectarVistasView.php #asignaciondocumentostemas');                                                                                 
                                        break;
                                    }
       });
                         
     }
+
+
 
 
 function loadDataSideBarOficiosCatalogos(){
