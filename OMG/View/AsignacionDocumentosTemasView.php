@@ -406,7 +406,7 @@ $Usuario=  Session::getSesion("user");
 					<img class="nav-user-photo" src="../../assets/probando/images/avatars/avatar.png" alt="<?php echo $Usuario["NOMBRE_USUARIO"]; ?>" />
 					<span class="user-info">
 						<small>Bienvenido,</small>
-						<?php echo $Usuario["NOMBRE_USUARIO"]; ?>
+						<?php echo $Usuario["nombre_usuario"]; ?>
 					</span>
 
 <!--								<i class="ace-icon fa fa-caret-down"></i>-->
@@ -489,17 +489,17 @@ $Usuario=  Session::getSesion("user");
                                 
                                 
                                 <td> 
-                                    <select id="id_documento" class="select" onchange="saveComboToDatabase('ID_DOCUMENTO', <?php echo $filas["ID_ASIGNACION_DOCUMENTO_TEMA"]; ?> )">
+                                    <select id="id_documento" class="select" onchange="saveComboToDatabase('id_cocumento', <?php echo $filas["id_asignacion_documento_tema"]; ?> )">
                                     <?php
                                     $s="";
                                                 foreach ($cbxDoc as $value) {
                                                     
-                                                    if($value["ID_DOCUMENTO"]=="".$filas["ID_DOCUMENTO"]){
+                                                    if($value["id_cocumento"]=="".$filas["id_cocumento"]){
 //                                                        $s="selected";
                                                     
                                                     ?>
                                     
-                                        <option value="<?php echo "".$value["ID_DOCUMENTO"] ?>"  selected ><?php echo "".$value["CLAVE_DOCUMENTO"]; ?></option>
+                                        <option value="<?php echo "".$value["id_cocumento"] ?>"  selected ><?php echo "".$value["clave_documento"]; ?></option>
                                         
                                                         <?php
                                                         }
@@ -507,7 +507,7 @@ $Usuario=  Session::getSesion("user");
                                                         else{
                                                             ?>
                                                         <!--}-->
-                                                             <option value="<?php echo "".$value["ID_DOCUMENTO"] ?>"  ><?php echo "".$value["CLAVE_DOCUMENTO"]; ?></option>
+                                                             <option value="<?php echo "".$value["id_cocumento"] ?>"  ><?php echo "".$value["clave_documento"]; ?></option>
                                                              <?php
                                                         }
                                                 }
@@ -518,7 +518,7 @@ $Usuario=  Session::getSesion("user");
                                     
                                 </td>
 
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'DOCUMENTO','<?php echo $filas["ID_ASIGNACION_DOCUMENTO_TEMA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["DOCUMENTO"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_asignacion_documento_tema"]; ?>')" onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
 
                                 
                                 
@@ -552,8 +552,8 @@ $Usuario=  Session::getSesion("user");
                                   
                                 
                                    
-                                    <td contenteditable="false" onBlur="saveToDatabase(this,'CLAUSULA','<?php echo $filas["ID_ASIGNACION_DOCUMENTO_TEMA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["CLAUSULA"]; ?></td>
-                                    <td contenteditable="false" onBlur="saveToDatabase(this,'DESCRIPCION_CLAUSULA','<?php echo $filas["ID_ASIGNACION_DOCUMENTO_TEMA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["DESCRIPCION_CLAUSULA"]; ?></td>
+                                    <td contenteditable="false" onBlur="saveToDatabase(this,'clausula','<?php echo $filas["id_asignacion_documento_tema"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clausula"]; ?></td>
+                                    <td contenteditable="false" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_asignacion_documento_tema"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion_clausula"]; ?></td>
                                     
                                     
                                     <td>
@@ -604,7 +604,7 @@ $Usuario=  Session::getSesion("user");
                                                                 foreach ($cbxDoc as $value) {
                                                                 ?>
                                                                 
-                                                                <option value="<?php echo "".$value["ID_DOCUMENTO"] ?>"  ><?php echo "".$value["CLAVE_DOCUMENTO"]; ?></option>
+                                                                <option value="<?php echo "".$value["id_documento"] ?>"  ><?php echo "".$value["clave_documento"]; ?></option>
                                                                 
                                                                     <?php
                                                                 
@@ -697,13 +697,13 @@ $Usuario=  Session::getSesion("user");
 				
                             
                                 
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'CLAUSULA','<?php echo $filas["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);">                            
-                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#add-requirement"><?php echo $filas["CLAUSULA"]; ?></button>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);">                            
+                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#add-requirement"><?php echo $filas["clausula"]; ?></button>
                                     
                                 </td>
                                 
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'DESCRIPCION_CLAUSULA','<?php echo $filas["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["DESCRIPCION_CLAUSULA"]; ?></td>                                                         
-                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'REQUISITO','<?php echo $filas["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["REQUISITO"]; ?></td>-->                                                                                                                                     
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion_clausula"]; ?></td>                                                         
+                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'REQUISITO','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["REQUISITO"]; ?></td>-->                                                                                                                                     
                                                     
 			  </tr>
 		<?php
