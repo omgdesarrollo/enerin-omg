@@ -4,7 +4,8 @@ class CumplimientoDAO{
     //consulta los datos de un empleado por su nombre de usuario
     public function mostrarCumplimientos(){
         try{
-            $query="SELECT ID_CUMPLIMIENTO, CLAVE_CUMPLIMIENTO, CUMPLIMIENTO FROM CUMPLIMIENTOS";
+                        //$query="SELECT ID_CUMPLIMIENTO, CLAVE_CUMPLIMIENTO, CUMPLIMIENTO FROM CUMPLIMIENTOS";
+                        $query="SELECT id_cumplimiento, clave_cumplimiento, cumplimiento FROM cumplimientos";
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             
@@ -18,7 +19,8 @@ class CumplimientoDAO{
     
     public function mostrarCumplimientosComboBox(){
         try{
-            $query="SELECT ID_CUMPLIMIENTO, CLAVE_CUMPLIMIENTO, CUMPLIMIENTO FROM CUMPLIMIENTOS";
+                        //$query="SELECT ID_CUMPLIMIENTO, CLAVE_CUMPLIMIENTO, CUMPLIMIENTO FROM CUMPLIMIENTOS";
+                        $query="SELECT id_cumplimiento, clave_cumplimiento, cumplimiento FROM cumplimientos";
 //            $query="SELECT ID_EMPLEADO  FROM EMPLEADOS";
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
@@ -41,7 +43,8 @@ class CumplimientoDAO{
     
     public function mostrarCumplimientosPorUsuario($usuario){
         try{
-            $query="SELECT tbcumplimientos.CLAVE_CUMPLIMIENTO FROM USUARIOS  JOIN CUMPLIMIENTOS tbcumplimientos ON usuarios.ID_USUARIO=tbcumplimientos.ID_USUARIO where usuarios.NOMBRE_USUARIO='$usuario'";
+                        //$query="SELECT tbcumplimientos.CLAVE_CUMPLIMIENTO FROM USUARIOS  JOIN CUMPLIMIENTOS tbcumplimientos ON usuarios.ID_USUARIO=tbcumplimientos.ID_USUARIO where usuarios.NOMBRE_USUARIO='$usuario'";
+                        $query="SELECT tbcumplimientos.clave_cumplimiento FROM usuarios  JOIN cumplimientos tbcumplimientos ON usuarios.id_usuario=tbcumplimientos.id_usuario where usuarios.nombre_usuario='$usuario'";
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             return $lista;
@@ -54,7 +57,7 @@ class CumplimientoDAO{
     public function insertarCumplimientos($clave_cumplimiento,$cumplimiento){
         
         try{
-            $query="INSERT INTO CUMPLIMIENTOS(ID_CUMPLIMIENTO,CLAVE_CUMPLIMIENTO,CUMPLIMIENTO)VALUES('$clave_cumplimiento','$cumplimiento')";
+            $query="INSERT INTO cumplimientos(id_cumplimiento,clave_cumplimiento,cumplimiento)VALUES('$clave_cumplimiento','$cumplimiento')";
             $db=  AccesoDB::getInstancia();
             $db->executeQuery($query);
 //            $rec=$lista[0];
@@ -68,7 +71,7 @@ class CumplimientoDAO{
     public function actualizarEmpleado($id_cumplimiento,$clave_cumplimiento,$cumplimiento){
         try{
 //            $query="UPDATE EMPLEADOS SET NOMBRE_EMPLEADO='$Nombre',APELLIDO_PATERNO='$Apellido_Paterno',APELLIDO_MATERNO='$Apellido_Materno',CORREO='$Correo'";
-             $query="UPDATE CUMPLIMIENTOS SET CLAVE_CUMPLIMIENTO='$clave_cumplimiento', CUMPLIMIENTO='$cumplimiento' WHERE ID_CUMPLIMIENTO=$id_cumplimiento";
+             $query="UPDATE cumplimientos SET clave_cumplimiento='$clave_cumplimiento', cumplimiento='$cumplimiento' WHERE id_cumplimiento=$id_cumplimiento";
      
             $db= AccesoDB::getInstancia();
             $db->executeQueryUpdate($query);
@@ -82,7 +85,7 @@ class CumplimientoDAO{
     
     public function eliminarEmpleado($id_cumplimiento){
         try{
-            $query="DELETE FROM CUMPLIMIENTOS WHERE ID_CUMPLIMIENTO=$id_cumplimiento";
+            $query="DELETE FROM cumplimientos WHERE id_cumplimiento=$id_cumplimiento";
             $db=  AccesoDB::getInstancia();
             $db->executeQueryUpdate($query);
 //            return $lista[0];
