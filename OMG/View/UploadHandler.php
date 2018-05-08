@@ -9,7 +9,11 @@
  * Licensed under the MIT license:
  * https://opensource.org/licenses/MIT
  */
+session_start();
+require_once '../util/Session.php';
 
+$newUrl=  Session::getSesion("newUrl");
+echo $newUrl;
 class UploadHandler
 {
 
@@ -43,11 +47,11 @@ class UploadHandler
     public function __construct($options = null, $initialize = true, $error_messages = null) {
         $this->response = array();
         $this->options = array(
-            'script_url' => $this->get_full_url().'/'.$this->basename($this->get_server_var('SCRIPT_NAME')),
-            'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/files/',
-            'upload_url' => $this->get_full_url().'/files/',
+            'script_url' => $this->get_full_url().$newUrl.$this->basename($this->get_server_var('SCRIPT_NAME')),
+            'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/',
+            'upload_url' => $this->get_full_url().$newUrl,
             'input_stream' => 'php://input',
-            'user_dirs' => false,
+            'user_dirs' => true,
             'mkdir_mode' => 0755,
             'param_name' => 'files',
             // Set the following option to 'POST', if your server does not support

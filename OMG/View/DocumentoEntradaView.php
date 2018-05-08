@@ -904,19 +904,18 @@ $Usuario=  Session::getSesion("user");
                                     +'&DOCUMENTO='+datos[13]+'&OBSERVACIONES='+datos[14]+'&MENSAJE_ALERTA='+datos[15],
                             
                             
-                                success: function(data)
+                                success: function(jsonData)
                                 {
-                                    alert(data.ID_CUMPLIMIENTO);
-                                    console.log(data.ID_CUMPLIMIENTO);
-                                    $.each(data.data,function(index,value)
-                                {
-                                        console.log("val "+value.ID_CUMPLIMIENTO);
-                                });
+                                //     alert(<?php  $Url ?>);
 //					$(editableObj).css("background","#FDFDFD");
                                         consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
-                                        $('#fileupload').fileupload({
-                                                url: '../../archivos/files/'+data.ID_CUMPLIMIENTO+'/'+data+'/'
-                                        });
+                                        // $('#fileupload').fileupload({
+                                        //         url: '../../archivos/files/'+jsonData.ID_CUMPLIMIENTO+'/'+jsonData.ID_DOCUMENTO+'/'
+                                        // });
+                                        // $('#fileupload').fileupload
+                                        // ({
+                                        //         formData: {newUrl: '/'+jsonData.ID_CUMPLIMIENTO+'/'+jsonData.ID_DOCUMENTO+'/'}
+                                        // });
                                         $('.start').click();
                                 }
                         });
