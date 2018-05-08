@@ -255,24 +255,24 @@ $Usuario=  Session::getSesion("user");
                                 
                                 <!--<td contenteditable="true" onBlur="saveToDatabase(this,'NOMBRE_EMPLEADO','<?php //echo $Lista[$k]["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php //echo $Lista[$k]["NOMBRE_EMPLEADO"]; ?></td>-->
                  
-                                <td style="background-color: #ccccff"> 
-                                    <select id="id_clausula"class="select" onchange="saveComboToDatabase('ID_CLAUSULA', <?php echo $filas["ID_ASIGNACION_TEMA_REQUISITO"]; ?> )">
+                                <td style="background-color: #ccccff">
+                                    <select id="id_clausula"class="select" onchange="saveComboToDatabase('id_clausula', <?php echo $filas["id_asignacion_tema_requisito"]; ?> )">
                                     <?php
                                     $s="";
                                                 foreach ($cbxClau as $value) {
-                                                    if($value["ID_CLAUSULA"]=="".$filas["ID_CLAUSULA"]){
+                                                    if($value["id_clausula"]=="".$filas["id_clausula"]){
 //                                                        $s="selected";
                                                     
                                                     ?>
                                     
-                                        <option value="<?php echo "".$value["ID_CLAUSULA"] ?>"  selected ><?php echo "".$value["CLAUSULA"]; ?></option>
+                                        <option value="<?php echo "".$value["id_clausula"] ?>"  selected ><?php echo "".$value["clausula"]; ?></option>
                                         
                                                         <?php
                                                         }
                                                         else{
                                                             ?>
                                                         }
-                                                             <option value="<?php echo "".$value["ID_CLAUSULA"] ?>"  ><?php echo "".$value["CLAUSULA"]; ?></option>
+                                                             <option value="<?php echo "".$value["id_clausula"] ?>"  ><?php echo "".$value["clausula"]; ?></option>
                                                              <?php
                                                         }
                                                 }
@@ -283,9 +283,9 @@ $Usuario=  Session::getSesion("user");
                                     
                                 </td>
                   
-                                <td  style="background-color: #ccccff" contenteditable="false" onBlur="saveToDatabase(this,'DESCRIPCION_CLAUSULA','<?php echo $filas["ID_ASIGNACION_TEMA_REQUISITO"]; ?>')" onClick="showNoEdit(this);"><div><?php echo $filas["DESCRIPCION_CLAUSULA"]; ?></td>
+                                <td  style="background-color: #ccccff" contenteditable="false" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_asignacion_tema_requisito"]; ?>')" onClick="showNoEdit(this);"><div><?php echo $filas["descripcion_clausula"]; ?></td>
                     <!--</div>-->
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'REQUISITO','<?php echo $filas["ID_ASIGNACION_TEMA_REQUISITO"]; ?>')" onClick="showEdit(this);"><?php echo $filas["REQUISITO"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'requisito','<?php echo $filas["id_asignacion_tema_requisito"]; ?>')" onClick="showEdit(this);"><?php echo $filas["requisito"]; ?></td>
                                                     
 			  </tr>
 		<?php
@@ -327,7 +327,7 @@ $Usuario=  Session::getSesion("user");
                                                                 foreach ($cbxClau as $value) {
                                                                 ?>
                                                                 
-                                                                <option value="<?php echo "".$value["ID_CLAUSULA"] ?>"  ><?php echo "".$value["CLAUSULA"]; ?></option>
+                                                                <option value="<?php echo "".$value["id_clausula"] ?>"  ><?php echo "".$value["clausula"]; ?></option>
                                                                 
                                                                     <?php
                                                                 

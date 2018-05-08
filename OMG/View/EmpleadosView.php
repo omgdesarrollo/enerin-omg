@@ -543,7 +543,7 @@ require_once '../util/Session.php';
 					<img class="nav-user-photo" src="../../assets/probando/images/avatars/avatar.png" alt="<?php echo $Usuario["NOMBRE_USUARIO"]; ?>" />
 					<span class="user-info">
 						<small>Bienvenido,</small>
-						<?php echo $Usuario["NOMBRE_USUARIO"]; ?>
+						<?php echo $Usuario["nombre_usuario"]; ?>
 					</span>
 
 <!--								<i class="ace-icon fa fa-caret-down"></i>-->
@@ -621,7 +621,7 @@ require_once '../util/Session.php';
                 foreach ($Lista as $filas) { 
                     
                     
-                    if($filas["NOMBRE_EMPLEADO"]!="SIN RESPONSABLE"){
+                    if($filas["nombre_empleado"]!="SIN RESPONSABLE"){
                                             
                             
                     ?>
@@ -631,12 +631,12 @@ require_once '../util/Session.php';
                               
                               
 				<td><?php echo $numeracion++; ?></td>                                
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'NOMBRE_EMPLEADO','<?php echo $filas["ID_EMPLEADO"]; ?>')" onClick="showEdit(this);"><?php echo $filas["NOMBRE_EMPLEADO"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'APELLIDO_PATERNO','<?php echo $filas["ID_EMPLEADO"]; ?>')" onClick="showEdit(this);"><?php echo $filas["APELLIDO_PATERNO"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'APELLIDO_MATERNO','<?php echo $filas["ID_EMPLEADO"]; ?>')" onClick="showEdit(this);"><?php echo $filas["APELLIDO_MATERNO"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'CATEGORIA','<?php echo $filas["ID_EMPLEADO"]; ?>')" onClick="showEdit(this);"><?php echo $filas["CATEGORIA"]; ?></td>
-                                 <td contenteditable="true" onBlur="saveToDatabase(this,'CORREO','<?php echo $filas["ID_EMPLEADO"]; ?>')" onClick="showEdit(this);"><?php echo $filas["CORREO"]; ?></td>
-                                 <td contenteditable="false" onBlur="saveToDatabase(this,'FECHA_CREACION','<?php echo $filas["ID_EMPLEADO"]; ?>')" onClick="showEdit(this);"><?php echo $filas["FECHA_CREACION"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'nombre_empleado','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleado"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'apellido_paterno','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);"><?php echo $filas["apellido_paterno"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'apellido_materno','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);"><?php echo $filas["apellido_materno"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'categoria','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);"><?php echo $filas["categoria"]; ?></td>
+                                 <td contenteditable="true" onBlur="saveToDatabase(this,'correo','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);"><?php echo $filas["correo"]; ?></td>
+                                 <td contenteditable="false" onBlur="saveToDatabase(this,'fecha_creacion','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_creacion"]; ?></td>
 			  </tr>
                           
 		<?php

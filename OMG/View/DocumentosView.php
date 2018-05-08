@@ -11,14 +11,14 @@ $numeroAlarmas = 0;
 foreach($Alarmas as $alarma)
 {
 	// print_r($alarma);
-	$alarm = new Datetime($alarma['FECHA_ALARMA']);
-	$flimite = new Datetime($alarma['FECHA_LIMITE_ATENCION']);
+	$alarm = new Datetime($alarma['fecha_alarma']);
+	$flimite = new Datetime($alarma['fecha_limite_atencion']);
 	$hoy = new Datetime();
 	$al = strftime("%d - %B - %y");
 	$hoy = new Datetime($al);
 	if($flimite<=$hoy)
 	{
-		$NotificacionesAlarma[$numeroAlarmas]["AFECTADO"] = "FOLIO ".$alarma['FOLIO_ENTRADA']." DEL ".$alarma['CLAVE_CUMPLIMIENTO'];
+		$NotificacionesAlarma[$numeroAlarmas]["AFECTADO"] = "FOLIO ".$alarma['FOLIO_ENTRADA']." DEL ".$alarma['clave_cumplimiento'];
 			if($flimite == $hoy)
 			{
 				$NotificacionesAlarma[$numeroAlarmas]["MENSAJE"] = "TIEMPO VENCIDO";//mensaje automatico
@@ -35,15 +35,15 @@ foreach($Alarmas as $alarma)
 	{
 		if($alarma['FECHA_ALARMA'] != "0000-00-00")
 		{
-			$NotificacionesAlarma[$numeroAlarmas]["AFECTADO"] = "FOLIO ".$alarma['FOLIO_ENTRADA']." DEL ".$alarma['CLAVE_CUMPLIMIENTO'];
+			$NotificacionesAlarma[$numeroAlarmas]["AFECTADO"] = "FOLIO ".$alarma['folio_entrada']." DEL ".$alarma['clave_cumplimiento'];
 			if($alarm == $hoy)
 			{
-				$NotificacionesAlarma[$numeroAlarmas]["MENSAJE"] = "ALARMA - ".$alarma['MENSAJE_ALERTA'];//agregar campoDB para que el usuario ingrese su mensaje
+				$NotificacionesAlarma[$numeroAlarmas]["MENSAJE"] = "ALARMA - ".$alarma['mensaje_alerta'];//agregar campoDB para que el usuario ingrese su mensaje
 			}
 			else
 			{
 				$diasA = strtotime(strftime("%d-%B-%y",$alarm -> getTimestamp())) - strtotime(strftime("%d-%B-%y",$hoy -> getTimestamp()));
-				$NotificacionesAlarma[$numeroAlarmas]["MENSAJE"] = " ALARMA VENCIADA ".$dias." DIA(S)"." - ".$alarma['MENSAJE_ALERTA'];				
+				$NotificacionesAlarma[$numeroAlarmas]["MENSAJE"] = " ALARMA VENCIDA ".$dias." DIA(S)"." - ".$alarma['mensaje_alerta'];				
 			}
 		$numeroAlarmas++;
 		}
@@ -295,27 +295,27 @@ foreach($Alarmas as $alarma)
 		  ?>
 			  <tr class="table-row">
 				<td><?php echo $numeracion++;   ?></td>                               
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'CLAVE_DOCUMENTO','<?php echo $filas["ID_DOCUMENTO"]; ?>')" onClick="showEdit(this);"><?php echo $filas["CLAVE_DOCUMENTO"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'DOCUMENTO','<?php echo $filas["ID_DOCUMENTO"]; ?>')" onClick="showEdit(this);"><?php echo $filas["DOCUMENTO"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'clave_documento','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_documento"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
                                   <td> 
 <!--                                    <select  class="empleado" name="n_empleado" onchange="saveComboToDatabase('ID_EMPLEADO', <?php // echo $filas["ID_CLAUSULA"]; ?> )">-->
-                                    <select   id="id_empleado" class="select"  onchange="saveComboToDatabase('ID_EMPLEADO', <?php echo $filas["ID_DOCUMENTO"]; ?> )">
+                                    <select   id="id_empleado" class="select"  onchange="saveComboToDatabase('id_empleado', <?php echo $filas["id_documento"]; ?> )">
                                     <!--<select name="name_empleado">-->
                                     <?php
                                     $s="";
                                                 foreach ($cbxEmp as $value) {
-                                                    if($value["ID_EMPLEADO"]=="".$filas["ID_EMPLEADO"]){
+                                                    if($value["id_empleado"]=="".$filas["id_empleado"]){
 //                                                        $s="selected";
                                                     ?>
                                     
-                                        <option value="<?php echo "".$filas["ID_EMPLEADO"] ?>"  selected ><?php echo "".$filas["NOMBRE_EMPLEADO"]." ".$filas["APELLIDO_PATERNO"]." ".$filas["APELLIDO_MATERNO"]; ?></option>
+                                        <option value="<?php echo "".$filas["id_empleado"] ?>"  selected ><?php echo "".$filas["nombre_empleado"]." ".$filas["apellido_paterno"]." ".$filas["apellido_materno"]; ?></option>
                                         
                                                         <?php
                                                         }
                                                         else{
                                                             ?>
                                                         }
-                                                             <option value="<?php echo "".$value["ID_EMPLEADO"] ?>"  ><?php echo "".$value["NOMBRE_EMPLEADO"]." ".$value["APELLIDO_PATERNO"]." ".$value["APELLIDO_MATERNO"]; ?></option>
+                                                             <option value="<?php echo "".$value["id_empleado"] ?>"  ><?php echo "".$value["nombre_empleado"]." ".$value["apellido_paterno"]." ".$value["apellido_materno"]; ?></option>
                                                              <?php
                                                         }
                                                 }
@@ -386,7 +386,7 @@ foreach($Alarmas as $alarma)
                                                                 foreach ($cbxEmp as $value) {
                                                                 ?>
                                                                 
-                                                                <option value="<?php echo "".$value["ID_EMPLEADO"] ?>"  ><?php echo "".$value["NOMBRE_EMPLEADO"]." ".$value["APELLIDO_PATERNO"]." ".$value["APELLIDO_MATERNO"]; ?></option>
+                                                                <option value="<?php echo "".$value["id_empleado"] ?>"  ><?php echo "".$value["nombre_empleado"]." ".$value["apellido_paterno"]." ".$value["apellido_materno"]; ?></option>
                                                                 
                                                                     <?php
                                                                 
