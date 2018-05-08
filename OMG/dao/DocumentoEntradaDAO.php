@@ -151,7 +151,8 @@ class DocumentoEntradaDAO{
             $db->executeQueryUpdate($query);
         } catch (Exception $ex) {
                 throw $ex;
-        }   
+        }
+        return $id_nuevo;
     }
     
     /*

@@ -15,6 +15,8 @@ class DocumentoEntradaModel{
         try
         {
             $dao = new DocumentoEntradaDAO();
+
+
             $rec = $dao->getFechaAlarma();
 
             return $rec;
@@ -66,17 +68,33 @@ class DocumentoEntradaModel{
     }
     
     public function insertar($pojo){
+        $data=array();        
         try{
             $dao=new DocumentoEntradaDAO();
+            $carpeta ='../../archivos/files/'.$pojo->getIdCumplimiento();
             
-           $dao->insertarDocumentosEntrada($pojo->getIdCumplimiento(),$pojo->getFolioReferencia(),
+            if(!file_exists($carpeta))
+            {
+                mkdir($carpeta,0777,true);
+            }
+
+            $id_nuevo = $dao->insertarDocumentosEntrada($pojo->getIdCumplimiento(),$pojo->getFolioReferencia(),
                    $pojo->getFolioEntrada(),$pojo->getFechaRecepcion(),$pojo->getAsunto(),$pojo->geRemitente(),
                    $pojo->getIdEntidad(),$pojo->getIdClausula(),$pojo->getClasificacion(),$pojo->getStatusDoc(),
                    $pojo->getFechaAsignacion(),$pojo->getFechaLimiteAtencion(),$pojo->getFechaAlarma(),
                    $pojo->getDocumento(),$pojo->getObservaciones(),$pojo->getMensajeAlerta());
+            
+            $carpeta = $carpeta."/".$id_nuevo;
+            if(!file_exists($carpeta))
+            {
+                mkdir($carpeta,0777,true);
+            }
+            $data[0]=$pojo->getIdCumplimiento();
+            $data[1]=$id_nuevo;
         } catch (Exception $ex) {
                 throw $ex;
         }
+        return $data;
     }
     
     

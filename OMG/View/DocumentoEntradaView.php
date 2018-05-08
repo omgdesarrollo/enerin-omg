@@ -576,7 +576,7 @@ $Usuario=  Session::getSesion("user");
                                                                                 <!-- <input type="checkbox" class="toggle"> -->
                                                                                 <span class="fileupload-process"></span>
                                                                         </div>
-                                                                        <div class="fileupload-progress" style="display:none">
+                                                                        <div class="fileupload-progress" >
                                                                                 <!-- The global progress bar -->
                                                                                 <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
                                                                                 <!-- The extended global progress state -->
@@ -735,10 +735,9 @@ $Usuario=  Session::getSesion("user");
                                     var FECHA_ASIGNACION=$("#FECHA_ASIGNACION").val();
                                     var FECHA_LIMITE_ATENCION=$("#FECHA_LIMITE_ATENCION").val();
                                     var FECHA_ALARMA=$("#FECHA_ALARMA").val();
-                                    var DOCUMENTO=$("#DOCUMENTO").val();
+                                    var DOCUMENTO=$('#fileupload').fileupload('option', 'url');
                                     var OBSERVACIONES=$("#OBSERVACIONES").val();
                                     var MENSAJE_ALERTA=$("#MENSAJE_ALERTA").val();
-                                                                      
                                   
                                 //   alert("ID_CUMPLIMIENTOMODAL :"+ID_CUMPLIMIENTOMODAL+"FOLIO_REFERENCIA :"+FOLIO_REFERENCIA
                                 //        +"FOLIO_ENTRADA :"+FOLIO_ENTRADA+"FECHA_RECEPCION :"+FECHA_RECEPCION+"ASUNTO :"+ASUNTO
@@ -907,34 +906,19 @@ $Usuario=  Session::getSesion("user");
                             
                                 success: function(data)
                                 {
-                                //     alert("se guardo");
-                                    
+                                    alert(data.ID_CUMPLIMIENTO);
+                                    console.log(data.ID_CUMPLIMIENTO);
+                                    $.each(data.data,function(index,value)
+                                {
+                                        console.log("val "+value.ID_CUMPLIMIENTO);
+                                });
 //					$(editableObj).css("background","#FDFDFD");
                                         consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
-//                                        window.location.href("EmpleadosView.php");
-                                        // $('#fileupload').addClass('fileupload-processing');
-                                        // $(this).removeClass('fileupload-processing');                                        
-                                        // $.ajax({
-                                        // // Uncomment the following to send cross-domain cookies:
-                                        // //xhrFields: {withCredentials: true},
-                                        //         url: $('#fileupload').fileupload('option', 'url'),
-                                        //         dataType: 'json',
-                                        //         context: $('#fileupload')[0],
-                                        // // }).always(function ()
-                                        // // {
-                                        // // }).done(function (result)
-                                        // success:function(data)
-                                        // {
-                                        //         alert("3");                                                
-                                        //         swal("Guardado Exitoso!", "Ok!", "success")
-                                        //         $(this).fileupload('option', 'done')
-                                        //         // .call(this, $.Event('done'), {result: result});
-                                        // }
-                                        // });
+                                        $('#fileupload').fileupload({
+                                                url: '../../archivos/files/'+data.ID_CUMPLIMIENTO+'/'+data+'/'
+                                        });
                                         $('.start').click();
                                 }
-                        // }).done(function(result)
-                        // {
                         });
 //                   window.location.href("EmpleadosView.php");
                 }
@@ -960,7 +944,7 @@ $Usuario=  Session::getSesion("user");
                                         <button class="start" style="display:none;padding: 0px 4px 0px 4px;" disabled>Start</button>
                                 {% } %}
                                 {% if (!i) { %}
-                                        <!-- <button class="cancel" style="padding: 0px 4px 0px 4px;color:white">Cancel</button> -->
+                                        <button class="cancel" style="padding: 0px 4px 0px 4px;color:white">Cancel</button>
                                 {% } %}
                                 </td>
                         </tr>

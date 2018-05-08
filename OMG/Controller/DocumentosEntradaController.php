@@ -88,7 +88,12 @@ switch ($Op) {
 					// }
 				//   print_r($_REQUEST['MENSAJE_DOCUMENTO']);
 				//   print_r($_FILEs['DOCUMENTO']); 
-                  $model->insertar($pojo);
+				  $data = $model->insertar($pojo);
+				  echo $data[0];
+				 $jsonData['ID_CUMPLIMIENTO'] = $data[0];
+				 header('Content-type: application/json; charset=utf-8');
+				  echo json_encode(array("data"=>$jsonData));
+				// return $data;
                   
                 //   $traerultimoinsertado=$model->traer_ultimo_insertado();  
                 //   echo json_encode("guarda documento");
