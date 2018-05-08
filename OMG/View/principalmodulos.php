@@ -377,7 +377,7 @@ ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: 
                      
                      $.each(r,function(index,value){
                         // alert("ya entro y "+value.CLAVE_CUMPLIMIENTO);
-                      datacontratos.push( {id:'contratos',text:value.CLAVE_CUMPLIMIENTO,img:'oficios.png',type:'button',isbig:true} )
+                      datacontratos.push( {id:'contratos',text:value.clave_cumplimiento,img:'oficios.png',type:'button',isbig:true} )
 
                          })                       
                         }    

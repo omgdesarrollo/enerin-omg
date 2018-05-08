@@ -72,13 +72,13 @@ $usuario=Session::eliminarSesion("usuario");
 				?>
 
 				<tr  class='table-success text-dark'>
-              <td class="editable0"><?php echo $filas['ID_CUMPLIMIENTO']; ?></td>
-              <td class="editable1"> <?php echo $filas['CLAVE_CUMPLIMIENTO']; ?></td>
-	       			<td class="editable2"><?php echo $filas['CUMPLIMIENTO']; ?></td>
+              <td class="editable0"><?php echo $filas['id_cumplimiento']; ?></td>
+              <td class="editable1"> <?php echo $filas['clave_cumplimiento']; ?></td>
+	       			<td class="editable2"><?php echo $filas['cumplimiento']; ?></td>
 	       			
               <td><button type="button" class="btn btn-warning" onclick="editableTable();">Modificar</button>
               
-              <!--<a href="../Controller/EmpleadosController.php?Op=Modificar&Correo=12&Id_Empleado=<?php echo "".$filas['ID_EMPLEADO'];?>">-->
+              <!--<a href="../Controller/EmpleadosController.php?Op=Modificar&Correo=12&Id_Empleado=<?php echo "".$filas['id_empleado'];?>">-->
               <a href="#"> <button type="button" class="btn btn-danger">Eliminar</button></a></td>
         </tr> 
         
