@@ -9,11 +9,7 @@
  * Licensed under the MIT license:
  * https://opensource.org/licenses/MIT
  */
-session_start();
-require_once '../util/Session.php';
 
-$newUrl=  Session::getSesion("newUrl");
-echo $newUrl;
 class UploadHandler
 {
 
@@ -45,13 +41,20 @@ class UploadHandler
     protected $image_objects = array();
 
     public function __construct($options = null, $initialize = true, $error_messages = null) {
+        session_start();
+        require_once '../util/Session.php';
+
+        $newUrl=  Session::getSesion("newUrl");
+        // echo $newUrl."---";
         $this->response = array();
         $this->options = array(
-            'script_url' => $this->get_full_url().$newUrl.$this->basename($this->get_server_var('SCRIPT_NAME')),
+            // 'script_url' => $this->get_full_url().'/../../archivos/files/'.$newUrl.$this->basename($this->get_server_var('SCRIPT_NAME')),
+            'script_url' => "http://enerin-omgapps.com/enerin-omg/archivos/files".$newUrl.$this->basename($this->get_server_var('SCRIPT_NAME')),            
             'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/',
-            'upload_url' => $this->get_full_url().$newUrl,
+            // 'upload_url' => $this->get_full_url().'/../../archivos/files/'.$newUrl,
+            'upload_url' => 'http://enerin-omgapps.com/enering-omg/archivos/files'.$newUrl,            
             'input_stream' => 'php://input',
-            'user_dirs' => true,
+            'user_dirs' => false,
             'mkdir_mode' => 0755,
             'param_name' => 'files',
             // Set the following option to 'POST', if your server does not support
@@ -172,6 +175,7 @@ class UploadHandler
             ),
             'print_response' => true
         );
+        echo $this->options['upload_url'];
         if ($options) {
             $this->options = $options + $this->options;
         }
@@ -209,7 +213,7 @@ class UploadHandler
         $https = !empty($_SERVER['HTTPS']) && strcasecmp($_SERVER['HTTPS'], 'on') === 0 ||
             !empty($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
                 strcasecmp($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') === 0;
-        return
+        return 
             ($https ? 'https://' : 'http://').
             (!empty($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER'].'@' : '').
             (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : ($_SERVER['SERVER_NAME'].
@@ -1075,8 +1079,12 @@ class UploadHandler
         $this->destroy_image_object($file_path);
     }
 
-    protected function handle_file_upload($uploaded_file, $name, $size, $type, $error,
-            $index = null, $content_range = null) {
+    protected function handle_file_upload($uploaded_file, $name, $size, $type, $error,$index = null, $content_range = null)
+    {
+        session_start();
+        require_once '../util/Session.php';
+        $newUrl=  Session::getSesion("newUrl");
+        
         $file = new \stdClass();
         $file->name = $this->get_file_name($uploaded_file, $name, $size, $type, $error,
             $index, $content_range);
@@ -1085,24 +1093,36 @@ class UploadHandler
         if ($this->validate($uploaded_file, $file, $error, $index)) {
             $this->handle_form_data($file, $index);
             $upload_dir = $this->get_upload_path();
-            if (!is_dir($upload_dir)) {
+            if (!is_dir($upload_dir))
+            {
+                echo "\n".$upload_dir."j \n---";
+
                 mkdir($upload_dir, $this->options['mkdir_mode'], true);
             }
             $file_path = $this->get_upload_path($file->name);
+            // $file_path = "C:/xampp/htdocs/enerin-omg/archivos/files".$newUrl.$file->name;
+            $file_path = "enerin-omgapps.com/enerin-omg/archivos/files".$newUrl.$file->name;
+            echo $file_path."o \n---";
+
             $append_file = $content_range && is_file($file_path) &&
                 $file->size > $this->get_file_size($file_path);
+
+            echo $append_file."s \n---";
             if ($uploaded_file && is_uploaded_file($uploaded_file)) {
                 // multipart/formdata uploads (POST method uploads)
                 if ($append_file) {
+                    echo "1 \n---";
                     file_put_contents(
                         $file_path,
                         fopen($uploaded_file, 'r'),
                         FILE_APPEND
                     );
                 } else {
+                    echo "2 \n---";
                     move_uploaded_file($uploaded_file, $file_path);
                 }
             } else {
+                echo "3 \n---";
                 // Non-multipart uploads (PUT method support)
                 file_put_contents(
                     $file_path,
