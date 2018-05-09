@@ -6,11 +6,17 @@ class AsignacionTemaRequisitoDAO {
     //put your code here
     public function mostrarAsignacionTemasRequisitos(){
         try{
-            $query="SELECT TBASIGNACION_TEMA_REQUISITO.ID_ASIGNACION_TEMA_REQUISITO, 
-                    TBCLAUSULAS.ID_CLAUSULA, TBCLAUSULAS.CLAUSULA, TBCLAUSULAS.DESCRIPCION_CLAUSULA,
-                    TBASIGNACION_TEMA_REQUISITO.REQUISITO FROM ASIGNACION_TEMA_REQUISITO TBASIGNACION_TEMA_REQUISITO
+//            $query="SELECT TBASIGNACION_TEMA_REQUISITO.ID_ASIGNACION_TEMA_REQUISITO, 
+//                    TBCLAUSULAS.ID_CLAUSULA, TBCLAUSULAS.CLAUSULA, TBCLAUSULAS.DESCRIPCION_CLAUSULA,
+//                    TBASIGNACION_TEMA_REQUISITO.REQUISITO FROM ASIGNACION_TEMA_REQUISITO TBASIGNACION_TEMA_REQUISITO
+//		 
+//                    JOIN CLAUSULAS TBCLAUSULAS ON TBCLAUSULAS.ID_CLAUSULA=TBASIGNACION_TEMA_REQUISITO.ID_CLAUSULA";
+            
+            $query="SELECT tbasignacion_tema_requisito.id_asignacion_tema_requisito, 
+                    tbclausulas.id_clausula, tbclausulas.clausula, tbclausulas.descripcion_clausula,
+                    tbasignacion_tema_requisito.requisito FROM asignacion_tema_requisito tbasignacion_tema_requisito
 		 
-                    JOIN CLAUSULAS TBCLAUSULAS ON TBCLAUSULAS.ID_CLAUSULA=TBASIGNACION_TEMA_REQUISITO.ID_CLAUSULA";
+                    JOIN clausulas tbclausulas ON tbclausulas.id_clausula=tbasignacion_tema_requisito.id_clausula";
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
@@ -26,11 +32,18 @@ class AsignacionTemaRequisitoDAO {
     
     public function mostrarAsignacionTemasRequisitosComboBox(){
         try{
-            $query="SELECT TBASIGNACION_TEMA_REQUISITO.ID_ASIGNACION_TEMA_REQUISITO, 
-                    TBCLAUSULAS.ID_CLAUSULA, TBCLAUSULAS.CLAUSULA, TBCLAUSULAS.DESCRIPCION_CLAUSULA,
-                    TBASIGNACION_TEMA_REQUISITO.REQUISITO FROM ASIGNACION_TEMA_REQUISITO TBASIGNACION_TEMA_REQUISITO
+//            $query="SELECT TBASIGNACION_TEMA_REQUISITO.ID_ASIGNACION_TEMA_REQUISITO, 
+//                    TBCLAUSULAS.ID_CLAUSULA, TBCLAUSULAS.CLAUSULA, TBCLAUSULAS.DESCRIPCION_CLAUSULA,
+//                    TBASIGNACION_TEMA_REQUISITO.REQUISITO FROM ASIGNACION_TEMA_REQUISITO TBASIGNACION_TEMA_REQUISITO
+//		 
+//                    JOIN CLAUSULAS TBCLAUSULAS ON TBCLAUSULAS.ID_CLAUSULA=TBASIGNACION_TEMA_REQUISITO.ID_CLAUSULA";
+            
+            
+            $query="SELECT tbasignacion_tema_requisito.id_asignacion_tema_requisito, 
+                    tbclausulas.id_clausula, tbclausulas.clausula, tbclausulas.descripcion_clausula,
+                    tbasignacion_tema_requisito.requisito FROM asignacion_tema_requisito tbasignacion_tema_requisito
 		 
-                    JOIN CLAUSULAS TBCLAUSULAS ON TBCLAUSULAS.ID_CLAUSULA=TBASIGNACION_TEMA_REQUISITO.ID_CLAUSULA";
+                    JOIN clausulas tbclausulas ON tbclausulas.id_clausula=tbasignacion_tema_requisito.id_clausula";
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
@@ -55,18 +68,19 @@ class AsignacionTemaRequisitoDAO {
         
         try{
             
-            $query_obtenerMaximo_mas_uno="SELECT max(ID_ASIGNACION_TEMA_REQUISITO)+1 as ID_ASIGNACION_TEMA_REQUISITO from ASIGNACION_TEMA_REQUISITO";
+//            $query_obtenerMaximo_mas_uno="SELECT max(ID_ASIGNACION_TEMA_REQUISITO)+1 as ID_ASIGNACION_TEMA_REQUISITO from ASIGNACION_TEMA_REQUISITO";
+            $query_obtenerMaximo_mas_uno="SELECT max(id_asignacion_tema_requisito)+1 as id_asignacion_tema_requisito FROM asignacion_tema_requisito";
             $db_obtenerMaximo_mas_uno=AccesoDB::getInstancia();
             $lista_id_nuevo_autoincrementado=$db_obtenerMaximo_mas_uno->executeQuery($query_obtenerMaximo_mas_uno);
             $id_nuevo=0;
             
             foreach ($lista_id_nuevo_autoincrementado as $value) {
-               $id_nuevo= $value["ID_ASIGNACION_TEMA_REQUISITO"];
+               $id_nuevo= $value["id_asignacion_tema_requisito"];
             }
              if($id_nuevo==NULL){
                 $id_nuevo=0;
             }
-            $query="INSERT INTO ASIGNACION_TEMA_REQUISITO(ID_ASIGNACION_TEMA_REQUISITO,ID_CLAUSULA,REQUISITO)"
+            $query="INSERT INTO asignacion_tema_requisito(id_asignacion_tema_requisito,id_clausula,requisito)"
                     . "VALUES($id_nuevo,$id_clausula,'$requisito')";
             
             $db=  AccesoDB::getInstancia();
@@ -81,8 +95,8 @@ class AsignacionTemaRequisitoDAO {
     
     public function actualizarAsignacionTemaRequisito($id_asignacion_tema_requisito, $id_clausula,$requisito){
         try{
-             $query="UPDATE ASIGNACION_TEMA_REQUISITO SET ID_CLAUSULA='$id_clausula', REQUISITO='$requisito',"
-                  . "WHERE ID_ASIGNACION_TEMA_REQUISITO=$id_asignacion_tema_requisito";
+             $query="UPDATE asignacion_tema_requisito SET id_clausula='$id_clausula', requisito='$requisito',"
+                  . "WHERE id_asignacion_tema_requisito=$id_asignacion_tema_requisito";
      
             $db= AccesoDB::getInstancia();
             $db->executeQueryUpdate($query);
@@ -97,8 +111,8 @@ class AsignacionTemaRequisitoDAO {
     public function actualizarAsignacionTemaRequisitoPorColumna($COLUMNA,$VALOR,$ID_ASIGNACION_TEMA_REQUISITO){
          
         try{
-            $query="UPDATE ASIGNACION_TEMA_REQUISITO SET ".$COLUMNA."='".$VALOR."'  "
-                 . "WHERE ID_ASIGNACION_TEMA_REQUISITO=$ID_ASIGNACION_TEMA_REQUISITO";
+            $query="UPDATE asignacion_tema_requisito SET ".$COLUMNA."='".$VALOR."'  "
+                 . "WHERE id_asignacion_tema_requisito=$ID_ASIGNACION_TEMA_REQUISITO";
             
 //             $query="UPDATE EMPLEADOS SET CORREO='$Correo' WHERE ID_EMPLEADO=$Id_Empleado";
      
@@ -114,7 +128,7 @@ class AsignacionTemaRequisitoDAO {
     
     public function eliminarAsignacionTemaRequisito($id_asignacion_tema_requisito){
         try{
-            $query="DELETE FROM ASIGNACION_TEMA_REQUISITO WHERE ID_ASIGNACION_TEMA_REQUISITO=$id_asignacion_tema_requisito";
+            $query="DELETE FROM asignacion_tema_requisito WHERE id_asignacion_tema_requisito=$id_asignacion_tema_requisito";
             $db=  AccesoDB::getInstancia();
             $db->executeQueryUpdate($query);
         } catch (Exception $ex) {
