@@ -46,12 +46,12 @@ require_once '../util/Session.php';
                      <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                      
                      <!--en esta seccion es para poder abrir el modal--> 
-                     <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
-                     
-                      <link href="../../codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
+                     <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>             
+                     <link href="../../codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
                      <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
                      <script src="../../codebase/dhtmlx.js"></script>
                      <!--aqui termina la seccion para poder abrir el modal--> 
+                     
                     
                      <!--<script src="../../assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>-->
                 
@@ -102,18 +102,15 @@ require_once '../util/Session.php';
 		<script>
                     
                     $(function(){
-                          $("#create-item").draggable({
+                         
+        
+                         $("#create-item").draggable({
                              handle: ".modal-header"
                          });
+                         
+                         
                         $("#btn_guardar").click(function(){
-                            
-                          
-                            
-                            
-                            
-                            
-                            
-                            
+                                                                                  
                                   var NOMBRE_EMPLEADO=$("#NOMBRE_EMPLEADO").val();
                                   var APELLIDO_PATERNO=$("#APELLIDO_PATERNO").val();
                                   var APELLIDO_MATERNO=$("#APELLIDO_MATERNO").val();
@@ -140,6 +137,7 @@ require_once '../util/Session.php';
                                 }
                                     
                         });
+                        
                         
                          $("#btn_limpiar").click(function(){
                                   $("#NOMBRE_EMPLEADO").val("");
@@ -569,9 +567,11 @@ require_once '../util/Session.php';
 				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
 					  Agregar Empleado
 				</button>
+
                                 <button type="button" class="btn btn-info " onclick="refresh();" >
                                     <i class="glyphicon glyphicon-repeat"></i> 
 				</button>
+
   <div class="contenedortable">   
 <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Nombre">
 <input type="text" id="idInputapellidopaterno" onkeyup="filterTableapellidoPaterno()" placeholder="Buscar Por Apellido Paterno">
