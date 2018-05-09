@@ -6,11 +6,18 @@ class DocumentoDAO{
     //consulta los datos de un empleado por su nombre de usuario
     public function mostrarDocumentos(){
         try{
-            $query="SELECT TBDOCUMENTOS.ID_DOCUMENTO, TBDOCUMENTOS.CLAVE_DOCUMENTO, TBDOCUMENTOS.DOCUMENTO,
-                    TBEMPLEADOS.ID_EMPLEADO, TBEMPLEADOS.NOMBRE_EMPLEADO, TBEMPLEADOS.APELLIDO_PATERNO,
-                    TBEMPLEADOS.APELLIDO_MATERNO FROM DOCUMENTOS TBDOCUMENTOS
+//            $query="SELECT TBDOCUMENTOS.ID_DOCUMENTO, TBDOCUMENTOS.CLAVE_DOCUMENTO, TBDOCUMENTOS.DOCUMENTO,
+//                    TBEMPLEADOS.ID_EMPLEADO, TBEMPLEADOS.NOMBRE_EMPLEADO, TBEMPLEADOS.APELLIDO_PATERNO,
+//                    TBEMPLEADOS.APELLIDO_MATERNO FROM DOCUMENTOS TBDOCUMENTOS
+//
+//                    JOIN EMPLEADOS TBEMPLEADOS ON TBEMPLEADOS.ID_EMPLEADO=TBDOCUMENTOS.ID_EMPLEADO";
+            
+            $query="SELECT tbdocumentos.id_documento, tbdocumentos.clave_documento, tbdocumentos.documento,
+                    tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno,
+                    tbempleados.apellido_materno FROM documentos tbdocumentos
 
-                    JOIN EMPLEADOS TBEMPLEADOS ON TBEMPLEADOS.ID_EMPLEADO=TBDOCUMENTOS.ID_EMPLEADO";
+                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumentos.id_empleado
+";
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
@@ -26,7 +33,9 @@ class DocumentoDAO{
 
     public function mostrarDocumentosComboBox(){
         try{
-            $query="SELECT ID_DOCUMENTO, CLAVE_DOCUMENTO, DOCUMENTO FROM DOCUMENTOS";
+//            $query="SELECT ID_DOCUMENTO, CLAVE_DOCUMENTO, DOCUMENTO FROM DOCUMENTOS";
+            $query="SELECT id_documento, clave_documento, documento FROM documentos";
+            
 //            $query="SELECT ID_EMPLEADO  FROM EMPLEADOS";
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
@@ -50,16 +59,16 @@ class DocumentoDAO{
         
         try{
             
-            $query_obtenerMaximo_mas_uno="SELECT max(ID_DOCUMENTO)+1 as ID_DOCUMENTO from DOCUMENTOS";
+            $query_obtenerMaximo_mas_uno="SELECT max(id_documento)+1 as id_documento FROM documentos";
             $db_obtenerMaximo_mas_uno=AccesoDB::getInstancia();
             $lista_id_nuevo_autoincrementado=$db_obtenerMaximo_mas_uno->executeQuery($query_obtenerMaximo_mas_uno);
             $id_nuevo=0;
             
             foreach ($lista_id_nuevo_autoincrementado as $value) {
-               $id_nuevo= $value["ID_DOCUMENTO"];
+               $id_nuevo= $value["id_documento"];
             }
             
-            $query="INSERT INTO DOCUMENTOS(ID_DOCUMENTO,CLAVE_DOCUMENTO,DOCUMENTO,ID_EMPLEADO)"
+            $query="INSERT INTO documentos(id_documento,clave_documento,documento,id_empleado)"
                     . "VALUES($id_nuevo,'$clave_documento','$documento',$id_empleado)";
             
             $db=  AccesoDB::getInstancia();
@@ -74,7 +83,7 @@ class DocumentoDAO{
     public function actualizarDocumentoPorColumna($COLUMNA,$VALOR,$ID_DOCUMENTO){
          
         try{
-            $query="UPDATE DOCUMENTOS SET ".$COLUMNA."='".$VALOR."'  WHERE ID_DOCUMENTO=$ID_DOCUMENTO";
+            $query="UPDATE documentos SET ".$COLUMNA."='".$VALOR."'  WHERE id_documento=$ID_DOCUMENTO";
 //             $query="UPDATE EMPLEADOS SET CORREO='$Correo' WHERE ID_EMPLEADO=$Id_Empleado";
      
             $db= AccesoDB::getInstancia();
@@ -90,7 +99,7 @@ class DocumentoDAO{
     
     public function eliminarDocumento($id_documento){
         try{
-            $query="DELETE FROM DOCUMENTOS WHERE ID_DOCUMENTO=$id_documento";
+            $query="DELETE FROM documentos WHERE id_documento=$id_documento";
             $db=  AccesoDB::getInstancia();
             $db->executeQueryUpdate($query);
         } catch (Exception $ex) {

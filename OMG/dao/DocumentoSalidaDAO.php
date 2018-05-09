@@ -4,24 +4,44 @@ class DocumentoSalidaDAO{
 
     public function mostrarDocumentosSalida(){
         try{
-            $query="SELECT TBDOCUMENTO_SALIDA.ID_DOCUMENTO_SALIDA,TBDOCUMENTO_ENTRADA.ID_DOCUMENTO_ENTRADA,
-                    TBDOCUMENTO_ENTRADA.FOLIO_ENTRADA,TBDOCUMENTO_SALIDA.FOLIO_SALIDA,
-                    TBDOCUMENTO_SALIDA.FECHA_ENVIO, TBDOCUMENTO_SALIDA.ASUNTO,
-                    TBENTIDAD_REGULADORA.CLAVE_ENTIDAD,TBDOCUMENTO_SALIDA.DESTINATARIO,
-                    TBEMPLEADOS.NOMBRE_EMPLEADO,TBEMPLEADOS.APELLIDO_PATERNO, 
-                    TBEMPLEADOS.APELLIDO_MATERNO, TBDOCUMENTO_SALIDA.DOCUMENTO,
-                    TBDOCUMENTO_SALIDA.OBSERVACIONES FROM DOCUMENTO_SALIDA TBDOCUMENTO_SALIDA
+//            $query="SELECT TBDOCUMENTO_SALIDA.ID_DOCUMENTO_SALIDA,TBDOCUMENTO_ENTRADA.ID_DOCUMENTO_ENTRADA,
+//                    TBDOCUMENTO_ENTRADA.FOLIO_ENTRADA,TBDOCUMENTO_SALIDA.FOLIO_SALIDA,
+//                    TBDOCUMENTO_SALIDA.FECHA_ENVIO, TBDOCUMENTO_SALIDA.ASUNTO,
+//                    TBENTIDAD_REGULADORA.CLAVE_ENTIDAD,TBDOCUMENTO_SALIDA.DESTINATARIO,
+//                    TBEMPLEADOS.NOMBRE_EMPLEADO,TBEMPLEADOS.APELLIDO_PATERNO, 
+//                    TBEMPLEADOS.APELLIDO_MATERNO, TBDOCUMENTO_SALIDA.DOCUMENTO,
+//                    TBDOCUMENTO_SALIDA.OBSERVACIONES FROM DOCUMENTO_SALIDA TBDOCUMENTO_SALIDA
+//
+//                    JOIN DOCUMENTO_ENTRADA TBDOCUMENTO_ENTRADA ON
+//                    TBDOCUMENTO_ENTRADA.ID_DOCUMENTO_ENTRADA=TBDOCUMENTO_SALIDA.ID_DOCUMENTO_ENTRADA
+//
+//                    JOIN ENTIDAD_REGULADORA TBENTIDAD_REGULADORA ON
+//                    TBENTIDAD_REGULADORA.ID_ENTIDAD=TBDOCUMENTO_ENTRADA.ID_ENTIDAD
+//
+//                    JOIN CLAUSULAS TBCLAUSULAS ON
+//                    TBCLAUSULAS.ID_CLAUSULA=TBDOCUMENTO_ENTRADA.ID_CLAUSULA
+//
+//                    JOIN EMPLEADOS TBEMPLEADOS ON TBEMPLEADOS.ID_EMPLEADO=TBCLAUSULAS.ID_EMPLEADO";
+            
+            
+            $query="SELECT tbdocumento_salida.id_documento_salida,tbdocumento_entrada.id_documento_entrada,
+                    tbdocumento_entrada.folio_entrada,tbdocumento_salida.folio_salida,
+                    tbdocumento_salida.fecha_envio, tbdocumento_salida.asunto,
+                    tbentidad_reguladora.clave_entidad,tbdocumento_salida.destinatario,
+                    tbempleados.nombre_empleado,tbempleados.apellido_paterno, 
+                    tbempleados.apellido_materno, tbdocumento_salida.documento,
+                    tbdocumento_salida.observaciones FROM documento_salida tbdocumento_salida
 
-                    JOIN DOCUMENTO_ENTRADA TBDOCUMENTO_ENTRADA ON
-                    TBDOCUMENTO_ENTRADA.ID_DOCUMENTO_ENTRADA=TBDOCUMENTO_SALIDA.ID_DOCUMENTO_ENTRADA
+                    JOIN documento_entrada tbdocumento_entrada ON
+                    tbdocumento_entrada.id_documento_entrada=tbdocumento_salida.id_documento_entrada
 
-                    JOIN ENTIDAD_REGULADORA TBENTIDAD_REGULADORA ON
-                    TBENTIDAD_REGULADORA.ID_ENTIDAD=TBDOCUMENTO_ENTRADA.ID_ENTIDAD
+                    JOIN entidad_reguladora tbentidad_reguladora ON
+                    tbentidad_reguladora.id_entidad=tbdocumento_entrada.id_entidad
 
-                    JOIN CLAUSULAS TBCLAUSULAS ON
-                    TBCLAUSULAS.ID_CLAUSULA=TBDOCUMENTO_ENTRADA.ID_CLAUSULA
+                    JOIN clausulas tbclausulas ON
+                    tbclausulas.id_clausula=tbdocumento_entrada.id_clausula
 
-                    JOIN EMPLEADOS TBEMPLEADOS ON TBEMPLEADOS.ID_EMPLEADO=TBCLAUSULAS.ID_EMPLEADO";
+                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbclausulas.id_empleado";
 
 
             $db=  AccesoDB::getInstancia();
@@ -41,13 +61,13 @@ class DocumentoSalidaDAO{
         
         try{
             
-            $query_obtenerMaximo_mas_uno="SELECT max(ID_DOCUMENTO_SALIDA)+1 as ID_DOCUMENTO_SALIDA from DOCUMENTO_SALIDA";
+            $query_obtenerMaximo_mas_uno="SELECT max(id_documento_salida)+1 as id_documento_salida FROM documento_salida";
             $db_obtenerMaximo_mas_uno=AccesoDB::getInstancia();
             $lista_id_nuevo_autoincrementado=$db_obtenerMaximo_mas_uno->executeQuery($query_obtenerMaximo_mas_uno);
             $id_nuevo=0;
             
             foreach ($lista_id_nuevo_autoincrementado as $value) {
-               $id_nuevo= $value["ID_DOCUMENTO_SALIDA"];
+               $id_nuevo= $value["id_documento_salida"];
             }
             
             if ($id_nuevo==NULL) {
@@ -55,9 +75,14 @@ class DocumentoSalidaDAO{
             }
             
             
-            $query="INSERT INTO DOCUMENTO_SALIDA (ID_DOCUMENTO_SALIDA,ID_DOCUMENTO_ENTRADA,FOLIO_SALIDA,FECHA_ENVIO,ASUNTO,DESTINATARIO,
-						  DOCUMENTO,OBSERVACIONES)
-										
+//            $query="INSERT INTO DOCUMENTO_SALIDA (ID_DOCUMENTO_SALIDA,ID_DOCUMENTO_ENTRADA,FOLIO_SALIDA,FECHA_ENVIO,ASUNTO,DESTINATARIO,
+//						  DOCUMENTO,OBSERVACIONES)
+
+            
+             $query="insert into documento_salida (id_documento_salida,id_documento_entrada,folio_salida,fecha_envio,asunto,destinatario,
+						  documento,observaciones)
+                                                  
+                                                    
                                           VALUES ($id_nuevo,$id_documento_entrada,'$folio_salida','$fecha_envio','$asunto','$destinatario',
                                                   '$documento','$observaciones');";
             
@@ -88,7 +113,7 @@ class DocumentoSalidaDAO{
     public function actualizarDocumentoSalidaPorColumna($COLUMNA,$VALOR,$ID_DOCUMENTO_SALIDA){
          
         try{
-            $query="UPDATE DOCUMENTO_SALIDA SET ".$COLUMNA."='".$VALOR."'  WHERE ID_DOCUMENTO_SALIDA=$ID_DOCUMENTO_SALIDA";
+            $query="UPDATE documento_salida SET ".$COLUMNA."='".$VALOR."'  WHERE id_documento_salida=$ID_DOCUMENTO_SALIDA";
 //             $query="UPDATE EMPLEADOS SET CORREO='$Correo' WHERE ID_EMPLEADO=$Id_Empleado";
      
             $db= AccesoDB::getInstancia();
@@ -104,7 +129,7 @@ class DocumentoSalidaDAO{
     
     public function eliminarClausula($id_clausula){
         try{
-            $query="DELETE FROM CLAUSULAS WHERE ID_CLAUSULA=$id_clausula";
+            $query="DELETE FROM documento_salida WHERE id_documento_salida=$id_clausula";
             $db=  AccesoDB::getInstancia();
             $db->executeQueryUpdate($query);
         } catch (Exception $ex) {

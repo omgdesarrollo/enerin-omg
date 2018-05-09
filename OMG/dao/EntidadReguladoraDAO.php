@@ -4,8 +4,13 @@ class EntidadReguladoraDAO{
 
     public function mostrarEntidadesReguladoras(){
         try{
-            $query="SELECT ID_ENTIDAD ID_ENTIDAD, CLAVE_ENTIDAD, DESCRIPCION, DIRECCION, TELEFONO, EXTENSION, EMAIL,"
-                 . "DIRECCION_WEB FROM ENTIDAD_REGULADORA";
+//            $query="SELECT ID_ENTIDAD ID_ENTIDAD, CLAVE_ENTIDAD, DESCRIPCION, DIRECCION, TELEFONO, EXTENSION, EMAIL,"
+//                 . "DIRECCION_WEB FROM ENTIDAD_REGULADORA";
+            
+            
+            $query="SELECT id_entidad id_entidad, clave_entidad, descripcion, direccion, telefono, extension, email,"
+                 . "direccion_web FROM entidad_reguladora";
+            
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             
@@ -20,8 +25,14 @@ class EntidadReguladoraDAO{
     
     public function mostrarEntidadesReguladorasComboBox(){
         try{
-            $query="SELECT ID_ENTIDAD ID_ENTIDAD, CLAVE_ENTIDAD, DESCRIPCION, DIRECCION, TELEFONO, EXTENSION, EMAIL,"
-                 . "DIRECCION_WEB FROM ENTIDAD_REGULADORA";
+//            $query="SELECT ID_ENTIDAD ID_ENTIDAD, CLAVE_ENTIDAD, DESCRIPCION, DIRECCION, TELEFONO, EXTENSION, EMAIL,"
+//                 . "DIRECCION_WEB FROM ENTIDAD_REGULADORA";
+            
+            
+            $query="SELECT id_entidad id_entidad, clave_entidad, descripcion, direccion, telefono, extension, email,"
+                 . "direccion_web FROM entidad_reguladora";
+            
+            
 //            $query="SELECT ID_EMPLEADO  FROM EMPLEADOS";
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
@@ -47,13 +58,13 @@ class EntidadReguladoraDAO{
         
         try{
             
-            $query_obtenerMaximo_mas_uno="SELECT max(ID_ENTIDAD)+1 as ID_ENTIDAD from ENTIDAD_REGULADORA";
+            $query_obtenerMaximo_mas_uno="SELECT max(id_entidad)+1 as id_entidad from entidad_reguladora";
             $db_obtenerMaximo_mas_uno=AccesoDB::getInstancia();
             $lista_id_nuevo_autoincrementado=$db_obtenerMaximo_mas_uno->executeQuery($query_obtenerMaximo_mas_uno);
             $id_nuevo=0;
           
             foreach ($lista_id_nuevo_autoincrementado as $value) {
-               $id_nuevo= $value["ID_ENTIDAD"];
+               $id_nuevo= $value["id_entidad"];
             }
             
             if($id_nuevo==NULL){
@@ -61,7 +72,7 @@ class EntidadReguladoraDAO{
             }
             
             
-            $query="INSERT INTO ENTIDAD_REGULADORA(ID_ENTIDAD, CLAVE_ENTIDAD, DESCRIPCION, DIRECCION, TELEFONO, EXTENSION, EMAIL, DIRECCION_WEB)"
+            $query="INSERT INTO entidad_reguladora(id_entidad, clave_entidad, descripcion, direccion, telefono, extension, email, direccion_web)"
                     . "VALUES($id_nuevo,'$clave_entidad','$descripcion','$direccion','$telefono','$extension','$email','$direccion_web')";
             
             $db=  AccesoDB::getInstancia();
@@ -89,7 +100,7 @@ class EntidadReguladoraDAO{
     public function actualizarEntidadReguladoraPorColumna($COLUMNA,$VALOR,$id_entidad){
          
         try{
-            $query="UPDATE ENTIDAD_REGULADORA SET ".$COLUMNA."='".$VALOR."'  WHERE ID_ENTIDAD=$id_entidad";
+            $query="UPDATE entidad_reguladora SET ".$COLUMNA."='".$VALOR."'  WHERE id_entidad=$id_entidad";
 //             $query="UPDATE EMPLEADOS SET CORREO='$Correo' WHERE ID_EMPLEADO=$Id_Empleado";
      
             $db= AccesoDB::getInstancia();
@@ -103,7 +114,7 @@ class EntidadReguladoraDAO{
     
     public function eliminarEntidadReguladora($id_entidad){
         try{
-            $query="DELETE FROM ENTIDAD_REGULADORA WHERE ID_ENTIDAD=$id_entidad";
+            $query="DELETE FROM entidad_reguladora WHERE id_entidad=$id_entidad";
             $db=  AccesoDB::getInstancia();
             $db->executeQueryUpdate($query);
         } catch (Exception $ex) {
