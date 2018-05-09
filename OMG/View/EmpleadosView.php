@@ -121,9 +121,9 @@ require_once '../util/Session.php';
                                   var CORREO=$("#CORREO").val();
                                   
                                   
-//                                  alert("nombre :"+NOMBRE_EMPLEADO+" APELLIDO PATERNO :   "+APELLIDO_PATERNO
-//                                    +" APELLIDO MATERNO : "+APELLIDO_MATERNO+" CATEGORIA : "+CATEGORIA+" CORREO :"      
-//                                    +CORREO);
+                                  alert("nombre :"+NOMBRE_EMPLEADO+" APELLIDO PATERNO :   "+APELLIDO_PATERNO
+                                    +" APELLIDO MATERNO : "+APELLIDO_MATERNO+" CATEGORIA : "+CATEGORIA+" CORREO :"      
+                                    +CORREO);
                                     datos=[];
                                     datos.push(NOMBRE_EMPLEADO);
                                     datos.push(APELLIDO_PATERNO);
@@ -133,7 +133,7 @@ require_once '../util/Session.php';
                                     correcto=validarCamposVacios(datos);
                                     alert("e  : "+correcto);
                                     if(correcto!==false){
-  
+                                                    alert("si paso ");
                                     saveToDatabaseDatosFormulario(datos);
                                 }else{
                                     alert("no paso ");

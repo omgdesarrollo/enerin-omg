@@ -719,7 +719,7 @@ $Usuario=  Session::getSesion("user");
                         });
   
                         $("#btn_guardar").click(function(){
-                                  alert("entro");
+                                //   alert("entro");
        
         
                                     var ID_CUMPLIMIENTOMODAL=$("#ID_CUMPLIMIENTOMODAL").val();
