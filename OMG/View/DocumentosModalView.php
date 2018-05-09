@@ -104,8 +104,8 @@ $Usuario=  Session::getSesion("user");
 		  ?>
 			  <tr class="table-row">
 				                              
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'CLAVE_DOCUMENTO','<?php echo $filas["ID_DOCUMENTO"]; ?>')" onClick="showEdit(this);"><?php echo $filas["CLAVE_DOCUMENTO"]; ?></td>
-                                <td   contenteditable="false" onBlur="saveToDatabase(this,'DOCUMENTO','<?php echo $filas["ID_DOCUMENTO"]; ?>')" onClick="showEdit(this);"><?php echo $filas["DOCUMENTO"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'clave_documento','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_documento"]; ?></td>
+                                <td   contenteditable="false" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
                                 
 			  </tr>
 		<?php

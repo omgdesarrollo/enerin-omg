@@ -76,14 +76,14 @@ $Usuario=  Session::getSesion("user");
 		  ?>
 			  <tr class="table-row">
 				                              
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'CLAUSULA','<?php echo $filas["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["CLAUSULA"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'SUB_CLAUSULA','<?php echo $filas["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["SUB_CLAUSULA"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'DESCRIPCION_CLAUSULA','<?php echo $filas["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["DESCRIPCION_CLAUSULA"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'DESCRIPCION_SUB_CLAUSULA','<?php echo $filas["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["DESCRIPCION_SUB_CLAUSULA"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'DESCRIPCION_SUB_CLAUSULA','<?php echo $filas["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php echo "".$filas["NOMBRE_EMPLEADO"]." ".$filas["APELLIDO_PATERNO"]." ".$filas["APELLIDO_MATERNO"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'TEXTO_BREVE','<?php echo $filas["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["TEXTO_BREVE"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'DESCRIPCION','<?php echo $filas["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["DESCRIPCION"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'PLAZO','<?php echo $filas["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["PLAZO"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clausula"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'sub_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["sub_clausula"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion_clausula"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'descripcion_sub_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion_sub_clausula"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'descripcion_sub_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo "".$filas["nombre_empleado"]." ".$filas["apellido_paterno"]." ".$filas["apellido_materno"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'texto_breve','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["texto_breve"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'descripcion','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'plazo','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["plazo"]; ?></td>
                           </tr>
 		<?php
 		}

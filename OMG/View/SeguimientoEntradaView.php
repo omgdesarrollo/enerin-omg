@@ -232,26 +232,26 @@ require_once '../util/Session.php';
                                 
                                 
                                 
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'FOLIO_ENTRADA','<?php echo $filas["ID_SEGUIMIENTO_ENTRADA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["FOLIO_ENTRADA"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'CLAVE_ENTIDAD','<?php echo $filas["ID_SEGUIMIENTO_ENTRADA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["CLAVE_ENTIDAD"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'ASUNTO','<?php echo $filas["ID_SEGUIMIENTO_ENTRADA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["ASUNTO"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'NOMBRE_EMPLEADOTEMA','<?php echo $filas["ID_SEGUIMIENTO_ENTRADA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["NOMBRE_EMPLEADOTEMA"]." ".$filas["APELLIDO_PATERNOTEMA"]." ".$filas["APELLIDO_PATERNOTEMA"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'FECHA_LIMITE_ATENCION','<?php echo $filas["ID_SEGUIMIENTO_ENTRADA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["FECHA_LIMITE_ATENCION"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'STATUS_DOC','<?php echo $filas["ID_SEGUIMIENTO_ENTRADA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["STATUS_DOC"]; ?></td>
-                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'NOMBRE_EMPLEADOPLAN','<?php echo $filas["ID_SEGUIMIENTO_ENTRADA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["NOMBRE_EMPLEADOPLAN"]; ?></td>-->
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'folio_entrada','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["folio_entrada"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'clave_entidad','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_entidad"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'asunto','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["asunto"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleadotema','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleadotema"]." ".$filas["apellido_paternotema"]." ".$filas["apellido_maternotema"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'fecha_limite_atencion','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["FECHA_LIMITE_ATENCION"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'status_doc','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["status_doc"]; ?></td>
+                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'NOMBRE_EMPLEADOPLAN','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleadoplan"]; ?></td>-->
                                                                                                                              
                                 <td> 
-                                    <select   id="id_empleado" class="select"  onchange="saveComboToDatabase('ID_EMPLEADO', <?php echo $filas["ID_SEGUIMIENTO_ENTRADA"]; ?> )">
+                                    <select   id="id_empleado" class="select"  onchange="saveComboToDatabase('id_empleado', <?php echo $filas["id_seguimiento_entrada"]; ?> )">
                                     
                                     <?php
                                     $s="";
                                                 foreach ($cbxEmpleadoPlan as $value) {
                                                     
-                                                    if($value["ID_EMPLEADOPLAN"]=="".$filas["ID_EMPLEADO"]){
+                                                    if($value["id_empleadoplan"]=="".$filas["id_empleado"]){
 //                                                        $s="selected";
                                                     ?>
                                     
-                                        <option value="<?php echo "".$filas["ID_EMPLEADOPLAN"] ?>"  selected ><?php echo "".$filas["NOMBRE_EMPLEADOPLAN"]." ".$filas["APELLIDO_PATERNOPLAN"]." ".$filas["APELLIDO_MATERNOPLAN"]; ?></option>
+                                        <option value="<?php echo "".$filas["id_empleadoplan"] ?>"  selected ><?php echo "".$filas["nombre_empleadoplan"]." ".$filas["apellido_paternoplan"]." ".$filas["apellido_maternoplan"]; ?></option>
                                         
                                                         <?php
                                                         }
@@ -266,9 +266,9 @@ require_once '../util/Session.php';
                                                         
                                                         
                                                         foreach($cbxEmpleadoPlan1 as $value1){
-                                                               if($value1["ID_EMPLEADO"]!=$filas["ID_EMPLEADOPLAN"]){
+                                                               if($value1["id_empleado"]!=$filas["id_empleadoplan"]){
                                                          ?>
-                                                            <option value="<?php echo "".$value1["ID_EMPLEADO"] ?>"  ><?php echo "".$value1["NOMBRE_EMPLEADO"]." ".$value1["APELLIDO_PATERNO"]." ".$value1["APELLIDO_MATERNO"]; ?></option>
+                                                            <option value="<?php echo "".$value1["id_empleado"] ?>"  ><?php echo "".$value1["nombre_empleado"]." ".$value1["apellido_paterno"]." ".$value1["apellido_materno"]; ?></option>
 
                                                          <?php
                                                                }
@@ -283,7 +283,7 @@ require_once '../util/Session.php';
                                 </td>
                                 
                                                                     
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'DOCUMENTO','<?php echo $filas["ID_SEGUIMIENTO_ENTRADA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["DOCUMENTO"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
                                 <td ><button class="btn btn-info">Cargar Programa</button></td>
                                 
 			  </tr>

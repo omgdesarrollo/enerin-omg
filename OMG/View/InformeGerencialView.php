@@ -227,13 +227,13 @@ require_once '../util/Session.php';
 
                                 <!--<td><?php //echo $numeracion++;   ?></td -->
                         
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'FOLIO_ENTRADA','<?php echo $filas["ID_INFORME_GERENCIAL"]; ?>')" onClick="showEdit(this);"><?php echo $filas["FOLIO_ENTRADA"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'CLAVE_ENTIDAD','<?php echo $filas["ID_INFORME_GERENCIAL"]; ?>')" onClick="showEdit(this);"><?php echo $filas["CLAVE_ENTIDAD"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'ASUNTO','<?php echo $filas["ID_INFORME_GERENCIAL"]; ?>')" onClick="showEdit(this);"><?php echo $filas["ASUNTO"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'NOMBRE_EMPLEADOTEMA','<?php echo $filas["ID_INFORME_GERENCIAL"]; ?>')" onClick="showEdit(this);"><?php echo $filas["NOMBRE_EMPLEADOTEMA"]." ".$filas["APELLIDO_PATERNOTEMA"]." ".$filas["APELLIDO_MATERNOTEMA"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'FECHA_LIMITE_ATENCION','<?php echo $filas["ID_INFORME_GERENCIAL"]; ?>')" onClick="showEdit(this);"><?php echo $filas["FECHA_LIMITE_ATENCION"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'STATUS_DOC','<?php echo $filas["ID_INFORME_GERENCIAL"]; ?>')" onClick="showEdit(this);"><?php echo $filas["STATUS_DOC"]; ?></td>    
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'DOCUMENTO','<?php echo $filas["ID_INFORME_GERENCIAL"]; ?>')" onClick="showEdit(this);"><?php echo $filas["DOCUMENTO"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'folio_entrada','<?php echo $filas["id_informe_gerencial"]; ?>')" onClick="showEdit(this);"><?php echo $filas["folio_entrada"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'clave_entidad','<?php echo $filas["id_informe_gerencial"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_entidad"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'asunto','<?php echo $filas["id_informe_gerencial"]; ?>')" onClick="showEdit(this);"><?php echo $filas["asunto"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleadotema','<?php echo $filas["id_informe_gerencial"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleadotema"]." ".$filas["apellido_paternotema"]." ".$filas["apellido_maternotema"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'fecha_limite_atencion','<?php echo $filas["id_informe_gerencial"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_limite_atencion"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'status_doc','<?php echo $filas["id_informe_gerencial"]; ?>')" onClick="showEdit(this);"><?php echo $filas["status_doc"]; ?></td>    
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_informe_gerencial"]; ?>')" onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
                                 
                                 
 			  </tr>
