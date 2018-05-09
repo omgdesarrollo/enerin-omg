@@ -205,7 +205,7 @@ $Usuario=  Session::getSesion("user");
                         if(itemIdSeleccion=="pdf")
                            alert("le has picado a pdf");
                         
-                        if(itemIdSeleccion=="catalogo")
+                        if(itemIdSeleccion=="catalogo") 
                            loadDataSideBarCatalogoInformacion();
                        
                        if(itemIdSeleccion=="documentos")

@@ -406,7 +406,7 @@ $Usuario=  Session::getSesion("user");
 					<img class="nav-user-photo" src="../../assets/probando/images/avatars/avatar.png" alt="<?php echo $Usuario["NOMBRE_USUARIO"]; ?>" />
 					<span class="user-info">
 						<small>Bienvenido,</small>
-						<?php echo $Usuario["nombre_usuario"]; ?>
+						<?php echo $Usuario["NOMBRE_USUARIO"]; ?>
 					</span>
 
 <!--								<i class="ace-icon fa fa-caret-down"></i>-->
