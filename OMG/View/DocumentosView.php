@@ -18,7 +18,7 @@ foreach($Alarmas as $alarma)
 	$hoy = new Datetime($al);
 	if($flimite<=$hoy)
 	{
-		$NotificacionesAlarma[$numeroAlarmas]["AFECTADO"] = "FOLIO ".$alarma['FOLIO_ENTRADA']." DEL ".$alarma['clave_cumplimiento'];
+		$NotificacionesAlarma[$numeroAlarmas]["AFECTADO"] = "FOLIO ".$alarma['folio_entrada']." DEL ".$alarma['clave_cumplimiento'];
 			if($flimite == $hoy)
 			{
 				$NotificacionesAlarma[$numeroAlarmas]["MENSAJE"] = "TIEMPO VENCIDO";//mensaje automatico
@@ -33,7 +33,7 @@ foreach($Alarmas as $alarma)
 	}
 	else
 	{
-		if($alarma['FECHA_ALARMA'] != "0000-00-00")
+		if($alarma['fecha_alarma'] != "0000-00-00")
 		{
 			$NotificacionesAlarma[$numeroAlarmas]["AFECTADO"] = "FOLIO ".$alarma['folio_entrada']." DEL ".$alarma['clave_cumplimiento'];
 			if($alarm == $hoy)
