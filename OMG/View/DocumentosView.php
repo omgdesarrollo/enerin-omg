@@ -104,7 +104,7 @@ $Usuario=  Session::getSesion("user");
 			  <tr>
 				<th class="table-header" >NO.</th>
                                 <th class="table-header">CLAVE DEL DOCUMENTO</th>
-				<th class="table-header">DOCUMENTO</th>				
+				<th class="table-header">NOMBRE DEL DOCUMENTO</th>				
 				<th class="table-header">RESPONSABLE DEL DOCUMENTO</th>					                                
 			  </tr>
 		  <!--</thead>-->
