@@ -102,10 +102,10 @@ $Usuario=  Session::getSesion("user");
                            <table class="tbl-qa">
 		  <!--<thead>-->
 			  <tr>
-				<th class="table-header" >NO.</th>
-                                <th class="table-header">CLAVE DEL DOCUMENTO</th>
-				<th class="table-header">DOCUMENTO</th>				
-				<th class="table-header">RESPONSABLE DEL DOCUMENTO</th>					                                
+				<th class="table-header" >No.</th>
+                                <th class="table-header">Clave del Documento</th>
+				<th class="table-header">Nombre del Documento</th>				
+				<th class="table-header">Responsable del Documento</th>					                                
 			  </tr>
 		  <!--</thead>-->
 		  <tbody>
