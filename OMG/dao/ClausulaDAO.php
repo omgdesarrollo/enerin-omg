@@ -19,7 +19,7 @@ class ClausulaDAO{
                     tbclausulas.descripcion, tbclausulas.plazo
                     FROM clausulas tbclausulas
 
-                    JOIN empleados tbempleados ON tbclausulas.id_empleado=tbempleados.id_empleado";
+                    JOIN empleados tbempleados ON tbclausulas.id_empleado=tbempleados.id_empleado ORDER BY  cast(tbclausulas.clausula  as unsigned )";
             
             
             $db=  AccesoDB::getInstancia();
