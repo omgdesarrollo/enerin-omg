@@ -91,17 +91,17 @@ switch ($Op) {
 				$data = $model->insertar($pojo);
 				//   echo $data[0];
 				//  $jsonData['ID_CUMPLIMIENTO'] = $data[0];
-				//  $jsonData['ID_DOCUMENTO'] = $data[1];
+				 $jsonData['ID_DOCUMENTO'] = $data[1];
 				$valores = '/'.$data[0].'/'.$data[1].'/';
 				Session::setSesion("newUrl",$valores);
-				//  header('Content-type: application/json; charset=utf-8');
-				//   echo json_encode($jsonData);
 				// return $data;
                   
                    $traerultimoinsertado=$model->traer_ultimo_insertado();  
                 //   echo json_encode("guarda documento");
-                   $modelSeguimientoEntrada->insertar($traerultimoinsertado);
-                  
+				   $modelSeguimientoEntrada->insertar($traerultimoinsertado);
+				
+				   header('Content-type: application/json; charset=utf-8');
+				echo json_encode($jsonData);
                         
 		break;
         

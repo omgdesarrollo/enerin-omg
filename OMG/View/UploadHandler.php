@@ -49,10 +49,12 @@ class UploadHandler
         $this->response = array();
         $this->options = array(
             // 'script_url' => $this->get_full_url().'/../../archivos/files/'.$newUrl.$this->basename($this->get_server_var('SCRIPT_NAME')),
-            'script_url' => "http://enerin-omgapps.com/enerin-omg/archivos/files".$newUrl.$this->basename($this->get_server_var('SCRIPT_NAME')),            
+            // 'script_url' => "http://enerin-omgapps.com/enerin-omg/archivos/files".$newUrl.$this->basename($this->get_server_var('SCRIPT_NAME')),
+            'script_url' => "localhost/enerin-omg/archivos/files".$newUrl.$this->basename($this->get_server_var('SCRIPT_NAME')),
             'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/',
             // 'upload_url' => $this->get_full_url().'/../../archivos/files/'.$newUrl,
-            'upload_url' => 'http://enerin-omgapps.com/enering-omg/archivos/files'.$newUrl,            
+            // 'upload_url' => 'http://enerin-omgapps.com/enering-omg/archivos/files'.$newUrl,
+            'upload_url' => 'localhost/enering-omg/archivos/files'.$newUrl,            
             'input_stream' => 'php://input',
             'user_dirs' => false,
             'mkdir_mode' => 0755,
@@ -1081,10 +1083,11 @@ class UploadHandler
 
     protected function handle_file_upload($uploaded_file, $name, $size, $type, $error,$index = null, $content_range = null)
     {
-        session_start();
-        require_once '../util/Session.php';
+        // session_start();
+        // require_once '../util/Session.php';
         $newUrl=  Session::getSesion("newUrl");
-        
+        // $archivosUrls = array();
+
         $file = new \stdClass();
         $file->name = $this->get_file_name($uploaded_file, $name, $size, $type, $error,
             $index, $content_range);
@@ -1095,14 +1098,39 @@ class UploadHandler
             $upload_dir = $this->get_upload_path();
             if (!is_dir($upload_dir))
             {
-                echo "\n".$upload_dir."j \n---";
+                // echo "\n".$upload_dir."j \n---";
 
                 mkdir($upload_dir, $this->options['mkdir_mode'], true);
             }
             $file_path = $this->get_upload_path($file->name);
-            // $file_path = "C:/xampp/htdocs/enerin-omg/archivos/files".$newUrl.$file->name;
-            $file_path = "enerin-omgapps.com/enerin-omg/archivos/files".$newUrl.$file->name;
-            echo $file_path."o \n---";
+            $file_path = "C:/xampp/htdocs/enerin-omg/archivos/files".$newUrl.$file->name;
+            // $file_path = "enerin-omgapps.com/enerin-omg/archivos/files".$newUrl.$file->name;
+            $filePath = array();
+            if(Session::getSesion("archivos_urls") == null)
+            {
+                echo "\n Variable vacia";
+                $filePath[0] = $file_path;
+                Session::setSesion("archivos_urls_contador",1);
+                Session::setSesion("archivos_urls",$filePath);
+            }
+            else
+            {
+                // echo "\n existe";
+                $archivoContador = Session::getSesion("archivos_urls_contador");
+                $filePath = Session::getSesion("archivos_urls");
+                $filePath[$archivoContador] = $file_path;
+                $archivoContador = $archivoContador + 1;
+                Session::setSesion("archivos_urls_contador",$archivoContador);
+                Session::setSesion("archivos_urls",$filePath);
+                // foreach($filePath as $valores)
+                // {
+                //     echo "\n";
+                //     echo $valores;
+                // }
+                // echo "\n".$archivoContador;
+                // echo "\n vector".array($filePath);
+            }
+            // echo $file_path."o \n---";
 
             $append_file = $content_range && is_file($file_path) &&
                 $file->size > $this->get_file_size($file_path);
@@ -1111,18 +1139,18 @@ class UploadHandler
             if ($uploaded_file && is_uploaded_file($uploaded_file)) {
                 // multipart/formdata uploads (POST method uploads)
                 if ($append_file) {
-                    echo "1 \n---";
+                    // echo "1 \n---";
                     file_put_contents(
                         $file_path,
                         fopen($uploaded_file, 'r'),
                         FILE_APPEND
                     );
                 } else {
-                    echo "2 \n---";
+                    // echo "2 \n---";
                     move_uploaded_file($uploaded_file, $file_path);
                 }
             } else {
-                echo "3 \n---";
+                // echo "3 \n---";
                 // Non-multipart uploads (PUT method support)
                 file_put_contents(
                     $file_path,
