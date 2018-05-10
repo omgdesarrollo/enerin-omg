@@ -79,6 +79,15 @@ $Usuario=  Session::getSesion("user");
                       text-align:center;
                       padding-top:10px;
                     }
+                .minusculas{
+                text-transform:lowercase;
+                 }	
+            .mayusculas{
+                    text-transform:uppercase;
+            }	
+                    
+                    
+                    
                 </style>    
                 
                 
