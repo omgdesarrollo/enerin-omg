@@ -108,9 +108,9 @@ switch ($Op) {
 				//   echo json_encode($jsonData);
 				// return $data;
                   
-                //   $traerultimoinsertado=$model->traer_ultimo_insertado();  
+                   $traerultimoinsertado=$model->traer_ultimo_insertado();  
                 //   echo json_encode("guarda documento");
-                //   $modelSeguimientoEntrada->insertar($traerultimoinsertado);
+                   $modelSeguimientoEntrada->insertar($traerultimoinsertado);
                   
                         
 		break;

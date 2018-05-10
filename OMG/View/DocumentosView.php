@@ -33,7 +33,7 @@ foreach($Alarmas as $alarma)
 	}
 	else
 	{
-		if($alarma['FECHA_ALARMA'] != "0000-00-00")
+		if($alarma['fecha_alarma'] != "0000-00-00")
 		{
 			$NotificacionesAlarma[$numeroAlarmas]["AFECTADO"] = "FOLIO ".$alarma['folio_entrada']." DEL ".$alarma['clave_cumplimiento'];
 			if($alarm == $hoy)

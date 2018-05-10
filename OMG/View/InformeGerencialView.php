@@ -37,16 +37,56 @@ require_once '../util/Session.php';
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
                 
-             <script src="../../js/jquery.js" type="text/javascript"></script>
-
+                <script src="../../js/jquery.js" type="text/javascript"></script>
 		<script src="../../assets/probando/js/ace-extra.min.js"></script>
+                <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+                <script src="../../js/loaderanimation.js" type="text/javascript"></script>      
+                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 
                 
-                 <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
-                     <script src="../../js/loaderanimation.js" type="text/javascript"></script>
-                     
- <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-                    
+                <!--en esta seccion es para poder abrir el modal--> 
+                <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>             
+                <link href="../../codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
+                <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
+                <script src="../../codebase/dhtmlx.js"></script>
+                <!--aqui termina la seccion para poder abrir el modal-->
+                
+                
+                <style>
+                    .modal
+                    {
+                        overflow: hidden;
+                    }
+                    .modal-dialog{
+                        margin-right: 0;
+                        margin-left: 0;
+                    }
+                    .modal-header{
+                      height:30px;background-color:#444;
+                      color:#ddd;
+                    }
+                    .modal-title{
+                      margin-top:-10px;
+                      font-size:16px;
+                    }
+                    .modal-header .close{
+                      margin-top:-10px;
+                      color:#fff;
+                    }
+                    .modal-body{
+                      color:#888;
+                       /*max-height: calc(100vh - 210px);*/
+                      max-height: calc(100vh - 110px);
+                      overflow-y: auto;
+                    }
+                    .modal-body p {
+                      text-align:center;
+                      padding-top:10px;
+                    }
+                </style>
+                
+                
+                
 	</head>
 
         <body class="no-skin" onload="loadSpinner()">
@@ -185,6 +225,12 @@ require_once '../util/Session.php';
             </div>
         </div>
 
+             
+             
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-grafica">
+Informe
+</button>             
+             
 	<div style="display:none;" id="myDiv" class="animate-bottom"> 
                      <div class="contenedortable">
                            <table class="tbl-qa">
@@ -277,7 +323,29 @@ require_once '../util/Session.php';
 </div>
 
 	
-                
+<!-- Inicio de Seccion Modal -->
+       <div class="modal draggable fade" id="mostrar-grafica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+		<div class="modal-content">
+                    
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title" id="myModalLabel">GRAFICA</h4>
+                    </div>
+
+                    <div id="validacion_empleado" class="modal-body">
+
+                                    
+
+		      		
+
+                    </div>
+                    
+		</div>
+
+            </div>
+       </div>
+<!--Final de Seccion Modal-->                
                 
                 
                 
@@ -324,7 +392,7 @@ require_once '../util/Session.php';
                       
                       
                       
-                      $(function(){
+                    $(function(){
                         $('.select').on('change', function() {
 //                          console.log( $(this).prop('value') );
 //                          alert("el value que va a viajar es "+ $(this).prop('value'));
@@ -347,8 +415,13 @@ require_once '../util/Session.php';
                           
                         });
   
+                        
+                        $("#mostrar-grafica").draggable({
+                             handle: ".modal-header"
+                        });   
   
-                      });
+  
+                    });//cierra el $function
                       
                       
                                                   
@@ -424,13 +497,13 @@ require_once '../util/Session.php';
                 }
                 
 		</script>
-                
-                
-                
+                              
+
+
+
                 
 	</body>
-        
-        
+    
         
 </html>
 

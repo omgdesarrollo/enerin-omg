@@ -258,13 +258,13 @@ require_once '../util/Session.php';
 		  ?>
 			  <tr class="table-row">
 				<td><?php echo $numeracion++;   ?></td>                               
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'CLAVE_ENTIDAD','<?php echo $filas["ID_ENTIDAD"]; ?>')" onClick="showEdit(this);"><?php echo $filas["CLAVE_ENTIDAD"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'DESCRIPCION','<?php echo $filas["ID_ENTIDAD"]; ?>')" onClick="showEdit(this);"><?php echo $filas["DESCRIPCION"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'DIRECCION','<?php echo $filas["ID_ENTIDAD"]; ?>')" onClick="showEdit(this);"><?php echo $filas["DIRECCION"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'TELEFONO','<?php echo $filas["ID_ENTIDAD"]; ?>')" onClick="showEdit(this);"><?php echo $filas["TELEFONO"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'EXTENSION','<?php echo $filas["ID_ENTIDAD"]; ?>')" onClick="showEdit(this);"><?php echo $filas["EXTENSION"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'EMAIL','<?php echo $filas["ID_ENTIDAD"]; ?>')" onClick="showEdit(this);"><?php echo $filas["EMAIL"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'DIRECCION_WEB','<?php echo $filas["ID_ENTIDAD"]; ?>')" onClick="showEdit(this);"><?php echo $filas["DIRECCION_WEB"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'clave_entidad','<?php echo $filas["id_entidad"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_entidad"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'descripcion','<?php echo $filas["id_entidad"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'direccion','<?php echo $filas["id_entidad"]; ?>')" onClick="showEdit(this);"><?php echo $filas["direccion"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'telefono','<?php echo $filas["id_entidad"]; ?>')" onClick="showEdit(this);"><?php echo $filas["telefono"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'extension','<?php echo $filas["id_entidad"]; ?>')" onClick="showEdit(this);"><?php echo $filas["extension"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'email','<?php echo $filas["id_entidad"]; ?>')" onClick="showEdit(this);"><?php echo $filas["email"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'direccion_web','<?php echo $filas["id_entidad"]; ?>')" onClick="showEdit(this);"><?php echo $filas["direccion_web"]; ?></td>
                                 
 			  </tr>
 		<?php
