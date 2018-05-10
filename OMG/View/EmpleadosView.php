@@ -121,9 +121,9 @@ require_once '../util/Session.php';
                                   var CORREO=$("#CORREO").val();
                                   
                                   
-                                  alert("nombre :"+NOMBRE_EMPLEADO+" APELLIDO PATERNO :   "+APELLIDO_PATERNO
-                                    +" APELLIDO MATERNO : "+APELLIDO_MATERNO+" CATEGORIA : "+CATEGORIA+" CORREO :"      
-                                    +CORREO);
+//                                  alert("nombre :"+NOMBRE_EMPLEADO+" APELLIDO PATERNO :   "+APELLIDO_PATERNO
+//                                    +" APELLIDO MATERNO : "+APELLIDO_MATERNO+" CATEGORIA : "+CATEGORIA+" CORREO :"      
+//                                    +CORREO);
                                     datos=[];
                                     datos.push(NOMBRE_EMPLEADO);
                                     datos.push(APELLIDO_PATERNO);
@@ -133,10 +133,10 @@ require_once '../util/Session.php';
                                     correcto=validarCamposVacios(datos);
                                     alert("e  : "+correcto);
                                     if(correcto!==false){
-                                                    alert("si paso ");
+                                                  //  alert("si paso ");
                                     saveToDatabaseDatosFormulario(datos);
                                 }else{
-                                    alert("no paso ");
+                                    //alert("no paso ");
                                 }
                                     
                         });
@@ -543,7 +543,7 @@ require_once '../util/Session.php';
 					<img class="nav-user-photo" src="../../assets/probando/images/avatars/avatar.png" alt="<?php echo $Usuario["NOMBRE_USUARIO"]; ?>" />
 					<span class="user-info">
 						<small>Bienvenido,</small>
-						<?php echo $Usuario["nombre_usuario"]; ?>
+						<?php echo $Usuario["NOMBRE_USUARIO"]; ?>
 					</span>
 
 <!--								<i class="ace-icon fa fa-caret-down"></i>-->

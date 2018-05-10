@@ -49,10 +49,10 @@ class UploadHandler
         $this->response = array();
         $this->options = array(
             // 'script_url' => $this->get_full_url().'/../../archivos/files/'.$newUrl.$this->basename($this->get_server_var('SCRIPT_NAME')),
-            'script_url' => "http://enerin-omgapps.com/enerin-omg/archivos/files".$newUrl.$this->basename($this->get_server_var('SCRIPT_NAME')),            
+            'script_url' => "https://enerin-omgapps.com/enerin-omg/archivos/files".$newUrl.$this->basename($this->get_server_var('SCRIPT_NAME')),            
             'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/',
             // 'upload_url' => $this->get_full_url().'/../../archivos/files/'.$newUrl,
-            'upload_url' => 'http://enerin-omgapps.com/enering-omg/archivos/files'.$newUrl,            
+            'upload_url' => 'https://enerin-omgapps.com/enering-omg/archivos/files'.$newUrl,            
             'input_stream' => 'php://input',
             'user_dirs' => false,
             'mkdir_mode' => 0755,
@@ -1100,8 +1100,12 @@ class UploadHandler
                 mkdir($upload_dir, $this->options['mkdir_mode'], true);
             }
             $file_path = $this->get_upload_path($file->name);
-            // $file_path = "C:/xampp/htdocs/enerin-omg/archivos/files".$newUrl.$file->name;
-            $file_path = "enerin-omgapps.com/enerin-omg/archivos/files".$newUrl.$file->name;
+            echo "d    ".$file_path;
+//            $file_path
+            echo "url : ".$newUrl;
+             $file_path = "C:/xampp/htdocs/enerin-omg/archivos/files".$newUrl.$file->name;
+       //     $file_path = "/home/fpa9q09nzhnx/public_html/enerin-omg/archivos/files".$newUrl.$file->name;
+//            https://enerin-omgapps.com/enerin-omg/OMG/View/principalmodulos.php
             echo $file_path."o \n---";
 
             $append_file = $content_range && is_file($file_path) &&

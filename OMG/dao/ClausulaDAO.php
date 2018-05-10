@@ -69,7 +69,9 @@ class ClausulaDAO{
             foreach ($lista_id_nuevo_autoincrementado as $value) {
                $id_nuevo= $value["id_clausula"];
             }
-            
+             if($id_nuevo==NULL){
+                $id_nuevo=0;
+            }
 //            $query="INSERT INTO CLAUSULAS (ID_CLAUSULA,CLAUSULA,SUB_CLAUSULA,DESCRIPCION_CLAUSULA, DESCRIPCION_SUB_CLAUSULA,
 //							  TEXTO_BREVE,DESCRIPCION,PLAZO,ID_EMPLEADO)
                                                           

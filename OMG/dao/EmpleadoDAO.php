@@ -55,12 +55,12 @@ class EmpleadoDAO{
         try{
             
 //            $query="INSERT INTO EMPLEADOS(ID_EMPLEADO,NOMBRE_EMPLEADO,CATEGORIA,APELLIDO_PATERNO,APELLIDO_MATERNO,CORREO,FECHA_CREACION)VALUES('$Nombre','$Categoria','$Apellido_Paterno','$Apellido_Materno','$Correo')";
-            $query_obtenerMaximo_mas_uno="SELECT max(id_empleado)+1 as ID_EMPLEADO from empleados";
+            $query_obtenerMaximo_mas_uno="SELECT max(id_empleado)+1 as id_empleado from empleados";
             $db_obtenerMaximo_mas_uno=AccesoDB::getInstancia();
             $lista_id_nuevo_autoincrementado=$db_obtenerMaximo_mas_uno->executeQuery($query_obtenerMaximo_mas_uno);
             $id_nuevo=0;
             foreach ($lista_id_nuevo_autoincrementado as $value) {
-               $id_nuevo= $value["ID_EMPLEADO"];
+               $id_nuevo= $value["id_empleado"];
             }
             $query="INSERT INTO empleados(id_empleado,nombre_empleado,categoria,apellido_paterno,apellido_materno,correo)VALUES($id_nuevo,'$Nombre','$Categoria','$Apellido_Paterno','$Apellido_Materno','$Correo');";
             
