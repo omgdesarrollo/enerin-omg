@@ -894,7 +894,7 @@ $Usuario=  Session::getSesion("user");
                 
                 function saveToDatabaseDatosFormulario(datos){
 //                    alert("datos nombre "+datos[0]);
-                    
+                        var ID_DOCUMENTO;
                     	$.ajax({
                                 url: "../Controller/DocumentosEntradaController.php?Op=Guardar",
 				type: "POST",
@@ -908,6 +908,7 @@ $Usuario=  Session::getSesion("user");
                                 {
                                 //     alert(<?php  $Url ?>);
 //					$(editableObj).css("background","#FDFDFD");
+                                        ID_DOCUMENTO = jsonData.ID_DOCUMENTO;
                                         consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
                                         // $('#fileupload').fileupload({
                                         //         url: '../../archivos/files/'+jsonData.ID_CUMPLIMIENTO+'/'+jsonData.ID_DOCUMENTO+'/'
@@ -917,7 +918,23 @@ $Usuario=  Session::getSesion("user");
                                         //         formData: {newUrl: '/'+jsonData.ID_CUMPLIMIENTO+'/'+jsonData.ID_DOCUMENTO+'/'}
                                         // });
                                         $('.start').click();
+
                                 }
+                        })
+                        .then(function(data)
+                        {
+                                // var tempUrls = "<?php Session::getSesion("archivos_urls") ?>";
+                                // console.log("valores : "+tempUrls); no funciona
+                                $.ajax({
+                                        url: "../Controller/ArchivoUploadController.php?Op=Guardar",
+                                        type: "POST",
+                                        data: 'ID_DOCUMENTO='+ID_DOCUMENTO,
+                                        success: function(data)
+                                        {
+                                                alert("insertado urls");
+                                        }
+                                });
+                        
                         });
 //                   window.location.href("EmpleadosView.php");
                 }
