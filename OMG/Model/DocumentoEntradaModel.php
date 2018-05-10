@@ -71,8 +71,8 @@ class DocumentoEntradaModel{
         $data=array();        
         try{
             $dao=new DocumentoEntradaDAO();
-            $carpeta ='../../archivos/files/'.$pojo->getIdCumplimiento();
-            
+            //$carpeta ='enerin-omgapps.com/enerin-omg/archivos/files/'.$pojo->getIdCumplimiento();
+             $carpeta ='../../archivos/files/'.$pojo->getIdCumplimiento();
             if(!file_exists($carpeta))
             {
                 mkdir($carpeta,0777,true);

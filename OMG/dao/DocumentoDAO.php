@@ -67,7 +67,9 @@ class DocumentoDAO{
             foreach ($lista_id_nuevo_autoincrementado as $value) {
                $id_nuevo= $value["id_documento"];
             }
-            
+             if($id_nuevo==NULL){
+                $id_nuevo=0;
+            }
             $query="INSERT INTO documentos(id_documento,clave_documento,documento,id_empleado)"
                     . "VALUES($id_nuevo,'$clave_documento','$documento',$id_empleado)";
             

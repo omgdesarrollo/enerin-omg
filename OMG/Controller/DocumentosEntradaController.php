@@ -92,8 +92,18 @@ switch ($Op) {
 				//   echo $data[0];
 				//  $jsonData['ID_CUMPLIMIENTO'] = $data[0];
 				//  $jsonData['ID_DOCUMENTO'] = $data[1];
-				$valores = '/'.$data[0].'/'.$data[1].'/';
+				$valores = "/".$data[0]."/".$data[1]."/";
+                                
+                                
+                                
+                                
+                                
+                                
 				Session::setSesion("newUrl",$valores);
+                                
+                                
+                                
+                                
 				//  header('Content-type: application/json; charset=utf-8');
 				//   echo json_encode($jsonData);
 				// return $data;

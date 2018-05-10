@@ -1,7 +1,6 @@
 <?php
 
-//este controlador solo atiende un requerimiento
-//el requerimiento que atiende es el de inicio de sesion
+
 session_start();
 require_once '../Model/DocumentoModel.php';
 require_once '../Pojo/DocumentoPojo.php';
