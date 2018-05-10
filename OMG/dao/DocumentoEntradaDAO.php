@@ -209,11 +209,17 @@ class DocumentoEntradaDAO{
                                           '$fecha_alarma','$documento','$observaciones','$mensaje_alerta');";
             
             $db=  AccesoDB::getInstancia();
-            $db->executeQueryUpdate($query);
+//            try{
+           $exito_inserccion= $db->executeQueryUpdate($query); 
+//            } catch (Exception $ex) {
+//
+//            }
+           
+           
         } catch (Exception $ex) {
                 throw $ex;
         }
-        return $id_nuevo;
+        return $exito_inserccion;
     }
     
     /*

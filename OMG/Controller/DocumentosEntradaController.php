@@ -89,6 +89,8 @@ switch ($Op) {
 				//   print_r($_REQUEST['MENSAJE_DOCUMENTO']);
 				//   print_r($_FILEs['DOCUMENTO']); 
 				$data = $model->insertar($pojo);
+                                
+                                echo "e".json_encode($data[2]);
 				//   echo $data[0];
 				//  $jsonData['ID_CUMPLIMIENTO'] = $data[0];
 				//  $jsonData['ID_DOCUMENTO'] = $data[1];
