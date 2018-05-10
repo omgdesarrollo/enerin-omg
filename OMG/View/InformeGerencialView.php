@@ -1,11 +1,10 @@
 <?php
 session_start();
 require_once '../util/Session.php';
-
+$Usuario=  Session::getSesion("user");
 ?>
 
 
-<?php $Usuario=  Session::getSesion("user"); ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -17,11 +16,11 @@ require_once '../util/Session.php';
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
 		<!-- bootstrap & fontawesome -->
+                <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 		<!--<link rel="stylesheet" href="assets/css/bootstrap.min.css" />-->
                 <!--<link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>-->
-                <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 		<!--<link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" />-->
-                <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 		<!-- page specific plugin styles -->
 
 		<!-- text fonts -->
@@ -39,20 +38,37 @@ require_once '../util/Session.php';
                 
                 <script src="../../js/jquery.js" type="text/javascript"></script>
 		<script src="../../assets/probando/js/ace-extra.min.js"></script>
-                <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
-                <script src="../../js/loaderanimation.js" type="text/javascript"></script>      
+                
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+               
+                
+                <!--<link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>-->
+                <!--<script src="../../js/loaderanimation.js" type="text/javascript"></script>-->      
                 
                 
                 <!--en esta seccion es para poder abrir el modal--> 
-                <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>             
-                <link href="../../codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
-                <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
-                <script src="../../codebase/dhtmlx.js"></script>
+                <!--<script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>-->             
+                <!--<link href="../../codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>-->
+                <!--<link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>-->
+                <!--<script src="../../codebase/dhtmlx.js"></script>-->
                 <!--aqui termina la seccion para poder abrir el modal-->
                 
                 
+                
+                
+                
+                <!--Aqui empieza el Chart-->
+                <!--<link href="dhtmlxChart_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>-->
+                <!--<script src="dhtmlxChart_v51_std/codebase/dhtmlxchart.js" type="text/javascript"></script>-->
+                <!--<link href="dhtmlxChart_v51_std/codebase/dhtmlxchart.css" rel="stylesheet" type="text/css"/>-->
+                
+                <!--Aqui termina el Chart-->
+                
+                
+                
                 <style>
+                    
                     .modal
                     {
                         overflow: hidden;
@@ -83,6 +99,16 @@ require_once '../util/Session.php';
                       text-align:center;
                       padding-top:10px;
                     }
+                    
+                                    
+                    div#winVP {
+			position: relative;
+			height: 350px;
+			border: 1px solid #dfdfdf;
+			margin: 10px;
+		}
+                
+                
                 </style>
                 
                 
@@ -227,12 +253,17 @@ require_once '../util/Session.php';
 
              
              
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-grafica">
-Informe
-</button>             
+
+
+<button type="button" id="btn_informe" class="btn btn-success" data-toggle="modal">
+    Informe
+    <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+</button>
+             
+             
              
 	<div style="display:none;" id="myDiv" class="animate-bottom"> 
-                     <div class="contenedortable">
+                     <div class="contenedortable" id="winVP">
                            <table class="tbl-qa">
 		  <!--<thead>-->
 			  <tr>
@@ -322,30 +353,7 @@ Informe
 	
 </div>
 
-	
-<!-- Inicio de Seccion Modal -->
-       <div class="modal draggable fade" id="mostrar-grafica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-		<div class="modal-content">
-                    
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                        <h4 class="modal-title" id="myModalLabel">GRAFICA</h4>
-                    </div>
-
-                    <div id="validacion_empleado" class="modal-body">
-
-                                    
-
-		      		
-
-                    </div>
-                    
-		</div>
-
-            </div>
-       </div>
-<!--Final de Seccion Modal-->                
+	               
                 
                 
                 
@@ -416,10 +424,12 @@ Informe
                         });
   
                         
-                        $("#mostrar-grafica").draggable({
-                             handle: ".modal-header"
-                        });   
-  
+                        $("#btn_informe").click(function(){
+                        loadChartView(true);
+                         });
+                         
+                      
+                        
   
                     });//cierra el $function
                       
@@ -466,8 +476,8 @@ Informe
                
               
                
-    function consultarInformacion(url){
-               $.ajax({  
+                function consultarInformacion(url){
+                $.ajax({  
                      url: ""+url,  
                     success: function(r) {    
 //                     $("#procesando").empty();
@@ -491,15 +501,41 @@ Informe
             }
             
     
-    function loadSpinner(){
+                function loadSpinner(){
 //                    alert("se cargara otro ");
                         myFunction();
                 }
                 
+                
+                
+              
+                function loadChartView(bclose){
+                    var dhxWins = new dhtmlXWindows();
+                    dhxWins.attachViewportTo("winVP");
+        //var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
+                    var layoutWin=dhxWins.createWindow({id:"informe", text:"OMG VISUALIZACION INFORME", left: 20, top: -30,width:530,  height:250,  center:true,resize: true,park:true,modal:true });
+                    layoutWin.attachURL("ChartView.php");
+
+            }
+              
+                
 		</script>
+                
+                <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+                <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+                
+                <!--en esta seccion es para poder abrir el modal--> 
+                <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
+                <!--aqui termina la seccion para poder abrir el modal--> 
+                
+                <script src="../../codebase/dhtmlx.js"></script>
+                <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
+                <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+
                               
 
-
+                
 
                 
 	</body>
