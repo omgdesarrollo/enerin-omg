@@ -224,15 +224,15 @@ $Usuario=  Session::getSesion("user");
                            <table class="tbl-qa">
 		  <!--<thead>-->
 			  <tr>
-				<th class="table-header" >NO.</th>
-                                <th class="table-header">TEMA</th>
-				<th class="table-header">SUB-TEMA</th>				
-				<th class="table-header">DESCRIPCION DEL TEMA</th>				
-				<th class="table-header">DESCRIPCION DEL SUB-TEMA</th>				
-				<th class="table-header">RESPONSABLE</th>				
-				<th class="table-header">TEXTO BREVE</th>				
-				<th class="table-header">DESCRIPCION</th>				
-                                <th class="table-header">PLAZO</th>					
+				<!--<th class="table-header" >NO.</th>-->
+                                <th class="table-header">No.Tema</th>
+				<th class="table-header">Tema</th>				
+				<th class="table-header">No.Sub-Tema</th>				
+				<th class="table-header">Sub-Tema</th>				
+				<th class="table-header">Responsable</th>				
+				<!--<th class="table-header">TEXTO BREVE</th>-->				
+				<th class="table-header">Descripcion</th>				
+                                <th class="table-header">Plazo</th>					
                                 
 			  </tr>
 		  <!--</thead>-->
@@ -253,15 +253,15 @@ $Usuario=  Session::getSesion("user");
                   foreach ($Lista as $filas) { 
 		  ?>
 			  <tr class="table-row">
-				<td><?php echo $numeracion++;   ?></td>
+				<!--<td><?php //echo $numeracion++;   ?></td>-->
                                 
                                             <?php
 //                                            echo "el valor es :   "."{$k}=>{$filas["CLAUSULA"]}";
                                             ?>
                                 <!--DESCRIPCION_SUB_CLAUSULA-->
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clausula"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'sub_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["sub_clausula"]; ?></td>
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion_clausula"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'sub_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["sub_clausula"]; ?></td>
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'descripcion_sub_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion_sub_clausula"]; ?></td>
                                 <!--<td contenteditable="true" onBlur="saveToDatabase(this,'NOMBRE_EMPLEADO','<?php //echo $Lista[$k]["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php //echo $Lista[$k]["NOMBRE_EMPLEADO"]; ?></td>-->
                                 <td> 
@@ -294,7 +294,7 @@ $Usuario=  Session::getSesion("user");
                                    <!--<div id="combo_zone" style="width:230px;"></div>-->
                                     
                                 </td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'TEXTO_BREVE','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["texto_breve"]; ?></td>
+                                <!--<td contenteditable="true" onBlur="saveToDatabase(this,'TEXTO_BREVE','<?php //echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["texto_breve"]; ?></td>-->
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'DESCRIPCION','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion"]; ?></td>
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'PLAZO','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["plazo"]; ?></td>
                                 
@@ -328,54 +328,41 @@ $Usuario=  Session::getSesion("user");
                                     
                                                 
                                                 <div class="form-group">
-							<label class="control-label" for="title">Tema:</label>
+							<label class="control-label" for="title">No.Tema:</label>
                                                         <input type="text"  id="CLAUSULA" class="form-control" data-error="Ingrese el Tema" required />
 							<div class="help-block with-errors"></div>
 						</div>
 
+                                                
+                                                <div class="form-group">
+							<label class="control-label" for="title">Tema:</label>
+                                                        <textarea  id="DESCRIPCION_CLAUSULA" class="form-control" data-error="Ingrese la Descripcion del Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>                                    
+                                    
                                     
 						<div class="form-group">
-							<label class="control-label" for="title">Sub-Tema:</label>
+							<label class="control-label" for="title">No.Sub-Tema:</label>
                                                         <textarea  id="SUB_CLAUSULA" class="form-control" data-error="Ingrese el Sub-Tema" required></textarea>
 							<div class="help-block with-errors"></div>
 						</div>
                                     
                                     
-                                                <div class="form-group">
-							<label class="control-label" for="title">Descripcion del Tema:</label>
-                                                        <textarea  id="DESCRIPCION_CLAUSULA" class="form-control" data-error="Ingrese la Descripcion del Tema" required></textarea>
-							<div class="help-block with-errors"></div>
-						</div>
+                                                
                                     
                                     
                                                 <div class="form-group">
-							<label class="control-label" for="title">Descripcion del Sub-Tema:</label>
+							<label class="control-label" for="title">Sub-Tema:</label>
                                                         <textarea  id="DESCRIPCION_SUB_CLAUSULA" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
 							<div class="help-block with-errors"></div>
 						</div>
                                     
                                     
-                                                <div class="form-group">
+<!--                                                <div class="form-group">
 							<label class="control-label" for="title">Texto-Breve:</label>
                                                         <textarea  id="TEXTO_BREVE" class="form-control" data-error="Ingrese el Texto-Breve" required></textarea>
 							<div class="help-block with-errors"></div>
-						</div>
-                                    
-                                    
-                                                <div class="form-group">
-							<label class="control-label" for="title">Descripcion:</label>
-                                                        <textarea  id="DESCRIPCION" class="form-control" data-error="Ingrese la Descripcion" required></textarea>
-							<div class="help-block with-errors"></div>
-						</div>
-                                    
-                                    
-                                                <div class="form-group">
-							<label class="control-label" for="title">Plazo:</label>
-                                                        <textarea  id="PLAZO" class="form-control" data-error="Ingrese el Plazo" required></textarea>
-							<div class="help-block with-errors"></div>
-						</div>
-
-                                                
+						</div>-->
 
 
                                                 <div class="form-group">
@@ -398,6 +385,22 @@ $Usuario=  Session::getSesion("user");
                                                         
 							<div class="help-block with-errors"></div>
 						</div>
+                                    
+
+                                                <div class="form-group">
+							<label class="control-label" for="title">Descripcion:</label>
+                                                        <textarea  id="DESCRIPCION" class="form-control" data-error="Ingrese la Descripcion" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+                                    
+                                    
+                                                <div class="form-group">
+							<label class="control-label" for="title">Plazo:</label>
+                                                        <textarea  id="PLAZO" class="form-control" data-error="Ingrese el Plazo" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+
+                                                                                            
                                     
 						<div class="form-group">
                                                     <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
@@ -462,13 +465,13 @@ $Usuario=  Session::getSesion("user");
        
         
                                     var CLAUSULA=$("#CLAUSULA").val();
-                                    var SUB_CLAUSULA=$("#SUB_CLAUSULA").val();
                                     var DESCRIPCION_CLAUSULA=$("#DESCRIPCION_CLAUSULA").val();
+                                    var SUB_CLAUSULA=$("#SUB_CLAUSULA").val();
                                     var DESCRIPCION_SUB_CLAUSULA=$("#DESCRIPCION_SUB_CLAUSULA").val();
-                                    var TEXTO_BREVE=$("#TEXTO_BREVE").val();
+                                    var ID_EMPLEADOMODAL=$("#ID_EMPLEADOMODAL").val();
+//                                    var TEXTO_BREVE=$("#TEXTO_BREVE").val();
                                     var DESCRIPCION=$("#DESCRIPCION").val();
                                     var PLAZO=$("#PLAZO").val();
-                                    var ID_EMPLEADOMODAL=$("#ID_EMPLEADOMODAL").val();
                                     //alert("ID_EMPLEADOMODAL :"+ID_EMPLEADOMODAL);
                                   
 //                                  alert("Clausula :"+CLAUSULA+ "Sub-clausula :"+SUB_CLAUSULA+ "Descripcion clausula :" +DESCRIPCION_CLAUSULA+
@@ -478,13 +481,13 @@ $Usuario=  Session::getSesion("user");
 
                                     datos=[];
                                     datos.push(CLAUSULA);
-                                    datos.push(SUB_CLAUSULA);
                                     datos.push(DESCRIPCION_CLAUSULA);
+                                    datos.push(SUB_CLAUSULA);
                                     datos.push(DESCRIPCION_SUB_CLAUSULA);
-                                    datos.push(TEXTO_BREVE);
+                                    datos.push(ID_EMPLEADOMODAL);
+//                                    datos.push(TEXTO_BREVE);
                                     datos.push(DESCRIPCION);
                                     datos.push(PLAZO);
-                                    datos.push(ID_EMPLEADOMODAL);
                                     saveToDatabaseDatosFormulario(datos);
                                     
                         });
@@ -494,13 +497,13 @@ $Usuario=  Session::getSesion("user");
 
                         $("#btn_limpiar").click(function(){
                                   $("#CLAUSULA").val("");
-                                  $("#SUB_CLAUSULA").val("");
                                   $("#DESCRIPCION_CLAUSULA").val("");
+                                  $("#SUB_CLAUSULA").val("");
                                   $("#DESCRIPCION_SUB_CLAUSULA").val("");
-                                  $("#TEXTO_BREVE").val("");
+                                  //$("#ID_EMPLEADOMODAL").val("");
+//                                  $("#TEXTO_BREVE").val("");
                                   $("#DESCRIPCION").val("");
                                   $("#PLAZO").val("");
-                                  //$("#ID_EMPLEADOMODAL").val("");
                                                                       
                         });
                         
@@ -541,11 +544,11 @@ $Usuario=  Session::getSesion("user");
                     	$.ajax({
                                 url: "../Controller/ClausulasController.php?Op=Guardar",
 				type: "POST",
-				data:'CLAUSULA='+datos[0]+'&SUB_CLAUSULA='+datos[1]+'&DESCRIPCION_CLAUSULA='+datos[2]
-                                                       +'&DESCRIPCION_SUB_CLAUSULA='+datos[3]+'&TEXTO_BREVE='+datos[4]
-                                                       +'&DESCRIPCION='+datos[5]+'&PLAZO='+datos[6]+'&ID_EMPLEADO='+datos[7],
+				data:'CLAUSULA='+datos[0]+'&DESCRIPCION_CLAUSULA='+datos[1]+'&SUB_CLAUSULA='+datos[2]
+                                                       +'&DESCRIPCION_SUB_CLAUSULA='+datos[3]+'&ID_EMPLEADO='+datos[4]
+                                                       +'&DESCRIPCION='+datos[5]+'&PLAZO='+datos[6],
 				success: function(data){
-                                    alert("se guardo");
+//                                    alert("se guardo");
                                     
 //					$(editableObj).css("background","#FDFDFD");
                                         swal("Guardado Exitoso!", "Ok!", "success")

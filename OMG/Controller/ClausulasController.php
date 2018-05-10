@@ -62,7 +62,6 @@ switch ($Op) {
                 $pojo->setSubClausula($_REQUEST['SUB_CLAUSULA']);
                 $pojo->setDescripcionClausula($_REQUEST['DESCRIPCION_CLAUSULA']);
                 $pojo->setDescripcionSubClausula($_REQUEST['DESCRIPCION_SUB_CLAUSULA']);
-                $pojo->setTextoBreve($_REQUEST['TEXTO_BREVE']);
                 $pojo->setDescripcion($_REQUEST['DESCRIPCION']);
                 $pojo->setPlazo($_REQUEST['PLAZO']);
                 $pojo->setIdEmpleado($_REQUEST['ID_EMPLEADO']);

@@ -59,7 +59,7 @@ class ClausulaModel{
 //            $pojo=new EmpleadoPojo();
             
            $dao->insertarClausulas($pojo->getClausula(),$pojo->getSubClausula(),$pojo->getDescripcionClausula(),
-                                   $pojo->getDescripcionSubClausula(),$pojo->getTextoBreve(),$pojo->getDescripcion(),
+                                   $pojo->getDescripcionSubClausula(),$pojo->getDescripcion(),
                                    $pojo->getPlazo(),$pojo->getIdEmpleado());
         } catch (Exception $ex) {
                 throw $ex;
@@ -76,7 +76,7 @@ class ClausulaModel{
 //        $rec=$dao->actualizarEmpleado($pojo->getIdEmpleado(), $pojo->getCorreo());
         $dao->actualizarClausula($pojo->getIdClausula(),$pojo->getClausula(),$pojo->getSubClausula(),
                                  $pojo->getDescripcionClausula(),$pojo->getDescripcionSubClausula(),
-                                 $pojo->getTextoBreve(),$pojo->getDescripcion(),$pojo->getPlazo(),$pojo->getIdEmpleado());
+                                 $pojo->getDescripcion(),$pojo->getPlazo(),$pojo->getIdEmpleado());
 //            return $rec;
         } catch (Exception $ex) {
                 throw $ex;
