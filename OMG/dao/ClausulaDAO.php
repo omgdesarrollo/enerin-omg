@@ -16,7 +16,7 @@ class ClausulaDAO{
             $query="SELECT tbclausulas.id_clausula id_clausula, tbclausulas.clausula, tbclausulas.sub_clausula,
                     tbclausulas.descripcion_clausula, tbclausulas.descripcion_sub_clausula,tbempleados.id_empleado,
                     tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno,
-                    tbclausulas.texto_breve, tbclausulas.descripcion, tbclausulas.plazo
+                    tbclausulas.descripcion, tbclausulas.plazo
                     FROM clausulas tbclausulas
 
                     JOIN empleados tbempleados ON tbclausulas.id_empleado=tbempleados.id_empleado";
@@ -56,7 +56,7 @@ class ClausulaDAO{
 
     
     public function insertarClausulas($clausula,$sub_clausula,$descripcion_clausula,
-                                      $descripcion_sub_clausula,$texto_breve,$descripcion,
+                                      $descripcion_sub_clausula,$descripcion,
                                       $plazo,$id_empleado){
         
         try{
@@ -69,17 +69,19 @@ class ClausulaDAO{
             foreach ($lista_id_nuevo_autoincrementado as $value) {
                $id_nuevo= $value["id_clausula"];
             }
-            
+             if($id_nuevo==NULL){
+                $id_nuevo=0;
+            }
 //            $query="INSERT INTO CLAUSULAS (ID_CLAUSULA,CLAUSULA,SUB_CLAUSULA,DESCRIPCION_CLAUSULA, DESCRIPCION_SUB_CLAUSULA,
 //							  TEXTO_BREVE,DESCRIPCION,PLAZO,ID_EMPLEADO)
                                                           
 
             $query="INSERT INTO clausulas (id_clausula,clausula,sub_clausula,descripcion_clausula, descripcion_sub_clausula,
-							  texto_breve,descripcion,plazo,id_empleado)
+                                           descripcion,plazo,id_empleado)
                                                           
 							  
-            VALUES ($id_nuevo,'$clausula','$sub_clausula','$descripcion_clausula', '$descripcion_sub_clausula','$texto_breve',
-			 '$descripcion','$plazo', $id_empleado);";
+            VALUES ($id_nuevo,'$clausula','$sub_clausula','$descripcion_clausula', '$descripcion_sub_clausula',
+		   '$descripcion','$plazo', $id_empleado);";
             
             $db=  AccesoDB::getInstancia();
             $db->executeQueryUpdate($query);
@@ -93,11 +95,11 @@ class ClausulaDAO{
     
     
     public function actualizarClausula($id_clausula,$clausula,$sub_clausula,$descripcion_clausula,
-                                       $descripcion_sub_clausula,$texto_breve,$descripcion,$plazo,$requisito,$id_empleado){
+                                       $descripcion_sub_clausula,$descripcion,$plazo,$requisito,$id_empleado){
         try{
              $query="UPDATE clausulas SET clausula='$clausula', sub_clausula='$sub_clausula',"
                      . " descripcion_clausula='$descripcion_clausula',"
-                     . " descripcion_sub_clausula='$descripcion_sub_clausula', texto_breve='$texto_breve',"
+                     . " descripcion_sub_clausula='$descripcion_sub_clausula',"
                      . " descripcion='$descripcion', plazo='$plazo', REQUISITO='$requisito', id_empleado='$id_empleado'"
                      . " WHERE id_clausula=$id_clausula";
      

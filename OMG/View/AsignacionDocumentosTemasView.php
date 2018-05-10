@@ -90,7 +90,7 @@ $Usuario=  Session::getSesion("user");
 		}
                 
                 
-                /*Estilos checkbox*/
+                /*Inicia Estilos checkbox*/
                 
 /*                 body {
   font-size: 16px;
@@ -227,69 +227,10 @@ $Usuario=  Session::getSesion("user");
   }
 }
                 
-                
+/*Termina Estilos checkbox*/ 
+
                 </style>
                 
-            <script>
-            
-            var myCombo;
-                
-                
-                
-           function loadSpinner(){
-//                    alert("se cargara otro ");
-                        myFunction();
-                }
-                
-                
-            function loadVista(bclose){
-//                consultarInformacion("../Controller/DocumentosController.php?Op=Listar");
-                    var dhxWins = new dhtmlXWindows();
-                    dhxWins.attachViewportTo("winVP");
-        //var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
-       
-                    var layoutWin=dhxWins.createWindow({id:"documentos", text:"OMG VISUALIZACION DOCUMENTOS", left: 20, top: -30,width:330,  height:250,  center:true,resize: true,park:true,modal:true	});
-                    layoutWin.attachURL("DocumentosModalView.php");
-            } 
-            
-            
-            function loadVistaTemas(bclose){
-                    var dhxWins = new dhtmlXWindows();
-                    dhxWins.attachViewportTo("winVP");
-        //var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
-                    var layoutWin=dhxWins.createWindow({id:"temas", text:"OMG VISUALIZACION TEMAS", left: 20, top: -30,width:530,  height:250,  center:true,resize: true,park:true,modal:true	});
-                    layoutWin.attachURL("TemasModalView.php");
-            } 
-                
-//        function cargarComboEmpleados(){
-////            alert("ya cargo");
-//             $.ajax({
-//                                url: "../Controller/EmpleadosController.php?Op=mostrarcombo",
-////                                        url: "192.168.1.75/OMG-STANDAR/OMG/Controller/ClausulasController.php?Op=mostrarcombo",
-//				type: "POST",
-//				data:'Combo=true',
-//                                async:false,
-//				success: function(data){
-//                                    
-//                                    $.each(data,function(i,value){
-////                                        alert("el nombre es "+ value.NOMBRE_EMPLEADO);
-//                                        
-//myCombo.addOption([
-// {value:""+value.ID_EMPLEADO, text:""+value.NOMBRE_EMPLEADO}
-//]);
-//      
-//                                        
-//                                    });
-//                                    myCombo.setChecked("1", true);
-//                                                                        
-//
-////					$(editableObj).css("background","#FDFDFD");
-//				}   
-//		   });
-//        }
-        
-            </script>
-
                 
 	</head>
 
@@ -557,10 +498,10 @@ $Usuario=  Session::getSesion("user");
                                     
                                     
                                     <td>
-                                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#edit-item">
+                                    <button type="button" id="btn_mostrar_requisitos" class="btn btn-secondary" data-toggle="modal">
                                     Ver Detalles
                                     <i class="ace-icon fa fa-book" style="color: #0099ff;font-size: 20px;"></i>
-                                    </button>
+                                    </button>                                  
                                     </td>    
                   
 <!--                                <td contenteditable="false" onBlur="saveToDatabase(this,'REQUISITO','<?php echo $filas["ID_ASIGNACION_DOCUMENTO_TEMA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["REQUISITO"]; ?></td>   -->
@@ -918,6 +859,11 @@ $Usuario=  Session::getSesion("user");
                         $("#btn_lista_temas").click(function(){
                         loadVistaTemas(true);
                          });
+                         
+                         
+                        $("#btn_mostrar_requisitos").click(function(){
+                        loadVistaRequisitos(true);
+                         }); 
                  
                  
 //                        $("#create-item-documentos").draggable({
@@ -1051,6 +997,15 @@ $Usuario=  Session::getSesion("user");
         //var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
                     var layoutWin=dhxWins.createWindow({id:"temas", text:"OMG VISUALIZACION TEMAS", left: 20, top: -30,width:530,  height:250,  center:true,resize: true,park:true,modal:true	});
                     layoutWin.attachURL("TemasModalView.php");
+            }
+            
+            
+            function loadVistaRequisitos(bclose){
+                    var dhxWins = new dhtmlXWindows();
+                    dhxWins.attachViewportTo("winVP");
+        //var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
+                    var layoutWin=dhxWins.createWindow({id:"requisitos", text:"OMG VISUALIZACION REQUISITOS", left: 20, top: -30,width:530,  height:250,  center:true,resize: true,park:true,modal:true	});
+                    layoutWin.attachURL("RequisitosPorTemaView.php");
             }
                
                

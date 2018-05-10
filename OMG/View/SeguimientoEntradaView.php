@@ -238,7 +238,7 @@ require_once '../util/Session.php';
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleadotema','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleadotema"]." ".$filas["apellido_paternotema"]." ".$filas["apellido_maternotema"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'fecha_limite_atencion','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_limite_atencion"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'status_doc','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["status_doc"]; ?></td>
-                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'NOMBRE_EMPLEADOPLAN','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleadoplan"]; ?></td>-->
+                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'NOMBRE_EMPLEADOPLAN','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php //echo $filas["nombre_empleadoplan"]; ?></td>-->
                                                                                                                              
                                 <td> 
                                     <select   id="id_empleado" class="select"  onchange="saveComboToDatabase('id_empleado', <?php echo $filas["id_seguimiento_entrada"]; ?> )">
@@ -294,30 +294,7 @@ require_once '../util/Session.php';
 		?>
 		  </tbody>
 		</table>
-<!--                         
-                          <nav>
-		  	<ul class="pagination">
-		  		<?php //if ($data["actual-section"] != 1): ?> 		  			
-		    		<li><a href="AsignacionTemasRequisitosView.php?page=1">Inicio</a></li>
-		    		<li><a href="AsignacionTemasRequisitosView.php?page=////<?php echo $data['previous']; ?>">&laquo;</a></li>
-				<?php //endif; ?>
 
-				<?php //for ($i = $data["section-start"]; $i <= $data["section-end"]; $i++): ?>					
-				<?php //if ($i > $data["total-pages"]): break; endif; ?>
-				<?php //$active = ($i == $data["this-page"]) ? "active" : ""; ?>			    
-			    	<li class="////<?php // echo $active; ?>">
-					<a href="AsignacionTemasRequisitosView.php?page=////<?php //echo $i; ?>">
-						<?php //echo $i; ?>			    		
-					</a>
-			    	</li>
-			    	<?php //endfor; ?>
-				
-				<?php //if ($data["actual-section"] != $data["total-sections"]): ?>
-                                <li><a href="AsignacionTemasRequisitosView.php?page=////<?php //echo $data['next']; ?>">&raquo;</a></li>
-			    	<li><a href="AsignacionTemasRequisitosView.php?page=////<?php //echo $data['total-pages']; ?>">Final</a></li>
-		    		<?php //endif; ?>
-		  	</ul>
-		</nav>-->
                      </div>
 
 <!--			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">

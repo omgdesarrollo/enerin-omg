@@ -89,11 +89,31 @@ switch ($Op) {
 				//   print_r($_REQUEST['MENSAJE_DOCUMENTO']);
 				//   print_r($_FILEs['DOCUMENTO']); 
 				$data = $model->insertar($pojo);
+                                
+                                echo "e".json_encode($data[2]);
 				//   echo $data[0];
 				//  $jsonData['ID_CUMPLIMIENTO'] = $data[0];
+<<<<<<< HEAD
 				 $jsonData['ID_DOCUMENTO'] = $data[1];
 				$valores = '/'.$data[0].'/'.$data[1].'/';
 				Session::setSesion("newUrl",$valores);
+=======
+				//  $jsonData['ID_DOCUMENTO'] = $data[1];
+				$valores = "/".$data[0]."/".$data[1]."/";
+                                
+                                
+                                
+                                
+                                
+                                
+				Session::setSesion("newUrl",$valores);
+                                
+                                
+                                
+                                
+				//  header('Content-type: application/json; charset=utf-8');
+				//   echo json_encode($jsonData);
+>>>>>>> 0f7f6502b7ca7d0eea3cf0d57cb53a1d2a6bb2e6
 				// return $data;
                   
                    $traerultimoinsertado=$model->traer_ultimo_insertado();  
