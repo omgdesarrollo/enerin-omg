@@ -66,12 +66,12 @@ $Usuario=  Session::getSesion("user");
 				
                             
                                 
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'CLAUSULA','<?php echo $filas["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);">                            
-                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#add-requirement"><?php echo $filas["CLAUSULA"]; ?></button>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);">                            
+                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#add-requirement"><?php echo $filas["clausula"]; ?></button>
                                     
                                 </td>
                                 
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'DESCRIPCION_CLAUSULA','<?php echo $filas["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php echo $filas["DESCRIPCION_CLAUSULA"]; ?></td>                                                         
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion_clausula"]; ?></td>                                                         
                                                     
 			  </tr>
 		<?php
@@ -104,7 +104,7 @@ $Usuario=  Session::getSesion("user");
                                             foreach ($ListaReqisitos as $value) { 
    
     
-                                            if($value["ID_CLAUSULA"]=="".$filas["ID_CLAUSULA"]){
+                                            if($value["id_clausula"]=="".$filas["id_clausula"]){
         
                                          ?>  
                       
@@ -115,7 +115,7 @@ $Usuario=  Session::getSesion("user");
 
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" name="" id="checkboxPersonalizado1" class="custom-control-input">
-							<label for="checkboxPersonalizado1" class="custom-control-label"><?php echo $value["REQUISITO"]; ?></label>
+							<label for="checkboxPersonalizado1" class="custom-control-label"><?php echo $value["requisito"]; ?></label>
 						</div>
 
 					</form>
