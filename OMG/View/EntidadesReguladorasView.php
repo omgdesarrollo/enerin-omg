@@ -229,7 +229,7 @@ require_once '../util/Session.php';
                            <table class="tbl-qa">
 		  <!--<thead>-->
 			  <tr>
-				<th class="table-header" >NO.</th>
+				<!--<th class="table-header" >NO.</th>-->
                                 <th class="table-header">CLAVE ENTIDAD</th>
 				<th class="table-header">DESCRIPCION</th>				
 				<th class="table-header">DIRECCION</th>				
@@ -257,7 +257,7 @@ require_once '../util/Session.php';
                   foreach ($Lista as $filas) { 
 		  ?>
 			  <tr class="table-row">
-				<td><?php echo $numeracion++;   ?></td>                               
+				<!--<td><?php // echo $numeracion++;   ?></td>-->                               
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'clave_entidad','<?php echo $filas["id_entidad"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_entidad"]; ?></td>
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'descripcion','<?php echo $filas["id_entidad"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion"]; ?></td>
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'direccion','<?php echo $filas["id_entidad"]; ?>')" onClick="showEdit(this);"><?php echo $filas["direccion"]; ?></td>
