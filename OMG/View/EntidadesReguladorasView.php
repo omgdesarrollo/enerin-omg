@@ -384,8 +384,8 @@ require_once '../util/Session.php';
                                     var EMAIL=$("#EMAIL").val();
                                     var DIRECCION_WEB=$("#DIRECCION_WEB").val();
 
-                                    alert("CLAVE_ENTIDAD :"+CLAVE_ENTIDAD+ "DESCRIPCION :"+DESCRIPCION+ "DIRECCION :"+DIRECCION
-                                           + "TELEFONO :"+TELEFONO+ "EXTENSION :"+EXTENSION+ "EMAIL :"+EMAIL+ "DIRECCION_WEB :"+DIRECCION_WEB);
+//                                    alert("CLAVE_ENTIDAD :"+CLAVE_ENTIDAD+ "DESCRIPCION :"+DESCRIPCION+ "DIRECCION :"+DIRECCION
+//                                           + "TELEFONO :"+TELEFONO+ "EXTENSION :"+EXTENSION+ "EMAIL :"+EMAIL+ "DIRECCION_WEB :"+DIRECCION_WEB);
                                   
                                     
 
@@ -457,7 +457,7 @@ require_once '../util/Session.php';
                                       +'&EXTENSION='+datos[4]+'&EMAIL='+datos[5]+'&DIRECCION_WEB='+datos[6],
                                 
 				success: function(data){
-                                    alert("se guardo");
+//                                    alert("se guardo");
                                     
 //					$(editableObj).css("background","#FDFDFD");
                                         swal("Guardado Exitoso!", "Ok!", "success")
