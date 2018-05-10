@@ -18,7 +18,6 @@ class ClausulaPojo {
     private $sub_clausula='';
     private $descripcion_clausula='';
     private $descripcion_sub_clausula='';
-    private $texto_breve='';
     private $descripcion='';
     private $plazo='';
     private $id_empleado='';
@@ -61,14 +60,6 @@ class ClausulaPojo {
     }
     public function setDescripcionSubClausula($descripcion_sub_clausula){
        $this->DescripcionSubClausula=$descripcion_sub_clausula;
-    }
-
-
-    public function getTextoBreve(){
-        return $this->TextoBreve;
-    }
-    public function setTextoBreve($texto_breve){
-       $this->TextoBreve=$texto_breve;
     }
 
 
