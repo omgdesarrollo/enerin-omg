@@ -721,7 +721,7 @@ $listadoUrls= Session::getSesion("getUrlsArchivos");
                         $("#btn_guardar2").click(function()
                         {
                                 agregarArchivosUrl();
-                        }
+                        });
                         $("#btn_guardar").click(function(){
                                 //   alert("entro");
        
