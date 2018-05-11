@@ -208,10 +208,12 @@ $Usuario=  Session::getSesion("user");
 							<div class="help-block with-errors"></div>
 						</div>
                                     
-                                    
+<!--                                     <button class="btn btn-info">Convertir a MAYUSCULAS</button>
+                                      <button class="btn btn-info">convertir a minusculas</button>-->
                                                 <div class="form-group">
+                                                   
 							<label class="control-label" for="title">Documento:</label>
-                                                        <textarea  id="DOCUMENTO" class="form-control" data-error="Ingrese el Documento" required></textarea>
+                                                        <textarea  id="DOCUMENTO" class="form-control minusculas " data-error="Ingrese el Documento" required></textarea>
 							<div class="help-block with-errors"></div>
 						</div>
                                     
@@ -309,7 +311,7 @@ $Usuario=  Session::getSesion("user");
                                   //alert("entro aqui");
                                   
                                     var CLAVE_DOCUMENTO=$("#CLAVE_DOCUMENTO").val();
-                                    var DOCUMENTO=$("#DOCUMENTO").val();
+                                    var DOCUMENTO=$("#DOCUMENTO").val(). toLowerCase();
                                     var ID_EMPLEADOMODAL=$("#ID_EMPLEADOMODAL").val();
                                     
 
