@@ -107,10 +107,22 @@ switch ($Op) {
 //                  $model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );
 //                    }
                 break;
-
+            
+        case 'loadAutoComplete':
+            
+              $cadenaclausula=$_REQUEST["cadenaclausula"];  
+              $data= $model->loadAutoComplete($cadenaclausula);
+               	header('Content-type: application/json; charset=utf-8');
+                echo json_encode($data);
+            
+        break;
+            
 	case 'Eliminar':
 		# code...
 		break;	
+            
+            
+            
 	default:
 		# code...
 		break;

@@ -19,7 +19,7 @@ class ClausulaDAO{
                     tbclausulas.descripcion, tbclausulas.plazo
                     FROM clausulas tbclausulas
 
-                    JOIN empleados tbempleados ON tbclausulas.id_empleado=tbempleados.id_empleado";
+                    JOIN empleados tbempleados ON tbclausulas.id_empleado=tbempleados.id_empleado ORDER BY  cast(tbclausulas.clausula  as unsigned )";
             
             
             $db=  AccesoDB::getInstancia();
@@ -53,7 +53,24 @@ class ClausulaDAO{
         throw $ex;
     }
     }
+public function loadAutoComplete($cadena){
+    try{
+            $query="SELECT tbclausulas.sub_clausula,tbclausulas.descripcion_clausula FROM clausulas tbclausulas WHERE tbclausulas.clausula  like '$cadena%'";
 
+            
+//            $query="SELECT ID_EMPLEADO  FROM EMPLEADOS";
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+        
+            return $lista;
+            
+    } catch (Exception $ex) {
+
+    }
+}
+    
+    
+    
     
     public function insertarClausulas($clausula,$sub_clausula,$descripcion_clausula,
                                       $descripcion_sub_clausula,$descripcion,

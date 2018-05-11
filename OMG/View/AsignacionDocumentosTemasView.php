@@ -16,8 +16,8 @@ $Usuario=  Session::getSesion("user");
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
                <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-		<!--<link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" />-->
                 <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+		<!--<link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" />-->
 		<!-- page specific plugin styles -->
 
 		<!-- text fonts -->
@@ -34,17 +34,16 @@ $Usuario=  Session::getSesion("user");
                 
                 
                 <script src="../../js/jquery.js" type="text/javascript"></script>
-
 		<script src="../../assets/probando/js/ace-extra.min.js"></script>
                 
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-                <link href="style.css" rel="stylesheet" type="text/css"/>
+              
                 
                 <!--Modal requisitos-->
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+<!--                <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-                <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css'>
+                <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css'>-->
 
                 
                   <style>
@@ -996,7 +995,9 @@ $Usuario=  Session::getSesion("user");
                     dhxWins.attachViewportTo("winVP");
         //var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
                     var layoutWin=dhxWins.createWindow({id:"temas", text:"OMG VISUALIZACION TEMAS", left: 20, top: -30,width:530,  height:250,  center:true,resize: true,park:true,modal:true	});
-                    layoutWin.attachURL("TemasModalView.php");
+//                    layoutWin.attachURL("TemasModalView.php");
+                    layoutWin.attachURL("ChartView.php");
+
             }
             
             
@@ -1022,23 +1023,26 @@ $Usuario=  Session::getSesion("user");
                 <!--en esta seccion es para poder abrir el modal--> 
                 <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
                 <!--aqui termina la seccion para poder abrir el modal--> 
+                
                 <script src="../../codebase/dhtmlx.js"></script>
                 <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
                 <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
                 <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
                
-                <!--Modal requisitos-->
-                <script src="../../js/indexcheckbox.js" type="text/javascript"></script>
+<!--                Modal requisitos
+                <script src="../../js/indexcheckbox.js" type="text/javascript"></script>-->
                 
               
                 
                 
-                <script type="text/javascript">
+<!--                <script type="text/javascript">
                 
                 function Mostrar(){
 		document.getElementById("caja-requisito");
                 }
-                </script>
+                
+                
+                </script>-->
                 
                 
                 

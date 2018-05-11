@@ -219,6 +219,7 @@ $Usuario=  Session::getSesion("user");
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
 		Asignar Tema-Requisito
         </button>    
+            
 
 	                   
 
@@ -440,6 +441,9 @@ $Usuario=  Session::getSesion("user");
                         });
                         
                         
+                        
+                        
+                        
   
                       }); //LLAVE CIERRE FUNCTION
                       
@@ -503,6 +507,10 @@ $Usuario=  Session::getSesion("user");
                 
 		</script>
                 
+                
+                 <script src="../../codebase/dhtmlx.js"></script>
+                <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
+         
                <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>   
                 

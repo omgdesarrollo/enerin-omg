@@ -90,21 +90,15 @@ switch ($Op) {
 				//   print_r($_FILEs['DOCUMENTO']); 
 				$data = $model->insertar($pojo);
                                 
-                                echo "e".json_encode($data[2]);
+                                // echo "e".json_encode($data[2]);
 				//   echo $data[0];
 				//  $jsonData['ID_CUMPLIMIENTO'] = $data[0];
-				//  $jsonData['ID_DOCUMENTO'] = $data[1];
-				$valores = "/".$data[0]."/".$data[1]."/";
-                                
-                                
-                                
-                                
-                                
-                                
+
+				$jsonData['ID_DOCUMENTO'] = $data[1];
+				$valores = '/'.$data[0].'/'.$data[1].'/';
 				Session::setSesion("newUrl",$valores);
-                                
-                                
-                                
+
+				//  $jsonData['ID_DOCUMENTO'] = $data[1];
                                 
 				//  header('Content-type: application/json; charset=utf-8');
 				//   echo json_encode($jsonData);

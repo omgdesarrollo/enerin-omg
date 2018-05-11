@@ -51,7 +51,19 @@ class ClausulaModel{
         throw  $e;
     }
     }
- 
+ public function loadAutoComplete($cadena){
+     
+     try{
+         $dao= new ClausulaDAO();
+         $rec=$dao->loadAutoComplete($cadena);
+         return $rec;
+     } catch (Exception $ex) {
+
+     }
+     
+     
+ }
+    
     
     public function insertar($pojo){
         try{

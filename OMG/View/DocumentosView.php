@@ -79,6 +79,15 @@ $Usuario=  Session::getSesion("user");
                       text-align:center;
                       padding-top:10px;
                     }
+                .minusculas{
+                text-transform:lowercase;
+                 }	
+            .mayusculas{
+                    text-transform:uppercase;
+            }	
+                    
+                    
+                    
                 </style>    
                 
                 
@@ -102,10 +111,10 @@ $Usuario=  Session::getSesion("user");
                            <table class="tbl-qa">
 		  <!--<thead>-->
 			  <tr>
-				<th class="table-header" >NO.</th>
-                                <th class="table-header">CLAVE DEL DOCUMENTO</th>
-				<th class="table-header">DOCUMENTO</th>				
-				<th class="table-header">RESPONSABLE DEL DOCUMENTO</th>					                                
+				<th class="table-header" >No.</th>
+                                <th class="table-header">Clave del Documento</th>
+				<th class="table-header">Nombre del Documento</th>				
+				<th class="table-header">Responsable del Documento</th>					                                
 			  </tr>
 		  <!--</thead>-->
 		  <tbody>
@@ -199,10 +208,12 @@ $Usuario=  Session::getSesion("user");
 							<div class="help-block with-errors"></div>
 						</div>
                                     
-                                    
+<!--                                     <button class="btn btn-info">Convertir a MAYUSCULAS</button>
+                                      <button class="btn btn-info">convertir a minusculas</button>-->
                                                 <div class="form-group">
+                                                   
 							<label class="control-label" for="title">Documento:</label>
-                                                        <textarea  id="DOCUMENTO" class="form-control" data-error="Ingrese el Documento" required></textarea>
+                                                        <textarea  id="DOCUMENTO" class="form-control minusculas " data-error="Ingrese el Documento" required></textarea>
 							<div class="help-block with-errors"></div>
 						</div>
                                     
@@ -300,7 +311,7 @@ $Usuario=  Session::getSesion("user");
                                   //alert("entro aqui");
                                   
                                     var CLAVE_DOCUMENTO=$("#CLAVE_DOCUMENTO").val();
-                                    var DOCUMENTO=$("#DOCUMENTO").val();
+                                    var DOCUMENTO=$("#DOCUMENTO").val(). toLowerCase();
                                     var ID_EMPLEADOMODAL=$("#ID_EMPLEADOMODAL").val();
                                     
 

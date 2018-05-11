@@ -38,7 +38,7 @@ $Usuario=  Session::getSesion("user");
                 
                 
              <script src="../../js/jquery.js" type="text/javascript"></script>
-
+             <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
 		<script src="../../assets/probando/js/ace-extra.min.js"></script>
        
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
@@ -75,6 +75,14 @@ $Usuario=  Session::getSesion("user");
                       text-align:center;
                       padding-top:10px;
                     }
+                    
+                    
+                    #sugerenciasclausulas {
+                    width:350px;
+                    height:5px;
+                    overflow: auto;
+                    }
+                    
                 </style>    
                 
                 
@@ -87,7 +95,7 @@ $Usuario=  Session::getSesion("user");
             
             <div class="navbar-container ace-save-state" id="navbar-container">
                 <div class="navbar-header pull-left">
-					<a href="index.html" class="navbar-brand">
+					<a  class="navbar-brand">
 						<small>
 							<i class="fa fa-leaf"></i>
 							OMG APPS
@@ -327,12 +335,21 @@ $Usuario=  Session::getSesion("user");
                                     <!--<form data-toggle="validator"  >-->
                                     
                                                 
-                                                <div class="form-group">
+<!--                                                <div class="form-group">
 							<label class="control-label" for="title">No.Tema:</label>
                                                         <input type="text"  id="CLAUSULA" class="form-control" data-error="Ingrese el Tema" required />
 							<div class="help-block with-errors"></div>
+						</div>-->
+                                                <div class="form-group">
+							<label class="control-label" for="title">No.Tema:</label>
+                                                        <input type="text"  id="CLAUSULA" class="form-control"  />
+                                                        
+                                                        <!--<div id="combo_zone" style="width:230px;"></div>-->
+							<div class="help-block with-errors"></div>
+                                                        <div id="sugerenciasclausulas"></div>
+                                                        <!--<div class="suggest-element"> </div>-->
+                                                        
 						</div>
-
                                                 
                                                 <div class="form-group">
 							<label class="control-label" for="title">Tema:</label>
@@ -435,6 +452,8 @@ $Usuario=  Session::getSesion("user");
                     
                       var idclausula;
                       $(function(){
+                           
+                         
                           
                         $('.select').on('change', function() {
 //                          console.log( $(this).prop('value') );
@@ -458,6 +477,22 @@ $Usuario=  Session::getSesion("user");
                           
                           
                         });
+                        
+                        
+                        $('#CLAUSULA').keyup(function(){
+                            
+                       var valueclausula = $(this).val();   
+                       if(valueclausula!=""){
+                           var dataString = valueclausula;
+                            loadAutocomplete(dataString);
+                            
+                            
+                       }
+                         
+                           });
+                        
+                        
+                        
                         
                         
                         $("#btn_guardar").click(function(){
@@ -560,8 +595,48 @@ $Usuario=  Session::getSesion("user");
 //                   window.location.href("EmpleadosView.php");
                 }
                 
+                
+                function loadAutocomplete(dataString){
+                    //Le pasamos el valor del input al ajax
+                            $.ajax({
+                                type: "POST",
+                                url: "../Controller/ClausulasController.php?Op=loadAutoComplete",
+                                data: "cadenaclausula="+dataString,
+                                success: function(data) {
+                                    //Escribimos las sugerencias que nos manda la consulta
+//var datos="<ul>";
+var dato="";
+    $.each(data, function (index,value) {
+//        console.log("sub_clausula: " + value.sub_clausula);
+if(value.sub_clausula!=""){
+//         datos+="<li>"+value.sub_clausula+"</li><br>";
+        dato=value.descripcion_clausula;
+     }
+    });
+//    datos+="</ul>"
+//    $('#sugerenciasclausulas').fadeIn(1000).html(datos);
+$('#DESCRIPCION_CLAUSULA').val(dato);
+if(dato==""){
+    
+$('#DESCRIPCION_CLAUSULA').prop("readonly",false);
+}else{
+    if(dato!=""){
+ $('#DESCRIPCION_CLAUSULA').prop("readonly",true);   
+ }
+}
+   
+//                                               
+                                }
+                            }); 
+                }
+                
 		</script>
                 
+                
+                <link rel="stylesheet" type="text/css" href="../../../codebase/fonts/font_roboto/roboto.css"/>
+                   <script src="../../codebase/dhtmlx.js"></script>
+                <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
+               
                 <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
                 <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
                 
