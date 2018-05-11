@@ -25,7 +25,7 @@ class ArchivoUploadDAO
         {
             $query = "SELECT tab_documento_dir.DIR FROM documento_dir tab_documento_dir where tab_documento_dir.ID_DOCUMENTO_ENTRADA = '$id_documento'";
             $db= AccesoDB::getInstancia();
-            $lista = $db->executeQuery();
+            $lista = $db->executeQuery($query);
             return $lista;
         }catch (Exception $ex)
         {

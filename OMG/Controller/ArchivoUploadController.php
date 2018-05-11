@@ -28,10 +28,12 @@ switch ($Op) {
 		// return $Lista;
 		break;
 		
-	case 'listar_urls':
-		var id_documento = $_REQUEST['ID_DOCUMENTO'];
-		$lista = $model->obtener_urls(id_documento);
+	case 'listarUrls':
+		$id_documento = $_REQUEST['ID_DOCUMENTO'];
+		$lista = $model->obtener_urls($id_documento);
 		Session::setSesion("getUrlsArchivos",$lista);
+		header('Content-type: application/json; charset=utf-8');
+		echo json_encode($lista);
 		break;
 	
 	default: break;

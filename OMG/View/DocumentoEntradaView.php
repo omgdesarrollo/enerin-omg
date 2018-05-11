@@ -374,8 +374,14 @@ $listadoUrls= Session::getSesion("getUrlsArchivos");
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'status_doc','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["status_doc"]; ?></td>
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'fecha_asignacion','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_asignacion"]; ?></td>
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'fecha_linmite_atencion','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_limite_atencion"]; ?></td>
+                                
                                 <!--<td contenteditable="true" onBlur="saveToDatabase(this,'FECHA_ALARMA','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_alarma"]; ?></td>-->
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
+                                <td>
+                                        <button onClick="mostrarUrl(<?php echo $filas['id_documento_entrada'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#create-itemUrls">
+		                                Mostrar Documentos
+                                        </button>
+                                        <!-- <?php echo $filas['id_documento_entrada']; ?> -->
+                                </td>
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'observaciones','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["observaciones"]; ?></td>
                                 
                                 
@@ -396,7 +402,44 @@ $listadoUrls= Session::getSesion("getUrlsArchivos");
 	
 </div>
              
-             
+<div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Archivos agregados</h4>
+		      </div>
+
+		      <div class="modal-body">
+                        <div id="DocumentolistadoUrl"></div>
+
+                        <div class="form-group" method="post" >
+                                <button type="submit" id="btn_guardar2"  class="btn crud-submit btn-info">Agragar Archivo</button>
+                        </div>
+                        <div class="form-group">
+                                                        <form id="fileupload" method="POST" enctype="multipart/form-data">
+                                                                <div class="fileupload-buttonbar">
+                                                                        <div class="fileupload-buttons">
+                                                                                <span class="fileinput-button">
+                                                                                        <span><a >Agregar documentos(Click o Arrastrar)...</a></span>
+                                                                                        <input type="file" name="files[]" multiple>
+                                                                                </span>
+                                                                                <span class="fileupload-process"></span>
+                                                                        </div>
+                                                                        <div class="fileupload-progress" >
+                                                                                <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                                <div class="progress-extended">&nbsp;</div>
+                                                                        </div>
+                                                                </div>
+                                                                <table role="presentation"><tbody class="files"></tbody></table>
+                                                        </form>
+			</div>
+
+                      </div><!-- cierre div class-body -->
+                </div><!-- cierre div class modal-content -->
+        </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal -->
+
              
        <!-- Inicio de Seccion Modal -->
        <div class="modal draggable fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -629,54 +672,11 @@ $listadoUrls= Session::getSesion("getUrlsArchivos");
                     
                 var id_documento_entrada;
                 var cualmodificar;
-                // alert("aaaa");
-                // document.addEventListener("DOMContentLoaded;",()=>
-                // {
-                //         alert("aquiiii");
-                //         let form = document.getElementById('form_subir');
-                //         form.addEventListener("submit",function(event)
-                //         {
-                //                 event.preventDefault();
-                //                 // console.log("aqui");
-                //                 alert(aqui);
-                //                 // subir_archivos(this);
-                //         });
-                // });
-                // function subir_archivos(form){
-                //         alert("wtf");
-                //         let barra_estado = form.children[14].children[0];
-                //         span = barra_estado.children[0];
-                //         boton_cancelar = form.children[13].children[2];
-
-                //         barra_estadp.classList.remove('barra_verde','barra_roja');
-                //         let peticion = new XMLHttpRequest();
-                //         //progreso
-                //         peticion.upload.addEventListener("Progress",(event)=>
-                //         {
-                //                 let porcentaje = Math.round((event.loaded/event.total) * 100);
-                //                 console.log(porcentaje);
-                //                 barra_estado.style.width = porcentaje+'%';
-                //                 span.innerHTML = porcentaje+'%';
-                //         });
-                //         //finalizar
-                //         peticion.addEventListener("load",()=>
-                //         {
-                //                 barra_estado.classList.add('barra_verde');
-                //                 console.log("Proceso completado");
-                //         });
-                //         peticion.open('post','../../../subir.php');
-                //         peticion.send(new FormData());
-                //         //cancelar
-                //         botton_cancelar.addEventListener("click",()=>
-                //         {
-                //                 peticion.abort();
-                //                 barra_estado.classList.remove('barra_verde');
-                //                 barra_estado.classList.add('barra_roja');
-                //                 span.innerHTML = "proceso Cancelado";
-                //         });
-                //                 // saveToDatabaseDatosFormulario(datos);
-                // }
-                        
+                function mostrarUrl(id_documento_entrada)
+                {
+                        // alert("mostrar urls: "+id_documento_entrada);
+                        mostrar_urls(id_documento_entrada);
+                }
                       $(function(){
                           
                           
@@ -717,7 +717,11 @@ $listadoUrls= Session::getSesion("getUrlsArchivos");
                           
                           
                         });
-  
+
+                        $("#btn_guardar2").click(function()
+                        {
+                                agregarArchivosUrl();
+                        }
                         $("#btn_guardar").click(function(){
                                 //   alert("entro");
        
@@ -918,7 +922,6 @@ $listadoUrls= Session::getSesion("getUrlsArchivos");
                                         //         formData: {newUrl: '/'+jsonData.ID_CUMPLIMIENTO+'/'+jsonData.ID_DOCUMENTO+'/'}
                                         // });
                                         $('.start').click();
-
                                 }
                         })
                         .then(function(data)
@@ -929,16 +932,40 @@ $listadoUrls= Session::getSesion("getUrlsArchivos");
                                         url: "../Controller/ArchivoUploadController.php?Op=Guardar",
                                         type: "POST",
                                         data: 'ID_DOCUMENTO='+ID_DOCUMENTO,
+                                        async: false,
                                         success: function(data)
                                         {
-                                                alert("insertado urls");
+                                                // alert("insertado urls");
                                         }
                                 });
                         
                         });
 //                   window.location.href("EmpleadosView.php");
                 }
-                
+                function mostrar_urls(id_documento_entrada)
+                {
+                        var tempDocumentolistadoUrl = " ";
+                        $.ajax({
+                                url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
+                                type: 'GET',
+                                data: 'ID_DOCUMENTO='+id_documento_entrada,
+                                success: function(lista)
+                                {
+                                        $.each(lista, function (index,value)
+                                        {
+                                                var tempDocumentolistadoUrlSplit = value.DIR.split("/");
+                                                var tempDocumentolistadoUrlPos = tempDocumentolistadoUrlSplit.length - 1;
+                                                tempDocumentolistadoUrl = tempDocumentolistadoUrl +"<li><a href=\"" +value.DIR+"\">" + tempDocumentolistadoUrlSplit[tempDocumentolistadoUrlPos] + "</a></li>";
+                                        });
+                                        if(tempDocumentolistadoUrl == " ")
+                                        {
+                                                tempDocumentolistadoUrl = " No hay archivos agregados "
+                                        }
+                                        // alert(tempDocumentolistadoUrl);
+                                        $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
+                                }
+                        });
+                }
                 
 		</script>
                 <script id="template-upload" type="text/x-tmpl">

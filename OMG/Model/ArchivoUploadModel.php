@@ -21,7 +21,7 @@ class ArchivoUploadModel{
             throw $e;
         }
     }
-    public function obtener_urls()
+    public function obtener_urls($id_documento)
     {
         try
         {
