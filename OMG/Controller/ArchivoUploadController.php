@@ -27,6 +27,12 @@ switch ($Op) {
 		
 		// return $Lista;
 		break;
+		
+	case 'listar_urls':
+		var id_documento = $_REQUEST['ID_DOCUMENTO'];
+		$lista = $model->obtener_urls(id_documento);
+		Session::setSesion("getUrlsArchivos",$lista);
+		break;
 	
 	default: break;
 }

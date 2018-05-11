@@ -4,7 +4,7 @@ session_start();
 require_once '../util/Session.php';
 
 $Usuario=  Session::getSesion("user"); 
-
+$listadoUrls= Session::getSesion("getUrlsArchivos");
 ?>
 
 

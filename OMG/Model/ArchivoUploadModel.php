@@ -21,5 +21,17 @@ class ArchivoUploadModel{
             throw $e;
         }
     }
+    public function obtener_urls()
+    {
+        try
+        {
+            $dao = new ArchivoUploadDAO();
+            $lista = $dao->listar_archivos($id_documento);
+            return $lista;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+        }
+    }
 }
 ?>
