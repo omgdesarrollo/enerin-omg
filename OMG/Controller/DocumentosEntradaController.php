@@ -156,7 +156,16 @@ switch ($Op) {
 				break;
 	case 'Eliminar':
 		# code...
-		break;	
+		break;
+	case 'getIdCumplimiento':
+		$value;
+		$ID_DOCUMENTO = $_REQUEST['ID_DOCUMENTO'];
+		$data = $model->getIdCumplimiento($ID_DOCUMENTO);
+		foreach ($data as $value)
+		{}
+		$valores = '/'.$value['ID_CUMPLIMIENTO'].'/'.$ID_DOCUMENTO.'/';
+		Session::setSesion("newUrl",$valores);
+		break;
 	default:
 		# code...
 		break;
