@@ -113,15 +113,17 @@ $Usuario=  Session::getSesion("user");
 
 require_once 'EncabezadoUsuarioView.php';
 
-?>            
+?>
+
+<div style="height: 50px"></div>            
            
+        <div style="position: fixed;">    
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
+                    Agregar Tema
+            </button>                
+        </div>
+ 
             
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
-		Agregar Tema
-        </button>
-                
-            </div>
-                 
             <div style="height: 55px"></div>
             
                            <table class="tbl-qa">
