@@ -88,145 +88,17 @@ $Usuario=  Session::getSesion("user");
 			margin: 10px;
 		}
                 
+                .main-encabezado {
+                        /*background: #333;*/
+                        color: white;
+                        height: 80px;
+
+                        width: 100%; /* hacemos que la cabecera ocupe el ancho completo de la página */
+                        left: 0; /* Posicionamos la cabecera al lado izquierdo */
+                        top: 0; /* Posicionamos la cabecera pegada arriba */
+                        position: fixed; /* Hacemos que la cabecera tenga una posición fija */
+                    }
                 
-                /*Inicia Estilos checkbox*/
-                
-/*                 body {
-  font-size: 16px;
-}*/
-
-.header {
-  height: 8rem;
-  background: #009688;
-}
-
-.content {
-  width: 20rem;
-  margin: -4rem auto 0 auto;
-  padding: 1rem;
-  background: #fff;
-  border-radius: 0.125rem;
-  box-shadow: 0 0.125rem 0.3125rem 0 rgba(0, 0, 0, 0.25);
-}
-
-.list {
-  margin: .5rem;
-}
-
-.list__item {
-  margin: 0 0 .5rem 0;
-  padding: 0;
-}
-
-.label--checkbox {
-  position: relative;
-  margin: .5rem;
-  font-family: Arial, sans-serif;
-  line-height: 135%;
-  cursor: pointer;
-}
-
-.checkbox {
-  position: relative;
-  top: -0.375rem;
-  margin: 0 1rem 0 0;
-  cursor: pointer;
-}
-.checkbox:before {
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-  content: "";
-  position: absolute;
-  left: 0;
-  z-index: 1;
-  width: 1rem;
-  height: 1rem;
-  border: 2px solid #f2f2f2;
-}
-.checkbox:checked:before {
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-  height: .5rem;
-  border-color: #009688;
-  border-top-style: none;
-  border-right-style: none;
-}
-.checkbox:after {
-  content: "";
-  position: absolute;
-  top: -0.125rem;
-  left: 0;
-  width: 1.1rem;
-  height: 1.1rem;
-  background: #fff;
-  cursor: pointer;
-}
-
-.button--round {
-  -webkit-transition: 0.3s background ease-in-out;
-  -moz-transition: 0.3s background ease-in-out;
-  transition: 0.3s background ease-in-out;
-  width: 2rem;
-  height: 2rem;
-  background: #5677fc;
-  border-radius: 50%;
-  box-shadow: 0 0.125rem 0.3125rem 0 rgba(0, 0, 0, 0.25);
-  color: #fff;
-  text-decoration: none;
-  text-align: center;
-}
-.button--round i {
-  font-size: 1rem;
-  line-height: 220%;
-  vertical-align: middle;
-}
-.button--round:hover {
-  background: #3b50ce;
-}
-
-.button--sticky {
-  position: fixed;
-  right: 2rem;
-  top: 16rem;
-}
-
-.content {
-  -webkit-animation-duration: 0.4s;
-  animation-duration: 0.4s;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-  -webkit-animation-name: slideUp;
-  animation-name: slideUp;
-  -webkit-animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@-webkit-keyframes slideUp {
-  0% {
-    -webkit-transform: translateY(6.25rem);
-    transform: translateY(6.25rem);
-  }
-  100% {
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
-  }
-}
-@keyframes slideUp {
-  0% {
-    -webkit-transform: translateY(6.25rem);
-    transform: translateY(6.25rem);
-  }
-  100% {
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
-  }
-}
-                
-/*Termina Estilos checkbox*/ 
 
                 </style>
                 
@@ -235,139 +107,17 @@ $Usuario=  Session::getSesion("user");
 
         <body class="no-skin" onload="loadSpinner()">
 	<div id="loader"></div>
-        <div id="navbar" class="navbar navbar-default          ace-save-state">
-            
-            <div class="navbar-container ace-save-state" id="navbar-container">
-                <div class="navbar-header pull-left">
-					<a  class="navbar-brand">
-						<small>
-							<i class="fa fa-leaf"></i>
-							OMG APPS
-						</small>
-					</a>
-		</div>
-                <div class="navbar-buttons navbar-header pull-right" role="navigation">
-                    <ul class="nav ace-nav" style="height: 10%">
-                    <!--seccion de inicio de sesion de alarmas--> 
-                        <li class="purple dropdown-modal">
-				<a data-toggle="dropdown" class="dropdown-toggle" href="#">
-				    <i class="ace-icon fa fa-bell icon-animated-bell"></i>
-					<span class="badge badge-important">0</span>
-				</a>
-
-				<ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
-					<li class="dropdown-header">
-					     <i class="ace-icon fa fa-exclamation-triangle"></i>
-						1 NOTIFICACIONES
-					</li>
-
-						<li class="dropdown-content">
-							<ul class="dropdown-menu dropdown-navbar navbar-pink">
-								<li>
-									<a href="#">
-									     <div class="clearfix">
-										<span class="pull-left">
-										    <i class="btn btn-xs no-hover btn-pink fa fa-user"></i>
-											Urgentes
-										</span>
-										<span class="pull-right badge badge-info">+1</span>
-									      </div>
-									</a>
-								</li>
-
-										
-							</ul>
-						</li>
-
-						<li class="dropdown-footer">
-									<a href="#">
-										<!--VER MAS NOTIFICACIONES-->
-										<i class="ace-icon fa fa-arrow-right"></i>
-									</a>
-						</li>
-				</ul>
-			</li>
-                        <!--seccion de cierre  alarmas-->
-                        
-                        <!--inicio de seccion de mensajes-->
-                        
-                        <li class="green dropdown-modal">
-							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
-								<i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
-								<span class="badge badge-success">0</span>
-							</a>
-
-							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
-								<li class="dropdown-header">
-									<i class="ace-icon fa fa-envelope-o"></i>
-									Cantidad de Mensajes
-								</li>
-
-								<li class="dropdown-content">
-									<ul class="dropdown-menu dropdown-navbar">
-									
-
-
-										<li>
-											<a href="#" class="clearfix">
-												<img src="../../assets/probando/images/avatars/avatar5.png" class="msg-photo" alt="Fred's Avatar" />
-												<span class="msg-body">
-													<span class="msg-title">
-														<span class="blue">aqui va el usuario remitente:</span>
-														aqui va el mensaje
-													</span>
-
-													<span class="msg-time">
-														<i class="ace-icon fa fa-clock-o"></i>
-														<span>aqui va la fecha en que lo envio </span>
-													</span>
-												</span>
-											</a>
-										</li>
-									</ul>
-								</li>
-
-								<li class="dropdown-footer">
-									<a href="inbox.html">
-										<!--ver todos los mensajes-->
-										<i class="ace-icon fa fa-arrow-right"></i>
-									</a>
-								</li>
-							</ul>
-						</li>
-                        
-                        <!--cierre de seccion de mensajes-->
-                        
-                        
-                        
-                        <!--seccion de info usuario-->
-                            <li class="light-blue dropdown-modal">
-				<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-					<img class="nav-user-photo" src="../../assets/probando/images/avatars/avatar.png" alt="<?php echo $Usuario["NOMBRE_USUARIO"]; ?>" />
-					<span class="user-info">
-						<small>Bienvenido,</small>
-						<?php echo $Usuario["NOMBRE_USUARIO"]; ?>
-					</span>
-
-<!--								<i class="ace-icon fa fa-caret-down"></i>-->
-				</a>
-
-					
-			    </li>
-                        <!--fin de seccion de info usuario-->
-                        
-                        
-                        
-                        
-                        
-                    </ul>
-                    
-                    
-                </div>
-                
-            </div>
-        </div>
         
+<?php
+
+require_once 'EncabezadoUsuarioView.php';
+
+?>          
+        
+<div style="height: 50px"></div>
+
+
+            <div style="position: fixed;">
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
 		Asignar Documento-Tema
             </button>
@@ -383,13 +133,16 @@ $Usuario=  Session::getSesion("user");
                 Lista de Temas
                                               <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
             </button>
-        
-		
+            </div>    
+                
+
+
+<div style="height: 55px"></div>		
         
         
         <div style="display:none;" id="myDiv" class="animate-bottom"> <!--inicio animacion tabla toda la interfaz seleccionada-->
                     <!--<div id="winVP"></div>-->
-                    <div class="contenedortable" id="winVP">  
+                <div class="contenedortable" id="winVP">  
                            <table class="tbl-qa">
 		  <!--<thead>-->
 			  <tr>
@@ -520,7 +273,7 @@ $Usuario=  Session::getSesion("user");
 			</a>
 		</div><!-- /.main-container -->
                         
-                </div>
+        </div>
         
         
         <!-- Inicio de Seccion Modal-Crear-->

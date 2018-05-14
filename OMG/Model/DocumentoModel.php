@@ -36,7 +36,19 @@ class DocumentoModel{
         throw  $e;
     }
     }
-    
+    public function verificacionExisteClaveandDocumento($registro,$cualverificar){
+        try{
+            $dao= new DocumentoDAO();
+//            if($cualverificar=="clavedocumento"){
+                $rec=$dao->verificacionExisteClaveandDocumento($registro,$cualverificar);
+//            }
+            
+            return $rec;
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+        
+    }
     
     
     public function insertar($pojo){

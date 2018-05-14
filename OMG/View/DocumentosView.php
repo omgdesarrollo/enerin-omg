@@ -4,12 +4,12 @@ session_start();
 require_once '../util/Session.php';
 $Usuario=  Session::getSesion("user");
 
-
 // setlocale(LC_ALL,'es_RA');
 
-
-
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -40,12 +40,26 @@ $Usuario=  Session::getSesion("user");
 		<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
+                <!--Inicia para el spiner cargando-->
+                <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+                <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+                <!--Termina para el spiner cargando-->
                 
-             <script src="../../js/jquery.js" type="text/javascript"></script>
-
+                
+                <script src="../../js/jquery.js" type="text/javascript"></script>
 		<script src="../../assets/probando/js/ace-extra.min.js"></script>
-       
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+                
+                
+                
+                
+                <script>
+                
+                
+                
+                </script>
+
+                
                 
             
             <style>
@@ -80,12 +94,12 @@ $Usuario=  Session::getSesion("user");
                       padding-top:10px;
                     }
                 .minusculas{
-                text-transform:lowercase;
+                /*text-transform:lowercase;*/
                  }	
             .mayusculas{
-                    text-transform:uppercase;
+                    /*text-transform:uppercase;*/
             }	
-                    
+                  
                     
                     
                 </style>    
@@ -95,18 +109,25 @@ $Usuario=  Session::getSesion("user");
 
 	</head>
 
-        <body class="no-skin" >
+        <body class="no-skin" onload="loadSpinner()">
+            <!--<div>Cargando...</div>-->
+            <div id="loader"></div>
+           
 	
 		<?php		
 		require_once 'EncabezadoUsuarioView.php';
 		?>			
-            
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
-		Agregar-Documento
-        </button>    
 
+            
+             <div style="height: 50px"></div>
+             
+             <div style="position: fixed;">        
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
+                    Agregar-Documento
+                </button>    
+              </div>
 	                   
-        
+          <div style="height: 55px"></div>
 
                            <table class="tbl-qa">
 		  <!--<thead>-->
@@ -206,6 +227,7 @@ $Usuario=  Session::getSesion("user");
 							<label class="control-label" for="title">Clave del Documento:</label>
                                                         <textarea  id="CLAVE_DOCUMENTO" class="form-control" data-error="Ingrese la Clave del Documento" required></textarea>
 							<div class="help-block with-errors"></div>
+                                                        <div id="msgerrorclave" ></div>
 						</div>
                                     
 <!--                                     <button class="btn btn-info">Convertir a MAYUSCULAS</button>
@@ -213,7 +235,7 @@ $Usuario=  Session::getSesion("user");
                                                 <div class="form-group">
                                                    
 							<label class="control-label" for="title">Documento:</label>
-                                                        <textarea  id="DOCUMENTO" class="form-control minusculas " data-error="Ingrese el Documento" required></textarea>
+                                                        <textarea  id="DOCUMENTO" class="form-control " data-error="Ingrese el Documento" required></textarea>
 							<div class="help-block with-errors"></div>
 						</div>
                                     
@@ -280,6 +302,19 @@ $Usuario=  Session::getSesion("user");
                     
                       var id_clausula;
                       $(function(){
+                          
+                          
+                          
+                        $("#CLAVE_DOCUMENTO").keyup(function(){
+//                            alert("d");
+                            var valueclavedocumento=$(this).val();
+//                            alert("d  "+valueclavedocumento);
+                            
+                            verificarExiste(valueclavedocumento,"clave_documento");
+                           
+                        });
+                          
+                          
                         $('.select').on('change', function() {
 //                          console.log( $(this).prop('value') );
                           alert("el value que va a viajar es "+ $(this).prop('value'));
@@ -311,11 +346,11 @@ $Usuario=  Session::getSesion("user");
                                   //alert("entro aqui");
                                   
                                     var CLAVE_DOCUMENTO=$("#CLAVE_DOCUMENTO").val();
-                                    var DOCUMENTO=$("#DOCUMENTO").val(). toLowerCase();
+                                    var DOCUMENTO=$("#DOCUMENTO").val();
                                     var ID_EMPLEADOMODAL=$("#ID_EMPLEADOMODAL").val();
                                     
 
-                                   alert("CLAVE_DOCUMENTO :"+CLAVE_DOCUMENTO + "DOCUMENTO :"+DOCUMENTO + "ID_EMPLEADOMODAL :"+ID_EMPLEADOMODAL);
+//                                   alert("CLAVE_DOCUMENTO :"+CLAVE_DOCUMENTO + "DOCUMENTO :"+DOCUMENTO + "ID_EMPLEADOMODAL :"+ID_EMPLEADOMODAL);
                                   
                                     
 
@@ -395,11 +430,46 @@ $Usuario=  Session::getSesion("user");
                 
                 
                 
+                
+      function verificarExiste(dataString,cualverificar){
+//          alert("fdf");
+                    //Le pasamos el valor del input al ajax
+                            $.ajax({
+                                type: "POST",
+                                url: "../Controller/DocumentosController.php?Op=verificacionexisteregistro&cualverificar="+cualverificar,
+                                data: "registro="+dataString,
+                                success: function(data) {    
+mensajeerror="";
+
+    $.each(data, function (index,value) {
+//        console.log("sub_clausula: " + value.sub_clausula);
+        mensajeerror=" "+value.clave_documento+" ya existe";
+    });
+$("#msgerrorclave").html(mensajeerror);
+if(mensajeerror!=""){
+    $("#msgerrorclave").css("background","red");
+    $("#msgerrorclave").css("width","190px");
+    $("#msgerrorclave").css("color","white");
+    $("#btn_guardar").prop("disabled",true);
+}else{
+    $("#btn_guardar").prop("disabled",false);
+}
+
+
+
+}
+                                })
+                            }
+                                 
+                
+                
+                
+                
+                
                 function loadSpinner(){
 //                    alert("se cargara otro ");
                         myFunction();
                 }
-                
                 
                 
 		</script>

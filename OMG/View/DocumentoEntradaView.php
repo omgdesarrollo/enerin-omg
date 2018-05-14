@@ -42,15 +42,13 @@ $listadoUrls= Session::getSesion("getUrlsArchivos");
 		<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
-                
-                <script src="../../js/jquery.js" type="text/javascript"></script>
-
-		<script src="../../assets/probando/js/ace-extra.min.js"></script>
-                
-                
+                <!--Inicia para el spiner cargando-->
                 <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/loaderanimation.js" type="text/javascript"></script>
-                
+                <!--Termina para el spiner cargando-->
+                                                
+                <script src="../../js/jquery.js" type="text/javascript"></script>
+		<script src="../../assets/probando/js/ace-extra.min.js"></script>              
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
 
                 <!-- cargar archivo -->
@@ -97,137 +95,12 @@ $listadoUrls= Session::getSesion("getUrlsArchivos");
         <body class="no-skin" onload="loadSpinner()">
              <div id="loader"></div>
        
-	   <div id="navbar" class="navbar navbar-default          ace-save-state">
-            
-            <div class="navbar-container ace-save-state" id="navbar-container">
-                <div class="navbar-header pull-left">
-					<a href="index.html" class="navbar-brand">
-						<small>
-							<i class="fa fa-leaf"></i>
-							OMG APPS
-						</small>
-					</a>
-		</div>
-                <div class="navbar-buttons navbar-header pull-right" role="navigation">
-                    <ul class="nav ace-nav" style="height: 10%">
-                    <!--seccion de inicio de sesion de alarmas--> 
-                        <li class="purple dropdown-modal">
-				<a data-toggle="dropdown" class="dropdown-toggle" href="#">
-				    <i class="ace-icon fa fa-bell icon-animated-bell"></i>
-					<span class="badge badge-important">0</span>
-				</a>
+<?php
 
-				<ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
-					<li class="dropdown-header">
-					     <i class="ace-icon fa fa-exclamation-triangle"></i>
-						1 NOTIFICACIONES
-					</li>
+require_once 'EncabezadoUsuarioView.php';
 
-						<li class="dropdown-content">
-							<ul class="dropdown-menu dropdown-navbar navbar-pink">
-								<li>
-									<a href="#">
-									     <div class="clearfix">
-										<span class="pull-left">
-										    <i class="btn btn-xs no-hover btn-pink fa fa-user"></i>
-											Urgentes
-										</span>
-										<span class="pull-right badge badge-info">+1</span>
-									      </div>
-									</a>
-								</li>
-
-							</ul>
-						</li>
-
-						<li class="dropdown-footer">
-									<a href="#">
-										<!--VER MAS NOTIFICACIONES-->
-										<i class="ace-icon fa fa-arrow-right"></i>
-									</a>
-						</li>
-				</ul>
-			</li>
-                        <!--seccion de cierre  alarmas-->
-                        
-                        <!--inicio de seccion de mensajes-->
-                        
-                        <li class="green dropdown-modal">
-							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
-								<i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
-								<span class="badge badge-success">0</span>
-							</a>
-
-							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
-								<li class="dropdown-header">
-									<i class="ace-icon fa fa-envelope-o"></i>
-									Cantidad de Mensajes
-								</li>
-
-								<li class="dropdown-content">
-									<ul class="dropdown-menu dropdown-navbar">
-									
-
-
-										<li>
-											<a href="#" class="clearfix">
-												<img src="../../assets/probando/images/avatars/avatar5.png" class="msg-photo" alt="Fred's Avatar" />
-												<span class="msg-body">
-													<span class="msg-title">
-														<span class="blue">aqui va el usuario remitente:</span>
-														aqui va el mensaje
-													</span>
-
-													<span class="msg-time">
-														<i class="ace-icon fa fa-clock-o"></i>
-														<span>aqui va la fecha en que lo envio </span>
-													</span>
-												</span>
-											</a>
-										</li>
-									</ul>
-								</li>
-
-								<li class="dropdown-footer">
-									<a href="inbox.html">
-										<!--ver todos los mensajes-->
-										<i class="ace-icon fa fa-arrow-right"></i>
-									</a>
-								</li>
-							</ul>
-						</li>
-                        
-                        <!--cierre de seccion de mensajes-->
-                        
-                        
-                        
-                        <!--seccion de info usuario-->
-                            <li class="light-blue dropdown-modal">
-				<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-					<img class="nav-user-photo" src="../../assets/probando/images/avatars/avatar.png" alt="<?php echo $Usuario["NOMBRE_USUARIO"]; ?>" />
-					<span class="user-info">
-						<small>Bienvenido,</small>
-						<?php echo $Usuario["NOMBRE_USUARIO"]; ?>
-					</span>
-
-<!--								<i class="ace-icon fa fa-caret-down"></i>-->
-				</a>
-
-					
-			    </li>
-                        <!--fin de seccion de info usuario-->
-                        
-                        
-                        
-                        
-                        
-                    </ul>
-                    
-                    
-                </div>
-                
-            </div>
-        </div>
+?>            
+             
              
 <button onClick="DocumentoArchivoAgregarModalF();" type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
 		Agregar Documento de Entrada
@@ -371,7 +244,58 @@ $listadoUrls= Session::getSesion("getUrlsArchivos");
                                     
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleado"]; ?></td>
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'clasificacion','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clasificacion"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'status_doc','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["status_doc"]; ?></td>
+                                
+                                <td> 
+                                    <select id="id_status" class="select" onchange="saveComboToDatabase('status_doc', <?php echo $filas["id_documento_entrada"]; ?> )">
+                                    <?php
+                                    $s="";
+                                                foreach ($Lista as $value) {
+                                                    
+                                                    if($value["status_doc"]== 1){                                                                                                            
+                                                        ?>                    
+                                                        
+                                                        <option value="1"  selected>En proceso</option>
+
+                                                    <?php                                                              
+                                                    }                                                 
+                                                    
+                                                            if($value["status_doc"]== 2){                                                                                                            
+                                                    ?>                    
+                                                        
+                                                                 <option value="2"  selected >Suspendido</option>    
+                                                            <?php                                               
+                                                            }
+                                                                                                     
+                                                                    if($value["status_doc"]== 3){                                                                                                            
+                                                            ?>                    
+                                                        
+                                                                        <option value="3"  selected >En alarma</option>
+                                               
+                                                                    <?php           
+                                               
+                                                                    }
+                                                            
+                                                                           if($value["status_doc"]== 3){                                               
+                                                                    ?>
+                                                                            
+                                                                                <option value="4"  selected >Terminado</option>
+                                                                            <?php
+                                                                            }
+                                                                                  
+                                       }
+                                    ?> 
+                                       
+                                       <option value="1">En proceso</option>
+                                       <option value="2">Suspendido</option>
+                                       <option value="3">En alerta</option>
+                                       <option value="4">Terminado</option>                                             
+                                               
+ 
+                                    </select>                                                                     
+                                </td>
+                                
+                                
+                                <!--<td contenteditable="true" onBlur="saveToDatabase(this,'status_doc','<?php // echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["status_doc"]; ?></td>-->
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'fecha_asignacion','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_asignacion"]; ?></td>
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'fecha_linmite_atencion','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_limite_atencion"]; ?></td>
                                 
@@ -553,8 +477,15 @@ $listadoUrls= Session::getSesion("getUrlsArchivos");
                                     
                                                 <div class="form-group">
 							<label class="control-label" for="title">Status:</label>
-                                                        <textarea  id="STATUS_DOC" class="form-control" data-error="Ingrese el Status" required></textarea>
-							<div class="help-block with-errors"></div>
+<!--                                                        <textarea  id="STATUS_DOC" class="form-control" data-error="Ingrese el Status" required></textarea>
+							<div class="help-block with-errors"></div>-->
+                                                        
+                                                        <select id="STATUS_DOC">
+                                                        <option value="1">En proceso</option>
+                                                        <option value="2">Suspendido</option>
+                                                        <option value="3">En alerta</option>
+                                                        <option value="4">Terminado</option>
+                                                        </select>
 						</div>
                           
                           
@@ -976,6 +907,12 @@ $listadoUrls= Session::getSesion("getUrlsArchivos");
                                 }
                         });
                 }
+                
+                function loadSpinner(){
+//                    alert("se cargara otro ");
+                        myFunction();
+                }
+                
                 
 		</script>
                 <script id="template-upload" type="text/x-tmpl">

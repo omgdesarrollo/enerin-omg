@@ -1,15 +1,14 @@
 <?php
 session_start();
 require_once '../util/Session.php';
+$Usuario=  Session::getSesion("user");
+
 ?>
 
 
 
-<?php $Usuario=  Session::getSesion("user"); ?>
 
-
-
-<html>
+<html ng-app="omgApp">
     <head>
       <title></title>
       <meta name="description" content="overview &amp; stats" />
@@ -37,13 +36,18 @@ require_once '../util/Session.php';
 		<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
-                
-             <script src="../../js/jquery.js" type="text/javascript"></script>
+                <!--Inicia para el spiner cargando-->
+                <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+                <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+                <!--Termina para el spiner cargando-->
+
+                <script src="../../js/jquery.js" type="text/javascript"></script>
 
 		<script src="../../assets/probando/js/ace-extra.min.js"></script>
                 
-                 <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
-                     <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+                
+                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
                      
                      <!--en esta seccion es para poder abrir el modal--> 
                      <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>             
@@ -52,6 +56,9 @@ require_once '../util/Session.php';
                      <script src="../../codebase/dhtmlx.js"></script>
                      <!--aqui termina la seccion para poder abrir el modal--> 
                      
+                     
+                     <script src="../../angular/angular.min.js" type="text/javascript"></script>
+                     <script src="../../angular/app.js" type="text/javascript"></script>
                     
                      <!--<script src="../../assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>-->
                 
@@ -95,475 +102,32 @@ require_once '../util/Session.php';
                       text-align:center;
                       padding-top:10px;
                     }
+                
+                       
+                   
+                    
                 </style>
 
-                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-		<script>
-                    
-                    $(function(){
-                         
-        
-                         $("#create-item").draggable({
-                             handle: ".modal-header"
-                         });
-                         
-                         
-                        $("#btn_guardar").click(function(){
-                                                                                  
-                                  var NOMBRE_EMPLEADO=$("#NOMBRE_EMPLEADO").val();
-                                  var APELLIDO_PATERNO=$("#APELLIDO_PATERNO").val();
-                                  var APELLIDO_MATERNO=$("#APELLIDO_MATERNO").val();
-                                  var CATEGORIA=$("#CATEGORIA").val();
-                                  var CORREO=$("#CORREO").val();
-                                  
-                                  
-//                                  alert("nombre :"+NOMBRE_EMPLEADO+" APELLIDO PATERNO :   "+APELLIDO_PATERNO
-//                                    +" APELLIDO MATERNO : "+APELLIDO_MATERNO+" CATEGORIA : "+CATEGORIA+" CORREO :"      
-//                                    +CORREO);
-                                    datos=[];
-                                    datos.push(NOMBRE_EMPLEADO);
-                                    datos.push(APELLIDO_PATERNO);
-                                    datos.push(APELLIDO_MATERNO);
-                                    datos.push(CATEGORIA);
-                                    datos.push(CORREO);
-                                    correcto=validarCamposVacios(datos);
-                                    alert("e  : "+correcto);
-                                    if(correcto!==false){
-                                                  //  alert("si paso ");
-                                    saveToDatabaseDatosFormulario(datos);
-                                }else{
-                                    //alert("no paso ");
-                                }
-                                    
-                        });
-                        
-                        
-                         $("#btn_limpiar").click(function(){
-                                  $("#NOMBRE_EMPLEADO").val("");
-                                  $("#APELLIDO_PATERNO").val("");
-                                  $("#APELLIDO_MATERNO").val("");
-                                  $("#CATEGORIA").val("");
-                                  $("#CORREO").val("");
-                        });
-                        
-//                       $('.modal.draggable>.modal-dialog>.modal-content>.modal-header').css('cursor', 'move'); 
-
-
-
-
-
-    
-    
-    
-    
-    
-//    validaciones campos 
-   
-       
-
-           
-//           alert("Estamos aqui");
-           
-        
-             
-            
-               
-               
-     
-
-
-         
-
-
-
-
-//termina validacione de campos 
-    
-    
-    
-    
-    
-    
-                    });
-                    
-                    
-                    function validarCamposVacios(datos){
-                         correcto=false;
-//                                    datos.push(NOMBRE_EMPLEADO);
-//                                    datos.push(APELLIDO_PATERNO);
-//                                    datos.push(APELLIDO_MATERNO);
-//                                    datos.push(CATEGORIA);
-//                                    datos.push(CORREO);
-                        var expr = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
-                        alert("entro "+datos[0]+"   "+datos[1]+"ddf   "+datos[2]+"   "+datos[3]+""+datos[4]+"");
-                        
-                 if(datos[0] == ""){
-                   $("#mensaje1").fadeIn();
-                   $("#mensaje1").append("Ingrese El Nombre");
-//                   $("#mensaje1").animate({left: '250px'});
-                   $("#mensaje1").css("background-color","red");
-                   $("#mensaje1").css("width", "35%");
-                   // $("#div2").fadeIn("slow");
-                   // $("#div3").fadeIn(3000);
-                   correcto=false;
-                  
-                   
-                } 
                 
-        else{
-                      $("#mensaje1").fadeOut();
-                    correcto=true;
-                      if(datos[1] == ""){
-                          $("#mensaje2").fadeIn();
-                   $("#mensaje2").append("Ingrese El Apellido Paterno");
-                   correcto=false;
-                          
-                   
-                      } else {
-                             $("#mensaje2").fadeOut();
-                                  correcto=true;
-                             if(datos[2] == ""){
-                             $("#mensaje3").fadeIn();
-                                $("#mensaje3").append("Ingrese El Apeliido Materno");
-                            correcto=false;
-                            
-                             } else {
-                                    $("#mensaje3").fadeOut();
-                                     correcto=true;
-                                    if(datos[3] == ""){
-                                    $("#mensaje4").fadeIn();
-                  $("#mensaje4").append("Ingrese Categoria");
-                   correcto=false;
-                                    
-                                    } else {
-                                           $("#mensaje4").fadeOut();
-                                            correcto=true;
-                                           if(datos[4] == "" || !expr.test(datos[4])){
-                                           $("#mensaje5").fadeIn();
-                                            $("#mensaje5").html("Ingrese Correo");
-                                             correcto=false;
-                                            
-                                           }else{
-                                                $("#mensaje5").fadeOut();
-                                               correcto=true;
-                                               
-                                           }
-                                               
-                                           }
-                                           
-                                    }// tercer else
-               
-                    }//segundo else
-                   
-               
-               } //primer else
-                        alert("co  "+correcto);
-                    return correcto;    
-                    }
-                    
-                function saveToDatabaseDatosFormulario(datos){
-//                    alert("datos nombre "+datos[0]);
-                    
-                    	$.ajax({
-                                url: "../Controller/EmpleadosController.php?Op=Guardar",
-				type: "POST",
-				data:'NOMBRE_EMPLEADO='+datos[0]+'&APELLIDO_PATERNO='+datos[1]+'&APELLIDO_MATERNO='+datos[2]+'&CATEGORIA='+datos[3]+'&CORREO='+datos[4]+'',
-				success: function(data){
-//                                    alert("se guardo");
-                                    
-//					$(editableObj).css("background","#FDFDFD");
-                                        swal("Guardado Exitoso!", "Ok!", "success")
-                                         consultarInformacion("../Controller/EmpleadosController.php?Op=Listar");
-//                                        window.location.href("EmpleadosView.php");
-				}   
-		   });
-//                   window.location.href("EmpleadosView.php");
-                }    
                 
-		function showEdit(editableObj) {
-			$(editableObj).css("background","#FFF");
-		} 
-		
-		function saveToDatabase(editableObj,column,id) {
-//                    alert("entraste aqui ");
-			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
-			$.ajax({
-                                url: "../Controller/EmpleadosController.php?Op=Modificar",
-				type: "POST",
-				data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
-				success: function(data){
-					$(editableObj).css("background","#FDFDFD");
-				}   
-		   });
-		}
-             
-                      function consultarInformacion(url){
-               $.ajax({  
-                     url: ""+url,  
-                    success: function(r) {    
-//                     $("#procesando").empty();
-                        
-                     },
-                     beforeSend:function(r){
-//                            $.jGrowl("Guardando  Porfavor Espere......", { header: 'Guardado de Informacion' });
-
-
-                     }
-                 
-        });  
-            }
-               function filterTable() {
-                // Declare variables 
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInput");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
-
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[1];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
-                      } 
-                    }
-                }
-                 function filterTableapellidoPaterno() {
-                // Declare variables 
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputapellidopaterno");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
-
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[2];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
-                      } 
-                    }
-                }
-                 function filterTableapellidoMaterno() {
-                // Declare variables 
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputapellidomaterno");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
-
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[3];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
-                      } 
-                    }
-                }
-                function filterTableCategoria(){
-                        // Declare variables 
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputCategoria");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
-
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[4];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
-                      } 
-                    }
-                }
-                    function filterTableCorreo(){
-                        // Declare variables 
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputCorreo");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
-
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[5];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
-                      } 
-                    }
-                }
                 
-                function refresh(){
-                    alert("aqui se debe actualizar checarlo ");
-                    
-                }
                 
-                function loadSpinner(){
-//                    alert("se cargara otro ");
-                        myFunction();
-                }
-		</script>
     </head>
+    
+    
     <body class="no-skin" onload="loadSpinner()">
          <!--<div>Cargando...</div>-->
-       <div id="loader"></div>
+         <div id="loader"></div>
       
        
-        <div id="navbar" class="navbar navbar-default          ace-save-state">
-            
-            <div class="navbar-container ace-save-state" id="navbar-container">
-                <div class="navbar-header pull-left">
-					<a href="index.html" class="navbar-brand">
-						<small>
-							<i class="fa fa-leaf"></i>
-							OMG APPS
-						</small>
-					</a>
-		</div>
-                <div class="navbar-buttons navbar-header pull-right" role="navigation">
-                    <ul class="nav ace-nav" style="height: 10%">
-                    <!--seccion de inicio de sesion de alarmas--> 
-                        <li class="purple dropdown-modal">
-				<a data-toggle="dropdown" class="dropdown-toggle" href="#">
-				    <i class="ace-icon fa fa-bell icon-animated-bell"></i>
-					<span class="badge badge-important">0</span>
-				</a>
+<?php		
+require_once 'EncabezadoUsuarioView.php';
+?>       
 
-				<ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
-					<li class="dropdown-header">
-					     <i class="ace-icon fa fa-exclamation-triangle"></i>
-						1 NOTIFICACIONES
-					</li>
+         
+<div style="height: 50px"></div>         
 
-						<li class="dropdown-content">
-							<ul class="dropdown-menu dropdown-navbar navbar-pink">
-								<li>
-									<a href="#">
-									     <div class="clearfix">
-										<span class="pull-left">
-										    <i class="btn btn-xs no-hover btn-pink fa fa-user"></i>
-											Urgentes
-										</span>
-										<span class="pull-right badge badge-info">+1</span>
-									      </div>
-									</a>
-								</li>
-
-										
-							</ul>
-						</li>
-
-						<li class="dropdown-footer">
-									<a href="#">
-										<!--VER MAS NOTIFICACIONES-->
-										<i class="ace-icon fa fa-arrow-right"></i>
-									</a>
-						</li>
-				</ul>
-			</li>
-                        <!--seccion de cierre  alarmas-->
-                        
-                        <!--inicio de seccion de mensajes-->
-                        
-                        <li class="green dropdown-modal">
-							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
-								<i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
-								<span class="badge badge-success">0</span>
-							</a>
-
-							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
-								<li class="dropdown-header">
-									<i class="ace-icon fa fa-envelope-o"></i>
-									Cantidad de Mensajes
-								</li>
-
-								<li class="dropdown-content">
-									<ul class="dropdown-menu dropdown-navbar">
-									
-
-
-										<li>
-											<a href="#" class="clearfix">
-												<img src="../../assets/probando/images/avatars/avatar5.png" class="msg-photo" alt="Fred's Avatar" />
-												<span class="msg-body">
-													<span class="msg-title">
-														<span class="blue">aqui va el usuario remitente:</span>
-														aqui va el mensaje
-													</span>
-
-													<span class="msg-time">
-														<i class="ace-icon fa fa-clock-o"></i>
-														<span>aqui va la fecha en que lo envio </span>
-													</span>
-												</span>
-											</a>
-										</li>
-									</ul>
-								</li>
-
-								<li class="dropdown-footer">
-									<a href="inbox.html">
-										<!--ver todos los mensajes-->
-										<i class="ace-icon fa fa-arrow-right"></i>
-									</a>
-								</li>
-							</ul>
-						</li>
-                        
-                        <!--cierre de seccion de mensajes-->
-                        
-                        
-                        
-                        <!--seccion de info usuario-->
-                            <li class="light-blue dropdown-modal">
-				<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-					<img class="nav-user-photo" src="../../assets/probando/images/avatars/avatar.png" alt="<?php echo $Usuario["NOMBRE_USUARIO"]; ?>" />
-					<span class="user-info">
-						<small>Bienvenido,</small>
-						<?php echo $Usuario["NOMBRE_USUARIO"]; ?>
-					</span>
-
-<!--								<i class="ace-icon fa fa-caret-down"></i>-->
-				</a>
-
-					
-			    </li>
-                        <!--fin de seccion de info usuario-->
-                        
-                        
-                        
-                        
-                        
-                    </ul>
-                    
-                    
-                </div>
-                
-            </div>
-        </div>
-<!--          <div class="pull-right">-->
-
+                                <div style="position: fixed;">    
 				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
 					  Agregar Empleado
 				</button>
@@ -571,14 +135,19 @@ require_once '../util/Session.php';
                                 <button type="button" class="btn btn-info " onclick="refresh();" >
                                     <i class="glyphicon glyphicon-repeat"></i> 
 				</button>
+                                </div>
 
-  <div class="contenedortable">   
-<input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Nombre">
-<input type="text" id="idInputapellidopaterno" onkeyup="filterTableapellidoPaterno()" placeholder="Buscar Por Apellido Paterno">
-<input type="text" id="idInputapellidomaterno" onkeyup="filterTableapellidoMaterno()" placeholder="Buscar Por Apellido Materno">
-<input type="text" id="idInputCategoria" onkeyup="filterTableCategoria()" placeholder="Buscar Por Categoria">
-<input type="text" id="idInputCorreo" onkeyup="filterTableCorreo()" placeholder="Buscar Por Correo">
-  </div >   
+<div style="height: 55px"></div>
+
+
+<div class="contenedortable">   
+    <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Nombre">
+    <input type="text" id="idInputapellidopaterno" onkeyup="filterTableapellidoPaterno()" placeholder="Buscar Por Apellido Paterno">
+    <input type="text" id="idInputapellidomaterno" onkeyup="filterTableapellidoMaterno()" placeholder="Buscar Por Apellido Materno">
+    <input type="text" id="idInputCategoria" onkeyup="filterTableCategoria()" placeholder="Buscar Por Categoria">
+    <input type="text" id="idInputCorreo" onkeyup="filterTableCorreo()" placeholder="Buscar Por Correo">
+</div >
+
 
 
 <!--                                 <div class="side-menu" id="sideMenu">
@@ -734,12 +303,336 @@ require_once '../util/Session.php';
        <!--Final de Seccion Modal-->
   
        
+                
+		<script>
+                    
+                    $(function(){
+                         
         
+                         $("#create-item").draggable({
+                             handle: ".modal-header"
+                         });
+                         
+                         
+                        $("#btn_guardar").click(function(){
+                                                                                  
+                                  var NOMBRE_EMPLEADO=$("#NOMBRE_EMPLEADO").val();
+                                  var APELLIDO_PATERNO=$("#APELLIDO_PATERNO").val();
+                                  var APELLIDO_MATERNO=$("#APELLIDO_MATERNO").val();
+                                  var CATEGORIA=$("#CATEGORIA").val();
+                                  var CORREO=$("#CORREO").val();
+                                  
+                                  
+//                                  alert("nombre :"+NOMBRE_EMPLEADO+" APELLIDO PATERNO :   "+APELLIDO_PATERNO
+//                                    +" APELLIDO MATERNO : "+APELLIDO_MATERNO+" CATEGORIA : "+CATEGORIA+" CORREO :"      
+//                                    +CORREO);
+                                    datos=[];
+                                    datos.push(NOMBRE_EMPLEADO);
+                                    datos.push(APELLIDO_PATERNO);
+                                    datos.push(APELLIDO_MATERNO);
+                                    datos.push(CATEGORIA);
+                                    datos.push(CORREO);
+//                                    correcto=validarCamposVacios(datos);
+                                    alert("e  : "+correcto);
+                                    if(correcto!==false){
+                                                  //  alert("si paso ");
+                                    saveToDatabaseDatosFormulario(datos);
+                                }else{
+                                    //alert("no paso ");
+                                }
+                                    
+                        });
+                        
+                        
+                         $("#btn_limpiar").click(function(){
+                                  $("#NOMBRE_EMPLEADO").val("");
+                                  $("#APELLIDO_PATERNO").val("");
+                                  $("#APELLIDO_MATERNO").val("");
+                                  $("#CATEGORIA").val("");
+                                  $("#CORREO").val("");
+                        });
+                        
+//                       $('.modal.draggable>.modal-dialog>.modal-content>.modal-header').css('cursor', 'move'); 
+
+
+    
+    
+                    }); //Cierra $fuction
+                    
+                    
+                    
+                    
+                    
+                    function validarCamposVacios(datos){
+                         correcto=false;
+//                                    datos.push(NOMBRE_EMPLEADO);
+//                                    datos.push(APELLIDO_PATERNO);
+//                                    datos.push(APELLIDO_MATERNO);
+//                                    datos.push(CATEGORIA);
+//                                    datos.push(CORREO);
+                        var expr = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
+                        alert("entro "+datos[0]+"   "+datos[1]+"ddf   "+datos[2]+"   "+datos[3]+""+datos[4]+"");
+                        
+                    if(datos[0] == ""){
+                      $("#mensaje1").fadeIn();
+                      $("#mensaje1").append("Ingrese El Nombre");
+   //                   $("#mensaje1").animate({left: '250px'});
+                      $("#mensaje1").css("background-color","red");
+                      $("#mensaje1").css("width", "35%");
+                      // $("#div2").fadeIn("slow");
+                      // $("#div3").fadeIn(3000);
+                      correcto=false;
+                  
+                   
+                    } 
+                
+                        else{
+                            $("#mensaje1").fadeOut();
+                            correcto=true;
+                            if(datos[1] == ""){
+                            $("#mensaje2").fadeIn();
+                            $("#mensaje2").append("Ingrese El Apellido Paterno");
+                            correcto=false;
+                          
+                   
+                            } else {
+                                    $("#mensaje2").fadeOut();
+                                    correcto=true;
+                                    if(datos[2] == ""){
+                                    $("#mensaje3").fadeIn();
+                                    $("#mensaje3").append("Ingrese El Apeliido Materno");
+                                    correcto=false;
+                            
+                                    } else {
+                                            $("#mensaje3").fadeOut();
+                                            correcto=true;
+                                            if(datos[3] == ""){
+                                            $("#mensaje4").fadeIn();
+                                            $("#mensaje4").append("Ingrese Categoria");
+                                            correcto=false;
+                                    
+                                            } else {
+                                                    $("#mensaje4").fadeOut();
+                                                    correcto=true;
+                                                    if(datos[4] == "" || !expr.test(datos[4])){
+                                                    $("#mensaje5").fadeIn();
+                                                    $("#mensaje5").html("Ingrese Correo");
+                                                    correcto=false;
+                                            
+                                                    }else{
+                                                          $("#mensaje5").fadeOut();
+                                                          correcto=true;
+                                               
+                                                         }
+                                               
+                                                    }
+                                           
+                                            }// tercer else
+               
+                                    }//segundo else
+                   
+               
+                            } //primer else
+                        alert("co  "+correcto);
+                    return correcto;    
+                    }
+                    
+                    
+                    
+                    
+                    
+                function saveToDatabaseDatosFormulario(datos){
+//                    alert("datos nombre "+datos[0]);
+                    
+                    	$.ajax({
+                                url: "../Controller/EmpleadosController.php?Op=Guardar",
+				type: "POST",
+				data:'NOMBRE_EMPLEADO='+datos[0]+'&APELLIDO_PATERNO='+datos[1]+'&APELLIDO_MATERNO='+datos[2]+'&CATEGORIA='+datos[3]+'&CORREO='+datos[4]+'',
+				success: function(data){
+//                                    alert("se guardo");
+                                    
+//					$(editableObj).css("background","#FDFDFD");
+                                        swal("Guardado Exitoso!", "Ok!", "success")
+                                         consultarInformacion("../Controller/EmpleadosController.php?Op=Listar");
+                                        window.location.href="EmpleadosView.php";
+				}   
+		   });
+//                   window.location.href("EmpleadosView.php");
+                }
+                
+                
+                
+		function showEdit(editableObj) {
+			$(editableObj).css("background","#FFF");
+		} 
+                
+                
+		
+		function saveToDatabase(editableObj,column,id) {
+//                    alert("entraste aqui ");
+			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
+			$.ajax({
+                                url: "../Controller/EmpleadosController.php?Op=Modificar",
+				type: "POST",
+				data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
+				success: function(data){
+					$(editableObj).css("background","#FDFDFD");
+				}   
+		   });
+		}
+                
+                
+             
+                      function consultarInformacion(url){
+               $.ajax({  
+                     url: ""+url,  
+                    success: function(r) {    
+//                     $("#procesando").empty();
+                        
+                     },
+                     beforeSend:function(r){
+//                            $.jGrowl("Guardando  Porfavor Espere......", { header: 'Guardado de Informacion' });
+
+
+                     }
+                 
+        });  
+            }
+            
+            
+            
+            
+               function filterTable() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInput");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[1];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }
+                
+                
+                
+                 function filterTableapellidoPaterno() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputapellidopaterno");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[2];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }
+                
+                
+                
+                 function filterTableapellidoMaterno() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputapellidomaterno");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[3];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }
+                
+                
+                
+                function filterTableCategoria(){
+                        // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputCategoria");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[4];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }
+                
+                
+                
+                    function filterTableCorreo(){
+                        // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputCorreo");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[5];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }
+                
+                
+                
+                
+                function refresh(){
+//                    alert("aqui se debe actualizar checarlo ");
+                 window.location.href="EmpleadosView.php";   
+                }
+                
+                
+                
+                function loadSpinner(){
+//                    alert("se cargara otro ");
+                        myFunction();
+                }
+		</script>
+
+
      
-     
-       
-       
-       
        
          <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
          <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>

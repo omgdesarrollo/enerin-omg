@@ -1,3 +1,19 @@
+
+<style>
+.main-encabezado {
+                        /*background: #333;*/
+                        color: white;
+                        height: 80px;
+
+                        width: 100%; /* hacemos que la cabecera ocupe el ancho completo de la página */
+                        left: 0; /* Posicionamos la cabecera al lado izquierdo */
+                        top: 0; /* Posicionamos la cabecera pegada arriba */
+                        position: fixed; /* Hacemos que la cabecera tenga una posición fija */
+                    } 
+</style>
+
+
+
 <?php
 
 date_default_timezone_set("America/Mexico_city");
@@ -39,7 +55,7 @@ foreach($Alarmas as $alarma)
 			}
 			else
 			{
-				$diasA = strtotime(strftime("%d-%B-%y",$alarm -> getTimestamp())) - strtotime(strftime("%d-%B-%y",$hoy -> getTimestamp()));
+				$dias = strtotime(strftime("%d-%B-%y",$alarm -> getTimestamp())) - strtotime(strftime("%d-%B-%y",$hoy -> getTimestamp()));
 				$NotificacionesAlarma[$numeroAlarmas]["MENSAJE"] = " ALARMA VENCIDA ".$dias." DIA(S)"." - ".$alarma['mensaje_alerta'];				
 			}
 		$numeroAlarmas++;
@@ -50,8 +66,9 @@ foreach($Alarmas as $alarma)
 
 ?>
 
+<div class="main-encabezado">
 
-		<div id="navbar" class="navbar navbar-default          ace-save-state">
+<div id="navbar" class="navbar navbar-default ace-save-state">
             
             <div class="navbar-container ace-save-state" id="navbar-container">
                 <div class="navbar-header pull-left">
@@ -183,4 +200,6 @@ foreach($Alarmas as $alarma)
                 </div>
                 
             </div>
-        </div>
+</div>
+
+</div>     
