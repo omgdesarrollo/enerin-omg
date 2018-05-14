@@ -39,12 +39,6 @@ require_once '../util/Session.php';
                 <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                 <!--Termina para el spiner cargando-->
                 
-<<<<<<< HEAD
-                <script src="../../js/jquery.js" type="text/javascript"></script>
-		<script src="../../assets/probando/js/ace-extra.min.js"></script>             
-                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-                    
-=======
              <script src="../../js/jquery.js" type="text/javascript"></script>
 
 		<script src="../../assets/probando/js/ace-extra.min.js"></script>
@@ -62,7 +56,6 @@ require_once '../util/Session.php';
   
  
 				 
->>>>>>> 678c15501994324cdb8e02250d54014af03318e8
 	</head>
 
         
@@ -74,23 +67,8 @@ require_once '../util/Session.php';
 
 require_once 'EncabezadoUsuarioView.php';
 
-<<<<<<< HEAD
 ?>             
 
-=======
-	
-		
-		
-		
-		<!--aqui termina el gantt    -->
-		
-		
-		
-		
-		
-		
-		
->>>>>>> 678c15501994324cdb8e02250d54014af03318e8
              
              <div style="display:none;" id="myDiv" class="animate-bottom"> 
                      <div class="contenedortable">

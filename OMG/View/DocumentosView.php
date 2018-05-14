@@ -99,16 +99,7 @@ $Usuario=  Session::getSesion("user");
             .mayusculas{
                     /*text-transform:uppercase;*/
             }	
-                  .main-encabezado {
-                        /*background: #333;*/
-                        color: white;
-                        height: 80px;
-
-                        width: 100%; /* hacemos que la cabecera ocupe el ancho completo de la página */
-                        left: 0; /* Posicionamos la cabecera al lado izquierdo */
-                        top: 0; /* Posicionamos la cabecera pegada arriba */
-                        position: fixed; /* Hacemos que la cabecera tenga una posición fija */
-                    }   
+                  
                     
                     
                 </style>    
@@ -118,30 +109,22 @@ $Usuario=  Session::getSesion("user");
 
 	</head>
 
-<<<<<<< HEAD
         <body class="no-skin" onload="loadSpinner()">
             <!--<div>Cargando...</div>-->
             <div id="loader"></div>
-
-            
-<?php		
-require_once 'EncabezadoUsuarioView.php';
-?>            
-
-            
-=======
-        <body class="no-skin" >
-	<div class="main-encabezado">
+           
+	
 		<?php		
 		require_once 'EncabezadoUsuarioView.php';
 		?>			
-        </div> 
+
+            
              <div style="height: 50px"></div>
-              <div style="position: fixed;">
->>>>>>> 678c15501994324cdb8e02250d54014af03318e8
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
-		Agregar-Documento
-        </button>    
+             
+             <div style="position: fixed;">        
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
+                    Agregar-Documento
+                </button>    
               </div>
 	                   
           <div style="height: 55px"></div>

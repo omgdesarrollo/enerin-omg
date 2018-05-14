@@ -98,44 +98,17 @@ $Usuario=  Session::getSesion("user");
 
 	</head>
 
-<<<<<<< HEAD
         <body class="no-skin" onload="loadSpinner()">
             <!--<div>Cargando...</div>-->
             <div id="loader"></div>
-=======
-        <body class="no-skin" >
-            <div class="main-encabezado">
-		<div id="navbar" class="navbar navbar-default          ace-save-state">
->>>>>>> 678c15501994324cdb8e02250d54014af03318e8
             
 <?php
 
 require_once 'EncabezadoUsuarioView.php';
 
-<<<<<<< HEAD
 ?> 
             
             
-=======
-					
-			    </li>
-                        <!--fin de seccion de info usuario-->
-                        
-                        
-                        
-                        
-                        
-                    </ul>
-                    
-                    
-                </div>
-                
-            </div>
-        </div>
-            </div>
-             <div style="height: 50px"></div>
-              <div style="position: fixed;">
->>>>>>> 678c15501994324cdb8e02250d54014af03318e8
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
 		Asignar Tema-Requisito
         </button>    
