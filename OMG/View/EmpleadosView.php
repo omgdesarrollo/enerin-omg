@@ -102,7 +102,8 @@ $Usuario=  Session::getSesion("user");
                       text-align:center;
                       padding-top:10px;
                     }
-                
+              
+             
                        
                    
                     
@@ -119,11 +120,11 @@ $Usuario=  Session::getSesion("user");
          <!--<div>Cargando...</div>-->
          <div id="loader"></div>
       
-       
+<div>
 <?php		
 require_once 'EncabezadoUsuarioView.php';
 ?>       
-
+</div>
          
 <div style="height: 50px"></div>         
 

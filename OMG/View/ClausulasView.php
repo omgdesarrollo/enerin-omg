@@ -86,7 +86,8 @@ $Usuario=  Session::getSesion("user");
                     height:5px;
                     overflow: auto;
                     }
-                     .main-encabezado {
+               
+                    .main-encabezado {
                         /*background: #333;*/
                         color: white;
                         height: 80px;
@@ -95,8 +96,7 @@ $Usuario=  Session::getSesion("user");
                         left: 0; /* Posicionamos la cabecera al lado izquierdo */
                         top: 0; /* Posicionamos la cabecera pegada arriba */
                         position: fixed; /* Hacemos que la cabecera tenga una posición fija */
-                    }
-                    
+                    } 
                    
                 </style>    
                 
