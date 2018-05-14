@@ -247,43 +247,26 @@ require_once 'EncabezadoUsuarioView.php';
                                 
                                 <td> 
                                     <select id="id_status" class="select" onchange="saveComboToDatabase('status_doc', <?php echo $filas["id_documento_entrada"]; ?> )">
-                                    <?php
+                                     <?php
                                     $s="";
                                                 foreach ($Lista as $value) {
+                                                    if($value["status_doc"]=="".$filas["status_doc"]){
                                                     
-                                                    if($value["status_doc"]== 1){                                                                                                            
-                                                        ?>                    
-                                                        
-                                                        <option value="1"  selected>En proceso</option>
-
-                                                    <?php                                                              
-                                                    }                                                 
-                                                    
-                                                            if($value["status_doc"]== 2){                                                                                                            
-                                                    ?>                    
-                                                        
-                                                                 <option value="2"  selected >Suspendido</option>    
-                                                            <?php                                               
-                                                            }
-                                                                                                     
-                                                                    if($value["status_doc"]== 3){                                                                                                            
-                                                            ?>                    
-                                                        
-                                                                        <option value="3"  selected >En alarma</option>
-                                               
-                                                                    <?php           
-                                               
-                                                                    }
-                                                            
-                                                                           if($value["status_doc"]== 3){                                               
-                                                                    ?>
-                                                                            
-                                                                                <option value="4"  selected >Terminado</option>
-                                                                            <?php
-                                                                            }
-                                                                                  
-                                       }
-                                    ?> 
+                                                    ?>
+                                    
+                                        <option value="<?php echo "".$value["status_doc"] ?>"  selected ><?php echo "".$value["status_doc"]; ?></option>
+                                        
+                                                        <?php
+                                                        }
+                                                        else{
+                                                            ?>
+                                                        }
+                                                             <option value="<?php echo "".$value["status_doc"] ?>"  ><?php echo "".$value["status_doc"]; ?></option>
+                                                             <?php
+                                                        }
+                                                }
+                                    
+                                    ?>
                                        
                                        <option value="1">En proceso</option>
                                        <option value="2">Suspendido</option>
