@@ -49,10 +49,10 @@ class UploadHandler
         $this->response = array();
         $this->options = array(
             // 'script_url' => $this->get_full_url().'/../../archivos/files/'.$newUrl.$this->basename($this->get_server_var('SCRIPT_NAME')),
-            'script_url' => "https://enerin-omgapps.com/omgcum/archivos/files".$newUrl.$this->basename($this->get_server_var('SCRIPT_NAME')),            
+            // 'script_url' => "https://enerin-omgapps.com/omgcum/archivos/files".$newUrl.$this->basename($this->get_server_var('SCRIPT_NAME')),            
             'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/',
             // 'upload_url' => $this->get_full_url().'/../../archivos/files/'.$newUrl,
-            'upload_url' => 'https://enerin-omgapps.com/omgcum/archivos/files'.$newUrl,            
+            // 'upload_url' => 'https://enerin-omgapps.com/omgcum/archivos/files'.$newUrl,            
             'input_stream' => 'php://input',
             'user_dirs' => false,
             'mkdir_mode' => 0755,
@@ -1101,13 +1101,15 @@ class UploadHandler
                 mkdir($upload_dir, $this->options['mkdir_mode'], true);
             }
             $file_path = $this->get_upload_path($file->name);
-//            $file_path = "C:/xampp/htdocs/enerin-omg/archivos/files".$newUrl.$file->name;
-             $file_path = "enerin-omgapps.com/omgcum/archivos/files".$newUrl.$file->name;
+            //  $file_path = "enerin-omgapps.com/omgcum/archivos/files".$newUrl.$file->name;//el que guarda web
+            // $file_path2 = "http://localhost:80/enerin-omg/archivos/files".$newUrl.$file->name;//el que descarga web
+            $file_path = "C:/xampp/htdocs/enerin-omg/archivos/files".$newUrl.$file->name;//el que guarda local
+            $file_path2 = "http://localhost:80/enerin-omg/archivos/files".$newUrl.$file->name;//el que descarga local
             $filePath = array();
             if(Session::getSesion("archivos_urls") == null)
             {
                 echo "\n Variable vacia";
-                $filePath[0] = $file_path;
+                $filePath[0] = $file_path2;
                 Session::setSesion("archivos_urls_contador",1);
                 Session::setSesion("archivos_urls",$filePath);
             }
@@ -1116,7 +1118,7 @@ class UploadHandler
                 // echo "\n existe";
                 $archivoContador = Session::getSesion("archivos_urls_contador");
                 $filePath = Session::getSesion("archivos_urls");
-                $filePath[$archivoContador] = $file_path;
+                $filePath[$archivoContador] = $file_path2;
                 $archivoContador = $archivoContador + 1;
                 Session::setSesion("archivos_urls_contador",$archivoContador);
                 Session::setSesion("archivos_urls",$filePath);
