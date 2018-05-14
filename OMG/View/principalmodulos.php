@@ -110,7 +110,7 @@ $Usuario=  Session::getSesion("user");
 
   
  var infosesionusuario=[
-     {id:'sesionusuario',text:'<div id="infousuario"><?php echo $Usuario["NOMBRE_USUARIO"]; ?></div>',img:'user.png', type:'button',isbig:true}
+     {id:'sesionusuario',text:'<div id="infousuario"><?php echo "Bienvenido <br>".$Usuario["NOMBRE_USUARIO"]; ?></div>',img:'user.png', type:'button',isbig:true}
  ];
 // nombre_usuario=$("#idusuario").val();
  

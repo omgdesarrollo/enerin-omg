@@ -94,12 +94,21 @@ $Usuario=  Session::getSesion("user");
                       padding-top:10px;
                     }
                 .minusculas{
-                text-transform:lowercase;
+                /*text-transform:lowercase;*/
                  }	
             .mayusculas{
-                    text-transform:uppercase;
+                    /*text-transform:uppercase;*/
             }	
-                    
+                  .main-encabezado {
+                        /*background: #333;*/
+                        color: white;
+                        height: 80px;
+
+                        width: 100%; /* hacemos que la cabecera ocupe el ancho completo de la página */
+                        left: 0; /* Posicionamos la cabecera al lado izquierdo */
+                        top: 0; /* Posicionamos la cabecera pegada arriba */
+                        position: fixed; /* Hacemos que la cabecera tenga una posición fija */
+                    }   
                     
                     
                 </style>    
@@ -109,6 +118,7 @@ $Usuario=  Session::getSesion("user");
 
 	</head>
 
+<<<<<<< HEAD
         <body class="no-skin" onload="loadSpinner()">
             <!--<div>Cargando...</div>-->
             <div id="loader"></div>
@@ -119,12 +129,22 @@ require_once 'EncabezadoUsuarioView.php';
 ?>            
 
             
+=======
+        <body class="no-skin" >
+	<div class="main-encabezado">
+		<?php		
+		require_once 'EncabezadoUsuarioView.php';
+		?>			
+        </div> 
+             <div style="height: 50px"></div>
+              <div style="position: fixed;">
+>>>>>>> 678c15501994324cdb8e02250d54014af03318e8
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
 		Agregar-Documento
         </button>    
-
+              </div>
 	                   
-        
+          <div style="height: 55px"></div>
 
                            <table class="tbl-qa">
 		  <!--<thead>-->
@@ -224,12 +244,15 @@ require_once 'EncabezadoUsuarioView.php';
 							<label class="control-label" for="title">Clave del Documento:</label>
                                                         <textarea  id="CLAVE_DOCUMENTO" class="form-control" data-error="Ingrese la Clave del Documento" required></textarea>
 							<div class="help-block with-errors"></div>
+                                                        <div id="msgerrorclave" ></div>
 						</div>
                                     
-                                    
+<!--                                     <button class="btn btn-info">Convertir a MAYUSCULAS</button>
+                                      <button class="btn btn-info">convertir a minusculas</button>-->
                                                 <div class="form-group">
+                                                   
 							<label class="control-label" for="title">Documento:</label>
-                                                        <textarea  id="DOCUMENTO" class="form-control" data-error="Ingrese el Documento" required></textarea>
+                                                        <textarea  id="DOCUMENTO" class="form-control " data-error="Ingrese el Documento" required></textarea>
 							<div class="help-block with-errors"></div>
 						</div>
                                     
@@ -296,6 +319,19 @@ require_once 'EncabezadoUsuarioView.php';
                     
                       var id_clausula;
                       $(function(){
+                          
+                          
+                          
+                        $("#CLAVE_DOCUMENTO").keyup(function(){
+//                            alert("d");
+                            var valueclavedocumento=$(this).val();
+//                            alert("d  "+valueclavedocumento);
+                            
+                            verificarExiste(valueclavedocumento,"clave_documento");
+                           
+                        });
+                          
+                          
                         $('.select').on('change', function() {
 //                          console.log( $(this).prop('value') );
                           alert("el value que va a viajar es "+ $(this).prop('value'));
@@ -331,7 +367,7 @@ require_once 'EncabezadoUsuarioView.php';
                                     var ID_EMPLEADOMODAL=$("#ID_EMPLEADOMODAL").val();
                                     
 
-                                   alert("CLAVE_DOCUMENTO :"+CLAVE_DOCUMENTO + "DOCUMENTO :"+DOCUMENTO + "ID_EMPLEADOMODAL :"+ID_EMPLEADOMODAL);
+//                                   alert("CLAVE_DOCUMENTO :"+CLAVE_DOCUMENTO + "DOCUMENTO :"+DOCUMENTO + "ID_EMPLEADOMODAL :"+ID_EMPLEADOMODAL);
                                   
                                     
 
@@ -408,6 +444,42 @@ require_once 'EncabezadoUsuarioView.php';
 		   });
 //                   window.location.href("EmpleadosView.php");
                 }
+                
+                
+                
+                
+      function verificarExiste(dataString,cualverificar){
+//          alert("fdf");
+                    //Le pasamos el valor del input al ajax
+                            $.ajax({
+                                type: "POST",
+                                url: "../Controller/DocumentosController.php?Op=verificacionexisteregistro&cualverificar="+cualverificar,
+                                data: "registro="+dataString,
+                                success: function(data) {    
+mensajeerror="";
+
+    $.each(data, function (index,value) {
+//        console.log("sub_clausula: " + value.sub_clausula);
+        mensajeerror=" "+value.clave_documento+" ya existe";
+    });
+$("#msgerrorclave").html(mensajeerror);
+if(mensajeerror!=""){
+    $("#msgerrorclave").css("background","red");
+    $("#msgerrorclave").css("width","190px");
+    $("#msgerrorclave").css("color","white");
+    $("#btn_guardar").prop("disabled",true);
+}else{
+    $("#btn_guardar").prop("disabled",false);
+}
+
+
+
+}
+                                })
+                            }
+                                 
+                
+                
                 
                 
                 

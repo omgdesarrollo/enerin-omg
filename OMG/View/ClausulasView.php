@@ -41,9 +41,16 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                 <!--Termina para el spiner cargando-->
                 
+<<<<<<< HEAD
                 
                 <script src="../../js/jquery.js" type="text/javascript"></script>
 		<script src="../../assets/probando/js/ace-extra.min.js"></script>       
+=======
+             <script src="../../js/jquery.js" type="text/javascript"></script>
+             <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+		<script src="../../assets/probando/js/ace-extra.min.js"></script>
+       
+>>>>>>> 678c15501994324cdb8e02250d54014af03318e8
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 
             
@@ -78,6 +85,25 @@ $Usuario=  Session::getSesion("user");
                       text-align:center;
                       padding-top:10px;
                     }
+                    
+                    
+                    #sugerenciasclausulas {
+                    width:350px;
+                    height:5px;
+                    overflow: auto;
+                    }
+                     .main-encabezado {
+                        /*background: #333;*/
+                        color: white;
+                        height: 80px;
+
+                        width: 100%; /* hacemos que la cabecera ocupe el ancho completo de la página */
+                        left: 0; /* Posicionamos la cabecera al lado izquierdo */
+                        top: 0; /* Posicionamos la cabecera pegada arriba */
+                        position: fixed; /* Hacemos que la cabecera tenga una posición fija */
+                    }
+                    
+                   
                 </style>    
                 
                 
@@ -85,36 +111,184 @@ $Usuario=  Session::getSesion("user");
 
 	</head>
 
+<<<<<<< HEAD
         <body class="no-skin" onload="loadSpinner()">
             <!--<div>Cargando...</div>-->
             <div id="loader"></div>
             
 <?php
+=======
+        <body class="no-skin" >
+            
+            <div class="main-encabezado">
+		<div id="navbar" class="navbar navbar-default          ace-save-state">
+            
+            <div class="navbar-container ace-save-state" id="navbar-container">
+                <div class="navbar-header pull-left">
+					<a  class="navbar-brand">
+						<small>
+							<i class="fa fa-leaf"></i>
+							OMG APPS
+						</small>
+					</a>
+		</div>
+                <div class="navbar-buttons navbar-header pull-right" role="navigation">
+                    <ul class="nav ace-nav" style="height: 10%">
+                    <!--seccion de inicio de sesion de alarmas--> 
+                        <li class="purple dropdown-modal">
+				<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+				    <i class="ace-icon fa fa-bell icon-animated-bell"></i>
+					<span class="badge badge-important">0</span>
+				</a>
+
+				<ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
+					<li class="dropdown-header">
+					     <i class="ace-icon fa fa-exclamation-triangle"></i>
+						1 NOTIFICACIONES
+					</li>
+
+						<li class="dropdown-content">
+							<ul class="dropdown-menu dropdown-navbar navbar-pink">
+								<li>
+									<a href="#">
+									     <div class="clearfix">
+										<span class="pull-left">
+										    <i class="btn btn-xs no-hover btn-pink fa fa-user"></i>
+											Urgentes
+										</span>
+										<span class="pull-right badge badge-info">+1</span>
+									      </div>
+									</a>
+								</li>
+
+										
+							</ul>
+						</li>
+
+						<li class="dropdown-footer">
+									<a href="#">
+										<!--VER MAS NOTIFICACIONES-->
+										<i class="ace-icon fa fa-arrow-right"></i>
+									</a>
+						</li>
+				</ul>
+			</li>
+                        <!--seccion de cierre  alarmas-->
+                        
+                        <!--inicio de seccion de mensajes-->
+                        
+                        <li class="green dropdown-modal">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
+								<span class="badge badge-success">0</span>
+							</a>
+
+							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+								<li class="dropdown-header">
+									<i class="ace-icon fa fa-envelope-o"></i>
+									Cantidad de Mensajes
+								</li>
+
+								<li class="dropdown-content">
+									<ul class="dropdown-menu dropdown-navbar">
+									
+
+
+										<li>
+											<a href="#" class="clearfix">
+												<img src="../../assets/probando/images/avatars/avatar5.png" class="msg-photo" alt="Fred's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">aqui va el usuario remitente:</span>
+														aqui va el mensaje
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>aqui va la fecha en que lo envio </span>
+													</span>
+												</span>
+											</a>
+										</li>
+									</ul>
+								</li>
+
+								<li class="dropdown-footer">
+									<a href="inbox.html">
+										<!--ver todos los mensajes-->
+										<i class="ace-icon fa fa-arrow-right"></i>
+									</a>
+								</li>
+							</ul>
+						</li>
+                        
+                        <!--cierre de seccion de mensajes-->
+                        
+                        
+                        
+                        <!--seccion de info usuario-->
+                            <li class="light-blue dropdown-modal">
+				<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+					<img class="nav-user-photo" src="../../assets/probando/images/avatars/avatar.png" alt="<?php echo $Usuario["NOMBRE_USUARIO"]; ?>" />
+					<span class="user-info">
+						<small>Bienvenido,</small>
+						<?php echo $Usuario["NOMBRE_USUARIO"]; ?>
+					</span>
+>>>>>>> 678c15501994324cdb8e02250d54014af03318e8
 
 require_once 'EncabezadoUsuarioView.php';
 
+<<<<<<< HEAD
 ?>            
            
             
+=======
+					
+			    </li>
+                        <!--fin de seccion de info usuario-->
+                        
+                        
+                        
+                        
+                        
+                    </ul>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+           
+           </div> 
+             <div style="height: 50px"></div>
+            <div style="position: fixed;">
+>>>>>>> 678c15501994324cdb8e02250d54014af03318e8
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
 		Agregar Tema
-        </button>    
-
-	                   
+        </button>
+                
+            </div>
+                 
+            <div style="height: 55px"></div>
+            
                            <table class="tbl-qa">
+                              
 		  <!--<thead>-->
-			  <tr>
+                            
+                               <tr  >
+                          <!--<div class="main-header">-->
 				<!--<th class="table-header" >NO.</th>-->
-                                <th class="table-header">No.Tema</th>
-				<th class="table-header">Tema</th>				
-				<th class="table-header">No.Sub-Tema</th>				
-				<th class="table-header">Sub-Tema</th>				
-				<th class="table-header">Responsable</th>				
+                                <th  class="table-header">No.Tema</th>
+				<th   class="table-header">Tema</th>				
+				<th  class="table-header">No.Sub-Tema</th>				
+				<th  class="table-header">Sub-Tema</th>				
+				<th   class="table-header">Responsable</th>				
 				<!--<th class="table-header">TEXTO BREVE</th>-->				
-				<th class="table-header">Descripcion</th>				
-                                <th class="table-header">Plazo</th>					
-                                
+				<th  class="table-header">Descripcion</th>				
+                                <th  class="table-header">Plazo</th>					
+                          <!--</div>-->
 			  </tr>
+                     
 		  <!--</thead>-->
 		  <tbody>
 		  <?php
@@ -207,12 +381,21 @@ require_once 'EncabezadoUsuarioView.php';
                                     <!--<form data-toggle="validator"  >-->
                                     
                                                 
-                                                <div class="form-group">
+<!--                                                <div class="form-group">
 							<label class="control-label" for="title">No.Tema:</label>
                                                         <input type="text"  id="CLAUSULA" class="form-control" data-error="Ingrese el Tema" required />
 							<div class="help-block with-errors"></div>
+						</div>-->
+                                                <div class="form-group">
+							<label class="control-label" for="title">No.Tema:</label>
+                                                        <input type="text"  id="CLAUSULA" class="form-control"  />
+                                                        
+                                                        <!--<div id="combo_zone" style="width:230px;"></div>-->
+							<div class="help-block with-errors"></div>
+                                                        <div id="sugerenciasclausulas"></div>
+                                                        <!--<div class="suggest-element"> </div>-->
+                                                        
 						</div>
-
                                                 
                                                 <div class="form-group">
 							<label class="control-label" for="title">Tema:</label>
@@ -315,6 +498,8 @@ require_once 'EncabezadoUsuarioView.php';
                     
                       var idclausula;
                       $(function(){
+                           
+                         
                           
                         $('.select').on('change', function() {
 //                          console.log( $(this).prop('value') );
@@ -338,6 +523,22 @@ require_once 'EncabezadoUsuarioView.php';
                           
                           
                         });
+                        
+                        
+                        $('#CLAUSULA').keyup(function(){
+                            
+                       var valueclausula = $(this).val();   
+                       if(valueclausula!=""){
+                           var dataString = valueclausula;
+                            loadAutocomplete(dataString);
+                            
+                            
+                       }
+                         
+                           });
+                        
+                        
+                        
                         
                         
                         $("#btn_guardar").click(function(){
@@ -441,6 +642,7 @@ require_once 'EncabezadoUsuarioView.php';
                 }
                 
                 
+<<<<<<< HEAD
                 
                 function loadSpinner(){
 //                    alert("se cargara otro ");
@@ -449,8 +651,50 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 
                 
+=======
+                function loadAutocomplete(dataString){
+                    //Le pasamos el valor del input al ajax
+                            $.ajax({
+                                type: "POST",
+                                url: "../Controller/ClausulasController.php?Op=loadAutoComplete",
+                                data: "cadenaclausula="+dataString,
+                                success: function(data) {
+                                    //Escribimos las sugerencias que nos manda la consulta
+//var datos="<ul>";
+var dato="";
+    $.each(data, function (index,value) {
+//        console.log("sub_clausula: " + value.sub_clausula);
+if(value.sub_clausula!=""){
+//         datos+="<li>"+value.sub_clausula+"</li><br>";
+        dato=value.descripcion_clausula;
+       
+     }
+    });
+//    datos+="</ul>"
+//    $('#sugerenciasclausulas').fadeIn(1000).html(datos);
+$('#DESCRIPCION_CLAUSULA').val(dato);
+if(dato==""){
+    
+$('#DESCRIPCION_CLAUSULA').prop("readonly",false);
+}else{
+    if(dato!=""){
+ $('#DESCRIPCION_CLAUSULA').prop("readonly",true);   
+ }
+}
+   
+//                                               
+                                }
+                            }); 
+                }
+                
+>>>>>>> 678c15501994324cdb8e02250d54014af03318e8
 		</script>
                 
+                
+                <link rel="stylesheet" type="text/css" href="../../../codebase/fonts/font_roboto/roboto.css"/>
+                   <script src="../../codebase/dhtmlx.js"></script>
+                <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
+               
                 <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
                 <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
                 

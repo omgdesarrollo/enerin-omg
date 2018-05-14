@@ -39,10 +39,30 @@ require_once '../util/Session.php';
                 <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                 <!--Termina para el spiner cargando-->
                 
+<<<<<<< HEAD
                 <script src="../../js/jquery.js" type="text/javascript"></script>
 		<script src="../../assets/probando/js/ace-extra.min.js"></script>             
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                     
+=======
+             <script src="../../js/jquery.js" type="text/javascript"></script>
+
+		<script src="../../assets/probando/js/ace-extra.min.js"></script>
+                
+                
+                 <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+                     <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+                     
+ <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+                 
+
+
+
+
+  
+ 
+				 
+>>>>>>> 678c15501994324cdb8e02250d54014af03318e8
 	</head>
 
         
@@ -54,8 +74,23 @@ require_once '../util/Session.php';
 
 require_once 'EncabezadoUsuarioView.php';
 
+<<<<<<< HEAD
 ?>             
 
+=======
+	
+		
+		
+		
+		<!--aqui termina el gantt    -->
+		
+		
+		
+		
+		
+		
+		
+>>>>>>> 678c15501994324cdb8e02250d54014af03318e8
              
              <div style="display:none;" id="myDiv" class="animate-bottom"> 
                      <div class="contenedortable">
@@ -156,7 +191,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 
                                                                     
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
-                                <td ><button class="btn btn-info">Cargar Programa</button></td>
+                                <td ><button class="btn btn-info" onClick="cargadePrograma('<?php echo $filas["folio_entrada"]; ?>')">Cargar Programa</button></td>
                                 
 			  </tr>
                           
@@ -276,6 +311,13 @@ require_once 'EncabezadoUsuarioView.php';
         myFunction();
     }
                 
+                
+    function cargadePrograma(foliodeentrada){
+        alert("le has picado al folio de entrada  "+foliodeentrada);
+        window.location.href=" GanttView.php?folio_entrada="+foliodeentrada;
+//   window.location.replace("http://sitioweb.com");
+        
+    }
 		</script>
                 
                 

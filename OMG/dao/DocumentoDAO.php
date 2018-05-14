@@ -53,6 +53,21 @@ class DocumentoDAO{
     }
     }
     
+    public function verificacionExisteClaveandDocumento($cadena,$cualverificar){
+        try{
+           $query="SELECT tbdocumentos.clave_documento  FROM documentos tbdocumentos WHERE tbdocumentos.$cualverificar ='$cadena'";
+
+            
+//            $query="SELECT ID_EMPLEADO  FROM EMPLEADOS";
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+        
+            return $lista;
+            
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
     
 
     public function insertarDocumentos($clave_documento,$documento,$id_empleado){
