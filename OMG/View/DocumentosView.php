@@ -4,12 +4,12 @@ session_start();
 require_once '../util/Session.php';
 $Usuario=  Session::getSesion("user");
 
-
 // setlocale(LC_ALL,'es_RA');
 
-
-
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -40,12 +40,26 @@ $Usuario=  Session::getSesion("user");
 		<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
+                <!--Inicia para el spiner cargando-->
+                <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+                <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+                <!--Termina para el spiner cargando-->
                 
-             <script src="../../js/jquery.js" type="text/javascript"></script>
-
+                
+                <script src="../../js/jquery.js" type="text/javascript"></script>
 		<script src="../../assets/probando/js/ace-extra.min.js"></script>
-       
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+                
+                
+                
+                
+                <script>
+                
+                
+                
+                </script>
+
+                
                 
             
             <style>
@@ -95,11 +109,15 @@ $Usuario=  Session::getSesion("user");
 
 	</head>
 
-        <body class="no-skin" >
-	
-		<?php		
-		require_once 'EncabezadoUsuarioView.php';
-		?>			
+        <body class="no-skin" onload="loadSpinner()">
+            <!--<div>Cargando...</div>-->
+            <div id="loader"></div>
+
+            
+<?php		
+require_once 'EncabezadoUsuarioView.php';
+?>            
+
             
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
 		Agregar-Documento
@@ -397,7 +415,6 @@ $Usuario=  Session::getSesion("user");
 //                    alert("se cargara otro ");
                         myFunction();
                 }
-                
                 
                 
 		</script>

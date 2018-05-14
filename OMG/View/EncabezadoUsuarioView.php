@@ -39,7 +39,7 @@ foreach($Alarmas as $alarma)
 			}
 			else
 			{
-				$diasA = strtotime(strftime("%d-%B-%y",$alarm -> getTimestamp())) - strtotime(strftime("%d-%B-%y",$hoy -> getTimestamp()));
+				$dias = strtotime(strftime("%d-%B-%y",$alarm -> getTimestamp())) - strtotime(strftime("%d-%B-%y",$hoy -> getTimestamp()));
 				$NotificacionesAlarma[$numeroAlarmas]["MENSAJE"] = " ALARMA VENCIDA ".$dias." DIA(S)"." - ".$alarma['mensaje_alerta'];				
 			}
 		$numeroAlarmas++;
@@ -51,7 +51,7 @@ foreach($Alarmas as $alarma)
 ?>
 
 
-		<div id="navbar" class="navbar navbar-default          ace-save-state">
+<div id="navbar" class="navbar navbar-default          ace-save-state">
             
             <div class="navbar-container ace-save-state" id="navbar-container">
                 <div class="navbar-header pull-left">
@@ -183,4 +183,4 @@ foreach($Alarmas as $alarma)
                 </div>
                 
             </div>
-        </div>
+</div>
