@@ -87,16 +87,16 @@ $Usuario=  Session::getSesion("user");
                     overflow: auto;
                     }
                
-                    .main-encabezado {
-                        /*background: #333;*/
+/*                    .main-encabezado {
+                        background: #333;
                         color: white;
                         height: 80px;
 
-                        width: 100%; /* hacemos que la cabecera ocupe el ancho completo de la página */
-                        left: 0; /* Posicionamos la cabecera al lado izquierdo */
-                        top: 0; /* Posicionamos la cabecera pegada arriba */
-                        position: fixed; /* Hacemos que la cabecera tenga una posición fija */
-                    } 
+                        width: 100%;  hacemos que la cabecera ocupe el ancho completo de la página 
+                        left: 0;  Posicionamos la cabecera al lado izquierdo 
+                        top: 0;  Posicionamos la cabecera pegada arriba 
+                        position: fixed;  Hacemos que la cabecera tenga una posición fija 
+                    } */
                    
                 </style>    
                 
@@ -108,12 +108,12 @@ $Usuario=  Session::getSesion("user");
         <body class="no-skin" onload="loadSpinner()">
             <!--<div>Cargando...</div>-->
             <div id="loader"></div>
-            
-<?php
+            <!--<div style="position: fixed">-->       
+            <?php
+            require_once 'EncabezadoUsuarioView.php';
 
-require_once 'EncabezadoUsuarioView.php';
-
-?>
+            ?>
+            <!--</div>-->
 
 <div style="height: 50px"></div>            
            

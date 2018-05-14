@@ -909,7 +909,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 url: "../Controller/DocumentosEntradaController.php?Op=getIdCumplimiento",
                                 type: 'POST',
                                 data: 'ID_DOCUMENTO='+ID_DOCUMENTO,
-                                asyn:false,
+                                async:false,
                                 success:function(data)
                                 {
                                         $('.start').click();
