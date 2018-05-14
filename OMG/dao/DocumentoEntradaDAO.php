@@ -263,6 +263,19 @@ class DocumentoEntradaDAO{
                 throw $ex;
         }
     }
+    public function getIdCumplimiento($ID_DOCUMENTO_ENTRADA)
+    {
+        try
+        {
+            $query = "SELECT documento_entrada.ID_CUMPLIMIENTO FROM documento_entrada WHERE id_documento_entrada = $ID_DOCUMENTO_ENTRADA";
+            $db= AccesoDB::getInstancia();
+            $dato = $db->executeQuery($query);
+            return $dato;
+        } catch(Except $ex)
+        {
+            throw $ex;
+        }
+    }
 }
 
 ?>

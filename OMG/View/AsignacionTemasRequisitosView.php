@@ -80,6 +80,13 @@ $Usuario=  Session::getSesion("user");
                       padding-top:10px;
                     }
                     
+                    div#winVP {
+			position: relative;
+			height: 350px;
+			border: 1px solid #dfdfdf;
+			margin: 10px;
+		}
+                    
                     
                     .main-encabezado {
                         /*background: #333;*/
@@ -107,15 +114,19 @@ $Usuario=  Session::getSesion("user");
 require_once 'EncabezadoUsuarioView.php';
 
 ?> 
+
+<div style="height: 50px"></div>
             
-            
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
-		Asignar Tema-Requisito
-        </button>    
-              </div>
+        <div style="position: fixed;">     
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
+                    Asignar Tema-Requisito
+            </button>    
+        </div>
             
 <div style="height: 55px"></div>
-	                   
+
+<!--<div style="display:none;" id="myDiv" class="animate-bottom"> inicio animacion tabla toda la interfaz seleccionada
+    <div class="contenedortable" id="winVP"> -->
 
                            <table class="tbl-qa">
 		  <!--<thead>-->
@@ -189,16 +200,14 @@ require_once 'EncabezadoUsuarioView.php';
 		?>
 		  </tbody>
 		</table>
-   
-            
-            
-			
+
 
 			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 			</a>
 	
-             
+<!--    </div>         
+</div>         -->
                 
                 <!-- Inicio de Seccion Modal -->
        <div class="modal draggable fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

@@ -102,7 +102,7 @@ require_once 'EncabezadoUsuarioView.php';
 ?>            
              
              
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
+<button onClick="DocumentoArchivoAgregarModalF();" type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
 		Agregar Documento de Entrada
 </button>             
              
@@ -337,28 +337,14 @@ require_once 'EncabezadoUsuarioView.php';
 		      <div class="modal-body">
                         <div id="DocumentolistadoUrl"></div>
 
+                        
+                        <div class="form-group">
+                                <div id="DocumentolistadoUrlModal"></div>
+			</div>
+
                         <div class="form-group" method="post" >
                                 <button type="submit" id="btn_guardar2"  class="btn crud-submit btn-info">Agragar Archivo</button>
                         </div>
-                        <div class="form-group">
-                                                        <form id="fileupload" method="POST" enctype="multipart/form-data">
-                                                                <div class="fileupload-buttonbar">
-                                                                        <div class="fileupload-buttons">
-                                                                                <span class="fileinput-button">
-                                                                                        <span><a >Agregar documentos(Click o Arrastrar)...</a></span>
-                                                                                        <input type="file" name="files[]" multiple>
-                                                                                </span>
-                                                                                <span class="fileupload-process"></span>
-                                                                        </div>
-                                                                        <div class="fileupload-progress" >
-                                                                                <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                                <div class="progress-extended">&nbsp;</div>
-                                                                        </div>
-                                                                </div>
-                                                                <table role="presentation"><tbody class="files"></tbody></table>
-                                                        </form>
-			</div>
-
                       </div><!-- cierre div class-body -->
                 </div><!-- cierre div class modal-content -->
         </div><!-- cierre div class="modal-dialog" -->
@@ -536,35 +522,9 @@ require_once 'EncabezadoUsuarioView.php';
                                                         <textarea  id="DOCUMENTO" class="form-control" data-error="Ingrese el Documento" required></textarea>
 							<div class="help-block with-errors"></div>
 						</div>-->
-                                                <div class="form-group">
-                                                        <form id="fileupload" method="POST" enctype="multipart/form-data">
-                                                                <div class="fileupload-buttonbar">
-                                                                        <div class="fileupload-buttons">
-                                                                                <span class="fileinput-button">
-                                                                                        <span><a >Agregar documentos(Click o Arrastrar)...</a></span>
-                                                                                        <input type="file" name="files[]" multiple>
-                                                                                </span>
-                                                                                <!-- <button type="submit" class="start">Start upload</button>
-                                                                                <button type="reset" class="cancel">Cancel upload</button>
-                                                                                <button type="button" class="delete">Delete</button> -->
-                                                                                <!-- <input type="checkbox" class="toggle"> -->
-                                                                                <span class="fileupload-process"></span>
-                                                                        </div>
-                                                                        <div class="fileupload-progress" >
-                                                                                <!-- The global progress bar -->
-                                                                                <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-                                                                                <!-- The extended global progress state -->
-                                                                                <div class="progress-extended">&nbsp;</div>
-                                                                        </div>
-                                                                </div>
-                                                                <table role="presentation"><tbody class="files"></tbody></table>
-                                                                                <!-- <label class="control-label" for="title">Documento:</label> -->
-                                                                                <!-- <input id="DOCUMENTO" name="uploadfile" type="file" /> -->
-                                                                                <!-- <input type="submit" class="btn" value="Cargar"/> -->
-                                                                                <!-- <input type="button" id="cancelar" value="Cancelar"/> -->
-                                                                                <!-- <div class="help-block with-errors"></div> -->
-                                                        </form>
-						</div>
+                                                <!-- <div class="form-group"> -->
+                                                        <div id="DocumentoEntradaAgregarModal"></div>
+						<!-- </div> -->
                                                 
                                                 <!-- <div class="barra">
                                                         <div class="barra_azul" id="barra_estado">
@@ -603,6 +563,27 @@ require_once 'EncabezadoUsuarioView.php';
                     
                 var id_documento_entrada;
                 var cualmodificar;
+                var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/form-data'>";
+                ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
+                ModalCargaArchivo += "<div class='fileupload-buttons'>";
+                ModalCargaArchivo += "<span class='fileinput-button'>";
+                ModalCargaArchivo += "<span><a >Agregar documentos(Click o Arrastrar)...</a></span>";
+                ModalCargaArchivo += "<input type='file' name='files[]' multiple></span>";
+                ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
+                ModalCargaArchivo += "<div class='fileupload-progress' >";
+                ModalCargaArchivo += "<div class='progress' role='progressbar' aria-valuemin='0' aria-valuemax='100'></div>";
+                ModalCargaArchivo += "<div class='progress-extended'>&nbsp;</div>";
+                ModalCargaArchivo += "</div></div>";
+                ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
+                function DocumentoArchivoAgregarModalF()
+                {
+                        $('#DocumentolistadoUrlModal').html(" ");
+                        $('#DocumentoEntradaAgregarModal').html(ModalCargaArchivo);
+                        $('#fileupload').fileupload();
+                        $('#fileupload').fileupload({
+                                url: '../View/',
+                        });
+                }
                 function mostrarUrl(id_documento_entrada)
                 {
                         // alert("mostrar urls: "+id_documento_entrada);
@@ -892,8 +873,40 @@ require_once 'EncabezadoUsuarioView.php';
                                         {
                                                 tempDocumentolistadoUrl = " No hay archivos agregados "
                                         }
+                                        tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdDocumento' type='text' style='display:none;' value='"+id_documento_entrada+"'>";
                                         // alert(tempDocumentolistadoUrl);
+                                        $('#DocumentoEntradaAgregarModal').html(" ");
+                                        $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
                                         $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
+                                        $('#fileupload').fileupload();
+                                        $('#fileupload').fileupload({
+                                                url: '../View/',
+                                        });
+                                }
+                        });
+                }
+                function agregarArchivosUrl()
+                {
+                        var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
+                        // alert(ID_DOCUMENTO);
+                        $.ajax({
+                                url: "../Controller/DocumentosEntradaController.php?Op=getIdCumplimiento",
+                                type: 'POST',
+                                data: 'ID_DOCUMENTO='+ID_DOCUMENTO,
+                                asyn:false,
+                                success:function(data)
+                                {
+                                        $('.start').click();
+                                }
+                        });
+                        $.ajax({
+                                url: "../Controller/ArchivoUploadController.php?Op=Guardar",
+                                type: "POST",
+                                data: 'ID_DOCUMENTO='+ID_DOCUMENTO,
+                                async: false,
+                                success: function(data)
+                                {
+                                        // alert("insertado urls");
                                 }
                         });
                 }

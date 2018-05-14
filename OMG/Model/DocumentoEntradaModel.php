@@ -77,13 +77,13 @@ class DocumentoEntradaModel{
             {
                 mkdir($carpeta,0777,true);
             }
-            $id_nuevo=$dao->traer_ultimo_insertado();
             $exito_inserccion=$dao->insertarDocumentosEntrada($pojo->getIdCumplimiento(),$pojo->getFolioReferencia(),
                    $pojo->getFolioEntrada(),$pojo->getFechaRecepcion(),$pojo->getAsunto(),$pojo->geRemitente(),
                    $pojo->getIdEntidad(),$pojo->getIdClausula(),$pojo->getClasificacion(),$pojo->getStatusDoc(),
                    $pojo->getFechaAsignacion(),$pojo->getFechaLimiteAtencion(),$pojo->getFechaAlarma(),
                    $pojo->getDocumento(),$pojo->getObservaciones(),$pojo->getMensajeAlerta());
-            
+                
+            $id_nuevo=$dao->traer_ultimo_insertado();
             $carpeta = $carpeta."/".$id_nuevo;
             if(!file_exists($carpeta))
             {
@@ -131,6 +131,17 @@ class DocumentoEntradaModel{
             $pojo= new ClausulaPojo();
             $dao->eliminarClausula($pojo->getIdClausula());
         } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+    public function getIdCumplimiento($ID_DOCUMENTO_ENTRADA)
+    {
+        try
+        {
+            $dao= new DocumentoEntradaDAO();
+            return $dao->getIdCumplimiento($ID_DOCUMENTO_ENTRADA);
+        }catch(Exception $ex)
+        {
             throw $ex;
         }
     }

@@ -97,7 +97,8 @@ $Usuario=  Session::getSesion("user");
                         left: 0; /* Posicionamos la cabecera al lado izquierdo */
                         top: 0; /* Posicionamos la cabecera pegada arriba */
                         position: fixed; /* Hacemos que la cabecera tenga una posición fija */
-                    } 
+                    }
+                
 
                 </style>
                 
@@ -113,7 +114,10 @@ require_once 'EncabezadoUsuarioView.php';
 
 ?>          
         
-        
+<div style="height: 50px"></div>
+
+
+            <div style="position: fixed;">
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
 		Asignar Documento-Tema
             </button>
@@ -129,13 +133,16 @@ require_once 'EncabezadoUsuarioView.php';
                 Lista de Temas
                                               <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
             </button>
-        
-		
+            </div>    
+                
+
+
+<div style="height: 55px"></div>		
         
         
         <div style="display:none;" id="myDiv" class="animate-bottom"> <!--inicio animacion tabla toda la interfaz seleccionada-->
                     <!--<div id="winVP"></div>-->
-                    <div class="contenedortable" id="winVP">  
+                <div class="contenedortable" id="winVP">  
                            <table class="tbl-qa">
 		  <!--<thead>-->
 			  <tr>
@@ -266,7 +273,7 @@ require_once 'EncabezadoUsuarioView.php';
 			</a>
 		</div><!-- /.main-container -->
                         
-                </div>
+        </div>
         
         
         <!-- Inicio de Seccion Modal-Crear-->
