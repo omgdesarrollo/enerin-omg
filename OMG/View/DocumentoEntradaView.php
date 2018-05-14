@@ -562,7 +562,10 @@ require_once 'EncabezadoUsuarioView.php';
                 {
                         $('#DocumentolistadoUrlModal').html(" ");
                         $('#DocumentoEntradaAgregarModal').html(ModalCargaArchivo);
-                        $('#fileupload').fileupload();                        
+                        $('#fileupload').fileupload();
+                        $('#fileupload').fileupload({
+                                url: '../View/',
+                        });
                 }
                 function mostrarUrl(id_documento_entrada)
                 {
@@ -860,7 +863,7 @@ require_once 'EncabezadoUsuarioView.php';
                                         $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
                                         $('#fileupload').fileupload();
                                         $('#fileupload').fileupload({
-                                                url: '../view/',
+                                                url: '../View/',
                                         });
                                 }
                         });
