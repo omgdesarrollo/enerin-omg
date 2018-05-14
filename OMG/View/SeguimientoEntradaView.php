@@ -44,7 +44,14 @@ require_once '../util/Session.php';
                      <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                      
  <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-                    
+                 
+
+
+
+
+  
+ 
+				 
 	</head>
 
         <body class="no-skin" onload="loadSpinner()">
@@ -183,7 +190,18 @@ require_once '../util/Session.php';
             </div>
         </div>
 
-
+	
+		
+		
+		
+		<!--aqui termina el gantt    -->
+		
+		
+		
+		
+		
+		
+		
              
              <div style="display:none;" id="myDiv" class="animate-bottom"> 
                      <div class="contenedortable">
@@ -284,7 +302,7 @@ require_once '../util/Session.php';
                                 
                                                                     
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
-                                <td ><button class="btn btn-info">Cargar Programa</button></td>
+                                <td ><button class="btn btn-info" onClick="cargadePrograma('<?php echo $filas["folio_entrada"]; ?>')">Cargar Programa</button></td>
                                 
 			  </tr>
                           
@@ -405,6 +423,13 @@ require_once '../util/Session.php';
                         myFunction();
                 }
                 
+                
+    function cargadePrograma(foliodeentrada){
+        alert("le has picado al folio de entrada  "+foliodeentrada);
+        window.location.href=" GanttView.php?folio_entrada="+foliodeentrada;
+//   window.location.replace("http://sitioweb.com");
+        
+    }
 		</script>
                 
                 

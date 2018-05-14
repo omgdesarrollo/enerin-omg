@@ -82,7 +82,18 @@ $Usuario=  Session::getSesion("user");
                     height:5px;
                     overflow: auto;
                     }
+                     .main-encabezado {
+                        /*background: #333;*/
+                        color: white;
+                        height: 80px;
+
+                        width: 100%; /* hacemos que la cabecera ocupe el ancho completo de la página */
+                        left: 0; /* Posicionamos la cabecera al lado izquierdo */
+                        top: 0; /* Posicionamos la cabecera pegada arriba */
+                        position: fixed; /* Hacemos que la cabecera tenga una posición fija */
+                    }
                     
+                   
                 </style>    
                 
                 
@@ -91,6 +102,8 @@ $Usuario=  Session::getSesion("user");
 	</head>
 
         <body class="no-skin" >
+            
+            <div class="main-encabezado">
 		<div id="navbar" class="navbar navbar-default          ace-save-state">
             
             <div class="navbar-container ace-save-state" id="navbar-container">
@@ -223,26 +236,36 @@ $Usuario=  Session::getSesion("user");
                 
             </div>
         </div>
-            
+           
+           </div> 
+             <div style="height: 50px"></div>
+            <div style="position: fixed;">
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
 		Agregar Tema
-        </button>    
-
-	                   
+        </button>
+                
+            </div>
+                 
+            <div style="height: 55px"></div>
+            
                            <table class="tbl-qa">
+                              
 		  <!--<thead>-->
-			  <tr>
+                            
+                               <tr  >
+                          <!--<div class="main-header">-->
 				<!--<th class="table-header" >NO.</th>-->
-                                <th class="table-header">No.Tema</th>
-				<th class="table-header">Tema</th>				
-				<th class="table-header">No.Sub-Tema</th>				
-				<th class="table-header">Sub-Tema</th>				
-				<th class="table-header">Responsable</th>				
+                                <th  class="table-header">No.Tema</th>
+				<th   class="table-header">Tema</th>				
+				<th  class="table-header">No.Sub-Tema</th>				
+				<th  class="table-header">Sub-Tema</th>				
+				<th   class="table-header">Responsable</th>				
 				<!--<th class="table-header">TEXTO BREVE</th>-->				
-				<th class="table-header">Descripcion</th>				
-                                <th class="table-header">Plazo</th>					
-                                
+				<th  class="table-header">Descripcion</th>				
+                                <th  class="table-header">Plazo</th>					
+                          <!--</div>-->
 			  </tr>
+                     
 		  <!--</thead>-->
 		  <tbody>
 		  <?php
@@ -611,6 +634,7 @@ var dato="";
 if(value.sub_clausula!=""){
 //         datos+="<li>"+value.sub_clausula+"</li><br>";
         dato=value.descripcion_clausula;
+       
      }
     });
 //    datos+="</ul>"

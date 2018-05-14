@@ -75,6 +75,18 @@ $Usuario=  Session::getSesion("user");
                       text-align:center;
                       padding-top:10px;
                     }
+                    
+                    
+                    .main-encabezado {
+                        /*background: #333;*/
+                        color: white;
+                        height: 80px;
+
+                        width: 100%; /* hacemos que la cabecera ocupe el ancho completo de la página */
+                        left: 0; /* Posicionamos la cabecera al lado izquierdo */
+                        top: 0; /* Posicionamos la cabecera pegada arriba */
+                        position: fixed; /* Hacemos que la cabecera tenga una posición fija */
+                    }
                 </style>    
                 
                 
@@ -83,6 +95,7 @@ $Usuario=  Session::getSesion("user");
 	</head>
 
         <body class="no-skin" >
+            <div class="main-encabezado">
 		<div id="navbar" class="navbar navbar-default          ace-save-state">
             
             <div class="navbar-container ace-save-state" id="navbar-container">
@@ -215,12 +228,15 @@ $Usuario=  Session::getSesion("user");
                 
             </div>
         </div>
-            
+            </div>
+             <div style="height: 50px"></div>
+              <div style="position: fixed;">
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
 		Asignar Tema-Requisito
         </button>    
+              </div>
             
-
+<div style="height: 55px"></div>
 	                   
 
                            <table class="tbl-qa">

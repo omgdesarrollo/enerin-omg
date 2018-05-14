@@ -9,7 +9,7 @@ require_once '../util/Session.php';
 
 
 
-<html>
+<html ng-app="omgApp">
     <head>
       <title></title>
       <meta name="description" content="overview &amp; stats" />
@@ -52,6 +52,9 @@ require_once '../util/Session.php';
                      <script src="../../codebase/dhtmlx.js"></script>
                      <!--aqui termina la seccion para poder abrir el modal--> 
                      
+                     
+                     <script src="../../angular/angular.min.js" type="text/javascript"></script>
+                     <script src="../../angular/app.js" type="text/javascript"></script>
                     
                      <!--<script src="../../assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>-->
                 
@@ -95,6 +98,9 @@ require_once '../util/Session.php';
                       text-align:center;
                       padding-top:10px;
                     }
+                    
+                   
+                    
                 </style>
 
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
@@ -127,7 +133,7 @@ require_once '../util/Session.php';
                                     datos.push(APELLIDO_MATERNO);
                                     datos.push(CATEGORIA);
                                     datos.push(CORREO);
-                                    correcto=validarCamposVacios(datos);
+//                                    correcto=validarCamposVacios(datos);
                                     alert("e  : "+correcto);
                                     if(correcto!==false){
                                                   //  alert("si paso ");
@@ -275,7 +281,7 @@ require_once '../util/Session.php';
 //					$(editableObj).css("background","#FDFDFD");
                                         swal("Guardado Exitoso!", "Ok!", "success")
                                          consultarInformacion("../Controller/EmpleadosController.php?Op=Listar");
-//                                        window.location.href("EmpleadosView.php");
+                                        window.location.href="EmpleadosView.php";
 				}   
 		   });
 //                   window.location.href("EmpleadosView.php");
@@ -415,8 +421,8 @@ require_once '../util/Session.php';
                 }
                 
                 function refresh(){
-                    alert("aqui se debe actualizar checarlo ");
-                    
+//                    alert("aqui se debe actualizar checarlo ");
+                 window.location.href="EmpleadosView.php";   
                 }
                 
                 function loadSpinner(){
@@ -434,7 +440,7 @@ require_once '../util/Session.php';
             
             <div class="navbar-container ace-save-state" id="navbar-container">
                 <div class="navbar-header pull-left">
-					<a href="index.html" class="navbar-brand">
+					<a class="navbar-brand">
 						<small>
 							<i class="fa fa-leaf"></i>
 							OMG APPS
@@ -523,7 +529,7 @@ require_once '../util/Session.php';
 								</li>
 
 								<li class="dropdown-footer">
-									<a href="inbox.html">
+									<a >
 										<!--ver todos los mensajes-->
 										<i class="ace-icon fa fa-arrow-right"></i>
 									</a>
@@ -562,6 +568,7 @@ require_once '../util/Session.php';
                 
             </div>
         </div>
+      
 <!--          <div class="pull-right">-->
 
 				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
@@ -594,17 +601,18 @@ require_once '../util/Session.php';
         <div style="display:none;" id="myDiv" class="animate-bottom"> <!--inicio animacion tabla toda la interfaz seleccionada-->
         
         
-           <div class="contenedortable">   
+            <div class="contenedortable" ng-controller="empleadosCtrl as empleado">  
+            
                <table class="tbl-qa" id="idTable">
 		  <thead>
 			  <tr>
-				<th class="table-header" width="10%">NO.</th>
-				<th class="table-header">NOMBRE</th>
-				<th class="table-header">APELLIDO PATERNO</th>
-                                <th class="table-header">APELLIDO MATERNO</th>
-                                <th class="table-header">CATEGORIA</th>
-                                <th class="table-header">EMAIL</th>
-                                <th class="table-header">FECHA CREACION</th>
+				<th class="table-header" width="10%">{{ dataEmpleados.numeracion }}</th>
+				<th class="table-header">{{dataEmpleados.nombre_Empleado}}</th>
+				<th class="table-header">{{dataEmpleados.apellido_paterno}}</th>
+                                <th class="table-header">{{dataEmpleados.apellido_materno}}</th>
+                                <th class="table-header">{{dataEmpleados.categoria}}</th>
+                                <th class="table-header">{{dataEmpleados.email }}</th>
+                                <th class="table-header">{{dataEmpleados.fecha_creacion}}</th>
 			  </tr>
 		  </thead>
 		  <tbody>
