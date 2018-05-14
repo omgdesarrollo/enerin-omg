@@ -43,7 +43,7 @@ class UploadHandler
     public function __construct($options = null, $initialize = true, $error_messages = null) {
         session_start();
         require_once '../util/Session.php';
-
+echo "d   :".$this->get_full_url();
         $newUrl=  Session::getSesion("newUrl");
         // echo $newUrl."---";
         $this->response = array();
@@ -1104,7 +1104,7 @@ class UploadHandler
             //  $file_path = "enerin-omgapps.com/omgcum/archivos/files".$newUrl.$file->name;//el que guarda web
             // $file_path2 = "http://localhost:80/enerin-omg/archivos/files".$newUrl.$file->name;//el que descarga web
             $file_path = "C:/xampp/htdocs/enerin-omg/archivos/files".$newUrl.$file->name;//el que guarda local
-            $file_path2 = "http://localhost:80/enerin-omg/archivos/files".$newUrl.$file->name;//el que descarga local
+            $file_path2 = "http://localhost:8282/enerin-omg/archivos/files".$newUrl.$file->name;//el que descarga local
             $filePath = array();
             if(Session::getSesion("archivos_urls") == null)
             {

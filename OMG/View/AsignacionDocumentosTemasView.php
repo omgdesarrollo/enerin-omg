@@ -3,7 +3,6 @@ session_start();
 require_once '../util/Session.php';
 $Usuario=  Session::getSesion("user");
 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -89,14 +88,14 @@ $Usuario=  Session::getSesion("user");
 		}
                 
                 .main-encabezado {
-                        /*background: #333;*/
+                        background: #333;
                         color: white;
                         height: 80px;
 
-                        width: 100%; /* hacemos que la cabecera ocupe el ancho completo de la página */
-                        left: 0; /* Posicionamos la cabecera al lado izquierdo */
-                        top: 0; /* Posicionamos la cabecera pegada arriba */
-                        position: fixed; /* Hacemos que la cabecera tenga una posición fija */
+                        width: 100%;  
+                        left: 0; 
+                        top: 0;  
+                        position: fixed; 
                     }
                 
 
