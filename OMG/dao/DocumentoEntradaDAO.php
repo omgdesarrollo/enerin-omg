@@ -58,7 +58,7 @@ class DocumentoEntradaDAO{
                 tbdocumento_entrada.folio_entrada, tbdocumento_entrada.fecha_recepcion,
                 tbdocumento_entrada.asunto, tbdocumento_entrada.remitente,
                 tbentidad_reguladora.id_entidad, tbentidad_reguladora.clave_entidad,
-                tbclausulas.id_clausula, tbclausulas.clausula, tbempleados.nombre_empleado,
+                tbclausulas.id_clausula, tbclausulas.clausula, tbclausulas.descripcion_clausula, tbempleados.nombre_empleado,
                 tbempleados.apellido_paterno, tbempleados.apellido_materno,
                 tbdocumento_entrada.clasificacion, tbdocumento_entrada.status_doc,
                 tbdocumento_entrada.fecha_asignacion, tbdocumento_entrada.fecha_limite_atencion,

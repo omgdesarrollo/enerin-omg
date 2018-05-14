@@ -114,22 +114,23 @@ require_once 'EncabezadoUsuarioView.php';
 		  <!--<thead>-->
 			  <tr>
 				
-                                <th class="table-header">CONTRATO</th>
-                                <th class="table-header">FOLIO REFERENCIA</th>
-                                <th class="table-header">FOLIO DE ENTRADA</th>
-                                <th class="table-header">FECHA RECEPCION</th>
-                                <th class="table-header">ASUNTO</th>
-                                <th class="table-header">REMITENTE</th>
-                                <th class="table-header">ENTIDAD REGULADORA</th>
-                                <th class="table-header">TEMA</th>
-                                <th class="table-header"> RESPONSABLE DEL TEMA</th>              
-                                <th class="table-header">CLASIFICACION</th>
-                                <th class="table-header">STATUS</th>
-                                <th class="table-header">FECHA ASIGNACION</th>
-                                <th class="table-header">FECHA LIMITE</th>
+                                <th class="table-header">Contrato</th>
+                                <th class="table-header">Folio Referencia</th>
+                                <th class="table-header">Folio de Entrada</th>
+                                <th class="table-header">Fecha Recepcion</th>
+                                <th class="table-header">Asunto</th>
+                                <th class="table-header">Remitente</th>
+                                <th class="table-header">Entidad Reguladora</th>
+                                <th class="table-header">No.Tema</th>
+                                <th class="table-header">Tema</th>
+                                <th class="table-header">Responsable del Tema</th>              
+                                <th class="table-header">Clasificacion</th>
+                                <th class="table-header">Status</th>
+                                <th class="table-header">Fecha Asignacion</th>
+                                <th class="table-header">Fecha Limite</th>
                                 <!--<th class="table-header">FECHA ALARMA</th>-->
-                                <th class="table-header">DOCUMENTO</th>
-                                <th class="table-header">OBSERVACIONES</th>
+                                <th class="table-header">Documento</th>
+                                <th class="table-header">Observaciones</th>
                                 
 			  </tr>
 		  <!--</thead>-->
@@ -242,37 +243,64 @@ require_once 'EncabezadoUsuarioView.php';
                                 </td>
                                 
                                     
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion_clausula"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleado"]; ?></td>
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'clasificacion','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clasificacion"]; ?></td>
                                 
+                                
                                 <td> 
                                     <select id="id_status" class="select" onchange="saveComboToDatabase('status_doc', <?php echo $filas["id_documento_entrada"]; ?> )">
-                                     <?php
-                                    $s="";
-                                                foreach ($Lista as $value) {
-                                                    if($value["status_doc"]=="".$filas["status_doc"]){
-                                                    
-                                                    ?>
-                                    
-                                        <option value="<?php echo "".$value["status_doc"] ?>"  selected ><?php echo "".$value["status_doc"]; ?></option>
+                                        <?php
+                                        if($filas["status_doc"]== 1){                                                                                                            
+                                        ?>                    
+                                                        
+                                            <option value="1" selected>En proceso</option>
+                                            <option value="2">Suspendido</option>
+                                            <option value="3">En alerta</option>
+                                            <option value="4">Terminado</option>
                                         
+                                       <?php                                                              
+                                        } 
+                                       
+                                                if($filas["status_doc"]== 2){
+                                         
+                                                ?>            
+                                     
+                                                    <option value="2" selected>Suspendido</option>
+                                                    <option value="1">En proceso</option>
+                                                    <option value="3">En alerta</option>
+                                                    <option value="4">Terminado</option>
+                                       
+                                                <?php
+                                                }
+                                         
+                                                        if($filas["status_doc"]== 3){
+                                         
+                                                        ?>
+                                       
+                                                            <option value="3" selected>En alerta</option>
+                                                            <option value="1">En proceso</option>
+                                                            <option value="2">Suspendido</option>
+                                                            <option value="4">Terminado</option>
+                                       
                                                         <?php
                                                         }
-                                                        else{
-                                                            ?>
-                                                        }
-                                                             <option value="<?php echo "".$value["status_doc"] ?>"  ><?php echo "".$value["status_doc"]; ?></option>
-                                                             <?php
-                                                        }
-                                                }
-                                    
-                                    ?>
+                                         
+                                                            if($filas["status_doc"]== 4){
+                                            
+                                                            ?> 
+                                                                <option value="4" selected>Terminado</option>
+                                                                <option value="1">En proceso</option>
+                                                                <option value="2">Suspendido</option>
+                                                                <option value="3" >En alerta</option>
+
                                        
-                                       <option value="1">En proceso</option>
-                                       <option value="2">Suspendido</option>
-                                       <option value="3">En alerta</option>
-                                       <option value="4">Terminado</option>                                             
-                                               
+                                                            <?php
+                                                            }
+                                                            
+                                                                                
+                                                            ?>
+                                       
  
                                     </select>                                                                     
                                 </td>
@@ -579,17 +607,22 @@ require_once 'EncabezadoUsuarioView.php';
 //                          console.log( $(this).prop('value') );
 //                          alert("el value que va a viajar es "+ $(this).prop('value'));
                           
-                        if (cualmodificar == "ID_CUMPLIMIENTO") {
+                        if (cualmodificar == "id_cumplimiento") {
     
-                         column="ID_CUMPLIMIENTO";
+                         column="id_cumplimiento";
     
-                        } else if (cualmodificar == "ID_ENTIDAD"){
+                        } else if (cualmodificar == "id_entidad"){
                           
-                          column="ID_ENTIDAD";                          
+                          column="id_entidad";                          
                           
+                        } else if (cualmodificar == "status_doc"){
+                            
+                          column="status_doc"; 
+                         
+                            
                         } else {
                             
-                          column="ID_CLAUSULA";  
+                          column="id_clausula";  
                             
                         }
                         
