@@ -10,9 +10,9 @@ and open the template in the editor.
         <title></title>
         
         
-        <script src="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.js"></script>
+<!--        <script src="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.js"></script>
   <link href="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.css" rel="stylesheet">
-  <script src="../../assets/dhtmlxGantt/api.js" type="text/javascript"></script>
+  <script src="../../assets/dhtmlxGantt/api.js" type="text/javascript"></script>-->
    
   <style type="text/css">
     html, body{

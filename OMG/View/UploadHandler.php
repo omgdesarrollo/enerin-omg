@@ -1104,11 +1104,7 @@ echo "d   :".$this->get_full_url();
             //  $file_path = "enerin-omgapps.com/omgcum/archivos/files".$newUrl.$file->name;//el que guarda web
             // $file_path2 = "http://localhost:80/enerin-omg/archivos/files".$newUrl.$file->name;//el que descarga web
             $file_path = "C:/xampp/htdocs/enerin-omg/archivos/files".$newUrl.$file->name;//el que guarda local
-<<<<<<< HEAD
             // $file_path2 = "http://localhost:80/enerin-omg/archivos/files".$newUrl.$file->name;//el que descarga local
-=======
-            $file_path2 = "http://localhost:8282/enerin-omg/archivos/files".$newUrl.$file->name;//el que descarga local
->>>>>>> 4bc031d70203049993f7f94a1a37231769fbc63e
             $filePath = array();
             if(Session::getSesion("archivos_urls") == null)
             {
