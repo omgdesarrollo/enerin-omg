@@ -53,10 +53,9 @@ foreach($Alarmas as $alarma)
 
 
 ?>
+<!--<div class="main-encabezado">-->
 
-<div class="main-encabezado">
-
-<div id="navbar" class="navbar navbar-default ace-save-state">
+<div id="navbar" class="navbar navbar-default ace-save-state .modal">
             
             <div class="navbar-container ace-save-state" id="navbar-container">
                 <div class="navbar-header pull-left">
@@ -66,17 +65,18 @@ foreach($Alarmas as $alarma)
 							OMG APPS
 						</small>
 					</a>
-		</div>
+				</div>
                 <div class="navbar-buttons navbar-header pull-right" role="navigation">
                     <ul class="nav ace-nav" style="height: 10%">
                     <!--seccion de inicio de sesion de alarmas--> 
-                        <li class="purple dropdown-modal">
+        <li class="purple dropdown-modal">
 				<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 				    <i class="ace-icon fa fa-bell icon-animated-bell"></i>
 					<span class="badge badge-important"><?php echo $numeroAlarmas;?></span>
 				</a>
 
-				<ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
+				<!-- <ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close"> -->
+				<ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close" style="overflow:hidden;width:320px;height:350px;left:414px;right:auto;top:20px;overflow-y:scroll">
 					<li class="dropdown-header">
 					     <i class="ace-icon fa fa-exclamation-triangle"></i>
 						<?php echo $numeroAlarmas." NOTIFICACIONES"; ?>
@@ -94,19 +94,19 @@ foreach($Alarmas as $alarma)
 											<?php echo $item['AFECTADO']." - ".$item['MENSAJE']; ?>
 										</span>
 										<!-- <span class="pull-right badge badge-info">+1</span> -->
-									      </div>
+									    </div>
 									</a>
 								</li>
 							<?php } ?>
 							</ul>
 						</li>
 
-						<li class="dropdown-footer">
-									<a href="#">
+						<!-- <li class="dropdown-footer"> -->
+									<!-- <a href="#"> -->
 										<!--VER MAS NOTIFICACIONES-->
-										<i class="ace-icon fa fa-arrow-right"></i>
-									</a>
-						</li>
+										<!-- <i class="ace-icon fa fa-arrow-right"></i> -->
+									<!-- </a> -->
+						<!-- </li> -->
 				</ul>
 			</li>
                         <!--seccion de cierre  alarmas-->
@@ -190,4 +190,3 @@ foreach($Alarmas as $alarma)
             </div>
 </div>
 
-</div>     
