@@ -54,6 +54,7 @@ function loadDataSideBarCatalogoInformacion(){
                                        case "asignaciontemasrequisitos":
                                              consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
                                              consultarInformacion("../Controller/ClausulasController.php?Op=mostrarcombo");
+                                             consultarInformacion("../Controller/DocumentosController.php?Op=mostrarcombo");                                             
                                             $("#sidebarObjV").load('InyectarVistasView.php #asignaciontemasrequisitos');
                                        break;
 

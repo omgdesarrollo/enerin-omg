@@ -147,7 +147,7 @@ require_once 'EncabezadoUsuarioView.php';
 //		  foreach($faq as $k=>$v) {
                   $Lista = Session::getSesion("listarAsignacionTemasRequisitos");
                   $cbxClau= Session::getSesion("listarClausulasComboBox");
-                  $cbxDoc= Session::getSesion("mostrarDocumentosComboBox");
+                  $cbxDoc= Session::getSesion("listarDocumentosComboBox");
 //                  $datostema
                   $numeracion = 1;
                   
@@ -192,11 +192,12 @@ require_once 'EncabezadoUsuarioView.php';
                                 <td  style="background-color: #ccccff" contenteditable="false" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_asignacion_tema_requisito"]; ?>')" onClick="showNoEdit(this);"><div><?php echo $filas["descripcion_clausula"]; ?></td>
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'requisito','<?php echo $filas["id_asignacion_tema_requisito"]; ?>')" onClick="showEdit(this);"><?php echo $filas["requisito"]; ?></td>
                                 
-                                <td style="background-color: #ccccff">
-                                    <select id="id_documento"class="select" onchange="saveComboToDatabase('id_documento', <?php echo $filas["id_asignacion_tema_requisito"]; ?> )">
+                                <td> 
+                                    <select id="id_documento" class="select" onchange="saveComboToDatabase('id_documento', <?php echo $filas["id_asignacion_tema_requisito"]; ?> )">
                                     <?php
                                     $s="";
-                                                foreach ($cbxClau as $value) {
+                                                foreach ($cbxDoc as $value) {
+                                                    
                                                     if($value["id_documento"]=="".$filas["id_documento"]){
 //                                                        $s="selected";
                                                     
@@ -206,9 +207,10 @@ require_once 'EncabezadoUsuarioView.php';
                                         
                                                         <?php
                                                         }
+                                                        
                                                         else{
                                                             ?>
-                                                        }
+                                                        <!--}-->
                                                              <option value="<?php echo "".$value["id_documento"] ?>"  ><?php echo "".$value["clave_documento"]; ?></option>
                                                              <?php
                                                         }
@@ -216,6 +218,7 @@ require_once 'EncabezadoUsuarioView.php';
                                     
                                     ?>
                                     </select>
+                                
                                     
                                 </td>
                                                     
@@ -276,6 +279,28 @@ require_once 'EncabezadoUsuarioView.php';
                                                         <textarea  id="REQUISITO" class="form-control" data-error="Ingrese el Requisito" required></textarea>
 							<div class="help-block with-errors"></div>
 						</div>
+                                    
+                                    
+                                                <div class="form-group">
+							<label class="control-label" for="title">Documento:</label>
+                                                        
+                                                        <select   id="ID_DOCUMENTOMODAL" class="select2">
+                                                                <?php
+                                                                $s="";
+                                                                foreach ($cbxDoc as $value) {
+                                                                ?>
+                                                                
+                                                                <option value="<?php echo "".$value["id_documento"] ?>"  ><?php echo "".$value["clave_documento"]; ?></option>
+                                                                
+                                                                    <?php
+                                                                
+                                                                }
+                                    
+                                                                 ?>
+                                                        </select>
+                                                        
+							<div class="help-block with-errors"></div>
+						</div>
                                                 
                                     
 						<div class="form-group">
@@ -312,12 +337,20 @@ require_once 'EncabezadoUsuarioView.php';
 		<script>
                     
                       var id_asignacion_tema_requisito;
+                      var cualmodificar;
                       $(function(){
                           
                         $('.select').on('change', function() {
 //                          console.log( $(this).prop('value') );
 //                          alert("el value que va a viajar es "+ $(this).prop('value'));
-                          column="ID_CLAUSULA";
+                          
+                          if(cualmodificar == "id_clausula"){
+                            column="id_clausula";
+                            
+                        } if (cualmodificar == "id_documento"){
+                            column="id_documento";
+                        }
+                          
                           val=$(this).prop('value');
                           //alert("el value que va a viajar es "+val+" i el id de la clausula : "+idclausula);
                           $.ajax({
@@ -325,12 +358,13 @@ require_once 'EncabezadoUsuarioView.php';
 				type: "POST",
 				data:'column='+column+'&editval='+val+'&id='+id_asignacion_tema_requisito,
 				success: function(data){
-                                    
+                                    alert("SE hizo");
 					//$(editableObj).css("background","#FDFDFD");
                                         consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
                                         consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
-                                        alert("entron ");
-                                        window.location.href="AsignacionTemasRequisitosView.php";
+                                        //alert("entron ");
+                                        refresh();                                        
+                                        //window.location.href="AsignacionTemasRequisitosView.php";
                                        
 				}   
                            });
@@ -340,19 +374,21 @@ require_once 'EncabezadoUsuarioView.php';
                         
                         
                         $("#btn_guardar").click(function(){
-                                  //alert("entro aqui");
+                                  alert("entro aqui");
                                   
         
                                     var ID_CLAUSULAMODAL=$("#ID_CLAUSULAMODAL").val();
                                     var REQUISITO=$("#REQUISITO").val();
+                                    var ID_DOCUMENTOMODAL=$("#ID_DOCUMENTOMODAL").val();
 
-                                   alert("ID_CLAUSULAMODAL :"+ID_CLAUSULAMODAL + "REQUISITO :"+REQUISITO );
+                                   alert("ID_DOCUMENTOMODAL :"+ID_DOCUMENTOMODAL);
                                   
                                     
 
                                     datos=[];
                                     datos.push(ID_CLAUSULAMODAL);
                                     datos.push(REQUISITO);
+                                    datos.push(ID_DOCUMENTOMODAL);
                                     saveToDatabaseDatosFormulario(datos);
                                     
                         });
@@ -400,6 +436,7 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 function saveComboToDatabase(column,id){
                      id_asignacion_tema_requisito=id;
+                     cualmodificar=column;
                }
                
                
@@ -410,22 +447,44 @@ require_once 'EncabezadoUsuarioView.php';
                     	$.ajax({
                                 url: "../Controller/AsignacionTemasRequisitosController.php?Op=Guardar",
 				type: "POST",
-				data:'ID_CLAUSULA='+datos[0]+'&REQUISITO='+datos[1]+'',
+				data:'ID_CLAUSULA='+datos[0]+'&REQUISITO='+datos[1]+'&ID_DOCUMENTO='+datos[2],
                                 
 				success: function(data){
                                     alert("se guardo");
                                     
 //					$(editableObj).css("background","#FDFDFD");
-                                        swal("Guardado Exitoso!", "Ok!", "success")
+                                        swal("Guardado Exitoso!", "Ok!", "success");
                                          consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
                                          consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
-                                        window.location.href("AsignacionTemasRequisitosView.php");
+                                         setTimeout('refresh()',1000);
+                                         //window.location.href="AsignacionTemasRequisitosView.php";
 				}   
 		   });
 //                   window.location.href("EmpleadosView.php");
                 }
                 
                 
+                function consultarInformacion(url){
+               $.ajax({  
+                     url: ""+url,  
+                    success: function(r) {    
+                     },
+                     beforeSend:function(r){
+
+
+                     }
+                 
+                });  
+            }
+                
+                
+                
+                
+                
+                function refresh(){
+                    
+                  window.location.href="AsignacionTemasRequisitosView.php";  
+                }
                 
                 function loadSpinner(){
 //                    alert("se cargara otro ");

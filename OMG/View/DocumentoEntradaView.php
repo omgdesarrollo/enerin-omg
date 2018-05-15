@@ -781,25 +781,14 @@ require_once 'EncabezadoUsuarioView.php';
                $.ajax({  
                      url: ""+url,  
                     success: function(r) {    
-//                     $("#procesando").empty();
                      },
                      beforeSend:function(r){
-//                          $("#loader").empty();
-//                          $("#sidebarObjV").append("<div class='loader'></div>");
-//                            $.jGrowl("Cargando  Porfavor Espere......", { header: 'Carga de Informacion' });
-//                         alert("e");
-//                          $("#sidebarObjV").append("Cargando Informacion ...");
-//$.jGrowl("Cargando  Porfavor Espere......", { sticky: true });
 
-//var delay = 1000;
-//							setTimeout(function(){
-//                                                            $.jGrowl("Informacion Obtenida", { sticky: true });
-//                                                        },delay);
 
                      }
                  
         });  
-            }
+    }
             
     
     function loadSpinner(){
