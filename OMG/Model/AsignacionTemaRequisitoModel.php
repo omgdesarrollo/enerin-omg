@@ -38,7 +38,7 @@ class AsignacionTemaRequisitoModel {
             $dao=new AsignacionTemaRequisitoDAO();
 //            $pojo=new EmpleadoPojo();
             
-           $dao->insertarAsignacionTemaRequisito($pojo->getId_clausula(),$pojo->getRequisito());
+           $dao->insertarAsignacionTemaRequisito($pojo->getId_clausula(),$pojo->getRequisito(),$pojo->getId_Documento());
         } catch (Exception $ex) {
                 throw $ex;
         }
@@ -54,7 +54,7 @@ class AsignacionTemaRequisitoModel {
 //            $pojo= new EmpleadoPojo();
 //            $rec=$dao->actualizarEmpleado($pojo->getIdEmpleado(),$pojo->getNombreEmpleado(),$pojo->getApellidoPaterno(),$pojo->getApellidoMaterno(), $pojo->getCategoria(),$pojo->getCorreo());
 //        $rec=$dao->actualizarEmpleado($pojo->getIdEmpleado(), $pojo->getCorreo());
-        $dao->actualizarClausula($pojo->getId_asignacion_tema_requisito(),$pojo->getId_clausula(),$pojo->getRequisito());
+        $dao->actualizarClausula($pojo->getId_asignacion_tema_requisito(),$pojo->getId_clausula(),$pojo->getRequisito(),$pojo->getId_Documento());
 //            return $rec;
         } catch (Exception $ex) {
                 throw $ex;

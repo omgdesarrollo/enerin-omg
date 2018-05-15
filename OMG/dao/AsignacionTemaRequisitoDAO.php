@@ -14,9 +14,12 @@ class AsignacionTemaRequisitoDAO {
             
             $query="SELECT tbasignacion_tema_requisito.id_asignacion_tema_requisito, 
                     tbclausulas.id_clausula, tbclausulas.clausula, tbclausulas.descripcion_clausula,
-                    tbasignacion_tema_requisito.requisito FROM asignacion_tema_requisito tbasignacion_tema_requisito
+                    tbasignacion_tema_requisito.requisito, tbdocumentos.id_documento, tbdocumentos.clave_documento
+                    FROM asignacion_tema_requisito tbasignacion_tema_requisito
 		 
-                    JOIN clausulas tbclausulas ON tbclausulas.id_clausula=tbasignacion_tema_requisito.id_clausula";
+                    JOIN clausulas tbclausulas ON tbclausulas.id_clausula=tbasignacion_tema_requisito.id_clausula
+                    
+                    JOIN documentos tbdocumentos ON tbdocumentos.id_documento=tbasignacion_tema_requisito.id_documento";
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
@@ -80,8 +83,8 @@ class AsignacionTemaRequisitoDAO {
              if($id_nuevo==NULL){
                 $id_nuevo=0;
             }
-            $query="INSERT INTO asignacion_tema_requisito(id_asignacion_tema_requisito,id_clausula,requisito)"
-                    . "VALUES($id_nuevo,$id_clausula,'$requisito')";
+            $query="INSERT INTO asignacion_tema_requisito(id_asignacion_tema_requisito,id_clausula,requisito, id_documento)"
+                    . "VALUES($id_nuevo,$id_clausula,'$requisito',$id_documento)";
             
             $db=  AccesoDB::getInstancia();
             $db->executeQueryUpdate($query);
