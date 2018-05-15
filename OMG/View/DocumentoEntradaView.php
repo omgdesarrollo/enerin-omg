@@ -273,7 +273,7 @@ require_once 'EncabezadoUsuarioView.php';
                                                 }
                                          
                                          
-                                                            if($filas["status_doc"]== 4){
+                                                            if($filas["status_doc"]== 3){
                                             
                                                             ?> 
                                                                 <option value="3" selected>Terminado</option>

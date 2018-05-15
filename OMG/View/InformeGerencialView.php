@@ -144,13 +144,14 @@ require_once 'EncabezadoUsuarioView.php';
 		  <!--<thead>-->
 			  <tr>
 				
-                                <th class="table-header">FOLIO E</th>
-                                <th class="table-header">ENT REGU</th>
-                                <th class="table-header">ASUNTO</th>
-                                <th class="table-header">RESP TEMA</th>
-                                <th class="table-header">FECHA LIMITE</th>
-                                <th class="table-header">STATUS</th>
-                                <th class="table-header">DOCUMENTO</th>
+                                <th class="table-header">Folio de Entrada</th>
+                                <th class="table-header">Entidad Reguladora</th>
+                                <th class="table-header">Asunto</th>
+                                <th class="table-header">Responsable del Tema</th>
+                                <th class="table-header">Fecha Limite</th>
+                                <th class="table-header">Status</th>
+                                <th class="table-header">Condicion</th>
+                                <th class="table-header">Documento</th>
                                 
                                 
 			  </tr>
@@ -185,7 +186,26 @@ require_once 'EncabezadoUsuarioView.php';
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'asunto','<?php echo $filas["id_informe_gerencial"]; ?>')" onClick="showEdit(this);"><?php echo $filas["asunto"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleadotema','<?php echo $filas["id_informe_gerencial"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleadotema"]." ".$filas["apellido_paternotema"]." ".$filas["apellido_maternotema"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'fecha_limite_atencion','<?php echo $filas["id_informe_gerencial"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_limite_atencion"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'status_doc','<?php echo $filas["id_informe_gerencial"]; ?>')" onClick="showEdit(this);"><?php echo $filas["status_doc"]; ?></td>    
+                                
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'status_doc','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);">
+                                    <?php 
+                                    
+                                    if($filas["status_doc"]== 1){
+                                        echo "En proceso";
+                                        
+                                    } if($filas["status_doc"]== 2){
+                                        echo "Suspendido";
+                                        
+                                    } if($filas["status_doc"]== 3){
+                                        echo "Terminado";
+                                        
+                                    }
+                                    
+                                    ?>                                
+                                </td>
+                                
+                                <td></td>
+                                
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_informe_gerencial"]; ?>')" onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
                                 
                                 

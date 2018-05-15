@@ -17,13 +17,9 @@ $Usuario=  Session::getSesion("user");
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
-		<!-- bootstrap & fontawesome -->
-		<!--<link rel="stylesheet" href="assets/css/bootstrap.min.css" />-->
-                <!--<link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>-->
+		
                 <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-		<!--<link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" />-->
                 <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-		<!-- page specific plugin styles -->
 
 		<!-- text fonts -->
 		<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />
@@ -37,15 +33,20 @@ $Usuario=  Session::getSesion("user");
 		<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
+                <script src="../../js/jquery.js" type="text/javascript"></script>
+		<script src="../../assets/probando/js/ace-extra.min.js"></script>       
+                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+                
+                
+                
                 <!--Inicia para el spiner cargando-->
                 <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                 <!--Termina para el spiner cargando-->
                 
                 
-                <script src="../../js/jquery.js" type="text/javascript"></script>
-		<script src="../../assets/probando/js/ace-extra.min.js"></script>       
-                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+                
                 
             
             <style>
@@ -121,12 +122,24 @@ require_once 'EncabezadoUsuarioView.php';
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
                     Asignar Tema-Requisito
             </button>    
+        
+
+            <button type="button" id="btn_lista_documentos" class="btn btn-success" data-toggle="modal">
+                Lista de Documentos
+                <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+            </button>
+        
+        
+            <button type="button" id="btn_lista_temas" class="btn btn-success" data-toggle="modal">
+                Lista de Temas
+                <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+            </button>
         </div>
             
 <div style="height: 55px"></div>
 
-<!--<div style="display:none;" id="myDiv" class="animate-bottom"> inicio animacion tabla toda la interfaz seleccionada
-    <div class="contenedortable" id="winVP"> -->
+<div style="display:none;" id="myDiv" class="animate-bottom"> <!--inicio animacion tabla toda la interfaz seleccionada-->
+    <div class="contenedortable" id="winVP"> 
 
                            <table class="tbl-qa">
 		  <!--<thead>-->
@@ -235,8 +248,8 @@ require_once 'EncabezadoUsuarioView.php';
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 			</a>
 	
-<!--    </div>         
-</div>         -->
+    </div>         
+</div>         
                 
                 <!-- Inicio de Seccion Modal -->
        <div class="modal draggable fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -318,18 +331,6 @@ require_once 'EncabezadoUsuarioView.php';
        <!--Final de Seccion Modal-->
                 
 
-
-		<script src="../../assets/probando/js/jquery-2.1.4.min.js"></script>
-
-		<script src="../../assets/probando/js/bootstrap.min.js"></script>
-
-		<script src="../../assets/probando/js/ace-elements.min.js"></script>
-		<script src="../../assets/probando/js/ace.min.js"></script>
-
-		<!-- inline scripts related to this page -->
-		<script type="text/javascript">
-	
-		</script>
                 
                 
                 
@@ -406,7 +407,14 @@ require_once 'EncabezadoUsuarioView.php';
                         });
                         
                         
-                        
+                        $("#btn_lista_documentos").click(function(){
+                        loadVistaDocumentos(true);
+                        });
+                 
+                 
+                        $("#btn_lista_temas").click(function(){
+                        loadVistaTemas(true);
+                         });
                         
                         
   
@@ -492,15 +500,39 @@ require_once 'EncabezadoUsuarioView.php';
                 }
                 
                 
+            function loadVistaDocumentos(bclose){
+                    var dhxWins = new dhtmlXWindows();
+                    dhxWins.attachViewportTo("winVP");
+                    var layoutWin=dhxWins.createWindow({id:"documentos", text:"OMG VISUALIZACION DOCUMENTOS", left: 20, top: -30,width:330,  height:250,  center:true,resize: true,park:true,modal:true	});
+                    layoutWin.attachURL("DocumentosModalView.php");
+            } 
+            
+            
+            function loadVistaTemas(bclose){
+                    var dhxWins = new dhtmlXWindows();
+                    dhxWins.attachViewportTo("winVP");
+                    var layoutWin=dhxWins.createWindow({id:"temas", text:"OMG VISUALIZACION TEMAS", left: 20, top: -30,width:530,  height:250,  center:true,resize: true,park:true,modal:true	});
+                    layoutWin.attachURL("TemasModalView.php");
+                
+            }    
                 
 		</script>
                 
+                
+                <script src="../../assets/probando/js/jquery-2.1.4.min.js"></script>
+
+		<script src="../../assets/probando/js/ace-elements.min.js"></script>
+		<script src="../../assets/probando/js/ace.min.js"></script>
                 
                 <script src="../../codebase/dhtmlx.js"></script>
                 <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
          
                 <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
-                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>   
+                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+                
+                <!--en esta seccion es para poder abrir el modal--> 
+                <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
+                <!--aqui termina la seccion para poder abrir el modal-->
                 
                 
 	</body>

@@ -69,15 +69,15 @@ require_once 'EncabezadoUsuarioView.php';
 		  <!--<thead>-->
 			  <tr>
 				
-                                <th class="table-header">FOLIO E</th>
-                                <th class="table-header">ENT REGU</th>
-                                <th class="table-header">ASUNTO</th>
-                                <th class="table-header">RESP TEMA</th>
-                                <th class="table-header">FECHA LIMITE</th>
-                                <th class="table-header">STATUS</th>
-                                <th class="table-header">RESP PLAN</th>
-                                <th class="table-header">DOC.</th>
-                                <th class="table-header">CARGA DE PROGRAMA</th>
+                                <th class="table-header">Foliode Entrada</th>
+                                <th class="table-header">Entidad Reguladora</th>
+                                <th class="table-header">Asunto</th>
+                                <th class="table-header">Responsable del Tema</th>
+                                <th class="table-header">Fecha Limite</th>
+                                <th class="table-header">Status</th>
+                                <th class="table-header">Responsable del Plan</th>
+                                <th class="table-header">Documento</th>
+                                <th class="table-header">Programa</th>
                                 
 			  </tr>
 		  <!--</thead>-->
@@ -88,10 +88,6 @@ require_once 'EncabezadoUsuarioView.php';
                   
 //		  foreach($faq as $k=>$v) {
                       $Lista = Session::getSesion("listarSeguimientoEntradas");
-//                    $Lista = PaginacionController::show_rows("ID_ASIGNACION_TEMA_REQUISITO");
-//                    $cbxCump= Session::getSesion("listarCumplimientosComboBox");
-//                    $cbxEnt= Session::getSesion("listarEntidadesReguladorasComboBox");
-//                    $cbxClau= Session::getSesion("listarClausulasComboBox");
                       $cbxEmp= Session::getSesion("listarEmpleadosComboBox");
                       $cbxEmpleadoPlan= Session::getSesion("listarEmpleadosComboBox");
                       $cbxEmpleadoPlan1= Session::getSesion("listarEmpleadosComboBox");
@@ -115,9 +111,24 @@ require_once 'EncabezadoUsuarioView.php';
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'asunto','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["asunto"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleadotema','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleadotema"]." ".$filas["apellido_paternotema"]." ".$filas["apellido_maternotema"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'fecha_limite_atencion','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_limite_atencion"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'status_doc','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["status_doc"]; ?></td>
-                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'NOMBRE_EMPLEADOPLAN','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php //echo $filas["nombre_empleadoplan"]; ?></td>-->
-                                                                                                                             
+                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'status_doc','<?php // echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php // echo $filas["status_doc"]; ?></td>-->
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'status_doc','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);">
+                                    <?php 
+                                    
+                                    if($filas["status_doc"]== 1){
+                                        echo "En proceso";
+                                        
+                                    } if($filas["status_doc"]== 2){
+                                        echo "Suspendido";
+                                        
+                                    } if($filas["status_doc"]== 3){
+                                        echo "Terminado";
+                                        
+                                    }
+                                    
+                                    ?>                                
+                                </td>
+                                                                                                                                                          
                                 <td> 
                                     <select   id="id_empleado" class="select"  onchange="saveComboToDatabase('id_empleado', <?php echo $filas["id_seguimiento_entrada"]; ?> )">
                                     

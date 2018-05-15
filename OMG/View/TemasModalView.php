@@ -56,7 +56,7 @@ $Usuario=  Session::getSesion("user");
 				<th class="table-header">DESCRIPCION DEL TEMA</th>				
 				<th class="table-header">DESCRIPCION DEL SUB-TEMA</th>				
 				<th class="table-header">RESPONSABLE</th>				
-				<th class="table-header">TEXTO BREVE</th>				
+				<!--<th class="table-header">TEXTO BREVE</th>-->				
 				<th class="table-header">DESCRIPCION</th>				
                                 <th class="table-header">PLAZO</th>
 				
@@ -81,7 +81,7 @@ $Usuario=  Session::getSesion("user");
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion_clausula"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'descripcion_sub_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion_sub_clausula"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'descripcion_sub_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo "".$filas["nombre_empleado"]." ".$filas["apellido_paterno"]." ".$filas["apellido_materno"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'texto_breve','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["texto_breve"]; ?></td>
+                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'texto_breve','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["texto_breve"]; ?></td>-->
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'descripcion','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'plazo','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["plazo"]; ?></td>
                           </tr>
