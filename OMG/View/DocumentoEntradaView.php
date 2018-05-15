@@ -4,7 +4,7 @@ session_start();
 require_once '../util/Session.php';
 
 $Usuario=  Session::getSesion("user"); 
-$listadoUrls= Session::getSesion("getUrlsArchivos");
+// $listadoUrls= Session::getSesion("getUrlsArchivos");
 ?>
 
 
@@ -877,13 +877,14 @@ require_once 'EncabezadoUsuarioView.php';
                                 url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
                                 type: 'GET',
                                 data: 'ID_DOCUMENTO='+id_documento_entrada,
-                                success: function(lista)
+                                success: function(todo)
                                 {
-                                        $.each(lista, function (index,value)
+                                        $.each(todo[0], function (index,value)
                                         {
                                                 // var tempDocumentolistadoUrlSplit = value.DIR.split("/");
                                                 // var tempDocumentolistadoUrlPos = tempDocumentolistadoUrlSplit.length - 1;
-                                                tempDocumentolistadoUrl = tempDocumentolistadoUrl +"<li><a href=\"http://localhost:8282/" +value.DIR+"\">" + value.DIR + "</a><button style=\"color:green;background:transparent;border:none;padding-left:10px\" onclick='borrarArchivo(\""+value.DIR+"\");')><i class=\"fa fa-trash\"></i></button></li>";
+                                                // console.log(value);
+                                                tempDocumentolistadoUrl = tempDocumentolistadoUrl +"<li><a href=\"http://localhost:80/enerin-omg/archivos/files/"+todo[1][0]['ID_CUMPLIMIENTO']+"/"+id_documento_entrada+"/"+value.DIR+"\">" + value.DIR + "</a><button style=\"color:green;background:transparent;border:none;padding-left:10px\" onclick='borrarArchivo(\""+value.DIR+"\");')><i class=\"fa fa-trash\"></i></button></li>";
                                         });
                                         if(tempDocumentolistadoUrl == " ")
                                         {
