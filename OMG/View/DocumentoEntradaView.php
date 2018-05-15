@@ -256,8 +256,7 @@ require_once 'EncabezadoUsuarioView.php';
                                                         
                                             <option value="1" selected>En proceso</option>
                                             <option value="2">Suspendido</option>
-                                            <option value="3">En alerta</option>
-                                            <option value="4">Terminado</option>
+                                            <option value="3">Terminado</option>
                                         
                                        <?php                                                              
                                         } 
@@ -268,37 +267,23 @@ require_once 'EncabezadoUsuarioView.php';
                                      
                                                     <option value="2" selected>Suspendido</option>
                                                     <option value="1">En proceso</option>
-                                                    <option value="3">En alerta</option>
-                                                    <option value="4">Terminado</option>
+                                                    <option value="3">Terminado</option>
                                        
                                                 <?php
                                                 }
                                          
-                                                        if($filas["status_doc"]== 3){
-                                         
-                                                        ?>
-                                       
-                                                            <option value="3" selected>En alerta</option>
-                                                            <option value="1">En proceso</option>
-                                                            <option value="2">Suspendido</option>
-                                                            <option value="4">Terminado</option>
-                                       
-                                                        <?php
-                                                        }
                                          
                                                             if($filas["status_doc"]== 4){
                                             
                                                             ?> 
-                                                                <option value="4" selected>Terminado</option>
+                                                                <option value="3" selected>Terminado</option>
                                                                 <option value="1">En proceso</option>
                                                                 <option value="2">Suspendido</option>
-                                                                <option value="3" >En alerta</option>
 
                                        
                                                             <?php
                                                             }
-                                                            
-                                                                                
+                                                                                                                                           
                                                             ?>
                                        
  
@@ -679,23 +664,58 @@ require_once 'EncabezadoUsuarioView.php';
                                 //        +"FECHA_ALARMA :"+FECHA_ALARMA+"DOCUMENTO :"+DOCUMENTO+"OBSERVACIONES :"+OBSERVACIONES);
 
                                     datos=[];
-                                    datos.push(ID_CUMPLIMIENTOMODAL);
-                                    datos.push(FOLIO_REFERENCIA);
-                                    datos.push(FOLIO_ENTRADA);
-                                    datos.push(FECHA_RECEPCION);
-                                    datos.push(ASUNTO);
-                                    datos.push(REMITENTE);
-                                    datos.push(ID_ENTIDADMODAL);
-                                    datos.push(ID_CLAUSULAMODAL);
-                                    datos.push(CLASIFICACION);
-                                    datos.push(STATUS_DOC);
-                                    datos.push(FECHA_ASIGNACION);
-                                    datos.push(FECHA_LIMITE_ATENCION);
-                                    datos.push(FECHA_ALARMA);
-                                    datos.push(DOCUMENTO);
-                                    datos.push(OBSERVACIONES);
-                                    datos.push(MENSAJE_ALERTA);
-                                // console.log("entro ");
+                                    datos.push(ID_CUMPLIMIENTOMODAL);//0
+                                    datos.push(FOLIO_REFERENCIA);//1
+                                    datos.push(FOLIO_ENTRADA);//2
+                                    datos.push(FECHA_RECEPCION);//3
+                                    datos.push(ASUNTO);//4
+                                    datos.push(REMITENTE);//5
+                                    datos.push(ID_ENTIDADMODAL);//6
+                                    datos.push(ID_CLAUSULAMODAL);//7
+                                    datos.push(CLASIFICACION);//8
+                                    datos.push(STATUS_DOC);//9
+                                    datos.push(FECHA_ASIGNACION);//10
+                                    datos.push(FECHA_LIMITE_ATENCION);//11
+                                    datos.push(FECHA_ALARMA);//12
+                                    datos.push(DOCUMENTO);//13
+                                    datos.push(OBSERVACIONES);//14
+                                    datos.push(MENSAJE_ALERTA);//15
+                                    console.log(datos);
+                                todoBien = true;
+                                asignacionF = new Date(datos[10]);
+                                asignacionF = new Date(asignacionF.getFullYear(),asignacionF.getMonth(),asignacionF.getDate());
+                                limiteF = new Date(datos[11]);
+                                limiteF = new Date(limiteF.getFullYear(),limiteF.getMonth(),limiteF.getDate());
+                                alarmaF = new Date(datos[12]);
+                                alarmaF = new Date(alarmaF.getFullYear(),alarmaF.getMonth(),alarmaF.getDate());
+                                if(limiteF >= asignacionF)
+                                {
+                                        // console.log("Limite mayor o igual a la fecha de asignacion");
+                                }
+                                else
+                                {
+                                        // console.log("La fecha limite no puede ser antes de la asignación");
+                                        todoBien = false;
+                                }
+                                if(alarmaF >= asignacionF)
+                                {
+                                        // console.log("Alarma mayor o igual a la fecha de asignacion");
+                                }
+                                else
+                                {
+                                        // console.log("La fecha de Alarma no puede ser antes de la asignación");
+                                        todoBien = false;
+                                }
+                                if(limiteF >= alarmaF)
+                                {
+                                        // console.log("Alarma menor o igual a la fecha de limite");
+                                }
+                                else
+                                {
+                                        // console.log("La alarma no puede ser despues de la fecha limite");
+                                        todoBien = false;
+                                }
+                                console.log((todoBien) ? " BIEN " : "Tus valores estan mal/ se pintara en el modal todo lo que sea erroneo o incompleto");
                                 // var peticion = new XMLHttpRequest();
                                 // console.log("2");
                                 //progreso
@@ -723,7 +743,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 //         barra_estado.classList.add('barra_roja');
                                 //         span.innerHTML = "proceso Cancelado";
                                 // });
-                                    saveToDatabaseDatosFormulario(datos);
+                                //     saveToDatabaseDatosFormulario(datos);
                         // });
                         });
                         
