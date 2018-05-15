@@ -294,23 +294,13 @@ ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: 
                      $("#procesando").empty();
                      },
                      beforeSend:function(r){
-//                          $("#loader").empty();
                           $("#sidebarObjV").append("<div class='loader'></div>");
-//                            $.jGrowl("Cargando  Porfavor Espere......", { header: 'Carga de Informacion' });
-//                         alert("e");
-//                          $("#sidebarObjV").append("Cargando Informacion ...");
-//$.jGrowl("Cargando  Porfavor Espere......", { sticky: true });
 
-//var delay = 1000;
-//							setTimeout(function(){
-//                                                            $.jGrowl("Informacion Obtenida", { sticky: true });
-//                                                        },delay);
 
                      }
                  
         });  
             }
-//    {id:'contratos',text:'Contrato 1',img:'contratos.png', type:'button',isbig:true}
 
 
     
@@ -453,7 +443,9 @@ ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: 
         
 
 </head>
-<body>
+<!--<body>-->
+<body onload="consultarInformacion('../Controller/DocumentosEntradaController.php?Op=Alarmas')">
+    
     
     <!--<div id="layoutCatalogoBase"></div>-->
 <!--    <div id="tbtemp" style="position: absolute;top: -2px; height: 20px; width: 130px;z-index: 104;left: 1px;">
