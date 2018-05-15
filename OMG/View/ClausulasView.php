@@ -87,16 +87,16 @@ $Usuario=  Session::getSesion("user");
                     overflow: auto;
                     }
                
-/*                    .main-encabezado {
-                        background: #333;
+                    .main-encabezado {
+                        /*background: #333;*/
                         color: white;
                         height: 80px;
 
-                        width: 100%;  hacemos que la cabecera ocupe el ancho completo de la página 
-                        left: 0;  Posicionamos la cabecera al lado izquierdo 
-                        top: 0;  Posicionamos la cabecera pegada arriba 
-                        position: fixed;  Hacemos que la cabecera tenga una posición fija 
-                    } */
+                        width: 100%;  /*hacemos que la cabecera ocupe el ancho completo de la página*/ 
+                        left: 0;  /*Posicionamos la cabecera al lado izquierdo*/ 
+                        top: 0;  /*Posicionamos la cabecera pegada arriba*/ 
+                        position: fixed;  /*Hacemos que la cabecera tenga una posición fija*/ 
+                    } 
                    
                 </style>    
                 
