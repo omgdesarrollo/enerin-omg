@@ -1,3 +1,42 @@
+<?php
+session_start();
+require_once '../util/Session.php';
+$Usuario=  Session::getSesion("user");
+
+$Lista = Session::getSesion("listarDocumentosEntrada");
+
+$a = 0; // Variable para "En proceso"
+$b = 0; // Variable para "Suspendido"        
+$c = 0; // Variable para "En alerta"
+$d = 0; // Variable para "Terminado"
+
+foreach ($Lista as $filas) { 
+
+	if($filas["status_doc"]== 1){
+		$a++;
+		//echo $a;
+	} elseif ($filas["status_doc"]==2) {
+		$b++;
+		//echo $a;
+
+	} elseif ($filas["status_doc"]==3) {
+		$c++;
+		//echo $a;
+	
+	} elseif ($filas["status_doc"]==4) {
+		$d++;
+		//echo $a;
+
+	} 
+
+                                                                        
+} //foreach
+
+
+?>
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,21 +58,19 @@
 			myPieChart = new dhtmlXChart({
 				view:"pie3D",
 				container:"chart1",
-				value:"#sales#",
+				value:"#entradas#",
 				color:"#color#",
-				label:"#month#",
-				pieInnerText:"#sales#",
+				label:"#status#",
+				pieInnerText:"#entradas#",
 				shadow:0
 			});
                         
                         var datos = [
-	{ sales:"20", month:"Jan", color: "#ee3639" },
-	{ sales:"30", month:"Feb", color: "#ee9e36" },
-	{ sales:"50", month:"Mar", color: "#eeea36" },
-	{ sales:"40", month:"Apr", color: "#a9ee36" },
-	{ sales:"70", month:"May", color: "#36d3ee" },
-	{ sales:"80", month:"Jun", color: "#367fee" },
-	{ sales:"60", month:"Jul", color: "#9b36ee" }
+	{ entradas: "<?php echo $a; ?>", status:"En proceso", color: "#ee3639" },
+	{ entradas: "<?php echo $b; ?>", status:"Suspendido", color: "#ee9e36" },
+	{ entradas: "<?php echo $c; ?>", status:"En alerta", color: "#eeea36" },
+	{ entradas: "<?php echo $d; ?>", status:"Terminado", color: "#a9ee36" }
+
 ];
                         
                         
@@ -43,6 +80,19 @@
 	</script>
 </head>
 <body onload="doOnLoad();">
+
+
+<?php
+
+
+
+
+?>
+
+
+
+
+
 	<table>
 		<tr>
 			<td>Documentos de Entrada</td>
@@ -52,5 +102,11 @@
 			<td><div id="chart1" style="width:400px;height:250px;border:1px solid #c0c0c0;"></div></td>
 		</tr>
 	</table>
+
+
+
+
+
+
 </body>
 </html>

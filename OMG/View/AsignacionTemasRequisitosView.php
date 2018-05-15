@@ -131,10 +131,11 @@ require_once 'EncabezadoUsuarioView.php';
                            <table class="tbl-qa">
 		  <!--<thead>-->
 			  <tr>
-				<th class="table-header" >NO.</th>
-                                <th class="table-header">TEMA</th>
-                                <th class="table-header">DESCRIPCION DEL TEMA</th>
-				<th class="table-header">REQUISITO</th>									
+				<th class="table-header" >No.</th>
+                                <th class="table-header">Tema</th>
+                                <th class="table-header">Descripcion del Tema</th>
+				<th class="table-header">Requisito</th>									
+				<th class="table-header">Clave Documento</th>									
                                 
 			  </tr>
 		  <!--</thead>-->
@@ -145,8 +146,8 @@ require_once 'EncabezadoUsuarioView.php';
                   
 //		  foreach($faq as $k=>$v) {
                   $Lista = Session::getSesion("listarAsignacionTemasRequisitos");
-//                   $Lista = PaginacionController::show_rows("ID_ASIGNACION_TEMA_REQUISITO");
                   $cbxClau= Session::getSesion("listarClausulasComboBox");
+                  $cbxDoc= Session::getSesion("mostrarDocumentosComboBox");
 //                  $datostema
                   $numeracion = 1;
                   
@@ -185,13 +186,38 @@ require_once 'EncabezadoUsuarioView.php';
                                     
                                     ?>
                                     </select>
-                                   <!--<div id="combo_zone" style="width:230px;"></div>-->
                                     
                                 </td>
                   
                                 <td  style="background-color: #ccccff" contenteditable="false" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_asignacion_tema_requisito"]; ?>')" onClick="showNoEdit(this);"><div><?php echo $filas["descripcion_clausula"]; ?></td>
-                    <!--</div>-->
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'requisito','<?php echo $filas["id_asignacion_tema_requisito"]; ?>')" onClick="showEdit(this);"><?php echo $filas["requisito"]; ?></td>
+                                
+                                <td style="background-color: #ccccff">
+                                    <select id="id_documento"class="select" onchange="saveComboToDatabase('id_documento', <?php echo $filas["id_asignacion_tema_requisito"]; ?> )">
+                                    <?php
+                                    $s="";
+                                                foreach ($cbxClau as $value) {
+                                                    if($value["id_documento"]=="".$filas["id_documento"]){
+//                                                        $s="selected";
+                                                    
+                                                    ?>
+                                    
+                                        <option value="<?php echo "".$value["id_documento"] ?>"  selected ><?php echo "".$value["clave_documento"]; ?></option>
+                                        
+                                                        <?php
+                                                        }
+                                                        else{
+                                                            ?>
+                                                        }
+                                                             <option value="<?php echo "".$value["id_documento"] ?>"  ><?php echo "".$value["clave_documento"]; ?></option>
+                                                             <?php
+                                                        }
+                                                }
+                                    
+                                    ?>
+                                    </select>
+                                    
+                                </td>
                                                     
 			  </tr>
 		<?php

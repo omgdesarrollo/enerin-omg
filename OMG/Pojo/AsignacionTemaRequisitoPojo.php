@@ -7,6 +7,7 @@ class AsignacionTemaRequisitoPojo {
     private $id_asignacion_tema_requisito;
     private $id_clausula='';
     private $requisito='';
+    private $id_documento='';
     
 
 
@@ -35,5 +36,15 @@ function setId_clausula($id_clausula) {
  function setRequisito($requisito) {
     $this->requisito = $requisito;
 }
+
+
+function getId_Documento() {
+    return $this->id_documento;
+}
+
+function setId_Documento($id_documento) {
+    $this->id_documento = $id_documento;
+}
+
 
 }

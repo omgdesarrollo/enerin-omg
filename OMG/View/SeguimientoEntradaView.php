@@ -48,14 +48,7 @@ require_once '../util/Session.php';
                      <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                      
  <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-                 
-
-
-
-
-  
- 
-				 
+ 			 
 	</head>
 
         
@@ -302,9 +295,7 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 
 	</body>
-        
-        
-        
+     
 </html>
 
 

@@ -256,8 +256,7 @@ require_once 'EncabezadoUsuarioView.php';
                                                         
                                             <option value="1" selected>En proceso</option>
                                             <option value="2">Suspendido</option>
-                                            <option value="3">En alerta</option>
-                                            <option value="4">Terminado</option>
+                                            <option value="3">Terminado</option>
                                         
                                        <?php                                                              
                                         } 
@@ -268,37 +267,23 @@ require_once 'EncabezadoUsuarioView.php';
                                      
                                                     <option value="2" selected>Suspendido</option>
                                                     <option value="1">En proceso</option>
-                                                    <option value="3">En alerta</option>
-                                                    <option value="4">Terminado</option>
+                                                    <option value="3">Terminado</option>
                                        
                                                 <?php
                                                 }
                                          
-                                                        if($filas["status_doc"]== 3){
-                                         
-                                                        ?>
-                                       
-                                                            <option value="3" selected>En alerta</option>
-                                                            <option value="1">En proceso</option>
-                                                            <option value="2">Suspendido</option>
-                                                            <option value="4">Terminado</option>
-                                       
-                                                        <?php
-                                                        }
                                          
                                                             if($filas["status_doc"]== 4){
                                             
                                                             ?> 
-                                                                <option value="4" selected>Terminado</option>
+                                                                <option value="3" selected>Terminado</option>
                                                                 <option value="1">En proceso</option>
                                                                 <option value="2">Suspendido</option>
-                                                                <option value="3" >En alerta</option>
 
                                        
                                                             <?php
                                                             }
-                                                            
-                                                                                
+                                                                                                                                           
                                                             ?>
                                        
  

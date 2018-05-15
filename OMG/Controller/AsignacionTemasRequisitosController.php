@@ -60,6 +60,7 @@ switch ($Op) {
             
                 $pojo->setId_clausula($_REQUEST['ID_CLAUSULA']);
                 $pojo->setRequisito($_REQUEST['REQUISITO']);
+                $pojo->setId_Documento($_REQUEST['ID_DOCUMENTO']);
                 
             
 
