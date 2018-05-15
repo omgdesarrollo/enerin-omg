@@ -2,6 +2,7 @@
 
 session_start();
 require_once '../Model/ArchivoUploadModel.php';
+require_once '../Model/DocumentoEntradaModel.php';
 require_once '../util/Session.php';
 
 $urls = Session::getSesion("archivos_urls");
@@ -9,6 +10,7 @@ $total = Session::getSesion("archivos_urls_contador");
 $Op=$_REQUEST["Op"];
 
 $model=new ArchivoUploadModel();
+$modelDocumentoEntrada= new DocumentoEntradaModel();
 
 switch ($Op) {
 	case 'Guardar':
@@ -29,12 +31,16 @@ switch ($Op) {
 		break;
 		
 	case 'listarUrls':
+		$todo = array();
 		$id_documento = $_REQUEST['ID_DOCUMENTO'];
 		$lista = $model->obtener_urls($id_documento);
+		$data = $modelDocumentoEntrada->getIdCumplimiento($id_documento);
+		$todo[0] = $lista;
+		$todo[1] = $data;
 		// Session::setSesion("newUrl",'/'.$id_cumplimiento.'/'.$id_documento.'/');
-		Session::setSesion("getUrlsArchivos",$lista);
+		// Session::setSesion("getUrlsArchivos",$lista);
 		header('Content-type: application/json; charset=utf-8');
-		echo json_encode($lista);
+		echo json_encode($todo);
 		break;
 	
 	case 'eliminarArchivo':
