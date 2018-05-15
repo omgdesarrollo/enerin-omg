@@ -881,9 +881,9 @@ require_once 'EncabezadoUsuarioView.php';
                                 {
                                         $.each(lista, function (index,value)
                                         {
-                                                var tempDocumentolistadoUrlSplit = value.DIR.split("/");
-                                                var tempDocumentolistadoUrlPos = tempDocumentolistadoUrlSplit.length - 1;
-                                                tempDocumentolistadoUrl = tempDocumentolistadoUrl +"<li><a href=\"" +value.DIR+"\">" + tempDocumentolistadoUrlSplit[tempDocumentolistadoUrlPos] + "</a></li>";
+                                                // var tempDocumentolistadoUrlSplit = value.DIR.split("/");
+                                                // var tempDocumentolistadoUrlPos = tempDocumentolistadoUrlSplit.length - 1;
+                                                tempDocumentolistadoUrl = tempDocumentolistadoUrl +"<li><a href=\"http://localhost:8282/" +value.DIR+"\">" + value.DIR + "</a><button style=\"color:green;background:transparent;border:none;padding-left:10px\" onclick='borrarArchivo(\""+value.DIR+"\");')><i class=\"fa fa-trash\"></i></button></li>";
                                         });
                                         if(tempDocumentolistadoUrl == " ")
                                         {
@@ -896,7 +896,7 @@ require_once 'EncabezadoUsuarioView.php';
                                         $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
                                         $('#fileupload').fileupload();
                                         $('#fileupload').fileupload({
-                                                url: '../View/',
+                                                url: '../View/'
                                         });
                                 }
                         });
@@ -926,12 +926,24 @@ require_once 'EncabezadoUsuarioView.php';
                                 }
                         });
                 }
-                
                 function loadSpinner(){
 //                    alert("se cargara otro ");
                         myFunction();
                 }
-                
+                function borrarArchivo(nombreArchivo)
+                {
+                        var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
+                        // alert(nombreArchivo);
+                        $.ajax({
+                                url: "../Controller/ArchivoUploadController.php?Op=eliminarArchivo",
+                                type: 'POST',
+                                data: 'ID_DOCUMENTO='+ID_DOCUMENTO+'&ARCHIVO_NAME='+nombreArchivo,
+                                success: function(data)
+                                {
+                                        console.log("Eliminado exitoso");
+                                }
+                        });
+                }
                 
 		</script>
                 <script id="template-upload" type="text/x-tmpl">

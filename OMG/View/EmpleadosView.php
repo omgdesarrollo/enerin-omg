@@ -480,7 +480,7 @@ require_once 'EncabezadoUsuarioView.php';
                     	$.ajax({
                                 url: "../Controller/EmpleadosController.php?Op=Guardar",
 				type: "POST",
-				data:'NOMBRE_EMPLEADO='+datos[0]+'&APELLIDO_PATERNO='+datos[1]+'&APELLIDO_MATERNO='+datos[2]+'&CATEGORIA='+datos[3]+'&CORREO='+datos[4]+'',
+				data:'NOMBRE_EMPLEADO='+datos[0]+'&APELLIDO_PATERNO='+datos[1]+'&APELLIDO_MATERNO='+datos[2]+'&CATEGORIA='+datos[3]+'&CORREO='+datos[4],
 				success: function(data){
 //                                    alert("se guardo");
                                     
