@@ -63,7 +63,7 @@ $Usuario=  Session::getSesion("user");
                 
             
             <style>
-                    /* .modal
+                     .modal
                     {
                         overflow: hidden;
                     }
@@ -83,22 +83,17 @@ $Usuario=  Session::getSesion("user");
                       margin-top:-10px;
                       color:#fff;
                     }
-                    .modal-body{
+                   .modal-body{
                       color:#888;
-                       /*max-height: calc(100vh - 210px);*/
-                      /* max-height: calc(100vh - 110px); */
-                      /* overflow-y: auto; */
+                       max-height: calc(100vh - 210px);
+                       max-height: calc(100vh - 110px); 
+                       overflow-y: auto; 
                     }
                     .modal-body p {
-                      /* text-align:center; */
-                      /* padding-top:10px; */
-                    } */
-                .minusculas{
-                /*text-transform:lowercase;*/
-                 }	
-            .mayusculas{
-                    /*text-transform:uppercase;*/
-            }	
+                       text-align:center; 
+                       padding-top:10px; 
+                    } 
+             
                 .main-encabezado {
                         /*background: #333;*/
                         color: white;

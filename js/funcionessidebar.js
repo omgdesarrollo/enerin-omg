@@ -13,8 +13,8 @@ function loadDataSideBarCatalogoInformacion(){
           //{id: "cumplimientos", text: "Cumplimientos", icon: "cumplimientos.png"},
           {type: "separator"},
           //{id: "asignaciontema", text: "Asignacion de Tema - Empleado", icon: "asignaciontema.jpg"},
-          {id: "asignaciontemasrequisitos", text: "Asignacion de Tema - Requisito", icon: "asignacionrequisitos.png"},
-          {id: "asignaciondocumentostemas", text: "Asignacion de Documento - Tema", icon: "asignaciondocumento.png"}  
+          {id: "asignaciontemasrequisitos", text: "Asignacion de Tema - Requisito - Documento", icon: "asignacionrequisitos.png"},
+          //{id: "asignaciondocumentostemas", text: "Asignacion de Documento - Tema", icon: "asignaciondocumento.png"}  
 
         ]
       });
@@ -54,6 +54,7 @@ function loadDataSideBarCatalogoInformacion(){
                                        case "asignaciontemasrequisitos":
                                              consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
                                              consultarInformacion("../Controller/ClausulasController.php?Op=mostrarcombo");
+                                             consultarInformacion("../Controller/DocumentosController.php?Op=mostrarcombo");                                             
                                             $("#sidebarObjV").load('InyectarVistasView.php #asignaciontemasrequisitos');
                                        break;
 
@@ -198,6 +199,8 @@ function loadDataSideBarOficiosDocumentacion(){
                                        
 
                                        case "informegerencial":
+                                            consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
+                                            consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
                                             consultarInformacion("../Controller/InformeGerencialController.php?Op=Listar");
                                             $("#sidebarObjV").load('InyectarVistasView.php #informegerencial');
                                        break;

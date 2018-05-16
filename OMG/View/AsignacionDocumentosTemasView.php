@@ -747,8 +747,8 @@ require_once 'EncabezadoUsuarioView.php';
                     dhxWins.attachViewportTo("winVP");
         //var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
                     var layoutWin=dhxWins.createWindow({id:"temas", text:"OMG VISUALIZACION TEMAS", left: 20, top: -30,width:530,  height:250,  center:true,resize: true,park:true,modal:true	});
-//                    layoutWin.attachURL("TemasModalView.php");
-                    layoutWin.attachURL("ChartView.php");
+                    layoutWin.attachURL("TemasModalView.php");
+                    
 
             }
             

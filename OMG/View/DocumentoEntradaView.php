@@ -273,7 +273,7 @@ require_once 'EncabezadoUsuarioView.php';
                                                 }
                                          
                                          
-                                                            if($filas["status_doc"]== 4){
+                                                            if($filas["status_doc"]== 3){
                                             
                                                             ?> 
                                                                 <option value="3" selected>Terminado</option>
@@ -479,8 +479,7 @@ require_once 'EncabezadoUsuarioView.php';
                                                         <select id="STATUS_DOC">
                                                         <option value="1">En proceso</option>
                                                         <option value="2">Suspendido</option>
-                                                        <option value="3">En alerta</option>
-                                                        <option value="4">Terminado</option>
+                                                        <option value="3">Terminado</option>
                                                         </select>
 						</div>
                           
@@ -743,7 +742,11 @@ require_once 'EncabezadoUsuarioView.php';
                                 //         barra_estado.classList.add('barra_roja');
                                 //         span.innerHTML = "proceso Cancelado";
                                 // });
+<<<<<<< HEAD
                                     saveToDatabaseDatosFormulario(datos);
+=======
+                                     saveToDatabaseDatosFormulario(datos);
+>>>>>>> e24618389a3b4ef583e95a19e9f573c30576a4df
                         // });
                         });
                         
@@ -816,25 +819,14 @@ require_once 'EncabezadoUsuarioView.php';
                $.ajax({  
                      url: ""+url,  
                     success: function(r) {    
-//                     $("#procesando").empty();
                      },
                      beforeSend:function(r){
-//                          $("#loader").empty();
-//                          $("#sidebarObjV").append("<div class='loader'></div>");
-//                            $.jGrowl("Cargando  Porfavor Espere......", { header: 'Carga de Informacion' });
-//                         alert("e");
-//                          $("#sidebarObjV").append("Cargando Informacion ...");
-//$.jGrowl("Cargando  Porfavor Espere......", { sticky: true });
 
-//var delay = 1000;
-//							setTimeout(function(){
-//                                                            $.jGrowl("Informacion Obtenida", { sticky: true });
-//                                                        },delay);
 
                      }
                  
         });  
-            }
+    }
             
     
     function loadSpinner(){

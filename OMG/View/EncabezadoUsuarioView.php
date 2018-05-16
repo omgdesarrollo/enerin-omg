@@ -54,7 +54,7 @@ foreach($Alarmas as $alarma)
 
 
 ?>
-<div class="main-encabezado">
+<!--<div class="main-encabezado">-->
 
 <div id="navbar" class="navbar navbar-default ace-save-state .modal">
             
@@ -191,4 +191,3 @@ foreach($Alarmas as $alarma)
             </div>
 </div>
 
-</div>

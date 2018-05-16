@@ -17,23 +17,15 @@ $Usuario=  Session::getSesion("user");
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
-		<!-- bootstrap & fontawesome -->
-		<!--<link rel="stylesheet" href="assets/css/bootstrap.min.css" />-->
-                <!--<link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>-->
+		
                 <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-		<!--<link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" />-->
                 <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-		<!-- page specific plugin styles -->
 
 		<!-- text fonts -->
 		<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />
-
 		<!-- ace styles -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
 
-		<!--[if lte IE 9]>
-			<link rel="stylesheet" href="assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
-		<![endif]-->
 		<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
@@ -42,10 +34,17 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                 <!--Termina para el spiner cargando-->
                 
-                
                 <script src="../../js/jquery.js" type="text/javascript"></script>
+                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
 		<script src="../../assets/probando/js/ace-extra.min.js"></script>       
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+                
+                
+                
+
+                
+                
+                
                 
             
             <style>
@@ -121,12 +120,24 @@ require_once 'EncabezadoUsuarioView.php';
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
                     Asignar Tema-Requisito
             </button>    
+        
+
+            <button type="button" id="btn_lista_documentos" class="btn btn-success" data-toggle="modal">
+                Lista de Documentos
+                <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+            </button>
+        
+        
+            <button type="button" id="btn_lista_temas" class="btn btn-success" data-toggle="modal">
+                Lista de Temas
+                <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+            </button>
         </div>
             
 <div style="height: 55px"></div>
 
-<!--<div style="display:none;" id="myDiv" class="animate-bottom"> inicio animacion tabla toda la interfaz seleccionada
-    <div class="contenedortable" id="winVP"> -->
+<div style="display:none;" id="myDiv" class="animate-bottom"> <!--inicio animacion tabla toda la interfaz seleccionada-->
+    <div id="winVP"> 
 
                            <table class="tbl-qa">
 		  <!--<thead>-->
@@ -147,7 +158,7 @@ require_once 'EncabezadoUsuarioView.php';
 //		  foreach($faq as $k=>$v) {
                   $Lista = Session::getSesion("listarAsignacionTemasRequisitos");
                   $cbxClau= Session::getSesion("listarClausulasComboBox");
-                  $cbxDoc= Session::getSesion("mostrarDocumentosComboBox");
+                  $cbxDoc= Session::getSesion("listarDocumentosComboBox");
 //                  $datostema
                   $numeracion = 1;
                   
@@ -192,11 +203,12 @@ require_once 'EncabezadoUsuarioView.php';
                                 <td  style="background-color: #ccccff" contenteditable="false" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_asignacion_tema_requisito"]; ?>')" onClick="showNoEdit(this);"><div><?php echo $filas["descripcion_clausula"]; ?></td>
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'requisito','<?php echo $filas["id_asignacion_tema_requisito"]; ?>')" onClick="showEdit(this);"><?php echo $filas["requisito"]; ?></td>
                                 
-                                <td style="background-color: #ccccff">
-                                    <select id="id_documento"class="select" onchange="saveComboToDatabase('id_documento', <?php echo $filas["id_asignacion_tema_requisito"]; ?> )">
+                                <td> 
+                                    <select id="id_documento" class="select" onchange="saveComboToDatabase('id_documento', <?php echo $filas["id_asignacion_tema_requisito"]; ?> )">
                                     <?php
                                     $s="";
-                                                foreach ($cbxClau as $value) {
+                                                foreach ($cbxDoc as $value) {
+                                                    
                                                     if($value["id_documento"]=="".$filas["id_documento"]){
 //                                                        $s="selected";
                                                     
@@ -206,9 +218,10 @@ require_once 'EncabezadoUsuarioView.php';
                                         
                                                         <?php
                                                         }
+                                                        
                                                         else{
                                                             ?>
-                                                        }
+                                                        <!--}-->
                                                              <option value="<?php echo "".$value["id_documento"] ?>"  ><?php echo "".$value["clave_documento"]; ?></option>
                                                              <?php
                                                         }
@@ -216,6 +229,7 @@ require_once 'EncabezadoUsuarioView.php';
                                     
                                     ?>
                                     </select>
+                                
                                     
                                 </td>
                                                     
@@ -232,8 +246,8 @@ require_once 'EncabezadoUsuarioView.php';
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 			</a>
 	
-<!--    </div>         
-</div>         -->
+    </div>         
+</div>         
                 
                 <!-- Inicio de Seccion Modal -->
        <div class="modal draggable fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -276,6 +290,28 @@ require_once 'EncabezadoUsuarioView.php';
                                                         <textarea  id="REQUISITO" class="form-control" data-error="Ingrese el Requisito" required></textarea>
 							<div class="help-block with-errors"></div>
 						</div>
+                                    
+                                    
+                                                <div class="form-group">
+							<label class="control-label" for="title">Documento:</label>
+                                                        
+                                                        <select   id="ID_DOCUMENTOMODAL" class="select2">
+                                                                <?php
+                                                                $s="";
+                                                                foreach ($cbxDoc as $value) {
+                                                                ?>
+                                                                
+                                                                <option value="<?php echo "".$value["id_documento"] ?>"  ><?php echo "".$value["clave_documento"]; ?></option>
+                                                                
+                                                                    <?php
+                                                                
+                                                                }
+                                    
+                                                                 ?>
+                                                        </select>
+                                                        
+							<div class="help-block with-errors"></div>
+						</div>
                                                 
                                     
 						<div class="form-group">
@@ -293,18 +329,6 @@ require_once 'EncabezadoUsuarioView.php';
        <!--Final de Seccion Modal-->
                 
 
-
-		<script src="../../assets/probando/js/jquery-2.1.4.min.js"></script>
-
-		<script src="../../assets/probando/js/bootstrap.min.js"></script>
-
-		<script src="../../assets/probando/js/ace-elements.min.js"></script>
-		<script src="../../assets/probando/js/ace.min.js"></script>
-
-		<!-- inline scripts related to this page -->
-		<script type="text/javascript">
-	
-		</script>
                 
                 
                 
@@ -312,12 +336,20 @@ require_once 'EncabezadoUsuarioView.php';
 		<script>
                     
                       var id_asignacion_tema_requisito;
+                      var cualmodificar;
                       $(function(){
                           
                         $('.select').on('change', function() {
 //                          console.log( $(this).prop('value') );
 //                          alert("el value que va a viajar es "+ $(this).prop('value'));
-                          column="ID_CLAUSULA";
+                          
+                          if(cualmodificar == "id_clausula"){
+                            column="id_clausula";
+                            
+                        } if (cualmodificar == "id_documento"){
+                            column="id_documento";
+                        }
+                          
                           val=$(this).prop('value');
                           //alert("el value que va a viajar es "+val+" i el id de la clausula : "+idclausula);
                           $.ajax({
@@ -325,12 +357,13 @@ require_once 'EncabezadoUsuarioView.php';
 				type: "POST",
 				data:'column='+column+'&editval='+val+'&id='+id_asignacion_tema_requisito,
 				success: function(data){
-                                    
+                                    //alert("SE hizo");
 					//$(editableObj).css("background","#FDFDFD");
                                         consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
                                         consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
-                                        alert("entron ");
-                                        window.location.href="AsignacionTemasRequisitosView.php";
+                                        //alert("entron ");
+                                        refresh();                                        
+                                        //window.location.href="AsignacionTemasRequisitosView.php";
                                        
 				}   
                            });
@@ -340,19 +373,21 @@ require_once 'EncabezadoUsuarioView.php';
                         
                         
                         $("#btn_guardar").click(function(){
-                                  //alert("entro aqui");
+                                  alert("entro aqui");
                                   
         
                                     var ID_CLAUSULAMODAL=$("#ID_CLAUSULAMODAL").val();
                                     var REQUISITO=$("#REQUISITO").val();
+                                    var ID_DOCUMENTOMODAL=$("#ID_DOCUMENTOMODAL").val();
 
-                                   alert("ID_CLAUSULAMODAL :"+ID_CLAUSULAMODAL + "REQUISITO :"+REQUISITO );
+                                   alert("ID_DOCUMENTOMODAL :"+ID_DOCUMENTOMODAL);
                                   
                                     
 
                                     datos=[];
                                     datos.push(ID_CLAUSULAMODAL);
                                     datos.push(REQUISITO);
+                                    datos.push(ID_DOCUMENTOMODAL);
                                     saveToDatabaseDatosFormulario(datos);
                                     
                         });
@@ -370,7 +405,14 @@ require_once 'EncabezadoUsuarioView.php';
                         });
                         
                         
-                        
+                        $("#btn_lista_documentos").click(function(){
+                        loadVistaDocumentos(true);
+                        });
+                 
+                 
+                        $("#btn_lista_temas").click(function(){
+                        loadVistaTemas(true);
+                         });
                         
                         
   
@@ -400,6 +442,7 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 function saveComboToDatabase(column,id){
                      id_asignacion_tema_requisito=id;
+                     cualmodificar=column;
                }
                
                
@@ -410,22 +453,44 @@ require_once 'EncabezadoUsuarioView.php';
                     	$.ajax({
                                 url: "../Controller/AsignacionTemasRequisitosController.php?Op=Guardar",
 				type: "POST",
-				data:'ID_CLAUSULA='+datos[0]+'&REQUISITO='+datos[1]+'',
+				data:'ID_CLAUSULA='+datos[0]+'&REQUISITO='+datos[1]+'&ID_DOCUMENTO='+datos[2],
                                 
 				success: function(data){
                                     alert("se guardo");
                                     
 //					$(editableObj).css("background","#FDFDFD");
-                                        swal("Guardado Exitoso!", "Ok!", "success")
+                                        swal("Guardado Exitoso!", "Ok!", "success");
                                          consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
                                          consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
-                                        window.location.href("AsignacionTemasRequisitosView.php");
+                                         setTimeout('refresh()',1000);
+                                         //window.location.href="AsignacionTemasRequisitosView.php";
 				}   
 		   });
 //                   window.location.href("EmpleadosView.php");
                 }
                 
                 
+                function consultarInformacion(url){
+               $.ajax({  
+                     url: ""+url,  
+                    success: function(r) {    
+                     },
+                     beforeSend:function(r){
+
+
+                     }
+                 
+                });  
+            }
+                
+                
+                
+                
+                
+                function refresh(){
+                    
+                  window.location.href="AsignacionTemasRequisitosView.php";  
+                }
                 
                 function loadSpinner(){
 //                    alert("se cargara otro ");
@@ -433,15 +498,39 @@ require_once 'EncabezadoUsuarioView.php';
                 }
                 
                 
+            function loadVistaDocumentos(bclose){
+                    var dhxWins = new dhtmlXWindows();
+                    dhxWins.attachViewportTo("winVP");
+                    var layoutWin=dhxWins.createWindow({id:"documentos", text:"OMG VISUALIZACION DOCUMENTOS", left: 20, top: -30,width:330,  height:250,  center:true,resize: true,park:true,modal:true	});
+                    layoutWin.attachURL("DocumentosModalView.php");
+            } 
+            
+            
+            function loadVistaTemas(bclose){
+                    var dhxWins = new dhtmlXWindows();
+                    dhxWins.attachViewportTo("winVP");
+                    var layoutWin=dhxWins.createWindow({id:"temas", text:"OMG VISUALIZACION TEMAS", left: 20, top: -30,width:530,  height:250,  center:true,resize: true,park:true,modal:true	});
+                    layoutWin.attachURL("TemasModalView.php");
+                
+            }    
                 
 		</script>
                 
+                
+                <script src="../../assets/probando/js/jquery-2.1.4.min.js"></script>
+
+		<script src="../../assets/probando/js/ace-elements.min.js"></script>
+		<script src="../../assets/probando/js/ace.min.js"></script>
                 
                 <script src="../../codebase/dhtmlx.js"></script>
                 <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
          
                 <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
-                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>   
+                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+                
+                <!--en esta seccion es para poder abrir el modal--> 
+                <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
+                <!--aqui termina la seccion para poder abrir el modal-->
                 
                 
 	</body>

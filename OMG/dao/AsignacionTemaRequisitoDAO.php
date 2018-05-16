@@ -67,7 +67,7 @@ class AsignacionTemaRequisitoDAO {
     
     
     
-    public function insertarAsignacionTemaRequisito($id_clausula,$requisito){
+    public function insertarAsignacionTemaRequisito($id_clausula,$requisito,$id_documento){
         
         try{
             
@@ -83,7 +83,7 @@ class AsignacionTemaRequisitoDAO {
              if($id_nuevo==NULL){
                 $id_nuevo=0;
             }
-            $query="INSERT INTO asignacion_tema_requisito(id_asignacion_tema_requisito,id_clausula,requisito, id_documento)"
+            $query="INSERT INTO asignacion_tema_requisito(id_asignacion_tema_requisito,id_clausula,requisito,id_documento)"
                     . "VALUES($id_nuevo,$id_clausula,'$requisito',$id_documento)";
             
             $db=  AccesoDB::getInstancia();
