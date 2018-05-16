@@ -138,7 +138,7 @@ require_once 'EncabezadoUsuarioView.php';
 
 
 <div class="contenedortable">   
-<input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Descripcion del Tema">
+    <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Descripcion del Tema" style="width: 220px">
 </div > 
 
 
