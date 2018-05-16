@@ -357,7 +357,7 @@ require_once 'EncabezadoUsuarioView.php';
 				type: "POST",
 				data:'column='+column+'&editval='+val+'&id='+id_asignacion_tema_requisito,
 				success: function(data){
-                                    alert("SE hizo");
+                                    //alert("SE hizo");
 					//$(editableObj).css("background","#FDFDFD");
                                         consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
                                         consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
