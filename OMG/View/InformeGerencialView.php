@@ -204,7 +204,65 @@ require_once 'EncabezadoUsuarioView.php';
                                     ?>                                
                                 </td>
                                 
-                                <td></td>
+                                <td>                                
+                                    <?php
+                                   
+                                    //Inicia Status Logico
+                                    $alarm = new Datetime($filas['fecha_alarma']);
+                                    $alarm = strftime("%d-%B-%y",$alarm -> getTimestamp());
+                                    $alarm = new Datetime($alarm);
+                                    
+                                    $flimite = new Datetime($filas['fecha_limite_atencion']);// Guarda en una variable la fecha de la base de datos
+                                    $flimite = strftime("%d-%B-%y",$flimite -> getTimestamp());// Esta da el formato: dia. mes y año, sin guardar las horas 
+                                    $flimite = new Datetime($flimite);//Se guarda en este formato y se reinicializan las horas a 00.
+                                    
+                                    $hoy = new Datetime();
+                                    $hoy = strftime("%d - %B - %y");
+                                    $hoy = new Datetime($hoy);
+                               
+
+                                    
+                                    if($filas["status_doc"]== 1){
+
+                                        if ($flimite <= $hoy){
+
+                                            if($flimite == $hoy){
+                                                
+                                                echo "Tiempo Limite";
+                                                
+                                            } else {
+                                                
+                                                echo "Tiempo Vencido";  
+                                            }
+                                                  
+                                        } else{
+                                            
+                                          if ($alarm <= $hoy){
+                                              
+                                              echo "Alerta Vencida";
+                                                                                           
+                                          } else {
+                                                  echo "En Tiempo";
+                                              }                                           
+                                        }
+                                       
+                                     
+                                    } //Primer If 
+                                    
+                                  
+                                    if($filas["status_doc"]== 2){
+                                        echo "Suspendido";
+                                        
+                                    } if($filas["status_doc"]== 3){
+                                        echo "Terminado";
+                                        
+                                    } 
+                                   
+                                    //Termina Status Logico
+                                   
+                                   ?>
+                                    
+                                </td>
                                 
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_informe_gerencial"]; ?>')" onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
                                 
