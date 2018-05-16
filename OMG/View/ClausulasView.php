@@ -159,9 +159,9 @@ $Usuario=  Session::getSesion("user");
                                             ?>
                                 <!--DESCRIPCION_SUB_CLAUSULA-->
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clausula"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion_clausula"]; ?></td>
+                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion_clausula"]; ?></td>
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'sub_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["sub_clausula"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'descripcion_sub_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion_sub_clausula"]; ?></td>
+                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'descripcion_sub_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion_sub_clausula"]; ?></td>
                                 <!--<td contenteditable="true" onBlur="saveToDatabase(this,'NOMBRE_EMPLEADO','<?php //echo $Lista[$k]["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php //echo $Lista[$k]["NOMBRE_EMPLEADO"]; ?></td>-->
                                 <td> 
 <!--                                    <select  class="empleado" name="n_empleado" onchange="saveComboToDatabase('ID_EMPLEADO', <?php echo $filas["id_clausula"]; ?> )">-->
@@ -194,8 +194,8 @@ $Usuario=  Session::getSesion("user");
                                     
                                 </td>
                                 <!--<td contenteditable="true" onBlur="saveToDatabase(this,'TEXTO_BREVE','<?php //echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["texto_breve"]; ?></td>-->
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'DESCRIPCION','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'PLAZO','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["plazo"]; ?></td>
+                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'descripcion','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'plazo','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["plazo"]; ?></td>
                                 
 			  </tr>
 		<?php
