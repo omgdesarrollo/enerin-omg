@@ -931,7 +931,7 @@ require_once 'EncabezadoUsuarioView.php';
                         //         async:false,
                         //         success:function(data)
                         //         {
-                                        // $('.start').click();
+                                        $('.start').click();
                                         // $('#loader').show();
                                         $('#create-itemUrls .close').click();
                                         // $('#loader').hide();
