@@ -171,13 +171,13 @@ require_once 'EncabezadoUsuarioView.php';
                <table class="tbl-qa" id="idTable">
 		  <thead>
 			  <tr>
-				<th class="table-header" width="10%">NO.</th>
-				<th class="table-header">NOMBRE</th>
-				<th class="table-header">APELLIDO PATERNO</th>
-                                <th class="table-header">APELLIDO MATERNO</th>
-                                <th class="table-header">CATEGORIA</th>
-                                <th class="table-header">EMAIL</th>
-                                <th class="table-header">FECHA CREACION</th>
+				<th class="table-header" width="10%">No.</th>
+				<th class="table-header">Nombre</th>
+				<th class="table-header">Apellido Paterno</th>
+                                <th class="table-header">Apellido Materno</th>
+                                <th class="table-header">Categoria</th>
+                                <th class="table-header">Email</th>
+                                <th class="table-header">Fecha Creacion</th>
 			  </tr>
 		  </thead>
 		  <tbody>
