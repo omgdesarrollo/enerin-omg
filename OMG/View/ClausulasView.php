@@ -16,23 +16,14 @@ $Usuario=  Session::getSesion("user");
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
-		<!-- bootstrap & fontawesome -->
-		<!--<link rel="stylesheet" href="assets/css/bootstrap.min.css" />-->
-                <!--<link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>-->
-                <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-		<!--<link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" />-->
-                <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-		<!-- page specific plugin styles -->
 
+                <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 		<!-- text fonts -->
 		<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />
-
 		<!-- ace styles -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
 
-		<!--[if lte IE 9]>
-			<link rel="stylesheet" href="assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
-		<![endif]-->
 		<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
@@ -41,10 +32,9 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                 <!--Termina para el spiner cargando-->
                 
-             <script src="../../js/jquery.js" type="text/javascript"></script>
-             <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+                <script src="../../js/jquery.js" type="text/javascript"></script>
+                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
 		<script src="../../assets/probando/js/ace-extra.min.js"></script>
-       
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 
             

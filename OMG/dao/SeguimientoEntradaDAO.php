@@ -38,8 +38,8 @@ class SeguimientoEntradaDAO{
 		 tbseguimiento_entrada.id_empleado id_empleadoplan, tbempleadosplan.nombre_empleado nombre_empleadoplan,
 		 tbempleadosplan.apellido_paterno apellido_paternoplan, tbempleadosplan.apellido_materno apellido_maternoplan,
  		 
-		 tbdocumento_entrada.fecha_limite_atencion, tbdocumento_entrada.status_doc,tbdocumento_entrada.documento,
-                 tbdocumento_entrada.observaciones FROM seguimiento_entrada tbseguimiento_entrada
+		 tbdocumento_entrada.fecha_limite_atencion, tbdocumento_entrada.fecha_alarma, tbdocumento_entrada.status_doc,
+                 tbdocumento_entrada.documento, tbdocumento_entrada.observaciones FROM seguimiento_entrada tbseguimiento_entrada
 		 
                     JOIN   documento_entrada tbdocumento_entrada ON 
                     tbdocumento_entrada.id_documento_entrada=tbseguimiento_entrada.id_documento_entrada

@@ -108,15 +108,15 @@ require_once 'EncabezadoUsuarioView.php';
                            <table class="tbl-qa">
 			  <tr>
 				
-                                <th class="table-header">FOLIO DE ENTRADA</th>
-                                <th class="table-header">FOLIO SALIDA</th>
-                                <th class="table-header">RESPONSABLE DEL TEMA</th>
-                                <th class="table-header">FECHA DE ENVIO</th>
-                                <th class="table-header">ASUNTO</th>
-                                <th class="table-header">ENTIDAD REGULADORA</th>
-                                <th class="table-header">DESTINATARIO</th>
-                                <th class="table-header">DOCUMENTO</th>
-                                <th class="table-header">OBSERVACIONES</th>              
+                                <th class="table-header">Folio de Entrada</th>
+                                <th class="table-header">Folio de Salida</th>
+                                <th class="table-header">Responsable del Tema</th>
+                                <th class="table-header">Fecha de Envio</th>
+                                <th class="table-header">Asunto</th>
+                                <th class="table-header">Entidad Reguladora</th>
+                                <th class="table-header">Destinatario</th>
+                                <th class="table-header">Documento</th>
+                                <th class="table-header">Observaciones</th>              
                                
                                 
 			  </tr>

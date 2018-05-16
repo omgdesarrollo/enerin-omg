@@ -108,13 +108,13 @@ require_once 'EncabezadoUsuarioView.php';
 		  <!--<thead>-->
 			  <tr>
 				<!--<th class="table-header" >NO.</th>-->
-                                <th class="table-header">CLAVE ENTIDAD</th>
-				<th class="table-header">DESCRIPCION</th>				
-				<th class="table-header">DIRECCION</th>				
-				<th class="table-header">TELEFONO</th>				
-				<th class="table-header">EXTENSION</th>				
-                                <th class="table-header">EMAIL</th>				
-                                <th class="table-header">DIRECCION WEB</th>				
+                                <th class="table-header">Clave Entidad</th>
+				<th class="table-header">Descripcion</th>				
+				<th class="table-header">Direccion</th>				
+				<th class="table-header">Telefono</th>				
+				<th class="table-header">Extension</th>				
+                                <th class="table-header">Email</th>				
+                                <th class="table-header">Direccion Web</th>				
 									                                
 			  </tr>
 		  <!--</thead>-->

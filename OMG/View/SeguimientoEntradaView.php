@@ -75,6 +75,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 <th class="table-header">Responsable del Tema</th>
                                 <th class="table-header">Fecha Limite</th>
                                 <th class="table-header">Status</th>
+                                <th class="table-header">Condicion</th>
                                 <th class="table-header">Responsable del Plan</th>
                                 <th class="table-header">Documento</th>
                                 <th class="table-header">Programa</th>
@@ -127,6 +128,35 @@ require_once 'EncabezadoUsuarioView.php';
                                     }
                                     
                                     ?>                                
+                                </td>
+                                
+                                <td>
+                                   <?php
+                                   
+                                   // print_r($alarma);
+                                    $alarm = new Datetime($alarma['fecha_alarma']);
+                                    $flimite = new Datetime($alarma['fecha_limite_atencion']);
+                                    $hoy = new Datetime();
+                                    $al = strftime("%d - %B - %y");
+                                    $hoy = new Datetime($al);
+                                    
+                                    if($flimite<=$hoy)
+                                   
+                                        
+                                    if($filas["status_doc"]== 1){
+                                        echo "En proceso";
+                                        
+                                    } if($filas["status_doc"]== 2){
+                                        echo "Suspendido";
+                                        
+                                    } if($filas["status_doc"]== 3){
+                                        echo "Terminado";
+                                        
+                                    }    
+
+                                   
+                                   ?>
+                                    
                                 </td>
                                                                                                                                                           
                                 <td> 

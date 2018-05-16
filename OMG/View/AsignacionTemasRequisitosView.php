@@ -23,27 +23,25 @@ $Usuario=  Session::getSesion("user");
 
 		<!-- text fonts -->
 		<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />
-
 		<!-- ace styles -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
 
-		<!--[if lte IE 9]>
-			<link rel="stylesheet" href="assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
-		<![endif]-->
 		<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
-                
-                <script src="../../js/jquery.js" type="text/javascript"></script>
-		<script src="../../assets/probando/js/ace-extra.min.js"></script>       
-                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-                
-                
                 
                 <!--Inicia para el spiner cargando-->
                 <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                 <!--Termina para el spiner cargando-->
+                
+                <script src="../../js/jquery.js" type="text/javascript"></script>
+                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+		<script src="../../assets/probando/js/ace-extra.min.js"></script>       
+                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+                
+                
+                
+
                 
                 
                 
@@ -139,7 +137,7 @@ require_once 'EncabezadoUsuarioView.php';
 <div style="height: 55px"></div>
 
 <div style="display:none;" id="myDiv" class="animate-bottom"> <!--inicio animacion tabla toda la interfaz seleccionada-->
-    <div class="contenedortable" id="winVP"> 
+    <div id="winVP"> 
 
                            <table class="tbl-qa">
 		  <!--<thead>-->
