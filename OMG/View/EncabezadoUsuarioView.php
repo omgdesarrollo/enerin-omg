@@ -43,8 +43,9 @@ foreach($Alarmas as $alarma)
 			}
 			else
 			{
-				$dias = strtotime(strftime("%d-%B-%y",$alarm -> getTimestamp())) - strtotime(strftime("%d-%B-%y",$hoy -> getTimestamp()));
-				$NotificacionesAlarma[$numeroAlarmas]["MENSAJE"] = " ALARMA VENCIDA ".$dias." DIA(S)"." - ".$alarma['mensaje_alerta'];				
+				$dias = strtotime(strftime("%d-%B-%y",$hoy -> getTimestamp())) - strtotime(strftime("%d-%B-%y",$alarm -> getTimestamp()));
+				$dias = $dias / 86400;
+				$NotificacionesAlarma[$numeroAlarmas]["MENSAJE"] = " ALARMA VENCIDA ".$dias." DIA(S)"." - ".$alarma['mensaje_alerta'];
 			}
 		$numeroAlarmas++;
 		}

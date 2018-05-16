@@ -743,7 +743,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 //         barra_estado.classList.add('barra_roja');
                                 //         span.innerHTML = "proceso Cancelado";
                                 // });
-                                //     saveToDatabaseDatosFormulario(datos);
+                                    saveToDatabaseDatosFormulario(datos);
                         // });
                         });
                         
@@ -854,8 +854,6 @@ require_once 'EncabezadoUsuarioView.php';
                                     +'&ASUNTO='+datos[4]+'&REMITENTE='+datos[5]+'&ID_ENTIDAD='+datos[6]+'&ID_CLAUSULA='+datos[7]+'&CLASIFICACION='+datos[8]
                                     +'&STATUS_DOC='+datos[9]+'&FECHA_ASIGNACION='+datos[10]+'&FECHA_LIMITE_ATENCION='+datos[11]+'&FECHA_ALARMA='+datos[12]
                                     +'&DOCUMENTO='+datos[13]+'&OBSERVACIONES='+datos[14]+'&MENSAJE_ALERTA='+datos[15],
-                            
-                            
                                 success: function(jsonData)
                                 {
                                 //     alert(<?php  $Url ?>);
@@ -874,7 +872,8 @@ require_once 'EncabezadoUsuarioView.php';
                         })
                         .then(function(data)
                         {
-                                // var tempUrls = "<?php Session::getSesion("archivos_urls") ?>";
+                                // var tempUrls = "<?php 
+                                        // Session::getSesion("archivos_urls") ?>";
                                 // console.log("valores : "+tempUrls); no funciona
                                 $.ajax({
                                         url: "../Controller/ArchivoUploadController.php?Op=Guardar",
