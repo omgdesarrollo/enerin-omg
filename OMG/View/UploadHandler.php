@@ -1105,25 +1105,25 @@ echo "d   :".$this->get_full_url();
             // $file_path2 = "http://localhost:80/enerin-omg/archivos/files".$newUrl.$file->name;//el que descarga web
             $file_path = "C:/xampp/htdocs/enerin-omg/archivos/files".$newUrl.$file->name;//el que guarda local
             // $file_path2 = "http://localhost:80/enerin-omg/archivos/files".$newUrl.$file->name;//el que descarga local
-            $filePath = array();
-            if(Session::getSesion("archivos_urls") == null)
-            {
-                echo "\n Variable vacia";
+            // $filePath = array();
+            // if(Session::getSesion("archivos_urls") == null)
+            // {
+                // echo "\n Variable vacia";
                 // $filePath[0] = $file_path2;
-                $filePath[0] = $file->name;                
-                Session::setSesion("archivos_urls_contador",1);
-                Session::setSesion("archivos_urls",$filePath);
-            }
-            else
-            {
+                // $filePath[0] = $file->name;                
+                // Session::setSesion("archivos_urls_contador",1);
+                // Session::setSesion("archivos_urls",$filePath);
+            // }
+            // else
+            // {
                 // echo "\n existe";
-                $archivoContador = Session::getSesion("archivos_urls_contador");
-                $filePath = Session::getSesion("archivos_urls");
+                // $archivoContador = Session::getSesion("archivos_urls_contador");
+                // $filePath = Session::getSesion("archivos_urls");
                 // $filePath[$archivoContador] = $file_path2;
-                $filePath[$archivoContador] = $file->name;                
-                $archivoContador = $archivoContador + 1;
-                Session::setSesion("archivos_urls_contador",$archivoContador);
-                Session::setSesion("archivos_urls",$filePath);
+                // $filePath[$archivoContador] = $file->name;                
+                // $archivoContador = $archivoContador + 1;
+                // Session::setSesion("archivos_urls_contador",$archivoContador);
+                // Session::setSesion("archivos_urls",$filePath);
                 // foreach($filePath as $valores)
                 // {
                 //     echo "\n";
@@ -1131,7 +1131,7 @@ echo "d   :".$this->get_full_url();
                 // }
                 // echo "\n".$archivoContador;
                 // echo "\n vector".array($filePath);
-            }
+            // }
             // echo $file_path."o \n---";
 
             $append_file = $content_range && is_file($file_path) &&

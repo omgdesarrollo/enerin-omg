@@ -18,31 +18,27 @@ USE `databaseomg`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `documentos`
+-- Table structure for table `modulos`
 --
 
-DROP TABLE IF EXISTS `documentos`;
+DROP TABLE IF EXISTS `modulos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `documentos` (
-  `ID_DOCUMENTO` int(11) NOT NULL,
-  `CLAVE_DOCUMENTO` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `DOCUMENTO` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `ID_EMPLEADO` int(11) NOT NULL,
-  PRIMARY KEY (`ID_DOCUMENTO`),
-  KEY `fk_documentos_empleados1_idx` (`ID_EMPLEADO`),
-  CONSTRAINT `fk_documentos_empleados1` FOREIGN KEY (`ID_EMPLEADO`) REFERENCES `empleados` (`ID_EMPLEADO`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `modulos` (
+  `ID_MODULOS` int(11) NOT NULL,
+  `NOMBRE` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`ID_MODULOS`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `documentos`
+-- Dumping data for table `modulos`
 --
 
-LOCK TABLES `documentos` WRITE;
-/*!40000 ALTER TABLE `documentos` DISABLE KEYS */;
-INSERT INTO `documentos` VALUES (0,'17ABR18-01<br>','CNH',9),(1,'17ABR18-02','CFE',1),(2,'17ABR18-03','SEDENA',1);
-/*!40000 ALTER TABLE `documentos` ENABLE KEYS */;
+LOCK TABLES `modulos` WRITE;
+/*!40000 ALTER TABLE `modulos` DISABLE KEYS */;
+INSERT INTO `modulos` VALUES (1,'OMG');
+/*!40000 ALTER TABLE `modulos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-02 18:57:18
+-- Dump completed on 2018-05-02 18:57:20
