@@ -479,8 +479,7 @@ require_once 'EncabezadoUsuarioView.php';
                                                         <select id="STATUS_DOC">
                                                         <option value="1">En proceso</option>
                                                         <option value="2">Suspendido</option>
-                                                        <option value="3">En alerta</option>
-                                                        <option value="4">Terminado</option>
+                                                        <option value="3">Terminado</option>
                                                         </select>
 						</div>
                           
@@ -743,7 +742,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 //         barra_estado.classList.add('barra_roja');
                                 //         span.innerHTML = "proceso Cancelado";
                                 // });
-                                //     saveToDatabaseDatosFormulario(datos);
+                                     saveToDatabaseDatosFormulario(datos);
                         // });
                         });
                         
