@@ -137,7 +137,7 @@ require_once 'EncabezadoUsuarioView.php';
 			  <tr class="table-row">
 				<!--<td><?php // echo $numeracion++;   ?></td>-->                               
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'clave_entidad','<?php echo $filas["id_entidad"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_entidad"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'descripcion','<?php echo $filas["id_entidad"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion"]; ?></td>
+                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'descripcion','<?php echo $filas["id_entidad"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion"]; ?></td>
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'direccion','<?php echo $filas["id_entidad"]; ?>')" onClick="showEdit(this);"><?php echo $filas["direccion"]; ?></td>
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'telefono','<?php echo $filas["id_entidad"]; ?>')" onClick="showEdit(this);"><?php echo $filas["telefono"]; ?></td>
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'extension','<?php echo $filas["id_entidad"]; ?>')" onClick="showEdit(this);"><?php echo $filas["extension"]; ?></td>

@@ -156,12 +156,13 @@ $Usuario=  Session::getSesion("user");
 //		foreach ($Lista as $k=>$filas) { 
 //                   $valorid= $Lista[$k]["ID_EMPLEADO"];
 //                   $nombreempleado=$Lista[$k]["NOMBRE_EMPLEADO"];
-                  foreach ($Lista as $filas) { 
+                  foreach ($Lista as $filas) {
+                      if($filas["clave_documento"]!="SIN DOCUMENTO"){
 		  ?>
 			  <tr class="table-row">
 				<td><?php echo $numeracion++;   ?></td>                               
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'clave_documento','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_documento"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
+                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
                                   <td> 
 <!--                                    <select  class="empleado" name="n_empleado" onchange="saveComboToDatabase('ID_EMPLEADO', <?php // echo $filas["ID_CLAUSULA"]; ?> )">-->
                                     <select   id="id_empleado" class="select"  onchange="saveComboToDatabase('id_empleado', <?php echo $filas["id_documento"]; ?> )">
@@ -194,6 +195,7 @@ $Usuario=  Session::getSesion("user");
                                 </td>
 			  </tr>
 		<?php
+                      }
 		}
                 
 		?>

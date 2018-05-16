@@ -136,10 +136,17 @@ require_once 'EncabezadoUsuarioView.php';
             
 <div style="height: 55px"></div>
 
+
+<div class="contenedortable">   
+    <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Descripcion del Tema" style="width: 220px">
+</div > 
+
+
+
 <div style="display:none;" id="myDiv" class="animate-bottom"> <!--inicio animacion tabla toda la interfaz seleccionada-->
     <div id="winVP"> 
 
-                           <table class="tbl-qa">
+                           <table id="idTable" class="tbl-qa">
 		  <!--<thead>-->
 			  <tr>
 				<th class="table-header" >No.</th>
@@ -167,7 +174,7 @@ require_once 'EncabezadoUsuarioView.php';
 //                   $nombreempleado=$Lista[$k]["NOMBRE_EMPLEADO"];
                   foreach ($Lista as $filas) { 
 		  ?>
-			  <tr class="table-row">
+			  <tr class="table-row" >
 				<td><?php echo $numeracion++;   ?></td>
                                 
                                 
@@ -201,7 +208,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 </td>
                   
                                 <td  style="background-color: #ccccff" contenteditable="false" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_asignacion_tema_requisito"]; ?>')" onClick="showNoEdit(this);"><div><?php echo $filas["descripcion_clausula"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'requisito','<?php echo $filas["id_asignacion_tema_requisito"]; ?>')" onClick="showEdit(this);"><?php echo $filas["requisito"]; ?></td>
+                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'requisito','<?php echo $filas["id_asignacion_tema_requisito"]; ?>')" onClick="showEdit(this);"><?php echo $filas["requisito"]; ?></td>
                                 
                                 <td> 
                                     <select id="id_documento" class="select" onchange="saveComboToDatabase('id_documento', <?php echo $filas["id_asignacion_tema_requisito"]; ?> )">
@@ -512,7 +519,29 @@ require_once 'EncabezadoUsuarioView.php';
                     var layoutWin=dhxWins.createWindow({id:"temas", text:"OMG VISUALIZACION TEMAS", left: 20, top: -30,width:530,  height:250,  center:true,resize: true,park:true,modal:true	});
                     layoutWin.attachURL("TemasModalView.php");
                 
-            }    
+            }
+            
+            
+            function filterTable() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInput");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[2];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }
                 
 		</script>
                 
