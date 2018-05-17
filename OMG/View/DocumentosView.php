@@ -168,18 +168,35 @@ $Usuario=  Session::getSesion("user");
             
              <div style="height: 50px"></div>
              
+             
              <div style="position: fixed;">        
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
                     Agregar-Documento
-                </button>    
+                </button>
+                 
+                <button type="button" class="btn btn-info " onclick="refresh();" >
+                    <i class="glyphicon glyphicon-repeat"></i> 
+                </button> 
+                 
               </div>
-	                   
+	     
+             
           <div style="height: 55px"></div>
+          
+          
+          <div class="contenedortable" style="position: fixed;">   
+            <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Nombre del Documento" style="width: 240px">
+          </div >
+
+
+<div style="height: 55px"></div>
+          
+          
         
           <div class="table-fixed-header">
               <div class="table-container">
 
-                           <table class="tbl-qa">
+                           <table id="idTable" class="tbl-qa">
 		  <thead >
 			  <tr>
 				<th class="table-header" >No.</th>
@@ -517,12 +534,39 @@ if(mensajeerror!=""){
                                  
                 
                 
+                function refresh(){
+                    
+                  window.location.href="DocumentosView.php";  
+                }
                 
                 
                 
                 function loadSpinner(){
 //                    alert("se cargara otro ");
                         myFunction();
+                }
+                
+                
+                
+                function filterTable() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInput");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[2];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
                 }
                 
                 

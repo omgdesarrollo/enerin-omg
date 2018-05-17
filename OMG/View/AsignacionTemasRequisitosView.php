@@ -181,6 +181,11 @@ require_once 'EncabezadoUsuarioView.php';
                 Lista de Temas
                 <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
             </button>
+            
+            <button type="button" class="btn btn-info " onclick="refresh();" >
+                <i class="glyphicon glyphicon-repeat"></i> 
+            </button>
+            
         </div>
             
 <div style="height: 55px"></div>

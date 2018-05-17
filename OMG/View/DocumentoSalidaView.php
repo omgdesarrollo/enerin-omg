@@ -155,15 +155,28 @@ require_once 'EncabezadoUsuarioView.php';
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
 		Agregar Documento de Salida
 </button>
+    
+<button type="button" class="btn btn-info " onclick="refresh();" >
+    <i class="glyphicon glyphicon-repeat"></i> 
+</button> 
 </div>    
 
 
 <div style="height: 55px"></div>
+
+
+<div class="contenedortable" style="position: fixed;">   
+    <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Folio de Salida" style="width: 200px;">
+</div >
+
+
+<div style="height: 55px"></div>
+
                    
 <div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> 
     <div class="table-container">
         
-                           <table class="tbl-qa">
+        <table id="idTable" class="tbl-qa">
 			  <tr>
 				
                                 <th class="table-header">Folio de Entrada</th>
@@ -610,10 +623,36 @@ require_once 'EncabezadoUsuarioView.php';
                 }
                 
                 
+                function refresh(){
+                    
+                  window.location.href="DocumentoSalidaView.php";  
+                }
                 
                 function loadSpinner(){
 //                    alert("se cargara otro ");
                         myFunction();
+                }
+                
+                
+                function filterTable() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInput");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[1];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
                 }
                 
                 

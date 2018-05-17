@@ -158,17 +158,30 @@ require_once 'EncabezadoUsuarioView.php';
            
         <div style="position: fixed;">    
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
-                    Agregar Tema
-            </button>                
+                Agregar Tema
+            </button>
+            
+            <button type="button" class="btn btn-info " onclick="refresh();" >
+                <i class="glyphicon glyphicon-repeat"></i> 
+	    </button>
         </div>
  
+<div style="height: 55px"></div>
+
+
+
+<div class="contenedortable" style="position: fixed;">   
+    <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Tema">
+</div >
+
+
 <div style="height: 55px"></div>
 
 
 <div class="table-fixed-header">
     <div class="table-container">            
             
-                           <table class="tbl-qa">
+                           <table id="idTable" class="tbl-qa">
                               
 		  <!--<thead>-->
                             
@@ -541,6 +554,11 @@ require_once 'EncabezadoUsuarioView.php';
                 }
                 
                 
+                function refresh(){
+                    
+                  window.location.href="ClausulasView.php";  
+                }
+                
                 
                 function loadSpinner(){
 //                    alert("se cargara otro ");
@@ -557,32 +575,56 @@ require_once 'EncabezadoUsuarioView.php';
                                 data: "cadenaclausula="+dataString,
                                 success: function(data) {
                                     //Escribimos las sugerencias que nos manda la consulta
-//var datos="<ul>";
-var dato="";
-    $.each(data, function (index,value) {
-//        console.log("sub_clausula: " + value.sub_clausula);
-if(value.sub_clausula!=""){
-//         datos+="<li>"+value.sub_clausula+"</li><br>";
-        dato=value.descripcion_clausula;
-       
-     }
-    });
-//    datos+="</ul>"
-//    $('#sugerenciasclausulas').fadeIn(1000).html(datos);
-$('#DESCRIPCION_CLAUSULA').val(dato);
-if(dato==""){
-    
-$('#DESCRIPCION_CLAUSULA').prop("readonly",false);
-}else{
-    if(dato!=""){
- $('#DESCRIPCION_CLAUSULA').prop("readonly",true);   
- }
-}
-   
-//                                               
+                                //var datos="<ul>";
+                                var dato="";
+                                    $.each(data, function (index,value) {
+                                //        console.log("sub_clausula: " + value.sub_clausula);
+                                if(value.sub_clausula!=""){
+                                //         datos+="<li>"+value.sub_clausula+"</li><br>";
+                                        dato=value.descripcion_clausula;
+
+                                     }
+                                    });
+                                //    datos+="</ul>"
+                                //    $('#sugerenciasclausulas').fadeIn(1000).html(datos);
+                                $('#DESCRIPCION_CLAUSULA').val(dato);
+                                if(dato==""){
+
+                                $('#DESCRIPCION_CLAUSULA').prop("readonly",false);
+                                }else{
+                                    if(dato!=""){
+                                 $('#DESCRIPCION_CLAUSULA').prop("readonly",true);   
+                                 }
                                 }
-                            }); 
+
+                                //                                               
+                                                                }
+                                                            }); 
+                                                }
+                
+                
+                
+                function filterTable() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInput");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[1];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
                 }
+                
                 
 		</script>
                 

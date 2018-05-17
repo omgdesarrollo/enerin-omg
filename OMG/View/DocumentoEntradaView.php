@@ -89,6 +89,17 @@ $Usuario=  Session::getSesion("user");
                     }
                     
                     
+                    .main-encabezado {
+                        /*background: #333;*/
+                        color: white;
+                        height: 80px;
+
+                        width: 100%;  /*hacemos que la cabecera ocupe el ancho completo de la página*/ 
+                        left: 0;  /*Posicionamos la cabecera al lado izquierdo*/ 
+                        top: 0;  /*Posicionamos la cabecera pegada arriba*/ 
+                        position: fixed;  /*Hacemos que la cabecera tenga una posición fija*/ 
+                    }
+                    
                     
 /*Inicia estilos para mantener fijo el header*/                    
                     .table-fixed-header {
@@ -152,14 +163,27 @@ require_once 'EncabezadoUsuarioView.php';
 
 ?>
              
-<div style="height: 15px"></div>
+<div style="height: 50px"></div>
 
              
 <div style="position: fixed;">             
 <button onClick="DocumentoArchivoAgregarModalF();" type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
 		Agregar Documento de Entrada
-</button>             
+</button>
+    
+<button type="button" class="btn btn-info " onclick="refresh();" >
+    <i class="glyphicon glyphicon-repeat"></i> 
+</button>    
 </div>
+
+
+<div style="height: 55px"></div>
+
+
+
+<div class="contenedortable" style="position: fixed;">   
+    <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Folio de Entrada" style="width: 200px;">
+</div >
 
 
 <div style="height: 55px"></div>
@@ -169,7 +193,7 @@ require_once 'EncabezadoUsuarioView.php';
 		
     <div class="table-container">
         
-                           <table class="tbl-qa">
+        <table id="idTable" class="tbl-qa">
 		  <!--<thead>-->
 			  <tr>
 				
@@ -887,6 +911,12 @@ require_once 'EncabezadoUsuarioView.php';
         });  
     }
             
+    function refresh(){
+                    
+                  window.location.href="DocumentoEntradaView.php";  
+                }
+    
+    
     
     function loadSpinner(){
 //                    alert("se cargara otro ");
@@ -1028,6 +1058,28 @@ require_once 'EncabezadoUsuarioView.php';
                                         console.log("Eliminado exitoso");
                                 }
                         });
+                }
+                
+                
+                function filterTable() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInput");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[2];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
                 }
                 
 		</script>

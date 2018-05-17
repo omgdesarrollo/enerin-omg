@@ -80,6 +80,18 @@ $Usuario=  Session::getSesion("user");
                     }
                     
                     
+                    .main-encabezado {
+                        /*background: #333;*/
+                        color: white;
+                        height: 80px;
+
+                        width: 100%;  /*hacemos que la cabecera ocupe el ancho completo de la página*/ 
+                        left: 0;  /*Posicionamos la cabecera al lado izquierdo*/ 
+                        top: 0;  /*Posicionamos la cabecera pegada arriba*/ 
+                        position: fixed;  /*Hacemos que la cabecera tenga una posición fija*/ 
+                    }
+                    
+                    
 /*Inicia estilos para mantener fijo el header*/                    
                     .table-fixed-header {
     display: table; /* 1 */
@@ -144,14 +156,26 @@ require_once 'EncabezadoUsuarioView.php';
 
 ?>        
 
-<div style="height: 15px"></div>     
+<div style="height: 50px"></div>     
 
 
 <div style="position: fixed;">
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
     Agregar Entidad Reguladora
 </button>
+    
+<button type="button" class="btn btn-info " onclick="refresh();" >
+    <i class="glyphicon glyphicon-repeat"></i> 
+</button>       
 </div>    
+
+
+<div style="height: 55px"></div>
+
+
+<div class="contenedortable" style="position: fixed;">   
+    <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Descripcion">
+</div >
 
 
 <div style="height: 55px"></div>
@@ -160,7 +184,7 @@ require_once 'EncabezadoUsuarioView.php';
 <div class="table-fixed-header">
     <div class="table-container">    
 
-                           <table class="tbl-qa">
+        <table id="idTable" class="tbl-qa">
 		  <!--<thead>-->
 			  <tr>
 				<!--<th class="table-header" >NO.</th>-->
@@ -405,9 +429,37 @@ require_once 'EncabezadoUsuarioView.php';
                         }
                 
                 
+                function refresh(){
+                    
+                  window.location.href="EntidadesReguladorasView.php";  
+                }
+                
+                
                 function loadSpinner(){
 //                    alert("se cargara otro ");
                         myFunction();
+                }
+                
+                
+                function filterTable() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInput");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[1];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
                 }
 
                 
