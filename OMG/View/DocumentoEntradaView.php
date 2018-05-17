@@ -406,14 +406,7 @@ require_once 'EncabezadoUsuarioView.php';
 
 </div>
 
-<<<<<<< HEAD
 <div class="no-skin modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" onload="loadSpinner()">
-=======
-
-
-
-<div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
->>>>>>> bcd92f4f47346f1c639ad050517aa45b8dff7af0
 	<div class="modal-dialog" role="document">
         <div id="loaderModalMostrar"></div>
 		<div class="modal-content">
