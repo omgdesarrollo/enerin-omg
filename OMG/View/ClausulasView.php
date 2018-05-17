@@ -88,6 +88,53 @@ $Usuario=  Session::getSesion("user");
                         position: fixed;  /*Hacemos que la cabecera tenga una posición fija*/ 
                     } 
                    
+                    
+/*Inicia estilos para mantener fijo el header*/                    
+                    .table-fixed-header {
+    display: table; /* 1 */
+    position: relative;
+    padding-top: calc(~'2.5em + 2px'); /* 2 */
+    
+    table {
+        margin: 0;
+        margin-top: calc(~"-2.5em - 2px"); /* 2 */
+    }
+    
+    thead th {
+        white-space: nowrap;
+        
+        /* 3 - apply same styling as for thead th */
+        /* 4 - compensation for padding-left */
+        &:before {
+            content: attr(data-header);
+            position: absolute;
+            top: 0;
+            padding: .5em 1em; /* 3 */
+            margin-left: -1em; /* 4 */
+        }
+    }
+}
+
+ /* 5 - setting height and scrolling */
+.table-container {
+    max-height: 70vh; /* 5 */
+    overflow-y: auto; /* 5 */
+        
+        /* 6 - same styling as for thead th */
+        &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        min-height: 2.5em;             /* 6 */
+        border-bottom: 2px solid #DDD; /* 6 */
+        background: #f1f1f1;           /* 6 */
+    }
+}
+ 
+/*Finaliza estilos para mantener fijo el header*/                    
+                    
                 </style>    
                 
                 
@@ -98,25 +145,43 @@ $Usuario=  Session::getSesion("user");
         <body class="no-skin" onload="loadSpinner()">
             <!--<div>Cargando...</div>-->
             <div id="loader"></div>
-            <!--<div style="position: fixed">-->       
-            <?php
-            require_once 'EncabezadoUsuarioView.php';
+            
+            
+<?php
 
-            ?>
-            <!--</div>-->
+require_once 'EncabezadoUsuarioView.php';
 
+?>
+
+            
 <div style="height: 50px"></div>            
            
         <div style="position: fixed;">    
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
-                    Agregar Tema
-            </button>                
+                Agregar Tema
+            </button>
+            
+            <button type="button" class="btn btn-info " onclick="refresh();" >
+                <i class="glyphicon glyphicon-repeat"></i> 
+	    </button>
         </div>
  
+<div style="height: 55px"></div>
+
+
+
+<div class="contenedortable" style="position: fixed;">   
+    <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Tema">
+</div >
+
+
+<div style="height: 55px"></div>
+
+
+<div class="table-fixed-header">
+    <div class="table-container">            
             
-            <div style="height: 55px"></div>
-            
-                           <table class="tbl-qa">
+                           <table id="idTable" class="tbl-qa">
                               
 		  <!--<thead>-->
                             
@@ -209,8 +274,10 @@ $Usuario=  Session::getSesion("user");
 			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 			</a>
-		</div><!-- /.main-container -->
-             
+
+    </div>
+</div>              
+
                 
        <!-- Inicio de Seccion Modal -->
        <div class="modal draggable fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -487,6 +554,11 @@ $Usuario=  Session::getSesion("user");
                 }
                 
                 
+                function refresh(){
+                    
+                  window.location.href="ClausulasView.php";  
+                }
+                
                 
                 function loadSpinner(){
 //                    alert("se cargara otro ");
@@ -503,32 +575,56 @@ $Usuario=  Session::getSesion("user");
                                 data: "cadenaclausula="+dataString,
                                 success: function(data) {
                                     //Escribimos las sugerencias que nos manda la consulta
-//var datos="<ul>";
-var dato="";
-    $.each(data, function (index,value) {
-//        console.log("sub_clausula: " + value.sub_clausula);
-if(value.sub_clausula!=""){
-//         datos+="<li>"+value.sub_clausula+"</li><br>";
-        dato=value.descripcion_clausula;
-       
-     }
-    });
-//    datos+="</ul>"
-//    $('#sugerenciasclausulas').fadeIn(1000).html(datos);
-$('#DESCRIPCION_CLAUSULA').val(dato);
-if(dato==""){
-    
-$('#DESCRIPCION_CLAUSULA').prop("readonly",false);
-}else{
-    if(dato!=""){
- $('#DESCRIPCION_CLAUSULA').prop("readonly",true);   
- }
-}
-   
-//                                               
+                                //var datos="<ul>";
+                                var dato="";
+                                    $.each(data, function (index,value) {
+                                //        console.log("sub_clausula: " + value.sub_clausula);
+                                if(value.sub_clausula!=""){
+                                //         datos+="<li>"+value.sub_clausula+"</li><br>";
+                                        dato=value.descripcion_clausula;
+
+                                     }
+                                    });
+                                //    datos+="</ul>"
+                                //    $('#sugerenciasclausulas').fadeIn(1000).html(datos);
+                                $('#DESCRIPCION_CLAUSULA').val(dato);
+                                if(dato==""){
+
+                                $('#DESCRIPCION_CLAUSULA').prop("readonly",false);
+                                }else{
+                                    if(dato!=""){
+                                 $('#DESCRIPCION_CLAUSULA').prop("readonly",true);   
+                                 }
                                 }
-                            }); 
+
+                                //                                               
+                                                                }
+                                                            }); 
+                                                }
+                
+                
+                
+                function filterTable() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInput");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[1];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
                 }
+                
                 
 		</script>
                 

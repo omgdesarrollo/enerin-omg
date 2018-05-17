@@ -65,8 +65,8 @@ switch ($Op) {
 		break;
 	
 	case 'eliminarArchivo':
-		$data = $model->eliminar_archivo($_REQUEST['ID_DOCUMENTO'],$_REQUEST['ARCHIVO_NAME']);
-		$data = $model->eliminar_archivoFisico($_REQUEST['ID_DOCUMENTO'],$_REQUEST['ARCHIVO_NAME'],$data);
+		// $data = $model->eliminar_archivo($_REQUEST['ID_DOCUMENTO'],$_REQUEST['ARCHIVO_NAME']);
+		$data = $model->eliminar_archivoFisico($_REQUEST['ID_DOCUMENTO'],$_REQUEST['ARCHIVO_NAME']);
 		header('Content-type: application/json; charset=utf-8');
 		echo json_encode($data);
 		break;

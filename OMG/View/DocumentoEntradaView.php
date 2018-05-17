@@ -87,6 +87,68 @@ $Usuario=  Session::getSesion("user");
                       text-align:center;
                       padding-top:10px;
                     }
+                    
+                    
+                    .main-encabezado {
+                        /*background: #333;*/
+                        color: white;
+                        height: 80px;
+
+                        width: 100%;  /*hacemos que la cabecera ocupe el ancho completo de la página*/ 
+                        left: 0;  /*Posicionamos la cabecera al lado izquierdo*/ 
+                        top: 0;  /*Posicionamos la cabecera pegada arriba*/ 
+                        position: fixed;  /*Hacemos que la cabecera tenga una posición fija*/ 
+                    }
+                    
+                    
+/*Inicia estilos para mantener fijo el header*/                    
+                    .table-fixed-header {
+    display: table; /* 1 */
+    position: relative;
+    padding-top: calc(~'2.5em + 2px'); /* 2 */
+    
+    table {
+        margin: 0;
+        margin-top: calc(~"-2.5em - 2px"); /* 2 */
+    }
+    
+    thead th {
+        white-space: nowrap;
+        
+        /* 3 - apply same styling as for thead th */
+        /* 4 - compensation for padding-left */
+        &:before {
+            content: attr(data-header);
+            position: absolute;
+            top: 0;
+            padding: .5em 1em; /* 3 */
+            margin-left: -1em; /* 4 */
+        }
+    }
+}
+
+ /* 5 - setting height and scrolling */
+.table-container {
+    max-height: 70vh; /* 5 */
+    overflow-y: auto; /* 5 */
+        
+        /* 6 - same styling as for thead th */
+        &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        min-height: 2.5em;             /* 6 */
+        border-bottom: 2px solid #DDD; /* 6 */
+        background: #f1f1f1;           /* 6 */
+    }
+}
+ 
+/*Finaliza estilos para mantener fijo el header*/                     
+                    
+                    
+                    
                 </style>
  
                     
@@ -99,18 +161,39 @@ $Usuario=  Session::getSesion("user");
 
 require_once 'EncabezadoUsuarioView.php';
 
-?>            
+?>
              
+<div style="height: 50px"></div>
+
              
+<div style="position: fixed;">             
 <button onClick="DocumentoArchivoAgregarModalF();" type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
 		Agregar Documento de Entrada
-</button>             
+</button>
+    
+<button id="btnAgregarDocumentoEntradaRefrescar" type="button" class="btn btn-info " onclick="refresh();" >
+    <i class="glyphicon glyphicon-repeat"></i> 
+</button>    
+</div>
+
+
+<div style="height: 55px"></div>
+
+
+
+<div class="contenedortable" style="position: fixed;">   
+    <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Folio de Entrada" style="width: 200px;">
+</div >
+
+
+<div style="height: 55px"></div>
              
              
- <div style="display:none;" id="myDiv" class="animate-bottom"> 
+ <div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> 
 		
-                     <div class="contenedortable">
-                           <table class="tbl-qa">
+    <div class="table-container">
+        
+        <table id="idTable" class="tbl-qa">
 		  <!--<thead>-->
 			  <tr>
 				
@@ -314,17 +397,20 @@ require_once 'EncabezadoUsuarioView.php';
 		  </tbody>
 		</table>
 
-                     </div>
+                     
 
 <!--			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 			</a>-->
-	
+    </div>
+
 </div>
-             
-<div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+<div class="no-skin modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" onload="loadSpinner()">
 	<div class="modal-dialog" role="document">
+        <div id="loaderModalMostrar"></div>
 		<div class="modal-content">
+                        
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 		        <h4 class="modal-title" id="myModalLabel">Archivos agregados</h4>
@@ -824,6 +910,12 @@ require_once 'EncabezadoUsuarioView.php';
         });  
     }
             
+    function refresh(){
+                    
+                  window.location.href="DocumentoEntradaView.php";  
+                }
+    
+    
     
     function loadSpinner(){
 //                    alert("se cargara otro ");
@@ -857,6 +949,7 @@ require_once 'EncabezadoUsuarioView.php';
                                         //         formData: {newUrl: '/'+jsonData.ID_CUMPLIMIENTO+'/'+jsonData.ID_DOCUMENTO+'/'}
                                         // });
                                         $('.start').click();
+                                        $('#create-item .close').click();
                                         // $ ( ' #fileupload ' ). fileupload ( ' send ' , {files : filesList}).success(function(data){alert("termino")})
                                         // {
                                                 // console.log();
@@ -922,21 +1015,24 @@ require_once 'EncabezadoUsuarioView.php';
                 }
                 function agregarArchivosUrl()
                 {
-                        // var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
-                        // // alert(ID_DOCUMENTO);
-                        // $.ajax({
-                        //         url: "../Controller/DocumentosEntradaController.php?Op=getIdCumplimiento",
-                        //         type: 'POST',
-                        //         data: 'ID_DOCUMENTO='+ID_DOCUMENTO,
-                        //         async:false,
-                        //         success:function(data)
-                        //         {
+                        var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
+                        // alert(ID_DOCUMENTO);
+                        $.ajax({
+                                url: "../Controller/DocumentosEntradaController.php?Op=getIdCumplimiento",
+                                type: 'POST',
+                                data: 'ID_DOCUMENTO='+ID_DOCUMENTO,
+                                // async:false,
+                                success:function(data)
+                                {
                                         $('.start').click();
                                         // $('#loader').show();
-                                        $('#create-itemUrls .close').click();
+                                        // $('#create-itemUrls .close').click();
                                         // $('#loader').hide();
-                                // }
-                        // });
+                                }
+                        });
+                        // .done(function(){mostrar_urls(ID_DOCUMENTO);});
+                        // bind('fileuploadchange',function(e,data){alert("archivo subido");});
+                        // $('#fileupload').bind('fileuploadchange',function(e,data){alert("archivo subido");});
                         // $.ajax({
                                 // url: "../Controller/ArchivoUploadController.php?Op=Guardar",
                                 // type: "POST",
@@ -963,8 +1059,31 @@ require_once 'EncabezadoUsuarioView.php';
                                 success: function(data)
                                 {
                                         console.log("Eliminado exitoso");
+                                        mostrar_urls(ID_DOCUMENTO);
                                 }
                         });
+                }
+                
+                
+                function filterTable() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInput");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[2];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
                 }
                 
 		</script>
@@ -991,10 +1110,11 @@ require_once 'EncabezadoUsuarioView.php';
                                 {% } %}
                                 </td>
                         </tr>
-                        {% } %}
+                        {% } %} 
                 </script>
                 <script id="template-download" type="text/x-tmpl">
-                        {% for (var i=0, file; file=o.files[i]; i++) { %}
+                {% var t = $('#fileupload').fileupload('active'); var i,file;%}
+                        {% for (i=0,file; file=o.files[i]; i++) { %}
                         <tr class="template-download">
                                 <td>
                                 <span class="preview">
@@ -1017,6 +1137,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 <!-- </td> -->
                         </tr>
                         {% } %}
+                        {% if(t == 1){ if( $('#tempInputIdDocumento').length > 0 ) { var ID_DOCUMENTO = $('#tempInputIdDocumento').val(); mostrar_urls(ID_DOCUMENTO);}else{ $('#btnAgregarDocumentoEntradaRefrescar').click(); } } %}
                 </script>
 
                 <!--Aqui abre para la ventana de guardado ok-->

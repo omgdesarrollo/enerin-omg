@@ -21,12 +21,8 @@ $Usuario=  Session::getSesion("user");
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
 		<!-- bootstrap & fontawesome -->
-		<!--<link rel="stylesheet" href="assets/css/bootstrap.min.css" />-->
-                <!--<link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>-->
                 <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-		<!--<link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" />-->
                 <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-		<!-- page specific plugin styles -->
 
 		<!-- text fonts -->
 		<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />
@@ -50,7 +46,7 @@ $Usuario=  Session::getSesion("user");
 		<script src="../../assets/probando/js/ace-extra.min.js"></script>
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 
-                
+                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
                 
                 
                 <script>
@@ -106,6 +102,53 @@ $Usuario=  Session::getSesion("user");
                     }
                     
                     
+/*Inicia estilos para mantener fijo el header*/                    
+                    .table-fixed-header {
+    display: table; /* 1 */
+    position: relative;
+    padding-top: calc(~'2.5em + 2px'); /* 2 */
+    
+    table {
+        margin: 0;
+        margin-top: calc(~"-2.5em - 2px"); /* 2 */
+    }
+    
+    thead th {
+        white-space: nowrap;
+        
+        /* 3 - apply same styling as for thead th */
+        /* 4 - compensation for padding-left */
+        &:before {
+            content: attr(data-header);
+            position: absolute;
+            top: 0;
+            padding: .5em 1em; /* 3 */
+            margin-left: -1em; /* 4 */
+        }
+    }
+}
+
+ /* 5 - setting height and scrolling */
+.table-container {
+    max-height: 70vh; /* 5 */
+    overflow-y: auto; /* 5 */
+        
+        /* 6 - same styling as for thead th */
+        &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        min-height: 2.5em;             /* 6 */
+        border-bottom: 2px solid #DDD; /* 6 */
+        background: #f1f1f1;           /* 6 */
+    }
+}
+ 
+/*Finaliza estilos para mantener fijo el header*/                    
+
+
                 </style>    
                 
                 
@@ -118,30 +161,51 @@ $Usuario=  Session::getSesion("user");
             <div id="loader"></div>
            
 	
-		<?php		
+            <?php		
 		require_once 'EncabezadoUsuarioView.php';
-		?>
+            ?>
 
             
-             <!-- <div style="height: 50px"></div> -->
+             <div style="height: 50px"></div>
+             
              
              <div style="position: fixed;">        
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
                     Agregar-Documento
-                </button>    
+                </button>
+                 
+                <button type="button" class="btn btn-info " onclick="refresh();" >
+                    <i class="glyphicon glyphicon-repeat"></i> 
+                </button> 
+                 
               </div>
-	                   
+	     
+             
           <div style="height: 55px"></div>
+          
+          
+          <div class="contenedortable" style="position: fixed;">   
+            <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Nombre del Documento" style="width: 240px">
+          </div >
 
-                           <table class="tbl-qa">
-		  <!--<thead>-->
+
+<div style="height: 55px"></div>
+          
+          
+        
+          <div class="table-fixed-header">
+              <div class="table-container">
+
+                           <table id="idTable" class="tbl-qa">
+		  <thead >
 			  <tr>
 				<th class="table-header" >No.</th>
                                 <th class="table-header">Clave del Documento</th>
 				<th class="table-header">Nombre del Documento</th>				
 				<th class="table-header">Responsable del Documento</th>					                                
 			  </tr>
-		  <!--</thead>-->
+		  </thead>
+                  
 		  <tbody>
 		  <?php
                   
@@ -203,7 +267,8 @@ $Usuario=  Session::getSesion("user");
 		</table>
                            
                            
-
+              </div>
+          </div>    
    
             
             
@@ -469,12 +534,39 @@ if(mensajeerror!=""){
                                  
                 
                 
+                function refresh(){
+                    
+                  window.location.href="DocumentosView.php";  
+                }
                 
                 
                 
                 function loadSpinner(){
 //                    alert("se cargara otro ");
                         myFunction();
+                }
+                
+                
+                
+                function filterTable() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInput");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[2];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
                 }
                 
                 

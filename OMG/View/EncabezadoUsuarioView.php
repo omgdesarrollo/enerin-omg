@@ -54,9 +54,13 @@ foreach($Alarmas as $alarma)
 
 
 ?>
-<!--<div class="main-encabezado">-->
+<div class="main-encabezado">
 
+<<<<<<< HEAD
 <div id="navbar" class="navbar navbar-default ace-save-state ">
+=======
+<div id="navbar" class="navbar navbar-default ace-save-state">
+>>>>>>> c72074271644c92fb5af642959c96370d6a4d036
             
             <div class="navbar-container ace-save-state" id="navbar-container">
                 <div class="navbar-header pull-left">
@@ -191,3 +195,4 @@ foreach($Alarmas as $alarma)
             </div>
 </div>
 
+</div>
