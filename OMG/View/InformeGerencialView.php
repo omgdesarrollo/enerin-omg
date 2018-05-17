@@ -58,18 +58,7 @@ $Usuario=  Session::getSesion("user");
                 <!--<link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>-->
                 <!--<script src="../../codebase/dhtmlx.js"></script>-->
                 <!--aqui termina la seccion para poder abrir el modal-->
-                
-                
-                
-                
-                
-                <!--Aqui empieza el Chart-->
-                <!--<link href="dhtmlxChart_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>-->
-                <!--<script src="dhtmlxChart_v51_std/codebase/dhtmlxchart.js" type="text/javascript"></script>-->
-                <!--<link href="dhtmlxChart_v51_std/codebase/dhtmlxchart.css" rel="stylesheet" type="text/css"/>-->
-                
-                <!--Aqui termina el Chart-->
-                
+   
                 
                 
                 <style>
@@ -114,6 +103,54 @@ $Usuario=  Session::getSesion("user");
 		}
                 
                 
+
+/*Inicia estilos para mantener fijo el header*/                    
+                    .table-fixed-header {
+    display: table; /* 1 */
+    position: relative;
+    padding-top: calc(~'2.5em + 2px'); /* 2 */
+    
+    table {
+        margin: 0;
+        margin-top: calc(~"-2.5em - 2px"); /* 2 */
+    }
+    
+    thead th {
+        white-space: nowrap;
+        
+        /* 3 - apply same styling as for thead th */
+        /* 4 - compensation for padding-left */
+        &:before {
+            content: attr(data-header);
+            position: absolute;
+            top: 0;
+            padding: .5em 1em; /* 3 */
+            margin-left: -1em; /* 4 */
+        }
+    }
+}
+
+ /* 5 - setting height and scrolling */
+.table-container {
+    max-height: 70vh; /* 5 */
+    overflow-y: auto; /* 5 */
+        
+        /* 6 - same styling as for thead th */
+        &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        min-height: 2.5em;             /* 6 */
+        border-bottom: 2px solid #DDD; /* 6 */
+        background: #f1f1f1;           /* 6 */
+    }
+}
+ 
+/*Finaliza estilos para mantener fijo el header*/                
+                
+                
                 </style>
                 
                 
@@ -131,15 +168,23 @@ require_once 'EncabezadoUsuarioView.php';
 ?>
              
 
+<div style="height: 15px"></div>
+
+             
+<div style="position: fixed;">                        
 <button type="button" id="btn_informe" class="btn btn-success" data-toggle="modal">
     Informe
     <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
 </button>
+</div>    
              
+
+<div style="height: 50px"></div>
+
              
-             
-	<div style="display:none;" id="myDiv" class="animate-bottom"> 
-                     <div class="contenedortable" id="winVP">
+<div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> 
+    <div class="table-container" id="winVP">
+                         
                            <table class="tbl-qa">
 		  <!--<thead>-->
 			  <tr>
@@ -275,36 +320,14 @@ require_once 'EncabezadoUsuarioView.php';
 		?>
 		  </tbody>
 		</table>
-<!--                         
-                          <nav>
-		  	<ul class="pagination">
-		  		<?php //if ($data["actual-section"] != 1): ?> 		  			
-		    		<li><a href="AsignacionTemasRequisitosView.php?page=1">Inicio</a></li>
-		    		<li><a href="AsignacionTemasRequisitosView.php?page=////<?php echo $data['previous']; ?>">&laquo;</a></li>
-				<?php //endif; ?>
 
-				<?php //for ($i = $data["section-start"]; $i <= $data["section-end"]; $i++): ?>					
-				<?php //if ($i > $data["total-pages"]): break; endif; ?>
-				<?php //$active = ($i == $data["this-page"]) ? "active" : ""; ?>			    
-			    	<li class="////<?php // echo $active; ?>">
-					<a href="AsignacionTemasRequisitosView.php?page=////<?php //echo $i; ?>">
-						<?php //echo $i; ?>			    		
-					</a>
-			    	</li>
-			    	<?php //endfor; ?>
-				
-				<?php //if ($data["actual-section"] != $data["total-sections"]): ?>
-                                <li><a href="AsignacionTemasRequisitosView.php?page=////<?php //echo $data['next']; ?>">&raquo;</a></li>
-			    	<li><a href="AsignacionTemasRequisitosView.php?page=////<?php //echo $data['total-pages']; ?>">Final</a></li>
-		    		<?php //endif; ?>
-		  	</ul>
-		</nav>-->
-                     </div>
+                     
 
 <!--			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 			</a>-->
-	
+    </div>	
+
 </div>
 
 	               

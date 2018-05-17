@@ -83,6 +83,56 @@ $Usuario=  Session::getSesion("user");
                       text-align:center;
                       padding-top:10px;
                     }
+                    
+                    
+                    
+/*Inicia estilos para mantener fijo el header*/                    
+                    .table-fixed-header {
+    display: table; /* 1 */
+    position: relative;
+    padding-top: calc(~'2.5em + 2px'); /* 2 */
+    
+    table {
+        margin: 0;
+        margin-top: calc(~"-2.5em - 2px"); /* 2 */
+    }
+    
+    thead th {
+        white-space: nowrap;
+        
+        /* 3 - apply same styling as for thead th */
+        /* 4 - compensation for padding-left */
+        &:before {
+            content: attr(data-header);
+            position: absolute;
+            top: 0;
+            padding: .5em 1em; /* 3 */
+            margin-left: -1em; /* 4 */
+        }
+    }
+}
+
+ /* 5 - setting height and scrolling */
+.table-container {
+    max-height: 70vh; /* 5 */
+    overflow-y: auto; /* 5 */
+        
+        /* 6 - same styling as for thead th */
+        &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        min-height: 2.5em;             /* 6 */
+        border-bottom: 2px solid #DDD; /* 6 */
+        background: #f1f1f1;           /* 6 */
+    }
+}
+ 
+/*Finaliza estilos para mantener fijo el header*/                    
+                    
+                    
                 </style>
                 
                     
@@ -97,14 +147,22 @@ require_once 'EncabezadoUsuarioView.php';
 
 ?>
              
+ 
+<div style="height: 15px"></div>
+
              
+<div style="position: fixed;">                          
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
 		Agregar Documento de Salida
-</button>             
-             
-                          
-		 <div style="display:none;" id="myDiv" class="animate-bottom"> 
-                     <div class="contenedortable">
+</button>
+</div>    
+
+
+<div style="height: 55px"></div>
+                   
+<div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> 
+    <div class="table-container">
+        
                            <table class="tbl-qa">
 			  <tr>
 				
@@ -242,35 +300,14 @@ require_once 'EncabezadoUsuarioView.php';
 		?>
 		  </tbody>
 		</table>
-<!--                         
-                          <nav>
-		  	<ul class="pagination">
-		  		<?php //if ($data["actual-section"] != 1): ?> 		  			
-		    		<li><a href="AsignacionTemasRequisitosView.php?page=1">Inicio</a></li>
-		    		<li><a href="AsignacionTemasRequisitosView.php?page=////<?php echo $data['previous']; ?>">&laquo;</a></li>
-				<?php //endif; ?>
 
-				<?php //for ($i = $data["section-start"]; $i <= $data["section-end"]; $i++): ?>					
-				<?php //if ($i > $data["total-pages"]): break; endif; ?>
-				<?php //$active = ($i == $data["this-page"]) ? "active" : ""; ?>			    
-			    	<li class="////<?php // echo $active; ?>">
-					<a href="AsignacionTemasRequisitosView.php?page=////<?php //echo $i; ?>">
-						<?php //echo $i; ?>			    		
-					</a>
-			    	</li>
-			    	<?php //endfor; ?>
-				
-				<?php //if ($data["actual-section"] != $data["total-sections"]): ?>
-                                <li><a href="AsignacionTemasRequisitosView.php?page=////<?php //echo $data['next']; ?>">&raquo;</a></li>
-			    	<li><a href="AsignacionTemasRequisitosView.php?page=////<?php //echo $data['total-pages']; ?>">Final</a></li>
-		    		<?php //endif; ?>
-		  	</ul>
-		</nav>-->
-                     </div>
+                 
 
 <!--			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 			</a>-->
+
+    </div>                    
 	
 </div>
              
@@ -290,7 +327,7 @@ require_once 'EncabezadoUsuarioView.php';
 
                                     
                                                 <div class="form-group">
-							<label class="control-label" for="title">Contrato:</label>
+							<label class="control-label" for="title">Folio de Entrada:</label>
                                                         
                                                         <select   id="ID_DOCUMENTO_ENTRADA_MODAL" class="select1">
                                                                 <?php
@@ -444,9 +481,9 @@ require_once 'EncabezadoUsuarioView.php';
                                     
                                                                       
                                   
-                                  alert("ID_DOCUMENTO_ENTRADA_MODAL :"+ID_DOCUMENTO_ENTRADA_MODAL+"FOLIO_SALIDA :"+FOLIO_SALIDA
-                                          +"FECHA_ENVIO :"+FECHA_ENVIO+"ASUNTO :"+ASUNTO+"DESTINATARIO :"+DESTINATARIO
-                                          +"DOCUMENTO :"+DOCUMENTO+"OBSERVACIONES :"+OBSERVACIONES);
+//                                  alert("ID_DOCUMENTO_ENTRADA_MODAL :"+ID_DOCUMENTO_ENTRADA_MODAL+"FOLIO_SALIDA :"+FOLIO_SALIDA
+//                                          +"FECHA_ENVIO :"+FECHA_ENVIO+"ASUNTO :"+ASUNTO+"DESTINATARIO :"+DESTINATARIO
+//                                          +"DOCUMENTO :"+DOCUMENTO+"OBSERVACIONES :"+OBSERVACIONES);
                                     
 
                                     datos=[];
@@ -561,7 +598,7 @@ require_once 'EncabezadoUsuarioView.php';
                             
                             
 				success: function(data){
-                                    alert("se guardo");
+//                                    alert("se guardo");
                                     
 //					$(editableObj).css("background","#FDFDFD");
                                         swal("Guardado Exitoso!", "Ok!", "success")

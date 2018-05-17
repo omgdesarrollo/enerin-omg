@@ -102,7 +102,7 @@ $Usuario=  Session::getSesion("user");
                     }
                     
                     
-                    
+/*Inicia estilos para mantener fijo el header*/                    
                     .table-fixed-header {
     display: table; /* 1 */
     position: relative;
@@ -145,7 +145,10 @@ $Usuario=  Session::getSesion("user");
         background: #f1f1f1;           /* 6 */
     }
 }
-                    
+ 
+/*Finaliza estilos para mantener fijo el header*/                    
+
+
                 </style>    
                 
                 
@@ -177,7 +180,6 @@ $Usuario=  Session::getSesion("user");
               <div class="table-container">
 
                            <table class="tbl-qa">
-                  <div style="position: fixed;">             
 		  <thead >
 			  <tr>
 				<th class="table-header" >No.</th>
@@ -186,7 +188,6 @@ $Usuario=  Session::getSesion("user");
 				<th class="table-header">Responsable del Documento</th>					                                
 			  </tr>
 		  </thead>
-                  </div>
                   
 		  <tbody>
 		  <?php

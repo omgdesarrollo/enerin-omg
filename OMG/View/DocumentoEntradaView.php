@@ -87,6 +87,57 @@ $Usuario=  Session::getSesion("user");
                       text-align:center;
                       padding-top:10px;
                     }
+                    
+                    
+                    
+/*Inicia estilos para mantener fijo el header*/                    
+                    .table-fixed-header {
+    display: table; /* 1 */
+    position: relative;
+    padding-top: calc(~'2.5em + 2px'); /* 2 */
+    
+    table {
+        margin: 0;
+        margin-top: calc(~"-2.5em - 2px"); /* 2 */
+    }
+    
+    thead th {
+        white-space: nowrap;
+        
+        /* 3 - apply same styling as for thead th */
+        /* 4 - compensation for padding-left */
+        &:before {
+            content: attr(data-header);
+            position: absolute;
+            top: 0;
+            padding: .5em 1em; /* 3 */
+            margin-left: -1em; /* 4 */
+        }
+    }
+}
+
+ /* 5 - setting height and scrolling */
+.table-container {
+    max-height: 70vh; /* 5 */
+    overflow-y: auto; /* 5 */
+        
+        /* 6 - same styling as for thead th */
+        &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        min-height: 2.5em;             /* 6 */
+        border-bottom: 2px solid #DDD; /* 6 */
+        background: #f1f1f1;           /* 6 */
+    }
+}
+ 
+/*Finaliza estilos para mantener fijo el header*/                     
+                    
+                    
+                    
                 </style>
  
                     
@@ -99,17 +150,25 @@ $Usuario=  Session::getSesion("user");
 
 require_once 'EncabezadoUsuarioView.php';
 
-?>            
+?>
              
+<div style="height: 15px"></div>
+
              
+<div style="position: fixed;">             
 <button onClick="DocumentoArchivoAgregarModalF();" type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
 		Agregar Documento de Entrada
 </button>             
+</div>
+
+
+<div style="height: 55px"></div>
              
              
- <div style="display:none;" id="myDiv" class="animate-bottom"> 
+ <div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> 
 		
-                     <div class="contenedortable">
+    <div class="table-container">
+        
                            <table class="tbl-qa">
 		  <!--<thead>-->
 			  <tr>
@@ -314,14 +373,18 @@ require_once 'EncabezadoUsuarioView.php';
 		  </tbody>
 		</table>
 
-                     </div>
+                     
 
 <!--			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 			</a>-->
-	
+    </div>
+
 </div>
-             
+
+
+
+
 <div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
