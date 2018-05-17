@@ -38,6 +38,18 @@ class DocumentoEntradaModel{
     }
     }
     
+    public function  listarCumplimientoPorId_Entrada($id_entrada){
+        try{
+            $dao=new DocumentoEntradaDAO();
+            $rec=$dao->listarCumplimientoPorId_Entrada($id_entrada);
+            
+            
+            return $rec;
+    }  catch (Exception $e){
+        throw  $e;
+    }
+    }
+    
     
     public function  listarDocumentosEntradaComboBox(){
         try{

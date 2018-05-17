@@ -94,7 +94,7 @@ switch ($Op) {
 				//   echo $data[0];
 				//  $jsonData['ID_CUMPLIMIENTO'] = $data[0];
 
-				$jsonData['ID_DOCUMENTO'] = $data[1];
+				// $jsonData['ID_DOCUMENTO'] = $data[1];
 				$valores = '/'.$data[0].'/'.$data[1].'/';
 				Session::setSesion("newUrl",$valores);
 
@@ -108,11 +108,52 @@ switch ($Op) {
                 //   echo json_encode("guarda documento");
 				   $modelSeguimientoEntrada->insertar($traerultimoinsertado);
 				
-				   header('Content-type: application/json; charset=utf-8');
-				echo json_encode($jsonData);
+				//    header('Content-type: application/json; charset=utf-8');
+				// echo json_encode($jsonData);
                         
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
 		break;
+        case "AlmacenarArchivosServer":
+            echo "le ";
+                         
+         $traerultimoinsertado=$model->traer_ultimo_insertado();
+//         $cumplimiento=$model->listarCumplimientoPorId_Entrada($traerultimoinsertado);
+         $data = $model->getIdCumplimiento($traerultimoinsertado);
+         foreach ($data as $value) {
+             
+         }
+//         echo "".$value["ID_CUMPLIMIENTO"];
+         $cump=$value["ID_CUMPLIMIENTO"];
+    if($_FILES["imagen"]["name"][0])
+    {
         
+        $carpetaDestino = "../../archivos/files/".$cump."/".$traerultimoinsertado."/";
+       // echo "carpeta:  ".$carpetaDestino;
+        for($i=0;$i<count($_FILES["imagen"]["name"]);$i++)
+        {
+            $origen = $_FILES["imagen"]["tmp_name"][$i];
+            $destino = $carpetaDestino.$_FILES["imagen"]["name"][$i];
+            move_uploaded_file($origen,$destino);
+        }
+        echo true;
+        
+    } else {
+ 
+        echo false;
+    }
+    
+    header("Location:../View/DocumentoEntradaViewChecandoNuevaVersion.php"); /* Redirección del navegador */
+
+/* Asegurándonos de que el código interior no será ejecutado cuando se realiza la redirección. */
+exit;
+            
+        break;
 	case 'Modificar':
 		# code...
    					

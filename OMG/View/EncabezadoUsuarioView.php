@@ -83,7 +83,7 @@ foreach($Alarmas as $alarma)
 						<?php echo $numeroAlarmas." NOTIFICACIONES"; ?>
 					</li>
 
-						<li class="dropdown-content">
+                                        <li class="dropdown-content" >
 							<ul class="dropdown-menu dropdown-navbar navbar-pink">
 							<?php foreach($NotificacionesAlarma as $item)
 							{ ?>

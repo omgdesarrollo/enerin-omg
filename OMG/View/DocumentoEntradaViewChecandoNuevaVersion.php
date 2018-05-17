@@ -18,38 +18,14 @@ $Usuario=  Session::getSesion("user");
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
-		<!-- bootstrap & fontawesome -->
-		<!--<link rel="stylesheet" href="assets/css/bootstrap.min.css" />-->
-                <!--<link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>-->
-                <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
                 
-                <!-- clase para la subida de archivos -->
-                <link href="../../assets/probando/css/subir.css" rel="stylesheet" type="text/css"/>
-
-		<!--<link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" />-->
-                <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-		<!-- page specific plugin styles -->
-
-		<!-- text fonts -->
-		<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />
-
-		<!-- ace styles -->
-		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-
-		<!--[if lte IE 9]>
-			<link rel="stylesheet" href="assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
-		<![endif]-->
-		<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
-		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
-                
+                <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
                 <!--Inicia para el spiner cargando-->
                 <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                 <!--Termina para el spiner cargando-->
                                                 
                 <script src="../../js/jquery.js" type="text/javascript"></script>
-		<script src="../../assets/probando/js/ace-extra.min.js"></script>              
-                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
 
                 <!-- cargar archivo -->
                 <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
@@ -57,6 +33,8 @@ $Usuario=  Session::getSesion("user");
                 <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
                 <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
             <style>
+                
+
                     .modal
                     {
                         overflow: hidden;
@@ -97,9 +75,61 @@ $Usuario=  Session::getSesion("user");
        
 <?php
 
-require_once 'EncabezadoUsuarioView.php';
+//require_once 'EncabezadoUsuarioView.php';
 
 ?>            
+         
+             <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="#">Mi Proyecto</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>          
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="http://collectivecloudperu.com/blogdevs/" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Nosotros</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" href="#">Misión</a>
+              <a class="dropdown-item" href="#">Prensa</a>
+              <a class="dropdown-item" href="#">Visión</a>              
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Nosotros</a>
+          </li>
+        </ul>
+
+                                
+
+          <div class="demo-content">
+            <div id="notification-header">
+              <div style="position:relative">
+                <button id="notification-icon" name="button" onclick="myFunction()" class="dropbtn"><span id="notification-count"></span><img src="img/icono.png" /></button>
+                <div id="notification-latest"></div>
+              </div>          
+            </div>
+          </div>
+
+                    
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Buscar" aria-label="Buscar" required>
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+        </form>
+
+      </div>
+    </nav>
+
+             
+             
+             
+             
+             
+             
+             
              
              
 <button onClick="DocumentoArchivoAgregarModalF();" type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
@@ -107,7 +137,7 @@ require_once 'EncabezadoUsuarioView.php';
 </button>             
              
              
- <div style="display:none;" id="myDiv" class="animate-bottom"> 
+ <div style="display:none;" id="myDiv" class="animate-bottom container>"> 
 		
                      <div class="contenedortable">
                            <table class="tbl-qa">
@@ -518,9 +548,18 @@ require_once 'EncabezadoUsuarioView.php';
 							<div class="help-block with-errors"></div>
 						</div>-->
                                                 <!-- <div class="form-group"> -->
-                                                        <div id="DocumentoEntradaAgregarModal"></div>
-						<!-- </div> -->
                                                 
+                                                <form id="frmArchivos"  method="post" action="../Controller/DocumentosEntradaController.php?Op=AlmacenarArchivosServer" enctype="multipart/form-data">
+                                                <input type="file" id="filesToUpload" name="imagen[]" multiple="multiple"/>
+                                                <input type="submit" id="btnSubmitMaster" style=""value="Enviar los archivos"/>
+                                                </form>
+                                                
+                                                
+
+                                                
+                                                        <!--<div id="DocumentoEntradaAgregarModal"></div>-->
+						<!-- </div> -->
+                                                <div id="fileList">d</div>
                                                 <!-- <div class="barra">
                                                         <div class="barra_azul" id="barra_estado">
                                                         <span></span>
@@ -538,6 +577,7 @@ require_once 'EncabezadoUsuarioView.php';
                                                     <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
                                                     <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
 						</div>
+                                                
 
 		      		<!-- </form> -->
 
@@ -547,8 +587,7 @@ require_once 'EncabezadoUsuarioView.php';
 		  </div>
 		</div>
        <!--Final de Seccion Modal--> 
-             
-                
+               
 
 
 		
@@ -635,9 +674,9 @@ require_once 'EncabezadoUsuarioView.php';
                                 agregarArchivosUrl();
                         });
                         $("#btn_guardar").click(function(){
-                                //   alert("entro");
+                                   alert("entro");
        
-        
+                                        
                                     var ID_CUMPLIMIENTOMODAL=$("#ID_CUMPLIMIENTOMODAL").val();
                                     var FOLIO_REFERENCIA=$("#FOLIO_REFERENCIA").val();
                                     var FOLIO_ENTRADA=$("#FOLIO_ENTRADA").val();
@@ -654,7 +693,18 @@ require_once 'EncabezadoUsuarioView.php';
                                     var DOCUMENTO=$('#fileupload').fileupload('option', 'url');
                                     var OBSERVACIONES=$("#OBSERVACIONES").val();
                                     var MENSAJE_ALERTA=$("#MENSAJE_ALERTA").val();
-                                  
+//                                    var file = document.getElementById('myFile').files[0];
+                               
+                                
+                                      
+                                
+//                                alert("file"+Object.keys(objeto));
+
+
+
+
+
+//                                 alert("d  "+file);
                                 //   alert("ID_CUMPLIMIENTOMODAL :"+ID_CUMPLIMIENTOMODAL+"FOLIO_REFERENCIA :"+FOLIO_REFERENCIA
                                 //        +"FOLIO_ENTRADA :"+FOLIO_ENTRADA+"FECHA_RECEPCION :"+FECHA_RECEPCION+"ASUNTO :"+ASUNTO
                                 //        +"REMITENTE :"+REMITENTE+"ID_ENTIDADMODAL :"+ID_ENTIDADMODAL+"ID_CLAUSULAMODAL :"+ID_CLAUSULAMODAL
@@ -679,6 +729,8 @@ require_once 'EncabezadoUsuarioView.php';
                                     datos.push(DOCUMENTO);//13
                                     datos.push(OBSERVACIONES);//14
                                     datos.push(MENSAJE_ALERTA);//15
+                                    
+                                    saveToDatabaseDatosFormulario(datos);
                                     console.log(datos);
                                 todoBien = true;
                                 asignacionF = new Date(datos[10]);
@@ -742,7 +794,10 @@ require_once 'EncabezadoUsuarioView.php';
                                 //         barra_estado.classList.add('barra_roja');
                                 //         span.innerHTML = "proceso Cancelado";
                                 // });
-                                     saveToDatabaseDatosFormulario(datos);
+                                     
+                                     
+                                     
+                                     //saveToDatabaseDatosFormulario(datos);
                         // });
                         });
                         
@@ -845,10 +900,24 @@ require_once 'EncabezadoUsuarioView.php';
                                 // async: false,
                                 success: function(jsonData)
                                 {
+                                    
+                                   
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+//                                    alert("f");
+                                    
+//                                  $("#btnSubmitMaster").simulate('click'); 
+//                                    btnSubmitMaster
+                                    
                                 //     alert(  $Url ?>);
 //					$(editableObj).css("background","#FDFDFD");
                                         // ID_DOCUMENTO = jsonData.ID_DOCUMENTO;
-                                        consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
+//                                        consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
                                         // $('#fileupload').fileupload({
                                         //         url: '../../archivos/files/'+jsonData.ID_CUMPLIMIENTO+'/'+jsonData.ID_DOCUMENTO+'/'
                                         // });
@@ -856,7 +925,7 @@ require_once 'EncabezadoUsuarioView.php';
                                         // ({
                                         //         formData: {newUrl: '/'+jsonData.ID_CUMPLIMIENTO+'/'+jsonData.ID_DOCUMENTO+'/'}
                                         // });
-                                        $('.start').click();
+//                                        $('.start').click();
                                         // $ ( ' #fileupload ' ). fileupload ( ' send ' , {files : filesList}).success(function(data){alert("termino")})
                                         // {
                                                 // console.log();
@@ -1030,22 +1099,10 @@ require_once 'EncabezadoUsuarioView.php';
                 <!--Aqui cierra para abrir el modal de insertar-->
 
                 <!-- js cargar archivo -->
-                <script src="../../assets/FileUpload/js/jquery.min.js"></script>
-                <script src="../../assets/FileUpload/js/jquery-ui.min.js"></script>
-                <script src="../../assets/FileUpload/js/tmpl.min.js"></script>
-                <script src="../../assets/FileUpload/js/load-image.all.min.js"></script>
-                <script src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.blueimp-gallery.min.js"></script>
+               
                 <script src="../../assets/FileUpload/js/jquery.iframe-transport.js"></script>
                 <script src="../../assets/FileUpload/js/jquery.fileupload.js"></script>
                 <script src="../../assets/FileUpload/js/jquery.fileupload-process.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-image.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-audio.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-video.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
-                <script src="../../assets/FileUpload/js/main.js"></script>
 	</body>
         
         

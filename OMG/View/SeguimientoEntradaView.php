@@ -133,27 +133,58 @@ require_once 'EncabezadoUsuarioView.php';
                                 <td>
                                    <?php
                                    
-                                   // print_r($alarma);
-                                    $alarm = new Datetime($alarma['fecha_alarma']);
-                                    $flimite = new Datetime($alarma['fecha_limite_atencion']);
-                                    $hoy = new Datetime();
-                                    $al = strftime("%d - %B - %y");
-                                    $hoy = new Datetime($al);
+                                    //Inicia Status Logico
+                                    $alarm = new Datetime($filas['fecha_alarma']);
+                                    $alarm = strftime("%d-%B-%y",$alarm -> getTimestamp());
+                                    $alarm = new Datetime($alarm);
                                     
-                                    if($flimite<=$hoy)
-                                   
-                                        
+                                    $flimite = new Datetime($filas['fecha_limite_atencion']);// Guarda en una variable la fecha de la base de datos
+                                    $flimite = strftime("%d-%B-%y",$flimite -> getTimestamp());// Esta da el formato: dia. mes y año, sin guardar las horas 
+                                    $flimite = new Datetime($flimite);//Se guarda en este formato y se reinicializan las horas a 00.
+                                    
+                                    $hoy = new Datetime();
+                                    $hoy = strftime("%d - %B - %y");
+                                    $hoy = new Datetime($hoy);
+                               
+
+                                    
                                     if($filas["status_doc"]== 1){
-                                        echo "En proceso";
-                                        
-                                    } if($filas["status_doc"]== 2){
+
+                                        if ($flimite <= $hoy){
+
+                                            if($flimite == $hoy){
+                                                
+                                                echo "Tiempo Limite";
+                                                
+                                            } else {
+                                                
+                                                echo "Tiempo Vencido";  
+                                            }
+                                                  
+                                        } else{
+                                            
+                                          if ($alarm <= $hoy){
+                                              
+                                              echo "Alerta Vencida";
+                                                                                           
+                                          } else {
+                                                  echo "En Tiempo";
+                                              }                                           
+                                        }
+                                       
+                                     
+                                    } //Primer If 
+                                    
+                                  
+                                    if($filas["status_doc"]== 2){
                                         echo "Suspendido";
                                         
                                     } if($filas["status_doc"]== 3){
                                         echo "Terminado";
                                         
-                                    }    
-
+                                    } 
+                                   
+                                    //Termina Status Logico
                                    
                                    ?>
                                     

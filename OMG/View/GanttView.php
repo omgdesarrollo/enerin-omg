@@ -49,8 +49,10 @@ and open the template in the editor.
     <script src="https://export.dhtmlx.com/gantt/api.js?v=20180322"></script>
     
    <script src="../../codebase/ext/dhtmlxgantt_smart_rendering.js"></script>
-    
-    
+   <script src="../../js/jquery.min.js" type="text/javascript"></script>
+   
+   
+    <!--<link rel="stylesheet" href="../../assets/gantt_5.1.2_com/skins/dhtmlxgantt_meadow.css?">-->
     
     
      <!--<link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>-->
@@ -84,7 +86,6 @@ and open the template in the editor.
   </style>
 
  
-        
       
         
         	
@@ -95,7 +96,7 @@ and open the template in the editor.
         
      
   <form action="">
-      <input type="submit" value="Recargar">      
+      <input type="submit" class="btn btn-info" value="Recargar">      
       
   </form>
         
@@ -151,10 +152,8 @@ and open the template in the editor.
     
   <script type="text/javascript">
       
-      gantt.attachEvent("onLinkClick", function (id) {
-          
-       alert("le has picado");   
-      });
+      
+ 
       
 //       var tasksA = {
 //                data: [
@@ -201,21 +200,38 @@ gantt.message({
 	});
 gantt.config.scale_height = 60;
 
-  gantt.serverList("stage", [
-		{key: 1, "label": "Planeacion"},
-		{key: 2, "label": "Prueba"}
-	]);
-	gantt.serverList("user", [
-		{key: 0, label: "N/A"},
-		{key: 1, label: "Hugo"},
-		{key: 2, label: "Frank"},
-		{key: 3, label: "Daniel"}
-	]);
-	gantt.serverList("priority", [
-		{key: 1, label: "Alta"},
-		{key: 2, label: "Normal"},
-		{key: 3, label: "Baja"}
-	]);
+//  gantt.serverList("stage", [
+//		{key: 1, "label": "Planeacion"},
+//		{key: 2, "label": "Prueba"}
+//	]);
+     var dataEmpleados=[];
+     obtenerEmpleados();
+      gantt.serverList("user",dataEmpleados); 
+//     
+//       $.each(dataEmpleados,function(index,value){
+////           alert("entro");
+////                var list={key:value.id_empleado,value:value.nombre_empleado};   
+////                   alert("v  "+value.id_empleado+"  y el nombre : "+value.nombre_empleado);
+////                   list.push("value");
+////alert("d"+list.key);
+////                   dataEmpleados.push({key:value.id_empleado,value:value.nombre_empleado});
+//                   console.log("d  "+dataEmpleados);
+//               });
+//      console.log("d  "+dataEmpleados);
+     
+     
+        
+//	gantt.serverList("user", [
+//		{key: 0, label: "N/A"},
+//		{key: 1, label: "Hugo"},
+//		{key: 2, label: "Frank"},
+//		{key: 3, label: "Daniel"}
+//	]);
+//	gantt.serverList("priority", [
+//		{key: 1, label: "Alta"},
+//		{key: 2, label: "Normal"},
+//		{key: 3, label: "Baja"}
+//	]);
         
 //        gantt.config.order_branch = true;
 //	gantt.config.grid_width = 420;
@@ -224,12 +240,12 @@ gantt.config.scale_height = 60;
 //gantt.locale.labels.column_nombre =
 //		gantt.locale.labels.section_nombre = "Nombre";
         
-	gantt.locale.labels.column_priority =
-		gantt.locale.labels.section_priority = "Prioridad";
+//	gantt.locale.labels.column_priority =
+//		gantt.locale.labels.section_priority = "Prioridad";
 	gantt.locale.labels.column_owner =
 		gantt.locale.labels.section_owner = "Encargado";
-	gantt.locale.labels.column_stage =
-		gantt.locale.labels.section_stage = "Escenario";
+//	gantt.locale.labels.column_stage =
+//		gantt.locale.labels.section_stage = "Escenario";
 
 	function byId(list, id) {
 		for (var i = 0; i < list.length; i++) {
@@ -242,19 +258,10 @@ gantt.config.scale_height = 60;
         
 gantt.config.columns = [
 		{name: "text", label: "Nombre", tree: true, width: '*'},
-		{
-			name: "priority", width: 80, align: "center", template: function (item) {
-				return byId(gantt.serverList('priority'), item.priority)
-			}
-		},
+		
 		{
 			name: "owner", width: 80, align: "center", template: function (item) {
 				return byId(gantt.serverList('user'), item.user)
-			}
-		},
-		{
-			name: "stage", width: 80, align: "center", template: function (item) {
-				return byId(gantt.serverList('stage'), item.stage)
 			}
 		},
 		{name: "add", width: 40}
@@ -263,9 +270,8 @@ gantt.config.columns = [
 
 gantt.config.lightbox.sections = [
 		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
-		{name: "priority", height: 22, map_to: "priority", type: "select", options: gantt.serverList("priority")},
-		{name: "owner", height: 22, map_to: "user", type: "select", options: gantt.serverList("user")},
-		{name: "stage", height: 22, map_to: "stage", type: "select", options: gantt.serverList("stage")},
+		
+		{name: "owner", height: 22, map_to: "user", type: "select", options: gantt.serverList("user")},	
 		{name: "time", type: "duration", map_to: "auto"}
 	];
 
@@ -339,12 +345,87 @@ gantt.config.lightbox.sections = [
     
     
     
+    function obtenerEmpleados(){
+        
+        $.ajax({
+           url:"../Controller/GanttController.php?Op=ListarEmpleados",
+           data:"",
+           async:false,
+           success:function (res){
+//               alert("se hizo ");
+               
+               $.each(res,function(index,value){
+//                var list={key:value.id_empleado,value:value.nombre_empleado};   
+//                   alert("v  "+value.id_empleado+"  y el nombre : "+value.nombre_empleado);
+//                   list.push("value");
+//alert("d"+list.key);
+                   dataEmpleados.push({key:value.id_empleado,label:value.nombre_empleado});
+//                   console.log("d  "+dataEmpleados.);
+               });
+           }
+           
+        });
+//        $.each(dataEmpleados,function(index,value){
+////                var list={key:value.id_empleado,value:value.nombre_empleado};   
+////                   alert("v  "+value.id_empleado+"  y el nombre : "+value.nombre_empleado);
+////                   list.push("value");
+////alert("d"+list.key);
+////                   dataEmpleados.push({key:value.id_empleado,value:value.nombre_empleado});
+//                   console.log("d1  "+value.value);
+//               });
+        
+      
+        
+    }
+//         $.each(dataEmpleados,function(index,value){
+//             alert("v  :"+value.key);
+////                var list={"key":value.id_empleado,"value":value.nombre_empleado};   
+////                   alert("v  "+value.id_empleado+"  y el nombre : "+value.nombre_empleado);
+////                   list.push("value");
+////                   dataEmpleados.push(list);
+//               });
+        
+        
+        
+        
+        
+//          $.ajax({
+//                                url: "../Controller/AsignacionTemasRequisitosController.php?Op=Modificar",
+//				type: "POST",
+//				data:'column='+column+'&editval='+val+'&id='+id_asignacion_tema_requisito,
+//				success: function(data){
+//                                    //alert("SE hizo");
+//					//$(editableObj).css("background","#FDFDFD");
+//                                        consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
+//                                        consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
+//                                        //alert("entron ");
+//                                        refresh();                                        
+//                                        //window.location.href="AsignacionTemasRequisitosView.php";
+//                                       
+//				}   
+//                           });
+        
+ 
     
-    
-    
+    $(function (){
+        
+      
+      
+     gantt.batchUpdate(function () {
+         alert("se ha cargado el gantt exitosamente");
+    gantt.eachSelectedTask(function(task_id){
+        if(gantt.isTaskExists(task_id))
+            gantt.deleteTask(task_id);
+    });
+});
+      
+      
+    });
     
   </script>
   
+  
+ 
   
   
   

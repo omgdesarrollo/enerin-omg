@@ -89,6 +89,24 @@ class DocumentoEntradaDAO{
     }
     
     
+    public function listarCumplimientoPorId_Entrada($id_entrada){
+        try{
+            
+        
+            $query="documento_entrada.id_cumplimiento from documento_entrada  where documento_entrada.id_documento_entrada=$id_entrada";
+
+
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            
+
+            return $lista;
+            } catch (Exception $ex) {
+                throw $ex;
+        }
+    }
+    
+    
     
     public function mostrarDocumentosEntradaComboBox(){
         try{
@@ -270,7 +288,7 @@ class DocumentoEntradaDAO{
             $query = "SELECT documento_entrada.ID_CUMPLIMIENTO FROM documento_entrada WHERE id_documento_entrada = $ID_DOCUMENTO_ENTRADA";
             $db= AccesoDB::getInstancia();
             $dato = $db->executeQuery($query);
-            return $dato;
+            return $dato[0];
         } catch(Except $ex)
         {
             throw $ex;
