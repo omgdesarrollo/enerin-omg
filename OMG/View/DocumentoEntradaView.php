@@ -321,10 +321,12 @@ require_once 'EncabezadoUsuarioView.php';
 			</a>-->
 	
 </div>
-             
-<div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+<div class="no-skin modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" onload="loadSpinner()">
 	<div class="modal-dialog" role="document">
+        <div id="loaderModalMostrar"></div>
 		<div class="modal-content">
+                        
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 		        <h4 class="modal-title" id="myModalLabel">Archivos agregados</h4>
@@ -857,6 +859,7 @@ require_once 'EncabezadoUsuarioView.php';
                                         //         formData: {newUrl: '/'+jsonData.ID_CUMPLIMIENTO+'/'+jsonData.ID_DOCUMENTO+'/'}
                                         // });
                                         $('.start').click();
+                                        $('#create-item .close').click();
                                         // $ ( ' #fileupload ' ). fileupload ( ' send ' , {files : filesList}).success(function(data){alert("termino")})
                                         // {
                                                 // console.log();
@@ -922,21 +925,24 @@ require_once 'EncabezadoUsuarioView.php';
                 }
                 function agregarArchivosUrl()
                 {
-                        // var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
-                        // // alert(ID_DOCUMENTO);
-                        // $.ajax({
-                        //         url: "../Controller/DocumentosEntradaController.php?Op=getIdCumplimiento",
-                        //         type: 'POST',
-                        //         data: 'ID_DOCUMENTO='+ID_DOCUMENTO,
-                        //         async:false,
-                        //         success:function(data)
-                        //         {
+                        var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
+                        // alert(ID_DOCUMENTO);
+                        $.ajax({
+                                url: "../Controller/DocumentosEntradaController.php?Op=getIdCumplimiento",
+                                type: 'POST',
+                                data: 'ID_DOCUMENTO='+ID_DOCUMENTO,
+                                // async:false,
+                                success:function(data)
+                                {
                                         $('.start').click();
                                         // $('#loader').show();
-                                        $('#create-itemUrls .close').click();
+                                        // $('#create-itemUrls .close').click();
                                         // $('#loader').hide();
-                                // }
-                        // });
+                                }
+                        });
+                        // .done(function(){mostrar_urls(ID_DOCUMENTO);});
+                        // bind('fileuploadchange',function(e,data){alert("archivo subido");});
+                        // $('#fileupload').bind('fileuploadchange',function(e,data){alert("archivo subido");});
                         // $.ajax({
                                 // url: "../Controller/ArchivoUploadController.php?Op=Guardar",
                                 // type: "POST",
@@ -963,6 +969,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 success: function(data)
                                 {
                                         console.log("Eliminado exitoso");
+                                        mostrar_urls(ID_DOCUMENTO);
                                 }
                         });
                 }
@@ -991,10 +998,11 @@ require_once 'EncabezadoUsuarioView.php';
                                 {% } %}
                                 </td>
                         </tr>
-                        {% } %}
+                        {% } %} 
                 </script>
                 <script id="template-download" type="text/x-tmpl">
-                        {% for (var i=0, file; file=o.files[i]; i++) { %}
+                {% var t = $('#fileupload').fileupload('active'); var i,file;%}
+                        {% for (i=0,file; file=o.files[i]; i++) { %}
                         <tr class="template-download">
                                 <td>
                                 <span class="preview">
@@ -1017,6 +1025,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 <!-- </td> -->
                         </tr>
                         {% } %}
+                        {% if(t == 1){ if( $('#tempInputIdDocumento').length > 0 ) { var ID_DOCUMENTO = $('#tempInputIdDocumento').val(); mostrar_urls(ID_DOCUMENTO);} } %}
                 </script>
 
                 <!--Aqui abre para la ventana de guardado ok-->

@@ -18,28 +18,31 @@ USE `databaseomg`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `informe_gerencial`
+-- Table structure for table `usuarios_y_empleados`
 --
 
-DROP TABLE IF EXISTS `informe_gerencial`;
+DROP TABLE IF EXISTS `usuarios_y_empleados`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `informe_gerencial` (
-  `ID_INFORME_GERENCIAL` int(11) NOT NULL,
-  `ID_DOCUMENTO_ENTRADA` int(11) NOT NULL,
-  PRIMARY KEY (`ID_INFORME_GERENCIAL`),
-  KEY `fk_INFORME_GERENCIAL_documento_entrada1_idx` (`ID_DOCUMENTO_ENTRADA`),
-  CONSTRAINT `fk_INFORME_GERENCIAL_documento_entrada1` FOREIGN KEY (`ID_DOCUMENTO_ENTRADA`) REFERENCES `documento_entrada` (`ID_DOCUMENTO_ENTRADA`) ON DELETE NO ACTION ON UPDATE NO ACTION
+CREATE TABLE `usuarios_y_empleados` (
+  `ID_USUARIO_EMPLEADO` int(11) NOT NULL,
+  `ID_USUARIO` int(10) NOT NULL,
+  `ID_EMPLEADO` int(11) NOT NULL,
+  PRIMARY KEY (`ID_USUARIO_EMPLEADO`),
+  KEY `fk_USUARIOS_Y_EMPLEADOS_usuarios1_idx` (`ID_USUARIO`),
+  KEY `fk_USUARIOS_Y_EMPLEADOS_empleados1_idx` (`ID_EMPLEADO`),
+  CONSTRAINT `fk_USUARIOS_Y_EMPLEADOS_empleados1` FOREIGN KEY (`ID_EMPLEADO`) REFERENCES `empleados` (`ID_EMPLEADO`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_USUARIOS_Y_EMPLEADOS_usuarios1` FOREIGN KEY (`ID_USUARIO`) REFERENCES `usuarios` (`ID_USUARIO`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `informe_gerencial`
+-- Dumping data for table `usuarios_y_empleados`
 --
 
-LOCK TABLES `informe_gerencial` WRITE;
-/*!40000 ALTER TABLE `informe_gerencial` DISABLE KEYS */;
-/*!40000 ALTER TABLE `informe_gerencial` ENABLE KEYS */;
+LOCK TABLES `usuarios_y_empleados` WRITE;
+/*!40000 ALTER TABLE `usuarios_y_empleados` DISABLE KEYS */;
+/*!40000 ALTER TABLE `usuarios_y_empleados` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-02 18:57:20
+-- Dump completed on 2018-05-02 18:57:17

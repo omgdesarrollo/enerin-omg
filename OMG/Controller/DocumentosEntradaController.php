@@ -163,7 +163,7 @@ switch ($Op) {
 		$data = $model->getIdCumplimiento($ID_DOCUMENTO);
 		foreach ($data as $value)
 		{}
-		$valores = '/'.$value['ID_CUMPLIMIENTO'].'/'.$ID_DOCUMENTO.'/';
+		$valores = '/'.$value.'/'.$ID_DOCUMENTO.'/';
 		Session::setSesion("newUrl",$valores);
 		break;
 	default:

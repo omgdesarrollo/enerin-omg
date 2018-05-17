@@ -18,29 +18,32 @@ USE `databaseomg`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `usuarios`
+-- Table structure for table `seguimiento_entrada`
 --
 
-DROP TABLE IF EXISTS `usuarios`;
+DROP TABLE IF EXISTS `seguimiento_entrada`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `usuarios` (
-  `ID_USUARIO` int(10) NOT NULL,
-  `NOMBRE_USUARIO` varchar(20) COLLATE utf8_bin DEFAULT NULL,
-  `CONTRA` varchar(20) COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`ID_USUARIO`),
-  UNIQUE KEY `XPKUSUARIOS` (`ID_USUARIO`)
+CREATE TABLE `seguimiento_entrada` (
+  `ID_SEGUIMIENTO_ENTRADA` int(11) NOT NULL,
+  `ID_DOCUMENTO_ENTRADA` int(11) NOT NULL,
+  `ID_EMPLEADO` int(11) NOT NULL,
+  PRIMARY KEY (`ID_SEGUIMIENTO_ENTRADA`),
+  KEY `fk_SEGUIMIENTO_ENTRADA_documento_entrada1_idx` (`ID_DOCUMENTO_ENTRADA`),
+  KEY `fk_SEGUIMIENTO_ENTRADA_empleados1_idx` (`ID_EMPLEADO`),
+  CONSTRAINT `fk_SEGUIMIENTO_ENTRADA_documento_entrada1` FOREIGN KEY (`ID_DOCUMENTO_ENTRADA`) REFERENCES `documento_entrada` (`ID_DOCUMENTO_ENTRADA`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_SEGUIMIENTO_ENTRADA_empleados1` FOREIGN KEY (`ID_EMPLEADO`) REFERENCES `empleados` (`ID_EMPLEADO`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `usuarios`
+-- Dumping data for table `seguimiento_entrada`
 --
 
-LOCK TABLES `usuarios` WRITE;
-/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (0,'admin','admin'),(1,'frank','frank1');
-/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
+LOCK TABLES `seguimiento_entrada` WRITE;
+/*!40000 ALTER TABLE `seguimiento_entrada` DISABLE KEYS */;
+INSERT INTO `seguimiento_entrada` VALUES (0,0,0);
+/*!40000 ALTER TABLE `seguimiento_entrada` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-02 18:57:17
+-- Dump completed on 2018-05-02 18:57:16
