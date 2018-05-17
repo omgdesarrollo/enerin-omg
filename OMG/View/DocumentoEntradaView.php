@@ -171,7 +171,7 @@ require_once 'EncabezadoUsuarioView.php';
 		Agregar Documento de Entrada
 </button>
     
-<button type="button" class="btn btn-info " onclick="refresh();" >
+<button id="btnAgregarDocumentoEntradaRefrescar" type="button" class="btn btn-info " onclick="refresh();" >
     <i class="glyphicon glyphicon-repeat"></i> 
 </button>    
 </div>
@@ -1137,7 +1137,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 <!-- </td> -->
                         </tr>
                         {% } %}
-                        {% if(t == 1){ if( $('#tempInputIdDocumento').length > 0 ) { var ID_DOCUMENTO = $('#tempInputIdDocumento').val(); mostrar_urls(ID_DOCUMENTO);} } %}
+                        {% if(t == 1){ if( $('#tempInputIdDocumento').length > 0 ) { var ID_DOCUMENTO = $('#tempInputIdDocumento').val(); mostrar_urls(ID_DOCUMENTO);}else{ $('#btnAgregarDocumentoEntradaRefrescar').click(); } } %}
                 </script>
 
                 <!--Aqui abre para la ventana de guardado ok-->
