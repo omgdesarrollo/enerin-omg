@@ -56,7 +56,7 @@ foreach($Alarmas as $alarma)
 ?>
 <!--<div class="main-encabezado">-->
 
-<div id="navbar" class="navbar navbar-default ace-save-state .modal">
+<div id="navbar" class="navbar navbar-default ace-save-state ">
             
             <div class="navbar-container ace-save-state" id="navbar-container">
                 <div class="navbar-header pull-left">

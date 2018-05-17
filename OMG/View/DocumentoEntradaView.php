@@ -845,7 +845,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 async: false,
                                 success: function(jsonData)
                                 {
-                                //     alert(<?php  $Url ?>);
+                                //     alert(  $Url ?>);
 //					$(editableObj).css("background","#FDFDFD");
                                         ID_DOCUMENTO = jsonData.ID_DOCUMENTO;
                                         consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
@@ -866,7 +866,7 @@ require_once 'EncabezadoUsuarioView.php';
                         });
                         // .then(function(data)
                         // {
-                                // var tempUrls = "<?php 
+                                // var tempUrls = "
                                         // Session::getSesion("archivos_urls") ?>";
                                 // console.log("valores : "+tempUrls); no funciona
                                 $.ajax({
@@ -897,7 +897,8 @@ require_once 'EncabezadoUsuarioView.php';
                                                 // var tempDocumentolistadoUrlSplit = value.DIR.split("/");
                                                 // var tempDocumentolistadoUrlPos = tempDocumentolistadoUrlSplit.length - 1;
                                                 // console.log(value);
-                                                tempDocumentolistadoUrl = tempDocumentolistadoUrl +"<li><a href=\"http://localhost:80/enerin-omg/archivos/files/"+todo[1][0]['ID_CUMPLIMIENTO']+"/"+id_documento_entrada+"/"+value.DIR+"\">" + value.DIR + "</a><button style=\"color:green;background:transparent;border:none;padding-left:10px\" onclick='borrarArchivo(\""+value.DIR+"\");')><i class=\"fa fa-trash\"></i></button></li>";
+                                                tempDocumentolistadoUrl = tempDocumentolistadoUrl +"<li><a href=\"http://localhost:8282/enerin-omg/archivos/files/"+todo[1][0]['ID_CUMPLIMIENTO']+"/"+id_documento_entrada+"/"+value.DIR+"\">" + value.DIR + "</a><button style=\"color:green;background:transparent;border:none;padding-left:10px\" onclick='borrarArchivo(\""+value.DIR+"\");')><i class=\"fa fa-trash\"></i></button></li>";
+                                            //tempDocumentolistadoUrl = tempDocumentolistadoUrl +"<li><a href=\"http://enerin-omgapps.com/omgcum/archivos/files/"+todo[1][0]['ID_CUMPLIMIENTO']+"/"+id_documento_entrada+"/"+value.DIR+"\">" + value.DIR + "</a><button style=\"color:green;background:transparent;border:none;padding-left:10px\" onclick='borrarArchivo(\""+value.DIR+"\");')><i class=\"fa fa-trash\"></i></button></li>";
                                         });
                                         if(tempDocumentolistadoUrl == " ")
                                         {
