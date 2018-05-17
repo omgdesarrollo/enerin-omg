@@ -574,9 +574,9 @@ require_once 'EncabezadoUsuarioView.php';
                 {
                         $('#DocumentolistadoUrlModal').html(" ");
                         $('#DocumentoEntradaAgregarModal').html(ModalCargaArchivo);
-                        $('#fileupload').fileupload();
+                        // $('#fileupload').fileupload();
                         $('#fileupload').fileupload({
-                                url: '../View/',
+                                url: '../View/'
                         });
                 }
                 function mostrarUrl(id_documento_entrada)
@@ -834,7 +834,7 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 function saveToDatabaseDatosFormulario(datos){
 //                    alert("datos nombre "+datos[0]);
-                        var ID_DOCUMENTO;
+                        // var ID_DOCUMENTO;
                     	$.ajax({
                                 url: "../Controller/DocumentosEntradaController.php?Op=Guardar",
 				type: "POST",
@@ -842,12 +842,12 @@ require_once 'EncabezadoUsuarioView.php';
                                     +'&ASUNTO='+datos[4]+'&REMITENTE='+datos[5]+'&ID_ENTIDAD='+datos[6]+'&ID_CLAUSULA='+datos[7]+'&CLASIFICACION='+datos[8]
                                     +'&STATUS_DOC='+datos[9]+'&FECHA_ASIGNACION='+datos[10]+'&FECHA_LIMITE_ATENCION='+datos[11]+'&FECHA_ALARMA='+datos[12]
                                     +'&DOCUMENTO='+datos[13]+'&OBSERVACIONES='+datos[14]+'&MENSAJE_ALERTA='+datos[15],
-                                async: false,
+                                // async: false,
                                 success: function(jsonData)
                                 {
                                 //     alert(<?php  $Url ?>);
 //					$(editableObj).css("background","#FDFDFD");
-                                        ID_DOCUMENTO = jsonData.ID_DOCUMENTO;
+                                        // ID_DOCUMENTO = jsonData.ID_DOCUMENTO;
                                         consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
                                         // $('#fileupload').fileupload({
                                         //         url: '../../archivos/files/'+jsonData.ID_CUMPLIMIENTO+'/'+jsonData.ID_DOCUMENTO+'/'
@@ -857,6 +857,20 @@ require_once 'EncabezadoUsuarioView.php';
                                         //         formData: {newUrl: '/'+jsonData.ID_CUMPLIMIENTO+'/'+jsonData.ID_DOCUMENTO+'/'}
                                         // });
                                         $('.start').click();
+                                        // $ ( ' #fileupload ' ). fileupload ( ' send ' , {files : filesList}).success(function(data){alert("termino")})
+                                        // {
+                                                // console.log();
+                                                // $.ajax({
+                                                // url: "../Controller/ArchivoUploadController.php?Op=Guardar",
+                                                // type: "POST",
+                                                // data: 'ID_DOCUMENTO='+ID_DOCUMENTO,
+                                                // async: false,
+                                                // success: function(data)
+                                                // {
+                                                //         alert("insertado urls");
+                                                // }
+                                                // });
+                                        // });
                                 }
                         // }).done(function(jsonData)
                         // {
@@ -869,16 +883,6 @@ require_once 'EncabezadoUsuarioView.php';
                                 // var tempUrls = "<?php 
                                         // Session::getSesion("archivos_urls") ?>";
                                 // console.log("valores : "+tempUrls); no funciona
-                                $.ajax({
-                                        url: "../Controller/ArchivoUploadController.php?Op=Guardar",
-                                        type: "POST",
-                                        data: 'ID_DOCUMENTO='+ID_DOCUMENTO,
-                                        async: false,
-                                        success: function(data)
-                                        {
-                                                // alert("insertado urls");
-                                        }
-                                });
                         
                         // });
 //                   window.location.href("EmpleadosView.php");
@@ -897,7 +901,8 @@ require_once 'EncabezadoUsuarioView.php';
                                                 // var tempDocumentolistadoUrlSplit = value.DIR.split("/");
                                                 // var tempDocumentolistadoUrlPos = tempDocumentolistadoUrlSplit.length - 1;
                                                 // console.log(value);
-                                                tempDocumentolistadoUrl = tempDocumentolistadoUrl +"<li><a href=\"http://localhost:80/enerin-omg/archivos/files/"+todo[1][0]['ID_CUMPLIMIENTO']+"/"+id_documento_entrada+"/"+value.DIR+"\">" + value.DIR + "</a><button style=\"color:green;background:transparent;border:none;padding-left:10px\" onclick='borrarArchivo(\""+value.DIR+"\");')><i class=\"fa fa-trash\"></i></button></li>";
+                                                // alert(value);
+                                                tempDocumentolistadoUrl = tempDocumentolistadoUrl +"<li><a href=\"http://localhost:80/enerin-omg/archivos/files/"+todo[1]['ID_CUMPLIMIENTO']+"/"+id_documento_entrada+"/"+value+"\">" + value + "</a><button style=\"color:green;background:transparent;border:none;padding-left:10px\" onclick='borrarArchivo(\""+value+"\");')><i class=\"fa fa-trash\"></i></button></li>";
                                         });
                                         if(tempDocumentolistadoUrl == " ")
                                         {
@@ -908,7 +913,7 @@ require_once 'EncabezadoUsuarioView.php';
                                         $('#DocumentoEntradaAgregarModal').html(" ");
                                         $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
                                         $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
-                                        $('#fileupload').fileupload();
+                                        // $('#fileupload').fileupload();
                                         $('#fileupload').fileupload({
                                                 url: '../View/'
                                         });
@@ -917,28 +922,31 @@ require_once 'EncabezadoUsuarioView.php';
                 }
                 function agregarArchivosUrl()
                 {
-                        var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
-                        // alert(ID_DOCUMENTO);
-                        $.ajax({
-                                url: "../Controller/DocumentosEntradaController.php?Op=getIdCumplimiento",
-                                type: 'POST',
-                                data: 'ID_DOCUMENTO='+ID_DOCUMENTO,
-                                async:false,
-                                success:function(data)
-                                {
+                        // var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
+                        // // alert(ID_DOCUMENTO);
+                        // $.ajax({
+                        //         url: "../Controller/DocumentosEntradaController.php?Op=getIdCumplimiento",
+                        //         type: 'POST',
+                        //         data: 'ID_DOCUMENTO='+ID_DOCUMENTO,
+                        //         async:false,
+                        //         success:function(data)
+                        //         {
                                         $('.start').click();
-                                }
-                        });
-                        $.ajax({
-                                url: "../Controller/ArchivoUploadController.php?Op=Guardar",
-                                type: "POST",
-                                data: 'ID_DOCUMENTO='+ID_DOCUMENTO,
-                                async: false,
-                                success: function(data)
-                                {
+                                        // $('#loader').show();
+                                        $('#create-itemUrls .close').click();
+                                        // $('#loader').hide();
+                                // }
+                        // });
+                        // $.ajax({
+                                // url: "../Controller/ArchivoUploadController.php?Op=Guardar",
+                                // type: "POST",
+                                // data: 'ID_DOCUMENTO='+ID_DOCUMENTO,
+                                // async: false,
+                                // success: function(data)
+                                // {
                                         // alert("insertado urls");
-                                }
-                        });
+                                // }
+                        // });
                 }
                 function loadSpinner(){
 //                    alert("se cargara otro ");
@@ -999,9 +1007,6 @@ require_once 'EncabezadoUsuarioView.php';
                                 <p class="name">
                                         <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
                                 </p>
-                                {% if (file.error) { %}
-                                        <div><span class="error">Error</span> {%=file.error%}</div>
-                                {% } %}
                                 </td>
                                 <td>
                                 <span class="size">{%=o.formatFileSize(file.size)%}</span>
