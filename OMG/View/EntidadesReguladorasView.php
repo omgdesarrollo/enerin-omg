@@ -1,11 +1,11 @@
 <?php
 session_start();
 require_once '../util/Session.php';
+$Usuario=  Session::getSesion("user");
+
 ?>
 
 
-<?php $Usuario=  Session::getSesion("user"); ?>
-<!--$Usuario=  Session::getSesion("user");-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -78,6 +78,66 @@ require_once '../util/Session.php';
                       text-align:center;
                       padding-top:10px;
                     }
+                    
+                    
+                    .main-encabezado {
+                        /*background: #333;*/
+                        color: white;
+                        height: 80px;
+
+                        width: 100%;  /*hacemos que la cabecera ocupe el ancho completo de la página*/ 
+                        left: 0;  /*Posicionamos la cabecera al lado izquierdo*/ 
+                        top: 0;  /*Posicionamos la cabecera pegada arriba*/ 
+                        position: fixed;  /*Hacemos que la cabecera tenga una posición fija*/ 
+                    }
+                    
+                    
+/*Inicia estilos para mantener fijo el header*/                    
+                    .table-fixed-header {
+    display: table; /* 1 */
+    position: relative;
+    padding-top: calc(~'2.5em + 2px'); /* 2 */
+    
+    table {
+        margin: 0;
+        margin-top: calc(~"-2.5em - 2px"); /* 2 */
+    }
+    
+    thead th {
+        white-space: nowrap;
+        
+        /* 3 - apply same styling as for thead th */
+        /* 4 - compensation for padding-left */
+        &:before {
+            content: attr(data-header);
+            position: absolute;
+            top: 0;
+            padding: .5em 1em; /* 3 */
+            margin-left: -1em; /* 4 */
+        }
+    }
+}
+
+ /* 5 - setting height and scrolling */
+.table-container {
+    max-height: 70vh; /* 5 */
+    overflow-y: auto; /* 5 */
+        
+        /* 6 - same styling as for thead th */
+        &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        min-height: 2.5em;             /* 6 */
+        border-bottom: 2px solid #DDD; /* 6 */
+        background: #f1f1f1;           /* 6 */
+    }
+}
+ 
+/*Finaliza estilos para mantener fijo el header*/                    
+                    
                 </style>
      
    
@@ -95,16 +155,36 @@ require_once '../util/Session.php';
 require_once 'EncabezadoUsuarioView.php';
 
 ?>        
-         
-            
+
+<div style="height: 50px"></div>     
+
+
+<div style="position: fixed;">
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
-		Agregar Entidad Reguladora
+    Agregar Entidad Reguladora
 </button>
-            
+    
+<button type="button" class="btn btn-info " onclick="refresh();" >
+    <i class="glyphicon glyphicon-repeat"></i> 
+</button>       
+</div>    
 
-        <div class="contenedortable">   
 
-                           <table class="tbl-qa">
+<div style="height: 55px"></div>
+
+
+<div class="contenedortable" style="position: fixed;">   
+    <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Descripcion">
+</div >
+
+
+<div style="height: 55px"></div>
+
+
+<div class="table-fixed-header">
+    <div class="table-container">    
+
+        <table id="idTable" class="tbl-qa">
 		  <!--<thead>-->
 			  <tr>
 				<!--<th class="table-header" >NO.</th>-->
@@ -159,8 +239,9 @@ require_once 'EncabezadoUsuarioView.php';
 <!--			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 			</a>-->
-		</div>
-            
+		
+    </div>
+</div>           
             
             
             
@@ -283,7 +364,7 @@ require_once 'EncabezadoUsuarioView.php';
                         
                         $("#btn_limpiar").click(function(){
                             
-                           alert("entro aqui");
+//                           alert("entro aqui");
                             
                                   $("#CLAVE_ENTIDAD").val("");
                                   $("#DESCRIPCION").val("");
@@ -348,9 +429,37 @@ require_once 'EncabezadoUsuarioView.php';
                         }
                 
                 
+                function refresh(){
+                    
+                  window.location.href="EntidadesReguladorasView.php";  
+                }
+                
+                
                 function loadSpinner(){
 //                    alert("se cargara otro ");
                         myFunction();
+                }
+                
+                
+                function filterTable() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInput");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[1];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
                 }
 
                 

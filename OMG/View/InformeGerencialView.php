@@ -58,18 +58,7 @@ $Usuario=  Session::getSesion("user");
                 <!--<link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>-->
                 <!--<script src="../../codebase/dhtmlx.js"></script>-->
                 <!--aqui termina la seccion para poder abrir el modal-->
-                
-                
-                
-                
-                
-                <!--Aqui empieza el Chart-->
-                <!--<link href="dhtmlxChart_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>-->
-                <!--<script src="dhtmlxChart_v51_std/codebase/dhtmlxchart.js" type="text/javascript"></script>-->
-                <!--<link href="dhtmlxChart_v51_std/codebase/dhtmlxchart.css" rel="stylesheet" type="text/css"/>-->
-                
-                <!--Aqui termina el Chart-->
-                
+   
                 
                 
                 <style>
@@ -113,6 +102,64 @@ $Usuario=  Session::getSesion("user");
 			margin: 10px;
 		}
                 
+                .main-encabezado {
+                        /*background: #333;*/
+                        color: white;
+                        height: 80px;
+
+                        width: 100%;  /*hacemos que la cabecera ocupe el ancho completo de la página*/ 
+                        left: 0;  /*Posicionamos la cabecera al lado izquierdo*/ 
+                        top: 0;  /*Posicionamos la cabecera pegada arriba*/ 
+                        position: fixed;  /*Hacemos que la cabecera tenga una posición fija*/ 
+                    }
+                
+
+/*Inicia estilos para mantener fijo el header*/                    
+                    .table-fixed-header {
+    display: table; /* 1 */
+    position: relative;
+    padding-top: calc(~'2.5em + 2px'); /* 2 */
+    
+    table {
+        margin: 0;
+        margin-top: calc(~"-2.5em - 2px"); /* 2 */
+    }
+    
+    thead th {
+        white-space: nowrap;
+        
+        /* 3 - apply same styling as for thead th */
+        /* 4 - compensation for padding-left */
+        &:before {
+            content: attr(data-header);
+            position: absolute;
+            top: 0;
+            padding: .5em 1em; /* 3 */
+            margin-left: -1em; /* 4 */
+        }
+    }
+}
+
+ /* 5 - setting height and scrolling */
+.table-container {
+    max-height: 70vh; /* 5 */
+    overflow-y: auto; /* 5 */
+        
+        /* 6 - same styling as for thead th */
+        &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        min-height: 2.5em;             /* 6 */
+        border-bottom: 2px solid #DDD; /* 6 */
+        background: #f1f1f1;           /* 6 */
+    }
+}
+ 
+/*Finaliza estilos para mantener fijo el header*/                
+                
                 
                 </style>
                 
@@ -131,16 +178,39 @@ require_once 'EncabezadoUsuarioView.php';
 ?>
              
 
+<div style="height: 50px"></div>
+
+             
+<div style="position: fixed;">                        
 <button type="button" id="btn_informe" class="btn btn-success" data-toggle="modal">
     Informe
     <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
 </button>
+    
+<button type="button" class="btn btn-info " onclick="refresh();" >
+    <i class="glyphicon glyphicon-repeat"></i> 
+</button>        
+</div>    
              
+<div style="height: 55px"></div>
+
+
+<div class="contenedortable" style="position: fixed;">   
+        <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Folio de Entrada" style="width: 200px;">
+        <input type="text" id="idInputEntidad" onkeyup="filterTableEntidad()" placeholder="Buscar Por Entidad" style="width: 150px;">
+        <input type="text" id="idInputAsunto" onkeyup="filterTableAsunto()" placeholder="Buscar Por Asunto" style="width: 140px;">
+        <input type="text" id="idInputResponsable" onkeyup="filterTableResponsable()" placeholder="Buscar Por Responsable" style="width: 180px;">
+        <input type="text" id="idInputStatus" onkeyup="filterTableStatus()" placeholder="Buscar Por Status" style="width: 130px;">
+</div >
+
+
+<div style="height: 55px"></div>
+
              
-             
-	<div style="display:none;" id="myDiv" class="animate-bottom"> 
-                     <div class="contenedortable" id="winVP">
-                           <table class="tbl-qa">
+<div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> 
+    <div class="table-container">
+                         
+        <table class="tbl-qa" id="idTable">
 		  <!--<thead>-->
 			  <tr>
 				
@@ -275,36 +345,14 @@ require_once 'EncabezadoUsuarioView.php';
 		?>
 		  </tbody>
 		</table>
-<!--                         
-                          <nav>
-		  	<ul class="pagination">
-		  		<?php //if ($data["actual-section"] != 1): ?> 		  			
-		    		<li><a href="AsignacionTemasRequisitosView.php?page=1">Inicio</a></li>
-		    		<li><a href="AsignacionTemasRequisitosView.php?page=////<?php echo $data['previous']; ?>">&laquo;</a></li>
-				<?php //endif; ?>
 
-				<?php //for ($i = $data["section-start"]; $i <= $data["section-end"]; $i++): ?>					
-				<?php //if ($i > $data["total-pages"]): break; endif; ?>
-				<?php //$active = ($i == $data["this-page"]) ? "active" : ""; ?>			    
-			    	<li class="////<?php // echo $active; ?>">
-					<a href="AsignacionTemasRequisitosView.php?page=////<?php //echo $i; ?>">
-						<?php //echo $i; ?>			    		
-					</a>
-			    	</li>
-			    	<?php //endfor; ?>
-				
-				<?php //if ($data["actual-section"] != $data["total-sections"]): ?>
-                                <li><a href="AsignacionTemasRequisitosView.php?page=////<?php //echo $data['next']; ?>">&raquo;</a></li>
-			    	<li><a href="AsignacionTemasRequisitosView.php?page=////<?php //echo $data['total-pages']; ?>">Final</a></li>
-		    		<?php //endif; ?>
-		  	</ul>
-		</nav>-->
-                     </div>
+                     
 
 <!--			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 			</a>-->
-	
+    </div>	
+
 </div>
 
 	               
@@ -454,6 +502,12 @@ require_once 'EncabezadoUsuarioView.php';
         });  
             }
             
+            
+                function refresh(){
+                    
+                  window.location.href="InformeGerencialView.php";  
+                }
+            
     
                 function loadSpinner(){
 //                    alert("se cargara otro ");
@@ -471,6 +525,118 @@ require_once 'EncabezadoUsuarioView.php';
                     layoutWin.attachURL("ChartView.php");
 
             }
+            
+            
+            
+            
+            function filterTable() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInput");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[0];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }
+                
+                
+        function filterTableEntidad() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputEntidad");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[1];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }   
+                
+                
+        function filterTableAsunto() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputAsunto");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[2];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }        
+                
+                
+        function filterTableResponsable() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputResponsable");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[3];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }
+                
+                
+        function filterTableStatus() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputStatus");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[5];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }
               
                 
 		</script>
