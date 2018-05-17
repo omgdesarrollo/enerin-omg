@@ -6,10 +6,11 @@ $Usuario=  Session::getSesion("user");
 $Lista = Session::getSesion("listarDocumentosEntrada");
 
 $a = 0; // Variable para "En proceso(En Tiempo)"
-$b = 0; // Variable para "Suspendido"        
-$c = 0; // Variable para "En alerta"
-$d = 0; // Variable para "Terminado"
-$e = 0; // Variable para "Terminado"
+$b = 0; // Variable para "En proceso(Alerta Vencida)"        
+$c = 0; // Variable para "En proceso(Tiempo Limite)"
+$d = 0; // Variable para "En proceso(Tiempo Vencido)"
+$e = 0; // Variable para "Suspendido"
+$f = 0; // Variable para "Terminado"
 
 foreach ($Lista as $filas) { 
 
@@ -35,19 +36,22 @@ foreach ($Lista as $filas) {
 
                                             if($flimite == $hoy){
                                                 
-                                                echo "Tiempo Limite";
+                                                //echo "Tiempo Limite";
+                                                $c++;
                                                 
                                             } else {
                                                 
-                                                echo "Tiempo Vencido";  
+                                                //echo "Tiempo Vencido";
+                                                $d++;
                                             }
                                                   
                                         } else{
                                             
                                           if ($alarm <= $hoy){
                                               
-                                              echo "Alerta Vencida";
-                                                                                           
+                                              //echo "Alerta Vencida";
+                                              $b++;
+                                              
                                           } else {
                                                   //echo "En Tiempo";
                                                   $a++;
@@ -59,11 +63,12 @@ foreach ($Lista as $filas) {
                                     
                                   
                                     if($filas["status_doc"]== 2){
-                                        echo "Suspendido";
+                                        //echo "Suspendido";
+                                        $e++;
                                         
                                     } if($filas["status_doc"]== 3){
                                         echo "Terminado";
-                                        
+                                        $f++;
                                     } 
                                    
                                     //Termina Status Logico    
@@ -104,10 +109,12 @@ foreach ($Lista as $filas) {
 			});
                         
                         var datos = [
-	{ entradas: "<?php echo $a; ?>", status:"En proceso", color: "#ee3639" },
-	{ entradas: "<?php echo $b; ?>", status:"Suspendido", color: "#ee9e36" },
-	{ entradas: "<?php echo $c; ?>", status:"En alerta", color: "#eeea36" },
-	{ entradas: "<?php echo $d; ?>", status:"Terminado", color: "#a9ee36" }
+	{ entradas: "<?php echo $a; ?>", status:"En proceso(En Tiempo)", color: "#ee3639" },
+	{ entradas: "<?php echo $b; ?>", status:"En proceso(Alerta Vencida)", color: "#ee9e36" },
+	{ entradas: "<?php echo $c; ?>", status:"En proceso(Tiempo Limite)", color: "#eeea36" },
+	{ entradas: "<?php echo $d; ?>", status:"En proceso(Tiempo Vencido)", color: "#eeea36" },
+	{ entradas: "<?php echo $e; ?>", status:"Suspendido", color: "#eeea36" },
+	{ entradas: "<?php echo $f; ?>", status:"Terminado", color: "#a9ee36" }
 
 ];
                         
@@ -137,7 +144,7 @@ foreach ($Lista as $filas) {
 		</tr>
                 
 		<tr>
-			<td><div id="chart1" style="width:400px;height:250px;border:1px solid #c0c0c0;"></div></td>
+			<td><div id="chart1" style="width:600px;height:350px;border:1px solid #c0c0c0;"></div></td>
 		</tr>
 	</table>
 

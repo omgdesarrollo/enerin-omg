@@ -7,6 +7,9 @@ $Usuario=  Session::getSesion("user");
 
 
 
+
+
+
 <html>
     <head>
       <title></title>
@@ -16,40 +19,37 @@ $Usuario=  Session::getSesion("user");
                 
                 
                 <!-- bootstrap & fontawesome -->
-		<!--<link rel="stylesheet" href="assets/css/bootstrap.min.css" />-->
-                <!--<link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>-->
                 <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-		<!--<link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" />-->
                 <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-		<!-- page specific plugin styles -->
-
+                
 		<!-- text fonts -->
 		<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />
 
 		<!-- ace styles -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
 
-		<!--[if lte IE 9]>
-			<link rel="stylesheet" href="assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
-		<![endif]-->
 		<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
+                <!--Inicia para el spiner cargando-->
+                <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+                <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+                <!--Termina para el spiner cargando-->
                 
-             <script src="../../js/jquery.js" type="text/javascript"></script>
-
+                <script src="../../js/jquery.js" type="text/javascript"></script>
 		<script src="../../assets/probando/js/ace-extra.min.js"></script>
-                
-                 <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
-                     <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                      
                      <!--en esta seccion es para poder abrir el modal--> 
-                     <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
-                     
+                     <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>                    
                       <link href="../../codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
                      <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
                      <script src="../../codebase/dhtmlx.js"></script>
-                     <!--aqui termina la seccion para poder abrir el modal--> 
+                     <!--aqui termina la seccion para poder abrir el modal-->
+                     
+                     
+                     
+                     <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
                     
                      <!--<script src="../../assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>-->
                 
@@ -108,8 +108,7 @@ $Usuario=  Session::getSesion("user");
                     
                 </style>
 
-                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+                
                                
                 
     </head>
@@ -130,7 +129,6 @@ require_once 'EncabezadoUsuarioView.php';
        
 <div style="height: 50px"></div>       
 
-
                                 <div style="position: fixed;">
 				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
 					  Agregar Empleado
@@ -140,19 +138,18 @@ require_once 'EncabezadoUsuarioView.php';
                                     <i class="glyphicon glyphicon-repeat"></i> 
 				</button>
                                 </div>
-
+                                
 <div style="height: 55px"></div>
-       
-       
-       
-  <div class="contenedortable">   
+
+
+  <div class="contenedortable" style="position: fixed;">   
 <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Nombre">
 <input type="text" id="idInputapellidopaterno" onkeyup="filterTableapellidoPaterno()" placeholder="Buscar Por Apellido Paterno">
 <input type="text" id="idInputapellidomaterno" onkeyup="filterTableapellidoMaterno()" placeholder="Buscar Por Apellido Materno">
 <input type="text" id="idInputCategoria" onkeyup="filterTableCategoria()" placeholder="Buscar Por Categoria">
 <input type="text" id="idInputCorreo" onkeyup="filterTableCorreo()" placeholder="Buscar Por Correo">
   </div >   
-
+<div style="height: 55px"></div>
 
 <!--                                 <div class="side-menu" id="sideMenu">
                                     <menu>
@@ -164,10 +161,11 @@ require_once 'EncabezadoUsuarioView.php';
                                 </div>   -->
 		        <!--</div>-->
        
-        <div style="display:none;" id="myDiv" class="animate-bottom"> <!--inicio animacion tabla toda la interfaz seleccionada-->
+        <!--<div style="display:none;" id="myDiv" class="animate-bottom"> inicio animacion tabla toda la interfaz seleccionada-->
         
         
-           <div class="contenedortable">   
+           <div class="contenedortable">
+               
                <table class="tbl-qa" id="idTable">
 		  <thead>
 			  <tr>
@@ -218,31 +216,9 @@ require_once 'EncabezadoUsuarioView.php';
 		?>
 		  </tbody>
 		</table>
-               
-<!--                <table class="table">			
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>NOMBRE EMPLEADO</th>
-					<th>CATEGORIA</th>
-				</tr>
-			</thead>
-			<tbody>
--->			<?php //foreach (PaginacionController::show_rows("ID_EMPLEADO") as $row): ?>
-		    	<!--<tr>-->
-			        <!--<td><?php //echo $row["ID_EMPLEADO"]; ?></td>-->
-			        <!--<td><?php //echo $row["NOMBRE_EMPLEADO"]; ?></td>-->
-				<!--<td><?php //echo $row["CATEGORIA"]; ?></td>-->
-		    	<!--</tr>-->
-		    	<?php// endforeach; ?>					<!--
-			</tbody>				
-		</table>-->
-               
-             
-
-               
+                                            
            </div>
-       </div>    <!--cierre animacion table y toda la interfaz seleccionada--> 
+       <!--</div>    cierre animacion table y toda la interfaz seleccionada--> 
    
 <?php 
 
@@ -634,10 +610,12 @@ require_once 'EncabezadoUsuarioView.php';
                   window.location.href="EmpleadosView.php";  
                 }
                 
+                
                 function loadSpinner(){
 //                    alert("se cargara otro ");
                         myFunction();
                 }
+                
 		</script>
  
      
