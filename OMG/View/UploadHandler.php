@@ -1103,7 +1103,12 @@ echo "d   :".$this->get_full_url();
             $file_path = $this->get_upload_path($file->name);
             //  $file_path = "enerin-omgapps.com/omgcum/archivos/files".$newUrl.$file->name;//el que guarda web
             // $file_path2 = "http://localhost:80/enerin-omg/archivos/files".$newUrl.$file->name;//el que descarga web
-            $file_path = "C:/xampp/htdocs/enerin-omg/archivos/files".$newUrl.$file->name;//el que guarda local
+            date_default_timezone_set("America/Mexico_city");
+            $hoy = new Datetime();
+	        $hoy = strftime("%d%B%y_%H%M%S");
+            // $hoy = new Datetime($hoy);
+            echo "fecha : ".$hoy;
+            $file_path = "C:/xampp/htdocs/enerin-omg/archivos/files".$newUrl.$hoy."-".$file->name;//el que guarda local
             // $file_path2 = "http://localhost:80/enerin-omg/archivos/files".$newUrl.$file->name;//el que descarga local
             // $filePath = array();
             // if(Session::getSesion("archivos_urls") == null)

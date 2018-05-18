@@ -46,19 +46,19 @@ class ArchivoUploadModel{
             throw $ex;
         }
     }
-    public function eliminar_archivoFisico($id_documento,$nombre_archivo,$data)
+    public function eliminar_archivoFisico($id_documento,$nombre_archivo)
     {
-        if($data==true)
-        {
+        // if($data==true)
+        // {
             $model=new DocumentoEntradaModel();
             $value;
             $id_cumplimientos = $model->getIdCumplimiento($id_documento);
             foreach($id_cumplimientos as $value)
             {}
-            $url = 'C:xampp/htdocs/enerin-omg/archivos/files/'.$value['ID_CUMPLIMIENTO'].'/'.$id_documento.'/'.$nombre_archivo;//Cambiar ruta del servidor a local y viceversa
+            $url = 'C:xampp/htdocs/enerin-omg/archivos/files/'.$value.'/'.$id_documento.'/'.$nombre_archivo;//Cambiar ruta del servidor a local y viceversa
             // echo "mostrando url: ".$url;
             $data = unlink($url);
-        }
+        // }
         return $data;
     }
 }
