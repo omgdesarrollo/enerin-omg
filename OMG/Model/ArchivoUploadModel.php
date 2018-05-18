@@ -55,7 +55,10 @@ class ArchivoUploadModel{
             $id_cumplimientos = $model->getIdCumplimiento($id_documento);
             foreach($id_cumplimientos as $value)
             {}
-            $url = 'C:xampp/htdocs/enerin-omg/archivos/files/'.$value.'/'.$id_documento.'/'.$nombre_archivo;//Cambiar ruta del servidor a local y viceversa
+//            $url = 'C:xampp/htdocs/enerin-omg/archivos/files/'.$value.'/'.$id_documento.'/'.$nombre_archivo;//Cambiar ruta del servidor a local y viceversa
+              $url = '/home/fpa9q09nzhnx/public_html/omgcum/archivos/files/'.$value.'/'.$id_documento.'/'.$nombre_archivo;
+           
+//
             // echo "mostrando url: ".$url;
             $data = unlink($url);
         // }
