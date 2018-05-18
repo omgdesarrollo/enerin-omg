@@ -208,7 +208,7 @@ require_once 'EncabezadoUsuarioView.php';
 
              
 <div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> 
-    <div class="table-container">
+    <div class="table-container" id="winVP">
                          
         <table class="tbl-qa" id="idTable">
 		  <!--<thead>-->
