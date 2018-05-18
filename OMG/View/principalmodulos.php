@@ -57,7 +57,7 @@ $Usuario=  Session::getSesion("user");
                 
                 div#arbolprincipal{
 /*                  position: relative;*/
-                    height:600px; 
+                    height:500px; 
                 }
 	</style>
 	<script>
@@ -109,7 +109,16 @@ $Usuario=  Session::getSesion("user");
       }
   ];
 
-
+// var cambiodeidioma=[
+//      {
+//          id:'cambioespanol',text:'Cambiar a ESPAÑOL',img:'',type:'button',isbig:true
+//      },
+//      {
+//          id:'cambioingles',text:'Cambiar a INGLES',img:'',type:'button',isbig:true
+//      }
+//  ];
+  
+  
 var gantt=[
     {
          id:'cargadeprograma',text:'Carga de Programa',img:'',type:'button',isbig:true
@@ -263,10 +272,10 @@ var gantt=[
 //	{id:'0x3',mode:'cols',text:'Herramientas',type:'block', 
 //		  		list:seccionHerramientas},	
 	  		
-	{id:'0x31',mode:'cols',text:'Reporte',type:'block', 
-	  		list:seccionReporte
-	  		     
-	},
+//	{id:'0x31',mode:'cols',text:'Reporte',type:'block', 
+//	  		list:seccionReporte
+//	  		     
+//	},
       
                             {id:'0x32',mode:'cols',text:'Catalogo',type:'block',
 		  		list:seccionCatalogo},	
@@ -282,7 +291,8 @@ var gantt=[
                              
                              {id:'0x36',mode:'cols',text:'Usuario',type:'block',
           list:infosesionusuario}
-	] },
+	] }
+    ,
     {id:'002',text:'Configuraciones' ,items:[
         
         {id:'0x1',mode:'cols',text:'Cambio de idioma',type:'block',

@@ -67,11 +67,11 @@ foreach($Alarmas as $alarma)
 						</small>
 					</a>
 				</div>
-                <div class="navbar-buttons navbar-header pull-right" role="navigation">
+                <div class="navbar-buttons navbar-header pull-right" role="navigation" style=" z-index: 2;">
                     <ul class="nav ace-nav" style="height: 10%">
                     <!--seccion de inicio de sesion de alarmas--> 
         <li class="purple dropdown-modal">
-				<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#"   >
 				    <i class="ace-icon fa fa-bell icon-animated-bell"></i>
 					<span class="badge badge-important"><?php echo $numeroAlarmas;?></span>
 				</a>
