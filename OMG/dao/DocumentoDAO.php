@@ -17,6 +17,7 @@ class DocumentoDAO{
                     tbempleados.apellido_materno FROM documentos tbdocumentos
 
                     JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumentos.id_empleado
+                    ORDER BY  tbdocumentos.clave_documento 
 ";
             
             $db=  AccesoDB::getInstancia();

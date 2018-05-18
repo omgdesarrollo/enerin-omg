@@ -18,38 +18,14 @@ $Usuario=  Session::getSesion("user");
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
-		<!-- bootstrap & fontawesome -->
-		<!--<link rel="stylesheet" href="assets/css/bootstrap.min.css" />-->
-                <!--<link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>-->
-                <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
                 
-                <!-- clase para la subida de archivos -->
-                <link href="../../assets/probando/css/subir.css" rel="stylesheet" type="text/css"/>
-
-		<!--<link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" />-->
-                <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-		<!-- page specific plugin styles -->
-
-		<!-- text fonts -->
-		<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />
-
-		<!-- ace styles -->
-		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-
-		<!--[if lte IE 9]>
-			<link rel="stylesheet" href="assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
-		<![endif]-->
-		<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
-		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
-                
+                <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
                 <!--Inicia para el spiner cargando-->
                 <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                 <!--Termina para el spiner cargando-->
                                                 
                 <script src="../../js/jquery.js" type="text/javascript"></script>
-		<script src="../../assets/probando/js/ace-extra.min.js"></script>              
-                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
 
                 <!-- cargar archivo -->
                 <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
@@ -57,6 +33,8 @@ $Usuario=  Session::getSesion("user");
                 <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
                 <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
             <style>
+                
+
                     .modal
                     {
                         overflow: hidden;
@@ -87,75 +65,6 @@ $Usuario=  Session::getSesion("user");
                       text-align:center;
                       padding-top:10px;
                     }
-                    
-                    
-                    .main-encabezado {
-                        /*background: #333;*/
-                        color: white;
-                        height: 80px;
-
-                        width: 100%;  /*hacemos que la cabecera ocupe el ancho completo de la página*/ 
-                        left: 0;  /*Posicionamos la cabecera al lado izquierdo*/ 
-                        top: 0;  /*Posicionamos la cabecera pegada arriba*/ 
-                        position: fixed;  /*Hacemos que la cabecera tenga una posición fija*/ 
-                    }
-                    
-                    .validar_formulario{
-                       background: blue; 
-                       width: 120px; 
-                       color: white; 
-                    }
-
-
-                    
-/*Inicia estilos para mantener fijo el header*/                    
-                    .table-fixed-header {
-    display: table; /* 1 */
-    position: relative;
-    padding-top: calc(~'2.5em + 2px'); /* 2 */
-    
-    table {
-        margin: 0;
-        margin-top: calc(~"-2.5em - 2px"); /* 2 */
-    }
-    
-    thead th {
-        white-space: nowrap;
-        
-        /* 3 - apply same styling as for thead th */
-        /* 4 - compensation for padding-left */
-        &:before {
-            content: attr(data-header);
-            position: absolute;
-            top: 0;
-            padding: .5em 1em; /* 3 */
-            margin-left: -1em; /* 4 */
-        }
-    }
-}
-
- /* 5 - setting height and scrolling */
-.table-container {
-    max-height: 70vh; /* 5 */
-    overflow-y: auto; /* 5 */
-        
-        /* 6 - same styling as for thead th */
-        &:before {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        min-height: 2.5em;             /* 6 */
-        border-bottom: 2px solid #DDD; /* 6 */
-        background: #f1f1f1;           /* 6 */
-    }
-}
- 
-/*Finaliza estilos para mantener fijo el header*/                     
-                    
-                    
-                    
                 </style>
  
                     
@@ -166,41 +75,72 @@ $Usuario=  Session::getSesion("user");
        
 <?php
 
-require_once 'EncabezadoUsuarioView.php';
+//require_once 'EncabezadoUsuarioView.php';
 
-?>
-             
-<div style="height: 48px"></div>
+?>            
+         
+             <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="#">Mi Proyecto</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>          
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="http://collectivecloudperu.com/blogdevs/" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Nosotros</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" href="#">Misión</a>
+              <a class="dropdown-item" href="#">Prensa</a>
+              <a class="dropdown-item" href="#">Visión</a>              
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Nosotros</a>
+          </li>
+        </ul>
+
+                                
+
+          <div class="demo-content">
+            <div id="notification-header">
+              <div style="position:relative">
+                <button id="notification-icon" name="button" onclick="myFunction()" class="dropbtn"><span id="notification-count"></span><img src="img/icono.png" /></button>
+                <div id="notification-latest"></div>
+              </div>          
+            </div>
+          </div>
+
+                    
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Buscar" aria-label="Buscar" required>
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+        </form>
+
+      </div>
+    </nav>
 
              
-<div style="position: fixed;">             
+             
+             
+             
+             
+             
+             
+             
+             
 <button onClick="DocumentoArchivoAgregarModalF();" type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
 		Agregar Documento de Entrada
-</button>
-    
-<button id="btnAgregarDocumentoEntradaRefrescar" type="button" class="btn btn-info " onclick="refresh();" >
-    <i class="glyphicon glyphicon-repeat"></i> 
-</button>    
-</div>
-
-
-<div style="height: 45px"></div>
-
-
-
-<div class="contenedortable" style="position: fixed;">   
-    <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Folio de Entrada" style="width: 200px;">
-</div >
-
-
-<div style="height: 36px"></div>
+</button>             
              
              
- <div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> 
+ <div style="display:none;" id="myDiv" class="animate-bottom container>"> 
 		
-    <div class="table-container">
-        
-        <table id="idTable" class="tbl-qa">
+                     <div class="contenedortable">
+                           <table class="tbl-qa">
 		  <!--<thead>-->
 			  <tr>
 				
@@ -404,23 +344,17 @@ require_once 'EncabezadoUsuarioView.php';
 		  </tbody>
 		</table>
 
-                     
+                     </div>
 
 <!--			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 			</a>-->
-    </div>
-
+	
 </div>
-
-
-
-<!-- Inicio de Seccion Modal Archivos-->
+             
 <div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
-        <div id="loaderModalMostrar"></div>
 		<div class="modal-content">
-                        
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 		        <h4 class="modal-title" id="myModalLabel">Archivos agregados</h4>
@@ -442,10 +376,7 @@ require_once 'EncabezadoUsuarioView.php';
         </div><!-- cierre div class="modal-dialog" -->
 </div><!-- cierre del modal -->
 
-
-
-
-
+             
        <!-- Inicio de Seccion Modal -->
        <div class="modal draggable fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		  <div class="modal-dialog" role="document">
@@ -492,7 +423,6 @@ require_once 'EncabezadoUsuarioView.php';
 							<label class="control-label" for="title">Folio de Entrada:</label>
                                                         <textarea  id="FOLIO_ENTRADA" class="form-control" data-error="Ingrese el folio de entrada" required></textarea>
 							<div class="help-block with-errors"></div>
-                                                        <div id="ValidarFolioEntradaModal" ></div>
 						</div>
                                     
                                     
@@ -500,7 +430,6 @@ require_once 'EncabezadoUsuarioView.php';
 							<label class="control-label" for="title">Fecha Recepcion:</label>                                                       
                                                         <input type="date" id="FECHA_RECEPCION" class="form-control" data-error="Ingrese la Fecha de Recepcion" required/>							   
                                                         <div class="help-block with-errors"></div>
-                                                        <div id="ValidarFechaRecepcionModal" ></div>
 						</div>
                                     
                                     
@@ -508,7 +437,6 @@ require_once 'EncabezadoUsuarioView.php';
 							<label class="control-label" for="title">Asunto:</label>
                                                         <textarea  id="ASUNTO" class="form-control" data-error="Ingrese el Asunto" required></textarea>
 							<div class="help-block with-errors"></div>
-                                                        <div id="ValidarAsuntoModal" ></div>
 						</div>
                                     
                                     
@@ -516,7 +444,6 @@ require_once 'EncabezadoUsuarioView.php';
 							<label class="control-label" for="title">Remitente:</label>
                                                         <textarea  id="REMITENTE" class="form-control" data-error="Ingrese el Remitente" required></textarea>
 							<div class="help-block with-errors"></div>
-                                                        <div id="ValidarRemitenteModal" ></div>
 						</div>
                                                 
                           
@@ -562,6 +489,7 @@ require_once 'EncabezadoUsuarioView.php';
                                                                  ?>
                                                         </select>
                                                         
+							<div class="help-block with-errors"></div>
 						</div>
                                                     
                                                                               
@@ -570,7 +498,6 @@ require_once 'EncabezadoUsuarioView.php';
 							<label class="control-label" for="title">Clasificacion:</label>
                                                         <textarea  id="CLASIFICACION" class="form-control" data-error="Ingrese la Clasificacion" required></textarea>
 							<div class="help-block with-errors"></div>
-                                                        <div id="ValidarClasificacionModal" ></div>
 						</div>
                                     
                                     
@@ -579,12 +506,11 @@ require_once 'EncabezadoUsuarioView.php';
 <!--                                                        <textarea  id="STATUS_DOC" class="form-control" data-error="Ingrese el Status" required></textarea>
 							<div class="help-block with-errors"></div>-->
                                                         
-                                                        <select id="STATUS_DOC" onchange="CambioStatusDocumentoEntrada()">
+                                                        <select id="STATUS_DOC">
                                                         <option value="1">En proceso</option>
                                                         <option value="2">Suspendido</option>
                                                         <option value="3">Terminado</option>
                                                         </select>
-
 						</div>
                           
                           
@@ -592,7 +518,6 @@ require_once 'EncabezadoUsuarioView.php';
 							<label class="control-label" for="title">Fecha Asignacion:</label>                                                       
                                                         <input type="date" id="FECHA_ASIGNACION" class="form-control" data-error="Ingrese la Fecha de Asignacion" required/>							   
                                                         <div class="help-block with-errors"></div>
-                                                        <div id="ValidarFechaAsignacionModal" ></div>
 						</div>
                           
                                                 
@@ -600,7 +525,6 @@ require_once 'EncabezadoUsuarioView.php';
 							<label class="control-label" for="title">Fecha Limite de Atencion:</label>                                                       
                                                         <input type="date" id="FECHA_LIMITE_ATENCION" class="form-control" data-error="Ingrese la Fecha Limite de Atencion" required/>							   
                                                         <div class="help-block with-errors"></div>
-                                                        <div id="ValidarFechaLimiteAtencionModal" ></div>
 						</div>
 
                                                 
@@ -609,14 +533,12 @@ require_once 'EncabezadoUsuarioView.php';
 							<label class="control-label" for="title">Fecha Alarma:</label>                                                       
                                                         <input type="date" id="FECHA_ALARMA" class="form-control" data-error="Ingrese la Fecha de Alarma" required/>							   
                                                         <div class="help-block with-errors"></div>
-                                                        <div id="ValidarFechaAlarmaModal" ></div>
 						</div>
 
                                                 <div class="form-group">
-							<label class="control-label" for="title">Mensaje para Alarma:</label>
+							<label class="control-label" for="title">Mensaje para alerta:</label>
                                                         <textarea  id="MENSAJE_ALERTA" class="form-control"></textarea>
-							<div class="help-block with-errors"></div>
-                                                        <div id="ValidarMensajeAlarmaModal" ></div>
+							<!-- <div class="help-block with-errors"></div> -->
 						</div>
 
                           
@@ -626,9 +548,18 @@ require_once 'EncabezadoUsuarioView.php';
 							<div class="help-block with-errors"></div>
 						</div>-->
                                                 <!-- <div class="form-group"> -->
-                                                        <div id="DocumentoEntradaAgregarModal"></div>
-						<!-- </div> -->
                                                 
+                                                <form id="frmArchivos"  method="post" action="../Controller/DocumentosEntradaController.php?Op=AlmacenarArchivosServer" enctype="multipart/form-data">
+                                                <input type="file" id="filesToUpload" name="imagen[]" multiple="multiple"/>
+                                                <input type="submit" id="btnSubmitMaster" style=""value="Enviar los archivos"/>
+                                                </form>
+                                                
+                                                
+
+                                                
+                                                        <!--<div id="DocumentoEntradaAgregarModal"></div>-->
+						<!-- </div> -->
+                                                <div id="fileList">d</div>
                                                 <!-- <div class="barra">
                                                         <div class="barra_azul" id="barra_estado">
                                                         <span></span>
@@ -646,6 +577,7 @@ require_once 'EncabezadoUsuarioView.php';
                                                     <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
                                                     <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
 						</div>
+                                                
 
 		      		<!-- </form> -->
 
@@ -655,8 +587,7 @@ require_once 'EncabezadoUsuarioView.php';
 		  </div>
 		</div>
        <!--Final de Seccion Modal--> 
-             
-                
+               
 
 
 		
@@ -692,27 +623,10 @@ require_once 'EncabezadoUsuarioView.php';
                         // alert("mostrar urls: "+id_documento_entrada);
                         mostrar_urls(id_documento_entrada);
                 }
-                
-                
-                
-                
                       $(function(){
                           
                           
-                       $("#FOLIO_ENTRADA").keyup(function(){
-//                            alert("d");
-                            var valuefolioentrada=$(this).val();
-//                            alert("d  "+valueclavedocumento);
-                            
-                            verificarExiste(valuefolioentrada,"folio_entrada");
-                           
-                        });
-                      
-                      
-                          
-                          
-                          
-                        $('.select').on('change', function() {  
+                        $('.select').on('change', function() {
 //                          console.log( $(this).prop('value') );
 //                          alert("el value que va a viajar es "+ $(this).prop('value'));
                           
@@ -760,9 +674,9 @@ require_once 'EncabezadoUsuarioView.php';
                                 agregarArchivosUrl();
                         });
                         $("#btn_guardar").click(function(){
-                                //   alert("entro");
+                                   alert("entro");
        
-        
+                                        
                                     var ID_CUMPLIMIENTOMODAL=$("#ID_CUMPLIMIENTOMODAL").val();
                                     var FOLIO_REFERENCIA=$("#FOLIO_REFERENCIA").val();
                                     var FOLIO_ENTRADA=$("#FOLIO_ENTRADA").val();
@@ -779,7 +693,18 @@ require_once 'EncabezadoUsuarioView.php';
                                     var DOCUMENTO=$('#fileupload').fileupload('option', 'url');
                                     var OBSERVACIONES=$("#OBSERVACIONES").val();
                                     var MENSAJE_ALERTA=$("#MENSAJE_ALERTA").val();
-                                  
+//                                    var file = document.getElementById('myFile').files[0];
+                               
+                                
+                                      
+                                
+//                                alert("file"+Object.keys(objeto));
+
+
+
+
+
+//                                 alert("d  "+file);
                                 //   alert("ID_CUMPLIMIENTOMODAL :"+ID_CUMPLIMIENTOMODAL+"FOLIO_REFERENCIA :"+FOLIO_REFERENCIA
                                 //        +"FOLIO_ENTRADA :"+FOLIO_ENTRADA+"FECHA_RECEPCION :"+FECHA_RECEPCION+"ASUNTO :"+ASUNTO
                                 //        +"REMITENTE :"+REMITENTE+"ID_ENTIDADMODAL :"+ID_ENTIDADMODAL+"ID_CLAUSULAMODAL :"+ID_CLAUSULAMODAL
@@ -804,135 +729,42 @@ require_once 'EncabezadoUsuarioView.php';
                                     datos.push(DOCUMENTO);//13
                                     datos.push(OBSERVACIONES);//14
                                     datos.push(MENSAJE_ALERTA);//15
+                                    
+                                    saveToDatabaseDatosFormulario(datos);
                                     console.log(datos);
                                 todoBien = true;
-                                
-                                $('#ValidarFolioEntradaModal').html('');
-                                $('#ValidarFolioEntradaModal').removeClass("validar_formulario");
-                                
-                                $('#ValidarFechaRecepcionModal').html('');
-                                $('#ValidarFechaRecepcionModal').removeClass("validar_formulario");
-                                
-                                $('#ValidarAsuntoModal').html('');
-                                $('#ValidarAsuntoModal').removeClass("validar_formulario");
-                                
-                                $('#ValidarRemitenteModal').html('');
-                                $('#ValidarRemitenteModal').removeClass("validar_formulario");
-                                
-                                $('#ValidarClasificacionModal').html('');
-                                $('#ValidarClasificacionModal').removeClass("validar_formulario");
-                                
-                                $('#ValidarFechaAsignacionModal').html('');
-                                $('#ValidarFechaAsignacionModal').removeClass("validar_formulario");
-                                
-                                $('#ValidarFechaLimiteAtencionModal').html('');
-                                $('#ValidarFechaLimiteAtencionModal').removeClass("validar_formulario");
-                                
-                                $('#ValidarFechaAlarmaModal').html('');
-                                $('#ValidarFechaAlarmaModal').removeClass("validar_formulario");
-                                
-                                
-                                if(datos[2]=="")
+                                asignacionF = new Date(datos[10]);
+                                asignacionF = new Date(asignacionF.getFullYear(),asignacionF.getMonth(),asignacionF.getDate());
+                                limiteF = new Date(datos[11]);
+                                limiteF = new Date(limiteF.getFullYear(),limiteF.getMonth(),limiteF.getDate());
+                                alarmaF = new Date(datos[12]);
+                                alarmaF = new Date(alarmaF.getFullYear(),alarmaF.getMonth(),alarmaF.getDate());
+                                if(limiteF >= asignacionF)
                                 {
-                                    todoBien = false;
-                                    $('#ValidarFolioEntradaModal').html('*Campo requerido');
-                                    $('#ValidarFolioEntradaModal').addClass("validar_formulario");
+                                        // console.log("Limite mayor o igual a la fecha de asignacion");
                                 }
-                                if(datos[3]=="")
+                                else
                                 {
-                                   todoBien = false;
-                                    $('#ValidarFechaRecepcionModal').html('*Campo requerido');
-                                    $('#ValidarFechaRecepcionModal').addClass("validar_formulario");
-                                   
+                                        // console.log("La fecha limite no puede ser antes de la asignación");
+                                        todoBien = false;
                                 }
-                                if(datos[4]=="")
+                                if(alarmaF >= asignacionF)
                                 {
-                                    todoBien = false;
-                                    $('#ValidarAsuntoModal').html('*Campo requerido');
-                                    $('#ValidarAsuntoModal').addClass("validar_formulario");
+                                        // console.log("Alarma mayor o igual a la fecha de asignacion");
                                 }
-                                if(datos[5]=="")
+                                else
                                 {
-                                    todoBien = false;
-                                    $('#ValidarRemitenteModal').html('*Campo requerido');
-                                    $('#ValidarRemitenteModal').addClass("validar_formulario");
+                                        // console.log("La fecha de Alarma no puede ser antes de la asignación");
+                                        todoBien = false;
                                 }
-                                if(datos[8]=="")
+                                if(limiteF >= alarmaF)
                                 {
-                                    todoBien = false;
-                                    $('#ValidarClasificacionModal').html('*Campo requerido');
-                                    $('#ValidarClasificacionModal').addClass("validar_formulario");
+                                        // console.log("Alarma menor o igual a la fecha de limite");
                                 }
-                                
-                                
-                                
-                                
-                                if(datos[10]!="")
+                                else
                                 {
-                                    if(datos[11]!="")
-                                    {
-                                        limiteF = new Date(datos[11]);
-                                        limiteF = new Date(limiteF.getFullYear(),limiteF.getMonth(),limiteF.getDate());
-                                        asignacionF = new Date(datos[10]);
-                                        asignacionF = new Date(asignacionF.getFullYear(),asignacionF.getMonth(),asignacionF.getDate());
-                                        if(limiteF >= asignacionF)
-                                        {
-                                            // console.log("Limite mayor o igual a la fecha de asignacion");
-                                            if(datos[12]!="")
-                                            {
-                                                alarmaF = new Date(datos[12]);
-                                                alarmaF = new Date(alarmaF.getFullYear(),alarmaF.getMonth(),alarmaF.getDate());
-                                                if(limiteF >= alarmaF)
-                                                {
-                                                        // console.log("Alarma menor o igual a la fecha de limite");
-                                                }
-                                                else
-                                                {
-                                                        // console.log("La alarma no puede ser despues de la fecha limite");
-                                                        //$
-                                                        todoBien = false;
-                                                        $('#ValidarFechaAlarmaModal').html('*La Fecha Alarma no puede ser mayor que la Fecha Limite');
-                                                        $('#ValidarFechaAlarmaModal').addClass("validar_formulario");
-                                                }
-                                                if(alarmaF >= asignacionF)
-                                                {
-                                                        // console.log("Alarma mayor o igual a la fecha de asignacion");
-                                                }
-                                                else
-                                                {
-                                                        // console.log("La fecha de Alarma no puede ser antes de la asignación");
-                                                        //$
-                                                        todoBien = false;
-                                                        $('#ValidarFechaAlarmaModal').html('*La Fecha Alarma no puede ser menor que la Fecha Asginacion');
-                                                        $('#ValidarFechaAlarmaModal').addClass("validar_formulario");
-                                                }
-                                            }
-                                        }
-                                        else
-                                        {
-                                                // console.log("La fecha limite no puede ser antes de la asignación");
-                                                todoBien = false;
-                                                $('#ValidarFechaLimiteAtencionModal').html('*La Fecha Limite no puede ser menor que la Fecha Asginacion');
-                                                $('#ValidarFechaLimiteAtencionModal').addClass("validar_formulario");
-                                                
-                                        }
-                                    }
-                                    else
-                                    {
-                                        //Campo requerido limite$
-                                                todoBien = false;
-                                                $('#ValidarFechaLimiteAtencionModal').html('*Campo requerido');
-                                                $('#ValidarFechaLimiteAtencionModal').addClass("validar_formulario");
-
-                                    }
-                                }
-                                else {
-                                
-                                    //campo requerido asignacion
-                                                  todoBien = false;
-                                                  $('#ValidarFechaAsignacionModal').html('*Campo requerido');
-                                                $('#ValidarFechaAsignacionModal').addClass("validar_formulario");
-
+                                        // console.log("La alarma no puede ser despues de la fecha limite");
+                                        todoBien = false;
                                 }
                                 console.log((todoBien) ? " BIEN " : "Tus valores estan mal/ se pintara en el modal todo lo que sea erroneo o incompleto");
                                 // var peticion = new XMLHttpRequest();
@@ -962,8 +794,10 @@ require_once 'EncabezadoUsuarioView.php';
                                 //         barra_estado.classList.add('barra_roja');
                                 //         span.innerHTML = "proceso Cancelado";
                                 // });
-                                if(todoBien == true)
-                                    saveToDatabaseDatosFormulario(datos);
+                                     
+                                     
+                                     
+                                     //saveToDatabaseDatosFormulario(datos);
                         // });
                         });
                         
@@ -1044,51 +878,7 @@ require_once 'EncabezadoUsuarioView.php';
                  
         });  
     }
-    
-    
-    
-    function verificarExiste(dataString,cualverificar){
-//          alert("fdf");
-                    //Le pasamos el valor del input al ajax
-       $.ajax({
-                                type: "POST",
-                                url: "../Controller/DocumentosEntradaController.php?Op=verificacionexisteregistro&cualverificar="+cualverificar,
-                                data: "registro="+dataString,
-                                success: function(data) {    
-                mensajeerror="";
-
-                    $.each(data, function (index,value) {
-                //        console.log("sub_clausula: " + value.sub_clausula);
-                        mensajeerror="El Folio de Entrada "+value.folio_entrada+" Ya Existe";
-                    });
-                $("#ValidarFolioEntradaModal").html(mensajeerror);
-                
-
-                if(mensajeerror!=""){
-                    
-                    $("#ValidarFolioEntradaModal").addClass("validar_formulario");
-                    $("#ValidarFolioEntradaModal").css("background","orange");
-                    $("#btn_guardar").prop("disabled",true);
-                }else{
-                    $("#btn_guardar").prop("disabled",false);
-                }
-
-
-
-                }
-         })
-}
-    
-    
-    
-    
             
-    function refresh(){
-                    
-                  window.location.href="DocumentoEntradaView.php";  
-                }
-    
-    
     
     function loadSpinner(){
 //                    alert("se cargara otro ");
@@ -1110,10 +900,24 @@ require_once 'EncabezadoUsuarioView.php';
                                 // async: false,
                                 success: function(jsonData)
                                 {
+                                    
+                                   
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+//                                    alert("f");
+                                    
+//                                  $("#btnSubmitMaster").simulate('click'); 
+//                                    btnSubmitMaster
+                                    
                                 //     alert(  $Url ?>);
 //					$(editableObj).css("background","#FDFDFD");
                                         // ID_DOCUMENTO = jsonData.ID_DOCUMENTO;
-                                        consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
+//                                        consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
                                         // $('#fileupload').fileupload({
                                         //         url: '../../archivos/files/'+jsonData.ID_CUMPLIMIENTO+'/'+jsonData.ID_DOCUMENTO+'/'
                                         // });
@@ -1121,8 +925,7 @@ require_once 'EncabezadoUsuarioView.php';
                                         // ({
                                         //         formData: {newUrl: '/'+jsonData.ID_CUMPLIMIENTO+'/'+jsonData.ID_DOCUMENTO+'/'}
                                         // });
-                                        $('.start').click();
-                                        $('#create-item .close').click();
+//                                        $('.start').click();
                                         // $ ( ' #fileupload ' ). fileupload ( ' send ' , {files : filesList}).success(function(data){alert("termino")})
                                         // {
                                                 // console.log();
@@ -1188,24 +991,21 @@ require_once 'EncabezadoUsuarioView.php';
                 }
                 function agregarArchivosUrl()
                 {
-                        var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
-                        // alert(ID_DOCUMENTO);
-                        $.ajax({
-                                url: "../Controller/DocumentosEntradaController.php?Op=getIdCumplimiento",
-                                type: 'POST',
-                                data: 'ID_DOCUMENTO='+ID_DOCUMENTO,
-                                // async:false,
-                                success:function(data)
-                                {
+                        // var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
+                        // // alert(ID_DOCUMENTO);
+                        // $.ajax({
+                        //         url: "../Controller/DocumentosEntradaController.php?Op=getIdCumplimiento",
+                        //         type: 'POST',
+                        //         data: 'ID_DOCUMENTO='+ID_DOCUMENTO,
+                        //         async:false,
+                        //         success:function(data)
+                        //         {
                                         $('.start').click();
                                         // $('#loader').show();
-                                        // $('#create-itemUrls .close').click();
+                                        $('#create-itemUrls .close').click();
                                         // $('#loader').hide();
-                                }
-                        });
-                        // .done(function(){mostrar_urls(ID_DOCUMENTO);});
-                        // bind('fileuploadchange',function(e,data){alert("archivo subido");});
-                        // $('#fileupload').bind('fileuploadchange',function(e,data){alert("archivo subido");});
+                                // }
+                        // });
                         // $.ajax({
                                 // url: "../Controller/ArchivoUploadController.php?Op=Guardar",
                                 // type: "POST",
@@ -1232,65 +1032,9 @@ require_once 'EncabezadoUsuarioView.php';
                                 success: function(data)
                                 {
                                         console.log("Eliminado exitoso");
-                                        mostrar_urls(ID_DOCUMENTO);
                                 }
                         });
                 }
-                
-                
-                function filterTable() {
-                // Declare variables 
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInput");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
-
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[2];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
-                      } 
-                    }
-                }
-                
-                
-                function CambioStatusDocumentoEntrada(){
-//                    alert("Llego aqui "+$("#STATUS_DOC").val());
-                    if ($("#STATUS_DOC").val() == 3){
-                    
-                    Habilitar_DesabilitarFechas(true);
-                    
-                    } else {
-                        if ($("#STATUS_DOC").val() == 1) {
-                            
-                            Habilitar_DesabilitarFechas(false);
-                        }
-                        
-                        if ($("#STATUS_DOC").val() == 2) {
-                            
-                            Habilitar_DesabilitarFechas(false);
-                        }
-                    }
-                        
-
-                }
-                
-                
-                function Habilitar_DesabilitarFechas(accion) {
-                    $("#FECHA_ASIGNACION").prop("disabled",accion);
-                    $("#FECHA_LIMITE_ATENCION").prop("disabled",accion);
-                    $("#FECHA_ALARMA").prop("disabled",accion);
-                    $("#MENSAJE_ALERTA").prop("disabled",accion);
-                }
-                
-                
-                
                 
 		</script>
                 <script id="template-upload" type="text/x-tmpl">
@@ -1316,13 +1060,10 @@ require_once 'EncabezadoUsuarioView.php';
                                 {% } %}
                                 </td>
                         </tr>
-                        {% } %} 
+                        {% } %}
                 </script>
-                
-                
                 <script id="template-download" type="text/x-tmpl">
-                {% var t = $('#fileupload').fileupload('active'); var i,file;%}
-                        {% for (i=0,file; file=o.files[i]; i++) { %}
+                        {% for (var i=0, file; file=o.files[i]; i++) { %}
                         <tr class="template-download">
                                 <td>
                                 <span class="preview">
@@ -1345,7 +1086,6 @@ require_once 'EncabezadoUsuarioView.php';
                                 <!-- </td> -->
                         </tr>
                         {% } %}
-                        {% if(t == 1){ if( $('#tempInputIdDocumento').length > 0 ) { var ID_DOCUMENTO = $('#tempInputIdDocumento').val(); mostrar_urls(ID_DOCUMENTO);}else{ $('#btnAgregarDocumentoEntradaRefrescar').click(); } } %}
                 </script>
 
                 <!--Aqui abre para la ventana de guardado ok-->
@@ -1359,22 +1099,10 @@ require_once 'EncabezadoUsuarioView.php';
                 <!--Aqui cierra para abrir el modal de insertar-->
 
                 <!-- js cargar archivo -->
-                <script src="../../assets/FileUpload/js/jquery.min.js"></script>
-                <script src="../../assets/FileUpload/js/jquery-ui.min.js"></script>
-                <script src="../../assets/FileUpload/js/tmpl.min.js"></script>
-                <script src="../../assets/FileUpload/js/load-image.all.min.js"></script>
-                <script src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.blueimp-gallery.min.js"></script>
+               
                 <script src="../../assets/FileUpload/js/jquery.iframe-transport.js"></script>
                 <script src="../../assets/FileUpload/js/jquery.fileupload.js"></script>
                 <script src="../../assets/FileUpload/js/jquery.fileupload-process.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-image.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-audio.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-video.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
-                <script src="../../assets/FileUpload/js/main.js"></script>
 	</body>
         
         
