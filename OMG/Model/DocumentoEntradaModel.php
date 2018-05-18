@@ -69,6 +69,21 @@ class DocumentoEntradaModel{
     }
     
     
+    public function verificarSiExisteFolioEntrada($registro,$cualverificar){
+        try{
+            $dao= new DocumentoEntradaDAO();
+//            if($cualverificar=="clavedocumento"){
+                $rec=$dao->verificarSiExisteFolioEntrada($registro,$cualverificar);
+//            }
+            
+            return $rec;
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+        
+    }
+    
+    
     public function traer_ultimo_insertado(){
         try{
              $dao=new DocumentoEntradaDAO();

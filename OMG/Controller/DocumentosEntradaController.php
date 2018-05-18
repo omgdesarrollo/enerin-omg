@@ -187,6 +187,23 @@ exit;
                   
                   
 	break;
+    
+    
+    
+        case 'verificacionexisteregistro':
+            
+              $registro=$_REQUEST["registro"];
+              $cualverificar=$_REQUEST["cualverificar"];
+              
+              $data= $model->verificarSiExisteFolioEntrada($registro,$cualverificar);
+              
+               	header('Content-type: application/json; charset=utf-8');
+                echo json_encode($data);
+            
+                
+                break;
+    
+    
 
 	case 'Alarmas':
 
