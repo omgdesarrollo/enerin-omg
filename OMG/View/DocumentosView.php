@@ -388,10 +388,10 @@ $Usuario=  Session::getSesion("user");
                           
                         $('.select').on('change', function() {
 //                          console.log( $(this).prop('value') );
-                          alert("el value que va a viajar es "+ $(this).prop('value'));
+//                          alert("el value que va a viajar es "+ $(this).prop('value'));
                           column="ID_EMPLEADO";
                           val=$(this).prop('value');
-                          alert("el value que va a viajar es "+val+" y el id de la claus : "+id_clausula);
+//                          alert("el value que va a viajar es "+val+" y el id de la claus : "+id_clausula);
                           $.ajax({
                                 url: "../Controller/DocumentosController.php?Op=Modificar",
 				type: "POST",
@@ -514,11 +514,11 @@ mensajeerror="";
 
     $.each(data, function (index,value) {
 //        console.log("sub_clausula: " + value.sub_clausula);
-        mensajeerror=" "+value.clave_documento+" ya existe";
+        mensajeerror=" El Documento "+value.clave_documento+" Ya Existe";
     });
 $("#msgerrorclave").html(mensajeerror);
 if(mensajeerror!=""){
-    $("#msgerrorclave").css("background","red");
+    $("#msgerrorclave").css("background","orange");
     $("#msgerrorclave").css("width","190px");
     $("#msgerrorclave").css("color","white");
     $("#btn_guardar").prop("disabled",true);

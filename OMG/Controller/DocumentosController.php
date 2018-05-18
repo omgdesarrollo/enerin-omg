@@ -69,7 +69,9 @@ switch ($Op) {
 		# code...
         $model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );    
 		break;
- case 'verificacionexisteregistro':
+            
+        
+        case 'verificacionexisteregistro':
             
               $registro=$_REQUEST["registro"];
               $cualverificar=$_REQUEST["cualverificar"];
@@ -80,7 +82,7 @@ switch ($Op) {
                 echo json_encode($data);
             
                 
-        break;
+                break;
     
     
 	case 'Eliminar':

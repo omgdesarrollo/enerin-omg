@@ -156,6 +156,25 @@ class DocumentoEntradaDAO{
     }
     }
     
+    
+    public function verificarSiExisteFolioEntrada($cadena,$cualverificar){
+        try{
+           $query="SELECT tbdocumento_entrada.folio_entrada  FROM documento_entrada tbdocumento_entrada WHERE tbdocumento_entrada.$cualverificar ='$cadena'";
+
+            
+//            $query="SELECT ID_EMPLEADO  FROM EMPLEADOS";
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+        
+            return $lista;
+            
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+    
+    
+    
     public function traer_ultimo_insertado(){
          $query_obtenerMaximo_mas_uno="SELECT max(id_documento_entrada) as id_documento_entrada FROM documento_entrada";
             $db_obtenerMaximo_mas_uno=AccesoDB::getInstancia();
