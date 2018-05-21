@@ -579,7 +579,7 @@ require_once 'EncabezadoUsuarioView.php';
 <!--                                                        <textarea  id="STATUS_DOC" class="form-control" data-error="Ingrese el Status" required></textarea>
 							<div class="help-block with-errors"></div>-->
                                                         
-                                                        <select id="STATUS_DOC">
+                                                        <select id="STATUS_DOC" onchange="CambioStatusDocumentoEntrada()">
                                                         <option value="1">En proceso</option>
                                                         <option value="2">Suspendido</option>
                                                         <option value="3">Terminado</option>
@@ -615,7 +615,8 @@ require_once 'EncabezadoUsuarioView.php';
                                                 <div class="form-group">
 							<label class="control-label" for="title">Mensaje para Alarma:</label>
                                                         <textarea  id="MENSAJE_ALERTA" class="form-control"></textarea>
-							<div class="help-block with-errors"></div>                                                        
+							<div class="help-block with-errors"></div>
+                                                        <div id="ValidarMensajeAlarmaModal" ></div>
 						</div>
 
                           
@@ -673,7 +674,7 @@ require_once 'EncabezadoUsuarioView.php';
                 ModalCargaArchivo += "<input type='file' name='files[]' multiple></span>";
                 ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
                 ModalCargaArchivo += "<div class='fileupload-progress' >";
-                ModalCargaArchivo += "<div class='progress' role='progressbar' aria-valuemin='0' aria-valuemax='100'></div>";
+                // ModalCargaArchivo += "<div class='progress' role='progressbar' aria-valuemin='0' aria-valuemax='100'></div>";
                 ModalCargaArchivo += "<div class='progress-extended'>&nbsp;</div>";
                 ModalCargaArchivo += "</div></div>";
                 ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
@@ -711,7 +712,7 @@ require_once 'EncabezadoUsuarioView.php';
                           
                           
                           
-                        $('.select').on('change', function() {
+                        $('.select').on('change', function() {  
 //                          console.log( $(this).prop('value') );
 //                          alert("el value que va a viajar es "+ $(this).prop('value'));
                           
@@ -805,6 +806,30 @@ require_once 'EncabezadoUsuarioView.php';
                                     datos.push(MENSAJE_ALERTA);//15
                                     console.log(datos);
                                 todoBien = true;
+                                
+                                $('#ValidarFolioEntradaModal').html('');
+                                $('#ValidarFolioEntradaModal').removeClass("validar_formulario");
+                                
+                                $('#ValidarFechaRecepcionModal').html('');
+                                $('#ValidarFechaRecepcionModal').removeClass("validar_formulario");
+                                
+                                $('#ValidarAsuntoModal').html('');
+                                $('#ValidarAsuntoModal').removeClass("validar_formulario");
+                                
+                                $('#ValidarRemitenteModal').html('');
+                                $('#ValidarRemitenteModal').removeClass("validar_formulario");
+                                
+                                $('#ValidarClasificacionModal').html('');
+                                $('#ValidarClasificacionModal').removeClass("validar_formulario");
+                                
+                                $('#ValidarFechaAsignacionModal').html('');
+                                $('#ValidarFechaAsignacionModal').removeClass("validar_formulario");
+                                
+                                $('#ValidarFechaLimiteAtencionModal').html('');
+                                $('#ValidarFechaLimiteAtencionModal').removeClass("validar_formulario");
+                                
+                                $('#ValidarFechaAlarmaModal').html('');
+                                $('#ValidarFechaAlarmaModal').removeClass("validar_formulario");
                                 
                                 
                                 if(datos[2]=="")
@@ -1157,7 +1182,12 @@ require_once 'EncabezadoUsuarioView.php';
                                         $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
                                         // $('#fileupload').fileupload();
                                         $('#fileupload').fileupload({
-                                                url: '../View/'
+                                                url: '../View/',
+                                        });
+                                        
+                                        $('#fileupload').fileupload('option', {
+                                        // url: '//jquery-file-upload.appspot.com/',
+                                        maxFileSize: 99900000,
                                         });
                                 }
                         });
@@ -1234,6 +1264,39 @@ require_once 'EncabezadoUsuarioView.php';
                       } 
                     }
                 }
+                
+                
+                function CambioStatusDocumentoEntrada(){
+//                    alert("Llego aqui "+$("#STATUS_DOC").val());
+                    if ($("#STATUS_DOC").val() == 3){
+                    
+                    Habilitar_DesabilitarFechas(true);
+                    
+                    } else {
+                        if ($("#STATUS_DOC").val() == 1) {
+                            
+                            Habilitar_DesabilitarFechas(false);
+                        }
+                        
+                        if ($("#STATUS_DOC").val() == 2) {
+                            
+                            Habilitar_DesabilitarFechas(false);
+                        }
+                    }
+                        
+
+                }
+                
+                
+                function Habilitar_DesabilitarFechas(accion) {
+                    $("#FECHA_ASIGNACION").prop("disabled",accion);
+                    $("#FECHA_LIMITE_ATENCION").prop("disabled",accion);
+                    $("#FECHA_ALARMA").prop("disabled",accion);
+                    $("#MENSAJE_ALERTA").prop("disabled",accion);
+                }
+                
+                
+                
                 
 		</script>
                 <script id="template-upload" type="text/x-tmpl">
