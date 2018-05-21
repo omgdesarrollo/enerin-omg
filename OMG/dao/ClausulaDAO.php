@@ -36,7 +36,7 @@ class ClausulaDAO{
 
     public function mostrarClausulasComboBox(){
         try{
-            $query="SELECT id_clausula, clausula, sub_clausula, descripcion_clausula, descripcion_sub_clausula FROM clausulas";
+            $query="SELECT id_clausula, clausula, sub_clausula, descripcion_clausula, descripcion_sub_clausula FROM clausulas GROUP BY clausula ORDER BY clausula ASC";
 //            $query="SELECT ID_EMPLEADO  FROM EMPLEADOS";
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);

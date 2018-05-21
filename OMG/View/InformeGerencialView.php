@@ -227,7 +227,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 <th class="table-header">Fecha Limite</th>
                                 <th class="table-header">Status</th>
                                 <th class="table-header">Condicion</th>
-                                <th class="table-header">Documento</th>
+                                <!--<th class="table-header">Documento</th>-->
                                 
                                 
 			  </tr>
@@ -340,7 +340,7 @@ require_once 'EncabezadoUsuarioView.php';
                                     
                                 </td>
                                 
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_informe_gerencial"]; ?>')" onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
+                                <!--<td contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php // echo $filas["id_informe_gerencial"]; ?>')" onClick="showEdit(this);"><?php // echo $filas["documento"]; ?></td>-->
                                 
                                 
 			  </tr>
