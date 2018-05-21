@@ -54,6 +54,11 @@ $Usuario=  Session::getSesion("user");
                         box-shadow: 0 1px 3px rgba(0,0,0,90.05), 0 1px 3px rgba(0,0,0,0.09);*/
                         box-shadow: 0 1px 3px rgba(0,0,0,90.05), 0 1px 3px rgba(0,0,0,0.09);
 		}
+                
+                div#arbolprincipal{
+/*                  position: relative;*/
+                    height:500px; 
+                }
 	</style>
 	<script>
             
@@ -92,7 +97,8 @@ $Usuario=  Session::getSesion("user");
   var seccionOficios=[
      {id:'catalogooficios',text:'Catalogos',img:'catalogos.png',type:'button',isbig:true},  
      {id:'documentacion',text:'Documentacion',img:'oficios.png',type:'button',isbig:true},  
-     {id:'vistas',text:'Vistas',img:'vistas.png',type:'button',isbig:true}  
+     {id:'vistas',text:'Vistas',img:'vistas.png',type:'button',isbig:true},
+     {id:'cargaprograma',text:'Carga Programa Gantt',img:'663.png',type:'button',isbig:true}
  ];
   var cambiodeidioma=[
       {
@@ -103,6 +109,21 @@ $Usuario=  Session::getSesion("user");
       }
   ];
 
+// var cambiodeidioma=[
+//      {
+//          id:'cambioespanol',text:'Cambiar a ESPAÑOL',img:'',type:'button',isbig:true
+//      },
+//      {
+//          id:'cambioingles',text:'Cambiar a INGLES',img:'',type:'button',isbig:true
+//      }
+//  ];
+  
+  
+var gantt=[
+    {
+         id:'cargadeprograma',text:'Carga de Programa',img:'',type:'button',isbig:true
+    }  
+];
 
   datacontratos=[];
  loadDataContratos();
@@ -222,8 +243,8 @@ $Usuario=  Session::getSesion("user");
                        
                         if(itemIdSeleccion=="vistas")
                            loadDataSideBarOficiosVistas();
-                       
-                           
+                       if(itemIdSeleccion=="cargaprograma")
+                           loadDataCargaProgramaGantt();
                        
                     });      
                     }	
@@ -251,10 +272,10 @@ $Usuario=  Session::getSesion("user");
 //	{id:'0x3',mode:'cols',text:'Herramientas',type:'block', 
 //		  		list:seccionHerramientas},	
 	  		
-	{id:'0x31',mode:'cols',text:'Reporte',type:'block', 
-	  		list:seccionReporte
-	  		     
-	},
+//	{id:'0x31',mode:'cols',text:'Reporte',type:'block', 
+//	  		list:seccionReporte
+//	  		     
+//	},
       
                             {id:'0x32',mode:'cols',text:'Catalogo',type:'block',
 		  		list:seccionCatalogo},	
@@ -270,7 +291,8 @@ $Usuario=  Session::getSesion("user");
                              
                              {id:'0x36',mode:'cols',text:'Usuario',type:'block',
           list:infosesionusuario}
-	] },
+	] }
+    ,
     {id:'002',text:'Configuraciones' ,items:[
         
         {id:'0x1',mode:'cols',text:'Cambio de idioma',type:'block',
@@ -394,6 +416,18 @@ ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: 
  
 });
     }
+    
+    
+    
+    function loadDataCargaProgramaGantt(){
+    var dhxWins = new dhtmlXWindows();
+//var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
+ dhxWins.attachViewportTo("arbolprincipal");
+ var layoutWin=dhxWins.createWindow({id:"emp", text:"OMG", left: 20, top: 30,width:430,  height:205,  center:true,resize: true,park:true,modal:true	});
+ layoutWin.attachURL("SeguimientoEntradaView.php", null, true);
+    
+    }
+    
     function cerrarSesion(bclose){
             var dhxWins = new dhtmlXWindows();
 //var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
@@ -451,12 +485,12 @@ ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: 
 <!--    <div id="tbtemp" style="position: absolute;top: -2px; height: 20px; width: 130px;z-index: 104;left: 1px;">
 		<div id="tbprincipal"></div>
 	</div>	-->
-    
+<!--<div id="arbolprincipal">--> 
 <div id="ribbonObj" style="position: relative;width: 100%;"></div>
    
     
 <div id="layoutObj" class="layoutObj"> 
-
+    <div id="arbolprincipal"> </div>
     <!--<div id="combo_zone2" style="width:200px; height:30px;"></div>-->
 </div>
 <!--    <div id="treeviewObj" > 
@@ -477,7 +511,7 @@ ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: 
     <div id="infousuario">
       
     </div>
-
+<!--</div>-->
     <!--<div id="idusuario" type="hidden" value="<?php echo $Usuario["NOMBRE_USUARIO"]; ?>" >-->
 </body>
 </html>

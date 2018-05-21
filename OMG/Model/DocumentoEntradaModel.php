@@ -38,6 +38,18 @@ class DocumentoEntradaModel{
     }
     }
     
+    public function  listarCumplimientoPorId_Entrada($id_entrada){
+        try{
+            $dao=new DocumentoEntradaDAO();
+            $rec=$dao->listarCumplimientoPorId_Entrada($id_entrada);
+            
+            
+            return $rec;
+    }  catch (Exception $e){
+        throw  $e;
+    }
+    }
+    
     
     public function  listarDocumentosEntradaComboBox(){
         try{
@@ -54,6 +66,21 @@ class DocumentoEntradaModel{
     }  catch (Exception $e){
         throw  $e;
     }
+    }
+    
+    
+    public function verificarSiExisteFolioEntrada($registro,$cualverificar){
+        try{
+            $dao= new DocumentoEntradaDAO();
+//            if($cualverificar=="clavedocumento"){
+                $rec=$dao->verificarSiExisteFolioEntrada($registro,$cualverificar);
+//            }
+            
+            return $rec;
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+        
     }
     
     
