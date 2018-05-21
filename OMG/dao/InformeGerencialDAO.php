@@ -24,7 +24,8 @@ class InformeGerencialDAO{
             
             $query="SELECT tbinforme_gerencial.id_informe_gerencial, tbdocumento_entrada.id_documento_entrada, tbdocumento_entrada.folio_entrada,
                     tbentidad_reguladora.clave_entidad, tbdocumento_entrada.asunto, tbempleados.nombre_empleado, tbempleados.id_empleado,
-                    tbempleados.apellido_paterno, tbempleados.apellido_materno, tbdocumento_entrada.fecha_limite_atencion, tbdocumento_entrada.status_doc,
+                    tbempleados.apellido_paterno, tbempleados.apellido_materno, tbdocumento_entrada.fecha_asignacion, 
+                    tbdocumento_entrada.fecha_limite_atencion, tbdocumento_entrada.fecha_alarma, tbdocumento_entrada.status_doc,
                     tbdocumento_entrada.documento FROM informe_gerencial tbinforme_gerencial
 		 
                     JOIN   documento_entrada tbdocumento_entrada ON 
