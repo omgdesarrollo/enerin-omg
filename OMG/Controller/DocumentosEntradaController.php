@@ -212,6 +212,18 @@ exit;
 				header('Content-type: application/json; charset=utf-8');
 				// echo json_encode($Lista);
 				break;
+                            
+                           
+        case 'loadAutoComplete':
+            
+              $cadenac=$_REQUEST["cadenaclausula"];  
+              $data= $model->loadAutoComplete($cadenaclausula);
+               	header('Content-type: application/json; charset=utf-8');
+                echo json_encode($data);
+            
+        break;                    
+                       
+                            
 	case 'Eliminar':
 		# code...
 		break;

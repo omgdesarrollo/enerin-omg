@@ -51,6 +51,7 @@ class ClausulaModel{
         throw  $e;
     }
     }
+    
  public function loadAutoComplete($cadena){
      
      try{

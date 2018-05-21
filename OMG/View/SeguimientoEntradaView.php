@@ -1,9 +1,12 @@
 <?php
 session_start();
 require_once '../util/Session.php';
+$Usuario=  Session::getSesion("user");
 ?>
 
-<?php $Usuario=  Session::getSesion("user"); ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -15,12 +18,8 @@ require_once '../util/Session.php';
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
 		<!-- bootstrap & fontawesome -->
-		<!--<link rel="stylesheet" href="assets/css/bootstrap.min.css" />-->
-                <!--<link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>-->
                 <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-		<!--<link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" />-->
                 <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-		<!-- page specific plugin styles -->
 
 		<!-- text fonts -->
 		<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />
@@ -40,27 +39,66 @@ require_once '../util/Session.php';
                 <!--Termina para el spiner cargando-->
                 
                 <script src="../../js/jquery.js" type="text/javascript"></script>
-
 		<script src="../../assets/probando/js/ace-extra.min.js"></script>
-                
-                
-                <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
-                     <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+
                      
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+
                 
                 <style>
                     
-                .main-encabezado {
-                        /*background: #333;*/
+                    .modal
+                    {
+                        overflow: hidden;
+                    }
+                    .modal-dialog{
+                        margin-right: 0;
+                        margin-left: 0;
+                    }
+                    .modal-header{
+                      height:30px;background-color:#444;
+                      color:#ddd;
+                    }
+                    .modal-title{
+                      margin-top:-10px;
+                      font-size:16px;
+                    }
+                    .modal-header .close{
+                      margin-top:-10px;
+                      color:#fff;
+                    }
+                    .modal-body{
+                      color:#888;
+                       /*max-height: calc(100vh - 210px);*/
+                      max-height: calc(100vh - 110px);
+                      overflow-y: auto;
+                    }
+                    .modal-body p {
+                      text-align:center;
+                      padding-top:10px;
+                    }
+                    
+                                    
+                    div#winVP {
+			position: relative;
+			height: 350px;
+			border: 1px solid #dfdfdf;
+			margin: 10px;
+		}
+                
+                   
+                    
+/*                .main-encabezado {
+                        background: #333;
                         color: white;
                         height: 80px;
 
-                        width: 100%;  /*hacemos que la cabecera ocupe el ancho completo de la página*/ 
-                        left: 0;  /*Posicionamos la cabecera al lado izquierdo*/ 
-                        top: 0;  /*Posicionamos la cabecera pegada arriba*/ 
-                        position: fixed;  /*Hacemos que la cabecera tenga una posición fija*/ 
-                    }    
+                        width: 100%;  hacemos que la cabecera ocupe el ancho completo de la página 
+                        left: 0;  Posicionamos la cabecera al lado izquierdo 
+                        top: 0;  Posicionamos la cabecera pegada arriba 
+                        position: fixed;  Hacemos que la cabecera tenga una posición fija 
+                    }    */
                     
 /*Inicia estilos para mantener fijo el header*/                    
                     .table-fixed-header {
@@ -128,20 +166,26 @@ require_once 'EncabezadoUsuarioView.php';
 ?>
 
 
-<div style="height: 50px"></div>
+<div style="height: 5px"></div>
 
              
 <div style="position: fixed;">                          
 <button type="button" class="btn btn-info " onclick="refresh();" >
     <i class="glyphicon glyphicon-repeat"></i> 
-</button> 
+</button>
+
+        <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Folio de Entrada" style="width: 200px;">
+        <input type="text" id="idInputEntidad" onkeyup="filterTableEntidad()" placeholder="Buscar Por Entidad" style="width: 150px;">
+        <input type="text" id="idInputAsunto" onkeyup="filterTableAsunto()" placeholder="Buscar Por Asunto" style="width: 140px;">
+        <input type="text" id="idInputResponsable" onkeyup="filterTableResponsable()" placeholder="Buscar Por Responsable" style="width: 180px;">
+        <input type="text" id="idInputStatus" onkeyup="filterTableStatus()" placeholder="Buscar Por Status" style="width: 130px;">    
 </div>    
 
 
-<div style="height: 55px"></div>
+<div style="height: 47px"></div>
 
 
-<div class="contenedortable" style="position: fixed;">   
+<!--<div class="contenedortable" style="position: fixed;">   
         <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Folio de Entrada" style="width: 200px;">
         <input type="text" id="idInputEntidad" onkeyup="filterTableEntidad()" placeholder="Buscar Por Entidad" style="width: 150px;">
         <input type="text" id="idInputAsunto" onkeyup="filterTableAsunto()" placeholder="Buscar Por Asunto" style="width: 140px;">
@@ -150,7 +194,7 @@ require_once 'EncabezadoUsuarioView.php';
 </div >
 
 
-<div style="height: 55px"></div>
+<div style="height: 55px"></div>-->
              
 
              
@@ -162,7 +206,7 @@ require_once 'EncabezadoUsuarioView.php';
 			  <tr>
 				
                                 <th class="table-header">Foliode Entrada</th>
-                                <th class="table-header">Entidad Reguladora</th>
+                                <th class="table-header">Autoridad Remitente</th>
                                 <th class="table-header">Asunto</th>
                                 <th class="table-header">Responsable del Tema</th>
                                 <th class="table-header">Fecha Limite</th>
@@ -573,7 +617,9 @@ require_once 'EncabezadoUsuarioView.php';
     
 		</script>
                 
-                
+            <!--en esta seccion es para poder abrir el modal--> 
+                <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
+            <!--aqui termina la seccion para poder abrir el modal-->    
                 
                 
 	</body>

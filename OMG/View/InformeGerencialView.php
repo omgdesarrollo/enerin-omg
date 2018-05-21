@@ -102,16 +102,16 @@ $Usuario=  Session::getSesion("user");
 			margin: 10px;
 		}
                 
-                .main-encabezado {
-                        /*background: #333;*/
+/*                .main-encabezado {
+                        background: #333;
                         color: white;
                         height: 80px;
 
-                        width: 100%;  /*hacemos que la cabecera ocupe el ancho completo de la página*/ 
-                        left: 0;  /*Posicionamos la cabecera al lado izquierdo*/ 
-                        top: 0;  /*Posicionamos la cabecera pegada arriba*/ 
-                        position: fixed;  /*Hacemos que la cabecera tenga una posición fija*/ 
-                    }
+                        width: 100%;  hacemos que la cabecera ocupe el ancho completo de la página 
+                        left: 0;  Posicionamos la cabecera al lado izquierdo 
+                        top: 0;  Posicionamos la cabecera pegada arriba 
+                        position: fixed;  Hacemos que la cabecera tenga una posición fija 
+                    }*/
                 
 
 /*Inicia estilos para mantener fijo el header*/                    
@@ -178,7 +178,7 @@ require_once 'EncabezadoUsuarioView.php';
 ?>
              
 
-<div style="height: 50px"></div>
+<div style="height: 5px"></div>
 
              
 <div style="position: fixed;">                        
@@ -189,13 +189,19 @@ require_once 'EncabezadoUsuarioView.php';
     
 <button type="button" class="btn btn-info " onclick="refresh();" >
     <i class="glyphicon glyphicon-repeat"></i> 
-</button>        
+</button>
+    
+        <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Folio de Entrada" style="width: 200px;">
+        <input type="text" id="idInputEntidad" onkeyup="filterTableEntidad()" placeholder="Buscar Por Entidad" style="width: 150px;">
+        <input type="text" id="idInputAsunto" onkeyup="filterTableAsunto()" placeholder="Buscar Por Asunto" style="width: 140px;">
+        <input type="text" id="idInputResponsable" onkeyup="filterTableResponsable()" placeholder="Buscar Por Responsable" style="width: 180px;">
+        <input type="text" id="idInputStatus" onkeyup="filterTableStatus()" placeholder="Buscar Por Status" style="width: 130px;">    
 </div>    
              
-<div style="height: 55px"></div>
+<div style="height: 38px"></div>
 
 
-<div class="contenedortable" style="position: fixed;">   
+<!--<div class="contenedortable" style="position: fixed;">   
         <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Folio de Entrada" style="width: 200px;">
         <input type="text" id="idInputEntidad" onkeyup="filterTableEntidad()" placeholder="Buscar Por Entidad" style="width: 150px;">
         <input type="text" id="idInputAsunto" onkeyup="filterTableAsunto()" placeholder="Buscar Por Asunto" style="width: 140px;">
@@ -204,7 +210,7 @@ require_once 'EncabezadoUsuarioView.php';
 </div >
 
 
-<div style="height: 55px"></div>
+<div style="height: 55px"></div>-->
 
              
 <div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> 
@@ -215,7 +221,7 @@ require_once 'EncabezadoUsuarioView.php';
 			  <tr>
 				
                                 <th class="table-header">Folio de Entrada</th>
-                                <th class="table-header">Entidad Reguladora</th>
+                                <th class="table-header">Autoridad Remitente</th>
                                 <th class="table-header">Asunto</th>
                                 <th class="table-header">Responsable del Tema</th>
                                 <th class="table-header">Fecha Limite</th>

@@ -80,16 +80,16 @@ $Usuario=  Session::getSesion("user");
                     }
                     
                     
-                    .main-encabezado {
-                        /*background: #333;*/
+/*                    .main-encabezado {
+                        background: #333;
                         color: white;
                         height: 80px;
 
-                        width: 100%;  /*hacemos que la cabecera ocupe el ancho completo de la página*/ 
-                        left: 0;  /*Posicionamos la cabecera al lado izquierdo*/ 
-                        top: 0;  /*Posicionamos la cabecera pegada arriba*/ 
-                        position: fixed;  /*Hacemos que la cabecera tenga una posición fija*/ 
-                    }
+                        width: 100%;  hacemos que la cabecera ocupe el ancho completo de la página 
+                        left: 0;  Posicionamos la cabecera al lado izquierdo 
+                        top: 0;  Posicionamos la cabecera pegada arriba 
+                        position: fixed;  Hacemos que la cabecera tenga una posición fija 
+                    }*/
                     
                     
 /*Inicia estilos para mantener fijo el header*/                    
@@ -156,29 +156,32 @@ require_once 'EncabezadoUsuarioView.php';
 
 ?>        
 
-<div style="height: 50px"></div>     
+<div style="height: 5px"></div>     
 
 
 <div style="position: fixed;">
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
-    Agregar Entidad Reguladora
+    Agregar Autoridad Remitente
 </button>
     
 <button type="button" class="btn btn-info " onclick="refresh();" >
     <i class="glyphicon glyphicon-repeat"></i> 
-</button>       
+</button>
+    
+    <input type="text" id="idInputClaveAutoridad" onkeyup="filterTableClaveAutoridad()" placeholder="Buscar Por Clave Autoridad" style="width: 210px;">
+<input type="text" id="idInputDescripcion" onkeyup="filterTableDescripcion()" placeholder="Buscar Por Descripcion">  
 </div>    
 
 
-<div style="height: 55px"></div>
+<div style="height: 47px"></div>
 
 
-<div class="contenedortable" style="position: fixed;">   
+<!--<div class="contenedortable" style="position: fixed;">   
     <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Descripcion">
 </div >
 
 
-<div style="height: 55px"></div>
+<div style="height: 55px"></div>-->
 
 
 <div class="table-fixed-header">
@@ -188,7 +191,7 @@ require_once 'EncabezadoUsuarioView.php';
 		  <!--<thead>-->
 			  <tr>
 				<!--<th class="table-header" >NO.</th>-->
-                                <th class="table-header">Clave Entidad</th>
+                                <th class="table-header">Clave Autoridad Remitente</th>
 				<th class="table-header">Descripcion</th>				
 				<th class="table-header">Direccion</th>				
 				<th class="table-header">Telefono</th>				
@@ -251,15 +254,15 @@ require_once 'EncabezadoUsuarioView.php';
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Crear Nueva Entidad Reguladora</h4>
+		        <h4 class="modal-title" id="myModalLabel">Crear Nueva Autoridad Remitente</h4>
 		      </div>
 
 		      <div class="modal-body">
                                     
                                                 
                                                 <div class="form-group">
-							<label class="control-label" for="title">Clave Entidad:</label>
-                                                        <input type="text"  id="CLAVE_ENTIDAD" class="form-control" data-error="Ingrese la clave de la Entidad" required />
+							<label class="control-label" for="title">Clave Autoridad Remitente:</label>
+                                                        <input type="text"  id="CLAVE_ENTIDAD" class="form-control" data-error="Ingrese la clave de la Autoridad" required />
 							<div class="help-block with-errors"></div>
 						</div>
 
@@ -441,10 +444,33 @@ require_once 'EncabezadoUsuarioView.php';
                 }
                 
                 
-                function filterTable() {
+                
+                function filterTableClaveAutoridad() {
                 // Declare variables 
                     var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInput");
+                    input = document.getElementById("idInputClaveAutoridad");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[0];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }
+                
+                
+                function filterTableDescripcion() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputDescripcion");
                     filter = input.value.toUpperCase();
                     table = document.getElementById("idTable");
                     tr = table.getElementsByTagName("tr");

@@ -94,6 +94,20 @@ class DocumentoEntradaModel{
         }
     }
     
+    
+    public function loadAutoComplete($cadena){
+     
+     try{
+         $dao= new DocumentoEntradaDAO();
+         $rec=$dao->loadAutoComplete($cadena);
+         return $rec;
+     } catch (Exception $ex) {
+
+     }
+     
+     
+ }
+    
     public function insertar($pojo){
         $data=array();        
         try{

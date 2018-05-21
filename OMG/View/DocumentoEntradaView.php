@@ -89,16 +89,16 @@ $Usuario=  Session::getSesion("user");
                     }
                     
                     
-                    .main-encabezado {
-                        /*background: #333;*/
+/*                    .main-encabezado {
+                        background: #333;
                         color: white;
                         height: 80px;
 
-                        width: 100%;  /*hacemos que la cabecera ocupe el ancho completo de la página*/ 
-                        left: 0;  /*Posicionamos la cabecera al lado izquierdo*/ 
-                        top: 0;  /*Posicionamos la cabecera pegada arriba*/ 
-                        position: fixed;  /*Hacemos que la cabecera tenga una posición fija*/ 
-                    }
+                        width: 100%;  hacemos que la cabecera ocupe el ancho completo de la página 
+                        left: 0;  Posicionamos la cabecera al lado izquierdo 
+                        top: 0;  Posicionamos la cabecera pegada arriba 
+                        position: fixed;  Hacemos que la cabecera tenga una posición fija 
+                    }*/
                     
                     .validar_formulario{
                        background: blue; 
@@ -170,7 +170,7 @@ require_once 'EncabezadoUsuarioView.php';
 
 ?>
              
-<div style="height: 48px"></div>
+<div style="height: 5px"></div>
 
              
 <div style="position: fixed;">             
@@ -180,20 +180,27 @@ require_once 'EncabezadoUsuarioView.php';
     
 <button id="btnAgregarDocumentoEntradaRefrescar" type="button" class="btn btn-info " onclick="refresh();" >
     <i class="glyphicon glyphicon-repeat"></i> 
-</button>    
-</div>
+</button>
+
+    <input type="text" id="idInputFolioEntrada" onkeyup="filterTableFolioEntrada()" placeholder="Buscar Por Folio de Entrada" style="width: 200px;">
+    <input type="text" id="idInputAsunto" onkeyup="filterTableAsunto()" placeholder="Buscar Por Asunto" style="width: 140px;">
+    <input type="text" id="idInputRemitente" onkeyup="filterTableRemitente()" placeholder="Buscar Por Remitente" style="width: 160px;">
+    <input type="text" id="idInputAutoridadRemitente" onkeyup="filterTableAutoridadRemitente()" placeholder="Buscar Por Autoridad Remitente" style="width: 220px;">
+    <input type="text" id="idInputResponsableTema" onkeyup="filterTableResponsableTema()" placeholder="Buscar Por Responsable del Tema" style="width: 250px;">
+    
+</div>  
 
 
-<div style="height: 45px"></div>
+<div style="height: 80px"></div>
 
 
 
-<div class="contenedortable" style="position: fixed;">   
+<!--<div class="contenedortable" style="position: fixed;">   
     <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Folio de Entrada" style="width: 200px;">
 </div >
 
 
-<div style="height: 36px"></div>
+<div style="height: 36px"></div>-->
              
              
  <div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> 
@@ -210,7 +217,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 <th class="table-header">Fecha Recepcion</th>
                                 <th class="table-header">Asunto</th>
                                 <th class="table-header">Remitente</th>
-                                <th class="table-header">Entidad Reguladora</th>
+                                <th class="table-header">Autoridad Remitente</th>
                                 <th class="table-header">No.Tema</th>
                                 <th class="table-header">Tema</th>
                                 <th class="table-header">Responsable del Tema</th>              
@@ -522,7 +529,7 @@ require_once 'EncabezadoUsuarioView.php';
                           
                           
                                                 <div class="form-group">
-							<label class="control-label" for="title">Entidad Reguladora:</label>
+							<label class="control-label" for="title">Autoridad Remitente:</label>
                                                         
                                                         <select   id="ID_ENTIDADMODAL" class="select2">
                                                                 <?php
@@ -1238,10 +1245,10 @@ require_once 'EncabezadoUsuarioView.php';
                 }
                 
                 
-                function filterTable() {
+                function filterTableFolioEntrada() {
                 // Declare variables 
                     var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInput");
+                    input = document.getElementById("idInputFolioEntrada");
                     filter = input.value.toUpperCase();
                     table = document.getElementById("idTable");
                     tr = table.getElementsByTagName("tr");
@@ -1259,6 +1266,91 @@ require_once 'EncabezadoUsuarioView.php';
                     }
                 }
                 
+                function filterTableAsunto() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputAsunto");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[4];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }
+                
+                
+                function filterTableRemitente() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputRemitente");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[5];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }
+                
+                function filterTableAutoridadRemitente() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputAutoridadRemitente");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[6];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }
+                
+                
+                function filterTableResponsableTema() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputResponsableTema");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[9];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }
                 
                 function CambioStatusDocumentoEntrada(){
 //                    alert("Llego aqui "+$("#STATUS_DOC").val());

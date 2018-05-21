@@ -193,6 +193,23 @@ class DocumentoEntradaDAO{
     
     
     
+    public function loadAutoComplete($cadena){
+    try{
+            $query="SELECT tbdocumento_entrada.asunto,tbdocumento_entrada.remitente FROM documento_entrada tbdocumento_entrada WHERE tbdocumento_entrada.folio_entrada  like '$cadena%'";
+
+            
+//            $query="SELECT ID_EMPLEADO  FROM EMPLEADOS";
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+        
+            return $lista;
+            
+    } catch (Exception $ex) {
+
+    }
+}
+    
+    
     public function traer_ultimo_insertado(){
          $query_obtenerMaximo_mas_uno="SELECT max(id_documento_entrada) as id_documento_entrada FROM documento_entrada";
             $db_obtenerMaximo_mas_uno=AccesoDB::getInstancia();

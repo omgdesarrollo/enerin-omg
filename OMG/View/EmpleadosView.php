@@ -94,16 +94,16 @@ $Usuario=  Session::getSesion("user");
                       padding-top:10px;
                     }
                     
-                    .main-encabezado {
-                        /*background: #333;*/
+/*                    .main-encabezado {
+                        background: #333;
                         color: white;
                         height: 80px;
 
-                        width: 100%;  /*hacemos que la cabecera ocupe el ancho completo de la página*/ 
-                        left: 0;  /*Posicionamos la cabecera al lado izquierdo*/ 
-                        top: 0;  /*Posicionamos la cabecera pegada arriba*/ 
-                        position: fixed;  /*Hacemos que la cabecera tenga una posición fija*/ 
-                    }
+                        width: 100%;  hacemos que la cabecera ocupe el ancho completo de la página 
+                        left: 0;  Posicionamos la cabecera al lado izquierdo 
+                        top: 0;  Posicionamos la cabecera pegada arriba 
+                        position: fixed;  Hacemos que la cabecera tenga una posición fija 
+                    }*/
 
 /*Inicia estilos para mantener fijo el header*/                    
                     .table-fixed-header {
@@ -172,7 +172,7 @@ require_once 'EncabezadoUsuarioView.php';
 ?>       
 
        
-<div style="height: 50px"></div>       
+<div style="height: 5px"></div>       
 
                                 <div style="position: fixed;">
 				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
@@ -182,19 +182,25 @@ require_once 'EncabezadoUsuarioView.php';
                                 <button type="button" class="btn btn-info " onclick="refresh();" >
                                     <i class="glyphicon glyphicon-repeat"></i> 
 				</button>
+                                    
+                                    <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Nombre" style="width: 150px;">
+                                <input type="text" id="idInputapellidopaterno" onkeyup="filterTableapellidoPaterno()" placeholder="Buscar Por Apellido Paterno" style="width: 210px;">
+                                <input type="text" id="idInputapellidomaterno" onkeyup="filterTableapellidoMaterno()" placeholder="Buscar Por Apellido Materno" style="width: 210px;">
+                                <input type="text" id="idInputCategoria" onkeyup="filterTableCategoria()" placeholder="Buscar Por Categoria" style="width: 180px;">
+                                    
                                 </div>
                                 
-<div style="height: 55px"></div>
+<div style="height: 47px"></div>
 
 
-  <div class="contenedortable" style="position: fixed;">   
+<!-- <div class="contenedortable" style="position: fixed;">   
 <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Nombre">
 <input type="text" id="idInputapellidopaterno" onkeyup="filterTableapellidoPaterno()" placeholder="Buscar Por Apellido Paterno">
 <input type="text" id="idInputapellidomaterno" onkeyup="filterTableapellidoMaterno()" placeholder="Buscar Por Apellido Materno">
 <input type="text" id="idInputCategoria" onkeyup="filterTableCategoria()" placeholder="Buscar Por Categoria">
 <input type="text" id="idInputCorreo" onkeyup="filterTableCorreo()" placeholder="Buscar Por Correo">
   </div >   
-<div style="height: 55px"></div>
+<div style="height: 55px"></div>-->
 
 <!--                                 <div class="side-menu" id="sideMenu">
                                     <menu>
