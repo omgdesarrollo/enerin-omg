@@ -652,7 +652,7 @@ require_once 'EncabezadoUsuarioView.php';
                 ModalCargaArchivo += "<input type='file' name='files[]' multiple></span>";
                 ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
                 ModalCargaArchivo += "<div class='fileupload-progress' >";
-                ModalCargaArchivo += "<div class='progress' role='progressbar' aria-valuemin='0' aria-valuemax='100'></div>";
+                // ModalCargaArchivo += "<div class='progress' role='progressbar' aria-valuemin='0' aria-valuemax='100'></div>";
                 ModalCargaArchivo += "<div class='progress-extended'>&nbsp;</div>";
                 ModalCargaArchivo += "</div></div>";
                 ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
@@ -1008,7 +1008,12 @@ require_once 'EncabezadoUsuarioView.php';
                                         $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
                                         // $('#fileupload').fileupload();
                                         $('#fileupload').fileupload({
-                                                url: '../View/'
+                                                url: '../View/',
+                                        });
+                                        
+                                        $('#fileupload').fileupload('option', {
+                                        // url: '//jquery-file-upload.appspot.com/',
+                                        maxFileSize: 99900000,
                                         });
                                 }
                         });
