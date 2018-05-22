@@ -1058,8 +1058,8 @@ require_once 'EncabezadoUsuarioView.php';
                                         {
                                                 ejecutarAjax=false;
                                                 (column=="fecha_asignacion")?
-                                                swal("La fecha de asignacion no puede quedar sin fecha!", "Ok!", "error"):
-                                                swal("La fecha limite no puede quedar sin fecha!", "Ok!", "error");
+                                                swal("VERIFICAR","La fecha de asignacion no puede quedar sin fecha!", "error"):
+                                                swal("VERIFICAR", "La fecha limite no puede quedar sin fecha!", "error");
                                                 (column=="fecha_asignacion")?
                                                 fecha = fasignacion:
                                                 fecha = flimite;
