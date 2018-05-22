@@ -241,7 +241,7 @@ $Usuario=  Session::getSesion("user");
 //                                                        $s="selected";
                                                     ?>
                                     
-                                        <option value="<?php echo "".$filas["id_empleado"] ?>"  selected ><?php echo "".$filas["nombre_empleado"]." ".$filas["apellido_paterno"]." ".$filas["apellido_materno"]; ?></option>
+                                                        <option value="<?php echo "".$filas["id_empleado"] ?>"  selected ><?php echo "".$filas["nombre_empleado"]." ".$filas["apellido_paterno"]." ".$filas["apellido_materno"]; ?></option>
                                         
                                                         <?php
                                                         }
@@ -600,7 +600,9 @@ if(mensajeerror!=""){
                 // Declare variables 
                     var input, filter, table, tr, td, i;
                     input = document.getElementById("idInputResponsableDocumento");
+                    //alert("aqui Jose");
                     filter = input.value.toUpperCase();
+                    //alert(filter);
                     table = document.getElementById("idTable");
                     tr = table.getElementsByTagName("tr");
 
@@ -608,11 +610,23 @@ if(mensajeerror!=""){
                     for (i = 0; i < tr.length; i++) {
                       td = tr[i].getElementsByTagName("td")[3];
                       if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
+                          select=td.getElementsByTagName("select");
+                          $.each(select,function(index,value)
+                          {
+                                var indexRes = value.selectedIndex;
+                                var responsable=value[indexRes].innerHTML;
+                                console.log(responsable);
+                              if (responsable.toUpperCase().indexOf(filter) > -1)
+                              {
+                                tr[i].style.display = "";
+                              }
+                              else
+                              {
+                                tr[i].style.display = "none";
+                              }
+//                            console.log(value.options(ind));
+                          });
+//                          alert("H"+select.selectedindex);
                       } 
                     }
                 }

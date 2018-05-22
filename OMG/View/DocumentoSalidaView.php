@@ -152,7 +152,7 @@ require_once 'EncabezadoUsuarioView.php';
 
              
 <div style="position: fixed;">                          
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
+<button onclick="loadAutocomplete();" type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
 		Agregar Documento de Salida
 </button>
     
@@ -348,7 +348,7 @@ require_once 'EncabezadoUsuarioView.php';
                                                 <div class="form-group">
 							<label class="control-label" for="title">Folio de Entrada:</label>
                                                         
-                                                        <select   id="ID_DOCUMENTO_ENTRADA_MODAL" class="select1">
+                                                        <select   id="ID_DOCUMENTO_ENTRADA_MODAL" class="select1" onchange="loadAutocomplete()">
                                                                 <?php
                                                                 $s="";
                                                                 foreach ($cbxDE as $value) {
@@ -659,40 +659,39 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 
                 
-                function loadAutocomplete(dataString){
+                function loadAutocomplete()
+                {
                     //Le pasamos el valor del input al ajax
-                            $.ajax({
-                                type: "POST",
-                                url: "../Controller/DocumentosSalidaController.php?Op=loadAutoComplete",
-                                data: "cadenadocumentosalida="+dataString,
-                                success: function(data) {
-                                    //Escribimos las sugerencias que nos manda la consulta
-                                //var datos="<ul>";
-                                var dato="";
-                                    $.each(data, function (index,value) {
-                                //        console.log("sub_clausula: " + value.sub_clausula);
-                                //if(value.asunto!=""){
-                                //         datos+="<li>"+value.sub_clausula+"</li><br>";
-                                        dato=value.destinatario;
+                    var ID_DOCUMENTO_ENTRADA_MODAL= $('#ID_DOCUMENTO_ENTRADA_MODAL').val();
+                    
+                    $.ajax({
+                        
+                            type: "GET",
+                            url: "../Controller/DocumentosSalidaController.php?Op=loadAutoComplete",
+                            data: "FOLIOENTRADA="+ID_DOCUMENTO_ENTRADA_MODAL,
+                            
+                                    success: function(data)
+                                    {
+                                        //Escribimos las sugerencias que nos manda la consulta
+                                    //var datos="<ul>";
+            //                                    var dato="";
+                                        $.each(data, function (index,value)
+                                        {
+                                    //        console.log("sub_clausula: " + value.sub_clausula);
+                                    //if(value.asunto!=""){
+                                    //         datos+="<li>"+value.sub_clausula+"</li><br>";
+            //                                        dato=value.remitente;
+                                            $('#DESTINATARIO').val(value.remitente);
+                                         //}
+                                        });
+                                    //    datos+="</ul>"
+                                    //    $('#sugerenciasclausulas').fadeIn(1000).html(datos);
 
-                                     //}
-                                    });
-                                //    datos+="</ul>"
-                                //    $('#sugerenciasclausulas').fadeIn(1000).html(datos);
-                                $('#DESTINATARIO').val(dato);
-                                if(dato==""){
 
-                                $('#DESTINATARIO').prop("readonly",false);
-                                }else{
-                                    if(dato!=""){
-                                 $('#DESTINATARIO').prop("readonly",true);   
-                                 }
-                                }
-
-                                //                                               
-                                                                }
-                                                            }); 
-                                                }
+                                    //                                               
+                                    }
+                            }); 
+                }
                 
                 
                 
