@@ -263,6 +263,9 @@ and open the template in the editor.
 	gantt.locale.labels.column_owner =
 		gantt.locale.labels.section_owner = "Encargado";
         
+        
+        gantt.config.order_branch = true;
+gantt.config.order_branch_free = true;
 //        para abrir las carpetas por default desde el principio
 
 
@@ -289,6 +292,7 @@ and open the template in the editor.
         
         
 gantt.config.columns = [
+    {name:"id",   label:"id",   align:"center" },
 		{name: "text", label: "Nombre", tree: true, width: '*'},
 		
 		{
@@ -323,7 +327,11 @@ gantt.config.lightbox.sections = [
 
 
     gantt.init("gantt_here");
-    
+    gantt.load("../Controller/GanttController.php?Op=MostrarTareasCompletasPorFolioDeEntrada");
+ 
+var dp = new gantt.dataProcessor("../Controller/GanttController.php?Op=MostrarTareasCompletasPorFolioDeEntrada");
+dp.init(gantt);
+dp.setTransactionMode("REST");
     
     
     
@@ -435,6 +443,7 @@ gantt.config.lightbox.sections = [
 			var type = gantt.hasChild(task.id) ? gantt.config.types.project : gantt.config.types.task;
 			if (type != task.type) {
 				task.type = type;
+                                alert("");
 				gantt.updateTask(id);
 			}
 		}

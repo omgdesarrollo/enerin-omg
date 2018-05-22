@@ -65,3 +65,8 @@
 <div id="informegerencial">
     <iframe src="InformeGerencialView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
+
+
+<div id="validaciondocumentos">
+    <iframe src="ValidacionDocumentosView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
+</div>
