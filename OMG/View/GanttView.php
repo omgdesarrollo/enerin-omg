@@ -51,7 +51,7 @@ and open the template in the editor.
    <script src="../../codebase/ext/dhtmlxgantt_smart_rendering.js"></script>
    <script src="../../js/jquery.min.js" type="text/javascript"></script>
    
-   
+   <link href="../../assets/gantt_5.1.2_com/codebase/skins/dhtmlxgantt_meadow.css" rel="stylesheet" type="text/css"/>
     <!--<link rel="stylesheet" href="../../assets/gantt_5.1.2_com/skins/dhtmlxgantt_meadow.css?">-->
     
     
@@ -65,8 +65,8 @@ and open the template in the editor.
     html, body{
       width: 100%;
       height: 100%;
-/*      padding:0px;
-      margin:0px;*/
+      padding:0px;
+      margin:0px;
       overflow: hidden;
     }
     
@@ -81,8 +81,26 @@ and open the template in the editor.
 			display: inline-block;
 		}*/
                 
+/*         .gantt_task_line.gantt_dependent_task {
+			background-color: #65c16f;
+			border: 1px solid #3c9445;
+		}       */
+/*.gantt_task_line.gantt_dependent_task .gantt_task_progress {*/
+			/*background-color: #46ad51;*/
+		/*}*/
+/*         .hide_project_progress_drag .gantt_task_progress_drag {
+			visibility: hidden;
+		}*/
                 
-
+/*       .gantt_task_progress {
+			text-align: left;
+			padding-left: 10px;
+			box-sizing: border-box;
+			color: white;
+			font-weight: bold;
+		}         */
+                
+                
   </style>
 
  
@@ -194,11 +212,11 @@ and open the template in the editor.
 //                    { id: 3, source: 3, target: 4, type: "0" }
 //                ]
 //            };
-gantt.message({
-		text: "Predefinido Estructura de proyecto <br>1 - <b>Projecto</b><br>2 - <b>Subprojecto</b><br>3 - <b>Tareas</b><br>las tareas no pueden tener elementos secundarios Click para cerrar",
-		expire: -1
-	});
-gantt.config.scale_height = 60;
+//gantt.message({
+//		text: "Predefinido Estructura de proyecto <br>1 - <b>Projecto</b><br>2 - <b>Subprojecto</b><br>3 - <b>Tareas</b><br>las tareas no pueden tener elementos secundarios Click para cerrar",
+//		expire: -1
+//	});
+//gantt.config.scale_height = 60;
 
 //  gantt.serverList("stage", [
 //		{key: 1, "label": "Planeacion"},
@@ -244,6 +262,20 @@ gantt.config.scale_height = 60;
 //		gantt.locale.labels.section_priority = "Prioridad";
 	gantt.locale.labels.column_owner =
 		gantt.locale.labels.section_owner = "Encargado";
+        
+//        para abrir las carpetas por default desde el principio
+
+
+
+
+
+
+
+
+//        	gantt.config.open_tree_initially = true;
+//        	para cerrar las carpetas por default desde el principio
+
+
 //	gantt.locale.labels.column_stage =
 //		gantt.locale.labels.section_stage = "Escenario";
 
@@ -276,7 +308,10 @@ gantt.config.lightbox.sections = [
 	];
 
 
-
+//gantt.config.lightbox.project_sections = [
+//		{name: "description", height: 70, map_to: "text", type: "textarea", focus: true},
+//		{name: "time", type: "duration", map_to: "auto", readonly: true}
+//	];
 
   
 
@@ -289,6 +324,120 @@ gantt.config.lightbox.sections = [
 
     gantt.init("gantt_here");
     
+    
+    
+    
+    	gantt.attachEvent("onAfterTaskDrag", function (id, mode) {
+		var task = gantt.getTask(id);
+		if (mode == gantt.config.drag_mode.progress) {
+			var pr = Math.floor(task.progress * 100 * 10) / 10;
+			gantt.message(task.text + " is now " + pr + "% completed!");
+		} else {
+			var convert = gantt.date.date_to_str("%H:%i, %F %j");
+			var s = convert(task.start_date);
+			var e = convert(task.end_date);
+			gantt.message(task.text + " starts at " + s + " and ends at " + e);
+		}
+	});
+    
+    	gantt.attachEvent("onBeforeTaskChanged", function (id, mode, old_event) {
+		var task = gantt.getTask(id);
+		if (mode == gantt.config.drag_mode.progress) {
+			if (task.progress < old_event.progress) {
+				gantt.message(task.text + " progress can't be undone!");
+				return false;
+			}
+		}
+		return true;
+	});
+    
+    
+    
+    gantt.attachEvent("onBeforeTaskDrag", function (id, mode) {
+		var task = gantt.getTask(id);
+		var message = task.text + " ";
+
+		if (mode == gantt.config.drag_mode.progress) {
+			message += "progress is being updated";
+		} else {
+			message += "is being ";
+			if (mode == gantt.config.drag_mode.move)
+				message += "moved";
+			else if (mode == gantt.config.drag_mode.resize)
+				message += "resized";
+		}
+
+		gantt.message(message);
+		return true;
+	});
+    
+    gantt.templates.progress_text = function (start, end, task) {
+		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
+	};
+    gantt.templates.task_class = function (start, end, task) {
+		if (task.type == gantt.config.types.project)
+			return "hide_project_progress_drag";
+	};
+
+ 
+    gantt.attachEvent("onTaskDrag", function (id) {
+//        alert("d");
+			refreshSummaryProgress(gantt.getParent(id), false);
+		});
+                
+                
+        function refreshSummaryProgress(id, submit) {
+//            alert("le has picado para avanzar");
+			if (!gantt.isTaskExists(id))
+				return;
+
+			var task = gantt.getTask(id);
+			task.progress = calculateSummaryProgress(task);
+
+			if (!submit) {
+				gantt.refreshTask(id);
+			} else {
+				gantt.updateTask(id);
+			}
+
+			if (!submit && gantt.getParent(id) !== gantt.config.root_id) {
+				refreshSummaryProgress(gantt.getParent(id), submit);
+			}
+		}
+                
+                function calculateSummaryProgress(task) {
+//                    alert("calcula el progreso del padre");
+			if (task.type != gantt.config.types.project)
+				return task.progress;
+			var totalToDo = 0;
+			var totalDone = 0;
+			gantt.eachTask(function (child) {
+				if (child.type != gantt.config.types.project) {
+					totalToDo += child.duration;
+					totalDone += (child.progress || 0) * child.duration;
+				}
+			}, task.id);
+			if (!totalToDo) return 0;
+			else return totalDone / totalToDo;
+		}
+                
+                
+                function checkParents(id) {
+			setTaskType(id);
+			var parent = gantt.getParent(id);
+			if (parent != gantt.config.root_id) {
+				checkParents(parent);
+			}
+		}
+                function setTaskType(id) {
+			id = id.id ? id.id : id;
+			var task = gantt.getTask(id);
+			var type = gantt.hasChild(task.id) ? gantt.config.types.project : gantt.config.types.task;
+			if (type != task.type) {
+				task.type = type;
+				gantt.updateTask(id);
+			}
+		}
 //    gantt.parse(tasksA);
     
     
@@ -315,6 +464,67 @@ gantt.config.lightbox.sections = [
 			{"source": "2", "target": "10", "type": "0"}
 		]
 	};
+    
+    
+    
+    var demo_tasks = {
+		"data": [
+			{"id": 11, "text": "Project #1", "start_date": "", "duration": "", "progress": 0.6, "open": true, type: gantt.config.types.project},
+			{"id": 12, "text": "Task #1", "start_date": "03-04-2018", "duration": "5", "parent": "11", "progress": 1, "open": true, type: gantt.config.types.task},
+			{"id": 13, "text": "Task #2", "start_date": "", "duration": "", "parent": "11", "progress": 0.4, "open": true, type: gantt.config.types.project},
+			{"id": 14, "text": "Task #3", "start_date": "02-04-2018", "duration": "6", "parent": "11", "progress": 0.8, "open": true, type: gantt.config.types.task},
+			{"id": 15, "text": "Task #4", "start_date": "", "duration": "", "parent": "11", "progress": 0.18, "open": true, type: gantt.config.types.project},
+			{"id": 16, "text": "Task #5", "start_date": "02-04-2018", "duration": "7", "parent": "11", "progress": 0, "open": true, type: gantt.config.types.task},
+			{"id": 17, "text": "Task #2.1", "start_date": "03-04-2018", "duration": "2", "parent": "13", "progress": 1, "open": true, type: gantt.config.types.task},
+			{"id": 18, "text": "Task #2.2", "start_date": "06-04-2018", "duration": "3", "parent": "13", "progress": 0.8, "open": true, type: gantt.config.types.task},
+			{"id": 19, "text": "Task #2.3", "start_date": "10-04-2018", "duration": "4", "parent": "13", "progress": 0.2, "open": true, type: gantt.config.types.task},
+			{"id": 20, "text": "Task #2.4", "start_date": "10-04-2018", "duration": "4", "parent": "13", "progress": 0, "open": true, type: gantt.config.types.task},
+			{"id": 21, "text": "Task #4.1", "start_date": "03-04-2018", "duration": "4", "parent": "15", "progress": 0.5, "open": true, type: gantt.config.types.task},
+			{"id": 22, "text": "Task #4.2", "start_date": "03-04-2018", "duration": "4", "parent": "15", "progress": 0.1, "open": true, type: gantt.config.types.task},
+			{"id": 23, "text": "Task #4.3", "start_date": "03-04-2018", "duration": "5", "parent": "15", "progress": 0, "open": true, type: gantt.config.types.task}
+		],
+		"links": [
+			{"id": "10", "source": "11", "target": "12", "type": "1"},
+			{"id": "11", "source": "11", "target": "13", "type": "1"},
+			{"id": "12", "source": "11", "target": "14", "type": "1"},
+			{"id": "13", "source": "11", "target": "15", "type": "1"},
+			{"id": "14", "source": "11", "target": "16", "type": "1"},
+			{"id": "15", "source": "13", "target": "17", "type": "1"},
+			{"id": "16", "source": "17", "target": "18", "type": "0"},
+			{"id": "17", "source": "18", "target": "19", "type": "0"},
+			{"id": "18", "source": "19", "target": "20", "type": "0"},
+			{"id": "19", "source": "15", "target": "21", "type": "2"},
+			{"id": "20", "source": "15", "target": "22", "type": "2"},
+			{"id": "21", "source": "15", "target": "23", "type": "2"}
+		]
+	};
+        
+           var demo_tasks2 = {
+		
+		"data": [
+			{"id": 1426170055699, "start_date": "04-01-2019 00:00", "text": "Project #1", "duration": 11, "type": "project", "parent": 0},
+			{"id": 1426170055704, "start_date": "03-01-2019 00:00", "text": "Subproject #1", "duration": 9,"progress": 0.43, "parent": "1426170055699", "type": "subproject"},
+			{"id": 1426170055707, "start_date": "04-01-2019 00:00", "text": "Task #1", "duration": 1, "parent": "1426170055704", "type": "task"},
+			{"id": 1426170055710, "start_date": "06-01-2019 00:00", "text": "Task #2", "duration": 4, "parent": "1426170055704", "type": "task"},
+			{"id": 1426170055711, "start_date": "10-01-2019 00:00", "text": "Task #3", "duration": 3, "parent": "1426170055704", "type": "task"},
+			{"id": 1426170055712, "start_date": "02-01-2019 00:00", "text": "Subproject #2", "duration": 5, "parent": "1426170055699", "type": "subproject"},
+			{"id": 1426170055715, "start_date": "03-01-2019 00:00", "text": "Task #1", "duration": 4, "parent": "1426170055712", "type": "task", "progress": 0},
+			{"id": 1426170055718, "start_date": "07-01-2019 00:00", "text": "Task #2", "duration": 5, "parent": "1426170055712", "type": "task"},
+			{"id": 1426170055702, "start_date": "02-01-2019 00:00", "text": "Project #2", "duration": 15, "type": "project", "end_date": "17-01-2019 00:00", "parent": 0},
+			{"id": 1426170055719, "start_date": "02-01-2019 00:00", "text": "Subproject #1", "duration": 7, "parent": "1426170055702", "type": "subproject"},
+			{"id": 1426170055722, "start_date": "02-01-2019 00:00", "text": "Task #1", "duration": 4, "parent": "1426170055719", "type": "task"},
+			{"id": 1426170055725, "start_date": "06-01-2019 00:00", "text": "Task #2", "duration": 6, "parent": "1426170055719", "type": "task"},
+			{"id": 1426170055726, "start_date": "12-01-2019 00:00", "text": "Task #3", "duration": 5, "parent": "1426170055719", "type": "task"},
+			{"id": 1426170055703, "start_date": "08-01-2019 00:00", "text": "Project #3", "duration": 8, "type": "project", "parent": 0},
+			{"id": 1426170055727, "start_date": "08-01-2019 00:00", "text": "Subproject #1", "duration": 8, "parent": "1426170055703", "type": "subproject"}
+		], "links": [
+                    
+                    
+                ]
+	};
+    
+	
+    gantt.parse(demo_tasks2);
     
     
 //    var tasks = {
@@ -411,14 +621,19 @@ gantt.config.lightbox.sections = [
         
       
       
-     gantt.batchUpdate(function () {
-         alert("se ha cargado el gantt exitosamente");
-    gantt.eachSelectedTask(function(task_id){
-        if(gantt.isTaskExists(task_id))
-            gantt.deleteTask(task_id);
-    });
-});
-      
+//     gantt.batchUpdate(function () {
+////         alert("se ha cargado el gantt exitosamente");
+//    gantt.eachSelectedTask(function(task_id){
+//        if(gantt.isTaskExists(task_id))
+//            gantt.deleteTask(task_id);
+//    });
+//});
+     gantt.attachEvent("onParse", function () {
+         alert("le has picado ");
+			gantt.eachTask(function (task) {
+				setTaskType(task);
+			});
+		}); 
       
     });
     

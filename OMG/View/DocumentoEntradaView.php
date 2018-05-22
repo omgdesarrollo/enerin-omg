@@ -1491,11 +1491,22 @@ require_once 'EncabezadoUsuarioView.php';
                     for (i = 0; i < tr.length; i++) {
                       td = tr[i].getElementsByTagName("td")[6];
                       if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
+                        select=td.getElementsByTagName("select");
+                          $.each(select,function(index,value)
+                          {
+                                var indexRes = value.selectedIndex;
+                                var responsable=value[indexRes].innerHTML;
+                                console.log(responsable);
+                              if (responsable.toUpperCase().indexOf(filter) > -1)
+                              {
+                                tr[i].style.display = "";
+                              }
+                              else
+                              {
+                                tr[i].style.display = "none";
+                              }
+//                            console.log(value.options(ind));
+                          });
                       } 
                     }
                 }

@@ -195,7 +195,7 @@ class DocumentoEntradaDAO{
     
     public function loadAutoComplete($cadena){
     try{
-            $query="SELECT tbdocumento_entrada.asunto,tbdocumento_entrada.remitente FROM documento_entrada tbdocumento_entrada WHERE tbdocumento_entrada.folio_entrada  like '$cadena%'";
+            $query="SELECT tbdocumento_entrada.remitente FROM documento_entrada tbdocumento_entrada WHERE tbdocumento_entrada.id_documento_entrada = '$cadena'";
 
             
 //            $query="SELECT ID_EMPLEADO  FROM EMPLEADOS";

@@ -14,6 +14,7 @@ require_once '../util/Session.php';
 
 $Op=$_REQUEST["Op"];
 $model=new DocumentoSalidaModel();
+$modelEntrada=new DocumentoEntradaModel();
 $pojo= new DocumentoSalidaPojo();
 
 switch ($Op) {
@@ -80,8 +81,8 @@ switch ($Op) {
                     
         case 'loadAutoComplete':
             
-              $cadenadocumentosalida=$_REQUEST["cadenadocumentosalida"];  
-              $data= $model->loadAutoComplete($cadenadocumentosalida);
+              $cadenafolioentrada=$_REQUEST["FOLIOENTRADA"];  
+              $data= $modelEntrada->loadAutoComplete($cadenafolioentrada);
                	header('Content-type: application/json; charset=utf-8');
                 echo json_encode($data);
             

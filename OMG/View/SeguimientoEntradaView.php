@@ -175,10 +175,11 @@ require_once 'EncabezadoUsuarioView.php';
 </button>
 
         <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Folio de Entrada" style="width: 200px;">
-        <input type="text" id="idInputEntidad" onkeyup="filterTableEntidad()" placeholder="Buscar Por Entidad" style="width: 150px;">
+        <input type="text" id="idInputEntidad" onkeyup="filterTableEntidad()" placeholder="Buscar Por Autoridad" style="width: 150px;">
         <input type="text" id="idInputAsunto" onkeyup="filterTableAsunto()" placeholder="Buscar Por Asunto" style="width: 140px;">
-        <input type="text" id="idInputResponsable" onkeyup="filterTableResponsable()" placeholder="Buscar Por Responsable" style="width: 180px;">
+        <input type="text" id="idInputResponsable" onkeyup="filterTableResponsable()" placeholder="Buscar Por Responsable Tema" style="width: 180px;">
         <input type="text" id="idInputStatus" onkeyup="filterTableStatus()" placeholder="Buscar Por Status" style="width: 130px;">    
+        <input type="text" id="idInputResponsablePlan" onkeyup="filterTableResponsablePlan()" placeholder="Buscar Por Responsable Plan" style="width: 130px;">
 </div>    
 
 
@@ -205,11 +206,13 @@ require_once 'EncabezadoUsuarioView.php';
 		  <!--<thead>-->
 			  <tr>
 				
-                                <th class="table-header">Foliode Entrada</th>
+                                <th class="table-header">Folio de Entrada</th>
                                 <th class="table-header">Autoridad Remitente</th>
                                 <th class="table-header">Asunto</th>
                                 <th class="table-header">Responsable del Tema</th>
+                                <th class="table-header">Fecha Asignacion</th>
                                 <th class="table-header">Fecha Limite</th>
+                                <th class="table-header">Fecha Alarma</th>
                                 <th class="table-header">Status</th>
                                 <th class="table-header">Condicion</th>
                                 <th class="table-header">Responsable del Plan</th>
@@ -247,8 +250,9 @@ require_once 'EncabezadoUsuarioView.php';
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'clave_entidad','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_entidad"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'asunto','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["asunto"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleadotema','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleadotema"]." ".$filas["apellido_paternotema"]." ".$filas["apellido_maternotema"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'fecha_asignacion','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_asignacion"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'fecha_limite_atencion','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_limite_atencion"]; ?></td>
-                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'status_doc','<?php // echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php // echo $filas["status_doc"]; ?></td>-->
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'fecha_alarma','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_alarma"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'status_doc','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);">
                                     <?php 
                                     
@@ -612,7 +616,38 @@ require_once 'EncabezadoUsuarioView.php';
                         }
                       } 
                     }
-                }        
+                }
+                function filterTableResponsablePlan() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputResponsablePlan");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[7];
+                      if (td) {
+                        select=td.getElementsByTagName("select");
+                          $.each(select,function(index,value)
+                          {
+                                var indexRes = value.selectedIndex;
+                                var responsable=value[indexRes].innerHTML;
+                                console.log(responsable);
+                              if (responsable.toUpperCase().indexOf(filter) > -1)
+                              {
+                                tr[i].style.display = "";
+                              }
+                              else
+                              {
+                                tr[i].style.display = "none";
+                              }
+//                            console.log(value.options(ind));
+                          });
+                      } 
+                    }
+                }
                 
     
 		</script>
