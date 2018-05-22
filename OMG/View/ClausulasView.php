@@ -693,6 +693,7 @@ require_once 'EncabezadoUsuarioView.php';
                    <script src="../../codebase/dhtmlx.js"></script>
                 <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
                
+                <!--Para abrir alertas de aviso, success,warning, error-->
                 <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
                 <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
                 
