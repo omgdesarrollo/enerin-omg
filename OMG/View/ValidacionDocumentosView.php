@@ -239,8 +239,9 @@ require_once 'EncabezadoUsuarioView.php';
 //                      $numeracion = 1;
                   
 
-                      foreach ($Lista as $filas) { 
-                        ?>
+                      foreach ($Lista as $filas)
+                          { 
+                          ?>
 			 
                         <tr class="table-row">
 
@@ -258,48 +259,6 @@ require_once 'EncabezadoUsuarioView.php';
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'fecha_alarma','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_alarma"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'status_doc','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);">
 
-                                                                                                                                                          
-                                <td> 
-                                    <select   id="id_empleado" class="select"  onchange="saveComboToDatabase('id_empleado', <?php echo $filas["id_seguimiento_entrada"]; ?> )">
-                                    
-                                    <?php
-                                    $s="";
-                                                foreach ($cbxEmpleadoPlan as $value) {
-                                                    
-                                                    if($value["id_empleadoplan"]=="".$filas["id_empleado"]){
-//                                                        $s="selected";
-                                                    ?>
-                                    
-                                        <option value="<?php echo "".$filas["id_empleadoplan"] ?>"  selected ><?php echo "".$filas["nombre_empleadoplan"]." ".$filas["apellido_paternoplan"]." ".$filas["apellido_maternoplan"]; ?></option>
-                                        
-                                                        <?php
-                                                        }
-                                                        else{
-                                                            
-                                                            
-                                                            
-                                                        ?>
-                                                        
-                                                             <?php
-                                                        }
-                                                        
-                                                        
-                                                        foreach($cbxEmpleadoPlan1 as $value1){
-                                                               if($value1["id_empleado"]!=$filas["id_empleadoplan"]){
-                                                         ?>
-                                                            <option value="<?php echo "".$value1["id_empleado"] ?>"  ><?php echo "".$value1["nombre_empleado"]." ".$value1["apellido_paterno"]." ".$value1["apellido_materno"]; ?></option>
-
-                                                         <?php
-                                                               }
-                                                        
-                                        
-                                                            }
-                                                             break;
-                                                }
-                                    
-                                    ?>
-                                    </select>                                                                    
-                                </td>
                                 
                                                                     
                                 <!--<td contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php // echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php // echo $filas["documento"]; ?></td>-->
@@ -307,10 +266,10 @@ require_once 'EncabezadoUsuarioView.php';
                                 
 			  </tr>
                           
-		<?php
-		}
-                
-		?>
+                            <?php
+                            }
+
+                            ?>
 		  </tbody>
 		</table>
 
