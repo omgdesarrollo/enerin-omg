@@ -15,14 +15,7 @@ class ValidacionDocumentoPojo {
 
     private $id_validacion_documento;       
     private $id_asignacion_tema_requisito='';    
-    private $id_asignacion_tema_requisito='';    
-    private $id_asignacion_tema_requisito='';    
-    private $id_asignacion_tema_requisito='';    
-    private $id_asignacion_tema_requisito='';    
-    private $id_asignacion_tema_requisito='';    
-    private $id_asignacion_tema_requisito='';    
-    private $id_asignacion_tema_requisito='';    
-    private $id_asignacion_tema_requisito='';    
+    
     
 
 
