@@ -1087,7 +1087,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 {
                                         if(editableObj.value != "")
                                         {
-                                                (editableObj.value!=falarma)?compararFechaAlarma(editableObj.value,fasignacion,flimite): ejecutarAjax=false;
+                                                (editableObj.value!=falarma)?ejecutarAjax=compararFechaAlarma(editableObj.value,fasignacion,flimite): ejecutarAjax=false;
                                                 (ejecutarAjax)? editableObj.style="color:limegreen": fecha=falarma;
                                         }
                                 }
