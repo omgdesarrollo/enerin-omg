@@ -1,7 +1,7 @@
  
 
 <div id="empleados">
-<iframe src="EmpleadosView.php" style="width: 100%; height: 400px;margin-top: 20px;margin-left: 10px;" name="formularios"></iframe>
+<iframe src="EmpleadosView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
 
 
@@ -16,13 +16,13 @@
 
 
 <div id="documentos">
-<iframe src="DocumentosView.php" style="width: 100%; height: 400px;margin-top: 20px;margin-left: 10px;" name="formularios"></iframe>
+<iframe src="DocumentosView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
 
 
 
 <div id="asignaciontemasrequisitos">
-    <iframe src="AsignacionTemasRequisitosView.php" style="width: 100%; height: 400px;margin-top: 20px;margin-left: 10px;" name="formularios"></iframe>
+    <iframe src="AsignacionTemasRequisitosView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
 
 
@@ -38,12 +38,12 @@
 
 
 <div id="clausulas">
-<iframe src="ClausulasView.php" style="width: 100%; height: 400px;margin-top: 20px;margin-left: 10px;" name="formularios"></iframe>
+<iframe src="ClausulasView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
 
 
 <div id="entidadesReguladoras">
-<iframe src="EntidadesReguladorasView.php" style="width: 100%; height: 400px;margin-top: 20px;margin-left: 10px;" name="formularios"></iframe>
+<iframe src="EntidadesReguladorasView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
 
 
@@ -53,15 +53,15 @@
 
 
 <div id="documentosSalida">
-<iframe src="DocumentoSalidaView.php" style="width: 100%; height: 400px;margin-top: 20px;margin-left: 10px;" name="formularios"></iframe>
+<iframe src="DocumentoSalidaView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
 
 
 <div id="seguimientoentradas">
-    <iframe src="SeguimientoEntradaView.php" style="width: 100%; height: 400px;margin-top: 20px;margin-left: 10px;" name="formularios"></iframe>
+    <iframe src="SeguimientoEntradaView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
 
 
 <div id="informegerencial">
-    <iframe src="InformeGerencialView.php" style="width: 100%; height: 400px;margin-top: 20px;margin-left: 10px;" name="formularios"></iframe>
+    <iframe src="InformeGerencialView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>

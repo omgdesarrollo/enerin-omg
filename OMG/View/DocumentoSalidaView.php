@@ -148,7 +148,7 @@ require_once 'EncabezadoUsuarioView.php';
 ?>
              
  
-<div style="height: 15px"></div>
+<div style="height: 5px"></div>
 
              
 <div style="position: fixed;">                          
@@ -158,19 +158,26 @@ require_once 'EncabezadoUsuarioView.php';
     
 <button type="button" class="btn btn-info " onclick="refresh();" >
     <i class="glyphicon glyphicon-repeat"></i> 
-</button> 
+</button>
+    
+    <input type="text" id="idInputFolioSalida" onkeyup="filterTableFolioSalida()" placeholder="Buscar Por Folio de Salida" style="width: 190px;">
+    <input type="text" id="idInputResponsableTema" onkeyup="filterTableResponsableTema()" placeholder="Buscar Por Responsable del Tema" style="width: 240px;">
+    <input type="text" id="idInputAsunto" onkeyup="filterTableAsunto()" placeholder="Buscar Por Asunto" style="width: 140px;">
+    <input type="text" id="idInputRemitente" onkeyup="filterTableRemitente()" placeholder="Buscar Por Remitente" style="width: 160px;">
+    <input type="text" id="idInputAutoridadRemitente" onkeyup="filterTableAutoridadRemitente()" placeholder="Buscar Por Autoridad Remitente" style="width: 230px;">    
 </div>    
 
 
-<div style="height: 55px"></div>
+
+<div style="height: 80px"></div>
 
 
-<div class="contenedortable" style="position: fixed;">   
+<!--<div class="contenedortable" style="position: fixed;">   
     <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Folio de Salida" style="width: 200px;">
 </div >
 
 
-<div style="height: 55px"></div>
+<div style="height: 55px"></div>-->
 
                    
 <div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> 
@@ -184,8 +191,8 @@ require_once 'EncabezadoUsuarioView.php';
                                 <th class="table-header">Responsable del Tema</th>
                                 <th class="table-header">Fecha de Envio</th>
                                 <th class="table-header">Asunto</th>
-                                <th class="table-header">Entidad Reguladora</th>
-                                <th class="table-header">Destinatario</th>
+                                <th class="table-header">Remitente</th>
+                                <th class="table-header">Autoridad Remitente</th>                                
                                 <th class="table-header">Documento</th>
                                 <th class="table-header">Observaciones</th>              
                                
@@ -298,9 +305,8 @@ require_once 'EncabezadoUsuarioView.php';
                                 </td>-->
                                 
                                 
-                                
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'clave_entidad','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_entidad"]; ?></td>                              
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'destinatario','<?php echo $filas["id_documento_salida"]; ?>')" onClick="showEdit(this);"><?php echo $filas["destinatario"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'clave_entidad','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_entidad"]; ?></td>                              
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_documento_salida"]; ?>')" onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'observaciones','<?php echo $filas["id_documento_salida"]; ?>')" onClick="showEdit(this);"><?php echo $filas["observaciones"]; ?></td>
                                 
@@ -358,6 +364,7 @@ require_once 'EncabezadoUsuarioView.php';
                                                         </select>
                                                         
 							<div class="help-block with-errors"></div>
+                                                        <div id="sugerenciasdocumentosalida"></div>
 						</div>
                           
                                                 
@@ -383,7 +390,7 @@ require_once 'EncabezadoUsuarioView.php';
                                     
                                     
                                                 <div class="form-group">
-							<label class="control-label" for="title">Destinatario:</label>
+							<label class="control-label" for="title">Remitente:</label>
                                                         <textarea  id="DESTINATARIO" class="form-control" data-error="Ingrese al Destinatario" required></textarea>
 							<div class="help-block with-errors"></div>
 						</div>
@@ -425,24 +432,26 @@ require_once 'EncabezadoUsuarioView.php';
 		<script>
                     
                 var id_documento_salida;
-                var cualmodificar;
+                //var cualmodificar;
                 
                       $(function(){
                         $('.select').on('change', function() {
 //                          console.log( $(this).prop('value') );
 //                          alert("el value que va a viajar es "+ $(this).prop('value'));
                           
-                        if (cualmodificar == "ID_DOCUMENTO_ENTRADA") {
+
+                        //if (cualmodificar == "ID_DOCUMENTO_ENTRADA") {
     
                          column="ID_DOCUMENTO_ENTRADA";    
                                                 
-                        } else {
+                        //} else {
                           
-                          column="ID_ENTIDAD";                          
+                          //column="ID_ENTIDAD";                          
                           
-                        } 
+                        //} 
                         
-                        
+
+
 //                        else {
 //                            
 //                          column="ID_CLAUSULA";  
@@ -468,6 +477,21 @@ require_once 'EncabezadoUsuarioView.php';
                           
                           
                         });
+                        
+                        
+                        
+                        
+                        $('#ID_DOCUMENTO_ENTRADA_MODAL').keyup(function(){
+                            
+                       var valuedocumentosalida = $(this).val();   
+                       if(valuedocumentosalida!=""){
+                           var dataString = valuedocumentosalida;
+                            loadAutocomplete(dataString);
+                            
+                            
+                       }
+                         
+                           });
   
                         
                         $("#btn_guardar").click(function(){
@@ -634,10 +658,48 @@ require_once 'EncabezadoUsuarioView.php';
                 }
                 
                 
-                function filterTable() {
+                
+                function loadAutocomplete(dataString){
+                    //Le pasamos el valor del input al ajax
+                            $.ajax({
+                                type: "POST",
+                                url: "../Controller/DocumentosSalidaController.php?Op=loadAutoComplete",
+                                data: "cadenadocumentosalida="+dataString,
+                                success: function(data) {
+                                    //Escribimos las sugerencias que nos manda la consulta
+                                //var datos="<ul>";
+                                var dato="";
+                                    $.each(data, function (index,value) {
+                                //        console.log("sub_clausula: " + value.sub_clausula);
+                                //if(value.asunto!=""){
+                                //         datos+="<li>"+value.sub_clausula+"</li><br>";
+                                        dato=value.destinatario;
+
+                                     //}
+                                    });
+                                //    datos+="</ul>"
+                                //    $('#sugerenciasclausulas').fadeIn(1000).html(datos);
+                                $('#DESTINATARIO').val(dato);
+                                if(dato==""){
+
+                                $('#DESTINATARIO').prop("readonly",false);
+                                }else{
+                                    if(dato!=""){
+                                 $('#DESTINATARIO').prop("readonly",true);   
+                                 }
+                                }
+
+                                //                                               
+                                                                }
+                                                            }); 
+                                                }
+                
+                
+                
+                function filterTableFolioSalida() {
                 // Declare variables 
                     var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInput");
+                    input = document.getElementById("idInputFolioSalida");
                     filter = input.value.toUpperCase();
                     table = document.getElementById("idTable");
                     tr = table.getElementsByTagName("tr");
@@ -655,6 +717,92 @@ require_once 'EncabezadoUsuarioView.php';
                     }
                 }
                 
+                
+                function filterTableResponsableTema() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputResponsableTema");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[2];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }
+                
+                
+                function filterTableAsunto() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputAsunto");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[4];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }
+                
+                function filterTableRemitente() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputRemitente");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[5];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }
+                
+                
+                function filterTableAutoridadRemitente() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputAutoridadRemitente");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[6];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }
                 
 		</script>
                 

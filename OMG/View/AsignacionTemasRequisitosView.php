@@ -87,16 +87,16 @@ $Usuario=  Session::getSesion("user");
 		}
                     
                     
-                    .main-encabezado {
-                        /*background: #333;*/
+/*                    .main-encabezado {
+                        background: #333;
                         color: white;
                         height: 80px;
 
-                        width: 100%; /* hacemos que la cabecera ocupe el ancho completo de la página */
-                        left: 0; /* Posicionamos la cabecera al lado izquierdo */
-                        top: 0; /* Posicionamos la cabecera pegada arriba */
-                        position: fixed; /* Hacemos que la cabecera tenga una posición fija */
-                    }
+                        width: 100%;  hacemos que la cabecera ocupe el ancho completo de la página 
+                        left: 0;  Posicionamos la cabecera al lado izquierdo 
+                        top: 0;  Posicionamos la cabecera pegada arriba 
+                        position: fixed;  Hacemos que la cabecera tenga una posición fija 
+                    }*/
                     
                     
 /*Inicia estilos para mantener fijo el header*/                    
@@ -163,7 +163,7 @@ require_once 'EncabezadoUsuarioView.php';
 
 ?> 
 
-<div style="height: 50px"></div>
+<div style="height: 5px"></div>
             
         <div style="position: fixed;">     
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
@@ -186,14 +186,16 @@ require_once 'EncabezadoUsuarioView.php';
                 <i class="glyphicon glyphicon-repeat"></i> 
             </button>
             
+            <input type="text" id="idInputDescripcionTema" onkeyup="filterTableDescripcionTema()" placeholder="Buscar Por Descripcion del Tema" style="width: 230px">
+            <input type="text" id="idInputRequisito" onkeyup="filterTableRequisito()" placeholder="Buscar Por Requisito" style="width: 160px">     
         </div>
             
-<div style="height: 55px"></div>
+<div style="height: 47px"></div>
 
 
-<div class="contenedortable">   
+<!--<div class="contenedortable">   
     <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Descripcion del Tema" style="width: 220px">
-</div > 
+</div > -->
 
 
 
@@ -303,9 +305,9 @@ require_once 'EncabezadoUsuarioView.php';
 		</table>
 
 
-			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+<!--			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-			</a>
+			</a>-->
 	
     </div>         
 </div>         
@@ -576,10 +578,10 @@ require_once 'EncabezadoUsuarioView.php';
             }
             
             
-            function filterTable() {
+            function filterTableDescripcionTema() {
                 // Declare variables 
                     var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInput");
+                    input = document.getElementById("idInputDescripcionTema");
                     filter = input.value.toUpperCase();
                     table = document.getElementById("idTable");
                     tr = table.getElementsByTagName("tr");
@@ -596,6 +598,28 @@ require_once 'EncabezadoUsuarioView.php';
                       } 
                     }
                 }
+                
+                
+            function filterTableRequisito() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputRequisito");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[3];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }    
                 
 		</script>
                 

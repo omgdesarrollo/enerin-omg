@@ -88,7 +88,7 @@ function loadDataSideBarOficiosCatalogos(){
         width: 350,
         items: [
           {id: "empleados", text: "Empleados", icon: "empleados.jpg"},
-          {id: "entidadesreguladoras", text: "Entidad Reguladora", icon: "entidadreguladora.png"},
+          {id: "entidadesreguladoras", text: "Autoridad Remitente", icon: "entidadreguladora.png"},
 //          {id: "cumplimientos", text: "Cumplimientos", icon: "cumplimientos.png"},
           {id: "clausulas", text: "Temas", icon: "temas.jpg"}
           /*{type: "separator"},

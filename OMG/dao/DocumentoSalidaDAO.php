@@ -55,6 +55,8 @@ class DocumentoSalidaDAO{
     }
     }
     
+  
+    
  
     
     public function insertarDocumentosSalida($id_documento_entrada,$folio_salida,$fecha_envio,$asunto,$destinatario,$documento,$observaciones){

@@ -77,16 +77,16 @@ $Usuario=  Session::getSesion("user");
                     overflow: auto;
                     }
                
-                    .main-encabezado {
-                        /*background: #333;*/
+/*                    .main-encabezado {
+                        background: #333;
                         color: white;
                         height: 80px;
 
-                        width: 100%;  /*hacemos que la cabecera ocupe el ancho completo de la página*/ 
-                        left: 0;  /*Posicionamos la cabecera al lado izquierdo*/ 
-                        top: 0;  /*Posicionamos la cabecera pegada arriba*/ 
-                        position: fixed;  /*Hacemos que la cabecera tenga una posición fija*/ 
-                    } 
+                        width: 100%;  hacemos que la cabecera ocupe el ancho completo de la página 
+                        left: 0;  Posicionamos la cabecera al lado izquierdo 
+                        top: 0;  Posicionamos la cabecera pegada arriba 
+                        position: fixed;  Hacemos que la cabecera tenga una posición fija 
+                    } */
                    
                     
 /*Inicia estilos para mantener fijo el header*/                    
@@ -154,7 +154,7 @@ require_once 'EncabezadoUsuarioView.php';
 ?>
 
             
-<div style="height: 50px"></div>            
+<div style="height: 5px"></div>            
            
         <div style="position: fixed;">    
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
@@ -164,18 +164,24 @@ require_once 'EncabezadoUsuarioView.php';
             <button type="button" class="btn btn-info " onclick="refresh();" >
                 <i class="glyphicon glyphicon-repeat"></i> 
 	    </button>
+            
+            <!--Filtros de busqueda-->
+            <input type="text" id="idInputTema" onkeyup="filterTableTema()" placeholder="Buscar Por Tema">
+            <input type="text" id="idInputSubTema" onkeyup="filterTableSubTema()" placeholder="Buscar Por Sub-Tema">
+            <input type="text" id="idInputResponsable" onkeyup="filterTableResponsable()" placeholder="Buscar Por Responsable">
+            
         </div>
  
-<div style="height: 55px"></div>
+<div style="height: 47px"></div>
 
 
 
-<div class="contenedortable" style="position: fixed;">   
+<!--<div class="contenedortable" style="position: fixed;">   
     <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Tema">
-</div >
+</div >-->
 
 
-<div style="height: 55px"></div>
+<!--<div style="height: 55px"></div>-->
 
 
 <div class="table-fixed-header">
@@ -197,7 +203,7 @@ require_once 'EncabezadoUsuarioView.php';
 				<th  class="table-header">Descripcion</th>				
                                 <th  class="table-header">Plazo</th>					
                           <!--</div>-->
-			  </tr>
+                               </tr>
                      
 		  <!--</thead>-->
 		  <tbody>
@@ -604,10 +610,10 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 
                 
-                function filterTable() {
+                function filterTableTema() {
                 // Declare variables 
                     var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInput");
+                    input = document.getElementById("idInputTema");
                     filter = input.value.toUpperCase();
                     table = document.getElementById("idTable");
                     tr = table.getElementsByTagName("tr");
@@ -625,6 +631,49 @@ require_once 'EncabezadoUsuarioView.php';
                     }
                 }
                 
+                
+                function filterTableSubTema() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputSubTema");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[3];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }
+                
+                
+                function filterTableResponsable() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputResponsable");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[4];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }
                 
 		</script>
                 

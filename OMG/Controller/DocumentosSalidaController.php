@@ -7,6 +7,7 @@
  */
 session_start();
 require_once '../Model/DocumentoSalidaModel.php';
+require_once '../Model/DocumentoEntradaModel.php';
 require_once '../util/Session.php';
 
 
@@ -74,6 +75,20 @@ switch ($Op) {
         $model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );          
                   
 	break;
+    
+    
+                    
+        case 'loadAutoComplete':
+            
+              $cadenadocumentosalida=$_REQUEST["cadenadocumentosalida"];  
+              $data= $model->loadAutoComplete($cadenadocumentosalida);
+               	header('Content-type: application/json; charset=utf-8');
+                echo json_encode($data);
+            
+        break;
+    
+    
+    
 
 	case 'Eliminar':
 		# code...

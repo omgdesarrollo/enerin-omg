@@ -90,16 +90,16 @@ $Usuario=  Session::getSesion("user");
                        padding-top:10px; 
                     } 
              
-                .main-encabezado {
-                        /*background: #333;*/
+/*                .main-encabezado {
+                        background: #333;
                         color: white;
                         height: 80px;
 
-                        width: 100%; /* hacemos que la cabecera ocupe el ancho completo de la página */
-                        left: 0; /* Posicionamos la cabecera al lado izquierdo */
-                        top: 0; /* Posicionamos la cabecera pegada arriba */
-                        position: fixed; /* Hacemos que la cabecera tenga una posición fija */
-                    }
+                        width: 100%;  hacemos que la cabecera ocupe el ancho completo de la página 
+                        left: 0;  Posicionamos la cabecera al lado izquierdo 
+                        top: 0;  Posicionamos la cabecera pegada arriba 
+                        position: fixed;  Hacemos que la cabecera tenga una posición fija 
+                    }*/
                     
                     
 /*Inicia estilos para mantener fijo el header*/                    
@@ -166,7 +166,7 @@ $Usuario=  Session::getSesion("user");
             ?>
 
             
-             <div style="height: 50px"></div>
+             <div style="height: 5px"></div>
              
              
              <div style="position: fixed;">        
@@ -176,20 +176,23 @@ $Usuario=  Session::getSesion("user");
                  
                 <button type="button" class="btn btn-info " onclick="refresh();" >
                     <i class="glyphicon glyphicon-repeat"></i> 
-                </button> 
+                </button>
                  
-              </div>
+                <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Buscar Por Clave del Documento" style="width: 240px">
+                <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Buscar Por Nombre del Documento" style="width: 240px">
+                <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Buscar Por Responsable del Documento" style="width: 270px">  
+            </div>
 	     
              
-          <div style="height: 55px"></div>
+          <div style="height: 47px"></div>
           
           
-          <div class="contenedortable" style="position: fixed;">   
+<!--          <div class="contenedortable" style="position: fixed;">   
             <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Nombre del Documento" style="width: 240px">
           </div >
 
 
-<div style="height: 55px"></div>
+<div style="height: 55px"></div>-->
           
           
         
@@ -548,10 +551,33 @@ if(mensajeerror!=""){
                 
                 
                 
-                function filterTable() {
+                function filterTableClaveDocumento() {
                 // Declare variables 
                     var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInput");
+                    input = document.getElementById("idInputClaveDocumento");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[1];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }
+                
+                
+                
+                function filterTableNombreDocumento() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputNombreDocumento");
                     filter = input.value.toUpperCase();
                     table = document.getElementById("idTable");
                     tr = table.getElementsByTagName("tr");
@@ -569,6 +595,27 @@ if(mensajeerror!=""){
                     }
                 }
                 
+                
+                function filterTableResponsableDocumento() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputResponsableDocumento");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[3];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }
                 
 		</script>
                 
