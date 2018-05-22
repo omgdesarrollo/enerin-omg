@@ -420,6 +420,8 @@ ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: 
     
     
     function loadDataCargaProgramaGantt(){
+        
+        
     var dhxWins = new dhtmlXWindows();
 //var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
  dhxWins.attachViewportTo("arbolprincipal");

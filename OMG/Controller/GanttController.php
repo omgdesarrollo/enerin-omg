@@ -4,6 +4,10 @@
 session_start();
 require_once '../Model/EmpleadoModel.php';
 require_once '../Pojo/EmpleadoPojo.php';
+require_once '../Model/GanttModel.php';
+
+
+
 require_once '../util/Session.php';
 
 
@@ -12,34 +16,28 @@ $Op=$_REQUEST["Op"];
 $model=new EmpleadoModel();
 $pojo= new EmpleadoPojo();
 
+$modelGantt= new GanttModel();
+
 switch ($Op) {
+       
 	case 'ListarEmpleados':
 
-		$Lista=$model->listarEmpleados();
+	$Lista=$model->listarEmpleados();
     	Session::setSesion("listarEmpleados",$Lista);
 //    	$tarjet="../view/principalmodulos.php";
     	header('Content-type: application/json; charset=utf-8');
 		echo json_encode($Lista);
-//                echo json_encode(array("data"=>$Lista));
-//	$filas=array();	
-//        foreach ($Lista as $filas)
-//            //$sentencia="SELECT * FROM empleados";
-//            //$resultado=mysql_query($sentencia);
-//            //while($filas=mysql_fetch_assoc($resultado))
-//              
-//            {
-//            echo json_encode($filas['ID_EMPLEADO']);	
-//            }
-		//header("location: login.php");
-//echo $json = json_encode(array("n" => "".$Lista.NOMBRE_EMPLEADO, "a" => "apellido",  "c" => "test"));
-		return $Lista;
+                
 		break;
+    	
+        case "MostrarTareasCompletasPorFolioDeEntrada":
+        $Lista=$modelGantt->obtenerTareasCompletasPorFolioEntrada("123");
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($Lista);
+//        Session::setSesion("", $value)
             
-        
-        	    
-            
-            
-	
+        break;
+    
 	case 'Nuevo':
 		# code...
 		break;	

@@ -21,7 +21,6 @@ class ClausulaDAO{
 
                     JOIN empleados tbempleados ON tbclausulas.id_empleado=tbempleados.id_empleado ORDER BY  cast(tbclausulas.clausula  as unsigned )";
             
-            
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             

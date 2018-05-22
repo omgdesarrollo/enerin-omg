@@ -225,7 +225,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 <th class="table-header">Status</th>
                                 <th class="table-header">Fecha Asignacion</th>
                                 <th class="table-header">Fecha Limite</th>
-                                <!--<th class="table-header">FECHA ALARMA</th>-->
+                                <th class="table-header">Fecha Alarma</th>
                                 <th class="table-header">Documento</th>
                                 <th class="table-header">Observaciones</th>
                                 
@@ -283,7 +283,16 @@ require_once 'EncabezadoUsuarioView.php';
                                 
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'folio_referencia','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["folio_referencia"]; ?></td>                                                               
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'folio_entrada','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["folio_entrada"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'fecha_recepcion','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_recepcion"]; ?></td>
+                                
+                                
+                                <td>
+                                        <input style="" value="<?php echo $filas["fecha_recepcion"]; ?>" 
+                                        onBlur="saveToDatabaseDates(this,'fecha_recepcion','<?php echo $filas["id_documento_entrada"]; ?>',
+                                        '<?php echo $filas["fecha_asignacion"]; ?>','<?php echo $filas["fecha_limite_atencion"];?>',
+                                        '<?php echo $filas["fecha_alarma"]; ?>')" type="date"/>
+                                </td>
+                                
+
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'asunto','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["asunto"]; ?></td>
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'remitente','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["remitente"]; ?></td>
                                 
@@ -385,13 +394,28 @@ require_once 'EncabezadoUsuarioView.php';
                                        
  
                                     </select>                                                                     
+                                </td>                        
+                                <!--<td contenteditable="true" onBlur="saveToDatabase(this,'status_doc','<?php // echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["status_doc"]; ?></td>-->
+                                <td>
+                                        <input style="" value="<?php echo $filas["fecha_asignacion"]; ?>" 
+                                        onBlur="saveToDatabaseDates(this,'fecha_asignacion','<?php echo $filas["id_documento_entrada"]; ?>',
+                                        '<?php echo $filas["fecha_asignacion"]; ?>','<?php echo $filas["fecha_limite_atencion"];?>',
+                                        '<?php echo $filas["fecha_alarma"]; ?>')" type="date"/>
                                 </td>
                                 
-                                
-                                <!--<td contenteditable="true" onBlur="saveToDatabase(this,'status_doc','<?php // echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["status_doc"]; ?></td>-->
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'fecha_asignacion','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_asignacion"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'fecha_linmite_atencion','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_limite_atencion"]; ?></td>
-                                
+                                <td>
+                                        <input style="" value="<?php echo $filas["fecha_limite_atencion"]; ?>" 
+                                        onBlur="saveToDatabaseDates(this,'fecha_limite_atencion','<?php echo $filas["id_documento_entrada"]; ?>',
+                                        '<?php echo $filas["fecha_asignacion"]; ?>','<?php echo $filas["fecha_limite_atencion"];?>',
+                                        '<?php echo $filas["fecha_alarma"]; ?>')" type="date"/>
+                                </td>
+
+                                <td>
+                                        <input style="" value="<?php echo $filas["fecha_alarma"]; ?>" 
+                                        onBlur="saveToDatabaseDates(this,'fecha_alarma','<?php echo $filas["id_documento_entrada"]; ?>',
+                                        '<?php echo $filas["fecha_asignacion"]; ?>','<?php echo $filas["fecha_limite_atencion"];?>',
+                                        '<?php echo $filas["fecha_alarma"]; ?>')" type="date"/>
+                                </td>
                                 <!--<td contenteditable="true" onBlur="saveToDatabase(this,'FECHA_ALARMA','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_alarma"]; ?></td>-->
                                 <td>
                                         <button onClick="mostrarUrl(<?php echo $filas['id_documento_entrada'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#create-itemUrls">
@@ -504,8 +528,9 @@ require_once 'EncabezadoUsuarioView.php';
                                     
                                     
                                                 <div class="form-group-">
-							<label class="control-label" for="title">Fecha Recepcion:</label>                                                       
-                                                        <input type="date" id="FECHA_RECEPCION" class="form-control" data-error="Ingrese la Fecha de Recepcion" required/>							   
+							<label class="control-label" for="title">Fecha Recepcion:</label>
+                                                        <input type="date" id="FECHA_RECEPCION" class="form-control" 
+                                                        data-error="Ingrese la Fecha de Recepcion" required/>
                                                         <div class="help-block with-errors"></div>
                                                         <div id="ValidarFechaRecepcionModal" ></div>
 						</div>
@@ -1015,6 +1040,145 @@ require_once 'EncabezadoUsuarioView.php';
 				}   
 		   });
 		}
+                function saveToDatabaseDates(editableObj,column,id,fasignacion,flimite,falarma,frecepcion)
+                {
+                        console.log(column);
+                        console.log(id);
+                        console.log(editableObj.value);
+                        console.log(fasignacion);
+                        console.log(flimite);
+                        console.log(falarma);
+                        var fecha;
+                        var ejecutarAjax = true;
+                        if(column != "fecha_recepcion")
+                        {
+                                if(column == "fecha_asignacion" || column == "fecha_limite_atencion")
+                                {
+                                        if(editableObj.value == "")
+                                        {
+                                                ejecutarAjax=false;
+                                                (column=="fecha_asignacion")?
+                                                swal("VERIFICAR","La fecha de asignacion no puede quedar sin fecha!", "error"):
+                                                swal("VERIFICAR", "La fecha limite no puede quedar sin fecha!", "error");
+                                                (column=="fecha_asignacion")?
+                                                fecha = fasignacion:
+                                                fecha = flimite;
+                                        }
+                                        else
+                                        {
+                                                if(column=="fecha_asignacion")
+                                                {
+                                                        if(editableObj.value==fasignacion)
+                                                                return 0;
+                                                }
+                                                else
+                                                {
+                                                        if(editableObj.value==flimite)
+                                                                return 0;
+                                                }
+                                                ejecutarAjax = (column=="fecha_asignacion")?
+                                                compararFechaAsignacion(editableObj.value,flimite,falarma):
+                                                compararFechaLimite(editableObj.value,fasignacion,falarma);
+                                                (ejecutarAjax)? editableObj.style="color:limegreen":
+                                                (column=="fecha_asignacion")?editableObj.value=fasignacion: fecha=flimite;
+                                        }
+                                }
+                                else
+                                {
+                                        if(editableObj.value != "")
+                                        {
+                                                (editableObj.value!=falarma)?compararFechaAlarma(editableObj.value,fasignacion,flimite): ejecutarAjax=false;
+                                                (ejecutarAjax)? editableObj.style="color:limegreen": fecha=falarma;
+                                        }
+                                }
+                        }
+                        else
+                        {
+                                (editableObj.value=="")? ejecutarAjax=false :editableObj.style="color:limegreen";
+                                fecha = frecepcion;
+                        }
+                        if(ejecutarAjax==true)
+                        {
+                                $.ajax({
+                                        url: "../Controller/DocumentosEntradaController.php?Op=Modificar",
+                                        type: "POST",
+                                        data:'column='+column+'&editval='+editableObj.value+'&id='+id,
+                                        success: function(data)
+                                        {
+                                                (data)? editableObj.style="color:limegreen":editableObj.value=fecha;
+                                        }
+                                });
+                        }
+                        else
+                                editableObj.value=fecha
+
+		}
+                function compararFechaAsignacion(val,flimite,falarma)
+                {
+                        limiteF = new Date(flimite);
+                        limiteF = new Date(limiteF.getFullYear(),limiteF.getMonth(),limiteF.getDate());
+                        asignacionF = new Date(val);
+                        asignacionF = new Date(asignacionF.getFullYear(),asignacionF.getMonth(),asignacionF.getDate());
+                        if(asignacionF>limiteF)
+                        {
+                                swal("D'oh!", "La fecha de asignacion sobrepasa la fecha limite, VERIFICA", "error");
+                                return false;
+                        }
+                        if(falarma!="0000-00-00")
+                        {
+                                alarmaF = new Date(falarma);
+                                alarmaF = new Date(alarmaF.getFullYear(),alarmaF.getMonth(),alarmaF.getDate());
+                                if(asignacionF>alarmaF)
+                                {
+                                        swal("D'oh!", "La fecha de asignacion sobrepasa la fecha de alarma, VERIFICA", "error");
+                                        return false;
+                                }
+                        }
+                        return true;
+                }
+                function compararFechaLimite(val,fasignacion,falarma)
+                {
+                        limiteF = new Date(val);
+                        limiteF = new Date(limiteF.getFullYear(),limiteF.getMonth(),limiteF.getDate());
+                        asignacionF = new Date(fasignacion);
+                        asignacionF = new Date(asignacionF.getFullYear(),asignacionF.getMonth(),asignacionF.getDate());
+                        if(limiteF<asignacionF)
+                        {
+                                swal("D'oh!", "La fecha limite no debe ser menor que la fecha de asignacion, VERIFICA", "error");
+                                return false;
+                        }
+                        if(falarma!="0000-00-00")
+                        {
+                                alarmaF = new Date(falarma);
+                                alarmaF = new Date(alarmaF.getFullYear(),alarmaF.getMonth(),alarmaF.getDate());
+                                if(limiteF<alarmaF)
+                                {
+                                        swal("D'oh!", "La fecha limite no puede ser menor que la fecha de alarma, VERIFICA", "error");
+                                        return false;
+                                }
+                        }
+                        return true;
+                }
+                function compararFechaAlarma(val,fasignacion,flimite)
+                {
+                        alarmaF = new Date(val);
+                        alarmaF = new Date(alarmaF.getFullYear(),alarmaF.getMonth(),alarmaF.getDate());
+                        limiteF = new Date(flimite);
+                        limiteF = new Date(limiteF.getFullYear(),limiteF.getMonth(),limiteF.getDate());
+                        asignacionF = new Date(fasignacion);
+                        asignacionF = new Date(asignacionF.getFullYear(),asignacionF.getMonth(),asignacionF.getDate());
+                        if(alarmaF<asignacionF)
+                        {
+                                swal("D'oh!", "La fecha de alarma no puede ser menor que la fecha de asignacion, VERIFICA", "error");
+                                return false;
+                        }
+                        if(alarmaF>limiteF)
+                        {
+                                swal("D'oh!", "La fecha de alarma no puede ser mayor que la fecha limite, VERIFICA", "error");
+                                return false;
+                        }
+                        return true;
+                }
                 
                 
                 function saveComboToDatabase(column,id){
