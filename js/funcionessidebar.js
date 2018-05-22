@@ -218,8 +218,8 @@ function loadDataSideBarOficiosDocumentacion(){
                                 template:'tiles',
         width: 350,
         items: [
-          {id: "registrovalidaciondocumentos", text: "Registro Validacion Documento", icon: "registrovalidaciondocumentos.jpg"},
-          {id: "formatodedocumento", text: "Formato de Documento", icon: "informegerencial.png"}
+          {id: "validaciondocumentos", text: "Validacion de Documentos", icon: "registrovalidaciondocumentos.jpg"},
+          //{id: "formatodedocumento", text: "Formato de Documento", icon: "informegerencial.png"}
             
         ]
       });
@@ -227,8 +227,10 @@ function loadDataSideBarOficiosDocumentacion(){
                                  
                          mySidebar.attachEvent("onSelect", function(id, value){
                                    switch(id){
-                                       case "registrovalidaciondocumentos":
-                                          
+                                       case "validaciondocumentos":
+                                            consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");
+
+                                            $("#sidebarObjV").load('InyectarVistasView.php #validaciondocumentos');
                                        break;  
                                        
 

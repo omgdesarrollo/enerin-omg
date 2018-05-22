@@ -207,18 +207,19 @@ require_once 'EncabezadoUsuarioView.php';
 		  <!--<thead>-->
 			  <tr>
 				
-                                <th class="table-header">Folio de Entrada</th>
-                                <th class="table-header">Autoridad Remitente</th>
-                                <th class="table-header">Asunto</th>
+                                <th class="table-header">Clave Documento</th>
+                                <th class="table-header">Nombre Documento</th>
+                                <th class="table-header">Responsable del Documento</th>
+                                <th class="table-header">Tema</th>
                                 <th class="table-header">Responsable del Tema</th>
-                                <th class="table-header">Fecha Asignacion</th>
-                                <th class="table-header">Fecha Limite</th>
-                                <th class="table-header">Fecha Alarma</th>
-                                <th class="table-header">Status</th>
-                                <th class="table-header">Condicion</th>
-                                <th class="table-header">Responsable del Plan</th>
-                                <th class="table-header">Documento</th>
-                                <th class="table-header">Programa</th>
+                                <th class="table-header">Documento Adjunto</th>
+                                <th class="table-header">Check-List</th>
+                                <th class="table-header">Documento por Responsable</th>
+                                <th class="table-header">Observacion Documento</th>
+                                <th class="table-header">Tema por Responsable</th>
+                                <th class="table-header">Observacion Tema</th>
+                                <th class="table-header">Plan de Accion</th>
+                                <th class="table-header">Desviacion Mayor</th>
                                 
 			  </tr>
 		  <!--</thead>-->
@@ -228,13 +229,14 @@ require_once 'EncabezadoUsuarioView.php';
                     
                   
 //		  foreach($faq as $k=>$v) {
-                      $Lista = Session::getSesion("listarSeguimientoEntradas");
-                      $cbxEmp= Session::getSesion("listarEmpleadosComboBox");
-                      $cbxEmpleadoPlan= Session::getSesion("listarEmpleadosComboBox");
-                      $cbxEmpleadoPlan1= Session::getSesion("listarEmpleadosComboBox");
+                      $Lista = Session::getSesion("listarValidacionDocumentos");
+                      $ListaATR= Session::getSesion("listarAsignacionTemasRequisitos");
+//                      $cbxEmp= Session::getSesion("listarEmpleadosComboBox");
+//                      $cbxEmpleadoPlan= Session::getSesion("listarEmpleadosComboBox");
+//                      $cbxEmpleadoPlan1= Session::getSesion("listarEmpleadosComboBox");
                   
 
-                      $numeracion = 1;
+//                      $numeracion = 1;
                   
 
                       foreach ($Lista as $filas) { 
@@ -255,81 +257,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'fecha_limite_atencion','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_limite_atencion"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'fecha_alarma','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_alarma"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'status_doc','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);">
-                                    <?php 
-                                    
-                                    if($filas["status_doc"]== 1){
-                                        echo "En proceso";
-                                        
-                                    } if($filas["status_doc"]== 2){
-                                        echo "Suspendido";
-                                        
-                                    } if($filas["status_doc"]== 3){
-                                        echo "Terminado";
-                                        
-                                    }
-                                    
-                                    ?>                                
-                                </td>
-                                
-                                <td>
-                                   <?php
-                                   
-                                    //Inicia Status Logico
-                                    $alarm = new Datetime($filas['fecha_alarma']);
-                                    $alarm = strftime("%d-%B-%y",$alarm -> getTimestamp());
-                                    $alarm = new Datetime($alarm);
-                                    
-                                    $flimite = new Datetime($filas['fecha_limite_atencion']);// Guarda en una variable la fecha de la base de datos
-                                    $flimite = strftime("%d-%B-%y",$flimite -> getTimestamp());// Esta da el formato: dia. mes y año, sin guardar las horas 
-                                    $flimite = new Datetime($flimite);//Se guarda en este formato y se reinicializan las horas a 00.
-                                    
-                                    $hoy = new Datetime();
-                                    $hoy = strftime("%d - %B - %y");
-                                    $hoy = new Datetime($hoy);
-                               
 
-                                    
-                                    if($filas["status_doc"]== 1){
-
-                                        if ($flimite <= $hoy){
-
-                                            if($flimite == $hoy){
-                                                
-                                                echo "Tiempo Limite";
-                                                
-                                            } else {
-                                                
-                                                echo "Tiempo Vencido";  
-                                            }
-                                                  
-                                        } else{
-                                            
-                                          if ($alarm <= $hoy){
-                                              
-                                              echo "Alerta Vencida";
-                                                                                           
-                                          } else {
-                                                  echo "En Tiempo";
-                                              }                                           
-                                        }
-                                       
-                                     
-                                    } //Primer If 
-                                    
-                                  
-                                    if($filas["status_doc"]== 2){
-                                        echo "Suspendido";
-                                        
-                                    } if($filas["status_doc"]== 3){
-                                        echo "Terminado";
-                                        
-                                    } 
-                                   
-                                    //Termina Status Logico
-                                   
-                                   ?>
-                                    
-                                </td>
                                                                                                                                                           
                                 <td> 
                                     <select   id="id_empleado" class="select"  onchange="saveComboToDatabase('id_empleado', <?php echo $filas["id_seguimiento_entrada"]; ?> )">
