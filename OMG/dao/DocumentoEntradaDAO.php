@@ -301,7 +301,8 @@ class DocumentoEntradaDAO{
             $db= AccesoDB::getInstancia();
            $result= $db->executeQueryUpdate($query);
 //            $db->executeQuery($query);
-//            return $lista[0];
+            // echo $result;
+           return $result;
         } catch (Exception $ex) {
            throw $ex; 
         }

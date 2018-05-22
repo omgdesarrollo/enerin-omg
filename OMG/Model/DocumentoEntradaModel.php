@@ -158,7 +158,7 @@ class DocumentoEntradaModel{
         try{
             $dao=new DocumentoEntradaDAO();
             $rec= $dao->actualizarDocumentoEntradaPorColumna($COLUMNA, $VALOR, $ID_DOCUMENTO_ENTRADA);
-            
+            return $rec;
         } catch (Exception $ex) {
 
         }

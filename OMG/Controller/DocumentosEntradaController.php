@@ -183,7 +183,9 @@ exit;
 //                      header('Content-type: application/json; charset=utf-8');
 //                      echo json_encode(array("data" => $msg));
 //                  }
-                $model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );  
+				$data = $model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );
+				header('Content-type: application/json; charset=utf-8');
+				echo json_encode($data);
                   
                   
 	break;
