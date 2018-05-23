@@ -191,11 +191,13 @@ require_once 'EncabezadoUsuarioView.php';
     <i class="glyphicon glyphicon-repeat"></i> 
 </button>
     
-        <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Folio de Entrada" style="width: 200px;">
-        <input type="text" id="idInputEntidad" onkeyup="filterTableEntidad()" placeholder="Buscar Por Entidad" style="width: 150px;">
-        <input type="text" id="idInputAsunto" onkeyup="filterTableAsunto()" placeholder="Buscar Por Asunto" style="width: 140px;">
-        <input type="text" id="idInputResponsable" onkeyup="filterTableResponsable()" placeholder="Buscar Por Responsable" style="width: 180px;">
-        <input type="text" id="idInputStatus" onkeyup="filterTableStatus()" placeholder="Buscar Por Status" style="width: 130px;">    
+        <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Folio de Entrada" style="width: 150px;">
+        <input type="text" id="idInputEntidad" onkeyup="filterTableEntidad()" placeholder="Autoridad Remitente" style="width: 170px;">
+        <input type="text" id="idInputAsunto" onkeyup="filterTableAsunto()" placeholder="Asunto" style="width: 140px;">
+        <input type="text" id="idInputResponsable" onkeyup="filterTableResponsable()" placeholder="Responsable del Tema" style="width: 180px;">
+        <input type="text" id="idInputStatus" onkeyup="filterTableStatus()" placeholder="Status" style="width: 130px;">
+        <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>    
+
 </div>    
              
 <div style="height: 38px"></div>
@@ -514,7 +516,7 @@ require_once 'EncabezadoUsuarioView.php';
             
             
                 function refresh(){
-                    
+                  consultarInformacion("../Controller/InformeGerencialController.php?Op=Listar");  
                   window.location.href="InformeGerencialView.php";  
                 }
             

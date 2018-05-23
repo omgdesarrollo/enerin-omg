@@ -512,8 +512,8 @@ require_once 'EncabezadoUsuarioView.php';
     
     function refresh(){
         
-                consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");  
-                  window.location.href="ValidacionDocumentosView.php";
+        consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");  
+        window.location.href="ValidacionDocumentosView.php";
                 }
     
     

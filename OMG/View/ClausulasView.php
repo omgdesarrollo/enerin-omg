@@ -166,10 +166,12 @@ require_once 'EncabezadoUsuarioView.php';
 	    </button>
             
             <!--Filtros de busqueda-->
-            <input type="text" id="idInputTema" onkeyup="filterTableTema()" placeholder="Buscar Por Tema">
-            <input type="text" id="idInputSubTema" onkeyup="filterTableSubTema()" placeholder="Buscar Por Sub-Tema">
-            <input type="text" id="idInputResponsable" onkeyup="filterTableResponsable()" placeholder="Buscar Por Responsable">
-            
+            <input type="text" id="idInputTema" onkeyup="filterTableTema()" placeholder="Tema">
+            <input type="text" id="idInputSubTema" onkeyup="filterTableSubTema()" placeholder="Sub-Tema">
+            <input type="text" id="idInputResponsable" onkeyup="filterTableResponsable()" placeholder="Responsable">
+            <input type="text" id="idInputDescripcion" onkeyup="filterTableDescripcion()" placeholder="Descripcion">
+            <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+
         </div>
  
 <div style="height: 47px"></div>
@@ -561,7 +563,7 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 
                 function refresh(){
-                    
+                  consultarInformacion("../Controller/ClausulasController.php?Op=Listar");  
                   window.location.href="ClausulasView.php";  
                 }
                 
@@ -607,6 +609,23 @@ require_once 'EncabezadoUsuarioView.php';
                                                                 }
                                                             }); 
                                                 }
+                
+                
+                function consultarInformacion(url){ 
+                    $.ajax({  
+                     url: ""+url,  
+                    success: function(r) {    
+//                     $("#procesando").empty();
+                        
+                     },
+                     beforeSend:function(r){
+//                            $.jGrowl("Guardando  Porfavor Espere......", { header: 'Guardado de Informacion' });
+
+
+                     }
+                 
+                   });  
+                }
                 
                 
                 
@@ -685,6 +704,31 @@ require_once 'EncabezadoUsuarioView.php';
                       } 
                     }
                 }
+                
+                
+                
+                
+                function filterTableDescripcion() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputDescripcion");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[5];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }
+                
                 
 		</script>
                 

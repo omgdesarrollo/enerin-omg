@@ -186,8 +186,9 @@ require_once 'EncabezadoUsuarioView.php';
                 <i class="glyphicon glyphicon-repeat"></i> 
             </button>
             
-            <input type="text" id="idInputDescripcionTema" onkeyup="filterTableDescripcionTema()" placeholder="Buscar Por Descripcion del Tema" style="width: 230px">
-            <input type="text" id="idInputRequisito" onkeyup="filterTableRequisito()" placeholder="Buscar Por Requisito" style="width: 160px">     
+            <input type="text" id="idInputDescripcionTema" onkeyup="filterTableDescripcionTema()" placeholder="Descripcion del Tema" style="width: 230px">
+            <input type="text" id="idInputRequisito" onkeyup="filterTableRequisito()" placeholder="Requisito" style="width: 160px">
+            <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
         </div>
             
 <div style="height: 47px"></div>
@@ -551,7 +552,7 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 
                 function refresh(){
-                    
+                  consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");  
                   window.location.href="AsignacionTemasRequisitosView.php";  
                 }
                 

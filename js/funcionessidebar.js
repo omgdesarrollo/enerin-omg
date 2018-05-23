@@ -192,6 +192,7 @@ function loadDataSideBarOficiosDocumentacion(){
                          mySidebar.attachEvent("onSelect", function(id, value){
                                    switch(id){
                                        case "seguimientoentradas":
+                                            consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
                                             consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
                                             consultarInformacion("../Controller/EmpleadosController.php?Op=mostrarcombo");
                                             $("#sidebarObjV").load('InyectarVistasView.php #seguimientoentradas');

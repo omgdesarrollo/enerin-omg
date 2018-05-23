@@ -160,16 +160,17 @@ require_once 'EncabezadoUsuarioView.php';
     <i class="glyphicon glyphicon-repeat"></i> 
 </button>
     
-    <input type="text" id="idInputFolioSalida" onkeyup="filterTableFolioSalida()" placeholder="Buscar Por Folio de Salida" style="width: 190px;">
-    <input type="text" id="idInputResponsableTema" onkeyup="filterTableResponsableTema()" placeholder="Buscar Por Responsable del Tema" style="width: 240px;">
-    <input type="text" id="idInputAsunto" onkeyup="filterTableAsunto()" placeholder="Buscar Por Asunto" style="width: 140px;">
-    <input type="text" id="idInputRemitente" onkeyup="filterTableRemitente()" placeholder="Buscar Por Remitente" style="width: 160px;">
-    <input type="text" id="idInputAutoridadRemitente" onkeyup="filterTableAutoridadRemitente()" placeholder="Buscar Por Autoridad Remitente" style="width: 230px;">    
+    <input type="text" id="idInputFolioSalida" onkeyup="filterTableFolioSalida()" placeholder="Folio de Salida" style="width: 120px;">
+    <input type="text" id="idInputResponsableTema" onkeyup="filterTableResponsableTema()" placeholder="Responsable del Tema" style="width: 160px;">
+    <input type="text" id="idInputAsunto" onkeyup="filterTableAsunto()" placeholder="Asunto" style="width: 120px;">
+    <input type="text" id="idInputRemitente" onkeyup="filterTableRemitente()" placeholder="Remitente" style="width: 120px;">
+    <input type="text" id="idInputAutoridadRemitente" onkeyup="filterTableAutoridadRemitente()" placeholder="Autoridad Remitente" style="width: 150px;">
+    <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>    
 </div>    
 
 
 
-<div style="height: 80px"></div>
+<div style="height: 50px"></div>
 
 
 <!--<div class="contenedortable" style="position: fixed;">   
@@ -222,7 +223,7 @@ require_once 'EncabezadoUsuarioView.php';
 
                                 <!--<td><?php //echo $numeracion++;   ?></td -->
                                 
-                                <td> 
+                              <td style="background-color: #ccccff"> 
                                     <select id="id_documento_entrada" class="select" onchange="saveComboToDatabase('id_documento_entrada', <?php echo $filas["id_documento_salida"]; ?> )">
                                     <?php
                                     $s="";
@@ -248,7 +249,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 </td>
                                 
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'folio_salida','<?php echo $filas["id_documento_salida"]; ?>')" onClick="showEdit(this);"><?php echo $filas["folio_salida"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleado"]." ".$filas["apellido_paterno"]." ".$filas["apellido_materno"]; ?></td>    
+                                <td style="background-color: #ccccff" contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleado"]." ".$filas["apellido_paterno"]." ".$filas["apellido_materno"]; ?></td>    
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'fecha_envio','<?php echo $filas["id_documento_salida"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_envio"]; ?></td>
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'asunto','<?php echo $filas["id_documento_salida"]; ?>')" onClick="showEdit(this);"><?php echo $filas["asunto"]; ?></td>
                                 
@@ -648,7 +649,7 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 
                 function refresh(){
-                    
+                  consultarInformacion("../Controller/DocumentosSalidaController.php?Op=Listar");  
                   window.location.href="DocumentoSalidaView.php";  
                 }
                 

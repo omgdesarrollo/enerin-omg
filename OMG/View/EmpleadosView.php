@@ -183,11 +183,12 @@ require_once 'EncabezadoUsuarioView.php';
                                     <i class="glyphicon glyphicon-repeat"></i> 
 				</button>
                                     
-                                    <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Nombre" style="width: 150px;">
-                                <input type="text" id="idInputapellidopaterno" onkeyup="filterTableapellidoPaterno()" placeholder="Buscar Por Apellido Paterno" style="width: 210px;">
-                                <input type="text" id="idInputapellidomaterno" onkeyup="filterTableapellidoMaterno()" placeholder="Buscar Por Apellido Materno" style="width: 210px;">
-                                <input type="text" id="idInputCategoria" onkeyup="filterTableCategoria()" placeholder="Buscar Por Categoria" style="width: 180px;">
-                                    
+                                    <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Nombre" style="width: 180px;">
+                                    <input type="text" id="idInputapellidopaterno" onkeyup="filterTableapellidoPaterno()" placeholder="Apellido Paterno" style="width: 180px;">
+                                    <input type="text" id="idInputapellidomaterno" onkeyup="filterTableapellidoMaterno()" placeholder="Apellido Materno" style="width: 180px;">
+                                    <input type="text" id="idInputCategoria" onkeyup="filterTableCategoria()" placeholder="Categoria" style="width: 180px;">
+                                    <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+
                                 </div>
                                 
 <div style="height: 47px"></div>
@@ -430,7 +431,7 @@ require_once 'EncabezadoUsuarioView.php';
     
     
     
-                    });
+                    }); // se cierra el $function
                     
                     
                     function validarCamposVacios(datos){
@@ -546,8 +547,8 @@ require_once 'EncabezadoUsuarioView.php';
 		   });
 		}
              
-                      function consultarInformacion(url){
-               $.ajax({  
+                function consultarInformacion(url){
+                    $.ajax({  
                      url: ""+url,  
                     success: function(r) {    
 //                     $("#procesando").empty();
@@ -559,8 +560,10 @@ require_once 'EncabezadoUsuarioView.php';
 
                      }
                  
-        });  
-            }
+                    });  
+                }
+                
+                
                function filterTable() {
                 // Declare variables 
                     var input, filter, table, tr, td, i;
@@ -663,7 +666,7 @@ require_once 'EncabezadoUsuarioView.php';
                 }
                 
                 function refresh(){
-                    
+                  consultarInformacion("../Controller/EmpleadosController.php?Op=Listar");                                             
                   window.location.href="EmpleadosView.php";  
                 }
                 

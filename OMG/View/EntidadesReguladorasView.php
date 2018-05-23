@@ -168,8 +168,9 @@ require_once 'EncabezadoUsuarioView.php';
     <i class="glyphicon glyphicon-repeat"></i> 
 </button>
     
-    <input type="text" id="idInputClaveAutoridad" onkeyup="filterTableClaveAutoridad()" placeholder="Buscar Por Clave Autoridad" style="width: 210px;">
-<input type="text" id="idInputDescripcion" onkeyup="filterTableDescripcion()" placeholder="Buscar Por Descripcion">  
+    <input type="text" id="idInputClaveAutoridad" onkeyup="filterTableClaveAutoridad()" placeholder="Clave Autoridad Remitente" style="width: 210px;">
+    <input type="text" id="idInputDescripcion" onkeyup="filterTableDescripcion()" placeholder="Descripcion">
+    <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
 </div>    
 
 
@@ -433,7 +434,7 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 
                 function refresh(){
-                    
+                  consultarInformacion("../Controller/EntidadesReguladorasController.php?Op=Listar");  
                   window.location.href="EntidadesReguladorasView.php";  
                 }
                 
@@ -443,6 +444,22 @@ require_once 'EncabezadoUsuarioView.php';
                         myFunction();
                 }
                 
+                
+                function consultarInformacion(url){
+                    $.ajax({  
+                     url: ""+url,  
+                    success: function(r) {    
+//                     $("#procesando").empty();
+                        
+                     },
+                     beforeSend:function(r){
+//                            $.jGrowl("Guardando  Porfavor Espere......", { header: 'Guardado de Informacion' });
+
+
+                     }
+                 
+                    });  
+                }
                 
                 
                 function filterTableClaveAutoridad() {
