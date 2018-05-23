@@ -251,12 +251,19 @@ require_once 'EncabezadoUsuarioView.php';
                                 
                                 
                                 
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'clave_documento','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_documento"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado_documento','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleado_documento"]." ".$filas["apellido_paterno_documento"]." ".$filas["apellido_materno_documento"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion_clausula"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado_tema','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleado_tema"]." ".$filas["apellido_paterno_tema"]." ".$filas["apellido_materno_tema"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'documento_archivo','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["documento_archivo"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'clave_documento','<?php echo $filas["id_validacion_documento"]; ?>')" 
+                                onClick="showEdit(this);"><?php echo $filas["clave_documento"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_validacion_documento"]; ?>')" 
+                                onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado_documento','<?php echo $filas["id_validacion_documento"]; ?>')" 
+                                onClick="showEdit(this);"><?php echo $filas["nombre_empleado_documento"]." ".$filas["apellido_paterno_documento"]." ".$filas["apellido_materno_documento"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_validacion_documento"]; ?>')" 
+                                onClick="showEdit(this);"><?php echo $filas["descripcion_clausula"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado_tema','<?php echo $filas["id_validacion_documento"]; ?>')"
+                                onClick="showEdit(this);"><?php echo $filas["nombre_empleado_tema"]." ".$filas["apellido_paterno_tema"]." ".$filas["apellido_materno_tema"]; ?></td>
+                                <!-- documento adjunto -->
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'documento_archivo','<?php echo $filas["id_validacion_documento"]; ?>')" 
+                                onClick="showEdit(this);"><?php echo $filas["documento_archivo"]; ?></td>
                        
 <!--                                <td>
                                 <button type="button" id="btn_mostrar_requisitos" class="btn btn-success" data-toggle="modal">
