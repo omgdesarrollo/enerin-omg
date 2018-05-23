@@ -30,13 +30,14 @@ switch ($Op) {
                 
 		break;
     	
-        case "MostrarTareasCompletasPorFolioDeEntrada":
+        case 'MostrarTareasCompletasPorFolioDeEntrada':
         $Lista=$modelGantt->obtenerTareasCompletasPorFolioEntrada("123");
             header('Content-type: application/json; charset=utf-8');
-            echo json_encode($Lista);
+            echo json_encode(array("data"=>$Lista));
 //        Session::setSesion("", $value)
             
         break;
+    
     
 	case 'Nuevo':
 		# code...
@@ -49,7 +50,39 @@ switch ($Op) {
 		break;
 
 	case 'Modificar':
-	
+
+            
+            
+          $editing= $_REQUEST["editing"];
+          $modo_gantt=$_REQUEST["gantt_mode"];
+//          $server=$_SERVER["HTTP_REFERER"];
+          $numero = count($_POST);
+            $tags = array_keys($_POST);// obtiene los nombres de las varibles
+            $valores = array_values($_POST);// obtiene los valores de las varibles
+echo "ca:   ".$numero;
+//echo "valores:  ".$valores."  ---";
+            // crea las variables y les asigna el valor
+            for($i=0;$i<$numero;$i++){
+                
+           echo "d:  ". $tags[$i]=$valores[$i]."<br>";
+}
+
+echo "posicon :  ".$tags[35];
+
+
+
+//          echo '<pre>';
+//          
+////          echo ($_POST,true);
+//    echo htmlspecialchars(print_r($_POST, true));
+//    echo '</pre>';
+//gantt_mode: tasks
+            
+            
+//            echo "estas en modificar  ".$editing."      mg   ".$modo_gantt."    ";
+            
+            
+            
 	break;
 
 	case 'Eliminar':

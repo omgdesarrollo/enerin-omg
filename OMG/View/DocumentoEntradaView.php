@@ -1081,7 +1081,7 @@ require_once 'EncabezadoUsuarioView.php';
                                                 compararFechaAsignacion(editableObj.value,flimite,falarma):
                                                 compararFechaLimite(editableObj.value,fasignacion,falarma);
                                                 (ejecutarAjax)? editableObj.style="color:limegreen":
-                                                (column=="fecha_asignacion")?editableObj.value=fasignacion: fecha=flimite;
+                                                (column=="fecha_asignacion")?fecha=fasignacion: fecha=flimite;
                                         }
                                 }
                                 else
