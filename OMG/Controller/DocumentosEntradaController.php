@@ -122,18 +122,18 @@ switch ($Op) {
         case "AlmacenarArchivosServer":
             echo "le ";
                          
-         $traerultimoinsertado=$model->traer_ultimo_insertado();
+//         $traerultimoinsertado=$model->traer_ultimo_insertado();
 //         $cumplimiento=$model->listarCumplimientoPorId_Entrada($traerultimoinsertado);
-         $data = $model->getIdCumplimiento($traerultimoinsertado);
+//         $data = $model->getIdCumplimiento($traerultimoinsertado);
          foreach ($data as $value) {
              
          }
 //         echo "".$value["ID_CUMPLIMIENTO"];
-         $cump=$value["ID_CUMPLIMIENTO"];
+//         $cump=$value["ID_CUMPLIMIENTO"];
     if($_FILES["imagen"]["name"][0])
     {
         
-        $carpetaDestino = "../../archivos/files/".$cump."/".$traerultimoinsertado."/";
+        $carpetaDestino = "../../archivos/1";
        // echo "carpeta:  ".$carpetaDestino;
         for($i=0;$i<count($_FILES["imagen"]["name"]);$i++)
         {

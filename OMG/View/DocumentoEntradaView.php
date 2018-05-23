@@ -651,7 +651,11 @@ require_once 'EncabezadoUsuarioView.php';
 							<div class="help-block with-errors"></div>
                                                         <div id="ValidarMensajeAlarmaModal" ></div>
 						</div>
-
+<!--                                    <form enctype="multipart/form-data" method="post" action="../Controller/DocumentosEntradaController.php?Op=AlmacenarArchivosServer">
+                                                <input name="imagen[]" required="" type="file" multiple />
+                                                <br>
+                                                <input type="submit" value="Upload">
+                                                </form>-->
                           
 <!--                                                <div class="form-group">
 							<label class="control-label" for="title">Documento:</label>
