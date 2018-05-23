@@ -1042,12 +1042,12 @@ require_once 'EncabezadoUsuarioView.php';
 		}
                 function saveToDatabaseDates(editableObj,column,id,fasignacion,flimite,falarma,frecepcion)
                 {
-                        console.log(column);
-                        console.log(id);
-                        console.log(editableObj.value);
-                        console.log(fasignacion);
-                        console.log(flimite);
-                        console.log(falarma);
+                        // console.log(column);
+                        // console.log(id);
+                        // console.log(editableObj.value);
+                        // console.log(fasignacion);
+                        // console.log(flimite);
+                        // console.log(falarma);
                         var fecha;
                         var ejecutarAjax = true;
                         if(column != "fecha_recepcion")
