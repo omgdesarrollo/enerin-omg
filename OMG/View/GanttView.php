@@ -81,26 +81,34 @@ and open the template in the editor.
 			display: inline-block;
 		}*/
                 
-/*         .gantt_task_line.gantt_dependent_task {
+         .gantt_task_line.gantt_dependent_task {
 			background-color: #65c16f;
 			border: 1px solid #3c9445;
-		}       */
-/*.gantt_task_line.gantt_dependent_task .gantt_task_progress {*/
-			/*background-color: #46ad51;*/
-		/*}*/
+		}       
+.gantt_task_line.gantt_dependent_task .gantt_task_progress {
+			background-color: #46ad51;
+		}
 /*         .hide_project_progress_drag .gantt_task_progress_drag {
 			visibility: hidden;
 		}*/
                 
-/*       .gantt_task_progress {
+       .gantt_task_progress {
 			text-align: left;
 			padding-left: 10px;
 			box-sizing: border-box;
 			color: white;
 			font-weight: bold;
-		}         */
+		}         
                 
-                
+/*     .gantt_data_area {
+    position: relative;
+    overflow-x: auto;
+    overflow-y: auto;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: auto;
+}  */
   </style>
 
  
@@ -223,6 +231,7 @@ and open the template in the editor.
 //		{key: 2, "label": "Prueba"}
 //	]);
      var dataEmpleados=[];
+//     var data
      obtenerEmpleados();
       gantt.serverList("user",dataEmpleados); 
 //     
@@ -260,15 +269,18 @@ and open the template in the editor.
         
 //	gantt.locale.labels.column_priority =
 //		gantt.locale.labels.section_priority = "Prioridad";
-	gantt.locale.labels.column_owner =
+	gantt.locale.labels.column_owner ="Encargado";
 		gantt.locale.labels.section_owner = "Encargado";
         
-        
-        gantt.config.order_branch = true;
-gantt.config.order_branch_free = true;
+        gantt.config.scale_height = 50;
+//        gantt.config.order_branch = true;
+//gantt.config.order_branch_free = true;
 //        para abrir las carpetas por default desde el principio
 
-
+gantt.templates.task_class = function (start, end, task) {
+		if (task.type == gantt.config.types.project)
+			return "hide_project_progress_drag";
+	};
 
 
 
@@ -322,18 +334,70 @@ gantt.config.lightbox.sections = [
 
 
 
+gantt.config.order_branch = true;
+gantt.config.order_branch_free = true;
+gantt.config.branch_loading = true;
 
-
-
-
+gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
     gantt.init("gantt_here");
     gantt.load("../Controller/GanttController.php?Op=MostrarTareasCompletasPorFolioDeEntrada");
  
-var dp = new gantt.dataProcessor("../Controller/GanttController.php?Op=MostrarTareasCompletasPorFolioDeEntrada");
+var dp = new gantt.dataProcessor("../Controller/GanttController.php?Op=Modificar");
 dp.init(gantt);
-dp.setTransactionMode("REST");
-    
-    
+
+//dp.attachEvent("onAfterUpdate", function(id, action, tid, response){
+//    if(action == "error"){
+//        // do something here
+//        alert("error al cargar los datos del server");
+//    }
+//});
+//dp.setTransactionMode({
+//   mode: "REST",
+//   header:{
+//       "Authorization": "Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b"
+//    }
+//});
+//    dhtmlxGantt se puede usar sin gantt.dataProcessor. En ese caso, deberá supervisar todos los cambios realizados 
+//    en el Gantt manualmente y luego enviarlos a su back-end. Aquí está la lista de eventos que deberá escuchar:
+//    gantt.attachEvent('onAfterTaskAdd', function(id, task) {
+//        
+//        alert("acaba de crear la tarea");
+//  taskService.create(task)
+//    .then(function(result){
+//      gantt.changeTaskId(id, result.databaseId);
+//    });
+//});
+//gantt.attachEvent('onAfterTaskUpdate', function(id, task) {
+//    alert("e");
+//  taskService.update(task);
+//});
+//gantt.attachEvent('onAfterTaskDelete', function(id) {
+//  taskService.delete(id);
+//});
+// 
+//// links
+//gantt.attachEvent('onAfterLinkAdd', function(id, link) {
+//  linkService.create(link)
+//    .then(function(result){
+//      gantt.changeLinkId(id, result.databaseId);
+//    });
+//});
+// 
+//gantt.attachEvent('onAfterLinkUpdate', function(id, link) {
+//  linkService.update(task);
+//});
+// 
+//gantt.attachEvent('onAfterLinkDelete', function(id, link) {
+//  linkService.delete(id);
+//});
+
+
+
+//termina dondse se puede escuchar sin dataprocessor
+
+
+
+
     
     	gantt.attachEvent("onAfterTaskDrag", function (id, mode) {
 		var task = gantt.getTask(id);
@@ -443,7 +507,8 @@ dp.setTransactionMode("REST");
 			var type = gantt.hasChild(task.id) ? gantt.config.types.project : gantt.config.types.task;
 			if (type != task.type) {
 				task.type = type;
-                                alert("");
+//                                alert("");
+//cuando crea una tarea
 				gantt.updateTask(id);
 			}
 		}
@@ -533,7 +598,7 @@ dp.setTransactionMode("REST");
 	};
     
 	
-    gantt.parse(demo_tasks2);
+//    gantt.parse(demo_tasks2);
     
     
 //    var tasks = {
@@ -559,7 +624,7 @@ dp.setTransactionMode("REST");
     
     
     
-    
+
 
     
     
@@ -638,7 +703,7 @@ dp.setTransactionMode("REST");
 //    });
 //});
      gantt.attachEvent("onParse", function () {
-         alert("le has picado ");
+//         alert("le has picado ");
 			gantt.eachTask(function (task) {
 				setTaskType(task);
 			});
