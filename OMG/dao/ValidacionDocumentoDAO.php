@@ -15,7 +15,7 @@ class ValidacionDocumentoDAO{
                     tbclausulas.id_empleado id_empleado_tema, tbempleados_tema.nombre_empleado nombre_empleado_tema,
                     tbempleados_tema.apellido_paterno apellido_paterno_tema, tbempleados_tema.apellido_materno apellido_materno_tema,
 
-                    tbvalidacion_documento.documento_archivo, tbvalidacion_documento.check_list,
+                    tbvalidacion_documento.documento_archivo, 
                     tbvalidacion_documento.validacion_documento_responsable, tbvalidacion_documento.observacion_documento,
                     tbvalidacion_documento.validacion_tema_responsable, tbvalidacion_documento.observacion_tema,
                     tbvalidacion_documento.plan_accion, tbvalidacion_documento.desviacion_mayor

@@ -213,7 +213,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 <th class="table-header">Tema</th>
                                 <th class="table-header">Responsable del Tema</th>
                                 <th class="table-header">Documento Adjunto</th>
-                                <th class="table-header">Check-List</th>
+
                                 <th class="table-header">Documento por Responsable</th>
                                 <th class="table-header">Observacion Documento</th>
                                 <th class="table-header">Tema por Responsable</th>
@@ -257,7 +257,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion_clausula"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado_tema','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleado_tema"]." ".$filas["apellido_paterno_tema"]." ".$filas["apellido_materno_tema"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'documento_archivo','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["documento_archivo"]; ?></td>
-                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'check_list','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["check_list"]; ?></td>-->
+                       
 <!--                                <td>
                                 <button type="button" id="btn_mostrar_requisitos" class="btn btn-success" data-toggle="modal">
                                     Ver
