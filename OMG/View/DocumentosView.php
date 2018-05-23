@@ -233,6 +233,7 @@ $Usuario=  Session::getSesion("user");
 				<td><?php echo $numeracion++;   ?></td>                               
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'clave_documento','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_documento"]; ?></td>
                                 <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
+                                
                                 <td> 
                                     <select   id="id_empleado" class="select"  onchange="saveComboToDatabase('id_empleado', <?php echo $filas["id_documento"]; ?> )">
                                     <?php

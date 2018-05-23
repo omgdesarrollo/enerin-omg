@@ -99,8 +99,8 @@ foreach ($Lista as $filas) {
           ['En proceso(Alerta Vencida)', <?php echo $b; ?>],
           ['En proceso(Tiempo Limite)', <?php echo $c; ?>],
           ['En proceso(Tiempo Vencido)', <?php echo $d; ?>],
-          ['Suspendido', <?php echo $e; ?>],
-          ['Terminado', <?php echo $f; ?>]
+          ['Suspendido', <?php echo $e; ?>]
+          //['Terminado', <?php //echo $f; ?>]
         ]);
 
         var options = {

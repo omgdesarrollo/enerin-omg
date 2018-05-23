@@ -7,6 +7,7 @@ $Usuario=  Session::getSesion("user");
 
 
 <!DOCTYPE html>
+
 <html lang="en">
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -167,6 +168,7 @@ $Usuario=  Session::getSesion("user");
                 
 	</head>
 
+        <div id="winVP">        
         <body class="no-skin" onload="loadSpinner()">
              <div id="loader"></div>
     
@@ -200,7 +202,7 @@ require_once 'EncabezadoUsuarioView.php';
 
 </div>    
              
-<div style="height: 38px"></div>
+<div style="height: 50px"></div>
 
 
 <!--<div class="contenedortable" style="position: fixed;">   
@@ -216,7 +218,7 @@ require_once 'EncabezadoUsuarioView.php';
 
              
 <div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> 
-    <div class="table-container" id="winVP">
+    <div class="table-container">
                          
         <table class="tbl-qa" id="idTable">
 		  <!--<thead>-->
@@ -639,7 +641,7 @@ require_once 'EncabezadoUsuarioView.php';
 
                     // Loop through all table rows, and hide those who don't match the search query
                     for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[5];
+                      td = tr[i].getElementsByTagName("td")[7];
                       if (td) {
                         if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
                           tr[i].style.display = "";
@@ -669,8 +671,10 @@ require_once 'EncabezadoUsuarioView.php';
 
                 
 	</body>
-    
+        </div>   
         
 </html>
+
+
 
 

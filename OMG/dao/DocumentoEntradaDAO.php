@@ -110,52 +110,10 @@ class DocumentoEntradaDAO{
     
     public function mostrarDocumentosEntradaComboBox(){
         try{
-//            $query="SELECT TBCUMPLIMIENTOS.ID_CUMPLIMIENTO, TBCUMPLIMIENTOS.CLAVE_CUMPLIMIENTO, 
-//                TBDOCUMENTO_ENTRADA.ID_DOCUMENTO_ENTRADA, TBDOCUMENTO_ENTRADA.FOLIO_REFERENCIA,
-//                TBDOCUMENTO_ENTRADA.FOLIO_ENTRADA, TBDOCUMENTO_ENTRADA.FECHA_RECEPCION,
-//                TBDOCUMENTO_ENTRADA.ASUNTO, TBDOCUMENTO_ENTRADA.REMITENTE,
-//                TBENTIDAD_REGULADORA.ID_ENTIDAD, TBENTIDAD_REGULADORA.CLAVE_ENTIDAD,
-//                TBCLAUSULAS.ID_CLAUSULA, TBCLAUSULAS.CLAUSULA, TBEMPLEADOS.NOMBRE_EMPLEADO,
-//                TBEMPLEADOS.APELLIDO_PATERNO, TBEMPLEADOS.APELLIDO_MATERNO,
-//                TBDOCUMENTO_ENTRADA.CLASIFICACION, TBDOCUMENTO_ENTRADA.STATUS_DOC,
-//                TBDOCUMENTO_ENTRADA.FECHA_ASIGNACION, TBDOCUMENTO_ENTRADA.FECHA_LIMITE_ATENCION,
-//                TBDOCUMENTO_ENTRADA.FECHA_ALARMA, TBDOCUMENTO_ENTRADA.DOCUMENTO,
-//                TBDOCUMENTO_ENTRADA.OBSERVACIONES FROM DOCUMENTO_ENTRADA TBDOCUMENTO_ENTRADA 
-//                JOIN CUMPLIMIENTOS TBCUMPLIMIENTOS ON
-//                TBDOCUMENTO_ENTRADA.ID_CUMPLIMIENTO=TBCUMPLIMIENTOS.ID_CUMPLIMIENTO 
-//                    
-//                JOIN ENTIDAD_REGULADORA TBENTIDAD_REGULADORA ON
-//                TBDOCUMENTO_ENTRADA.ID_ENTIDAD=TBENTIDAD_REGULADORA.ID_ENTIDAD 
-//                    
-//                JOIN CLAUSULAS TBCLAUSULAS ON
-//                TBDOCUMENTO_ENTRADA.ID_CLAUSULA=TBCLAUSULAS.ID_CLAUSULA
-//
-//                JOIN EMPLEADOS TBEMPLEADOS ON TBCLAUSULAS.ID_EMPLEADO=TBEMPLEADOS.ID_EMPLEADO";
-            
-            
-            $query="SELECT tbcumplimientos.id_cumplimiento, tbcumplimientos.clave_cumplimiento, 
-                tbdocumento_entrada.id_documento_entrada, tbdocumento_entrada.folio_referencia,
-                tbdocumento_entrada.folio_entrada, tbdocumento_entrada.fecha_recepcion,
-                tbdocumento_entrada.asunto, tbdocumento_entrada.remitente,
-                tbentidad_reguladora.id_entidad, tbentidad_reguladora.clave_entidad,
-                tbclausulas.id_clausula, tbclausulas.clausula, tbempleados.nombre_empleado,
-                tbempleados.apellido_paterno, tbempleados.apellido_materno,
-                tbdocumento_entrada.clasificacion, tbdocumento_entrada.status_doc,
-                tbdocumento_entrada.fecha_asignacion, tbdocumento_entrada.fecha_limite_atencion,
-                tbdocumento_entrada.fecha_alarma, tbdocumento_entrada.documento,
-                tbdocumento_entrada.observaciones FROM documento_entrada tbdocumento_entrada 
-                
-                JOIN cumplimientos tbcumplimientos ON
-                tbdocumento_entrada.id_cumplimiento=tbcumplimientos.id_cumplimiento 
-                    
-                JOIN entidad_reguladora tbentidad_reguladora ON
-                tbdocumento_entrada.id_entidad=tbentidad_reguladora.id_entidad 
-                    
-                JOIN clausulas tbclausulas ON
-                tbdocumento_entrada.id_clausula=tbclausulas.id_clausula
+           
+            $query="SELECT tbdocumento_entrada.id_documento_entrada, tbdocumento_entrada.folio_entrada
 
-                JOIN empleados tbempleados ON tbclausulas.id_empleado=tbempleados.id_empleado
-";
+                    FROM documento_entrada tbdocumento_entrada";
             
             
             $db=  AccesoDB::getInstancia();

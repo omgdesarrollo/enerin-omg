@@ -250,7 +250,10 @@ require_once 'EncabezadoUsuarioView.php';
 //                   $valorid= $Lista[$k]["ID_EMPLEADO"];
 //                   $nombreempleado=$Lista[$k]["NOMBRE_EMPLEADO"];
                   foreach ($Lista as $filas) { 
-		  ?>
+                    if($filas["folio_entrada"] != "SIN FOLIO DE ENTRADA"){  
+                      
+                      ?>
+                      
 			  <tr class="table-row">
 
                                 <!--<td><?php //echo $numeracion++;   ?></td -->
@@ -351,7 +354,30 @@ require_once 'EncabezadoUsuarioView.php';
                                     
                                 <td style="background-color: #ccccff" contenteditable="false" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion_clausula"]; ?></td>
                                 <td style="background-color: #ccccff" contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleado"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'clasificacion','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clasificacion"]; ?></td>
+                                
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'clasificacion','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);">
+                                <?php 
+                                
+                                if ($filas["clasificacion"] == 1)
+                                    {
+                                    
+                                    echo "Con Limite de Tiempo";                                   
+                                    }
+                                
+                                if ($filas["clasificacion"] == 2)
+                                    {
+                                    
+                                    echo "Sin Limite de Tiempo";                                   
+                                    }
+                                
+                                if ($filas["clasificacion"] == 3)
+                                    {
+                                    
+                                    echo "Informativo";                                   
+                                    }
+                                                              
+                                ?>
+                                </td>
                                 
                                 
                                 <td> 
@@ -430,7 +456,9 @@ require_once 'EncabezadoUsuarioView.php';
 			  </tr>
                           
 		<?php
-		}
+		  }
+                
+                }// Cierra Foreach
                 
 		?>
 		  </tbody>
@@ -601,9 +629,15 @@ require_once 'EncabezadoUsuarioView.php';
                                                                                       
                                                 <div class="form-group">
 							<label class="control-label" for="title">Clasificacion:</label>
-                                                        <textarea  id="CLASIFICACION" class="form-control" data-error="Ingrese la Clasificacion" required></textarea>
+<!--                                                        <textarea  id="CLASIFICACION" class="form-control" data-error="Ingrese la Clasificacion" required></textarea>
 							<div class="help-block with-errors"></div>
-                                                        <div id="ValidarClasificacionModal" ></div>
+                                                        <div id="ValidarClasificacionModal" ></div>-->
+                                                        <select id="CLASIFICACION">
+                                                        <option value="1">Con Limite de Tiempo</option>
+                                                        <option value="2">Sin Limite de Tiempo</option>
+                                                        <option value="3">Informativo</option>
+                                                        </select>
+                                                        
 						</div>
                                     
                                     

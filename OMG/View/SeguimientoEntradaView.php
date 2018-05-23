@@ -608,7 +608,7 @@ require_once 'EncabezadoUsuarioView.php';
 
                     // Loop through all table rows, and hide those who don't match the search query
                     for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[5];
+                      td = tr[i].getElementsByTagName("td")[7];
                       if (td) {
                         if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
                           tr[i].style.display = "";
@@ -628,7 +628,7 @@ require_once 'EncabezadoUsuarioView.php';
 
                     // Loop through all table rows, and hide those who don't match the search query
                     for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[7];
+                      td = tr[i].getElementsByTagName("td")[9];
                       if (td) {
                         select=td.getElementsByTagName("select");
                           $.each(select,function(index,value)
