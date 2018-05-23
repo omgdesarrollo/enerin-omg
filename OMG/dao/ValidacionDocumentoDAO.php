@@ -50,6 +50,27 @@ class ValidacionDocumentoDAO{
     }
     
     
+    
+    public function obtenerRequisitosporDocumento($id_documento){
+        try{
+            
+            $query="SELECT tbasignacion_tema_requisito.id_asignacion_tema_requisito, tbasignacion_tema_requisito.requisito
+
+                    FROM  asignacion_tema_requisito tbasignacion_tema_requisito WHERE tbasignacion_tema_requisito.id_documento=$id_documento";
+         
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            
+
+            return $lista;
+    }  catch (Exception $ex){
+        //throw $rec;
+        throw $ex;
+    }
+    }
+    
+    
+    
     public function insertar($id_documento_entrada){
         try{
              $query_obtenerMaximo_mas_uno="SELECT max(id_seguimiento_entrada)+1 as id_seguimiento_entrada FROM seguimiento_entrada";

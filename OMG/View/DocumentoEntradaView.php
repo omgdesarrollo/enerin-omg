@@ -423,6 +423,7 @@ require_once 'EncabezadoUsuarioView.php';
                                         </button>
                                         <!-- <?php echo $filas['id_documento_entrada']; ?> -->
                                 </td>
+                                
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'observaciones','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["observaciones"]; ?></td>
                                 
                                 
@@ -466,7 +467,7 @@ require_once 'EncabezadoUsuarioView.php';
 			</div>
 
                         <div class="form-group" method="post" >
-                                <button type="submit" id="btn_guardar2"  class="btn crud-submit btn-info">Agragar Archivo</button>
+                                <button type="submit" id="btn_guardar2"  class="btn crud-submit btn-info">Agregar Archivo</button>
                         </div>
                       </div><!-- cierre div class-body -->
                 </div><!-- cierre div class modal-content -->
@@ -1324,6 +1325,7 @@ require_once 'EncabezadoUsuarioView.php';
                         // });
 //                   window.location.href("EmpleadosView.php");
                 }
+                
                 function mostrar_urls(id_documento_entrada)
                 {
                         var tempDocumentolistadoUrl = " ";
@@ -1363,6 +1365,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 }
                         });
                 }
+                
                 function agregarArchivosUrl()
                 {
                         var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
