@@ -262,8 +262,11 @@ require_once 'EncabezadoUsuarioView.php';
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado_tema','<?php echo $filas["id_validacion_documento"]; ?>')"
                                 onClick="showEdit(this);"><?php echo $filas["nombre_empleado_tema"]." ".$filas["apellido_paterno_tema"]." ".$filas["apellido_materno_tema"]; ?></td>
                                 <!-- documento adjunto -->
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'documento_archivo','<?php echo $filas["id_validacion_documento"]; ?>')" 
-                                onClick="showEdit(this);"><?php echo $filas["documento_archivo"]; ?></td>
+                                <td>
+                                  <button onClick="documentoAdjuntar(<?php echo $filas['id_documento_entrada'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#DocumentoAdjuntoModel">
+		                                Adjuntar
+                                  </button>
+                                </td>
                        
 <!--                                <td>
                                 <button type="button" id="btn_mostrar_requisitos" class="btn btn-success" data-toggle="modal">
@@ -362,7 +365,27 @@ require_once 'EncabezadoUsuarioView.php';
         </div><!-- cierre div class="modal-dialog" -->
 </div><!-- cierre del modal Requisitos-->                
                 
-
+<!-- Inicio modal adjuntar documento -->
+<div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+        <div id="loaderModalMostrar"></div>
+		<div class="modal-content">
+                        
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Archivos agregados</h4>
+		      </div>
+          
+          <form enctype="multipart/form-data" method="post" action="../Controller/ValidacionDocumentosController.php?Op=AlmacenarArchivosServer">
+              <input name="imagen[]" required="" type="file" multiple />
+              <br>
+              <input type="submit" value="Upload">
+          </form>
+          
+                      </div><!-- cierre div class-body -->
+                </div><!-- cierre div class modal-content -->
+        </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal -->
 
 
 
