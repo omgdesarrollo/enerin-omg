@@ -182,16 +182,16 @@ require_once 'EncabezadoUsuarioView.php';
     <i class="glyphicon glyphicon-repeat"></i> 
 </button>
 
-    <input type="text" id="idInputFolioEntrada" onkeyup="filterTableFolioEntrada()" placeholder="Buscar Por Folio de Entrada" style="width: 200px;">
-    <input type="text" id="idInputAsunto" onkeyup="filterTableAsunto()" placeholder="Buscar Por Asunto" style="width: 140px;">
-    <input type="text" id="idInputRemitente" onkeyup="filterTableRemitente()" placeholder="Buscar Por Remitente" style="width: 160px;">
-    <input type="text" id="idInputAutoridadRemitente" onkeyup="filterTableAutoridadRemitente()" placeholder="Buscar Por Autoridad Remitente" style="width: 220px;">
-    <input type="text" id="idInputResponsableTema" onkeyup="filterTableResponsableTema()" placeholder="Buscar Por Responsable del Tema" style="width: 250px;">
-    
+    <input type="text" id="idInputFolioEntrada" onkeyup="filterTableFolioEntrada()" placeholder="Folio de Entrada" style="width: 120px;">
+    <input type="text" id="idInputAsunto" onkeyup="filterTableAsunto()" placeholder="Asunto" style="width: 120px;">
+    <input type="text" id="idInputRemitente" onkeyup="filterTableRemitente()" placeholder="Remitente" style="width: 130px;">
+    <input type="text" id="idInputAutoridadRemitente" onkeyup="filterTableAutoridadRemitente()" placeholder="Autoridad Remitente" style="width: 150px;">
+    <input type="text" id="idInputResponsableTema" onkeyup="filterTableResponsableTema()" placeholder="Responsable del Tema" style="width: 170px;">
+    <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
 </div>  
 
 
-<div style="height: 80px"></div>
+<div style="height: 50px"></div>
 
 
 
@@ -250,7 +250,10 @@ require_once 'EncabezadoUsuarioView.php';
 //                   $valorid= $Lista[$k]["ID_EMPLEADO"];
 //                   $nombreempleado=$Lista[$k]["NOMBRE_EMPLEADO"];
                   foreach ($Lista as $filas) { 
-		  ?>
+                    if($filas["folio_entrada"] != "SIN FOLIO DE ENTRADA"){  
+                      
+                      ?>
+                      
 			  <tr class="table-row">
 
                                 <!--<td><?php //echo $numeracion++;   ?></td -->
@@ -323,7 +326,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 </td>
 
                                 
-                                <td> 
+                                <td style="background-color: #ccccff"> 
                                     <select id="id_clausula" class="select" onchange="saveComboToDatabase('id_clausula', <?php echo $filas["id_documento_entrada"]; ?> )">
                                     <?php
                                     $s="";
@@ -349,9 +352,32 @@ require_once 'EncabezadoUsuarioView.php';
                                 </td>
                                 
                                     
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion_clausula"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleado"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'clasificacion','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clasificacion"]; ?></td>
+                                <td style="background-color: #ccccff" contenteditable="false" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion_clausula"]; ?></td>
+                                <td style="background-color: #ccccff" contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleado"]; ?></td>
+                                
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'clasificacion','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);">
+                                <?php 
+                                
+                                if ($filas["clasificacion"] == 1)
+                                    {
+                                    
+                                    echo "Con Limite de Tiempo";                                   
+                                    }
+                                
+                                if ($filas["clasificacion"] == 2)
+                                    {
+                                    
+                                    echo "Sin Limite de Tiempo";                                   
+                                    }
+                                
+                                if ($filas["clasificacion"] == 3)
+                                    {
+                                    
+                                    echo "Informativo";                                   
+                                    }
+                                                              
+                                ?>
+                                </td>
                                 
                                 
                                 <td> 
@@ -430,7 +456,9 @@ require_once 'EncabezadoUsuarioView.php';
 			  </tr>
                           
 		<?php
-		}
+		  }
+                
+                }// Cierra Foreach
                 
 		?>
 		  </tbody>
@@ -601,9 +629,15 @@ require_once 'EncabezadoUsuarioView.php';
                                                                                       
                                                 <div class="form-group">
 							<label class="control-label" for="title">Clasificacion:</label>
-                                                        <textarea  id="CLASIFICACION" class="form-control" data-error="Ingrese la Clasificacion" required></textarea>
+<!--                                                        <textarea  id="CLASIFICACION" class="form-control" data-error="Ingrese la Clasificacion" required></textarea>
 							<div class="help-block with-errors"></div>
-                                                        <div id="ValidarClasificacionModal" ></div>
+                                                        <div id="ValidarClasificacionModal" ></div>-->
+                                                        <select id="CLASIFICACION">
+                                                        <option value="1">Con Limite de Tiempo</option>
+                                                        <option value="2">Sin Limite de Tiempo</option>
+                                                        <option value="3">Informativo</option>
+                                                        </select>
+                                                        
 						</div>
                                     
                                     
@@ -1260,7 +1294,7 @@ require_once 'EncabezadoUsuarioView.php';
     
             
     function refresh(){
-                    
+                  consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");  
                   window.location.href="DocumentoEntradaView.php";  
                 }
     

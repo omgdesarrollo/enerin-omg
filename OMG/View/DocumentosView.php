@@ -178,9 +178,11 @@ $Usuario=  Session::getSesion("user");
                     <i class="glyphicon glyphicon-repeat"></i> 
                 </button>
                  
-                <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Buscar Por Clave del Documento" style="width: 240px">
-                <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Buscar Por Nombre del Documento" style="width: 240px">
-                <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Buscar Por Responsable del Documento" style="width: 270px">  
+                <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave del Documento" style="width: 200px">
+                <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre del Documento" style="width: 200px">
+                <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 200px">
+                <input type="text" id="idInputRegistros" onkeyup="filterTableRegistros()" placeholder="Registros" style="width: 150px">
+                <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
             </div>
 	     
              
@@ -231,6 +233,7 @@ $Usuario=  Session::getSesion("user");
 				<td><?php echo $numeracion++;   ?></td>                               
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'clave_documento','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_documento"]; ?></td>
                                 <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
+                                
                                 <td> 
                                     <select   id="id_empleado" class="select"  onchange="saveComboToDatabase('id_empleado', <?php echo $filas["id_documento"]; ?> )">
                                     <?php
@@ -545,7 +548,7 @@ if(mensajeerror!=""){
                 
                 
                 function refresh(){
-                    
+                  consultarInformacion("../Controller/DocumentosController.php?Op=Listar");  
                   window.location.href="DocumentosView.php";  
                 }
                 
@@ -554,6 +557,24 @@ if(mensajeerror!=""){
                 function loadSpinner(){
 //                    alert("se cargara otro ");
                         myFunction();
+                }
+                
+                
+                
+                function consultarInformacion(url){
+                    $.ajax({  
+                     url: ""+url,  
+                    success: function(r) {    
+//                     $("#procesando").empty();
+                        
+                     },
+                     beforeSend:function(r){
+//                            $.jGrowl("Guardando  Porfavor Espere......", { header: 'Guardado de Informacion' });
+
+
+                     }
+                 
+                    });  
                 }
                 
                 
@@ -637,6 +658,29 @@ if(mensajeerror!=""){
                       } 
                     }
                 }
+                
+                
+                function filterTableRegistros() {
+                // Declare variables 
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("idInputRegistros");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("idTable");
+                    tr = table.getElementsByTagName("tr");
+
+                    // Loop through all table rows, and hide those who don't match the search query
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[4];
+                      if (td) {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      } 
+                    }
+                }
+
                 
 		</script>
                 

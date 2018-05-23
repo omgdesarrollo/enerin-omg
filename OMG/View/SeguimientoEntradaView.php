@@ -177,7 +177,7 @@ require_once 'EncabezadoUsuarioView.php';
         <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Folio de Entrada" style="width: 140px;">
         <input type="text" id="idInputEntidad" onkeyup="filterTableEntidad()" placeholder="Autoridad Remitente" style="width: 140px;">
         <input type="text" id="idInputAsunto" onkeyup="filterTableAsunto()" placeholder="Asunto" style="width: 120px;">
-        <input type="text" id="idInputResponsable" onkeyup="filterTableResponsable()" placeholder="Responsable Tema" style="width: 180px;">
+        <input type="text" id="idInputResponsable" onkeyup="filterTableResponsable()" placeholder="Responsable del Tema" style="width: 180px;">
         <input type="text" id="idInputStatus" onkeyup="filterTableStatus()" placeholder="Status" style="width: 120px;">    
         <input type="text" id="idInputResponsablePlan" onkeyup="filterTableResponsablePlan()" placeholder="Responsable Plan" style="width: 180px;">
         <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
@@ -493,7 +493,7 @@ require_once 'EncabezadoUsuarioView.php';
             
     
     function refresh(){
-                    
+                  consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");  
                   window.location.href="SeguimientoEntradaView.php";  
                 }
     
@@ -608,7 +608,7 @@ require_once 'EncabezadoUsuarioView.php';
 
                     // Loop through all table rows, and hide those who don't match the search query
                     for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[5];
+                      td = tr[i].getElementsByTagName("td")[7];
                       if (td) {
                         if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
                           tr[i].style.display = "";
@@ -628,7 +628,7 @@ require_once 'EncabezadoUsuarioView.php';
 
                     // Loop through all table rows, and hide those who don't match the search query
                     for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[7];
+                      td = tr[i].getElementsByTagName("td")[9];
                       if (td) {
                         select=td.getElementsByTagName("select");
                           $.each(select,function(index,value)

@@ -7,6 +7,7 @@ $Usuario=  Session::getSesion("user");
 
 
 <!DOCTYPE html>
+
 <html lang="en">
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -167,6 +168,7 @@ $Usuario=  Session::getSesion("user");
                 
 	</head>
 
+        <div id="winVP">        
         <body class="no-skin" onload="loadSpinner()">
              <div id="loader"></div>
     
@@ -191,14 +193,16 @@ require_once 'EncabezadoUsuarioView.php';
     <i class="glyphicon glyphicon-repeat"></i> 
 </button>
     
-        <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Folio de Entrada" style="width: 200px;">
-        <input type="text" id="idInputEntidad" onkeyup="filterTableEntidad()" placeholder="Buscar Por Entidad" style="width: 150px;">
-        <input type="text" id="idInputAsunto" onkeyup="filterTableAsunto()" placeholder="Buscar Por Asunto" style="width: 140px;">
-        <input type="text" id="idInputResponsable" onkeyup="filterTableResponsable()" placeholder="Buscar Por Responsable" style="width: 180px;">
-        <input type="text" id="idInputStatus" onkeyup="filterTableStatus()" placeholder="Buscar Por Status" style="width: 130px;">    
+        <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Folio de Entrada" style="width: 150px;">
+        <input type="text" id="idInputEntidad" onkeyup="filterTableEntidad()" placeholder="Autoridad Remitente" style="width: 170px;">
+        <input type="text" id="idInputAsunto" onkeyup="filterTableAsunto()" placeholder="Asunto" style="width: 140px;">
+        <input type="text" id="idInputResponsable" onkeyup="filterTableResponsable()" placeholder="Responsable del Tema" style="width: 180px;">
+        <input type="text" id="idInputStatus" onkeyup="filterTableStatus()" placeholder="Status" style="width: 130px;">
+        <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>    
+
 </div>    
              
-<div style="height: 38px"></div>
+<div style="height: 50px"></div>
 
 
 <!--<div class="contenedortable" style="position: fixed;">   
@@ -214,7 +218,7 @@ require_once 'EncabezadoUsuarioView.php';
 
              
 <div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> 
-    <div class="table-container" id="winVP">
+    <div class="table-container">
                          
         <table class="tbl-qa" id="idTable">
 		  <!--<thead>-->
@@ -514,7 +518,7 @@ require_once 'EncabezadoUsuarioView.php';
             
             
                 function refresh(){
-                    
+                  consultarInformacion("../Controller/InformeGerencialController.php?Op=Listar");  
                   window.location.href="InformeGerencialView.php";  
                 }
             
@@ -637,7 +641,7 @@ require_once 'EncabezadoUsuarioView.php';
 
                     // Loop through all table rows, and hide those who don't match the search query
                     for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[5];
+                      td = tr[i].getElementsByTagName("td")[7];
                       if (td) {
                         if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
                           tr[i].style.display = "";
@@ -667,8 +671,10 @@ require_once 'EncabezadoUsuarioView.php';
 
                 
 	</body>
-    
+        </div>   
         
 </html>
+
+
 
 
