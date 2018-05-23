@@ -201,7 +201,7 @@ require_once 'EncabezadoUsuarioView.php';
 
              
 <div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> 
-    <div class="table-container">
+    <div class="table-container" id="winVP">
         
         <table class="tbl-qa" id="idTable">
 		  <!--<thead>-->
@@ -230,7 +230,8 @@ require_once 'EncabezadoUsuarioView.php';
                   
 //		  foreach($faq as $k=>$v) {
                       $Lista = Session::getSesion("listarValidacionDocumentos");
-                      $ListaATR= Session::getSesion("listarAsignacionTemasRequisitos");
+                      $ListaReqisitos = Session::getSesion("listarAsignacionTemasRequisitos");
+                      //$ListaATR= Session::getSesion("listarAsignacionTemasRequisitos");
 //                      $cbxEmp= Session::getSesion("listarEmpleadosComboBox");
 //                      $cbxEmpleadoPlan= Session::getSesion("listarEmpleadosComboBox");
 //                      $cbxEmpleadoPlan1= Session::getSesion("listarEmpleadosComboBox");
@@ -250,19 +251,34 @@ require_once 'EncabezadoUsuarioView.php';
                                 
                                 
                                 
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'folio_entrada','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["folio_entrada"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'clave_entidad','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_entidad"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'asunto','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["asunto"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleadotema','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleadotema"]." ".$filas["apellido_paternotema"]." ".$filas["apellido_maternotema"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'fecha_asignacion','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_asignacion"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'fecha_limite_atencion','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_limite_atencion"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'fecha_alarma','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_alarma"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'status_doc','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);">
-
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'clave_documento','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_documento"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado_documento','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleado_documento"]." ".$filas["apellido_paterno_documento"]." ".$filas["apellido_materno_documento"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion_clausula"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado_tema','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleado_tema"]." ".$filas["apellido_paterno_tema"]." ".$filas["apellido_materno_tema"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'documento_archivo','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["documento_archivo"]; ?></td>
+                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'check_list','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["check_list"]; ?></td>-->
+<!--                                <td>
+                                <button type="button" id="btn_mostrar_requisitos" class="btn btn-success" data-toggle="modal">
+                                    Ver
+                                    <i class="ace-icon fa fa-book" style="color: #0099ff;font-size: 20px;"></i>
+                                </button>
+                                </td>-->
                                 
-                                                                    
-                                <!--<td contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php // echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php // echo $filas["documento"]; ?></td>-->
-                                <td ><button class="btn btn-info" onClick="cargadePrograma('<?php echo $filas["folio_entrada"]; ?>')">Cargar Programa</button></td>
+                                <td>
+                                        <button onClick="mostrarRequisitosUrl(<?php echo $filas['id_validacion_documento'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#checkbox-requisitos">
+		                                Ver
+                                                <i class="ace-icon fa fa-book" style="color: #0099ff;font-size: 20px;"></i>
+                                        </button>
+                                </td>
+                                
+                                
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'validacion_documento_responsable','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["validacion_documento_responsable"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'observacion_documento','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["observacion_documento"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'validacion_tema_responsable','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["validacion_tema_responsable"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'observacion_tema','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["observacion_tema"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'plan_accion','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["plan_accion"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'desviacion_mayor','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["desviacion_mayor"]; ?></td>
                                 
 			  </tr>
                           
@@ -278,14 +294,71 @@ require_once 'EncabezadoUsuarioView.php';
 <!--			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 			</a>-->
-    </div>                    
-	
+    </div>                    	
 </div>
 
 	
+<!-- Inicio de Seccion Modal Requisitos-->
+<div class="modal draggable fade" id="checkbox-requisitos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+        <div id="loaderModalMostrar"></div>
+		<div class="modal-content">
+                        
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Check-List Requisitos</h4>
+		      </div>
+
+                    
+		      <div class="modal-body">
+<!--                        <div id="DocumentolistadoUrl"></div>
+
+                        
+                        <div class="form-group">
+                                <div id="DocumentolistadoUrlModal"></div>
+			</div>-->
+<div class="row">
+    <div class="col">
+        <form action="">
+                <?php
+                                      
+                foreach ($ListaReqisitos as $value) { 
+
+
+                if($value["id_clausula"]=="".$filas["id_clausula"])
+                {
+                    
+                ?>    
+            
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="checkbox" value="opcion1"><?php echo $value["requisito"]; ?>
+                </label>
+            </div>
+
+                <?php
+                }
+                }
+                ?>
+
+        </form>        
+    </div>                                            
+</div>  
+
+
+                        <div class="form-group" method="post" >
+                                <button type="submit" id="btn_guardar2"  class="btn crud-submit btn-info">Agregar Archivo</button>
+                        </div>
+                      </div><!-- cierre div class-body -->
+                      
+                </div><!-- cierre div class modal-content -->
+        </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal Requisitos-->                
                 
-                
-                
+
+
+
+
                 
 		<script>
                     
@@ -317,12 +390,63 @@ require_once 'EncabezadoUsuarioView.php';
                           
                           
                         });
+                        
+//                      $("#btn_mostrar_requisitos").click(function(){
+//                        loadVistaRequisitos(true);
+//                         });  
   
   
-                      });
+                      });// Cierra el $function 
                       
-                      
-                                                  
+                function mostrarRequisitosUrl(id_validacion_documento)
+                {
+                        // alert("mostrar urls: "+id_documento_entrada);
+                        mostrarRequisitos_urls(id_validacion_documento);
+                }
+                
+                
+                function mostrarRequisitos_urls(id_validacion_documento)
+                {
+                        alert("entraste aqui ");
+                        var tempDocumentolistadoUrl = " ";
+                        $.ajax({
+                                url: '../Controller/ValidacionDocumentosController.php?Op=listar',
+                                type: 'GET',
+                                data: 'ID_DOCUMENTO='+id_validacion_documento,
+                                success: function(todo)
+                                {
+                                        $.each(todo[0], function (index,value)
+                                        {
+                                                // var tempDocumentolistadoUrlSplit = value.DIR.split("/");
+                                                // var tempDocumentolistadoUrlPos = tempDocumentolistadoUrlSplit.length - 1;
+                                                // console.log(value);
+                                                // alert(value);
+//                                                tempDocumentolistadoUrl = tempDocumentolistadoUrl +"<li><a href=\"http://localhost:8282/enerin-omg/archivos/files/"+todo[1]['ID_CUMPLIMIENTO']+"/"+id_documento_entrada+"/"+value+"\">" + value + "</a><button style=\"color:green;background:transparent;border:none;padding-left:10px\" onclick='borrarArchivo(\""+value+"\");')><i class=\"fa fa-trash\"></i></button></li>";
+                                                tempDocumentolistadoUrl = tempDocumentolistadoUrl +"<li><a href=\"http://enerin-omgapps.com/omgcum/archivos/files/"+todo[1]['ID_CUMPLIMIENTO']+"/"+id_documento_entrada+"/"+value+"\">" + value + "</a><button style=\"color:green;background:transparent;border:none;padding-left:10px\" onclick='borrarArchivo(\""+value+"\");')><i class=\"fa fa-trash\"></i></button></li>";
+                                        });
+                                        if(tempDocumentolistadoUrl == " ")
+                                        {
+                                                tempDocumentolistadoUrl = " No hay archivos agregados "
+                                        }
+                                        tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdDocumento' type='text' style='display:none;' value='"+id_documento_entrada+"'>";
+                                        // alert(tempDocumentolistadoUrl);
+                                        $('#DocumentoEntradaAgregarModal').html(" ");
+                                        $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
+                                        $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
+                                        // $('#fileupload').fileupload();
+                                        $('#fileupload').fileupload({
+                                                url: '../View/',
+                                        });
+                                        
+                                        $('#fileupload').fileupload('option', {
+                                        // url: '//jquery-file-upload.appspot.com/',
+                                        maxFileSize: 99900000,
+                                        });
+                                }
+                        });
+                }
+                
+                
 		function showEdit(editableObj) {
 			$(editableObj).css("background","#FFF");
 		} 
@@ -381,7 +505,7 @@ require_once 'EncabezadoUsuarioView.php';
     
     function refresh(){
                     
-                  window.location.href="SeguimientoEntradaView.php";  
+                  window.location.href="ValidacionDocumentosView.php";  
                 }
     
     
@@ -395,6 +519,16 @@ require_once 'EncabezadoUsuarioView.php';
         window.location.href=" GanttView.php?folio_entrada="+foliodeentrada;
 //   window.location.replace("http://sitioweb.com");        
     }
+    
+    
+    
+//    function loadVistaRequisitos(bclose){
+//                    var dhxWins = new dhtmlXWindows();
+//                    dhxWins.attachViewportTo("winVP");
+//  
+//                    var layoutWin=dhxWins.createWindow({id:"requisitos", text:"OMG VISUALIZACION REQUISITOS", left: 20, top: -30,width:530,  height:250,  center:true,resize: true,park:true,modal:true	});
+//                    layoutWin.attachURL("RequisitosPorTemaView.php");
+//            }
     
     
     function filterTable() {
@@ -542,7 +676,13 @@ require_once 'EncabezadoUsuarioView.php';
                 
             <!--en esta seccion es para poder abrir el modal--> 
                 <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
-            <!--aqui termina la seccion para poder abrir el modal-->    
+            <!--aqui termina la seccion para poder abrir el modal-->
+            
+            
+                <script src="../../codebase/dhtmlx.js"></script>
+                <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
+                <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
                 
                 
 	</body>
