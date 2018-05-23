@@ -205,7 +205,8 @@ $Usuario=  Session::getSesion("user");
 				<th class="table-header" >No.</th>
                                 <th class="table-header">Clave del Documento</th>
 				<th class="table-header">Nombre del Documento</th>				
-				<th class="table-header">Responsable del Documento</th>					                                
+                                <th class="table-header">Responsable del Documento</th>					                                
+                                <th class="table-header">Registros</th>					                                
 			  </tr>
 		  </thead>
                   
@@ -230,15 +231,12 @@ $Usuario=  Session::getSesion("user");
 				<td><?php echo $numeracion++;   ?></td>                               
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'clave_documento','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_documento"]; ?></td>
                                 <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
-                                  <td> 
-<!--                                    <select  class="empleado" name="n_empleado" onchange="saveComboToDatabase('ID_EMPLEADO', <?php // echo $filas["ID_CLAUSULA"]; ?> )">-->
+                                <td> 
                                     <select   id="id_empleado" class="select"  onchange="saveComboToDatabase('id_empleado', <?php echo $filas["id_documento"]; ?> )">
-                                    <!--<select name="name_empleado">-->
                                     <?php
                                     $s="";
                                                 foreach ($cbxEmp as $value) {
                                                     if($value["id_empleado"]=="".$filas["id_empleado"]){
-//                                                        $s="selected";
                                                     ?>
                                     
                                                         <option value="<?php echo "".$filas["id_empleado"] ?>"  selected ><?php echo "".$filas["nombre_empleado"]." ".$filas["apellido_paterno"]." ".$filas["apellido_materno"]; ?></option>
@@ -254,12 +252,11 @@ $Usuario=  Session::getSesion("user");
                                                 }
                                     
                                     ?>
-                                    </select>
-                                        
-                                  
-                                   <!--<div id="combo_zone" style="width:230px;"></div>-->
-                                    
+                                    </select>                                   
                                 </td>
+                                
+                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'registros','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["registros"]; ?></td>
+
 			  </tr>
 		<?php
                       }
@@ -336,8 +333,13 @@ $Usuario=  Session::getSesion("user");
 							<div class="help-block with-errors"></div>
 						</div>
                                     
-                                    
-                                    
+                                                
+                                                <div class="form-group">
+                                                   
+							<label class="control-label" for="title">Registros:</label>
+                                                        <textarea  id="REGISTROS" class="form-control " data-error="Ingrese el Documento" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
                                                 
                                                 
                                     
@@ -422,9 +424,10 @@ $Usuario=  Session::getSesion("user");
                                     var CLAVE_DOCUMENTO=$("#CLAVE_DOCUMENTO").val();
                                     var DOCUMENTO=$("#DOCUMENTO").val();
                                     var ID_EMPLEADOMODAL=$("#ID_EMPLEADOMODAL").val();
-                                    
+                                    var REGISTROS=$("#REGISTROS").val();
 
-//                                   alert("CLAVE_DOCUMENTO :"+CLAVE_DOCUMENTO + "DOCUMENTO :"+DOCUMENTO + "ID_EMPLEADOMODAL :"+ID_EMPLEADOMODAL);
+                                   alert("CLAVE_DOCUMENTO :"+CLAVE_DOCUMENTO + "DOCUMENTO :"+DOCUMENTO + "ID_EMPLEADOMODAL :"+ID_EMPLEADOMODAL
+                                                            + "REGISTROS :"+REGISTROS);
                                   
                                     
 
@@ -432,6 +435,8 @@ $Usuario=  Session::getSesion("user");
                                     datos.push(CLAVE_DOCUMENTO);
                                     datos.push(DOCUMENTO);
                                     datos.push(ID_EMPLEADOMODAL);
+                                    datos.push(REGISTROS);
+                                    
                                     saveToDatabaseDatosFormulario(datos);
                                     
                         });
@@ -446,6 +451,8 @@ $Usuario=  Session::getSesion("user");
                                   $("#CLAVE_DOCUMENTO").val("");
                                   $("#DOCUMENTO").val("");
                                   //$("#ID_EMPLEADOMODAL").val("");
+                                  $("#REGISTROS").val("");
+                                  
                                                                       
                         });
                         
@@ -482,12 +489,12 @@ $Usuario=  Session::getSesion("user");
                
                
                function saveToDatabaseDatosFormulario(datos){
-//                    alert("datos nombre "+datos[0]);
+                   alert("datos nombre "+datos[3]);
                     
                     	$.ajax({
                                 url: "../Controller/DocumentosController.php?Op=Guardar",
 				type: "POST",
-				data:'CLAVE_DOCUMENTO='+datos[0]+'&DOCUMENTO='+datos[1]+'&ID_EMPLEADO='+datos[2],
+				data:'CLAVE_DOCUMENTO='+datos[0]+'&DOCUMENTO='+datos[1]+'&ID_EMPLEADO='+datos[2]+'&REGISTROS='+datos[3],
                                 
 				success: function(data){
                                     alert("se guardo");
