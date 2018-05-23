@@ -92,35 +92,65 @@ switch ($Op) {
 		break;
 	
 	case "AlmacenarArchivosServer":
-		echo "le ";
+		// echo "le ";
 					 
 //         $traerultimoinsertado=$model->traer_ultimo_insertado();
 //         $cumplimiento=$model->listarCumplimientoPorId_Entrada($traerultimoinsertado);
 //         $data = $model->getIdCumplimiento($traerultimoinsertado);
-		 foreach ($data as $value)
-		 {}
-	//         echo "".$value["ID_CUMPLIMIENTO"];
-	//         $cump=$value["ID_CUMPLIMIENTO"];
-		if($_FILES["imagen"]["name"][0])
-		{
-			$carpetaDestino = "../../archivos/1";
-	// echo "carpeta:  ".$carpetaDestino;
-			for($i=0;$i<count($_FILES["imagen"]["name"]);$i++)
-			{
-				$origen = $_FILES["imagen"]["tmp_name"][$i];
-				$destino = $carpetaDestino.$_FILES["imagen"]["name"][$i];
-				move_uploaded_file($origen,$destino);
+			$existe=false;
+			$id_validacion=$_REQUEST["ID_VALIDACION"];
+			if($_FILES["imagen"]["name"][0])
+			{        
+				$carpetaDestino = "../../archivos/filesValidacionDocumento/".$id_validacion;
+				if(!file_exists($carpetaDestino))
+				{
+					mkdir($carpetaDestino,0777,true);
+				}
+			// echo "carpeta:  ".$carpetaDestino;
+				for($i=0;$i<count($_FILES["imagen"]["name"]);$i++)
+				{
+					$origen = $_FILES["imagen"]["tmp_name"][$i];
+					$destino = $carpetaDestino."/".$_FILES["imagen"]["name"][$i];
+					move_uploaded_file($origen,$destino);
+					$existe=file_exists($destino);
+				}
 			}
-			echo true;
-		
-		}else
+			header('Content-type: application/json; charset=utf-8');
+			echo json_encode($existe);
+	break;
+	case "ObtenerArchivos":
+		$todo = array();
+		$id_validacion = $_REQUEST['ID_VALIDACION'];
+		// $data = $modelDocumentoEntrada->getIdCumplimiento($id_documento);
+		// echo $data;
+		// foreach($data as $index=>$value)
+		// {
+		// 	echo "\n".$index." - ".$value;
+		// }
+		// $lista = $model->obtener_urls($id_documento);
+		$archivosNames = array();
+		$existe=file_exists("C:xampp/htdocs/enerin-omg/archivos/filesValidacionDocumento/".$id_validacion);
+		if($existe)
 		{
-			echo false;
+			$files = scandir("C:xampp/htdocs/enerin-omg/archivos/filesValidacionDocumento/".$id_validacion);//C:\xampp\htdocs\enerin-omg\archivos\files\1\10
+			foreach($files as $index=>$value)
+			{
+				if($index>=2)
+				{
+					// echo "\n".$index." - ".$value;
+					$archivosNames[$index-2] = $value;
+				}
+			}
 		}
-
-	header("Location:../View/DocumentoEntradaViewChecandoNuevaVersion.php"); /* Redirección del navegador */
-	/* Asegurándonos de que el código interior no será ejecutado cuando se realiza la redirección. */
-	exit;
+		// echo "\n";
+		// foreach($archivosNames as $index=>$value)
+		// {
+		// 	echo "\n".$index." - ".$value;
+		// }
+		// Session::setSesion("newUrl",'/'.$id_cumplimiento.'/'.$id_documento.'/');
+		// Session::setSesion("getUrlsArchivos",$lista);
+		header('Content-type: application/json; charset=utf-8');
+		echo json_encode($archivosNames);
 	break;
 	default:
 		# code...

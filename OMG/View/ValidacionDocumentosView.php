@@ -263,7 +263,8 @@ require_once 'EncabezadoUsuarioView.php';
                                 onClick="showEdit(this);"><?php echo $filas["nombre_empleado_tema"]." ".$filas["apellido_paterno_tema"]." ".$filas["apellido_materno_tema"]; ?></td>
                                 <!-- documento adjunto -->
                                 <td>
-                                  <button onClick="documentoAdjuntar(<?php echo $filas['id_documento_entrada'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#DocumentoAdjuntoModel">
+                                  <button onClick="documentoAdjuntar(<?php echo $filas['id_validacion_documento'] ?>);" type="button" 
+                                  class="btn btn-success" data-toggle="modal" data-target="#documentoAdjuntoModal">
 		                                Adjuntar
                                   </button>
                                 </td>
@@ -366,25 +367,19 @@ require_once 'EncabezadoUsuarioView.php';
 </div><!-- cierre del modal Requisitos-->                
                 
 <!-- Inicio modal adjuntar documento -->
-<div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal draggable fade" id="documentoAdjuntoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
-        <div id="loaderModalMostrar"></div>
 		<div class="modal-content">
-                        
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Archivos agregados</h4>
-		      </div>
-          
-          <form enctype="multipart/form-data" method="post" action="../Controller/ValidacionDocumentosController.php?Op=AlmacenarArchivosServer">
-              <input name="imagen[]" required="" type="file" multiple />
-              <br>
-              <input type="submit" value="Upload">
-          </form>
-          
-                      </div><!-- cierre div class-body -->
-                </div><!-- cierre div class modal-content -->
-        </div><!-- cierre div class="modal-dialog" -->
+      
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title" id="myModalLabel">Archivos agregados</h4>
+      </div>
+      <div id="AddCodeDocumentoAdjuntoModal"></div>
+
+        <!-- </div>cierre div class-body -->
+    </div><!-- cierre div class modal-content -->
+  </div><!-- cierre div class="modal-dialog" -->
 </div><!-- cierre del modal -->
 
 
@@ -561,7 +556,55 @@ require_once 'EncabezadoUsuarioView.php';
 //                    layoutWin.attachURL("RequisitosPorTemaView.php");
 //            }
     
-    
+    function documentoAdjuntar(id)
+    {
+      // console.log("ID validacion: "+id);
+      var code="";
+      $.ajax({
+        url:'../Controller/ValidacionDocumentosController.php?Op=ObtenerArchivos',
+        data: 'ID_VALIDACION='+id,
+        type:'GET',
+        success:function(names)
+        {
+          if(names.length!=0)
+          {
+            $.each(names, function(index,value)
+            {
+              code = "<a href=''>"+value+"</a>";
+            });
+            $('#AddCodeDocumentoAdjuntoModal').html(code);
+          }
+          else
+          {
+            code = "<form id='formAdjuntarDocumento' style='margin:15px' class='form-group'>";
+            code += "<input name='imagen[]' required type='file' multiple /></form>";
+            code += "<input onclick='cargarDocumentoA("+id+")' type='submit' value='Upload' class='btn crud-submit btn-info' style='margin:10px'>";
+            $('#AddCodeDocumentoAdjuntoModal').html(code);
+          }
+        }
+      });
+    }
+    function cargarDocumentoA(id)
+    {
+      // console.log(objectHtml);
+      // console.log(document.getElementById("divArchivo").getElementsByTagName("input")[1].value);
+      var form = document.querySelector("#formAdjuntarDocumento");
+      var formData = new FormData(form);
+      // console.log(formData);
+      $.ajax({
+        url: '../Controller/ValidacionDocumentosController.php?Op=AlmacenarArchivosServer&ID_VALIDACION='+id,
+        type:'POST',
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success:function(date)
+        {
+          documentoAdjuntar(id);
+        }
+      });
+      // '../Controller/ValidacionDocumentosController.php?Op=AlmacenarArchivosServer&IdValidacion'
+    }
     function filterTable() {
                 // Declare variables 
                     var input, filter, table, tr, td, i;
