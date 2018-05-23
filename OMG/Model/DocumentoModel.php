@@ -56,7 +56,8 @@ class DocumentoModel{
             $dao=new DocumentoDAO();
 //            $pojo=new EmpleadoPojo();
             
-           $dao->insertarDocumentos($pojo->getClave_documento(),$pojo->getDocumento(),$pojo->getId_empleado());
+           $dao->insertarDocumentos($pojo->getClave_documento(),$pojo->getDocumento(),$pojo->getId_empleado(),
+                                    $pojo->getRegistros());
         } catch (Exception $ex) {
                 throw $ex;
         }

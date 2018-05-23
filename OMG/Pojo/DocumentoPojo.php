@@ -12,13 +12,14 @@
  * @author francisco
  */
 class DocumentoPojo {    
+   
     
     //put your code here
     private $id_documento;
     private $clave_documento='';
     private $documento='';
     private $id_empleado='';
-    
+    private $registros='';
     
     
     
@@ -56,6 +57,13 @@ class DocumentoPojo {
     }
 
     
+    public function getRegistros() {
+        return $this->registros;
+    }
+
+    public function setRegistros($registros) {
+        $this->registros = $registros;
+    }
          
     
     
