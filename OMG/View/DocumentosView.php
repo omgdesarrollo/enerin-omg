@@ -13,11 +13,11 @@ $Usuario=  Session::getSesion("user");
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta http-equiv="X-UA-Compatible"  content="overview &amp; stats"  />
 		<meta charset="utf-8" />
 		<title>OMG APPS</title>
 
-		<meta name="description" content="overview &amp; stats" />
+		<meta name="description" content="overview &amp; " />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
 		<!-- bootstrap & fontawesome -->
@@ -472,12 +472,12 @@ $Usuario=  Session::getSesion("user");
                 
                 
 		function saveToDatabase(editableObj,column,id) {
-                    //alert("entraste aqui ");
+//                    alert("entraste aqui  y el valor es "+editableObj);
 			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
 			$.ajax({
                                 url: "../Controller/DocumentosController.php?Op=Modificar",
 				type: "POST",
-				data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
+				data:'column='+column+'&editval='+editableObj.textContent+'&id='+id,
 				success: function(data){
 					$(editableObj).css("background","#FDFDFD");
 				}   

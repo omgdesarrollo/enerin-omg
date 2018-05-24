@@ -67,7 +67,11 @@ switch ($Op) {
 
 	case 'Modificar':
 		# code...
-        $model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );    
+            echo "el val es g de  "+ $_REQUEST['editval'];
+//            htmlspecialchars($_REQUEST['editval']);
+        $model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );
+        
+            
 		break;
             
         
