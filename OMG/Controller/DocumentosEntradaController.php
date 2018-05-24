@@ -119,40 +119,28 @@ switch ($Op) {
                                    
                                    
 		break;
-        case "AlmacenarArchivosServer":
-            echo "le ";
-                         
+        case "AlmacenarArchivosServer":                            
 //         $traerultimoinsertado=$model->traer_ultimo_insertado();
 //         $cumplimiento=$model->listarCumplimientoPorId_Entrada($traerultimoinsertado);
 //         $data = $model->getIdCumplimiento($traerultimoinsertado);
-         foreach ($data as $value) {
-             
-         }
+        //  foreach ($data as $value){}
 //         echo "".$value["ID_CUMPLIMIENTO"];
 //         $cump=$value["ID_CUMPLIMIENTO"];
-    if($_FILES["imagen"]["name"][0])
-    {
-        
-        $carpetaDestino = "../../archivos/1";
-       // echo "carpeta:  ".$carpetaDestino;
-        for($i=0;$i<count($_FILES["imagen"]["name"]);$i++)
-        {
-            $origen = $_FILES["imagen"]["tmp_name"][$i];
-            $destino = $carpetaDestino.$_FILES["imagen"]["name"][$i];
-            move_uploaded_file($origen,$destino);
-        }
-        echo true;
-        
-    } else {
- 
-        echo false;
-    }
-    
-    header("Location:../View/DocumentoEntradaViewChecandoNuevaVersion.php"); /* Redirección del navegador */
-
-/* Asegurándonos de que el código interior no será ejecutado cuando se realiza la redirección. */
-exit;
-            
+    	if($_FILES["imagen"]["name"][0])
+    	{        
+			$carpetaDestino = "../../archivos/filesValidacionDocumento/".$Id_validacion;
+			if(!file_exists($carpetaDestino))
+            {
+                mkdir($carpeta,0777,true);
+            }
+		// echo "carpeta:  ".$carpetaDestino;
+			for($i=0;$i<count($_FILES["imagen"]["name"]);$i++)
+			{
+				$origen = $_FILES["imagen"]["tmp_name"][$i];
+				$destino = $carpetaDestino."/".$_FILES["imagen"]["name"][$i];
+				move_uploaded_file($origen,$destino);
+			}
+		}
         break;
 	case 'Modificar':
 		# code...
