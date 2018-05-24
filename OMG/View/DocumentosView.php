@@ -13,7 +13,7 @@ $Usuario=  Session::getSesion("user");
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta http-equiv="X-UA-Compatible" content="text/html;"  />
+		<meta http-equiv="X-UA-Compatible"  content="overview &amp; stats"  />
 		<meta charset="utf-8" />
 		<title>OMG APPS</title>
 
@@ -258,7 +258,7 @@ $Usuario=  Session::getSesion("user");
                                     </select>                                   
                                 </td>
                                 
-                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'registros','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php echo htmlspecialchars($filas["registros"]); ?></td>
+                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'registros','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["registros"]; ?></td>
 
 			  </tr>
 		<?php
