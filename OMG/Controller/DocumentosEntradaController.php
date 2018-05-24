@@ -95,7 +95,7 @@ switch ($Op) {
 				//  $jsonData['ID_CUMPLIMIENTO'] = $data[0];
 
 				// $jsonData['ID_DOCUMENTO'] = $data[1];
-				$valores = '/'.$data[0].'/'.$data[1].'/';
+				$valores = 'filesDocumento/'.$data[0].'/'.$data[1].'/';
 				Session::setSesion("newUrl",$valores);
 
 				//  $jsonData['ID_DOCUMENTO'] = $data[1];
@@ -126,21 +126,23 @@ switch ($Op) {
         //  foreach ($data as $value){}
 //         echo "".$value["ID_CUMPLIMIENTO"];
 //         $cump=$value["ID_CUMPLIMIENTO"];
+		$destino = "filesValidacionDocumento/".$Id_validacion;
     	if($_FILES["imagen"]["name"][0])
     	{        
-			$carpetaDestino = "../../archivos/filesValidacionDocumento/".$Id_validacion;
+			$carpetaDestino = "../../archivos/".$destino;
 			if(!file_exists($carpetaDestino))
             {
-                mkdir($carpeta,0777,true);
+                mkdir($carpetaDestino,0777,true);
             }
 		// echo "carpeta:  ".$carpetaDestino;
-			for($i=0;$i<count($_FILES["imagen"]["name"]);$i++)
-			{
-				$origen = $_FILES["imagen"]["tmp_name"][$i];
-				$destino = $carpetaDestino."/".$_FILES["imagen"]["name"][$i];
-				move_uploaded_file($origen,$destino);
-			}
+			// for($i=0;$i<count($_FILES["imagen"]["name"]);$i++)
+			// {
+			// 	$origen = $_FILES["imagen"]["tmp_name"][$i];
+			// 	$destino = $carpetaDestino."/".$_FILES["imagen"]["name"][$i];
+			// 	move_uploaded_file($origen,$destino);
+			// }
 		}
+		Session::setSesion("newUrl",$destino."/");
         break;
 	case 'Modificar':
 		# code...
@@ -210,13 +212,15 @@ switch ($Op) {
 		# code...
 		break;
 	case 'getIdCumplimiento':
-		$value;
+		$Id_cumplimiento="";
 		$ID_DOCUMENTO = $_REQUEST['ID_DOCUMENTO'];
 		$data = $model->getIdCumplimiento($ID_DOCUMENTO);
-		foreach ($data as $value)
+		foreach ($data as $Id_cumplimiento)
 		{}
-		$valores = '/'.$value.'/'.$ID_DOCUMENTO.'/';
-		Session::setSesion("newUrl",$valores);
+		// $valores = '/'.$value.'/'.$ID_DOCUMENTO.'/';
+		// Session::setSesion("newUrl",$valores);
+		header('Content-type: application/json; charset=utf-8');
+		echo json_encode($Id_cumplimiento);
 		break;
 	default:
 		# code...

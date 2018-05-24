@@ -44,7 +44,7 @@ class UploadHandler
         session_start();
         require_once '../util/Session.php';
 echo "d   :".$this->get_full_url();
-        $newUrl=  Session::getSesion("newUrl");
+        // $newUrl=  Session::getSesion("newUrl");
         // echo $newUrl."---";
         $this->response = array();
         $this->options = array(
@@ -1084,6 +1084,7 @@ echo "d   :".$this->get_full_url();
         // session_start();
         // require_once '../util/Session.php';
         $newUrl=  Session::getSesion("newUrl");
+        $Urls = Session::getSesion("URLS");
         // $archivosUrls = array();
 
         $file = new \stdClass();
@@ -1105,10 +1106,11 @@ echo "d   :".$this->get_full_url();
             // $file_path2 = "http://localhost:80/enerin-omg/archivos/files".$newUrl.$file->name;//el que descarga web
             date_default_timezone_set("America/Mexico_city");
             $hoy = new Datetime();
-	        $hoy = strftime("%d%B%y_%H%M%S");
+	        $hoy = strftime("%d-%B-%y %Hh-%Mm-%Ss");
             // $hoy = new Datetime($hoy);
-            echo "fecha : ".$hoy;
-            $file_path = "C:/xampp/htdocs/enerin-omg/archivos/files".$newUrl.$hoy."-".$file->name;//el que guarda local
+            // echo "fecha : ".$hoy;
+            $file_path = $Urls["fisica"].$newUrl.$hoy."^".$file->name;//el que guarda local
+            echo $file_path;
             // $file_path2 = "http://localhost:80/enerin-omg/archivos/files".$newUrl.$file->name;//el que descarga local
             // $filePath = array();
             // if(Session::getSesion("archivos_urls") == null)

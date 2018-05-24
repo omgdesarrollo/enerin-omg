@@ -1364,93 +1364,120 @@ require_once 'EncabezadoUsuarioView.php';
 //                   window.location.href("EmpleadosView.php");
                 }
                 
-                function mostrar_urls(id_documento_entrada)
-                {
-                        var tempDocumentolistadoUrl = " ";
-                        $.ajax({
-                                url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
-                                type: 'GET',
-                                data: 'ID_DOCUMENTO='+id_documento_entrada,
-                                success: function(todo)
+        function mostrar_urls(id_documento_entrada)
+        {
+                var tempDocumentolistadoUrl = "";
+                $.ajax({
+                        url:    '../Controller/DocumentosEntradaController.php?Op=getIdCumplimiento',
+                        type:   'GET',
+                        data: 'ID_DOCUMENTO='+id_documento_entrada,
+                        success: function(Id_cumplimiento)
+                        {
+                                if(Id_cumplimiento!="")
                                 {
-                                        $.each(todo[0], function (index,value)
-                                        {
-                                                // var tempDocumentolistadoUrlSplit = value.DIR.split("/");
-                                                // var tempDocumentolistadoUrlPos = tempDocumentolistadoUrlSplit.length - 1;
-                                                // console.log(value);
-                                                // alert(value);
-//                                                tempDocumentolistadoUrl = tempDocumentolistadoUrl +"<li><a href=\"http://localhost:8282/enerin-omg/archivos/files/"+todo[1]['ID_CUMPLIMIENTO']+"/"+id_documento_entrada+"/"+value+"\">" + value + "</a><button style=\"color:green;background:transparent;border:none;padding-left:10px\" onclick='borrarArchivo(\""+value+"\");')><i class=\"fa fa-trash\"></i></button></li>";
-                                                tempDocumentolistadoUrl = tempDocumentolistadoUrl +"<li><a href=\"http://enerin-omgapps.com/omgcum/archivos/files/"+todo[1]['ID_CUMPLIMIENTO']+"/"+id_documento_entrada+"/"+value+"\">" + value + "</a><button style=\"color:green;background:transparent;border:none;padding-left:10px\" onclick='borrarArchivo(\""+value+"\");')><i class=\"fa fa-trash\"></i></button></li>";
-                                        });
-                                        if(tempDocumentolistadoUrl == " ")
-                                        {
-                                                tempDocumentolistadoUrl = " No hay archivos agregados "
-                                        }
-                                        tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdDocumento' type='text' style='display:none;' value='"+id_documento_entrada+"'>";
-                                        // alert(tempDocumentolistadoUrl);
-                                        $('#DocumentoEntradaAgregarModal').html(" ");
-                                        $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
-                                        $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
-                                        // $('#fileupload').fileupload();
-                                        $('#fileupload').fileupload({
-                                                url: '../View/',
-                                        });
-                                        
-                                        $('#fileupload').fileupload('option', {
-                                        // url: '//jquery-file-upload.appspot.com/',
-                                        maxFileSize: 99900000,
+                                        URL = 'filesDocumento/'+Id_cumplimiento+"/"+id_documento_entrada,
+                                        $.ajax({
+                                                url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
+                                                type: 'GET',
+                                                data: 'URL='+URL,
+                                                success: function(todo)
+                                                {
+                                                        console.log(todo[0].length);
+                                                        if(todo[0].length!=0)
+                                                        {
+                                                                tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
+                                                                $.each(todo[0], function (index,value)
+                                                                {
+                                                                        nametmp = value.split("^");
+                                                                        name;
+                                                                        fecha = nametmp[0];
+                                                                        $.each(nametmp, function(index,value)
+                                                                        {
+                                                                                if(index!=0)
+                                                                                        (index==1)?name=value:name+="-"+value;
+                                                                        });
+                                                                //tempDocumentolistadoUrl = tempDocumentolistadoUrl +"<li><a href=\"http://localhost:8282/enerin-omg/archivos/files/"+todo[1]['ID_CUMPLIMIENTO']+"/"+id_documento_entrada+"/"+value+"\">" + value + "</a><button style=\"color:green;background:transparent;border:none;padding-left:10px\" onclick='borrarArchivo(\""+value+"\");')><i class=\"fa fa-trash\"></i></button></li>";
+                                                                        
+                                                                        tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
+                                                                        tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\">"+name+"</a></td>";
+                                                                        tempDocumentolistadoUrl += "<td><button style=\"color:green;background:transparent;border:none;padding-left:10px\"";
+                                                                        tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
+                                                                        tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";
+                                                                });
+                                                                tempDocumentolistadoUrl += "</tbody></table>";
+                                                        }
+                                                        if(tempDocumentolistadoUrl == " ")
+                                                        {
+                                                                tempDocumentolistadoUrl = " No hay archivos agregados "
+                                                        }
+                                                        tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdDocumento' type='text' style='display:none;' value='"+id_documento_entrada+"'>";
+                                                        // alert(tempDocumentolistadoUrl);
+                                                        $('#DocumentoEntradaAgregarModal').html(" ");
+                                                        $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
+                                                        $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
+                                                        // $('#fileupload').fileupload();
+                                                        $('#fileupload').fileupload({
+                                                        url: '../View/',
+                                                        });
+                                                }
                                         });
                                 }
-                        });
-                }
+                        }
+                });
+        }
                 
-                function agregarArchivosUrl()
-                {
-                        var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
-                        // alert(ID_DOCUMENTO);
-                        $.ajax({
-                                url: "../Controller/DocumentosEntradaController.php?Op=getIdCumplimiento",
-                                type: 'POST',
-                                data: 'ID_DOCUMENTO='+ID_DOCUMENTO,
-                                // async:false,
-                                success:function(data)
+        function agregarArchivosUrl()
+        {
+                var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
+                // alert(ID_DOCUMENTO);
+                $.ajax({
+                        url: "../Controller/DocumentosEntradaController.php?Op=getIdCumplimiento",
+                        type: 'GET',
+                        data: 'ID_DOCUMENTO='+ID_DOCUMENTO,
+                        // async:false,
+                        success:function(Id_cumplimiento)
+                        {
+                                if(Id_cumplimiento!="")
                                 {
-                                        $('.start').click();
-                                        // $('#loader').show();
-                                        // $('#create-itemUrls .close').click();
-                                        // $('#loader').hide();
+                                        url = 'filesDocumento/'+Id_cumplimiento+"/"+ID_DOCUMENTO+"/",
+                                        $.ajax({
+                                                url: "../Controller/ArchivoUploadController.php?Op=crearUrl",
+                                                type: 'POST',
+                                                data: 'Url='+url,
+                                                success:function(creado)
+                                                {
+                                                        if(creado)
+                                                                $('.start').click();
+                                                }
+                                        });
                                 }
-                        });
-                        // .done(function(){mostrar_urls(ID_DOCUMENTO);});
-                        // bind('fileuploadchange',function(e,data){alert("archivo subido");});
-                        // $('#fileupload').bind('fileuploadchange',function(e,data){alert("archivo subido");});
-                        // $.ajax({
-                                // url: "../Controller/ArchivoUploadController.php?Op=Guardar",
-                                // type: "POST",
-                                // data: 'ID_DOCUMENTO='+ID_DOCUMENTO,
-                                // async: false,
-                                // success: function(data)
-                                // {
-                                        // alert("insertado urls");
-                                // }
-                        // });
-                }
+                        }
+                });
+        }
                 function loadSpinner(){
 //                    alert("se cargara otro ");
                         myFunction();
                 }
-                function borrarArchivo(nombreArchivo)
+                function borrarArchivo(url)
                 {
                         var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
                         // alert(nombreArchivo);
                         $.ajax({
                                 url: "../Controller/ArchivoUploadController.php?Op=eliminarArchivo",
                                 type: 'POST',
-                                data: 'ID_DOCUMENTO='+ID_DOCUMENTO+'&ARCHIVO_NAME='+nombreArchivo,
+                                data: 'URL='+url,
                                 success: function(data)
                                 {
-                                        console.log("Eliminado exitoso");
-                                        mostrar_urls(ID_DOCUMENTO);
+                                        if(data)
+                                        {
+                                                mostrar_urls(ID_DOCUMENTO);
+                                        }
+                                        else
+                                                swal("","Ocurrio un error al elimiar el archivo", "error");
+                                },
+                                error:function()
+                                {
+                                        swal("","Ocurrio un error al elimiar el archivo", "error");
                                 }
                         });
                 }

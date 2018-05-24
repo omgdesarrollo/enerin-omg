@@ -7,9 +7,11 @@ if (Session:: NoExisteSeSion("user")){
     header("location: login.php");
     return;
 }
-
+$urls["fisica"] = "C:xampp/htdocs/enerin-omg/archivos/";
+$urls["logica"] = 'localhost:80/enerin-omg/archivos/';
+// $urls[""] = ;
+Session::setSesion("URLS",$urls);
 $Usuario=  Session::getSesion("user");
-
 
 ?>
 
