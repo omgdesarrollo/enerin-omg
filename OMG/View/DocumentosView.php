@@ -477,7 +477,7 @@ $Usuario=  Session::getSesion("user");
 			$.ajax({
                                 url: "../Controller/DocumentosController.php?Op=Modificar",
 				type: "POST",
-				data:'column='+column+'&editval='+editableObj.textContent+'&id='+id,
+				data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
 				success: function(data){
 					$(editableObj).css("background","#FDFDFD");
 				}   
