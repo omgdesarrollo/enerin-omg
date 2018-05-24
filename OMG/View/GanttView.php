@@ -337,6 +337,8 @@ gantt.config.lightbox.sections = [
 gantt.config.order_branch = true;
 gantt.config.order_branch_free = true;
 gantt.config.branch_loading = true;
+gantt.config.fit_tasks = true; 
+
 
 gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
     gantt.init("gantt_here");
@@ -403,25 +405,25 @@ dp.init(gantt);
 		var task = gantt.getTask(id);
 		if (mode == gantt.config.drag_mode.progress) {
 			var pr = Math.floor(task.progress * 100 * 10) / 10;
-			gantt.message(task.text + " is now " + pr + "% completed!");
+//			gantt.message(task.text + " is now " + pr + "% completed!");
 		} else {
 			var convert = gantt.date.date_to_str("%H:%i, %F %j");
 			var s = convert(task.start_date);
 			var e = convert(task.end_date);
-			gantt.message(task.text + " starts at " + s + " and ends at " + e);
+//			gantt.message(task.text + " starts at " + s + " and ends at " + e);
 		}
 	});
     
-    	gantt.attachEvent("onBeforeTaskChanged", function (id, mode, old_event) {
-		var task = gantt.getTask(id);
-		if (mode == gantt.config.drag_mode.progress) {
-			if (task.progress < old_event.progress) {
-				gantt.message(task.text + " progress can't be undone!");
-				return false;
-			}
-		}
-		return true;
-	});
+//    	gantt.attachEvent("onBeforeTaskChanged", function (id, mode, old_event) {
+//		var task = gantt.getTask(id);
+//		if (mode == gantt.config.drag_mode.progress) {
+//			if (task.progress < old_event.progress) {
+//				gantt.message(task.text + " progress can't be undone!");
+//				return false;
+//			}
+//		}
+//		return true;
+//	});
     
     
     
@@ -439,7 +441,7 @@ dp.init(gantt);
 				message += "resized";
 		}
 
-		gantt.message(message);
+//		gantt.message(message);
 		return true;
 	});
     
@@ -457,7 +459,22 @@ dp.init(gantt);
 			refreshSummaryProgress(gantt.getParent(id), false);
 		});
                 
-                
+             gantt.attachEvent("onTaskDrag", function(id, mode, task, original){
+  	var minimal_date = gantt.getState().min_date// + 86400;
+    minimal_date = gantt.date.add(minimal_date, 1, 'day');
+ 	if (task.start_date < minimal_date) gantt.refreshData();
+  
+  	var maximal_date = gantt.getState().max_date// + 86400;
+    maximal_date = gantt.date.add(maximal_date, 1, 'day');
+ 	if (task.end_date < maximal_date) gantt.refreshData();  
+});
+//             gantt.attachEvent("onAfterAutoSchedule",function(taskId, updatedTasks){
+//                 alert("");
+//    // any custom logic here
+//});
+             
+             
+             
         function refreshSummaryProgress(id, submit) {
 //            alert("le has picado para avanzar");
 			if (!gantt.isTaskExists(id))

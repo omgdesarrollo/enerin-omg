@@ -215,13 +215,12 @@ require_once 'EncabezadoUsuarioView.php';
                                 <th class="table-header">Clave Documento</th>
                                 <th class="table-header">Nombre Documento</th>
                                 <th class="table-header">Responsable del Documento</th>
-                                <th class="table-header">Tema</th>
+                                <th class="table-header">No.Tema</th>
                                 <th class="table-header">Responsable del Tema</th>
                                 <th class="table-header">Documento Adjunto</th>
-
-                                <th class="table-header">Documento por Responsable</th>
+                                <th class="table-header">Validacion de Documento</th>
                                 <th class="table-header">Observacion Documento</th>
-                                <th class="table-header">Tema por Responsable</th>
+                                <th class="table-header">Validacion de Tema</th>
                                 <th class="table-header">Observacion Tema</th>
                                 <th class="table-header">Plan de Accion</th>
                                 <th class="table-header">Desviacion Mayor</th>
@@ -262,8 +261,8 @@ require_once 'EncabezadoUsuarioView.php';
                                 onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado_documento','<?php echo $filas["id_validacion_documento"]; ?>')" 
                                 onClick="showEdit(this);"><?php echo $filas["nombre_empleado_documento"]." ".$filas["apellido_paterno_documento"]." ".$filas["apellido_materno_documento"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_validacion_documento"]; ?>')" 
-                                onClick="showEdit(this);"><?php echo $filas["descripcion_clausula"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'clausula','<?php echo $filas["id_validacion_documento"]; ?>')" 
+                                onClick="showEdit(this);"><?php echo $filas["clausula"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado_tema','<?php echo $filas["id_validacion_documento"]; ?>')"
                                 onClick="showEdit(this);"><?php echo $filas["nombre_empleado_tema"]." ".$filas["apellido_paterno_tema"]." ".$filas["apellido_materno_tema"]; ?></td>
                                 <!-- documento adjunto -->

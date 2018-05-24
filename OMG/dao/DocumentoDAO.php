@@ -102,6 +102,7 @@ class DocumentoDAO{
          
         try{
             $query="UPDATE documentos SET ".$COLUMNA."='".$VALOR."'  WHERE id_documento=$ID_DOCUMENTO";
+            echo "l aconsulta  : ".$query;
 //             $query="UPDATE EMPLEADOS SET CORREO='$Correo' WHERE ID_EMPLEADO=$Id_Empleado";
      
             $db= AccesoDB::getInstancia();

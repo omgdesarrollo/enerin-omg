@@ -15,8 +15,7 @@ class ValidacionDocumentoPojo {
 
     private $id_validacion_documento;       
     private $id_asignacion_tema_requisito='';    
-    private $documento_archivo='';    
-    private $check_list='';    
+    private $documento_archivo='';       
     private $validacion_documento_responsable='';    
     private $observacion_documento='';    
     private $validacion_tema_responsable='';    
@@ -53,15 +52,6 @@ class ValidacionDocumentoPojo {
         $this->documento_archivo = $documento_archivo;
     }
 
-    
-    
-    function getCheck_list() {
-        return $this->check_list;
-    }
-
-    function setCheck_list($check_list) {
-        $this->check_list = $check_list;
-    }
     
     
     
