@@ -10,7 +10,7 @@ class ValidacionDocumentoDAO{
                     tbempleados.id_empleado id_empleado_documento, tbempleados.nombre_empleado nombre_empleado_documento,
                     tbempleados.apellido_paterno apellido_paterno_documento, tbempleados.apellido_materno apellido_materno_documento,
 
-                    tbclausulas.descripcion_clausula,
+                    tbclausulas.clausula, tbclausulas.descripcion_clausula,
 
                     tbclausulas.id_empleado id_empleado_tema, tbempleados_tema.nombre_empleado nombre_empleado_tema,
                     tbempleados_tema.apellido_paterno apellido_paterno_tema, tbempleados_tema.apellido_materno apellido_materno_tema,
