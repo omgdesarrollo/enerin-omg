@@ -258,7 +258,7 @@ $Usuario=  Session::getSesion("user");
                                     </select>                                   
                                 </td>
                                 
-                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'registros','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["registros"]; ?></td>
+                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'registros','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php echo htmlspecialchars($filas["registros"]); ?></td>
 
 			  </tr>
 		<?php
@@ -548,6 +548,7 @@ if(mensajeerror!=""){
                 
                 
                 function refresh(){
+                  consultarInformacion("../Controller/DocumentosController.php?Op=Listar");  
                   consultarInformacion("../Controller/DocumentosController.php?Op=Listar");  
                   window.location.href="DocumentosView.php";  
                 }
