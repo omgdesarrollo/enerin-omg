@@ -6,11 +6,7 @@ class AsignacionTemaRequisitoDAO {
     //put your code here
     public function mostrarAsignacionTemasRequisitos(){
         try{
-//            $query="SELECT TBASIGNACION_TEMA_REQUISITO.ID_ASIGNACION_TEMA_REQUISITO, 
-//                    TBCLAUSULAS.ID_CLAUSULA, TBCLAUSULAS.CLAUSULA, TBCLAUSULAS.DESCRIPCION_CLAUSULA,
-//                    TBASIGNACION_TEMA_REQUISITO.REQUISITO FROM ASIGNACION_TEMA_REQUISITO TBASIGNACION_TEMA_REQUISITO
-//		 
-//                    JOIN CLAUSULAS TBCLAUSULAS ON TBCLAUSULAS.ID_CLAUSULA=TBASIGNACION_TEMA_REQUISITO.ID_CLAUSULA";
+
             
             $query="SELECT tbasignacion_tema_requisito.id_asignacion_tema_requisito, 
                     tbclausulas.id_clausula, tbclausulas.clausula, tbclausulas.descripcion_clausula,
@@ -35,11 +31,7 @@ class AsignacionTemaRequisitoDAO {
     
     public function mostrarAsignacionTemasRequisitosComboBox(){
         try{
-//            $query="SELECT TBASIGNACION_TEMA_REQUISITO.ID_ASIGNACION_TEMA_REQUISITO, 
-//                    TBCLAUSULAS.ID_CLAUSULA, TBCLAUSULAS.CLAUSULA, TBCLAUSULAS.DESCRIPCION_CLAUSULA,
-//                    TBASIGNACION_TEMA_REQUISITO.REQUISITO FROM ASIGNACION_TEMA_REQUISITO TBASIGNACION_TEMA_REQUISITO
-//		 
-//                    JOIN CLAUSULAS TBCLAUSULAS ON TBCLAUSULAS.ID_CLAUSULA=TBASIGNACION_TEMA_REQUISITO.ID_CLAUSULA";
+
             
             
             $query="SELECT tbasignacion_tema_requisito.id_asignacion_tema_requisito, 
@@ -56,6 +48,26 @@ class AsignacionTemaRequisitoDAO {
                 $rec=$lista[0];
             }
             return $rec;*/
+
+            return $lista;
+    }  catch (Exception $ex){
+        //throw $rec;
+        throw $ex;
+    }
+    }
+    
+    
+    
+    public function obtenerRequisitosporDocumento($id_documento){
+        try{
+            
+            $query="SELECT tbasignacion_tema_requisito.id_asignacion_tema_requisito, tbasignacion_tema_requisito.requisito
+
+                    FROM  asignacion_tema_requisito tbasignacion_tema_requisito WHERE tbasignacion_tema_requisito.id_documento=$id_documento";
+         
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            
 
             return $lista;
     }  catch (Exception $ex){

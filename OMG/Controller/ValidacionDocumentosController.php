@@ -9,12 +9,18 @@
 session_start();
 require_once '../Model/ValidacionDocumentoModel.php';
 require_once '../Pojo/ValidacionDocumentoPojo.php';
+
+require_once '../Model/AsignacionTemaRequisitoModel.php';
+require_once '../Model/DocumentoModel.php';
+
 require_once '../util/Session.php';
 
 
 
 $Op=$_REQUEST["Op"];
 $model=new ValidacionDocumentoModel();
+$modelAsignacionTemaRequisito=new AsignacionTemaRequisitoModel();
+$modelDocumento=new DocumentoModel();
 $pojo= new ValidacionDocumentoPojo();
 
 switch ($Op) {
@@ -42,15 +48,33 @@ switch ($Op) {
 //echo $json = json_encode(array("n" => "".$Lista.NOMBRE_EMPLEADO, "a" => "apellido",  "c" => "test"));
 		return $Lista;
 		break;    
-        
+ 
             
-	case 'Nuevo':
-		# code...
+            
+	case 'MostrarRequisitosPorDocumento':
+            
+                $id_documento=$_REQUEST["ID_DOCUMENTO"];
+            
+		$Lista=$modelAsignacionTemaRequisito->obtenerRequisitosporDocumento($id_documento);
+    	Session::setSesion("obtenerRequisitosporDocumento",$Lista);
+//    	$tarjet="../view/principalmodulos.php";
+        
+    	header('Content-type: application/json; charset=utf-8');
+		echo json_encode( $Lista);
 		break;	
 
-	case 'Guardar':
+	
+            
+        case 'MostrarRegistrosPorDocumento':
                   
-		# code...
+                $id_documento=$_REQUEST["ID_DOCUMENTO"];
+                
+                $lista=$modelDocumento->obtenerRegistrosPorDocumento($id_documento);
+                Session::setSesion("obtenerRegistrosPorDocumento",$lista); 
+                
+                header('Content-type: application/json; charset=utf-8');
+                echo json_encode($lista);
+            
 		break;
 
 	case 'Modificar':

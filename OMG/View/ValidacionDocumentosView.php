@@ -176,10 +176,11 @@ require_once 'EncabezadoUsuarioView.php';
              
 <div style="position: fixed;">                          
 <button type="button" class="btn btn-info " onclick="refresh();" >
-    <i class="glyphicon glyphicon-repeat"></i> 
+    <i class="glyphicon glyphicon-repeat"></i>
+    
 </button>
 
-        <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Folio de Entrada" style="width: 140px;">
+        <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Clave Documento" style="width: 140px;">
         <input type="text" id="idInputEntidad" onkeyup="filterTableEntidad()" placeholder="Autoridad Remitente" style="width: 140px;">
         <input type="text" id="idInputAsunto" onkeyup="filterTableAsunto()" placeholder="Asunto" style="width: 120px;">
         <input type="text" id="idInputResponsable" onkeyup="filterTableResponsable()" placeholder="Responsable Tema" style="width: 180px;">
@@ -189,22 +190,11 @@ require_once 'EncabezadoUsuarioView.php';
 </div>    
 
 
+
 <div style="height: 47px"></div>
 
 
-<!--<div class="contenedortable" style="position: fixed;">   
-        <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Folio de Entrada" style="width: 200px;">
-        <input type="text" id="idInputEntidad" onkeyup="filterTableEntidad()" placeholder="Buscar Por Entidad" style="width: 150px;">
-        <input type="text" id="idInputAsunto" onkeyup="filterTableAsunto()" placeholder="Buscar Por Asunto" style="width: 140px;">
-        <input type="text" id="idInputResponsable" onkeyup="filterTableResponsable()" placeholder="Buscar Por Responsable" style="width: 180px;">
-        <input type="text" id="idInputStatus" onkeyup="filterTableStatus()" placeholder="Buscar Por Status" style="width: 130px;">
-</div >
 
-
-<div style="height: 55px"></div>-->
-             
-
-             
 <div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> 
     <div class="table-container" id="winVP">
         
@@ -218,6 +208,8 @@ require_once 'EncabezadoUsuarioView.php';
                                 <th class="table-header">No.Tema</th>
                                 <th class="table-header">Responsable del Tema</th>
                                 <th class="table-header">Documento Adjunto</th>
+                                <th class="table-header">Requisitos</th>
+                                <th class="table-header">Registros</th>                                
                                 <th class="table-header">Validacion de Documento</th>
                                 <th class="table-header">Observacion Documento</th>
                                 <th class="table-header">Validacion de Tema</th>
@@ -232,13 +224,10 @@ require_once 'EncabezadoUsuarioView.php';
                   
                     
                   
-//		  foreach($faq as $k=>$v) {
+
                       $Lista = Session::getSesion("listarValidacionDocumentos");
                       $ListaReqisitos = Session::getSesion("listarAsignacionTemasRequisitos");
-                      //$ListaATR= Session::getSesion("listarAsignacionTemasRequisitos");
-//                      $cbxEmp= Session::getSesion("listarEmpleadosComboBox");
-//                      $cbxEmpleadoPlan= Session::getSesion("listarEmpleadosComboBox");
-//                      $cbxEmpleadoPlan1= Session::getSesion("listarEmpleadosComboBox");
+
                   
 
 //                      $numeracion = 1;
@@ -272,16 +261,10 @@ require_once 'EncabezadoUsuarioView.php';
 		                                Adjuntar
                                   </button>
                                 </td>
-                       
-<!--                                <td>
-                                <button type="button" id="btn_mostrar_requisitos" class="btn btn-success" data-toggle="modal">
-                                    Ver
-                                    <i class="ace-icon fa fa-book" style="color: #0099ff;font-size: 20px;"></i>
-                                </button>
-                                </td>-->
                                 
+                                <!--Mostrar Requisutos-->
                                 <td>
-                                        <button onClick="mostrarRequisitosUrl(<?php echo $filas['id_validacion_documento'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#checkbox-requisitos">
+                                        <button onClick="mostrarRequisitos(<?php echo $filas['id_documento'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-requisitos">
 		                                Ver
                                                 <i class="ace-icon fa fa-book" style="color: #0099ff;font-size: 20px;"></i>
                                         </button>
@@ -312,64 +295,8 @@ require_once 'EncabezadoUsuarioView.php';
     </div>                    	
 </div>
 
-	
-<!-- Inicio de Seccion Modal Requisitos-->
-<div class="modal draggable fade" id="checkbox-requisitos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-        <div id="loaderModalMostrar"></div>
-		<div class="modal-content">
-                        
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Check-List Requisitos</h4>
-		      </div>
 
-                    
-		      <div class="modal-body">
-<!--                        <div id="DocumentolistadoUrl"></div>
-
-                        
-                        <div class="form-group">
-                                <div id="DocumentolistadoUrlModal"></div>
-			</div>-->
-<div class="row">
-    <div class="col">
-        <form action="">
-                <?php
-                                      
-                foreach ($ListaReqisitos as $value) { 
-
-
-                if($value["id_clausula"]=="".$filas["id_clausula"])
-                {
-                    
-                ?>    
-            
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input type="checkbox" value="opcion1"><?php echo $value["requisito"]; ?>
-                </label>
-            </div>
-
-                <?php
-                }
-                }
-                ?>
-
-        </form>        
-    </div>                                            
-</div>  
-
-
-                        <div class="form-group" method="post" >
-                                <button type="submit" id="btn_guardar2"  class="btn crud-submit btn-info">Agregar Archivo</button>
-                        </div>
-                      </div><!-- cierre div class-body -->
-                      
-                </div><!-- cierre div class modal-content -->
-        </div><!-- cierre div class="modal-dialog" -->
-</div><!-- cierre del modal Requisitos-->                
-                
+               
 <!-- Inicio modal adjuntar documento -->
 <div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
@@ -390,6 +317,28 @@ require_once 'EncabezadoUsuarioView.php';
           <div class="form-group" method="post" >
                   <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Documento</button>
           </div>
+        </div><!-- cierre div class-body -->
+      </div><!-- cierre div class modal-content -->
+    </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal -->
+
+
+
+               
+<!-- Inicio modal Requisitos -->
+<div class="modal draggable fade" id="mostrar-requisitos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+        <div id="loaderModalMostrar"></div>
+		<div class="modal-content">                
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title" id="myModalLabel">Lista Requisitos</h4>
+        </div>
+
+        <div class="modal-body">
+          
+            <div id="RequisitosListado"></div>
+  
         </div><!-- cierre div class-body -->
       </div><!-- cierre div class modal-content -->
     </div><!-- cierre div class="modal-dialog" -->
@@ -440,53 +389,10 @@ require_once 'EncabezadoUsuarioView.php';
   
     });// Cierra el $function 
                       
-                // function mostrarRequisitosUrl(id_validacion_documento)
-                // {
-                        // alert("mostrar urls: "+id_documento_entrada);
-                //         mostrarRequisitos_urls(id_validacion_documento);
-                // }
+                 
                 
                 
-//                 function mostrarRequisitos_urls(id_validacion_documento)
-//                 {
-//                         alert("entraste aqui ");
-//                         var tempDocumentolistadoUrl = " ";
-//                         $.ajax({
-//                                 url: '../Controller/ValidacionDocumentosController.php?Op=listar',
-//                                 type: 'GET',
-//                                 data: 'ID_DOCUMENTO='+id_validacion_documento,
-//                                 success: function(todo)
-//                                 {
-//                                         $.each(todo[0], function (index,value)
-//                                         {
-//                                                 // var tempDocumentolistadoUrlSplit = value.DIR.split("/");
-//                                                 // var tempDocumentolistadoUrlPos = tempDocumentolistadoUrlSplit.length - 1;
-//                                                 // console.log(value);
-//                                                 // alert(value);
-// //                                                tempDocumentolistadoUrl = tempDocumentolistadoUrl +"<li><a href=\"http://localhost:8282/enerin-omg/archivos/files/"+todo[1]['ID_CUMPLIMIENTO']+"/"+id_documento_entrada+"/"+value+"\">" + value + "</a><button style=\"color:green;background:transparent;border:none;padding-left:10px\" onclick='borrarArchivo(\""+value+"\");')><i class=\"fa fa-trash\"></i></button></li>";
-//                                                 tempDocumentolistadoUrl = tempDocumentolistadoUrl +"<li><a href=\"http://enerin-omgapps.com/omgcum/archivos/files/"+todo[1]['ID_CUMPLIMIENTO']+"/"+id_documento_entrada+"/"+value+"\">" + value + "</a><button style=\"color:green;background:transparent;border:none;padding-left:10px\" onclick='borrarArchivo(\""+value+"\");')><i class=\"fa fa-trash\"></i></button></li>";
-//                                         });
-//                                         if(tempDocumentolistadoUrl == " ")
-//                                         {
-//                                                 tempDocumentolistadoUrl = " No hay archivos agregados "
-//                                         }
-//                                         tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdDocumento' type='text' style='display:none;' value='"+id_documento_entrada+"'>";
-//                                         // alert(tempDocumentolistadoUrl);
-//                                         $('#DocumentoEntradaAgregarModal').html(" ");
-//                                         $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
-//                                         $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
-//                                         // $('#fileupload').fileupload();
-//                                         $('#fileupload').fileupload({
-//                                                 url: '../View/',
-//                                         });
-                                        
-//                                         $('#fileupload').fileupload('option', {
-//                                         // url: '//jquery-file-upload.appspot.com/',
-//                                         maxFileSize: 99900000,
-//                                         });
-//                                 }
-//                         });
-//                 }
+            
                 
                 
 		function showEdit(editableObj)
@@ -511,6 +417,8 @@ require_once 'EncabezadoUsuarioView.php';
     {
       id_seguimiento_entrada=id;
     }
+    
+    
     function consultarInformacion(url)
     {
       $.ajax({  
@@ -520,21 +428,12 @@ require_once 'EncabezadoUsuarioView.php';
             },
             beforeSend:function(r)
             {
-//                          $("#loader").empty();
-//                          $("#sidebarObjV").append("<div class='loader'></div>");
-//                            $.jGrowl("Cargando  Porfavor Espere......", { header: 'Carga de Informacion' });
-//                         alert("e");
-//                          $("#sidebarObjV").append("Cargando Informacion ...");
-//$.jGrowl("Cargando  Porfavor Espere......", { sticky: true });
 
-//var delay = 1000;
-//							setTimeout(function(){
-//                                                            $.jGrowl("Informacion Obtenida", { sticky: true });
-//                                                        },delay);
 
           }
       });  
     }
+    
     
     function refresh()
     {
@@ -550,69 +449,13 @@ require_once 'EncabezadoUsuarioView.php';
                 
     function cargadePrograma(foliodeentrada)
     {
-      alert("le has picado al folio de entrada  "+foliodeentrada);
+      //alert("le has picado al folio de entrada  "+foliodeentrada);
       window.location.href=" GanttView.php?folio_entrada="+foliodeentrada;
 //   window.location.replace("http://sitioweb.com");        
     }
     
-    
-    
-//    function loadVistaRequisitos(bclose){
-//                    var dhxWins = new dhtmlXWindows();
-//                    dhxWins.attachViewportTo("winVP");
-//  
-//                    var layoutWin=dhxWins.createWindow({id:"requisitos", text:"OMG VISUALIZACION REQUISITOS", left: 20, top: -30,width:530,  height:250,  center:true,resize: true,park:true,modal:true	});
-//                    layoutWin.attachURL("RequisitosPorTemaView.php");
-//            }
-    
-    // function documentoAdjuntar(id)
-    // {
-    //   // console.log("ID validacion: "+id);
-    //   var code="";
-    //   $.ajax({
-    //     url:'../Controller/ValidacionDocumentosController.php?Op=ObtenerArchivos',
-    //     data: 'ID_VALIDACION='+id,
-    //     type:'GET',
-    //     success:function(names)
-    //     {
-    //       if(names.length!=0)
-    //       {
-    //         $.each(names, function(index,value)
-    //         {
-    //           code = "<a href=''>"+value+"</a>";
-    //         });
-    //         $('#AddCodeDocumentoAdjuntoModal').html(code);
-    //       }
-    //       else
-    //       {
-    //         code = "<form id='formAdjuntarDocumento' style='margin:15px' class='form-group'>";
-    //         code += "<input name='imagen[]' required type='file' multiple /></form>";
-    //         code += "<input onclick='cargarDocumentoA("+id+")' type='submit' value='Upload' class='btn crud-submit btn-info' style='margin:10px'>";
-    //         $('#AddCodeDocumentoAdjuntoModal').html(code);
-    //       }
-    //     }
-    //   });
-    // }
-    // function cargarDocumentoA(id)
-    // {
-    //   // console.log(objectHtml);
-    //   // console.log(document.getElementById("divArchivo").getElementsByTagName("input")[1].value);
-    //   var form = document.querySelector("#formAdjuntarDocumento");
-    //   var formData = new FormData(form);
-    //   // console.log(formData);
-    //   $.ajax({
-    //     url: '../Controller/ValidacionDocumentosController.php?Op=AlmacenarArchivosServer&ID_VALIDACION='+id,
-    //     type:'POST',
-    //     data: formData,
-    //     cache: false,
-    //     contentType: false,
-    //     processData: false,
-    //     success:function(date)
-    //     {
-    //       documentoAdjuntar(id);
-    //     }
-    //   });
-    // }
+   
+
     var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/form-data'>";
         ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
         ModalCargaArchivo += "<div class='fileupload-buttons'>";
@@ -625,6 +468,9 @@ require_once 'EncabezadoUsuarioView.php';
         ModalCargaArchivo += "<div class='progress-extended'>&nbsp;</div>";
         ModalCargaArchivo += "</div></div>";
         ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
+   
+    
+    
     function mostrar_urls(id_validacion_documento)
     {
       var tempDocumentolistadoUrl = "";
@@ -673,6 +519,31 @@ require_once 'EncabezadoUsuarioView.php';
           }
       });
     }
+    
+    
+    function mostrarRequisitos(id_documento)
+                 {
+                         mostrarrequisitos = "<ul>";
+                         //alert("validacion documento"+id_documento);
+                         
+                         $.ajax ({
+                             url: "../Controller/ValidacionDocumentosController.php?Op=MostrarRequisitosPorDocumento",
+                             type: 'POST',
+                             data: 'ID_DOCUMENTO='+id_documento,
+                             success:function(responserequisitos)
+                             {
+                                $.each(responserequisitos,function(index,value){
+                                    //alert("Hast aqui"+value.requisito);
+                                 mostrarrequisitos+="<li>"+value.requisito+"</li>"                                       
+                                    
+                                });
+                            mostrarrequisitos += "</ul>";     
+                                $('#RequisitosListado').html(mostrarrequisitos);
+                             }
+                         });
+                 }
+    
+    
     function agregarArchivosUrl()
     {
       var ID_VALIDACION_DOCUMENTO = $('#tempInputIdValidacionDocumento').val();
