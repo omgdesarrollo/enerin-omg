@@ -70,6 +70,26 @@ class DocumentoDAO{
         }
     }
     
+    
+    
+    public function obtenerRegistrosPorDocumento($id_documento){
+        try{
+            
+            $query="SELECT tbdocumentos.id_documento, tbdocumentos.registros
+
+                    FROM documentos tbdocumentos WHERE tbdocumentos.id_documento=$id_documento";
+         
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            
+
+            return $lista;
+    }  catch (Exception $ex){
+        //throw $rec;
+        throw $ex;
+    }
+    }
+    
 
     public function insertarDocumentos($clave_documento,$documento,$id_empleado,$registros){
         

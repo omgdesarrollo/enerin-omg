@@ -5,7 +5,8 @@ class ValidacionDocumentoDAO{
     public function mostrarValidacionDocumentos(){
         try{
             
-            $query="SELECT tbvalidacion_documento.id_validacion_documento, tbdocumentos.clave_documento, tbdocumentos.documento,
+            $query="SELECT tbvalidacion_documento.id_validacion_documento, tbdocumentos.id_documento, tbdocumentos.clave_documento,
+                    tbdocumentos.documento,
 		 
                     tbempleados.id_empleado id_empleado_documento, tbempleados.nombre_empleado nombre_empleado_documento,
                     tbempleados.apellido_paterno apellido_paterno_documento, tbempleados.apellido_materno apellido_materno_documento,
@@ -50,26 +51,7 @@ class ValidacionDocumentoDAO{
     }
     
     
-    
-    public function obtenerRequisitosporDocumento($id_documento){
-        try{
-            
-            $query="SELECT tbasignacion_tema_requisito.id_asignacion_tema_requisito, tbasignacion_tema_requisito.requisito
-
-                    FROM  asignacion_tema_requisito tbasignacion_tema_requisito WHERE tbasignacion_tema_requisito.id_documento=$id_documento";
-         
-            $db=  AccesoDB::getInstancia();
-            $lista=$db->executeQuery($query);
-            
-
-            return $lista;
-    }  catch (Exception $ex){
-        //throw $rec;
-        throw $ex;
-    }
-    }
-    
-    
+ 
     
     public function insertar($id_documento_entrada){
         try{
