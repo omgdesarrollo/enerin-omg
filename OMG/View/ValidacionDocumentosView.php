@@ -234,7 +234,8 @@ require_once 'EncabezadoUsuarioView.php';
                   
 
                       foreach ($Lista as $filas)
-                          { 
+                          {
+                          if($filas["clave_documento"]!="SIN DOCUMENTO"){
                           ?>
 			 
                         <tr class="table-row">
@@ -282,6 +283,7 @@ require_once 'EncabezadoUsuarioView.php';
                           
                             <?php
                             }
+                          }
 
                             ?>
 		  </tbody>
