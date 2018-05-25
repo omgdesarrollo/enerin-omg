@@ -182,7 +182,7 @@ require_once 'EncabezadoUsuarioView.php';
                 <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
             </button>
             
-            <button type="button" class="btn btn-info " onclick="refresh();" >
+            <button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
                 <i class="glyphicon glyphicon-repeat"></i> 
             </button>
             
@@ -491,6 +491,7 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 
 		function saveToDatabase(editableObj,column,id) {
+                     $("#btnrefrescar").prop("disabled",true);
                     //alert("entraste aqui ");
 			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
 			$.ajax({
@@ -498,7 +499,10 @@ require_once 'EncabezadoUsuarioView.php';
 				type: "POST",
 				data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
 				success: function(data){
+                                    consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");  
 					$(editableObj).css("background","#FDFDFD");
+                                         $("#btnrefrescar").prop("disabled",false);
+                                         
 				}   
 		   });
 		}
