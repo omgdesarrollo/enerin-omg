@@ -48,6 +48,22 @@ class AsignacionTemaRequisitoModel {
     
     
     
+    public function obtenerTemayResponsable($id_documento){
+        try{
+            $dao=new AsignacionTemaRequisitoDAO();
+            $rec=$dao->obtenerTemayResponsable($id_documento);
+            
+            return $rec;
+            
+        } catch (Exception $ex){            
+            throw $ex;
+        }
+        
+        
+    }
+    
+    
+    
     public function insertar($pojo){
         try{
             $dao=new AsignacionTemaRequisitoDAO();

@@ -36,37 +36,37 @@ class ClausulaDAO{
     public function mostrarClausulasComboBox(){
         try{
             $query="SELECT id_clausula, clausula, sub_clausula, descripcion_clausula, descripcion_sub_clausula FROM clausulas GROUP BY clausula ORDER BY clausula ASC";
-//            $query="SELECT ID_EMPLEADO  FROM EMPLEADOS";
+
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-            
-            /*$rec = NULL;
-            if (count($lista)==1){
-                $rec=$lista[0];
-            }
-            return $rec;*/
 
             return $lista;
+            
     }  catch (Exception $ex){
-        //throw $rec;
+
         throw $ex;
     }
     }
-public function loadAutoComplete($cadena){
-    try{
-            $query="SELECT tbclausulas.sub_clausula,tbclausulas.descripcion_clausula FROM clausulas tbclausulas WHERE tbclausulas.clausula  like '$cadena%'";
+    
+    
+    
 
-            
-//            $query="SELECT ID_EMPLEADO  FROM EMPLEADOS";
-            $db=  AccesoDB::getInstancia();
-            $lista=$db->executeQuery($query);
-        
-            return $lista;
-            
-    } catch (Exception $ex) {
 
+    public function loadAutoComplete($cadena){
+        try{
+                $query="SELECT tbclausulas.sub_clausula,tbclausulas.descripcion_clausula FROM clausulas tbclausulas WHERE tbclausulas.clausula  like '$cadena%'";
+
+
+    //            $query="SELECT ID_EMPLEADO  FROM EMPLEADOS";
+                $db=  AccesoDB::getInstancia();
+                $lista=$db->executeQuery($query);
+
+                return $lista;
+
+        } catch (Exception $ex) {
+
+        }
     }
-}
     
     
     
