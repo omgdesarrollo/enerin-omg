@@ -42,57 +42,61 @@ $Usuario=  Session::getSesion("user");
 
 		<script src="../../assets/probando/js/ace-extra.min.js"></script>
                 
+    <!--Inicia para el spiner cargando-->
+    <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+    <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+    <!--Termina para el spiner cargando-->
+          
+    <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+    <!-- cargar archivo -->
+    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
+    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
+    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
+    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
                 
-                 <!--Inicia para el spiner cargando-->
-                <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
-                <script src="../../js/loaderanimation.js" type="text/javascript"></script>
-                <!--Termina para el spiner cargando-->
-                     
-                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 
                 
-                
-                <style>
-                    .modal
-                    {
-                        overflow: hidden;
-                    }
-                    .modal-dialog{
-                        margin-right: 0;
-                        margin-left: 0;
-                    }
-                    .modal-header{
-                      height:30px;background-color:#444;
-                      color:#ddd;
-                    }
-                    .modal-title{
-                      margin-top:-10px;
-                      font-size:16px;
-                    }
-                    .modal-header .close{
-                      margin-top:-10px;
-                      color:#fff;
-                    }
-                    .modal-body{
-                      color:#888;
-                       /*max-height: calc(100vh - 210px);*/
-                      max-height: calc(100vh - 110px);
-                      overflow-y: auto;
-                    }
-                    .modal-body p {
-                      text-align:center;
-                      padding-top:10px;
-                    }
+    <style>
+      .modal
+      {
+          overflow: hidden;
+      }
+      .modal-dialog{
+          margin-right: 0;
+          margin-left: 0;
+      }
+      .modal-header{
+        height:30px;background-color:#444;
+        color:#ddd;
+      }
+      .modal-title{
+        margin-top:-10px;
+        font-size:16px;
+      }
+      .modal-header .close{
+        margin-top:-10px;
+        color:#fff;
+      }
+      .modal-body{
+        color:#888;
+          /*max-height: calc(100vh - 210px);*/
+        max-height: calc(100vh - 110px);
+        overflow-y: auto;
+      }
+      .modal-body p {
+        text-align:center;
+        padding-top:10px;
+      }
                     
                     
                     
 /*Inicia estilos para mantener fijo el header*/                    
-                    .table-fixed-header {
-    display: table; /* 1 */
-    position: relative;
-    padding-top: calc(~'2.5em + 2px'); /* 2 */
+    .table-fixed-header {
+      display: table; /* 1 */
+      position: relative;
+      padding-top: calc(~'2.5em + 2px'); /* 2 */
     
-    table {
+    table{
         margin: 0;
         margin-top: calc(~"-2.5em - 2px"); /* 2 */
     }
@@ -110,10 +114,10 @@ $Usuario=  Session::getSesion("user");
             margin-left: -1em; /* 4 */
         }
     }
-}
+  }
 
  /* 5 - setting height and scrolling */
-.table-container {
+  .table-container {
     max-height: 70vh; /* 5 */
     overflow-y: auto; /* 5 */
         
@@ -128,12 +132,12 @@ $Usuario=  Session::getSesion("user");
         border-bottom: 2px solid #DDD; /* 6 */
         background: #f1f1f1;           /* 6 */
     }
-}
+  }
  
 /*Finaliza estilos para mantener fijo el header*/                    
                     
                     
-                </style>
+  </style>
                 
                     
 	</head>
@@ -156,7 +160,7 @@ require_once 'EncabezadoUsuarioView.php';
 		Agregar Documento de Salida
 </button>
     
-<button type="button" class="btn btn-info " onclick="refresh();" >
+<button id="btnAgregarDocumentoSalidaRefrescar" type="button" class="btn btn-info " onclick="refresh();" >
     <i class="glyphicon glyphicon-repeat"></i> 
 </button>
     
@@ -179,7 +183,31 @@ require_once 'EncabezadoUsuarioView.php';
 
 
 <div style="height: 55px"></div>-->
+<!-- Inicio de Seccion Modal Archivos-->
+<div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+      <div id="loaderModalMostrar"></div>
+		<div class="modal-content">
+                        
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Archivos agregados</h4>
+      </div>
 
+      <div class="modal-body">
+        <div id="DocumentolistadoUrl"></div>
+        
+        <div class="form-group">
+          <div id="DocumentolistadoUrlModal"></div>
+			  </div>
+
+        <div class="form-group" method="post" >
+          <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Agregar Archivo</button>
+        </div>
+      </div><!-- cierre div class-body -->
+    </div><!-- cierre div class modal-content -->
+  </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal -->
                    
 <div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> 
     <div class="table-container">
@@ -308,7 +336,14 @@ require_once 'EncabezadoUsuarioView.php';
                                 
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'destinatario','<?php echo $filas["id_documento_salida"]; ?>')" onClick="showEdit(this);"><?php echo $filas["destinatario"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'clave_entidad','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_entidad"]; ?></td>                              
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_documento_salida"]; ?>')" onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
+                                
+                                <td>
+                                  <button onClick="mostrar_urls(<?php echo $filas['id_documento_salida'] ?>);" type="button" 
+                                  class="btn btn-success" data-toggle="modal" data-target="#create-itemUrls">
+		                                Mostrar Documentos
+                                  </button>
+                                </td>
+                                
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'observaciones','<?php echo $filas["id_documento_salida"]; ?>')" onClick="showEdit(this);"><?php echo $filas["observaciones"]; ?></td>
                                 
                                 
@@ -561,22 +596,24 @@ require_once 'EncabezadoUsuarioView.php';
 			$(editableObj).css("background","#FFF");
 		} 
 		
-		function saveToDatabase(editableObj,column,id) {
+  function saveToDatabase(editableObj,column,id)
+  {
                     //alert("entraste aqui ");
-			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
-			$.ajax({
-                                url: "../Controller/DocumentosSalidaController.php?Op=Modificar",
-				type: "POST",
-				data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
-				success: function(data){
-					$(editableObj).css("background","#FDFDFD");
-                                        
-				}   
-		   });
-		}
+    $(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
+    $.ajax({
+            url: "../Controller/DocumentosSalidaController.php?Op=Modificar",
+				    type: "POST",
+				    data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
+				    success: function(data)
+            {
+					      $(editableObj).css("background","#FDFDFD");
+				    }
+		      });
+  }
                 
                 
-                function saveComboToDatabase(column,id){
+  function saveComboToDatabase(column,id)
+  {
 //                   value= $("#id_clausula").val();
 //                    //alert("esta es la columna" + column + "este es el" + id);
 //                    alert("este es el id de la clausula " + id + " esta es la columna que se va a editar " + column + " el nuevo dato que va a viajar a la BD " + value);
@@ -590,21 +627,24 @@ require_once 'EncabezadoUsuarioView.php';
 //					//$(editableObj).css("background","#FDFDFD");
 //				}   
 //		   });
-                        id_documento_salida=id;
-                        cualmodificar=column;
-               }
+    id_documento_salida=id;
+    cualmodificar=column;
+  }
               
                
                
               
                
-    function consultarInformacion(url){
-               $.ajax({  
-                     url: ""+url,  
-                    success: function(r) {    
+  function consultarInformacion(url)
+  {
+    $.ajax({  
+            url: ""+url,
+            success: function(r)
+            {
 //                     $("#procesando").empty();
-                     },
-                     beforeSend:function(r){
+            },
+            beforeSend:function(r)
+            {
 //                          $("#loader").empty();
 //                          $("#sidebarObjV").append("<div class='loader'></div>");
 //                            $.jGrowl("Cargando  Porfavor Espere......", { header: 'Carga de Informacion' });
@@ -617,194 +657,378 @@ require_once 'EncabezadoUsuarioView.php';
 //                                                            $.jGrowl("Informacion Obtenida", { sticky: true });
 //                                                        },delay);
 
-                     }
-                 
-        });  
             }
-            
-    
+          });
+  }
                 
-                
-                function saveToDatabaseDatosFormulario(datos){
-//                    alert("datos nombre "+datos[0]);
-                    
-                    	$.ajax({
-                                url: "../Controller/DocumentosSalidaController.php?Op=Guardar",
-				type: "POST",
-				data:'ID_DOCUMENTO_ENTRADA='+datos[0]+'&FOLIO_SALIDA='+datos[1]+'&FECHA_ENVIO='+datos[2]+'&ASUNTO='+datos[3]
-                                    +'&DESTINATARIO='+datos[4]+'&DOCUMENTO='+datos[5]+'&OBSERVACIONES='+datos[6],
-                            
-                            
-				success: function(data){
-//                                    alert("se guardo");
-                                    
+  function saveToDatabaseDatosFormulario(datos)
+  {
+//                    alert("datos nombre "+datos[0]);          
+    $.ajax({
+            url: "../Controller/DocumentosSalidaController.php?Op=Guardar",
+            type: "POST",
+            data:'ID_DOCUMENTO_ENTRADA='+datos[0]+'&FOLIO_SALIDA='+datos[1]+'&FECHA_ENVIO='+datos[2]+
+            '&ASUNTO='+datos[3]+'&DESTINATARIO='+datos[4]+'&DOCUMENTO='+datos[5]+'&OBSERVACIONES='+datos[6],
+            success: function(data)
+            {
+//                                    alert("se guardo");                    
 //					$(editableObj).css("background","#FDFDFD");
-                                        swal("Guardado Exitoso!", "Ok!", "success")
-                                         consultarInformacion("../Controller/DocumentosSalidaController.php?Op=Listar");
+                swal("Guardado Exitoso!", "Ok!", "success")
+                consultarInformacion("../Controller/DocumentosSalidaController.php?Op=Listar");
 //                                        window.location.href("EmpleadosView.php");
-				}   
-		   });
+            }   
+          });
 //                   window.location.href("EmpleadosView.php");
-                }
+  }
                 
                 
-                function refresh(){
-                  consultarInformacion("../Controller/DocumentosSalidaController.php?Op=Listar");  
-                  window.location.href="DocumentoSalidaView.php";  
-                }
+  function refresh()
+  {
+    consultarInformacion("../Controller/DocumentosSalidaController.php?Op=Listar");
+    window.location.href="DocumentoSalidaView.php";
+  }
                 
-                function loadSpinner(){
-//                    alert("se cargara otro ");
-                        myFunction();
-                }
+  function loadSpinner()
+  {
+    myFunction();
+  }
                 
                 
                 
-                function loadAutocomplete()
-                {
-                    //Le pasamos el valor del input al ajax
-                    var ID_DOCUMENTO_ENTRADA_MODAL= $('#ID_DOCUMENTO_ENTRADA_MODAL').val();
-                    
-                    $.ajax({
-                        
-                            type: "GET",
-                            url: "../Controller/DocumentosSalidaController.php?Op=loadAutoComplete",
-                            data: "FOLIOENTRADA="+ID_DOCUMENTO_ENTRADA_MODAL,
-                            
-                                    success: function(data)
-                                    {
-                                        //Escribimos las sugerencias que nos manda la consulta
-                                    //var datos="<ul>";
-            //                                    var dato="";
-                                        $.each(data, function (index,value)
-                                        {
-                                    //        console.log("sub_clausula: " + value.sub_clausula);
-                                    //if(value.asunto!=""){
-                                    //         datos+="<li>"+value.sub_clausula+"</li><br>";
-            //                                        dato=value.remitente;
-                                            $('#DESTINATARIO').val(value.remitente);
-                                         //}
-                                        });
-                                    //    datos+="</ul>"
-                                    //    $('#sugerenciasclausulas').fadeIn(1000).html(datos);
+  function loadAutocomplete()
+  {
+      //Le pasamos el valor del input al ajax
+    var ID_DOCUMENTO_ENTRADA_MODAL= $('#ID_DOCUMENTO_ENTRADA_MODAL').val();
+    $.ajax({
+            type: "GET",
+            url: "../Controller/DocumentosSalidaController.php?Op=loadAutoComplete",
+            data: "FOLIOENTRADA="+ID_DOCUMENTO_ENTRADA_MODAL,
+            success: function(data)
+            {
+                          //Escribimos las sugerencias que nos manda la consulta
+                      //var datos="<ul>";
+//                                    var dato="";
+              $.each(data, function (index,value)
+              {
+                      //        console.log("sub_clausula: " + value.sub_clausula);
+                      //if(value.asunto!=""){
+                      //         datos+="<li>"+value.sub_clausula+"</li><br>";
+//                                        dato=value.remitente;
+                $('#DESTINATARIO').val(value.remitente);
+                            //}
+              });
+                      //    datos+="</ul>"
+                      //    $('#sugerenciasclausulas').fadeIn(1000).html(datos);
 
 
-                                    //                                               
-                                    }
-                            }); 
-                }
-                
-                
-                
-                function filterTableFolioSalida() {
-                // Declare variables 
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputFolioSalida");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
+                      //                                               
+            }
+          }); 
+  }
+  var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/form-data'>";
+      ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
+      ModalCargaArchivo += "<div class='fileupload-buttons'>";
+      ModalCargaArchivo += "<span class='fileinput-button'>";
+      ModalCargaArchivo += "<span><a >Agregar documentos(Click o Arrastrar)...</a></span>";
+      ModalCargaArchivo += "<input type='file' name='files[]' multiple></span>";
+      ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
+      ModalCargaArchivo += "<div class='fileupload-progress' >";
+      // ModalCargaArchivo += "<div class='progress' role='progressbar' aria-valuemin='0' aria-valuemax='100'></div>";
+      ModalCargaArchivo += "<div class='progress-extended'>&nbsp;</div>";
+      ModalCargaArchivo += "</div></div>";
+      ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
 
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[1];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
+  $("#subirArchivos").click(function()
+  {
+    agregarArchivosUrl();
+  });
+  
+  function mostrar_urls(id_documento_salida)
+  {
+      var tempDocumentolistadoUrl = "";
+      URL = 'filesDocumento/Salida/'+id_documento_salida;
+      $.ajax({
+          url: '../Controller/ArchivoUploadController.php?Op=CrearUrl',
+          type: 'GET',
+          data: 'URL='+URL,
+          success:function(creado)
+          {
+            if(creado)
+            {
+              $.ajax({
+                      url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
+                      type: 'GET',
+                      data: 'URL='+URL,
+                      success: function(todo)
+                      {
+                        // console.log(todo[0].length);
+                        if(todo[0].length!=0)
+                        {
+                            tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
+                            $.each(todo[0], function (index,value)
+                            {
+                                nametmp = value.split("^");
+                                name;
+                                fecha = nametmp[0];
+                                $.each(nametmp, function(index,value)
+                                {
+                                    if(index!=0)
+                                        (index==1)?name=value:name+="-"+value;
+                                });                                                                        
+                                tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
+                                tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\">"+name+"</a></td>";
+                                tempDocumentolistadoUrl += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
+                                tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
+                                tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";
+                            });
+                            tempDocumentolistadoUrl += "</tbody></table>";
                         }
-                      } 
-                    }
-                }
-                
-                
-                function filterTableResponsableTema() {
-                // Declare variables 
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputResponsableTema");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
-
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[2];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
+                        if(tempDocumentolistadoUrl == " ")
+                        {
+                            tempDocumentolistadoUrl = " No hay archivos agregados ";
                         }
-                      } 
+                        tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdDocumentoSalida' type='text' style='display:none;' value='"+id_documento_salida+"'>";
+                        $('#DocumentoEntradaAgregarModal').html(" ");
+                        $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
+                        $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
+                        $('#fileupload').fileupload
+                        ({
+                          url: '../View/',
+                        });
                     }
-                }
-                
-                
-                function filterTableAsunto() {
+                  });
+            }
+            else
+            {
+              swal("","Error del servidor","error");
+            }
+          }
+        });
+  }
+  function agregarArchivosUrl()
+    {
+      var ID_DOCUMENTO_SALIDA = $('#tempInputIdDocumentoSalida').val();
+      url = 'filesDocumento/Salida/'+ID_DOCUMENTO_SALIDA;
+      $.ajax({
+        url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
+        type: 'GET',
+        data: 'URL='+url,
+        success:function(creado)
+        {
+          if(creado)
+            $('.start').click();
+        },
+        error:function()
+        {
+          swal("","Error del servidor","error");
+        }
+      });
+    }
+    function borrarArchivo(url)
+    {
+      swal({
+          title: "ELIMINAR",
+          text: "Confirme para eliminar el documento",
+          type: "warning",
+          showCancelButton: true,
+          closeOnConfirm: false,
+          showLoaderOnConfirm: true
+        },function()
+        {
+          var ID_DOCUMENTO_SALIDA = $('#tempInputIdDocumentoSalida').val();
+          $.ajax({
+            url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
+            type: 'POST',
+            data: 'URL='+url,
+            success: function(eliminado)
+            {
+              if(eliminado)
+              {
+                mostrar_urls(ID_DOCUMENTO_SALIDA);
+                swal("","Archivo eliminado");
+                setTimeout(function(){swal.close();},1000);
+              }
+              else
+                swal("","Ocurrio un error al elimiar el documento", "error");
+            },
+            error:function()
+            {
+              swal("","Ocurrio un error al elimiar el documento", "error");
+            }
+          });
+        });
+    }
+  function filterTableFolioSalida()
+  {
                 // Declare variables 
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputAsunto");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("idInputFolioSalida");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("idTable");
+    tr = table.getElementsByTagName("tr");
 
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[4];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
-                      } 
-                    }
-                }
+      // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++)
+    {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td)
+      {
+        if (td.innerHTML.toUpperCase().indexOf(filter) > -1)
+        {
+          tr[i].style.display = "";
+        }else{
+            tr[i].style.display = "none";
+        }
+      } 
+    }
+  }
                 
-                function filterTableRemitente() {
-                // Declare variables 
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputRemitente");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
+                
+  function filterTableResponsableTema()
+  {
+  // Declare variables 
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("idInputResponsableTema");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("idTable");
+    tr = table.getElementsByTagName("tr");
+      // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++)
+    {
+        td = tr[i].getElementsByTagName("td")[2];
+        if (td)
+        {
+          if (td.innerHTML.toUpperCase().indexOf(filter) > -1)
+          {
+            tr[i].style.display = "";
+          }else{
+            tr[i].style.display = "none";
+          }
+        }
+    }
+  }
 
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[5];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
-                      } 
-                    }
-                }
-                
-                
-                function filterTableAutoridadRemitente() {
-                // Declare variables 
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputAutoridadRemitente");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
+  function filterTableAsunto()
+  {
+  // Declare variables 
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("idInputAsunto");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("idTable");
+    tr = table.getElementsByTagName("tr");
 
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[6];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
-                      } 
-                    }
-                }
-                
+      // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++)
+    {
+      td = tr[i].getElementsByTagName("td")[4];
+      if (td)
+      {
+        if (td.innerHTML.toUpperCase().indexOf(filter) > -1)
+        {
+          tr[i].style.display = "";
+        }else{
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+  
+  function filterTableRemitente() {
+  // Declare variables 
+      var input, filter, table, tr, td, i;
+      input = document.getElementById("idInputRemitente");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("idTable");
+      tr = table.getElementsByTagName("tr");
+
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[5];
+        if (td) {
+          if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        } 
+      }
+  }
+
+  function filterTableAutoridadRemitente() {
+  // Declare variables 
+      var input, filter, table, tr, td, i;
+      input = document.getElementById("idInputAutoridadRemitente");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("idTable");
+      tr = table.getElementsByTagName("tr");
+
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[6];
+        if (td) {
+          if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        } 
+      }
+  }
+  
 		</script>
+    <script id="template-upload" type="text/x-tmpl">
+      {% for (var i=0, file; file=o.files[i]; i++) { %}
+      <tr class="template-upload" style="width:100%">
+              <td>
+              <span class="preview"></span>
+              </td>
+              <td>
+              <p class="name">{%=file.name%}</p>
+              <strong class="error"></strong>
+              </td>
+              <td>
+              <p class="size">Processing...</p>
+              <!-- <div class="progress"></div> -->
+              </td>
+              <td>
+              {% if (!i && !o.options.autoUpload) { %}
+                      <button class="start" style="display:none;padding: 0px 4px 0px 4px;" disabled>Start</button>
+              {% } %}
+              {% if (!i) { %}
+                      <button class="cancel" style="padding: 0px 4px 0px 4px;color:white">Cancel</button>
+              {% } %}
+              </td>
+      </tr>
+      {% } %} 
+</script>
+
+<script id="template-download" type="text/x-tmpl">
+{% var t = $('#fileupload').fileupload('active'); var i,file; %}
+      {% for (i=0,file; file=o.files[i]; i++) { %}
+      <tr class="template-download">
+              <td>
+              <span class="preview">
+                      {% if (file.thumbnailUrl) { %}
+                      <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                      {% } %}
+              </span>
+              </td>
+              <td>
+              <p class="name">
+                      <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+              </p>
+              </td>
+              <td>
+              <span class="size">{%=o.formatFileSize(file.size)%}</span>
+              </td>
+              <!-- <td> -->
+              <!-- <button class="delete" style="padding: 0px 4px 0px 4px;" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>Delete</button> -->
+              <!-- <input type="checkbox" name="delete" value="1" class="toggle"> -->
+              <!-- </td> -->
+      </tr>
+      {% } %}
+      {% if(t == 1){ if( $('#tempInputIdDocumentoSalida').length > 0 ) { var ID_DOCUMENTO = $('#tempInputIdDocumentoSalida').val(); mostrar_urls(ID_DOCUMENTO);}else{ $('#btnAgregarDocumentoSalidaRefrescar').click(); } } %}
+</script>
                 
                 
                 
@@ -817,7 +1041,23 @@ require_once 'EncabezadoUsuarioView.php';
                 <!--Aqui abre el modal de insertar-->
                 <script src="../../assets/probando/js/bootstrap.min.js"></script>
                 <!--Aqui cierra para abrir el modal de insertar-->
-                
+                <!-- js cargar archivo -->
+                <script src="../../assets/FileUpload/js/jquery.min.js"></script>
+                <script src="../../assets/FileUpload/js/jquery-ui.min.js"></script>
+                <script src="../../assets/FileUpload/js/tmpl.min.js"></script>
+                <script src="../../assets/FileUpload/js/load-image.all.min.js"></script>
+                <script src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.blueimp-gallery.min.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.iframe-transport.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.fileupload.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.fileupload-process.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.fileupload-image.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.fileupload-audio.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.fileupload-video.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
+                <script src="../../assets/FileUpload/js/main.js"></script>
                 
                 
                 

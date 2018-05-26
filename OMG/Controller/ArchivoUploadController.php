@@ -65,23 +65,31 @@ switch ($Op) {
 		echo json_encode($todo);
 		break;
 	
-	case 'eliminarArchivo':
+	case 'EliminarArchivo':
 		// $data = $model->eliminar_archivo($_REQUEST['ID_DOCUMENTO'],$_REQUEST['ARCHIVO_NAME']);
 		$urlTemp = Session::getSesion("URLS");
 		$url = $urlTemp["fisica"].$_REQUEST["URL"];
-		$data = $model->eliminar_archivoFisico($url);
+		$eliminado = $model->eliminar_archivoFisico($url);
 		header('Content-type: application/json; charset=utf-8');
-		echo json_encode($data);
+		echo $eliminado;
 		break;
 
-	case 'crearUrl':
-		$url = $_REQUEST["Url"];
+	case 'CrearUrl':
+		$url = $_REQUEST["URL"];
+		$carpetaDestino = "../../archivos/".$url;
+		$creado=true;
+		if(!file_exists($carpetaDestino))
+		{
+			$creado = mkdir($carpetaDestino,0777,true);
+		}
 		Session::setSesion("newUrl",$url);
 		header('Content-type: application/json; charset=utf-8');
-		$creado=true;
-		echo json_encode($creado);
+		echo $creado;
 		break;
-
-	default: break;
+	
+	default:
+		header('Content-type: application/json; charset=utf-8');
+		echo false;
+	break;
 }
 ?>

@@ -625,91 +625,124 @@ require_once 'EncabezadoUsuarioView.php';
         ModalCargaArchivo += "<div class='progress-extended'>&nbsp;</div>";
         ModalCargaArchivo += "</div></div>";
         ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
+    $("#subirArchivos").click(function()
+    {
+      agregarArchivosUrl();
+    });
+
     function mostrar_urls(id_validacion_documento)
     {
       var tempDocumentolistadoUrl = "";
-      URL = 'filesValidacionDocumento/'+id_validacion_documento,
+      URL = 'filesValidacionDocumento/'+id_validacion_documento;
       $.ajax({
-          url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
+          url: '../Controller/ArchivoUploadController.php?Op=CrearUrl',
           type: 'GET',
           data: 'URL='+URL,
-          success: function(todo)
+          success:function(creado)
           {
-                  console.log(todo[0].length);
-                  if(todo[0].length!=0)
+            if(creado)
+            {
+              $.ajax({
+                  url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
+                  type: 'GET',
+                  data: 'URL='+URL,
+                  success: function(todo)
                   {
-                          tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
-                          $.each(todo[0], function (index,value)
-                          {
-                                  nametmp = value.split("^");
-                                  name;
-                                  fecha = nametmp[0];
-                                  $.each(nametmp, function(index,value)
-                                  {
-                                          if(index!=0)
-                                                  (index==1)?name=value:name+="-"+value;
-                                  });
-                                  tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
-                                  tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\">"+name+"</a></td>";
-                                  tempDocumentolistadoUrl += "<td><button style=\"color:green;background:transparent;border:none;padding-left:10px\"";
-                                  tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
-                                  tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";
-                          });
-                          tempDocumentolistadoUrl += "</tbody></table>";
+                      // console.log(todo[0].length);
+                      if(todo[0].length!=0)
+                      {
+                              tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
+                              $.each(todo[0], function (index,value)
+                              {
+                                      nametmp = value.split("^");
+                                      name;
+                                      fecha = nametmp[0];
+                                      $.each(nametmp, function(index,value)
+                                      {
+                                              if(index!=0)
+                                                      (index==1)?name=value:name+="-"+value;
+                                      });
+                                      tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
+                                      tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\">"+name+"</a></td>";
+                                      tempDocumentolistadoUrl += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
+                                      tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
+                                      tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";
+                              });
+                              tempDocumentolistadoUrl += "</tbody></table>";
+                      }
+                      if(tempDocumentolistadoUrl == " ")
+                      {
+                              tempDocumentolistadoUrl = " No hay archivos agregados ";
+                      }
+                      tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdValidacionDocumento' type='text' style='display:none;' value='"+id_validacion_documento+"'>";                  
+                      $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
+                      $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
+                      $('#fileupload').fileupload
+                      ({
+                        url: '../View/',
+                      });
                   }
-                  if(tempDocumentolistadoUrl == " ")
-                  {
-                          tempDocumentolistadoUrl = " No hay archivos agregados "
-                  }
-                  tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdValidacionDocumento' type='text' style='display:none;' value='"+id_validacion_documento+"'>";
-                  // alert(tempDocumentolistadoUrl);
-                  // $('#DocumentoEntradaAgregarModal').html(" ");
-                  $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
-                  $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
-                  // $('#fileupload').fileupload();
-                  $('#fileupload').fileupload({
-                  url: '../View/',
-                  });
+              });
+            }
+            else
+            {
+              swal("","Error del servidor","error");
+            }
           }
-      });
+        });
     }
     function agregarArchivosUrl()
     {
       var ID_VALIDACION_DOCUMENTO = $('#tempInputIdValidacionDocumento').val();
-      url = 'filesValidacionDocumento/'+ID_VALIDACION_DOCUMENTO+"/",
+      url = 'filesValidacionDocumento/'+ID_VALIDACION_DOCUMENTO,
       $.ajax({
-        url: "../Controller/ArchivoUploadController.php?Op=crearUrl",
-        type: 'POST',
-        data: 'Url='+url,
+        url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
+        type: 'GET',
+        data: 'URL='+url,
         success:function(creado)
         {
           if(creado)
             $('.start').click();
+        },
+        error:function()
+        {
+          swal("","Error del servidor","error");
         }
       });
     }
     function borrarArchivo(url)
     {
-      var ID_VALIDACION_DOCUMENTO = $('#tempInputIdValidacionDocumento').val();
-      // alert(nombreArchivo);
-      $.ajax({
-        url: "../Controller/ArchivoUploadController.php?Op=eliminarArchivo",
-        type: 'POST',
-        data: 'URL='+url,
-        success: function(data)
+      swal({
+          title: "ELIMINAR",
+          text: "Confirme para eliminar el documento",
+          type: "warning",
+          showCancelButton: true,
+          closeOnConfirm: false,
+          showLoaderOnConfirm: true
+        },function()
         {
-          if(data)
-          {
-            mostrar_urls(ID_VALIDACION_DOCUMENTO);
-          }
-          else
-            swal("","Ocurrio un error al elimiar el documento", "error");
-        },
-        error:function()
-        {
-          swal("","Ocurrio un error al elimiar el documento", "error");
-        }
-      });
+          var ID_VALIDACION_DOCUMENTO = $('#tempInputIdValidacionDocumento').val();
+          $.ajax({
+            url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
+            type: 'POST',
+            data: 'URL='+url,
+            success: function(eliminado)
+            {
+              if(eliminado)
+              {
+                mostrar_urls(ID_VALIDACION_DOCUMENTO);
+                swal("","Archivo eliminado");
+                setTimeout(function(){swal.close();},1000);
+              }
+              else
+                swal("","Ocurrio un error al elimiar el documento", "error");
+            },
+            error:function()
+            {
+              swal("","Ocurrio un error al elimiar el documento", "error");
+            }
+          });
+        });
     }
     function filterTable()
     {
