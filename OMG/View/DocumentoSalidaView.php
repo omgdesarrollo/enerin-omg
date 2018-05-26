@@ -471,6 +471,12 @@ require_once 'EncabezadoUsuarioView.php';
                 //var cualmodificar;
                 
                       $(function(){
+                          //inicio detecta evento moda de cierre
+//                          $("#create-item").on("hidden.bs.modal", function () {
+//    // put your default event here
+//    alert("cerro");
+//});
+//cierre detecto evento cierre modal 
                         $('.select').on('change', function() {
 //                          console.log( $(this).prop('value') );
 //                          alert("el value que va a viajar es "+ $(this).prop('value'));

@@ -20,6 +20,20 @@ class ValidacionDocumentoModel{
     }
     
     
+    public function  obtenerRequisitosporDocumento($id_documento){
+        try{
+            $dao=new ValidacionDocumentoDAO();
+            $rec=$dao->obtenerRequisitosporDocumento($id_documento);
+            
+            
+            return $rec;
+    }  catch (Exception $e){
+        throw  $e;
+    }
+    }
+    
+    
+    
 //    public function insert
     public function insertar($id_documento_entrada){
         try{

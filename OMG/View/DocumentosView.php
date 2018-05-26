@@ -13,7 +13,7 @@ $Usuario=  Session::getSesion("user");
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta http-equiv="X-UA-Compatible" content="text/html;"  />
+		<meta http-equiv="X-UA-Compatible"  content="overview &amp; stats"  />
 		<meta charset="utf-8" />
 		<title>OMG APPS</title>
 
@@ -174,7 +174,7 @@ $Usuario=  Session::getSesion("user");
                     Agregar-Documento
                 </button>
                  
-                <button type="button" class="btn btn-info " onclick="refresh();" >
+                <button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
                     <i class="glyphicon glyphicon-repeat"></i> 
                 </button>
                  
@@ -258,7 +258,7 @@ $Usuario=  Session::getSesion("user");
                                     </select>                                   
                                 </td>
                                 
-                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'registros','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php echo htmlspecialchars($filas["registros"]); ?></td>
+                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'registros','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["registros"]; ?></td>
 
 			  </tr>
 		<?php
@@ -406,8 +406,8 @@ $Usuario=  Session::getSesion("user");
 				data:'column='+column+'&editval='+val+'&id='+id_clausula,
 				success: function(data){
                                     
-                                        consultarInformacion("../Controller/DocumentosController.php?Op=Listar");
-                                        consultarInformacion("../Controller/DocumentosController.php?Op=Listar");
+//                                        consultarInformacion("../Controller/DocumentosController.php?Op=Listar");
+//                                        consultarInformacion("../Controller/DocumentosController.php?Op=Listar");
                                         window.location.href="DocumentosView.php";
                                     
 					//$(editableObj).css("background","#FDFDFD");
@@ -472,14 +472,17 @@ $Usuario=  Session::getSesion("user");
                 
                 
 		function saveToDatabase(editableObj,column,id) {
+                    $("#btnrefrescar").prop("disabled",true);
 //                    alert("entraste aqui  y el valor es "+editableObj);
 			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
 			$.ajax({
                                 url: "../Controller/DocumentosController.php?Op=Modificar",
 				type: "POST",
-				data:'column='+column+'&editval='+editableObj.textContent+'&id='+id,
+				data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
 				success: function(data){
 					$(editableObj).css("background","#FDFDFD");
+                                        consultarInformacion("../Controller/DocumentosController.php?Op=Listar"); 
+                                        $("#btnrefrescar").prop("disabled",false);
 				}   
 		   });
 		}
@@ -548,8 +551,8 @@ if(mensajeerror!=""){
                 
                 
                 function refresh(){
-                  consultarInformacion("../Controller/DocumentosController.php?Op=Listar");  
-                  consultarInformacion("../Controller/DocumentosController.php?Op=Listar");  
+//                  consultarInformacion("../Controller/DocumentosController.php?Op=Listar");  
+//                  consultarInformacion("../Controller/DocumentosController.php?Op=Listar");  
                   window.location.href="DocumentosView.php";  
                 }
                 
@@ -557,14 +560,18 @@ if(mensajeerror!=""){
                 
                 function loadSpinner(){
 //                    alert("se cargara otro ");
+//consultarInformacion("../Controller/DocumentosController.php?Op=Listar"); 
+                         
                         myFunction();
+                        
+                         
                 }
                 
                 
                 
                 function consultarInformacion(url){
                     $.ajax({  
-                     url: ""+url,  
+                     url: ""+url,
                     success: function(r) {    
 //                     $("#procesando").empty();
                         
