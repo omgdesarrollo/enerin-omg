@@ -1109,7 +1109,7 @@ echo "d   :".$this->get_full_url();
 	        $hoy = strftime("%d-%B-%y %Hh-%Mm-%Ss");
             // $hoy = new Datetime($hoy);
             // echo "fecha : ".$hoy;
-            $file_path = $Urls["fisica"].$newUrl.$hoy."^".$file->name;//el que guarda local
+            $file_path = $Urls["fisica"].$newUrl."/".$hoy."^".$file->name;//el que guarda local
             echo $file_path;
             // $file_path2 = "http://localhost:80/enerin-omg/archivos/files".$newUrl.$file->name;//el que descarga local
             // $filePath = array();
@@ -1175,7 +1175,7 @@ echo "d   :".$this->get_full_url();
                 }
             } else {
                 $file->size = $file_size;
-                if (!$content_range && $this->options['discard_aborted_uploads']) {
+                if (!$content_range && $this->options['discard_aborted_uploads']){
                     unlink($file_path);
                     $file->error = $this->get_error_message('abort');
                 }

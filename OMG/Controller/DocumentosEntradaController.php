@@ -63,69 +63,57 @@ switch ($Op) {
 
 	case 'Guardar':
                   
-		# code...
-				
-                  $pojo->setIdCumplimiento($_REQUEST['ID_CUMPLIMIENTO']);
-                  $pojo->setFolioReferencia($_REQUEST['FOLIO_REFERENCIA']);
-                  $pojo->setFolioEntrada($_REQUEST['FOLIO_ENTRADA']);
-                  $pojo->setFechaRecepcion($_REQUEST['FECHA_RECEPCION']);
-                  $pojo->setAsunto($_REQUEST['ASUNTO']);
-                  $pojo->setRemitente($_REQUEST['REMITENTE']);
-                  $pojo->setIdEntidad($_REQUEST['ID_ENTIDAD']);
-                  $pojo->setIdClausula($_REQUEST['ID_CLAUSULA']);
-                  $pojo->setClasificacion($_REQUEST['CLASIFICACION']);
-                  $pojo->setStatusDoc($_REQUEST['STATUS_DOC']);
-                  $pojo->setFechaAsignacion($_REQUEST['FECHA_ASIGNACION']);
-                  $pojo->setFechaLimiteAtencion($_REQUEST['FECHA_LIMITE_ATENCION']);
-                  $pojo->setFechaAlarma($_REQUEST['FECHA_ALARMA']);
-                  $pojo->setDocumento($_REQUEST['DOCUMENTO']);
-				  $pojo->setObservaciones($_REQUEST['OBSERVACIONES']);
-				  $pojo->setMensajeAlerta($_REQUEST['MENSAJE_ALERTA']);
-				  
-				//   if ($_REQUEST['DOCUMENTO']['type']=="text/plain"){
-					//movemos el achivo al directorio destino
-					// mode_uploaded_file("../../../archivos/");
-					// }
-				//   print_r($_REQUEST['MENSAJE_DOCUMENTO']);
-				//   print_r($_FILEs['DOCUMENTO']); 
-				$data = $model->insertar($pojo);
-                                
-                                // echo "e".json_encode($data[2]);
-				//   echo $data[0];
-				//  $jsonData['ID_CUMPLIMIENTO'] = $data[0];
+# code...
+	
+		$pojo->setIdCumplimiento($_REQUEST['ID_CUMPLIMIENTO']);
+		$pojo->setFolioReferencia($_REQUEST['FOLIO_REFERENCIA']);
+		$pojo->setFolioEntrada($_REQUEST['FOLIO_ENTRADA']);
+		$pojo->setFechaRecepcion($_REQUEST['FECHA_RECEPCION']);
+		$pojo->setAsunto($_REQUEST['ASUNTO']);
+		$pojo->setRemitente($_REQUEST['REMITENTE']);
+		$pojo->setIdEntidad($_REQUEST['ID_ENTIDAD']);
+		$pojo->setIdClausula($_REQUEST['ID_CLAUSULA']);
+		$pojo->setClasificacion($_REQUEST['CLASIFICACION']);
+		$pojo->setStatusDoc($_REQUEST['STATUS_DOC']);
+		$pojo->setFechaAsignacion($_REQUEST['FECHA_ASIGNACION']);
+		$pojo->setFechaLimiteAtencion($_REQUEST['FECHA_LIMITE_ATENCION']);
+		$pojo->setFechaAlarma($_REQUEST['FECHA_ALARMA']);
+		$pojo->setDocumento($_REQUEST['DOCUMENTO']);
+		$pojo->setObservaciones($_REQUEST['OBSERVACIONES']);
+		$pojo->setMensajeAlerta($_REQUEST['MENSAJE_ALERTA']);
+			
+		//   if ($_REQUEST['DOCUMENTO']['type']=="text/plain"){
+			//movemos el achivo al directorio destino
+			// mode_uploaded_file("../../../archivos/");
+			// }
+		//   print_r($_REQUEST['MENSAJE_DOCUMENTO']);
+		//   print_r($_FILEs['DOCUMENTO']); 
+		$data = $model->insertar($pojo);
+						
+						// echo "e".json_encode($data[2]);
+		//   echo $data[0];
+		//  $jsonData['ID_CUMPLIMIENTO'] = $data[0];
 
-				// $jsonData['ID_DOCUMENTO'] = $data[1];
-				$valores = 'filesDocumento/'.$data[0].'/'.$data[1].'/';
-				Session::setSesion("newUrl",$valores);
+		// $jsonData['ID_DOCUMENTO'] = $data[1];
+		$valores = 'filesDocumento/Entrada/'.$data[0].'/'.$data[1];
+		// Session::setSesion("newUrl",$valores);
+		// $valores[0]=$dato[0]
 
-				//  $jsonData['ID_DOCUMENTO'] = $data[1];
-                                
-				//  header('Content-type: application/json; charset=utf-8');
-				//   echo json_encode($jsonData);
-				// return $data;
-                  
-                   $traerultimoinsertado=$model->traer_ultimo_insertado();  
-                //   echo json_encode("guarda documento");
-				   $modelSeguimientoEntrada->insertar($traerultimoinsertado);
-				
-				//    header('Content-type: application/json; charset=utf-8');
-				// echo json_encode($jsonData);
-                        
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
+		//  $jsonData['ID_DOCUMENTO'] = $data[1];
+						
+		//  header('Content-type: application/json; charset=utf-8');
+		//   echo json_encode($jsonData);
+		// return $data;
+		
+		$traerultimoinsertado=$model->traer_ultimo_insertado();  
+	//   echo json_encode("guarda documento");
+		$modelSeguimientoEntrada->insertar($traerultimoinsertado);
+	
+		header('Content-type: application/json; charset=utf-8');
+		echo json_encode($valores);                           
 		break;
-        case "AlmacenarArchivosServer":                            
-//         $traerultimoinsertado=$model->traer_ultimo_insertado();
-//         $cumplimiento=$model->listarCumplimientoPorId_Entrada($traerultimoinsertado);
-//         $data = $model->getIdCumplimiento($traerultimoinsertado);
-        //  foreach ($data as $value){}
-//         echo "".$value["ID_CUMPLIMIENTO"];
-//         $cump=$value["ID_CUMPLIMIENTO"];
+
+	case "AlmacenarArchivosServer":
 		$destino = "filesValidacionDocumento/".$Id_validacion;
     	if($_FILES["imagen"]["name"][0])
     	{        
@@ -134,16 +122,10 @@ switch ($Op) {
             {
                 mkdir($carpetaDestino,0777,true);
             }
-		// echo "carpeta:  ".$carpetaDestino;
-			// for($i=0;$i<count($_FILES["imagen"]["name"]);$i++)
-			// {
-			// 	$origen = $_FILES["imagen"]["tmp_name"][$i];
-			// 	$destino = $carpetaDestino."/".$_FILES["imagen"]["name"][$i];
-			// 	move_uploaded_file($origen,$destino);
-			// }
 		}
 		Session::setSesion("newUrl",$destino."/");
-        break;
+		break;
+
 	case 'Modificar':
 		# code...
    					
@@ -173,40 +155,30 @@ switch ($Op) {
 //                      header('Content-type: application/json; charset=utf-8');
 //                      echo json_encode(array("data" => $msg));
 //                  }
-				$data = $model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );
-				header('Content-type: application/json; charset=utf-8');
-				echo json_encode($data);
-                  
-                  
+		$data = $model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );
+		header('Content-type: application/json; charset=utf-8');
+		echo json_encode($data);                  
 	break;
-    
-    
-    
-        case 'verificacionexisteregistro':
+
+	case 'verificacionexisteregistro':
             
-              $registro=$_REQUEST["registro"];
-              $cualverificar=$_REQUEST["cualverificar"];
-              
-              $data= $model->verificarSiExisteFolioEntrada($registro,$cualverificar);
-              
-               	header('Content-type: application/json; charset=utf-8');
-                echo json_encode($data);
-            
-                
-                break;
-    
-    
+		$registro=$_REQUEST["registro"];
+		$cualverificar=$_REQUEST["cualverificar"];
+		
+		$data= $model->verificarSiExisteFolioEntrada($registro,$cualverificar);
+		
+		header('Content-type: application/json; charset=utf-8');
+		echo json_encode($data);
+		
+		break;
 
 	case 'Alarmas':
 
-				$Lista = $model->getFechaAlarma();
-				Session::setSesion("Alarmas",$Lista);
-				header('Content-type: application/json; charset=utf-8');
-				// echo json_encode($Lista);
-				break;
-                            
-                           
-        
+		$Lista = $model->getFechaAlarma();
+		Session::setSesion("Alarmas",$Lista);
+		header('Content-type: application/json; charset=utf-8');
+		// echo json_encode($Lista);
+		break;
                             
 	case 'Eliminar':
 		# code...

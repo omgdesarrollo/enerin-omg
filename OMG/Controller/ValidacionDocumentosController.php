@@ -131,40 +131,6 @@ switch ($Op) {
 			header('Content-type: application/json; charset=utf-8');
 			echo json_encode($existe);
 	break;
-	case "ObtenerArchivos":
-		$todo = array();
-		$id_validacion = $_REQUEST['ID_VALIDACION'];
-		// $data = $modelDocumentoEntrada->getIdCumplimiento($id_documento);
-		// echo $data;
-		// foreach($data as $index=>$value)
-		// {
-		// 	echo "\n".$index." - ".$value;
-		// }
-		// $lista = $model->obtener_urls($id_documento);
-		$archivosNames = array();
-		$existe=file_exists("C:xampp/htdocs/enerin-omg/archivos/filesValidacionDocumento/".$id_validacion);
-		if($existe)
-		{
-			$files = scandir("C:xampp/htdocs/enerin-omg/archivos/filesValidacionDocumento/".$id_validacion);//C:\xampp\htdocs\enerin-omg\archivos\files\1\10
-			foreach($files as $index=>$value)
-			{
-				if($index>=2)
-				{
-					// echo "\n".$index." - ".$value;
-					$archivosNames[$index-2] = $value;
-				}
-			}
-		}
-		// echo "\n";
-		// foreach($archivosNames as $index=>$value)
-		// {
-		// 	echo "\n".$index." - ".$value;
-		// }
-		// Session::setSesion("newUrl",'/'.$id_cumplimiento.'/'.$id_documento.'/');
-		// Session::setSesion("getUrlsArchivos",$lista);
-		header('Content-type: application/json; charset=utf-8');
-		echo json_encode($archivosNames);
-	break;
 	default:
 		# code...
 		break;
