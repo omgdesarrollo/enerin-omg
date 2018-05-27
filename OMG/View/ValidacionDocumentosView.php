@@ -49,7 +49,6 @@ $Usuario=  Session::getSesion("user");
                 <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
                 <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
                 <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
-
                 
                 <style>
                     
@@ -205,8 +204,8 @@ require_once 'EncabezadoUsuarioView.php';
                                 <th class="table-header">Clave Documento</th>
                                 <th class="table-header">Nombre Documento</th>
                                 <th class="table-header">Responsable del Documento</th>
-                                <th class="table-header">No.Tema</th>
-                                <th class="table-header">Responsable del Tema</th>
+                                <th class="table-header">Tema y Responsable</th>
+                                <!--<th class="table-header">Responsable del Tema</th>-->
                                 <th class="table-header">Documento Adjunto</th>
                                 <th class="table-header">Requisitos</th>
                                 <th class="table-header">Registros</th>                                
@@ -236,8 +235,8 @@ require_once 'EncabezadoUsuarioView.php';
                       foreach ($Lista as $filas)
                           {
                           if($filas["clave_documento"]!="SIN DOCUMENTO"){
-                          ?>
-			 
+                          ?>			 
+                      
                         <tr class="table-row">
 
                                 <!--<td><?php //echo $numeracion++;   ?></td -->
@@ -251,10 +250,20 @@ require_once 'EncabezadoUsuarioView.php';
                                 onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado_documento','<?php echo $filas["id_validacion_documento"]; ?>')" 
                                 onClick="showEdit(this);"><?php echo $filas["nombre_empleado_documento"]." ".$filas["apellido_paterno_documento"]." ".$filas["apellido_materno_documento"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'clausula','<?php echo $filas["id_validacion_documento"]; ?>')" 
-                                onClick="showEdit(this);"><?php echo $filas["clausula"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado_tema','<?php echo $filas["id_validacion_documento"]; ?>')"
-                                onClick="showEdit(this);"><?php echo $filas["nombre_empleado_tema"]." ".$filas["apellido_paterno_tema"]." ".$filas["apellido_materno_tema"]; ?></td>
+<!--                                <td contenteditable="false" onBlur="saveToDatabase(this,'clausula','<?php //echo $filas["id_validacion_documento"]; ?>')" 
+                                onClick="showEdit(this);"><?php //echo $filas["clausula"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado_tema','<?php //echo $filas["id_validacion_documento"]; ?>')"
+                                onClick="showEdit(this);"><?php //echo $filas["nombre_empleado_tema"]." ".$filas["apellido_paterno_tema"]." ".$filas["apellido_materno_tema"]; ?></td>
+                                -->
+                                
+                                <td>
+                                        <button onClick="mostrarTemaResponsable(<?php echo $filas['id_documento'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-temaresponsable">
+		                                Ver
+                                                <i class="ace-icon fa fa-book" style="color: #0099ff;font-size: 20px;"></i>
+                                        </button>
+                                </td>
+                                
+                                
                                 <!-- documento adjunto -->
                                 <td>
                                   <button onClick="mostrar_urls(<?php echo $filas['id_validacion_documento'] ?>);" type="button" 
@@ -271,8 +280,28 @@ require_once 'EncabezadoUsuarioView.php';
                                         </button>
                                 </td>
                                 
+                                <td>
+                                        <button onClick="mostrarRegistros(<?php echo $filas['id_documento'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-registros">
+		                                Ver
+                                                <i class="ace-icon fa fa-book" style="color: #0099ff;font-size: 20px;"></i>
+                                        </button>
+                                </td>
                                 
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'validacion_documento_responsable','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["validacion_documento_responsable"]; ?></td>
+
+                                <td  >
+                                    <form method="post" action="">
+						
+						<div class="">
+                                                        <input type="checkbox" name="checkbox" id="id_validacion_documento" class="checkbox" value="5" onchange="saveCheckBoxToDataBase('validacion_documento_responsable'<?php echo $filas["id_validacion_documento"]; ?>)">
+							<label for="validacion_documento_responsable" >Responsable Documento</label>
+						</div>
+						
+					</form>
+                                </td>
+                                
+
+                                    
+                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'validacion_documento_responsable','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["validacion_documento_responsable"]; ?></td>-->
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'observacion_documento','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["observacion_documento"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'validacion_tema_responsable','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["validacion_tema_responsable"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'observacion_tema','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["observacion_tema"]; ?></td>
@@ -344,56 +373,100 @@ require_once 'EncabezadoUsuarioView.php';
         </div><!-- cierre div class-body -->
       </div><!-- cierre div class modal-content -->
     </div><!-- cierre div class="modal-dialog" -->
-</div><!-- cierre del modal -->
+</div><!-- cierre del modal Requisitos-->
 
 
+
+<!-- Inicio modal Requisitos -->
+<div class="modal draggable fade" id="mostrar-registros" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+        <div id="loaderModalMostrar"></div>
+		<div class="modal-content">                
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title" id="myModalLabel">Lista Registros</h4>
+        </div>
+
+        <div class="modal-body">
+          
+            <div id="RegistrosListado"></div>
+  
+        </div><!-- cierre div class-body -->
+      </div><!-- cierre div class modal-content -->
+    </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal Requisitos-->
+
+
+<!-- Inicio modal Requisitos -->
+<div class="modal draggable fade" id="mostrar-temaresponsable" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+        <div id="loaderModalMostrar"></div>
+		<div class="modal-content">                
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title" id="myModalLabel">Lista Tema y Responsable</h4>
+        </div>
+
+        <div class="modal-body">
+          
+            <div id="TemayResponsableListado"></div>
+  
+        </div><!-- cierre div class-body -->
+      </div><!-- cierre div class modal-content -->
+    </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal Requisitos-->
 
 
                 
 		<script>
                     
-    var id_seguimiento_entrada;
+    var id_validacion_documento;
     $("#subirArchivos").click(function()
     {
       agregarArchivosUrl();
     });
-                                            
+    
+    
     $(function()
     {
-      $('.select').on('change', function()
+      
+        $('.checkbox').on('change', function()
       {
         console.log( $(this).prop('value') );                     
-        column="ID_EMPLEADO";
+        column="VALIDACION_DOCUMENTO_RESPONSABLE";
         val=$(this).prop('value');
-        alert("el value que va a viajar es "+val+" y el id del seguimiento : "+id_seguimiento_entrada);
+        //alert("el value que va a viajar es "+val+" y el id del seguimiento : "+id_seguimiento_entrada);
                           
         $.ajax({
-          url: "../Controller/SeguimientoEntradasController.php?Op=Modificar",
-          type: "POST",
-          data:'column='+column+'&editval='+val+'&id='+id_seguimiento_entrada,
-          success: function(data)
-          {
-            window.location.href="AsignacionTemasRequisitosView.php?page=1";
-					//$(editableObj).css("background","#FDFDFD");
-            consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
-            consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
-            window.location.href="SeguimientoEntradaView.php";
-				  }   
-        });
+                url: "../Controller/ValidacionDocumentosController.php?Op=Modificar",
+                type: "POST",
+                data:'column='+column+'&editval='+val+'&id='+id_validacion_documento,
+                success: function(data)
+                {
+//            window.location.href="ValidacionDocumentosView.php?page=1";
+//					//$(editableObj).css("background","#FDFDFD");
+//            consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");
+//            consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");
+//            window.location.href="ValidacionDocumentosView.php";
+                } 
+                
+                });
                           
                           
       });
                         
-//                      $("#btn_mostrar_requisitos").click(function(){
-//                        loadVistaRequisitos(true);
-//                         });  
+
+
+
   
   
     });// Cierra el $function 
                       
                  
                 
-                
+    function saveCheckBoxToDataBase(column,id){
+                     id_validacion_documento=id;
+               }            
             
                 
                 
@@ -401,20 +474,26 @@ require_once 'EncabezadoUsuarioView.php';
     {
 			$(editableObj).css("background","#FFF");
 		}
-		function saveToDatabase(editableObj,column,id)
+                
+     
+     
+    function saveToDatabase(editableObj,column,id)
     {
                     //alert("entraste aqui ");
-			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
-			$.ajax({
-        url: "../Controller/SeguimientoEntradasController.php?Op=Modificar",
-				type: "POST",
-				data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
-				success: function(data)
-        {
-					$(editableObj).css("background","#FDFDFD");                                
-				}
-		  });
-		}
+        $(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
+        $.ajax({
+                url: "../Controller/ValidacionDocumentosController.php?Op=Modificar",
+                type: "POST",
+                data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
+                success: function(data)
+                    {
+                        $(editableObj).css("background","#FDFDFD");                                
+                    }
+                });
+    }
+    
+    
+    
     function saveComboToDatabase(column,id)
     {
       id_seguimiento_entrada=id;
@@ -435,6 +514,18 @@ require_once 'EncabezadoUsuarioView.php';
           }
       });  
     }
+    
+    
+    function saveCheckBoxToDataBase_ok(id)
+    {
+   
+       validacion = $('#validacion_documento_responsable').val();  
+       alert("Entro aqui"+validacion);
+       
+       saveToDatabase(validacion,"validacion_documento_responsable",id);
+    
+    }
+    
     
     
     function refresh()
@@ -470,119 +561,208 @@ require_once 'EncabezadoUsuarioView.php';
         ModalCargaArchivo += "<div class='progress-extended'>&nbsp;</div>";
         ModalCargaArchivo += "</div></div>";
         ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
+<<<<<<< HEAD
+    $("#subirArchivos").click(function()
+    {
+      agregarArchivosUrl();
+    });
+
+=======
    
     
     
+>>>>>>> 9e66d52dceabaf1f30545a7cffcd104b8a2ebecd
     function mostrar_urls(id_validacion_documento)
     {
       var tempDocumentolistadoUrl = "";
-      URL = 'filesValidacionDocumento/'+id_validacion_documento,
+      URL = 'filesValidacionDocumento/'+id_validacion_documento;
       $.ajax({
-          url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
+          url: '../Controller/ArchivoUploadController.php?Op=CrearUrl',
           type: 'GET',
           data: 'URL='+URL,
-          success: function(todo)
+          success:function(creado)
           {
-                  console.log(todo[0].length);
-                  if(todo[0].length!=0)
+            if(creado)
+            {
+              $.ajax({
+                  url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
+                  type: 'GET',
+                  data: 'URL='+URL,
+                  success: function(todo)
                   {
-                          tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
-                          $.each(todo[0], function (index,value)
-                          {
-                                  nametmp = value.split("^");
-                                  name;
-                                  fecha = nametmp[0];
-                                  $.each(nametmp, function(index,value)
-                                  {
-                                          if(index!=0)
-                                                  (index==1)?name=value:name+="-"+value;
-                                  });
-                                  tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
-                                  tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\">"+name+"</a></td>";
-                                  tempDocumentolistadoUrl += "<td><button style=\"color:green;background:transparent;border:none;padding-left:10px\"";
-                                  tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
-                                  tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";
-                          });
-                          tempDocumentolistadoUrl += "</tbody></table>";
+                      // console.log(todo[0].length);
+                      if(todo[0].length!=0)
+                      {
+                              tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
+                              $.each(todo[0], function (index,value)
+                              {
+                                      nametmp = value.split("^");
+                                      name;
+                                      fecha = nametmp[0];
+                                      $.each(nametmp, function(index,value)
+                                      {
+                                              if(index!=0)
+                                                      (index==1)?name=value:name+="-"+value;
+                                      });
+                                      tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
+                                      tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\">"+name+"</a></td>";
+                                      tempDocumentolistadoUrl += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
+                                      tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
+                                      tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";
+                              });
+                              tempDocumentolistadoUrl += "</tbody></table>";
+                      }
+                      if(tempDocumentolistadoUrl == " ")
+                      {
+                              tempDocumentolistadoUrl = " No hay archivos agregados ";
+                      }
+                      tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdValidacionDocumento' type='text' style='display:none;' value='"+id_validacion_documento+"'>";                  
+                      $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
+                      $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
+                      $('#fileupload').fileupload
+                      ({
+                        url: '../View/',
+                      });
                   }
-                  if(tempDocumentolistadoUrl == " ")
-                  {
-                          tempDocumentolistadoUrl = " No hay archivos agregados "
-                  }
-                  tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdValidacionDocumento' type='text' style='display:none;' value='"+id_validacion_documento+"'>";
-                  // alert(tempDocumentolistadoUrl);
-                  // $('#DocumentoEntradaAgregarModal').html(" ");
-                  $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
-                  $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
-                  // $('#fileupload').fileupload();
-                  $('#fileupload').fileupload({
-                  url: '../View/',
-                  });
+              });
+            }
+            else
+            {
+              swal("","Error del servidor","error");
+            }
           }
-      });
+        });
     }
     
     
     function mostrarRequisitos(id_documento)
-                 {
-                         mostrarrequisitos = "<ul>";
-                         //alert("validacion documento"+id_documento);
-                         
-                         $.ajax ({
-                             url: "../Controller/ValidacionDocumentosController.php?Op=MostrarRequisitosPorDocumento",
-                             type: 'POST',
-                             data: 'ID_DOCUMENTO='+id_documento,
-                             success:function(responserequisitos)
-                             {
-                                $.each(responserequisitos,function(index,value){
-                                    //alert("Hast aqui"+value.requisito);
-                                 mostrarrequisitos+="<li>"+value.requisito+"</li>"                                       
-                                    
-                                });
-                            mostrarrequisitos += "</ul>";     
-                                $('#RequisitosListado').html(mostrarrequisitos);
-                             }
-                         });
-                 }
+    {
+            mostrarrequisitos = "<ul>";
+            //alert("validacion documento"+id_documento);
+
+            $.ajax ({
+                url: "../Controller/ValidacionDocumentosController.php?Op=MostrarRequisitosPorDocumento",
+                type: 'POST',
+                data: 'ID_DOCUMENTO='+id_documento,
+                success:function(responserequisitos)
+                {
+                   $.each(responserequisitos,function(index,value){
+                       //alert("Hast aqui"+value.requisito);
+                    mostrarrequisitos+="<li>"+value.requisito+"</li>";                                       
+
+                   });
+               mostrarrequisitos += "</ul>";     
+                   $('#RequisitosListado').html(mostrarrequisitos);
+                }
+            });
+    }
+    
+    
+    function mostrarRegistros(id_documento)
+    {
+     mostrarregistros = "<ul>";
+//     alert("validacion documento"+id_documento);
+     $.ajax ({
+         url:"../Controller/ValidacionDocumentosController.php?Op=MostrarRegistrosPorDocumento",
+         type: 'POST',
+         data: 'ID_DOCUMENTO='+id_documento,
+         success:function(responseregistros)
+         {
+             $.each(responseregistros,function(index,value){
+                mostrarregistros+="<li>"+value.registros+"</li>"; 
+             });
+             
+             mostrarregistros += "</ul>";
+             $('#RegistrosListado').html(mostrarregistros);
+         }
+     })
+    }
+    
+    
+    function mostrarTemaResponsable(id_documento)
+    {
+        mostrarTemaResponsable = "<table class='tbl-qa'>\n\
+                                    <tr>\n\
+                                        <th class='table-header'>Tema</th>\n\
+                                        <th class='table-header'>Responsable del Tema</th>\n\
+                                    </tr>\n\
+                                    <tbody>";
+        //alert("validacion documento"+id_documento);
+
+        $.ajax ({
+            url:"../Controller/ValidacionDocumentosController.php?Op=MostrarTemayResponsable",
+            type:'POST',
+            data:'ID_DOCUMENTO='+id_documento,
+            success:function(responseTemayResponsable)
+            {
+                $.each(responseTemayResponsable,function(index,value){
+                  mostrarTemaResponsable+="<tr><td>"+value.clausula+"</td>" ;
+                  mostrarTemaResponsable+="<td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";  
+
+                });
+                
+                mostrarTemaResponsable += "</tbody></table>";
+                $('#TemayResponsableListado').html(mostrarTemaResponsable);
+            }
+                    
+        })
+        
+    }
+    
     
     
     function agregarArchivosUrl()
     {
       var ID_VALIDACION_DOCUMENTO = $('#tempInputIdValidacionDocumento').val();
-      url = 'filesValidacionDocumento/'+ID_VALIDACION_DOCUMENTO+"/",
+      url = 'filesValidacionDocumento/'+ID_VALIDACION_DOCUMENTO,
       $.ajax({
-        url: "../Controller/ArchivoUploadController.php?Op=crearUrl",
-        type: 'POST',
-        data: 'Url='+url,
+        url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
+        type: 'GET',
+        data: 'URL='+url,
         success:function(creado)
         {
           if(creado)
             $('.start').click();
+        },
+        error:function()
+        {
+          swal("","Error del servidor","error");
         }
       });
     }
     function borrarArchivo(url)
     {
-      var ID_VALIDACION_DOCUMENTO = $('#tempInputIdValidacionDocumento').val();
-      // alert(nombreArchivo);
-      $.ajax({
-        url: "../Controller/ArchivoUploadController.php?Op=eliminarArchivo",
-        type: 'POST',
-        data: 'URL='+url,
-        success: function(data)
+      swal({
+          title: "ELIMINAR",
+          text: "Confirme para eliminar el documento",
+          type: "warning",
+          showCancelButton: true,
+          closeOnConfirm: false,
+          showLoaderOnConfirm: true
+        },function()
         {
-          if(data)
-          {
-            mostrar_urls(ID_VALIDACION_DOCUMENTO);
-          }
-          else
-            swal("","Ocurrio un error al elimiar el documento", "error");
-        },
-        error:function()
-        {
-          swal("","Ocurrio un error al elimiar el documento", "error");
-        }
-      });
+          var ID_VALIDACION_DOCUMENTO = $('#tempInputIdValidacionDocumento').val();
+          $.ajax({
+            url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
+            type: 'POST',
+            data: 'URL='+url,
+            success: function(eliminado)
+            {
+              if(eliminado)
+              {
+                mostrar_urls(ID_VALIDACION_DOCUMENTO);
+                swal("","Archivo eliminado");
+                setTimeout(function(){swal.close();},1000);
+              }
+              else
+                swal("","Ocurrio un error al elimiar el documento", "error");
+            },
+            error:function()
+            {
+              swal("","Ocurrio un error al elimiar el documento", "error");
+            }
+          });
+        });
     }
     function filterTable()
     {
