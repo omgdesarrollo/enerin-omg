@@ -250,7 +250,7 @@ require_once 'EncabezadoUsuarioView.php';
 //                   $valorid= $Lista[$k]["ID_EMPLEADO"];
 //                   $nombreempleado=$Lista[$k]["NOMBRE_EMPLEADO"];
                   foreach ($Lista as $filas) { 
-                    if($filas["folio_entrada"] != "SIN FOLIO DE ENTRADA"){  
+                    if($filas["folio_entrada"] != "SIN FOLIO DE ENTRADA" ){  
                       
                       ?>
                       
