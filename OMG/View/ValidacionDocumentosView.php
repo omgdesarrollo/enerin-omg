@@ -563,17 +563,11 @@ require_once 'EncabezadoUsuarioView.php';
         ModalCargaArchivo += "<div class='progress-extended'>&nbsp;</div>";
         ModalCargaArchivo += "</div></div>";
         ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
-<<<<<<< HEAD
     $("#subirArchivos").click(function()
     {
       agregarArchivosUrl();
     });
 
-=======
-   
-    
-    
->>>>>>> 9e66d52dceabaf1f30545a7cffcd104b8a2ebecd
     function mostrar_urls(id_validacion_documento)
     {
       var tempDocumentolistadoUrl = "";
@@ -964,7 +958,7 @@ require_once 'EncabezadoUsuarioView.php';
           <!-- </td> -->
   </tr>
   {% } %}
-  {% if(t == 1){ if( $('#tempInputIdValidacionDocumento').length > 0 ) { var ID_VALIDACION_DOCUMENTO = $('#tempInputIdValidacionDocumento').val(); mostrar_urls(ID_VALIDACION_DOCUMENTO);}else{ } } %}
+  {% if(t == 1){ if( $('#tempInputIdValidacionDocumento').length > 0 ) { var ID_VALIDACION_DOCUMENTO = $('#tempInputIdValidacionDocumento').val(); mostrar_urls(ID_VALIDACION_DOCUMENTO);} } %}
 </script>
                 
             <!--en esta seccion es para poder abrir el modal--> 
