@@ -462,7 +462,9 @@ require_once 'EncabezadoUsuarioView.php';
   
     });// Cierra el $function 
                       
-                 
+    
+    
+    
                 
     function saveCheckBoxToDataBase(column,id){
                      id_validacion_documento=id;
