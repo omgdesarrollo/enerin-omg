@@ -59,15 +59,20 @@ switch ($Op) {
           $numero = count($_POST);
             $tags = array_keys($_POST);// obtiene los nombres de las varibles
             $valores = array_values($_POST);// obtiene los valores de las varibles
-echo "ca:   ".$numero;
+//            echo "nombre variables: ".$tags;
+            var_dump($tags);
+            echo "valores de variables ";
+            var_dump($valores);
+            
+//echo "ca:   ".$numero;
 //echo "valores:  ".$valores."  ---";
             // crea las variables y les asigna el valor
-            for($i=0;$i<$numero;$i++){
-                
-           echo "d:  ". $tags[$i]=$valores[$i]."<br>";
-}
+//            for($i=0;$i<$numero;$i++){
+//                
+//           echo "d:  ". $tags[$i]=$valores[$i]."<br>";
+//}
 
-echo "posicon :  ".$tags[35];
+//echo "posicon :  ".$tags[35];
 
 
 
