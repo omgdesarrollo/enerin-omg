@@ -13,6 +13,7 @@ require_once '../Pojo/ValidacionDocumentoPojo.php';
 require_once '../Model/AsignacionTemaRequisitoModel.php';
 require_once '../Model/DocumentoModel.php';
 
+
 require_once '../util/Session.php';
 
 
@@ -21,6 +22,7 @@ $Op=$_REQUEST["Op"];
 $model=new ValidacionDocumentoModel();
 $modelAsignacionTemaRequisito=new AsignacionTemaRequisitoModel();
 $modelDocumento=new DocumentoModel();
+
 $pojo= new ValidacionDocumentoPojo();
 
 switch ($Op) {
@@ -76,36 +78,23 @@ switch ($Op) {
                 echo json_encode($lista);
             
 		break;
+         
+            
+            
+        case 'MostrarTemayResponsable':
+                  
+                $id_documento=$_REQUEST["ID_DOCUMENTO"];
+            
+                $lista=$modelAsignacionTemaRequisito->obtenerTemayResponsable($id_documento);
+                Session::setSesion("obtenerTemayResponsable", $lista);
+                        
+                header('Content-type: application/json; charset=utf-8');
+                echo json_encode($lista);
+                        
+		break;    
 
 	case 'Modificar':
-		# code...
-   					
-//                  $pojo->setIdDocumentoEntrada($_REQUEST['ID_DOCUMENTO_ENTRADA']);
-//                  $pojo->setIdCumplimiento($_REQUEST['ID_CUMPLIMIENTO']);
-//                  $pojo->setFolioReferencia($_REQUEST['FOLIO_REFERENCIA']);
-//                  $pojo->setFolioEntrada($_REQUEST['FOLIO_ENTRADA']);
-//                  $pojo->set($_REQUEST['FECHA_RECEPCION']);
-//                  $pojo->setAsunto($_REQUEST['ASUNTO']);
-//                  $pojo->setRemitente($_REQUEST['REMITENTE']);
-//                  $pojo->setIdEntidad($_REQUEST['ID_ENTIDAD']);
-//                  $pojo->setIdClausula($_REQUEST['ID_CLAUSULA']);
-//                  $pojo->setClasificacion($_REQUEST['CLASIFICACION']);
-//                  $pojo->setStatusDoc($_REQUEST['STATUS_DOC']);
-//                  $pojo->setFechaAsignacion($_REQUEST['FECHA_ASIGNACION']);
-//                  $pojo->setFechaLimiteAtencion($_REQUEST['FECHA_LIMITE_ATENCION']);
-//                  $pojo->setFechaAlarma($_REQUEST['FECHA_ALARMA']);
-//                  $pojo->setDocumento($_REQUEST['DOCUMENTO']);
-//                  $pojo->setObservaciones($_REQUEST['OBSERVACIONES']);
-//                  
-//                  
-//                  
-//                  
-//                  $model->actualizar($pojo);
-//                  $msg=$exito['mensaje'];
-//                  if($exito['Error']==0){
-//                      header('Content-type: application/json; charset=utf-8');
-//                      echo json_encode(array("data" => $msg));
-//                  }
+
                 $model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );  
                   
                   

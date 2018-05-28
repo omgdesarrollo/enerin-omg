@@ -39,31 +39,28 @@ class ClausulaModel{
         try{
             $dao=new ClausulaDAO();
             $rec=$dao->mostrarClausulasComboBox();
-            
-            /*if($rec==NULL){
-            throw new Exception("Usuario no existe !!!!!");
-            }
-            if($rec["CONTRA"]!=$clave){
-            throw  new Exception("Clave Incorrecta!!!!!");
-            }*/            
+                      
             return $rec;
     }  catch (Exception $e){
         throw  $e;
     }
     }
     
- public function loadAutoComplete($cadena){
-     
-     try{
-         $dao= new ClausulaDAO();
-         $rec=$dao->loadAutoComplete($cadena);
-         return $rec;
-     } catch (Exception $ex) {
+ 
+    
+    
+    public function loadAutoComplete($cadena){
 
-     }
-     
-     
- }
+        try{
+            $dao= new ClausulaDAO();
+            $rec=$dao->loadAutoComplete($cadena);
+            return $rec;
+        } catch (Exception $ex) {
+
+        }
+
+
+    }
     
     
     public function insertar($pojo){

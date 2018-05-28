@@ -79,6 +79,7 @@ class ValidacionDocumentoDAO{
     }
     
     
+    
     public function actualizarValidacionDocumentoPorColumna($COLUMNA,$VALOR,$ID_VALIDACION_DOCUMENTO){
          
         try{
@@ -95,6 +96,9 @@ class ValidacionDocumentoDAO{
            throw $ex; 
         }
     }
+    
+    
+    
     
     
     public function eliminarValidacionDocumento($id_validacion_documento){
