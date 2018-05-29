@@ -476,16 +476,18 @@ require_once 'EncabezadoUsuarioView.php';
     
         $('.checkboxDocumento').on('change', function()
       { 
-            inputs = $('#idTable').find('input').filter('[type=checkbox]');
-       //      
-       alert(""+input);
-                                    if($(this).attr("checked"))
-                      {
-                            inputs.attr('checked', true);
-
-               }else{
-                    inputs.attr('checked', false);
-               }
+          
+          enviar_notificacion();
+//            inputs = $('#idTable').find('input').filter('[type=checkbox]');
+//       //      
+//       alert(""+input);
+//                                    if($(this).attr("checked"))
+//                      {
+//                            inputs.attr('checked', true);
+//
+//               }else{
+//                    inputs.attr('checked', false);
+//               }
                
                
         swal({
@@ -546,7 +548,13 @@ require_once 'EncabezadoUsuarioView.php';
   
     });// Cierra el $function 
  
-                
+      function enviar_notificacion(){
+          alert("enviado correccto ");
+          
+      }
+      
+      
+      
     function saveCheckBoxToDataBase(checkbox,column,id){
                      id_validacion_documento=id;
                      columna=column;
