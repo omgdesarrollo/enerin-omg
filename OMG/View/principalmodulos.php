@@ -89,11 +89,13 @@ $Usuario=  Session::getSesion("user");
      {id:'catalogo', text:'Informacion',img:'catalogo.png',type:'button',isbig:true}  
  ];
  
+ 
  var seccionCumplimiento=[
-     {id:'documentos',text:'Documentos',img:'documentos.png',type:'button',isbig:true} ,
+     {id:'documentos',text:'Validacion de Documentos',img:'documentos.png',type:'button',isbig:true} ,
      {id:'operaciones',text:'Evidencias',img:'operaciones.png',type:'button',isbig:true},
      {id:'planaccion',text:'Plan de Accion',img:'planaccion.png',type:'button',isbig:true}
  ];
+ 
  
  var seccionInformesGerenciales=[
      {id:'informe',text:'Informe',img:'documentos.jpg',type:'button',isbig:true}  
