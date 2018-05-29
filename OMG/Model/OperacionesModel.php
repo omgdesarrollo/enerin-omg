@@ -1,7 +1,7 @@
 <?php
 
 require_once '../dao/OperacionesDAO.php';
-require_once '../Pojo/OperacionesEntradaPojo.php';
+require_once '../Pojo/OperacionesPojo.php';
 
 class OperacionesModel
 {
@@ -10,7 +10,7 @@ class OperacionesModel
         try
         {
             $dao = new OperacionesDAO();
-            $rec = $dao->listarOperaciones();
+            $rec = $dao->mostrarOperaciones();
             return $rec;
         }catch(Exception $e)
         {

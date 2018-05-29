@@ -3,12 +3,15 @@
 
 session_start();
 require_once '../Model/OperacionesModel.php';
-require_once '../Pojo/operacionesPojo.php';
+require_once '../Pojo/OperacionesPojo.php';
+require_once '../Model/DocumentoModel.php';
 require_once '../util/Session.php';
 
 $Op=$_REQUEST["Op"];
-$model=new DocumentoModel();
-$pojo= new DocumentoPojo();
+$model=new OperacionesModel();
+$pojo= new OperacionesPojo();
+
+$modelDocumento=new DocumentoModel();
 
 
 switch ($Op)
@@ -22,10 +25,22 @@ switch ($Op)
 		break;
     
 	case 'getClavesDocumentos':
-        $Lista=$model->getClavesDocumentos();
+        $Lista=$modelDocumento->getClavesDocumentos();
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
-		break;	
+		break;
+            
+    case 'MostrarRegistrosPorDocumento':
+        
+        $id_documento=$_REQUEST["ID_DOCUMENTO"];
+        
+        $lista=$modelDocumento->obtenerRegistrosPorDocumento($id_documento);
+        Session::setSesion("obtenerRegistrosPorDocumento",$lista);
+        
+        header('Content-type: application/json; charset=utf-8');
+                echo json_encode($lista);
+        
+        break;
 
 	default:
 		# code...
