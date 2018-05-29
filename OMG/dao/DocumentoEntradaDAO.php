@@ -283,6 +283,7 @@ class DocumentoEntradaDAO{
             $query = "SELECT documento_entrada.ID_CUMPLIMIENTO FROM documento_entrada WHERE id_documento_entrada = $ID_DOCUMENTO_ENTRADA";
             $db= AccesoDB::getInstancia();
             $dato = $db->executeQuery($query);
+            
             return $dato[0];
         } catch(Except $ex)
         {

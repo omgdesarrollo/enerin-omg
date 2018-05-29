@@ -188,7 +188,9 @@ switch ($Op) {
 		$ID_DOCUMENTO = $_REQUEST['ID_DOCUMENTO'];
 		$data = $model->getIdCumplimiento($ID_DOCUMENTO);
 		foreach ($data as $Id_cumplimiento)
-		{}
+		{
+//                    echo 'e'.$Id_cumplimiento;
+                }
 		// $valores = '/'.$value.'/'.$ID_DOCUMENTO.'/';
 		// Session::setSesion("newUrl",$valores);
 		header('Content-type: application/json; charset=utf-8');

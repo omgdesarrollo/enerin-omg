@@ -504,7 +504,7 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 
     function cargadePrograma(foliodeentrada){
-        alert("le has picado al folio de entrada  "+foliodeentrada);
+//        alert("le has picado al folio de entrada  "+foliodeentrada);
         window.location.href=" GanttView.php?folio_entrada="+foliodeentrada;
 //   window.location.replace("http://sitioweb.com");        
     }

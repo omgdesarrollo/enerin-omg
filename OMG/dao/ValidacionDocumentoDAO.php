@@ -24,11 +24,11 @@ class ValidacionDocumentoDAO{
                     FROM validacion_documento tbvalidacion_documento
 
 
-                    JOIN asignacion_tema_requisito tbasignacion_tema_requisito ON 
-                    tbasignacion_tema_requisito.id_asignacion_tema_requisito=tbvalidacion_documento.id_asignacion_tema_requisito
+                    JOIN documentos tbdocumentos ON 
+                    tbdocumentos.id_documento=tbvalidacion_documento.id_documento
 
-                    JOIN documentos tbdocumentos ON
-                    tbdocumentos.id_documento=tbasignacion_tema_requisito.id_documento
+                    JOIN asignacion_tema_requisito tbasignacion_tema_requisito ON
+                    tbasignacion_tema_requisito.id_documento=tbdocumentos.id_documento
 
                     JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumentos.id_empleado
 
@@ -91,9 +91,10 @@ class ValidacionDocumentoDAO{
             $db= AccesoDB::getInstancia();
            $result= $db->executeQueryUpdate($query);
 //            $db->executeQuery($query);
-//            return $lista[0];
+            return $result;
         } catch (Exception $ex) {
-           throw $ex; 
+           throw $ex;
+           return false;
         }
     }
     

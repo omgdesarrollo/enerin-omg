@@ -95,9 +95,8 @@ switch ($Op) {
 
 	case 'Modificar':
 
-                $model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );  
-                  
-                  
+                echo $model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );  
+                 
 	break;
 
 	case 'Eliminar':

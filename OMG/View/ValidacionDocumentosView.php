@@ -186,11 +186,12 @@ require_once 'EncabezadoUsuarioView.php';
         <input type="text" id="idInputStatus" onkeyup="filterTableStatus()" placeholder="Status" style="width: 120px;">    
         <input type="text" id="idInputResponsablePlan" onkeyup="filterTableResponsablePlan()" placeholder="Responsable Plan" style="width: 180px;">
         <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+
 </div>    
 
 
-
 <div style="height: 47px"></div>
+<button onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewExcel.php'">Exportar A Excel </button>
 
 
 
@@ -199,24 +200,39 @@ require_once 'EncabezadoUsuarioView.php';
         
         <table class="tbl-qa" id="idTable">
 		  <!--<thead>-->
+                           
+                            <tr>
+                                <th class="table-header"></th>
+                                <th class="table-header"></th>
+                                <th class="table-header"></th>
+                                <th class="table-header"></th>
+                                <th class="table-header"></th>
+                                <th class="table-header"></th>
+                                <th class="table-header"></th>
+                                <th class="table-header" colspan="2">Validacion</th>
+                                <th class="table-header"></th>
+                                <th class="table-header"></th>
+                          </tr>
+                  
+            
 			  <tr>
 				
-                                <th class="table-header">Clave Documento</th>
+                              <th class="table-header">Clave Documento</th>
                                 <th class="table-header">Nombre Documento</th>
                                 <th class="table-header">Responsable del Documento</th>
                                 <th class="table-header">Tema y Responsable</th>
-                                <!--<th class="table-header">Responsable del Tema</th>-->
                                 <th class="table-header">Documento Adjunto</th>
                                 <th class="table-header">Requisitos</th>
-                                <th class="table-header">Registros</th>                                
-                                <th class="table-header">Validacion de Documento</th>
-                                <th class="table-header">Observacion Documento</th>
-                                <th class="table-header">Validacion de Tema</th>
-                                <th class="table-header">Observacion Tema</th>
-                                <th class="table-header">Plan de Accion</th>
+                                <th class="table-header">Registros</th>
+                                <th class="table-header">Responsable Documento</th>
+                                <th class="table-header">Responsable Tema</th>
+                                <th class="table-header">Observaciones</th>
+                                <!--<th class="table-header">Plan de Accion</th>-->
                                 <th class="table-header">Desviacion Mayor</th>
                                 
 			  </tr>
+                          
+                          
 		  <!--</thead>-->
 		  <tbody>
 		  <?php
@@ -267,7 +283,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 <!-- documento adjunto -->
                                 <td>
                                   <button onClick="mostrar_urls(<?php echo $filas['id_validacion_documento'] ?>);" type="button" 
-                                  class="btn btn-success" data-toggle="modal" data-target="#create-itemUrls">
+                                  class="btn btn-primary" data-toggle="modal" data-target="#create-itemUrls">
 		                                Adjuntar
                                   </button>
                                 </td>
@@ -287,27 +303,48 @@ require_once 'EncabezadoUsuarioView.php';
                                         </button>
                                 </td>
                                 
-
-                                <td  >
-                                    <form method="post" action="">
-						
-						<div class="">
-                <input type="checkbox" class="checkmark" name="checkbox" id="id_validacion_documento" class="checkbox"
-                onchange="saveCheckBoxToDataBase_ok(this,'validacion_documento_responsable',<?php echo $filas["id_validacion_documento"]; ?>)">
-							<label for="validacion_documento_responsable" >Responsable Documento</label>
-						</div>
-						
-					</form>
+                           
+                                <td style="background-color: #ccccff">
+                                    <div class="">
+                                        <input type="checkbox" style="width: 40px; height: 40px"  name="checkbox" class="checkboxDocumento" 
+                                            <?php 
+                                            if($filas["validacion_documento_responsable"] == "true"){
+                                                echo "checked disabled";
+                                            }
+                                             ?>
+                                               onchange="saveCheckBoxToDataBase(this,'validacion_documento_responsable',<?php echo $filas["id_validacion_documento"]; ?>)">
+                                    </div>						
                                 </td>
                                 
-
-                                    
-                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'validacion_documento_responsable','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["validacion_documento_responsable"]; ?></td>-->
+                            
+                                <td style="background-color: #ccccff">
+                                    <div class="">
+                                        <input type="checkbox" style="width: 40px; height: 40px" name="checkbox"  class="checkboxDocumento"
+                                            <?php 
+                                            if($filas["validacion_tema_responsable"] == "true"){
+                                                echo "checked disabled";
+                                            }
+                                             ?>
+                                        onchange="saveCheckBoxToDataBase(this,'validacion_tema_responsable',<?php echo $filas["id_validacion_documento"]; ?>)">
+                                    </div>						
+                                </td>
+                                 
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'observacion_documento','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["observacion_documento"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'validacion_tema_responsable','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["validacion_tema_responsable"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'observacion_tema','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["observacion_tema"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'plan_accion','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["plan_accion"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'desviacion_mayor','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["desviacion_mayor"]; ?></td>
+                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'observacion_tema','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["observacion_tema"]; ?></td>-->
+                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'plan_accion','<?php //echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["plan_accion"]; ?></td>-->
+                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'desviacion_mayor','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["desviacion_mayor"]; ?></td>-->
+                                
+                                <td style="background-color: #ccccff">
+                                    <div class="">
+                                        <input type="checkbox" style="width: 40px; height: 40px" name="checkbox"  class="checkboxDocumento"
+                                            <?php 
+                                            if($filas["desviacion_mayor"] == "true"){
+                                                echo "checked disabled";
+                                            }
+                                             ?>
+                                        onchange="saveCheckBoxToDataBase(this,'desviacion_mayor',<?php echo $filas["id_validacion_documento"]; ?>)">
+                                    </div>						
+                                </td>
                                 
 			  </tr>
                           
@@ -398,7 +435,7 @@ require_once 'EncabezadoUsuarioView.php';
 </div><!-- cierre del modal Requisitos-->
 
 
-<!-- Inicio modal Requisitos -->
+<!-- Inicio moda -->
 <div class="modal draggable fade" id="mostrar-temaresponsable" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
         <div id="loaderModalMostrar"></div>
@@ -415,35 +452,77 @@ require_once 'EncabezadoUsuarioView.php';
         </div><!-- cierre div class-body -->
       </div><!-- cierre div class modal-content -->
     </div><!-- cierre div class="modal-dialog" -->
-</div><!-- cierre del modal Requisitos-->
+</div><!-- cierre del modal-->
 
 
                 
 		<script>
                     
-    var id_validacion_documento;
+    var id_validacion_documento,columna,objetocheckbox;
+    
     $("#subirArchivos").click(function()
     {
       agregarArchivosUrl();
     });
     
     
+    
+    
+    
     $(function()
     {
       
-        $('.checkbox').on('change', function()
-      {
-        console.log( $(this).prop('value') );                     
-        column="VALIDACION_DOCUMENTO_RESPONSABLE";
-        val=$(this).prop('value');
-        //alert("el value que va a viajar es "+val+" y el id del seguimiento : "+id_seguimiento_entrada);
-                          
-        $.ajax({
+      
+    
+        $('.checkboxDocumento').on('change', function()
+      { 
+            inputs = $('#idTable').find('input').filter('[type=checkbox]');
+       //      
+       alert(""+input);
+                                    if($(this).attr("checked"))
+                      {
+                            inputs.attr('checked', true);
+
+               }else{
+                    inputs.attr('checked', false);
+               }
+               
+               
+        swal({
+          title: "VALIDAR",
+          text: "Una vez validado el documento no podra desvalidarlo, confirme",
+          type: "warning",
+          showCancelButton: true,
+          closeOnConfirm: false,
+          showLoaderOnConfirm: true
+        },function()
+        {
+            $.ajax({
                 url: "../Controller/ValidacionDocumentosController.php?Op=Modificar",
                 type: "POST",
-                data:'column='+column+'&editval='+val+'&id='+id_validacion_documento,
+                data:'column='+columna+'&editval='+$('.checkboxDocumento').is(':checked')+'&id='+id_validacion_documento,
                 success: function(data)
                 {
+
+                    if(data)
+                    {
+                        $(objetocheckbox).attr('disabled','true');
+//                        $(objetocheckbox).attr("checked", $(this));// fvazconcelos :d
+//                          inputs = $('#idTable').find('input').filter('[type=checkbox]');
+//                          
+//                             if($(this).attr("checked"))
+//               {
+//                     inputs.attr('checked', true);
+//               } 
+//                else
+//               {
+//                     inputs.attr('checked', false);
+//               }
+               
+//                        $('.checkboxDocumento').prop("disabled","true");
+                        swal("","Documento validado");
+                        setTimeout(function(){swal.close();},1000);
+                    }
 //            window.location.href="ValidacionDocumentosView.php?page=1";
 //					//$(editableObj).css("background","#FDFDFD");
 //            consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");
@@ -452,6 +531,10 @@ require_once 'EncabezadoUsuarioView.php';
                 } 
                 
                 });
+        
+        });
+        
+        
                           
                           
       });
@@ -462,13 +545,12 @@ require_once 'EncabezadoUsuarioView.php';
   
   
     });// Cierra el $function 
-                      
-    
-    
-    
+ 
                 
-    function saveCheckBoxToDataBase(column,id){
+    function saveCheckBoxToDataBase(checkbox,column,id){
                      id_validacion_documento=id;
+                     columna=column;
+                     objetocheckbox=checkbox;
                }            
             
                 
@@ -502,7 +584,6 @@ require_once 'EncabezadoUsuarioView.php';
       id_seguimiento_entrada=id;
     }
     
-    
     function consultarInformacion(url)
     {
       $.ajax({  
@@ -517,25 +598,7 @@ require_once 'EncabezadoUsuarioView.php';
           }
       });  
     }
-    
-    
-    function saveCheckBoxToDataBase_ok(valores,as,id)
-    {
-      // console.log(valores);
-      // $(valores).attr("checked","checked");
-      // console.log(valores);
-      // alert("nada");
-      $(valores).removeAttr("checked","");
-      console.log(valores);
-      //  validacion = $('#validacion_documento_responsable').val();  
-      //  alert("Entro aqui"+validacion);
-       
-      //  saveToDatabase(validacion,"validacion_documento_responsable",id);
-    
-    }
-    
-    
-    
+ 
     function refresh()
     {
       consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");  
@@ -683,14 +746,14 @@ require_once 'EncabezadoUsuarioView.php';
     
     function mostrarTemaResponsable(id_documento)
     {
-        mostrarTemaResponsable = "<table class='tbl-qa'>\n\
+        ValoresTemaResponsable = "<table class='tbl-qa'>\n\
                                     <tr>\n\
                                         <th class='table-header'>Tema</th>\n\
                                         <th class='table-header'>Responsable del Tema</th>\n\
                                     </tr>\n\
                                     <tbody>";
         //alert("validacion documento"+id_documento);
-
+//alert("d");
         $.ajax ({
             url:"../Controller/ValidacionDocumentosController.php?Op=MostrarTemayResponsable",
             type:'POST',
@@ -698,13 +761,13 @@ require_once 'EncabezadoUsuarioView.php';
             success:function(responseTemayResponsable)
             {
                 $.each(responseTemayResponsable,function(index,value){
-                  mostrarTemaResponsable+="<tr><td>"+value.clausula+"</td>" ;
-                  mostrarTemaResponsable+="<td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";  
+                  ValoresTemaResponsable+="<tr><td>"+value.clausula+"</td>" ;
+                  ValoresTemaResponsable+="<td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";  
 
                 });
                 
-                mostrarTemaResponsable += "</tbody></table>";
-                $('#TemayResponsableListado').html(mostrarTemaResponsable);
+                ValoresTemaResponsable += "</tbody></table>";
+                $('#TemayResponsableListado').html(ValoresTemaResponsable);
             }
                     
         })

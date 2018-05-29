@@ -9,6 +9,9 @@ if (Session:: NoExisteSeSion("user")){
 }
 $urls["fisica"] = "C:xampp/htdocs/enerin-omg/archivos/";
 $urls["logica"] = 'localhost:8282/enerin-omg/archivos/';
+//rutas web 
+//$urls["fisica"] = "/home/fpa9q09nzhnx/public_html/omgcum/archivos/";
+//$urls["logica"] = 'http://www.enerin-omgapps.com/omgcum/archivos/';
 // $urls[""] = ;
 Session::setSesion("URLS",$urls);
 $Usuario=  Session::getSesion("user");
@@ -86,11 +89,13 @@ $Usuario=  Session::getSesion("user");
      {id:'catalogo', text:'Informacion',img:'catalogo.png',type:'button',isbig:true}  
  ];
  
+ 
  var seccionCumplimiento=[
-     {id:'documentos',text:'Documentos',img:'documentos.png',type:'button',isbig:true} ,
+     {id:'documentos',text:'Validacion de Documentos',img:'documentos.png',type:'button',isbig:true} ,
      {id:'operaciones',text:'Evidencias',img:'operaciones.png',type:'button',isbig:true},
      {id:'planaccion',text:'Plan de Accion',img:'planaccion.png',type:'button',isbig:true}
  ];
+ 
  
  var seccionInformesGerenciales=[
      {id:'informe',text:'Informe',img:'documentos.jpg',type:'button',isbig:true}  

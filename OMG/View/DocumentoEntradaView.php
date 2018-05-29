@@ -6,8 +6,6 @@ require_once '../util/Session.php';
 $Usuario=  Session::getSesion("user"); 
 // $listadoUrls= Session::getSesion("getUrlsArchivos");
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -102,7 +100,7 @@ $Usuario=  Session::getSesion("user");
                     
                     .validar_formulario{
                        background: blue; 
-                       width: 120px; 
+                       width: 100%; 
                        color: white; 
                     }
 
@@ -183,8 +181,8 @@ require_once 'EncabezadoUsuarioView.php';
 </button>
 
     <input type="text" id="idInputFolioEntrada" onkeyup="filterTableFolioEntrada()" placeholder="Folio de Entrada" style="width: 120px;">
-    <input type="text" id="idInputAsunto" onkeyup="filterTableAsunto()" placeholder="Asunto" style="width: 120px;">
-    <input type="text" id="idInputRemitente" onkeyup="filterTableRemitente()" placeholder="Remitente" style="width: 130px;">
+    <input type="text" id="idInputAsunto" onkeyup="filterTableAsunto()" placeholder="Asunto" style="width: 110px;">
+    <input type="text" id="idInputRemitente" onkeyup="filterTableRemitente()" placeholder="Remitente" style="width: 110px;">
     <input type="text" id="idInputAutoridadRemitente" onkeyup="filterTableAutoridadRemitente()" placeholder="Autoridad Remitente" style="width: 150px;">
     <input type="text" id="idInputResponsableTema" onkeyup="filterTableResponsableTema()" placeholder="Responsable del Tema" style="width: 170px;">
     <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
@@ -506,7 +504,7 @@ require_once 'EncabezadoUsuarioView.php';
 
 
 
-       <!-- Inicio de Seccion Modal -->
+       <!-- Inicio de Seccion Modal Crear nueva Entrada-->
        <div class="modal draggable fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
@@ -886,7 +884,11 @@ require_once 'EncabezadoUsuarioView.php';
                                 }
                                 if(datos[3]=="")
                                 {
-                                   todoBien = false;
+//                                   verificar si esta correcto!!! 
+//                                   recepcionF = new Date(datos[3]);
+//                                   recepcionF = new Date(recepcionF.getFullYear(),recepcionF.getMonth(),recepcionF.getDate()); 
+                                   
+                                    todoBien = false;
                                     $('#ValidarFechaRecepcionModal').html('*Campo requerido');
                                     $('#ValidarFechaRecepcionModal').addClass("validar_formulario");
                                    
@@ -915,12 +917,13 @@ require_once 'EncabezadoUsuarioView.php';
                                 
                                 if(datos[10]!="")
                                 {
+                                    asignacionF = new Date(datos[10]);
+                                    asignacionF = new Date(asignacionF.getFullYear(),asignacionF.getMonth(),asignacionF.getDate());
                                     if(datos[11]!="")
                                     {
                                         limiteF = new Date(datos[11]);
                                         limiteF = new Date(limiteF.getFullYear(),limiteF.getMonth(),limiteF.getDate());
-                                        asignacionF = new Date(datos[10]);
-                                        asignacionF = new Date(asignacionF.getFullYear(),asignacionF.getMonth(),asignacionF.getDate());
+                                        
                                         if(limiteF >= asignacionF)
                                         {
                                             // console.log("Limite mayor o igual a la fecha de asignacion");
@@ -928,19 +931,14 @@ require_once 'EncabezadoUsuarioView.php';
                                             {
                                                 alarmaF = new Date(datos[12]);
                                                 alarmaF = new Date(alarmaF.getFullYear(),alarmaF.getMonth(),alarmaF.getDate());
-                                                if(limiteF >= alarmaF)
+                                                if(limiteF < alarmaF)
                                                 {
                                                         // console.log("Alarma menor o igual a la fecha de limite");
-                                                }
-                                                else
-                                                {
-                                                        // console.log("La alarma no puede ser despues de la fecha limite");
-                                                        //$
                                                         todoBien = false;
                                                         $('#ValidarFechaAlarmaModal').html('*La Fecha Alarma no puede ser mayor que la Fecha Limite');
                                                         $('#ValidarFechaAlarmaModal').addClass("validar_formulario");
                                                 }
-                                                if(alarmaF >= asignacionF)
+                                                if(alarmaF < asignacionF)
                                                 {
                                                         // console.log("Alarma mayor o igual a la fecha de asignacion");
                                                 }
@@ -971,6 +969,18 @@ require_once 'EncabezadoUsuarioView.php';
                                                 $('#ValidarFechaLimiteAtencionModal').addClass("validar_formulario");
 
                                     }
+                                    if(datos[3]!="")
+                                    {
+                                        recepcionF = new Date(datos[3]);
+                                        recepcionF = new Date(recepcionF.getFullYear(),recepcionF.getMonth(),recepcionF.getDate());
+                                        if(recepcionF > asignacionF)
+                                        {
+                                            todoBien = false;
+                                            $('#ValidarFechaRecepcionModal').html('*La Fecha de recepcion no puede ser mayor a la fecha de asignacion');
+                                            $('#ValidarFechaRecepcionModal').addClass("validar_formulario");
+                                        }
+                                    }
+                                    
                                 }
                                 else {
                                 
@@ -1133,11 +1143,21 @@ require_once 'EncabezadoUsuarioView.php';
                         limiteF = new Date(limiteF.getFullYear(),limiteF.getMonth(),limiteF.getDate());
                         asignacionF = new Date(val);
                         asignacionF = new Date(asignacionF.getFullYear(),asignacionF.getMonth(),asignacionF.getDate());
+//                        recepcionF = new Date(Frecepcion);
+//                        recepcionF = new Date(recepcionF.getFullYear(),recepcionF.getMonth(),recepcionF.getDate());
+//                        
+//                        if(asignacionF<recepcionF)
+//                        {
+//                                swal("D'oh!", "La fecha de asignacion no debe ser menor que la fecha de recepcion, VERIFICA", "error");
+//                                return false;
+//                        }
+                        
                         if(asignacionF>limiteF)
                         {
                                 swal("D'oh!", "La fecha de asignacion sobrepasa la fecha limite, VERIFICA", "error");
                                 return false;
                         }
+                        
                         if(falarma!="0000-00-00")
                         {
                                 alarmaF = new Date(falarma);
@@ -1379,6 +1399,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 if(Id_cumplimiento!="")
                                 {
                                         URL = 'filesDocumento/Entrada/'+Id_cumplimiento+"/"+id_documento_entrada;
+//                                        alert(URL);
                                         $.ajax({
                                                 url: '../Controller/ArchivoUploadController.php?Op=CrearUrl',
                                                 type: 'GET',
@@ -1480,6 +1501,7 @@ require_once 'EncabezadoUsuarioView.php';
         }
         function borrarArchivo(url)
         {
+
                 swal({
                         title: "ELIMINAR",
                         text: "Confirme para eliminar el documento",
