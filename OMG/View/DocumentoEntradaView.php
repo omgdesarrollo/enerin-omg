@@ -886,7 +886,11 @@ require_once 'EncabezadoUsuarioView.php';
                                 }
                                 if(datos[3]=="")
                                 {
-                                   todoBien = false;
+//                                   verificar si esta correcto!!! 
+                                   recepcionF = new Date(datos[3]);
+                                   recepcionF = new Date(recepcionF.getFullYear(),recepcionF.getMonth(),recepcionF.getDate()); 
+                                   
+                                    todoBien = false;
                                     $('#ValidarFechaRecepcionModal').html('*Campo requerido');
                                     $('#ValidarFechaRecepcionModal').addClass("validar_formulario");
                                    
@@ -1127,17 +1131,27 @@ require_once 'EncabezadoUsuarioView.php';
                                 editableObj.value=fecha
 
 		}
-                function compararFechaAsignacion(val,flimite,falarma)
+                function compararFechaAsignacion(val,Frecepcion,flimite,falarma)
                 {
                         limiteF = new Date(flimite);
                         limiteF = new Date(limiteF.getFullYear(),limiteF.getMonth(),limiteF.getDate());
                         asignacionF = new Date(val);
                         asignacionF = new Date(asignacionF.getFullYear(),asignacionF.getMonth(),asignacionF.getDate());
+                        recepcionF = new Date(Frecepcion);
+                        recepcionF = new Date(recepcionF.getFullYear(),recepcionF.getMonth(),recepcionF.getDate());
+                        
+                        if(asignacionF<recepcionF)
+                        {
+                                swal("D'oh!", "La fecha de asignacion no debe ser menor que la fecha de recepcion, VERIFICA", "error");
+                                return false;
+                        }
+                        
                         if(asignacionF>limiteF)
                         {
                                 swal("D'oh!", "La fecha de asignacion sobrepasa la fecha limite, VERIFICA", "error");
                                 return false;
                         }
+                        
                         if(falarma!="0000-00-00")
                         {
                                 alarmaF = new Date(falarma);
