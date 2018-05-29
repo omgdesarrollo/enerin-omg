@@ -1,16 +1,33 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+require_once '../dao/OperacionesDAO.php';
+require_once '../Pojo/OperacionesEntradaPojo.php';
 
-/**
- * Description of OperacionesModel
- *
- * @author usuario
- */
-class OperacionesModel {
-    //put your code here
+class OperacionesModel
+{
+    public function listarOperaciones()
+    {
+        try
+        {
+            $dao = new OperacionesDAO();
+            $rec = $dao->listarOperaciones();
+            return $rec;
+        }catch(Exception $e)
+        {
+            throw $e;
+        }
+    }
+    public function getClavesDocumentos()
+    {
+        try
+        {
+            $dao = new OperacionesDAO();
+            $rec = $dao->getClavesDocumentos();
+            return $rec;
+        }catch(Exception $e)
+        {
+            throw $e;
+        }
+    }
 }
+?>

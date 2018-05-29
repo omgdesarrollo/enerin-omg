@@ -119,7 +119,7 @@
             array("name"=>"Clave","column"=>0),
             array("name"=>"Nombre Documento","column"=>1),
             array("name"=>"Responsable","column"=>2),
-            array("name"=>"Clasificación","column"=>6)
+            array("name"=>"Clasificación","column"=>6),
             // array("name"=>"Clave Evidencia","column"=>"text"),
         );
         $titulosTable = 
@@ -128,10 +128,12 @@
                 "Plan de Acción","Ingresar Oficio Atención","Oficio de Atención");
     ?>
     <div style="position: fixed;">
-    <!-- <button onClick="DocumentoArchivoAgregarModalF();" type="button" 
-    class="btn btn-success" data-toggle="modal" data-target="#create-item">
-		Agregar Documento de Entrada
-    </button> -->
+
+        <button onClick="DocumentoArchivoAgregarModalF();" type="button" 
+        class="btn btn-success" data-toggle="modal" data-target="#create-item">
+            Agregar Nuevo Registro
+        </button>
+
         <button id="btnAgregarOperacionesRefrescar" type="button" 
         class="btn btn-info " onclick="refresh();" >
             <i class="glyphicon glyphicon-repeat"></i> 
@@ -145,23 +147,25 @@
         placeholder="<?php echo $value['name'] ?>" style="width: 120px;">
         <?php } ?>
 
-        <div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom">
-            <div class="table-container">
-                <table id="idTable" class="tbl-qa">
-                    <tr>
-                    <?php foreach($titulosTable as $value)
-                    { ?>
-                        <th class="table-header"><?php echo $value ?></th>
-                    <?php } ?>
-                    </tr>
-                    <tbody id="bodyTable">
+    <div style="height: 50px"></div>
 
-                    </tbody>
-                </table>
-            </div>
+    <div class="table-fixed-header" style="display:block;" id="myDiv" class="animate-bottom">
+        <div class="table-container">
+            <table id="idTable" class="tbl-qa">
+                <tr>
+                <?php foreach($titulosTable as $value)
+                { ?>
+                    <th class="table-header"><?php echo $value ?></th>
+                <?php } ?>
+                </tr>
+                <tbody id="bodyTable">
+
+                </tbody>
+            </table>
         </div>
+    </div>
 
-    <!-- </div> -->
+    </div>
 </body>
 <script>
     var data="";
@@ -183,29 +187,41 @@
         // alert("se cargara otro ");
         myFunction();
     }
-    // function filterTableAsunt()
-    // {
-    //     var input, filter, table, tr, td, i;
-    //     input = document.getElementById("idInputAsunto");
-    //     filter = input.value.toUpperCase();
-    //     table = document.getElementById("idTable");
-    //     tr = table.getElementsByTagName("tr");
+    function getClavesDocumentos()
+    {
+        $.ajax
+        ({
+            url: '../Controller/OperacionesController.php?Op=getClavesDocumentos',
+            type: 'GET',
+            success:function(data)
+            {
 
-    //     for (i = 0; i < tr.length; i++)
-    //     {
-    //         td = tr[i].getElementsByTagName("td")[4];
-    //         if (td)
-    //         {
-    //             if (td.innerHTML.toUpperCase().indexOf(filter) > -1)
-    //             {
-    //                 tr[i].style.display = "";
-    //             }else
-    //             {
-    //                 tr[i].style.display = "none";
-    //             }
-    //         }
-    //     }
-    // }
+            })
+        });
+    }
+    function filterTableAsunt()
+    {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("idInputAsunto");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("idTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++)
+        {
+            td = tr[i].getElementsByTagName("td")[4];
+            if (td)
+            {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1)
+                {
+                    tr[i].style.display = "";
+                }else
+                {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
     function getDataTable()
     {        
         // $('#bodyTable').html(data);
