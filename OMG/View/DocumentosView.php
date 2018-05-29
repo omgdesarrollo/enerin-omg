@@ -258,8 +258,8 @@ $Usuario=  Session::getSesion("user");
                                     </select>                                   
                                 </td>
                                 
-                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'registros','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["registros"]; ?></td>
-
+                                <!--<td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'registros','<?php // echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php // echo $filas["registros"]; ?></td>-->
+                                <td><textarea cols="50"  wrap="soft"> <?php echo $filas["registros"]; ?> </textarea>  </td>
 			  </tr>
 		<?php
                       }
@@ -487,6 +487,12 @@ $Usuario=  Session::getSesion("user");
 		   });
 		}
                 
+                
+                
+                
+                function save(){
+                    aler("valor");
+                }
                 
                 function saveComboToDatabase(column,id){
                      id_clausula=id;
