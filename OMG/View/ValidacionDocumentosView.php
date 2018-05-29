@@ -746,7 +746,7 @@ require_once 'EncabezadoUsuarioView.php';
     
     function mostrarTemaResponsable(id_documento)
     {
-        mostrarTemaResponsable = "<table class='tbl-qa'>\n\
+        ValoresTemaResponsable = "<table class='tbl-qa'>\n\
                                     <tr>\n\
                                         <th class='table-header'>Tema</th>\n\
                                         <th class='table-header'>Responsable del Tema</th>\n\
@@ -761,13 +761,13 @@ require_once 'EncabezadoUsuarioView.php';
             success:function(responseTemayResponsable)
             {
                 $.each(responseTemayResponsable,function(index,value){
-                  mostrarTemaResponsable+="<tr><td>"+value.clausula+"</td>" ;
-                  mostrarTemaResponsable+="<td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";  
+                  ValoresTemaResponsable+="<tr><td>"+value.clausula+"</td>" ;
+                  ValoresTemaResponsable+="<td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";  
 
                 });
                 
-                mostrarTemaResponsable += "</tbody></table>";
-                $('#TemayResponsableListado').html(mostrarTemaResponsable);
+                ValoresTemaResponsable += "</tbody></table>";
+                $('#TemayResponsableListado').html(ValoresTemaResponsable);
             }
                     
         })
