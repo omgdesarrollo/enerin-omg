@@ -251,24 +251,20 @@ function loadDataSideBarOficiosDocumentacion(){
     mySidebar = new dhtmlXSideBar({
         parent: "sidebarObj",
         icons_path: "../../images/base/",    
-                                template:'tiles',
+        template:'tiles',
         width: 350,
         items: [
           {id: "seguimientooperaciones", text: "Seguimiento Operaciones", icon: "seguimientooperaciones.jpg"},
-            
         ]
       });
-
-                                 
-                         mySidebar.attachEvent("onSelect", function(id, value){
-                                   switch(id){
-                                       case "seguimientooperaciones":
-                                            // consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");
-                                            $("#sidebarObjV").load('InyectarVistasView.php #seguimientooperaciones');
-
-                                       break;  
-                                                                              
-                                   }
+            mySidebar.attachEvent("onSelect", function(id, value){
+                switch(id)
+                {
+                    case "seguimientooperaciones":
+                    // consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");
+                    $("#sidebarObjV").load('InyectarVistasView.php #seguimientooperaciones');
+                    break;
+                }
       });
                         
     } 

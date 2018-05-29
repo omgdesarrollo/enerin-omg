@@ -24,7 +24,7 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
                 
                 <!-- clase para la subida de archivos -->
-                <link href="../../assets/probando/css/subir.css" rel="stylesheet" type="text/css"/>
+                <!-- <link href="../../assets/probando/css/subir.css" rel="stylesheet" type="text/css"/> -->
 
 		<!--<link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" />-->
                 <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>

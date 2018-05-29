@@ -292,7 +292,8 @@ require_once 'EncabezadoUsuarioView.php';
                                     <form method="post" action="">
 						
 						<div class="">
-                                                        <input type="checkbox" name="checkbox" id="id_validacion_documento" class="checkbox" value="5" onchange="saveCheckBoxToDataBase('validacion_documento_responsable'<?php echo $filas["id_validacion_documento"]; ?>)">
+                <input type="checkbox" class="checkmark" name="checkbox" id="id_validacion_documento" class="checkbox"
+                onchange="saveCheckBoxToDataBase_ok(this,'validacion_documento_responsable',<?php echo $filas["id_validacion_documento"]; ?>)">
 							<label for="validacion_documento_responsable" >Responsable Documento</label>
 						</div>
 						
@@ -518,13 +519,18 @@ require_once 'EncabezadoUsuarioView.php';
     }
     
     
-    function saveCheckBoxToDataBase_ok(id)
+    function saveCheckBoxToDataBase_ok(valores,as,id)
     {
-   
-       validacion = $('#validacion_documento_responsable').val();  
-       alert("Entro aqui"+validacion);
+      // console.log(valores);
+      // $(valores).attr("checked","checked");
+      // console.log(valores);
+      // alert("nada");
+      $(valores).removeAttr("checked","");
+      console.log(valores);
+      //  validacion = $('#validacion_documento_responsable').val();  
+      //  alert("Entro aqui"+validacion);
        
-       saveToDatabase(validacion,"validacion_documento_responsable",id);
+      //  saveToDatabase(validacion,"validacion_documento_responsable",id);
     
     }
     
