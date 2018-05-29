@@ -186,11 +186,12 @@ require_once 'EncabezadoUsuarioView.php';
         <input type="text" id="idInputStatus" onkeyup="filterTableStatus()" placeholder="Status" style="width: 120px;">    
         <input type="text" id="idInputResponsablePlan" onkeyup="filterTableResponsablePlan()" placeholder="Responsable Plan" style="width: 180px;">
         <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+
 </div>    
 
 
-
 <div style="height: 47px"></div>
+<button onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewExcel.php'">Exportar A Excel </button>
 
 
 
@@ -272,7 +273,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 -->
                                 
                                 <td>
-                                        <button onClick="mostrarTemaResponsable('<?php echo $filas['id_documento'] ?>');" type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-temaresponsable">
+                                        <button onClick="mostrarTemaResponsable(<?php echo $filas['id_documento'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-temaresponsable">
 		                                Ver
                                                 <i class="ace-icon fa fa-book" style="color: #0099ff;font-size: 20px;"></i>
                                         </button>
@@ -434,7 +435,7 @@ require_once 'EncabezadoUsuarioView.php';
 </div><!-- cierre del modal Requisitos-->
 
 
-<!-- Inicio modal Requisitos -->
+<!-- Inicio moda -->
 <div class="modal draggable fade" id="mostrar-temaresponsable" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
         <div id="loaderModalMostrar"></div>
@@ -451,7 +452,7 @@ require_once 'EncabezadoUsuarioView.php';
         </div><!-- cierre div class-body -->
       </div><!-- cierre div class modal-content -->
     </div><!-- cierre div class="modal-dialog" -->
-</div><!-- cierre del modal Requisitos-->
+</div><!-- cierre del modal-->
 
 
                 
@@ -471,9 +472,22 @@ require_once 'EncabezadoUsuarioView.php';
     $(function()
     {
       
+      
+    
         $('.checkboxDocumento').on('change', function()
       { 
-    
+            inputs = $('#idTable').find('input').filter('[type=checkbox]');
+       //      
+       alert(""+input);
+                                    if($(this).attr("checked"))
+                      {
+                            inputs.attr('checked', true);
+
+               }else{
+                    inputs.attr('checked', false);
+               }
+               
+               
         swal({
           title: "VALIDAR",
           text: "Una vez validado el documento no podra desvalidarlo, confirme",
@@ -493,6 +507,18 @@ require_once 'EncabezadoUsuarioView.php';
                     if(data)
                     {
                         $(objetocheckbox).attr('disabled','true');
+//                        $(objetocheckbox).attr("checked", $(this));// fvazconcelos :d
+//                          inputs = $('#idTable').find('input').filter('[type=checkbox]');
+//                          
+//                             if($(this).attr("checked"))
+//               {
+//                     inputs.attr('checked', true);
+//               } 
+//                else
+//               {
+//                     inputs.attr('checked', false);
+//               }
+               
 //                        $('.checkboxDocumento').prop("disabled","true");
                         swal("","Documento validado");
                         setTimeout(function(){swal.close();},1000);
@@ -505,7 +531,7 @@ require_once 'EncabezadoUsuarioView.php';
                 } 
                 
                 });
-          
+        
         });
         
         
@@ -727,7 +753,7 @@ require_once 'EncabezadoUsuarioView.php';
                                     </tr>\n\
                                     <tbody>";
         //alert("validacion documento"+id_documento);
-
+//alert("d");
         $.ajax ({
             url:"../Controller/ValidacionDocumentosController.php?Op=MostrarTemayResponsable",
             type:'POST',

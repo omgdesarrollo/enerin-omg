@@ -9,6 +9,9 @@ if (Session:: NoExisteSeSion("user")){
 }
 $urls["fisica"] = "C:xampp/htdocs/enerin-omg/archivos/";
 $urls["logica"] = 'localhost:8282/enerin-omg/archivos/';
+//rutas web 
+//$urls["fisica"] = "/home/fpa9q09nzhnx/public_html/omgcum/archivos/";
+//$urls["logica"] = 'http://www.enerin-omgapps.com/omgcum/archivos/';
 // $urls[""] = ;
 Session::setSesion("URLS",$urls);
 $Usuario=  Session::getSesion("user");

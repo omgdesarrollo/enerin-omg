@@ -6,8 +6,6 @@ require_once '../util/Session.php';
 $Usuario=  Session::getSesion("user"); 
 // $listadoUrls= Session::getSesion("getUrlsArchivos");
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -1393,6 +1391,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 if(Id_cumplimiento!="")
                                 {
                                         URL = 'filesDocumento/Entrada/'+Id_cumplimiento+"/"+id_documento_entrada;
+//                                        alert(URL);
                                         $.ajax({
                                                 url: '../Controller/ArchivoUploadController.php?Op=CrearUrl',
                                                 type: 'GET',
@@ -1494,6 +1493,7 @@ require_once 'EncabezadoUsuarioView.php';
         }
         function borrarArchivo(url)
         {
+
                 swal({
                         title: "ELIMINAR",
                         text: "Confirme para eliminar el documento",
