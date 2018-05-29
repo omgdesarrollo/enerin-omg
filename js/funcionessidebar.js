@@ -211,65 +211,78 @@ function loadDataSideBarOficiosDocumentacion(){
                         
     }
     function loadDataSideBarCumplimientosDocumentos(){
+        
+        
+        consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");
+        $("#sidebarObjV").load('InyectarVistasView.php #validaciondocumentos');
+
+        
 //         mySidebar = myLayout.cells("a").attachSidebar();
    
-    mySidebar = new dhtmlXSideBar({
-        parent: "sidebarObj",
-        icons_path: "../../images/base/",    
-                                template:'tiles',
-        width: 350,
-        items: [
-          {id: "validaciondocumentos", text: "Validacion de Documentos", icon: "registrovalidaciondocumentos.jpg"},
-          //{id: "formatodedocumento", text: "Formato de Documento", icon: "informegerencial.png"}
-            
-        ]
-      });
+//    mySidebar = new dhtmlXSideBar({
+//        parent: "sidebarObj",
+//        icons_path: "../../images/base/",    
+//                                template:'tiles',
+//        width: 350,
+//        items: [
+//          {id: "validaciondocumentos", text: "Validacion de Documentos", icon: "registrovalidaciondocumentos.jpg"},
+//          //{id: "formatodedocumento", text: "Formato de Documento", icon: "informegerencial.png"}
+//            
+//        ]
+//      });
 
                                  
-                         mySidebar.attachEvent("onSelect", function(id, value){
-                                   switch(id){
-                                       case "validaciondocumentos":
-                                            consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");
-
-                                            $("#sidebarObjV").load('InyectarVistasView.php #validaciondocumentos');
-                                       break;  
-                                       
-
-                                       case "formatodedocumentos":
-                                          
-                                       break;
-                                                                              
-                                   }
-      });
-                        
-    } 
+//                         mySidebar.attachEvent("onSelect", function(id, value){
+//                                   switch(id){
+//                                       case "validaciondocumentos":
+//                                            consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");
+//
+//                                            $("#sidebarObjV").load('InyectarVistasView.php #validaciondocumentos');
+//                                       break;  
+//                                       
+//
+//                                       case "formatodedocumentos":
+//                                          
+//                                       break;
+//                                                                              
+//                                   }
+//      });
+//                        
+    }
+    
+    
+    
     
     
        function loadDataSideBarCumplimientosOperaciones(){
+           
+          consultarInformacion("../Controller/OperacionesController.php?Op=Listar");
+          $("#sidebarObjV").load('InyectarVistasView.php #seguimientooperaciones');
+           
 //         mySidebar = myLayout.cells("a").attachSidebar();
    
-    mySidebar = new dhtmlXSideBar({
-        parent: "sidebarObj",
-        icons_path: "../../images/base/",    
-                                template:'tiles',
-        width: 350,
-        items: [
-          {id: "seguimientooperaciones", text: "Seguimiento Operaciones", icon: "seguimientooperaciones.jpg"},
-            
-        ]
-      });
-
-                                 
-                         mySidebar.attachEvent("onSelect", function(id, value){
-                                   switch(id){
-                                       case "seguimientooperaciones":
-                                            // consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");
-                                            $("#sidebarObjV").load('InyectarVistasView.php #seguimientooperaciones');
-
-                                       break;  
-                                                                              
-                                   }
-      });
+//    mySidebar = new dhtmlXSideBar({
+//        parent: "sidebarObj",
+//        icons_path: "../../images/base/",    
+//                                template:'tiles',
+//        width: 350,
+//        items: [
+//          {id: "seguimientooperaciones", text: "Seguimiento Operaciones", icon: "seguimientooperaciones.jpg"},
+//            
+//        ]
+//      });
+//
+//                                 
+//                         mySidebar.attachEvent("onSelect", function(id, value){
+//                                   switch(id){
+//                                       case "seguimientooperaciones":
+//                                            // consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");
+//                                            $("#sidebarObjV").load('InyectarVistasView.php #seguimientooperaciones');
+//
+//                                       break;  
+//                                                                              
+//                                   }
+//      });
                         
     } 
     

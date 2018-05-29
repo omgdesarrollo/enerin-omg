@@ -22,7 +22,7 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
                 
                 <!-- clase para la subida de archivos -->
-                <link href="../../assets/probando/css/subir.css" rel="stylesheet" type="text/css"/>
+                <!-- <link href="../../assets/probando/css/subir.css" rel="stylesheet" type="text/css"/> -->
 
 		<!--<link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" />-->
                 <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
@@ -100,7 +100,7 @@ $Usuario=  Session::getSesion("user");
                     
                     .validar_formulario{
                        background: blue; 
-                       width: 120px; 
+                       width: 100%; 
                        color: white; 
                     }
 
@@ -504,7 +504,7 @@ require_once 'EncabezadoUsuarioView.php';
 
 
 
-       <!-- Inicio de Seccion Modal -->
+       <!-- Inicio de Seccion Modal Crear nueva Entrada-->
        <div class="modal draggable fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
@@ -884,7 +884,11 @@ require_once 'EncabezadoUsuarioView.php';
                                 }
                                 if(datos[3]=="")
                                 {
-                                   todoBien = false;
+//                                   verificar si esta correcto!!! 
+//                                   recepcionF = new Date(datos[3]);
+//                                   recepcionF = new Date(recepcionF.getFullYear(),recepcionF.getMonth(),recepcionF.getDate()); 
+                                   
+                                    todoBien = false;
                                     $('#ValidarFechaRecepcionModal').html('*Campo requerido');
                                     $('#ValidarFechaRecepcionModal').addClass("validar_formulario");
                                    
@@ -913,12 +917,13 @@ require_once 'EncabezadoUsuarioView.php';
                                 
                                 if(datos[10]!="")
                                 {
+                                    asignacionF = new Date(datos[10]);
+                                    asignacionF = new Date(asignacionF.getFullYear(),asignacionF.getMonth(),asignacionF.getDate());
                                     if(datos[11]!="")
                                     {
                                         limiteF = new Date(datos[11]);
                                         limiteF = new Date(limiteF.getFullYear(),limiteF.getMonth(),limiteF.getDate());
-                                        asignacionF = new Date(datos[10]);
-                                        asignacionF = new Date(asignacionF.getFullYear(),asignacionF.getMonth(),asignacionF.getDate());
+                                        
                                         if(limiteF >= asignacionF)
                                         {
                                             // console.log("Limite mayor o igual a la fecha de asignacion");
@@ -926,19 +931,14 @@ require_once 'EncabezadoUsuarioView.php';
                                             {
                                                 alarmaF = new Date(datos[12]);
                                                 alarmaF = new Date(alarmaF.getFullYear(),alarmaF.getMonth(),alarmaF.getDate());
-                                                if(limiteF >= alarmaF)
+                                                if(limiteF < alarmaF)
                                                 {
                                                         // console.log("Alarma menor o igual a la fecha de limite");
-                                                }
-                                                else
-                                                {
-                                                        // console.log("La alarma no puede ser despues de la fecha limite");
-                                                        //$
                                                         todoBien = false;
                                                         $('#ValidarFechaAlarmaModal').html('*La Fecha Alarma no puede ser mayor que la Fecha Limite');
                                                         $('#ValidarFechaAlarmaModal').addClass("validar_formulario");
                                                 }
-                                                if(alarmaF >= asignacionF)
+                                                if(alarmaF < asignacionF)
                                                 {
                                                         // console.log("Alarma mayor o igual a la fecha de asignacion");
                                                 }
@@ -969,6 +969,18 @@ require_once 'EncabezadoUsuarioView.php';
                                                 $('#ValidarFechaLimiteAtencionModal').addClass("validar_formulario");
 
                                     }
+                                    if(datos[3]!="")
+                                    {
+                                        recepcionF = new Date(datos[3]);
+                                        recepcionF = new Date(recepcionF.getFullYear(),recepcionF.getMonth(),recepcionF.getDate());
+                                        if(recepcionF > asignacionF)
+                                        {
+                                            todoBien = false;
+                                            $('#ValidarFechaRecepcionModal').html('*La Fecha de recepcion no puede ser mayor a la fecha de asignacion');
+                                            $('#ValidarFechaRecepcionModal').addClass("validar_formulario");
+                                        }
+                                    }
+                                    
                                 }
                                 else {
                                 
@@ -1131,11 +1143,21 @@ require_once 'EncabezadoUsuarioView.php';
                         limiteF = new Date(limiteF.getFullYear(),limiteF.getMonth(),limiteF.getDate());
                         asignacionF = new Date(val);
                         asignacionF = new Date(asignacionF.getFullYear(),asignacionF.getMonth(),asignacionF.getDate());
+//                        recepcionF = new Date(Frecepcion);
+//                        recepcionF = new Date(recepcionF.getFullYear(),recepcionF.getMonth(),recepcionF.getDate());
+//                        
+//                        if(asignacionF<recepcionF)
+//                        {
+//                                swal("D'oh!", "La fecha de asignacion no debe ser menor que la fecha de recepcion, VERIFICA", "error");
+//                                return false;
+//                        }
+                        
                         if(asignacionF>limiteF)
                         {
                                 swal("D'oh!", "La fecha de asignacion sobrepasa la fecha limite, VERIFICA", "error");
                                 return false;
                         }
+                        
                         if(falarma!="0000-00-00")
                         {
                                 alarmaF = new Date(falarma);
