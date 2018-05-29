@@ -186,11 +186,12 @@ require_once 'EncabezadoUsuarioView.php';
         <input type="text" id="idInputStatus" onkeyup="filterTableStatus()" placeholder="Status" style="width: 120px;">    
         <input type="text" id="idInputResponsablePlan" onkeyup="filterTableResponsablePlan()" placeholder="Responsable Plan" style="width: 180px;">
         <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+
 </div>    
 
 
-
 <div style="height: 47px"></div>
+<button onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewExcel.php'">Exportar A Excel </button>
 
 
 
@@ -201,7 +202,9 @@ require_once 'EncabezadoUsuarioView.php';
 		  <!--<thead>-->
 			  <tr>
 				
-                                <th class="table-header">Clave Documento</th>
+                                <th class="table-header" colspan="2">Clave Documento</th>
+                                
+                                
                                 <th class="table-header">Nombre Documento</th>
                                 <th class="table-header">Responsable del Documento</th>
                                 <th class="table-header">Tema y Responsable</th>
@@ -217,6 +220,15 @@ require_once 'EncabezadoUsuarioView.php';
                                 <th class="table-header">Desviacion Mayor</th>
                                 
 			  </tr>
+                          
+                          <tr>
+
+  
+
+      <th>Entrada</th>
+
+      <th>Salida</th>
+                          </tr>
 		  <!--</thead>-->
 		  <tbody>
 		  <?php

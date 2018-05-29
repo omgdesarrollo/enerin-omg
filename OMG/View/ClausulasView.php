@@ -22,7 +22,10 @@ $Usuario=  Session::getSesion("user");
 		<!-- text fonts -->
 		<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />
 		<!-- ace styles -->
-		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+		
+                
+                
+                <link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
 
 		<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
