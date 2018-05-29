@@ -51,8 +51,9 @@ class ValidacionDocumentoModel{
             $dao=new ValidacionDocumentoDAO();
             $rec= $dao->actualizarValidacionDocumentoPorColumna($COLUMNA, $VALOR, $ID_VALIDACION_DOCUMENTO);
             
+            return $rec;
         } catch (Exception $ex) {
-
+            return false;
         }
     }
     

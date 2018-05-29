@@ -90,7 +90,9 @@ class DocumentoDAO{
     }
     }
     
-
+    
+    
+    
     public function insertarDocumentos($clave_documento,$documento,$id_empleado,$registros){
         
         try{

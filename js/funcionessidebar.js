@@ -263,7 +263,9 @@ function loadDataSideBarOficiosDocumentacion(){
                          mySidebar.attachEvent("onSelect", function(id, value){
                                    switch(id){
                                        case "seguimientooperaciones":
-                                          
+                                            // consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");
+                                            $("#sidebarObjV").load('InyectarVistasView.php #seguimientooperaciones');
+
                                        break;  
                                                                               
                                    }
