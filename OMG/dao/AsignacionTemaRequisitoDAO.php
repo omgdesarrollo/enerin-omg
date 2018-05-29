@@ -81,13 +81,19 @@ class AsignacionTemaRequisitoDAO {
         try{
             $query="SELECT tbclausulas.clausula, tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno
 
-                    FROM  asignacion_tema_requisito tbasignacion_tema_requisito
+                    FROM  validacion_documento tbvalidacion_documento
+                                        
+                    
+                    JOIN documentos tbdocumentos ON tbdocumentos.id_documento=tbvalidacion_documento.id_documento
+
+                    JOIN asignacion_tema_requisito tbasignacion_tema_requisito ON 
+                    tbasignacion_tema_requisito.id_documento=tbdocumentos.id_documento
 
                     JOIN clausulas tbclausulas ON tbclausulas.id_clausula=tbasignacion_tema_requisito.id_clausula
 
                     JOIN empleados tbempleados ON tbempleados.id_empleado=tbclausulas.id_empleado
 
-                    WHERE tbasignacion_tema_requisito.id_documento=$id_documento";
+                    WHERE tbvalidacion_documento.id_documento=$id_documento";
             
             
             $db= AccesoDB::getInstancia();

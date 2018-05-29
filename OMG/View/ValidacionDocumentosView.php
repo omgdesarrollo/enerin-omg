@@ -199,24 +199,39 @@ require_once 'EncabezadoUsuarioView.php';
         
         <table class="tbl-qa" id="idTable">
 		  <!--<thead>-->
+                           
+                            <tr>
+                                <th class="table-header"></th>
+                                <th class="table-header"></th>
+                                <th class="table-header"></th>
+                                <th class="table-header"></th>
+                                <th class="table-header"></th>
+                                <th class="table-header"></th>
+                                <th class="table-header"></th>
+                                <th class="table-header" colspan="2">Validacion</th>
+                                <th class="table-header"></th>
+                                <th class="table-header"></th>
+                          </tr>
+                  
+            
 			  <tr>
 				
-                                <th class="table-header">Clave Documento</th>
+                              <th class="table-header">Clave Documento</th>
                                 <th class="table-header">Nombre Documento</th>
                                 <th class="table-header">Responsable del Documento</th>
                                 <th class="table-header">Tema y Responsable</th>
-                                <!--<th class="table-header">Responsable del Tema</th>-->
                                 <th class="table-header">Documento Adjunto</th>
                                 <th class="table-header">Requisitos</th>
-                                <th class="table-header">Registros</th>                                
-                                <th class="table-header">Validacion de Documento</th>
-                                <th class="table-header">Observacion Documento</th>
-                                <th class="table-header">Validacion de Tema</th>
-                                <th class="table-header">Observacion Tema</th>
-                                <th class="table-header">Plan de Accion</th>
+                                <th class="table-header">Registros</th>
+                                <th class="table-header">Responsable Documento</th>
+                                <th class="table-header">Responsable Tema</th>
+                                <th class="table-header">Observaciones</th>
+                                <!--<th class="table-header">Plan de Accion</th>-->
                                 <th class="table-header">Desviacion Mayor</th>
                                 
 			  </tr>
+                          
+                          
 		  <!--</thead>-->
 		  <tbody>
 		  <?php
@@ -257,7 +272,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 -->
                                 
                                 <td>
-                                        <button onClick="mostrarTemaResponsable(<?php echo $filas['id_documento'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-temaresponsable">
+                                        <button onClick="mostrarTemaResponsable('<?php echo $filas['id_documento'] ?>');" type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-temaresponsable">
 		                                Ver
                                                 <i class="ace-icon fa fa-book" style="color: #0099ff;font-size: 20px;"></i>
                                         </button>
@@ -267,7 +282,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 <!-- documento adjunto -->
                                 <td>
                                   <button onClick="mostrar_urls(<?php echo $filas['id_validacion_documento'] ?>);" type="button" 
-                                  class="btn btn-success" data-toggle="modal" data-target="#create-itemUrls">
+                                  class="btn btn-primary" data-toggle="modal" data-target="#create-itemUrls">
 		                                Adjuntar
                                   </button>
                                 </td>
@@ -287,26 +302,48 @@ require_once 'EncabezadoUsuarioView.php';
                                         </button>
                                 </td>
                                 
-
-                                <td  >
-                                    <form method="post" action="">
-						
-						<div class="">
-                                                        <input type="checkbox" name="checkbox" id="id_validacion_documento" class="checkbox" value="5" onchange="saveCheckBoxToDataBase('validacion_documento_responsable'<?php echo $filas["id_validacion_documento"]; ?>)">
-							<label for="validacion_documento_responsable" >Responsable Documento</label>
-						</div>
-						
-					</form>
+                           
+                                <td style="background-color: #ccccff">
+                                    <div class="">
+                                        <input type="checkbox" style="width: 40px; height: 40px"  name="checkbox" class="checkboxDocumento" 
+                                            <?php 
+                                            if($filas["validacion_documento_responsable"] == "true"){
+                                                echo "checked disabled";
+                                            }
+                                             ?>
+                                               onchange="saveCheckBoxToDataBase(this,'validacion_documento_responsable',<?php echo $filas["id_validacion_documento"]; ?>)">
+                                    </div>						
                                 </td>
                                 
-
-                                    
-                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'validacion_documento_responsable','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["validacion_documento_responsable"]; ?></td>-->
+                            
+                                <td style="background-color: #ccccff">
+                                    <div class="">
+                                        <input type="checkbox" style="width: 40px; height: 40px" name="checkbox"  class="checkboxDocumento"
+                                            <?php 
+                                            if($filas["validacion_tema_responsable"] == "true"){
+                                                echo "checked disabled";
+                                            }
+                                             ?>
+                                        onchange="saveCheckBoxToDataBase(this,'validacion_tema_responsable',<?php echo $filas["id_validacion_documento"]; ?>)">
+                                    </div>						
+                                </td>
+                                 
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'observacion_documento','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["observacion_documento"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'validacion_tema_responsable','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["validacion_tema_responsable"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'observacion_tema','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["observacion_tema"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'plan_accion','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["plan_accion"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'desviacion_mayor','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["desviacion_mayor"]; ?></td>
+                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'observacion_tema','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["observacion_tema"]; ?></td>-->
+                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'plan_accion','<?php //echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["plan_accion"]; ?></td>-->
+                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'desviacion_mayor','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["desviacion_mayor"]; ?></td>-->
+                                
+                                <td style="background-color: #ccccff">
+                                    <div class="">
+                                        <input type="checkbox" style="width: 40px; height: 40px" name="checkbox"  class="checkboxDocumento"
+                                            <?php 
+                                            if($filas["desviacion_mayor"] == "true"){
+                                                echo "checked disabled";
+                                            }
+                                             ?>
+                                        onchange="saveCheckBoxToDataBase(this,'desviacion_mayor',<?php echo $filas["id_validacion_documento"]; ?>)">
+                                    </div>						
+                                </td>
                                 
 			  </tr>
                           
@@ -420,29 +457,46 @@ require_once 'EncabezadoUsuarioView.php';
                 
 		<script>
                     
-    var id_validacion_documento;
+    var id_validacion_documento,columna,objetocheckbox;
+    
     $("#subirArchivos").click(function()
     {
       agregarArchivosUrl();
     });
     
     
+    
+    
+    
     $(function()
     {
       
-        $('.checkbox').on('change', function()
-      {
-        console.log( $(this).prop('value') );                     
-        column="VALIDACION_DOCUMENTO_RESPONSABLE";
-        val=$(this).prop('value');
-        //alert("el value que va a viajar es "+val+" y el id del seguimiento : "+id_seguimiento_entrada);
-                          
-        $.ajax({
+        $('.checkboxDocumento').on('change', function()
+      { 
+    
+        swal({
+          title: "VALIDAR",
+          text: "Una vez validado el documento no podra desvalidarlo, confirme",
+          type: "warning",
+          showCancelButton: true,
+          closeOnConfirm: false,
+          showLoaderOnConfirm: true
+        },function()
+        {
+            $.ajax({
                 url: "../Controller/ValidacionDocumentosController.php?Op=Modificar",
                 type: "POST",
-                data:'column='+column+'&editval='+val+'&id='+id_validacion_documento,
+                data:'column='+columna+'&editval='+$('.checkboxDocumento').is(':checked')+'&id='+id_validacion_documento,
                 success: function(data)
                 {
+
+                    if(data)
+                    {
+                        $(objetocheckbox).attr('disabled','true');
+//                        $('.checkboxDocumento').prop("disabled","true");
+                        swal("","Documento validado");
+                        setTimeout(function(){swal.close();},1000);
+                    }
 //            window.location.href="ValidacionDocumentosView.php?page=1";
 //					//$(editableObj).css("background","#FDFDFD");
 //            consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");
@@ -451,6 +505,10 @@ require_once 'EncabezadoUsuarioView.php';
                 } 
                 
                 });
+          
+        });
+        
+        
                           
                           
       });
@@ -461,13 +519,12 @@ require_once 'EncabezadoUsuarioView.php';
   
   
     });// Cierra el $function 
-                      
-    
-    
-    
+ 
                 
-    function saveCheckBoxToDataBase(column,id){
+    function saveCheckBoxToDataBase(checkbox,column,id){
                      id_validacion_documento=id;
+                     columna=column;
+                     objetocheckbox=checkbox;
                }            
             
                 
@@ -501,7 +558,6 @@ require_once 'EncabezadoUsuarioView.php';
       id_seguimiento_entrada=id;
     }
     
-    
     function consultarInformacion(url)
     {
       $.ajax({  
@@ -516,20 +572,7 @@ require_once 'EncabezadoUsuarioView.php';
           }
       });  
     }
-    
-    
-    function saveCheckBoxToDataBase_ok(id)
-    {
-   
-       validacion = $('#validacion_documento_responsable').val();  
-       alert("Entro aqui"+validacion);
-       
-       saveToDatabase(validacion,"validacion_documento_responsable",id);
-    
-    }
-    
-    
-    
+ 
     function refresh()
     {
       consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");  

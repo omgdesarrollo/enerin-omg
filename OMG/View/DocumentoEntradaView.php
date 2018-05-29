@@ -183,8 +183,8 @@ require_once 'EncabezadoUsuarioView.php';
 </button>
 
     <input type="text" id="idInputFolioEntrada" onkeyup="filterTableFolioEntrada()" placeholder="Folio de Entrada" style="width: 120px;">
-    <input type="text" id="idInputAsunto" onkeyup="filterTableAsunto()" placeholder="Asunto" style="width: 120px;">
-    <input type="text" id="idInputRemitente" onkeyup="filterTableRemitente()" placeholder="Remitente" style="width: 130px;">
+    <input type="text" id="idInputAsunto" onkeyup="filterTableAsunto()" placeholder="Asunto" style="width: 110px;">
+    <input type="text" id="idInputRemitente" onkeyup="filterTableRemitente()" placeholder="Remitente" style="width: 110px;">
     <input type="text" id="idInputAutoridadRemitente" onkeyup="filterTableAutoridadRemitente()" placeholder="Autoridad Remitente" style="width: 150px;">
     <input type="text" id="idInputResponsableTema" onkeyup="filterTableResponsableTema()" placeholder="Responsable del Tema" style="width: 170px;">
     <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
