@@ -21,8 +21,8 @@ switch ($Op)
         echo json_encode($Lista);
 		break;
     
-	case 'getClavesDocumentos':
-        $Lista=$model->getClavesDocumentos();
+    case 'getClavesDocumentos':
+        $Lista=$model->getClavesDocumentos($_REQUEST["CADENA"];
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
 		break;	

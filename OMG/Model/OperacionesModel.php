@@ -17,12 +17,12 @@ class OperacionesModel
             throw $e;
         }
     }
-    public function getClavesDocumentos()
+    public function getClavesDocumentos($cadena)
     {
         try
         {
             $dao = new OperacionesDAO();
-            $rec = $dao->getClavesDocumentos();
+            $rec = $dao->getClavesDocumentos($cadena);
             return $rec;
         }catch(Exception $e)
         {

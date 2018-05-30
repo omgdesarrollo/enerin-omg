@@ -187,15 +187,16 @@
         // alert("se cargara otro ");
         myFunction();
     }
-    function getClavesDocumentos()
+    function getClavesDocumentos(cadena)
     {
         $.ajax
         ({
             url: '../Controller/OperacionesController.php?Op=getClavesDocumentos',
             type: 'GET',
+            data: "CADENA="+cadena,
             success:function(data)
             {
-
+                
             })
         });
     }
