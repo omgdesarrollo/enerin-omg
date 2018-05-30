@@ -20,6 +20,7 @@ $Usuario=  Session::getSesion("user");
 		<!-- bootstrap & fontawesome -->
                 <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
                 <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
 
 		<!-- text fonts -->
 		<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />
@@ -35,15 +36,15 @@ $Usuario=  Session::getSesion("user");
                 
                 <!--Inicia para el spiner cargando-->
                 <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
-                <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                 <!--Termina para el spiner cargando-->
                 
-                <script src="../../js/jquery.js" type="text/javascript"></script>
-		<script src="../../assets/probando/js/ace-extra.min.js"></script>
-
-                     
+                
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+                
+                <!--en esta seccion es para poder abrir el modal--> 
+                <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
+                <!--aqui termina la seccion para poder abrir el modal-->
+
 
                 <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
                 <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
@@ -84,12 +85,12 @@ $Usuario=  Session::getSesion("user");
                     }
                     
                                     
-                    div#winVP {
+/*                    div#winVP {
 			position: relative;
 			height: 350px;
 			border: 1px solid #dfdfdf;
 			margin: 10px;
-		}
+		}*/
                 
                    
                     
@@ -147,7 +148,6 @@ $Usuario=  Session::getSesion("user");
         background: #f1f1f1;           /* 6 */
     }
 }
- 
 /*Finaliza estilos para mantener fijo el header*/                    
                                       
                     
@@ -196,7 +196,7 @@ require_once 'EncabezadoUsuarioView.php';
 
 
 <div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> 
-    <div class="table-container" id="winVP">
+    <div class="table-container">
         
         <table class="tbl-qa" id="idTable">
 		  <!--<thead>-->
@@ -477,7 +477,13 @@ require_once 'EncabezadoUsuarioView.php';
         $('.checkboxDocumento').on('change', function()
       { 
           
-          enviar_notificacion();
+          var chekeado=$('.checkboxDocumento').is(':checked');
+         
+//          alert("value de columna es : "+columna);
+        if(columna=="desviacion_mayor"){
+            enviar_notificacion(columna,chekeado,id_validacion_documento);
+        }
+          
 //            inputs = $('#idTable').find('input').filter('[type=checkbox]');
 //       //      
 //       alert(""+input);
@@ -540,16 +546,23 @@ require_once 'EncabezadoUsuarioView.php';
                           
                           
       });
-                        
-
-
-
-  
+    
   
     });// Cierra el $function 
  
-      function enviar_notificacion(){
-          alert("enviado correccto ");
+      function enviar_notificacion(columna,chekeado,id_validacion_documento){
+        
+          var u=$("#user").val();
+//            alert("enviado correccto "+u);
+          
+          $.ajax({
+             url:"../Controller/NotificacionesController.php?Op=enviarNotificacionDesviacionAResponsableContrato",
+             data:"columna="+columna+"&checkeado="+chekeado+"&id_validacion_documento="+id_validacion_documento,
+             success:function(response){
+                 
+             }
+              
+          });
           
       }
       
@@ -1037,17 +1050,31 @@ require_once 'EncabezadoUsuarioView.php';
   {% } %}
   {% if(t == 1){ if( $('#tempInputIdValidacionDocumento').length > 0 ) { var ID_VALIDACION_DOCUMENTO = $('#tempInputIdValidacionDocumento').val(); mostrar_urls(ID_VALIDACION_DOCUMENTO);} } %}
 </script>
-                
-            <!--en esta seccion es para poder abrir el modal--> 
-                <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
-            <!--aqui termina la seccion para poder abrir el modal-->
             
-            
-                <script src="../../codebase/dhtmlx.js"></script>
-                <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
-                <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
-                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+            <!--Inicia para el spiner cargando-->
+            <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+            <!--Termina para el spiner cargando-->
 
+            <!--jquery-->
+            <script src="../../js/jquery.js" type="text/javascript"></script>
+            <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+
+            <!--Bootstrap-->
+            <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
+            <!--Para abrir alertas de aviso, success,warning, error-->       
+            <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+            
+            <!--Para abrir alertas del encabezado-->
+            <script src="../../assets/probando/js/ace-elements.min.js"></script>
+            <script src="../../assets/probando/js/ace.min.js"></script>
+            <script src="../../assets/probando/js/ace-extra.min.js"></script>
+
+            <!--DHTMLX-->
+            <script src="../../codebase/dhtmlx.js"></script>
+            
+                
+
+                <!--Para cargar archivos-->
                 <script src="../../assets/FileUpload/js/jquery.min.js"></script>
                 <script src="../../assets/FileUpload/js/jquery-ui.min.js"></script>
                 <script src="../../assets/FileUpload/js/tmpl.min.js"></script>

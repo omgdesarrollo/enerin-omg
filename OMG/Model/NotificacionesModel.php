@@ -11,8 +11,18 @@
  *
  * @author usuario
  */
+
+require '../dao/NotificacionesDao.php';
+
+
 class NotificacionesModel {
-    //put your code here
+
+    
+    
+    public function enviaraResponsableCumplimiento_sobre_desviacion_mayor(){
+    
+    }
+    
     
     
     

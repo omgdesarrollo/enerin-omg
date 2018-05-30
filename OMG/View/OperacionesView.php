@@ -13,29 +13,26 @@
     <meta name="description" content="overview &amp; stats" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <title></title>
-
+    
+    <!--Bootstrap y fontawesome-->
     <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+
     <!-- text fonts -->
 	<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />
     <!-- ace styles -->
     <link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
     <link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
     <link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
+    
     <!--Inicia para el spiner cargando-->
     <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
-    <script src="../../js/loaderanimation.js" type="text/javascript"></script>
     <!--Termina para el spiner cargando-->
-    <script src="../../js/jquery.js" type="text/javascript"></script>
-    <script src="../../assets/probando/js/ace-extra.min.js"></script>              
+                  
     <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-    <!-- Alertas-->
-    <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
-    <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
-    <!--Aqui cierra Alertas-->
-    <!--Modales-->
-    <script src="../../assets/probando/js/bootstrap.min.js"></script>
-    <!--Aqui cierra modales-->
+    
+ 
 
     <style>
         .modal
@@ -168,7 +165,7 @@
 
 
 <!-- Inicio modal Registros -->
-<div class="modal draggable fade" id="mostrar-registros" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!--<div class="modal draggable fade" id="mostrar-registros" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
         <div id="loaderModalMostrar"></div>
 		<div class="modal-content">                
@@ -181,10 +178,10 @@
           
             <div id="RegistrosListado"></div>
   
-        </div><!-- cierre div class-body -->
-      </div><!-- cierre div class modal-content -->
-    </div><!-- cierre div class="modal-dialog" -->
-</div><!-- cierre del modal Requisitos-->
+        </div> cierre div class-body 
+      </div> cierre div class modal-content 
+    </div> cierre div class="modal-dialog" 
+</div> cierre del modal Requisitos-->
 
 <!-- Inicio de Seccion Modal Crear nueva Entrada-->
 <div class="modal draggable fade" id="nuevoRegistroModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -432,4 +429,26 @@
         $('#bodyTable').html(tempData);
     }
 </script>
+
+        <!--Inicia para el spiner cargando-->
+        <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+        <!--Termina para el spiner cargando-->
+        
+        <!--jquery-->
+        <script src="../../js/jquery.js" type="text/javascript"></script>
+        <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+
+        
+        <!--Bootstrap-->
+        <script src="../../assets/probando/js/bootstrap.min.js"></script>
+        <!--Para abrir alertas de aviso, success,warning, error-->
+        <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+
+        <!--Para abrir alertas del encabezado-->
+        <script src="../../assets/probando/js/ace-elements.min.js"></script>
+        <script src="../../assets/probando/js/ace.min.js"></script>        
+        <script src="../../assets/probando/js/ace-extra.min.js"></script>
+
+
+</body>
 </html>

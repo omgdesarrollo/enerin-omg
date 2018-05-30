@@ -18,11 +18,11 @@ $Usuario=  Session::getSesion("user");
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
 		<!-- bootstrap & fontawesome -->
-		<!--<link rel="stylesheet" href="assets/css/bootstrap.min.css" />-->
-                <!--<link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>-->
                 <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-		<!--<link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" />-->
                 <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+                <!--Para abrir alertas de aviso, success,warning, error-->       
+                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+
 		<!-- page specific plugin styles -->
 
 		<!-- text fonts -->
@@ -30,29 +30,23 @@ $Usuario=  Session::getSesion("user");
 
 		<!-- ace styles -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-
-		<!--[if lte IE 9]>
-			<link rel="stylesheet" href="assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
-		<![endif]-->
-		<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
+                <link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
-                
-                
+		                                
                 <script src="../../js/jquery.js" type="text/javascript"></script>
 
-		<script src="../../assets/probando/js/ace-extra.min.js"></script>
                 
-    <!--Inicia para el spiner cargando-->
-    <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
-    <script src="../../js/loaderanimation.js" type="text/javascript"></script>
-    <!--Termina para el spiner cargando-->
-          
-    <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-    <!-- cargar archivo -->
-    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
-    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
-    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
-    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
+                <!--Inicia para el spiner cargando-->
+                <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+                <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+                <!--Termina para el spiner cargando-->
+
+                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+                <!-- cargar archivo -->
+                <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
+                <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
+                <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
+                <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
                 
                 
                 
@@ -503,7 +497,7 @@ require_once 'EncabezadoUsuarioView.php';
                         
                           
                           val=$(this).prop('value');
-                          alert("el value que va a viajar es "+val+" y el id de la clausula : "+id_documento_salida);
+//                          alert("el value que va a viajar es "+val+" y el id de la clausula : "+id_documento_salida);
                           $.ajax({
                                 url: "../Controller/DocumentosSalidaController.php?Op=Modificar",
 				type: "POST",
@@ -1036,17 +1030,26 @@ require_once 'EncabezadoUsuarioView.php';
       {% if(t == 1){ if( $('#tempInputIdDocumentoSalida').length > 0 ) { var ID_DOCUMENTO = $('#tempInputIdDocumentoSalida').val(); mostrar_urls(ID_DOCUMENTO);}else{ $('#btnAgregarDocumentoSalidaRefrescar').click(); } } %}
 </script>
                 
-                
-                
-                <!--Aqui abre para la ventana de guardado ok-->
-                <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
-                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
-                <!--Aqui cierra para la ventana de guardado ok-->
 
-                
+                <!--Inicia para el spiner cargando-->
+                <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+                <!--Termina para el spiner cargando-->    
+        
+
+                <!--Bootstrap-->
                 <!--Aqui abre el modal de insertar-->
                 <script src="../../assets/probando/js/bootstrap.min.js"></script>
                 <!--Aqui cierra para abrir el modal de insertar-->
+                <!--Aqui abre para la ventana de guardado ok-->
+                <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+                <!--Aqui cierra para la ventana de guardado ok-->
+
+                <!--Para abrir alertas del encabezado-->
+                <script src="../../assets/probando/js/ace-elements.min.js"></script>
+                <script src="../../assets/probando/js/ace.min.js"></script>
+                <script src="../../assets/probando/js/ace-extra.min.js"></script>
+              
+                
                 <!-- js cargar archivo -->
                 <script src="../../assets/FileUpload/js/jquery.min.js"></script>
                 <script src="../../assets/FileUpload/js/jquery-ui.min.js"></script>

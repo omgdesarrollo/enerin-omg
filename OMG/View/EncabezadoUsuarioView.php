@@ -169,7 +169,14 @@ foreach($Alarmas as $alarma)
 					<img class="nav-user-photo" src="../../assets/probando/images/avatars/avatar.png" alt="<?php echo $Usuario["NOMBRE_USUARIO"]; ?>" />
 					<span class="user-info">
 						<small>Bienvenido,</small>
-						<?php echo $Usuario["NOMBRE_USUARIO"]; ?>
+                                                    <div id=""><?php echo $Usuario["NOMBRE_USUARIO"]; ?></div>
+                                                   <?php 
+                                                   ($Usuario['NOMBRE_USUARIO']!="")? $obuser=$Usuario["NOMBRE_USUARIO"] :$obuser="";
+                                                   
+                                                       ?>
+                                                    
+                                                    <input id="user" type="hidden" value="<?php  echo $obuser ?> "> 
+                                                   
 					</span>
 
 <!--								<i class="ace-icon fa fa-caret-down"></i>-->

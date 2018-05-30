@@ -12,11 +12,30 @@ try {
     //proceso
     $model=new LoginModel();
     $recUser=$model->validar($usuario,$clave);
+    
+    $hora = date('H:i');
+$session_id = session_id();
+$token = hash('sha256', $hora.$session_id);
+$recUser["tokenseguridad"]=$token;
+//$json["tokenseguridad"]=$token;
+    
+//    echo json_encode($recUser);
 //    echo "dato";
     Session::setSesion("user",$recUser);
+
+
+//  $jsonToken["tokenseguridad"]=$token;
+//    Session::setSesion("token",$jsonToken);
+//    Session::setSesion("user", $token);
+    
+
+
+
     
     $jsondata['success']=true;
     $jsondata['message']='Correcto';
+//    $jsondata['seguridad']=$token;
+   
     //para redireccionar se guarda en una variable el link
 //    $target="../View/main.php";
 }  catch (Exception $e){

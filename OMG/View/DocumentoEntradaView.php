@@ -17,9 +17,11 @@ $Usuario=  Session::getSesion("user");
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
 		<!-- bootstrap & fontawesome -->
-		<!--<link rel="stylesheet" href="assets/css/bootstrap.min.css" />-->
-                <!--<link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>-->
                 <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+                <!--Para abrir alertas de aviso, success,warning, error-->       
+                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+
                 
                 <!-- clase para la subida de archivos -->
                 <!-- <link href="../../assets/probando/css/subir.css" rel="stylesheet" type="text/css"/> -->
@@ -42,11 +44,11 @@ $Usuario=  Session::getSesion("user");
                 
                 <!--Inicia para el spiner cargando-->
                 <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
-                <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                 <!--Termina para el spiner cargando-->
-                                                
+                
                 <script src="../../js/jquery.js" type="text/javascript"></script>
-		<script src="../../assets/probando/js/ace-extra.min.js"></script>              
+
+                             
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
 
                 <!-- cargar archivo -->
@@ -54,6 +56,7 @@ $Usuario=  Session::getSesion("user");
                 <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
                 <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
                 <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
+                
             <style>
                     .modal
                     {
@@ -787,7 +790,7 @@ require_once 'EncabezadoUsuarioView.php';
                         
                           
                           val=$(this).prop('value');
-                          alert("el value que va a viajar es "+val+" y el id del documento de entrada : "+id_documento_entrada);
+//                          alert("el value que va a viajar es "+val+" y el id del documento de entrada : "+id_documento_entrada);
                           $.ajax({
                                 url: "../Controller/DocumentosEntradaController.php?Op=Modificar",
 				type: "POST",
@@ -1746,16 +1749,26 @@ require_once 'EncabezadoUsuarioView.php';
                         {% } %}
                         {% if(t == 1){ if( $('#tempInputIdDocumento').length > 0 ) { var ID_DOCUMENTO = $('#tempInputIdDocumento').val(); mostrar_urls(ID_DOCUMENTO);}else{ $('#btnAgregarDocumentoEntradaRefrescar').click(); } } %}
                 </script>
-
-                <!--Aqui abre para la ventana de guardado ok-->
-                <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
-                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
-                <!--Aqui cierra para la ventana de guardado ok-->
-
                 
+                
+                <!--Inicia para el spiner cargando-->
+                <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+                <!--Termina para el spiner cargando-->
+                
+                <!--jquery-->
+                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+
+                <!--Bootstrap-->
                 <!--Aqui abre el modal de insertar-->
                 <script src="../../assets/probando/js/bootstrap.min.js"></script>
                 <!--Aqui cierra para abrir el modal de insertar-->
+                <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+
+                <!--Para abrir alertas del encabezado-->
+                <script src="../../assets/probando/js/ace-elements.min.js"></script>
+                <script src="../../assets/probando/js/ace.min.js"></script>
+		<script src="../../assets/probando/js/ace-extra.min.js"></script>     
+          
 
                 <!-- js cargar archivo -->
                 <script src="../../assets/FileUpload/js/jquery.min.js"></script>
