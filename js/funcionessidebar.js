@@ -256,7 +256,7 @@ function loadDataSideBarOficiosDocumentacion(){
     
        function loadDataSideBarCumplimientosOperaciones(){
            
-          consultarInformacion("../Controller/OperacionesController.php?Op=Listar");
+        //   consultarInformacion("../Controller/OperacionesController.php?Op=Listar");
           $("#sidebarObjV").load('InyectarVistasView.php #seguimientooperaciones');
            
 //         mySidebar = myLayout.cells("a").attachSidebar();

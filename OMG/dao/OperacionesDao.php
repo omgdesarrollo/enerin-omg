@@ -3,7 +3,7 @@
 require_once '../ds/AccesoDB.php';
 class OperacionesDao
 {
-    public function mostrarOperaciones()
+    public function listarOperaciones()
     {
         try
         {
@@ -35,7 +35,7 @@ class OperacionesDao
         try
         {
             $query = "SELECT tbdocumentos.ID_DOCUMENTO, tbdocumentos.CLAVE_DOCUMENTO,tbdocumentos.DOCUMENTO,
-            tbempleados.NOMBRE_EMPLEADO,tbdocumentos.REGISTROS FROM documentos tbdocumentos 
+            tbempleados.NOMBRE_EMPLEADO,tbempleados.APELLIDO_PATERNO,tbempleados.APELLIDO_MATERNO,tbdocumentos.REGISTROS FROM documentos tbdocumentos 
             JOIN empleados tbempleados ON tbempleados.ID_EMPLEADO = tbdocumentos.ID_EMPLEADO
             WHERE tbdocumentos.DOCUMENTO LIKE '%$cadena%'";
             $db = AccesoDB::getInstancia();
@@ -44,6 +44,19 @@ class OperacionesDao
             return $lista;
         }
         catch(Exception $ex)
+        {
+            throw $ex;
+        }
+    }
+    public function crearEvidencia($claveDocumento)
+    {
+        try
+        {
+            $query = "INSERT INTO";
+            $db = AccesoDB::getInstancia();
+            $res = $db->executeQueryUpdate($query);
+            return $res;
+        }catch(Exection $ex)
         {
             throw $ex;
         }
