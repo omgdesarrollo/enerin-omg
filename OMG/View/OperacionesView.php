@@ -158,8 +158,37 @@
                     <th class="table-header"><?php echo $value ?></th>
                 <?php } ?>
                 </tr>
+                
                 <tbody id="bodyTable">
-
+                    <?php
+                    $Lista = Session::getSesion("listarOperaciones");
+                    
+                    foreach ($Lista as $filas)
+                    {                   
+                    ?>
+                    
+                    <tr class="table-row">
+                        
+                        <td contenteditable="false" onBlur="saveToDatabase(this,'clave_documento','<?php echo $filas["id_evidencias"]; ?>')" 
+                            onClick="showEdit(this);"><?php echo $filas["clave_documento"]; ?></td>
+                        <td contenteditable="false" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_evidencias"]; ?>')" 
+                            onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
+                        <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado','<?php echo $filas["id_evidencias"]; ?>')" 
+                            onClick="showEdit(this);"><?php echo $filas["nombre_empleado"]." ".$filas["apellido_paterno"]." ".$filas["apellido_materno"]; ?></td>
+                        
+                        <td>
+                            <button onClick="mostrarRegistros(<?php echo $filas['id_documento'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-registros">
+                                    Ver
+                                    <i class="ace-icon fa fa-book" style="color: #0099ff;font-size: 20px;"></i>
+                            </button>
+                        </td>
+                        
+                    </tr>
+                    
+                    
+                    <?php
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>
@@ -167,9 +196,60 @@
 
     </div>
 </body>
+
+
+<!-- Inicio modal Registros -->
+<div class="modal draggable fade" id="mostrar-registros" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+        <div id="loaderModalMostrar"></div>
+		<div class="modal-content">                
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title" id="myModalLabel">Lista Registros</h4>
+        </div>
+
+        <div class="modal-body">
+          
+            <div id="RegistrosListado"></div>
+  
+        </div><!-- cierre div class-body -->
+      </div><!-- cierre div class modal-content -->
+    </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal Requisitos-->
+
+
 <script>
-    var data="";
+    
+    
+    
+    function mostrarRegistros(id_documento)
+    {
+        ValoresRegistros = "<ul>";
+        alert("Registros"+id_documento);
+        
+        $.ajax
+        ({
+            url:"../Controller/OperacionesController.php?op=MostrarRegistrosPorDocumento",
+            type: 'POST',
+            data: 'ID_DOCUMENTO'+id_documento,
+            success:function(responseregistros)
+            {
+                $.each(responseregistros, function(index,value){
+                    ValoresRegistros+="<li>"+value.registros+"</li>";                   
+                });
+        ValoresRegistros += "</ul>";
+                
+                $('#RegistrosListado').html(ValoresRegistros);
+                
+            }
+            
+        })
+    }
+    
+   var data="";
     var dataTemp="";
+    
+    
     function refresh()
     {
         // consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
