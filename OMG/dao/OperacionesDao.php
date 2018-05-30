@@ -52,7 +52,11 @@ class OperacionesDao
     {
         try
         {
-            $query = "INSERT INTO";
+            $query = "INSERT INTO evidencias (id_documento,clasificacion,desviacion,accion_correctiva,validacion_supervisor,plan_accion,
+								ingresar_oficio_atencion,oficio_atencion)
+                     VALUES ('$clave_documento','','','','false','','false','false')";
+            
+            
             $db = AccesoDB::getInstancia();
             $res = $db->executeQueryUpdate($query);
             return $res;

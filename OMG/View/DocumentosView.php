@@ -277,7 +277,7 @@ $Usuario=  Session::getSesion("user");
 	
              
                 
-                <!-- Inicio de Seccion Modal -->
+                <!-- Inicio de Seccion Modal Nuevo Documento-->
        <div class="modal draggable fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
