@@ -51,7 +51,51 @@ class ValidacionDocumentoDAO{
     }
     
     
- 
+ public function obtenerInfoPorIdValidacionDocumento($id_validacion_documento){
+     try{
+         $query="SELECT tbvalidacion_documento.id_validacion_documento, tbdocumentos.id_documento, tbdocumentos.clave_documento,
+                    tbdocumentos.documento,
+		 
+                    tbempleados.id_empleado id_empleado_documento, tbempleados.nombre_empleado nombre_empleado_documento,
+                    tbempleados.apellido_paterno apellido_paterno_documento, tbempleados.apellido_materno apellido_materno_documento,
+
+                    tbclausulas.clausula, tbclausulas.descripcion_clausula,
+
+                    tbclausulas.id_empleado id_empleado_tema, tbempleados_tema.nombre_empleado nombre_empleado_tema,
+                    tbempleados_tema.apellido_paterno apellido_paterno_tema, tbempleados_tema.apellido_materno apellido_materno_tema,
+
+                    tbvalidacion_documento.documento_archivo, 
+                    tbvalidacion_documento.validacion_documento_responsable, tbvalidacion_documento.observacion_documento,
+                    tbvalidacion_documento.validacion_tema_responsable, tbvalidacion_documento.observacion_tema,
+                    tbvalidacion_documento.plan_accion, tbvalidacion_documento.desviacion_mayor
+
+                    FROM validacion_documento tbvalidacion_documento
+
+
+                    JOIN documentos tbdocumentos ON 
+                    tbdocumentos.id_documento=tbvalidacion_documento.id_documento
+
+                    JOIN asignacion_tema_requisito tbasignacion_tema_requisito ON
+                    tbasignacion_tema_requisito.id_documento=tbdocumentos.id_documento
+
+                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumentos.id_empleado
+
+                    JOIN clausulas tbclausulas ON tbclausulas.id_clausula=tbasignacion_tema_requisito.id_clausula
+
+
+                    JOIN empleados tbempleados_tema ON tbempleados_tema.id_empleado=tbclausulas.id_empleado";
+         
+         
+         
+         
+         
+     } catch (Exception $ex) {
+         throw $ex;
+     }
+     
+     
+     
+ }
     
     public function insertar($id_documento_entrada){
         try{

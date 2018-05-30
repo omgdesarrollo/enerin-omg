@@ -7,7 +7,9 @@ class NotificacionesDao {
     
     public function enviaraResponsableCumplimiento_sobre_desviacion_mayor(){
         try{
-            $query="inser into notificaciones(idnotificaciones,ID_USUARIO_EMPLEADO)";
+            $query="insert into notificaciones 
+                    (id_usuario_empleado,mensaje,tipo_mensaje,atendido)
+                    values(0,'tiene que atender la desviacion',1,'false')";
             $db= AccesoDB::getInstancia($query);
             $lista=$db->executeQueryUpdate($query);
             return $lista;

@@ -477,7 +477,13 @@ require_once 'EncabezadoUsuarioView.php';
         $('.checkboxDocumento').on('change', function()
       { 
           
-          enviar_notificacion();
+          var chekeado=$('.checkboxDocumento').is(':checked');
+         
+//          alert("value de columna es : "+columna);
+        if(columna=="desviacion_mayor"){
+            enviar_notificacion(columna,chekeado,id_validacion_documento);
+        }
+          
 //            inputs = $('#idTable').find('input').filter('[type=checkbox]');
 //       //      
 //       alert(""+input);
@@ -540,16 +546,23 @@ require_once 'EncabezadoUsuarioView.php';
                           
                           
       });
-                        
-
-
-
-  
+    
   
     });// Cierra el $function 
  
-      function enviar_notificacion(){
-          alert("enviado correccto ");
+      function enviar_notificacion(columna,chekeado,id_validacion_documento){
+        
+          var u=$("#user").val();
+//            alert("enviado correccto "+u);
+          
+          $.ajax({
+             url:"../Controller/NotificacionesController.php?Op=enviarNotificacionDesviacionAResponsableContrato",
+             data:"columna="+columna+"&checkeado="+chekeado+"&id_validacion_documento="+id_validacion_documento,
+             success:function(response){
+                 
+             }
+              
+          });
           
       }
       
