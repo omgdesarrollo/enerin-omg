@@ -17,9 +17,11 @@ $Usuario=  Session::getSesion("user");
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
-		
+		<!--Bootstrap-->
                 <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
                 <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+
 
 		<!-- text fonts -->
 		<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />
@@ -31,20 +33,17 @@ $Usuario=  Session::getSesion("user");
                 
                 <!--Inicia para el spiner cargando-->
                 <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
-                <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                 <!--Termina para el spiner cargando-->
-                
-                <script src="../../js/jquery.js" type="text/javascript"></script>
-                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-		<script src="../../assets/probando/js/ace-extra.min.js"></script>       
+            
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 
-                
-                
+                <script src="../../js/jquery.js" type="text/javascript"></script>
 
                 
-                
-                
+                <!--en esta seccion es para poder abrir el modal--> 
+                <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
+                <!--aqui termina la seccion para poder abrir el modal-->
+            
                 
             
             <style>
@@ -186,8 +185,8 @@ require_once 'EncabezadoUsuarioView.php';
                 <i class="glyphicon glyphicon-repeat"></i> 
             </button>
             
-            <input type="text" id="idInputDescripcionTema" onkeyup="filterTableDescripcionTema()" placeholder="Descripcion del Tema" style="width: 230px">
-            <input type="text" id="idInputRequisito" onkeyup="filterTableRequisito()" placeholder="Requisito" style="width: 160px">
+            <input type="text" id="idInputDescripcionTema" onkeyup="filterTableDescripcionTema()" placeholder="Descripcion del Tema" style="width: 220px">
+            <input type="text" id="idInputRequisito" onkeyup="filterTableRequisito()" placeholder="Requisito" style="width: 150px">
             <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
         </div>
             
@@ -628,22 +627,29 @@ require_once 'EncabezadoUsuarioView.php';
                 
 		</script>
                 
+                <!--Inicia para el spiner cargando-->
+                <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+                <!--Termina para el spiner cargando-->
                 
+                <!--jquery-->
+                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
                 <script src="../../assets/probando/js/jquery-2.1.4.min.js"></script>
-
+                
+                <!--Bootstrap-->
+                <script src="../../assets/probando/js/bootstrap.min.js"></script>
+                <!--Para abrir alertas de aviso, success,warning, error-->       
+                <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+                
+                <!--Para abrir alertas del encabezado-->
 		<script src="../../assets/probando/js/ace-elements.min.js"></script>
 		<script src="../../assets/probando/js/ace.min.js"></script>
+                <script src="../../assets/probando/js/ace-extra.min.js"></script>
                 
+                <!--DHTMLX-->
                 <script src="../../codebase/dhtmlx.js"></script>
-                <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
-         
-                <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
-                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+
                 
-                <!--en esta seccion es para poder abrir el modal--> 
-                <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
-                <!--aqui termina la seccion para poder abrir el modal-->
-                
+		     
                 
 	</body>
         

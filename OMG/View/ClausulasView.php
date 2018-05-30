@@ -16,29 +16,34 @@ $Usuario=  Session::getSesion("user");
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
-
+                <!-- bootstrap & fontawesome -->
                 <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
                 <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-		<!-- text fonts -->
-		<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />
-		<!-- ace styles -->
+                <!--Para abrir alertas de aviso, success,warning, error-->
+                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
 		
-                
-                
+                <!-- text fonts -->
+		<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />
+		
+                <!-- ace styles -->
                 <link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-
 		<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
                 <!--Inicia para el spiner cargando-->
                 <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
-                <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                 <!--Termina para el spiner cargando-->
                 
-                <script src="../../js/jquery.js" type="text/javascript"></script>
-                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-		<script src="../../assets/probando/js/ace-extra.min.js"></script>
+                
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+                
+                <script src="../../js/jquery.js" type="text/javascript"></script>
+
+                
+                <!--en esta seccion es para poder abrir el modal--> 
+                <link href="../../codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
+                <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
+                <!--aqui termina la seccion para poder abrir el modal-->
                 
             
             <style>
@@ -134,9 +139,9 @@ $Usuario=  Session::getSesion("user");
         border-bottom: 2px solid #DDD; /* 6 */
         background: #f1f1f1;           /* 6 */
     }
-}
- 
-/*Finaliza estilos para mantener fijo el header*/                    
+} 
+/*Finaliza estilos para mantener fijo el header*/ 
+
                     
                 </style>    
                 
@@ -159,23 +164,23 @@ require_once 'EncabezadoUsuarioView.php';
             
 <div style="height: 5px"></div>            
            
-        <div style="position: fixed;">    
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
-                Agregar Tema
-            </button>
-            
-            <button type="button" class="btn btn-info " onclick="refresh();" >
-                <i class="glyphicon glyphicon-repeat"></i> 
-	    </button>
-            
-            <!--Filtros de busqueda-->
-            <input type="text" id="idInputTema" onkeyup="filterTableTema()" placeholder="Tema">
-            <input type="text" id="idInputSubTema" onkeyup="filterTableSubTema()" placeholder="Sub-Tema">
-            <input type="text" id="idInputResponsable" onkeyup="filterTableResponsable()" placeholder="Responsable">
-            <input type="text" id="idInputDescripcion" onkeyup="filterTableDescripcion()" placeholder="Descripcion">
-            <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+<div style="position: fixed;">    
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
+        Agregar Tema
+    </button>
 
-        </div>
+    <button type="button" class="btn btn-info " onclick="refresh();" >
+        <i class="glyphicon glyphicon-repeat"></i> 
+    </button>
+
+    <!--Filtros de busqueda-->
+    <input type="text" id="idInputTema" onkeyup="filterTableTema()" placeholder="Tema">
+    <input type="text" id="idInputSubTema" onkeyup="filterTableSubTema()" placeholder="Sub-Tema">
+    <input type="text" id="idInputResponsable" onkeyup="filterTableResponsable()" placeholder="Responsable">
+    <input type="text" id="idInputDescripcion" onkeyup="filterTableDescripcion()" placeholder="Descripcion">
+    <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+
+</div>
  
 <div style="height: 47px"></div>
 
@@ -401,21 +406,7 @@ require_once 'EncabezadoUsuarioView.php';
 		  </div>
 		</div>
        <!--Final de Seccion Modal-->
-                
-
-
-		<script src="../../assets/probando/js/jquery-2.1.4.min.js"></script>
-
-		<script src="../../assets/probando/js/bootstrap.min.js"></script>
-
-		<script src="../../assets/probando/js/ace-elements.min.js"></script>
-		<script src="../../assets/probando/js/ace.min.js"></script>
-
-		<!-- inline scripts related to this page -->
-		<script type="text/javascript"></script>
-                
-                
-                
+                            
                 
 		<script>
                     
@@ -735,14 +726,28 @@ require_once 'EncabezadoUsuarioView.php';
                 
 		</script>
                 
+                <!--Inicia para el spiner cargando-->
+                <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+                <!--Termina para el spiner cargando-->
                 
-                <link rel="stylesheet" type="text/css" href="../../../codebase/fonts/font_roboto/roboto.css"/>
-                   <script src="../../codebase/dhtmlx.js"></script>
-                <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
-               
+                <!--jquery-->
+                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+                <!--<script src="../../assets/probando/js/jquery-2.1.4.min.js"></script>-->
+
+                <!--Bootstrap-->
+		<script src="../../assets/probando/js/bootstrap.min.js"></script>
                 <!--Para abrir alertas de aviso, success,warning, error-->
                 <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
-                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+                
+                <!--Para abrir alertas del encabezado-->
+                <script src="../../assets/probando/js/ace-elements.min.js"></script>
+		<script src="../../assets/probando/js/ace.min.js"></script>
+                <script src="../../assets/probando/js/ace-extra.min.js"></script>
+
+
+                <!--DHTMLX-->
+                <script src="../../codebase/dhtmlx.js"></script>     
+
                 
                 
 	</body>

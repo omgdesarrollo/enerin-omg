@@ -5,62 +5,46 @@ $Usuario=  Session::getSesion("user");
 
 ?>
 
-
-
-
-
-
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
-      <title></title>
-      <meta name="description" content="overview &amp; stats" />
+
+                <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>OMG APPS</title>
+                
+                <meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-                
-                
                 
                 <!-- bootstrap & fontawesome -->
                 <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
                 <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+                <!--Para abrir alertas de aviso, success,warning, error-->       
+                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
                 
 		<!-- text fonts -->
 		<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />
 
 		<!-- ace styles -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-
 		<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
                 <!--Inicia para el spiner cargando-->
                 <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
-                <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                 <!--Termina para el spiner cargando-->
                 
-                <script src="../../js/jquery.js" type="text/javascript"></script>
-		<script src="../../assets/probando/js/ace-extra.min.js"></script>
-                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-                     
-                     <!--en esta seccion es para poder abrir el modal--> 
-                     <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>                    
-                      <link href="../../codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
-                     <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
-                     <script src="../../codebase/dhtmlx.js"></script>
-                     <!--aqui termina la seccion para poder abrir el modal-->
-                     
-                     
-                     
-                     <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-                    
-                     <!--<script src="../../assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>-->
                 
-<!--		<style>
-			body{width:100%}
-			.current-row{background-color:#B24926;color:#FFF;}
-			.current-col{background-color:#1b1b1b;color:#FFF;}
-			.tbl-qa{width: 100%;font-size:0.9em;background-color: #f5f5f5;}borde de toda la 
-                        .tbl-qa th.table-header {padding: 5px;text-align: left;padding:10px;background-color: #33ccff;}
-                        .tbl-qa .table-row td {padding:10px;background-color:#ffffff}
-		</style>-->
+                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+                
+                <script src="../../js/jquery.js" type="text/javascript"></script>
+
+                     
+                <!--en esta seccion es para poder abrir el modal--> 
+                <link href="../../codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
+                <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
+                <!--aqui termina la seccion para poder abrir el modal-->
+                     
                 
                 <style>
                     .modal
@@ -161,9 +145,9 @@ $Usuario=  Session::getSesion("user");
     
     
     
-    <body class="no-skin" onload="loadSpinner()">
-         <!--<div>Cargando...</div>-->
-       <div id="loader"></div>
+<body class="no-skin" onload="loadSpinner()">
+     <!--<div>Cargando...</div>-->
+   <div id="loader"></div>
       
 <?php
 
@@ -174,54 +158,30 @@ require_once 'EncabezadoUsuarioView.php';
        
 <div style="height: 5px"></div>       
 
-                                <div style="position: fixed;">
-				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
-					  Agregar Empleado
-				</button>
-                                
-                                <button type="button" class="btn btn-info " onclick="refresh();" >
-                                    <i class="glyphicon glyphicon-repeat"></i> 
-				</button>
-                                    
-                                    <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Nombre" style="width: 180px;">
-                                    <input type="text" id="idInputapellidopaterno" onkeyup="filterTableapellidoPaterno()" placeholder="Apellido Paterno" style="width: 180px;">
-                                    <input type="text" id="idInputapellidomaterno" onkeyup="filterTableapellidoMaterno()" placeholder="Apellido Materno" style="width: 180px;">
-                                    <input type="text" id="idInputCategoria" onkeyup="filterTableCategoria()" placeholder="Categoria" style="width: 180px;">
-                                    <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+<div style="position: fixed;">
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
+          Agregar Empleado
+</button>
 
-                                </div>
+<button type="button" class="btn btn-info " onclick="refresh();" >
+    <i class="glyphicon glyphicon-repeat"></i> 
+</button>
+
+    <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Nombre" style="width: 180px;">
+    <input type="text" id="idInputapellidopaterno" onkeyup="filterTableapellidoPaterno()" placeholder="Apellido Paterno" style="width: 180px;">
+    <input type="text" id="idInputapellidomaterno" onkeyup="filterTableapellidoMaterno()" placeholder="Apellido Materno" style="width: 180px;">
+    <input type="text" id="idInputCategoria" onkeyup="filterTableCategoria()" placeholder="Categoria" style="width: 180px;">
+    <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+
+</div>
                                 
 <div style="height: 47px"></div>
 
 
-<!-- <div class="contenedortable" style="position: fixed;">   
-<input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Nombre">
-<input type="text" id="idInputapellidopaterno" onkeyup="filterTableapellidoPaterno()" placeholder="Buscar Por Apellido Paterno">
-<input type="text" id="idInputapellidomaterno" onkeyup="filterTableapellidoMaterno()" placeholder="Buscar Por Apellido Materno">
-<input type="text" id="idInputCategoria" onkeyup="filterTableCategoria()" placeholder="Buscar Por Categoria">
-<input type="text" id="idInputCorreo" onkeyup="filterTableCorreo()" placeholder="Buscar Por Correo">
-  </div >   
-<div style="height: 55px"></div>-->
-
-<!--                                 <div class="side-menu" id="sideMenu">
-                                    <menu>
-                                        <ul class="nav nav-tabs nav-stacked">
-                                            <li><a href="#myModal" data-backdrop="false" data-toggle="modal">Agregar Empleado</a>
-                                            </li>
-                                        </ul>
-                                    </menu>
-                                </div>   -->
-		        <!--</div>-->
-       
-        <!--<div style="display:none;" id="myDiv" class="animate-bottom"> inicio animacion tabla toda la interfaz seleccionada-->
-        
-        
-           <!--<div class="contenedortable">-->
-           
 <div class="table-fixed-header">
     <div class="table-container">           
                
-               <table class="tbl-qa" id="idTable">
+               <table  id="idTable" class="tbl-qa">
 		  <thead>
 			  <tr>
 				<th class="table-header" width="10%">No.</th>
@@ -275,70 +235,63 @@ require_once 'EncabezadoUsuarioView.php';
     </div>
 </div>    
                                             
-           <!--</div>-->
-       <!--</div>    cierre animacion table y toda la interfaz seleccionada--> 
-   
-<?php 
 
+<!-- Inicio de Seccion Modal -->
+<div class="modal draggable fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <h4 class="modal-title" id="myModalLabel">Crear Nuevo Empleado</h4>
+          </div>
 
-?>
+          <div id="validacion_empleado" class="modal-body">
+                    <!--<form data-toggle="validator" action="api/create.php" method="POST">-->
+                        <!--<form data-toggle="validator"  >-->
+                        <div id="ok"></div>
+                            <div class="form-group">
+                                            <label class="control-label" for="title">Nombre:</label>
+                                            <input type="text"  id="NOMBRE_EMPLEADO" class="form-control" data-error="Ingrese Nombre" required />
+                                            <div id="mensaje1" class="help-block with-errors" ></div>
+                                    </div>
 
-        <!-- Inicio de Seccion Modal -->
-       <div class="modal draggable fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Crear Nuevo Empleado</h4>
-		      </div>
+                                    <div class="form-group">
+                                            <label class="control-label" for="title">Apellido Paterno:</label>
+                                            <textarea  id="APELLIDO_PATERNO" class="form-control" data-error="Ingrese Apellido Paterno." required></textarea>
+                                            <div id="mensaje2"class="help-block with-errors"></div>
+                                    </div>
 
-		      <div id="validacion_empleado" class="modal-body">
-		      		<!--<form data-toggle="validator" action="api/create.php" method="POST">-->
-                                    <!--<form data-toggle="validator"  >-->
-                                    <div id="ok"></div>
-		      			<div class="form-group">
-							<label class="control-label" for="title">Nombre:</label>
-                                                        <input type="text"  id="NOMBRE_EMPLEADO" class="form-control" data-error="Ingrese Nombre" required />
-                                                        <div id="mensaje1" class="help-block with-errors" ></div>
-						</div>
+                                    <div class="form-group">
+                                            <label class="control-label" for="title">Apellido Materno:</label>
+                                            <textarea  id="APELLIDO_MATERNO" class="form-control" data-error="Ingrese Apellido Materno." required></textarea>
+                                            <div id="mensaje3" class="help-block with-errors"></div>
+                                    </div>
 
-						<div class="form-group">
-							<label class="control-label" for="title">Apellido Paterno:</label>
-                                                        <textarea  id="APELLIDO_PATERNO" class="form-control" data-error="Ingrese Apellido Paterno." required></textarea>
-							<div id="mensaje2"class="help-block with-errors"></div>
-						</div>
-                                    
-                                                <div class="form-group">
-							<label class="control-label" for="title">Apellido Materno:</label>
-                                                        <textarea  id="APELLIDO_MATERNO" class="form-control" data-error="Ingrese Apellido Materno." required></textarea>
-							<div id="mensaje3" class="help-block with-errors"></div>
-						</div>
-                                    
-                                                <div class="form-group">
-							<label class="control-label" for="title">Categoria:</label>
-                                                        <textarea  id="CATEGORIA" class="form-control" data-error="Ingrese Categoria." required></textarea>
-							<div id="mensaje4" class="help-block with-errors"></div>
-						</div>
-                                    
-                                                <div class="form-group">
-							<label class="control-label" for="title">Email:</label>
-                                                        <textarea  id="CORREO" class="form-control" data-error="Ingrese Email" required></textarea>
-							<div id="mensaje5"class="help-block with-errors"></div>
-						</div>
-                                    
-						<div class="form-group">
-                                                    <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
-                                                    <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
-						</div>
+                                    <div class="form-group">
+                                            <label class="control-label" for="title">Categoria:</label>
+                                            <textarea  id="CATEGORIA" class="form-control" data-error="Ingrese Categoria." required></textarea>
+                                            <div id="mensaje4" class="help-block with-errors"></div>
+                                    </div>
 
-		      		<!--</form>-->
+                                    <div class="form-group">
+                                            <label class="control-label" for="title">Email:</label>
+                                            <textarea  id="CORREO" class="form-control" data-error="Ingrese Email" required></textarea>
+                                            <div id="mensaje5"class="help-block with-errors"></div>
+                                    </div>
 
-		      </div>
-		    </div>
+                                    <div class="form-group">
+                                        <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
+                                        <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
+                                    </div>
 
-		  </div>
-		</div>
-       <!--Final de Seccion Modal-->
+                    <!--</form>-->
+
+          </div>
+        </div>
+
+    </div>
+</div>
+<!--Final de Seccion Modal-->
   
        
                         
@@ -680,14 +633,27 @@ require_once 'EncabezadoUsuarioView.php';
  
      
      
-       
-       
-       
-       
-         <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
-         <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
-         
-         
-         
+        <!--Inicia para el spiner cargando-->
+        <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+        <!--Termina para el spiner cargando-->
+        
+        <!--jquery-->
+        <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+        
+        <!--Bootstrap-->
+        <script src="../../assets/probando/js/bootstrap.min.js"></script>
+        <!--Para abrir alertas de aviso, success,warning, error-->       
+        <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+        
+        <!--Para abrir alertas del encabezado-->
+        <script src="../../assets/probando/js/ace-elements.min.js"></script>
+        <script src="../../assets/probando/js/ace.min.js"></script>
+        <script src="../../assets/probando/js/ace-extra.min.js"></script>
+        
+        <!--DHTMLX-->
+        <script src="../../codebase/dhtmlx.js"></script>
+
+        
+
     </body>
 </html>

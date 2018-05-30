@@ -41,6 +41,7 @@ switch ($Op)
                 echo json_encode($lista);
         
         break;
+    
 
 	default:
 		# code...
