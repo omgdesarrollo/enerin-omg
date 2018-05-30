@@ -415,7 +415,7 @@ require_once 'EncabezadoUsuarioView.php';
 
 
 
-<!-- Inicio modal Requisitos -->
+<!-- Inicio modal Registros -->
 <div class="modal draggable fade" id="mostrar-registros" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
         <div id="loaderModalMostrar"></div>
@@ -723,7 +723,7 @@ require_once 'EncabezadoUsuarioView.php';
     
     function mostrarRequisitos(id_documento)
     {
-            mostrarrequisitos = "<ul>";
+            ValoresRequisitos = "<ul>";
             //alert("validacion documento"+id_documento);
 
             $.ajax ({
@@ -734,11 +734,11 @@ require_once 'EncabezadoUsuarioView.php';
                 {
                    $.each(responserequisitos,function(index,value){
                        //alert("Hast aqui"+value.requisito);
-                    mostrarrequisitos+="<li>"+value.requisito+"</li>";                                       
+                    ValoresRequisitos+="<li>"+value.requisito+"</li>";                                       
 
                    });
-               mostrarrequisitos += "</ul>";     
-                   $('#RequisitosListado').html(mostrarrequisitos);
+               ValoresRequisitos += "</ul>";     
+                   $('#RequisitosListado').html(ValoresRequisitos);
                 }
             });
     }
@@ -746,7 +746,7 @@ require_once 'EncabezadoUsuarioView.php';
     
     function mostrarRegistros(id_documento)
     {
-     mostrarregistros = "<ul>";
+     ValoresRegistros = "<ul>";
 //     alert("validacion documento"+id_documento);
      $.ajax ({
          url:"../Controller/ValidacionDocumentosController.php?Op=MostrarRegistrosPorDocumento",
@@ -755,11 +755,11 @@ require_once 'EncabezadoUsuarioView.php';
          success:function(responseregistros)
          {
              $.each(responseregistros,function(index,value){
-                mostrarregistros+="<li>"+value.registros+"</li>"; 
+                ValoresRegistros+="<li>"+value.registros+"</li>"; 
              });
              
-             mostrarregistros += "</ul>";
-             $('#RegistrosListado').html(mostrarregistros);
+    ValoresRegistros += "</ul>";
+             $('#RegistrosListado').html(ValoresRegistros);
          }
      })
     }

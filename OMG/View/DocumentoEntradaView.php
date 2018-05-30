@@ -1072,6 +1072,7 @@ require_once 'EncabezadoUsuarioView.php';
                         // console.log(fasignacion);
                         // console.log(flimite);
                         // console.log(falarma);
+                        alert(falarma);
                         var fecha;
                         var ejecutarAjax = true;
                         if(column != "fecha_recepcion")
@@ -1114,6 +1115,12 @@ require_once 'EncabezadoUsuarioView.php';
                                                 (editableObj.value!=falarma)?ejecutarAjax=compararFechaAlarma(editableObj.value,fasignacion,flimite): ejecutarAjax=false;
                                                 (ejecutarAjax)? editableObj.style="color:limegreen": fecha=falarma;
                                         }
+                                        // else
+                                        // {
+                                        //         ejecutarAjax=false;
+                                        //         swal("VERIFICAR", "La fecha de alarma no puede quedar sin fecha!", "error");
+                                        //         fecha = falarma;
+                                        // }
                                 }
                         }
                         else
