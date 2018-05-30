@@ -339,16 +339,31 @@
     $('#BTN_CREAR_NUEVAEVIDENCIAMODAL').click(function()
     {
         clave = $('#CLAVE_NUEVAEVIDENCIAMODAL2')[0].innerHTML;
-        $.ajax
-        ({
-            url: '../Controller/OperacionesController?Op=crearEvidencia',
-            type: 'POST',
-            data: 'CLAVE_DOCUMENTO='+clave,
-            success:function(data)
-            {
-
-            }
-        });
+        data = true;
+        if(clave!="")
+        {
+            // $.ajax
+            // ({
+            //     url: '../Controller/OperacionesController?Op=crearEvidencia',
+            //     type: 'POST',
+            //     data: 'CLAVE_DOCUMENTO='+clave,
+            //     success:function(data)
+            //     {
+            //         (data)?swal("","Se creo la evidencia","success"):swal("","Error al crear", "error");
+            //         setTimeout(function(){swal.close();},1500);
+            //     }
+            // });
+            time = setInterval(cronometro,2);;
+            (data)?swal({
+                    title: 'Auto close alert!',
+                    text: 'cerrado in'+time,
+                    timer: 2000,
+                    showCancelButton: false,
+                    showConfirmButton: false
+                    })
+                    :swal("","Error al crear", "error");
+            setTimeout(function(){swal.close();},1500);
+        }
     });
 
     function filterTableAsunt()
