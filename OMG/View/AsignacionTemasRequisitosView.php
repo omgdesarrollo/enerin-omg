@@ -263,8 +263,8 @@ require_once 'EncabezadoUsuarioView.php';
                                     
                                 </td>
                   
-                                <td  style="background-color: #ccccff" contenteditable="false" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_asignacion_tema_requisito"]; ?>')" onClick="showNoEdit(this);"><div><?php echo $filas["descripcion_clausula"]; ?></td>
-                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'requisito','<?php echo $filas["id_asignacion_tema_requisito"]; ?>')" onClick="showEdit(this);"><?php echo $filas["requisito"]; ?></td>
+                                <td  style="background-color: #ccccff" contenteditable="false" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_asignacion_tema_requisito"]; ?>')" onClick="showNoEdit(this);" ><div><?php echo $filas["descripcion_clausula"]; ?></td>
+                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'requisito','<?php echo $filas["id_asignacion_tema_requisito"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["requisito"]; ?></td>
                                 
                                 <td> 
                                     <select id="id_documento" class="select" onchange="saveComboToDatabase('id_documento', <?php echo $filas["id_asignacion_tema_requisito"]; ?> )">
@@ -399,7 +399,7 @@ require_once 'EncabezadoUsuarioView.php';
 		<script>
                     
                       var id_asignacion_tema_requisito;
-                      var cualmodificar;
+                      var cualmodificar,si_cambio=false;
                       $(function(){
                           
                         $('.select').on('change', function() {
@@ -490,20 +490,29 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 
 		function saveToDatabase(editableObj,column,id) {
-                     $("#btnrefrescar").prop("disabled",true);
-                    //alert("entraste aqui ");
-			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
-			$.ajax({
-                                url: "../Controller/AsignacionTemasRequisitosController.php?Op=Modificar",
-				type: "POST",
-				data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
-				success: function(data){
-                                    consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");  
-					$(editableObj).css("background","#FDFDFD");
-                                         $("#btnrefrescar").prop("disabled",false);
-                                         
-				}   
-		   });
+//                    alert("d");
+                    if(si_cambio==true){
+                        $("#btnrefrescar").prop("disabled",true);
+
+                            //alert("entraste aqui ");
+                                $(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
+                                $.ajax({
+                                        url: "../Controller/AsignacionTemasRequisitosController.php?Op=Modificar",
+                                        type: "POST",
+                                        data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
+                                        success: function(data){
+                                            consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");  
+                                                $(editableObj).css("background","#FDFDFD");
+                                                 $("#btnrefrescar").prop("disabled",false);
+                                                  swal("Actualizacion Exitosa!", "Ok!", "success");
+                                                 si_cambio=false;
+                                                 
+
+                                        }   
+                           });
+                    }else{
+//                        alert("n");
+                    }
 		}
                 
                 
@@ -564,7 +573,13 @@ require_once 'EncabezadoUsuarioView.php';
                         myFunction();
                 }
                 
-                
+                  function detectarsihaycambio(value){
+//                    alert("entro "+value.innerHTML);
+                    
+                    si_cambio=true;
+                    
+                    
+                }
             function loadVistaDocumentos(bclose){
                     var dhxWins = new dhtmlXWindows();
                     dhxWins.attachViewportTo("winVP");

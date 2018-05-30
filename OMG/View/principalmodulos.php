@@ -15,7 +15,8 @@ $urls["logica"] = 'localhost:8282/enerin-omg/archivos/';
 // $urls[""] = ;
 Session::setSesion("URLS",$urls);
 $Usuario=  Session::getSesion("user");
-
+//$tokenseguridad=  Session::getSesion("token");
+//$tse=$tokenseguridad["tokenseguridad"];
 ?>
 
 <!DOCTYPE html>

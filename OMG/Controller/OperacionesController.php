@@ -24,8 +24,8 @@ switch ($Op)
         echo json_encode($Lista);
 		break;
     
-	case 'getClavesDocumentos':
-        $Lista=$modelDocumento->getClavesDocumentos();
+    case 'getClavesDocumentos':
+        $Lista=$model->getClavesDocumentos($_REQUEST["CADENA"]);
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
 		break;
@@ -41,10 +41,13 @@ switch ($Op)
                 echo json_encode($lista);
         
         break;
-    
+    case 'CrearEvidencia':
 
+        $res = $model->crearEvidencia($_REQUEST["CLAVE_DOCUMENTO"]);
+        echo $res;
+        break;
 	default:
-		# code...
-		break;
+		echo false;
+        break;
 }
 ?>

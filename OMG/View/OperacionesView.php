@@ -104,8 +104,7 @@
                 background: #f1f1f1;           /* 6 */
             }
         }
-        </style>
-
+        </style>        
 </head>
 <body>
 <!-- <body class="no-skin" onload="loadSpinner()"> -->
@@ -126,8 +125,8 @@
     ?>
     <div style="position: fixed;">
 
-        <button onClick="DocumentoArchivoAgregarModalF();" type="button" 
-        class="btn btn-success" data-toggle="modal" data-target="#create-item">
+        <button onClick="" type="button" 
+        class="btn btn-success" data-toggle="modal" data-target="#nuevoRegistroModal">
             Agregar Nuevo Registro
         </button>
 
@@ -137,13 +136,13 @@
         </button>
 
         <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
-    
+
         <?php foreach($filtrosArray as $value)
         { ?>
         <input type="text" onkeyup="filterTable(this)" 
         placeholder="<?php echo $value['name'] ?>" style="width: 120px;">
         <?php } ?>
-
+    </div>
     <div style="height: 50px"></div>
 
     <div class="table-fixed-header" style="display:block;" id="myDiv" class="animate-bottom">
@@ -157,42 +156,12 @@
                 </tr>
                 
                 <tbody id="bodyTable">
-                    <?php
-//                    $Lista = Session::getSesion("listarOperaciones");
-//                    
-//                    foreach ($Lista as $filas)
-//                    {                   
-//                    ?>
                     
-<!--                    <tr class="table-row">
-                        
-                        <td contenteditable="false" onBlur="saveToDatabase(this,'clave_documento','//<?php echo $filas["id_evidencias"]; ?>')" 
-                            onClick="showEdit(this);">//<?php echo $filas["clave_documento"]; ?></td>
-                        <td contenteditable="false" onBlur="saveToDatabase(this,'documento','//<?php echo $filas["id_evidencias"]; ?>')" 
-                            onClick="showEdit(this);">//<?php echo $filas["documento"]; ?></td>
-                        <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado','//<?php echo $filas["id_evidencias"]; ?>')" 
-                            onClick="showEdit(this);">//<?php echo $filas["nombre_empleado"]." ".$filas["apellido_paterno"]." ".$filas["apellido_materno"]; ?></td>
-                        
-                        <td>
-                            <button onClick="mostrarRegistros(//<?php echo $filas['id_documento']; ?>)" type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-registros" >
-                                    Ver
-                                    <i class="ace-icon fa fa-book" style="color: #0099ff;font-size: 20px;"></i>
-                            </button>
-                        </td>
-                        
-                    </tr>-->
-                    
-                    
-                    <?php
-//                    }
-//                    ?>
                 </tbody>
             </table>
         </div>
     </div>
-
-    </div>
-
+</body>
 
 
 <!-- Inicio modal Registros -->
@@ -214,38 +183,86 @@
     </div> cierre div class="modal-dialog" 
 </div> cierre del modal Requisitos-->
 
+<!-- Inicio de Seccion Modal Crear nueva Entrada-->
+<div class="modal draggable fade" id="nuevoRegistroModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+		        <h4 class="modal-title" id="myModalLabel">Crear Nueva Evidencia</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="control-label" for="title">Clave Documento:</label>
+                    <input type="text" class="" onkeyup="getClavesDocumento(this)"/>
+                    <select id="CLAVE_NUEVAEVIDENCIAMODAL" class="select1" onchange="select_clavesModal(this)">
+                        <option>Sin especificar</option>
+                    </select>
+
+                    <div class="help-block with-errors"></div>
+				</div>
+                <div class="form-group">
+                    Clave: <label id="CLAVE_NUEVAEVIDENCIAMODAL2" class="control-label" for="title"></label>
+                </div>
+                <div class="form-group">
+                    Documento: <label id="DOCUMENTO_NUEVAEVIDENCIAMODAL" class="control-label" for="title"></label>
+                </div>
+                <div class="form-group">
+                    Responsable del Documento: <label id="NOMBRE_NUEVAEVIDENCIAMODAL" class="control-label" for="title"></label>
+                </div>
+                <div class="form-group" method="post">
+                    <button type="submit" id="BTN_CREAR_NUEVAEVIDENCIAMODAL" class="btn crud-submit btn-info">Crear Evidencia</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+       <!--Final de Seccion Modal--> 
 
 <script>
+
     var data="";
     var dataTemp="";
-    
-    
-//    function mostrarRegistros(id_documento)
-//    {
-//        ValoresRegistros = "<ul>";
-//        alert("Registros"+id_documento);
-//        
-//        $.ajax
-//        ({
-//            url:"../Controller/OperacionesController.php?Op=MostrarRegistrosPorDocumento",
-//            type: 'POST',
-//            data: 'ID_DOCUMENTO='+id_documento,
-//            success:function(responseregistros)
-//            {
-//                $.each(responseregistros, function(index,value){
-//                    ValoresRegistros+="<li>"+value.registros+"</li>";                   
-//                });
-//        ValoresRegistros += "</ul>";
-//                
-//                $('#RegistrosListado').html(ValoresRegistros);
-//                
-//            }
-//            
-//        })
-//    }
-    
-   
-    
+    $(function()
+    {
+        $.ajax
+        ({
+            url: '../Controller/OperacionesController.php?Op=Listar',
+            type: 'GET',
+            success:function(datos)
+            {
+                data = datos;
+                reconstruirTable(datos);
+            }
+        });
+    });
+
+    function mostrarRegistros(id_documento)
+    {
+        ValoresRegistros = "<ul>";
+        alert("Registros"+id_documento);
+        
+        $.ajax
+        ({
+            url:"../Controller/OperacionesController.php?op=MostrarRegistrosPorDocumento",
+            type: 'POST',
+            data: 'ID_DOCUMENTO'+id_documento,
+            success:function(responseregistros)
+            {
+                $.each(responseregistros, function(index,value){
+                    ValoresRegistros+="<li>"+value.registros+"</li>";                   
+                });
+        ValoresRegistros += "</ul>";
+                
+                $('#RegistrosListado').html(ValoresRegistros);
+                
+            }
+            
+        })
+    }
     
     function refresh()
     {
@@ -264,18 +281,76 @@
         // alert("se cargara otro ");
         myFunction();
     }
-    function getClavesDocumentos()
+    function getClavesDocumento(Obj)
     {
+        tempData="";
+        cadena = $(Obj).val();
+        if(cadena!="")
+        {
+            $.ajax
+            ({
+                url: '../Controller/OperacionesController.php?Op=getClavesDocumentos',
+                type: 'GET',
+                data: "CADENA="+cadena,
+                success:function(data)
+                {
+                    if(data!="")
+                    tempData += "<option value=''></option>";
+                    $.each(data,function(index,value)
+                    {
+                        apellidos = value.NOMBRE_EMPLEADO;
+                        if(value.APELLIDO_PATERNO!=null)
+                        {
+                            apellidos += " "+value.APELLIDO_PATERNO+" "+value.APELLIDO_MATERNO;
+                        }
+                        tempData += "<option value='"+value.CLAVE_DOCUMENTO+"+=$="+value.DOCUMENTO;
+                        tempData += "+=$="+apellidos+"'>";
+                        tempData += value.CLAVE_DOCUMENTO+"</option>";
+                    });
+                    $('#CLAVE_NUEVAEVIDENCIAMODAL').html(tempData);
+                }
+            });
+        }
+        else
+        {
+            tempData = "<option>Sin especificar</option>";
+            $('#CLAVE_NUEVAEVIDENCIAMODAL').html(tempData);
+        }
+    }
+
+    function select_clavesModal(Obj)
+    {
+        tempData = $(Obj).prop("value");
+        tempData = tempData.split("+=$=");
+        if(tempData.length == 3)
+        {
+            $('#CLAVE_NUEVAEVIDENCIAMODAL2').html(tempData[0]);
+            $('#DOCUMENTO_NUEVAEVIDENCIAMODAL').html(tempData[1]);
+            $('#NOMBRE_NUEVAEVIDENCIAMODAL').html(tempData[2]);
+        }
+        else
+        {
+            $('#CLAVE_NUEVAEVIDENCIAMODAL2').html("");
+            $('#DOCUMENTO_NUEVAEVIDENCIAMODAL').html("");
+            $('#NOMBRE_NUEVAEVIDENCIAMODAL').html("");
+        }
+    }
+
+    $('#BTN_CREAR_NUEVAEVIDENCIAMODAL').click(function()
+    {
+        clave = $('#CLAVE_NUEVAEVIDENCIAMODAL2')[0].innerHTML;
         $.ajax
         ({
-            url: '../Controller/OperacionesController.php?Op=getClavesDocumentos',
-            type: 'GET',
+            url: '../Controller/OperacionesController?Op=crearEvidencia',
+            type: 'POST',
+            data: 'CLAVE_DOCUMENTO='+clave,
             success:function(data)
             {
 
             }
         });
-    }
+    });
+
     function filterTableAsunt()
     {
         var input, filter, table, tr, td, i;
@@ -315,26 +390,28 @@
     }
     function reconstruirTable(data)
     {
+        tempData = "";
         $.each(data,function(index,value)
         {
             tempData += "<tr>";
-            tempData += "<td>"+value.Clave+"</td>";
-            tempData += "<td>"+value.Nombre_documento+"</td>";
-            tempData += "<td>"+value.Responsable_documento+"</td>";
-            tempData += "<td>"+value.Registros+"</td>";
+            tempData += "<td>"+value.clave_documento+"</td>";
+            tempData += "<td>"+value.documento+"</td>";
+            tempData += "<td>"+value.nombre_empleado+value.apellido_paterno+value.apellido_materno+"</td>";
+            tempData += "<td>"+value.registros+"</td>";
             tempData += "<td><button onClick='mostrar_urls();'";
             tempData += "type='button' class='btn btn-success' data-toggle='modal' data-target='#create-itemUrls'>";
             tempData += "Mostrar Documentos</button></td>";
-            tempData += "<td>"+value.Fecha_Registro+"</td>";
-            tempData += "<td>"+value.Desviación+"</td>";
-            tempData += "<td>"+value.Acción_Correctiva_Inmediata+"</td>";
-            tempData += "<td>"+value.Validación+"</td>";
-            tempData += "<td>"+value.PlanAcción+"</td>";
-            tempData += "<td>"+value.ingresar_Oficio_Atención+"</td>";
-            tempData += "<td>"+value.Oficio_Atención+"</td>";
+            tempData += "<td>"+value.clasificacion+"</td>";
+            tempData += "<td>"+value.desviacion+"</td>";
+            tempData += "<td>La fecha</td>";
+            tempData += "<td>"+value.accion_correctiva+"</td>";
+            tempData += "<td>"+value.validacion_supervisor+"</td>";
+            tempData += "<td>"+value.plan_accion+"</td>";
+            tempData += "<td>"+value.ingresar_oficio_atencion+"</td>";
+            tempData += "<td>"+value.oficio_atencion+"</td>";
             tempData += "</tr>";
         });
-        $('#bodyTable').html(data);
+        $('#bodyTable').html(tempData);
     }
 </script>
 

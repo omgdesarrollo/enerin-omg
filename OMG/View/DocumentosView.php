@@ -8,8 +8,6 @@ $Usuario=  Session::getSesion("user");
 
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -55,9 +53,6 @@ $Usuario=  Session::getSesion("user");
                 
                 </script>
 
-                
-                
-            
             <style>
                      .modal
                     {
@@ -148,7 +143,6 @@ $Usuario=  Session::getSesion("user");
  
 /*Finaliza estilos para mantener fijo el header*/                    
 
-
                 </style>    
                 
                 
@@ -231,8 +225,8 @@ $Usuario=  Session::getSesion("user");
 		  ?>
 			  <tr class="table-row">
 				<td><?php echo $numeracion++;   ?></td>                               
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'clave_documento','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_documento"]; ?></td>
-                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'clave_documento','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["clave_documento"]; ?></td>
+                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"  onkeyup="detectarsihaycambio(this)"><?php echo $filas["documento"]; ?></td>
                                 
                                 <td> 
                                     <select   id="id_empleado" class="select"  onchange="saveComboToDatabase('id_empleado', <?php echo $filas["id_documento"]; ?> )">
@@ -258,8 +252,8 @@ $Usuario=  Session::getSesion("user");
                                     </select>                                   
                                 </td>
                                 
-                                <!--<td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'registros','<?php // echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"><?php // echo $filas["registros"]; ?></td>-->
-                                <td><textarea cols="50"  wrap="soft"> <?php echo $filas["registros"]; ?> </textarea>  </td>
+                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'registros','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"  onkeyup="detectarsihaycambio(this)"><?php echo $filas["registros"]; ?></td>
+                                <!--<td><textarea cols="50"  wrap="soft"> <?php echo $filas["registros"]; ?> </textarea>  </td>-->
 			  </tr>
 		<?php
                       }
@@ -371,7 +365,7 @@ $Usuario=  Session::getSesion("user");
                 
 		<script>
                     
-                      var id_clausula;
+                      var id_clausula,si_hay_cambio=false;
                       $(function(){
                           
                           
@@ -387,6 +381,7 @@ $Usuario=  Session::getSesion("user");
                           
                           
                         $('.select').on('change', function() {
+//                             consultarInformacion("../Controller/DocumentosController.php?Op=Listar");
 //                          console.log( $(this).prop('value') );
 //                          alert("el value que va a viajar es "+ $(this).prop('value'));
                           column="ID_EMPLEADO";
@@ -397,12 +392,19 @@ $Usuario=  Session::getSesion("user");
 				type: "POST",
 				data:'column='+column+'&editval='+val+'&id='+id_clausula,
 				success: function(data){
+                                     consultarInformacion("../Controller/DocumentosController.php?Op=Listar");
+                                      swal("Actualizacion Exitosa!", "Ok!", "success")
+							
                                     
 //                                        consultarInformacion("../Controller/DocumentosController.php?Op=Listar");
 //                                        consultarInformacion("../Controller/DocumentosController.php?Op=Listar");
-                                        window.location.href="DocumentosView.php";
+//                                        window.location.href="DocumentosView.php";
                                     
 					//$(editableObj).css("background","#FDFDFD");
+                                        
+                                      
+							
+							
 				}   
                            });
                           
@@ -464,19 +466,27 @@ $Usuario=  Session::getSesion("user");
                 
                 
 		function saveToDatabase(editableObj,column,id) {
-                    $("#btnrefrescar").prop("disabled",true);
-//                    alert("entraste aqui  y el valor es "+editableObj);
-			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
-			$.ajax({
-                                url: "../Controller/DocumentosController.php?Op=Modificar",
-				type: "POST",
-				data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
-				success: function(data){
-					$(editableObj).css("background","#FDFDFD");
-                                        consultarInformacion("../Controller/DocumentosController.php?Op=Listar"); 
-                                        $("#btnrefrescar").prop("disabled",false);
-				}   
-		   });
+                    if(si_hay_cambio==true){
+                            $("#btnrefrescar").prop("disabled",true);
+        //                    alert("entraste aqui  y el valor es "+editableObj);
+                                $(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
+                                $.ajax({
+                                        url: "../Controller/DocumentosController.php?Op=Modificar",
+                                        type: "POST",
+                                        data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
+                                        success: function(data){
+
+                                                $(editableObj).css("background","#FDFDFD");
+                                                consultarInformacion("../Controller/DocumentosController.php?Op=Listar"); 
+                                                 swal("Actualizacion Exitosa!", "Ok!", "success");
+                                                $("#btnrefrescar").prop("disabled",false);
+                                                si_hay_cambio=false;
+                                        }   
+                           });
+                    }
+                    else{
+                      
+                    }
 		}
                 
                 
@@ -583,6 +593,13 @@ if(mensajeerror!=""){
                     });  
                 }
                 
+                function detectarsihaycambio(value){
+//                    alert("entro "+value.innerHTML);
+                    
+                    si_hay_cambio=true;
+                    
+                    
+                }
                 
                 
                 function filterTableClaveDocumento() {
