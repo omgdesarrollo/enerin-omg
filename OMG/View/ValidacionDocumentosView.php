@@ -46,6 +46,9 @@ $Usuario=  Session::getSesion("user");
                 <!--aqui termina la seccion para poder abrir el modal-->
 
 
+                <script src="../../js/jquery.js" type="text/javascript"></script>
+                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+   
                 <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
                 <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
                 <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
@@ -458,13 +461,10 @@ require_once 'EncabezadoUsuarioView.php';
                     
     var id_validacion_documento,columna,objetocheckbox;
     
-    $("#subirArchivos").click(function()
-    {
-      agregarArchivosUrl();
-    });
+   
     
     
-    
+     
     
     
     $(function()
@@ -472,11 +472,12 @@ require_once 'EncabezadoUsuarioView.php';
       
       
     
+    
         $('.checkboxDocumento').on('change', function()
       { 
           
           var chekeado=$('.checkboxDocumento').is(':checked');
-         
+         alert("");
 //          alert("value de columna es : "+columna);
         if(columna=="desviacion_mayor"){
             enviar_notificacion(columna,chekeado,id_validacion_documento);
@@ -984,9 +985,7 @@ require_once 'EncabezadoUsuarioView.php';
             <script src="../../js/loaderanimation.js" type="text/javascript"></script>
             <!--Termina para el spiner cargando-->
 
-            <!--jquery-->
-            <script src="../../js/jquery.js" type="text/javascript"></script>
-            <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+           
 
             <!--Bootstrap-->
             <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
