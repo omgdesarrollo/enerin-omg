@@ -177,17 +177,15 @@ require_once 'EncabezadoUsuarioView.php';
 
              
 <div style="position: fixed;">                          
-<button type="button" class="btn btn-info " onclick="refresh();" >
+    <button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
     <i class="glyphicon glyphicon-repeat"></i>
     
 </button>
 
-        <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Clave Documento" style="width: 140px;">
-        <input type="text" id="idInputEntidad" onkeyup="filterTableEntidad()" placeholder="Autoridad Remitente" style="width: 140px;">
-        <input type="text" id="idInputAsunto" onkeyup="filterTableAsunto()" placeholder="Asunto" style="width: 120px;">
-        <input type="text" id="idInputResponsable" onkeyup="filterTableResponsable()" placeholder="Responsable Tema" style="width: 180px;">
-        <input type="text" id="idInputStatus" onkeyup="filterTableStatus()" placeholder="Status" style="width: 120px;">    
-        <input type="text" id="idInputResponsablePlan" onkeyup="filterTableResponsablePlan()" placeholder="Responsable Plan" style="width: 180px;">
+        <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave Documento" style="width: 180px;">
+        <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre Documento" style="width: 180px;">
+        <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 180px;">
+
         <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
 
 </div>    
@@ -608,23 +606,28 @@ require_once 'EncabezadoUsuarioView.php';
     
     function consultarInformacion(url)
     {
+        $("#loader").show();
       $.ajax({  
             url: ""+url,  
-          success: function(r) {    
-//                     $("#procesando").empty();
+          success: function(r) {
+              $("idTable").prop("ValidacionDocumentosView.php #idTable");
+              $("#loader").hide();
             },
             beforeSend:function(r)
             {
 
-
-          }
+            },
+            error:function()
+            {
+                $("#loader").hide();
+            }
       });  
     }
  
     function refresh()
     {
       consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");  
-      window.location.href="ValidacionDocumentosView.php";
+      //window.location.href="ValidacionDocumentosView.php";
     }
     
     function loadSpinner()
@@ -851,11 +854,11 @@ require_once 'EncabezadoUsuarioView.php';
           });
         });
     }
-    function filterTable()
+    function filterTableClaveDocumento()
     {
                 // Declare variables 
       var input, filter, table, tr, td, i;
-      input = document.getElementById("idInput");
+      input = document.getElementById("idInputClaveDocumento");
       filter = input.value.toUpperCase();
       table = document.getElementById("idTable");
       tr = table.getElementsByTagName("tr");
@@ -874,11 +877,11 @@ require_once 'EncabezadoUsuarioView.php';
   }
                 
                 
-  function filterTableEntidad() 
+  function filterTableNombreDocumento() 
   {
   // Declare variables 
       var input, filter, table, tr, td, i;
-      input = document.getElementById("idInputEntidad");
+      input = document.getElementById("idInputNombreDocumento");
       filter = input.value.toUpperCase();
       table = document.getElementById("idTable");
       tr = table.getElementsByTagName("tr");
@@ -897,11 +900,11 @@ require_once 'EncabezadoUsuarioView.php';
   }   
   
                 
-  function filterTableAsunto()
+  function filterTableResponsableDocumento()
   {
   // Declare variables 
     var input, filter, table, tr, td, i;
-    input = document.getElementById("idInputAsunto");
+    input = document.getElementById("idInputResponsableDocumento");
     filter = input.value.toUpperCase();
     table = document.getElementById("idTable");
     tr = table.getElementsByTagName("tr");
@@ -920,82 +923,8 @@ require_once 'EncabezadoUsuarioView.php';
     }
   }
                 
-  function filterTableResponsable()
-  {
-// Declare variables 
-    var input, filter, table, tr, td, i;
-    input = document.getElementById("idInputResponsable");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("idTable");
-    tr = table.getElementsByTagName("tr");
 
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[3];
-      if (td) {
-        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
-        }
-      } 
-    }
-  }
-                
-                
-  function filterTableStatus()
-  {
-// Declare variables 
-    var input, filter, table, tr, td, i;
-    input = document.getElementById("idInputStatus");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("idTable");
-    tr = table.getElementsByTagName("tr");
-
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[5];
-      if (td) {
-        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
-        }
-      } 
-    }
-  }
-  function filterTableResponsablePlan()
-  {
-  // Declare variables 
-    var input, filter, table, tr, td, i;
-    input = document.getElementById("idInputResponsablePlan");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("idTable");
-    tr = table.getElementsByTagName("tr");
-
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[7];
-      if (td) {
-        select=td.getElementsByTagName("select");
-          $.each(select,function(index,value)
-          {
-                var indexRes = value.selectedIndex;
-                var responsable=value[indexRes].innerHTML;
-                console.log(responsable);
-              if (responsable.toUpperCase().indexOf(filter) > -1)
-              {
-                tr[i].style.display = "";
-              }
-              else
-              {
-                tr[i].style.display = "none";
-              }
-  //                            console.log(value.options(ind));
-          });
-      } 
-    }
-  }    
+    
 		</script>
     <script id="template-upload" type="text/x-tmpl">
       {% for (var i=0, file; file=o.files[i]; i++) { %}
