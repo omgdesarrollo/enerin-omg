@@ -31,6 +31,16 @@
     <!--Termina para el spiner cargando-->
                   
     <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+
+    <!--jquery-->
+    <script src="../../js/jquery.js" type="text/javascript"></script>
+    <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+    
+    <!-- cargar archivo -->
+    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
+    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
+    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
+    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
     
  
 
@@ -106,9 +116,9 @@
         }
         </style>        
 </head>
-<body>
-<!-- <body class="no-skin" onload="loadSpinner()"> -->
-    <!-- <div id="loader"></div> -->
+<!-- <body> -->
+<body class="no-skin" onload="loadSpinner()">
+    <div id="loader"></div>
     <?php
         require_once 'EncabezadoUsuarioView.php';
         $filtrosArray = array(
@@ -126,7 +136,7 @@
     <div style="position: fixed;">
 
         <button onClick="" type="button" 
-        class="btn btn-success" data-toggle="modal" data-target="#nuevoRegistroModal">
+        class="btn btn-success" data-toggle="modal" data-target="#nuevaEvidenciaModal">
             Agregar Nuevo Registro
         </button>
 
@@ -184,7 +194,7 @@
 </div> cierre del modal Requisitos-->
 
 <!-- Inicio de Seccion Modal Crear nueva Entrada-->
-<div class="modal draggable fade" id="nuevoRegistroModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal draggable fade" id="nuevaEvidenciaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -213,6 +223,7 @@
                 <div class="form-group">
                     Responsable del Documento: <label id="NOMBRE_NUEVAEVIDENCIAMODAL" class="control-label" for="title"></label>
                 </div>
+
                 <div class="form-group" method="post">
                     <button type="submit" id="BTN_CREAR_NUEVAEVIDENCIAMODAL" class="btn crud-submit btn-info">Crear Evidencia</button>
                 </div>
@@ -220,54 +231,71 @@
         </div>
     </div>
 </div>
-       <!--Final de Seccion Modal--> 
+<!--Final de Seccion Modal--> 
+<!-- Inicio de Seccion Modal Archivos-->
+<div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+        <div id="loaderModalMostrar"></div>
+		<div class="modal-content">
+                        
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Documento Adjuntado</h4>
+		      </div>
+
+		      <div class="modal-body">
+                        <div id="DocumentolistadoUrl"></div>
+
+                        
+                        <div class="form-group">
+                                <div id="DocumentolistadoUrlModal"></div>
+			</div>
+
+                        <div class="form-group" method="post" >
+                                <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Agregar Archivo</button>
+                        </div>
+                      </div><!-- cierre div class-body -->
+                </div><!-- cierre div class modal-content -->
+        </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal -->
 
 <script>
 
     var data="";
     var dataTemp="";
+
     $(function()
+    {
+        listarDatos();
+    });
+
+    function listarDatos()
     {
         $.ajax
         ({
             url: '../Controller/OperacionesController.php?Op=Listar',
             type: 'GET',
+            beforeSend:function()
+            {
+                $('#loader').show();
+            },
             success:function(datos)
             {
                 data = datos;
                 reconstruirTable(datos);
+            },
+            error:function(error)
+            {
+                $('#loader').hide();
             }
         });
-    });
-
-    function mostrarRegistros(id_documento)
-    {
-        ValoresRegistros = "<ul>";
-        alert("Registros"+id_documento);
-        
-        $.ajax
-        ({
-            url:"../Controller/OperacionesController.php?op=MostrarRegistrosPorDocumento",
-            type: 'POST',
-            data: 'ID_DOCUMENTO'+id_documento,
-            success:function(responseregistros)
-            {
-                $.each(responseregistros, function(index,value){
-                    ValoresRegistros+="<li>"+value.registros+"</li>";                   
-                });
-        ValoresRegistros += "</ul>";
-                
-                $('#RegistrosListado').html(ValoresRegistros);
-                
-            }
-            
-        })
     }
-    
+
     function refresh()
     {
         // consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
-        window.location.href="OperacionesView.php";
+        // window.location.href="OperacionesView.php";        
+        listarDatos();
     }
     function filterTable(Obj)
     {
@@ -342,27 +370,36 @@
         data = true;
         if(clave!="")
         {
-            // $.ajax
-            // ({
-            //     url: '../Controller/OperacionesController?Op=crearEvidencia',
-            //     type: 'POST',
-            //     data: 'CLAVE_DOCUMENTO='+clave,
-            //     success:function(data)
-            //     {
-            //         (data)?swal("","Se creo la evidencia","success"):swal("","Error al crear", "error");
-            //         setTimeout(function(){swal.close();},1500);
-            //     }
-            // });
-            time = setInterval(cronometro,2);;
-            (data)?swal({
-                    title: 'Auto close alert!',
-                    text: 'cerrado in'+time,
-                    timer: 2000,
-                    showCancelButton: false,
-                    showConfirmButton: false
-                    })
-                    :swal("","Error al crear", "error");
-            setTimeout(function(){swal.close();},1500);
+            $.ajax
+            ({
+                url: '../Controller/OperacionesController.php?Op=CrearEvidencia',
+                type: 'POST',
+                data: 'CLAVE_DOCUMENTO='+clave,
+                success:function(data)
+                {
+                    (data)?
+                    (swal({
+                        title: '',text: 'Se creo la evidencia',
+                        showCancelButton: false,showConfirmButton: false,
+                        type:"success"
+                        }),
+                        $('#CLAVE_NUEVAEVIDENCIAMODAL2').html(""),
+                        $('#DOCUMENTO_NUEVAEVIDENCIAMODAL').html(""),
+                        $('#NOMBRE_NUEVAEVIDENCIAMODAL').html(""),
+                        $('#nuevaEvidenciaModal .close').click(),
+                        listarDatos()
+                    )
+                    :swal({
+                        title: '',
+                        text: 'Error al crear',
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                        type:"error"
+                    });
+                    setTimeout(function(){swal.close();},1500);
+
+                }
+            });
         }
     });
 
@@ -408,36 +445,269 @@
         tempData = "";
         $.each(data,function(index,value)
         {
-            tempData += "<tr>";
-            tempData += "<td>"+value.clave_documento+"</td>";
-            tempData += "<td>"+value.documento+"</td>";
-            tempData += "<td>"+value.nombre_empleado+value.apellido_paterno+value.apellido_materno+"</td>";
-            tempData += "<td>"+value.registros+"</td>";
-            tempData += "<td><button onClick='mostrar_urls();'";
-            tempData += "type='button' class='btn btn-success' data-toggle='modal' data-target='#create-itemUrls'>";
-            tempData += "Mostrar Documentos</button></td>";
-            tempData += "<td>"+value.clasificacion+"</td>";
-            tempData += "<td>"+value.desviacion+"</td>";
-            tempData += "<td>La fecha</td>";
-            tempData += "<td>"+value.accion_correctiva+"</td>";
-            tempData += "<td>"+value.validacion_supervisor+"</td>";
-            tempData += "<td>"+value.plan_accion+"</td>";
-            tempData += "<td>"+value.ingresar_oficio_atencion+"</td>";
-            tempData += "<td>"+value.oficio_atencion+"</td>";
-            tempData += "</tr>";
+            URL = 'filesEvidenciaDocumento/'+value.id_evidencias;
+            $.ajax({
+                  url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
+                  type: 'GET',
+                  data: 'URL='+URL,
+                  async: false,
+                  success: function(todo)
+                  {
+                    tempData = "<tr>";
+                    tempData += "<td>"+value.clave_documento+"</td>";
+                    tempData += "<td>"+value.documento+"</td>";
+                    tempData += "<td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td>";
+                    // tempData += "<td>"+value.registros+"</td>";
+                    tempData += "<td><button onClick='mostrarTemaResponsable();' type='button' class='btn btn-success'";
+                    tempData += "data-toggle='modal' data-target='#mostrar-temaresponsable'>Ver";
+                    tempData += "<i class='ace-icon fa fa-book' style='color: #0099ff;font-size: 20px;'></i></button></td>";
+                    tempData += "<td><button onClick='mostrar_urls("+value.id_evidencias+");'";
+                    tempData += "type='button' class='btn btn-success' data-toggle='modal' data-target='#create-itemUrls'>";
+                    tempData += "Adjuntar Documento</button></td>";
+                    $.each(todo[0],function(index2,value2)
+                    {
+                        nametmp = value2.split("^");
+                        // fechaAdjunto=nametmp[0];
+                        tempData += "<td>"+value.clasificacion+"</td>";
+                        tempData += "<td>"+value.desviacion+"</td>";
+                        tempData += "<td>"+nametmp[0]+"</td>";
+                        tempData += "<td>"+value.accion_correctiva+"</td>";
+                        tempData += "<td>"+value.validacion_supervisor+"</td>";
+                        tempData += "<td>"+value.plan_accion+"</td>";
+                        tempData += "<td>"+value.ingresar_oficio_atencion+"</td>";
+                        tempData += "<td>"+value.oficio_atencion+"</td>";
+                    });
+                    tempData += "</tr>";
+                  }
+                });
         });
         $('#bodyTable').html(tempData);
+        $('#loader').hide();
     }
+
+    var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='form-data'>";
+        ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
+        ModalCargaArchivo += "<div class='fileupload-buttons'>";
+        ModalCargaArchivo += "<span class='fileinput-button'>";
+        ModalCargaArchivo += "<span id='spanAgregarDocumento'><a >Agregar documentos(Click o Arrastrar)...</a></span>";
+        ModalCargaArchivo += "<input type='file' name='files[]'></span>";
+        ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
+        ModalCargaArchivo += "<div class='fileupload-progress' >";
+        // ModalCargaArchivo += "<div class='progress' role='progressbar' aria-valuemin='0' aria-valuemax='100'></div>";
+        ModalCargaArchivo += "<div class='progress-extended'>&nbsp;</div>";
+        ModalCargaArchivo += "</div></div>";
+        ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
+
+    $("#subirArchivos").click(function()
+    {
+        agregarArchivosUrl();
+    });
+
+    function mostrar_urls(id_evidencia)
+    {
+        var tempDocumentolistadoUrl = "";
+        URL = 'filesEvidenciaDocumento/'+id_evidencia;
+        $.ajax({
+          url: '../Controller/ArchivoUploadController.php?Op=CrearUrl',
+          type: 'GET',
+          data: 'URL='+URL,
+          success:function(creado)
+          {
+            if(creado)
+            {
+              $.ajax({
+                  url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
+                  type: 'GET',
+                  data: 'URL='+URL,
+                  success: function(todo)
+                  {
+                      // console.log(todo[0].length);
+                      if(todo[0].length!=0)
+                      {
+                              tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
+                              $.each(todo[0], function (index,value)
+                              {
+                                      nametmp = value.split("^");
+                                      name;
+                                      fecha = nametmp[0];
+                                      $.each(nametmp, function(index,value)
+                                      {
+                                              if(index!=0)
+                                                      (index==1)?name=value:name+="-"+value;
+                                      });
+                                      tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
+                                      tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\">"+name+"</a></td>";
+                                      tempDocumentolistadoUrl += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
+                                      tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
+                                      tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";
+                              });
+                              tempDocumentolistadoUrl += "</tbody></table>";
+                      }
+                      if(tempDocumentolistadoUrl == "")
+                      {
+                            tempDocumentolistadoUrl = " No hay archivos agregados ";
+                            $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
+                      }
+                      else
+                      {
+                        $('#DocumentolistadoUrlModal').html("");
+                      }
+                      tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdEvidenciaDocumento' type='text' style='display:none;' value='"+id_evidencia+"'>";
+                      $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
+                      $('#fileupload').fileupload
+                      ({
+                        url: '../View/',
+                      });
+                  }
+              });
+            }
+            else
+            {
+              swal("","Error del servidor","error");
+            }
+          }
+        });
+    }
+    function borrarArchivo(url)
+    {
+      swal({
+          title: "ELIMINAR",
+          text: "Se eliminara toda la evidencia de este documento. ¿Desea continuar?",
+          type: "warning",
+          showCancelButton: true,
+          closeOnConfirm: false,
+          showLoaderOnConfirm: true
+        },function()
+        {
+          var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();
+          $.ajax({
+            url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
+            type: 'POST',
+            data: 'URL='+url,
+            success: function(eliminado)
+            {
+              if(eliminado)
+              {
+                mostrar_urls(ID_EVIDENCIA_DOCUMENTO);
+                refresh();
+                //eliminar parte del registro en la base de datos
+                swal("","Archivo eliminado");
+                setTimeout(function(){swal.close();},1000);
+              }
+              else
+                swal("","Ocurrio un error al elimiar el documento", "error");
+            },
+            error:function()
+            {
+              swal("","Ocurrio un error al elimiar el documento", "error");
+            }
+          });
+        });
+    }
+
+    function agregarArchivosUrl()
+    {
+      var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();
+      url = 'filesEvidenciaDocumento/'+ID_EVIDENCIA_DOCUMENTO,
+      $.ajax({
+        url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
+        type: 'GET',
+        data: 'URL='+url,
+        success:function(creado)
+        {
+          if(creado)
+            $('.start').click();
+        },
+        error:function()
+        {
+          swal("","Error del servidor","error");
+        }
+      });
+    }
+
+    function mostrarRegistros(id_documento)
+    {
+        ValoresRegistros = "<ul>";
+        alert("Registros"+id_documento);
+        
+        $.ajax
+        ({
+            url:"../Controller/OperacionesController.php?op=MostrarRegistrosPorDocumento",
+            type: 'POST',
+            data: 'ID_DOCUMENTO'+id_documento,
+            success:function(responseregistros)
+            {
+                $.each(responseregistros, function(index,value){
+                    ValoresRegistros+="<li>"+value.registros+"</li>";                   
+                });
+        ValoresRegistros += "</ul>";
+                
+                $('#RegistrosListado').html(ValoresRegistros);
+                
+            }
+            
+        })
+    }
+</script>
+
+<script id="template-upload" type="text/x-tmpl">
+    {% for (var i=0, file; file=o.files[i]; i++) { %}
+        <tr class="template-upload" style="width:100%">
+            <td>
+            <span class="preview"></span>
+            </td>
+            <td>
+            <p class="name">{%=file.name%}</p>
+            <strong class="error"></strong>
+            </td>
+            <td>
+            <p class="size">Processing...</p>
+            <!-- <div class="progress"></div> -->
+            </td>
+            <td>
+            {% if (!i && !o.options.autoUpload) { %}
+                    <button class="start" style="display:none;padding: 0px 4px 0px 4px;" disabled>Start</button>
+            {% } %}
+            {% if (!i) { %}
+                    <button class="cancel" style="padding: 0px 4px 0px 4px;color:white">Cancel</button>
+            {% } %}
+            </td>
+        </tr>
+        {% if(i==0){ $('.fileupload-buttonbar').html("");} %}
+    {% } %}
+</script>
+
+<script id="template-download" type="text/x-tmpl">
+    {% var t = $('#fileupload').fileupload('active'); var i,file;%}
+    {% for (i=0,file; file=o.files[i]; i++) { %}
+        <tr class="template-download">
+            <td>
+            <span class="preview">
+                    {% if (file.thumbnailUrl) { %}
+                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                    {% } %}
+            </span>
+            </td>
+            <td>
+            <p class="name">
+                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+            </p>
+            </td>
+            <td>
+            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+            </td>
+            <!-- <td> -->
+            <!-- <button class="delete" style="padding: 0px 4px 0px 4px;" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>Delete</button> -->
+            <!-- <input type="checkbox" name="delete" value="1" class="toggle"> -->
+            <!-- </td> -->
+        </tr>
+    {% } %}
+    {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO); refresh(); } } %}
 </script>
 
         <!--Inicia para el spiner cargando-->
         <script src="../../js/loaderanimation.js" type="text/javascript"></script>
         <!--Termina para el spiner cargando-->
-        
-        <!--jquery-->
-        <script src="../../js/jquery.js" type="text/javascript"></script>
-        <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-
         
         <!--Bootstrap-->
         <script src="../../assets/probando/js/bootstrap.min.js"></script>
@@ -449,6 +719,22 @@
         <script src="../../assets/probando/js/ace.min.js"></script>        
         <script src="../../assets/probando/js/ace-extra.min.js"></script>
 
-
+        <!-- js cargar archivo -->
+        <script src="../../assets/FileUpload/js/jquery.min.js"></script>
+        <script src="../../assets/FileUpload/js/jquery-ui.min.js"></script>
+        <script src="../../assets/FileUpload/js/tmpl.min.js"></script>
+        <script src="../../assets/FileUpload/js/load-image.all.min.js"></script>
+        <script src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.blueimp-gallery.min.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.iframe-transport.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.fileupload.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.fileupload-process.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.fileupload-image.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.fileupload-audio.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.fileupload-video.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
+        <script src="../../assets/FileUpload/js/main.js"></script>
 </body>
 </html>
