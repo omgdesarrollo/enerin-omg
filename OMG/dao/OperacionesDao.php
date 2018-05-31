@@ -65,4 +65,26 @@ class OperacionesDao
             return false;
         }
     }
+    
+    
+    public function actualizarEvidenciaPorColumna($COLUMNA,$VALOR,$ID_EVIDENCIAS){
+         
+        try{
+            $query="UPDATE evidencias SET ".$COLUMNA."='".$VALOR."'  "
+                 . "WHERE id_evidencias=$ID_EVIDENCIAS";
+            
+
+     
+            $db= AccesoDB::getInstancia();
+           $result= $db->executeQueryUpdate($query);
+
+            return $result;
+        } catch (Exception $ex) {
+           throw $ex;
+           return false;
+        }
+    }
+    
+    
+    
 }

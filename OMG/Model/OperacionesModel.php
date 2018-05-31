@@ -42,5 +42,17 @@ class OperacionesModel
             return false;
         }
     }
+    
+    public function actualizarPorColumna($COLUMNA,$VALOR,$ID_EVIDENCIAS){
+        try{
+            $dao=new OperacionesDao();
+            $rec= $dao->actualizarEvidenciaPorColumna($COLUMNA, $VALOR, $ID_EVIDENCIAS);
+            return $rec;
+        } catch (Exception $ex) {
+
+        }
+    }
+    
+    
 }
 ?>

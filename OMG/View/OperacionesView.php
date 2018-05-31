@@ -115,6 +115,15 @@
                 background: #f1f1f1;           /* 6 */
             }
         }
+        .backgroundTdTable
+        {
+            background: gold;
+        }
+        .nuevoTdTable
+        {
+            border-bottom: 1px solid gold;
+            background: lightgoldenrodyellow;
+        }
         </style>        
 </head>
 <!-- <body> -->
@@ -160,10 +169,13 @@
         <div class="table-container">
             <table id="idTable" class="tbl-qa">
                 <tr>
-                <?php foreach($titulosTable as $value)
-                { ?>
+                <?php foreach($titulosTable as $index=>$value)
+                { if($index<4){ ?>
+                <th class="backgroundTdTable"><?php echo $value ?></th>
+                <?php }else{ ?>
                     <th class="table-header"><?php echo $value ?></th>
-                <?php } ?>
+                <?php   } 
+                } ?>
                 </tr>
                 
                 <tbody id="bodyTable">
@@ -454,12 +466,13 @@
                   async: false,
                   success: function(todo)
                   {
+                    nametmp="";
                     tempData += "<tr>";
-                    tempData += "<td>"+value.clave_documento+"</td>";
-                    tempData += "<td>"+value.documento+"</td>";
-                    tempData += "<td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td>";
+                    tempData += "<td class='nuevoTdTable'>"+value.clave_documento+"</td>";
+                    tempData += "<td class='nuevoTdTable'>"+value.documento+"</td>";
+                    tempData += "<td class='nuevoTdTable'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td>";
                     // tempData += "<td>"+value.registros+"</td>";
-                    tempData += "<td><button onClick='mostrarTemaResponsable();' type='button' class='btn btn-success'";
+                    tempData += "<td class='nuevoTdTable' style='font-size: -webkit-xxx-large;'><button onClick='mostrarTemaResponsable();' type='button' class='btn btn-success'";
                     tempData += "data-toggle='modal' data-target='#mostrar-temaresponsable'>Ver";
                     tempData += "<i class='ace-icon fa fa-book' style='color: #0099ff;font-size: 20px;'></i></button></td>";
                     tempData += "<td><button onClick='mostrar_urls("+value.id_evidencias+");'";
@@ -469,9 +482,24 @@
                     {
                         nametmp = value2.split("^");
                         // fechaAdjunto=nametmp[0];
-                        tempData += "<td>"+value.clasificacion+"</td>";
-                        tempData += "<td>"+value.desviacion+"</td>";
                         tempData += "<td>"+nametmp[0]+"</td>";
+                        if(value.clasificacion=='0')
+                        {
+                            tempData += "<td><select class='select'";
+                            tempData += "onchange=\"saveComboToDatabase(this,'clasificacion',"+value.id_evidencias+")\">";
+                            tempData += "<option value='0' selected></option>";
+                            tempData += "<option value='DIARIO'>DIARIO</option>";
+                            tempData += "<option value='MENSUAL'>MENSUAL</option>";
+                            tempData += "<option value='BIMESTRAL'>BIMESTRAL</option>";
+                            tempData += "<option value='ANUAL'>ANUAL</option>";
+                            tempData += "<option value='TIEMPO INDEFINIDO'>TIEMPO INDEFINIDO</option>";
+                            tempData += "</select></td>";
+                        }
+                        else
+                        {
+                            tempData += "<td>"+value.clasificacion+"</td>";
+                        }
+                        tempData += "<td>"+value.desviacion+"</td>";
                         tempData += "<td>"+value.accion_correctiva+"</td>";
                         tempData += "<td>"+value.validacion_supervisor+"</td>";
                         tempData += "<td>"+value.plan_accion+"</td>";
@@ -484,6 +512,48 @@
         });
         $('#bodyTable').html(tempData);
         $('#loader').hide();
+    }
+
+    function saveComboToDatabase(Obj,columna,id)
+    {
+        valor = $(Obj)[0];
+        Objtmp=valor[valor.selectedIndex].innerHTML;
+        if(Objtmp!="")
+        {
+            swal({
+                        title:"SELECCIONAR",
+                        text: "Una vez seleccionado no se puede cambiar",
+                        type: "info",
+                        showCancelButton: true,
+                        closeOnConfirm: false,
+                        showLoaderOnConfirm: true
+                        }, function()
+                        {
+                                var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
+                                $.ajax({
+                                        url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
+                                        type: 'GET',
+                                        data: 'URL='+url,
+                                        success: function(eliminado)
+                                        {
+                                                // eliminar = eliminado;
+                                                if(eliminado)
+                                                {
+                                                        mostrar_urls(ID_DOCUMENTO);
+                                                        swal("","Archivo eliminado");
+                                                        setTimeout(function(){swal.close();},1000);
+                                                }
+                                                else
+                                                        swal("","Ocurrio un error al eliminar el archivo", "error");
+                                        },
+                                        error:function()
+                                        {
+                                                swal("","Ocurrio un error al elimiar el archivo", "error");
+                                        }
+                                    });
+                        }
+                );
+        }
     }
 
     var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='form-data'>";

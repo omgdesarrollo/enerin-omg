@@ -6,7 +6,7 @@ class ValidacionDocumentoDAO{
         try{
             
             $query="SELECT tbvalidacion_documento.id_validacion_documento, tbdocumentos.id_documento, tbdocumentos.clave_documento,
-                    tbdocumentos.documento,
+                    tbdocumentos.documento, tbasignacion_tema_requisito.requisito, tbdocumentos.registros,
 		 
                     tbempleados.id_empleado id_empleado_documento, tbempleados.nombre_empleado nombre_empleado_documento,
                     tbempleados.apellido_paterno apellido_paterno_documento, tbempleados.apellido_materno apellido_materno_documento,
