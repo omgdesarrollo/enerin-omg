@@ -54,8 +54,7 @@ class OperacionesDao
         {
             $query = "INSERT INTO evidencias (id_documento,clasificacion,desviacion,accion_correctiva,validacion_supervisor,plan_accion,
 								ingresar_oficio_atencion,oficio_atencion)
-                     VALUES ('$clave_documento','','','','false','','false','false')";
-            
+                     VALUES ('$claveDocumento','','','','false','','false','false')";
             
             $db = AccesoDB::getInstancia();
             $res = $db->executeQueryUpdate($query);
@@ -63,6 +62,7 @@ class OperacionesDao
         }catch(Exection $ex)
         {
             throw $ex;
+            return false;
         }
     }
 }

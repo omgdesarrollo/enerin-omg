@@ -33,12 +33,13 @@ class OperacionesModel
     {
         try
         {
-            $dapo = new OperacionesDAO();
+            $dao = new OperacionesDAO();
             $rec = $dao->crearEvidencia($claveDocumento);
             return $rec;
         }catch(Exception $e)
         {
             throw $e;
+            return false;
         }
     }
 }
