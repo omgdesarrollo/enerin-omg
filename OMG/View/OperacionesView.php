@@ -453,7 +453,7 @@
                   async: false,
                   success: function(todo)
                   {
-                    tempData = "<tr>";
+                    tempData += "<tr>";
                     tempData += "<td>"+value.clave_documento+"</td>";
                     tempData += "<td>"+value.documento+"</td>";
                     tempData += "<td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td>";
@@ -648,6 +648,7 @@
             
         })
     }
+    noArchivo=0;
 </script>
 
 <script id="template-upload" type="text/x-tmpl">
@@ -665,16 +666,16 @@
             <!-- <div class="progress"></div> -->
             </td>
             <td>
-            {% if (!i && !o.options.autoUpload) { %}
+            {% if (!i && !o.options.autoUpload) { if(noArchivo==0){ %}
                     <button class="start" style="display:none;padding: 0px 4px 0px 4px;" disabled>Start</button>
-            {% } %}
+            {% } } %}
             {% if (!i) { %}
                     <button class="cancel" style="padding: 0px 4px 0px 4px;color:white">Cancel</button>
             {% } %}
             </td>
         </tr>
-        {% if(i==0){ $('.fileupload-buttonbar').html("");} %}
-    {% } %}
+        {% if(i==0){ $('.fileupload-buttonbar').html(""); } %}
+    {% noArchivo=1; } %}
 </script>
 
 <script id="template-download" type="text/x-tmpl">
@@ -702,7 +703,7 @@
             <!-- </td> -->
         </tr>
     {% } %}
-    {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO); refresh(); } } %}
+    {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO); refresh(); noArchivo=0; } } %}
 </script>
 
         <!--Inicia para el spiner cargando-->
