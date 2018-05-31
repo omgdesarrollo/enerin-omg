@@ -135,7 +135,7 @@ var gantt=[
 
   datacontratos=[];
  loadDataContratos();
-    
+    loadDataNotificaciones();
 
   
  var infosesionusuario=[
@@ -332,7 +332,21 @@ ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: 
         });  
             }
 
+function loadDataNotificaciones(){
+           $.ajax({  
+                     url: "../Controller/NotificacionesController.php?Op=mostrarNotificaciones->Responsable",  
+                    success: function(r) {    
+//                     $("#procesando").empty();
+                     },
+                     beforeSend:function(r){
+//                          $("#sidebarObjV").append("<div class='loader'></div>");
 
+
+                     }
+                 
+        });
+        
+}
     
     
    function loadDataArbol(){

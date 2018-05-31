@@ -421,6 +421,9 @@ require_once 'EncabezadoUsuarioView.php';
 //                          alert("el value que va a viajar es "+ $(this).prop('value'));
                           column="ID_EMPLEADO";
                           val=$(this).prop('value');
+                          
+                      
+                              alert("entro aqui ");
                           //alert("el value que va a viajar es "+val+" i el id de la clausula : "+idclausula);
                           $.ajax({
                                 url: "../Controller/ClausulasController.php?Op=Modificar",
@@ -430,12 +433,13 @@ require_once 'EncabezadoUsuarioView.php';
                                     
 //                                      consultarInformacion("../Controller/ClausulasController.php?Op=Listar");                                        
                                         consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
-                                        swal("Actualizacion Exitosa!", "Ok!", "success")
+                                        swal("Actualizacion Exitosa!", "Ok!", "success");
+//                                        si_hay_cambio_combo=false;
                                         //window.location.href="ClausulasView.php";                                       
 					//$(editableObj).css("background","#FDFDFD");
 				}   
                            });
-                          
+                       
                           
                         });
                         
@@ -527,10 +531,11 @@ require_once 'EncabezadoUsuarioView.php';
 				data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
 				success: function(data){
 					$(editableObj).css("background","#FDFDFD");
-                                        consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
-                                        swal("Actualizacion Exitosa!", "Ok!", "success");
+                                        refresh();
+//                                        swal("Actualizacion Exitosa!", "Ok!", "success");
                                         $("#btnrefrescar").prop("disabled",false);
                                         si_hay_cambio=false;
+                                        
 				}   
                         });
                    
@@ -543,6 +548,7 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 function saveComboToDatabase(column,id){
                      idclausula=id;
+                     alert("d");
                }
                
                
@@ -561,9 +567,10 @@ require_once 'EncabezadoUsuarioView.php';
                                     
 //					$(editableObj).css("background","#FDFDFD");
                                         swal("Guardado Exitoso!", "Ok!", "success")
-                                        consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
-                                        consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
-                                        window.location.href("ClausulasView.php");
+//                                        consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
+//                                        consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
+//                                        window.location.href("ClausulasView.php");}
+                                        refresh();
 				}   
 		   });
 //                   window.location.href("EmpleadosView.php");

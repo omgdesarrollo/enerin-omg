@@ -53,6 +53,14 @@ foreach($Alarmas as $alarma)
 }
 
 
+$notifacionescompletas= Session::getSesion("notificacionescompletas");
+$contadorNotificaciones=0;
+foreach ($notifacionescompletas as $value){
+    $contadorNotificaciones++;
+}
+
+
+
 ?>
 <div class="main-encabezado">
 
@@ -117,45 +125,48 @@ foreach($Alarmas as $alarma)
                         <li class="green dropdown-modal">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
-								<span class="badge badge-success">0</span>
+								<span class="badge badge-success"><?php echo "".$contadorNotificaciones ?></span>
 							</a>
 
 							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
 								<li class="dropdown-header">
 									<i class="ace-icon fa fa-envelope-o"></i>
-									Cantidad de Mensajes
+									Cantidad de Mensajes(<?php echo "".$contadorNotificaciones ?>)
 								</li>
 
 								<li class="dropdown-content">
 									<ul class="dropdown-menu dropdown-navbar">
 									
 
-
+                                                                            <?php foreach ($notifacionescompletas as $item){ ?>                                    
 										<li>
 											<a href="#" class="clearfix">
-												<img src="../../assets/probando/images/avatars/avatar5.png" class="msg-photo" alt="Fred's Avatar" />
+												<img src="../../assets/probando/images/avatars/avatar5.png" class="msg-photo" alt="admin" />
 												<span class="msg-body">
 													<span class="msg-title">
-														<span class="blue">aqui va el usuario remitente:</span>
-														aqui va el mensaje
+														<span class="blue"><?php echo $item["para"] ?>:
+                                                                                                                Tiene que atender una desviacion de 
+                                                                                                                </span>
+														
 													</span>
 
 													<span class="msg-time">
 														<i class="ace-icon fa fa-clock-o"></i>
-														<span>aqui va la fecha en que lo envio </span>
+														<span><?php echo  $item["fecha_envio"] ?></span>
 													</span>
 												</span>
 											</a>
 										</li>
+                                                                            <?php } ?>
 									</ul>
 								</li>
 
-								<li class="dropdown-footer">
+<!--								<li class="dropdown-footer">
 									<a href="inbox.html">
-										<!--ver todos los mensajes-->
+										ver todos los mensajes
 										<i class="ace-icon fa fa-arrow-right"></i>
 									</a>
-								</li>
+								</li>-->
 							</ul>
 						</li>
                         
@@ -176,7 +187,7 @@ foreach($Alarmas as $alarma)
                                                        ?>
                                                     
                                                     <input id="user" type="hidden" value="<?php  echo $obuser ?> "> 
-                                                    <input id
+                                                    <input id="ts" type="hidden" value="<?php  echo $Usuario['tokenseguridad'] ?> "> 
                                                    
 					</span>
 
