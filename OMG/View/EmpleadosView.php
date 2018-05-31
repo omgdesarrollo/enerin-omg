@@ -501,15 +501,20 @@ require_once 'EncabezadoUsuarioView.php';
 		}
              
                 function consultarInformacion(url){
+                    $("#loader").show();
                     $.ajax({  
                      url: ""+url,  
                     success: function(r) {    
 //                     $("#procesando").empty();
-                        
+                        $("#loader").hide();
+                        $("#idTable").load('EmpleadosView.php #idTable');
+                   
                      },
                      beforeSend:function(r){
 //                            $.jGrowl("Guardando  Porfavor Espere......", { header: 'Guardado de Informacion' });
-
+                
+                  
+                   
 
                      }
                  
@@ -619,8 +624,10 @@ require_once 'EncabezadoUsuarioView.php';
                 }
                 
                 function refresh(){
-                  consultarInformacion("../Controller/EmpleadosController.php?Op=Listar");                                             
-                  window.location.href="EmpleadosView.php";  
+//                    alert("s");
+                  consultarInformacion("../Controller/EmpleadosController.php?Op=Listar");
+                 
+//                  window.location.href="EmpleadosView.php";  
                 }
                 
                 

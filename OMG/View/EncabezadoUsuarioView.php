@@ -171,11 +171,12 @@ foreach($Alarmas as $alarma)
 						<small>Bienvenido,</small>
                                                     <div id=""><?php echo $Usuario["NOMBRE_USUARIO"]; ?></div>
                                                    <?php 
-                                                   ($Usuario['NOMBRE_USUARIO']!="")? $obuser=$Usuario["NOMBRE_USUARIO"] :$obuser="";
+                                                   ($Usuario['NOMBRE_USUARIO']!="")? ($obuser=$Usuario["NOMBRE_USUARIO"]) :$obuser="";
                                                    
                                                        ?>
                                                     
                                                     <input id="user" type="hidden" value="<?php  echo $obuser ?> "> 
+                                                    <input id
                                                    
 					</span>
 
