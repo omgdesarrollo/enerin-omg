@@ -291,9 +291,7 @@ require_once 'EncabezadoUsuarioView.php';
                                                 }
                                     
                                     ?>
-                                    </select>
-                                
-                                    
+                                    </select>                                                                    
                                 </td>
                                                     
 			  </tr>
@@ -399,7 +397,7 @@ require_once 'EncabezadoUsuarioView.php';
 		<script>
                     
                       var id_asignacion_tema_requisito;
-                      var cualmodificar,si_cambio=false;
+                      var cualmodificar,si_hay_cambio=false;
                       $(function(){
                           
                         $('.select').on('change', function() {
@@ -422,10 +420,12 @@ require_once 'EncabezadoUsuarioView.php';
 				success: function(data){
                                     //alert("SE hizo");
 					//$(editableObj).css("background","#FDFDFD");
+//                                        consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
                                         consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
-                                        consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
+                                        swal("Actualizacion Exitosa!", "Ok!", "success")
+
                                         //alert("entron ");
-                                        refresh();                                        
+//                                        refresh();                                        
                                         //window.location.href="AsignacionTemasRequisitosView.php";
                                        
 				}   
@@ -491,7 +491,7 @@ require_once 'EncabezadoUsuarioView.php';
                 
 		function saveToDatabase(editableObj,column,id) {
 //                    alert("d");
-                    if(si_cambio==true){
+                    if(si_hay_cambio==true){
                         $("#btnrefrescar").prop("disabled",true);
 
                             //alert("entraste aqui ");
@@ -501,11 +501,12 @@ require_once 'EncabezadoUsuarioView.php';
                                         type: "POST",
                                         data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
                                         success: function(data){
-                                            consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");  
                                                 $(editableObj).css("background","#FDFDFD");
-                                                 $("#btnrefrescar").prop("disabled",false);
-                                                  swal("Actualizacion Exitosa!", "Ok!", "success");
-                                                 si_cambio=false;
+                                                consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");  
+                                                swal("Actualizacion Exitosa!", "Ok!", "success");
+                                                $("#btnrefrescar").prop("disabled",false);
+
+                                                 si_hay_cambio=false;
                                                  
 
                                         }   
@@ -547,25 +548,31 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 
                 function consultarInformacion(url){
-               $.ajax({  
-                     url: ""+url,  
-                    success: function(r) {    
-                     },
-                     beforeSend:function(r){
+                    $("#loader").show();
+                    
+                    $.ajax({  
+                          url: ""+url,  
+                         success: function(r) {
+                             
+                             $("#idTable").load("AsignacionTemasRequisitosView.php #idTable");
+                             $("#loader").hide();
+                          },
+                          beforeSend:function(r){
 
 
-                     }
-                 
-                });  
+                          },
+                          error:function(){
+                              $("#loader").hide();
+                          }
+
+                     });  
             }
                 
                 
-                
-                
-                
+              
                 function refresh(){
                   consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");  
-                  window.location.href="AsignacionTemasRequisitosView.php";  
+                  //window.location.href="AsignacionTemasRequisitosView.php";  
                 }
                 
                 function loadSpinner(){
@@ -576,7 +583,7 @@ require_once 'EncabezadoUsuarioView.php';
                   function detectarsihaycambio(value){
 //                    alert("entro "+value.innerHTML);
                     
-                    si_cambio=true;
+                    si_hay_cambio=true;
                     
                     
                 }

@@ -169,7 +169,7 @@ require_once 'EncabezadoUsuarioView.php';
         Agregar Tema
     </button>
 
-    <button type="button" class="btn btn-info " onclick="refresh();" >
+    <button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
         <i class="glyphicon glyphicon-repeat"></i> 
     </button>
 
@@ -239,11 +239,11 @@ require_once 'EncabezadoUsuarioView.php';
 //                                            echo "el valor es :   "."{$k}=>{$filas["CLAUSULA"]}";
                                             ?>
                                 <!--DESCRIPCION_SUB_CLAUSULA-->
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clausula"]; ?></td>
-                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion_clausula"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'sub_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["sub_clausula"]; ?></td>
-                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'descripcion_sub_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion_sub_clausula"]; ?></td>
-                                <!--<td contenteditable="true" onBlur="saveToDatabase(this,'NOMBRE_EMPLEADO','<?php //echo $Lista[$k]["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php //echo $Lista[$k]["NOMBRE_EMPLEADO"]; ?></td>-->
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["clausula"]; ?></td>
+                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["descripcion_clausula"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'sub_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["sub_clausula"]; ?></td>
+                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'descripcion_sub_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["descripcion_sub_clausula"]; ?></td>
+                                
                                 <td> 
 <!--                                    <select  class="empleado" name="n_empleado" onchange="saveComboToDatabase('ID_EMPLEADO', <?php //echo $filas["id_clausula"]; ?> )">-->
                                     <select   id="id_empleado" class="select"  onchange="saveComboToDatabase('id_empleado', <?php echo $filas["id_clausula"]; ?> )">
@@ -274,9 +274,10 @@ require_once 'EncabezadoUsuarioView.php';
                                    <!--<div id="combo_zone" style="width:230px;"></div>-->
                                     
                                 </td>
+                                
                                 <!--<td contenteditable="true" onBlur="saveToDatabase(this,'TEXTO_BREVE','<?php //echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["texto_breve"]; ?></td>-->
-                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'descripcion','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'plazo','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["plazo"]; ?></td>
+                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'descripcion','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["descripcion"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'plazo','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["plazo"]; ?></td>
                                 
 			  </tr>
 		<?php
@@ -410,7 +411,7 @@ require_once 'EncabezadoUsuarioView.php';
                 
 		<script>
                     
-                      var idclausula;
+                      var idclausula,si_hay_cambio=false;
                       $(function(){
                            
                          
@@ -427,10 +428,10 @@ require_once 'EncabezadoUsuarioView.php';
 				data:'column='+column+'&editval='+val+'&id='+idclausula,
 				success: function(data){
                                     
+//                                      consultarInformacion("../Controller/ClausulasController.php?Op=Listar");                                        
                                         consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
-                                        consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
-                                        window.location.href="ClausulasView.php";    
-                                    
+                                        swal("Actualizacion Exitosa!", "Ok!", "success")
+                                        //window.location.href="ClausulasView.php";                                       
 					//$(editableObj).css("background","#FDFDFD");
 				}   
                            });
@@ -514,7 +515,11 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 
 		function saveToDatabase(editableObj,column,id) {
+                    
+                    if(si_hay_cambio==true)
+                    {
                     //alert("entraste aqui ");
+                        $("#btnrefrescar").prop("disabled",true);
 			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
 			$.ajax({
                                 url: "../Controller/ClausulasController.php?Op=Modificar",
@@ -522,9 +527,18 @@ require_once 'EncabezadoUsuarioView.php';
 				data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
 				success: function(data){
 					$(editableObj).css("background","#FDFDFD");
+                                        consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
+                                        swal("Actualizacion Exitosa!", "Ok!", "success");
+                                        $("#btnrefrescar").prop("disabled",false);
+                                        si_hay_cambio=false;
 				}   
-		   });
+                        });
+                   
+                    } else {
+                        
+                    }
 		}
+                
                 
                 
                 function saveComboToDatabase(column,id){
@@ -558,7 +572,7 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 function refresh(){
                   consultarInformacion("../Controller/ClausulasController.php?Op=Listar");  
-                  window.location.href="ClausulasView.php";  
+                  //window.location.href="ClausulasView.php";  
                 }
                 
                 
@@ -605,20 +619,32 @@ require_once 'EncabezadoUsuarioView.php';
                                                 }
                 
                 
-                function consultarInformacion(url){ 
+                function consultarInformacion(url){
+                    
+                    $("#loader").show();
+                    
                     $.ajax({  
                      url: ""+url,  
-                    success: function(r) {    
-//                     $("#procesando").empty();
-                        
+                    success: function(r) {
+                        $("#idTable").load("ClausulasView.php #idTable")
+                        $("#loader").hide();                        
                      },
                      beforeSend:function(r){
 //                            $.jGrowl("Guardando  Porfavor Espere......", { header: 'Guardado de Informacion' });
 
 
+                     },
+                     error:function(){
+                        $("#loader").hide();                         
                      }
                  
                    });  
+                }
+                
+                
+                function detectarsihaycambio(){
+                    
+                    si_hay_cambio=true;
                 }
                 
                 

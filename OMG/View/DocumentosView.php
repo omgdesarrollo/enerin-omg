@@ -393,7 +393,7 @@ $Usuario=  Session::getSesion("user");
 				data:'column='+column+'&editval='+val+'&id='+id_clausula,
 				success: function(data){
                                      consultarInformacion("../Controller/DocumentosController.php?Op=Listar");
-                                      swal("Actualizacion Exitosa!", "Ok!", "success")
+                                     swal("Actualizacion Exitosa!", "Ok!", "success")
 							
                                     
 //                                        consultarInformacion("../Controller/DocumentosController.php?Op=Listar");
@@ -401,10 +401,7 @@ $Usuario=  Session::getSesion("user");
 //                                        window.location.href="DocumentosView.php";
                                     
 					//$(editableObj).css("background","#FDFDFD");
-                                        
-                                      
-							
-							
+ 							
 				}   
                            });
                           
@@ -559,9 +556,9 @@ if(mensajeerror!=""){
                 
                 
                 function refresh(){
+                  consultarInformacion("../Controller/DocumentosController.php?Op=Listar");  
 //                  consultarInformacion("../Controller/DocumentosController.php?Op=Listar");  
-//                  consultarInformacion("../Controller/DocumentosController.php?Op=Listar");  
-                  window.location.href="DocumentosView.php";  
+                  //window.location.href="DocumentosView.php";  
                 }
                 
                 
@@ -578,21 +575,26 @@ if(mensajeerror!=""){
                 
                 
                 function consultarInformacion(url){
+                    
+                    $('#loader').show();
                     $.ajax({  
                      url: ""+url,
-                    success: function(r) {    
-//                     $("#procesando").empty();
-                        
+                    success: function(r) {
+                        $("#idTable").load("DocumentosView.php #idTable");
+                        $('#loader').hide();
                      },
                      beforeSend:function(r){
-//                            $.jGrowl("Guardando  Porfavor Espere......", { header: 'Guardado de Informacion' });
 
 
+                     },
+                     error:function(){
+                         $('#loader').hide();
                      }
                  
                     });  
                 }
-                
+ 
+ 
                 function detectarsihaycambio(value){
 //                    alert("entro "+value.innerHTML);
                     

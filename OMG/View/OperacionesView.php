@@ -42,7 +42,8 @@
     <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
     <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
     
- 
+    <script src="../../js/jquery.js" type="text/javascript"></script>
+
 
     <style>
         .modal
