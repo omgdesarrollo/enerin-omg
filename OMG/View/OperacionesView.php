@@ -32,7 +32,8 @@
                   
     <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
     
- 
+    <script src="../../js/jquery.js" type="text/javascript"></script>
+
 
     <style>
         .modal
@@ -435,7 +436,6 @@
         <!--Termina para el spiner cargando-->
         
         <!--jquery-->
-        <script src="../../js/jquery.js" type="text/javascript"></script>
         <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
 
         

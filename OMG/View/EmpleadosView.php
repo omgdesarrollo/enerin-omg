@@ -163,7 +163,7 @@ require_once 'EncabezadoUsuarioView.php';
           Agregar Empleado
 </button>
 
-<button type="button" class="btn btn-info " onclick="refresh();" >
+    <button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh()">
     <i class="glyphicon glyphicon-repeat"></i> 
 </button>
 
@@ -178,7 +178,7 @@ require_once 'EncabezadoUsuarioView.php';
 <div style="height: 47px"></div>
 
 
-<div class="table-fixed-header">
+<div class="table-fixed-header" >
     <div class="table-container">           
                
                <table  id="idTable" class="tbl-qa">
@@ -217,12 +217,12 @@ require_once 'EncabezadoUsuarioView.php';
                               
                               
 				<td><?php echo $numeracion++; ?></td>                                
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'nombre_empleado','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleado"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'apellido_paterno','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);"><?php echo $filas["apellido_paterno"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'apellido_materno','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);"><?php echo $filas["apellido_materno"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'categoria','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);"><?php echo $filas["categoria"]; ?></td>
-                                 <td contenteditable="true" onBlur="saveToDatabase(this,'correo','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);"><?php echo $filas["correo"]; ?></td>
-                                 <td contenteditable="false" onBlur="saveToDatabase(this,'fecha_creacion','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_creacion"]; ?></td>
+                                    <td contenteditable="true" onBlur="saveToDatabase(this,'nombre_empleado','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["nombre_empleado"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'apellido_paterno','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["apellido_paterno"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'apellido_materno','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["apellido_materno"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'categoria','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["categoria"]; ?></td>
+                                 <td contenteditable="true" onBlur="saveToDatabase(this,'correo','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["correo"]; ?></td>
+                                 <td contenteditable="false" onBlur="saveToDatabase(this,'fecha_creacion','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["fecha_creacion"]; ?></td>
 			  </tr>
                           
 		<?php
@@ -297,6 +297,7 @@ require_once 'EncabezadoUsuarioView.php';
                         
                 
 		<script>
+                    var si_hay_cambio=false;
                     
                     $(function(){
                           $("#create-item").draggable({
@@ -379,10 +380,7 @@ require_once 'EncabezadoUsuarioView.php';
 
 //termina validacione de campos 
     
-    
-    
-    
-    
+  
     
                     }); // se cierra el $function
                     
@@ -488,7 +486,10 @@ require_once 'EncabezadoUsuarioView.php';
 		} 
 		
 		function saveToDatabase(editableObj,column,id) {
+                    if(si_hay_cambio==true){
+                        
 //                    alert("entraste aqui ");
+                        $("#btnrefrescar").prop("disabled",true);
 			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
 			$.ajax({
                                 url: "../Controller/EmpleadosController.php?Op=Modificar",
@@ -496,26 +497,47 @@ require_once 'EncabezadoUsuarioView.php';
 				data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
 				success: function(data){
 					$(editableObj).css("background","#FDFDFD");
+                                        consultarInformacion("../Controller/EmpleadosController.php?Op=Listar");
+                                        swal("Actualizacion Exitosa!", "Ok!", "success");
+                                        $("#btnrefrescar").prop("disabled",false);
+                                        si_hay_cambio=false;
 				}   
 		   });
+                   
+                    } else {
+                        
+                    }
+
 		}
              
                 function consultarInformacion(url){
+                    $('#loader').show();
+
                     $.ajax({  
                      url: ""+url,  
                     success: function(r) {    
-//                     $("#procesando").empty();
-                        
+//                     $("#procesando").empty();                       
+                        $("#idTable").load("EmpleadosView.php #idTable");
+                        $('#loader').hide();
                      },
-                     beforeSend:function(r){
+                     beforeSend:function(){
 //                            $.jGrowl("Guardando  Porfavor Espere......", { header: 'Guardado de Informacion' });
 
+                     },                    
+                     error: function(){
+                        $('#loader').hide();
 
                      }
                  
                     });  
                 }
                 
+                
+                
+                function detectarsihaycambio() {
+                    
+                    si_hay_cambio=true;
+                }
                 
                function filterTable() {
                 // Declare variables 
@@ -620,14 +642,19 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 function refresh(){
                   consultarInformacion("../Controller/EmpleadosController.php?Op=Listar");                                             
-                  window.location.href="EmpleadosView.php";  
+                  //window.location.href="EmpleadosView.php";
+                  
                 }
+                
                 
                 
                 function loadSpinner(){
 //                    alert("se cargara otro ");
                         myFunction();
                 }
+                
+                
+                
                 
 		</script>
  
