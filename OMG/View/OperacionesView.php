@@ -503,10 +503,10 @@
                         tempData += "<td>"+value.accion_correctiva+"</td>";
                         tempData += "<td>"+value.validacion_supervisor+"</td>";
                         tempData += "<td>"+value.plan_accion+"</td>";
-                        tempData += "<td><input type='checkbox' style='width: 40px; height: 40px';
+                        tempData += "<td><input type='checkbox' style='width: 40px; height: 40px'";
                         tempData += "name='checkbox' class='checkboxDocumento' onchange='saveCheckBoxToDataBase";
-                        tempData += "(this,'validacion_documento_responsable',"+value.id_evidencias+")">"
-                        +value.ingresar_oficio_atencion+"</td>";
+                        tempData += "(this,'validacion_documento_responsable',"+value.id_evidencias+")></td>";
+                        // +value.ingresar_oficio_atencion+"</td>";
                         tempData += "<td>"+value.oficio_atencion+"</td>";
                     });
                     tempData += "</tr>";
