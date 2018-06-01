@@ -192,7 +192,9 @@ require_once 'EncabezadoUsuarioView.php';
 
 
 <div style="height: 47px"></div>
-<button onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewExcel.php'">Exportar A Excel </button>
+<button onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">Exportar A Excel </button>
+<button onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">Exportar A Word </button>
+<button onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">Exportar A Pdf </button>
 
 
 

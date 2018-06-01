@@ -35,7 +35,7 @@ switch ($Op) {
           $resultadoInserccion= $model->enviaraResponsableCumplimiento_sobre_desviacion_mayor($dataUsuarioEmpleado,"Atender Desviacion Mayor de una validacion documento",0,'false','admin');
             echo "res:  ".$resultadoInserccion;
 //            echo "trajo de usuario : ".$dataUsuarioEmpleado;
-            
+            echo "mi usuario es :".json_encode($lista); 
             
 //              $cadenaclausula=$_REQUEST["check"];  
 //               	header('Content-type: application/json; charset=utf-8');
