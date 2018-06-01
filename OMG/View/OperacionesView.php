@@ -531,7 +531,7 @@
                         {
                                 var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
                                 $.ajax({
-                                        url: "../Controller/ArchivoUploadController.php?Op=ModificarColumna",
+                                        url: "../Controller/OperacionesController.php?Op=ModificarColumna",
                                         type: 'GET',
                                         data: 'COLUMNA='+columna+"&VALOR="+Objtmp+"&ID_EVIDENCIA="+id,
                                         success: function(modificado)
