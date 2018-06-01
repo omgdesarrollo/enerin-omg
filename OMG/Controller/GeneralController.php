@@ -1,15 +1,15 @@
 <?php
 session_start();
-require '../Model/ActualizarColumnaPorTablaModel.php';
+require '../Model/GeneralModel.php';
 
 
 $Op=$_REQUEST["Op"];
-$model=new ActualizarColumnaPorTablaModel();
+$model=new GeneralModel();
 
 
 switch ($Op){
     
-    case 'modificarColumna':
+    case 'ModificarColumna':
         
         $model->actualizarPorColumna($_REQUEST["TABLA"],$_REQUEST["COLUMNA"],$_REQUEST["VALOR"],$_REQUEST["ID"]);
         

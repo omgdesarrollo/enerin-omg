@@ -1,7 +1,7 @@
 <?php
 require_once '../ds/AccesoDB.php';
 
-class ActualizarColumnaPorTablaDAO{
+class GeneralDAO{
     
     
     public function actualizarColumnaPorTabla($TABLA,$COLUMNA,$VALOR,$ID){

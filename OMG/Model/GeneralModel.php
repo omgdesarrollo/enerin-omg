@@ -1,15 +1,15 @@
 <?php
-require_once '../dao/ActualizarColumnaPorTablaDAO.php';
+require_once '../dao/GeneralDAO.php';
 
 
-class ActualizarColumnaPorTablaModel{
+class GeneralModel{
     
     
     
     public function actualizarPorColumna($TABLA,$COLUMNA,$VALOR,$ID) {
         try {
 
-            $dao=new ActualizarColumnaPorTablaDAO()
+            $dao=new GeneralDAO()
             $rec= $dao->actualizarColumnaPorTabla($TABLA,$COLUMNA,$VALOR,$ID);        
             
         } catch (Exception $ex) {
