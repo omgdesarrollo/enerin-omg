@@ -12,9 +12,13 @@ switch ($Op)
     
     case 'ModificarColumna':
 
-    echo $model->actualizarPorColumna($_REQUEST["TABLA"],$_REQUEST["COLUMNA"],$_REQUEST["VALOR"],$_REQUEST["ID"],$_REQUEST["ID_CONTEXTO"]);
+    $resultado = $model->actualizarPorColumna($_REQUEST["TABLA"],$_REQUEST["COLUMNA"],$_REQUEST["VALOR"],$_REQUEST["ID"],$_REQUEST["ID_CONTEXTO"]);
+    echo $resultado;
     break;
 
+    case 'ListarEvidencia'
+    $resultado = $model->listarEvidencia($_REQUEST['ID_EVIDENCIA']);
+    echo $resulto;
     default: echo false;
     break;
 }
