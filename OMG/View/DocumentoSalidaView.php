@@ -505,9 +505,9 @@ require_once 'EncabezadoUsuarioView.php';
 				success: function(data){
 //                                    window.location.href="AsignacionTemasRequisitosView.php?page=1";
 					//$(editableObj).css("background","#FDFDFD");
-                                        consultarInformacion("../Controller/DocumentosSalidaController.php?Op=Listar");
-                                        consultarInformacion("../Controller/DocumentosSalidaController.php?Op=Listar");
-                                        window.location.href="DocumentoSalidaView.php";
+//                                        consultarInformacion("../Controller/DocumentosSalidaController.php?Op=Listar");
+//                                        consultarInformacion("../Controller/DocumentosSalidaController.php?Op=Listar");
+//                                        window.location.href="DocumentoSalidaView.php";
 				}   
                            });
                           
@@ -632,34 +632,7 @@ require_once 'EncabezadoUsuarioView.php';
   }
               
                
-               
-              
-               
-  function consultarInformacion(url)
-  {
-    $.ajax({  
-            url: ""+url,
-            success: function(r)
-            {
-//                     $("#procesando").empty();
-            },
-            beforeSend:function(r)
-            {
-//                          $("#loader").empty();
-//                          $("#sidebarObjV").append("<div class='loader'></div>");
-//                            $.jGrowl("Cargando  Porfavor Espere......", { header: 'Carga de Informacion' });
-//                         alert("e");
-//                          $("#sidebarObjV").append("Cargando Informacion ...");
-//$.jGrowl("Cargando  Porfavor Espere......", { sticky: true });
-
-//var delay = 1000;
-//							setTimeout(function(){
-//                                                            $.jGrowl("Informacion Obtenida", { sticky: true });
-//                                                        },delay);
-
-            }
-          });
-  }
+ 
                 
   function saveToDatabaseDatosFormulario(datos)
   {
@@ -685,12 +658,38 @@ require_once 'EncabezadoUsuarioView.php';
   function refresh()
   {
     consultarInformacion("../Controller/DocumentosSalidaController.php?Op=Listar");
-    window.location.href="DocumentoSalidaView.php";
+//    window.location.href="DocumentoSalidaView.php";
   }
                 
   function loadSpinner()
   {
     myFunction();
+  }
+  
+  
+  
+                
+              
+               
+  function consultarInformacion(url)
+  {
+      $("#loader").show();
+      $.ajax({  
+            url: ""+url,
+            success: function(r)
+            {
+                $("#idTable").load("DocumentosSalidaView.php #idTable");
+                $("#loader").hide();
+
+            },
+            beforeSend:function(r)
+            {
+
+            },
+            error:function(){
+                $("#loader").hide();
+            }
+     });
   }
                 
                 
