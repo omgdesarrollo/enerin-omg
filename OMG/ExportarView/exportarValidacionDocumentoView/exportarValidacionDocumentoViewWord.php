@@ -1,17 +1,17 @@
 <?php
 session_start();
-require_once '../util/Session.php';
+require_once '../../util/Session.php';
 
 //establecemos el timezone para obtener la hora local
-date_default_timezone_set('America/Lima');
+date_default_timezone_set('America/Mexico_city');
  
 //la fecha y hora de exportación sera parte del nombre del archivo Excel
 $fecha = date("d-m-Y H:i:s");
  
 //Inicio de exportación en Excel
-//header('Content-type: application/vnd.ms-excel');
+header('Content-type: application/vnd.ms-word');
 
-header("Content-Disposition: attachment; filename=Reporte_ValidacionDocumentos-$fecha.xls"); //Indica el nombre del archivo resultante
+header("Content-Disposition: attachment; filename=Reporte_ValidacionDocumentos-$fecha.doc"); //Indica el nombre del archivo resultante
 header("Pragma: no-cache");
 header("Expires: 0");
  
