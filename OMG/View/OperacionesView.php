@@ -372,11 +372,7 @@
             $('#CLAVE_NUEVAEVIDENCIAMODAL2').html(tempData[0]);
             $('#DOCUMENTO_NUEVAEVIDENCIAMODAL').html(tempData[1]);
             $('#NOMBRE_NUEVAEVIDENCIAMODAL').html(tempData[2]);
-<<<<<<< HEAD
             $('#ID_NUEVAEVIDENCIAMODAL').value(tempData[3]);
-=======
-
->>>>>>> 798de5a9590007b2a1a297637c65455c7d54c2c1
         }
         else
         {
@@ -536,7 +532,7 @@
         $.ajax({
                 url: "../Controller/GeneralController.php?Op=ModificarColumna",
                 type: 'GET',
-                data: 'TABLA='+tabla+'&COLUMNA='+columna+'&VALOR='+valor+'&ID='+id+"&ID_CONTEXTO="+contexto,
+                data: 'TABLA='+tabla+'&COLUMNA='+columna+'&VALOR='+valor+'&ID='+id+'&ID_CONTEXTO='+contexto,
                 success: function(modificado)
                 {
                     alert(modificado);
