@@ -383,6 +383,7 @@
         data = true;
         if(clave!="")
         {
+
             $.ajax
             ({
                 url: '../Controller/OperacionesController.php?Op=CrearEvidencia',
@@ -460,6 +461,11 @@
         {
             URL = 'filesEvidenciaDocumento/'+value.id_evidencias;
             $.ajax({
+                    url: '../Controller/ArchivoUploadController.php?Op=CrearUrl',
+                    type: 'GET',
+                    data: 'URL='+URL,
+                    });
+            $.ajax({
                   url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
                   type: 'GET',
                   data: 'URL='+URL,
@@ -483,7 +489,7 @@
                         nametmp = value2.split("^");
                         // fechaAdjunto=nametmp[0];
                         tempData += "<td>"+nametmp[0]+"</td>";
-                        if(value.clasificacion=='0')
+                        if(value.clasificacion=="")
                         {
                             tempData += "<td><select class='select'";
                             tempData += "onchange=\"saveComboToDatabase(this,'evidencias','clasificacion',"+value.id_evidencias+")\">";
@@ -556,7 +562,7 @@
                     showCancelButton: true,
                     closeOnConfirm: false,
                     showLoaderOnConfirm: true
-                    }, function()
+                    }, function(isConfirm)
                     {
                         $('#loader').show();
                         saveOneToDatabase(Objtmp,columna,tabla,id);
