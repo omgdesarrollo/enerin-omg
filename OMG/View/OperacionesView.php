@@ -236,6 +236,9 @@
                 <div class="form-group">
                     Responsable del Documento: <label id="NOMBRE_NUEVAEVIDENCIAMODAL" class="control-label" for="title"></label>
                 </div>
+                <div class="form-group">
+                    <input id="ID_NUEVAEVIDENCIAMODAL" type="text" value="" style="display: none"/>
+                </div>
 
                 <div class="form-group" method="post">
                     <button type="submit" id="BTN_CREAR_NUEVAEVIDENCIAMODAL" class="btn crud-submit btn-info">Crear Evidencia</button>
@@ -244,7 +247,8 @@
         </div>
     </div>
 </div>
-<!--Final de Seccion Modal--> 
+<!--Final de Seccion Modal-->
+
 <!-- Inicio de Seccion Modal Archivos-->
 <div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
@@ -363,11 +367,12 @@
     {
         tempData = $(Obj).prop("value");
         tempData = tempData.split("+=$=");
-        if(tempData.length == 3)
+        if(tempData.length == 4)
         {
             $('#CLAVE_NUEVAEVIDENCIAMODAL2').html(tempData[0]);
             $('#DOCUMENTO_NUEVAEVIDENCIAMODAL').html(tempData[1]);
             $('#NOMBRE_NUEVAEVIDENCIAMODAL').html(tempData[2]);
+            $('#ID_NUEVAEVIDENCIAMODAL').value(tempData[3]);
         }
         else
         {
