@@ -46,6 +46,16 @@ switch ($Op)
         $res = $model->crearEvidencia($_REQUEST["CLAVE_DOCUMENTO"]);
         echo $res;
         break;
+    
+    case 'ModificarColumna':
+
+		$data = $model->actualizarPorColumna($_REQUEST["COLUMNA"],$_REQUEST["VALOR"],$_REQUEST["ID_EVIDENCIA"] );
+		// header('Content-type: application/json; charset=utf-8');
+		echo $data;
+	break;
+    
+    
+    
 	default:
 		echo false;
         break;

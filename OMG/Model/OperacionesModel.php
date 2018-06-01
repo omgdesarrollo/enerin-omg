@@ -44,12 +44,14 @@ class OperacionesModel
     }
     
     public function actualizarPorColumna($COLUMNA,$VALOR,$ID_EVIDENCIAS){
-        try{
+        try
+        {
             $dao=new OperacionesDao();
             $rec= $dao->actualizarEvidenciaPorColumna($COLUMNA, $VALOR, $ID_EVIDENCIAS);
             return $rec;
-        } catch (Exception $ex) {
-
+        }catch (Exception $ex) 
+        {
+            return false;
         }
     }
     
