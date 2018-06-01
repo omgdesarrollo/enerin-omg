@@ -492,34 +492,12 @@ require_once 'EncabezadoUsuarioView.php';
                
               
                
-                function consultarInformacion(url){
-                $.ajax({  
-                     url: ""+url,  
-                    success: function(r) {    
-//                     $("#procesando").empty();
-                     },
-                     beforeSend:function(r){
-//                          $("#loader").empty();
-//                          $("#sidebarObjV").append("<div class='loader'></div>");
-//                            $.jGrowl("Cargando  Porfavor Espere......", { header: 'Carga de Informacion' });
-//                         alert("e");
-//                          $("#sidebarObjV").append("Cargando Informacion ...");
-//$.jGrowl("Cargando  Porfavor Espere......", { sticky: true });
-
-//var delay = 1000;
-//							setTimeout(function(){
-//                                                            $.jGrowl("Informacion Obtenida", { sticky: true });
-//                                                        },delay);
-
-                     }
-                 
-        });  
-            }
+                
             
             
                 function refresh(){
                   consultarInformacion("../Controller/InformeGerencialController.php?Op=Listar");  
-                  window.location.href="InformeGerencialView.php";  
+//                  window.location.href="InformeGerencialView.php";  
                 }
             
     
@@ -528,6 +506,26 @@ require_once 'EncabezadoUsuarioView.php';
                         myFunction();
                 }
                 
+                
+                function consultarInformacion(url){
+                    
+                    $("#loader").show();
+                    $.ajax({  
+                        url: ""+url,  
+                        success: function(r) {
+                            $("#idTable").load("InformeGerencialView.php #idTable");
+                            $("#loader").hide();
+
+                        },
+                         beforeSend:function(r){
+
+                        },
+                        error:function(){
+                            $("#loader").hide();
+                        }
+                 
+                    });  
+                }
                 
                 
               

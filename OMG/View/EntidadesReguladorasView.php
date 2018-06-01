@@ -435,7 +435,7 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 function refresh(){
                   consultarInformacion("../Controller/EntidadesReguladorasController.php?Op=Listar");  
-                  window.location.href="EntidadesReguladorasView.php";  
+//                  window.location.href="EntidadesReguladorasView.php";  
                 }
                 
                 
@@ -446,16 +446,20 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 
                 function consultarInformacion(url){
+                    $("#loader").show();
                     $.ajax({  
                      url: ""+url,  
-                    success: function(r) {    
-//                     $("#procesando").empty();
+                    success: function(r) {
+                        $("#idTable").load("EntidadesReguladorasView.php #idTable");
+                        $("#loader").hide();
                         
                      },
                      beforeSend:function(r){
-//                            $.jGrowl("Guardando  Porfavor Espere......", { header: 'Guardado de Informacion' });
 
 
+                     },
+                     error:function(){
+                        $("#loader").hide();
                      }
                  
                     });  

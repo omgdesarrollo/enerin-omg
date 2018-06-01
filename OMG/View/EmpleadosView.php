@@ -159,6 +159,10 @@ require_once 'EncabezadoUsuarioView.php';
 <div style="height: 5px"></div>       
 
 <div style="position: fixed;">
+<button type="button" class="btn btn-success" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewExcel.php'">
+    Exportar Xls
+</button>   
+    
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
           Agregar Empleado
 </button>
@@ -166,13 +170,12 @@ require_once 'EncabezadoUsuarioView.php';
     <button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh()">
     <i class="glyphicon glyphicon-repeat"></i> 
 </button>
-
-    <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Nombre" style="width: 180px;">
-    <input type="text" id="idInputapellidopaterno" onkeyup="filterTableapellidoPaterno()" placeholder="Apellido Paterno" style="width: 180px;">
-    <input type="text" id="idInputapellidomaterno" onkeyup="filterTableapellidoMaterno()" placeholder="Apellido Materno" style="width: 180px;">
-    <input type="text" id="idInputCategoria" onkeyup="filterTableCategoria()" placeholder="Categoria" style="width: 180px;">
+    
+    <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Nombre" style="width: 150px;">
+    <input type="text" id="idInputapellidopaterno" onkeyup="filterTableapellidoPaterno()" placeholder="Apellido Paterno" style="width: 150px;">
+    <input type="text" id="idInputapellidomaterno" onkeyup="filterTableapellidoMaterno()" placeholder="Apellido Materno" style="width: 150px;">
+    <input type="text" id="idInputCategoria" onkeyup="filterTableCategoria()" placeholder="Categoria" style="width: 150px;">
     <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
-
 </div>
                                 
 <div style="height: 47px"></div>
