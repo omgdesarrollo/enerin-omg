@@ -6,19 +6,18 @@ class GeneralModel{
     
     
     
-    public function actualizarPorColumna($TABLA,$COLUMNA,$VALOR,$ID) {
-        try {
-
+    public function actualizarPorColumna($TABLA,$COLUMNA,$VALOR,$ID,$ID_CONTEXT) {
+        try
+        {
             $dao=new GeneralDAO();
-            $rec= $dao->actualizarColumnaPorTabla($TABLA, $COLUMNA, $VALOR, $ID);
-            
+            $rec= $dao->actualizarColumnaPorTabla($TABLA, $COLUMNA, $VALOR, $ID,$ID_CONTEXT);
             return $rec;
             
-        } catch (Exception $ex) {
+        }catch (Exception $ex)
+        {
             throw $ex;
             return false;
-        }
-            
+        }    
     }
     
     

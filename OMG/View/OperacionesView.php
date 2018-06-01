@@ -349,7 +349,7 @@
                             apellidos += " "+value.APELLIDO_PATERNO+" "+value.APELLIDO_MATERNO;
                         }
                         tempData += "<option value='"+value.CLAVE_DOCUMENTO+"+=$="+value.DOCUMENTO;
-                        tempData += "+=$="+apellidos+"'>";
+                        tempData += "+=$="+apellidos+"+=$="+value.ID_DOCUMENTO+"'>";
                         tempData += value.CLAVE_DOCUMENTO+"</option>";
                     });
                     $('#CLAVE_NUEVAEVIDENCIAMODAL').html(tempData);
@@ -372,7 +372,11 @@
             $('#CLAVE_NUEVAEVIDENCIAMODAL2').html(tempData[0]);
             $('#DOCUMENTO_NUEVAEVIDENCIAMODAL').html(tempData[1]);
             $('#NOMBRE_NUEVAEVIDENCIAMODAL').html(tempData[2]);
+<<<<<<< HEAD
             $('#ID_NUEVAEVIDENCIAMODAL').value(tempData[3]);
+=======
+
+>>>>>>> 798de5a9590007b2a1a297637c65455c7d54c2c1
         }
         else
         {
@@ -497,7 +501,7 @@
                         if(value.clasificacion=="")
                         {
                             tempData += "<td><select class='select'";
-                            tempData += "onchange=\"saveComboToDatabase(this,'evidencias','clasificacion',"+value.id_evidencias+")\">";
+                            tempData += "onchange=\"saveComboToDatabase(this,'evidencias','clasificacion',"+value.id_evidencias+",'id_evidencias')\">";
                             tempData += "<option value='0' selected></option>";
                             tempData += "<option value='DIARIO'>DIARIO</option>";
                             tempData += "<option value='MENSUAL'>MENSUAL</option>";
@@ -527,14 +531,15 @@
         $('#bodyTable').html(tempData);
         $('#loader').hide();
     }
-    function saveOneToDatabase(valor,columna,tabla,id)
+    function saveOneToDatabase(valor,columna,tabla,id,contexto)
     {
         $.ajax({
                 url: "../Controller/GeneralController.php?Op=ModificarColumna",
                 type: 'GET',
-                data: 'TABLA='+tabla+'&COLUMNA='+columna+'&VALOR='+valor+'&ID='+id,
+                data: 'TABLA='+tabla+'&COLUMNA='+columna+'&VALOR='+valor+'&ID='+id+"&ID_CONTEXTO="+contexto,
                 success: function(modificado)
                 {
+                    alert(modificado);
                     if(modificado)
                     {
                         $('#loader').hide();
@@ -554,7 +559,7 @@
                 }
             });
     }
-    function saveComboToDatabase(Obj,tabla,columna,id)
+    function saveComboToDatabase(Obj,tabla,columna,id,contexto)
     {
         valortmp = $(Obj)[0];
         Objtmp=valortmp[valortmp.selectedIndex].innerHTML;
@@ -570,7 +575,7 @@
                     }, function(isConfirm)
                     {
                         $('#loader').show();
-                        saveOneToDatabase(Objtmp,columna,tabla,id);
+                        saveOneToDatabase(Objtmp,columna,tabla,id,contexto);
                     }
                 );
         }
