@@ -500,52 +500,41 @@ require_once 'EncabezadoUsuarioView.php';
           showCancelButton: true,
           closeOnConfirm: false,
           showLoaderOnConfirm: true
-        },function()
+        },function(isConfirm)
         {
+          if(isConfirm)
+          {
             $.ajax({
                 url: "../Controller/ValidacionDocumentosController.php?Op=Modificar",
                 type: "POST",
                 data:'column='+columna+'&editval='+$('.checkboxDocumento').is(':checked')+'&id='+id_validacion_documento,
                 success: function(data)
                 {
-
                     if(data)
                     {
                         $(objetocheckbox).attr('disabled','true');
-//                        $(objetocheckbox).attr("checked", $(this));// fvazconcelos :d
-//                          inputs = $('#idTable').find('input').filter('[type=checkbox]');
-//                          
-//                             if($(this).attr("checked"))
-//               {
-//                     inputs.attr('checked', true);
-//               } 
-//                else
-//               {
-//                     inputs.attr('checked', false);
-//               }
-               
-//                        $('.checkboxDocumento').prop("disabled","true");
                         swal("","Documento validado");
                         setTimeout(function(){swal.close();},1000);
-                        
-                          if(columna=="desviacion_mayor"){
-                                enviar_notificacion(columna,chekeado,id_validacion_documento);
-                            }
+                        if(columna=="desviacion_mayor")
+                        {
+                          enviar_notificacion(columna,chekeado,id_validacion_documento);
+                        }
                     }
-//            window.location.href="ValidacionDocumentosView.php?page=1";
-//					//$(editableObj).css("background","#FDFDFD");
-//            consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");
-//            consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");
-//            window.location.href="ValidacionDocumentosView.php";
-                } 
-                
+                }                
                 });
+          }
+          else
+          {
+            inputs = $(objetocheckbox).filter('[type=checkbox]');
+            inputs[0]['checked']=false;
+          }
         
         });
+        // console.log($('#idTable').find('input').filter('[type=checkbox]').attr('checked', false));
+        // inputs = $('#idTable').find('input').filter('[type=checkbox]');
+        // inputs.attr('checked', false);
+        // console.log( $(objetocheckbox).filter('[type=checkbox]').attr('checked', false));
         
-        
-                          
-                          
       });
     
   

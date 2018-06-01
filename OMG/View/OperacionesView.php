@@ -503,7 +503,10 @@
                         tempData += "<td>"+value.accion_correctiva+"</td>";
                         tempData += "<td>"+value.validacion_supervisor+"</td>";
                         tempData += "<td>"+value.plan_accion+"</td>";
-                        tempData += "<td>"+value.ingresar_oficio_atencion+"</td>";
+                        tempData += "<td><input type='checkbox' style='width: 40px; height: 40px';
+                        tempData += "name='checkbox' class='checkboxDocumento' onchange='saveCheckBoxToDataBase";
+                        tempData += "(this,'validacion_documento_responsable',"+value.id_evidencias+")">"
+                        +value.ingresar_oficio_atencion+"</td>";
                         tempData += "<td>"+value.oficio_atencion+"</td>";
                     });
                     tempData += "</tr>";
@@ -513,47 +516,57 @@
         $('#bodyTable').html(tempData);
         $('#loader').hide();
     }
-
-    function saveComboToDatabase(Obj,columna,id)
+    function saveOneToDatabase(valor,columna,tabla,id)
     {
-        valor = $(Obj)[0];
-        Objtmp=valor[valor.selectedIndex].innerHTML;
+        $.ajax({
+                url: "../Controller/GeneralController.php?Op=ModificarColumna",
+                type: 'GET',
+                data: 'TABLA='+tabla+'&COLUMNA='+columna+'&VALOR='+valor+'&ID='+id,
+                success: function(modificado)
+                {
+                    if(modificado)
+                    {
+                        $('#loader').hide();
+                        swal("","Modificado","success");
+                        setTimeout(function(){swal.close();},1000);
+                    }
+                    else
+                    {
+                        $('#loader').hide();
+                        swal("","Ocurrio un error al modificar", "error");
+                    }
+                },
+                error:function()
+                {
+                    $('#loader').hide();
+                    swal("","Ocurrio un error al modificar", "error");
+                }
+            });
+    }
+    function saveComboToDatabase(Obj,columna,tabla,id)
+    {
+        valortmp = $(Obj)[0];
+        Objtmp=valortmp[valortmp.selectedIndex].innerHTML;
         if(Objtmp!="")
         {
             swal({
-                        title:"SELECCIONAR",
-                        text: "Una vez seleccionado no se puede cambiar",
-                        type: "info",
-                        showCancelButton: true,
-                        closeOnConfirm: false,
-                        showLoaderOnConfirm: true
-                        }, function()
-                        {
-                                var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
-                                $.ajax({
-                                        url: "../Controller/ArchivoUploadController.php?Op=ModificarColumna",
-                                        type: 'GET',
-                                        data: 'COLUMNA='+columna+"&VALOR="+Objtmp+"&ID_EVIDENCIA="+id,
-                                        success: function(modificado)
-                                        {
-                                                // eliminar = eliminado;
-                                                if(modificado)
-                                                {
-                                                        mostrar_urls(ID_DOCUMENTO);
-                                                        swal("","Modificado","success");
-                                                        setTimeout(function(){swal.close();},1000);
-                                                }
-                                                else
-                                                        swal("","Ocurrio un error al modificar", "error");
-                                        },
-                                        error:function()
-                                        {
-                                                swal("","Ocurrio un error al modificar", "error");
-                                        }
-                                    });
-                        }
+                    title:"SELECCIONAR",
+                    text: "Una vez seleccionado no se puede cambiar",
+                    type: "info",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true
+                    }, function()
+                    {
+                        $('#loader').show();
+                        saveOneToDatabase(Objtmp,columna,tabla,id);
+                    }
                 );
         }
+    }
+    function saveCheckToDatabase(Obj,columna,tabla,id)
+    {
+
     }
 
     var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='form-data'>";
