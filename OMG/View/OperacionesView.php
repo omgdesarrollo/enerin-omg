@@ -486,7 +486,7 @@
                         if(value.clasificacion=='0')
                         {
                             tempData += "<td><select class='select'";
-                            tempData += "onchange=\"saveComboToDatabase(this,'clasificacion',"+value.id_evidencias+")\">";
+                            tempData += "onchange=\"saveComboToDatabase(this,'evidencias','clasificacion',"+value.id_evidencias+")\">";
                             tempData += "<option value='0' selected></option>";
                             tempData += "<option value='DIARIO'>DIARIO</option>";
                             tempData += "<option value='MENSUAL'>MENSUAL</option>";
@@ -543,7 +543,7 @@
                 }
             });
     }
-    function saveComboToDatabase(Obj,columna,tabla,id)
+    function saveComboToDatabase(tabla,columna,Obj,id)
     {
         valortmp = $(Obj)[0];
         Objtmp=valortmp[valortmp.selectedIndex].innerHTML;
