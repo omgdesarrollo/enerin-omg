@@ -83,7 +83,8 @@ class ValidacionDocumentoDAO{
                     JOIN clausulas tbclausulas ON tbclausulas.id_clausula=tbasignacion_tema_requisito.id_clausula
 
 
-                    JOIN empleados tbempleados_tema ON tbempleados_tema.id_empleado=tbclausulas.id_empleado";
+                    JOIN empleados tbempleados_tema ON tbempleados_tema.id_empleado=tbclausulas.id_empleado 
+                    WHERE tbvalidacion_documento.ID_VALIDACION_DOCUMENTO=$id_validacion_documento";
          
          
          

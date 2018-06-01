@@ -477,11 +477,9 @@ require_once 'EncabezadoUsuarioView.php';
       { 
           
           var chekeado=$('.checkboxDocumento').is(':checked');
-         alert("");
+//         alert("");
 //          alert("value de columna es : "+columna);
-        if(columna=="desviacion_mayor"){
-            enviar_notificacion(columna,chekeado,id_validacion_documento);
-        }
+      
           
 //            inputs = $('#idTable').find('input').filter('[type=checkbox]');
 //       //      
@@ -529,6 +527,10 @@ require_once 'EncabezadoUsuarioView.php';
 //                        $('.checkboxDocumento').prop("disabled","true");
                         swal("","Documento validado");
                         setTimeout(function(){swal.close();},1000);
+                        
+                          if(columna=="desviacion_mayor"){
+                                enviar_notificacion(columna,chekeado,id_validacion_documento);
+                            }
                     }
 //            window.location.href="ValidacionDocumentosView.php?page=1";
 //					//$(editableObj).css("background","#FDFDFD");
@@ -610,7 +612,7 @@ require_once 'EncabezadoUsuarioView.php';
       $.ajax({  
             url: ""+url,  
           success: function(r) {
-              $("idTable").prop("ValidacionDocumentosView.php #idTable");
+              $("#idTable").load("ValidacionDocumentosView.php #idTable");
               $("#loader").hide();
             },
             beforeSend:function(r)

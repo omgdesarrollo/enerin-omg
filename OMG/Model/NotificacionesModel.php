@@ -19,8 +19,30 @@ class NotificacionesModel {
 
     
     
-    public function enviaraResponsableCumplimiento_sobre_desviacion_mayor(){
+    public function enviaraResponsableCumplimiento_sobre_desviacion_mayor($id_usuario_empleado,$mensaje,$tipo,$atendido,$para){
+      try{
+             $dao=new NotificacionesDao();
+            $rec=$dao->enviaraResponsableCumplimiento_sobre_desviacion_mayor($id_usuario_empleado, $mensaje, $tipo,$atendido,$para);
+           return $rec;
+      
+        } catch (Exception $ex) {
+
+        }
     
+    
+    }
+    
+    public function mostrarNotificacionesCompletas(){
+        try{
+            $dao= new NotificacionesDao();
+            $rec= $dao->mostrarNotificacionesCompletas();
+            return $rec;
+        } catch (Exception $ex) {
+
+        }
+        
+        
+        
     }
     
     

@@ -21,7 +21,10 @@ class ValidacionDocumentoModel{
     
     public function obtenerInfoPorIdValidacionDocumento($id_validacion_documento){
         try{
-            
+             $dao=new ValidacionDocumentoDAO();
+            $rec=$dao->obtenerInfoPorIdValidacionDocumento($id_validacion_documento);
+            return $rec;
+      
         } catch (Exception $ex) {
 
         }

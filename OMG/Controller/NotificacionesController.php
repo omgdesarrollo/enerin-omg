@@ -17,19 +17,39 @@ switch ($Op) {
 	
             
         case 'enviarNotificacionDesviacionAResponsableContrato':
-            echo 'entraste aqui ';
+//            echo 'entraste aqui ';
+            
+            $lista=Session::getSesion("user");
             
             $columna=$_REQUEST["columna"];
             $chekeado=$_REQUEST["checkeado"];
+            
             $id_validacion_documento=$_REQUEST["id_validacion_documento"];
-            $modelValidacionDocumentos->listarValidacionDocumentos();
+            
+            // datos de la sesion 
+            $dataUsuarioEmpleado=$lista["usuariosyempleados_id_usuario_empleados"];
+            //termina datos de la session 
+            
+            $listaInfValidacionDocumento=$modelValidacionDocumentos->obtenerInfoPorIdValidacionDocumento($id_validacion_documento);
+ 
+          $resultadoInserccion= $model->enviaraResponsableCumplimiento_sobre_desviacion_mayor($dataUsuarioEmpleado,"Atender Desviacion Mayor de una validacion documento",0,'false','admin');
+            echo "res:  ".$resultadoInserccion;
+//            echo "trajo de usuario : ".$dataUsuarioEmpleado;
+            
+            
 //              $cadenaclausula=$_REQUEST["check"];  
 //               	header('Content-type: application/json; charset=utf-8');
 //                echo json_encode($data);
             
         break;    
             
+        case "mostrarNotificaciones->Responsable":
+            $lista=$model->mostrarNotificacionesCompletas();
+            Session::setSesion("notificacionescompletas",$lista);
+            echo 'er   '. json_encode($lista);
+//            Session::setSesion("notify", $);
             
+        break;
 
             
 	default:
