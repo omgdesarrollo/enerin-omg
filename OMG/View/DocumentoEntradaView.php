@@ -798,9 +798,9 @@ require_once 'EncabezadoUsuarioView.php';
 				success: function(data){
 //                                    window.location.href="AsignacionTemasRequisitosView.php?page=1";
 					//$(editableObj).css("background","#FDFDFD");
-                                        consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
-                                        consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
-                                        window.location.href="DocumentoEntradaView.php";
+//                                        consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
+//                                        consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
+//                                        window.location.href="DocumentoEntradaView.php";
 				}   
                            });
                           
@@ -1243,19 +1243,28 @@ require_once 'EncabezadoUsuarioView.php';
                         cualmodificar=column;
                }
               
-               
-               
               
+    function refresh(){
+                  consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");  
+                  //window.location.href="DocumentoEntradaView.php";  
+                }           
+                          
                
     function consultarInformacion(url){
-               $.ajax({  
-                     url: ""+url,  
-                    success: function(r) {    
-                     },
-                     beforeSend:function(r){
+        $("#loader").show(); 
+        $.ajax({  
+              url: ""+url,  
+             success: function(r) {
+                 $("#idTable").load("DocumentosEntradaView.php #idTable");
+                 $("#loader").hide();
 
+              },
+              beforeSend:function(r){
 
-                     }
+              },
+              error:function(){
+                 $("#loader").hide(); 
+              }
                  
         });  
     }
@@ -1295,14 +1304,7 @@ require_once 'EncabezadoUsuarioView.php';
 }
     
     
-    
-    
-            
-    function refresh(){
-                  consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");  
-                  window.location.href="DocumentoEntradaView.php";  
-                }
-    
+
     
     
     function loadSpinner(){

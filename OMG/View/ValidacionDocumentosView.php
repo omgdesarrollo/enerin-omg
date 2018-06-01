@@ -176,10 +176,13 @@ require_once 'EncabezadoUsuarioView.php';
 <div style="height: 5px"></div>
 
              
-<div style="position: fixed;">                          
-    <button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
-    <i class="glyphicon glyphicon-repeat"></i>
+<div style="position: fixed;">
+<button type="button" class="btn btn-success" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewExcel.php'">
+    Exportar Xls
+</button>
     
+<button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
+    <i class="glyphicon glyphicon-repeat"></i>   
 </button>
 
         <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave Documento" style="width: 180px;">
@@ -192,7 +195,8 @@ require_once 'EncabezadoUsuarioView.php';
 
 
 <div style="height: 47px"></div>
-<button onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewExcel.php'">Exportar A Excel </button>
+
+
 
 
 

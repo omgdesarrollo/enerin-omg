@@ -420,11 +420,11 @@ require_once 'EncabezadoUsuarioView.php';
 				data:'column='+column+'&editval='+val+'&id='+id_seguimiento_entrada,
 				
 				success: function(data){
-                                    window.location.href="AsignacionTemasRequisitosView.php?page=1";
+//                                    window.location.href="AsignacionTemasRequisitosView.php?page=1";
 					//$(editableObj).css("background","#FDFDFD");
-                                        consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
-                                        consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
-                                        window.location.href="SeguimientoEntradaView.php";
+//                                        consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
+//                                        consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
+//                                        window.location.href="SeguimientoEntradaView.php";
 				}   
                            });
                           
@@ -464,43 +464,39 @@ require_once 'EncabezadoUsuarioView.php';
                }
               
                
-               
-              
-               
-    function consultarInformacion(url){
-               $.ajax({  
-                     url: ""+url,  
-                    success: function(r) {    
-//                     $("#procesando").empty();
-                     },
-                     beforeSend:function(r){
-//                          $("#loader").empty();
-//                          $("#sidebarObjV").append("<div class='loader'></div>");
-//                            $.jGrowl("Cargando  Porfavor Espere......", { header: 'Carga de Informacion' });
-//                         alert("e");
-//                          $("#sidebarObjV").append("Cargando Informacion ...");
-//$.jGrowl("Cargando  Porfavor Espere......", { sticky: true });
-
-//var delay = 1000;
-//							setTimeout(function(){
-//                                                            $.jGrowl("Informacion Obtenida", { sticky: true });
-//                                                        },delay);
-
-                     }
-                 
-        });  
-            }
-            
-    
     function refresh(){
                   consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");  
-                  window.location.href="SeguimientoEntradaView.php";  
+//                  window.location.href="SeguimientoEntradaView.php";  
                 }
     
     
     function loadSpinner(){
         myFunction();
+    }           
+              
+               
+    function consultarInformacion(url){
+        
+        $("#loader").show();
+        $.ajax({  
+            url: ""+url,  
+            success: function(r) {
+                $("#idTable").load("SeguimientoEntradaView.php #idTable")
+                $("#loader").hide();
+
+            },
+            beforeSend:function(r){
+
+            },
+            error:function(){
+                $("#loader").hide();
+            }
+                 
+        });  
     }
+            
+    
+    
                 
                 
     function cargadePrograma(foliodeentrada){
