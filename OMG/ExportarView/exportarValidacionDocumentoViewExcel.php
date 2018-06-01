@@ -9,7 +9,8 @@ date_default_timezone_set('America/Lima');
 $fecha = date("d-m-Y H:i:s");
  
 //Inicio de exportación en Excel
-header('Content-type: application/vnd.ms-excel');
+//header('Content-type: application/vnd.ms-excel');
+
 header("Content-Disposition: attachment; filename=Reporte_ValidacionDocumentos-$fecha.xls"); //Indica el nombre del archivo resultante
 header("Pragma: no-cache");
 header("Expires: 0");

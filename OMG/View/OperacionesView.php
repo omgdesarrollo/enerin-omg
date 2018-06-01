@@ -531,24 +531,24 @@
                         {
                                 var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
                                 $.ajax({
-                                        url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
+                                        url: "../Controller/ArchivoUploadController.php?Op=ModificarColumna",
                                         type: 'GET',
-                                        data: 'URL='+url,
-                                        success: function(eliminado)
+                                        data: 'COLUMNA='+columna+"&VALOR="+Objtmp+"&ID_EVIDENCIA="+id,
+                                        success: function(modificado)
                                         {
                                                 // eliminar = eliminado;
-                                                if(eliminado)
+                                                if(modificado)
                                                 {
                                                         mostrar_urls(ID_DOCUMENTO);
-                                                        swal("","Archivo eliminado");
+                                                        swal("","Modificado","success");
                                                         setTimeout(function(){swal.close();},1000);
                                                 }
                                                 else
-                                                        swal("","Ocurrio un error al eliminar el archivo", "error");
+                                                        swal("","Ocurrio un error al modificar", "error");
                                         },
                                         error:function()
                                         {
-                                                swal("","Ocurrio un error al elimiar el archivo", "error");
+                                                swal("","Ocurrio un error al modificar", "error");
                                         }
                                     });
                         }
