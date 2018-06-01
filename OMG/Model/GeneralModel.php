@@ -9,11 +9,14 @@ class GeneralModel{
     public function actualizarPorColumna($TABLA,$COLUMNA,$VALOR,$ID) {
         try {
 
-            $dao=new GeneralDAO()
-            $rec= $dao->actualizarColumnaPorTabla($TABLA,$COLUMNA,$VALOR,$ID);        
+            $dao=new GeneralDAO();
+            $rec= $dao->actualizarColumnaPorTabla($TABLA, $COLUMNA, $VALOR, $ID);
+            
+            return $rec;
             
         } catch (Exception $ex) {
             throw $ex;
+            return false;
         }
             
     }

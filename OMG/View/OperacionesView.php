@@ -543,7 +543,7 @@
                 }
             });
     }
-    function saveComboToDatabase(tabla,columna,Obj,id)
+    function saveComboToDatabase(Obj,tabla,columna,id)
     {
         valortmp = $(Obj)[0];
         Objtmp=valortmp[valortmp.selectedIndex].innerHTML;

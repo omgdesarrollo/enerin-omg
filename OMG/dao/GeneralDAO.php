@@ -10,10 +10,12 @@ class GeneralDAO{
             
             $db= AccesoDB::getInstancia();
             $result= $db->executeQueryUpdate($query);
-        
+            
+            return $result;
             
         } catch (Exception $ex){
             throw $ex;
+            return false;
         }
                 
     }
