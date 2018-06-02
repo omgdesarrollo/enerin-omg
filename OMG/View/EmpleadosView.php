@@ -156,19 +156,23 @@ require_once 'EncabezadoUsuarioView.php';
 ?>       
 
        
-<div style="height: 5px"></div>       
+<!--<div style="height: 5px"></div>-->       
 
 <div style="position: fixed;">
-<button type="button" class="btn btn-success" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewExcel.php'">
-    Exportar Xls
-</button>   
-    
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
-          Agregar Empleado
+    Agregar Empleado
 </button>
-
-    <button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh()">
+<button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh()">
     <i class="glyphicon glyphicon-repeat"></i> 
+</button>
+<button type="button" onclick="window.location.href='../ExportarView/exportarEmpleadosView/exportarEmpleadosViewExcel.php'">
+    <img src="../../images/base/_excel.png" width="30px" height="30px">
+</button>     
+<button type="button" onclick="window.location.href='../ExportarView/exportarEmpleadosView/exportarEmpleadosViewWord.php'">
+    <img src="../../images/base/word.png" width="30px" height="30px"> 
+</button>
+<button type="button" onclick="window.location.href='../ExportarView/'">
+    <img src="../../images/base/pdf.png" width="30px" height="30px"> 
 </button>
     
     <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Nombre" style="width: 150px;">
@@ -178,7 +182,7 @@ require_once 'EncabezadoUsuarioView.php';
     <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
 </div>
                                 
-<div style="height: 47px"></div>
+<div style="height: 40px"></div>
 
 
 <div class="table-fixed-header" >

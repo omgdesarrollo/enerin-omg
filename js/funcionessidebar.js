@@ -286,43 +286,43 @@ function loadDataSideBarOficiosDocumentacion(){
                         
     } 
     
-      function loadDataSideBarCumplimientosPlanDeAccion(){
-//         mySidebar = myLayout.cells("a").attachSidebar();
-   
-    mySidebar = new dhtmlXSideBar({
-        parent: "sidebarObj",
-        icons_path: "../../images/base/",    
-                                template:'tiles',
-        width: 350,
-        items: [
-          {id: "solicitudatenciondesviacion", text: "Solicitud Atencion Desviacion", icon: "solicituddesviacion.gif"},
-            {id: "asignacionreponsableplan", text: "Asignacion Responsable Plan", icon: "asignacionresponsableplan.jpg"},
-           {id: "generarplan", text: "Generar Plan", icon: "generarplan.jpg"},
-            {id: "seguimiento", text: "seguimiento", icon: "seguimiento.png"}
-            
-        ]
-      });
-
-                                 
-                         mySidebar.attachEvent("onSelect", function(id, value){
-                                   switch(id){
-                                       case "solicitudatenciondesviacion":
-                                          
-                                       break;  
-                                        case "asignacionreponsableplan":
-                                          
-                                       break;  
-                                        case "generarplan":
-                                          
-                                       break;  
-                                        case "seguimiento":
-                                          
-                                       break;  
-                                       
-                                                                              
-                                   }
-      });
-                        
-    }  
+//      function loadDataSideBarCumplimientosPlanDeAccion(){
+//
+//   
+//    mySidebar = new dhtmlXSideBar({
+//        parent: "sidebarObj",
+//        icons_path: "../../images/base/",    
+//                                template:'tiles',
+//        width: 350,
+//        items: [
+//          {id: "solicitudatenciondesviacion", text: "Solicitud Atencion Desviacion", icon: "solicituddesviacion.gif"},
+//            {id: "asignacionreponsableplan", text: "Asignacion Responsable Plan", icon: "asignacionresponsableplan.jpg"},
+//           {id: "generarplan", text: "Generar Plan", icon: "generarplan.jpg"},
+//            {id: "seguimiento", text: "seguimiento", icon: "seguimiento.png"}
+//            
+//        ]
+//      });
+//
+//                                 
+//                         mySidebar.attachEvent("onSelect", function(id, value){
+//                                   switch(id){
+//                                       case "solicitudatenciondesviacion":
+//                                          
+//                                       break;  
+//                                        case "asignacionreponsableplan":
+//                                          
+//                                       break;  
+//                                        case "generarplan":
+//                                          
+//                                       break;  
+//                                        case "seguimiento":
+//                                          
+//                                       break;  
+//                                       
+//                                                                              
+//                                   }
+//      });
+//                        
+//    }  
     
     

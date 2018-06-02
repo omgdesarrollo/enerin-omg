@@ -173,17 +173,23 @@ require_once 'EncabezadoUsuarioView.php';
 ?>
 
 
-<div style="height: 5px"></div>
+<!--<div style="height: 5px"></div>-->
 
              
-<div style="position: fixed;">
-<button type="button" class="btn btn-success" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewExcel.php'">
-    Exportar Xls
-</button>
-    
+<div style="position: fixed;">    
 <button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
     <i class="glyphicon glyphicon-repeat"></i>   
 </button>
+
+<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
+    <img src="../../images/base/_excel.png" width="30px" height="30px">
+</button>
+<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
+    <img src="../../images/base/word.png" width="30px" height="30px"> 
+</button>
+<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
+    <img src="../../images/base/pdf.png" width="30px" height="30px"> 
+</button>    
 
         <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave Documento" style="width: 180px;">
         <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre Documento" style="width: 180px;">
@@ -194,11 +200,7 @@ require_once 'EncabezadoUsuarioView.php';
 </div>    
 
 
-<div style="height: 47px"></div>
-<button onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">Exportar A Excel </button>
-<button onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">Exportar A Word </button>
-<button onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">Exportar A Pdf </button>
-
+<div style="height: 40px"></div>
 
 
 <div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> 
@@ -206,7 +208,8 @@ require_once 'EncabezadoUsuarioView.php';
         
         <table class="tbl-qa" id="idTable">
 		  <!--<thead>-->
-                           
+            
+            
                             <tr>
                                 <th class="table-header"></th>
                                 <th class="table-header"></th>
@@ -237,7 +240,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 <th class="table-header">Desviacion Mayor</th>
                                 
 			  </tr>
-                          
+            
                           
 		  <!--</thead>-->
 		  <tbody>

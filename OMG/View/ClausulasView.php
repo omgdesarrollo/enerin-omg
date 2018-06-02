@@ -169,15 +169,24 @@ require_once 'EncabezadoUsuarioView.php';
         Agregar Tema
     </button>
 
-    <button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
-        <i class="glyphicon glyphicon-repeat"></i> 
-    </button>
+<button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
+    <i class="glyphicon glyphicon-repeat"></i> 
+</button>
+<button type="button" onclick="window.location.href='../ExportarView/exportarClausulasView/exportarClausulasViewExcel.php'">
+<img src="../../images/base/_excel.png" width="30px" height="30px">
+</button>     
+<button type="button" onclick="window.location.href='../ExportarView/exportarEmpleadosView/exportarEmpleadosViewWord.php'">
+    <img src="../../images/base/word.png" width="30px" height="30px"> 
+</button>
+<button type="button" onclick="window.location.href='../ExportarView/'">
+    <img src="../../images/base/pdf.png" width="30px" height="30px"> 
+</button>
 
     <!--Filtros de busqueda-->
-    <input type="text" id="idInputTema" onkeyup="filterTableTema()" placeholder="Tema">
-    <input type="text" id="idInputSubTema" onkeyup="filterTableSubTema()" placeholder="Sub-Tema">
-    <input type="text" id="idInputResponsable" onkeyup="filterTableResponsable()" placeholder="Responsable">
-    <input type="text" id="idInputDescripcion" onkeyup="filterTableDescripcion()" placeholder="Descripcion">
+    <input type="text" id="idInputTema" onkeyup="filterTableTema()" placeholder="Tema" style="width: 150px;">
+    <input type="text" id="idInputSubTema" onkeyup="filterTableSubTema()" placeholder="Sub-Tema" style="width: 150px;">
+    <input type="text" id="idInputResponsable" onkeyup="filterTableResponsable()" placeholder="Responsable" style="width: 150px;">
+    <input type="text" id="idInputDescripcion" onkeyup="filterTableDescripcion()" placeholder="Descripcion" style="width: 150px;">
     <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
 
 </div>
