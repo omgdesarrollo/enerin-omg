@@ -202,18 +202,14 @@ require_once 'EncabezadoUsuarioView.php';
 
 <div style="height: 40px"></div>
 
-   
-
-   
-
-
 
 <div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> 
     <div class="table-container">
         
         <table class="tbl-qa" id="idTable">
 		  <!--<thead>-->
-                           
+            
+            
                             <tr>
                                 <th class="table-header"></th>
                                 <th class="table-header"></th>
@@ -244,7 +240,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 <th class="table-header">Desviacion Mayor</th>
                                 
 			  </tr>
-                          
+            
                           
 		  <!--</thead>-->
 		  <tbody>
