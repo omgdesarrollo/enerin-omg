@@ -16,9 +16,8 @@ switch ($Op)
     echo $resultado;
     break;
 
-    case 'ListarEvidencia'
-    $resultado = $model->listarEvidencia($_REQUEST['ID_EVIDENCIA']);
-    echo $resulto;
+    
+
     default: echo false;
     break;
 }
