@@ -384,8 +384,9 @@
 
     $('#BTN_CREAR_NUEVAEVIDENCIAMODAL').click(function()
     {
-        clave = $('#CLAVE_NUEVAEVIDENCIAMODAL2')[0].innerHTML;
-        data = true;
+        // clave = $('#CLAVE_NUEVAEVIDENCIAMODAL2')[0].innerHTML;
+        // data = true;
+        clave = $('#ID_NUEVAEVIDENCIAMODAL').val();
         if(clave!="")
         {
 
