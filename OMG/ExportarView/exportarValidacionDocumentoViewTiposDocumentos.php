@@ -11,27 +11,39 @@ $urlExportar="exportarValidacionDocumentoView/exportarValidacionDocumentoViewWor
 header("Location: $urlExportar");
 }
 if($tipo=="Pdf"){
-    require_once '../util/lib/dompdf/dompdf_config.inc.php';
-    date_default_timezone_set('America/Mexico_city'); 
-//la fecha y hora de exportación sera parte del nombre del archivo Excel
-   $fecha = date("d-m-Y H:i:s");
+    require_once '../util/dompdf/autoload.inc.php';
+    session_start();
+    require_once '../util/Session.php';
 
-    $dompdf = new DOMPDF();
-    $dompdf->load_html( file_get_contents( 'exportarValidacionDocumentoView/exportarValidacionDocumentoViewPdf.php' ) );
-    $dompdf->render();
-    $dompdf->stream("ReporteValidacionDocumento".$fecha.".pdf");
+   
     
-//    header("Content-type: application/vnd.ms-$tipo");
-//    header("Content-Disposition: attachment; filename=Reporte_ValidacionDocumentos-$fecha.pdf");
-//    header("Pragma: no-cache");
-//    header("Expires: 0");  
-//    $urlExportar="exportarValidacionDocumentoView/exportarValidacionDocumentoViewPdf.php";
-//    header("Location: $urlExportar");
+$Lista = Session::getSesion("listarValidacionDocumentos");
+//$contenidoInfo="<table>";
+//$contenidoInfo.="<tr>";
+//$contenidoInfo.="<thead>";
+//$contenidoInfo.="<td>Clave Documento</td>";
+//$contenidoInfo.="<td>Nombre Documento</td>";
+//$contenidoInfo.="<td>Responsable Documento</td>";
+//$contenidoInfo.="<td>Tema Y Responsable</td>";
+//$contenidoInfo.="<td>Registros</td>";
+//$contenidoInfo.="<thead>";
+//$contenidoInfo.="<tr>";
+//$contenidoInfo.="<tr>";
+$contenidoInfo="";
+foreach ($Lista as $contenido){
+//    $contenidoInfo.="<tr>";
+    $contenidoInfo.=$contenido['clave_documento'];
+    
+//    $contenidoInfo.="</tr>";
+}
+//$contenidoInfo.="</tr>";
+//$contenidoInfo.="</table></thead>";
+        $dompdf = new Dompdf\Dompdf();
+        $dompdf->loadHtml($contenidoInfo);
+        $dompdf->setPaper('A4', 'landscape'); // (Opcional) Configurar papel y orientación
+        $dompdf->render(); // Generar el PDF desde contenido HTML
+        $pdf = $dompdf->output(); // Obtener el PDF generado
+        $dompdf->stream(); // Enviar el PDF generado al navegador
 }
 
-
-
-//echo "d  ".$tipo;
-
-//header("$urlExportar");
 ?>
