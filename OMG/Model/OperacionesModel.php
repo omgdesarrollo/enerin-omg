@@ -17,6 +17,23 @@ class OperacionesModel
             throw $e;
         }
     }
+    
+    public function listarEvidencia($ID_EVIDENCIA)
+    {
+        try
+        {
+            $dao = new OperacionesDAO();
+            $rec = $dao->listarEvidencia($ID_EVIDENCIA);
+
+            return $rec;
+        }catch(Exception $e)
+        {
+            throw $e;
+            return false;
+        }
+    }
+
+
     public function getClavesDocumentos($cadena)
     {
         try

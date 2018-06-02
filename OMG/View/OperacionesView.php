@@ -236,6 +236,9 @@
                 <div class="form-group">
                     Responsable del Documento: <label id="NOMBRE_NUEVAEVIDENCIAMODAL" class="control-label" for="title"></label>
                 </div>
+                <div class="form-group">
+                    <input id="ID_NUEVAEVIDENCIAMODAL" type="text" value="" style="display: none"/>
+                </div>
 
                 <div class="form-group" method="post">
                     <button type="submit" id="BTN_CREAR_NUEVAEVIDENCIAMODAL" class="btn crud-submit btn-info">Crear Evidencia</button>
@@ -244,7 +247,8 @@
         </div>
     </div>
 </div>
-<!--Final de Seccion Modal--> 
+<!--Final de Seccion Modal-->
+
 <!-- Inicio de Seccion Modal Archivos-->
 <div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
@@ -345,7 +349,7 @@
                             apellidos += " "+value.APELLIDO_PATERNO+" "+value.APELLIDO_MATERNO;
                         }
                         tempData += "<option value='"+value.CLAVE_DOCUMENTO+"+=$="+value.DOCUMENTO;
-                        tempData += "+=$="+apellidos+"'>";
+                        tempData += "+=$="+apellidos+"+=$="+value.ID_DOCUMENTO+"'>";
                         tempData += value.CLAVE_DOCUMENTO+"</option>";
                     });
                     $('#CLAVE_NUEVAEVIDENCIAMODAL').html(tempData);
@@ -363,11 +367,12 @@
     {
         tempData = $(Obj).prop("value");
         tempData = tempData.split("+=$=");
-        if(tempData.length == 3)
+        if(tempData.length == 4)
         {
             $('#CLAVE_NUEVAEVIDENCIAMODAL2').html(tempData[0]);
             $('#DOCUMENTO_NUEVAEVIDENCIAMODAL').html(tempData[1]);
             $('#NOMBRE_NUEVAEVIDENCIAMODAL').html(tempData[2]);
+            $('#ID_NUEVAEVIDENCIAMODAL').val(tempData[3]);
         }
         else
         {
@@ -473,7 +478,7 @@
                   success: function(todo)
                   {
                     nametmp="";
-                    tempData += "<tr>";
+                    tempData += "<tr id='registro_"+value.id_evidencias+">";
                     tempData += "<td class='nuevoTdTable'>"+value.clave_documento+"</td>";
                     tempData += "<td class='nuevoTdTable'>"+value.documento+"</td>";
                     tempData += "<td class='nuevoTdTable'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td>";
@@ -492,7 +497,7 @@
                         if(value.clasificacion=="")
                         {
                             tempData += "<td><select class='select'";
-                            tempData += "onchange=\"saveComboToDatabase(this,'evidencias','clasificacion',"+value.id_evidencias+")\">";
+                            tempData += "onchange=\"saveComboToDatabase(this,'evidencias','clasificacion',"+value.id_evidencias+",'id_evidencias')\">";
                             tempData += "<option value='0' selected></option>";
                             tempData += "<option value='DIARIO'>DIARIO</option>";
                             tempData += "<option value='MENSUAL'>MENSUAL</option>";
@@ -522,16 +527,89 @@
         $('#bodyTable').html(tempData);
         $('#loader').hide();
     }
-    function saveOneToDatabase(valor,columna,tabla,id)
+
+    function reconstruirRow(id)
+    {
+        tempData = "";
+        $.ajax({
+            url: "../Controller/OperacionesController.php?Op=ListarEvidencia",
+            type: 'GET',
+            data: 'ID_EVIDENCIA='+id,
+            success:function(datos)
+            {
+                URL = 'filesEvidenciaDocumento/'+id;
+                $.ajax({
+                    url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
+                    type: 'GET',
+                    data: 'URL='+URL,
+                    async: false,
+                    success: function(todo)
+                    {
+                        $.each(datos,function(index,value)
+                        {
+                            nametmp="";
+                            tempData += "<tr id="+value.id_evidencias+">";
+                            tempData += "<td class='nuevoTdTable'>"+value.clave_documento+"</td>";
+                            tempData += "<td class='nuevoTdTable'>"+value.documento+"</td>";
+                            tempData += "<td class='nuevoTdTable'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td>";
+                            // tempData += "<td>"+value.registros+"</td>";
+                            tempData += "<td class='nuevoTdTable' style='font-size: -webkit-xxx-large;'><button onClick='mostrarTemaResponsable();' type='button' class='btn btn-success'";
+                            tempData += "data-toggle='modal' data-target='#mostrar-temaresponsable'>Ver";
+                            tempData += "<i class='ace-icon fa fa-book' style='color: #0099ff;font-size: 20px;'></i></button></td>";
+                            tempData += "<td><button onClick='mostrar_urls("+value.id_evidencias+");'";
+                            tempData += "type='button' class='btn btn-success' data-toggle='modal' data-target='#create-itemUrls'>";
+                            tempData += "Adjuntar Documento</button></td>";
+                            $.each(todo[0],function(index2,value2)
+                            {
+                                nametmp = value2.split("^");
+                                // fechaAdjunto=nametmp[0];
+                                tempData += "<td>"+nametmp[0]+"</td>";
+                                if(value.clasificacion=="")
+                                {
+                                    tempData += "<td><select class='select'";
+                                    tempData += "onchange=\"saveComboToDatabase(this,'evidencias','clasificacion',"+value.id_evidencias+",'id_evidencias')\">";
+                                    tempData += "<option value='0' selected></option>";
+                                    tempData += "<option value='DIARIO'>DIARIO</option>";
+                                    tempData += "<option value='MENSUAL'>MENSUAL</option>";
+                                    tempData += "<option value='BIMESTRAL'>BIMESTRAL</option>";
+                                    tempData += "<option value='ANUAL'>ANUAL</option>";
+                                    tempData += "<option value='TIEMPO INDEFINIDO'>TIEMPO INDEFINIDO</option>";
+                                    tempData += "</select></td>";
+                                }
+                                else
+                                {
+                                    tempData += "<td>"+value.clasificacion+"</td>";
+                                }
+                                tempData += "<td>"+value.desviacion+"</td>";
+                                tempData += "<td>"+value.accion_correctiva+"</td>";
+                                tempData += "<td>"+value.validacion_supervisor+"</td>";
+                                tempData += "<td>"+value.plan_accion+"</td>";
+                                tempData += "<td><input type='checkbox' style='width: 40px; height: 40px'";
+                                tempData += "name='checkbox' class='checkboxDocumento' onchange='saveCheckBoxToDataBase";
+                                tempData += "(this,'validacion_documento_responsable',"+value.id_evidencias+")></td>";
+                            // +value.ingresar_oficio_atencion+"</td>";
+                                tempData += "<td>"+value.oficio_atencion+"</td>";
+                            });
+                            tempData += "</tr>";
+                        });
+                    }
+                });
+            }
+        });
+        $('#registro_'+id).html(tempData);
+        $('#loader').hide();
+    }
+    function saveOneToDatabase(valor,columna,tabla,id,contexto)
     {
         $.ajax({
                 url: "../Controller/GeneralController.php?Op=ModificarColumna",
                 type: 'GET',
-                data: 'TABLA='+tabla+'&COLUMNA='+columna+'&VALOR='+valor+'&ID='+id,
+                data: 'TABLA='+tabla+'&COLUMNA='+columna+'&VALOR='+valor+'&ID='+id+'&ID_CONTEXTO='+contexto,
                 success: function(modificado)
                 {
-                    if(modificado)
+                    if(modificado==true)
                     {
+                        reconstruirRow(id);
                         $('#loader').hide();
                         swal("","Modificado","success");
                         setTimeout(function(){swal.close();},1000);
@@ -549,11 +627,13 @@
                 }
             });
     }
-    function saveComboToDatabase(Obj,tabla,columna,id)
+    function saveComboToDatabase(Obj,tabla,columna,id,contexto)
     {
         valortmp = $(Obj)[0];
         Objtmp=valortmp[valortmp.selectedIndex].innerHTML;
-        if(Objtmp!="")
+        //poner alerta para valores
+        // alert(Objtmp);
+        if(Objtmp!=" ")
         {
             swal({
                     title:"SELECCIONAR",
@@ -564,8 +644,13 @@
                     showLoaderOnConfirm: true
                     }, function(isConfirm)
                     {
-                        $('#loader').show();
-                        saveOneToDatabase(Objtmp,columna,tabla,id);
+                        if(isConfirm)
+                        {
+                            $('#loader').show();
+                            saveOneToDatabase(Objtmp,columna,tabla,id,contexto);
+                        }
+                        else
+                            $(Obj)[0].selectedIndex=0;
                     }
                 );
         }
