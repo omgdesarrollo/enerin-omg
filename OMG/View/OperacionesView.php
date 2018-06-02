@@ -372,7 +372,7 @@
             $('#CLAVE_NUEVAEVIDENCIAMODAL2').html(tempData[0]);
             $('#DOCUMENTO_NUEVAEVIDENCIAMODAL').html(tempData[1]);
             $('#NOMBRE_NUEVAEVIDENCIAMODAL').html(tempData[2]);
-            $('#ID_NUEVAEVIDENCIAMODAL').value(tempData[3]);
+            $('#ID_NUEVAEVIDENCIAMODAL').val(tempData[3]);
         }
         else
         {

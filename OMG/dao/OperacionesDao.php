@@ -13,7 +13,7 @@ class OperacionesDao
                     tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno,
 
                     tbevidencias.clasificacion, tbevidencias.desviacion, tbevidencias.accion_correctiva, tbevidencias.validacion_supervisor,
-                    tbevidencias.plan_accion, tbevidencias.INGRESAR_OFICIO_ATENCION, tbevidencias.oficio_atencion
+                    tbevidencias.plan_accion, tbevidencias.ingresar_oficio_atencion, tbevidencias.oficio_atencion
 
                     FROM evidencias tbevidencias
 
@@ -30,6 +30,41 @@ class OperacionesDao
             throw $ex;
         }
     }
+    
+    
+    public function listarEvidencia($ID_EVIDENCIA)
+    {
+        try
+        {
+            $query = "SELECT tbevidencias.id_evidencias, tbdocumentos.id_documento, tbdocumentos.clave_documento, tbdocumentos.documento,
+                    tbdocumentos.registros,
+
+                    tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno,
+
+                    tbevidencias.clasificacion, tbevidencias.desviacion, tbevidencias.accion_correctiva, tbevidencias.validacion_supervisor,
+                    tbevidencias.plan_accion, tbevidencias.ingresar_oficio_atencion, tbevidencias.oficio_atencion
+
+                    FROM evidencias tbevidencias
+
+                    JOIN documentos tbdocumentos ON tbdocumentos.id_documento=tbevidencias.id_documento
+
+                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumentos.id_empleado
+                    
+                    WHERE tbevidencias.id_evidencias=$ID_EVIDENCIA";
+            $db = AccesoDB::getInstancia();
+            $lista = $db->executeQuery($query);
+            
+            return $lista;
+        }
+        catch(Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
+
+    
     public function getClavesDocumentos($cadena)
     {
         try

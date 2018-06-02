@@ -10,10 +10,22 @@ $fecha = date("d-m-Y H:i:s");
  
 //Inicio de exportación en Excel
 //header('Content-type: application/vnd.ms-excel');
+//header("Content-type: application/vnd.ms-excel; name='excel'");
+//header('Pragma: public');
+//header("Content-type: application/vnd.ms-excel; charset=UTF-8");
+//header('Content-type: application/x-msexcel; charset=utf-8');
 
+//Ya estaba
+header("Content-type: application/vnd.ms-excel; charset=UTF-8");
 header("Content-Disposition: attachment; filename=Reporte_ValidacionDocumentos-$fecha.xls"); //Indica el nombre del archivo resultante
 header("Pragma: no-cache");
 header("Expires: 0");
+//ya estaba
+
+//header('Content-Transfer-Encoding: none');
+//header('Content-type: application/x-msexcel');
+//header("Content-Type: application/force-download");
+//header("Content-Type: application/octet-stream");
  
     
 
@@ -24,10 +36,12 @@ $i=0;
 $i2=0;
 $entrar=false;
 $limite=sizeof($Lista);
+$ValDocResp="";
 
 
 foreach($Lista as $in=>$filas){
     $requisitos="";
+    
     if($i2<$limite)
     {
         foreach ($Lista as $index2=>$filas2){
@@ -40,20 +54,33 @@ foreach($Lista as $in=>$filas){
         }
         if($entrar)
         {
-        $table.="<tr><td style='border-style: solid;'>".$Lista[$i]['clave_documento']."</td>"
+        $table.="<tr style='text-align: center;'><td style='border-style: solid;text-align: center !important;'>".$Lista[$i]['clave_documento']."</td>"
                 . "<td style='border-style: solid;'>".$Lista[$i]['documento']."</td>"
                 . "<td style='border-style: solid;'>".$Lista[$i]['nombre_empleado_documento']." ".$Lista[$i]['apellido_paterno_documento']." ".$Lista[$i]['apellido_materno_documento']."</td>"
                 . "<td style='border-style: solid;'>".$requisitos."</td>"
                 . "<td style='border-style: solid;'>".$Lista[$i]['registros']."</td>"
-//                . "<td style='border-style: solid;'>"."if($Lista[$i]['validacion_documento_responsable']=='true')echo 'si'; echo 'no'"."</td>"
-                . "<td style='border-style: solid;'>".$Lista[$i]['observacion_documento']."</td>"
-                . "</tr>";
+                ."<td style='border-style: solid;'>";
+                if($Lista[$i]['validacion_documento_responsable']=='true')
+                    $table.="SI";
+                else
+                    $table.="NO";
+                $table.="</td><td style='border-style: solid;'>";
+                if($Lista[$i]['validacion_tema_responsable']=='true')
+                    $table.="SI";
+                else
+                    $table.="NO";
+                $table.= "</td><td style='border-style: solid;'>".$Lista[$i]['observacion_documento']."</td><td style='border-style: solid;'>";
+                if($Lista[$i]['desviacion_mayor']=='true')
+                    $table.="SI";
+                else
+                    $table.="NO";
+                $table.= "</td></tr>";
         }
         $i2=$i+1;
     }
 }
 
-echo "<table>
+echo "<table >
             <tr>
                 <th style='background:#CCC; color:#000;border-style: solid;'>
                 Clave Documento
@@ -71,7 +98,16 @@ echo "<table>
                 Registros
                 </th>
                 <th style='background:#CCC; color:#000;border-style: solid;'>
+                Responsable Documento
+                </th>
+                <th style='background:#CCC; color:#000;border-style: solid;'>
+                Responsable Tema
+                </th>
+                <th style='background:#CCC; color:#000;border-style: solid;'>
                 Observaciones
+                </th>
+                <th style='background:#CCC; color:#000;border-style: solid;'>
+                Desviacion Mayor
                 </th>
             </tr>".$table."
 
