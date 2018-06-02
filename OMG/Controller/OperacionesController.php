@@ -19,7 +19,7 @@ switch ($Op)
     case 'Listar':
     
 		$Lista=$model->listarOperaciones();
-    	Session::setSesion("listarOperaciones",$Lista);
+    	// Session::setSesion("listarOperaciones",$Lista);
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
 		break;
@@ -54,7 +54,11 @@ switch ($Op)
 		echo $data;
 	break;
     
-    
+    case 'ListarEvidencia':
+    $resultado = $model->listarEvidencia($_REQUEST['ID_EVIDENCIA']);
+    header('Content-type: application/json; charset=utf-8');
+    echo json_encode($resultado);
+    break;
     
 	default:
 		echo false;

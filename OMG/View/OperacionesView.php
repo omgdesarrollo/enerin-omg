@@ -478,7 +478,7 @@
                   success: function(todo)
                   {
                     nametmp="";
-                    tempData += "<tr id='registro_"+value.id_evidencias+">";
+                    tempData += "<tr id='registro_"+value.id_evidencias+"'>";
                     tempData += "<td class='nuevoTdTable'>"+value.clave_documento+"</td>";
                     tempData += "<td class='nuevoTdTable'>"+value.documento+"</td>";
                     tempData += "<td class='nuevoTdTable'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td>";
@@ -514,11 +514,11 @@
                         tempData += "<td>"+value.accion_correctiva+"</td>";
                         tempData += "<td>"+value.validacion_supervisor+"</td>";
                         tempData += "<td>"+value.plan_accion+"</td>";
-                        tempData += "<td><input type='checkbox' style='width: 40px; height: 40px'";
-                        tempData += "name='checkbox' class='checkboxDocumento' onchange='saveCheckBoxToDataBase";
-                        tempData += "(this,'validacion_documento_responsable',"+value.id_evidencias+")></td>";
+                        // tempData += "<td><input type='checkbox' style='width: 40px; height: 40px'";
+                        // tempData += "name='checkbox' class='checkboxDocumento' onchange='saveCheckBoxToDataBase";
+                        // tempData += "(this,'validacion_documento_responsable',"+value.id_evidencias+")></td>";
                         // +value.ingresar_oficio_atencion+"</td>";
-                        tempData += "<td>"+value.oficio_atencion+"</td>";
+                        // tempData += "<td>"+value.oficio_atencion+"</td>";
                     });
                     tempData += "</tr>";
                   }
@@ -542,13 +542,14 @@
                     url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
                     type: 'GET',
                     data: 'URL='+URL,
-                    async: false,
+                    // async: false,
                     success: function(todo)
                     {
+                        console.log(datos)
                         $.each(datos,function(index,value)
                         {
                             nametmp="";
-                            tempData += "<tr id="+value.id_evidencias+">";
+                            // tempData += "<tr id='registro_"+value.id_evidencias+"'>";
                             tempData += "<td class='nuevoTdTable'>"+value.clave_documento+"</td>";
                             tempData += "<td class='nuevoTdTable'>"+value.documento+"</td>";
                             tempData += "<td class='nuevoTdTable'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td>";
@@ -561,10 +562,11 @@
                             tempData += "Adjuntar Documento</button></td>";
                             $.each(todo[0],function(index2,value2)
                             {
+                                alert("hola");
                                 nametmp = value2.split("^");
                                 // fechaAdjunto=nametmp[0];
                                 tempData += "<td>"+nametmp[0]+"</td>";
-                                if(value.clasificacion=="")
+                                if(value.clasificacion=='')
                                 {
                                     tempData += "<td><select class='select'";
                                     tempData += "onchange=\"saveComboToDatabase(this,'evidencias','clasificacion',"+value.id_evidencias+",'id_evidencias')\">";
@@ -584,20 +586,33 @@
                                 tempData += "<td>"+value.accion_correctiva+"</td>";
                                 tempData += "<td>"+value.validacion_supervisor+"</td>";
                                 tempData += "<td>"+value.plan_accion+"</td>";
-                                tempData += "<td><input type='checkbox' style='width: 40px; height: 40px'";
-                                tempData += "name='checkbox' class='checkboxDocumento' onchange='saveCheckBoxToDataBase";
-                                tempData += "(this,'validacion_documento_responsable',"+value.id_evidencias+")></td>";
+                                // tempData += "<td><input type='checkbox' style='width: 40px; height: 40px'";
+                                // tempData += "name='checkbox' class='checkboxDocumento' onchange='saveCheckBoxToDataBase";
+                                // tempData += "(this,'validacion_documento_responsable',"+value.id_evidencias+")></td>";
                             // +value.ingresar_oficio_atencion+"</td>";
-                                tempData += "<td>"+value.oficio_atencion+"</td>";
+                                // tempData += "<td>"+value.oficio_atencion+"</td>";
                             });
-                            tempData += "</tr>";
+                            // tempData += "</tr>";
                         });
+                        console.log(tempData);
+                        $('#registro_'+id).html(tempData);
+                        $('#loader').hide();
+                        swal("","Modificado","success");
+                        setTimeout(function(){swal.close();},1000);
+                    },
+                    error:function()
+                    {
+                        swal("","Error del servidor","error");
+                        setTimeout(function(){swal.close();},1000);
                     }
                 });
+            },
+            error:function()
+            {
+                swal("","Error del servidor","error");
+                setTimeout(function(){swal.close();},1000);
             }
         });
-        $('#registro_'+id).html(tempData);
-        $('#loader').hide();
     }
     function saveOneToDatabase(valor,columna,tabla,id,contexto)
     {
@@ -610,9 +625,9 @@
                     if(modificado==true)
                     {
                         reconstruirRow(id);
-                        $('#loader').hide();
-                        swal("","Modificado","success");
-                        setTimeout(function(){swal.close();},1000);
+                        // $('#loader').hide();
+                        // swal("","Modificado","success");
+                        // setTimeout(function(){swal.close();},1000);
                     }
                     else
                     {
@@ -743,40 +758,55 @@
           }
         });
     }
+    function aumentador()
+    {
+        alert();
+        $.ajax({
+            // url:"../Controller/GeneralController.php?a",
+            success:function()
+            {
+                valor--;
+            }
+        });
+    }
+    valor = 8;
     function borrarArchivo(url)
     {
-      swal({
+        setInterval(aumentador(), 3000);
+        swal({
           title: "ELIMINAR",
-          text: "Se eliminara toda la evidencia de este documento. ¿Desea continuar?",
+          text: "Al eliminar este documento se eliminara toda la evidencia registrada. ¿Desea continuar?",
           type: "warning",
           showCancelButton: true,
           closeOnConfirm: false,
-          showLoaderOnConfirm: true
+          showLoaderOnConfirm: true,
+          confirmButtonText: ""+valor,
         },function()
         {
-          var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();
-          $.ajax({
-            url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
-            type: 'POST',
-            data: 'URL='+url,
-            success: function(eliminado)
-            {
-              if(eliminado)
-              {
-                mostrar_urls(ID_EVIDENCIA_DOCUMENTO);
-                refresh();
-                //eliminar parte del registro en la base de datos
-                swal("","Archivo eliminado");
-                setTimeout(function(){swal.close();},1000);
-              }
-              else
-                swal("","Ocurrio un error al elimiar el documento", "error");
-            },
-            error:function()
-            {
-              swal("","Ocurrio un error al elimiar el documento", "error");
-            }
-          });
+
+        //   var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();
+        //   $.ajax({
+        //     url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
+        //     type: 'POST',
+        //     data: 'URL='+url,
+        //     success: function(eliminado)
+        //     {
+        //       if(eliminado)
+        //       {
+        //         mostrar_urls(ID_EVIDENCIA_DOCUMENTO);
+        //         refresh();
+        //         //eliminar parte del registro en la base de datos
+        //         swal("","Archivo eliminado");
+        //         setTimeout(function(){swal.close();},1000);
+        //       }
+        //       else
+        //         swal("","Ocurrio un error al elimiar el documento", "error");
+        //     },
+        //     error:function()
+        //     {
+        //       swal("","Ocurrio un error al elimiar el documento", "error");
+        //     }
+        //   });
         });
     }
 
