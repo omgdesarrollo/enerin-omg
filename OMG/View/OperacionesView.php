@@ -491,14 +491,14 @@
                     tempData += "data-toggle='modal' data-target='#mostrarRegistrosModal'>Ver";
                     tempData += "<i class='ace-icon fa fa-book' style='color: #0099ff;font-size: 20px;'></i></button></td>";
                     
-                    tempData += "<td><button onClick='mostrar_urls("+value.id_evidencias+");'";
+                    tempData += "<td style='background-color: #ccccff'><button onClick='mostrar_urls("+value.id_evidencias+");'";
                     tempData += "type='button' class='btn btn-success' data-toggle='modal' data-target='#create-itemUrls'>";
                     tempData += "Adjuntar Documento</button></td>";
                     $.each(todo[0],function(index2,value2)
                     {
                         nametmp = value2.split("^");
                         // fechaAdjunto=nametmp[0];
-                        tempData += "<td>"+nametmp[0]+"</td>";
+                        tempData += "<td style='background-color: #ccccff'>"+nametmp[0]+"</td>";
                         if(value.clasificacion=="")
                         {
                             tempData += "<td><select class='select'";
@@ -513,12 +513,15 @@
                         }
                         else
                         {
-                            tempData += "<td>"+value.clasificacion+"</td>";
+                            tempData += "<td style='background-color: #ccccff'>"+value.clasificacion+"</td>";
                         }
-                        tempData += "<td>"+value.desviacion+"</td>";
-                        tempData += "<td>"+value.accion_correctiva+"</td>";
+                        tempData += "<td style='background-color: #ccccff'>"+value.accion_correctiva+"</td>";
+ //                        tempData += "<td>"+value.plan_accion+"</td>";
+                        tempData += "<td style='background-color: #ccccff'><button class='btn btn-info' onClick='#("+value.id_evidencias+");'>";
+                        tempData += "Cargar Programa</button></td>";
+                        tempData += "<td>"+value.desviacion+"</td>";                        
                         tempData += "<td>"+value.validacion_supervisor+"</td>";
-                        tempData += "<td>"+value.plan_accion+"</td>";
+                        
                         // tempData += "<td><input type='checkbox' style='width: 40px; height: 40px'";
                         // tempData += "name='checkbox' class='checkboxDocumento' onchange='saveCheckBoxToDataBase";
                         // tempData += "(this,'validacion_documento_responsable',"+value.id_evidencias+")></td>";
