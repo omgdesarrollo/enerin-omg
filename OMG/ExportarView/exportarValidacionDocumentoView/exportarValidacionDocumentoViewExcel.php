@@ -9,14 +9,7 @@ date_default_timezone_set('America/Mexico_city');
 $fecha = date("d-m-Y H:i:s");
  
 //Inicio de exportación en Excel
-//header('Content-type: application/vnd.ms-excel');
-//header("Content-type: application/vnd.ms-excel; name='excel'");
-//header('Pragma: public');
-//header("Content-type: application/vnd.ms-excel; charset=UTF-8");
-//header('Content-type: application/x-msexcel; charset=utf-8');
-
-//Ya estaba
-header("Content-type: application/vnd.ms-excel; charset=UTF-8");
+header('Content-type: application/vnd.ms-excel');
 header("Content-Disposition: attachment; filename=Reporte_ValidacionDocumentos-$fecha.xls"); //Indica el nombre del archivo resultante
 header("Pragma: no-cache");
 header("Expires: 0");
@@ -59,28 +52,17 @@ foreach($Lista as $in=>$filas){
                 . "<td style='border-style: solid;'>".$Lista[$i]['nombre_empleado_documento']." ".$Lista[$i]['apellido_paterno_documento']." ".$Lista[$i]['apellido_materno_documento']."</td>"
                 . "<td style='border-style: solid;'>".$requisitos."</td>"
                 . "<td style='border-style: solid;'>".$Lista[$i]['registros']."</td>"
-                ."<td style='border-style: solid;'>";
-                if($Lista[$i]['validacion_documento_responsable']=='true')
-                    $table.="SI";
-                else
-                    $table.="NO";
-                $table.="</td><td style='border-style: solid;'>";
-                if($Lista[$i]['validacion_tema_responsable']=='true')
-                    $table.="SI";
-                else
-                    $table.="NO";
-                $table.= "</td><td style='border-style: solid;'>".$Lista[$i]['observacion_documento']."</td><td style='border-style: solid;'>";
-                if($Lista[$i]['desviacion_mayor']=='true')
-                    $table.="SI";
-                else
-                    $table.="NO";
-                $table.= "</td></tr>";
+                . "<td style='border-style: solid;'>"."if($Lista[$i]['validacion_documento_responsable']=='true') si else  no"."</td>"
+                . "<td style='border-style: solid;'>".$Lista[$i]['observacion_documento']."</td>"
+                . "</tr>";
         }
         $i2=$i+1;
     }
 }
+?>
 
-echo "<table >
+<?php
+echo "<table>
             <tr>
                 <th style='background:#CCC; color:#000;border-style: solid;'>
                 Clave Documento

@@ -8,7 +8,10 @@ if (Session:: NoExisteSeSion("user")){
     return;
 }
 $urls["fisica"] = "C:xampp/htdocs/enerin-omg/archivos/";
-$urls["logica"] = 'localhost:80/enerin-omg/archivos/';
+$urls["logica"] = "".$_SERVER['HTTP_HOST']."/enerin-omg/archivos/";
+//para hallar ruta fisica tanto web como local
+//echo dirname(__FILE__);
+//temrina para hallar ruta fisica tanto web como local 
 //rutas web 
 //$urls["fisica"] = "/home/fpa9q09nzhnx/public_html/omgcum/archivos/";
 //$urls["logica"] = 'http://www.enerin-omgapps.com/omgcum/archivos/';
