@@ -187,26 +187,9 @@
 </body>
 
 
-<!-- Inicio modal Registros -->
-<!--<div class="modal draggable fade" id="mostrar-registros" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-        <div id="loaderModalMostrar"></div>
-		<div class="modal-content">                
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-          <h4 class="modal-title" id="myModalLabel">Lista Registros</h4>
-        </div>
 
-        <div class="modal-body">
-          
-            <div id="RegistrosListado"></div>
-  
-        </div> cierre div class-body 
-      </div> cierre div class modal-content 
-    </div> cierre div class="modal-dialog" 
-</div> cierre del modal Requisitos-->
 
-<!-- Inicio de Seccion Modal Crear nueva Entrada-->
+<!-- Inicio de Seccion Modal Crear nueva Evidencia-->
 <div class="modal draggable fade" id="nuevaEvidenciaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -248,6 +231,28 @@
     </div>
 </div>
 <!--Final de Seccion Modal-->
+
+<!-- Inicio modal Registros -->
+<div class="modal draggable fade" id="mostrarRegistrosModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+        <div id="loaderModalMostrar"></div>
+		<div class="modal-content">                
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title" id="myModalLabel">Lista Registros</h4>
+        </div>
+
+        <div class="modal-body">
+          
+            <div id="RegistrosListado"></div>
+  
+        </div> 
+      </div> 
+    </div> 
+</div> 
+<!--cierre del modal Registros-->
+
+
 
 <!-- Inicio de Seccion Modal Archivos-->
 <div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -482,9 +487,10 @@
                     tempData += "<td class='nuevoTdTable'>"+value.documento+"</td>";
                     tempData += "<td class='nuevoTdTable'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td>";
                     // tempData += "<td>"+value.registros+"</td>";
-                    tempData += "<td class='nuevoTdTable' style='font-size: -webkit-xxx-large;'><button onClick='mostrarTemaResponsable();' type='button' class='btn btn-success'";
-                    tempData += "data-toggle='modal' data-target='#mostrar-temaresponsable'>Ver";
+                    tempData += "<td class='nuevoTdTable' style='font-size: -webkit-xxx-large;'><button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success'";
+                    tempData += "data-toggle='modal' data-target='#mostrarRegistrosModal'>Ver";
                     tempData += "<i class='ace-icon fa fa-book' style='color: #0099ff;font-size: 20px;'></i></button></td>";
+                    
                     tempData += "<td><button onClick='mostrar_urls("+value.id_evidencias+");'";
                     tempData += "type='button' class='btn btn-success' data-toggle='modal' data-target='#create-itemUrls'>";
                     tempData += "Adjuntar Documento</button></td>";
@@ -832,13 +838,13 @@
     function mostrarRegistros(id_documento)
     {
         ValoresRegistros = "<ul>";
-        alert("Registros"+id_documento);
+        //alert("Registros"+id_documento);
         
         $.ajax
         ({
-            url:"../Controller/OperacionesController.php?op=MostrarRegistrosPorDocumento",
+            url:"../Controller/OperacionesController.php?Op=MostrarRegistrosPorDocumento",
             type: 'POST',
-            data: 'ID_DOCUMENTO'+id_documento,
+            data: 'ID_DOCUMENTO='+id_documento,
             success:function(responseregistros)
             {
                 $.each(responseregistros, function(index,value){
