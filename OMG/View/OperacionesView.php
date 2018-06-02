@@ -140,8 +140,8 @@
         );
         $titulosTable = 
             array("Clave","Nombre Documento","Responsable Documento","Registros","Documento Adjunto",
-                "Fecha Registro","Clasificación","Desviación","Acción Correctiva Inmediata","Validación",
-                "Plan de Acción"/*,"Ingresar Oficio Atención","Oficio de Atención"*/);
+                "Fecha Registro","Clasificación","Acción Correctiva Inmediata","Plan de Acción","Desviación","Validación",
+                /*,"Ingresar Oficio Atención","Oficio de Atención"*/);
     ?>
     <div style="position: fixed;">
 
