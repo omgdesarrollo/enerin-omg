@@ -173,7 +173,7 @@ require_once 'EncabezadoUsuarioView.php';
 <button type="button" onclick="window.location.href='../ExportarView/exportarClausulasView/exportarClausulasViewExcel.php'">
 <img src="../../images/base/_excel.png" width="30px" height="30px">
 </button>     
-<button type="button" onclick="window.location.href='../ExportarView/exportarEmpleadosView/exportarEmpleadosViewWord.php'">
+<button type="button" onclick="window.location.href='../ExportarView/exportarClausulasView/exportarClausulasViewWord.php'">
     <img src="../../images/base/word.png" width="30px" height="30px"> 
 </button>
 <button type="button" onclick="window.location.href='../ExportarView/'">
@@ -215,7 +215,7 @@ require_once 'EncabezadoUsuarioView.php';
 				<th   class="table-header">Tema</th>				
 				<th  class="table-header">No.Sub-Tema</th>				
 				<th  class="table-header">Sub-Tema</th>				
-				<th   class="table-header">Responsable</th>				
+				<th   class="table-header">Responsable del Tema</th>				
 				<!--<th class="table-header">TEXTO BREVE</th>-->				
 				<th  class="table-header">Descripcion</th>				
                                 <th  class="table-header">Plazo</th>					
