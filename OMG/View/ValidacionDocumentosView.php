@@ -478,9 +478,6 @@ require_once 'EncabezadoUsuarioView.php';
     $(function()
     {
       
-      
-    
-    
         $('.checkboxDocumento').on('change', function()
       { 
           
