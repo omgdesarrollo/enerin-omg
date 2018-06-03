@@ -109,30 +109,30 @@ $Usuario=  Session::getSesion("user");
                     }    */
                     
 /*Inicia estilos para mantener fijo el header*/                    
-                    .table-fixed-header {
-    display: table; /* 1 */
+/*                    .table-fixed-header {
+    display: table;  1 
     position: relative;
-    padding-top: calc(~'2.5em + 2px'); /* 2 */
+    padding-top: calc(~'2.5em + 2px');  2 
     
     table {
         margin: 0;
-        margin-top: calc(~"-2.5em - 2px"); /* 2 */
+        margin-top: calc(~"-2.5em - 2px");  2 
     }
     
     thead th {
         white-space: nowrap;
         
-        /* 3 - apply same styling as for thead th */
-        /* 4 - compensation for padding-left */
+         3 - apply same styling as for thead th 
+         4 - compensation for padding-left 
         &:before {
             content: attr(data-header);
             position: absolute;
             top: 0;
-            padding: .5em 1em; /* 3 */
-            margin-left: -1em; /* 4 */
+            padding: .5em 1em;  3 
+            margin-left: -1em;  4 
         }
     }
-}
+}*/
 
  /* 5 - setting height and scrolling */
 .table-container {
@@ -203,7 +203,7 @@ require_once 'EncabezadoUsuarioView.php';
 <div style="height: 40px"></div>
 
 
-<div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> 
+<!--<div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom">--> 
     <div class="table-container">
         
         <table class="tbl-qa" id="idTable">
@@ -371,7 +371,7 @@ require_once 'EncabezadoUsuarioView.php';
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 			</a>-->
     </div>                    	
-</div>
+<!--</div>-->
 
 
                
