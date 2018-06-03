@@ -4,8 +4,6 @@ require_once '../util/Session.php';
 $Usuario=  Session::getSesion("user");
 
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>

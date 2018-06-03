@@ -111,14 +111,14 @@ $Usuario=  Session::getSesion("user");
      {id:'vistas',text:'Vistas',img:'vistas.png',type:'button',isbig:true},
      {id:'cargaprograma',text:'Carga Programa Gantt',img:'663.png',type:'button',isbig:true}
  ];
-  var cambiodeidioma=[
-      {
-          id:'cambioespanol',text:'Cambiar a ESPAÑOL',img:'',type:'button',isbig:true
-      },
-      {
-          id:'cambioingles',text:'Cambiar a INGLES',img:'',type:'button',isbig:true
-      }
-  ];
+//  var cambiodeidioma=[
+//      {
+//          id:'cambioespanol',text:'Cambiar a ESPAÑOL',img:'',type:'button',isbig:true
+//      },
+//      {
+//          id:'cambioingles',text:'Cambiar a INGLES',img:'',type:'button',isbig:true
+//      }
+//  ];
 
 // var cambiodeidioma=[
 //      {
@@ -303,13 +303,13 @@ var gantt=[
                              {id:'0x36',mode:'cols',text:'Usuario',type:'block',
           list:infosesionusuario}
 	] }
-    ,
-    {id:'002',text:'Configuraciones' ,items:[
-        
-        {id:'0x1',mode:'cols',text:'Cambio de idioma',type:'block',
-            list:cambiodeidioma
-        }
-]}
+//    ,
+//    {id:'002',text:'Configuraciones' ,items:[
+//        
+//        {id:'0x1',mode:'cols',text:'Cambio de idioma',type:'block',
+//            list:cambiodeidioma
+//        }
+//]}
         ];
     
     
