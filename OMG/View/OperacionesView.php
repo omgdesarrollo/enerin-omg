@@ -293,6 +293,7 @@
     });
     
     function saveToDatabase(editableObj,column,id) {
+        alert("entro");
                     if(si_hay_cambio==true){
                         
 //                    alert("entraste aqui ");
@@ -548,7 +549,7 @@
                         {
                             tempData += "<td style='background-color: #ccccff'>"+value.clasificacion+"</td>";
                         }
-                        tempData += "<td style='background-color: #ccccff' contenteditable='true' onBlur='saveToDatabase(this,'+value.accion_correctiva','+value.id_evidencias')' onClick='showEdit(this);' onkeyup='detectarsihaycambio(this)'>"+value.accion_correctiva+"</td>";
+                        tempData += "<td style='background-color: #ccccff' contenteditable='true' onBlur=\"saveToDatabase(this,'accion_correctiva',"+value.id_evidencias+")\" onClick='showEdit(this);' onkeyup='detectarsihaycambio(this)'>"+value.accion_correctiva+"</td>";
  //                        tempData += "<td>"+value.plan_accion+"</td>";
                         tempData += "<td  style='background-color: #ccccff'><button class='btn btn-info' onClick='#("+value.id_evidencias+");'>";
                         tempData += "Cargar Programa</button></td>";
