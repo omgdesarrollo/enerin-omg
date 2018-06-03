@@ -285,11 +285,44 @@
 
     var data="";
     var dataTemp="";
-
+    var si_hay_cambio=false;
+    
     $(function()
     {
         listarDatos();
     });
+    
+    function saveToDatabase(editableObj,column,id) {
+                    if(si_hay_cambio==true){
+                        
+//                    alert("entraste aqui ");
+                        $("#btnrefrescar").prop("disabled",true);
+			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
+			$.ajax({
+                                url: "../Controller/OperacionesController.php?Op=ModificarColumna",
+				type: "POST",
+				data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
+				success: function(data){
+					$(editableObj).css("background","#FDFDFD");
+                                        consultarInformacion("../Controller/OperacionesController.php?Op=Listar");
+                                        swal("Actualizacion Exitosa!", "Ok!", "success");
+                                        $("#btnrefrescar").prop("disabled",false);
+                                        si_hay_cambio=false;
+				}   
+		   });
+                   
+                    } else {
+                        
+                    }
+
+		}
+    
+    function detectarsihaycambio() {
+                    
+        si_hay_cambio=true;
+    }
+                
+                
 
     function listarDatos()
     {
@@ -515,7 +548,7 @@
                         {
                             tempData += "<td style='background-color: #ccccff'>"+value.clasificacion+"</td>";
                         }
-                        tempData += "<td style='background-color: #ccccff'>"+value.accion_correctiva+"</td>";
+                        tempData += "<td style='background-color: #ccccff' contenteditable='true' onBlur='saveToDatabase(this,'+value.accion_correctiva','+value.id_evidencias')' onClick='showEdit(this);' onkeyup='detectarsihaycambio(this)'>"+value.accion_correctiva+"</td>";
  //                        tempData += "<td>"+value.plan_accion+"</td>";
                         tempData += "<td style='background-color: #ccccff'><button class='btn btn-info' onClick='#("+value.id_evidencias+");'>";
                         tempData += "Cargar Programa</button></td>";

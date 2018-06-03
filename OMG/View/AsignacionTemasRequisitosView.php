@@ -164,33 +164,49 @@ require_once 'EncabezadoUsuarioView.php';
 
 <div style="height: 5px"></div>
             
-        <div style="position: fixed;">     
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
-                    Asignar Tema-Requisito
-            </button>    
-        
+<div style="position: fixed;">     
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
+        Asignar Tema-Requisito
+</button>    
 
-            <button type="button" id="btn_lista_documentos" class="btn btn-success" data-toggle="modal">
-                Lista de Documentos
-                <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
-            </button>
-        
-        
-            <button type="button" id="btn_lista_temas" class="btn btn-success" data-toggle="modal">
-                Lista de Temas
-                <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
-            </button>
-            
-            <button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
-                <i class="glyphicon glyphicon-repeat"></i> 
-            </button>
-            
-            <input type="text" id="idInputDescripcionTema" onkeyup="filterTableDescripcionTema()" placeholder="Descripcion del Tema" style="width: 220px">
-            <input type="text" id="idInputRequisito" onkeyup="filterTableRequisito()" placeholder="Requisito" style="width: 150px">
-            <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
-        </div>
-            
-<div style="height: 47px"></div>
+<button type="button" id="btn_lista_documentos" class="btn btn-success" data-toggle="modal">
+    Lista de Documentos
+    <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+</button>
+
+<button type="button" id="btn_lista_temas" class="btn btn-success" data-toggle="modal">
+    Lista de Temas
+    <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+</button>
+
+<button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
+    <i class="glyphicon glyphicon-repeat"></i> 
+</button>
+    
+<button type="button" onclick="window.location.href='../ExportarView/exportarAsignacionTemasRequisitosView/exportarAsignacionTemasRequisitoExcel.php'">
+    <img src="../../images/base/_excel.png" width="30px" height="30px">
+</button>     
+<button type="button" onclick="window.location.href='../ExportarView/exportarAsignacionTemasRequisitosView/exportarAsignacionTemasRequisitoWord.php'">
+    <img src="../../images/base/word.png" width="30px" height="30px"> 
+</button>
+<button type="button" onclick="window.location.href='../ExportarView/'">
+    <img src="../../images/base/pdf.png" width="30px" height="30px"> 
+</button>
+    
+<div style="height: 5px"></div> 
+
+
+<input type="text" id="idInputDescripcionTema" onkeyup="filterTableDescripcionTema()" placeholder="Descripcion del Tema" style="width: 220px">
+<input type="text" id="idInputRequisito" onkeyup="filterTableRequisito()" placeholder="Requisito" style="width: 150px">
+<i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>    
+
+</div>
+
+<div style="height: 70px"></div>
+
+
+
+
 
 
 <!--<div class="contenedortable">   
