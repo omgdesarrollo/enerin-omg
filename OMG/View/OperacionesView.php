@@ -515,9 +515,9 @@
                         {
                             tempData += "<td style='background-color: #ccccff'>"+value.clasificacion+"</td>";
                         }
-                        tempData += "<td style='background-color: #ccccff'>"+value.accion_correctiva+"</td>";
+                        tempData += "<td  style='background-color: #ccccff'>"+value.accion_correctiva+"</td>";
  //                        tempData += "<td>"+value.plan_accion+"</td>";
-                        tempData += "<td style='background-color: #ccccff'><button class='btn btn-info' onClick='#("+value.id_evidencias+");'>";
+                        tempData += "<td  style='background-color: #ccccff'><button class='btn btn-info' onClick='#("+value.id_evidencias+");'>";
                         tempData += "Cargar Programa</button></td>";
                         tempData += "<td>"+value.desviacion+"</td>";                        
                         tempData += "<td>"+value.validacion_supervisor+"</td>";
