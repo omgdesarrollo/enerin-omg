@@ -9,7 +9,6 @@ $model=new GeneralModel();
 
 switch ($Op)
 {
-    
     case 'ModificarColumna':
 
     $resultado = $model->actualizarPorColumna($_REQUEST["TABLA"],$_REQUEST["COLUMNA"],$_REQUEST["VALOR"],$_REQUEST["ID"],$_REQUEST["ID_CONTEXTO"]);
@@ -18,7 +17,8 @@ switch ($Op)
 
     
 
-    default: echo false;
+    default: 
+        echo false;
     break;
 }
 ?>

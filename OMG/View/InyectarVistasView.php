@@ -16,7 +16,7 @@
 
 
 <div id="documentos">
-<iframe src="DocumentosView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
+<iframe src="DocumentosView.php" style="width: 100%; height: 445px;margin-top: 20px;margin-left: auto;" name="formularios"></iframe>
 </div>
 
 

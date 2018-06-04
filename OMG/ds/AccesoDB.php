@@ -26,6 +26,7 @@ class AccesoDB {
         if($this->cn == null) {
             try {
                 $this->cn = mysqli_connect($server,$user,$pass,$db);
+                
                 if($this->cn) {
 //                    echo 'ok';
                 }
@@ -43,8 +44,10 @@ class AccesoDB {
     public function executeQuery($query ) {
         try {
             $cn = $this->getConnection();
-           
+            
             $rs = mysqli_query($cn,$query);
+           
+            
             if(mysqli_errno($cn)) {
                 throw new Exception(mysqli_error($cn));
             }
@@ -52,12 +55,14 @@ class AccesoDB {
             while ($row = mysqli_fetch_assoc($rs)) {
                     $lista[] = $row;
             }
+           
             mysqli_free_result($rs); 
             //agrego esta linea para que pueda realizar 
             //dos consultas a la vez en la BD
             mysqli_next_result($this->cn);
              
 //            mysqli_close();
+             
             return $lista;
         } catch( Exception $e ) {
             Util::save_log( $e, $query );

@@ -36,7 +36,7 @@ switch ($Op) {
             echo "res:  ".$resultadoInserccion;
 //            echo "trajo de usuario : ".$dataUsuarioEmpleado;
             echo "mi usuario es :".json_encode($lista); 
-            
+       
 //              $cadenaclausula=$_REQUEST["check"];  
 //               	header('Content-type: application/json; charset=utf-8');
 //                echo json_encode($data);
@@ -54,11 +54,8 @@ switch ($Op) {
             
 	default:
 		# code...
-		break;
+	break;
 }
-
-
-
 
 ?>
 

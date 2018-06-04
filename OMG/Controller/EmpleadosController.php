@@ -16,7 +16,8 @@ switch ($Op) {
 	case 'Listar':
 
 		$Lista=$model->listarEmpleados();
-    	Session::setSesion("listarEmpleados",$Lista);
+              
+    	Session::setSesion("listarEmpleados",  $Lista);
 //    	$tarjet="../view/principalmodulos.php";
     	header('Content-type: application/json; charset=utf-8');
 //		echo json_encode($Lista);
