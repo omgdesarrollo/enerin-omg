@@ -313,36 +313,59 @@
     }); 
     
     
-    function showEdit(editableObj) {
-            $(editableObj).css("background","#FFF");
-    }
+//    function showEdit(editableObj) {
+//            $(editableObj).css("background","#FFF");
+//    }
     
-    function saveToDatabase(editableObj,column,id) {
+    function saveSingleToDatabase(Obj,tabla,columna,id,contexto) {
 //        alert("entro");
-                    if(si_hay_cambio==true){
-                        
-//                    alert("entraste aqui ");
-                        $("#btnrefrescar").prop("disabled",true);
-			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
-			$.ajax({
-                                url: "../Controller/OperacionesController.php?Op=ModificarColumna",
-				type: "POST",
-				data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
-				success: function(data){
-					$(editableObj).css("background","#FDFDFD");
-//                                        consultarInformacion("../Controller/OperacionesController.php?Op=Listar");
-                                          listarDatos();
-                                        swal("Actualizacion Exitosa!", "Ok!", "success");
-                                        $("#btnrefrescar").prop("disabled",false);
-                                        si_hay_cambio=false;
-				}   
-		   });
-                   
-                    } else {
-                        
-                    }
+//        console.log(Obj);        
+            if(si_hay_cambio==true){
 
-		}
+//            alert("entraste aqui ");
+            $("#btnAgregarOperacionesRefrescar").prop("disabled",true);
+            
+            $(Obj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
+            
+            saveOneToDatabase(Obj.innerHTML,columna,tabla,id,contexto);
+            
+            si_hay_cambio=false;
+
+        } 
+
+    }
+                
+                
+    function saveComboToDatabase(Obj,tabla,columna,id,contexto)
+    {
+        valortmp = $(Obj)[0];
+        Objtmp=valortmp[valortmp.selectedIndex].innerHTML;
+        //poner alerta para valores
+        // alert(Objtmp);
+        if(Objtmp!=" ")
+        {
+            swal({
+                    title:"SELECCIONAR",
+                    text: "Una vez seleccionado no se puede cambiar",
+                    type: "info",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true
+                    }, function(isConfirm)
+                    {
+                        if(isConfirm)
+                        {
+                            $('#loader').show();
+                            saveOneToDatabase(Objtmp,columna,tabla,id,contexto);
+                        }
+                        else
+                            $(Obj)[0].selectedIndex=0;
+                    }
+                );
+        }
+    }            
+                
+                
     
     function detectarsihaycambio() {
                     
@@ -551,14 +574,14 @@
                     tempData += "data-toggle='modal' data-target='#mostrarRegistrosModal'>Ver";
                     tempData += "<i class='ace-icon fa fa-book' style='color: #0099ff;font-size: 20px;'></i></button></td>";
                     
-                    tempData += "<td style='background-color: #ccccff; font-size: -webkit-xxx-large'><button onClick='mostrar_urls("+value.id_evidencias+");'";
+                    tempData += "<td style='font-size: -webkit-xxx-large'><button onClick='mostrar_urls("+value.id_evidencias+");'";
                     tempData += "type='button' class='btn btn-success' data-toggle='modal' data-target='#create-itemUrls'>";
                     tempData += "Adjuntar Documento</button></td>";
                     $.each(todo[0],function(index2,value2)
                     {
                         nametmp = value2.split("^");
                         // fechaAdjunto=nametmp[0];
-                        tempData += "<td style='background-color: #ccccff'>"+nametmp[0]+"</td>";
+                        tempData += "<td>"+nametmp[0]+"</td>";
                         if(value.clasificacion=="")
                         {
                             tempData += "<td><select class='select'";
@@ -573,11 +596,11 @@
                         }
                         else
                         {
-                            tempData += "<td style='background-color: #ccccff'>"+value.clasificacion+"</td>";
+                            tempData += "<td>"+value.clasificacion+"</td>";
                         }
-                        tempData += "<td style='background-color: #ccccff' contenteditable='true' onBlur=\"saveToDatabase(this,'accion_correctiva',"+value.id_evidencias+")\" onClick='showEdit(this);' onkeyup='detectarsihaycambio(this)'>"+value.accion_correctiva+"</td>";
+                        tempData += "<td contenteditable='true' onBlur=\"saveSingleToDatabase(this,'evidencias','accion_correctiva',"+value.id_evidencias+",'id_evidencias')\" onkeyup=\"detectarsihaycambio(this)\">"+value.accion_correctiva+"</td>";
  //                        tempData += "<td>"+value.plan_accion+"</td>";
-                        tempData += "<td  style='background-color: #ccccff;font-size: -webkit-xxx-large'><button class='btn btn-info' onClick='#("+value.id_evidencias+");'>";
+                        tempData += "<td  style='font-size: -webkit-xxx-large'><button class='btn btn-info' onClick='#("+value.id_evidencias+");'>";
                         tempData += "Cargar Programa</button></td>";
                         tempData += "<td contenteditable='true' onBlur=\"saveToDatabase(this,'desviacion',"+value.id_evidencias+")\" onClick='showEdit(this);' onkeyup='detectarsihaycambio(this)'>"+value.desviacion+"</td>";                        
                         tempData += "<td>"+value.validacion_supervisor+"</td>";
@@ -630,7 +653,7 @@
                             tempData += "Adjuntar Documento</button></td>";
                             $.each(todo[0],function(index2,value2)
                             {
-                                alert("hola");
+//                                alert("hola");
                                 nametmp = value2.split("^");
                                 // fechaAdjunto=nametmp[0];
                                 tempData += "<td>"+nametmp[0]+"</td>";
@@ -695,49 +718,24 @@
                         reconstruirRow(id);
                         // $('#loader').hide();
                         // swal("","Modificado","success");
-                        // setTimeout(function(){swal.close();},1000);
+                        // setTimeout(function(){swal.close();},1000);                       
                     }
                     else
                     {
                         $('#loader').hide();
                         swal("","Ocurrio un error al modificar", "error");
                     }
+                  $("#btnAgregarOperacionesRefrescar").prop("disabled",false);  
                 },
                 error:function()
                 {
                     $('#loader').hide();
                     swal("","Ocurrio un error al modificar", "error");
+                    $("#btnAgregarOperacionesRefrescar").prop("disabled",false);
                 }
             });
     }
-    function saveComboToDatabase(Obj,tabla,columna,id,contexto)
-    {
-        valortmp = $(Obj)[0];
-        Objtmp=valortmp[valortmp.selectedIndex].innerHTML;
-        //poner alerta para valores
-        // alert(Objtmp);
-        if(Objtmp!=" ")
-        {
-            swal({
-                    title:"SELECCIONAR",
-                    text: "Una vez seleccionado no se puede cambiar",
-                    type: "info",
-                    showCancelButton: true,
-                    closeOnConfirm: false,
-                    showLoaderOnConfirm: true
-                    }, function(isConfirm)
-                    {
-                        if(isConfirm)
-                        {
-                            $('#loader').show();
-                            saveOneToDatabase(Objtmp,columna,tabla,id,contexto);
-                        }
-                        else
-                            $(Obj)[0].selectedIndex=0;
-                    }
-                );
-        }
-    }
+    
     function saveCheckToDatabase(Obj,columna,tabla,id)
     {
 

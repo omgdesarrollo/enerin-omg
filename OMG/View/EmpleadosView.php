@@ -506,6 +506,7 @@ require_once 'EncabezadoUsuarioView.php';
 					$(editableObj).css("background","#FDFDFD");
                                         consultarInformacion("../Controller/EmpleadosController.php?Op=Listar");
                                         swal("Actualizacion Exitosa!", "Ok!", "success");
+                                        setTimeout(function(){swal.close();},1000);
                                         $("#btnrefrescar").prop("disabled",false);
                                         si_hay_cambio=false;
 				}   
