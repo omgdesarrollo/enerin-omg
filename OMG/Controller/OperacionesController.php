@@ -49,7 +49,7 @@ switch ($Op)
     
     case 'ModificarColumna':
 
-		$data = $model->actualizarPorColumna($_REQUEST["COLUMNA"],$_REQUEST["VALOR"],$_REQUEST["ID_EVIDENCIA"] );
+		$data = $model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );
 		// header('Content-type: application/json; charset=utf-8');
 		echo $data;
 	break;

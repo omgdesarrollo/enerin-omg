@@ -148,36 +148,46 @@ $Usuario=  Session::getSesion("user");
                 
                 
 
-	</head>
+</head>
 
-        <body class="no-skin" onload="loadSpinner()">
-            <!--<div>Cargando...</div>-->
-            <div id="loader"></div>
+<body class="no-skin" onload="loadSpinner()">
+    <!--<div>Cargando...</div>-->
+    <div id="loader"></div>
            
 	
-            <?php		
-		require_once 'EncabezadoUsuarioView.php';
-            ?>
+<?php		
+    require_once 'EncabezadoUsuarioView.php';
+?>
 
             
-             <div style="height: 5px"></div>
+<div style="height: 5px"></div>
              
              
-             <div style="position: fixed;">        
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
-                    Agregar-Documento
-                </button>
-                 
-                <button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
-                    <i class="glyphicon glyphicon-repeat"></i> 
-                </button>
-                 
-                <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave del Documento" style="width: 200px">
-                <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre del Documento" style="width: 200px">
-                <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 200px">
-                <input type="text" id="idInputRegistros" onkeyup="filterTableRegistros()" placeholder="Registros" style="width: 150px">
-                <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
-            </div>
+<div style="position: fixed;">        
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
+    Agregar-Documento
+</button>
+
+<button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
+    <i class="glyphicon glyphicon-repeat"></i> 
+</button>
+    
+<button type="button" onclick="window.location.href='../ExportarView/exportarDocumentosView/exportarDocumentosViewExcel.php'">
+    <img src="../../images/base/_excel.png" width="30px" height="30px">
+</button>     
+<button type="button" onclick="window.location.href='../ExportarView/exportarDocumentosView/exportarDocumentosViewWord.php'">
+    <img src="../../images/base/word.png" width="30px" height="30px"> 
+</button>
+<button type="button" onclick="window.location.href='../ExportarView/'">
+    <img src="../../images/base/pdf.png" width="30px" height="30px"> 
+</button>
+
+   <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave del Documento" style="width: 150px">
+   <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre del Documento" style="width: 160px">
+   <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 190px">
+   <input type="text" id="idInputRegistros" onkeyup="filterTableRegistros()" placeholder="Registros" style="width: 120px">
+   <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+</div>
 	     
              
           <div style="height: 47px"></div>
