@@ -124,7 +124,27 @@
             border-bottom: 1px solid gold;
             background: lightgoldenrodyellow;
         }
-        </style>        
+        /* .header_fijo
+        {
+            width: 750px;
+            table-layout: fixed;
+            border-collapse: collapse;
+        } */
+        /* .header_fijo thead {
+            background-color: #333;
+            color: #FDFDFD;
+        }
+        .header_fijo thead tr {
+            display: block;
+            position: relative;
+        } */
+        /* .header_fijo tbody {
+            display: block;
+            overflow: auto;
+            width: 100%;
+            height: 1px;
+        } */
+        </style>
 </head>
 <!-- <body> -->
 <body class="no-skin" onload="loadSpinner()">
@@ -165,9 +185,9 @@
     </div>
     <div style="height: 50px"></div>
 
-    <div class="table-fixed-header" style="display:block;" id="myDiv" class="animate-bottom">
+    <!-- <div class="table-fixed-header" style="display:block;" id="myDiv" class="animate-bottom"> -->
         <div class="table-container">
-            <table id="idTable" class="tbl-qa">
+            <table id="idTable" class="tbl-qa ListaTabla header_fijo">
                 <tr>
                 <?php foreach($titulosTable as $index=>$value)
                 { if($index<4){ ?>
@@ -183,7 +203,7 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    <!-- </div> -->
 </body>
 
 
@@ -290,7 +310,12 @@
     $(function()
     {
         listarDatos();
-    });
+    }); 
+    
+    
+    function showEdit(editableObj) {
+            $(editableObj).css("background","#FFF");
+    }
     
     function saveToDatabase(editableObj,column,id) {
 //        alert("entro");
@@ -305,7 +330,8 @@
 				data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
 				success: function(data){
 					$(editableObj).css("background","#FDFDFD");
-                                        consultarInformacion("../Controller/OperacionesController.php?Op=Listar");
+//                                        consultarInformacion("../Controller/OperacionesController.php?Op=Listar");
+                                          listarDatos();
                                         swal("Actualizacion Exitosa!", "Ok!", "success");
                                         $("#btnrefrescar").prop("disabled",false);
                                         si_hay_cambio=false;
@@ -525,7 +551,7 @@
                     tempData += "data-toggle='modal' data-target='#mostrarRegistrosModal'>Ver";
                     tempData += "<i class='ace-icon fa fa-book' style='color: #0099ff;font-size: 20px;'></i></button></td>";
                     
-                    tempData += "<td style='background-color: #ccccff'><button onClick='mostrar_urls("+value.id_evidencias+");'";
+                    tempData += "<td style='background-color: #ccccff; font-size: -webkit-xxx-large'><button onClick='mostrar_urls("+value.id_evidencias+");'";
                     tempData += "type='button' class='btn btn-success' data-toggle='modal' data-target='#create-itemUrls'>";
                     tempData += "Adjuntar Documento</button></td>";
                     $.each(todo[0],function(index2,value2)
@@ -551,9 +577,9 @@
                         }
                         tempData += "<td style='background-color: #ccccff' contenteditable='true' onBlur=\"saveToDatabase(this,'accion_correctiva',"+value.id_evidencias+")\" onClick='showEdit(this);' onkeyup='detectarsihaycambio(this)'>"+value.accion_correctiva+"</td>";
  //                        tempData += "<td>"+value.plan_accion+"</td>";
-                        tempData += "<td  style='background-color: #ccccff'><button class='btn btn-info' onClick='#("+value.id_evidencias+");'>";
+                        tempData += "<td  style='background-color: #ccccff;font-size: -webkit-xxx-large'><button class='btn btn-info' onClick='#("+value.id_evidencias+");'>";
                         tempData += "Cargar Programa</button></td>";
-                        tempData += "<td>"+value.desviacion+"</td>";                        
+                        tempData += "<td contenteditable='true' onBlur=\"saveToDatabase(this,'desviacion',"+value.id_evidencias+")\" onClick='showEdit(this);' onkeyup='detectarsihaycambio(this)'>"+value.desviacion+"</td>";                        
                         tempData += "<td>"+value.validacion_supervisor+"</td>";
                         
                         // tempData += "<td><input type='checkbox' style='width: 40px; height: 40px'";
@@ -800,21 +826,21 @@
           }
         });
     }
-    function aumentador()
-    {
-        alert();
-        $.ajax({
-            // url:"../Controller/GeneralController.php?a",
-            success:function()
-            {
-                valor--;
-            }
-        });
-    }
-    valor = 8;
+    // function aumentador()
+    // {
+    //     alert();
+    //     $.ajax({
+    //         // url:"../Controller/GeneralController.php?a",
+    //         success:function()
+    //         {
+    //             valor--;
+    //         }
+    //     });
+    // }
+    // valor = 8;
     function borrarArchivo(url)
     {
-        setInterval(aumentador(), 3000);
+        // setInterval(aumentador(), 3000);
         swal({
           title: "ELIMINAR",
           text: "Al eliminar este documento se eliminara toda la evidencia registrada. ¿Desea continuar?",
@@ -822,33 +848,33 @@
           showCancelButton: true,
           closeOnConfirm: false,
           showLoaderOnConfirm: true,
-          confirmButtonText: ""+valor,
+          confirmButtonText: "Eliminar",
+          cancelButtonText: "Cancelar",
         },function()
         {
-
-        //   var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();
-        //   $.ajax({
-        //     url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
-        //     type: 'POST',
-        //     data: 'URL='+url,
-        //     success: function(eliminado)
-        //     {
-        //       if(eliminado)
-        //       {
-        //         mostrar_urls(ID_EVIDENCIA_DOCUMENTO);
-        //         refresh();
-        //         //eliminar parte del registro en la base de datos
-        //         swal("","Archivo eliminado");
-        //         setTimeout(function(){swal.close();},1000);
-        //       }
-        //       else
-        //         swal("","Ocurrio un error al elimiar el documento", "error");
-        //     },
-        //     error:function()
-        //     {
-        //       swal("","Ocurrio un error al elimiar el documento", "error");
-        //     }
-        //   });
+          var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();
+          $.ajax({
+            url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
+            type: 'POST',
+            data: 'URL='+url,
+            success: function(eliminado)
+            {
+              if(eliminado)
+              {
+                mostrar_urls(ID_EVIDENCIA_DOCUMENTO);
+                refresh();
+                //eliminar parte del registro en la base de datos
+                swal("","Archivo eliminado");
+                setTimeout(function(){swal.close();},1000);
+              }
+              else
+                swal("","Ocurrio un error al elimiar el documento", "error");
+            },
+            error:function()
+            {
+              swal("","Ocurrio un error al elimiar el documento", "error");
+            }
+          });
         });
     }
 
@@ -950,7 +976,7 @@
             <!-- </td> -->
         </tr>
     {% } %}
-    {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO); refresh(); noArchivo=0; } } %}
+    {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO); reconstruirRow(ID_EVIDENCIA_DOCUMENTO); noArchivo=0; } } %}
 </script>
 
         <!--Inicia para el spiner cargando-->
