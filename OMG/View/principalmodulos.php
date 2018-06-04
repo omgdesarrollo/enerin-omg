@@ -323,6 +323,7 @@ ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: 
     function consultarInformacion(url){
                $.ajax({  
                      url: ""+url,  
+                     
                     success: function(r) {    
                      $("#procesando").empty();
                      },
@@ -445,7 +446,7 @@ function loadDataNotificaciones(){
     
     
     function loadDataCargaProgramaGantt(){
-        
+          consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
         
     var dhxWins = new dhtmlXWindows();
 //var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
