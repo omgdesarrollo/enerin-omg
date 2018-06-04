@@ -310,10 +310,15 @@
     $(function()
     {
         listarDatos();
-    });
+    }); 
+    
+    
+    function showEdit(editableObj) {
+            $(editableObj).css("background","#FFF");
+    }
     
     function saveToDatabase(editableObj,column,id) {
-        alert("entro");
+//        alert("entro");
                     if(si_hay_cambio==true){
                         
 //                    alert("entraste aqui ");
@@ -325,7 +330,8 @@
 				data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
 				success: function(data){
 					$(editableObj).css("background","#FDFDFD");
-                                        consultarInformacion("../Controller/OperacionesController.php?Op=Listar");
+//                                        consultarInformacion("../Controller/OperacionesController.php?Op=Listar");
+                                          listarDatos();
                                         swal("Actualizacion Exitosa!", "Ok!", "success");
                                         $("#btnrefrescar").prop("disabled",false);
                                         si_hay_cambio=false;
@@ -544,12 +550,8 @@
                     tempData += "<td class='nuevoTdTable' style='font-size: -webkit-xxx-large;'><button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success'";
                     tempData += "data-toggle='modal' data-target='#mostrarRegistrosModal'>Ver";
                     tempData += "<i class='ace-icon fa fa-book' style='color: #0099ff;font-size: 20px;'></i></button></td>";
-<<<<<<< HEAD
-                    tempData += "<td style='font-size: -webkit-xxx-large;'><button onClick='mostrar_urls("+value.id_evidencias+");'";
-=======
                     
-                    tempData += "<td style='background-color: #ccccff'><button onClick='mostrar_urls("+value.id_evidencias+");'";
->>>>>>> 7f604d9fe1b3dbfd4b2757e3391f75c53085f81b
+                    tempData += "<td style='background-color: #ccccff; font-size: -webkit-xxx-large'><button onClick='mostrar_urls("+value.id_evidencias+");'";
                     tempData += "type='button' class='btn btn-success' data-toggle='modal' data-target='#create-itemUrls'>";
                     tempData += "Adjuntar Documento</button></td>";
                     $.each(todo[0],function(index2,value2)
@@ -575,9 +577,9 @@
                         }
                         tempData += "<td style='background-color: #ccccff' contenteditable='true' onBlur=\"saveToDatabase(this,'accion_correctiva',"+value.id_evidencias+")\" onClick='showEdit(this);' onkeyup='detectarsihaycambio(this)'>"+value.accion_correctiva+"</td>";
  //                        tempData += "<td>"+value.plan_accion+"</td>";
-                        tempData += "<td  style='background-color: #ccccff'><button class='btn btn-info' onClick='#("+value.id_evidencias+");'>";
+                        tempData += "<td  style='background-color: #ccccff;font-size: -webkit-xxx-large'><button class='btn btn-info' onClick='#("+value.id_evidencias+");'>";
                         tempData += "Cargar Programa</button></td>";
-                        tempData += "<td>"+value.desviacion+"</td>";                        
+                        tempData += "<td contenteditable='true' onBlur=\"saveToDatabase(this,'desviacion',"+value.id_evidencias+")\" onClick='showEdit(this);' onkeyup='detectarsihaycambio(this)'>"+value.desviacion+"</td>";                        
                         tempData += "<td>"+value.validacion_supervisor+"</td>";
                         
                         // tempData += "<td><input type='checkbox' style='width: 40px; height: 40px'";
