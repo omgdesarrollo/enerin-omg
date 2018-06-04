@@ -523,6 +523,7 @@ require_once 'EncabezadoUsuarioView.php';
                         if(columna=="desviacion_mayor")
                         {
                           enviar_notificacion(columna,chekeado,id_validacion_documento);
+                          
                         }
                     }
                 }                
@@ -555,13 +556,32 @@ require_once 'EncabezadoUsuarioView.php';
              data:"columna="+columna+"&checkeado="+chekeado+"&id_validacion_documento="+id_validacion_documento,
              success:function(response){
                  
+                 
+                 envioCorreo("desarrollador.frv@gmail.com","el asunto ","el mensaje");
+                 
              }
               
           });
           
       }
       
-      
+      function envioCorreo (para,asunto,mensaje){
+          alert("");
+          $.ajax({
+                    url:"../Controller/EmailController.php?Op=envioCorreo",
+                    data:"para="+para+"&asunto="+asunto+"&mensaje="+mensaje,
+                    success:function(response){
+                         $("#loader").hide();
+                    },
+                    beforesend:function(){
+                        $("#loader").show();
+                    },
+                    error:function (){
+                        
+                    }
+                    
+                 });
+      }
       
     function saveCheckBoxToDataBase(checkbox,column,id){
                      id_validacion_documento=id;
