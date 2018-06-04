@@ -16,24 +16,25 @@ $modelValidacionDocumentos= new ValidacionDocumentoModel();
 switch ($Op) {
 	
             
-        case 'enviarNotificacionDesviacionAResponsableContrato':
+        case 'EnviarNotificacionHibry':
 //            echo 'entraste aqui ';
-            
             $lista=Session::getSesion("user");
+            $para = $_REQUEST["PARA"];
+            $mensaje = $_REQUEST["MENSAJE"];
+            $atendido = $_REQUEST["ATENDIDO"];
+            $tipoM = $_REQUEST["TIPO_MENSAJE"];
+            $estado = $_REQUEST["ESTADO"];
+        //     $columna=$_REQUEST["columna"];
             
-            $columna=$_REQUEST["columna"];
-            $chekeado=$_REQUEST["checkeado"];
-            
-            $id_validacion_documento=$_REQUEST["id_validacion_documento"];
-            
+        //     $id_validacion_documento=$_REQUEST["id_validacion_documento"];
             // datos de la sesion 
-            $dataUsuarioEmpleado=$lista["usuariosyempleados_id_usuario_empleados"];
+        //     echo $lista;
+            $de=$lista["usuariosyempleados_id_usuario_empleados"];
             //termina datos de la session 
-            
             $listaInfValidacionDocumento=$modelValidacionDocumentos->obtenerInfoPorIdValidacionDocumento($id_validacion_documento);
- 
-          $resultadoInserccion= $model->enviaraResponsableCumplimiento_sobre_desviacion_mayor($dataUsuarioEmpleado,"Atender Desviacion Mayor de una validacion documento",0,'false','admin');
-            echo "res:  ".$resultadoInserccion;
+            $resultado=$model->enviaraResponsableCumplimiento_sobre_desviacion_mayor($de,$mensaje,$estado,$atendido,$para);
+
+            echo "res:  ".$resultado;
 //            echo "trajo de usuario : ".$dataUsuarioEmpleado;
             echo "mi usuario es :".json_encode($lista); 
             

@@ -255,7 +255,7 @@
 <!-- Inicio modal Registros -->
 <div class="modal draggable fade" id="mostrarRegistrosModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
-        <div id="loaderModalMostrar"></div>
+        <!-- <div id="loaderModalMostrar"></div> -->
 		<div class="modal-content">                
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -263,9 +263,7 @@
         </div>
 
         <div class="modal-body">
-          
             <div id="RegistrosListado"></div>
-  
         </div> 
       </div> 
     </div> 
@@ -277,7 +275,7 @@
 <!-- Inicio de Seccion Modal Archivos-->
 <div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
-        <div id="loaderModalMostrar"></div>
+        <!-- <div id="loaderModalMostrar"></div> -->
 		<div class="modal-content">
                         
 		      <div class="modal-header">
@@ -300,6 +298,24 @@
                 </div><!-- cierre div class modal-content -->
         </div><!-- cierre div class="modal-dialog" -->
 </div><!-- cierre del modal -->
+
+<!-- Inicio modal Mensaje -->
+<div class="modal draggable fade" id="MandarNotificacionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+        <!-- <div id="loaderModalMostrar"></div> -->
+		<div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title" id="myModalLabel">Lista Registros</h4>
+        </div>
+
+        <div class="modal-body">
+            <input type="textArea">
+        </div>
+      </div>
+    </div>
+</div>
+<!--cierre del modal Mensaje-->
 
 <script>
 
@@ -544,12 +560,8 @@
                     tempData += "<td class='nuevoTdTable' style='font-size: -webkit-xxx-large;'><button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success'";
                     tempData += "data-toggle='modal' data-target='#mostrarRegistrosModal'>Ver";
                     tempData += "<i class='ace-icon fa fa-book' style='color: #0099ff;font-size: 20px;'></i></button></td>";
-<<<<<<< HEAD
-                    tempData += "<td style='font-size: -webkit-xxx-large;'><button onClick='mostrar_urls("+value.id_evidencias+");'";
-=======
                     
                     tempData += "<td style='background-color: #ccccff'><button onClick='mostrar_urls("+value.id_evidencias+");'";
->>>>>>> 7f604d9fe1b3dbfd4b2757e3391f75c53085f81b
                     tempData += "type='button' class='btn btn-success' data-toggle='modal' data-target='#create-itemUrls'>";
                     tempData += "Adjuntar Documento</button></td>";
                     $.each(todo[0],function(index2,value2)
@@ -577,9 +589,13 @@
  //                        tempData += "<td>"+value.plan_accion+"</td>";
                         tempData += "<td  style='background-color: #ccccff'><button class='btn btn-info' onClick='#("+value.id_evidencias+");'>";
                         tempData += "Cargar Programa</button></td>";
-                        tempData += "<td>"+value.desviacion+"</td>";                        
-                        tempData += "<td>"+value.validacion_supervisor+"</td>";
-                        
+                        tempData += "<td>"+value.desviacion+"</td>";
+                        tempData += "<td><input type='checkbox' style='width: 40px; height: 40px' name='checkbox'";
+                        if(value.validacion_supervisor=='true')
+                            tempData += " checked disabled";
+                        else
+                            tempData += " onchange=\"saveCheckBoxToDataBase(this,'evidencias','validacion_supervisor','id_evidencias',"+value.id_evidencias+")\"";
+                        tempData += "></td>"
                         // tempData += "<td><input type='checkbox' style='width: 40px; height: 40px'";
                         // tempData += "name='checkbox' class='checkboxDocumento' onchange='saveCheckBoxToDataBase";
                         // tempData += "(this,'validacion_documento_responsable',"+value.id_evidencias+")></td>";
@@ -680,6 +696,67 @@
             }
         });
     }
+
+    function saveCheckBoxToDataBase(checkbox,tabla,column,context,id)
+    {
+        id_validacion_documento=id;
+        columna=column;
+        objetocheckbox=checkbox;
+        var chekeado=$('.checkboxDocumento').is(':checked');
+        if(checked==false)
+        {
+            swal({
+                title: "VALIDAR",
+                text: "Una vez validada la evidencia no podra desvalidarla, confirme",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true,
+                },function(isConfirm)
+                {
+                    if(isConfirm)
+                    {
+                        $.ajax({
+                            url: "../Controller/GeneralController.php?Op=ModificarColumna",
+                            type: "POST",
+                            data: "TABLA="+tabla+"&COLUMNA="+column+"&ID_CONTEXTO="+context+"&ID="+id+"&VALOR="+true,
+                            success: function(data)
+                            {
+                                if(data)
+                                {
+                                    $(objetocheckbox).attr('disabled','true');
+                                    swal("","Evidencia validada");
+                                    setTimeout(function(){swal.close();},1000);
+                                    if(columna=="desviacion_mayor")
+                                    {
+                                        enviar_notificacion();
+                                    }
+                                }
+                            }
+                            });
+                    }
+                    else
+                    {
+                        inputs = $(objetocheckbox).filter('[type=checkbox]');
+                        inputs[0]['checked']=false;
+                    }
+            });
+        }
+    }
+
+    function enviar_notificacion(para,mensaje,tipoMensaje,atendido,estado)
+    {
+          var u=$("#user").val();
+          $.ajax({
+             url:"../Controller/NotificacionesController.php?Op=enviarNotificacionDesviacionAResponsableContrato",
+             data: "PARA="+para+"&MENSAJE="+mensaje+"&ATENDIDO="+atendido+"&TIPO_MENSAJE="+tipoMensaje+"&ESTADO="+estado,
+             success:function(response)
+             {
+
+             } 
+          });
+    }
+
     function saveOneToDatabase(valor,columna,tabla,id,contexto)
     {
         $.ajax({

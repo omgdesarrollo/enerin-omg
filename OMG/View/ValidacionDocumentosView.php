@@ -546,19 +546,15 @@ require_once 'EncabezadoUsuarioView.php';
     });// Cierra el $function 
  
       function enviar_notificacion(columna,chekeado,id_validacion_documento){
-        
           var u=$("#user").val();
 //            alert("enviado correccto "+u);
-          
           $.ajax({
              url:"../Controller/NotificacionesController.php?Op=enviarNotificacionDesviacionAResponsableContrato",
              data:"columna="+columna+"&checkeado="+chekeado+"&id_validacion_documento="+id_validacion_documento,
-             success:function(response){
-                 
-             }
-              
+             success:function(response)
+             {
+             } 
           });
-          
       }
       
       
@@ -567,7 +563,7 @@ require_once 'EncabezadoUsuarioView.php';
                      id_validacion_documento=id;
                      columna=column;
                      objetocheckbox=checkbox;
-               }            
+               }
             
                 
                 

@@ -19,12 +19,14 @@ switch ($Op)
     case 'Listar':
     
 		$Lista=$model->listarOperaciones();
-    	// Session::setSesion("listarOperaciones",$Lista);
+        // Session::setSesion("listarOperaciones",$Lista);
+        
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
 		break;
     
     case 'getClavesDocumentos':
+        $lista=Session::getSesion("user");
         $Lista=$model->getClavesDocumentos($_REQUEST["CADENA"]);
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
