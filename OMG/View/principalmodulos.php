@@ -57,7 +57,7 @@ $Usuario=  Session::getSesion("user");
 			/*margin-left: 10px;*/
                         /*margin-top: 50px;*/
 			/*width: 900px    ;*/
-                        overflow: auto;
+                        /*overflow: auto;*/
                         height: 450px;
 /*			box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
                         box-shadow: 0 1px 3px rgba(0,0,0,90.05), 0 1px 3px rgba(0,0,0,0.09);*/
