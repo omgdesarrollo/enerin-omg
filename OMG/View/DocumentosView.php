@@ -84,7 +84,7 @@ $Usuario=  Session::getSesion("user");
                        text-align:center; 
                        padding-top:10px; 
                     } 
-             
+                  
 /*                .main-encabezado {
                         background: #333;
                         color: white;
@@ -212,7 +212,8 @@ $Usuario=  Session::getSesion("user");
                                 <th class="table-header">Clave del Documento</th>
 				<th class="table-header">Nombre del Documento</th>				
                                 <th class="table-header">Responsable del Documento</th>					                                
-                                <th class="table-header">Registros</th>					                                
+                                <th class="table-header">Registros</th>	
+                                <th class="table-header">Opcion</th>
 			  </tr>
 		  </thead>
                   
@@ -263,7 +264,8 @@ $Usuario=  Session::getSesion("user");
                                 </td>
                                 
                                 <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'registros','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"  onkeyup="detectarsihaycambio(this)"><?php echo $filas["registros"]; ?></td>
-                                <!--<td><textarea cols="50"  wrap="soft"> <?php echo $filas["registros"]; ?> </textarea>  </td>-->
+                                <!--<td><textarea cols="50"  wrap="soft"> <?php // echo $filas["registros"]; ?> </textarea>  </td>-->
+                                <td><button  ><i class="fa fa-trash"></i></button> </td>
 			  </tr>
 		<?php
                       }

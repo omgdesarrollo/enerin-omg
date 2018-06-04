@@ -293,7 +293,7 @@
     });
     
     function saveToDatabase(editableObj,column,id) {
-        alert("entro");
+//        alert("entro");
                     if(si_hay_cambio==true){
                         
 //                    alert("entraste aqui ");
