@@ -61,7 +61,7 @@ class AccesoDB {
             //dos consultas a la vez en la BD
             mysqli_next_result($this->cn);
              //viendo si debo comentarla
-            mysqli_close();
+//            mysqli_close();
              //termina el de viendo si debo comentarla
             return $lista;
         } catch( Exception $e ) {

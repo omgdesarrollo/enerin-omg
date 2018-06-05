@@ -108,7 +108,7 @@ $Usuario=  Session::getSesion("user");
   var seccionOficios=[
      {id:'catalogooficios',text:'Catalogos',img:'catalogos.png',type:'button',isbig:true},  
      {id:'documentacion',text:'Documentacion',img:'oficios.png',type:'button',isbig:true},  
-     {id:'vistas',text:'Vistas',img:'vistas.png',type:'button',isbig:true},
+     {id:'informegerencial',text:'Informe Gerencial',img:'seguimiento.png',type:'button',isbig:true},
      {id:'cargaprograma',text:'Carga Programa Gantt',img:'663.png',type:'button',isbig:true}
  ];
 //  var cambiodeidioma=[
@@ -252,8 +252,8 @@ var gantt=[
                         if(itemIdSeleccion=="documentacion")
                            loadDataSideBarOficiosDocumentacion();
                        
-                        if(itemIdSeleccion=="vistas")
-                           loadDataSideBarOficiosVistas();
+                        if(itemIdSeleccion=="informegerencial")
+                       loadDataInformeGerencial();
                        if(itemIdSeleccion=="cargaprograma")
                            loadDataCargaProgramaGantt();
                        
