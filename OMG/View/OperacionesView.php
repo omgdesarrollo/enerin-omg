@@ -160,7 +160,7 @@
         );
         $titulosTable = 
             array("Clave","Nombre Documento","Responsable Documento","Registros","Documento Adjunto",
-                "Fecha Registro","Clasificación","Acción Correctiva Inmediata","Plan de Acción","Desviación","Validación"
+                "Fecha Registro","Clasificación","Acción Correctiva Inmediata","Plan de Acción","Desviación","Validación","Opcion"
                 /*,"Ingresar Oficio Atención","Oficio de Atención"*/);
     ?>
     <div style="position: fixed;">
@@ -278,25 +278,25 @@
         <!-- <div id="loaderModalMostrar"></div> -->
 		<div class="modal-content">
                         
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Documento Adjuntado</h4>
-		      </div>
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <h4 class="modal-title" id="myModalLabel">Documento Adjuntado</h4>
+            </div>
 
-		      <div class="modal-body">
-                        <div id="DocumentolistadoUrl"></div>
+            <div class="modal-body">
+                <div id="DocumentolistadoUrl"></div>
 
-                        
-                        <div class="form-group">
-                                <div id="DocumentolistadoUrlModal"></div>
-			</div>
+                    
+                <div class="form-group">
+                    <div id="DocumentolistadoUrlModal"></div>
+                </div>
 
-                        <div class="form-group" method="post" >
-                                <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Agregar Archivo</button>
-                        </div>
-                      </div><!-- cierre div class-body -->
-                </div><!-- cierre div class modal-content -->
-        </div><!-- cierre div class="modal-dialog" -->
+                <div class="form-group" method="post" >
+                    <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Agregar Archivo</button>
+                </div>
+            </div><!-- cierre div class-body -->
+        </div><!-- cierre div class modal-content -->
+    </div><!-- cierre div class="modal-dialog" -->
 </div><!-- cierre del modal -->
 
 <!-- Inicio modal Mensaje -->
@@ -306,11 +306,18 @@
 		<div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-          <h4 class="modal-title" id="myModalLabel">Lista Registros</h4>
+          <h4 class="modal-title" id="myModalLabel">Mandar Notificación</h4>
         </div>
 
         <div class="modal-body">
-            <input type="textArea">
+            <div class="form-group">
+                <label class="control-label" for="title">Mensaje:</label>
+                <textarea id="textAreaNotificacionModal" class="form-control" ></textarea>
+            </div>
+
+            <div class="form-group" method="post" >
+                <button onClick="notificar()" type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Enviar</button>
+            </div>
         </div>
       </div>
     </div>
@@ -328,32 +335,59 @@
         listarDatos();
     });
     
-    function saveToDatabase(editableObj,column,id) {
-        alert("entro");
-                    if(si_hay_cambio==true){
-                        
-//                    alert("entraste aqui ");
-                        $("#btnrefrescar").prop("disabled",true);
-			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
-			$.ajax({
-                                url: "../Controller/OperacionesController.php?Op=ModificarColumna",
-				type: "POST",
-				data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
-				success: function(data){
-					$(editableObj).css("background","#FDFDFD");
-                                        consultarInformacion("../Controller/OperacionesController.php?Op=Listar");
-                                        swal("Actualizacion Exitosa!", "Ok!", "success");
-                                        $("#btnrefrescar").prop("disabled",false);
-                                        si_hay_cambio=false;
-				}   
-		   });
-                   
-                    } else {
-                        
-                    }
-
-		}
     
+//    function showEdit(editableObj) {
+//            $(editableObj).css("background","#FFF");
+//    }
+    
+    function saveSingleToDatabase(Obj,tabla,columna,id,contexto) {
+//        alert("entro");
+//        console.log(Obj);        
+            if(si_hay_cambio==true){
+
+//            alert("entraste aqui ");
+            $("#btnAgregarOperacionesRefrescar").prop("disabled",true);
+            
+            $(Obj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
+            
+            saveOneToDatabase(Obj.innerHTML,columna,tabla,id,contexto);
+            
+            si_hay_cambio=false;
+
+        } 
+
+    }
+                
+                
+    function saveComboToDatabase(Obj,tabla,columna,id,contexto)
+    {
+        valortmp = $(Obj)[0];
+        Objtmp=valortmp[valortmp.selectedIndex].innerHTML;
+        //poner alerta para valores
+        // alert(Objtmp);
+        if(Objtmp!=" ")
+        {
+            swal({
+                    title:"SELECCIONAR",
+                    text: "Una vez seleccionado no se puede cambiar",
+                    type: "info",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true
+                    }, function(isConfirm)
+                    {
+                        if(isConfirm)
+                        {
+                            $('#loader').show();
+                            saveOneToDatabase(Objtmp,columna,tabla,id,contexto);
+                        }
+                        else
+                            $(Obj)[0].selectedIndex=0;
+                    }
+                );
+        }
+    }
+
     function detectarsihaycambio() {
                     
         si_hay_cambio=true;
@@ -535,6 +569,7 @@
     }
     function reconstruirTable(data)
     {
+        cargaTodo=0;
         tempData = "";
         $.each(data,function(index,value)
         {
@@ -551,58 +586,7 @@
                   async: false,
                   success: function(todo)
                   {
-                    nametmp="";
-                    tempData += "<tr id='registro_"+value.id_evidencias+"'>";
-                    tempData += "<td class='nuevoTdTable'>"+value.clave_documento+"</td>";
-                    tempData += "<td class='nuevoTdTable'>"+value.documento+"</td>";
-                    tempData += "<td class='nuevoTdTable'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td>";
-                    // tempData += "<td>"+value.registros+"</td>";
-                    tempData += "<td class='nuevoTdTable' style='font-size: -webkit-xxx-large;'><button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success'";
-                    tempData += "data-toggle='modal' data-target='#mostrarRegistrosModal'>Ver";
-                    tempData += "<i class='ace-icon fa fa-book' style='color: #0099ff;font-size: 20px;'></i></button></td>";
-                    
-                    tempData += "<td style='background-color: #ccccff'><button onClick='mostrar_urls("+value.id_evidencias+");'";
-                    tempData += "type='button' class='btn btn-success' data-toggle='modal' data-target='#create-itemUrls'>";
-                    tempData += "Adjuntar Documento</button></td>";
-                    $.each(todo[0],function(index2,value2)
-                    {
-                        nametmp = value2.split("^");
-                        // fechaAdjunto=nametmp[0];
-                        tempData += "<td style='background-color: #ccccff'>"+nametmp[0]+"</td>";
-                        if(value.clasificacion=="")
-                        {
-                            tempData += "<td><select class='select'";
-                            tempData += "onchange=\"saveComboToDatabase(this,'evidencias','clasificacion',"+value.id_evidencias+",'id_evidencias')\">";
-                            tempData += "<option value='0' selected></option>";
-                            tempData += "<option value='DIARIO'>DIARIO</option>";
-                            tempData += "<option value='MENSUAL'>MENSUAL</option>";
-                            tempData += "<option value='BIMESTRAL'>BIMESTRAL</option>";
-                            tempData += "<option value='ANUAL'>ANUAL</option>";
-                            tempData += "<option value='TIEMPO INDEFINIDO'>TIEMPO INDEFINIDO</option>";
-                            tempData += "</select></td>";
-                        }
-                        else
-                        {
-                            tempData += "<td style='background-color: #ccccff'>"+value.clasificacion+"</td>";
-                        }
-                        tempData += "<td style='background-color: #ccccff' contenteditable='true' onBlur=\"saveToDatabase(this,'accion_correctiva',"+value.id_evidencias+")\" onClick='showEdit(this);' onkeyup='detectarsihaycambio(this)'>"+value.accion_correctiva+"</td>";
- //                        tempData += "<td>"+value.plan_accion+"</td>";
-                        tempData += "<td  style='background-color: #ccccff'><button class='btn btn-info' onClick='#("+value.id_evidencias+");'>";
-                        tempData += "Cargar Programa</button></td>";
-                        tempData += "<td>"+value.desviacion+"</td>";
-                        tempData += "<td><input type='checkbox' style='width: 40px; height: 40px' name='checkbox'";
-                        if(value.validacion_supervisor=='true')
-                            tempData += " checked disabled";
-                        else
-                            tempData += " onchange=\"saveCheckBoxToDataBase(this,'evidencias','validacion_supervisor','id_evidencias',"+value.id_evidencias+")\"";
-                        tempData += "></td>"
-                        // tempData += "<td><input type='checkbox' style='width: 40px; height: 40px'";
-                        // tempData += "name='checkbox' class='checkboxDocumento' onchange='saveCheckBoxToDataBase";
-                        // tempData += "(this,'validacion_documento_responsable',"+value.id_evidencias+")></td>";
-                        // +value.ingresar_oficio_atencion+"</td>";
-                        // tempData += "<td>"+value.oficio_atencion+"</td>";
-                    });
-                    tempData += "</tr>";
+                    tempData += reconstruir(todo,value,cargaTodo);
                   }
                 });
         });
@@ -612,6 +596,7 @@
 
     function reconstruirRow(id)
     {
+        cargaUno=1;
         tempData = "";
         $.ajax({
             url: "../Controller/OperacionesController.php?Op=ListarEvidencia",
@@ -627,60 +612,14 @@
                     // async: false,
                     success: function(todo)
                     {
-                        console.log(datos)
                         $.each(datos,function(index,value)
                         {
-                            nametmp="";
-                            // tempData += "<tr id='registro_"+value.id_evidencias+"'>";
-                            tempData += "<td class='nuevoTdTable'>"+value.clave_documento+"</td>";
-                            tempData += "<td class='nuevoTdTable'>"+value.documento+"</td>";
-                            tempData += "<td class='nuevoTdTable'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td>";
-                            // tempData += "<td>"+value.registros+"</td>";
-                            tempData += "<td class='nuevoTdTable' style='font-size: -webkit-xxx-large;'><button onClick='mostrarTemaResponsable();' type='button' class='btn btn-success'";
-                            tempData += "data-toggle='modal' data-target='#mostrar-temaresponsable'>Ver";
-                            tempData += "<i class='ace-icon fa fa-book' style='color: #0099ff;font-size: 20px;'></i></button></td>";
-                            tempData += "<td><button onClick='mostrar_urls("+value.id_evidencias+");'";
-                            tempData += "type='button' class='btn btn-success' data-toggle='modal' data-target='#create-itemUrls'>";
-                            tempData += "Adjuntar Documento</button></td>";
-                            $.each(todo[0],function(index2,value2)
-                            {
-                                alert("hola");
-                                nametmp = value2.split("^");
-                                // fechaAdjunto=nametmp[0];
-                                tempData += "<td>"+nametmp[0]+"</td>";
-                                if(value.clasificacion=='')
-                                {
-                                    tempData += "<td><select class='select'";
-                                    tempData += "onchange=\"saveComboToDatabase(this,'evidencias','clasificacion',"+value.id_evidencias+",'id_evidencias')\">";
-                                    tempData += "<option value='0' selected></option>";
-                                    tempData += "<option value='DIARIO'>DIARIO</option>";
-                                    tempData += "<option value='MENSUAL'>MENSUAL</option>";
-                                    tempData += "<option value='BIMESTRAL'>BIMESTRAL</option>";
-                                    tempData += "<option value='ANUAL'>ANUAL</option>";
-                                    tempData += "<option value='TIEMPO INDEFINIDO'>TIEMPO INDEFINIDO</option>";
-                                    tempData += "</select></td>";
-                                }
-                                else
-                                {
-                                    tempData += "<td>"+value.clasificacion+"</td>";
-                                }
-                                tempData += "<td>"+value.desviacion+"</td>";
-                                tempData += "<td>"+value.accion_correctiva+"</td>";
-                                tempData += "<td>"+value.validacion_supervisor+"</td>";
-                                tempData += "<td>"+value.plan_accion+"</td>";
-                                // tempData += "<td><input type='checkbox' style='width: 40px; height: 40px'";
-                                // tempData += "name='checkbox' class='checkboxDocumento' onchange='saveCheckBoxToDataBase";
-                                // tempData += "(this,'validacion_documento_responsable',"+value.id_evidencias+")></td>";
-                            // +value.ingresar_oficio_atencion+"</td>";
-                                // tempData += "<td>"+value.oficio_atencion+"</td>";
-                            });
-                            // tempData += "</tr>";
+                            tempData = reconstruir(todo,value,cargaUno);
+                            $('#registro_'+id).html(tempData);
+                            $('#loader').hide();
+                            swal("","Modificado","success");
+                            setTimeout(function(){swal.close();},1000);
                         });
-                        console.log(tempData);
-                        $('#registro_'+id).html(tempData);
-                        $('#loader').hide();
-                        swal("","Modificado","success");
-                        setTimeout(function(){swal.close();},1000);
                     },
                     error:function()
                     {
@@ -697,13 +636,100 @@
         });
     }
 
+    function reconstruir(todo,value,carga)
+    {
+        tempData = "";
+        // $.each(todo,function(index,value)
+        // {
+            nametmp="";
+            if(carga==0)
+            tempData += "<tr id='registro_"+value.id_evidencias+"'>";
+            tempData += "<td class='nuevoTdTable'>"+value.clave_documento+"</td>";
+            tempData += "<td class='nuevoTdTable'>"+value.documento+"</td>";
+            tempData += "<td class='nuevoTdTable'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td>";                    
+            tempData += "<td class='nuevoTdTable' style='font-size: -webkit-xxx-large;'><button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success'";
+            tempData += "data-toggle='modal' data-target='#mostrarRegistrosModal'>";
+            tempData += "<i class='ace-icon fa fa-book' style='color: #0099ff;font-size: 20px;'></i> Ver</button></td>";
+            
+            tempData += "<td style='font-size: -webkit-xxx-large'><button onClick='mostrar_urls("+value.id_evidencias+");'";
+            tempData += "type='button' class='btn btn-success' data-toggle='modal' data-target='#create-itemUrls'>";
+            tempData += "Adjuntar Documento</button></td>";
+            $.each(todo[0],function(index2,value2)
+            {
+                nametmp = value2.split("^");
+                // fechaAdjunto=nametmp[0];
+                tempData += "<td>"+nametmp[0]+"</td>";
+                if(value.clasificacion=="")
+                {
+                    tempData += "<td><select class='select'";
+                    tempData += "onchange=\"saveComboToDatabase(this,'evidencias','clasificacion',"+value.id_evidencias+",'id_evidencias')\">";
+                    tempData += "<option value='0' selected></option>";
+                    tempData += "<option value='DIARIO'>DIARIO</option>";
+                    tempData += "<option value='MENSUAL'>MENSUAL</option>";
+                    tempData += "<option value='BIMESTRAL'>BIMESTRAL</option>";
+                    tempData += "<option value='ANUAL'>ANUAL</option>";
+                    tempData += "<option value='TIEMPO INDEFINIDO'>TIEMPO INDEFINIDO</option>";
+                    tempData += "</select></td>";
+                }
+                else
+                {
+                    tempData += "<td>"+value.clasificacion+"</td>";
+                }
+                tempData += "<td contenteditable='true' onBlur=\"saveSingleToDatabase(this,'evidencias','accion_correctiva',"+value.id_evidencias+",'id_evidencias')\"";
+                tempData += " onkeyup=\"detectarsihaycambio(this)\">"+value.accion_correctiva+"</td>";
+                tempData += "<td style='font-size: -webkit-xxx-large'><button class='btn btn-info' onClick='#("+value.id_evidencias+");'>";
+                tempData += "Cargar Programa</button></td>";
+
+                tempData += "<td style='font-size: -webkit-xxx-large'><button onClick='MandarNotificacion("+value.id_documento+");' type='button' class='btn btn-success'";
+                tempData += "data-toggle='modal' data-target='#MandarNotificacionModal'>";
+                tempData += "<i class='ace-icon fa fa-envelope' style='color: #0099ff;font-size: 20px;'></i> Escribir desviación</button></td>";
+
+                tempData += "<td style='font-size: -webkit-xxx-large;'><input type='checkbox' style='width:40px;height:40px;margin:28px 0 0;' name='checkbox'";
+                if(value.validacion_supervisor=='true')
+                    tempData += " checked disabled";
+                else
+                    tempData += " onchange=\"saveCheckBoxToDataBase(this,'evidencias','validacion_supervisor','id_evidencias',"+value.id_evidencias+")\"";
+                tempData += "></td>"
+            });
+            if(value.clasificacion=="")
+            {
+                tempData += "<td></td><td></td><td></td><td></td><td></td><td></td>";
+                tempData += "<td>";
+                tempData += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
+                tempData += "onclick='eliminarEvidencia("+value.id_evidencias+");'>";
+                tempData += "<i class=\"fa fa-trash\"></i></button></td>";
+            }
+            if(carga==0)
+            tempData += "</tr>";
+        // });
+        return tempData;
+    }
+
+    function eliminarEvidencia(id_evidencias)
+    {
+        $.ajax({
+            url: '../Controller/EnvidenciasController.php?=EliminarEvidencia',
+            type: 'POST',
+            data: 'ID_EVIDENCIA='+id_evidencias,
+            success:function(eliminado)
+            {
+                (eliminado==true)?(swal("","Se elimino la evidencia","success"),$('registro_'+id_evidencias).remove()):swal("","No se pudo eliminar","error");
+                setTimeout(function(){swal.close();},1000);
+            },
+            error:function()
+            {
+                swal("","Error del servidor","error");
+                setTimeout(function(){swal.close();},1000);
+            }
+        });
+    }
     function saveCheckBoxToDataBase(checkbox,tabla,column,context,id)
     {
         id_validacion_documento=id;
         columna=column;
         objetocheckbox=checkbox;
-        var chekeado=$('.checkboxDocumento').is(':checked');
-        if(checked==false)
+        var checked = $(objetocheckbox).filter('[type=checkbox]')[0]['checked'];
+        if(checked==true)
         {
             swal({
                 title: "VALIDAR",
@@ -744,16 +770,24 @@
         }
     }
 
-    function enviar_notificacion(para,mensaje,tipoMensaje,atendido,estado)
+    function notificar(Obj)
     {
-          var u=$("#user").val();
+        mensaje = $(textAreaNotificacionModal).val();
+        enviar_notificacion(mensaje,'admin',0,false);//msj,para,tipomsj,atendido
+    }
+
+    function enviar_notificacion(mensaje,para,tipoMensaje,atendido)
+    {
+        //   var u=$("#user").val();
           $.ajax({
-             url:"../Controller/NotificacionesController.php?Op=enviarNotificacionDesviacionAResponsableContrato",
-             data: "PARA="+para+"&MENSAJE="+mensaje+"&ATENDIDO="+atendido+"&TIPO_MENSAJE="+tipoMensaje+"&ESTADO="+estado,
+             url:"../Controller/NotificacionesController.php?Op=EnviarNotificacionHibry",
+             data: "PARA="+para+"&MENSAJE="+mensaje+"&ATENDIDO="+atendido+"&TIPO_MENSAJE="+tipoMensaje,
              success:function(response)
              {
-
-             } 
+                (response==true)?
+                swal("","Mensaje enviado","success"):swal("","No se pudo enviar la notificacion","error");
+                setTimeout(function(){swal.close();},1500);
+             }
           });
     }
 
@@ -777,42 +811,17 @@
                         $('#loader').hide();
                         swal("","Ocurrio un error al modificar", "error");
                     }
+                  $("#btnAgregarOperacionesRefrescar").prop("disabled",false);  
                 },
                 error:function()
                 {
                     $('#loader').hide();
                     swal("","Ocurrio un error al modificar", "error");
+                    $("#btnAgregarOperacionesRefrescar").prop("disabled",false);
                 }
             });
     }
-    function saveComboToDatabase(Obj,tabla,columna,id,contexto)
-    {
-        valortmp = $(Obj)[0];
-        Objtmp=valortmp[valortmp.selectedIndex].innerHTML;
-        //poner alerta para valores
-        // alert(Objtmp);
-        if(Objtmp!=" ")
-        {
-            swal({
-                    title:"SELECCIONAR",
-                    text: "Una vez seleccionado no se puede cambiar",
-                    type: "info",
-                    showCancelButton: true,
-                    closeOnConfirm: false,
-                    showLoaderOnConfirm: true
-                    }, function(isConfirm)
-                    {
-                        if(isConfirm)
-                        {
-                            $('#loader').show();
-                            saveOneToDatabase(Objtmp,columna,tabla,id,contexto);
-                        }
-                        else
-                            $(Obj)[0].selectedIndex=0;
-                    }
-                );
-        }
-    }
+    
     function saveCheckToDatabase(Obj,columna,tabla,id)
     {
 

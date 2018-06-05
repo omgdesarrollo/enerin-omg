@@ -37,7 +37,7 @@ echo "<table >
                 <th style='background:#CCC; color:#000;border-style: solid;'>
                 Clave del Documento
                 </th>
-            </tr>".$table."
+            </tr>".utf8_decode($table)."
 
  
     </table>";

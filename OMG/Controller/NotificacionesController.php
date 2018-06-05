@@ -21,9 +21,9 @@ switch ($Op) {
             $lista=Session::getSesion("user");
             $para = $_REQUEST["PARA"];
             $mensaje = $_REQUEST["MENSAJE"];
-            $atendido = $_REQUEST["ATENDIDO"];
-            $tipoM = $_REQUEST["TIPO_MENSAJE"];
-            $estado = $_REQUEST["ESTADO"];
+            $atendido = $_REQUEST["ATENDIDO"];//si es leido o no
+            $tipoM = $_REQUEST["TIPO_MENSAJE"];//0->info, 1->alert, 2->error
+            // $estado = $_REQUEST["ESTADO"];//
         //     $columna=$_REQUEST["columna"];
             
         //     $id_validacion_documento=$_REQUEST["id_validacion_documento"];
@@ -32,12 +32,12 @@ switch ($Op) {
             $de=$lista["usuariosyempleados_id_usuario_empleados"];
             //termina datos de la session 
             $listaInfValidacionDocumento=$modelValidacionDocumentos->obtenerInfoPorIdValidacionDocumento($id_validacion_documento);
-            $resultado=$model->enviaraResponsableCumplimiento_sobre_desviacion_mayor($de,$mensaje,$estado,$atendido,$para);
+            $resultado=$model->guardarNotificacionHibry($de,$mensaje,$estado,$atendido,$para);
 
-            echo "res:  ".$resultado;
+            echo $resultado;
 //            echo "trajo de usuario : ".$dataUsuarioEmpleado;
-            echo "mi usuario es :".json_encode($lista); 
-            
+            // echo "mi usuario es :".json_encode($lista); 
+       
 //              $cadenaclausula=$_REQUEST["check"];  
 //               	header('Content-type: application/json; charset=utf-8');
 //                echo json_encode($data);
@@ -55,11 +55,8 @@ switch ($Op) {
             
 	default:
 		# code...
-		break;
+	break;
 }
-
-
-
 
 ?>
 

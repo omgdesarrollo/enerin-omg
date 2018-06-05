@@ -439,8 +439,9 @@ require_once 'EncabezadoUsuarioView.php';
 				success: function(data){
                                     
 //                                      consultarInformacion("../Controller/ClausulasController.php?Op=Listar");                                        
-                                        consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
+//                                        consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
                                         swal("Actualizacion Exitosa!", "Ok!", "success");
+                                        refresh();
 //                                        si_hay_cambio_combo=false;
                                         //window.location.href="ClausulasView.php";                                       
 					//$(editableObj).css("background","#FDFDFD");
@@ -538,8 +539,9 @@ require_once 'EncabezadoUsuarioView.php';
 				data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
 				success: function(data){
 					$(editableObj).css("background","#FDFDFD");
+                                        swal("Actualizacion Exitosa!", "Ok!", "success");
                                         refresh();
-//                                        swal("Actualizacion Exitosa!", "Ok!", "success");
+                                                                                
                                         $("#btnrefrescar").prop("disabled",false);
                                         si_hay_cambio=false;
                                         
