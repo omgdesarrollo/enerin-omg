@@ -2,7 +2,7 @@
 require_once '../ds/AccesoDB.php';
 class PermisosDAO{
     
-    public function mostrarPermisos($id_usuario) {
+    public function obtenerPermisos($id_usuario) {
         try {
            $query="SELECT tbpermisos.idpermisos, tbpermisos.descripcion, tbpermisos.Agregar, tbpermisos.Eliminar,tbpermisos.Modificar,
  		 tbpermisos.Consultar,
@@ -18,6 +18,10 @@ class PermisosDAO{
                 JOIN vistas tbvistas ON tbvistas.id_vistas=tbvistas_permisos.id_vistas
 
                 WHERE tbusuarios_y_empleados.id_usuario=$id_usuario"; 
+           $db=  AccesoDB::getInstancia();
+           $lista=$db->executeQuery($query);
+           
+           return $lista;
             
         }catch(Exception $ex)
         {

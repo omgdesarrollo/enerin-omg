@@ -318,7 +318,7 @@ require_once 'EncabezadoUsuarioView.php';
                                         <input type="checkbox" style="width: 40px; height: 40px"  name="checkbox" class="checkboxDocumento" 
                                             <?php 
                                             if($filas["validacion_documento_responsable"] == "true"){
-                                                echo "checked disabled";
+                                                echo "checked";
                                             }
                                              ?>
                                                onchange="saveCheckBoxToDataBase(this,'validacion_documento_responsable',<?php echo $filas["id_validacion_documento"]; ?>)">
@@ -331,14 +331,14 @@ require_once 'EncabezadoUsuarioView.php';
                                         <input type="checkbox" style="width: 40px; height: 40px" name="checkbox"  class="checkboxDocumento"
                                             <?php 
                                             if($filas["validacion_tema_responsable"] == "true"){
-                                                echo "checked disabled";
+                                                echo "checked";
                                             }
                                              ?>
                                         onchange="saveCheckBoxToDataBase(this,'validacion_tema_responsable',<?php echo $filas["id_validacion_documento"]; ?>)">
                                     </div>						
                                 </td>
                                  
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'observacion_documento','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["observacion_documento"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'observacion_documento','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["observacion_documento"]; ?></td>
                                 <!--<td contenteditable="false" onBlur="saveToDatabase(this,'observacion_tema','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["observacion_tema"]; ?></td>-->
                                 <!--<td contenteditable="false" onBlur="saveToDatabase(this,'plan_accion','<?php //echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["plan_accion"]; ?></td>-->
                                 <!--<td contenteditable="false" onBlur="saveToDatabase(this,'desviacion_mayor','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["desviacion_mayor"]; ?></td>-->
@@ -348,7 +348,7 @@ require_once 'EncabezadoUsuarioView.php';
                                         <input type="checkbox" style="width: 40px; height: 40px" name="checkbox"  class="checkboxDocumento"
                                             <?php 
                                             if($filas["desviacion_mayor"] == "true"){
-                                                echo "checked disabled";
+                                                echo "checked";
                                             }
                                              ?>
                                         onchange="saveCheckBoxToDataBase(this,'desviacion_mayor',<?php echo $filas["id_validacion_documento"]; ?>)">
@@ -467,7 +467,7 @@ require_once 'EncabezadoUsuarioView.php';
                 
 		<script>
                     
-    var id_validacion_documento,columna,objetocheckbox;
+    var id_validacion_documento,columna,objetocheckbox,si_hay_cambio=false;
     
    
     
@@ -479,46 +479,21 @@ require_once 'EncabezadoUsuarioView.php';
     {
       
         $('.checkboxDocumento').on('change', function()
-      { 
-          
+        {          
           var chekeado=$('.checkboxDocumento').is(':checked');
-//         alert("");
-//          alert("value de columna es : "+columna);
-      
-          
-//            inputs = $('#idTable').find('input').filter('[type=checkbox]');
-//       //      
-//       alert(""+input);
-//                                    if($(this).attr("checked"))
-//                      {
-//                            inputs.attr('checked', true);
-//
-//               }else{
-//                    inputs.attr('checked', false);
-//               }
-               
-               
-        swal({
-          title: "VALIDAR",
-          text: "Una vez validado el documento no podra desvalidarlo, confirme",
-          type: "warning",
-          showCancelButton: true,
-          closeOnConfirm: false,
-          showLoaderOnConfirm: true
-        },function(isConfirm)
-        {
-          if(isConfirm)
-          {
+          alert(chekeado);
             $.ajax({
                 url: "../Controller/ValidacionDocumentosController.php?Op=Modificar",
                 type: "POST",
-                data:'column='+columna+'&editval='+$('.checkboxDocumento').is(':checked')+'&id='+id_validacion_documento,
+                data:'column='+columna+'&editval='+chekeado+'&id='+id_validacion_documento,
                 success: function(data)
                 {
-                    if(data)
+                    if(data==true)
                     {
-                        $(objetocheckbox).attr('disabled','true');
-                        swal("","Documento validado");
+                        (chekeado)?
+                        
+                        swal("","Documento validado"):swal("","Documento no validado");
+
                         setTimeout(function(){swal.close();},1000);
                         if(columna=="desviacion_mayor")
                         {
@@ -528,14 +503,7 @@ require_once 'EncabezadoUsuarioView.php';
                     }
                 }                
                 });
-          }
-          else
-          {
-            inputs = $(objetocheckbox).filter('[type=checkbox]');
-            inputs[0]['checked']=false;
-          }
-        
-        });
+    
         // console.log($('#idTable').find('input').filter('[type=checkbox]').attr('checked', false));
         // inputs = $('#idTable').find('input').filter('[type=checkbox]');
         // inputs.attr('checked', false);
@@ -601,16 +569,24 @@ require_once 'EncabezadoUsuarioView.php';
     function saveToDatabase(editableObj,column,id)
     {
                     //alert("entraste aqui ");
-        $(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
-        $.ajax({
-                url: "../Controller/ValidacionDocumentosController.php?Op=Modificar",
-                type: "POST",
-                data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
-                success: function(data)
-                    {
-                        $(editableObj).css("background","#FDFDFD");                                
-                    }
-                });
+        if(si_hay_cambio==true)
+        {
+            $("#btnrefrescar").prop("disabled",true);            
+            $(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
+            $.ajax({
+                    url: "../Controller/ValidacionDocumentosController.php?Op=Modificar",
+                    type: "POST",
+                    data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
+                    success: function(data)
+                        {
+                            $(editableObj).css("background","#FDFDFD");
+                            swal("Actualizacion Exitosa!", "Ok!", "success");
+                            setTimeout(function(){swal.close();},1000);
+                            $("#btnrefrescar").prop("disabled",false);
+                            si_hay_cambio=false;
+                        }
+                    });
+        }
     }
     
     
@@ -619,6 +595,13 @@ require_once 'EncabezadoUsuarioView.php';
     {
       id_seguimiento_entrada=id;
     }
+    
+    
+    function detectarsihaycambio()
+    {
+        si_hay_cambio=true;
+    }
+    
     
     function consultarInformacion(url)
     {
