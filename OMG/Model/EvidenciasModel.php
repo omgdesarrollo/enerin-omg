@@ -1,6 +1,6 @@
 <?php
 
-require_once '../dao/EvidenciasDAO.php';
+require_once '../dao/EvidenciasDao.php';
 require_once '../Pojo/EvidenciasPojo.php';
 
 class EvidenciasModel

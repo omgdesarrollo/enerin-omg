@@ -1,5 +1,6 @@
 <?php
 
+
 session_start();
 require_once '../Model/EvidenciasModel.php';
 require_once '../Pojo/EvidenciasPojo.php';
@@ -18,7 +19,7 @@ switch ($Op)
     case 'Listar':
     
 		$Lista=$model->listarEvidencias();
-    	 Session::setSesion("listarOperaciones",$Lista);
+    	// Session::setSesion("listarOperaciones",$Lista);
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
 		break;
@@ -63,6 +64,4 @@ switch ($Op)
 		echo false;
         break;
 }
-
-
 ?>
