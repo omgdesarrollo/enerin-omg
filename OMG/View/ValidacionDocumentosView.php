@@ -282,9 +282,9 @@ require_once 'EncabezadoUsuarioView.php';
                                 -->
                                 
                                 <td>
-                                        <button onClick="mostrarTemaResponsable(<?php echo $filas['id_documento'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-temaresponsable">
-		                                Ver
-                                                <i class="ace-icon fa fa-book" style="color: #0099ff;font-size: 20px;"></i>
+                                        <button onClick="mostrarTemaResponsable(<?php echo $filas['id_documento'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-temaresponsable">		                                
+                                                <i class="ace-icon fa fa-book" style="font-size: 20px;"></i>
+                                                Ver
                                         </button>
                                 </td>
                                 
@@ -300,15 +300,15 @@ require_once 'EncabezadoUsuarioView.php';
                                 <!--Mostrar Requisutos-->
                                 <td>
                                         <button onClick="mostrarRequisitos(<?php echo $filas['id_documento'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-requisitos">
-		                                Ver
-                                                <i class="ace-icon fa fa-book" style="color: #0099ff;font-size: 20px;"></i>
+                                                <i class="ace-icon fa fa-book" style="font-size: 20px;"></i>
+                                                Ver
                                         </button>
                                 </td>
                                 
                                 <td>
                                         <button onClick="mostrarRegistros(<?php echo $filas['id_documento'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-registros">
-		                                Ver
-                                                <i class="ace-icon fa fa-book" style="color: #0099ff;font-size: 20px;"></i>
+                                                <i class="ace-icon fa fa-book" style="font-size: 20px;"></i>
+		                                Ver                                                
                                         </button>
                                 </td>
                                 
