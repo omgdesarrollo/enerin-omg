@@ -3,7 +3,7 @@
 require_once '../ds/AccesoDB.php';
 class EvidenciasDao
 {
-    public function listarOperaciones()
+    public function listarEvidencias()
     {
         try
         {
