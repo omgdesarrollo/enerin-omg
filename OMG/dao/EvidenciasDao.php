@@ -1,7 +1,7 @@
 <?php
 
 require_once '../ds/AccesoDB.php';
-class OperacionesDao
+class EvidenciasDao
 {
     public function listarOperaciones()
     {

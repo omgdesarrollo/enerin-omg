@@ -71,6 +71,6 @@
     <iframe src="ValidacionDocumentosView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
 
-<div id="seguimientooperaciones">
-    <iframe src="OperacionesView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
+<div id="seguimientoevidencias">
+    <iframe src="EvidenciasView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
