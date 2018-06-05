@@ -11,7 +11,7 @@
  *
  * @author usuario
  */
-class OperacionesPojo {
+class EvidenciasPojo {
 
     private $id_evidencias;       
     private $id_documento='';    

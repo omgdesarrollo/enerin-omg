@@ -1,15 +1,14 @@
 <?php
 
-
 session_start();
-require_once '../Model/OperacionesModel.php';
-require_once '../Pojo/OperacionesPojo.php';
+require_once '../Model/EvidenciasModel.php';
+require_once '../Pojo/EvidenciasPojo.php';
 require_once '../Model/DocumentoModel.php';
 require_once '../util/Session.php';
 
 $Op=$_REQUEST["Op"];
-$model=new OperacionesModel();
-$pojo= new OperacionesPojo();
+$model=new EvidenciasModel();
+$pojo= new EvidenciasPojo();
 
 $modelDocumento=new DocumentoModel();
 
@@ -18,15 +17,13 @@ switch ($Op)
 {
     case 'Listar':
     
-		$Lista=$model->listarOperaciones();
-        // Session::setSesion("listarOperaciones",$Lista);
-        
+		$Lista=$model->listarEvidencias();
+    	 Session::setSesion("listarOperaciones",$Lista);
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
 		break;
     
     case 'getClavesDocumentos':
-        $lista=Session::getSesion("user");
         $Lista=$model->getClavesDocumentos($_REQUEST["CADENA"]);
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
@@ -49,6 +46,11 @@ switch ($Op)
         echo $res;
         break;
     
+    case 'iniciarEnVacio':
+        $res = $model->iniciarEnVacio($_REQUEST["ID_EVIDENCIAS"]);
+        echo $res;
+        break;
+    
     case 'ModificarColumna':
 
 		$data = $model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );
@@ -61,9 +63,17 @@ switch ($Op)
     header('Content-type: application/json; charset=utf-8');
     echo json_encode($resultado);
     break;
+
+
+    case'EliminarEvidencia':
+        $data = $model->eliminarEvidencia($id_evidencias);
+        echo $data;
+    break;
     
 	default:
 		echo false;
         break;
 }
+
+
 ?>

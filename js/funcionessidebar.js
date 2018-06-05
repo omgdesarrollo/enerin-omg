@@ -173,41 +173,47 @@ function loadDataSideBarOficiosDocumentacion(){
                         
     }
     
-    function loadDataSideBarOficiosVistas(){
+    function loadDataInformeGerencial(){
 //         mySidebar = myLayout.cells("a").attachSidebar();
    
-    mySidebar = new dhtmlXSideBar({
-        parent: "sidebarObj",
-        icons_path: "../../images/base/",    
-                                template:'tiles',
-        width: 350,
-        items: [
-          {id: "seguimientoentradas", text: "Seguimiento", icon: "seguimiento.png"},
-          {id: "informegerencial", text: "Informe Gerencial", icon: "informegerencial.png"}
-            
-        ]
-      });
+   
+        consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
+        consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
+        consultarInformacion("../Controller/InformeGerencialController.php?Op=Listar");
+        $("#sidebarObjV").load('InyectarVistasView.php #informegerencial');
+    
+//    mySidebar = new dhtmlXSideBar({
+//        parent: "sidebarObj",
+//        icons_path: "../../images/base/",    
+//                                template:'tiles',
+//        width: 350,
+//        items: [
+//          {id: "seguimientoentradas", text: "Seguimiento", icon: "seguimiento.png"},
+//          {id: "informegerencial", text: "Informe Gerencial", icon: "informegerencial.png"}
+//            
+//        ]
+//      });
 
                                  
-                         mySidebar.attachEvent("onSelect", function(id, value){
-                                   switch(id){
-                                       case "seguimientoentradas":
-                                            consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
-                                            consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
-                                            consultarInformacion("../Controller/EmpleadosController.php?Op=mostrarcombo");
-                                            $("#sidebarObjV").load('InyectarVistasView.php #seguimientoentradas');
-                                       break; 
-                                       
-
-                                       case "informegerencial":
-                                            consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
-                                            consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
-                                            consultarInformacion("../Controller/InformeGerencialController.php?Op=Listar");
-                                            $("#sidebarObjV").load('InyectarVistasView.php #informegerencial');
-                                       break;
-                                                                              
-                                   }
-      });
+//                         mySidebar.attachEvent("onSelect", function(id, value){
+//                                   switch(id){
+//                                       case "seguimientoentradas":
+//                                            consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
+//                                            consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
+//                                            consultarInformacion("../Controller/EmpleadosController.php?Op=mostrarcombo");
+//                                            $("#sidebarObjV").load('InyectarVistasView.php #seguimientoentradas');
+//                                       break; 
+//                                       
+//
+//                                       case "informegerencial":
+//                                            consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
+//                                            consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
+//                                            consultarInformacion("../Controller/InformeGerencialController.php?Op=Listar");
+//                                            $("#sidebarObjV").load('InyectarVistasView.php #informegerencial');
+//                                       break;
+//                                                                              
+//                                   }
+//      });
                         
     }
     function loadDataSideBarCumplimientosDocumentos(){
@@ -254,10 +260,10 @@ function loadDataSideBarOficiosDocumentacion(){
     
     
     
-       function loadDataSideBarCumplimientosOperaciones(){
+       function loadDataSideBarCumplimientosEvidencias(){
            
         //   consultarInformacion("../Controller/OperacionesController.php?Op=Listar");
-          $("#sidebarObjV").load('InyectarVistasView.php #seguimientooperaciones');
+          $("#sidebarObjV").load('InyectarVistasView.php #seguimientoevidencias');
            
 //         mySidebar = myLayout.cells("a").attachSidebar();
    

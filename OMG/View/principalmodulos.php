@@ -96,7 +96,7 @@ $Usuario=  Session::getSesion("user");
  
  var seccionCumplimiento=[
      {id:'documentos',text:'Validacion de Documentos',img:'documentos.png',type:'button',isbig:true} ,
-     {id:'operaciones',text:'Evidencias',img:'operaciones.png',type:'button',isbig:true},
+     {id:'evidencias',text:'Evidencias',img:'operaciones.png',type:'button',isbig:true},
 //     {id:'planaccion',text:'Plan de Accion',img:'planaccion.png',type:'button',isbig:true}
  ];
  
@@ -108,7 +108,7 @@ $Usuario=  Session::getSesion("user");
   var seccionOficios=[
      {id:'catalogooficios',text:'Catalogos',img:'catalogos.png',type:'button',isbig:true},  
      {id:'documentacion',text:'Documentacion',img:'oficios.png',type:'button',isbig:true},  
-     {id:'vistas',text:'Vistas',img:'vistas.png',type:'button',isbig:true},
+     {id:'informegerencial',text:'Informe Gerencial',img:'seguimiento.png',type:'button',isbig:true},
      {id:'cargaprograma',text:'Carga Programa Gantt',img:'663.png',type:'button',isbig:true}
  ];
 //  var cambiodeidioma=[
@@ -242,8 +242,8 @@ var gantt=[
                        
                        if(itemIdSeleccion=="documentos")
                            loadDataSideBarCumplimientosDocumentos();
-                       if(itemIdSeleccion=="operaciones")
-                           loadDataSideBarCumplimientosOperaciones();
+                       if(itemIdSeleccion=="evidencias")
+                           loadDataSideBarCumplimientosEvidencias();
                        if(itemIdSeleccion=="planaccion")
                            loadDataSideBarCumplimientosPlanDeAccion();
                         if(itemIdSeleccion=="catalogooficios")
@@ -252,8 +252,8 @@ var gantt=[
                         if(itemIdSeleccion=="documentacion")
                            loadDataSideBarOficiosDocumentacion();
                        
-                        if(itemIdSeleccion=="vistas")
-                           loadDataSideBarOficiosVistas();
+                        if(itemIdSeleccion=="informegerencial")
+                       loadDataInformeGerencial();
                        if(itemIdSeleccion=="cargaprograma")
                            loadDataCargaProgramaGantt();
                        

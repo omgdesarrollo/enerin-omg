@@ -1,9 +1,9 @@
 <?php
 
 require_once '../ds/AccesoDB.php';
-class OperacionesDao
+class EvidenciasDAO
 {
-    public function listarOperaciones()
+    public function listarEvidencias()
     {
         try
         {
@@ -13,7 +13,7 @@ class OperacionesDao
                     tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno,
 
                     tbevidencias.clasificacion, tbevidencias.desviacion, tbevidencias.accion_correctiva, tbevidencias.validacion_supervisor,
-                    tbevidencias.plan_accion, tbevidencias.ingresar_oficio_atencion, tbevidencias.oficio_atencion
+                    tbevidencias.plan_accion
 
                     FROM evidencias tbevidencias
 
@@ -42,7 +42,7 @@ class OperacionesDao
                     tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno,
 
                     tbevidencias.clasificacion, tbevidencias.desviacion, tbevidencias.accion_correctiva, tbevidencias.validacion_supervisor,
-                    tbevidencias.plan_accion, tbevidencias.ingresar_oficio_atencion, tbevidencias.oficio_atencion
+                    tbevidencias.plan_accion
 
                     FROM evidencias tbevidencias
 
@@ -51,6 +51,7 @@ class OperacionesDao
                     JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumentos.id_empleado
                     
                     WHERE tbevidencias.id_evidencias=$ID_EVIDENCIA";
+            
             $db = AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
             
@@ -89,7 +90,7 @@ class OperacionesDao
         {
             $query = "INSERT INTO evidencias (id_documento,clasificacion,desviacion,accion_correctiva,validacion_supervisor,plan_accion,
 								ingresar_oficio_atencion,oficio_atencion)
-                     VALUES ('$claveDocumento','','','','false','','false','false')";
+                     VALUES ('$claveDocumento','','','','false','','','')";
             
             $db = AccesoDB::getInstancia();
             $res = $db->executeQueryUpdate($query);
@@ -102,6 +103,29 @@ class OperacionesDao
     }
     
     
+    public function iniciarEnVacio($id_evidencias)
+    {
+        try
+        {
+            $query="UPDATE evidencias
+
+                    SET clasificacion='',desviacion='',accion_correctiva='',validacion_supervisor='false',plan_accion='',
+                    ingresar_oficio_atencion='',oficio_atencion=''
+
+                    WHERE id_evidencias=$id_evidencias";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista = $db->executeQueryUpdate($query);            
+            return $lista;
+            
+        }catch(Exception $ex)
+        {
+            throw $ex;
+        }
+    }
+
+    
+
     public function actualizarEvidenciaPorColumna($COLUMNA,$VALOR,$ID_EVIDENCIAS)
     {     
         try
@@ -116,6 +140,25 @@ class OperacionesDao
         {
            throw $ex;
            return false;
+        }
+    }
+    
+    public function eliminarEvidencia($id_evidencias)
+    {
+        try
+        {
+            $query="DELETE FROM evidencias
+
+            WHERE id_evidencias=$id_evidencias";
+            
+            $db= AccesoDB::getInstancia();
+            $result= $db->executeQueryUpdate($query);
+            
+            return $result;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
         }
     }
     

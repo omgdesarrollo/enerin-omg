@@ -1,16 +1,16 @@
 <?php
 
-require_once '../dao/OperacionesDAO.php';
-require_once '../Pojo/OperacionesPojo.php';
+require_once '../dao/EvidenciasDao.php';
+require_once '../Pojo/EvidenciasPojo.php';
 
-class OperacionesModel
+class EvidenciasModel
 {
-    public function listarOperaciones()
+    public function listarEvidencias()
     {
         try
         {
-            $dao = new OperacionesDAO();
-            $rec = $dao->listarOperaciones();
+            $dao = new EvidenciasDAO();
+            $rec = $dao->listarEvidencias();
             return $rec;
         }catch(Exception $e)
         {
@@ -22,7 +22,7 @@ class OperacionesModel
     {
         try
         {
-            $dao = new OperacionesDAO();
+            $dao = new EvidenciasDAO();
             $rec = $dao->listarEvidencia($ID_EVIDENCIA);
 
             return $rec;
@@ -38,7 +38,7 @@ class OperacionesModel
     {
         try
         {
-            $dao = new OperacionesDAO();
+            $dao = new EvidenciasDAO();
             $rec = $dao->getClavesDocumentos($cadena);
             return $rec;
         }catch(Exception $e)
@@ -50,7 +50,7 @@ class OperacionesModel
     {
         try
         {
-            $dao = new OperacionesDAO();
+            $dao = new EvidenciasDAO();
             $rec = $dao->crearEvidencia($claveDocumento);
             return $rec;
         }catch(Exception $e)
@@ -60,18 +60,51 @@ class OperacionesModel
         }
     }
     
-    public function actualizarPorColumna($COLUMNA,$VALOR,$ID_EVIDENCIAS){
+    
+    public function iniciarEnVacio($id_evidencias)
+    {
         try
         {
-            $dao=new OperacionesDao();
+            $dao = new EvidenciasDAO();
+            $rec = $dao->iniciarEnVacio($id_evidencias);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
+    
+
+    public function actualizarPorColumna($COLUMNA,$VALOR,$ID_EVIDENCIAS)
+    {
+        try
+        {
+            $dao=new EvidenciasDAO();
             $rec= $dao->actualizarEvidenciaPorColumna($COLUMNA, $VALOR, $ID_EVIDENCIAS);
             return $rec;
         }catch (Exception $ex) 
         {
+            throw $ex;
             return false;
         }
     }
     
+    public function eliminarEvidencia ($id_evidencias)
+    {
+        try
+        {
+            $dao=new EvidenciasDAO();
+            $dao->eliminarEvidencia($id_evidencias);
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+            
     
 }
 ?>

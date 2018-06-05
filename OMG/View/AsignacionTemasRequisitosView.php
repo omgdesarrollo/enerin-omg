@@ -171,12 +171,12 @@ require_once 'EncabezadoUsuarioView.php';
 
 <button type="button" id="btn_lista_documentos" class="btn btn-success" data-toggle="modal">
     Lista de Documentos
-    <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+    <!--<i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>-->
 </button>
 
 <button type="button" id="btn_lista_temas" class="btn btn-success" data-toggle="modal">
     Lista de Temas
-    <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+    <!--<i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>-->
 </button>
 
 <button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >

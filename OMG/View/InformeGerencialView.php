@@ -186,7 +186,7 @@ require_once 'EncabezadoUsuarioView.php';
 <div style="position: fixed;">                        
 <button type="button" id="btn_informe" class="btn btn-success" data-toggle="modal">
     Informe
-    <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+    <!--<i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>-->
 </button>
     
 <button type="button" class="btn btn-info " onclick="refresh();" >

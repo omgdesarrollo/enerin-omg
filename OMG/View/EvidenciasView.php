@@ -170,7 +170,7 @@
             Agregar Nuevo Registro
         </button>
 
-        <button id="btnAgregarOperacionesRefrescar" type="button" 
+        <button id="btnAgregarEvidenciasRefrescar" type="button" 
         class="btn btn-info " onclick="refresh();" >
             <i class="glyphicon glyphicon-repeat"></i> 
         </button>
@@ -346,7 +346,7 @@
             if(si_hay_cambio==true){
 
 //            alert("entraste aqui ");
-            $("#btnAgregarOperacionesRefrescar").prop("disabled",true);
+            $("#btnAgregarEvidenciasRefrescar").prop("disabled",true);
             
             $(Obj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
             
@@ -399,7 +399,7 @@
     {
         $.ajax
         ({
-            url: '../Controller/OperacionesController.php?Op=Listar',
+            url: '../Controller/EvidenciasController.php?Op=Listar',
             type: 'GET',
             beforeSend:function()
             {
@@ -443,7 +443,7 @@
         {
             $.ajax
             ({
-                url: '../Controller/OperacionesController.php?Op=getClavesDocumentos',
+                url: '../Controller/EvidenciasController.php?Op=getClavesDocumentos',
                 type: 'GET',
                 data: "CADENA="+cadena,
                 success:function(data)
@@ -499,7 +499,7 @@
 
             $.ajax
             ({
-                url: '../Controller/OperacionesController.php?Op=CrearEvidencia',
+                url: '../Controller/EvidenciasController.php?Op=CrearEvidencia',
                 type: 'POST',
                 data: 'CLAVE_DOCUMENTO='+clave,
                 success:function(data)
@@ -558,7 +558,7 @@
         // $('#bodyTable').html(data);
         $.ajax
         ({
-            url: '../Controller/OperacionesController.php?Op=getDataTable',
+            url: '../Controller/EvidenciasController.php?Op=getDataTable',
             type: 'GET',
             // data: '',
             success:function(dataT)
@@ -599,7 +599,7 @@
         cargaUno=1;
         tempData = "";
         $.ajax({
-            url: "../Controller/OperacionesController.php?Op=ListarEvidencia",
+            url: "../Controller/EvidenciasController.php?Op=ListarEvidencia",
             type: 'GET',
             data: 'ID_EVIDENCIA='+id,
             success:function(datos)
@@ -811,13 +811,13 @@
                         $('#loader').hide();
                         swal("","Ocurrio un error al modificar", "error");
                     }
-                  $("#btnAgregarOperacionesRefrescar").prop("disabled",false);  
+                  $("#btnAgregarEvidenciasRefrescar").prop("disabled",false);  
                 },
                 error:function()
                 {
                     $('#loader').hide();
                     swal("","Ocurrio un error al modificar", "error");
-                    $("#btnAgregarOperacionesRefrescar").prop("disabled",false);
+                    $("#btnAgregarEvidenciasRefrescar").prop("disabled",false);
                 }
             });
     }
@@ -989,7 +989,7 @@
         
         $.ajax
         ({
-            url:"../Controller/OperacionesController.php?Op=MostrarRegistrosPorDocumento",
+            url:"../Controller/EvidenciasController.php?Op=MostrarRegistrosPorDocumento",
             type: 'POST',
             data: 'ID_DOCUMENTO='+id_documento,
             success:function(responseregistros)
