@@ -19,8 +19,12 @@ class PermisosDAO{
 
                 WHERE tbusuarios_y_empleados.id_usuario=$id_usuario"; 
             
-        }
+        }catch(Exception $ex)
+        {
+            throw $ex;
+        
     }
+}
     
     
     
