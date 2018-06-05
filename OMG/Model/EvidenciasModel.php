@@ -78,7 +78,8 @@ class EvidenciasModel
 
     
 
-    public function actualizarPorColumna($COLUMNA,$VALOR,$ID_EVIDENCIAS){
+    public function actualizarPorColumna($COLUMNA,$VALOR,$ID_EVIDENCIAS)
+    {
         try
         {
             $dao=new EvidenciasDAO();
@@ -86,10 +87,24 @@ class EvidenciasModel
             return $rec;
         }catch (Exception $ex) 
         {
+            throw $ex;
             return false;
         }
     }
     
+    public function eliminarEvidencia ($id_evidencias)
+    {
+        try
+        {
+            $dao=new EvidenciasDAO();
+            $dao->eliminarEvidencia($id_evidencias);
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+            
     
 }
 ?>

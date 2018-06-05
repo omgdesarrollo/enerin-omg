@@ -63,6 +63,12 @@ switch ($Op)
     header('Content-type: application/json; charset=utf-8');
     echo json_encode($resultado);
     break;
+
+
+    case'EliminarEvidencia':
+        $data = $model->eliminarEvidencia($id_evidencias);
+        echo $data;
+    break;
     
 	default:
 		echo false;

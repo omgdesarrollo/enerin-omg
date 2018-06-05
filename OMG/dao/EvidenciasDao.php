@@ -143,4 +143,23 @@ class EvidenciasDAO
         }
     }
     
+    public function eliminarEvidencia($id_evidencias)
+    {
+        try
+        {
+            $query="DELETE FROM evidencias
+
+            WHERE id_evidencias=$id_evidencias";
+            
+            $db= AccesoDB::getInstancia();
+            $result= $db->executeQueryUpdate($query);
+            
+            return $result;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
 }

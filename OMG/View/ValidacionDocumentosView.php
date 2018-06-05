@@ -480,7 +480,7 @@ require_once 'EncabezadoUsuarioView.php';
       
         $('.checkboxDocumento').on('change', function()
         {          
-          var chekeado=$('.checkboxDocumento').is(':checked');
+          var chekeado=$(objetocheckbox).filter('[type=checkbox]')[0]['checked'];
           alert(chekeado);
             $.ajax({
                 url: "../Controller/ValidacionDocumentosController.php?Op=Modificar",
@@ -491,23 +491,18 @@ require_once 'EncabezadoUsuarioView.php';
                     if(data==true)
                     {
                         (chekeado)?
-                        
                         swal("","Documento validado"):swal("","Documento no validado");
 
                         setTimeout(function(){swal.close();},1000);
-                        if(columna=="desviacion_mayor")
-                        {
-                          enviar_notificacion(columna,chekeado,id_validacion_documento);
-                          
-                        }
+//                        if(columna=="desviacion_mayor")
+//                        {
+//                          enviar_notificacion(columna,chekeado,id_validacion_documento);
+//                          
+//                        }
                     }
                 }                
                 });
     
-        // console.log($('#idTable').find('input').filter('[type=checkbox]').attr('checked', false));
-        // inputs = $('#idTable').find('input').filter('[type=checkbox]');
-        // inputs.attr('checked', false);
-        // console.log( $(objetocheckbox).filter('[type=checkbox]').attr('checked', false));
         
       });
     
