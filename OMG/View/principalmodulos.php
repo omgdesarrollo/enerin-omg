@@ -7,13 +7,13 @@ if (Session:: NoExisteSeSion("user")){
     header("location: login.php");
     return;
 }
-$urls["fisica"] = "C:xampp/htdocs/enerin-omg/archivos/";
+//$urls["fisica"] = "C:xampp/htdocs/enerin-omg/archivos/";
 $urls["logica"] = "".$_SERVER['HTTP_HOST']."/enerin-omg/archivos/";
 //para hallar ruta fisica tanto web como local
 //echo dirname(__FILE__);
 //temrina para hallar ruta fisica tanto web como local 
 //rutas web 
-//$urls["fisica"] = "/home/fpa9q09nzhnx/public_html/omgcum/archivos/";
+$urls["fisica"] = "/home/fpa9q09nzhnx/public_html/omgcum/archivos/";
 //$urls["logica"] = 'http://www.enerin-omgapps.com/omgcum/archivos/';
 // $urls[""] = ;
 Session::setSesion("URLS",$urls);
