@@ -65,8 +65,9 @@ switch ($Op)
     break;
 
 
-    case'EliminarEvidencia':
-        $data = $model->eliminarEvidencia($id_evidencias);
+    case 'EliminarEvidencia':
+        
+        $data = $model->eliminarEvidencia($_REQUEST['ID_EVIDENCIA']);
         echo $data;
     break;
     

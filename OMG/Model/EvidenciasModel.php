@@ -97,7 +97,9 @@ class EvidenciasModel
         try
         {
             $dao=new EvidenciasDAO();
-            $dao->eliminarEvidencia($id_evidencias);
+            $result = $dao->eliminarEvidencia($id_evidencias);
+            
+            return $result;
         } catch (Exception $ex)
         {
             throw $ex;

@@ -639,6 +639,7 @@
     function reconstruir(todo,value,carga)
     {
         tempData = "";
+        tempArchivo="";
         // $.each(todo,function(index,value)
         // {
             nametmp="";
@@ -649,7 +650,7 @@
             tempData += "<td class='nuevoTdTable'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td>";                    
             tempData += "<td class='nuevoTdTable' style='font-size: -webkit-xxx-large;'><button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success'";
             tempData += "data-toggle='modal' data-target='#mostrarRegistrosModal'>";
-            tempData += "<i class='ace-icon fa fa-book' style='color: #0099ff;font-size: 20px;'></i> Ver</button></td>";
+            tempData += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i> Ver</button></td>";
             
             tempData += "<td style='font-size: -webkit-xxx-large'><button onClick='mostrar_urls("+value.id_evidencias+");'";
             tempData += "type='button' class='btn btn-success' data-toggle='modal' data-target='#create-itemUrls'>";
@@ -657,6 +658,7 @@
             $.each(todo[0],function(index2,value2)
             {
                 nametmp = value2.split("^");
+                tempArchivo = nametmp[0];
                 // fechaAdjunto=nametmp[0];
                 tempData += "<td>"+nametmp[0]+"</td>";
                 if(value.clasificacion=="")
@@ -682,7 +684,7 @@
 
                 tempData += "<td style='font-size: -webkit-xxx-large'><button onClick='MandarNotificacion("+value.id_documento+");' type='button' class='btn btn-success'";
                 tempData += "data-toggle='modal' data-target='#MandarNotificacionModal'>";
-                tempData += "<i class='ace-icon fa fa-envelope' style='color: #0099ff;font-size: 20px;'></i> Escribir desviación</button></td>";
+                tempData += "<i class='ace-icon fa fa-envelope' style='font-size: 20px;'></i> Escribir desviación</button></td>";
 
                 tempData += "<td style='font-size: -webkit-xxx-large;'><input type='checkbox' style='width:40px;height:40px;margin:28px 0 0;' name='checkbox'";
                 if(value.validacion_supervisor=='true')
@@ -691,7 +693,7 @@
                     tempData += " onchange=\"saveCheckBoxToDataBase(this,'evidencias','validacion_supervisor','id_evidencias',"+value.id_evidencias+")\"";
                 tempData += "></td>"
             });
-            if(value.clasificacion=="")
+            if(tempArchivo=="")
             {
                 tempData += "<td></td><td></td><td></td><td></td><td></td><td></td>";
                 tempData += "<td>";
@@ -708,12 +710,12 @@
     function eliminarEvidencia(id_evidencias)
     {
         $.ajax({
-            url: '../Controller/EnvidenciasController.php?=EliminarEvidencia',
+            url: '../Controller/EvidenciasController.php?Op=EliminarEvidencia',
             type: 'POST',
             data: 'ID_EVIDENCIA='+id_evidencias,
             success:function(eliminado)
             {
-                (eliminado==true)?(swal("","Se elimino la evidencia","success"),$('registro_'+id_evidencias).remove()):swal("","No se pudo eliminar","error");
+                (eliminado==true)?(swal("","Se elimino la evidencia","success"),$('#registro_'+id_evidencias).remove()):swal("","No se pudo eliminar","error");
                 setTimeout(function(){swal.close();},1000);
             },
             error:function()
