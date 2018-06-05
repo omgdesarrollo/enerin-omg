@@ -60,6 +60,24 @@ class EvidenciasModel
         }
     }
     
+    
+    public function iniciarEnVacio($id_evidencias)
+    {
+        try
+        {
+            $dao = new EvidenciasDAO();
+            $rec = $dao->iniciarEnVacio($id_evidencias);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
+    
+
     public function actualizarPorColumna($COLUMNA,$VALOR,$ID_EVIDENCIAS){
         try
         {

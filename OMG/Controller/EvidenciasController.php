@@ -46,6 +46,11 @@ switch ($Op)
         echo $res;
         break;
     
+    case 'iniciarEnVacio':
+        $res = $model->iniciarEnVacio($_REQUEST["ID_EVIDENCIAS"]);
+        echo $res;
+        break;
+    
     case 'ModificarColumna':
 
 		$data = $model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );
