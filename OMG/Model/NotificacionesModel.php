@@ -12,7 +12,7 @@
  * @author usuario
  */
 
-require '../dao/NotificacionesDao.php';
+require '../dao/NotificacionesDAO.php';
 
 
 class NotificacionesModel {

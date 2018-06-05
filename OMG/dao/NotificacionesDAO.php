@@ -1,7 +1,7 @@
 <?php
 
 require_once  '../ds/AccesoDB.php';
-class NotificacionesDao {
+class NotificacionesDAO {
     //put your code here
     
     
