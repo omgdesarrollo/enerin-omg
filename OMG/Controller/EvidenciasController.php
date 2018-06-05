@@ -2,14 +2,14 @@
 
 
 session_start();
-require_once '../Model/OperacionesModel.php';
-require_once '../Pojo/OperacionesPojo.php';
+require_once '../Model/EvidenciasModel.php';
+require_once '../Pojo/EvidenciasPojo.php';
 require_once '../Model/DocumentoModel.php';
 require_once '../util/Session.php';
 
 $Op=$_REQUEST["Op"];
-$model=new OperacionesModel();
-$pojo= new OperacionesPojo();
+$model=new EvidenciasModel();
+$pojo= new EvidenciasPojo();
 
 $modelDocumento=new DocumentoModel();
 
@@ -18,7 +18,7 @@ switch ($Op)
 {
     case 'Listar':
     
-		$Lista=$model->listarOperaciones();
+		$Lista=$model->listarEvidencias();
     	// Session::setSesion("listarOperaciones",$Lista);
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);

@@ -254,10 +254,10 @@ function loadDataSideBarOficiosDocumentacion(){
     
     
     
-       function loadDataSideBarCumplimientosOperaciones(){
+       function loadDataSideBarCumplimientosEvidencias(){
            
         //   consultarInformacion("../Controller/OperacionesController.php?Op=Listar");
-          $("#sidebarObjV").load('InyectarVistasView.php #seguimientooperaciones');
+          $("#sidebarObjV").load('InyectarVistasView.php #seguimientoevidencias');
            
 //         mySidebar = myLayout.cells("a").attachSidebar();
    
