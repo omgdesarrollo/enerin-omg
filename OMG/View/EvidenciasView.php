@@ -789,6 +789,10 @@
                 (response==true)?
                 swal("","Mensaje enviado","success"):swal("","No se pudo enviar la notificacion","error");
                 setTimeout(function(){swal.close();},1500);
+             },
+             error:function()
+             {
+                swal("","Error del servidor","error");
              }
           });
     }
