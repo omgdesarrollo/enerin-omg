@@ -544,7 +544,7 @@ require_once 'EncabezadoUsuarioView.php';
                           
                                                 
                                                 <div class="form-group">
-							<label class="control-label" for="title">Folio Referencia:</label>
+							<label class="control-label" for="title">Referencia:</label>
                                                         <input type="text"  id="FOLIO_REFERENCIA" class="form-control" data-error="Ingrese el Folio de referencia" required />
 							<div class="help-block with-errors"></div>
 						</div>
