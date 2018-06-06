@@ -230,7 +230,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 <th class="table-header">Nombre Documento</th>
                                 <th class="table-header">Responsable del Documento</th>
                                 <th class="table-header">Tema y Responsable</th>
-                                <th class="table-header">Documento Adjunto</th>
+                                <th class="table-header">Archivo Adjunto</th>
                                 <th class="table-header">Requisitos</th>
                                 <th class="table-header">Registros</th>
                                 <th class="table-header">Responsable Documento</th>
@@ -293,6 +293,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 <td>
                                   <button onClick="mostrar_urls(<?php echo $filas['id_validacion_documento'] ?>);" type="button" 
                                   class="btn btn-primary" data-toggle="modal" data-target="#create-itemUrls">
+                                  <i class='fa fa-cloud-upload' style='font-size: 20px'></i>    
 		                                Adjuntar
                                   </button>
                                 </td>
@@ -382,7 +383,7 @@ require_once 'EncabezadoUsuarioView.php';
 		<div class="modal-content">                
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-          <h4 class="modal-title" id="myModalLabel">Documentos Adjuntos</h4>
+          <h4 class="modal-title" id="myModalLabel">Archivos Adjuntos</h4>
         </div>
 
         <div class="modal-body">
@@ -393,7 +394,7 @@ require_once 'EncabezadoUsuarioView.php';
           </div>
 
           <div class="form-group" method="post" >
-                  <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Documento</button>
+                  <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Archivo</button>
           </div>
         </div><!-- cierre div class-body -->
       </div><!-- cierre div class modal-content -->
@@ -640,7 +641,7 @@ require_once 'EncabezadoUsuarioView.php';
         ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
         ModalCargaArchivo += "<div class='fileupload-buttons'>";
         ModalCargaArchivo += "<span class='fileinput-button'>";
-        ModalCargaArchivo += "<span><a >Agregar documentos(Click o Arrastrar)...</a></span>";
+        ModalCargaArchivo += "<span><a >Agregar Archivos(Click o Arrastrar)...</a></span>";
         ModalCargaArchivo += "<input type='file' name='files[]' multiple></span>";
         ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
         ModalCargaArchivo += "<div class='fileupload-progress' >";

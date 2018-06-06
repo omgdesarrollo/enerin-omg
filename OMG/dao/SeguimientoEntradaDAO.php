@@ -4,33 +4,9 @@ class SeguimientoEntradaDAO{
 
     public function mostrarSeguimientoEntradas(){
         try{
-//            $query="SELECT TBSEGUIMIENTO_ENTRADA.ID_SEGUIMIENTO_ENTRADA, TBDOCUMENTO_ENTRADA.ID_DOCUMENTO_ENTRADA, 
-//		 TBDOCUMENTO_ENTRADA.FOLIO_ENTRADA, TBENTIDAD_REGULADORA.CLAVE_ENTIDAD, TBDOCUMENTO_ENTRADA.ASUNTO,
-//       
-//		 TBEMPLEADOS.ID_EMPLEADO ID_EMPLEADOTEMA, TBEMPLEADOS.NOMBRE_EMPLEADO NOMBRE_EMPLEADOTEMA, 
-//		 TBEMPLEADOS.APELLIDO_PATERNO APELLIDO_PATERNOTEMA, TBEMPLEADOS.APELLIDO_MATERNO APELLIDO_MATERNOTEMA,
-//		 
-//		 TBSEGUIMIENTO_ENTRADA.ID_EMPLEADO ID_EMPLEADOPLAN, TBEMPLEADOSPLAN.NOMBRE_EMPLEADO NOMBRE_EMPLEADOPLAN,
-//		 TBEMPLEADOSPLAN.APELLIDO_PATERNO APELLIDO_PATERNOPLAN, TBEMPLEADOSPLAN.APELLIDO_MATERNO APELLIDO_MATERNOPLAN,
-// 		 
-//		 TBDOCUMENTO_ENTRADA.FECHA_LIMITE_ATENCION, TBDOCUMENTO_ENTRADA.STATUS_DOC,TBDOCUMENTO_ENTRADA.DOCUMENTO,
-//                 TBDOCUMENTO_ENTRADA.OBSERVACIONES FROM SEGUIMIENTO_ENTRADA TBSEGUIMIENTO_ENTRADA
-//		 
-//                    JOIN   DOCUMENTO_ENTRADA TBDOCUMENTO_ENTRADA ON 
-//                    TBDOCUMENTO_ENTRADA.ID_DOCUMENTO_ENTRADA=TBSEGUIMIENTO_ENTRADA.ID_DOCUMENTO_ENTRADA
-//                    
-//                    JOIN CLAUSULAS TBCLAUSULAS ON TBCLAUSULAS.ID_CLAUSULA=TBDOCUMENTO_ENTRADA.ID_CLAUSULA
-//		 
-//                    JOIN ENTIDAD_REGULADORA TBENTIDAD_REGULADORA ON
-//                    TBENTIDAD_REGULADORA.ID_ENTIDAD=TBDOCUMENTO_ENTRADA.ID_ENTIDAD
-//
-//                    JOIN EMPLEADOS TBEMPLEADOS ON TBEMPLEADOS.ID_EMPLEADO=TBCLAUSULAS.ID_EMPLEADO
-//                    
-//                    JOIN EMPLEADOS TBEMPLEADOSPLAN ON TBEMPLEADOSPLAN.ID_EMPLEADO=TBSEGUIMIENTO_ENTRADA.ID_EMPLEADO";
-
-            
-            $query="SELECT tbseguimiento_entrada.id_seguimiento_entrada, tbdocumento_entrada.id_documento_entrada, 
-		 tbdocumento_entrada.folio_entrada, tbentidad_reguladora.clave_entidad, tbdocumento_entrada.asunto,
+                $query="SELECT tbseguimiento_entrada.id_seguimiento_entrada, tbseguimiento_entrada.avance_programa, 
+                    tbdocumento_entrada.id_documento_entrada, tbdocumento_entrada.folio_entrada, tbentidad_reguladora.clave_entidad,
+                    tbdocumento_entrada.asunto,
        
 		 tbempleados.id_empleado id_empleadotema, tbempleados.nombre_empleado nombre_empleadotema, 
 		 tbempleados.apellido_paterno apellido_paternotema, tbempleados.apellido_materno apellido_maternotema,

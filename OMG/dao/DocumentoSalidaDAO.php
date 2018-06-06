@@ -4,24 +4,6 @@ class DocumentoSalidaDAO{
 
     public function mostrarDocumentosSalida(){
         try{
-//            $query="SELECT TBDOCUMENTO_SALIDA.ID_DOCUMENTO_SALIDA,TBDOCUMENTO_ENTRADA.ID_DOCUMENTO_ENTRADA,
-//                    TBDOCUMENTO_ENTRADA.FOLIO_ENTRADA,TBDOCUMENTO_SALIDA.FOLIO_SALIDA,
-//                    TBDOCUMENTO_SALIDA.FECHA_ENVIO, TBDOCUMENTO_SALIDA.ASUNTO,
-//                    TBENTIDAD_REGULADORA.CLAVE_ENTIDAD,TBDOCUMENTO_SALIDA.DESTINATARIO,
-//                    TBEMPLEADOS.NOMBRE_EMPLEADO,TBEMPLEADOS.APELLIDO_PATERNO, 
-//                    TBEMPLEADOS.APELLIDO_MATERNO, TBDOCUMENTO_SALIDA.DOCUMENTO,
-//                    TBDOCUMENTO_SALIDA.OBSERVACIONES FROM DOCUMENTO_SALIDA TBDOCUMENTO_SALIDA
-//
-//                    JOIN DOCUMENTO_ENTRADA TBDOCUMENTO_ENTRADA ON
-//                    TBDOCUMENTO_ENTRADA.ID_DOCUMENTO_ENTRADA=TBDOCUMENTO_SALIDA.ID_DOCUMENTO_ENTRADA
-//
-//                    JOIN ENTIDAD_REGULADORA TBENTIDAD_REGULADORA ON
-//                    TBENTIDAD_REGULADORA.ID_ENTIDAD=TBDOCUMENTO_ENTRADA.ID_ENTIDAD
-//
-//                    JOIN CLAUSULAS TBCLAUSULAS ON
-//                    TBCLAUSULAS.ID_CLAUSULA=TBDOCUMENTO_ENTRADA.ID_CLAUSULA
-//
-//                    JOIN EMPLEADOS TBEMPLEADOS ON TBEMPLEADOS.ID_EMPLEADO=TBCLAUSULAS.ID_EMPLEADO";
             
             
             $query="SELECT tbdocumento_salida.id_documento_salida,tbdocumento_entrada.id_documento_entrada,
@@ -59,7 +41,7 @@ class DocumentoSalidaDAO{
     
  
     
-    public function insertarDocumentosSalida($id_documento_entrada,$folio_salida,$fecha_envio,$asunto,$destinatario,$documento,$observaciones){
+    public function insertarDocumentosSalida($id_documento_entrada,$folio_salida,$fecha_envio,$asunto,$destinatario,$observaciones){
         
         try{
             
@@ -75,18 +57,12 @@ class DocumentoSalidaDAO{
             if ($id_nuevo==NULL) {
                 $id_nuevo=0;
             }
+                        
             
-            
-//            $query="INSERT INTO DOCUMENTO_SALIDA (ID_DOCUMENTO_SALIDA,ID_DOCUMENTO_ENTRADA,FOLIO_SALIDA,FECHA_ENVIO,ASUNTO,DESTINATARIO,
-//						  DOCUMENTO,OBSERVACIONES)
-
-            
-             $query="insert into documento_salida (id_documento_salida,id_documento_entrada,folio_salida,fecha_envio,asunto,destinatario,
-						  documento,observaciones)
+             $query="insert into documento_salida (id_documento_salida,id_documento_entrada,folio_salida,fecha_envio,asunto,destinatario,observaciones)
                                                   
                                                     
-                                          VALUES ($id_nuevo,$id_documento_entrada,'$folio_salida','$fecha_envio','$asunto','$destinatario',
-                                                  '$documento','$observaciones');";
+                                          VALUES ($id_nuevo,$id_documento_entrada,'$folio_salida','$fecha_envio','$asunto','$destinatario','$observaciones');";
             
             $db=  AccesoDB::getInstancia();
             $db->executeQueryUpdate($query);
@@ -116,12 +92,11 @@ class DocumentoSalidaDAO{
          
         try{
             $query="UPDATE documento_salida SET ".$COLUMNA."='".$VALOR."'  WHERE id_documento_salida=$ID_DOCUMENTO_SALIDA";
-//             $query="UPDATE EMPLEADOS SET CORREO='$Correo' WHERE ID_EMPLEADO=$Id_Empleado";
+
      
             $db= AccesoDB::getInstancia();
            $result= $db->executeQueryUpdate($query);
-//            $db->executeQuery($query);
-//            return $lista[0];
+
         } catch (Exception $ex) {
            throw $ex; 
         }
