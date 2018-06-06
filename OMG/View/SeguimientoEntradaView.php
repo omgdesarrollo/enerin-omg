@@ -217,9 +217,9 @@ require_once 'EncabezadoUsuarioView.php';
                                 <th class="table-header">Status</th>
                                 <th class="table-header">Condicion</th>
                                 <th class="table-header">Responsable del Plan</th>
-                                <th class="table-header">Documento</th>
-                                <th class="table-header">Programa</th>
-                                
+                                <th class="table-header">Archivo Adjunto</th>
+                                <th class="table-header">Registrar Programa</th>
+                                <th class="table-header">Avance del Programa</th>
 			  </tr>
 		  <!--</thead>-->
 		  <tbody>
@@ -373,9 +373,9 @@ require_once 'EncabezadoUsuarioView.php';
                                     </select>                                                                    
                                 </td>
                                 
-                                                                    
+                                <td></td>                                    
                                 <!--<td contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php // echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php // echo $filas["documento"]; ?></td>-->
-                                <td ><button class="btn btn-info" onClick="cargadePrograma('<?php echo $filas["folio_entrada"]; ?>')">Cargar Programa</button></td>
+                                <td ><button class="btn btn-success" onClick="cargadePrograma('<?php echo $filas["folio_entrada"]; ?>')">Registrar</button></td>
                                 
 			  </tr>
                           

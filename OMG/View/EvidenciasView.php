@@ -159,7 +159,7 @@
             // array("name"=>"Clave Evidencia","column"=>"text"),
         );
         $titulosTable = 
-            array("Clave","Nombre Documento","Responsable Documento","Registros","Documento Adjunto",
+            array("Clave","Nombre Documento","Responsable Documento","Registros","Achivo Adjunto",
                 "Fecha Registro","Clasificación","Acción Correctiva Inmediata","Plan de Acción","Desviación","Validación","Opcion"
                 /*,"Ingresar Oficio Atención","Oficio de Atención"*/);
     ?>
@@ -280,7 +280,7 @@
                         
             <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-            <h4 class="modal-title" id="myModalLabel">Documento Adjuntado</h4>
+            <h4 class="modal-title" id="myModalLabel">Archivos Adjuntos</h4>
             </div>
 
             <div class="modal-body">
@@ -292,7 +292,7 @@
                 </div>
 
                 <div class="form-group" method="post" >
-                    <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Agregar Archivo</button>
+                    <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Archivo</button>
                 </div>
             </div><!-- cierre div class-body -->
         </div><!-- cierre div class modal-content -->
@@ -653,8 +653,8 @@
             tempData += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i> Ver</button></td>";
             
             tempData += "<td style='font-size: -webkit-xxx-large'><button onClick='mostrar_urls("+value.id_evidencias+");'";
-            tempData += "type='button' class='btn btn-success' data-toggle='modal' data-target='#create-itemUrls'>";
-            tempData += "Adjuntar Documento</button></td>";
+            tempData += "type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
+            tempData += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar</button></td>";
             $.each(todo[0],function(index2,value2)
             {
                 nametmp = value2.split("^");
@@ -833,7 +833,7 @@
         ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
         ModalCargaArchivo += "<div class='fileupload-buttons'>";
         ModalCargaArchivo += "<span class='fileinput-button'>";
-        ModalCargaArchivo += "<span id='spanAgregarDocumento'><a >Agregar documentos(Click o Arrastrar)...</a></span>";
+        ModalCargaArchivo += "<span id='spanAgregarDocumento'><a >Agregar Archivos(Click o Arrastrar)...</a></span>";
         ModalCargaArchivo += "<input type='file' name='files[]'></span>";
         ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
         ModalCargaArchivo += "<div class='fileupload-progress' >";
