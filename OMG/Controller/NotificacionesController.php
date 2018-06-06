@@ -26,7 +26,7 @@ switch ($Op) {
             // $estado = $_REQUEST["ESTADO"];//
         //     $columna=$_REQUEST["columna"];
             
-        //     $id_validacion_documento=$_REQUEST["id_validacion_documento"];
+            $id_validacion_documento=$_REQUEST["id_validacion_documento"];
             // datos de la sesion 
         //     echo $lista;
             $de=$lista["usuariosyempleados_id_usuario_empleados"];
