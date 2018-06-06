@@ -5,7 +5,7 @@ class NotificacionesDAO {
     //put your code here
     
     
-    public function enviaraResponsableCumplimiento_sobre_desviacion_mayor($id_usuario_empleado,$mensaje,$tipo,$atendido,$para){
+    public function guardarNotificacionHibry($id_usuario_empleado,$mensaje,$tipo,$atendido,$para){
         try{
             $query="insert into notificaciones 
                     (id_usuario_empleado,mensaje,tipo_mensaje,atendido,para)
@@ -16,6 +16,7 @@ class NotificacionesDAO {
             
         } catch (Exception $ex) {
             throw $ex;
+            return false;
         }
     }
     

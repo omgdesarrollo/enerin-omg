@@ -60,7 +60,26 @@ class EvidenciasModel
         }
     }
     
-    public function actualizarPorColumna($COLUMNA,$VALOR,$ID_EVIDENCIAS){
+    
+    public function iniciarEnVacio($id_evidencias)
+    {
+        try
+        {
+            $dao = new EvidenciasDAO();
+            $rec = $dao->iniciarEnVacio($id_evidencias);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
+    
+
+    public function actualizarPorColumna($COLUMNA,$VALOR,$ID_EVIDENCIAS)
+    {
         try
         {
             $dao=new EvidenciasDAO();
@@ -68,10 +87,26 @@ class EvidenciasModel
             return $rec;
         }catch (Exception $ex) 
         {
+            throw $ex;
             return false;
         }
     }
     
+    public function eliminarEvidencia ($id_evidencias)
+    {
+        try
+        {
+            $dao=new EvidenciasDAO();
+            $result = $dao->eliminarEvidencia($id_evidencias);
+            
+            return $result;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+            
     
 }
 ?>

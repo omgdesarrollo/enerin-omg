@@ -33,7 +33,7 @@ class DocumentoSalidaModel {
             $dao=new DocumentoSalidaDAO();
             
            $dao->insertarDocumentosSalida($pojo->getId_documento_entrada(),$pojo->getFolio_salida(),$pojo->getFecha_envio(),
-                                          $pojo->getAsunto(),$pojo->getDestinatario(),$pojo->getDocumento(),$pojo->getObservaciones());
+                                          $pojo->getAsunto(),$pojo->getDestinatario(),$pojo->getObservaciones());
         } catch (Exception $ex) {
                 throw $ex;
         }

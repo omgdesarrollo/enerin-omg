@@ -46,6 +46,11 @@ switch ($Op)
         echo $res;
         break;
     
+    case 'iniciarEnVacio':
+        $res = $model->iniciarEnVacio($_REQUEST["ID_EVIDENCIAS"]);
+        echo $res;
+        break;
+    
     case 'ModificarColumna':
 
 		$data = $model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );
@@ -57,6 +62,13 @@ switch ($Op)
     $resultado = $model->listarEvidencia($_REQUEST['ID_EVIDENCIA']);
     header('Content-type: application/json; charset=utf-8');
     echo json_encode($resultado);
+    break;
+
+
+    case 'EliminarEvidencia':
+        
+        $data = $model->eliminarEvidencia($_REQUEST['ID_EVIDENCIA']);
+        echo $data;
     break;
     
 	default:

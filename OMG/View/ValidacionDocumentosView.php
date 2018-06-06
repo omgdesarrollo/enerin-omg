@@ -230,7 +230,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 <th class="table-header">Nombre Documento</th>
                                 <th class="table-header">Responsable del Documento</th>
                                 <th class="table-header">Tema y Responsable</th>
-                                <th class="table-header">Documento Adjunto</th>
+                                <th class="table-header">Archivo Adjunto</th>
                                 <th class="table-header">Requisitos</th>
                                 <th class="table-header">Registros</th>
                                 <th class="table-header">Responsable Documento</th>
@@ -282,9 +282,9 @@ require_once 'EncabezadoUsuarioView.php';
                                 -->
                                 
                                 <td>
-                                        <button onClick="mostrarTemaResponsable(<?php echo $filas['id_documento'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-temaresponsable">
-		                                Ver
-                                                <i class="ace-icon fa fa-book" style="color: #0099ff;font-size: 20px;"></i>
+                                        <button onClick="mostrarTemaResponsable(<?php echo $filas['id_documento'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-temaresponsable">		                                
+                                                <i class="ace-icon fa fa-book" style="font-size: 20px;"></i>
+                                                Ver
                                         </button>
                                 </td>
                                 
@@ -293,6 +293,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 <td>
                                   <button onClick="mostrar_urls(<?php echo $filas['id_validacion_documento'] ?>);" type="button" 
                                   class="btn btn-primary" data-toggle="modal" data-target="#create-itemUrls">
+                                  <i class='fa fa-cloud-upload' style='font-size: 20px'></i>    
 		                                Adjuntar
                                   </button>
                                 </td>
@@ -300,15 +301,15 @@ require_once 'EncabezadoUsuarioView.php';
                                 <!--Mostrar Requisutos-->
                                 <td>
                                         <button onClick="mostrarRequisitos(<?php echo $filas['id_documento'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-requisitos">
-		                                Ver
-                                                <i class="ace-icon fa fa-book" style="color: #0099ff;font-size: 20px;"></i>
+                                                <i class="ace-icon fa fa-book" style="font-size: 20px;"></i>
+                                                Ver
                                         </button>
                                 </td>
                                 
                                 <td>
                                         <button onClick="mostrarRegistros(<?php echo $filas['id_documento'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-registros">
-		                                Ver
-                                                <i class="ace-icon fa fa-book" style="color: #0099ff;font-size: 20px;"></i>
+                                                <i class="ace-icon fa fa-book" style="font-size: 20px;"></i>
+		                                Ver                                                
                                         </button>
                                 </td>
                                 
@@ -382,7 +383,7 @@ require_once 'EncabezadoUsuarioView.php';
 		<div class="modal-content">                
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-          <h4 class="modal-title" id="myModalLabel">Documentos Adjuntos</h4>
+          <h4 class="modal-title" id="myModalLabel">Archivos Adjuntos</h4>
         </div>
 
         <div class="modal-body">
@@ -393,7 +394,7 @@ require_once 'EncabezadoUsuarioView.php';
           </div>
 
           <div class="form-group" method="post" >
-                  <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Documento</button>
+                  <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Archivo</button>
           </div>
         </div><!-- cierre div class-body -->
       </div><!-- cierre div class modal-content -->
@@ -480,7 +481,7 @@ require_once 'EncabezadoUsuarioView.php';
       
         $('.checkboxDocumento').on('change', function()
         {          
-          var chekeado=$('.checkboxDocumento').is(':checked');
+          var chekeado=$(objetocheckbox).filter('[type=checkbox]')[0]['checked'];
           alert(chekeado);
             $.ajax({
                 url: "../Controller/ValidacionDocumentosController.php?Op=Modificar",
@@ -491,23 +492,18 @@ require_once 'EncabezadoUsuarioView.php';
                     if(data==true)
                     {
                         (chekeado)?
-                        
                         swal("","Documento validado"):swal("","Documento no validado");
 
                         setTimeout(function(){swal.close();},1000);
-                        if(columna=="desviacion_mayor")
-                        {
-                          enviar_notificacion(columna,chekeado,id_validacion_documento);
-                          
-                        }
+//                        if(columna=="desviacion_mayor")
+//                        {
+//                          enviar_notificacion(columna,chekeado,id_validacion_documento);
+//                          
+//                        }
                     }
                 }                
                 });
     
-        // console.log($('#idTable').find('input').filter('[type=checkbox]').attr('checked', false));
-        // inputs = $('#idTable').find('input').filter('[type=checkbox]');
-        // inputs.attr('checked', false);
-        // console.log( $(objetocheckbox).filter('[type=checkbox]').attr('checked', false));
         
       });
     
@@ -515,10 +511,8 @@ require_once 'EncabezadoUsuarioView.php';
     });// Cierra el $function 
  
       function enviar_notificacion(columna,chekeado,id_validacion_documento){
-        
           var u=$("#user").val();
 //            alert("enviado correccto "+u);
-          
           $.ajax({
              url:"../Controller/NotificacionesController.php?Op=enviarNotificacionDesviacionAResponsableContrato",
              data:"columna="+columna+"&checkeado="+chekeado+"&id_validacion_documento="+id_validacion_documento,
@@ -530,7 +524,6 @@ require_once 'EncabezadoUsuarioView.php';
              }
               
           });
-          
       }
       
       function envioCorreo (para,asunto,mensaje){
@@ -555,7 +548,7 @@ require_once 'EncabezadoUsuarioView.php';
                      id_validacion_documento=id;
                      columna=column;
                      objetocheckbox=checkbox;
-               }            
+               }
             
                 
                 
@@ -648,7 +641,7 @@ require_once 'EncabezadoUsuarioView.php';
         ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
         ModalCargaArchivo += "<div class='fileupload-buttons'>";
         ModalCargaArchivo += "<span class='fileinput-button'>";
-        ModalCargaArchivo += "<span><a >Agregar documentos(Click o Arrastrar)...</a></span>";
+        ModalCargaArchivo += "<span><a >Agregar Archivos(Click o Arrastrar)...</a></span>";
         ModalCargaArchivo += "<input type='file' name='files[]' multiple></span>";
         ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
         ModalCargaArchivo += "<div class='fileupload-progress' >";

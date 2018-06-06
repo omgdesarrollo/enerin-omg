@@ -20,7 +20,6 @@ class DocumentoSalidaPojo {
     private $fecha_envio='';
     private $asunto='';
     private $destinatario='';
-    private $documento='';
     private $observaciones='';
 
     
@@ -71,13 +70,6 @@ class DocumentoSalidaPojo {
         $this->destinatario = $destinatario;
     }
 
-    
-    function getDocumento() {
-        return $this->documento;
-    }
-    function setDocumento($documento) {
-        $this->documento = $documento;
-    }
 
     function getObservaciones() {
         return $this->observaciones;

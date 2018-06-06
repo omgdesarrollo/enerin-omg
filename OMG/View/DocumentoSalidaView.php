@@ -177,31 +177,7 @@ require_once 'EncabezadoUsuarioView.php';
 
 
 <div style="height: 55px"></div>-->
-<!-- Inicio de Seccion Modal Archivos-->
-<div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-      <div id="loaderModalMostrar"></div>
-		<div class="modal-content">
-                        
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Archivos agregados</h4>
-      </div>
 
-      <div class="modal-body">
-        <div id="DocumentolistadoUrl"></div>
-        
-        <div class="form-group">
-          <div id="DocumentolistadoUrlModal"></div>
-			  </div>
-
-        <div class="form-group" method="post" >
-          <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Agregar Archivo</button>
-        </div>
-      </div><!-- cierre div class-body -->
-    </div><!-- cierre div class modal-content -->
-  </div><!-- cierre div class="modal-dialog" -->
-</div><!-- cierre del modal -->
                    
 <div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> 
     <div class="table-container">
@@ -216,7 +192,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 <th class="table-header">Asunto</th>
                                 <th class="table-header">Remitente</th>
                                 <th class="table-header">Autoridad Remitente</th>                                
-                                <th class="table-header">Documento</th>
+                                <th class="table-header">Archivo Adjunto</th>
                                 <th class="table-header">Observaciones</th>              
                                
                                 
@@ -333,8 +309,9 @@ require_once 'EncabezadoUsuarioView.php';
                                 
                                 <td>
                                   <button onClick="mostrar_urls(<?php echo $filas['id_documento_salida'] ?>);" type="button" 
-                                  class="btn btn-success" data-toggle="modal" data-target="#create-itemUrls">
-		                                Mostrar Documentos
+                                  class="btn btn-info" data-toggle="modal" data-target="#create-itemUrls">
+                                      <i class='fa fa-cloud-upload' style='font-size: 20px'></i>  
+                                      Mostrar
                                   </button>
                                 </td>
                                 
@@ -426,11 +403,11 @@ require_once 'EncabezadoUsuarioView.php';
 						</div>
                                     
                                     
-                                                <div class="form-group">
+<!--                                                <div class="form-group">
 							<label class="control-label" for="title">Documento:</label>
                                                         <textarea  id="DOCUMENTO" class="form-control" data-error="Ingrese el Documento" required></textarea>
 							<div class="help-block with-errors"></div>
-						</div>
+						</div>-->
                                                                                                                               
                                                                                       
                                                 <div class="form-group">
@@ -454,6 +431,33 @@ require_once 'EncabezadoUsuarioView.php';
 		  </div>
 		</div>
        <!--Final de Seccion Modal-->
+       
+       
+<!-- Inicio de Seccion Modal Archivos-->
+<div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+      <div id="loaderModalMostrar"></div>
+		<div class="modal-content">
+                        
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Archivos Adjuntos</h4>
+      </div>
+
+      <div class="modal-body">
+        <div id="DocumentolistadoUrl"></div>
+        
+        <div class="form-group">
+          <div id="DocumentolistadoUrlModal"></div>
+			  </div>
+
+        <div class="form-group" method="post" >
+          <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Archivo</button>
+        </div>
+      </div><!-- cierre div class-body -->
+    </div><!-- cierre div class modal-content -->
+  </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal -->       
 	
                 
                 
@@ -728,7 +732,7 @@ require_once 'EncabezadoUsuarioView.php';
       ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
       ModalCargaArchivo += "<div class='fileupload-buttons'>";
       ModalCargaArchivo += "<span class='fileinput-button'>";
-      ModalCargaArchivo += "<span><a >Agregar documentos(Click o Arrastrar)...</a></span>";
+      ModalCargaArchivo += "<span><a >Agregar Archivos(Click o Arrastrar)...</a></span>";
       ModalCargaArchivo += "<input type='file' name='files[]' multiple></span>";
       ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
       ModalCargaArchivo += "<div class='fileupload-progress' >";
