@@ -213,7 +213,7 @@ require_once 'EncabezadoUsuarioView.php';
 			  <tr>
 				
                                 <th class="table-header">Contrato</th>
-                                <th class="table-header">Folio Referencia</th>
+                                <th class="table-header">Referencia</th>
                                 <th class="table-header">Folio de Entrada</th>
                                 <th class="table-header">Fecha Recepcion</th>
                                 <th class="table-header">Asunto</th>
