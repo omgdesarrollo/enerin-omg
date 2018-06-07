@@ -25,8 +25,19 @@ class RegistrosDAO
         }
     }
     
-    
-    
+    public function insertarRegistros($registro)
+    {
+        try
+        {
+            $query="INSERT INTO registros(id_registro,registro)
+
+                    VALUES (null,'$registro');";
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
     
     
     

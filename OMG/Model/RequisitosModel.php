@@ -20,5 +20,23 @@ class RegistrosModel{
             return false;
         }
     }
+    
+    
+    public function insertar($registro)
+    {
+        try
+        {
+            $dao=new RegistrosDAO();
+            $dao->insertarRegistros($registro);
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
+    
+}    
 
 ?>

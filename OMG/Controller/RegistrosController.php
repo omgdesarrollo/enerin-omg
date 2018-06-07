@@ -19,6 +19,12 @@ switch ($Op){
                 return $Lista;        
     break;
 
+    case 'guardar':
+        
+        $data = $model->insertarRegistros($_REQUEST["REGISTRO"]);
+		echo $data;
+    break;
+
     default:
     # code...
     break;
