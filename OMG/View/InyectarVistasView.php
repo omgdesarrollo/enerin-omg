@@ -48,7 +48,7 @@
 
 
 <div id="documentosEntrada">
-<iframe src="DocumentoEntradaView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
+    <iframe src="DocumentoEntradaView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
 
 

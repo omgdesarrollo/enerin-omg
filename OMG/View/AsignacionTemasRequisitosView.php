@@ -17,85 +17,35 @@ $Usuario=  Session::getSesion("user");
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
-		<!--Bootstrap-->
-                <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-                <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
-
-
-		<!-- text fonts -->
-		<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />
-		<!-- ace styles -->
+                 
+                 <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-
-		<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
-		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
-                
+<!--
                 <!--Inicia para el spiner cargando-->
                 <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
                 <!--Termina para el spiner cargando-->
-            
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 
                 <script src="../../js/jquery.js" type="text/javascript"></script>
 
-                
-                <!--en esta seccion es para poder abrir el modal--> 
-                <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
-                <!--aqui termina la seccion para poder abrir el modal-->
-            
-                
-            
+                <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+         
+                <link href="../../codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
+                <script src="../../codebase/dhtmlx.js" type="text/javascript"></script>
+                <link href="../../codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
+              
+
+
             <style>
-                    .modal
-                    {
-                        overflow: hidden;
-                    }
-                    .modal-dialog{
-                        margin-right: 0;
-                        margin-left: 0;
-                    }
-                    .modal-header{
-                      height:30px;background-color:#444;
-                      color:#ddd;
-                    }
-                    .modal-title{
-                      margin-top:-10px;
-                      font-size:16px;
-                    }
-                    .modal-header .close{
-                      margin-top:-10px;
-                      color:#fff;
-                    }
-                    .modal-body{
-                      color:#888;
-                       /*max-height: calc(100vh - 210px);*/
-                      max-height: calc(100vh - 110px);
-                      overflow-y: auto;
-                    }
-                    .modal-body p {
-                      text-align:center;
-                      padding-top:10px;
-                    }
+                
                     
-                    div#winVP {
+                div#winVP {
 			position: relative;
 			height: 350px;
 			border: 1px solid #dfdfdf;
 			margin: 10px;
 		}
-                    
-                    
-/*                    .main-encabezado {
-                        background: #333;
-                        color: white;
-                        height: 80px;
-
-                        width: 100%;  hacemos que la cabecera ocupe el ancho completo de la página 
-                        left: 0;  Posicionamos la cabecera al lado izquierdo 
-                        top: 0;  Posicionamos la cabecera pegada arriba 
-                        position: fixed;  Hacemos que la cabecera tenga una posición fija 
-                    }*/
                     
                     
 /*Inicia estilos para mantener fijo el header*/                    
@@ -153,7 +103,6 @@ $Usuario=  Session::getSesion("user");
 	</head>
 
         <body class="no-skin" onload="loadSpinner()">
-            <!--<div>Cargando...</div>-->
             <div id="loader"></div>
             
 <?php
@@ -178,7 +127,9 @@ require_once 'EncabezadoUsuarioView.php';
     Lista de Temas
     <!--<i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>-->
 </button>
-
+    <button type="button" class="btn btn-success" onclick="showArbol()" data-toggle="modal" data-target="#show-arbol">
+        mostrar Arbol
+</button>   
 <button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
     <i class="glyphicon glyphicon-repeat"></i> 
 </button>
@@ -204,17 +155,6 @@ require_once 'EncabezadoUsuarioView.php';
 
 <div style="height: 70px"></div>
 
-
-
-
-
-
-<!--<div class="contenedortable">   
-    <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Descripcion del Tema" style="width: 220px">
-</div > -->
-
-
-
 <div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> <!--inicio animacion tabla toda la interfaz seleccionada-->
     <div class="table-container" id="winVP"> 
 
@@ -232,18 +172,13 @@ require_once 'EncabezadoUsuarioView.php';
 		  <tbody>
 		  <?php
                   
-                    
-                  
-//		  foreach($faq as $k=>$v) {
+ 
                   $Lista = Session::getSesion("listarAsignacionTemasRequisitos");
                   $cbxClau= Session::getSesion("listarClausulasComboBox");
                   $cbxDoc= Session::getSesion("listarDocumentosComboBox");
-//                  $datostema
                   $numeracion = 1;
                   
-//		foreach ($Lista as $k=>$filas) { 
-//                   $valorid= $Lista[$k]["ID_EMPLEADO"];
-//                   $nombreempleado=$Lista[$k]["NOMBRE_EMPLEADO"];
+
                   foreach ($Lista as $filas) { 
 		  ?>
 			  <tr class="table-row" >
@@ -316,13 +251,7 @@ require_once 'EncabezadoUsuarioView.php';
                 
 		?>
 		  </tbody>
-		</table>
-
-
-<!--			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-			</a>-->
-	
+		</table>	
     </div>         
 </div>         
                 
@@ -331,7 +260,7 @@ require_once 'EncabezadoUsuarioView.php';
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
 		        <h4 class="modal-title" id="myModalLabel">Crear Nuevo Requisito a un Tema</h4>
 		      </div>
 
@@ -406,19 +335,37 @@ require_once 'EncabezadoUsuarioView.php';
        <!--Final de Seccion Modal-->
                 
 
-                
-                
-                
-                
+ <div class="modal draggable fade" id="show-arbol" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Arbol</h4>
+		      </div>
+
+		      <div class="modal-body">                   
+<!--                            <div class="form-group">
+
+                            </div>-->
+                           <div id="treeboxbox_tree" style="width:550px;height:250px;background-color:white;"></div>
+		      </div>
+		    </div>
+
+		  </div>
+		</div>                
+
 		<script>
-                    
+                   myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%', 0);
+			myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
+                        myTree.enableHighlighting(true);
+                        
                       var id_asignacion_tema_requisito;
                       var cualmodificar,si_hay_cambio=false;
                       $(function(){
                           
+                          
+                          
                         $('.select').on('change', function() {
-//                          console.log( $(this).prop('value') );
-//                          alert("el value que va a viajar es "+ $(this).prop('value'));
                           
                           if(cualmodificar == "id_clausula"){
                             column="id_clausula";
@@ -451,17 +398,10 @@ require_once 'EncabezadoUsuarioView.php';
                         });
                         
                         
-                        $("#btn_guardar").click(function(){
-                                  alert("entro aqui");
-                                  
-        
+                        $("#btn_guardar").click(function(){                                  
                                     var ID_CLAUSULAMODAL=$("#ID_CLAUSULAMODAL").val();
                                     var REQUISITO=$("#REQUISITO").val();
                                     var ID_DOCUMENTOMODAL=$("#ID_DOCUMENTOMODAL").val();
-
-                                   alert("ID_DOCUMENTOMODAL :"+ID_DOCUMENTOMODAL);
-                                  
-                                    
 
                                     datos=[];
                                     datos.push(ID_CLAUSULAMODAL);
@@ -476,9 +416,6 @@ require_once 'EncabezadoUsuarioView.php';
 
                         $("#btn_limpiar").click(function(){
                             
-//                            alert("entro aqui");
-                            
-                                  //$("#ID_CLAUSULAMODAL").val("");
                                   $("#REQUISITO").val("");
                                                                       
                         });
@@ -541,7 +478,6 @@ require_once 'EncabezadoUsuarioView.php';
                
                
                function saveToDatabaseDatosFormulario(datos){
-//                    alert("datos nombre "+datos[0]);
                     
                     	$.ajax({
                                 url: "../Controller/AsignacionTemasRequisitosController.php?Op=Guardar",
@@ -549,17 +485,12 @@ require_once 'EncabezadoUsuarioView.php';
 				data:'ID_CLAUSULA='+datos[0]+'&REQUISITO='+datos[1]+'&ID_DOCUMENTO='+datos[2],
                                 
 				success: function(data){
-                                    alert("se guardo");
-                                    
-//					$(editableObj).css("background","#FDFDFD");
                                         swal("Guardado Exitoso!", "Ok!", "success");
                                          consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
                                          consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
                                          setTimeout('refresh()',1000);
-                                         //window.location.href="AsignacionTemasRequisitosView.php";
 				}   
 		   });
-//                   window.location.href("EmpleadosView.php");
                 }
                 
                 
@@ -588,17 +519,12 @@ require_once 'EncabezadoUsuarioView.php';
               
                 function refresh(){
                   consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");  
-                  //window.location.href="AsignacionTemasRequisitosView.php";  
+              
                 }
-                
                 function loadSpinner(){
-//                    alert("se cargara otro ");
                         myFunction();
                 }
-                
                   function detectarsihaycambio(value){
-//                    alert("entro "+value.innerHTML);
-                    
                     si_hay_cambio=true;
                     
                     
@@ -663,15 +589,15 @@ require_once 'EncabezadoUsuarioView.php';
                     }
                 }    
                 
+              
 		</script>
-                
+                <script src="../../js/functionATRView.js" type="text/javascript"></script>
                 <!--Inicia para el spiner cargando-->
                 <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                 <!--Termina para el spiner cargando-->
                 
                 <!--jquery-->
                 <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-                <script src="../../assets/probando/js/jquery-2.1.4.min.js"></script>
                 
                 <!--Bootstrap-->
                 <script src="../../assets/probando/js/bootstrap.min.js"></script>
@@ -682,11 +608,7 @@ require_once 'EncabezadoUsuarioView.php';
 		<script src="../../assets/probando/js/ace-elements.min.js"></script>
 		<script src="../../assets/probando/js/ace.min.js"></script>
                 <script src="../../assets/probando/js/ace-extra.min.js"></script>
-                
-                <!--DHTMLX-->
-                <script src="../../codebase/dhtmlx.js"></script>
-
-                
+     
 		     
                 
 	</body>

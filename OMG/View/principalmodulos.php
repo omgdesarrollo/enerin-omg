@@ -7,14 +7,14 @@ if (Session:: NoExisteSeSion("user")){
     header("location: login.php");
     return;
 }
-//$urls["fisica"] = "C:xampp/htdocs/enerin-omg/archivos/";
-//$urls["logica"] = "".$_SERVER['HTTP_HOST']."/enerin-omg/archivos/";
+$urls["fisica"] = "C:xampp/htdocs/enerin-omg/archivos/";
+$urls["logica"] = "".$_SERVER['HTTP_HOST']."/enerin-omg/archivos/";
 //para hallar ruta fisica tanto web como local
 //echo dirname(__FILE__);
 //temrina para hallar ruta fisica tanto web como local 
 //rutas web 
-$urls["fisica"] = "/home/fpa9q09nzhnx/public_html/omgcum/archivos/";
-$urls["logica"] = 'http://www.enerin-omgapps.com/omgcum/archivos/';
+//$urls["fisica"] = "/home/fpa9q09nzhnx/public_html/omgcum/archivos/";
+//$urls["logica"] = 'http://www.enerin-omgapps.com/omgcum/archivos/';
 // $urls[""] = ;
 Session::setSesion("URLS",$urls);
 $Usuario=  Session::getSesion("user");
@@ -25,7 +25,7 @@ $Usuario=  Session::getSesion("user");
 <!DOCTYPE html>
 <html>
 <head>
-	<title>OMG</title>
+	<title>OMG APPS</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<link rel="stylesheet" type="text/css" href="../../codebase/fonts/font_roboto/roboto.css"/>
