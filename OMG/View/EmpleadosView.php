@@ -17,13 +17,10 @@ $Usuario=  Session::getSesion("user");
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
                 
                 <!-- bootstrap & fontawesome -->
-                <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-                <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
                 <!--Para abrir alertas de aviso, success,warning, error-->       
                 <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
-                
-		<!-- text fonts -->
-		<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />
 
 		<!-- ace styles -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
@@ -42,20 +39,7 @@ $Usuario=  Session::getSesion("user");
        
                      
                 
-                <style>
-                    .modal
-                    {
-                        overflow: hidden;
-                        /*width: 2900px;*/
-                    }
-                    .modal-dialog{
-                        margin-right: 0;
-                        margin-left: 0;
-                    }
-                    .modal-header{
-                      height:50px;background-color:#444;
-                      color:#ddd;
-                    }
+                <style> 
                     .modal-body{
                        max-height: calc(100vh - 110px);
                       overflow-y: auto;
@@ -278,28 +262,14 @@ require_once 'EncabezadoUsuarioView.php';
                     var si_hay_cambio=false;
                     
                     $(function(){
-                          $("#create-item").draggable({
-                             handle: ".modal-header"
-                         });
+                       
                         $("#btn_guardar").click(function(){
-                            
-                          
-                            
-                            
-                            
-                            
-                            
                             
                                   var NOMBRE_EMPLEADO=$("#NOMBRE_EMPLEADO").val();
                                   var APELLIDO_PATERNO=$("#APELLIDO_PATERNO").val();
                                   var APELLIDO_MATERNO=$("#APELLIDO_MATERNO").val();
                                   var CATEGORIA=$("#CATEGORIA").val();
                                   var CORREO=$("#CORREO").val();
-                                  
-                                  
-//                                  alert("nombre :"+NOMBRE_EMPLEADO+" APELLIDO PATERNO :   "+APELLIDO_PATERNO
-//                                    +" APELLIDO MATERNO : "+APELLIDO_MATERNO+" CATEGORIA : "+CATEGORIA+" CORREO :"      
-//                                    +CORREO);
                                     datos=[];
                                     datos.push(NOMBRE_EMPLEADO);
                                     datos.push(APELLIDO_PATERNO);
@@ -325,62 +295,22 @@ require_once 'EncabezadoUsuarioView.php';
                                   $("#CORREO").val("");
                         });
                         
-//                       $('.modal.draggable>.modal-dialog>.modal-content>.modal-header').css('cursor', 'move'); 
-
-
-
-
-
-    
-    
-    
-    
-    
-//    validaciones campos 
-   
-       
-
-           
-//           alert("Estamos aqui");
-           
-        
-             
-            
-               
-               
-     
-
-
-         
-
-
-
-
-//termina validacione de campos 
-    
-  
     
                     }); // se cierra el $function
                     
                     
                     function validarCamposVacios(datos){
                          correcto=false;
-//                                    datos.push(NOMBRE_EMPLEADO);
-//                                    datos.push(APELLIDO_PATERNO);
-//                                    datos.push(APELLIDO_MATERNO);
-//                                    datos.push(CATEGORIA);
-//                                    datos.push(CORREO);
+
                         var expr = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
                         alert("entro "+datos[0]+"   "+datos[1]+"ddf   "+datos[2]+"   "+datos[3]+""+datos[4]+"");
                         
                  if(datos[0] == ""){
                    $("#mensaje1").fadeIn();
                    $("#mensaje1").append("Ingrese El Nombre");
-//                   $("#mensaje1").animate({left: '250px'});
                    $("#mensaje1").css("background-color","red");
                    $("#mensaje1").css("width", "35%");
-                   // $("#div2").fadeIn("slow");
-                   // $("#div3").fadeIn(3000);
+             
                    correcto=false;
                   
                    
@@ -433,7 +363,7 @@ require_once 'EncabezadoUsuarioView.php';
                    
                
                } //primer else
-                        alert("co  "+correcto);
+                   
                     return correcto;    
                     }
                     
@@ -456,7 +386,7 @@ require_once 'EncabezadoUsuarioView.php';
                                         
 				}   
 		   });
-//                   window.location.href("EmpleadosView.php");
+
                 }    
                 
 		function showEdit(editableObj) {
@@ -466,7 +396,6 @@ require_once 'EncabezadoUsuarioView.php';
 		function saveToDatabase(editableObj,column,id) {
                     if(si_hay_cambio==true){
                         
-//                    alert("entraste aqui ");
                         $("#btnrefrescar").prop("disabled",true);
 			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
 			$.ajax({
@@ -500,7 +429,6 @@ require_once 'EncabezadoUsuarioView.php';
                         $('#loader').hide();
                      },
                      beforeSend:function(){
-//                            $.jGrowl("Guardando  Porfavor Espere......", { header: 'Guardado de Informacion' });
 
                      },                    
                      error: function(){
@@ -519,14 +447,12 @@ require_once 'EncabezadoUsuarioView.php';
                 }
                 
                function filterTable() {
-                // Declare variables 
                     var input, filter, table, tr, td, i;
                     input = document.getElementById("idInput");
                     filter = input.value.toUpperCase();
                     table = document.getElementById("idTable");
                     tr = table.getElementsByTagName("tr");
 
-                    // Loop through all table rows, and hide those who don't match the search query
                     for (i = 0; i < tr.length; i++) {
                       td = tr[i].getElementsByTagName("td")[1];
                       if (td) {
@@ -539,7 +465,6 @@ require_once 'EncabezadoUsuarioView.php';
                     }
                 }
                  function filterTableapellidoPaterno() {
-                // Declare variables 
                     var input, filter, table, tr, td, i;
                     input = document.getElementById("idInputapellidopaterno");
                     filter = input.value.toUpperCase();
@@ -559,14 +484,12 @@ require_once 'EncabezadoUsuarioView.php';
                     }
                 }
                  function filterTableapellidoMaterno() {
-                // Declare variables 
                     var input, filter, table, tr, td, i;
                     input = document.getElementById("idInputapellidomaterno");
                     filter = input.value.toUpperCase();
                     table = document.getElementById("idTable");
                     tr = table.getElementsByTagName("tr");
 
-                    // Loop through all table rows, and hide those who don't match the search query
                     for (i = 0; i < tr.length; i++) {
                       td = tr[i].getElementsByTagName("td")[3];
                       if (td) {
@@ -579,14 +502,12 @@ require_once 'EncabezadoUsuarioView.php';
                     }
                 }
                 function filterTableCategoria(){
-                        // Declare variables 
                     var input, filter, table, tr, td, i;
                     input = document.getElementById("idInputCategoria");
                     filter = input.value.toUpperCase();
                     table = document.getElementById("idTable");
                     tr = table.getElementsByTagName("tr");
 
-                    // Loop through all table rows, and hide those who don't match the search query
                     for (i = 0; i < tr.length; i++) {
                       td = tr[i].getElementsByTagName("td")[4];
                       if (td) {
@@ -621,14 +542,12 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 function refresh(){
                   consultarInformacion("../Controller/EmpleadosController.php?Op=Listar");                                             
-                  //window.location.href="EmpleadosView.php";
                   
                 }
                 
                 
                 
                 function loadSpinner(){
-//                    alert("se cargara otro ");
                         myFunction();
                 }
                 
@@ -636,16 +555,10 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 
 		</script>
- 
-     
-     
+
         <!--Inicia para el spiner cargando-->
         <script src="../../js/loaderanimation.js" type="text/javascript"></script>
         <!--Termina para el spiner cargando-->
-        
-        <!--jquery-->
-        <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-        
         <!--Bootstrap-->
         <script src="../../assets/probando/js/bootstrap.min.js"></script>
         <!--Para abrir alertas de aviso, success,warning, error-->       
@@ -654,12 +567,5 @@ require_once 'EncabezadoUsuarioView.php';
         <!--Para abrir alertas del encabezado-->
         <script src="../../assets/probando/js/ace-elements.min.js"></script>
         <script src="../../assets/probando/js/ace.min.js"></script>
-        <script src="../../assets/probando/js/ace-extra.min.js"></script>
-        
-        <!--DHTMLX-->
-        <script src="../../codebase/dhtmlx.js"></script>
-
-        
-
     </body>
 </html>

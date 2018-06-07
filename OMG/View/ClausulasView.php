@@ -35,21 +35,14 @@ $Usuario=  Session::getSesion("user");
                 
             
             <style>
-                    .modal
-                    {
-                        overflow: hidden;
-                    }
-                    .modal-dialog{
+                  
+/*                    .modal-dialog{
                         margin-right: 0;
                         margin-left: 0;
-                    }
-                    .modal-header{
-                      height:50px;background-color:#444;
-                      color:#ddd;
-                    }
+                    }*/
+                    
                     .modal-body{
                       color:#888;
-                       /*max-height: calc(100vh - 210px);*/
                       max-height: calc(100vh - 110px);
                       overflow-y: auto;
                     }                    
@@ -656,11 +649,7 @@ require_once 'EncabezadoUsuarioView.php';
                 <!--Inicia para el spiner cargando-->
                 <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                 <!--Termina para el spiner cargando-->
-                
-                <!--jquery-->
-                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-                <!--<script src="../../assets/probando/js/jquery-2.1.4.min.js"></script>-->
-
+              
                 <!--Bootstrap-->
 		<script src="../../assets/probando/js/bootstrap.min.js"></script>
                 <!--Para abrir alertas de aviso, success,warning, error-->
@@ -669,14 +658,6 @@ require_once 'EncabezadoUsuarioView.php';
                 <!--Para abrir alertas del encabezado-->
                 <script src="../../assets/probando/js/ace-elements.min.js"></script>
 		<script src="../../assets/probando/js/ace.min.js"></script>
-                <script src="../../assets/probando/js/ace-extra.min.js"></script>
-
-
-                <!--DHTMLX-->
-                <script src="../../codebase/dhtmlx.js"></script>     
-
-                
-                
 	</body>
         
         
