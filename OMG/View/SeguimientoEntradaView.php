@@ -373,7 +373,14 @@ require_once 'EncabezadoUsuarioView.php';
                                     </select>                                                                    
                                 </td>
                                 
-                                <td></td>                                    
+                                <td>
+                                        <button onClick="mostrar_urls(<?php echo $filas['id_documento_entrada'] ?>);" type="button" class="btn btn-info" data-toggle="modal" data-target="#create-itemUrls">
+                                            <i class='fa fa-cloud-upload' style='font-size: 20px'></i>
+                                            Mostrar
+                                        </button>
+                                        <!-- <?php echo $filas['id_documento_entrada']; ?> -->
+                                </td>
+                                
                                 <!--<td contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php // echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php // echo $filas["documento"]; ?></td>-->
                                 <td ><button class="btn btn-success" onClick="cargadePrograma('<?php echo $filas["folio_entrada"]; ?>')">Registrar</button></td>
                                 
@@ -394,6 +401,35 @@ require_once 'EncabezadoUsuarioView.php';
     </div>                    
 	
 </div>
+
+
+
+<!-- Inicio de Seccion Modal Archivos-->
+<div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+        <div id="loaderModalMostrar"></div>
+		<div class="modal-content">
+                        
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Archivos Adjuntos</h4>
+		      </div>
+
+		      <div class="modal-body">
+                        <div id="DocumentolistadoUrl"></div>
+
+                        
+                        <div class="form-group">
+                                <div id="DocumentolistadoUrlModal"></div>
+			</div>
+
+<!--                        <div class="form-group" method="post" >
+                                <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Archivo</button>
+                        </div>-->
+                      </div><!-- cierre div class-body -->
+                </div><!-- cierre div class modal-content -->
+        </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal -->
 
 	
                 
@@ -494,8 +530,84 @@ require_once 'EncabezadoUsuarioView.php';
                  
         });  
     }
-            
     
+    
+    
+    function mostrar_urls(id_documento_entrada)
+        {
+                var tempDocumentolistadoUrl = "";
+                $.ajax({
+                        url:    '../Controller/DocumentosEntradaController.php?Op=getIdCumplimiento',
+                        type:   'GET',
+                        data: 'ID_DOCUMENTO='+id_documento_entrada,
+                        success: function(Id_cumplimiento)
+                        {
+                                if(Id_cumplimiento!="")
+                                {
+                                        URL = 'filesDocumento/Entrada/'+Id_cumplimiento+"/"+id_documento_entrada;
+//                                        alert(URL);
+                                        $.ajax({
+                                                url: '../Controller/ArchivoUploadController.php?Op=CrearUrl',
+                                                type: 'GET',
+                                                data: 'URL='+URL,
+                                                success:function(creado)
+                                                {
+                                                        if(creado)
+                                                        {
+                                                                $.ajax({
+                                                                        url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
+                                                                        type: 'GET',
+                                                                        data: 'URL='+URL,
+                                                                        success: function(todo)
+                                                                        {
+                                                                                console.log(todo[0].length);
+                                                                                if(todo[0].length!=0)
+                                                                                {
+                                                                                        tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
+                                                                                        $.each(todo[0], function (index,value)
+                                                                                        {
+                                                                                                nametmp = value.split("^");
+                                                                                                name;
+                                                                                                fecha = nametmp[0];
+                                                                                                $.each(nametmp, function(index,value)
+                                                                                                {
+                                                                                                        if(index!=0)
+                                                                                                                (index==1)?name=value:name+="-"+value;
+                                                                                                });                                                                        
+                                                                                                tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
+                                                                                                tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\">"+name+"</a></td>";
+                                                                                                tempDocumentolistadoUrl += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
+                                                                                                tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
+                                                                                                tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";
+                                                                                        });
+                                                                                        tempDocumentolistadoUrl += "</tbody></table>";
+                                                                                }
+                                                                                if(tempDocumentolistadoUrl == " ")
+                                                                                {
+                                                                                        tempDocumentolistadoUrl = " No hay archivos agregados ";
+                                                                                }
+                                                                                tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdDocumento' type='text' style='display:none;' value='"+id_documento_entrada+"'>";
+                                                                                // alert(tempDocumentolistadoUrl);
+                                                                                $('#DocumentoEntradaAgregarModal').html(" ");
+//                                                                                $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
+                                                                                $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
+                                                                                // $('#fileupload').fileupload();
+                                                                                $('#fileupload').fileupload({
+                                                                                url: '../View/',
+                                                                                });
+                                                                        }
+                                                                });
+                                                        }
+                                                        else
+                                                        {
+                                                                swal("","Error del servidor","error");
+                                                        }
+                                                }
+                                        });
+                                }
+                        }
+                });
+        }
     
                 
                 
