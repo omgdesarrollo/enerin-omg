@@ -5,8 +5,6 @@ $Usuario=  Session::getSesion("user");
 ?>
 
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -18,19 +16,13 @@ $Usuario=  Session::getSesion("user");
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
 		<!-- bootstrap & fontawesome -->
-                <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-                <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
                 <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
-
-		<!-- text fonts -->
-		<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />
 
 		<!-- ace styles -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
 
-		<!--[if lte IE 9]>
-			<link rel="stylesheet" href="assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
-		<![endif]-->
 		<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
@@ -38,101 +30,15 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
                 <!--Termina para el spiner cargando-->
                 
-                
+                <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-                
-                <!--en esta seccion es para poder abrir el modal--> 
-                <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
-                <!--aqui termina la seccion para poder abrir el modal-->
-
-
                 <script src="../../js/jquery.js" type="text/javascript"></script>
-                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-   
-                <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
-                <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
-                <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
-                <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
+               
+                
                 
                 <style>
                     
-                    .modal
-                    {
-                        overflow: hidden;
-                    }
-                    .modal-dialog{
-                        margin-right: 0;
-                        margin-left: 0;
-                    }
-                    .modal-header{
-                      height:30px;background-color:#444;
-                      color:#ddd;
-                    }
-                    .modal-title{
-                      margin-top:-10px;
-                      font-size:16px;
-                    }
-                    .modal-header .close{
-                      margin-top:-10px;
-                      color:#fff;
-                    }
-                    .modal-body{
-                      color:#888;
-                       /*max-height: calc(100vh - 210px);*/
-                      max-height: calc(100vh - 110px);
-                      overflow-y: auto;
-                    }
-                    .modal-body p {
-                      text-align:center;
-                      padding-top:10px;
-                    }
-                    
-                                    
-/*                    div#winVP {
-			position: relative;
-			height: 350px;
-			border: 1px solid #dfdfdf;
-			margin: 10px;
-		}*/
-                
-                   
-                    
-/*                .main-encabezado {
-                        background: #333;
-                        color: white;
-                        height: 80px;
 
-                        width: 100%;  hacemos que la cabecera ocupe el ancho completo de la página 
-                        left: 0;  Posicionamos la cabecera al lado izquierdo 
-                        top: 0;  Posicionamos la cabecera pegada arriba 
-                        position: fixed;  Hacemos que la cabecera tenga una posición fija 
-                    }    */
-                    
-/*Inicia estilos para mantener fijo el header*/                    
-/*                    .table-fixed-header {
-    display: table;  1 
-    position: relative;
-    padding-top: calc(~'2.5em + 2px');  2 
-    
-    table {
-        margin: 0;
-        margin-top: calc(~"-2.5em - 2px");  2 
-    }
-    
-    thead th {
-        white-space: nowrap;
-        
-         3 - apply same styling as for thead th 
-         4 - compensation for padding-left 
-        &:before {
-            content: attr(data-header);
-            position: absolute;
-            top: 0;
-            padding: .5em 1em;  3 
-            margin-left: -1em;  4 
-        }
-    }
-}*/
 
  /* 5 - setting height and scrolling */
 .table-container {
@@ -171,9 +77,6 @@ $Usuario=  Session::getSesion("user");
 require_once 'EncabezadoUsuarioView.php';
 
 ?>
-
-
-<!--<div style="height: 5px"></div>-->
 
              
 <div style="position: fixed;">    
@@ -252,11 +155,6 @@ require_once 'EncabezadoUsuarioView.php';
                       $Lista = Session::getSesion("listarValidacionDocumentos");
                       $ListaReqisitos = Session::getSesion("listarAsignacionTemasRequisitos");
 
-                  
-
-//                      $numeracion = 1;
-                  
-
                       foreach ($Lista as $filas)
                           {
                           if($filas["clave_documento"]!="SIN DOCUMENTO"){
@@ -264,22 +162,13 @@ require_once 'EncabezadoUsuarioView.php';
                       
                         <tr class="table-row">
 
-                                <!--<td><?php //echo $numeracion++;   ?></td -->
-                                
-                                
-                                
-                                
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'clave_documento','<?php echo $filas["id_validacion_documento"]; ?>')" 
                                 onClick="showEdit(this);"><?php echo $filas["clave_documento"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_validacion_documento"]; ?>')" 
                                 onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado_documento','<?php echo $filas["id_validacion_documento"]; ?>')" 
                                 onClick="showEdit(this);"><?php echo $filas["nombre_empleado_documento"]." ".$filas["apellido_paterno_documento"]." ".$filas["apellido_materno_documento"]; ?></td>
-<!--                                <td contenteditable="false" onBlur="saveToDatabase(this,'clausula','<?php //echo $filas["id_validacion_documento"]; ?>')" 
-                                onClick="showEdit(this);"><?php //echo $filas["clausula"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado_tema','<?php //echo $filas["id_validacion_documento"]; ?>')"
-                                onClick="showEdit(this);"><?php //echo $filas["nombre_empleado_tema"]." ".$filas["apellido_paterno_tema"]." ".$filas["apellido_materno_tema"]; ?></td>
-                                -->
+
                                 
                                 <td>
                                         <button onClick="mostrarTemaResponsable(<?php echo $filas['id_documento'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-temaresponsable">		                                
@@ -340,10 +229,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 </td>
                                  
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'observacion_documento','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["observacion_documento"]; ?></td>
-                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'observacion_tema','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["observacion_tema"]; ?></td>-->
-                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'plan_accion','<?php //echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["plan_accion"]; ?></td>-->
-                                <!--<td contenteditable="false" onBlur="saveToDatabase(this,'desviacion_mayor','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);"><?php echo $filas["desviacion_mayor"]; ?></td>-->
-                                
+                             
                                 <td style="background-color: #ccccff">
                                     <div class="">
                                         <input type="checkbox" style="width: 40px; height: 40px" name="checkbox"  class="checkboxDocumento"
@@ -366,11 +252,6 @@ require_once 'EncabezadoUsuarioView.php';
 		  </tbody>
 		</table>
 
-                     
-
-<!--			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-			</a>-->
     </div>                    	
 <!--</div>-->
 
@@ -382,7 +263,7 @@ require_once 'EncabezadoUsuarioView.php';
         <div id="loaderModalMostrar"></div>
 		<div class="modal-content">                
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
           <h4 class="modal-title" id="myModalLabel">Archivos Adjuntos</h4>
         </div>
 
@@ -410,7 +291,7 @@ require_once 'EncabezadoUsuarioView.php';
         <div id="loaderModalMostrar"></div>
 		<div class="modal-content">                
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
           <h4 class="modal-title" id="myModalLabel">Lista Requisitos</h4>
         </div>
 
@@ -431,7 +312,7 @@ require_once 'EncabezadoUsuarioView.php';
         <div id="loaderModalMostrar"></div>
 		<div class="modal-content">                
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
           <h4 class="modal-title" id="myModalLabel">Lista Registros</h4>
         </div>
 
@@ -451,7 +332,7 @@ require_once 'EncabezadoUsuarioView.php';
         <div id="loaderModalMostrar"></div>
 		<div class="modal-content">                
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"  class="closeLetra">X</span></button>
           <h4 class="modal-title" id="myModalLabel">Lista Tema y Responsable</h4>
         </div>
 
@@ -469,12 +350,6 @@ require_once 'EncabezadoUsuarioView.php';
 		<script>
                     
     var id_validacion_documento,columna,objetocheckbox,si_hay_cambio=false;
-    
-   
-    
-    
-     
-    
     
     $(function()
     {
@@ -561,7 +436,6 @@ require_once 'EncabezadoUsuarioView.php';
      
     function saveToDatabase(editableObj,column,id)
     {
-                    //alert("entraste aqui ");
         if(si_hay_cambio==true)
         {
             $("#btnrefrescar").prop("disabled",true);            
@@ -619,7 +493,6 @@ require_once 'EncabezadoUsuarioView.php';
     function refresh()
     {
       consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");  
-      //window.location.href="ValidacionDocumentosView.php";
     }
     
     function loadSpinner()
@@ -630,9 +503,7 @@ require_once 'EncabezadoUsuarioView.php';
                 
     function cargadePrograma(foliodeentrada)
     {
-      //alert("le has picado al folio de entrada  "+foliodeentrada);
-      window.location.href=" GanttView.php?folio_entrada="+foliodeentrada;
-//   window.location.replace("http://sitioweb.com");        
+      window.location.href=" GanttView.php?folio_entrada="+foliodeentrada;     
     }
     
    
@@ -720,7 +591,6 @@ require_once 'EncabezadoUsuarioView.php';
     function mostrarRequisitos(id_documento)
     {
             ValoresRequisitos = "<ul>";
-            //alert("validacion documento"+id_documento);
 
             $.ajax ({
                 url: "../Controller/ValidacionDocumentosController.php?Op=MostrarRequisitosPorDocumento",
@@ -987,12 +857,7 @@ require_once 'EncabezadoUsuarioView.php';
             <!--Para abrir alertas del encabezado-->
             <script src="../../assets/probando/js/ace-elements.min.js"></script>
             <script src="../../assets/probando/js/ace.min.js"></script>
-            <script src="../../assets/probando/js/ace-extra.min.js"></script>
-
-            <!--DHTMLX-->
-            <script src="../../codebase/dhtmlx.js"></script>
-            
-                
+    
 
                 <!--Para cargar archivos-->
                 <script src="../../assets/FileUpload/js/jquery.min.js"></script>
@@ -1011,6 +876,10 @@ require_once 'EncabezadoUsuarioView.php';
                 <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
                 <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
                 <script src="../../assets/FileUpload/js/main.js"></script>
+                <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
+                <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
+                <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
+                <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
                 
 	</body>
      

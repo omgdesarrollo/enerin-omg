@@ -25,7 +25,7 @@ $Usuario=  Session::getSesion("user");
 <!DOCTYPE html>
 <html>
 <head>
-	<title>OMG</title>
+	<title>OMG APPS</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<link rel="stylesheet" type="text/css" href="../../codebase/fonts/font_roboto/roboto.css"/>
@@ -108,8 +108,8 @@ $Usuario=  Session::getSesion("user");
   var seccionOficios=[
      {id:'catalogooficios',text:'Catalogos',img:'catalogos.png',type:'button',isbig:true},  
      {id:'documentacion',text:'Documentacion',img:'oficios.png',type:'button',isbig:true},  
-     {id:'informegerencial',text:'Informe Gerencial',img:'seguimiento.png',type:'button',isbig:true},
-     {id:'cargaprograma',text:'Carga Programa Gantt',img:'663.png',type:'button',isbig:true}
+     {id:'cargaprograma',text:'Carga Programa Gantt',img:'663.png',type:'button',isbig:true},
+     {id:'informegerencial',text:'Informe Gerencial',img:'seguimiento.png',type:'button',isbig:true}
  ];
 //  var cambiodeidioma=[
 //      {

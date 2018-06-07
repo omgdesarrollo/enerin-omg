@@ -4,15 +4,7 @@ class ClausulaDAO{
 
     public function mostrarClausulas(){
         try{
-//            $query="SELECT TBCLAUSULAS.ID_CLAUSULA ID_CLAUSULA, TBCLAUSULAS.CLAUSULA, TBCLAUSULAS.SUB_CLAUSULA,
-//                    TBCLAUSULAS.DESCRIPCION_CLAUSULA, TBCLAUSULAS.DESCRIPCION_SUB_CLAUSULA,TBEMPLEADOS.ID_EMPLEADO,
-//                    TBEMPLEADOS.NOMBRE_EMPLEADO, TBEMPLEADOS.APELLIDO_PATERNO, TBEMPLEADOS.APELLIDO_MATERNO,
-//                    TBCLAUSULAS.TEXTO_BREVE, TBCLAUSULAS.DESCRIPCION, TBCLAUSULAS.PLAZO
-//                    FROM CLAUSULAS TBCLAUSULAS
-//
-//                    JOIN EMPLEADOS TBEMPLEADOS ON TBCLAUSULAS.ID_EMPLEADO=TBEMPLEADOS.ID_EMPLEADO";
-            
-            
+                        
             $query="SELECT tbclausulas.id_clausula id_clausula, tbclausulas.clausula, tbclausulas.sub_clausula,
                     tbclausulas.descripcion_clausula, tbclausulas.descripcion_sub_clausula,tbempleados.id_empleado,
                     tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno,

@@ -6,11 +6,6 @@ class DocumentoDAO{
     //consulta los datos de un empleado por su nombre de usuario
     public function mostrarDocumentos(){
         try{
-//            $query="SELECT TBDOCUMENTOS.ID_DOCUMENTO, TBDOCUMENTOS.CLAVE_DOCUMENTO, TBDOCUMENTOS.DOCUMENTO,
-//                    TBEMPLEADOS.ID_EMPLEADO, TBEMPLEADOS.NOMBRE_EMPLEADO, TBEMPLEADOS.APELLIDO_PATERNO,
-//                    TBEMPLEADOS.APELLIDO_MATERNO FROM DOCUMENTOS TBDOCUMENTOS
-//
-//                    JOIN EMPLEADOS TBEMPLEADOS ON TBEMPLEADOS.ID_EMPLEADO=TBDOCUMENTOS.ID_EMPLEADO";
             
             $query="SELECT tbdocumentos.id_documento, tbdocumentos.clave_documento, tbdocumentos.documento,
                     tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno,

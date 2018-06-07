@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 require_once '../util/Session.php';
@@ -170,7 +169,7 @@ $Usuario=  Session::getSesion("user");
 require_once 'EncabezadoUsuarioView.php';
 
 ?>
-             
+             <div id="idT"></div>        
 <div style="height: 5px"></div>
 
              
@@ -213,7 +212,7 @@ require_once 'EncabezadoUsuarioView.php';
 			  <tr>
 				
                                 <th class="table-header">Contrato</th>
-                                <th class="table-header">Folio Referencia</th>
+                                <th class="table-header">Referencia</th>
                                 <th class="table-header">Folio de Entrada</th>
                                 <th class="table-header">Fecha Recepcion</th>
                                 <th class="table-header">Asunto</th>
@@ -544,7 +543,7 @@ require_once 'EncabezadoUsuarioView.php';
                           
                                                 
                                                 <div class="form-group">
-							<label class="control-label" for="title">Folio Referencia:</label>
+							<label class="control-label" for="title">Referencia:</label>
                                                         <input type="text"  id="FOLIO_REFERENCIA" class="form-control" data-error="Ingrese el Folio de referencia" required />
 							<div class="help-block with-errors"></div>
 						</div>
@@ -772,7 +771,7 @@ require_once 'EncabezadoUsuarioView.php';
                         }
                         
                         
-                          
+//                          alert("d");
                           val=$(this).prop('value');
 //                          alert("el value que va a viajar es "+val+" y el id del documento de entrada : "+id_documento_entrada);
                           $.ajax({
@@ -780,11 +779,14 @@ require_once 'EncabezadoUsuarioView.php';
 				type: "POST",
 				data:'column='+column+'&editval='+val+'&id='+id_documento_entrada,
 				success: function(data){
+                                    
+                                    
 //                                    window.location.href="AsignacionTemasRequisitosView.php?page=1";
 					//$(editableObj).css("background","#FDFDFD");
 //                                        consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
 //                                        consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
 //                                        window.location.href="DocumentoEntradaView.php";
+                                        refresh();
 				}   
                            });
                           
@@ -1229,11 +1231,34 @@ require_once 'EncabezadoUsuarioView.php';
               
               
     function refresh(){
-                  consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");  
-                  //window.location.href="DocumentoEntradaView.php";  
+//        alert("entro ");
+                  consultarDatos("../Controller/DocumentosEntradaController.php?Op=Listar");  
+//                  window.location.href="DocumentoEntradaView.php";
+
                 }           
                           
-               
+         
+         
+         function consultarDatos(url){
+            $.ajax({  
+                  url: ""+url,  
+                  async:false,
+                 success: function(r) {
+                     alert();
+                     $("#idT").load("DocumentoEntradaView.php #idTable");
+//                     table-container
+                     $("#loader").hide();
+
+                  },
+                  beforeSend:function(r){
+
+                  },
+                  error:function(){
+                     $("#loader").hide(); 
+                  }
+
+            }); 
+    }
     function consultarInformacion(url){
         $("#loader").show(); 
         $.ajax({  
@@ -1458,7 +1483,8 @@ require_once 'EncabezadoUsuarioView.php';
                         }
                 });
         }
-                
+
+
         function agregarArchivosUrl()
         {
                 var ID_DOCUMENTO = $('#tempInputIdDocumento').val();

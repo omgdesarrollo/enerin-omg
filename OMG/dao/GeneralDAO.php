@@ -4,7 +4,8 @@ require_once '../ds/AccesoDB.php';
 class GeneralDAO{
     
     
-    public function actualizarColumnaPorTabla($TABLA,$COLUMNA,$VALOR,$ID,$ID_CONTEXT){
+    public function actualizarColumnaPorTabla($TABLA,$COLUMNA,$VALOR,$ID,$ID_CONTEXT)
+    {
         try {
             $query="UPDATE $TABLA SET $COLUMNA='$VALOR' WHERE $ID_CONTEXT=$ID";
             // echo $query;
@@ -14,6 +15,21 @@ class GeneralDAO{
             return $result;
             
         } catch (Exception $ex){
+            throw $ex;
+            return false;
+        }
+    }
+    
+    public function eliminarRegistroPorTabla($TABLA,$ID)
+    {
+        try 
+        {
+            $query="DELETE FROM $TABLA WHERE ID=$ID ";
+            
+            $db=  AccesoDB::getInstancia();
+            $db->executeQueryUpdate($query);
+        } catch (Exception $ex) 
+        {
             throw $ex;
             return false;
         }
