@@ -1484,7 +1484,8 @@ require_once 'EncabezadoUsuarioView.php';
                         }
                 });
         }
-                
+
+
         function agregarArchivosUrl()
         {
                 var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
