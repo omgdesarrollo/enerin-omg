@@ -523,7 +523,7 @@ $Usuario=  Session::getSesion("user");
                     tableBuild += "<td style='background-color: #ccccff' contenteditable='false' onBlur='saveToDatabase(this,\'descripcion_clausula\',"+value.id_asignacion_tema_requisito+")'";
                     tableBuild += "onClick='showNoEdit(this);'>"+value.descripcion_clausula+"</td>";
                     tableBuild += "<td><button onClick='mostrarRegistros("+value.id_asignacion_tema_requisito+");' type='button' class='btn btn-success'";
-                    tableBuild += "data-toggle='modal' data-target='#mostrarRegistrosModal'>";
+                    tableBuild += "data-toggle='modal' data-target='#show-arbol'>";
                     tableBuild += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i> Ver</button></td>";
             
                     // tableBuild += "<td class='text-left' contenteditable='true' onBlur='saveToDatabase(this,\'requisito\',"+value.id_asignacion_tema_requisito+")' onClick='showEdit(this)'";
