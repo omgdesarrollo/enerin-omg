@@ -104,6 +104,7 @@
 <!-- <body> -->
 <body class="no-skin" onload="loadSpinner()">
     <div id="loader"></div>
+    
     <?php
         require_once 'EncabezadoUsuarioView.php';
         $filtrosArray = array(
@@ -118,6 +119,7 @@
                 "Fecha Registro","Clasificación","Acción Correctiva Inmediata","Plan de Acción","Desviación","Validación","Opcion"
                 /*,"Ingresar Oficio Atención","Oficio de Atención"*/);
     ?>
+    
     <div style="position: fixed;">
 
         <button onClick="" type="button" 
@@ -138,11 +140,12 @@
         placeholder="<?php echo $value['name'] ?>" style="width: 120px;">
         <?php } ?>
     </div>
+    
     <div style="height: 50px"></div>
 
     <!-- <div class="table-fixed-header" style="display:block;" id="myDiv" class="animate-bottom"> -->
         <div class="table-container">
-            <table id="idTable" class="tbl-qa ListaTabla header_fijo">
+            <table id="idTable" class="tbl-qa">
                 <tr>
                 <?php foreach($titulosTable as $index=>$value)
                 { if($index<4){ ?>
@@ -364,6 +367,7 @@
         });
     }
 
+
     function refresh()
     {       
         listarDatos();
@@ -498,20 +502,21 @@
             }
         }
     }
-    function getDataTable()
-    {        
-        // $('#bodyTable').html(data);
-        $.ajax
-        ({
-            url: '../Controller/EvidenciasController.php?Op=getDataTable',
-            type: 'GET',
-            // data: '',
-            success:function(dataT)
-            {
-                reconstruirTable(dataT);
-            }
-        });
-    }
+//    function getDataTable()
+//    {        
+//        // $('#bodyTable').html(data);
+//        $.ajax
+//        ({
+//            url: '../Controller/EvidenciasController.php?Op=getDataTable',
+//            type: 'GET',
+//            // data: '',
+//            success:function(dataT)
+//            {
+//                reconstruirTable(dataT);
+//            }
+//        });
+//    }
+    
     function reconstruirTable(data)
     {
         cargaTodo=0;
@@ -538,6 +543,7 @@
         $('#bodyTable').html(tempData);
         $('#loader').hide();
     }
+
 
     function reconstruirRow(id)
     {
