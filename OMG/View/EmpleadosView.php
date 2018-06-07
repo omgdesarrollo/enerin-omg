@@ -60,10 +60,10 @@ $Usuario=  Session::getSesion("user");
                     .closeLetra{
                          color: white;font-size: 30px; 
                     }
-                    .modal-title{
+/*                    .modal-title{
                       margin-top:-10px;
                       font-size:16px;
-                    }
+                    }*/
 /*                    .modal-header .close{
                       margin-top:-10px;
                       color:#fff;
