@@ -152,14 +152,22 @@ $Usuario=  Session::getSesion("user");
 
 	</head>
 
-        <body class="no-skin" onload="loadSpinner()">
+<body class="no-skin" onload="loadSpinner()">
             <!--<div>Cargando...</div>-->
-            <div id="loader"></div>
+<div id="loader"></div>
             
 <?php
 
-require_once 'EncabezadoUsuarioView.php';
-
+    require_once 'EncabezadoUsuarioView.php';
+    // $filtrosArray = array(
+    //     array("name"=>"Clave","column"=>0),
+    //     array("name"=>"Nombre Documento","column"=>1),
+    //     array("name"=>"Responsable","column"=>2),
+    //     array("name"=>"Clasificación","column"=>6),
+            // array("name"=>"Clave Evidencia","column"=>"text"),
+        // );
+        $titulosTable = 
+            array("No.","Tema","Descripción de Tema","Requisitos");
 ?> 
 
 <div style="height: 5px"></div>
@@ -204,121 +212,37 @@ require_once 'EncabezadoUsuarioView.php';
 
 <div style="height: 70px"></div>
 
-
-
-
-
-
 <!--<div class="contenedortable">   
     <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Descripcion del Tema" style="width: 220px">
 </div > -->
-
-
-
 <div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> <!--inicio animacion tabla toda la interfaz seleccionada-->
     <div class="table-container" id="winVP"> 
+        <table id="idTable" class="tbl-qa">
+            <tr>
+            <?php   foreach($titulosTable as $value)
+                {?>
+                    <th class="table-header"> <?php echo $value ?> </th>
+                <?php } ?>
+            </tr>
+		  <tbody id="tbodyTableAsignacion">
+          </tbody>
+        </table>
+    </div>         
+</div>  
 
-                           <table id="idTable" class="tbl-qa">
-		  <!--<thead>-->
-			  <tr>
-				<th class="table-header" >No.</th>
-                                <th class="table-header">Tema</th>
-                                <th class="table-header">Descripcion del Tema</th>
-				<th class="table-header">Requisito</th>									
-				<th class="table-header">Clave Documento</th>									
-                                
-			  </tr>
-		  <!--</thead>-->
-		  <tbody>
-		  <?php
-                  
-                    
-                  
+<?php
+
 //		  foreach($faq as $k=>$v) {
                   $Lista = Session::getSesion("listarAsignacionTemasRequisitos");
                   $cbxClau= Session::getSesion("listarClausulasComboBox");
                   $cbxDoc= Session::getSesion("listarDocumentosComboBox");
-//                  $datostema
                   $numeracion = 1;
-                  
-//		foreach ($Lista as $k=>$filas) { 
-//                   $valorid= $Lista[$k]["ID_EMPLEADO"];
-//                   $nombreempleado=$Lista[$k]["NOMBRE_EMPLEADO"];
-                  foreach ($Lista as $filas) { 
-		  ?>
-			  <tr class="table-row" >
-				<td><?php echo $numeracion++;   ?></td>
-                                
-                                
-                                <!--<td contenteditable="true" onBlur="saveToDatabase(this,'NOMBRE_EMPLEADO','<?php //echo $Lista[$k]["ID_CLAUSULA"]; ?>')" onClick="showEdit(this);"><?php //echo $Lista[$k]["NOMBRE_EMPLEADO"]; ?></td>-->
-                 
-                                <td style="background-color: #ccccff">
-                                    <select id="id_clausula"class="select" onchange="saveComboToDatabase('id_clausula', <?php echo $filas["id_asignacion_tema_requisito"]; ?> )">
-                                    <?php
-                                    $s="";
-                                                foreach ($cbxClau as $value) {
-                                                    if($value["id_clausula"]=="".$filas["id_clausula"]){
-//                                                        $s="selected";
-                                                    
-                                                    ?>
-                                    
-                                        <option value="<?php echo "".$value["id_clausula"] ?>"  selected ><?php echo "".$value["clausula"]; ?></option>
-                                        
-                                                        <?php
-                                                        }
-                                                        else{
-                                                            ?>
-                                                        }
-                                                             <option value="<?php echo "".$value["id_clausula"] ?>"  ><?php echo "".$value["clausula"]; ?></option>
-                                                             <?php
-                                                        }
-                                                }
-                                    
-                                    ?>
-                                    </select>
-                                    
-                                </td>
-                  
-                                <td  style="background-color: #ccccff" contenteditable="false" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_asignacion_tema_requisito"]; ?>')" onClick="showNoEdit(this);" ><div><?php echo $filas["descripcion_clausula"]; ?></td>
-                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'requisito','<?php echo $filas["id_asignacion_tema_requisito"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["requisito"]; ?></td>
-                                
-                                <td> 
-                                    <select id="id_documento" class="select" onchange="saveComboToDatabase('id_documento', <?php echo $filas["id_asignacion_tema_requisito"]; ?> )">
-                                    <?php
-                                    $s="";
-                                                foreach ($cbxDoc as $value) {
-                                                    
-                                                    if($value["id_documento"]=="".$filas["id_documento"]){
-//                                                        $s="selected";
-                                                    
-                                                    ?>
-                                    
-                                        <option value="<?php echo "".$value["id_documento"] ?>"  selected ><?php echo "".$value["clave_documento"]; ?></option>
-                                        
-                                                        <?php
-                                                        }
-                                                        
-                                                        else{
-                                                            ?>
-                                                        <!--}-->
-                                                             <option value="<?php echo "".$value["id_documento"] ?>"  ><?php echo "".$value["clave_documento"]; ?></option>
-                                                             <?php
-                                                        }
-                                                }
-                                    
-                                    ?>
-                                    </select>                                                                    
-                                </td>
-                                                    
-			  </tr>
-		<?php
-		}
-                
-		?>
-		  </tbody>
-		</table>
+?>
 
-
+<!-- //		foreach ($Lista as $k=>$filas) {  -->
+<!-- //                   $valorid= $Lista[$k]["ID_EMPLEADO"]; -->
+<!-- //                   $nombreempleado=$Lista[$k]["NOMBRE_EMPLEADO"]; -->
+                  
 <!--			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 			</a>-->
@@ -586,15 +510,88 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 
               
-                function refresh(){
-                  consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");  
-                  //window.location.href="AsignacionTemasRequisitosView.php";  
-                }
+    function refresh(){
+        // consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
+        // listarClausulas();
+        //window.location.href="AsignacionTemasRequisitosView.php";  
+    }
                 
-                function loadSpinner(){
+    function loadSpinner()
+    {//cargar listado
 //                    alert("se cargara otro ");
-                        myFunction();
-                }
+            myFunction();
+            listarDocumentos();
+
+    }
+    function listarClausulas(documentos)
+    {
+        $.ajax({
+            url: '../Controller/ClausulasController.php?Op=Listar',
+            type: 'GET',
+            success:function(data)
+            {
+                construirTable(data,documentos);
+            }
+        });
+    }
+    function listarDocumentos()
+    {
+        $.ajax({
+            url: '../Controller/DocumentosController.php?Op=Listar',
+            type: 'GET',
+            success:function(data)
+            {
+                listarClausulas(data);
+            }
+        });
+    }
+
+    function construirTable(clausulasData,documentosData)
+    {
+        tableBuild="";
+        numeracion=1;
+        $.ajax({
+            url: '../Controller/AsignacionTemasRequisitosController.php?Op=Listar',
+            type: 'GET',
+            success:function(data)
+            {
+                $.each(data,function(index,value)
+                {
+                    tableBuild += "<tr class='table-row' id='registro_"+value.id_asignacion_tema_requisito+"'><td>"+numeracion+"</td>";
+                    tableBuild += "<td style='background-color: #ccccff'>";
+                    tableBuild += "<select class='select' onchange='saveComboToDatabase(\'id_clausula\',"+value.id_asignacion_tema_requisito+")'>";
+                    $.each(clausulasData,function(index2,value2)
+                    {
+
+                        tableBuild += "<option value='"+value2.id_clausula+"'";
+                        if(value.id_clausula==value2.clausula)
+                            tableBuild += "selected";
+                        tableBuild += ">"+value2.clausula+"</option>";
+                    });
+                    tableBuild += "</select></td>";
+                    tableBuild += "<td style='background-color: #ccccff' contenteditable='false' onBlur='saveToDatabase(this,\'descripcion_clausula\',"+value.id_asignacion_tema_requisito+")'";
+                    tableBuild += "onClick='showNoEdit(this);'>"+value.descripcion_clausula+"</td>";
+                    tableBuild += "<td><button onClick='mostrarRegistros("+value.id_asignacion_tema_requisito+");' type='button' class='btn btn-success'";
+                    tableBuild += "data-toggle='modal' data-target='#mostrarRegistrosModal'>";
+                    tableBuild += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i> Ver</button></td>";
+            
+                    // tableBuild += "<td class='text-left' contenteditable='true' onBlur='saveToDatabase(this,\'requisito\',"+value.id_asignacion_tema_requisito+")' onClick='showEdit(this)'";
+                    // tableBuild += "onkeyup='detectarsihaycambio(this)'>"+value.requisito+"</td>";
+                    // tableBuild += "<td><select id='id_documento' class='select' onchange='saveComboToDatabase(\'id_documento\',"+value.id_asignacion_tema_requisito+")'>";
+                    // $.each(documentosData,function(index3,value3)
+                    // {
+                    //     tableBuild += "<option value='"+value.id_documento+"'";
+                    //         if(value3.id_documento==value.id_documento)
+                    //     tableBuild += "selected";
+                    //     tableBuild += ">"+value3.clave_documento+"</option>";
+                    // });
+                    // tableBuild +="</select></td><tr>";
+                    tableBuild +="<tr>";
+                });
+                $('#tbodyTableAsignacion').html(tableBuild);
+            }
+        });
+    }
                 
                   function detectarsihaycambio(value){
 //                    alert("entro "+value.innerHTML);

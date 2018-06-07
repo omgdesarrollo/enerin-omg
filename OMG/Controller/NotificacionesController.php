@@ -26,13 +26,13 @@ switch ($Op) {
             // $estado = $_REQUEST["ESTADO"];//
         //     $columna=$_REQUEST["columna"];
             
-            $id_validacion_documento=$_REQUEST["id_validacion_documento"];
+            // $id_validacion_documento=$_REQUEST["id_validacion_documento"];
             // datos de la sesion 
         //     echo $lista;
             $de=$lista["usuariosyempleados_id_usuario_empleados"];
             //termina datos de la session 
-            $listaInfValidacionDocumento=$modelValidacionDocumentos->obtenerInfoPorIdValidacionDocumento($id_validacion_documento);
-            $resultado=$model->guardarNotificacionHibry($de,$mensaje,$estado,$atendido,$para);
+            // $listaInfValidacionDocumento=$modelValidacionDocumentos->obtenerInfoPorIdValidacionDocumento($id_validacion_documento);
+            $resultado=$model->guardarNotificacionHibry($de,$mensaje,$tipoM,$atendido,$para);
 
             echo $resultado;
 //            echo "trajo de usuario : ".$dataUsuarioEmpleado;
