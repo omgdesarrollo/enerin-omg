@@ -23,7 +23,7 @@ switch ($Op) {
 //		echo json_encode(array("data" => $Lista));
 //		header("location: login.php");
         header('Content-type: application/json; charset=utf-8');
-                echo json_encode($Lista);
+		echo json_encode($Lista);
 //        echo json_encode(array("data" => $Lista));
 //echo $json = json_encode(array("n" => "".$Lista.NOMBRE_EMPLEADO, "a" => "apellido",  "c" => "test"));
 //		return $Lista;

@@ -14,11 +14,10 @@ $Usuario=  Session::getSesion("user");
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
                 <!-- bootstrap & fontawesome -->
-                <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>   
                 <!--Para abrir alertas de aviso, success,warning, error-->
                 <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
-		
-               
+                <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
                 <!-- ace styles -->
                 <link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
                 
@@ -32,15 +31,13 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/jquery.js" type="text/javascript"></script>
 
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+                <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>
+                <link href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.js"></script>
+                <script src="../../js/fTemasView.js" type="text/javascript"></script>
                 
-            
-            <style>
-                  
-/*                    .modal-dialog{
-                        margin-right: 0;
-                        margin-left: 0;
-                    }*/
-                    
+                
+            <style> 
                     .modal-body{
                       color:#888;
                       max-height: calc(100vh - 110px);
@@ -51,58 +48,11 @@ $Usuario=  Session::getSesion("user");
                     width:350px;
                     height:5px;
                     overflow: auto;
+                    }  
+                    body{
+                    overflow:hidden;     
                     }
-                    
-/*Inicia estilos para mantener fijo el header*/                    
-                    .table-fixed-header {
-    display: table; /* 1 */
-    position: relative;
-    padding-top: calc(~'2.5em + 2px'); /* 2 */
-    
-    table {
-        margin: 0;
-        margin-top: calc(~"-2.5em - 2px"); /* 2 */
-    }
-    
-    thead th {
-        white-space: nowrap;
-        
-        /* 3 - apply same styling as for thead th */
-        /* 4 - compensation for padding-left */
-        &:before {
-            content: attr(data-header);
-            position: absolute;
-            top: 0;
-            padding: .5em 1em; /* 3 */
-            margin-left: -1em; /* 4 */
-        }
-    }
-}
-
- /* 5 - setting height and scrolling */
-.table-container {
-    max-height: 70vh; /* 5 */
-    overflow-y: auto; /* 5 */
-        
-        /* 6 - same styling as for thead th */
-        &:before {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        min-height: 2.5em;             /* 6 */
-        border-bottom: 2px solid #DDD; /* 6 */
-        background: #f1f1f1;           /* 6 */
-    }
-} 
-/*Finaliza estilos para mantener fijo el header*/ 
-
-                    
                 </style>    
-                
-                
-                
 
 	</head>
 
@@ -147,89 +97,32 @@ require_once 'EncabezadoUsuarioView.php';
 
 </div>
  
-<div style="height: 47px"></div>
+<div style="height: 50px"></div>
 
 
-<div class="table-fixed-header">
-    <div class="table-container">            
-            
-                           <table id="idTable" class="tbl-qa">
-                            
-                               <tr  >
-                          
-                                <th  class="table-header">No.Tema</th>
-				<th   class="table-header">Tema</th>				
-				<th  class="table-header">No.Sub-Tema</th>				
-				<th  class="table-header">Sub-Tema</th>				
-				<th   class="table-header">Responsable del Tema</th>				
-				<!--<th class="table-header">TEXTO BREVE</th>-->				
-				<th  class="table-header">Descripcion</th>				
-                                <th  class="table-header">Plazo</th>					
-                               </tr>
-                     
-		  <tbody>
-		  <?php                  
-                  $Lista = Session::getSesion("listarClausulas");
-                  $cbxE= Session::getSesion("listarEmpleadosComboBox");
-                  
-                  $numeracion = 1;
-
-                  foreach ($Lista as $filas) { 
-		  ?>
-			  <tr class="table-row">
-			
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["clausula"]; ?></td>
-                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["descripcion_clausula"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'sub_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["sub_clausula"]; ?></td>
-                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'descripcion_sub_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["descripcion_sub_clausula"]; ?></td>
-                                
-                                <td> 
-
-                                    <select   id="id_empleado" class="select"  onchange="saveComboToDatabase('id_empleado', <?php echo $filas["id_clausula"]; ?> )">
-                          
-                                    <?php
-                                    $s="";
-                                                foreach ($cbxE as $value) {
-                                                    if($value["id_empleado"]=="".$filas["id_empleado"]){
-
-                                                    ?>
-                                    
-                                        <option value="<?php echo "".$filas["id_empleado"] ?>"  selected ><?php echo "".$filas["nombre_empleado"]." ".$filas["apellido_paterno"]." ".$filas["apellido_materno"]; ?></option>
-                                        
-                                                        <?php
-                                                        }
-                                                        else{
-                                                            ?>
-                                                        }
-                                                             <option value="<?php echo "".$value["id_empleado"] ?>"  ><?php echo "".$value["nombre_empleado"]." ".$value["apellido_paterno"]." ".$value["apellido_materno"]; ?></option>
-                                                             <?php
-                                                        }
-                                                }
-                                    
-                                    ?>
-                                    </select>
-                          
-                                    
-                                </td>
-                                
-
-                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'descripcion','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["descripcion"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'plazo','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["plazo"]; ?></td>
-                                
-			  </tr>
-		<?php
-		}
-                
-		?>
-		  </tbody>
-		</table>
+<div>    
+                     <table class="table table-bordered table-striped header_fijo ">
+                         <thead >
+                          <tr >
+                          <th class="table-headert" width="10%">No. Tema</th>
+                          <th class="table-headert" width="20%">Tema</th>
+                          <th class="table-headert" width="10%">No. Sub-tema</th>
+                          <th class="table-headert" width="20%">Sub-tema</th>
+                          <th class="table-headert" width="20%">Responsable del tema</th>
+                          <th class="table-headert" width="10%">Descripcion</th>
+                          <th class="table-headert" width="10%">Plazo</th>
+                         </tr>
+                        </thead>
+                        
+                        <tbody id="datosGenerales" >
+                        </tbody>
+                    </table>     
 			
 
 			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 			</a>
 
-    </div>
 </div>              
 
                 
@@ -325,326 +218,13 @@ require_once 'EncabezadoUsuarioView.php';
 		  </div>
 		</div>
        <!--Final de Seccion Modal-->
-                            
-                
-		<script>
-                    
+		<script>  
                       var idclausula,si_hay_cambio=false;
-                      $(function(){
-                           
-                         
-                          
-                        $('.select').on('change', function() {
-                          column="ID_EMPLEADO";
-                          val=$(this).prop('value');
-                          
-                      
-                              alert("entro aqui ");
-          
-                          $.ajax({
-                                url: "../Controller/ClausulasController.php?Op=Modificar",
-				type: "POST",
-				data:'column='+column+'&editval='+val+'&id='+idclausula,
-				success: function(data){
-                                    
-                                        swal("Actualizacion Exitosa!", "Ok!", "success");
-                                        refresh();
-
-				}   
-                           });
-                       
-                          
-                        });
-                        
-                        
-                        $('#CLAUSULA').keyup(function(){
-                            
-                       var valueclausula = $(this).val();   
-                       if(valueclausula!=""){
-                           var dataString = valueclausula;
-                            loadAutocomplete(dataString);
-                            
-                            
-                       }
-                         
-                           });
-                        
-                        
-                        
-                        
-                        
-                        $("#btn_guardar").click(function(){
-       
-        
-                                    var CLAUSULA=$("#CLAUSULA").val();
-                                    var DESCRIPCION_CLAUSULA=$("#DESCRIPCION_CLAUSULA").val();
-                                    var SUB_CLAUSULA=$("#SUB_CLAUSULA").val();
-                                    var DESCRIPCION_SUB_CLAUSULA=$("#DESCRIPCION_SUB_CLAUSULA").val();
-                                    var ID_EMPLEADOMODAL=$("#ID_EMPLEADOMODAL").val();
-                                    var DESCRIPCION=$("#DESCRIPCION").val();
-                                    var PLAZO=$("#PLAZO").val();
-                            
-
-                                    datos=[];
-                                    datos.push(CLAUSULA);
-                                    datos.push(DESCRIPCION_CLAUSULA);
-                                    datos.push(SUB_CLAUSULA);
-                                    datos.push(DESCRIPCION_SUB_CLAUSULA);
-                                    datos.push(ID_EMPLEADOMODAL);
-                                    datos.push(DESCRIPCION);
-                                    datos.push(PLAZO);
-                                    saveToDatabaseDatosFormulario(datos);
-                                    
-                        });
-                        
- 
-
-
-                        $("#btn_limpiar").click(function(){
-                                  $("#CLAUSULA").val("");
-                                  $("#DESCRIPCION_CLAUSULA").val("");
-                                  $("#SUB_CLAUSULA").val("");
-                                  $("#DESCRIPCION_SUB_CLAUSULA").val("");
-                                  //$("#ID_EMPLEADOMODAL").val("");
-//                                  $("#TEXTO_BREVE").val("");
-                                  $("#DESCRIPCION").val("");
-                                  $("#PLAZO").val("");
-                                                                      
-                        });
-                        
-  
-                      }); //Se cierra el function
-                      
-                      
-                      
-		function showEdit(editableObj) {
-			$(editableObj).css("background","#FFF");
-		} 
-		
-                
-                
-		function saveToDatabase(editableObj,column,id) {
-                    
-                    if(si_hay_cambio==true)
-                    {
-                        $("#btnrefrescar").prop("disabled",true);
-			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
-			$.ajax({
-                                url: "../Controller/ClausulasController.php?Op=Modificar",
-				type: "POST",
-				data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
-				success: function(data){
-					$(editableObj).css("background","#FDFDFD");
-                                        swal("Actualizacion Exitosa!", "Ok!", "success");
-                                        refresh();
-                                                                                
-                                        $("#btnrefrescar").prop("disabled",false);
-                                        si_hay_cambio=false;
-                                        
-				}   
-                        });
-                   
-                    }
-		}
-                
-                
-                
-                function saveComboToDatabase(column,id){
-                     idclausula=id;
-                     alert("d");
-               }
-               
-               
-               
-               function saveToDatabaseDatosFormulario(datos){;
-                    
-                    	$.ajax({
-                                url: "../Controller/ClausulasController.php?Op=Guardar",
-				type: "POST",
-				data:'CLAUSULA='+datos[0]+'&DESCRIPCION_CLAUSULA='+datos[1]+'&SUB_CLAUSULA='+datos[2]
-                                                       +'&DESCRIPCION_SUB_CLAUSULA='+datos[3]+'&ID_EMPLEADO='+datos[4]
-                                                       +'&DESCRIPCION='+datos[5]+'&PLAZO='+datos[6],
-				success: function(data){
-
-                                        swal("Guardado Exitoso!", "Ok!", "success")
-                                        refresh();
-				}   
-		   });
-                }
-                
-                
-                function refresh(){
-                  consultarInformacion("../Controller/ClausulasController.php?Op=Listar"); 
-                }
-                
-                
-                function loadSpinner(){
-                        myFunction();
-                }
-                
-                
-                
-                function loadAutocomplete(dataString){
-                            $.ajax({
-                                type: "POST",
-                                url: "../Controller/ClausulasController.php?Op=loadAutoComplete",
-                                data: "cadenaclausula="+dataString,
-                                success: function(data) {
-                                var dato="";
-                                    $.each(data, function (index,value) {
-                                if(value.sub_clausula!=""){
-                                        dato=value.descripcion_clausula;
-
-                                     }
-                                    });
-                            
-                                $('#DESCRIPCION_CLAUSULA').val(dato);
-                                if(dato==""){
-
-                                $('#DESCRIPCION_CLAUSULA').prop("readonly",false);
-                                }else{
-                                    if(dato!=""){
-                                 $('#DESCRIPCION_CLAUSULA').prop("readonly",true);   
-                                 }
-                                }
-
-                                                                             
-                                                                }
-                                                            }); 
-                                                }
-                
-                
-                function consultarInformacion(url){
-                    
-                    $("#loader").show();
-                    
-                    $.ajax({  
-                     url: ""+url,  
-                    success: function(r) {
-                        $("#idTable").load("ClausulasView.php #idTable")
-                        $("#loader").hide();                        
-                     },
-                     beforeSend:function(r){
-
-
-                     },
-                     error:function(){
-                        $("#loader").hide();                         
-                     }
-                 
-                   });  
-                }
-                
-                
-                function detectarsihaycambio(){
-                    
-                    si_hay_cambio=true;
-                }
-                
-                
-                
-                function filterTableTema() {
-                // Declare variables 
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputTema");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
-
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[1];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
-                      } 
-                    }
-                }
-                
-                
-                function filterTableSubTema() {
-                // Declare variables 
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputSubTema");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
-
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[3];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
-                      } 
-                    }
-                }
-                
-                
-                function filterTableResponsable() {
-                // Declare variables 
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputResponsable");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
-
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[4];
-                      if (td) {
-                          select=td.getElementsByTagName("select");
-                          $.each(select,function(index,value)
-                          {
-                                var indexRes = value.selectedIndex;
-                                var responsable=value[indexRes].innerHTML;
-                                console.log(responsable);
-                              if (responsable.toUpperCase().indexOf(filter) > -1)
-                              {
-                                tr[i].style.display = "";
-                              }
-                              else
-                              {
-                                tr[i].style.display = "none";
-                              }
-//                            console.log(value.options(ind));
-                          });
-                      } 
-                    }
-                }
-                
-                
-                
-                
-                function filterTableDescripcion() {
-                // Declare variables 
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputDescripcion");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
-
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[5];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
-                      } 
-                    }
-                }
-                
-                
+                      contruirContenido();
 		</script>
+                
+                
+                
                 
                 <!--Inicia para el spiner cargando-->
                 <script src="../../js/loaderanimation.js" type="text/javascript"></script>
