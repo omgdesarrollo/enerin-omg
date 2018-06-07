@@ -114,7 +114,7 @@
             // array("name"=>"Clave Evidencia","column"=>"text"),
         );
         $titulosTable = 
-            array("Clave","Nombre Documento","Responsable Documento","Registros","Achivo Adjunto",
+            array("Clave","Nombre Documento","Responsable Documento","Registros","Archivo Adjunto",
                 "Fecha Registro","Clasificación","Acción Correctiva Inmediata","Plan de Acción","Desviación","Validación","Opcion"
                 /*,"Ingresar Oficio Atención","Oficio de Atención"*/);
     ?>
@@ -283,8 +283,7 @@
 
     var data="";
     var dataTemp="";
-    var si_hay_cambio=false;
-    
+    var si_hay_cambio=false;    
     $(function()
     {
         listarDatos();
@@ -304,14 +303,26 @@
         } 
 
     }
-                
-                
+
+    var tempo = 1;
+
     function saveComboToDatabase(Obj,tabla,columna,id,contexto)
     {
         valortmp = $(Obj)[0];
         Objtmp=valortmp[valortmp.selectedIndex].innerHTML;
         //poner alerta para valores
         // alert(Objtmp);
+        setInterval(function()
+        {
+            $.ajax({
+                url:'../Controller/EvidenciasController.php?Op=a',
+                success:function(data)
+                {
+                    console.log(tempo);
+                    tempo++;
+                }
+            });
+        },1500);
         if(Objtmp!=" ")
         {
             swal({
@@ -320,7 +331,8 @@
                     type: "info",
                     showCancelButton: true,
                     closeOnConfirm: false,
-                    showLoaderOnConfirm: true
+                    showLoaderOnConfirm: true,
+                    confirmButtonText: tempo,
                     }, function(isConfirm)
                     {
                         if(isConfirm)
@@ -339,9 +351,7 @@
                     
         si_hay_cambio=true;
     }
-                
-                
-
+     
     function listarDatos()
     {
         $.ajax
@@ -721,8 +731,9 @@
     {
         mensaje = $(textAreaNotificacionModal).val();
         enviar_notificacion(mensaje,'admin',0,false);//msj,para,tipomsj,atendido
+        
     }
-
+    
     function enviar_notificacion(mensaje,para,tipoMensaje,atendido)
     {
         //   var u=$("#user").val();
