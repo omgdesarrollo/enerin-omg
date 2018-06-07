@@ -15,8 +15,8 @@
     <title></title>
     
     <!--Bootstrap y fontawesome-->
-    <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
 
     <!-- text fonts -->
@@ -36,46 +36,20 @@
     <script src="../../js/jquery.js" type="text/javascript"></script>
     <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
     
-    <!-- cargar archivo -->
-    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
-    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
-    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
-    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
+    <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
     
     <script src="../../js/jquery.js" type="text/javascript"></script>
 
 
     <style>
-        .modal
-        {
-            overflow: hidden;
-        }
-        .modal-dialog{
-            margin-right: 0;
-            margin-left: 0;
-        }
-        .modal-header{
-            height:30px;background-color:#444;
-            color:#ddd;
-        }
-        .modal-title{
-            margin-top:-10px;
-            font-size:16px;
-        }
-        .modal-header .close{
-            margin-top:-10px;
-            color:#fff;
-        }
+        
         .modal-body{
             color:#888;
             /*max-height: calc(100vh - 210px);*/
             max-height: calc(100vh - 110px);
             overflow-y: auto;
         }
-        .modal-body p {
-            text-align:center;
-            padding-top:10px;
-        }
+        
         .validar_formulario{
             background: blue; 
             width: 120px; 
@@ -124,26 +98,7 @@
             border-bottom: 1px solid gold;
             background: lightgoldenrodyellow;
         }
-        /* .header_fijo
-        {
-            width: 750px;
-            table-layout: fixed;
-            border-collapse: collapse;
-        } */
-        /* .header_fijo thead {
-            background-color: #333;
-            color: #FDFDFD;
-        }
-        .header_fijo thead tr {
-            display: block;
-            position: relative;
-        } */
-        /* .header_fijo tbody {
-            display: block;
-            overflow: auto;
-            width: 100%;
-            height: 1px;
-        } */
+        
         </style>
 </head>
 <!-- <body> -->
@@ -335,17 +290,9 @@
         listarDatos();
     });
     
-    
-//    function showEdit(editableObj) {
-//            $(editableObj).css("background","#FFF");
-//    }
-    
     function saveSingleToDatabase(Obj,tabla,columna,id,contexto) {
-//        alert("entro");
-//        console.log(Obj);        
+      
             if(si_hay_cambio==true){
-
-//            alert("entraste aqui ");
             $("#btnAgregarEvidenciasRefrescar").prop("disabled",true);
             
             $(Obj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
@@ -418,9 +365,7 @@
     }
 
     function refresh()
-    {
-        // consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
-        // window.location.href="OperacionesView.php";        
+    {       
         listarDatos();
     }
     function filterTable(Obj)
@@ -1081,7 +1026,6 @@
         <!--Para abrir alertas del encabezado-->
         <script src="../../assets/probando/js/ace-elements.min.js"></script>
         <script src="../../assets/probando/js/ace.min.js"></script>        
-        <script src="../../assets/probando/js/ace-extra.min.js"></script>
 
         <!-- js cargar archivo -->
         <script src="../../assets/FileUpload/js/jquery.min.js"></script>
@@ -1100,5 +1044,9 @@
         <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
         <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
         <script src="../../assets/FileUpload/js/main.js"></script>
+        <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
+        <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
+        <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
+        <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
 </body>
 </html>
