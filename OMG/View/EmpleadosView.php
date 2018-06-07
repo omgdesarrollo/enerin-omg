@@ -39,44 +39,46 @@ $Usuario=  Session::getSesion("user");
                 
                 <script src="../../js/jquery.js" type="text/javascript"></script>
 
-                     
-                <!--en esta seccion es para poder abrir el modal--> 
-                <link href="../../codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
-                <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
-                <!--aqui termina la seccion para poder abrir el modal-->
+       
                      
                 
                 <style>
                     .modal
                     {
                         overflow: hidden;
+                        /*width: 2900px;*/
                     }
                     .modal-dialog{
                         margin-right: 0;
                         margin-left: 0;
                     }
                     .modal-header{
-                      height:30px;background-color:#444;
+                      height:50px;background-color:#444;
                       color:#ddd;
+                    }
+                    
+                    .closeLetra{
+                         color: white;font-size: 30px; 
                     }
                     .modal-title{
                       margin-top:-10px;
                       font-size:16px;
                     }
-                    .modal-header .close{
+/*                    .modal-header .close{
                       margin-top:-10px;
                       color:#fff;
-                    }
+                    }*/
                     .modal-body{
-                      color:#888;
-                       /*max-height: calc(100vh - 210px);*/
-                      max-height: calc(100vh - 110px);
+                      /*color:#888;*/
+                       max-height: calc(100vh - 110px);
+/*                      max-height: calc(100vh - 110px);*/
+                      /*width: 100px;*/
                       overflow-y: auto;
                     }
-                    .modal-body p {
+/*                    .modal-body p {
                       text-align:center;
                       padding-top:10px;
-                    }
+                    }*/
                     
 /*                    .main-encabezado {
                         background: #333;
@@ -248,7 +250,7 @@ require_once 'EncabezadoUsuarioView.php';
     <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">x</span></button>
             <h4 class="modal-title" id="myModalLabel">Crear Nuevo Empleado</h4>
           </div>
 
