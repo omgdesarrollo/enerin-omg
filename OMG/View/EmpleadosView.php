@@ -39,46 +39,58 @@ $Usuario=  Session::getSesion("user");
        
                      
                 
-    <style>
+                <style> 
+                    .modal-body{
+                       max-height: calc(100vh - 110px);
+                      overflow-y: auto;
+                    }
+/*Inicia estilos para mantener fijo el header*/                    
+                    .table-fixed-header {
+    display: table; /* 1 */
+    position: relative;
+    padding-top: calc(~'2.5em + 2px'); /* 2 */
+    
+    table {
+        margin: 0;
+        margin-top: calc(~"-2.5em - 2px"); /* 2 */
+    }
+    
+    thead th {
+        white-space: nowrap;
         
-        .modal-body{
-            color:#888;
-            /*max-height: calc(100vh - 210px);*/
-            max-height: calc(100vh - 110px);
-            overflow-y: auto;
+        /* 3 - apply same styling as for thead th */
+        /* 4 - compensation for padding-left */
+        &:before {
+            content: attr(data-header);
+            position: absolute;
+            top: 0;
+            padding: .5em 1em; /* 3 */
+            margin-left: -1em; /* 4 */
         }
-        
-        .validar_formulario{
-            background: blue; 
-            width: 120px; 
-            color: white; 
-        }
+    }
+}
 
-        .table-container {
-            max-height: 70vh; /* 5 */
-            overflow-y: auto; /* 5 */
-            &:before{
-                content: '';
-                position: absolute;
-                left: 0;
-                right: 0;
-                top: 0;
-                min-height: 2.5em;             /* 6 */
-                border-bottom: 2px solid #DDD; /* 6 */
-                background: #f1f1f1;           /* 6 */
-            }
-        }
-        .backgroundTdTable
-        {
-            background: gold;
-        }
-        .nuevoTdTable
-        {
-            border-bottom: 1px solid gold;
-            background: lightgoldenrodyellow;
-        }
+ /* 5 - setting height and scrolling */
+.table-container {
+    max-height: 70vh; /* 5 */
+    overflow-y: auto; /* 5 */
         
-        </style>
+        /* 6 - same styling as for thead th */
+        &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        min-height: 2.5em;             /* 6 */
+        border-bottom: 2px solid #DDD; /* 6 */
+        background: #f1f1f1;           /* 6 */
+    }
+}
+ 
+/*Finaliza estilos para mantener fijo el header*/                    
+                    
+                </style>
 
                 
                                
@@ -96,11 +108,8 @@ $Usuario=  Session::getSesion("user");
 
 require_once 'EncabezadoUsuarioView.php';
 
-$titulosTable = 
-            array("No.","Nombre","Apellido Paterno","Apellido Materno","Categoria",
-                "Email","Fecha Creacion");
-
 ?>       
+
        
 <!--<div style="height: 5px"></div>-->       
 
@@ -131,28 +140,62 @@ $titulosTable =
 <div style="height: 40px"></div>
 
 
+<div class="table-fixed-header" >
     <div class="table-container">           
                
-        <table  id="idTable" class="tbl-qa">
-            
-            <tr>
-                <?php foreach($titulosTable as $index=>$value)
-                { if($index<7){ ?>
-                <th class="backgroundTdTable"><?php echo $value ?></th>
-                <?php }else{ ?>
-                    <th class="table-header"><?php echo $value ?></th>
-                <?php   } 
-                } ?>
-            </tr>
-            
-            <tbody id="bodyTable">
-                    
-            </tbody>
+               <table  id="idTable" class="tbl-qa">
+		  <thead>
+			  <tr>
+				<th class="table-header" width="10%">No.</th>
+				<th class="table-header">Nombre</th>
+				<th class="table-header">Apellido Paterno</th>
+                                <th class="table-header">Apellido Materno</th>
+                                <th class="table-header">Categoria</th>
+                                <th class="table-header">Email</th>
+                                <th class="table-header">Fecha Creacion</th>
+			  </tr>
+		  </thead>
+		  <tbody>
+                      
+		  <?php
+                  
+                  
+                  
+//		  foreach($faq as $k=>$v) {
+                  $Lista = Session::getSesion("listarEmpleados");
 
-         </table>
+                 $numeracion=1;
+//		foreach ($Lista as $k=>$filas) { 
+                foreach ($Lista as $filas) { 
+                    
+                    
+                    if($filas["nombre_empleado"]!="SIN RESPONSABLE"){
+                                            
+                            
+                    ?>
+                      
+                      
+			  <tr class="table-row">
+                              
+                              
+				<td><?php echo $numeracion++; ?></td>                                
+                                    <td contenteditable="true" onBlur="saveToDatabase(this,'nombre_empleado','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["nombre_empleado"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'apellido_paterno','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["apellido_paterno"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'apellido_materno','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["apellido_materno"]; ?></td>
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'categoria','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["categoria"]; ?></td>
+                                 <td contenteditable="true" onBlur="saveToDatabase(this,'correo','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["correo"]; ?></td>
+                                 <td contenteditable="false" onBlur="saveToDatabase(this,'fecha_creacion','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["fecha_creacion"]; ?></td>
+			  </tr>
+                          
+		<?php
+                    }
+		}
+		?>
+		  </tbody>
+		</table>
         
     </div>
-   
+</div>    
                                             
 
 <!-- Inicio de Seccion Modal -->
@@ -403,25 +446,6 @@ $titulosTable =
                     si_hay_cambio=true;
                 }
                 
-                
-                
-                function reconstruirTable(data)
-                {
-                    cargarTodo=0;
-                    tempData ="";
-                    $.ajax({
-                        url:"../Controller/EmpleadosController.php",
-                        type:'GET',
-                        data:'',
-                        success:
-                                
-                    });
-
-                }
-                
-                
-                
-                
                function filterTable() {
                     var input, filter, table, tr, td, i;
                     input = document.getElementById("idInput");
@@ -517,34 +541,9 @@ $titulosTable =
                 }
                 
                 function refresh(){
-                  listarDatos();
+                  consultarInformacion("../Controller/EmpleadosController.php?Op=Listar");                                             
+                  
                 }
-                
-                
-                function listarDatos()
-                {
-                    $.ajax
-                    ({
-                        url: '../Controller/EmpleadosController.php?Op=Listar',
-                        type: 'GET',
-                        beforeSend:function()
-                        {
-                            $('#loader').show();
-                        },
-                        success:function(datos)
-                        {
-                            data = datos;
-                            reconstruirTable(datos);
-                        },
-                        error:function(error)
-                        {
-                            $('#loader').hide();
-                        }
-                    });
-                }
-                
-                
-                
                 
                 
                 
