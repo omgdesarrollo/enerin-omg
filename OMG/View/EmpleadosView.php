@@ -38,7 +38,7 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 
                 <script src="../../js/jquery.js" type="text/javascript"></script>
-
+                <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
        
                      
                 
@@ -56,41 +56,10 @@ $Usuario=  Session::getSesion("user");
                       height:50px;background-color:#444;
                       color:#ddd;
                     }
-                    
-                    .closeLetra{
-                         color: white;font-size: 30px; 
-                    }
-/*                    .modal-title{
-                      margin-top:-10px;
-                      font-size:16px;
-                    }*/
-/*                    .modal-header .close{
-                      margin-top:-10px;
-                      color:#fff;
-                    }*/
                     .modal-body{
-                      /*color:#888;*/
                        max-height: calc(100vh - 110px);
-/*                      max-height: calc(100vh - 110px);*/
-                      /*width: 100px;*/
                       overflow-y: auto;
                     }
-/*                    .modal-body p {
-                      text-align:center;
-                      padding-top:10px;
-                    }*/
-                    
-/*                    .main-encabezado {
-                        background: #333;
-                        color: white;
-                        height: 80px;
-
-                        width: 100%;  hacemos que la cabecera ocupe el ancho completo de la página 
-                        left: 0;  Posicionamos la cabecera al lado izquierdo 
-                        top: 0;  Posicionamos la cabecera pegada arriba 
-                        position: fixed;  Hacemos que la cabecera tenga una posición fija 
-                    }*/
-
 /*Inicia estilos para mantener fijo el header*/                    
                     .table-fixed-header {
     display: table; /* 1 */

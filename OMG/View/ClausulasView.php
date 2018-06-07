@@ -13,20 +13,14 @@ $Usuario=  Session::getSesion("user");
 
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-
                 <!-- bootstrap & fontawesome -->
                 <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-                <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
                 <!--Para abrir alertas de aviso, success,warning, error-->
                 <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
 		
-                <!-- text fonts -->
-		<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />
-		
+               
                 <!-- ace styles -->
                 <link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-		<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
-		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
                 <!--Inicia para el spiner cargando-->
                 <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
@@ -37,11 +31,7 @@ $Usuario=  Session::getSesion("user");
                 
                 <script src="../../js/jquery.js" type="text/javascript"></script>
 
-                
-                <!--en esta seccion es para poder abrir el modal--> 
-                <link href="../../codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
-                <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
-                <!--aqui termina la seccion para poder abrir el modal-->
+                <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 
             
             <style>
@@ -54,46 +44,21 @@ $Usuario=  Session::getSesion("user");
                         margin-left: 0;
                     }
                     .modal-header{
-                      height:30px;background-color:#444;
+                      height:50px;background-color:#444;
                       color:#ddd;
-                    }
-                    .modal-title{
-                      margin-top:-10px;
-                      font-size:16px;
-                    }
-                    .modal-header .close{
-                      margin-top:-10px;
-                      color:#fff;
                     }
                     .modal-body{
                       color:#888;
                        /*max-height: calc(100vh - 210px);*/
                       max-height: calc(100vh - 110px);
                       overflow-y: auto;
-                    }
-                    .modal-body p {
-                      text-align:center;
-                      padding-top:10px;
-                    }
-                    
+                    }                    
                     
                     #sugerenciasclausulas {
                     width:350px;
                     height:5px;
                     overflow: auto;
                     }
-               
-/*                    .main-encabezado {
-                        background: #333;
-                        color: white;
-                        height: 80px;
-
-                        width: 100%;  hacemos que la cabecera ocupe el ancho completo de la página 
-                        left: 0;  Posicionamos la cabecera al lado izquierdo 
-                        top: 0;  Posicionamos la cabecera pegada arriba 
-                        position: fixed;  Hacemos que la cabecera tenga una posición fija 
-                    } */
-                   
                     
 /*Inicia estilos para mantener fijo el header*/                    
                     .table-fixed-header {
@@ -192,25 +157,13 @@ require_once 'EncabezadoUsuarioView.php';
 <div style="height: 47px"></div>
 
 
-
-<!--<div class="contenedortable" style="position: fixed;">   
-    <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Tema">
-</div >-->
-
-
-<!--<div style="height: 55px"></div>-->
-
-
 <div class="table-fixed-header">
     <div class="table-container">            
             
                            <table id="idTable" class="tbl-qa">
-                              
-		  <!--<thead>-->
                             
                                <tr  >
-                          <!--<div class="main-header">-->
-				<!--<th class="table-header" >NO.</th>-->
+                          
                                 <th  class="table-header">No.Tema</th>
 				<th   class="table-header">Tema</th>				
 				<th  class="table-header">No.Sub-Tema</th>				
@@ -219,47 +172,33 @@ require_once 'EncabezadoUsuarioView.php';
 				<!--<th class="table-header">TEXTO BREVE</th>-->				
 				<th  class="table-header">Descripcion</th>				
                                 <th  class="table-header">Plazo</th>					
-                          <!--</div>-->
                                </tr>
                      
-		  <!--</thead>-->
 		  <tbody>
-		  <?php
-                  
-                    
-                  
-//		  foreach($faq as $k=>$v) {
+		  <?php                  
                   $Lista = Session::getSesion("listarClausulas");
                   $cbxE= Session::getSesion("listarEmpleadosComboBox");
                   
                   $numeracion = 1;
-                  
-//		foreach ($Lista as $k=>$filas) { 
-//                   $valorid= $Lista[$k]["ID_EMPLEADO"];
-//                   $nombreempleado=$Lista[$k]["NOMBRE_EMPLEADO"];
+
                   foreach ($Lista as $filas) { 
 		  ?>
 			  <tr class="table-row">
-				<!--<td><?php //echo $numeracion++;   ?></td>-->
-                                
-                                            <?php
-//                                            echo "el valor es :   "."{$k}=>{$filas["CLAUSULA"]}";
-                                            ?>
-                                <!--DESCRIPCION_SUB_CLAUSULA-->
+			
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["clausula"]; ?></td>
                                 <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["descripcion_clausula"]; ?></td>
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'sub_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["sub_clausula"]; ?></td>
                                 <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'descripcion_sub_clausula','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["descripcion_sub_clausula"]; ?></td>
                                 
                                 <td> 
-<!--                                    <select  class="empleado" name="n_empleado" onchange="saveComboToDatabase('ID_EMPLEADO', <?php //echo $filas["id_clausula"]; ?> )">-->
+
                                     <select   id="id_empleado" class="select"  onchange="saveComboToDatabase('id_empleado', <?php echo $filas["id_clausula"]; ?> )">
-                                    <!--<select name="name_empleado">-->
+                          
                                     <?php
                                     $s="";
                                                 foreach ($cbxE as $value) {
                                                     if($value["id_empleado"]=="".$filas["id_empleado"]){
-//                                                        $s="selected";
+
                                                     ?>
                                     
                                         <option value="<?php echo "".$filas["id_empleado"] ?>"  selected ><?php echo "".$filas["nombre_empleado"]." ".$filas["apellido_paterno"]." ".$filas["apellido_materno"]; ?></option>
@@ -276,13 +215,11 @@ require_once 'EncabezadoUsuarioView.php';
                                     
                                     ?>
                                     </select>
-                                        
-                                  
-                                   <!--<div id="combo_zone" style="width:230px;"></div>-->
+                          
                                     
                                 </td>
                                 
-                                <!--<td contenteditable="true" onBlur="saveToDatabase(this,'TEXTO_BREVE','<?php //echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);"><?php echo $filas["texto_breve"]; ?></td>-->
+
                                 <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'descripcion','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["descripcion"]; ?></td>
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'plazo','<?php echo $filas["id_clausula"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["plazo"]; ?></td>
                                 
@@ -308,28 +245,19 @@ require_once 'EncabezadoUsuarioView.php';
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
 		        <h4 class="modal-title" id="myModalLabel">Crear Nuevo Tema</h4>
 		      </div>
 
 		      <div class="modal-body">
-		      		<!--<form data-toggle="validator" action="api/create.php" method="POST">-->
-                                    <!--<form data-toggle="validator"  >-->
-                                    
-                                                
-<!--                                                <div class="form-group">
-							<label class="control-label" for="title">No.Tema:</label>
-                                                        <input type="text"  id="CLAUSULA" class="form-control" data-error="Ingrese el Tema" required />
-							<div class="help-block with-errors"></div>
-						</div>-->
+	
                                                 <div class="form-group">
 							<label class="control-label" for="title">No.Tema:</label>
                                                         <input type="text"  id="CLAUSULA" class="form-control"  />
                                                         
-                                                        <!--<div id="combo_zone" style="width:230px;"></div>-->
+                                                    
 							<div class="help-block with-errors"></div>
                                                         <div id="sugerenciasclausulas"></div>
-                                                        <!--<div class="suggest-element"> </div>-->
                                                         
 						</div>
                                                 
@@ -355,14 +283,6 @@ require_once 'EncabezadoUsuarioView.php';
                                                         <textarea  id="DESCRIPCION_SUB_CLAUSULA" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
 							<div class="help-block with-errors"></div>
 						</div>
-                                    
-                                    
-<!--                                                <div class="form-group">
-							<label class="control-label" for="title">Texto-Breve:</label>
-                                                        <textarea  id="TEXTO_BREVE" class="form-control" data-error="Ingrese el Texto-Breve" required></textarea>
-							<div class="help-block with-errors"></div>
-						</div>-->
-
 
                                                 <div class="form-group">
 							<label class="control-label" for="title">Responsable:</label>
@@ -406,8 +326,6 @@ require_once 'EncabezadoUsuarioView.php';
                                                     <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
 						</div>
 
-		      		<!--</form>-->
-
 		      </div>
 		    </div>
 
@@ -424,27 +342,21 @@ require_once 'EncabezadoUsuarioView.php';
                          
                           
                         $('.select').on('change', function() {
-//                          console.log( $(this).prop('value') );
-//                          alert("el value que va a viajar es "+ $(this).prop('value'));
                           column="ID_EMPLEADO";
                           val=$(this).prop('value');
                           
                       
                               alert("entro aqui ");
-                          //alert("el value que va a viajar es "+val+" i el id de la clausula : "+idclausula);
+          
                           $.ajax({
                                 url: "../Controller/ClausulasController.php?Op=Modificar",
 				type: "POST",
 				data:'column='+column+'&editval='+val+'&id='+idclausula,
 				success: function(data){
                                     
-//                                      consultarInformacion("../Controller/ClausulasController.php?Op=Listar");                                        
-//                                        consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
                                         swal("Actualizacion Exitosa!", "Ok!", "success");
                                         refresh();
-//                                        si_hay_cambio_combo=false;
-                                        //window.location.href="ClausulasView.php";                                       
-					//$(editableObj).css("background","#FDFDFD");
+
 				}   
                            });
                        
@@ -469,7 +381,6 @@ require_once 'EncabezadoUsuarioView.php';
                         
                         
                         $("#btn_guardar").click(function(){
-                                  //alert("entro");
        
         
                                     var CLAUSULA=$("#CLAUSULA").val();
@@ -477,15 +388,9 @@ require_once 'EncabezadoUsuarioView.php';
                                     var SUB_CLAUSULA=$("#SUB_CLAUSULA").val();
                                     var DESCRIPCION_SUB_CLAUSULA=$("#DESCRIPCION_SUB_CLAUSULA").val();
                                     var ID_EMPLEADOMODAL=$("#ID_EMPLEADOMODAL").val();
-//                                    var TEXTO_BREVE=$("#TEXTO_BREVE").val();
                                     var DESCRIPCION=$("#DESCRIPCION").val();
                                     var PLAZO=$("#PLAZO").val();
-                                    //alert("ID_EMPLEADOMODAL :"+ID_EMPLEADOMODAL);
-                                  
-//                                  alert("Clausula :"+CLAUSULA+ "Sub-clausula :"+SUB_CLAUSULA+ "Descripcion clausula :" +DESCRIPCION_CLAUSULA+
-//                                          "Descripcion sub clausula : " +DESCRIPCION_SUB_CLAUSULA+ " texto breve :" +TEXTO_BREVE "descripcion :" +DESCRIPCION+
-//                                         "Plazo :" +PLAZO+ "Requisito :" +REQUISITO+ "id_empleado :" +ID_EMPLEADO);   
-                                    
+                            
 
                                     datos=[];
                                     datos.push(CLAUSULA);
@@ -493,7 +398,6 @@ require_once 'EncabezadoUsuarioView.php';
                                     datos.push(SUB_CLAUSULA);
                                     datos.push(DESCRIPCION_SUB_CLAUSULA);
                                     datos.push(ID_EMPLEADOMODAL);
-//                                    datos.push(TEXTO_BREVE);
                                     datos.push(DESCRIPCION);
                                     datos.push(PLAZO);
                                     saveToDatabaseDatosFormulario(datos);
@@ -530,7 +434,6 @@ require_once 'EncabezadoUsuarioView.php';
                     
                     if(si_hay_cambio==true)
                     {
-                    //alert("entraste aqui ");
                         $("#btnrefrescar").prop("disabled",true);
 			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
 			$.ajax({
@@ -548,8 +451,6 @@ require_once 'EncabezadoUsuarioView.php';
 				}   
                         });
                    
-                    } else {
-                        
                     }
 		}
                 
@@ -562,8 +463,7 @@ require_once 'EncabezadoUsuarioView.php';
                
                
                
-               function saveToDatabaseDatosFormulario(datos){
-//                    alert("datos nombre "+datos[0]);
+               function saveToDatabaseDatosFormulario(datos){;
                     
                     	$.ajax({
                                 url: "../Controller/ClausulasController.php?Op=Guardar",
@@ -572,53 +472,39 @@ require_once 'EncabezadoUsuarioView.php';
                                                        +'&DESCRIPCION_SUB_CLAUSULA='+datos[3]+'&ID_EMPLEADO='+datos[4]
                                                        +'&DESCRIPCION='+datos[5]+'&PLAZO='+datos[6],
 				success: function(data){
-//                                    alert("se guardo");
-                                    
-//					$(editableObj).css("background","#FDFDFD");
+
                                         swal("Guardado Exitoso!", "Ok!", "success")
-//                                        consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
-//                                        consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
-//                                        window.location.href("ClausulasView.php");}
                                         refresh();
 				}   
 		   });
-//                   window.location.href("EmpleadosView.php");
                 }
                 
                 
                 function refresh(){
-                  consultarInformacion("../Controller/ClausulasController.php?Op=Listar");  
-                  //window.location.href="ClausulasView.php";  
+                  consultarInformacion("../Controller/ClausulasController.php?Op=Listar"); 
                 }
                 
                 
                 function loadSpinner(){
-//                    alert("se cargara otro ");
                         myFunction();
                 }
                 
                 
                 
                 function loadAutocomplete(dataString){
-                    //Le pasamos el valor del input al ajax
                             $.ajax({
                                 type: "POST",
                                 url: "../Controller/ClausulasController.php?Op=loadAutoComplete",
                                 data: "cadenaclausula="+dataString,
                                 success: function(data) {
-                                    //Escribimos las sugerencias que nos manda la consulta
-                                //var datos="<ul>";
                                 var dato="";
                                     $.each(data, function (index,value) {
-                                //        console.log("sub_clausula: " + value.sub_clausula);
                                 if(value.sub_clausula!=""){
-                                //         datos+="<li>"+value.sub_clausula+"</li><br>";
                                         dato=value.descripcion_clausula;
 
                                      }
                                     });
-                                //    datos+="</ul>"
-                                //    $('#sugerenciasclausulas').fadeIn(1000).html(datos);
+                            
                                 $('#DESCRIPCION_CLAUSULA').val(dato);
                                 if(dato==""){
 
@@ -629,7 +515,7 @@ require_once 'EncabezadoUsuarioView.php';
                                  }
                                 }
 
-                                //                                               
+                                                                             
                                                                 }
                                                             }); 
                                                 }
@@ -646,7 +532,6 @@ require_once 'EncabezadoUsuarioView.php';
                         $("#loader").hide();                        
                      },
                      beforeSend:function(r){
-//                            $.jGrowl("Guardando  Porfavor Espere......", { header: 'Guardado de Informacion' });
 
 
                      },
