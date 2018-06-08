@@ -32,9 +32,9 @@ $Usuario=  Session::getSesion("user");
 
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>
-                <link href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.js"></script>
                 <script src="../../js/fTemasView.js" type="text/javascript"></script>
+             
+            
                 
                 
             <style> 
@@ -54,10 +54,10 @@ $Usuario=  Session::getSesion("user");
                     }
                 </style>    
 
+
 	</head>
 
         <body class="no-skin" onload="loadSpinner()">
-            <!--<div>Cargando...</div>-->
             <div id="loader"></div>
             
             
@@ -89,10 +89,7 @@ require_once 'EncabezadoUsuarioView.php';
 </button>
 
     <!--Filtros de busqueda-->
-    <input type="text" id="idInputTema" onkeyup="filterTableTema()" placeholder="Tema" style="width: 150px;">
-    <input type="text" id="idInputSubTema" onkeyup="filterTableSubTema()" placeholder="Sub-Tema" style="width: 150px;">
-    <input type="text" id="idInputResponsable" onkeyup="filterTableResponsable()" placeholder="Responsable" style="width: 150px;">
-    <input type="text" id="idInputDescripcion" onkeyup="filterTableDescripcion()" placeholder="Descripcion" style="width: 150px;">
+
     <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
 
 </div>
@@ -100,10 +97,12 @@ require_once 'EncabezadoUsuarioView.php';
 <div style="height: 50px"></div>
 
 
-<div>    
-                     <table class="table table-bordered table-striped header_fijo ">
+<div class="table-fixed-header">
+    <div class="table-container">            
+            
+                     <table class="table table-bordered table-striped header_fijo"  >
                          <thead >
-                          <tr >
+                         <tr class="">
                           <th class="table-headert" width="10%">No. Tema</th>
                           <th class="table-headert" width="20%">Tema</th>
                           <th class="table-headert" width="10%">No. Sub-tema</th>
@@ -114,7 +113,7 @@ require_once 'EncabezadoUsuarioView.php';
                          </tr>
                         </thead>
                         
-                        <tbody id="datosGenerales" >
+                        <tbody id="datosGenerales"  style="position:absolute ;overflow: auto;display:block ;width: 100%">
                         </tbody>
                     </table>     
 			
@@ -123,6 +122,7 @@ require_once 'EncabezadoUsuarioView.php';
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 			</a>
 
+    </div>
 </div>              
 
                 
@@ -221,11 +221,7 @@ require_once 'EncabezadoUsuarioView.php';
 		<script>  
                       var idclausula,si_hay_cambio=false;
                       contruirContenido();
-		</script>
-                
-                
-                
-                
+		</script> 
                 <!--Inicia para el spiner cargando-->
                 <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                 <!--Termina para el spiner cargando-->

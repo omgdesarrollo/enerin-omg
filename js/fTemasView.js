@@ -1,7 +1,7 @@
 
  $(function(){
                            
-                         
+    
                           
                         $('.select').on('change', function() {
                           column="ID_EMPLEADO";
@@ -87,25 +87,29 @@
 
 
 
+
+
+
 //1 .funciones para consultar informacion y construir datos 
   function contruirContenido()
  {
+     
   $.ajax({
    url:"../Controller/ClausulasController.php?Op=Listar",
    method:"POST",
-   
    success:function(data)
    {
         for(var count=0; count<data.length; count++)
         {
-         var html_data = '<tr><td  class="celda-no-editable" width="10%">'+data[count].clausula+'</td>';
-         html_data += '<td class="celda" width="20%" data-name="descripcion_clausula" class="descripcion_clausula" data-type="text" data-pk="'+data[count].id_clausula+'">'+data[count].descripcion_clausula+'</td>';
-         html_data += '<td class="celda" width="10%" data-name="sub_clausula" class="sub_clausula" data-type="text" data-pk="'+data[count].id_clausula+'">'+data[count].sub_clausula+'</td>';
-         html_data += '<td class="celda" width="20%" data-name="descripcion_sub_clausula" class="descripcion" data-type="text" data-pk="'+data[count].id_clausula+'">'+data[count].descripcion_sub_clausula+'</td>';
-         html_data += '<td class="celda" width="20%" data-name="id_empleado" class="id_empleado" data-type="text" data-pk="'+data[count].id_clausula+'">'+data[count].id_empleado+'</td>';
-         html_data += '<td class="celda" width="10%" data-name="descripcion" class="descripcion" data-type="text" data-pk="'+data[count].id_clausula+'">'+data[count].descripcion+'</td>';
-         html_data += '<td class="celda" width="10%" data-name="plazo" class="plazo" data-type="text" data-pk="'+data[count].id_clausula+'">'+data[count].plazo+'</td></tr>';
+         var html_data = '<tr><td  class="celda-no-editable" width="12%">'+data[count].clausula+'</td>';
+         html_data += '<td class="celda" width="20%"  class="descripcion_clausula" ><textarea style=" height: 100px; width: 100%;" >' +data[count].descripcion_clausula+'</textarea></td>';
+         html_data += '<td class="celda" width="10%"  class="sub_clausula" ><textarea style=" height: 100px; width: 100%;" >'+data[count].sub_clausula+'</textarea></td>';
+         html_data += '<td class="celda" width="20%"  class="descripcion"><textarea style=" height: 100px; width: 100%;" >'+data[count].descripcion_sub_clausula+'</textarea></td>';
+         html_data += '<td class="celda" width="20%"  class="id_empleado" ><textarea style=" height: 100px; width: 100%;" >'+data[count].id_empleado+'</textarea></td>';
+         html_data += '<td class="celda" width="10%"  class="descripcion" ><textarea style=" height: 100px; width: 100%;" >'+data[count].descripcion+'</textarea></td>';
+         html_data += '<td class="celda" width="6%"  class="plazo" ><textarea style=" height: 100px; width: 100%;" >'+data[count].plazo+'</textarea></td></tr>';
          $('#datosGenerales').append(html_data);
+         
         }
    }
   })
