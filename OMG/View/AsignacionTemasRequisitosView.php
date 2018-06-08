@@ -296,7 +296,7 @@ $Usuario=  Session::getSesion("user");
 
 		<script>
             myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
-			myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
+			    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
             myTree.enableHighlighting(true);
                         
                       var id_asignacion_tema_requisito;
