@@ -503,8 +503,10 @@ $Usuario=  Session::getSesion("user");
                 });
                 console.log(dataArbol);
                 showArbol(dataArbol,dataIds);
-        });
+        }});
+    
     }
+    
     function listarClausulas(documentos)
     {
         $.ajax({
