@@ -164,8 +164,8 @@ $Usuario=  Session::getSesion("user");
 
 <div style="height: 70px"></div>
 
-<div class="table-fixed-header"> 
-
+<div class="table-fixed-header">
+<!-- inicio animacion tabla toda la interfaz seleccionada -->
     <div class="table-container" id="winVP"> 
         <table id="idTable" class="tbl-qa">
             <tr>
@@ -290,7 +290,8 @@ $Usuario=  Session::getSesion("user");
 		        <h4 class="modal-title" id="myModalLabel">Arbol</h4>
 		      </div>
 
-            <div class="modal-body">                   
+            <div class="modal-body">
+                <div style=""><div>
                 <div id="treeboxbox_tree" style="width:100%;height:300px;background-color:white;"></div>
             </div>
 		    </div>
@@ -483,23 +484,25 @@ $Usuario=  Session::getSesion("user");
             success:function(data)
             {
                 // console.log(data);
-                array=[];
+                dataArbol=[];
+                dataIds=[];
                 padre=1;
                 hijo=1;
                 $.each(data,function(index,value)
                 {
-                    array.push([padre,0,value.requisito]);
-                    $.each(value[0],function(ind,val)
+                    dataArbol.push([padre,0,value.requisito]);
+                    dataId.push([padre,value.id_requisito,value.requisito]);
+                    $.each(vlue[0],function(ind,val)
                     {
                         hijo++;
-                        array.push([hijo,padre,val.registro]);
+                        dataArbol.push([hijo,padre,val.registro]);
+                        dataId.push([hijo,val.id_registro,val.registro]);
                     });
                     hijo++;
                     padre=hijo;
                 });
-                console.log(array);
-                showArbol(array);
-            }
+                console.log(dataArbol);
+                showArbol(dataArbol,dataIds);
         });
     }
     function listarClausulas(documentos)
