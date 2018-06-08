@@ -287,21 +287,17 @@ $Usuario=  Session::getSesion("user");
 		        <h4 class="modal-title" id="myModalLabel">Arbol</h4>
 		      </div>
 
-		      <div class="modal-body">                   
-<!--                            <div class="form-group">
-
-                            </div>-->
-                           <div id="treeboxbox_tree" style="width:550px;height:250px;background-color:white;"></div>
-		      </div>
+            <div class="modal-body">                   
+                <div id="treeboxbox_tree" style="width:100%;height:300px;background-color:white;"></div>
+            </div>
 		    </div>
-
 		  </div>
 		</div>                
 
 		<script>
-                   myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%', 0);
+            myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
 			myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
-                        myTree.enableHighlighting(true);
+            myTree.enableHighlighting(true);
                         
                       var id_asignacion_tema_requisito;
                       var cualmodificar,si_hay_cambio=false;
@@ -474,6 +470,35 @@ $Usuario=  Session::getSesion("user");
             listarDocumentos();
 
     }
+    // obtenerDatosArbol(1);
+    function obtenerDatosArbol(id_asignacion)
+    {
+        $.ajax({
+            url: '../Controller/RegistrosController.php?Op=GenerarArbol',
+            type: 'GET',
+            data: 'ID_ASIGNACION='+id_asignacion,
+            success:function(data)
+            {
+                // console.log(data);
+                array=[];
+                padre=1;
+                hijo=1;
+                $.each(data,function(index,value)
+                {
+                    array.push([padre,0,value.requisito]);
+                    $.each(value[0],function(ind,val)
+                    {
+                        hijo++;
+                        array.push([hijo,padre,val.registro]);
+                    });
+                    hijo++;
+                    padre=hijo;
+                });
+                console.log(array);
+                showArbol(array);
+            }
+        });
+    }
     function listarClausulas(documentos)
     {
         $.ajax({
@@ -508,7 +533,7 @@ $Usuario=  Session::getSesion("user");
             {
                 $.each(data,function(index,value)
                 {
-                    tableBuild += "<tr class='table-row' id='registro_"+value.id_asignacion_tema_requisito+"'><td>"+numeracion+"</td>";
+                    tableBuild += "<tr class='table-row' id='registro_"+value.id_asignacion_tema_requisito+"'><td>"+value.id_asignacion_tema_requisito+"</td>";
                     tableBuild += "<td style='background-color: #ccccff'>";
                     tableBuild += "<select class='select' onchange='saveComboToDatabase(\'id_clausula\',"+value.id_asignacion_tema_requisito+")'>";
                     $.each(clausulasData,function(index2,value2)
@@ -522,8 +547,8 @@ $Usuario=  Session::getSesion("user");
                     tableBuild += "</select></td>";
                     tableBuild += "<td style='background-color: #ccccff' contenteditable='false' onBlur='saveToDatabase(this,\'descripcion_clausula\',"+value.id_asignacion_tema_requisito+")'";
                     tableBuild += "onClick='showNoEdit(this);'>"+value.descripcion_clausula+"</td>";
-                    tableBuild += "<td><button onClick='mostrarRegistros("+value.id_asignacion_tema_requisito+");' type='button' class='btn btn-success'";
-                    tableBuild += "data-toggle='modal' data-target='#mostrarRegistrosModal'>";
+                    tableBuild += "<td><button onClick='obtenerDatosArbol("+value.id_asignacion_tema_requisito+");' type='button' class='btn btn-success'";
+                    tableBuild += "data-toggle='modal' data-target='#show-arbol'>";
                     tableBuild += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i> Ver</button></td>";
             
                     // tableBuild += "<td class='text-left' contenteditable='true' onBlur='saveToDatabase(this,\'requisito\',"+value.id_asignacion_tema_requisito+")' onClick='showEdit(this)'";

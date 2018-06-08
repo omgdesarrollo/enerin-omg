@@ -21,7 +21,27 @@ class RegistrosModel{
         }
     }
     
+    public function generarDatosArbol($id_asignacion)
+    {
+        try
+        {
+            $datosArbol = array();
+            $dao=new RegistrosDAO();
+            $requisitos= $dao->obtenerRequisitos($id_asignacion);
+            foreach($requisitos as $index=>$resultado)
+            {
+                $requisitos[$index][0] = $dao->obtenerRegistros($resultado['id_requisito']);
+            }
+            return $requisitos;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
     
+
     public function insertar($registro)
     {
         try
