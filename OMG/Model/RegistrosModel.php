@@ -26,16 +26,13 @@ class RegistrosModel{
         try
         {
             $datosArbol = array();
-            
             $dao=new RegistrosDAO();
             $requisitos= $dao->obtenerRequisitos($id_asignacion);
-            
-            
             foreach($requisitos as $index=>$resultado)
             {
-               $datosArbol[$index]=$dao->obtenerRegistros($resultado['id_requisito']); 
+                $requisitos[$index][0] = $dao->obtenerRegistros($resultado['id_requisito']);
             }
-            return $datosArbol;
+            return $requisitos;
         } catch (Exception $ex)
         {
             throw $ex;
