@@ -170,6 +170,7 @@ $Usuario=  Session::getSesion("user");
             <tr>
             <?php   foreach($titulosTable as $value)
                 {?>
+              
                     <th class="table-header"> <?php echo $value ?> </th>
                 <?php } ?>
             </tr>
