@@ -508,6 +508,10 @@ $Usuario=  Session::getSesion("user");
             {
                 $.each(data,function(index,value)
                 {
+                    
+                });
+                $.each(data,function(index,value)
+                {
                     tableBuild += "<tr class='table-row' id='registro_"+value.id_asignacion_tema_requisito+"'><td>"+numeracion+"</td>";
                     tableBuild += "<td style='background-color: #ccccff'>";
                     tableBuild += "<select class='select' onchange='saveComboToDatabase(\'id_clausula\',"+value.id_asignacion_tema_requisito+")'>";
