@@ -169,6 +169,7 @@ $Usuario=  Session::getSesion("user");
     <div class="table-container" id="winVP"> 
         <table id="idTable" class="tbl-qa">
             <tr>
+                
             <?php   foreach($titulosTable as $value)
                 {?>
               
@@ -198,8 +199,8 @@ $Usuario=  Session::getSesion("user");
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 			</a>-->
 	
-    </div>         
-</div>         
+        
+         
                 
                 <!-- Inicio de Seccion Modal -->
        <div class="modal draggable fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
