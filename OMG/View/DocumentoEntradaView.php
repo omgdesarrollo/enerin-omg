@@ -16,21 +16,11 @@ $Usuario=  Session::getSesion("user");
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
 		<!-- bootstrap & fontawesome -->
-                <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-                <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+                
                 <!--Para abrir alertas de aviso, success,warning, error-->       
                 <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
-
-                
-                <!-- clase para la subida de archivos -->
-                <!-- <link href="../../assets/probando/css/subir.css" rel="stylesheet" type="text/css"/> -->
-
-		<!--<link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" />-->
-                <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-		<!-- page specific plugin styles -->
-
-		<!-- text fonts -->
-		<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />
 
 		<!-- ace styles -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
@@ -88,18 +78,6 @@ $Usuario=  Session::getSesion("user");
                       padding-top:10px;
                     }
                     
-                    
-/*                    .main-encabezado {
-                        background: #333;
-                        color: white;
-                        height: 80px;
-
-                        width: 100%;  hacemos que la cabecera ocupe el ancho completo de la página 
-                        left: 0;  Posicionamos la cabecera al lado izquierdo 
-                        top: 0;  Posicionamos la cabecera pegada arriba 
-                        position: fixed;  Hacemos que la cabecera tenga una posición fija 
-                    }*/
-                    
                     .validar_formulario{
                        background: blue; 
                        width: 100%; 
@@ -109,7 +87,7 @@ $Usuario=  Session::getSesion("user");
 
                     
 /*Inicia estilos para mantener fijo el header*/                    
-                    .table-fixed-header {
+ .table-fixed-header {
     display: table; /* 1 */
     position: relative;
     padding-top: calc(~'2.5em + 2px'); /* 2 */
