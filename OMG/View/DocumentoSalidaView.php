@@ -179,7 +179,7 @@ require_once 'EncabezadoUsuarioView.php';
 <div style="height: 55px"></div>-->
 
                    
-<div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> 
+<div class="table-fixed-header" style="display:block;" id="myDiv" class="animate-bottom"> 
     <div class="table-container">
         
         <table id="idTable" class="tbl-qa">

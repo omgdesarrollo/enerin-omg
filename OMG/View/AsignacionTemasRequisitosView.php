@@ -289,7 +289,8 @@ $Usuario=  Session::getSesion("user");
 		        <h4 class="modal-title" id="myModalLabel">Arbol</h4>
 		      </div>
 
-            <div class="modal-body">                   
+            <div class="modal-body">
+                <div style=""><div>
                 <div id="treeboxbox_tree" style="width:100%;height:300px;background-color:white;"></div>
             </div>
 		    </div>
