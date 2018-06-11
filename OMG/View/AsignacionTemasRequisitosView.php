@@ -18,22 +18,22 @@ $Usuario=  Session::getSesion("user");
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
                  
-                 <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
-                <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+        <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+        <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
 <!--
-                <!--Inicia para el spiner cargando-->
-                <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
-                <!--Termina para el spiner cargando-->
-                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-                
-                <script src="../../js/jquery.js" type="text/javascript"></script>
+        <!--Inicia para el spiner cargando-->
+        <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+        <!--Termina para el spiner cargando-->
+        <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+        
+        <script src="../../js/jquery.js" type="text/javascript"></script>
 
-                <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
-         
-                <link href="../../codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
-                <script src="../../codebase/dhtmlx.js" type="text/javascript"></script>
-                <link href="../../codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
+        <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+    
+        <link href="../../codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
+        <script src="../../codebase/dhtmlx.js" type="text/javascript"></script>
+        <link href="../../codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
               
 
 
@@ -503,8 +503,10 @@ $Usuario=  Session::getSesion("user");
                 });
                 console.log(dataArbol);
                 showArbol(dataArbol,dataIds);
+            }
         });
     }
+    
     function listarClausulas(documentos)
     {
         $.ajax({
@@ -638,7 +640,7 @@ $Usuario=  Session::getSesion("user");
                         }
                       } 
                     }
-                }    
+                }
                 
               
 		</script>

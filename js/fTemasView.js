@@ -102,7 +102,7 @@
          for(var count=0; count<data.length; count++)
          {
           var html_data = '<tr><td  class="celda-no-editable" width="12%">'+data[count].clausula+'</td>';
-          html_data += '<td class="celda" width="20%"  class="descripcion_clausula" ><textarea style=" height: 100px; width: 100%;" >' +data[count].descripcion_clausula+'</textarea></td>';
+          html_data += '<td class="celda" width="20%"  class="descripcion_clausula" ><input type="text" style="width: 100%;"  value="">' +data[count].descripcion_clausula+'</textarea></td>';
           html_data += '<td class="celda" width="10%"  class="sub_clausula" ><textarea style=" height: 100px; width: 100%;" >'+data[count].sub_clausula+'</textarea></td>';
           html_data += '<td class="celda" width="20%"  class="descripcion"><textarea style=" height: 100px; width: 100%;" >'+data[count].descripcion_sub_clausula+'</textarea></td>';
           html_data += '<td class="celda" width="20%"  class="id_empleado" ><textarea style=" height: 100px; width: 100%;" >'+data[count].id_empleado+'</textarea></td>';
