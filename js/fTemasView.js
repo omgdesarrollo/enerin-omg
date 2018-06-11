@@ -99,21 +99,27 @@
    method:"POST",
     success:function(data)
     {
+     
          for(var count=0; count<data.length; count++)
          {
           var html_data = '<tr><td  class="celda-no-editable" width="12%">'+data[count].clausula+'</td>';
-          html_data += '<td class="celda" width="20%"  class="descripcion_clausula" ><input type="text" style="width: 100%;"  value="">' +data[count].descripcion_clausula+'</textarea></td>';
-          html_data += '<td class="celda" width="10%"  class="sub_clausula" ><textarea style=" height: 100px; width: 100%;" >'+data[count].sub_clausula+'</textarea></td>';
-          html_data += '<td class="celda" width="20%"  class="descripcion"><textarea style=" height: 100px; width: 100%;" >'+data[count].descripcion_sub_clausula+'</textarea></td>';
-          html_data += '<td class="celda" width="20%"  class="id_empleado" ><textarea style=" height: 100px; width: 100%;" >'+data[count].id_empleado+'</textarea></td>';
-          html_data += '<td class="celda" width="10%"  class="descripcion" ><textarea style=" height: 100px; width: 100%;" >'+data[count].descripcion+'</textarea></td>';
-          html_data += '<td class="celda" width="6%"  class="plazo" ><textarea style=" height: 100px; width: 100%;" >'+data[count].plazo+'</textarea></td></tr>';
+          html_data += '<td class="celda" width="20%" OnClick="obtener(\'h\')" class="descripcion_clausula" >' +data[count].descripcion_clausula+'</td>';
+          html_data += '<td class="celda" width="10%"  class="sub_clausula" >'+data[count].sub_clausula+'</td>';
+          html_data += '<td class="celda" width="20%"  class="descripcion">'+data[count].descripcion_sub_clausula+'</td>';
+          html_data += '<td class="celda" width="20%"  class="id_empleado" >'+data[count].id_empleado+'</td>';
+          html_data += '<td class="celda" width="10%"  class="descripcion" >'+data[count].descripcion+'</td>';
+          html_data += '<td class="celda" width="6%"  class="plazo" >'+data[count].plazo+'</td></tr>';
           $('#datosGenerales').append(html_data);
 
          }
     }
   })
  }
+
+function obtener(v){
+    alert("d"+v);
+}
+
 
 //1. termina 
 function consultarInformacion(url){

@@ -145,7 +145,7 @@ require_once 'EncabezadoUsuarioView.php';
                
                <table  id="idTable" class="tbl-qa">
 		  <thead>
-			  <tr>
+			  <tr >
 				<th class="table-header" width="10%">No.</th>
 				<th class="table-header">Nombre</th>
 				<th class="table-header">Apellido Paterno</th>

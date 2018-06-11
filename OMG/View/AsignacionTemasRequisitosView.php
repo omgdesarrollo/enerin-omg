@@ -34,7 +34,7 @@ $Usuario=  Session::getSesion("user");
         <link href="../../codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
         <script src="../../codebase/dhtmlx.js" type="text/javascript"></script>
         <link href="../../codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
-              
+      
 
 
             <style>
@@ -297,10 +297,12 @@ $Usuario=  Session::getSesion("user");
 		    </div>
 		  </div>
 		</div>                
-
-		<script>
+                  </div>
+ </div>
+	<script>
+         
             myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
-			    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
+	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
             myTree.enableHighlighting(true);
                         
                       var id_asignacion_tema_requisito;
@@ -471,6 +473,7 @@ $Usuario=  Session::getSesion("user");
     {//cargar listado
 //                    alert("se cargara otro ");
             myFunction();
+
             listarDocumentos();
 
     }
@@ -491,12 +494,12 @@ $Usuario=  Session::getSesion("user");
                 $.each(data,function(index,value)
                 {
                     dataArbol.push([padre,0,value.requisito]);
-                    dataId.push([padre,value.id_requisito,value.requisito]);
-                    $.each(vlue[0],function(ind,val)
+                    dataIds.push([padre,value.id_requisito,value.requisito]);
+                    $.each(value[0],function(ind,val)
                     {
                         hijo++;
                         dataArbol.push([hijo,padre,val.registro]);
-                        dataId.push([hijo,val.id_registro,val.registro]);
+                        dataIds.push([hijo,val.id_registro,val.registro]);
                     });
                     hijo++;
                     padre=hijo;
@@ -520,12 +523,14 @@ $Usuario=  Session::getSesion("user");
     }
     function listarDocumentos()
     {
+//        $("#loader").show();
         $.ajax({
             url: '../Controller/DocumentosController.php?Op=Listar',
             type: 'GET',
             success:function(data)
             {
                 listarClausulas(data);
+//                 $("#loader").hide();
             }
         });
     }
@@ -641,31 +646,22 @@ $Usuario=  Session::getSesion("user");
                       } 
                     }
                 }
-                
-              
-		</script>
-                <script src="../../js/functionATRView.js" type="text/javascript"></script>
-                <!--Inicia para el spiner cargando-->
-                <script src="../../js/loaderanimation.js" type="text/javascript"></script>
-                <!--Termina para el spiner cargando-->
-                
-                <!--jquery-->
-                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-                
-                <!--Bootstrap-->
-                <script src="../../assets/probando/js/bootstrap.min.js"></script>
-                <!--Para abrir alertas de aviso, success,warning, error-->       
-                <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
-                
-                <!--Para abrir alertas del encabezado-->
-		<script src="../../assets/probando/js/ace-elements.min.js"></script>
-		<script src="../../assets/probando/js/ace.min.js"></script>
-                <script src="../../assets/probando/js/ace-extra.min.js"></script>
-     
-		     
-                
-	</body>
-        
-        
-        
+        </script>      
+</body>
+
+            <script src="../../js/functionATRView.js" type="text/javascript"></script>
+            <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+                        <!--Termina para el spiner cargando-->
+
+            <!--Bootstrap-->
+            <script src="../../assets/probando/js/bootstrap.min.js"></script>
+            <!--Para abrir alertas de aviso, success,warning, error-->
+            <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+
+            <!--Para abrir alertas del encabezado-->
+            <script src="../../assets/probando/js/ace-elements.min.js"></script>
+            <script src="../../assets/probando/js/ace.min.js"></script>
+ 
 </html>
+              
+		
