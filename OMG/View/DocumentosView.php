@@ -156,7 +156,7 @@ $Usuario=  Session::getSesion("user");
                                 <th class="table-header">Clave del Documento</th>
 				<th class="table-header">Nombre del Documento</th>				
                                 <th class="table-header">Responsable del Documento</th>					                                
-                                <th class="table-header">Registros</th>	
+                                <!--<th class="table-header">Registros</th>-->	
                                 <th class="table-header">Opcion</th>
 			  </tr>
 		  </thead>
@@ -202,9 +202,11 @@ $Usuario=  Session::getSesion("user");
                                     </select>                                   
                                 </td>
                                 
-                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'registros','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"  onkeyup="detectarsihaycambio(this)"><?php echo $filas["registros"]; ?></td>
+                                <!--<td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'registros','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"  onkeyup="detectarsihaycambio(this)"><?php echo $filas["registros"]; ?></td>-->
                                 <!--<td><textarea cols="50"  wrap="soft"> <?php // echo $filas["registros"]; ?> </textarea>  </td>-->
-                                <td><button  ><i class="fa fa-trash"></i></button> </td>
+                                <td>
+                                    <button style="font-size:x-large;color:#39c;background:transparent;border:none;" ><i class="fa fa-trash"></i></button> 
+                                </td>
 			  </tr>
 		<?php
                       }
