@@ -118,14 +118,14 @@ $Usuario=  Session::getSesion("user");
         // );
         $titulosTable = 
             array("No.","Tema","Descripción de Tema","Requisitos");
-?> 
+?>
 
 <div style="height: 5px"></div>
             
 <div style="position: fixed;">     
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
         Asignar Tema-Requisito
-</button>    
+</button>
 
 <button type="button" id="btn_lista_documentos" class="btn btn-success" data-toggle="modal">
     Lista de Documentos
@@ -138,14 +138,14 @@ $Usuario=  Session::getSesion("user");
 </button>
     <button type="button" class="btn btn-success" onclick="showArbol()" data-toggle="modal" data-target="#show-arbol">
         mostrar Arbol
-</button>   
+</button>
 <button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
     <i class="glyphicon glyphicon-repeat"></i> 
 </button>
     
 <button type="button" onclick="window.location.href='../ExportarView/exportarAsignacionTemasRequisitosView/exportarAsignacionTemasRequisitoExcel.php'">
     <img src="../../images/base/_excel.png" width="30px" height="30px">
-</button>     
+</button>
 <button type="button" onclick="window.location.href='../ExportarView/exportarAsignacionTemasRequisitosView/exportarAsignacionTemasRequisitoWord.php'">
     <img src="../../images/base/word.png" width="30px" height="30px"> 
 </button>
@@ -158,7 +158,7 @@ $Usuario=  Session::getSesion("user");
 
 <input type="text" id="idInputDescripcionTema" onkeyup="filterTableDescripcionTema()" placeholder="Descripcion del Tema" style="width: 220px">
 <input type="text" id="idInputRequisito" onkeyup="filterTableRequisito()" placeholder="Requisito" style="width: 150px">
-<i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>    
+<i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
 
 </div>
 
@@ -166,7 +166,7 @@ $Usuario=  Session::getSesion("user");
 
 <div class="table-fixed-header">
 <!-- inicio animacion tabla toda la interfaz seleccionada -->
-    <div class="table-container" id="winVP"> 
+    <div class="table-container" id="winVP">
         <table id="idTable" class="tbl-qa">
             <tr>
                 
@@ -179,8 +179,8 @@ $Usuario=  Session::getSesion("user");
 		  <tbody id="tbodyTableAsignacion">
           </tbody>
         </table>
-    </div>         
-</div>  
+    </div>
+</div>
 
 <?php
 

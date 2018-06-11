@@ -215,6 +215,9 @@ var gantt=[
 //                                    alert("d");
 //                        });
                     ribbon.attachEvent("onClick", function(itemIdSeleccion, bId){
+                        // alert(itemIdSeleccion);
+                        if(itemIdSeleccion=="sesionusuario")
+                            loadViewUsuario();
                         if(itemIdSeleccion=="cambiaresc")
                             alert("le has picado a cam biar act");
                         
@@ -263,7 +266,7 @@ var gantt=[
                             
 //                            
          );
- 
+
  function loadDataMenuArriba(){	
 //	alert("data "+data.id);
 	var inicio=[

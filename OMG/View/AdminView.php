@@ -56,7 +56,7 @@ $Usuario=  Session::getSesion("user");
         <!--<link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>-->
         <!--<script src="../../codebase/dhtmlx.js"></script>-->
         <!--aqui termina la seccion para poder abrir el modal-->
-   
+        <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 
                 
         <style>
@@ -144,9 +144,42 @@ $Usuario=  Session::getSesion("user");
     /*Finaliza estilos para mantener fijo el header*/                
         </style>
     </head>
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#agregarUsuario">
+        Agregar Usuario
+    </button>
 
-<div id="winVP">        
-    <body class="no-skin" onload="loadSpinner()">
-        <div id="loader"></div>
+    <div id="winVP">
+        <body class="no-skin" onload="loadSpinner()">
+            <div id="loader"></div>
+
+            <div style="height: 5px"></div>
+                
+                <div style="position: fixed;">
         </body>
-        
+        </body>
+    </div>
+
+    <div class="modal draggable fade" id="agregarUsuario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Agregar Usuario</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div style=""><div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    function loadSpinner()
+    {
+        myFunction();
+        // listarDocumentos();
+    }
+    
+</script>

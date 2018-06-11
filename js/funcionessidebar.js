@@ -255,9 +255,10 @@ function loadDataSideBarOficiosDocumentacion(){
 //      });
 //                        
     }
-    
-    
-    
+        function loadViewUsuario()
+        {
+            $("#sidebarObjV").load('InyectarVistasView.php #administrarUsuario');
+        }
     
     
        function loadDataSideBarCumplimientosEvidencias(){
