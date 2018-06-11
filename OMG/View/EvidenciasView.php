@@ -116,7 +116,7 @@
         );
         $titulosTable = 
             array("Clave","Nombre Documento","Responsable Documento","Registros","Archivo Adjunto",
-                "Fecha Registro","Clasificación","Acción Correctiva Inmediata","Plan de Acción","Desviación","Validación","Opcion"
+                "Fecha Registro","Frecuencia","Acción Correctiva Inmediata","Plan de Acción","Desviación","Validación","Opcion"
                 /*,"Ingresar Oficio Atención","Oficio de Atención"*/);
     ?>
     
