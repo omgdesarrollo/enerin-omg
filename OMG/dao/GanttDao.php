@@ -34,4 +34,13 @@ class GanttDao {
     }
     
     
+    public function insertarTareasGantt(){
+        try{
+            $query="INSERT into ";
+        } catch (Exception $ex) {
+
+        }
+    }
+    
+    
 }

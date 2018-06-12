@@ -16,9 +16,12 @@ class GanttModel {
         } catch (Exception $ex) {
             throw $e;
         }
-        
-        
     }
     
-    
+    public function insertarTareasGantt($data){
+        foreach ($data as $value) {
+            
+        }
+        
+    }
 }
