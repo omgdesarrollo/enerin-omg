@@ -48,7 +48,7 @@ and open the template in the editor.
     <script src="../../assets/gantt_5.1.2_com/codebase/locale/locale_es.js" type="text/javascript"></script>
     <script src="https://export.dhtmlx.com/gantt/api.js?v=20180322"></script>
     
-   <script src="../../codebase/ext/dhtmlxgantt_smart_rendering.js"></script>
+   <!--<script src="../../codebase/ext/dhtmlxgantt_smart_rendering.js"></script>-->
    <script src="../../js/jquery.min.js" type="text/javascript"></script>
    
    <link href="../../assets/gantt_5.1.2_com/codebase/skins/dhtmlxgantt_meadow.css" rel="stylesheet" type="text/css"/>

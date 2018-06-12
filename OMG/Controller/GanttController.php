@@ -26,7 +26,9 @@ switch ($Op) {
     	Session::setSesion("listarEmpleados",$Lista);
 //    	$tarjet="../view/principalmodulos.php";
     	header('Content-type: application/json; charset=utf-8');
-		echo json_encode($Lista);
+	echo json_encode($Lista);
+        
+                
                 
 		break;
     	
@@ -63,6 +65,9 @@ switch ($Op) {
             var_dump($tags);
             echo "valores de variables ";
             var_dump($valores);
+            
+            
+            
             
 //echo "ca:   ".$numero;
 //echo "valores:  ".$valores."  ---";
