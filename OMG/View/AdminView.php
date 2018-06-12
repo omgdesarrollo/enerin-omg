@@ -168,8 +168,19 @@ $Usuario=  Session::getSesion("user");
                 </div>
 
                 <div class="modal-body">
-                    <div style=""><div>
-                    
+                    <div class="form-group">
+                        <!-- <label class="control-label" for="title">Nombre Usuario: </label>
+                        <input type="text" class="" onkeyup="getClavesDocumento(this)"/>
+                        <select id="CLAVE_NUEVAEVIDENCIAMODAL" class="select1" onchange="select_clavesModal(this)">
+                            <option>Sin especificar</option>
+                        </select> -->
+                        <div class="dropdown">
+                            <input type="text" class="dropdown-toggle" id="menu1" data-toggle="dropdown" onkeyup="getClavesDocumento(this)"/>
+                                <ul class="dropdown-menu" id="dropdownEvent" role="menu" 
+                                aria-labelledby="menu1"></ul>
+                        </div>
+                        <div class="help-block with-errors"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -179,7 +190,39 @@ $Usuario=  Session::getSesion("user");
     function loadSpinner()
     {
         myFunction();
-        // listarDocumentos();
     }
-    
+    function getClavesDocumento(data)
+    {
+        cadena = $(data).val().toLowerCase();
+        tempData="";
+        if(cadena!="")
+        {
+            $.ajax({
+                url: '../Controller/AdminController.php?Op=BusquedaEmpleado',
+                type: 'GET',
+                data: 'CADENA='+cadena,
+                success:function(usuarios)
+                {
+                    $.each(usuarios,function(index,value)
+                    {
+                        // console.log(value);
+                        tempData +="<li role='presentation'><a role='menuitem' tabindex='-1' href='#'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</a></li>";
+                    });
+                    $("#dropdownEvent").html(tempData);
+                }
+            });
+        }
+    }
+</script>
+<script src="../../js/loaderanimation.js" type="text/javascript"></script>
+                <!--Termina para el spiner cargando-->
+
+    <!--Bootstrap-->
+    <script src="../../assets/probando/js/bootstrap.min.js"></script>
+    <!--Para abrir alertas de aviso, success,warning, error-->
+    <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+
+    <!--Para abrir alertas del encabezado-->
+    <script src="../../assets/probando/js/ace-elements.min.js"></script>
+    <script src="../../assets/probando/js/ace.min.js"></script>
 </script>
