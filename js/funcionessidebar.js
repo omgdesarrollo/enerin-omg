@@ -183,9 +183,10 @@ function loadDataSideBarOficiosDocumentacion(){
         consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");
         $("#sidebarObjV").load('InyectarVistasView.php #validaciondocumentos');                       
     }
-    
-    
-    
+        function loadViewUsuario()
+        {
+            $("#sidebarObjV").load('InyectarVistasView.php #administrarUsuario');
+        }
     
     
        function loadDataSideBarCumplimientosEvidencias(){

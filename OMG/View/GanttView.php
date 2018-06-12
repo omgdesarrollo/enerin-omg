@@ -263,6 +263,7 @@ gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
  
 var dp = new gantt.dataProcessor("../Controller/GanttController.php?Op=Modificar");
 dp.init(gantt);
+// console.log(dp);
 
 //dp.attachEvent("onAfterUpdate", function(id, action, tid, response){
 //    if(action == "error"){

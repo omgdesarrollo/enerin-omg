@@ -94,6 +94,18 @@ class EmpleadoModel{
             throw $ex;
         }
     }
+    public function BusquedaEmpleado($cadena)
+    {
+        try{
+            $dao= new EmpleadoDAO();
+            $lista = $dao->BusquedaEmpleado($cadena);
+            return $lista;
+        }catch(Exception $er)
+        {
+            return false;
+            throw $er;
+        }
+    }
 }
 
 ?>

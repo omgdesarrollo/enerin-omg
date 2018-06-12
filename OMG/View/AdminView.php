@@ -56,7 +56,7 @@ $Usuario=  Session::getSesion("user");
         <!--<link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>-->
         <!--<script src="../../codebase/dhtmlx.js"></script>-->
         <!--aqui termina la seccion para poder abrir el modal-->
-   
+        <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 
                 
         <style>
@@ -144,9 +144,85 @@ $Usuario=  Session::getSesion("user");
     /*Finaliza estilos para mantener fijo el header*/                
         </style>
     </head>
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#agregarUsuario">
+        Agregar Usuario
+    </button>
 
-<div id="winVP">        
-    <body class="no-skin" onload="loadSpinner()">
-        <div id="loader"></div>
+    <div id="winVP">
+        <body class="no-skin" onload="loadSpinner()">
+            <div id="loader"></div>
+
+            <div style="height: 5px"></div>
+                
+                <div style="position: fixed;">
         </body>
-        
+        </body>
+    </div>
+
+    <div class="modal draggable fade" id="agregarUsuario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Agregar Usuario</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <!-- <label class="control-label" for="title">Nombre Usuario: </label>
+                        <input type="text" class="" onkeyup="getClavesDocumento(this)"/>
+                        <select id="CLAVE_NUEVAEVIDENCIAMODAL" class="select1" onchange="select_clavesModal(this)">
+                            <option>Sin especificar</option>
+                        </select> -->
+                        <div class="dropdown">
+                            <input type="text" class="dropdown-toggle" id="menu1" data-toggle="dropdown" onkeyup="getClavesDocumento(this)"/>
+                                <ul class="dropdown-menu" id="dropdownEvent" role="menu" 
+                                aria-labelledby="menu1"></ul>
+                        </div>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    function loadSpinner()
+    {
+        myFunction();
+    }
+    function getClavesDocumento(data)
+    {
+        cadena = $(data).val().toLowerCase();
+        tempData="";
+        if(cadena!="")
+        {
+            $.ajax({
+                url: '../Controller/AdminController.php?Op=BusquedaEmpleado',
+                type: 'GET',
+                data: 'CADENA='+cadena,
+                success:function(usuarios)
+                {
+                    $.each(usuarios,function(index,value)
+                    {
+                        // console.log(value);
+                        tempData +="<li role='presentation'><a role='menuitem' tabindex='-1' href='#'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</a></li>";
+                    });
+                    $("#dropdownEvent").html(tempData);
+                }
+            });
+        }
+    }
+</script>
+<script src="../../js/loaderanimation.js" type="text/javascript"></script>
+                <!--Termina para el spiner cargando-->
+
+    <!--Bootstrap-->
+    <script src="../../assets/probando/js/bootstrap.min.js"></script>
+    <!--Para abrir alertas de aviso, success,warning, error-->
+    <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+
+    <!--Para abrir alertas del encabezado-->
+    <script src="../../assets/probando/js/ace-elements.min.js"></script>
+    <script src="../../assets/probando/js/ace.min.js"></script>
+</script>
