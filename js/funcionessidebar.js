@@ -12,8 +12,7 @@ function loadDataSideBarCatalogoInformacion(){
           {id: "documentos", text: "Documentos", icon: "documentosn.jpg"},
           //{id: "cumplimientos", text: "Cumplimientos", icon: "cumplimientos.png"},
           {type: "separator"},
-          //{id: "asignaciontema", text: "Asignacion de Tema - Empleado", icon: "asignaciontema.jpg"},
-          {id: "asignaciontemasrequisitos", text: "Asignacion de Tema - Requisito - Documento", icon: "asignacionrequisitos.png"},
+          {id: "asignaciontemasrequisitos", text: "Asignacion de Tema - Requisito - Documento", icon: "asignacionrequisitos.png"}
           //{id: "asignaciondocumentostemas", text: "Asignacion de Documento - Tema", icon: "asignaciondocumento.png"}  
 
         ]
@@ -35,13 +34,7 @@ function loadDataSideBarCatalogoInformacion(){
                                             consultarInformacion("../Controller/EmpleadosController.php?Op=mostrarcombo");
                                             $("#sidebarObjV").load('InyectarVistasView.php #clausulas');
                                        break;
-                                       
-
-//                                       case "requisitos":
-//                                            consultarInformacion("../Controller/RequisitosController.php?Op=Listar");
-//                                            $("#sidebarObjV").load('InyectarVistasView.php #requisitos');
-//                                       break;
-                                       
+                                     
 
                                        case "documentos":             
                                              consultarInformacion("../Controller/EmpleadosController.php?Op=mostrarcombo");
@@ -79,7 +72,6 @@ function loadDataSideBarCatalogoInformacion(){
 
 
 function loadDataSideBarOficiosCatalogos(){
-//         mySidebar = myLayout.cells("a").attachSidebar();
    
     mySidebar = new dhtmlXSideBar({
         parent: "sidebarObj",
@@ -182,78 +174,14 @@ function loadDataSideBarOficiosDocumentacion(){
         consultarInformacion("../Controller/InformeGerencialController.php?Op=Listar");
         $("#sidebarObjV").load('InyectarVistasView.php #informegerencial');
     
-//    mySidebar = new dhtmlXSideBar({
-//        parent: "sidebarObj",
-//        icons_path: "../../images/base/",    
-//                                template:'tiles',
-//        width: 350,
-//        items: [
-//          {id: "seguimientoentradas", text: "Seguimiento", icon: "seguimiento.png"},
-//          {id: "informegerencial", text: "Informe Gerencial", icon: "informegerencial.png"}
-//            
-//        ]
-//      });
 
-                                 
-//                         mySidebar.attachEvent("onSelect", function(id, value){
-//                                   switch(id){
-//                                       case "seguimientoentradas":
-//                                            consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
-//                                            consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
-//                                            consultarInformacion("../Controller/EmpleadosController.php?Op=mostrarcombo");
-//                                            $("#sidebarObjV").load('InyectarVistasView.php #seguimientoentradas');
-//                                       break; 
-//                                       
-//
-//                                       case "informegerencial":
-//                                            consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
-//                                            consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
-//                                            consultarInformacion("../Controller/InformeGerencialController.php?Op=Listar");
-//                                            $("#sidebarObjV").load('InyectarVistasView.php #informegerencial');
-//                                       break;
-//                                                                              
-//                                   }
-//      });
                         
     }
     function loadDataSideBarCumplimientosDocumentos(){
         
         
         consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");
-        $("#sidebarObjV").load('InyectarVistasView.php #validaciondocumentos');
-
-        
-//         mySidebar = myLayout.cells("a").attachSidebar();
-   
-//    mySidebar = new dhtmlXSideBar({
-//        parent: "sidebarObj",
-//        icons_path: "../../images/base/",    
-//                                template:'tiles',
-//        width: 350,
-//        items: [
-//          {id: "validaciondocumentos", text: "Validacion de Documentos", icon: "registrovalidaciondocumentos.jpg"},
-//          //{id: "formatodedocumento", text: "Formato de Documento", icon: "informegerencial.png"}
-//            
-//        ]
-//      });
-
-                                 
-//                         mySidebar.attachEvent("onSelect", function(id, value){
-//                                   switch(id){
-//                                       case "validaciondocumentos":
-//                                            consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");
-//
-//                                            $("#sidebarObjV").load('InyectarVistasView.php #validaciondocumentos');
-//                                       break;  
-//                                       
-//
-//                                       case "formatodedocumentos":
-//                                          
-//                                       break;
-//                                                                              
-//                                   }
-//      });
-//                        
+        $("#sidebarObjV").load('InyectarVistasView.php #validaciondocumentos');                       
     }
         function loadViewUsuario()
         {
@@ -262,74 +190,10 @@ function loadDataSideBarOficiosDocumentacion(){
     
     
        function loadDataSideBarCumplimientosEvidencias(){
-           
-        //   consultarInformacion("../Controller/OperacionesController.php?Op=Listar");
+
           $("#sidebarObjV").load('InyectarVistasView.php #seguimientoevidencias');
-           
-//         mySidebar = myLayout.cells("a").attachSidebar();
-   
-//    mySidebar = new dhtmlXSideBar({
-//        parent: "sidebarObj",
-//        icons_path: "../../images/base/",    
-//                                template:'tiles',
-//        width: 350,
-//        items: [
-//          {id: "seguimientooperaciones", text: "Seguimiento Operaciones", icon: "seguimientooperaciones.jpg"},
-//            
-//        ]
-//      });
-//
-//                                 
-//                         mySidebar.attachEvent("onSelect", function(id, value){
-//                                   switch(id){
-//                                       case "seguimientooperaciones":
-//                                            // consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");
-//                                            $("#sidebarObjV").load('InyectarVistasView.php #seguimientooperaciones');
-//
-//                                       break;  
-//                                                                              
-//                                   }
-//      });
-                        
+                     
     } 
     
-//      function loadDataSideBarCumplimientosPlanDeAccion(){
-//
-//   
-//    mySidebar = new dhtmlXSideBar({
-//        parent: "sidebarObj",
-//        icons_path: "../../images/base/",    
-//                                template:'tiles',
-//        width: 350,
-//        items: [
-//          {id: "solicitudatenciondesviacion", text: "Solicitud Atencion Desviacion", icon: "solicituddesviacion.gif"},
-//            {id: "asignacionreponsableplan", text: "Asignacion Responsable Plan", icon: "asignacionresponsableplan.jpg"},
-//           {id: "generarplan", text: "Generar Plan", icon: "generarplan.jpg"},
-//            {id: "seguimiento", text: "seguimiento", icon: "seguimiento.png"}
-//            
-//        ]
-//      });
-//
-//                                 
-//                         mySidebar.attachEvent("onSelect", function(id, value){
-//                                   switch(id){
-//                                       case "solicitudatenciondesviacion":
-//                                          
-//                                       break;  
-//                                        case "asignacionreponsableplan":
-//                                          
-//                                       break;  
-//                                        case "generarplan":
-//                                          
-//                                       break;  
-//                                        case "seguimiento":
-//                                          
-//                                       break;  
-//                                       
-//                                                                              
-//                                   }
-//      });
-//                        
-//    }  
     
     
