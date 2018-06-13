@@ -1,8 +1,6 @@
 
  $(function(){
-                           
-    
-                          
+                                                         
                         $('.select').on('change', function() {
                           column="ID_EMPLEADO";
                           val=$(this).prop('value');
@@ -91,7 +89,7 @@
 
 
 //1 .funciones para consultar informacion y construir datos 
-  function contruirContenido()
+  function construirContenido()
  {
      
   $.ajax({
@@ -99,22 +97,23 @@
    method:"POST",
     success:function(data)
     {
-     
+         var html_data ="";   
          for(var count=0; count<data.length; count++)
-         {
-          var html_data = '<tr><td  class="celda-no-editable" width="12%">'+data[count].clausula+'</td>';
+         {             
+          html_data += '<tr><td  class="celda-no-editable" width="8%">'+data[count].clausula+'</td>';
           html_data += '<td class="celda" width="20%" OnClick="obtener(\'h\')" class="descripcion_clausula" >' +data[count].descripcion_clausula+'</td>';
           html_data += '<td class="celda" width="10%"  class="sub_clausula" >'+data[count].sub_clausula+'</td>';
           html_data += '<td class="celda" width="20%"  class="descripcion">'+data[count].descripcion_sub_clausula+'</td>';
           html_data += '<td class="celda" width="20%"  class="id_empleado" >'+data[count].id_empleado+'</td>';
-          html_data += '<td class="celda" width="10%"  class="descripcion" >'+data[count].descripcion+'</td>';
-          html_data += '<td class="celda" width="6%"  class="plazo" >'+data[count].plazo+'</td></tr>';
-          $('#datosGenerales').append(html_data);
-
+          html_data += '<td class="celda" width="12%"  class="descripcion" >'+data[count].descripcion+'</td>';
+          html_data += '<td class="celda" width="10%"  class="plazo" >'+data[count].plazo+'</td></tr>';
          }
+         
+         $('#datosGenerales').html(html_data);
     }
-  })
+  });
  }
+ 
 
 function obtener(v){
     alert("d"+v);
@@ -169,9 +168,7 @@ function loadAutocomplete(dataString){
         }); 
 }
                                                                    
-function loadSpinner(){
-        myFunction();
-}
+
 function refresh(){
    consultarInformacion("../Controller/ClausulasController.php?Op=Listar"); 
  }
@@ -233,6 +230,10 @@ function saveToDatabase(editableObj,column,id) {
 function showEdit(editableObj) {
         $(editableObj).css("background","#FFF");
 } 
+
+function loadSpinner(){
+        myFunction();
+}
 
 
 

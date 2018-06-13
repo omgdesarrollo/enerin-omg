@@ -24,7 +24,7 @@ $Usuario=  Session::getSesion("user");
 
 		<!-- ace styles -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-	
+		<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
                 <!--Inicia para el spiner cargando-->
@@ -33,75 +33,49 @@ $Usuario=  Session::getSesion("user");
                 
                 
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+                <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+                <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>
+
                 
                 <script src="../../js/jquery.js" type="text/javascript"></script>
-                <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
-       
+                <script src="../../js/fEmpleadosView.js" type="text/javascript"></script>
                      
                 
-                <style> 
-                    .modal-body{
-                       max-height: calc(100vh - 110px);
-                      overflow-y: auto;
-                    }
-/*Inicia estilos para mantener fijo el header*/                    
-                    .table-fixed-header {
-    display: table; /* 1 */
-    position: relative;
-    padding-top: calc(~'2.5em + 2px'); /* 2 */
-    
-    table {
-        margin: 0;
-        margin-top: calc(~"-2.5em - 2px"); /* 2 */
-    }
-    
-    thead th {
-        white-space: nowrap;
+<style>
         
-        /* 3 - apply same styling as for thead th */
-        /* 4 - compensation for padding-left */
-        &:before {
-            content: attr(data-header);
-            position: absolute;
-            top: 0;
-            padding: .5em 1em; /* 3 */
-            margin-left: -1em; /* 4 */
-        }
-    }
+.modal-body{
+color:#888;
+max-height: calc(100vh - 110px);
+overflow-y: auto;
+}                    
+
+#sugerenciasclausulas {
+width:350px;
+height:5px;
+overflow: auto;
+}  
+body{
+overflow:hidden;     
 }
 
- /* 5 - setting height and scrolling */
-.table-container {
-    max-height: 70vh; /* 5 */
-    overflow-y: auto; /* 5 */
-        
-        /* 6 - same styling as for thead th */
-        &:before {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        min-height: 2.5em;             /* 6 */
-        border-bottom: 2px solid #DDD; /* 6 */
-        background: #f1f1f1;           /* 6 */
-    }
+.hideScrollBar{
+width: 100%;
+height: 100%;
+overflow: auto;
+margin-right: 14px;
+padding-right: 28px; /*This would hide the scroll bar of the right. To be sure we hide the scrollbar on every browser, increase this value*/
+padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is one*/
 }
- 
-/*Finaliza estilos para mantener fijo el header*/                    
-                    
-                </style>
+        
+</style>
 
                 
-                               
-                
-    </head>
+</head>
     
     
     
     
 <body class="no-skin" onload="loadSpinner()">
-     <!--<div>Cargando...</div>-->
    <div id="loader"></div>
       
 <?php
@@ -109,9 +83,8 @@ $Usuario=  Session::getSesion("user");
 require_once 'EncabezadoUsuarioView.php';
 
 ?>       
-
        
-<!--<div style="height: 5px"></div>-->       
+<div style="height: 5px"></div>       
 
 <div style="position: fixed;">
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
@@ -140,62 +113,23 @@ require_once 'EncabezadoUsuarioView.php';
 <div style="height: 40px"></div>
 
 
-<div class="table-fixed-header" >
-    <div class="table-container">           
-               
-               <table  id="idTable" class="tbl-qa">
-		  <thead>
-			  <tr >
-				<th class="table-header" width="10%">No.</th>
-				<th class="table-header">Nombre</th>
-				<th class="table-header">Apellido Paterno</th>
-                                <th class="table-header">Apellido Materno</th>
-                                <th class="table-header">Categoria</th>
-                                <th class="table-header">Email</th>
-                                <th class="table-header">Fecha Creacion</th>
-			  </tr>
-		  </thead>
-		  <tbody>
-                      
-		  <?php
-                  
-                  
-                  
-//		  foreach($faq as $k=>$v) {
-                  $Lista = Session::getSesion("listarEmpleados");
+ <table class="table table-bordered table-striped header_fijo"  >
+    <thead >
+    <tr class="">
+     <!--<th class="table-headert" width="8%">No.</th>-->
+     <th class="table-headert" width="21.12%">Nombre</th>
+     <th class="table-headert" width="15.36%">Apellido Paterno</th>
+     <th class="table-headert" width="15.36%">Apellido Materno</th>
+     <th class="table-headert" width="15.36%">Categoria</th>
+     <th class="table-headert" width="14.4%">Email</th>
+     <th class="table-headert" width="14.4%">Fecha Creacion</th>
+    </tr>
+   </thead>
 
-                 $numeracion=1;
-//		foreach ($Lista as $k=>$filas) { 
-                foreach ($Lista as $filas) { 
-                    
-                    
-                    if($filas["nombre_empleado"]!="SIN RESPONSABLE"){
-                                            
-                            
-                    ?>
-                      
-                      
-			  <tr class="table-row">
-                              
-                              
-				<td><?php echo $numeracion++; ?></td>                                
-                                    <td contenteditable="true" onBlur="saveToDatabase(this,'nombre_empleado','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["nombre_empleado"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'apellido_paterno','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["apellido_paterno"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'apellido_materno','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["apellido_materno"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'categoria','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["categoria"]; ?></td>
-                                 <td contenteditable="true" onBlur="saveToDatabase(this,'correo','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["correo"]; ?></td>
-                                 <td contenteditable="false" onBlur="saveToDatabase(this,'fecha_creacion','<?php echo $filas["id_empleado"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["fecha_creacion"]; ?></td>
-			  </tr>
-                          
-		<?php
-                    }
-		}
-		?>
-		  </tbody>
-		</table>
-        
-    </div>
-</div>    
+   <tbody class="hideScrollBar"  id="datosGenerales" style="position: absolute">
+   </tbody>
+
+</table>  
                                             
 
 <!-- Inicio de Seccion Modal -->
@@ -259,192 +193,147 @@ require_once 'EncabezadoUsuarioView.php';
                         
                 
 		<script>
-                    var si_hay_cambio=false;
-                    
-                    $(function(){
-                       
-                        $("#btn_guardar").click(function(){
-                            
-                                  var NOMBRE_EMPLEADO=$("#NOMBRE_EMPLEADO").val();
-                                  var APELLIDO_PATERNO=$("#APELLIDO_PATERNO").val();
-                                  var APELLIDO_MATERNO=$("#APELLIDO_MATERNO").val();
-                                  var CATEGORIA=$("#CATEGORIA").val();
-                                  var CORREO=$("#CORREO").val();
-                                    datos=[];
-                                    datos.push(NOMBRE_EMPLEADO);
-                                    datos.push(APELLIDO_PATERNO);
-                                    datos.push(APELLIDO_MATERNO);
-                                    datos.push(CATEGORIA);
-                                    datos.push(CORREO);
-                                    correcto=validarCamposVacios(datos);
-                                    alert("e  : "+correcto);
-                                    if(correcto!==false){
-                                                  //  alert("si paso ");
-                                    saveToDatabaseDatosFormulario(datos);
-                                }else{
-                                    //alert("no paso ");
-                                }
-                                    
-                        });
-                        
-                         $("#btn_limpiar").click(function(){
-                                  $("#NOMBRE_EMPLEADO").val("");
-                                  $("#APELLIDO_PATERNO").val("");
-                                  $("#APELLIDO_MATERNO").val("");
-                                  $("#CATEGORIA").val("");
-                                  $("#CORREO").val("");
-                        });
-                        
-    
-                    }); // se cierra el $function
-                    
-                    
-                    function validarCamposVacios(datos){
-                         correcto=false;
+                    si_hay_cambio=false;
+                    listarDatos();
 
-                        var expr = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
-                        alert("entro "+datos[0]+"   "+datos[1]+"ddf   "+datos[2]+"   "+datos[3]+""+datos[4]+"");
-                        
-                 if(datos[0] == ""){
-                   $("#mensaje1").fadeIn();
-                   $("#mensaje1").append("Ingrese El Nombre");
-                   $("#mensaje1").css("background-color","red");
-                   $("#mensaje1").css("width", "35%");
-             
-                   correcto=false;
-                  
-                   
-                } 
+
+
+//function listarDatos()
+//{
+//    $.ajax
+//    ({
+//        url: '../Controller/EmpleadosController.php?Op=Listar',
+//        type: 'GET',
+//        beforeSend:function()
+//        {
+//            $('#loader').show();
+//        },
+//        success:function(datos)
+//        {
+////            data = datos;
+//            reconstruirTable(datos);
+//        },
+//        error:function(error)
+//        {
+//            $('#loader').hide();
+//        }
+//    });
+//}
+
+
+
+//function reconstruirTable(data)
+//{
+//    cargaTodo=0;
+////    tempData="";
+//    
+////    $.each(data,function(index,value){
+////        
+////            tempData += reconstruir(value,cargaTodo);
+////    });
+//      tempData = "";
+//    
+//    $.each(data,function(index,value){
+////                if(carga==0)
+////                tempData += "<tr id='registro_"+value.id_empleado+"'>";
+//                tempData += "<tr><td class='celda' width='22%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'empleados','nombre_empleado',"+value.id_empleado+",'id_empleado')\" \n\
+//                                  onkeyup=\"detectarsihaycambio()\" >"+value.nombre_empleado+"</td>";
+//                tempData += "<td class='celda' width='16%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'empleados','apellido_paterno',"+value.id_empleado+",'id_empleado')\" \n\
+//                                  onkeyup=\"detectarsihaycambio()\">"+value.apellido_paterno+"</td>";
+//                tempData += "<td class='celda' width='16%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'empleados','apellido_materno',"+value.id_empleado+",'id_empleado')\" \n\
+//                                  onkeyup=\"detectarsihaycambio()\">"+value.apellido_materno+"</td>";
+//                tempData += "<td class='celda' width='16%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'empleados','categoria',"+value.id_empleado+",'id_empleado')\" \n\
+//                                  onkeyup=\"detectarsihaycambio()\">"+value.categoria+"</td>";
+//                tempData += "<td class='celda' width='15%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'empleados','correo',"+value.id_empleado+",'id_empleado')\" \n\
+//                                  onkeyup=\"detectarsihaycambio()\">"+value.correo+"</td>";
+//                tempData += "<td class='celda' width='15%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'empleados','fecha_creacion',"+value.id_empleado+",'id_empleado')\" \n\
+//                                  onkeyup=\"detectarsihaycambio()\">"+value.fecha_creacion+"</td>";                    
+//                
+////                if(carga==0)
+//                tempData += "</tr>";
+//            });
+//    $("#datosGenerales").html(tempData);
+//    $("#loader").hide();
+//}
+//
+//
+//function saveSingleToDatabase(Obj,tabla,columna,id,contexto) {
+////    alert(Obj.innerHTML+"-"+columna+"-"+tabla+"-"+id+"-"+contexto+"-"+si_hay_cambio);
+//            if(si_hay_cambio==true){
+//            //alert("si hay cambio"); 
+//            $("#btnrefrescar").prop("disabled",true);
+//            
+//            $(Obj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
+//            
+////            saveOneToDatabase(Obj.innerHTML,columna,tabla,id,contexto);
+//            $(Obj).css("background","#FDFDFD");
+//           
+//            si_hay_cambio=false;
+//
+//        } 
+//
+//    }
+//    
+//    
+// function detectarsihaycambio() {
+//                    
+//    si_hay_cambio=true;
+//}   
+              
                 
-        else{
-                      $("#mensaje1").fadeOut();
-                    correcto=true;
-                      if(datos[1] == ""){
-                          $("#mensaje2").fadeIn();
-                   $("#mensaje2").append("Ingrese El Apellido Paterno");
-                   correcto=false;
-                          
-                   
-                      } else {
-                             $("#mensaje2").fadeOut();
-                                  correcto=true;
-                             if(datos[2] == ""){
-                             $("#mensaje3").fadeIn();
-                                $("#mensaje3").append("Ingrese El Apeliido Materno");
-                            correcto=false;
-                            
-                             } else {
-                                    $("#mensaje3").fadeOut();
-                                     correcto=true;
-                                    if(datos[3] == ""){
-                                    $("#mensaje4").fadeIn();
-                  $("#mensaje4").append("Ingrese Categoria");
-                   correcto=false;
-                                    
-                                    } else {
-                                           $("#mensaje4").fadeOut();
-                                            correcto=true;
-                                           if(datos[4] == "" || !expr.test(datos[4])){
-                                           $("#mensaje5").fadeIn();
-                                            $("#mensaje5").html("Ingrese Correo");
-                                             correcto=false;
-                                            
-                                           }else{
-                                                $("#mensaje5").fadeOut();
-                                               correcto=true;
-                                               
-                                           }
-                                               
-                                           }
-                                           
-                                    }// tercer else
-               
-                    }//segundo else
-                   
-               
-               } //primer else
-                   
-                    return correcto;    
-                    }
-                    
-                function saveToDatabaseDatosFormulario(datos){
-//                    alert("datos nombre "+datos[0]);
-                    
-                    	$.ajax({
-                                url: "../Controller/EmpleadosController.php?Op=Guardar",
-				type: "POST",
-				data:'NOMBRE_EMPLEADO='+datos[0]+'&APELLIDO_PATERNO='+datos[1]+'&APELLIDO_MATERNO='+datos[2]+'&CATEGORIA='+datos[3]+'&CORREO='+datos[4],
-				success: function(data){
-//                                    alert("se guardo");
-                                    
+//		function showEdit(editableObj) {
+//			$(editableObj).css("background","#FFF");
+//		} 
+//		
+//		function saveToDatabase(editableObj,column,id) {
+//                    if(si_hay_cambio==true){
+//                        
+//                        $("#btnrefrescar").prop("disabled",true);
+//			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
+//			$.ajax({
+//                                url: "../Controller/EmpleadosController.php?Op=Modificar",
+//				type: "POST",
+//				data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
+//				success: function(data){
 //					$(editableObj).css("background","#FDFDFD");
-                                        swal("Guardado Exitoso!", "Ok!", "success");
-                                        setTimeout('refresh()',1000);
-
-                                         consultarInformacion("../Controller/EmpleadosController.php?Op=Listar");
-//                                        window.location.href="EmpleadosView.php";
-                                        
-				}   
-		   });
-
-                }    
-                
-		function showEdit(editableObj) {
-			$(editableObj).css("background","#FFF");
-		} 
-		
-		function saveToDatabase(editableObj,column,id) {
-                    if(si_hay_cambio==true){
-                        
-                        $("#btnrefrescar").prop("disabled",true);
-			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
-			$.ajax({
-                                url: "../Controller/EmpleadosController.php?Op=Modificar",
-				type: "POST",
-				data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
-				success: function(data){
-					$(editableObj).css("background","#FDFDFD");
-                                        consultarInformacion("../Controller/EmpleadosController.php?Op=Listar");
-                                        swal("Actualizacion Exitosa!", "Ok!", "success");
-                                        setTimeout(function(){swal.close();},1000);
-                                        $("#btnrefrescar").prop("disabled",false);
-                                        si_hay_cambio=false;
-				}   
-		   });
-                   
-                    } else {
-                        
-                    }
-
-		}
+//                                        consultarInformacion("../Controller/EmpleadosController.php?Op=Listar");
+//                                        swal("Actualizacion Exitosa!", "Ok!", "success");
+//                                        setTimeout(function(){swal.close();},1000);
+//                                        $("#btnrefrescar").prop("disabled",false);
+//                                        si_hay_cambio=false;
+//				}   
+//		   });
+//                   
+//                    } else {
+//                        
+//                    }
+//
+//		}
              
-                function consultarInformacion(url){
-                    $('#loader').show();
-
-                    $.ajax({  
-                     url: ""+url,  
-                    success: function(r) {    
-//                     $("#procesando").empty();                       
-                        $("#idTable").load("EmpleadosView.php #idTable");
-                        $('#loader').hide();
-                     },
-                     beforeSend:function(){
-
-                     },                    
-                     error: function(){
-                        $('#loader').hide();
-
-                     }
-                 
-                    });  
-                }
                 
                 
                 
-                function detectarsihaycambio() {
-                    
-                    si_hay_cambio=true;
-                }
+                
+                
+                
+                
+                
+//                function reconstruirTable(data)
+//                {
+//                    cargarTodo=0;
+//                    tempData ="";
+//                    $.ajax({
+//                        url:"../Controller/EmpleadosController.php",
+//                        type:'GET',
+//                        data:'',
+//                        success:
+//                                
+//                    });
+//
+//                }
+                
+                
+                
                 
                function filterTable() {
                     var input, filter, table, tr, td, i;
@@ -539,20 +428,8 @@ require_once 'EncabezadoUsuarioView.php';
                       } 
                     }
                 }
-                
-                function refresh(){
-                  consultarInformacion("../Controller/EmpleadosController.php?Op=Listar");                                             
-                  
-                }
-                
-                
-                
-                function loadSpinner(){
-                        myFunction();
-                }
-                
-                
-                
+             
+                                         
                 
 		</script>
 

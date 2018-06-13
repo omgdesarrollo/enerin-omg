@@ -302,7 +302,6 @@
             saveOneToDatabase(Obj.innerHTML,columna,tabla,id,contexto);
             
             si_hay_cambio=false;
-
         } 
 
     }
@@ -640,6 +639,7 @@
                 }
                 tempData += "<td contenteditable='true' onBlur=\"saveSingleToDatabase(this,'evidencias','accion_correctiva',"+value.id_evidencias+",'id_evidencias')\"";
                 tempData += " onkeyup=\"detectarsihaycambio(this)\">"+value.accion_correctiva+"</td>";
+                
                 tempData += "<td style='font-size: -webkit-xxx-large'><button class='btn btn-info' onClick='#("+value.id_evidencias+");'>";
                 tempData += "Cargar Programa</button></td>";
 
@@ -662,6 +662,7 @@
                 tempData += "onclick='eliminarEvidencia("+value.id_evidencias+");'>";
                 tempData += "<i class=\"fa fa-trash\"></i></button></td>";
             }
+            
             if(carga==0)
             tempData += "</tr>";
         // });
