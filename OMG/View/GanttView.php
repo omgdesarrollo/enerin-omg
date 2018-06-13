@@ -48,7 +48,7 @@ and open the template in the editor.
     <script src="../../assets/gantt_5.1.2_com/codebase/locale/locale_es.js" type="text/javascript"></script>
     <script src="https://export.dhtmlx.com/gantt/api.js?v=20180322"></script>
     
-   <script src="../../codebase/ext/dhtmlxgantt_smart_rendering.js"></script>
+   <!--<script src="../../codebase/ext/dhtmlxgantt_smart_rendering.js"></script>-->
    <script src="../../js/jquery.min.js" type="text/javascript"></script>
    
    <link href="../../assets/gantt_5.1.2_com/codebase/skins/dhtmlxgantt_meadow.css" rel="stylesheet" type="text/css"/>
@@ -181,99 +181,16 @@ and open the template in the editor.
       
  
       
-//       var tasksA = {
-//                data: [
-//                    {
-//                        id: 1, text: "Project #1", start_date: "01-04-2018", duration: 18, order: 10,
-//                        progress: 0.4, open: true
-//                    },
-//                    {
-//                        id: 2, text: "Task #1", start_date: "02-04-2018", duration: 8, order: 10,
-//                        progress: 0.6, parent: 1
-//                    },
-//                    {
-//                        id: 3, text: "Task #2", start_date: "11-04-2018", duration: 8, order: 20,
-//                        progress: 0.6, parent: 1
-//                    }
-//                ],
-//                links: [
-//                    { id: 1, source: 1, target: 2, type: "1" }
-//                ]
-//            };
-            
-//            var tasksB = {
-//                data: [
-//                    {
-//                        id: 1, text: "Project #2", start_date: "01-04-2018", duration: 18, order: 10,
-//                        progress: 0.4, open: true
-//                    },
-//                    {
-//                        id: 3, text: "Task #3", start_date: "02-04-2018", duration: 1, order: 10,
-//                        progress: 0.6, parent: 1
-//                    },
-//                    {
-//                        id: 4, text: "Task #4", start_date: "03-04-2018", duration: 1, order: 20,
-//                        progress: 0.6, parent: 1
-//                    }
-//                ],
-//                links: [
-//                    { id: 3, source: 3, target: 4, type: "0" }
-//                ]
-//            };
-//gantt.message({
-//		text: "Predefinido Estructura de proyecto <br>1 - <b>Projecto</b><br>2 - <b>Subprojecto</b><br>3 - <b>Tareas</b><br>las tareas no pueden tener elementos secundarios Click para cerrar",
-//		expire: -1
-//	});
-//gantt.config.scale_height = 60;
-
-//  gantt.serverList("stage", [
-//		{key: 1, "label": "Planeacion"},
-//		{key: 2, "label": "Prueba"}
-//	]);
      var dataEmpleados=[];
 //     var data
      obtenerEmpleados();
       gantt.serverList("user",dataEmpleados); 
-//     
-//       $.each(dataEmpleados,function(index,value){
-////           alert("entro");
-////                var list={key:value.id_empleado,value:value.nombre_empleado};   
-////                   alert("v  "+value.id_empleado+"  y el nombre : "+value.nombre_empleado);
-////                   list.push("value");
-////alert("d"+list.key);
-////                   dataEmpleados.push({key:value.id_empleado,value:value.nombre_empleado});
-//                   console.log("d  "+dataEmpleados);
-//               });
-//      console.log("d  "+dataEmpleados);
-     
-     
-        
-//	gantt.serverList("user", [
-//		{key: 0, label: "N/A"},
-//		{key: 1, label: "Hugo"},
-//		{key: 2, label: "Frank"},
-//		{key: 3, label: "Daniel"}
-//	]);
-//	gantt.serverList("priority", [
-//		{key: 1, label: "Alta"},
-//		{key: 2, label: "Normal"},
-//		{key: 3, label: "Baja"}
-//	]);
-        
-//        gantt.config.order_branch = true;
-//	gantt.config.grid_width = 420;
-//	gantt.config.row_height = 24;
-//	gantt.config.grid_resize = true;
-//gantt.locale.labels.column_nombre =
-//		gantt.locale.labels.section_nombre = "Nombre";
-        
-//	gantt.locale.labels.column_priority =
-//		gantt.locale.labels.section_priority = "Prioridad";
+
 	gantt.locale.labels.column_owner ="Encargado";
 		gantt.locale.labels.section_owner = "Encargado";
         
         gantt.config.scale_height = 50;
-//        gantt.config.order_branch = true;
+        gantt.config.order_branch = true;
 //gantt.config.order_branch_free = true;
 //        para abrir las carpetas por default desde el principio
 
@@ -346,6 +263,7 @@ gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
  
 var dp = new gantt.dataProcessor("../Controller/GanttController.php?Op=Modificar");
 dp.init(gantt);
+// console.log(dp);
 
 //dp.attachEvent("onAfterUpdate", function(id, action, tid, response){
 //    if(action == "error"){

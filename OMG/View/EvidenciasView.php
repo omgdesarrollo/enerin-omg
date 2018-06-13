@@ -185,7 +185,6 @@
                     <select id="CLAVE_NUEVAEVIDENCIAMODAL" class="select1" onchange="select_clavesModal(this)">
                         <option>Sin especificar</option>
                     </select>
-
                     <div class="help-block with-errors"></div>
 				</div>
                 <div class="form-group">

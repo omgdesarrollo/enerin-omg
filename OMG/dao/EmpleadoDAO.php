@@ -125,6 +125,26 @@ class EmpleadoDAO{
                 throw $ex;
         }
     }
+
+    public function BusquedaEmpleado($cadena)
+    {
+        try
+        {
+            $query = "SELECT tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno, tbempleados.correo 
+            FROM empleados tbempleados 
+            WHERE LOWER(tbempleados.nombre_empleado) like '%$cadena%'
+            OR LOWER(tbempleados.apellido_paterno) like '%$cadena%' 
+            OR LOWER(tbempleados.apellido_materno) like '%$cadena%' ";
+
+            $db = AccesoDB::getInstancia();
+            $lista = $db->executeQuery($query);
+            return $lista;
+        }catch(Exception $er)
+        {
+            return false;
+            throw $er;
+        }
+    }
 }
 
 ?>

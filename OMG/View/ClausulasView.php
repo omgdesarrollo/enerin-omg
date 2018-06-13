@@ -33,6 +33,7 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/fTemasView.js" type="text/javascript"></script>
+                
              
             
                 

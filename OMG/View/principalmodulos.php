@@ -30,10 +30,10 @@ $Usuario=  Session::getSesion("user");
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<link rel="stylesheet" type="text/css" href="../../codebase/fonts/font_roboto/roboto.css"/>
 	<link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
-  <link href="../../codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
-   <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
-   <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
-   <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../../codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
+         <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
+         <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+         <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 	<script src="../../codebase/dhtmlx.js"></script>
         <script src="../../js/jquery.js" type="text/javascript"></script>
         <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
@@ -158,63 +158,13 @@ var gantt=[
         myLayout.cells("a").attachObject("sidebarObj");
         myLayout.cells("b").attachObject("sidebarObjV");
         
-        //loadDataContratos();
-       
-         //alert("n:   "+arr[1].text);
-//            $.each(listseleccioncontratos,function(index,value){
-//                         alert("v  "+value.CUMPLIMIENTO);
-//                       
-////                        alert(""+value.CLAVE_CUMPLIMIENTO); 
-//                     });
-       
-//        var myCombo = new dhtmlXCombo("combo_zone2","alfa2",200);
-        
-//         myLayout.cells("b").attachObject("menugrid");
-//                  myGrid = new dhtmlXGridObject({parent : 'gridbox'});
-//			myGrid.setImagePath("../../codebase/imgs/");
-//			myGrid.setHeader("NOMBRE EMPLEADO");
-//			myGrid.setInitWidths("200");
-//			myGrid.setColAlign("left");
-//			myGrid.setColTypes("NOMBRE_EMPLEADO");
-////                        myGrid.setColumnHidden(2,true);
-////			myGrid.setColSorting("int,str,str");
-////                        myGrid.setColSorting("int");
-//			myGrid.init();
-                        
-//        myLayout.cells("b").attachURL("principalmodulos.php", null, true);
-//        myLayout.cells("a").attachObject("empleado");
-       
-     //   myLayout.cells("a").attachObject("treeboxbox_tree");	
-        
-//        tree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%', 0);
-//			tree.setImagePath("../../codebase/imgs/dhxtree_material/");
-                        //tree.setImagePath("../../codebase/imgs/dhxtree_material/");
-	//		tree.enableKeyboardNavigation(true);
-	//		tree.enableKeySearch(true);	
-        
-//       myLayout.cells("a").attachTreeView({
-//      parent:"treeviewObj",
-//    items: [
-//        {id: 1, text: "Books", open: 1, items: [
-//            {id: 2, text: "Turned at Dark / C. C. Hunter"},
-//            {id: 3, text: "Daire Meets Ever / Alyson Noël"},
-//            {id: 4, text: "Socs and Greasers / Rob Lowe"},
-//            {id: 5, text: "Privacy and Terms.pdf"},
-//            {id: 6, text: "Licence Agreement.pdf"}
-//        ]}
-//    ]
-//});
+
         loadDataMenuArriba();
-       
-//  mySidebar = new dhtmlXSideBar({
-//				parent: "sidebarObj",
-//				icons_path: "",
-//				json: ""
-//			});
-//           mySidebar.attachEvent("onClick", function(itemId, bId){
-//                                    alert("d");
-//                        });
+ 
                     ribbon.attachEvent("onClick", function(itemIdSeleccion, bId){
+                        // alert(itemIdSeleccion);
+                        if(itemIdSeleccion=="sesionusuario")
+                            loadViewUsuario();
                         if(itemIdSeleccion=="cambiaresc")
                             alert("le has picado a cam biar act");
                         
@@ -263,7 +213,7 @@ var gantt=[
                             
 //                            
          );
- 
+
  function loadDataMenuArriba(){	
 //	alert("data "+data.id);
 	var inicio=[
@@ -352,60 +302,12 @@ function loadDataNotificaciones(){
         
 }
     
-    
-   function loadDataArbol(){
-//          myTreeView = myLayout.cells("a").attachTreeView({
-//				root_id: "",
-//				iconset: "font_awesome",
-//				items: "xml/directoryTree.php?id={id}"
-//			});
-                        
-//                        var myTreeView = new dhtmlXTreeView({
-//    parent:"treeviewObj",
-//    items: [
-//        {id: 1, text: "Books", open: 1, items: [
-//            {id: 2, text: "Turned at Dark / C. C. Hunter"},
-//            {id: 3, text: "Daire Meets Ever / Alyson Noël"},
-//            {id: 4, text: "Socs and Greasers / Rob Lowe"},
-//            {id: 5, text: "Privacy and Terms.pdf"},
-//            {id: 6, text: "Licence Agreement.pdf"}
-//        ]}
-//    ]
-//});
-
-
-//	    	var list=[];
-//// 	    	var dsub=[];
-//// 	    	dsub.push(comboSub.getSelectedValue());
-//// 	    	dsub.push(0);
-//// 	    	dub.push(comboSub.getComboText());
-//// 	    	
-//// 	    	list.push(dsub);
-//	    	alert("d");
-//                tree.deleteChildItems(0);
-//			
-//var a=[];								
-//							 a.push(1);
-//							 a.push(0);
-//							 a.push("Empleados");
-//							 list.push(a);	
-//                                                         a=[];
-//                                                         a.push(2);
-//							 a.push(1);
-//							 a.push("Empleados1");
-//			list.push(a);
-//
-//			 if(list.length>0){
-//			tree.parse(list, "jsarray");
-//				 existenodo=true;
-//			 }else
-//				 existenodo=false;
-
-		}
+ 
                 
                 
      function loadDataContratos(){
 //         alert("usuario es "+$("#idusuario").val());
+
           $.ajax({  
                      url: "../Controller/CumplimientosController.php?Op=Listar&TipoOperacion=ListarContratosPorUsuario&usuario=<?php echo $Usuario["NOMBRE_USUARIO"]; ?>",  
                      async:false,

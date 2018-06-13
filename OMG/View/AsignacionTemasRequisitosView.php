@@ -34,7 +34,7 @@ $Usuario=  Session::getSesion("user");
         <link href="../../codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
         <script src="../../codebase/dhtmlx.js" type="text/javascript"></script>
         <link href="../../codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
-      
+        <link href="../../skins/dhtmlx.css" rel="stylesheet" type="text/css"/>
 
 
             <style>
@@ -93,7 +93,10 @@ $Usuario=  Session::getSesion("user");
 }
  
 /*Finaliza estilos para mantener fijo el header*/                    
-                    
+        .dhx_toolbar_material.dhxtoolbar_icons_24 div.dhx_toolbar_btn i {
+                  font-size: 18px;
+                  color: #7d7d7d;
+          }      
                     
                 </style>    
                 
@@ -118,14 +121,14 @@ $Usuario=  Session::getSesion("user");
         // );
         $titulosTable = 
             array("No.","Tema","Descripción de Tema","Requisitos");
-?> 
+?>
 
 <div style="height: 5px"></div>
             
 <div style="position: fixed;">     
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
         Asignar Tema-Requisito
-</button>    
+</button>
 
 <button type="button" id="btn_lista_documentos" class="btn btn-success" data-toggle="modal">
     Lista de Documentos
@@ -138,14 +141,14 @@ $Usuario=  Session::getSesion("user");
 </button>
     <button type="button" class="btn btn-success" onclick="showArbol()" data-toggle="modal" data-target="#show-arbol">
         mostrar Arbol
-</button>   
+</button>
 <button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
     <i class="glyphicon glyphicon-repeat"></i> 
 </button>
     
 <button type="button" onclick="window.location.href='../ExportarView/exportarAsignacionTemasRequisitosView/exportarAsignacionTemasRequisitoExcel.php'">
     <img src="../../images/base/_excel.png" width="30px" height="30px">
-</button>     
+</button>
 <button type="button" onclick="window.location.href='../ExportarView/exportarAsignacionTemasRequisitosView/exportarAsignacionTemasRequisitoWord.php'">
     <img src="../../images/base/word.png" width="30px" height="30px"> 
 </button>
@@ -158,7 +161,7 @@ $Usuario=  Session::getSesion("user");
 
 <input type="text" id="idInputDescripcionTema" onkeyup="filterTableDescripcionTema()" placeholder="Descripcion del Tema" style="width: 220px">
 <input type="text" id="idInputRequisito" onkeyup="filterTableRequisito()" placeholder="Requisito" style="width: 150px">
-<i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>    
+<i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
 
 </div>
 
@@ -166,7 +169,7 @@ $Usuario=  Session::getSesion("user");
 
 <div class="table-fixed-header">
 <!-- inicio animacion tabla toda la interfaz seleccionada -->
-    <div class="table-container" id="winVP"> 
+    <div class="table-container" id="winVP">
         <table id="idTable" class="tbl-qa">
             <tr>
                 
@@ -179,8 +182,8 @@ $Usuario=  Session::getSesion("user");
 		  <tbody id="tbodyTableAsignacion">
           </tbody>
         </table>
-    </div>         
-</div>  
+    </div>
+</div>
 
 <?php
 
@@ -204,7 +207,7 @@ $Usuario=  Session::getSesion("user");
                 
                 <!-- Inicio de Seccion Modal -->
        <div class="modal draggable fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  <div class="modal-dialog" role="document">
+           <div class="modal-dialog modal-lg" role="document" >
 		    <div class="modal-content">
 		      <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
@@ -283,27 +286,44 @@ $Usuario=  Session::getSesion("user");
                 
 
  <div class="modal draggable fade" id="show-arbol" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  <div class="modal-dialog" role="document">
+		  <div class="modal-dialog modal-lg" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
 		        <h4 class="modal-title" id="myModalLabel">Arbol</h4>
 		      </div>
 
-            <div class="modal-body">
-                <div style=""><div>
-                <div id="treeboxbox_tree" style="width:100%;height:300px;background-color:white;"></div>
-            </div>
-		    </div>
+                <div class="modal-body">
+                    <div style="">
+                    <div>
+
+                        <div id="layoutObj" style="width:100%;height:300px;background-color:white;">
+
+                        </div>
+                        <div id="treeboxbox_tree" style="width:100%;height:300px;background-color:white;"></div>
+                    </div>
+                    </div>
 		  </div>
 		</div>                
                   </div>
  </div>
 	<script>
-         
+            var myLayout, myTreeView, myGrid, myDataView, myMenu, myToolbar;
             myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
 	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
             myTree.enableHighlighting(true);
+
+//            myLayout = new dhtmlXLayoutObject();
+            myLayout = new dhtmlXLayoutObject({parent: "layoutObj",pattern: "2U",
+                                                cells: [{id: "a", text: "Navegacion",
+                                                 header:true},{id: "b", text: "Visualizacion",header:true}]});
+            myLayout.cells("a").setWidth(750);
+            myLayout.cells("a").setText("Folders");
+            myLayout.cells("b").hideHeader(); 
+            
+            myLayout.cells("a").attachObject("treeboxbox_tree");
+//            myLayout.cells("b").attachObject("sidebarObjV");
+                        
                         
                       var id_asignacion_tema_requisito;
                       var cualmodificar,si_hay_cambio=false;

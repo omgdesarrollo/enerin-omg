@@ -18,11 +18,9 @@ $Usuario=  Session::getSesion("user");
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
 		<!-- bootstrap & fontawesome -->
-                <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-                <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-
-		<!-- text fonts -->
-		<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />
+                 <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+		
 
 		<!-- ace styles -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
@@ -30,7 +28,6 @@ $Usuario=  Session::getSesion("user");
 		<!--[if lte IE 9]>
 			<link rel="stylesheet" href="assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
 		<![endif]-->
-		<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
                 <!--Inicia para el spiner cargando-->
@@ -200,7 +197,7 @@ require_once 'EncabezadoUsuarioView.php';
              
 
              
-<div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom"> 
+<div class="table-fixed-header"  id="" class="animate-bottom"> 
     <div class="table-container">
         
         <table class="tbl-qa" id="idTable">
@@ -232,11 +229,7 @@ require_once 'EncabezadoUsuarioView.php';
                       $cbxEmp= Session::getSesion("listarEmpleadosComboBox");
                       $cbxEmpleadoPlan= Session::getSesion("listarEmpleadosComboBox");
                       $cbxEmpleadoPlan1= Session::getSesion("listarEmpleadosComboBox");
-                  
-
                       $numeracion = 1;
-                  
-
                       foreach ($Lista as $filas) { 
                         ?>
 			 
