@@ -375,7 +375,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 </td>
                                 
                                 <!--<td contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php // echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php // echo $filas["documento"]; ?></td>-->
-                                <td ><button class="btn btn-success" onClick="cargadePrograma('<?php echo $filas["folio_entrada"]; ?>')">Registrar</button></td>
+                                <td ><button class="btn btn-success" onClick="cargadePrograma('<?php echo $filas["id_seguimiento_entrada"]; ?>')">Registrar</button></td>
                                 
 			  </tr>
                           
