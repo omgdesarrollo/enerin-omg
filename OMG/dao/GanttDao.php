@@ -7,18 +7,27 @@ class GanttDao {
     
     
     public function obtenerTareasCompletasPorFolioEntrada($folio_entrada){
-        try{
+        try
+        {
+            $query="SELECT tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno,
+                           tbgantt_tasks.text, tbgantt_tasks.start_date, tbgantt_tasks.duration, tbgantt_tasks.progress,tbgantt_tasks.parent  
+
+                    FROM gantt_seguimiento_entrada tbgantt_seguimiento_entrada
+
+                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbgantt_seguimiento_entrada.id_empleado
+
+                    JOIN gantt_tasks tbgantt_tasks ON tbgantt_tasks.id=tbgantt_seguimiento_entrada.id_gantt
+
+                    WHERE tbgantt_seguimiento_entrada.id_seguimiento_entrada=$folio_entrada"; 
+           
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
             
-        
-         $query="SElECT tbgantt_task.id,tbgantt_task.text,tbgantt_task.start_date,tbgantt_task.duration,
-             tbgantt_task.progress,tbgantt_task.parent
-             FROM gantt_tasks tbgantt_task"; 
-           $db=  AccesoDB::getInstancia();
-          $lista=$db->executeQuery($query);
-          return $lista;
+            return $lista;
+            
           } catch (Exception $ex) {
               throw $ex;
-            
+              return false;
         }
     }
     
