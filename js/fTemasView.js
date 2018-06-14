@@ -89,7 +89,7 @@
 
 
 //1 .funciones para consultar informacion y construir datos 
-  function contruirContenido()
+  function construirContenido()
  {
      
   $.ajax({
