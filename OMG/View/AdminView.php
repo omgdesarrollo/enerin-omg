@@ -176,6 +176,7 @@ $Usuario=  Session::getSesion("user");
     <div class="table-container">
         <table id="idTable" style="width:100%" class="tbl-qa">
             <tr>
+                <th class="table-header">Usuario</th>
                 <th class="table-header">Nombre</th>
                 <th class="table-header">Apellido Paterno</th>
                 <th class="table-header">Apellido Materno</th>
@@ -251,9 +252,26 @@ $Usuario=  Session::getSesion("user");
                         <div class="form-group">
                             Categoria: <label id="CATEGORIA_AGREGARUSUARIO" class="control-label"></label>
                         </div> -->
+                        <div class="form-group">
+                            <div class="table-container">
+                                <table style="width:100%" class="tbl-qa">
+                                    <tr>
+                                        <th class="table-header">Menu</th>
+                                        <th class="table-header">Vistas</th>
+                                        <th class="table-header">Ver</th>
+                                        <th class="table-header">Consultar</th>
+                                        <th class="table-header">Editar</th>
+                                        <th class="table-header">Modificar</th>
+                                    </tr>
+                                    <tbody id="bodyTable">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
 
                         <div class="form-group" method="post">
-                            <button type="submit" id="BTN_MODIFICARPERMISOS" class="btn crud-submit btn-info">Agregar Usuario</button>
+                            <button type="submit" id="BTN_MODIFICARPERMISOS" class="btn crud-submit btn-info">Guardar Cambios</button>
                         </div>
                     </div>
                 </div>
@@ -275,7 +293,7 @@ $Usuario=  Session::getSesion("user");
     function loadUsuarios()
     {
         $.ajax({
-            url: '../Controller/AdminViewController.php?Op=Listar',
+            url: '../Controller/AdminController.php?Op=Listar',
             type: 'GET',
             beforeSend:function()
             {
@@ -287,10 +305,10 @@ $Usuario=  Session::getSesion("user");
                 $.each(usuarios,function(index,value)
                 {
                     tempData += "<tr id='registro_"+value.id_usuario+"'>";
-                    tempData += construirTabla(value);
-                    temoData += "</tr>";
+                    tempData += construirTablaAgregar(value);
+                    tempData += "</tr>";
                 });
-                $
+                $('#bodyTable').html(tempData);
             },
             error:function(error)
             {
@@ -312,16 +330,17 @@ $Usuario=  Session::getSesion("user");
 
     }
 
-    function construirTabla(value)
+    function construirTablaAgregar(value)
     {
-        tempData = "<td>"+value.nombre_empleado+"<td>";
-        tempData += "<td>"+value.apellido_paterno+"<td>";
-        tempData += "<td>"+value.apellido_materno+"<td>";
-        tempData += "<td>"+value.correo+"<td>";
-        tempData += "<td>"+value.categoria+"<td>";
+        tempData = "<td>"+value.nombre_usuario+"</td>";
+        tempData += "<td>"+value.nombre_empleado+"</td>";
+        tempData += "<td>"+value.apellido_paterno+"</td>";
+        tempData += "<td>"+value.apellido_materno+"</td>";
+        tempData += "<td>"+value.correo+"</td>";
+        tempData += "<td>"+value.categoria+"</td>";
         tempData += "<td><button onClick='modificarPermisos("+value.id_usuario+");' type='button' class='btn btn-success'";
         tempData += "data-toggle='modal' data-target='#modificarPermisos'>";
-        tempData += "<i class='ace-icon fa fa-envelope' style='font-size: 20px;'></i></button><td>";
+        tempData += "<i class='ace-icon fa fa-envelope' style='font-size: 20px;'></i></button></td>";
         return tempData;
     }
 
@@ -351,10 +370,53 @@ $Usuario=  Session::getSesion("user");
             });
         }
     }
+
     function seleccionarItem(correo,nombre)
     {
         usuario = correo.split("@");
         $('#NOMBREESCRITURA_AGREGARUSUARIO').val(usuario[0]);
+    }
+    
+    function modificarPermisos(id)
+    {
+        $.ajax({
+            url: '../Controller/AdminController.php?Op=ListarPermisos',
+            type:'GET',
+            data: "ID_USUARIO="+id,
+            beforeSend:function()
+            {
+                $('#loader').show();
+            },
+            success:function(permisos)
+            {
+                tempData = "";
+                $.each(permisos,function(index,value)
+                {
+                    tempData += construirTabla(value);
+                });
+                $('#bodyTable').html(tempData);
+            },
+            error:function()
+            {
+                swal({
+                        title: '',
+                        text: 'Error en el servidor',
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                        type:"error"
+                    });
+                setTimeout(function(){swal.close();},1500);
+                $('#loader').hide();
+            }
+        });
+    }
+    function construirTablaPermisos(value)
+    {
+        
+        tempData = "<tr>";
+        tempData += "<td>";
+        tempData += "</td>";
+        tempData += "</tr>";
     }
 </script>
 <script src="../../js/loaderanimation.js" type="text/javascript"></script>
