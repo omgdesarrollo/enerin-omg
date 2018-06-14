@@ -14,7 +14,8 @@ class GanttModel {
             return $rec;
             
         } catch (Exception $ex) {
-            throw $e;
+            throw $ex;
+            return false;
         }
     }
     
@@ -75,4 +76,22 @@ class GanttModel {
             throw  $ex;
         }
     }
+    
+    
+    public function obtenerFolioEntradaSeguimiento($ID_SEGUIMIENTO)
+    {
+        try
+        {
+            $dao=new GanttDao();
+            $rec= $dao->obtenerFolioEntradaSeguimiento($ID_SEGUIMIENTO);
+            
+            return $rec;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
 }
