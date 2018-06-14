@@ -14,7 +14,8 @@ class GanttModel {
             return $rec;
             
         } catch (Exception $ex) {
-            throw $e;
+            throw $ex;
+            return false;
         }
     }
     
