@@ -16,6 +16,9 @@ $Op=$_REQUEST["Op"];
 $model=new EmpleadoModel();
 $pojo= new EmpleadoPojo();
 
+$modelGantt=new GanttModel();
+$pojo=new GanttPojo();
+
 $modelGantt= new GanttModel();
 
 switch ($Op) {
@@ -31,6 +34,14 @@ switch ($Op) {
                 
                 
 		break;
+            
+            
+        case'obtenerFolioEntradaSeguimiento':
+            
+            $Lista=$modelGantt->obtenerFolioEntradaSeguimiento($_REQUEST['ID_SEGUIMIENTO']);
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($Lista);
+            break;
     	
         case 'MostrarTareasCompletasPorFolioDeEntrada':
         $Lista=$modelGantt->obtenerTareasCompletasPorFolioEntrada("123");
@@ -38,7 +49,7 @@ switch ($Op) {
             echo json_encode(array("data"=>$Lista));
 //        Session::setSesion("", $value)
             
-        break;
+                break;
     
     
 	case 'Nuevo':

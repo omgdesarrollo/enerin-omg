@@ -1,16 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of GanttDao
- *
- * @author usuario
- */
 require_once '../ds/AccesoDB.php';
 class GanttDao {
     //put your code here
@@ -87,5 +76,35 @@ class GanttDao {
     }
     
     
+    public function obtenerFolioEntradaSeguimiento ($ID_SEGUIMIENTO)
+    {
+        try
+        {
+            $query="SELECT tbdocumento_entrada.folio_entrada,
+		           tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno	
+
+                    FROM seguimiento_entrada tbseguimiento_entrada
+
+                    JOIN documento_entrada tbdocumento_entrada ON 
+                         tbdocumento_entrada.id_documento_entrada=tbseguimiento_entrada.id_documento_entrada
+
+                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbseguimiento_entrada.id_empleado
+ 
+                    WHERE tbseguimiento_entrada.id_seguimiento_entrada=$ID_SEGUIMIENTO";
+            
+            $db= AccesoDB::getInstancia();
+            $list= $db->executeQueryUpdate($query);
+            
+            return $list;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return $ex;
+        }
+    }
+    
     
 }
+
+?>
