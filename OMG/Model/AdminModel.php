@@ -3,7 +3,8 @@ require_once '../dao/AdminDAO.php';
 
 class AdminModel{
     
-    public function listarUsuarios(){
+    public function listarUsuarios()
+    {
         try
         {
            $dao=new AdminDAO();
@@ -18,8 +19,23 @@ class AdminModel{
         }
         
     }
+    
+    public function listarUsuarioVistas($ID_USUARIO)
+    {
+        try
+        {
+            $dao=new AdminDAO();
+            $rec= $dao->listarUsuarioVistas($ID_USUARIO);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
 }
-
 
 
 ?>

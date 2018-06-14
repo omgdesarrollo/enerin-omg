@@ -63,11 +63,11 @@ and open the template in the editor.
     
   <style type="text/css">
     html, body{
-      width: 100%;
+      /*width: 100%;*/
       height: 100%;
       padding:0px;
       margin:0px;
-      overflow: hidden;
+      /*overflow: hidden;*/
     }
     
     
@@ -176,11 +176,7 @@ and open the template in the editor.
   
     
     
-  <script type="text/javascript">
-      
-      
- 
-      
+  <script type="text/javascript">      
      var dataEmpleados=[];
 //     var data
      obtenerEmpleados();
@@ -263,7 +259,20 @@ gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
  
 var dp = new gantt.dataProcessor("../Controller/GanttController.php?Op=Modificar");
 dp.init(gantt);
-// console.log(dp);
+//dp.setTransactionMode("REST");
+ console.log(dp);
+
+
+//var resourcesStore = gantt.createDatastore({
+//    name:"resource",
+//    initItem: function(item){
+//        item.id = item.key || gantt.uid();
+//        return item;
+//    }
+//});
+//var tasksStore = gantt.getDatastore("task");
+//gantt.changeTaskId(1, 15);
+
 
 //dp.attachEvent("onAfterUpdate", function(id, action, tid, response){
 //    if(action == "error"){
@@ -454,115 +463,7 @@ dp.init(gantt);
     
      //gantt2 = Gantt.getGanttInstance();
     
-    var tasks = {
-		"data": [
-			{"id": 1, "text": "Tarea 1 ", "start_date": "02-04-2018 00:00", "duration": 3, "priority": 3, "stage": 1, "user": 3, "open": true, "parent": 0},
-			{"id": 5, "text": "Tarea 1.1", "start_date": "05-04-2018 00:00", "duration": 4, "parent": 1, "open": true, "priority": 1, "stage": 1, "user": 1},
-			{"id": 6, "text": "Tarea 1.2", "start_date": "11-04-2018 00:00", "duration": 6, "parent": 1, "open": true, "priority": 2, "stage": 2, "user": 3},
-			{"id": 2, "text": "Tarea 2", "start_date": "11-04-2018 00:00", "duration": 2, "priority": 1, "stage": 3, "user": 0, "open": true, "parent": 0},
-			{"id": 7, "text": "Tarea 2.1 ", "start_date": "13-04-2018 00:00", "duration": 2, "parent": 2, "open": true, "priority": 3, "stage": 2, "user": 2},
-			{"id": 3, "text": "Tarea 3 ", "start_date": "11-04-2018 00:00", "duration": 6, "priority": 2, "stage": 2, "user": 1, "open": true, "parent": 0},
-			{"id": 8, "text": "Tarea 3.1", "start_date": "09-04-2018 00:00", "duration": 3, "parent": 3, "open": true, "priority": 1, "stage": 1, "user": 3},
-			{"id": 9, "text": "Tarea 3.2", "start_date": "12-04-2018 00:00", "duration": 2, "parent": 3, "open": true, "priority": 3, "stage": 3, "user": 1},
-			{"id": 10, "text": "Tarea 3.3", "start_date": "17-04-2018 00:00", "duration": 2, "parent": 3, "open": true, "priority": 2, "stage": 2, "user": 0}
-		], "links": [
-			{"source": "1", "target": "5", "type": "0"},
-			{"source": "5", "target": "8", "type": "0"},
-			{"source": "3", "target": "7", "type": "0"},
-			{"source": "6", "target": "7", "type": "0"},
-			{"source": "2", "target": "10", "type": "0"}
-		]
-	};
-    
-    
-    
-    var demo_tasks = {
-		"data": [
-			{"id": 11, "text": "Project #1", "start_date": "", "duration": "", "progress": 0.6, "open": true, type: gantt.config.types.project},
-			{"id": 12, "text": "Task #1", "start_date": "03-04-2018", "duration": "5", "parent": "11", "progress": 1, "open": true, type: gantt.config.types.task},
-			{"id": 13, "text": "Task #2", "start_date": "", "duration": "", "parent": "11", "progress": 0.4, "open": true, type: gantt.config.types.project},
-			{"id": 14, "text": "Task #3", "start_date": "02-04-2018", "duration": "6", "parent": "11", "progress": 0.8, "open": true, type: gantt.config.types.task},
-			{"id": 15, "text": "Task #4", "start_date": "", "duration": "", "parent": "11", "progress": 0.18, "open": true, type: gantt.config.types.project},
-			{"id": 16, "text": "Task #5", "start_date": "02-04-2018", "duration": "7", "parent": "11", "progress": 0, "open": true, type: gantt.config.types.task},
-			{"id": 17, "text": "Task #2.1", "start_date": "03-04-2018", "duration": "2", "parent": "13", "progress": 1, "open": true, type: gantt.config.types.task},
-			{"id": 18, "text": "Task #2.2", "start_date": "06-04-2018", "duration": "3", "parent": "13", "progress": 0.8, "open": true, type: gantt.config.types.task},
-			{"id": 19, "text": "Task #2.3", "start_date": "10-04-2018", "duration": "4", "parent": "13", "progress": 0.2, "open": true, type: gantt.config.types.task},
-			{"id": 20, "text": "Task #2.4", "start_date": "10-04-2018", "duration": "4", "parent": "13", "progress": 0, "open": true, type: gantt.config.types.task},
-			{"id": 21, "text": "Task #4.1", "start_date": "03-04-2018", "duration": "4", "parent": "15", "progress": 0.5, "open": true, type: gantt.config.types.task},
-			{"id": 22, "text": "Task #4.2", "start_date": "03-04-2018", "duration": "4", "parent": "15", "progress": 0.1, "open": true, type: gantt.config.types.task},
-			{"id": 23, "text": "Task #4.3", "start_date": "03-04-2018", "duration": "5", "parent": "15", "progress": 0, "open": true, type: gantt.config.types.task}
-		],
-		"links": [
-			{"id": "10", "source": "11", "target": "12", "type": "1"},
-			{"id": "11", "source": "11", "target": "13", "type": "1"},
-			{"id": "12", "source": "11", "target": "14", "type": "1"},
-			{"id": "13", "source": "11", "target": "15", "type": "1"},
-			{"id": "14", "source": "11", "target": "16", "type": "1"},
-			{"id": "15", "source": "13", "target": "17", "type": "1"},
-			{"id": "16", "source": "17", "target": "18", "type": "0"},
-			{"id": "17", "source": "18", "target": "19", "type": "0"},
-			{"id": "18", "source": "19", "target": "20", "type": "0"},
-			{"id": "19", "source": "15", "target": "21", "type": "2"},
-			{"id": "20", "source": "15", "target": "22", "type": "2"},
-			{"id": "21", "source": "15", "target": "23", "type": "2"}
-		]
-	};
-        
-           var demo_tasks2 = {
-		
-		"data": [
-			{"id": 1426170055699, "start_date": "04-01-2019 00:00", "text": "Project #1", "duration": 11, "type": "project", "parent": 0},
-			{"id": 1426170055704, "start_date": "03-01-2019 00:00", "text": "Subproject #1", "duration": 9,"progress": 0.43, "parent": "1426170055699", "type": "subproject"},
-			{"id": 1426170055707, "start_date": "04-01-2019 00:00", "text": "Task #1", "duration": 1, "parent": "1426170055704", "type": "task"},
-			{"id": 1426170055710, "start_date": "06-01-2019 00:00", "text": "Task #2", "duration": 4, "parent": "1426170055704", "type": "task"},
-			{"id": 1426170055711, "start_date": "10-01-2019 00:00", "text": "Task #3", "duration": 3, "parent": "1426170055704", "type": "task"},
-			{"id": 1426170055712, "start_date": "02-01-2019 00:00", "text": "Subproject #2", "duration": 5, "parent": "1426170055699", "type": "subproject"},
-			{"id": 1426170055715, "start_date": "03-01-2019 00:00", "text": "Task #1", "duration": 4, "parent": "1426170055712", "type": "task", "progress": 0},
-			{"id": 1426170055718, "start_date": "07-01-2019 00:00", "text": "Task #2", "duration": 5, "parent": "1426170055712", "type": "task"},
-			{"id": 1426170055702, "start_date": "02-01-2019 00:00", "text": "Project #2", "duration": 15, "type": "project", "end_date": "17-01-2019 00:00", "parent": 0},
-			{"id": 1426170055719, "start_date": "02-01-2019 00:00", "text": "Subproject #1", "duration": 7, "parent": "1426170055702", "type": "subproject"},
-			{"id": 1426170055722, "start_date": "02-01-2019 00:00", "text": "Task #1", "duration": 4, "parent": "1426170055719", "type": "task"},
-			{"id": 1426170055725, "start_date": "06-01-2019 00:00", "text": "Task #2", "duration": 6, "parent": "1426170055719", "type": "task"},
-			{"id": 1426170055726, "start_date": "12-01-2019 00:00", "text": "Task #3", "duration": 5, "parent": "1426170055719", "type": "task"},
-			{"id": 1426170055703, "start_date": "08-01-2019 00:00", "text": "Project #3", "duration": 8, "type": "project", "parent": 0},
-			{"id": 1426170055727, "start_date": "08-01-2019 00:00", "text": "Subproject #1", "duration": 8, "parent": "1426170055703", "type": "subproject"}
-		], "links": [
-                    
-                    
-                ]
-	};
-    
-	
-//    gantt.parse(demo_tasks2);
-    
-    
-//    var tasks = {
-//		"data": [
-//			{"id": 1, "text": "Task #1", "start_date": "02-04-2018 00:00", "duration": 3, "priority": 3, "stage": 1, "user": 3, "open": true, "parent": 0},
-//			{"id": 5, "text": "Task #1.1", "start_date": "05-04-2018 00:00", "duration": 4, "parent": 1, "open": true, "priority": 1, "stage": 1, "user": 1},
-//			{"id": 6, "text": "Task #1.2", "start_date": "11-04-2018 00:00", "duration": 6, "parent": 1, "open": true, "priority": 2, "stage": 2, "user": 3},
-//			{"id": 2, "text": "Task #2", "start_date": "11-04-2018 00:00", "duration": 2, "priority": 1, "stage": 3, "user": 0, "open": true, "parent": 0},
-//			{"id": 7, "text": "Task #2.1", "start_date": "13-04-2018 00:00", "duration": 2, "parent": 2, "open": true, "priority": 3, "stage": 2, "user": 2},
-//			{"id": 3, "text": "Task #3", "start_date": "11-04-2018 00:00", "duration": 6, "priority": 2, "stage": 2, "user": 1, "open": true, "parent": 0},
-//			{"id": 8, "text": "Task #3.1", "start_date": "09-04-2018 00:00", "duration": 3, "parent": 3, "open": true, "priority": 1, "stage": 1, "user": 3},
-//			{"id": 9, "text": "Task #3.2", "start_date": "12-04-2018 00:00", "duration": 2, "parent": 3, "open": true, "priority": 3, "stage": 3, "user": 1},
-//			{"id": 10, "text": "Task #3.3", "start_date": "17-04-2018 00:00", "duration": 2, "parent": 3, "open": true, "priority": 2, "stage": 2, "user": 0}
-//		], "links": [
-//			{"source": "1", "target": "5", "type": "0"},
-//			{"source": "5", "target": "8", "type": "0"},
-//			{"source": "3", "target": "7", "type": "0"},
-//			{"source": "6", "target": "7", "type": "0"},
-//			{"source": "2", "target": "10", "type": "0"}
-//		]
-//	};
-    
-    
-    
-    
-
-
-    
-    
+   
     
     function obtenerEmpleados(){
         

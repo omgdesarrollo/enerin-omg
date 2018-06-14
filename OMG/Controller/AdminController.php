@@ -11,7 +11,11 @@ require_once '../util/Session.php';
 
 
 $Op=$_REQUEST["Op"];
+<<<<<<< HEAD
 $model = new AdminModel();
+=======
+$model=new AdminModel();
+>>>>>>> a8145bb68c646ddbe290fb402acd9b7a600fe25b
 $modelEmpleado=new EmpleadoModel();
 
 // $pojo= new DocumentoEntradaPojo();

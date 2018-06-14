@@ -54,9 +54,7 @@ switch ($Op) {
           	$numero = count($_POST);
             $tags = array_keys($_POST);// obtiene los nombres de las varibles
             $valores = array_values($_POST);// obtiene los valores de las varibles
-//            echo "nombre variables: ".$tags;
-            // var_dump($tags);
-           echo "v";
+            echo " g";
 			// var_dump($valores);
 			$arrayTransformado;
 			$listaNo=0;
@@ -79,6 +77,11 @@ switch ($Op) {
 				if($cadenaKey == "!nativeeditor_status")
 					$listaNo++;
 			}
+                        
+                        $modelGantt->insertarTareasGantt($arrayTransformado);
+//                        echo json_encode($resultado);
+                        
+//                        var_dump($resExito);
 			header('Content-type: application/json; charset=utf-8');
             echo json_encode($arrayTransformado);
 			// foreach($valores as $key=>$value)

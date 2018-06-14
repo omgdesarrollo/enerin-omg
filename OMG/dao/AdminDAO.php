@@ -29,6 +29,29 @@ class AdminDAO{
     }
     
     
+    public function listarUsuarioVistas($ID_USUARIO)
+    {
+        try
+        {
+            $query="SELECT tbusuarios_vistas.id_vistas, tbusuarios_vistas.id_usuario, tbusuarios_vistas.EDIT,
+		           tbusuarios_vistas.delete, tbusuarios_vistas.new,tbusuarios_vistas.consult 
+
+                           FROM usuarios_vistas tbusuarios_vistas
+
+                           WHERE tbusuarios_vistas.id_usuario=$ID_USUARIO";
+            
+            $db= AccesoDB::getInstancia();
+            $lista = $db->executeQuery($query);
+            
+            return $lista;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
+    
     
 }
 
