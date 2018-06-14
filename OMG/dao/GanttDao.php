@@ -34,13 +34,58 @@ class GanttDao {
     }
     
     
-    public function insertarTareasGantt(){
+    public function insertarTareasGantt($value){
         try{
-            $query="INSERT into ";
+//            $query="INSERT INTO gantt_tasks(gantt_tasks.id,gantt_tasks.text,gantt_tasks.start_date,gantt_tasks.duration,gantt_tasks.progress,gantt_tasks.parent)
+            $query="INSERT INTO gantt_tasks(gantt_tasks.id,gantt_tasks.text,gantt_tasks.start_date,duration,progress,parent) "
+                    . "VALUES('".$value["id"]."','".$value["text"]."','".$value["start_date"]."','".$value["duration"]."','".$value["progress"]."','".$value["parent"]."');";
+            echo "d  ".$query;
+            $db= AccesoDB::getInstancia();
+            $exito=$db->executeQueryUpdate($query);
+            
+            
         } catch (Exception $ex) {
-
+            throw $ex;
         }
     }
+    
+    public function verificarTareaExiste($value){
+        try{
+            $query="select count(*) as cantidad from gantt_tasks tble_gantt_task  where tble_gantt_task.id='".$value["id"]."'";
+            $db= AccesoDB::getInstancia();
+            $list=$db->executeQuery($query);
+//            echo ($list[0]["cantidad"]);
+//            echo json_encode($list[0]["cantidad"]);
+            return $list;
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+    
+    public function updateTareas($value){
+        try{
+        $query="UPDATE gantt_tasks set gantt_tasks.text='".$value["text"]."',gantt_tasks.start_date='".$value["start_date"]."',gantt_tasks.duration='".$value["duration"]."',gantt_tasks.progress='".$value["progress"]."',gantt_tasks.parent='".$value["parent"]."' where gantt_tasks.id='".$value['id']."'";
+            $db= AccesoDB::getInstancia();
+            $list=$db->executeQueryUpdate($query);
+//            echo "s  ".$list;
+            return $list;
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+    
+    
+    public function deleteTareas($value){
+        try{
+            $query="delete from  gantt_tasks  where gantt_tasks.id='".$value["id"]."'";
+            $db= AccesoDB::getInstancia();
+            $list=$db->executeQueryUpdate($query);
+            return $list;
+        } catch (Exception $ex) {
+            throw  $ex;
+        }
+    }
+    
     
     
 }

@@ -88,11 +88,14 @@
 
 
 
+
+
+//1 .funciones para consultar informacion y construir datos 
   function contruirContenido()
  {
      
   $.ajax({
-   url:"../Controller/SocketController.php?Op=abrirConeccionSegundoPlano",
+   url:"../Controller/ClausulasController.php?Op=Listar",
    method:"POST",
     success:function(data)
     {
