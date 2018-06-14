@@ -314,17 +314,17 @@
         Objtmp=valortmp[valortmp.selectedIndex].innerHTML;
         //poner alerta para valores
         // alert(Objtmp);
-        setInterval(function()
-        {
-            $.ajax({
-                url:'../Controller/EvidenciasController.php?Op=a',
-                success:function(data)
-                {
-                    console.log(tempo);
-                    tempo++;
-                }
-            });
-        },1500);
+        // setInterval(function()
+        // {
+        //     $.ajax({
+        //         url:'../Controller/EvidenciasController.php?Op=a',
+        //         success:function(data)
+        //         {
+        //             console.log(tempo);
+        //             tempo++;
+        //         }
+        //     });
+        // },1500);
         if(Objtmp!=" ")
         {
             swal({
@@ -334,7 +334,7 @@
                     showCancelButton: true,
                     closeOnConfirm: false,
                     showLoaderOnConfirm: true,
-                    confirmButtonText: tempo,
+                    // confirmButtonText: tempo,
                     }, function(isConfirm)
                     {
                         if(isConfirm)
