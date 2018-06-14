@@ -46,15 +46,8 @@ switch ($Op) {
 		break;	
 
 	case 'Guardar':
-               
- 
-		# code...
 		break;
-
 	case 'Modificar':
-
-            
-            
           $editing= $_REQUEST["editing"];
           $modo_gantt=$_REQUEST["gantt_mode"];
 //          $server=$_SERVER["HTTP_REFERER"];
@@ -126,7 +119,7 @@ switch ($Op) {
 	case 'Eliminar':
 		# code...
 		break;	
-	default:
+                default:
 		# code...
 		break;
 }

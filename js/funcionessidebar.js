@@ -23,7 +23,7 @@ function loadDataSideBarCatalogoInformacion(){
                              
                                    switch(id){
                                        case "empleados":
-                                            consultarInformacion("../Controller/EmpleadosController.php?Op=Listar");                                           
+//                                            consultarInformacion("../Controller/EmpleadosController.php?Op=Listar");                                           
                                             $("#sidebarObjV").load('InyectarVistasView.php #empleados');
                                             //$("#sidebarObjV").load('EmpleadosView.php');
                                        break;  

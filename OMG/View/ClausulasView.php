@@ -33,6 +33,7 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/fTemasView.js" type="text/javascript"></script>
+                
              
             
                 
@@ -52,13 +53,24 @@ $Usuario=  Session::getSesion("user");
                     body{
                     overflow:hidden;     
                     }
-                </style>    
+                    
+                    .hideScrollBar{
+                      width: 100%;
+                      height: 100%;
+                      overflow: auto;
+                      margin-right: 14px;
+                      padding-right: 28px; /*This would hide the scroll bar of the right. To be sure we hide the scrollbar on every browser, increase this value*/
+                      padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is one*/
+                    }
+            
+                    
+            </style>    
 
 
 	</head>
 
-        <body class="no-skin" onload="loadSpinner()">
-            <div id="loader"></div>
+<body class="no-skin" onload="loadSpinner()">
+    <div id="loader"></div>
             
             
 <?php
@@ -96,36 +108,30 @@ require_once 'EncabezadoUsuarioView.php';
  
 <div style="height: 50px"></div>
 
-
-<div class="table-fixed-header">
-    <div class="table-container">            
+   
             
-                     <table class="table table-bordered table-striped header_fijo"  >
-                         <thead >
-                         <tr class="">
-                          <th class="table-headert" width="10%">No. Tema</th>
-                          <th class="table-headert" width="20%">Tema</th>
-                          <th class="table-headert" width="10%">No. Sub-tema</th>
-                          <th class="table-headert" width="20%">Sub-tema</th>
-                          <th class="table-headert" width="20%">Responsable del tema</th>
-                          <th class="table-headert" width="10%">Descripcion</th>
-                          <th class="table-headert" width="10%">Plazo</th>
-                         </tr>
-                        </thead>
-                        
-                        <tbody id="datosGenerales"  style="position:absolute ;overflow: auto;display:block ;width: 100%">
-                        </tbody>
-                    </table>     
-			
+<table class="table table-bordered table-striped header_fijo"  >
+    <thead >
+    <tr class="">
+     <th class="table-headert" width="8%">No. Tema</th>
+     <th class="table-headert" width="20%">Tema</th>
+     <th class="table-headert" width="10%">No.Sub-tema</th>
+     <th class="table-headert" width="20%">Sub-tema</th>
+     <th class="table-headert" width="20%">Responsable del tema</th>
+     <th class="table-headert" width="12%">Descripcion</th>
+     <th class="table-headert" width="10%">Plazo</th>
+    </tr>
+   </thead>
 
-			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-			</a>
+       <!--<tbody id="datosGenerales"  style="position:absolute ;overflow: auto;display:block ;width: 100%">-->
 
-    </div>
-</div>              
+   <tbody class="hideScrollBar"  id="datosGenerales" style="position: absolute">
+   </tbody>
 
-                
+</table>     
+
+
+                             
        <!-- Inicio de Seccion Modal -->
        <div class="modal draggable fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		  <div class="modal-dialog" role="document">
@@ -218,9 +224,10 @@ require_once 'EncabezadoUsuarioView.php';
 		  </div>
 		</div>
        <!--Final de Seccion Modal-->
+       
 		<script>  
                       var idclausula,si_hay_cambio=false;
-                      contruirContenido();
+                      construirContenido();
 		</script> 
                 <!--Inicia para el spiner cargando-->
                 <script src="../../js/loaderanimation.js" type="text/javascript"></script>

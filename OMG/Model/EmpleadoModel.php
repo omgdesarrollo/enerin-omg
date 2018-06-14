@@ -30,7 +30,24 @@ class EmpleadoModel{
     }
     }
     
-    public function  listarEmpleadosComboBox(){
+    
+    public function listarEmpleado($ID_EMPLEADO){
+        try
+        {
+            $dao = new EmpleadoDAO();
+            $rec = $dao->listarEmpleado($ID_EMPLEADO);
+            
+            return $rec;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
+    
+        public function  listarEmpleadosComboBox(){
         try{
             $dao=new EmpleadoDAO();
             $rec=$dao->mostrarEmpleadosComboBox();
