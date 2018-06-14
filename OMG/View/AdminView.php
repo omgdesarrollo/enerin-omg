@@ -184,7 +184,7 @@ $Usuario=  Session::getSesion("user");
                 <th class="table-header">Categoria</th>
                 <th class="table-header">Permisos</th>
             </tr>
-            <tbody id="bodyTable">
+            <tbody id="bodyTableAgregar">
             </tbody>
         </table>
     </div>
@@ -263,7 +263,7 @@ $Usuario=  Session::getSesion("user");
                                         <th class="table-header">Editar</th>
                                         <th class="table-header">Modificar</th>
                                     </tr>
-                                    <tbody id="bodyTable">
+                                    <tbody id="bodyTablePermisos">
 
                                     </tbody>
                                 </table>
@@ -308,7 +308,7 @@ $Usuario=  Session::getSesion("user");
                     tempData += construirTablaAgregar(value);
                     tempData += "</tr>";
                 });
-                $('#bodyTable').html(tempData);
+                $('#bodyTableAgregar').html(tempData);
             },
             error:function(error)
             {
@@ -379,6 +379,7 @@ $Usuario=  Session::getSesion("user");
     
     function modificarPermisos(id)
     {
+        construirTablaPermisos();
         $.ajax({
             url: '../Controller/AdminController.php?Op=ListarPermisos',
             type:'GET',
@@ -392,9 +393,10 @@ $Usuario=  Session::getSesion("user");
                 tempData = "";
                 $.each(permisos,function(index,value)
                 {
-                    tempData += construirTabla(value);
+                    tempData += construirTablaPermisosDatos(value);
                 });
-                $('#bodyTable').html(tempData);
+                $('#bodyTablePermisos').html(tempData);
+                $('#loader').hide();
             },
             error:function()
             {
@@ -410,13 +412,13 @@ $Usuario=  Session::getSesion("user");
             }
         });
     }
-    function construirTablaPermisos(value)
+    function construirTablaPermisosDatos(value)
     {
-        
         tempData = "<tr>";
-        tempData += "<td>";
+        tempData += "<td rowspan='2'>"Catalago;
         tempData += "</td>";
         tempData += "</tr>";
+        return tempData;
     }
 </script>
 <script src="../../js/loaderanimation.js" type="text/javascript"></script>
