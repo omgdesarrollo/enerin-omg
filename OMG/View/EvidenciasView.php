@@ -301,7 +301,6 @@
             saveOneToDatabase(Obj.innerHTML,columna,tabla,id,contexto);
             
             si_hay_cambio=false;
-
         } 
 
     }
@@ -314,17 +313,17 @@
         Objtmp=valortmp[valortmp.selectedIndex].innerHTML;
         //poner alerta para valores
         // alert(Objtmp);
-        setInterval(function()
-        {
-            $.ajax({
-                url:'../Controller/EvidenciasController.php?Op=a',
-                success:function(data)
-                {
-                    console.log(tempo);
-                    tempo++;
-                }
-            });
-        },1500);
+        // setInterval(function()
+        // {
+        //     $.ajax({
+        //         url:'../Controller/EvidenciasController.php?Op=a',
+        //         success:function(data)
+        //         {
+        //             console.log(tempo);
+        //             tempo++;
+        //         }
+        //     });
+        // },1500);
         if(Objtmp!=" ")
         {
             swal({
@@ -334,7 +333,7 @@
                     showCancelButton: true,
                     closeOnConfirm: false,
                     showLoaderOnConfirm: true,
-                    confirmButtonText: tempo,
+                    // confirmButtonText: tempo,
                     }, function(isConfirm)
                     {
                         if(isConfirm)
@@ -639,6 +638,7 @@
                 }
                 tempData += "<td contenteditable='true' onBlur=\"saveSingleToDatabase(this,'evidencias','accion_correctiva',"+value.id_evidencias+",'id_evidencias')\"";
                 tempData += " onkeyup=\"detectarsihaycambio(this)\">"+value.accion_correctiva+"</td>";
+                
                 tempData += "<td style='font-size: -webkit-xxx-large'><button class='btn btn-info' onClick='#("+value.id_evidencias+");'>";
                 tempData += "Cargar Programa</button></td>";
 
@@ -661,6 +661,7 @@
                 tempData += "onclick='eliminarEvidencia("+value.id_evidencias+");'>";
                 tempData += "<i class=\"fa fa-trash\"></i></button></td>";
             }
+            
             if(carga==0)
             tempData += "</tr>";
         // });

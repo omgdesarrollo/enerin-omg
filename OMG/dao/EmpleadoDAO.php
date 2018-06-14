@@ -4,47 +4,61 @@ class EmpleadoDAO{
     //consulta los datos de un empleado por su nombre de usuario
     public function mostrarEmpleados(){
         try{
-//            $query="SELECT ID_EMPLEADO, NOMBRE_EMPLEADO, CATEGORIA, APELLIDO_PATERNO, APELLIDO_MATERNO, CORREO, FECHA_CREACION 
-//                            FROM EMPLEADOS ORDER BY NOMBRE_EMPLEADO";
 
               $query="SELECT id_empleado, nombre_empleado, categoria, apellido_paterno, apellido_materno, correo, fecha_creacion 
                             FROM empleados order by nombre_empleado";            
 
 
-//            $query="SELECT ID_EMPLEADO  FROM EMPLEADOS";
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-            
-            /*$rec = NULL;
-            if (count($lista)==1){
-                $rec=$lista[0];
-            }
-            return $rec;*/
+
+            return $lista;
 
             return $lista;
     }  catch (Exception $ex){
-        //throw $rec;
         throw $ex;
+        return false;
     }
     }
     
+    
+    public function listarEmpleado ($ID_EMPLEADO){
+        try
+        {
+            $query = "SELECT id_empleado, nombre_empleado, categoria, apellido_paterno, apellido_materno, correo, fecha_creacion
+
+                      FROM empleados
+
+                      WHERE id_empleado=$ID_EMPLEADO";
+            
+            $db = AccesoDB::getInstancia();
+            $lista = $db->executeQuery($query);
+            
+            return $lista;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
+    
+
     public function mostrarEmpleadosComboBox(){
         try{
             $query="SELECT id_empleado, nombre_empleado, apellido_paterno, apellido_materno FROM empleados";
-//            $query="SELECT ID_EMPLEADO  FROM EMPLEADOS";
+
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             
-            /*$rec = NULL;
-            if (count($lista)==1){
-                $rec=$lista[0];
-            }
-            return $rec;*/
+
+            return $lista;
 
             return $lista;
     }  catch (Exception $ex){
-        //throw $rec;
         throw $ex;
+        return false;
     }
     }
     
@@ -54,7 +68,6 @@ class EmpleadoDAO{
         
         try{
             
-//            $query="INSERT INTO EMPLEADOS(ID_EMPLEADO,NOMBRE_EMPLEADO,CATEGORIA,APELLIDO_PATERNO,APELLIDO_MATERNO,CORREO,FECHA_CREACION)VALUES('$Nombre','$Categoria','$Apellido_Paterno','$Apellido_Materno','$Correo')";
             $query_obtenerMaximo_mas_uno="SELECT max(id_empleado)+1 as id_empleado from empleados";
             $db_obtenerMaximo_mas_uno=AccesoDB::getInstancia();
             $lista_id_nuevo_autoincrementado=$db_obtenerMaximo_mas_uno->executeQuery($query_obtenerMaximo_mas_uno);
@@ -66,8 +79,8 @@ class EmpleadoDAO{
             
             $db=  AccesoDB::getInstancia();
             $db->executeQueryUpdate($query);
-//            $rec=$lista[0];
-//            return $rec;
+
+            
         } catch (Exception $ex) {
                 throw $ex;
         }   
@@ -117,11 +130,14 @@ class EmpleadoDAO{
     {
         try
         {
-            $query = "SELECT tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno, tbempleados.correo 
+            $query = "SELECT tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno, tbempleados.correo, tbempleados.categoria 
             FROM empleados tbempleados 
-            WHERE LOWER(tbempleados.nombre_empleado) like '%$cadena%'
-            OR LOWER(tbempleados.apellido_paterno) like '%$cadena%' 
-            OR LOWER(tbempleados.apellido_materno) like '%$cadena%' ";
+            WHERE tbempleados.id_empleado != 0
+            AND (
+                    LOWER(tbempleados.nombre_empleado) like '%$cadena%'
+                    OR LOWER(tbempleados.apellido_paterno) like '%$cadena%' 
+                    OR LOWER(tbempleados.apellido_materno) like '%$cadena%'
+                )";
 
             $db = AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);

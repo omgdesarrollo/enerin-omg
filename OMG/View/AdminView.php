@@ -47,8 +47,8 @@ $Usuario=  Session::getSesion("user");
         <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
         
                 
-        <!--<link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>-->
-        <!--<script src="../../js/loaderanimation.js" type="text/javascript"></script>-->      
+        <!-- <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+        <script src="../../js/loaderanimation.js" type="text/javascript"></script>       -->
         
         <!--en esta seccion es para poder abrir el modal--> 
         <!--<script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>-->             
@@ -57,7 +57,11 @@ $Usuario=  Session::getSesion("user");
         <!--<script src="../../codebase/dhtmlx.js"></script>-->
         <!--aqui termina la seccion para poder abrir el modal-->
         <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
-                
+        <!-- swal -->
+        <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+        <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+        <!-- <script src="../../assets/probando/js/ace-elements.min.js"></script>
+        <script src="../../assets/probando/js/ace.min.js"></script>         -->
                 
         <style>
             
@@ -141,57 +145,189 @@ $Usuario=  Session::getSesion("user");
                     background: #f1f1f1;           /* 6 */
                 }
             }
+            /* ::-webkit-scrollbar
+            {
+                display: none;
+            } */
+            /* Oculta los scroll */
+
     /*Finaliza estilos para mantener fijo el header*/                
         </style>
     </head>
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#agregarUsuario">
-        Agregar Usuario
-    </button>
 
-    <div id="winVP">
-        <body class="no-skin" onload="loadSpinner()">
-            <div id="loader"></div>
+    <!-- <div id="winVP"> -->
+    <body class="no-skin" onload="loadSpinner()">
+        <div id="loader"></div>
+        <?php
+            require_once 'EncabezadoUsuarioView.php';
+        ?>
 
-            <div style="height: 5px"></div>
-                
-                <div style="position: fixed;">
-        </body>
-        </body>
+        <div style="height: 5px"></div>
+        <div style="position: fixed;">
+
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#agregarUsuario">
+                Agregar Usuario
+            </button>
+        </div>
+
+        <div style="height: 50px"></div>
+
+<!-- <div class="table-fixed-header" style="display:block;" id="myDiv" class="animate-bottom"> -->
+    <div class="table-container">
+        <table id="idTable" style="width:100%" class="tbl-qa">
+            <tr>
+                <th class="table-header">Nombre</th>
+                <th class="table-header">Apellido Paterno</th>
+                <th class="table-header">Apellido Materno</th>
+                <th class="table-header">Correo</th>
+                <th class="table-header">Categoria</th>
+                <th class="table-header">Permisos</th>
+            </tr>
+            <tbody id="bodyTable">
+            </tbody>
+        </table>
     </div>
 
-    <div class="modal draggable fade" id="agregarUsuario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Agregar Usuario</h4>
-                </div>
+        <!-- Modal agregar usuario -->
+        <div class="modal draggable fade" id="agregarUsuario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Agregar Usuario</h4>
+                    </div>
 
-                <div class="modal-body">
-                    <div class="form-group">
-                        <!-- <label class="control-label" for="title">Nombre Usuario: </label>
-                        <input type="text" class="" onkeyup="getClavesDocumento(this)"/>
-                        <select id="CLAVE_NUEVAEVIDENCIAMODAL" class="select1" onchange="select_clavesModal(this)">
-                            <option>Sin especificar</option>
-                        </select> -->
-                        <div class="dropdown">
-                            <input type="text" class="dropdown-toggle" id="menu1" data-toggle="dropdown" onkeyup="getClavesDocumento(this)"/>
-                                <ul class="dropdown-menu" id="dropdownEvent" role="menu" 
-                                aria-labelledby="menu1"></ul>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label id="NOMBRE_AGREGARUSUARIO" class="control-label">Empleado/Usuario: </label>
+                            <div class="dropdown">
+                                <input style="width:60%" type="text" class="dropdown-toggle" id="NOMBREESCRITURA_AGREGARUSUARIO" data-toggle="dropdown" onkeyup="getClavesDocumento(this)"/>
+                                    <ul style="width:60%;cursor:pointer;" class="dropdown-menu" id="dropdownEvent" role="menu" 
+                                    aria-labelledby="menu1"></ul>
+                            </div>
                         </div>
-                        <div class="help-block with-errors"></div>
+                        <div class="form-group">
+                            Nombre: <label id="NOMBRE_AGREGARUSUARIO" class="control-label"></label>
+                        </div>
+                        <div class="form-group">
+                            Correo: <label id="CORREO_AGREGARUSUARIO" class="control-label"></label>
+                        </div>
+                        <div class="form-group">
+                            Categoria: <label id="CATEGORIA_AGREGARUSUARIO" class="control-label"></label>
+                        </div>
+                        <div class="form-group" method="post">
+                            <button type="submit" id="BTN_AGREGARUSUARIO" class="btn crud-submit btn-info">Agregar Usuario</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+        <!-- fin del modal agregar usuario -->
+
+        <!-- Modal modificar permisos -->
+        <div class="modal draggable fade" id="modificarPermisos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Agregar Usuario</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <!-- <div class="form-group">
+                            <label id="NOMBRE_AGREGARUSUARIO" class="control-label">Empleado/Usuario: </label>
+                            <div class="dropdown">
+                                <input style="width:60%" type="text" class="dropdown-toggle" id="NOMBREESCRITURA_AGREGARUSUARIO" data-toggle="dropdown" onkeyup="getClavesDocumento(this)"/>
+                                    <ul style="width:60%;cursor:pointer;" class="dropdown-menu" id="dropdownEvent" role="menu" 
+                                    aria-labelledby="menu1"></ul>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            Nombre: <label id="NOMBRE_AGREGARUSUARIO" class="control-label"></label>
+                        </div>
+                        <div class="form-group">
+                            Correo: <label id="CORREO_AGREGARUSUARIO" class="control-label"></label>
+                        </div>
+                        <div class="form-group">
+                            Categoria: <label id="CATEGORIA_AGREGARUSUARIO" class="control-label"></label>
+                        </div> -->
+
+                        <div class="form-group" method="post">
+                            <button type="submit" id="BTN_MODIFICARPERMISOS" class="btn crud-submit btn-info">Agregar Usuario</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- fin del modal agregar usuario -->
+
+    </body>
+    <!-- </div> -->
+
 
 <script>
     function loadSpinner()
     {
         myFunction();
     }
-    function getClavesDocumento(data)
+    loadUsuarios();
+
+    function loadUsuarios()
+    {
+        $.ajax({
+            url: '../Controller/AdminViewController.php?Op=Listar',
+            type: 'GET',
+            beforeSend:function()
+            {
+                $('#loader').show();
+            },
+            success:function(usuarios)
+            {
+                tempData = "";
+                $.each(usuarios,function(index,value)
+                {
+                    tempData += "<tr id='registro_"+value.id_usuario+"'>";
+                    tempData += construirTabla(value);
+                    temoData += "</tr>";
+                });
+                $
+            },
+            error:function(error)
+            {
+                swal({
+                        title: '',
+                        text: 'Error en el servidor',
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                        type:"error"
+                    });
+                setTimeout(function(){swal.close();},1500);
+                $('#loader').hide();
+            }
+        });
+    }
+
+    function loadUsuario()
+    {
+
+    }
+
+    function construirTabla(value)
+    {
+        tempData = "<td>"+value.nombre_empleado+"<td>";
+        tempData += "<td>"+value.apellido_paterno+"<td>";
+        tempData += "<td>"+value.apellido_materno+"<td>";
+        tempData += "<td>"+value.correo+"<td>";
+        tempData += "<td>"+value.categoria+"<td>";
+        tempData += "<td><button onClick='modificarPermisos("+value.id_usuario+");' type='button' class='btn btn-success'";
+        tempData += "data-toggle='modal' data-target='#modificarPermisos'>";
+        tempData += "<i class='ace-icon fa fa-envelope' style='font-size: 20px;'></i></button><td>";
+        return tempData;
+    }
+
+    // console.log($('#NOMBREESCRITURA_AGREGARUSUARIO').left());
+
+    function buscarEmpleados(data)
     {
         cadena = $(data).val().toLowerCase();
         tempData="";
@@ -205,13 +341,20 @@ $Usuario=  Session::getSesion("user");
                 {
                     $.each(usuarios,function(index,value)
                     {
-                        // console.log(value);
-                        tempData +="<li role='presentation'><a role='menuitem' tabindex='-1' href='#'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</a></li>";
+                        nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
+                        tempData += "<li role='presentation'><a role='menuitem' tabindex='-1'";
+                        tempData += "onClick='seleccionarItem(\""+value.correo+"\",\""+ nombre +"\")'>";
+                        tempData += nombre+"</a></li>";
                     });
                     $("#dropdownEvent").html(tempData);
                 }
             });
         }
+    }
+    function seleccionarItem(correo,nombre)
+    {
+        usuario = correo.split("@");
+        $('#NOMBREESCRITURA_AGREGARUSUARIO').val(usuario[0]);
     }
 </script>
 <script src="../../js/loaderanimation.js" type="text/javascript"></script>

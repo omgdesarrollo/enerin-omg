@@ -18,24 +18,20 @@ switch ($Op) {
 		$Lista=$model->listarEmpleados();
               
     	Session::setSesion("listarEmpleados",  $Lista);
-//    	$tarjet="../view/principalmodulos.php";
+
     	header('Content-type: application/json; charset=utf-8');
-//		echo json_encode($Lista);
-                echo json_encode(array("data"=>$Lista));
-//	$filas=array();	
-//        foreach ($Lista as $filas)
-//            //$sentencia="SELECT * FROM empleados";
-//            //$resultado=mysql_query($sentencia);
-//            //while($filas=mysql_fetch_assoc($resultado))
-//              
-//            {
-//            echo json_encode($filas['ID_EMPLEADO']);	
-//            }
-		//header("location: login.php");
-//echo $json = json_encode(array("n" => "".$Lista.NOMBRE_EMPLEADO, "a" => "apellido",  "c" => "test"));
+
+                echo json_encode($Lista);
+
 		return $Lista;
 		break;
+        
+        case 'ListarEmpleado':
+            $resultado = $model->listarEmpleado($_REQUEST['ID_EMPLEADO']);
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($resultado);
             
+            break;
         
             
         case 'mostrarcombo':
