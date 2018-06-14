@@ -44,6 +44,7 @@ switch ($Op) {
             break;
     	
         case 'MostrarTareasCompletasPorFolioDeEntrada':
+        echo "dsd  ".Session::getSesion("dataGantt")["id_seguimiento_emtrada"];
         $Lista=$modelGantt->obtenerTareasCompletasPorFolioEntrada("123");
             header('Content-type: application/json; charset=utf-8');
             echo json_encode(array("data"=>$Lista));

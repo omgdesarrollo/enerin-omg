@@ -138,12 +138,12 @@ and open the template in the editor.
   </form>
         
         <?php  
-        if($_REQUEST["folio_entrada"]==""){
+        if($_REQUEST["id_seguimiento_entrada"]==""){
             echo "no tiene folio de entrada  ";
         }else
         {
             
-        echo "el folio de entrada ".$_REQUEST["folio_entrada"]; 
+        echo "el folio de entrada ".$_REQUEST["id_seguimiento_entrada"]; 
         } ?>
         
         
