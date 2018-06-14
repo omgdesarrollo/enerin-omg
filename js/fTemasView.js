@@ -86,7 +86,7 @@
 
 
 
-  function contruirContenido()
+  function construirContenido()
  {
      
   $.ajax({
