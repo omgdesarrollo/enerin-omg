@@ -158,6 +158,31 @@ class GanttDao {
     
     
     
+    public function calculoSumaParents($value)
+    {
+        try
+        {
+           $query="SELECT SUM(tbgantt_tasks.progress)/COUNT(tbgantt_tasks.progress) AS total_avance_programa 		
+                   FROM gantt_seguimiento_entrada tbgantt_seguimiento_entrada
+
+                   JOIN gantt_tasks tbgantt_tasks ON tbgantt_tasks.id=tbgantt_seguimiento_entrada.id_gantt  
+
+                   WHERE tbgantt_seguimiento_entrada.id_seguimiento_entrada='".$value["id_seguimiento"]."' AND tbgantt_tasks.parent=0";
+           
+           
+           $db= AccesoDB::getInstancia();
+           $list= $db->executeQueryUpdate($query);
+           
+           return $list;
+           
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
+    
 }
 
 ?>

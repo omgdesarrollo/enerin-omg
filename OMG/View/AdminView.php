@@ -178,8 +178,8 @@ $Usuario=  Session::getSesion("user");
             <tr>
                 <th class="table-header">Usuario</th>
                 <th class="table-header">Nombre</th>
-                <th class="table-header">Apellido Paterno</th>
-                <th class="table-header">Apellido Materno</th>
+                <!-- <th class="table-header">Apellido Paterno</th> -->
+                <!-- <th class="table-header">Apellido Materno</th> -->
                 <th class="table-header">Correo</th>
                 <th class="table-header">Categoria</th>
                 <th class="table-header">Permisos</th>
@@ -204,21 +204,22 @@ $Usuario=  Session::getSesion("user");
                             <div class="dropdown">
                                 <input style="width:60%" type="text" class="dropdown-toggle" id="NOMBREESCRITURA_AGREGARUSUARIO" data-toggle="dropdown" onkeyup="buscarEmpleados(this)"/>
                                     <ul style="width:60%;cursor:pointer;" class="dropdown-menu" id="dropdownEvent" role="menu" 
-                                    aria-labelledby="menu1"></ul>* Este sera el nombre de usuario
+                                    aria-labelledby="menu1"></ul>* Este sera el nombre de usuario.
                             </div>
                         </div>
-                        <div id="INFO_AGREGARUSUARIO"></div>
-                        <div class="form-group">
-                            Nombre:
-                        </div>
-                        <div class="form-group">
-                            Correo:
-                        </div>
-                        <div class="form-group">
-                            Categoria:
-                        </div>
-                        <div class="form-group" method="post">
-                            <button type="submit" class="btn crud-submit btn-info">Agregar Usuario</button>
+                        <div id="INFO_AGREGARUSUARIO">
+                            <div class="form-group">
+                                Nombre:
+                            </div>
+                            <div class="form-group">
+                                Correo:
+                            </div>
+                            <div class="form-group">
+                                Categoria:
+                            </div>
+                            <div class="form-group" method="post">
+                                <button type="submit" class="btn crud-submit btn-info">Agregar Usuario</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -288,7 +289,7 @@ $Usuario=  Session::getSesion("user");
                 tempData = "";
                 $.each(usuarios,function(index,value)
                 {
-                    tempData += "<tr id='registro_"+value.id_usuario+"'>";
+                    tempData += "<tr id='registro_"+value.id_empleado+"'>";
                     tempData += construirTablaAgregar(value);
                     tempData += "</tr>";
                 });
@@ -316,13 +317,14 @@ $Usuario=  Session::getSesion("user");
 
     function construirTablaAgregar(value)
     {
+        // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
         tempData = "<td>"+value.nombre_usuario+"</td>";
-        tempData += "<td>"+value.nombre_empleado+"</td>";
-        tempData += "<td>"+value.apellido_paterno+"</td>";
-        tempData += "<td>"+value.apellido_materno+"</td>";
+        tempData += "<td>"+value.nombre+"</td>";
+        // tempData += "<td>"+value.apellido_paterno+"</td>";
+        // tempData += "<td>"+value.apellido_materno+"</td>";
         tempData += "<td>"+value.correo+"</td>";
         tempData += "<td>"+value.categoria+"</td>";
-        tempData += "<td><button onClick='modificarPermisos("+value.id_usuario+");' type='button' class='btn btn-success'";
+        tempData += "<td><button onClick='modificarPermisos("+value.id_empleado+");' type='button' class='btn btn-success'";
         tempData += "data-toggle='modal' data-target='#modificarPermisos'>";
         tempData += "<i class='ace-icon fa fa-envelope' style='font-size: 20px;'></i></button></td>";
         return tempData;
@@ -344,11 +346,11 @@ $Usuario=  Session::getSesion("user");
                 {
                     $.each(usuarios,function(index,value)
                     {
-                        nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
-                        datos = value.correo+"^_^"+nombre+"^_^"+value.categoria;
+                        // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
+                        datos = value.correo+"^_^"+value.nombre+"^_^"+value.categoria+"^_^"+value.id_empleado;
                         tempData += "<li role='presentation'><a role='menuitem' tabindex='-1'";
                         tempData += "onClick='seleccionarItem(\""+datos+"\")'>";
-                        tempData += nombre+"</a></li>";
+                        tempData += value.nombre+"</a></li>";
                     });
                     $("#dropdownEvent").html(tempData);
                 }
@@ -359,16 +361,82 @@ $Usuario=  Session::getSesion("user");
     function seleccionarItem(usuarioDatos)
     {
         datos = usuarioDatos.split("^_^");
-        usuario = datos[0].split("@");
-        console.log(datos);
+        EmpleadoDataG = datos;
+        // usuario = datos[0].split("@");
+        $('#NOMBREESCRITURA_AGREGARUSUARIO').val(datos[0]);
         textoHTML = "<div class='form-group'>Nombre: <label class='control-label'>"+datos[1]+"</label></div>";
         textoHTML += "<div class='form-group'>Correo: <label class='control-label'>"+datos[0]+"</label></div>";
         textoHTML += "<div class='form-group'>Categoria: <label class='control-label'>"+datos[2]+"</label></div>";
-        textoHTML += "<div class='form-group' method='post'><button onClick='btn_agregarUsuario()'";
-        textoHTML += "type='submit' class='btn crud-submit btn-info'>Agregar Usuario</button></div>";
+        textoHTML += "<div class='form-group' method='post'><button onClick='agregarUsuarioBtn()'";
+        textoHTML += "type='submit' class='btn crud-submit btn-info'>Agregar Usuario</button></div>*La contraseña es el correo del empleado";
         $("#INFO_AGREGARUSUARIO").html(textoHTML);
     }
-    
+    var EmpleadoDataG;
+    function agregarUsuarioBtn()
+    {
+        $.ajax({
+            url: '../Controller/AdminController.php?Op=AgregarUsuario',
+            type: 'POST',
+            data: 'ID_EMPLEADO='+idEmpleado+"&USUARIO_NOMBRE="+usuario,
+            beforeSend:function()
+            {
+                $('#loader').show();
+            },
+            success:function(creado)
+            {
+                if(creado==true)
+                {
+                    usuario = $('#NOMBREESCRITURA_AGREGARUSUARIO').val();
+                    EmpleadoDataObj=[];
+                    EmpleadoDataObj['id_empleado']=EmpleadoDataG[3];
+                    EmpleadoDataObj['nombre']=EmpleadoDataG[1];
+                    EmpleadoDataObj['correo']=EmpleadoDataG[0];
+                    EmpleadoDataObj['categoria']=EmpleadoDataG[2];
+
+                    tempData = "<tr id='registro_"+EmpleadoDataG[3]+"'>";
+                    tempData += construirTablaAgregar(EmpleadoDataObj);
+                    tempData += "</tr>";
+                    $('#bodyTableAgregar').append(tempData);
+                    swalSuccess('Usuario Creado');
+                    $('#agregarUsuario .close').click()
+                }
+                else
+                {
+                    swalError('No creado, Error en el servidor');
+                }
+            },
+            error:function(error)
+            {
+                swalError('No creado, Error en el servidor');
+            }
+        });
+    }
+    function swalSuccess(msj)
+    {
+        swal({
+                title: '',
+                text: msj,
+                showCancelButton: false,
+                showConfirmButton: false,
+                type:"success"
+            });
+        setTimeout(function(){swal.close();},1500);
+        $('#loader').hide();
+    }
+
+    function swalError(msj)
+    {
+        swal({
+                title: '',
+                text: msj,
+                showCancelButton: false,
+                showConfirmButton: false,
+                type:"error"
+            });
+        setTimeout(function(){swal.close();$('#agregarUsuario .close').click()},1500);
+        $('#loader').hide();
+    }
+
     function modificarPermisos(id)
     {
         // construirTablaPermisos();

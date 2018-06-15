@@ -139,10 +139,11 @@ class EmpleadoDAO{
 //                    OR LOWER(tbempleados.apellido_materno) like '%$cadena%'
 //                )";
             
-            $query="SELECT tbusuarios.id_usuario, tbusuarios.nombre_usuario,
-		 
-		 tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno,
-		 tbempleados.categoria, tbempleados.correo
+            $query="SELECT tbusuarios.nombre_usuario, tbempleados.id_empleado, 
+            CONCAT (tbempleados.nombre_empleado,' ', tbempleados.apellido_paterno,' ', tbempleados.apellido_materno) 
+            AS nombre,
+		    
+            tbempleados.categoria, tbempleados.correo
 
                 FROM empleados tbempleados
 

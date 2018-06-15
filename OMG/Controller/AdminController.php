@@ -39,6 +39,21 @@ switch ($Op)
 		echo json_encode($lista);
     break;
     
+    case 'AgregarUsuario':
+        $result = $model->InsertarUsuario($_REQUEST["ID_EMPLEADO"],$_REQUEST["NOMBRE_USUARIO"]);
+        echo $result;
+    break;
+
+    case 'ListarUsuario':
+        $lista=$modal->listarUsuario($_REQUEST["ID_EMPLEADO"]);
+        header('Content-type: application/json; charset=utf-8');
+		echo json_encode($lista);
+    break;
+    
+    case '':
+        $lista=$modal->
+    break;
+
     default:
     return false;
     break;
