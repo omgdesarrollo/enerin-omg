@@ -1,12 +1,14 @@
 <?php  
 session_start();
 require_once '../util/Session.php';
-if(isset($_REQUEST["id_documento_entrada"])){
+if(isset($_REQUEST["id_documento_entrada"]) && isset($_REQUEST["folio_entrada"])){
     Session::setSesion("dataGantt",$_REQUEST["id_documento_entrada"]);
-    echo "el seguimiento de entrada linkeado al de doc de entrada y al folio de entrada   ".$dataGantt=Session::getSesion("dataGantt");;
+    Session::setSesion("dataGanttFolio_Entrada",$_REQUEST["folio_entrada"]);
+//    echo "el seguimiento de entrada linkeado al de doc de entrada y al folio de entrada   ".$dataGantt=Session::getSesion("dataGantt");;
+    echo "<h2><center>El folio de entrada es = ".Session::getSesion("dataGanttFolio_Entrada")."</center><h2>";
 }else{
         $dataGantt=Session::getSesion("dataGantt");
-        echo "d   : ".$dataGantt;
+       echo "<h2><center>El folio de entrada es = ".Session::getSesion("dataGanttFolio_Entrada")."</center><h2>";
     }     
 //Session::setSesion("dataGantt",$_REQUEST["id_documento_entrada"]);
   //  Session::setSesion("dataGantt",":(");
@@ -66,12 +68,10 @@ and open the template in the editor.
     
    <!--<script src="../../codebase/ext/dhtmlxgantt_smart_rendering.js"></script>-->
    <script src="../../js/jquery.min.js" type="text/javascript"></script>
+   <script src="../../assets/gantt_5.1.2_com/codebase/sources/ext/dhtmlxgantt_keyboard_navigation.js" type="text/javascript"></script>
    
    <link href="../../assets/gantt_5.1.2_com/codebase/skins/dhtmlxgantt_meadow.css" rel="stylesheet" type="text/css"/>
-    <!--<link rel="stylesheet" href="../../assets/gantt_5.1.2_com/skins/dhtmlxgantt_meadow.css?">-->
-    
-    
-     <!--<link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>-->
+   
     
      <link href="../../assets/gantt_5.1.2_com/samples/common/third-party/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     
@@ -189,6 +189,149 @@ and open the template in the editor.
     
     
   <script type="text/javascript">      
+	(function dynamicTaskType() {
+		var delTaskParent;
+
+		function checkParents(id) {
+			setTaskType(id);
+			var parent = gantt.getParent(id);
+			if (parent != gantt.config.root_id) {
+				checkParents(parent);
+			}
+		}
+
+		function setTaskType(id) {
+			id = id.id ? id.id : id;
+			var task = gantt.getTask(id);
+			var type = gantt.hasChild(task.id) ? gantt.config.types.project : gantt.config.types.task;
+			if (type != task.type) {
+				task.type = type;
+				gantt.updateTask(id);
+			}
+		}
+
+		gantt.attachEvent("onParse", function () {
+			gantt.eachTask(function (task) {
+				setTaskType(task);
+			});
+		});
+
+		gantt.attachEvent("onAfterTaskAdd", function onAfterTaskAdd(id) {
+			gantt.batchUpdate(checkParents(id));
+		});
+
+		gantt.attachEvent("onBeforeTaskDelete", function onBeforeTaskDelete(id, task) {
+//			alert("antes");
+//                       gantt.refreshData();
+                        delTaskParent = gantt.getParent(id);
+                         
+//                        var taskId = gantt.getSelectedId();
+//                        gantt.deleteTask(delTaskParent);
+//                        gantt.deleteTask(delTaskParent);
+			return true;
+		});
+
+		gantt.attachEvent("onAfterTaskDelete", function onAfterTaskDelete(id, task) {
+//			alert("s");
+//alert("des");
+//                    alert("tarea eliminada es "+id);
+                             $.ajax({
+                                url:"../Controller/GanttController.php?Op=EliminarTarea&deleteidtarea="+id,
+                                success:function (res){
+
+                                }
+           
+                              });
+                                 
+                                if (delTaskParent != gantt.config.root_id) {
+				gantt.batchUpdate(checkParents(delTaskParent));
+                                 
+                         }
+//                         window.location.href="GanttView.php";
+		});
+
+	})();      
+      
+      	(function dynamicProgress() {
+
+		function calculateSummaryProgress(task) {
+			if (task.type != gantt.config.types.project)
+				return task.progress;
+			var totalToDo = 0;
+			var totalDone = 0;
+			gantt.eachTask(function (child) {
+				if (child.type != gantt.config.types.project) {
+					totalToDo += child.duration;
+					totalDone += (child.progress || 0) * child.duration;
+				}
+			}, task.id);
+			if (!totalToDo) return 0;
+			else return totalDone / totalToDo;
+		}
+
+		function refreshSummaryProgress(id, submit) {
+			if (!gantt.isTaskExists(id))
+				return;
+
+			var task = gantt.getTask(id);
+			task.progress = calculateSummaryProgress(task);
+
+			if (!submit) {
+				gantt.refreshTask(id);
+			} else {
+				gantt.updateTask(id);
+			}
+
+			if (!submit && gantt.getParent(id) !== gantt.config.root_id) {
+				refreshSummaryProgress(gantt.getParent(id), submit);
+			}
+		}
+
+
+		gantt.attachEvent("onParse", function () {
+                   
+			gantt.eachTask(function (task) {
+//                             alert("e");
+				task.progress = calculateSummaryProgress(task);
+			});
+		});
+
+		gantt.attachEvent("onAfterTaskUpdate", function (id) {
+			refreshSummaryProgress(gantt.getParent(id), true);
+		});
+
+		gantt.attachEvent("onTaskDrag", function (id) {
+			refreshSummaryProgress(gantt.getParent(id), false);
+		});
+		gantt.attachEvent("onAfterTaskAdd", function (id) {
+			refreshSummaryProgress(gantt.getParent(id), true);
+//                         gantt.load("../Controller/GanttController.php?Op=MostrarTareasCompletasPorFolioDeEntrada");
+                          
+//                                var dp = new gantt.dataProcessor("../Controller/GanttController.php?Op=Modificar");
+
+//                                dp.init(gantt);
+//                        gantt.render();
+//                        gantt.refreshData();
+//                         alert("quedo agregado");
+//                          $("#gantt_here").load("GanttView.php  #gantt_here");
+		});
+
+
+		(function () {
+			var idParentBeforeDeleteTask = 0;
+			gantt.attachEvent("onBeforeTaskDelete", function (id) {
+				idParentBeforeDeleteTask = gantt.getParent(id);
+			});
+			gantt.attachEvent("onAfterTaskDelete", function () {
+				refreshSummaryProgress(idParentBeforeDeleteTask, true);
+			});
+		})();
+	})();
+
+      
+ 
+      
+      
      var dataEmpleados=[];
 //     var data
      obtenerEmpleados();
@@ -199,6 +342,8 @@ and open the template in the editor.
         
         gantt.config.scale_height = 50;
         gantt.config.order_branch = true;
+        
+//        gantt.config.branch_loading = true;
 //gantt.config.order_branch_free = true;
 //        para abrir las carpetas por default desde el principio
 
@@ -206,6 +351,9 @@ gantt.templates.task_class = function (start, end, task) {
 		if (task.type == gantt.config.types.project)
 			return "hide_project_progress_drag";
 	};
+
+
+
 
 
 
@@ -263,150 +411,86 @@ gantt.config.order_branch = true;
 gantt.config.order_branch_free = true;
 gantt.config.branch_loading = true;
 gantt.config.fit_tasks = true; 
+gantt.config.work_time = true;
+gantt.config.auto_scheduling = true;
+gantt.config.sort = true;
+
+//gantt.config.readonly = true;
 
 
 gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
     gantt.init("gantt_here");
     gantt.load("../Controller/GanttController.php?Op=MostrarTareasCompletasPorFolioDeEntrada");
- 
+
+
 var dp = new gantt.dataProcessor("../Controller/GanttController.php?Op=Modificar");
+
 dp.init(gantt);
+
 //dp.setTransactionMode("REST");
- console.log(dp);
 
-
-//var resourcesStore = gantt.createDatastore({
-//    name:"resource",
-//    initItem: function(item){
-//        item.id = item.key || gantt.uid();
-//        return item;
-//    }
-//});
-//var tasksStore = gantt.getDatastore("task");
-//gantt.changeTaskId(1, 15);
-
-
-//dp.attachEvent("onAfterUpdate", function(id, action, tid, response){
-//    if(action == "error"){
-//        // do something here
-//        alert("error al cargar los datos del server");
-//    }
-//});
-//dp.setTransactionMode({
-//   mode: "REST",
-//   header:{
-//       "Authorization": "Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b"
-//    }
-//});
-//    dhtmlxGantt se puede usar sin gantt.dataProcessor. En ese caso, deberá supervisar todos los cambios realizados 
-//    en el Gantt manualmente y luego enviarlos a su back-end. Aquí está la lista de eventos que deberá escuchar:
-//    gantt.attachEvent('onAfterTaskAdd', function(id, task) {
-//        
-//        alert("acaba de crear la tarea");
-//  taskService.create(task)
-//    .then(function(result){
-//      gantt.changeTaskId(id, result.databaseId);
-//    });
-//});
-//gantt.attachEvent('onAfterTaskUpdate', function(id, task) {
-//    alert("e");
-//  taskService.update(task);
-//});
-//gantt.attachEvent('onAfterTaskDelete', function(id) {
-//  taskService.delete(id);
-//});
-// 
-//// links
-//gantt.attachEvent('onAfterLinkAdd', function(id, link) {
-//  linkService.create(link)
-//    .then(function(result){
-//      gantt.changeLinkId(id, result.databaseId);
-//    });
-//});
-// 
-//gantt.attachEvent('onAfterLinkUpdate', function(id, link) {
-//  linkService.update(task);
-//});
-// 
-//gantt.attachEvent('onAfterLinkDelete', function(id, link) {
-//  linkService.delete(id);
-//});
-
-
-
-//termina dondse se puede escuchar sin dataprocessor
-
-
+    console.log(dp);
+    
+    //para no actualizar en tiempo real 
+//dp.autoUpdate=false;
+//dp.action_param="status";
 
 
     
-    	gantt.attachEvent("onAfterTaskDrag", function (id, mode) {
-		var task = gantt.getTask(id);
-		if (mode == gantt.config.drag_mode.progress) {
-			var pr = Math.floor(task.progress * 100 * 10) / 10;
-//			gantt.message(task.text + " is now " + pr + "% completed!");
-		} else {
-			var convert = gantt.date.date_to_str("%H:%i, %F %j");
-			var s = convert(task.start_date);
-			var e = convert(task.end_date);
-//			gantt.message(task.text + " starts at " + s + " and ends at " + e);
-		}
-	});
-    
-//    	gantt.attachEvent("onBeforeTaskChanged", function (id, mode, old_event) {
+//    	gantt.attachEvent("onAfterTaskDrag", function (id, mode) {
 //		var task = gantt.getTask(id);
 //		if (mode == gantt.config.drag_mode.progress) {
-//			if (task.progress < old_event.progress) {
-//				gantt.message(task.text + " progress can't be undone!");
-//				return false;
-//			}
+//			var pr = Math.floor(task.progress * 100 * 10) / 10;
+////			gantt.message(task.text + " is now " + pr + "% completed!");
+//		} else {
+//			var convert = gantt.date.date_to_str("%H:%i, %F %j");
+//			var s = convert(task.start_date);
+//			var e = convert(task.end_date);
+////			gantt.message(task.text + " starts at " + s + " and ends at " + e);
 //		}
+//	});
+    
+//    gantt.attachEvent("onBeforeTaskDrag", function (id, mode) {
+//		var task = gantt.getTask(id);
+//		var message = "la Tarea "+task.text + " ";
+//
+//		if (mode == gantt.config.drag_mode.progress) {
+//			message += "su progreso fue actualizado";
+//		} else {
+//			message += "se ha ";
+//			if (mode == gantt.config.drag_mode.move)
+//				message += "movido";
+//			else if (mode == gantt.config.drag_mode.resize)
+//				message += "reacomodado";
+//		}
+//
+//		gantt.message(message);
 //		return true;
 //	});
     
-    
-    
-    gantt.attachEvent("onBeforeTaskDrag", function (id, mode) {
-		var task = gantt.getTask(id);
-		var message = task.text + " ";
-
-		if (mode == gantt.config.drag_mode.progress) {
-			message += "progress is being updated";
-		} else {
-			message += "is being ";
-			if (mode == gantt.config.drag_mode.move)
-				message += "moved";
-			else if (mode == gantt.config.drag_mode.resize)
-				message += "resized";
-		}
-
-//		gantt.message(message);
-		return true;
-	});
-    
-    gantt.templates.progress_text = function (start, end, task) {
-		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
-	};
-    gantt.templates.task_class = function (start, end, task) {
-		if (task.type == gantt.config.types.project)
-			return "hide_project_progress_drag";
-	};
+//    gantt.templates.progress_text = function (start, end, task) {
+//		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
+//	};
+//    gantt.templates.task_class = function (start, end, task) {
+//		if (task.type == gantt.config.types.project)
+//			return "hide_project_progress_drag";
+//	};
 
  
-    gantt.attachEvent("onTaskDrag", function (id) {
-//        alert("d");
-			refreshSummaryProgress(gantt.getParent(id), false);
-		});
+//    gantt.attachEvent("onTaskDrag", function (id) {
+////        alert("d");
+//			refreshSummaryProgress(gantt.getParent(id), false);
+//		});
                 
-             gantt.attachEvent("onTaskDrag", function(id, mode, task, original){
-  	var minimal_date = gantt.getState().min_date// + 86400;
-    minimal_date = gantt.date.add(minimal_date, 1, 'day');
- 	if (task.start_date < minimal_date) gantt.refreshData();
-  
-  	var maximal_date = gantt.getState().max_date// + 86400;
-    maximal_date = gantt.date.add(maximal_date, 1, 'day');
- 	if (task.end_date < maximal_date) gantt.refreshData();  
-});
+//             gantt.attachEvent("onTaskDrag", function(id, mode, task, original){
+//  	var minimal_date = gantt.getState().min_date// + 86400;
+//    minimal_date = gantt.date.add(minimal_date, 1, 'day');
+// 	if (task.start_date < minimal_date) gantt.refreshData();
+//  
+//  	var maximal_date = gantt.getState().max_date// + 86400;
+//    maximal_date = gantt.date.add(maximal_date, 1, 'day');
+// 	if (task.end_date < maximal_date) gantt.refreshData();  
+//});
 //             gantt.attachEvent("onAfterAutoSchedule",function(taskId, updatedTasks){
 //                 alert("");
 //    // any custom logic here
@@ -414,66 +498,69 @@ dp.init(gantt);
              
              
              
-        function refreshSummaryProgress(id, submit) {
-//            alert("le has picado para avanzar");
-			if (!gantt.isTaskExists(id))
-				return;
-
-			var task = gantt.getTask(id);
-			task.progress = calculateSummaryProgress(task);
-
-			if (!submit) {
-				gantt.refreshTask(id);
-			} else {
-				gantt.updateTask(id);
-			}
-
-			if (!submit && gantt.getParent(id) !== gantt.config.root_id) {
-				refreshSummaryProgress(gantt.getParent(id), submit);
-			}
-		}
-                
-                function calculateSummaryProgress(task) {
-//                    alert("calcula el progreso del padre");
-			if (task.type != gantt.config.types.project)
-				return task.progress;
-			var totalToDo = 0;
-			var totalDone = 0;
-			gantt.eachTask(function (child) {
-				if (child.type != gantt.config.types.project) {
-					totalToDo += child.duration;
-					totalDone += (child.progress || 0) * child.duration;
-				}
-			}, task.id);
-			if (!totalToDo) return 0;
-			else return totalDone / totalToDo;
-		}
+//        function refreshSummaryProgress(id, submit) {
+////            alert("le has picado para avanzar");
+//			if (!gantt.isTaskExists(id))
+//				return;
+//
+//			var task = gantt.getTask(id);
+//			task.progress = calculateSummaryProgress(task);
+//
+//			if (!submit) {
+//				gantt.refreshTask(id);
+//			} else {
+//				gantt.updateTask(id);
+//			}
+//
+//			if (!submit && gantt.getParent(id) !== gantt.config.root_id) {
+//				refreshSummaryProgress(gantt.getParent(id), submit);
+//			}
+//		}
                 
                 
-                function checkParents(id) {
-			setTaskType(id);
-			var parent = gantt.getParent(id);
-			if (parent != gantt.config.root_id) {
-				checkParents(parent);
-			}
-		}
-                function setTaskType(id) {
-			id = id.id ? id.id : id;
-			var task = gantt.getTask(id);
-			var type = gantt.hasChild(task.id) ? gantt.config.types.project : gantt.config.types.task;
-			if (type != task.type) {
-				task.type = type;
-//                                alert("");
-//cuando crea una tarea
-				gantt.updateTask(id);
-			}
-		}
+//                function calculateSummaryProgress(task) {
+////                    alert("calcula el progreso del padre");
+//			if (task.type != gantt.config.types.project)
+//				return task.progress;
+//			var totalToDo = 0;
+//			var totalDone = 0;
+//			gantt.eachTask(function (child) {
+//				if (child.type != gantt.config.types.project) {
+//					totalToDo += child.duration;
+//					totalDone += (child.progress || 0) * child.duration;
+//				}
+//			}, task.id);
+//			if (!totalToDo) return 0;
+//			else return totalDone / totalToDo;
+//		}
+                
+                
+//                function checkParents(id) {
+//			setTaskType(id);
+//			var parent = gantt.getParent(id);
+//			if (parent != gantt.config.root_id) {
+//				checkParents(parent);
+//			}
+//		}
+//                function setTaskType(id) {
+//			id = id.id ? id.id : id;
+//			var task = gantt.getTask(id);
+//			var type = gantt.hasChild(task.id) ? gantt.config.types.project : gantt.config.types.task;
+//			if (type != task.type) {
+//				task.type = type;
+////                                alert("");
+//                                console.log("jh");
+////cuando crea una tarea
+//				gantt.updateTask(id);
+////                                dp.init(gantt);
+////                                gantt.refreshData();
+////                                gantt.getTask(id).readonly = true;
+////                                gantt.load("../Controller/GanttController.php?Op=MostrarTareasCompletasPorFolioDeEntrada");
+////                                gantt.refreshTask(id);
+//			}
+//		}
 //    gantt.parse(tasksA);
     
-    
-    
-    
-     //gantt2 = Gantt.getGanttInstance();
     
    
     
@@ -484,60 +571,22 @@ dp.init(gantt);
            data:"",
            async:false,
            success:function (res){
-//               alert("se hizo ");
                
                $.each(res,function(index,value){
-//                var list={key:value.id_empleado,value:value.nombre_empleado};   
-//                   alert("v  "+value.id_empleado+"  y el nombre : "+value.nombre_empleado);
-//                   list.push("value");
-//alert("d"+list.key);
                    dataEmpleados.push({key:value.id_empleado,label:value.nombre_empleado});
-//                   console.log("d  "+dataEmpleados.);
-               });
+             });
            }
            
         });
-//        $.each(dataEmpleados,function(index,value){
-////                var list={key:value.id_empleado,value:value.nombre_empleado};   
-////                   alert("v  "+value.id_empleado+"  y el nombre : "+value.nombre_empleado);
-////                   list.push("value");
-////alert("d"+list.key);
-////                   dataEmpleados.push({key:value.id_empleado,value:value.nombre_empleado});
-//                   console.log("d1  "+value.value);
-//               });
-        
       
         
     }
-//         $.each(dataEmpleados,function(index,value){
-//             alert("v  :"+value.key);
-////                var list={"key":value.id_empleado,"value":value.nombre_empleado};   
-////                   alert("v  "+value.id_empleado+"  y el nombre : "+value.nombre_empleado);
-////                   list.push("value");
-////                   dataEmpleados.push(list);
-//               });
-        
-        
-        
-        
-        
-//          $.ajax({
-//                                url: "../Controller/AsignacionTemasRequisitosController.php?Op=Modificar",
-//				type: "POST",
-//				data:'column='+column+'&editval='+val+'&id='+id_asignacion_tema_requisito,
-//				success: function(data){
-//                                    //alert("SE hizo");
-//					//$(editableObj).css("background","#FDFDFD");
-//                                        consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
-//                                        consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
-//                                        //alert("entron ");
-//                                        refresh();                                        
-//                                        //window.location.href="AsignacionTemasRequisitosView.php";
-//                                       
-//				}   
-//                           });
-        
- 
+
+
+    
+    gantt.templates.progress_text = function (start, end, task) {
+		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
+	};
     
     $(function (){
         
@@ -550,12 +599,12 @@ dp.init(gantt);
 //            gantt.deleteTask(task_id);
 //    });
 //});
-     gantt.attachEvent("onParse", function () {
-//         alert("le has picado ");
-			gantt.eachTask(function (task) {
-				setTaskType(task);
-			});
-		}); 
+//     gantt.attachEvent("onParse", function () {
+////         alert("le has picado ");
+//			gantt.eachTask(function (task) {
+//				setTaskType(task);
+//			});
+//		}); 
       
     });
     

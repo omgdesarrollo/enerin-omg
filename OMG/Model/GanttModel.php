@@ -19,8 +19,8 @@ class GanttModel {
         }
     }
     
-    public function insertarTareasGantt($data){
-//        echo "   entro";
+    public function insertarTareasGantt($data,$id_seguimiento_que_lleva_al_folio_de_entrada){
+       
         try{
             $inserccion;
             $lista_tareas_verificadas;
@@ -34,20 +34,25 @@ class GanttModel {
                                 if($value2["cantidad"]==0){
                                     if($value["parent"]!=""){
                                          $value["progress"]=0;
+                                         $value["id_empleado"]=$value["user"];
+                                         $value["id_seguimiento_entrada"]=$id_seguimiento_que_lleva_al_folio_de_entrada;
                                          $dao->insertarTareasGantt($value);
+                                         $dao->insertarTareasConFolioEntrada_de_seguimiento_entrada($value);
                                     }
                                 }
                                 else{
-//                                    echo "que tiene  ".$value["!nativeeditor_status"];
+                                    
                                      if($value["!nativeeditor_status"]=='deleted'){
-//                                            echo "entro en eliminar  ".$value["id"];
+                                         echo "entro a eliminar la tarea";
                                          $dao->deleteTareas($value);
+                                         $dao->deleteTareasDe_Gantt_Seguimiento_Entrada($value);
                                             
                                     }else{
+                                        
                                          $dao->updateTareas($value); 
-//                                         echo "entro actualizar";
+                                         $dao->updateTareasId_EmpleadoXIdGantt_En_Tabla_Seguimiento_entrada($value);
                                     }
-                            }
+                                }
                         }
                     }
                 }
@@ -91,6 +96,17 @@ class GanttModel {
         {
             throw $ex;
             return false;
+        }
+    }
+    
+    
+    public function deleteTareaajax($value){
+        try{
+            $dao= new GanttDao();
+            $dao->deleteTareasAjax($value);
+            
+        } catch (Exception $ex) {
+
         }
     }
     
