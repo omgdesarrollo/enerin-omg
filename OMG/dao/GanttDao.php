@@ -8,18 +8,12 @@ class GanttDao {
     
     public function obtenerTareasCompletasPorFolioEntrada($folio_entrada){
         try
-        {
-            $query="SELECT tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno,
-                           tbgantt_tasks.text, tbgantt_tasks.start_date, tbgantt_tasks.duration, tbgantt_tasks.progress,tbgantt_tasks.parent  
-
+        { 
+           $query="SELECT tbempleados.id_empleado user, tbgantt_tasks.id, tbgantt_tasks.text, tbgantt_tasks.start_date, tbgantt_tasks.duration, tbgantt_tasks.progress,tbgantt_tasks.parent  
                     FROM gantt_seguimiento_entrada tbgantt_seguimiento_entrada
-
-                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbgantt_seguimiento_entrada.id_empleado
-
                     JOIN gantt_tasks tbgantt_tasks ON tbgantt_tasks.id=tbgantt_seguimiento_entrada.id_gantt
-
-                    WHERE tbgantt_seguimiento_entrada.id_seguimiento_entrada=$folio_entrada"; 
-           
+                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbgantt_seguimiento_entrada.id_empleado
+                     WHERE tbgantt_seguimiento_entrada.id_seguimiento_entrada=$folio_entrada";
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             
@@ -34,8 +28,7 @@ class GanttDao {
     
     public function insertarTareasGantt($value){
         try{
-//            $query="INSERT INTO gantt_tasks(gantt_tasks.id,gantt_tasks.text,gantt_tasks.start_date,gantt_tasks.duration,gantt_tasks.progress,gantt_tasks.parent)
-            $query="INSERT INTO gantt_tasks(gantt_tasks.id,gantt_tasks.text,gantt_tasks.start_date,duration,progress,parent) "
+           $query="INSERT INTO gantt_tasks(gantt_tasks.id,gantt_tasks.text,gantt_tasks.start_date,duration,progress,parent) "
                     . "VALUES('".$value["id"]."','".$value["text"]."','".$value["start_date"]."','".$value["duration"]."','".$value["progress"]."','".$value["parent"]."');";
             echo "d  ".$query;
             $db= AccesoDB::getInstancia();
@@ -46,7 +39,29 @@ class GanttDao {
             throw $ex;
         }
     }
-    
+    public function insertarTareasConFolioEntrada_de_seguimiento_entrada($value){
+        try{
+            $query="INSERT INTO gantt_seguimiento_entrada(gantt_seguimiento_entrada.ID_GANTT,gantt_seguimiento_entrada.id_seguimiento_entrada,gantt_seguimiento_entrada.id_empleado) "
+                    . "VALUES('".$value["id"]."','".$value["id_seguimiento_entrada"]."','".$value["id_empleado"]."');";
+//            echo "query de tareas  ".$query;
+            
+            $db= AccesoDB::getInstancia();
+            $db->executeQueryUpdate($query);
+        } catch (Exception $ex) {
+            throw  $ex;
+        }
+    }
+    //esta funcion actualiza en la tabla llamada gantt_seguimiento_entrada por id gantt
+    public function updateTareasId_EmpleadoXIdGantt_En_Tabla_Seguimiento_entrada($value){
+        try{
+            
+        $query="UPDATE gantt_seguimiento_entrada set gantt_seguimiento_entrada.id_empleado='".$value["user"]."' where gantt_seguimiento_entrada.id_gantt='".$value['id']."'";
+        $db= AccesoDB::getInstancia();
+        $db->executeQueryUpdate($query);
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
     public function verificarTareaExiste($value){
         try{
             $query="select count(*) as cantidad from gantt_tasks tble_gantt_task  where tble_gantt_task.id='".$value["id"]."'";
@@ -83,8 +98,26 @@ class GanttDao {
             throw  $ex;
         }
     }
+//    public function deleteTareasHijas($value){
+//        try{
+//            $query="delete from  gantt_tasks  where gantt_tasks.parent='".$value["id"]."'";
+//            $db= AccesoDB::getInstancia();
+//            $list=$db->executeQueryUpdate($query);
+//        } catch (Exception $ex) {
+//            throw $ex;
+//        }
+//    }
     
     
+    public function deleteTareasDe_Gantt_Seguimiento_Entrada($value){
+        try{
+            $query="delete from gantt_seguimiento_entrada where gantt_seguimiento_entrada.id_gantt='".$value["id"]."'";
+            $db= AccesoDB::getInstancia();
+            $list=$db->executeQueryUpdate($query);
+        } catch (Exception $ex) {
+            throw  $ex;
+        }
+    }
     public function obtenerFolioEntradaSeguimiento ($ID_SEGUIMIENTO)
     {
         try
@@ -112,6 +145,17 @@ class GanttDao {
             return $ex;
         }
     }
+    public function deleteTareasAjax($value){
+        try{
+             $query="delete from  gantt_tasks  where gantt_tasks.id='".$value["id"]."'";
+            $db= AccesoDB::getInstancia();
+          $db->executeQueryUpdate($query);
+            
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+    
     
     
 }
