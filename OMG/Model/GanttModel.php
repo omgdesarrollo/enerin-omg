@@ -100,13 +100,29 @@ class GanttModel {
     }
     
     
-    public function deleteTareaajax($value){
+    public function deleteTareaajax($value)
+    {
         try{
             $dao= new GanttDao();
             $dao->deleteTareasAjax($value);
             
         } catch (Exception $ex) {
 
+        }
+    }
+    
+    public function calculoSumaParents($value)
+    {
+        try
+        {
+            $dao=new GanttDao();
+            $rec= $dao->calculoSumaParents($value);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
         }
     }
     
