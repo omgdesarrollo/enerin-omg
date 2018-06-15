@@ -70,6 +70,7 @@ class AdminDAO{
             $db= AccesoDB::getInstancia();
             $lista = $db->executeQueryUpdate($query);
             
+            echo $query;
             return $lista;
             
         } catch (Exception $ex)
