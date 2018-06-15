@@ -41,7 +41,8 @@ switch ($Op)
     
     case 'AgregarUsuario':
         $result = $model->InsertarUsuario($_REQUEST["ID_EMPLEADO"],$_REQUEST["NOMBRE_USUARIO"]);
-        echo $result;
+        header('Content-type: application/json; charset=utf-8');
+		echo json_encode($result);
     break;
 
     case 'ListarUsuario':
@@ -49,9 +50,9 @@ switch ($Op)
         header('Content-type: application/json; charset=utf-8');
 		echo json_encode($lista);
     break;
-    
+
     case '':
-        $lista=$modal->
+        $lista=$modal;
     break;
 
     default:
