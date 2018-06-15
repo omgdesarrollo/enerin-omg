@@ -52,6 +52,34 @@ class AdminDAO{
     }
     
     
+    public function insertarUsuario($ID_EMPLEADO, $NOMBRE_USUARIO)
+    {
+        try
+        {
+            $query_obtenerMaximo_mas_uno="SELECT max(id_usuario)+1 as id_usuario from usuarios";
+            $db_obtenerMaximo_mas_uno=AccesoDB::getInstancia();
+            $lista_id_nuevo_autoincrementado=$db_obtenerMaximo_mas_uno->executeQuery($query_obtenerMaximo_mas_uno);
+            $id_nuevo=0;
+            foreach ($lista_id_nuevo_autoincrementado as $value) {
+               $id_nuevo= $value["id_usuario"];
+            }
+            
+            $query ="INSERT INTO usuarios (id_usuario, nombre_usuario, contra, id_empleado) VALUES($id_nuevo,$NOMBRE_USUARIO,
+                    (SELECT tbempleados.correo FROM empleados tbempleados
+                    WHERE tbempleados.id_empleado=$ID_EMPLEADO),$ID_EMPLEADO)";
+            
+            $db= AccesoDB::getInstancia();
+            $lista = $db->executeQuery($query);
+            
+            return $lista;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
     
 }
 

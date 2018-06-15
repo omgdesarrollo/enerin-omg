@@ -35,8 +35,23 @@ class AdminModel{
         }
     }
     
+    
+    public function insertarUsuario($ID_EMPLEADO, $NOMBRE_USUARIO)
+    {
+        try
+        {
+            $dao=new AdminDAO();
+            $rec= $dao->insertarUsuario($ID_EMPLEADO, $NOMBRE_USUARIO);
+            
+            return$rec;
+        } catch (Exception $ex)
+        {
+        throw $ex;
+        return false;
+        }
+    }
+    
 }
-
 
 ?>
 
