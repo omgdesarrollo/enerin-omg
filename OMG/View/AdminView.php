@@ -374,42 +374,49 @@ $Usuario=  Session::getSesion("user");
     var EmpleadoDataG;
     function agregarUsuarioBtn()
     {
-        $.ajax({
-            url: '../Controller/AdminController.php?Op=AgregarUsuario',
-            type: 'POST',
-            data: 'ID_EMPLEADO='+idEmpleado+"&USUARIO_NOMBRE="+usuario,
-            beforeSend:function()
-            {
-                $('#loader').show();
-            },
-            success:function(creado)
-            {
-                if(creado==true)
+        usuario = $('#NOMBREESCRITURA_AGREGARUSUARIO').val();
+        if(usuario!="")
+        {
+            $.ajax({
+                url: '../Controller/AdminController.php?Op=AgregarUsuario',
+                type: 'POST',
+                data: 'ID_EMPLEADO='+EmpleadoDataG[3]+"&NOMBRE_USUARIO="+usuario,
+                beforeSend:function()
                 {
-                    usuario = $('#NOMBREESCRITURA_AGREGARUSUARIO').val();
-                    EmpleadoDataObj=[];
-                    EmpleadoDataObj['id_empleado']=EmpleadoDataG[3];
-                    EmpleadoDataObj['nombre']=EmpleadoDataG[1];
-                    EmpleadoDataObj['correo']=EmpleadoDataG[0];
-                    EmpleadoDataObj['categoria']=EmpleadoDataG[2];
+                    $('#loader').show();
+                },
+                success:function(creado)
+                {
+                    if(creado==true)
+                    {
+                        EmpleadoDataObj=[];
+                        EmpleadoDataObj['id_empleado']=EmpleadoDataG[3];
+                        EmpleadoDataObj['nombre']=EmpleadoDataG[1];
+                        EmpleadoDataObj['correo']=EmpleadoDataG[0];
+                        EmpleadoDataObj['categoria']=EmpleadoDataG[2];
 
-                    tempData = "<tr id='registro_"+EmpleadoDataG[3]+"'>";
-                    tempData += construirTablaAgregar(EmpleadoDataObj);
-                    tempData += "</tr>";
-                    $('#bodyTableAgregar').append(tempData);
-                    swalSuccess('Usuario Creado');
-                    $('#agregarUsuario .close').click()
-                }
-                else
+                        tempData = "<tr id='registro_"+EmpleadoDataG[3]+"'>";
+                        tempData += construirTablaAgregar(EmpleadoDataObj);
+                        tempData += "</tr>";
+                        $('#bodyTableAgregar').append(tempData);
+                        swalSuccess('Usuario Creado');
+                        $('#agregarUsuario .close').click()
+                    }
+                    else
+                    {
+                        swalError('No creado, Error en el servidor');
+                    }
+                },
+                error:function(error)
                 {
                     swalError('No creado, Error en el servidor');
                 }
-            },
-            error:function(error)
-            {
-                swalError('No creado, Error en el servidor');
-            }
-        });
+            });
+        }
+        else
+        {
+            //mandar alertas que no este vacio usuario
+        }
     }
     function swalSuccess(msj)
     {
