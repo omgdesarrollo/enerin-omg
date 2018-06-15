@@ -200,24 +200,25 @@ $Usuario=  Session::getSesion("user");
 
                     <div class="modal-body">
                         <div class="form-group">
-                            <label id="NOMBRE_AGREGARUSUARIO" class="control-label">Empleado/Usuario: </label>
+                            <label class="control-label">Empleado/Usuario: </label>
                             <div class="dropdown">
-                                <input style="width:60%" type="text" class="dropdown-toggle" id="NOMBREESCRITURA_AGREGARUSUARIO" data-toggle="dropdown" onkeyup="getClavesDocumento(this)"/>
+                                <input style="width:60%" type="text" class="dropdown-toggle" id="NOMBREESCRITURA_AGREGARUSUARIO" data-toggle="dropdown" onkeyup="buscarEmpleados(this)"/>
                                     <ul style="width:60%;cursor:pointer;" class="dropdown-menu" id="dropdownEvent" role="menu" 
-                                    aria-labelledby="menu1"></ul>
+                                    aria-labelledby="menu1"></ul>* Este sera el nombre de usuario
                             </div>
                         </div>
+                        <div id="INFO_AGREGARUSUARIO"></div>
                         <div class="form-group">
-                            Nombre: <label id="NOMBRE_AGREGARUSUARIO" class="control-label"></label>
+                            Nombre:
                         </div>
                         <div class="form-group">
-                            Correo: <label id="CORREO_AGREGARUSUARIO" class="control-label"></label>
+                            Correo:
                         </div>
                         <div class="form-group">
-                            Categoria: <label id="CATEGORIA_AGREGARUSUARIO" class="control-label"></label>
+                            Categoria:
                         </div>
                         <div class="form-group" method="post">
-                            <button type="submit" id="BTN_AGREGARUSUARIO" class="btn crud-submit btn-info">Agregar Usuario</button>
+                            <button type="submit" class="btn crud-submit btn-info">Agregar Usuario</button>
                         </div>
                     </div>
                 </div>
@@ -235,23 +236,6 @@ $Usuario=  Session::getSesion("user");
                     </div>
 
                     <div class="modal-body">
-                        <!-- <div class="form-group">
-                            <label id="NOMBRE_AGREGARUSUARIO" class="control-label">Empleado/Usuario: </label>
-                            <div class="dropdown">
-                                <input style="width:60%" type="text" class="dropdown-toggle" id="NOMBREESCRITURA_AGREGARUSUARIO" data-toggle="dropdown" onkeyup="getClavesDocumento(this)"/>
-                                    <ul style="width:60%;cursor:pointer;" class="dropdown-menu" id="dropdownEvent" role="menu" 
-                                    aria-labelledby="menu1"></ul>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            Nombre: <label id="NOMBRE_AGREGARUSUARIO" class="control-label"></label>
-                        </div>
-                        <div class="form-group">
-                            Correo: <label id="CORREO_AGREGARUSUARIO" class="control-label"></label>
-                        </div>
-                        <div class="form-group">
-                            Categoria: <label id="CATEGORIA_AGREGARUSUARIO" class="control-label"></label>
-                        </div> -->
                         <div class="form-group">
                             <div class="table-container">
                                 <table style="width:100%" class="tbl-qa">
@@ -361,8 +345,9 @@ $Usuario=  Session::getSesion("user");
                     $.each(usuarios,function(index,value)
                     {
                         nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
+                        datos = value.correo+"^_^"+nombre+"^_^"+value.categoria;
                         tempData += "<li role='presentation'><a role='menuitem' tabindex='-1'";
-                        tempData += "onClick='seleccionarItem(\""+value.correo+"\",\""+ nombre +"\")'>";
+                        tempData += "onClick='seleccionarItem(\""+datos+"\")'>";
                         tempData += nombre+"</a></li>";
                     });
                     $("#dropdownEvent").html(tempData);
@@ -371,15 +356,22 @@ $Usuario=  Session::getSesion("user");
         }
     }
 
-    function seleccionarItem(correo,nombre)
+    function seleccionarItem(usuarioDatos)
     {
-        usuario = correo.split("@");
-        $('#NOMBREESCRITURA_AGREGARUSUARIO').val(usuario[0]);
+        datos = usuarioDatos.split("^_^");
+        usuario = datos[0].split("@");
+        console.log(datos);
+        textoHTML = "<div class='form-group'>Nombre: <label class='control-label'>"+datos[1]+"</label></div>";
+        textoHTML += "<div class='form-group'>Correo: <label class='control-label'>"+datos[0]+"</label></div>";
+        textoHTML += "<div class='form-group'>Categoria: <label class='control-label'>"+datos[2]+"</label></div>";
+        textoHTML += "<div class='form-group' method='post'><button onClick='btn_agregarUsuario()'";
+        textoHTML += "type='submit' class='btn crud-submit btn-info'>Agregar Usuario</button></div>";
+        $("#INFO_AGREGARUSUARIO").html(textoHTML);
     }
     
     function modificarPermisos(id)
     {
-        construirTablaPermisos();
+        // construirTablaPermisos();
         $.ajax({
             url: '../Controller/AdminController.php?Op=ListarPermisos',
             type:'GET',
@@ -415,7 +407,7 @@ $Usuario=  Session::getSesion("user");
     function construirTablaPermisosDatos(value)
     {
         tempData = "<tr>";
-        tempData += "<td rowspan='2'>"Catalago;
+        tempData += "<td rowspan='2'>Catalago";
         tempData += "</td>";
         tempData += "</tr>";
         return tempData;

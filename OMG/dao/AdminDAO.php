@@ -3,7 +3,7 @@ require_once '../ds/AccesoDB.php';
 
 class AdminDAO{
     
-    public function listarUsuarios ()
+    public function listarUsuarios()
     {
         try
         {
