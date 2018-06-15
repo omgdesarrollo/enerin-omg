@@ -130,14 +130,31 @@ class EmpleadoDAO{
     {
         try
         {
-            $query = "SELECT tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno, tbempleados.correo, tbempleados.categoria 
-            FROM empleados tbempleados 
-            WHERE tbempleados.id_empleado != 0
-            AND (
-                    LOWER(tbempleados.nombre_empleado) like '%$cadena%'
-                    OR LOWER(tbempleados.apellido_paterno) like '%$cadena%' 
-                    OR LOWER(tbempleados.apellido_materno) like '%$cadena%'
-                )";
+//            $query = "SELECT tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno, tbempleados.correo, tbempleados.categoria 
+//            FROM empleados tbempleados 
+//            WHERE tbempleados.id_empleado != 0
+//            AND (
+//                    LOWER(tbempleados.nombre_empleado) like '%$cadena%'
+//                    OR LOWER(tbempleados.apellido_paterno) like '%$cadena%' 
+//                    OR LOWER(tbempleados.apellido_materno) like '%$cadena%'
+//                )";
+            
+            $query="SELECT tbusuarios.id_usuario, tbusuarios.nombre_usuario,
+		 
+		 tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno,
+		 tbempleados.categoria, tbempleados.correo
+
+                FROM empleados tbempleados
+
+                LEFT JOIN usuarios tbusuarios ON tbempleados.id_empleado=tbusuarios.id_empleado
+                
+                WHERE tbusuarios.id_empleado IS NULL AND tbempleados.id_empleado != 0
+
+                AND (
+                        LOWER(tbempleados.nombre_empleado) like '%$cadena%'
+                        OR LOWER(tbempleados.apellido_paterno) like '%$cadena%' 
+                        OR LOWER(tbempleados.apellido_materno) like '%$cadena%'
+                   )";
 
             $db = AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
