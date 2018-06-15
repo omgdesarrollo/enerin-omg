@@ -67,8 +67,9 @@ class AdminDAO{
                     WHERE tbempleados.id_empleado=$ID_EMPLEADO),$ID_EMPLEADO)";
             
             $db= AccesoDB::getInstancia();
-            $lista = $db->executeQuery($query);
+            $lista = $db->executeQueryUpdate($query);
             
+            echo $query;
             return $lista;
             
         } catch (Exception $ex)
