@@ -1,10 +1,15 @@
 <?php  
 session_start();
 require_once '../util/Session.php';
-if(isset($_REQUEST["id_seguimiento_entrada"]))
-    Session::setSesion("dataGantt",$_REQUEST["id_seguimiento_entrada"]);
-else
-    Session::setSesion("dataGantt",":(");
+if(isset($_REQUEST["id_documento_entrada"])){
+    Session::setSesion("dataGantt",$_REQUEST["id_documento_entrada"]);
+    echo "el seguimiento de entrada linkeado al de doc de entrada y al folio de entrada   ".$dataGantt=Session::getSesion("dataGantt");;
+}else{
+        $dataGantt=Session::getSesion("dataGantt");
+        echo "d   : ".$dataGantt;
+    }     
+//Session::setSesion("dataGantt",$_REQUEST["id_documento_entrada"]);
+  //  Session::setSesion("dataGantt",":(");
 ?>
 
 
@@ -138,13 +143,9 @@ and open the template in the editor.
   </form>
         
         <?php  
-        if($_REQUEST["id_seguimiento_entrada"]==""){
-            echo "no tiene folio de entrada  ";
-        }else
-        {
-            
-        echo "el folio de entrada ".$_REQUEST["id_seguimiento_entrada"]; 
-        } ?>
+        
+//        echo"e  ".Session::getSesion("dataGantt");
+        ?>
         
         
         <input value="Exportar a PDF"  class="btn btn-info" type="button" onclick="gantt.exportToPDF()" style="margin:20px;">
