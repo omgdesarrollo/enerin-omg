@@ -114,6 +114,26 @@ class GanttDao {
     }
     
     
+    public function calculoSumaParents($ID_SEGUIMIENTO)
+    {
+        try
+        {
+           $query="";
+           
+           
+           $db= AccesoDB::getInstancia();
+           $list= $db->executeQueryUpdate($query);
+           
+           return $list;
+           
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
+    
 }
 
 ?>
