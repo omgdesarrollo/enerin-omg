@@ -375,7 +375,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 </td>
                                 
                                 <!--<td contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php // echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php // echo $filas["documento"]; ?></td>-->
-                                <td ><button class="btn btn-success" onClick="cargadePrograma('<?php echo $filas["id_documento_entrada"]; ?>')">Registrar</button></td>
+                                <td ><button class="btn btn-success" onClick="cargadePrograma('<?php echo $filas["id_documento_entrada"]; ?>','<?php echo $filas["folio_entrada"] ?>')">Registrar</button></td>
                                 
 			  </tr>
                           
@@ -604,9 +604,9 @@ require_once 'EncabezadoUsuarioView.php';
     
                 
                 
-    function cargadePrograma(foliodeentrada){
+    function cargadePrograma(id_documento_entrada,folio_entrada){
 //        alert("le has picado al folio de entrada  "+foliodeentrada);
-        window.location.href=" GanttView.php?id_documento_entrada="+foliodeentrada;
+        window.location.href=" GanttView.php?id_documento_entrada="+id_documento_entrada+"&folio_entrada="+folio_entrada;
 //   window.location.replace("http://sitioweb.com");        
     }
     

@@ -43,9 +43,8 @@ switch ($Op) {
             echo json_encode($Lista);
             break;
     	
-        case 'MostrarTareasCompletasPorFolioDeEntrada':
-            
-        $Lista=$modelGantt->obtenerTareasCompletasPorFolioEntrada(Session::getSesion("dataGantt"));
+        case 'MostrarTareasCompletasPorFolioDeEntrada':   
+            $Lista=$modelGantt->obtenerTareasCompletasPorFolioEntrada(Session::getSesion("dataGantt"));
             header('Content-type: application/json; charset=utf-8');
             echo json_encode(array("data"=>$Lista));
 //        Session::setSesion("", $value)
@@ -59,7 +58,18 @@ switch ($Op) {
 
 	case 'Guardar':
 		break;
+        case 'EliminarTarea':
+             if(isset($_REQUEST["deleteidtarea"])){
+//                echo "entro ";
+                 $value["id"]=$_REQUEST["deleteidtarea"];
+                $modelGantt->deleteTareaajax ($value);
+            }else{
+                echo ":(";
+            }
+        break;
 	case 'Modificar':
+            
+           
           $editing= $_REQUEST["editing"];
           $modo_gantt=$_REQUEST["gantt_mode"];
 //          $server=$_SERVER["HTTP_REFERER"];
@@ -88,14 +98,15 @@ switch ($Op) {
 				$arrayTransformado[$listaNo][$cadenaKey] = $valores[$key];
 				if($cadenaKey == "!nativeeditor_status")
 					$listaNo++;
-			}
+			}  
                         
-                        $modelGantt->insertarTareasGantt($arrayTransformado);
+//                        Session::setSesion("", $value);
+                        $modelGantt->insertarTareasGantt($arrayTransformado,Session::getSesion("dataGantt"));
 //                        echo json_encode($resultado);
                         
 //                        var_dump($resExito);
 			header('Content-type: application/json; charset=utf-8');
-            echo json_encode($arrayTransformado);
+                        echo json_encode($arrayTransformado);
 			// foreach($valores as $key=>$value)
 			// {
 			// 	echo "\n".$key." : ".$value;

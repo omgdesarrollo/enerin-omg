@@ -79,7 +79,8 @@
 		});
 
 		gantt.attachEvent("onAfterTaskDelete", function onAfterTaskDelete(id, task) {
-			if (delTaskParent != gantt.config.root_id) {
+			alert("s");
+                                if (delTaskParent != gantt.config.root_id) {
 				gantt.batchUpdate(checkParents(delTaskParent));
 			}
 		});
