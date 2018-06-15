@@ -394,10 +394,12 @@ $Usuario=  Session::getSesion("user");
                         EmpleadoDataObj['nombre']=EmpleadoDataG[1];
                         EmpleadoDataObj['correo']=EmpleadoDataG[0];
                         EmpleadoDataObj['categoria']=EmpleadoDataG[2];
+                        EmpleadoDataObj['nombre_usuario']=usuario;
 
                         tempData = "<tr id='registro_"+EmpleadoDataG[3]+"'>";
                         tempData += construirTablaAgregar(EmpleadoDataObj);
                         tempData += "</tr>";
+
                         $('#bodyTableAgregar').append(tempData);
                         swalSuccess('Usuario Creado');
                         $('#agregarUsuario .close').click()
@@ -467,15 +469,7 @@ $Usuario=  Session::getSesion("user");
             },
             error:function()
             {
-                swal({
-                        title: '',
-                        text: 'Error en el servidor',
-                        showCancelButton: false,
-                        showConfirmButton: false,
-                        type:"error"
-                    });
-                setTimeout(function(){swal.close();},1500);
-                $('#loader').hide();
+                swalError('Error del servidor');
             }
         });
     }
