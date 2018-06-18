@@ -10,18 +10,21 @@ session_start();
 require_once '../Model/SeguimientoEntradaModel.php';
 require_once '../Pojo/SeguimientoEntradaPojo.php';
 require_once '../util/Session.php';
-
+require_once '../Model/GanttModel.php';
 
 
 $Op=$_REQUEST["Op"];
 $model=new SeguimientoEntradaModel();
 $pojo= new SeguimientoEntradaPojo();
+$modelGantt=new GanttModel();
 
 switch ($Op) {
 	case 'Listar':
-
+//                $_REQUEST[""];
                 $Lista=$model->listarSeguimientoEntradas();
+//                $Lista["avanceprograma"]=$model->calculoSumaParents($value);
                 Session::setSesion("listarSeguimientoEntradas",$Lista);
+                
         //    	$tarjet="../view/principalmodulos.php";
                 header('Content-type: application/json; charset=utf-8');
 		echo json_encode( $Lista);

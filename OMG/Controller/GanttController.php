@@ -101,10 +101,19 @@ switch ($Op) {
 			}  
                         
 //                        Session::setSesion("", $value);
+                        //la variable de sesion del dataGant se refiere al id de seguimiento entrada que hace 
+                        //referencia al folio de entrada de documento de entrada
                         $modelGantt->insertarTareasGantt($arrayTransformado,Session::getSesion("dataGantt"));
-//                        echo json_encode($resultado);
+                        $value["id_seguimiento"]=Session::getSesion("dataGantt");
+                        $resultAvanceProgramaGeneral=$modelGantt->calculoAvanceProgramaGeneral($value)[0]["total_avance_programa"];
                         
+                       
+//                        $modelGantt->calculoSumaParents($value);
+//                        echo "f  ".json_encode($resultAvanceProgramaGeneral);
+                        $value["avance_programa"]=$resultAvanceProgramaGeneral;
+                        $modelGantt->updateAvanceProgramaGeneral($value);
 //                        var_dump($resExito);
+//                        echo "d   ".json_encode($res);
 			header('Content-type: application/json; charset=utf-8');
                         echo json_encode($arrayTransformado);
 			// foreach($valores as $key=>$value)
