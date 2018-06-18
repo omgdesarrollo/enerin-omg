@@ -75,40 +75,9 @@ switch ($Op) {
 
 	case 'Modificar':
 		# code...
-		/*			
-                  $pojo->setIdClausula($_REQUEST['ID_CLAUSULA']);
-                  $pojo->setClausula($_REQUEST['CLAUSULA']);
-                  $pojo->setSubClausula($_REQUEST['SUB_CLAUSULA']);
-                  $pojo->setDescripcionClausula($_REQUEST['DESCRIPCION_CLAUSULA']);
-                  $pojo->setDescripcionSubClausula($_REQUEST['DESCRIPCION_SUB_CLAUSULA']);
-                  $pojo->setTextoBreve($_REQUEST['TEXTO_BREVE']);
-                  $pojo->setDescripcion($_REQUEST['DESCRIPCION']);
-                  $pojo->setPlazo($_REQUEST['PLAZO']);
-                  
-                  $model->actualizar($pojo);                 
-                 */  
-            
-//                  $msg=$exito['mensaje'];
-//                  if($exito['Error']==0){
-//                      header('Content-type: application/json; charset=utf-8');
-//                      echo json_encode(array("data" => $msg));
-//                  }
-                //$model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );
-//                     $valorcombo = $_REQUEST["Combo"];
+
             $model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );
             
-                   
-            
-//                    if($valorcombo == 'false'){
-//                        
-//                  $model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );
-//                    }
-                    
-                    
-//                    if($valorcombo == 'true'){
-//                        
-//                  $model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );
-//                    }
                 break;
 
             

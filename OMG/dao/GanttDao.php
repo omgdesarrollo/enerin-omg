@@ -158,7 +158,7 @@ class GanttDao {
     
     
     
-    public function calculoSumaParents($value)
+    public function calculoAvanceProgramaGeneral($value)
     {
         try
         {
@@ -168,10 +168,8 @@ class GanttDao {
                    JOIN gantt_tasks tbgantt_tasks ON tbgantt_tasks.id=tbgantt_seguimiento_entrada.id_gantt  
 
                    WHERE tbgantt_seguimiento_entrada.id_seguimiento_entrada='".$value["id_seguimiento"]."' AND tbgantt_tasks.parent=0";
-           
-           
            $db= AccesoDB::getInstancia();
-           $list= $db->executeQueryUpdate($query);
+           $list= $db->executeQuery($query);
            
            return $list;
            
@@ -182,6 +180,16 @@ class GanttDao {
         }
     }
     
+   public function updateAvanceProgramaGeneral($value){
+        try{
+            $query="update databaseomg.seguimiento_entrada set databaseomg.seguimiento_entrada.AVANCE_PROGRAMA='".$value["avance_programa"]."' where databaseomg.seguimiento_entrada.ID_SEGUIMIENTO_ENTRADA='".$value["id_seguimiento"]."'";
+            $db= AccesoDB::getInstancia();
+            $list= $db->executeQueryUpdate($query);
+            
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+   } 
     
 }
 

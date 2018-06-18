@@ -227,7 +227,8 @@ require_once 'EncabezadoUsuarioView.php';
        
 		<script>  
                       var idclausula,si_hay_cambio=false;
-                      construirContenido();
+//                      construirContenido();
+                        listarEmpleados();
 		</script> 
                 <!--Inicia para el spiner cargando-->
                 <script src="../../js/loaderanimation.js" type="text/javascript"></script>

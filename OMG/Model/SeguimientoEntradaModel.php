@@ -3,7 +3,7 @@
 
 require_once '../dao/SeguimientoEntradaDAO.php';
 require_once '../Pojo/SeguimientoEntradaPojo.php';
-
+require_once '../dao/GanttDao.php';
 
 class SeguimientoEntradaModel{
     
@@ -11,7 +11,6 @@ class SeguimientoEntradaModel{
         try{
             $dao=new SeguimientoEntradaDAO();
             $rec=$dao->mostrarSeguimientoEntradas();
-            
             
             return $rec;
     }  catch (Exception $e){

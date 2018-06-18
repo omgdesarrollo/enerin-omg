@@ -207,7 +207,7 @@ $Usuario=  Session::getSesion("user");
                 
                 <!-- Inicio de Seccion Modal -->
        <div class="modal draggable fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-           <div class="modal-dialog modal-lg" role="document" >
+           <div class="modal-dialog  modal-lg" role="document" >
 		    <div class="modal-content">
 		      <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
@@ -568,6 +568,7 @@ $Usuario=  Session::getSesion("user");
                 {
                     tableBuild += "<tr class='table-row' id='registro_"+value.id_asignacion_tema_requisito+"'><td>"+value.id_asignacion_tema_requisito+"</td>";
                     tableBuild += "<td style='background-color: #ccccff'>";
+                    
                     tableBuild += "<select class='select' onchange='saveComboToDatabase(\'id_clausula\',"+value.id_asignacion_tema_requisito+")'>";
                     $.each(clausulasData,function(index2,value2)
                     {
