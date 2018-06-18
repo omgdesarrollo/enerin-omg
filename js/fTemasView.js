@@ -91,7 +91,7 @@
 //1 .funciones para consultar informacion y construir datos 
   function construirContenido()
  {
-     
+  $("#loader").show();   
   $.ajax({
    url:"../Controller/ClausulasController.php?Op=Listar",
    method:"POST",
@@ -100,18 +100,24 @@
          var html_data ="";   
          for(var count=0; count<data.length; count++)
          {             
-          html_data += '<tr><td  class="celda-no-editable" width="8%">'+data[count].clausula+'</td>';
-          html_data += '<td class="celda" width="20%" OnClick="obtener(\'h\')" class="descripcion_clausula" >' +data[count].descripcion_clausula+'</td>';
-          html_data += '<td class="celda" width="10%"  class="sub_clausula" >'+data[count].sub_clausula+'</td>';
-          html_data += '<td class="celda" width="20%"  class="descripcion">'+data[count].descripcion_sub_clausula+'</td>';
-          html_data += '<td class="celda" width="20%"  class="id_empleado" >'+data[count].id_empleado+'</td>';
-          html_data += '<td class="celda" width="12%"  class="descripcion" >'+data[count].descripcion+'</td>';
-          html_data += '<td class="celda" width="10%"  class="plazo" >'+data[count].plazo+'</td></tr>';
+          html_data += '<tr><td width="8%" class="celda" contenteditable="true" onClick="showEdit(this)" onkeyup="detectarsihaycambio()" onBlur=\"saveToDatabase(this,\'clausula\','+data[count].id_clausula+')\">'+data[count].clausula+'</td>';
+          html_data += '<td width="20%" class="celda" contenteditable="true" onClick="showEdit(this)" onkeyup="detectarsihaycambio()" onBlur=\"saveToDatabase(this,\'descripcion_clausula\','+data[count].id_clausula+')\">' +data[count].descripcion_clausula+'</td>';
+          html_data += '<td width="10%" class="celda" contenteditable="true" onClick="showEdit(this)" onkeyup="detectarsihaycambio()" onBlur=\"saveToDatabase(this,\'sub_clausula\','+data[count].id_clausula+')\">'+data[count].sub_clausula+'</td>';
+          html_data += '<td width="20%" class="celda" contenteditable="true" onClick="showEdit(this)" onkeyup="detectarsihaycambio()" onBlur=\"saveToDatabase(this,\'descripcion_sub_clausula\','+data[count].id_clausula+')\">'+data[count].descripcion_sub_clausula+'</td>';
+          html_data += '<td width="20%" class="celda"   class="id_empleado" >'+data[count].id_empleado+'</td>';
+          html_data += '<td width="12%" class="celda" contenteditable="true" onClick="showEdit(this)" onkeyup="detectarsihaycambio()" onBlur=\"saveToDatabase(this,\'descripcion\','+data[count].id_clausula+')\">'+data[count].descripcion+'</td>';
+          html_data += '<td width="10%" class="celda" contenteditable="true" onClick="showEdit(this)" onkeyup="detectarsihaycambio()" onBlur=\"saveToDatabase(this,\'plazo\','+data[count].id_clausula+')\">'+data[count].plazo+'</td></tr>';
          }
-         
+         $("#loader").hide();
          $('#datosGenerales').html(html_data);
-    }
-  });
+    },
+    error:function()
+    {
+        $("#loader").hide();
+        swal("Error al obtener informacion!", "Ok!", "Error");
+        setTimeout(function(){swal.close();},1000);
+    }       
+    });
  }
  
 
@@ -170,7 +176,8 @@ function loadAutocomplete(dataString){
                                                                    
 
 function refresh(){
-   consultarInformacion("../Controller/ClausulasController.php?Op=Listar"); 
+//   consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
+    construirContenido();
  }
  
  
@@ -185,7 +192,7 @@ function refresh(){
                                     success: function(data)
                                     {
 
-                                            swal("Guardado Exitoso!", "Ok!", "success")
+                                            swal("Guardado Exitoso!", "Ok!", "success");
                                             refresh();
                                     }   
 		               });
@@ -203,7 +210,7 @@ idclausula=id;
 }
 
 function saveToDatabase(editableObj,column,id) {
-                    
+        alert("entro al save");            
         if(si_hay_cambio==true)
         {
             $("#btnrefrescar").prop("disabled",true);
@@ -216,8 +223,8 @@ function saveToDatabase(editableObj,column,id) {
                     {
                             $(editableObj).css("background","#FDFDFD");
                             swal("Actualizacion Exitosa!", "Ok!", "success");
-                            refresh();
-
+                            setTimeout(function(){swal.close();},1000);
+//                            refresh();
                             $("#btnrefrescar").prop("disabled",false);
                             si_hay_cambio=false;
 

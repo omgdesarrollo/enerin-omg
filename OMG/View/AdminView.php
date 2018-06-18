@@ -236,9 +236,9 @@ $Usuario=  Session::getSesion("user");
                         <h4 class="modal-title" id="myModalLabel">Agregar Usuario</h4>
                     </div>
 
-                    <div class="modal-body">
+                    <div class="modal-body" style="width: -webkit-fill-available;">
                         <div class="form-group">
-                            <div class="table-container">
+                            <div class="table-container" style="max-height:none;">
                                 <table style="width:100%" class="tbl-qa">
                                     <tr>
                                         <th class="table-header">Menu</th>
@@ -289,7 +289,7 @@ $Usuario=  Session::getSesion("user");
                 tempData = "";
                 $.each(usuarios,function(index,value)
                 {
-                    tempData += "<tr id='registro_"+value.id_empleado+"'>";
+                    tempData += "<tr id='registro_"+value.id_usuario+"'>";
                     tempData += construirTablaAgregar(value);
                     tempData += "</tr>";
                 });
@@ -324,7 +324,7 @@ $Usuario=  Session::getSesion("user");
         // tempData += "<td>"+value.apellido_materno+"</td>";
         tempData += "<td>"+value.correo+"</td>";
         tempData += "<td>"+value.categoria+"</td>";
-        tempData += "<td><button onClick='modificarPermisos("+value.id_empleado+");' type='button' class='btn btn-success'";
+        tempData += "<td><button onClick='modificarPermisos("+value.id_usuario+");' type='button' class='btn btn-success'";
         tempData += "data-toggle='modal' data-target='#modificarPermisos'>";
         tempData += "<i class='ace-icon fa fa-envelope' style='font-size: 20px;'></i></button></td>";
         return tempData;
@@ -387,17 +387,20 @@ $Usuario=  Session::getSesion("user");
                 },
                 success:function(creado)
                 {
-                    if(creado==true)
+
+                    if(creado.resultado==true)
                     {
                         EmpleadoDataObj=[];
-                        EmpleadoDataObj['id_empleado']=EmpleadoDataG[3];
+                        EmpleadoDataObj['id_usuario']=creado.id_usuario;
                         EmpleadoDataObj['nombre']=EmpleadoDataG[1];
                         EmpleadoDataObj['correo']=EmpleadoDataG[0];
                         EmpleadoDataObj['categoria']=EmpleadoDataG[2];
+                        EmpleadoDataObj['nombre_usuario']=usuario;
 
-                        tempData = "<tr id='registro_"+EmpleadoDataG[3]+"'>";
+                        tempData = "<tr id='registro_"+creado.id_usuario+"'>";
                         tempData += construirTablaAgregar(EmpleadoDataObj);
                         tempData += "</tr>";
+
                         $('#bodyTableAgregar').append(tempData);
                         swalSuccess('Usuario Creado');
                         $('#agregarUsuario .close').click()
@@ -467,15 +470,7 @@ $Usuario=  Session::getSesion("user");
             },
             error:function()
             {
-                swal({
-                        title: '',
-                        text: 'Error en el servidor',
-                        showCancelButton: false,
-                        showConfirmButton: false,
-                        type:"error"
-                    });
-                setTimeout(function(){swal.close();},1500);
-                $('#loader').hide();
+                swalError('Error del servidor');
             }
         });
     }
