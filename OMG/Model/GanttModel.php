@@ -57,6 +57,10 @@ class GanttModel {
                     }
                 }
             }
+            
+          
+            
+            
         } catch (Exception $ex) {
             throw $ex;
         }
@@ -111,12 +115,19 @@ class GanttModel {
         }
     }
     
-    public function calculoSumaParents($value)
+    public  function calculoAvanceProgramaGeneral($value)
     {
         try
         {
             $dao=new GanttDao();
-            $rec= $dao->calculoSumaParents($value);
+            $rec= $dao->calculoAvanceProgramaGeneral($value);
+//            echo "ew:  ".json_encode($rec);
+//            if($rec==""){
+//                echo "trajo null";
+//            } else {
+//                echo "no trajo null";
+//            }
+            
             
             return $rec;
         } catch (Exception $ex)
@@ -126,4 +137,16 @@ class GanttModel {
         }
     }
     
+    
+    public function updateAvanceProgramaGeneral($value){
+        try{
+            
+            $dao= new GanttDao();
+            $dao= 
+            
+            
+        } catch (Exception $ex) {
+            throw  $ex;
+        }
+    }
 }
