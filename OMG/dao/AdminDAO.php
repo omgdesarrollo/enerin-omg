@@ -31,7 +31,7 @@ class AdminDAO{
     {
         try
         {
-            $query="SELECT tbestructura.id_submodulos,tbestructura.descripcion, tbestructura.id_vistas,tbvistas.nombre, tbusuarios_vistas.EDIT,
+            $query="SELECT tbestructura.id_estructura tbestructura.id_submodulos,tbestructura.descripcion, tbestructura.id_vistas,tbvistas.nombre, tbusuarios_vistas.EDIT,
             tbusuarios_vistas.delete, tbusuarios_vistas.new,tbusuarios_vistas.consult 
             FROM usuarios_vistas tbusuarios_vistas
             JOIN estructura tbestructura ON tbusuarios_vistas.id_estructura = tbestructura.id_estructura
