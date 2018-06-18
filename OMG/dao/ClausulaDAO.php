@@ -129,8 +129,9 @@ class ClausulaDAO{
      
             $db= AccesoDB::getInstancia();
            $result= $db->executeQueryUpdate($query);
-//            $db->executeQuery($query);
-//            return $lista[0];
+           
+//           echo "Entro el query".$query;
+//            return $lista;
         } catch (Exception $ex) {
            throw $ex; 
         }

@@ -80,10 +80,27 @@ class AdminDAO{
     }
     
     
+    public function actualizarUsuariosVistasPorColumna($COLUMNA,$VALOR,$ID_USUARIO,$ID_ESTRUCTURA)
+    {
+        try
+        {
+            $query="UPDATE usuarios_vistas 
+                    SET ".$COLUMNA."='".$VALOR."' WHERE id_usuario=$ID_USUARIO AND id_estructura=$ID_ESTRUCTURA";
+            
+            $db= AccesoDB::getInstancia();
+            $lista= $db->executeQueryUpdate($query);
+            
+            return $lista;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;        
+        }
+    }
+    
+    
 }
-
-
-
 
 
 ?>
