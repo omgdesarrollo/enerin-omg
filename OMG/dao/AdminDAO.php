@@ -50,6 +50,51 @@ class AdminDAO{
     }
     
     
+    public function listarSubmodulos()
+    {
+        try
+        {
+           $query="SELECT tbsubmodulos.id_submodulos, tbsubmodulos.nombre
+                   FROM submodulos tbsubmodulos";
+           
+           $db= AccesoDB::getInstancia();
+           $lista= $db->executeQuery($query);
+           
+           return $lista;
+           
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
+    
+    public function listarVistasDeSubmodulos($ID_SUBMODULOS)
+    {
+        try
+        {
+          $query="SELECT tbestructura.id_submodulos, tbestructura.descripcion  
+                  FROM estructura tbestructura
+                  WHERE  tbestructura.id_submodulos=$ID_SUBMODULOS";
+                  
+          $db= AccesoDB::getInstancia();        
+          $lista= $db->executeQuery($query);
+          
+          return $lista;
+          
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
+
+
+
+
+
     public function insertarUsuario($ID_EMPLEADO, $NOMBRE_USUARIO)
     {
         try

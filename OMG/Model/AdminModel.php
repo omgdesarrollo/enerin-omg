@@ -36,6 +36,32 @@ class AdminModel{
     }
     
     
+    public function listarSubmodulos()
+    {
+        try
+        {
+            $dao=new AdminDAO();
+            $rec= $dao->listarSubmodulos();
+            
+            $resultado;
+            
+            foreach($rec as $index=>$value)
+            {
+                
+            $resultado[$value]['nombre'] = $dao->listarVistasDeSubmodulos($value['id_submodulos']);
+            }
+            
+            return $resultado;
+            
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return $ex;
+        }
+    }
+    
+    
     public function insertarUsuario($ID_EMPLEADO, $NOMBRE_USUARIO)
     {
         try
@@ -51,6 +77,7 @@ class AdminModel{
         }
     }
     
+
     public function actualizarUsuariosVistasPorColumna($COLUMNA, $VALOR, $ID_USUARIO, $ID_ESTRUCTURA)
     {
         try
