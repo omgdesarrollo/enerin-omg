@@ -67,7 +67,7 @@ function listarDatos()
     $.ajax
     ({
         url:'../Controller/DocumentosController.php?Op=Listar',
-        type:'',
+        type:'GET',
         beforeSend:function()
         {
             $('#loader').show();
@@ -82,5 +82,32 @@ function listarDatos()
         }
     });
 };
+
+function reconstruirTable(datos)
+{
+    cargaTodo=0;
+    tempData="";
+    $.each(datos,function(index,value){
+        tempData+= reconstruir(value,cargaTodo);
+    });
+    
+    $("#datosGenerales").html(tempData);
+    $("#loader").hide();
+}
+
+function reconstruir(value,carga)
+{
+    tempData="";
+    
+    if(carga==0)
+    tempData += "<tr id='registro_"+value.id_documento+"'>"
+    tempData += "<td class='celda' width='22%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'documentos','clave_documento',"+value.id_documento+",'id_documento')\"\n\
+                     onkeyup=\"detectarsihaycambio()\">"+value.clave_documento+"</td>";
+    
+    if(carga==0)
+      tempData+="</tr>";
+  
+  return tempData;
+}
 
 

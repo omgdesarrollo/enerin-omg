@@ -54,20 +54,96 @@ switch ($Op)
 
     case 'CrearTablaPermisos':
         $lista = $model->listarSubmodulos();
-        foreach($lista as $key=>$datos)
+        // foreach($lista as $key=>$datos)
+        // {
+        //     echo "$key \n";
+        //     foreach($datos as $val)
+        //     {
+        //         echo "\n";
+        //         echo " $val[descripcion]";
+        //         // header('Content-type: application/json; charset=utf-8');
+        //         // echo json_encode($val);
+        //     }
+        //     // echo $key."\n";
+        //     // header('Content-type: application/json; charset=utf-8');
+        //     // echo json_encode($datos);
+        //     // echo "\n";
+        // }
+        
+        $tempData="";
+        $idEstruct=2;
+        $textCheckBox = "<input type='checkbox' style='width:40px;height:40px;margin:7px 0 0;'";
+        
+        foreach($lista as $index=>$value)
         {
-            echo "$key";
-            // foreach($datos as $val)
-            // {
-            //     // echo "\n";
-            //     header('Content-type: application/json; charset=utf-8');
-            //     echo json_encode($val);        
-            // }
-            // echo $key."\n";
-            header('Content-type: application/json; charset=utf-8');
-            echo json_encode($datos);
-            echo "\n";
-        }
+            $tempData .= "<tr>";
+            $tempData2 = "";
+            $tempData3 = "";
+            $cont=0;
+            
+            foreach ($value as $ind=>$val)
+            {
+                $cont++;
+                $vista = explode("-",$val['descripcion']);
+                if($cont==1)
+                {
+                    //ver/consultar/editar/eliminar
+                    
+                    $tempData2 = "<td style='border-top: 1px solid;'>$vista[1]</td>";
+
+                    $tempData2 .= "<td onClick=\"saveCheckBoxToDataBase(this,'view','$val[id_submodulos]')\" id='view_$val[id_submodulos]' style='border-top: 1px solid;cursor:pointer;'></td>";
+
+                    $tempData2 .= "<td onClick=\"saveCheckBoxToDataBase(this,'new','$val[id_submodulos]')\" id='new_$val[id_submodulos]' style='border-top: 1px solid;cursor:pointer;'></td>";
+
+                    $tempData2 .= "<td onClick=\"saveCheckBoxToDataBase(this,'edit','$val[id_submodulos]')\" id='edit_$val[id_submodulos]' style='border-top: 1px solid;cursor:pointer;'></td>";
+
+                    $tempData2 .= "<td onClick=\"saveCheckBoxToDataBase(this,'delete','$val[id_submodulos]')\" id='delet_$val[id_submodulos]' style='border-top: 1px solid;cursor:pointer;'></td></tr>";
+
+                    // $tempData2 .= "<td id='view_$idEstruct' style='border-top: 1px solid;'>$textCheckBox ";
+                    // $tempData2 .= "onchange=\"saveCheckBoxToDataBase(this,'view','$idEstruct')\" ></td>";
+
+                    // $tempData2 .= "<td id='consult_$idEstruct' style='border-top: 1px solid;'>$textCheckBox ";
+                    // $tempData2 .= "onchange=\"saveCheckBoxToDataBase(this,'consult','$idEstruct')\" ></td>";
+
+                    // $tempData2 .= "<td id='edit_$idEstruct' style='border-top: 1px solid;'>$textCheckBox ";
+                    // $tempData2 .= "onchange=\"saveCheckBoxToDataBase(this,'edit','$idEstruct')\" ></td>";
+
+                    // $tempData2 .= "<td id='delet_$idEstruct' style='border-top: 1px solid;'>$textCheckBoxb ";
+                    // $tempData2 .= "onchange=\"saveCheckBoxToDataBase(this,'delete','$idEstruct')\" ></td></tr>";
+                    
+                    
+                }
+                else
+                {
+                    $tempData3 .= "<tr><td>$vista[1]</td>";
+                    // $tempData3 .= "<td id='view_$idEstruct'>$textCheckBox ";
+                    // $tempData3 .= "onchange=\"saveCheckBoxToDataBase(this,'view','$idEstruct')\" ></td>";
+
+                    // $tempData3 .= "<td id='consult_$idEstruct'> $textCheckBox ";
+                    // $tempData3 .= "onchange=\"saveCheckBoxToDataBase(this,'consult','$idEstruct')\" ></td>";
+
+                    // $tempData3 .= "<td id='edit_$idEstruct'>$textCheckBox ";
+                    // $tempData3 .= "onchange=\"saveCheckBoxToDataBase(this,'edit','$idEstruct')\" ></td>";
+
+                    // $tempData3 .= "<td id='delet_$idEstruct'> $textCheckBox ";
+                    // $tempData3 .= "onchange=\"saveCheckBoxToDataBase(this,'delete','$idEstruct')\" ></td></tr>";
+
+                    
+                    $tempData3 .= "<td onClick=\"saveCheckBoxToDataBase(this,'view','$val[id_submodulos]')\" id='view_$val[id_submodulos]' style='cursor:pointer;'></td>";
+
+                    $tempData3 .= "<td onClick=\"saveCheckBoxToDataBase(this,'new','$val[id_submodulos]')\" id='new_$val[id_submodulos]' style='cursor:pointer;'></td>";
+
+                    $tempData3 .= "<td onClick=\"saveCheckBoxToDataBase(this,'edit','$val[id_submodulos]')\" id='edit_$val[id_submodulos]' style='cursor:pointer;'></td>";
+
+                    $tempData3 .= "<td onClick=\"saveCheckBoxToDataBase(this,'delete','$val[id_submodulos]')\" id='delet_$val[id_submodulos]' style='cursor:pointer;'></td></tr>";
+                }
+                $idEstruct++;
+            };
+            $tempData .= "<td style='border-top: 1px solid;' rowspan='$cont'>$index</td>";
+            $tempData .= $tempData2.$tempData3;
+        };
+        echo $tempData;
+
     break;
 
     default:
