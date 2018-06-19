@@ -45,7 +45,13 @@ class AdminModel{
             $resultado;
             foreach($rec as $index=>$value)
             {
-                $resultado[$value['nombre']] = $dao->listarVistasDeSubmodulos($value['id_submodulos']);
+                $val = $dao->listarVistasDeSubmodulos($value['id_submodulos']);
+                // foreach($dao->listarVistasDeSubmodulos($value['id_submodulos']) as $val)
+                // {
+                    $resultado[$value['nombre']] = $val;
+                    // array_push($resultado[$value['nombre']]=>$val);
+                // }
+                // array_push($resultado[$value['nombre']]=>$value);
             }
             return $resultado;
         }
