@@ -48,6 +48,15 @@ switch ($Op)
     case 'ListarUsuario':
         $lista=$modal->listarUsuario($_REQUEST["ID_EMPLEADO"]);
         
+        
+        
+//        header('Content-type: application/json; charset=utf-8');
+//		echo json_encode($lista);
+    break;
+
+    case 'CrearTablaPermisos':
+        $lista = $model->listarSubmodulos();
+        
         $tempData="";
         $idEstruct=2;
         $textCheckBox = "<input type='checkbox' style='width:40px;height:40px;margin:7px 0 0;'";
@@ -62,7 +71,7 @@ switch ($Op)
             foreach ($value as $ind=>$val)
             {
                 $cont++;
-                if(cont==1)
+                if($cont==1)
                 {
                     //ver/consultar/editar/eliminar
                     $tempData2 = "<td style='border-top: 1px solid;'>$val</td>";
@@ -99,13 +108,7 @@ switch ($Op)
             $tempData .= $tempData2.$tempData3;
         };
         echo $tempData;
-        
-//        header('Content-type: application/json; charset=utf-8');
-//		echo json_encode($lista);
-    break;
 
-    case '':
-        $lista=$modal;
     break;
 
     default:
