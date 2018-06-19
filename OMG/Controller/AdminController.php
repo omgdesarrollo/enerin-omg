@@ -47,14 +47,27 @@ switch ($Op)
 
     case 'ListarUsuario':
         $lista = $model->listarUsuario($_REQUEST["ID_EMPLEADO"]);
-        header('Content-type: application/json; charset=utf-8');
-		echo json_encode($lista);
+        
+        // header('Content-type: application/json; charset=utf-8');
+		// echo json_encode($lista);
     break;
 
     case 'CrearTablaPermisos':
         $lista = $model->listarSubmodulos();
-        header('Content-type: application/json; charset=utf-8');
-		echo json_encode($lista);
+        foreach($lista as $key=>$datos)
+        {
+            echo "$key";
+            // foreach($datos as $val)
+            // {
+            //     // echo "\n";
+            //     header('Content-type: application/json; charset=utf-8');
+            //     echo json_encode($val);        
+            // }
+            // echo $key."\n";
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($datos);
+            echo "\n";
+        }
     break;
 
     default:
