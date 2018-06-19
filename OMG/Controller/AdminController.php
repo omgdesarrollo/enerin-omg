@@ -89,15 +89,15 @@ switch ($Op)
                 {
                     //ver/consultar/editar/eliminar
                     
-                    $tempData2 = "<td style='border-top: 1px solid;'>$vista[1]</td>";
+                    $tempData2 = "<td style='border-top: 1px solid;border-right: 1px solid;'>$vista[1]</td>";
 
-                    $tempData2 .= "<td onClick=\"saveCheckBoxToDataBase(this,'view','$val[id_submodulos]')\" id='view_$val[id_submodulos]' style='border-top: 1px solid;cursor:pointer;'></td>";
+                    $tempData2 .= "<td onClick=\"saveCheckBoxToDataBase(this,'view','$val[id_submodulos]')\" id='view_$val[id_submodulos]' style='border-top: 1px solid;border-right: 1px solid;cursor:pointer;'></td>";
 
-                    $tempData2 .= "<td onClick=\"saveCheckBoxToDataBase(this,'new','$val[id_submodulos]')\" id='new_$val[id_submodulos]' style='border-top: 1px solid;cursor:pointer;'></td>";
+                    $tempData2 .= "<td onClick=\"saveCheckBoxToDataBase(this,'new','$val[id_submodulos]')\" id='new_$val[id_submodulos]' style='border-top: 1px solid;cursor:pointer;border-right: 1px solid'></td>";
 
-                    $tempData2 .= "<td onClick=\"saveCheckBoxToDataBase(this,'edit','$val[id_submodulos]')\" id='edit_$val[id_submodulos]' style='border-top: 1px solid;cursor:pointer;'></td>";
+                    $tempData2 .= "<td onClick=\"saveCheckBoxToDataBase(this,'edit','$val[id_submodulos]')\" id='edit_$val[id_submodulos]' style='border-top: 1px solid;cursor:pointer;border-right: 1px solid'></td>";
 
-                    $tempData2 .= "<td onClick=\"saveCheckBoxToDataBase(this,'delete','$val[id_submodulos]')\" id='delet_$val[id_submodulos]' style='border-top: 1px solid;cursor:pointer;'></td></tr>";
+                    $tempData2 .= "<td onClick=\"saveCheckBoxToDataBase(this,'delete','$val[id_submodulos]')\" id='delet_$val[id_submodulos]' style='border-top: 1px solid;cursor:pointer;border-right: 1px solid'></td></tr>";
 
                     // $tempData2 .= "<td id='view_$idEstruct' style='border-top: 1px solid;'>$textCheckBox ";
                     // $tempData2 .= "onchange=\"saveCheckBoxToDataBase(this,'view','$idEstruct')\" ></td>";
@@ -115,7 +115,7 @@ switch ($Op)
                 }
                 else
                 {
-                    $tempData3 .= "<tr><td>$vista[1]</td>";
+                    $tempData3 .= "<tr><td style='border-right: 1px solid'>$vista[1]</td>";
                     // $tempData3 .= "<td id='view_$idEstruct'>$textCheckBox ";
                     // $tempData3 .= "onchange=\"saveCheckBoxToDataBase(this,'view','$idEstruct')\" ></td>";
 
@@ -129,13 +129,13 @@ switch ($Op)
                     // $tempData3 .= "onchange=\"saveCheckBoxToDataBase(this,'delete','$idEstruct')\" ></td></tr>";
 
                     
-                    $tempData3 .= "<td onClick=\"saveCheckBoxToDataBase(this,'view','$val[id_submodulos]')\" id='view_$val[id_submodulos]' style='cursor:pointer;'></td>";
+                    $tempData3 .= "<td onClick=\"saveCheckBoxToDataBase(this,'view','$val[id_submodulos]')\" id='view_$val[id_submodulos]' style='cursor:pointer;border-right: 1px solid'></td>";
 
-                    $tempData3 .= "<td onClick=\"saveCheckBoxToDataBase(this,'new','$val[id_submodulos]')\" id='new_$val[id_submodulos]' style='cursor:pointer;'></td>";
+                    $tempData3 .= "<td onClick=\"saveCheckBoxToDataBase(this,'new','$val[id_submodulos]')\" id='new_$val[id_submodulos]' style='cursor:pointer;border-right: 1px solid'></td>";
 
-                    $tempData3 .= "<td onClick=\"saveCheckBoxToDataBase(this,'edit','$val[id_submodulos]')\" id='edit_$val[id_submodulos]' style='cursor:pointer;'></td>";
+                    $tempData3 .= "<td onClick=\"saveCheckBoxToDataBase(this,'edit','$val[id_submodulos]')\" id='edit_$val[id_submodulos]' style='cursor:pointer;border-right: 1px solid'></td>";
 
-                    $tempData3 .= "<td onClick=\"saveCheckBoxToDataBase(this,'delete','$val[id_submodulos]')\" id='delet_$val[id_submodulos]' style='cursor:pointer;'></td></tr>";
+                    $tempData3 .= "<td onClick=\"saveCheckBoxToDataBase(this,'delete','$val[id_submodulos]')\" id='delet_$val[id_submodulos]' style='cursor:pointer;border-right: 1px solid'></td></tr>";
                 }
                 $idEstruct++;
             };
