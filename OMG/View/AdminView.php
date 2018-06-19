@@ -472,6 +472,13 @@ $Usuario=  Session::getSesion("user");
         };
         console.log(submodulo);
         textCheckBox = "<input type='checkbox' style='width:40px;height:40px;margin:7px 0 0;'";
+    
+    $.ajax({
+        url: '../Controller/AdminController.php?Op=CrearTablaPermisos',
+        type: 'GET',
+        success:function()
+        {}
+    });
     function construirTablaPermisosDatos()
     {
         var tempData="";
@@ -543,8 +550,6 @@ $Usuario=  Session::getSesion("user");
         });
         return tempData;
     }
-    [id_submodulos:1,descripcion:'pepe'],
-    [id_submodulos:2,descripcion:'nada'],
 
     function asignarPermisosTabla(permisos)
     {

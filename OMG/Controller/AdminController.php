@@ -46,13 +46,15 @@ switch ($Op)
     break;
 
     case 'ListarUsuario':
-        $lista=$modal->listarUsuario($_REQUEST["ID_EMPLEADO"]);
+        $lista = $model->listarUsuario($_REQUEST["ID_EMPLEADO"]);
         header('Content-type: application/json; charset=utf-8');
 		echo json_encode($lista);
     break;
 
-    case '':
-        $lista=$modal;
+    case 'CrearTablaPermisos':
+        $lista = $model->listarSubmodulos();
+        header('Content-type: application/json; charset=utf-8');
+		echo json_encode($lista);
     break;
 
     default:

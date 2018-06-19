@@ -11,8 +11,6 @@ class DocumentoModel{
             $dao=new DocumentoDAO();
             $rec=$dao->mostrarDocumentos();
             
-            
-            
             return $rec;
     }  catch (Exception $e){
         throw  $e;

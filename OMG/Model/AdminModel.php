@@ -42,19 +42,14 @@ class AdminModel{
         {
             $dao=new AdminDAO();
             $rec= $dao->listarSubmodulos();
-            
             $resultado;
-            
             foreach($rec as $index=>$value)
             {
-                
-            $resultado[$value]['nombre'] = $dao->listarVistasDeSubmodulos($value['id_submodulos']);
+                $resultado[$value['nombre']] = $dao->listarVistasDeSubmodulos($value['id_submodulos']);
             }
-            
             return $resultado;
-            
-            
-        } catch (Exception $ex)
+        }
+        catch(Exception $ex)
         {
             throw $ex;
             return $ex;
