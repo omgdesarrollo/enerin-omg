@@ -158,10 +158,7 @@ function saveSingleToDatabase(Obj,tabla,columna,id,contexto) {
         } 
 
     }
-    
-        
-    
-    
+      
  function saveOneToDatabase(valor,columna,tabla,id,contexto)
     {
         //alert("Entro aqui");
