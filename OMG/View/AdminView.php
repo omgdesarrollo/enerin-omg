@@ -558,24 +558,26 @@ $Usuario=  Session::getSesion("user");
     function asignarPermisosTabla(permisos)
     {
         idEstructura=2;
+        no = "<i class='fa fa-check-circle-o' style='font-size: xx-large;' aria-hidden='true'></i>";
+        yes = "<i class='fa fa-check-circle-o' style='font-size: xx-large;' aria-hidden='true'></i>";
         $.each(permisos,function(index,value)
         {
             if(value.edit=='true')
-                $('#edit_'+idEstructura).html("<i class='fa fa-check-circle-o' aria-hidden='true'></i>");
+                $('#edit_'+idEstructura).html(yes);
             else
-                $('#edit_'+idEstructura).html("");
+                $('#edit_'+idEstructura).html(no);
             if(value.edit=='true')
-                $('#view_'+idEstructura).html("<i class='fa fa-check-circle-o' aria-hidden='true'></i>");
+                $('#view_'+idEstructura).html(yes);
             else
-                $('#view_'+idEstructura).html("");
+                $('#view_'+idEstructura).html(no);
             if(value.edit=='true')
-                $('#consult_'+idEstructura).html("<i class='fa fa-check-circle-o' aria-hidden='true'></i>");
+                $('#consult_'+idEstructura).html(yes);
             else
-                $('#consult_'+idEstructura).html("");
+                $('#consult_'+idEstructura).html(no);
             if(value.edit=='true')
-                $('#delet_'+idEstructura).html("<i class='fa fa-check-circle-o' aria-hidden='true'></i>");
+                $('#delet_'+idEstructura).html(yes);
             else
-                $('#delet_'+idEstructura).html("");
+                $('#delet_'+idEstructura).html(no);
             idEstructura++;
         });
     }
@@ -585,6 +587,9 @@ $Usuario=  Session::getSesion("user");
         console.log(Obj);
         console.log(column);
         console.log(idEstructura);
+        $(Obj).html("<i class='fa fa-check-circle-o' style='font-size: xx-large;' aria-hidden='true'></i>");
+        ObjI = Obj.getElementsByTagName("i");
+        console.log(ObjI[0]);
     }
 
 </script>
