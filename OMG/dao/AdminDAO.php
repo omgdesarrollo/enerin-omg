@@ -31,7 +31,7 @@ class AdminDAO{
     {
         try
         {
-            $query="SELECT tbestructura.id_estructura tbestructura.id_submodulos,tbestructura.descripcion, tbestructura.id_vistas,tbvistas.nombre, tbusuarios_vistas.EDIT,
+            $query="SELECT tbestructura.id_estructura, tbestructura.id_submodulos,tbestructura.descripcion, tbestructura.id_vistas,tbvistas.nombre, tbusuarios_vistas.EDIT,
             tbusuarios_vistas.delete, tbusuarios_vistas.new,tbusuarios_vistas.consult 
             FROM usuarios_vistas tbusuarios_vistas
             JOIN estructura tbestructura ON tbusuarios_vistas.id_estructura = tbestructura.id_estructura
@@ -74,7 +74,7 @@ class AdminDAO{
     {
         try
         {
-          $query="SELECT tbestructura.id_submodulos, tbestructura.descripcion  
+          $query="SELECT tbestructura.id_submodulos,tbestructura.id_estructura, tbestructura.descripcion  
                   FROM estructura tbestructura
                   WHERE  tbestructura.id_submodulos=$ID_SUBMODULOS";
                   
@@ -166,9 +166,8 @@ class AdminDAO{
     {
         try
         {
-            $query="UPDATE usuarios_vistas 
-                    SET ".$COLUMNA."='".$VALOR."' WHERE id_usuario=$ID_USUARIO AND id_estructura=$ID_ESTRUCTURA";
-            
+            $query="UPDATE usuarios_vistas tbusuarios_vistas 
+                    SET tbusuarios_vistas.".$COLUMNA."= '".$VALOR."' WHERE tbusuarios_vistas.id_usuario=$ID_USUARIO AND tbusuarios_vistas.id_estructura=$ID_ESTRUCTURA";
             $db= AccesoDB::getInstancia();
             $lista= $db->executeQueryUpdate($query);
             
