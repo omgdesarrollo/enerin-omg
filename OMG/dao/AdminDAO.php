@@ -31,7 +31,7 @@ class AdminDAO{
     {
         try
         {
-            $query="SELECT tbestructura.id_estructura tbestructura.id_submodulos,tbestructura.descripcion, tbestructura.id_vistas,tbvistas.nombre, tbusuarios_vistas.EDIT,
+            $query="SELECT tbestructura.id_estructura, tbestructura.id_submodulos,tbestructura.descripcion, tbestructura.id_vistas,tbvistas.nombre, tbusuarios_vistas.EDIT,
             tbusuarios_vistas.delete, tbusuarios_vistas.new,tbusuarios_vistas.consult 
             FROM usuarios_vistas tbusuarios_vistas
             JOIN estructura tbestructura ON tbusuarios_vistas.id_estructura = tbestructura.id_estructura
@@ -74,7 +74,7 @@ class AdminDAO{
     {
         try
         {
-          $query="SELECT tbestructura.id_submodulos, tbestructura.descripcion  
+          $query="SELECT tbestructura.id_submodulos,tbestructura.id_estructura, tbestructura.descripcion  
                   FROM estructura tbestructura
                   WHERE  tbestructura.id_submodulos=$ID_SUBMODULOS";
                   
@@ -91,12 +91,13 @@ class AdminDAO{
     }
 
 
-    public function listarTemas()
+    public function listarTemas($cadena)
     {
         try
         {
             $query="SELECT tbtemas.no, tbtemas.nombre
-                    FROM temas tbtemas";
+                    FROM temas tbtemas
+                    WHERE tbtemas.nombre LIKE '%$cadena%' AND tbtemas.padre=0";
             
             $db= AccesoDB::getInstancia();        
             $lista= $db->executeQuery($query);
@@ -108,7 +109,28 @@ class AdminDAO{
             return false;
         }
     }
-
+    
+    
+    public function listarTemasPorUsuario($ID_USUARIO)
+    {
+        try
+        {
+            $query="SELECT tbtemas.no, tbtemas.nombre
+                    FROM usuarios_temas tbusuarios_temas
+                    JOIN temas tbtemas ON tbtemas.id_tema=tbusuarios_temas.id_tema
+                    WHERE tbusuarios_temas.id_usuario=$ID_USUARIO";
+            
+            $db= AccesoDB::getInstancia();
+            $lista= $db->executeQuery($query);
+            
+            return $lista;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
 
     public function insertarUsuario($ID_EMPLEADO, $NOMBRE_USUARIO)
     {
@@ -144,9 +166,8 @@ class AdminDAO{
     {
         try
         {
-            $query="UPDATE usuarios_vistas 
-                    SET ".$COLUMNA."='".$VALOR."' WHERE id_usuario=$ID_USUARIO AND id_estructura=$ID_ESTRUCTURA";
-            
+            $query="UPDATE usuarios_vistas tbusuarios_vistas 
+                    SET tbusuarios_vistas.".$COLUMNA."= '".$VALOR."' WHERE tbusuarios_vistas.id_usuario=$ID_USUARIO AND tbusuarios_vistas.id_estructura=$ID_ESTRUCTURA";
             $db= AccesoDB::getInstancia();
             $lista= $db->executeQueryUpdate($query);
             

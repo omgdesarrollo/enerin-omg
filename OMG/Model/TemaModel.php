@@ -17,9 +17,8 @@ class TemaModel{
             foreach ($rec as $value)
             {
                 
-            $resultadoArbol[$contador]= array(
-                array($value['no'],$value['padre'],$value['descripcion']),                
-            );
+            $resultadoArbol[$contador]=
+                array($value['id_tema'],$value['padre'],$value['no']."-".$value['nombre']);                
                 $contador++;
             }    
             
@@ -30,6 +29,22 @@ class TemaModel{
         }
     }
   
+    
+    public function listarHijos($ID_TEMA)
+    {
+        try
+        {
+            $dao= new TemaDAO();
+            $rec= $dao->listarHijos($ID_TEMA);
+            
+            return $rec;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
     
 }
 

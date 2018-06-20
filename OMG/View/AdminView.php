@@ -160,6 +160,7 @@ $Usuario=  Session::getSesion("user");
                 <th class="table-header">Correo</th>
                 <th class="table-header">Categoria</th>
                 <th class="table-header">Permisos</th>
+                <th class="table-header">Temas</th>
             </tr>
             <tbody id="bodyTableAgregar">
             </tbody>
@@ -232,15 +233,58 @@ $Usuario=  Session::getSesion("user");
                             </div>
                         </div>
 
-                        <div class="form-group" method="post">
+                        <!-- <div class="form-group" method="post">
                             <button type="submit" id="BTN_MODIFICARPERMISOS" onClick="" class="btn crud-submit btn-info">Guardar Cambios</button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
         </div>
         <!-- fin del modal agregar usuario -->
 
+        <!-- Modal modificar temas permitidos -->
+        <div class="modal draggable fade" id="modificarTemas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Agregar Usuario</h4>
+                    </div>
+
+                    <div class="modal-body" style="width: -webkit-fill-available;">
+                        <div class="form-group">
+                            <label class="control-label">Temas: </label>
+                            <div class="dropdown">
+                                <input style="width:60%" type="text" class="dropdown-toggle" id="NOMBRETEMA_MODIFICARTEMAS" data-toggle="dropdown" onkeyup="buscarTemas(this)"/>
+                                    <ul style="width:60%;cursor:pointer;" class="dropdown-menu" id="dropdownEventTemas" role="menu" 
+                                    aria-labelledby="menu1"></ul>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="table-container" style="max-height:none;">
+                                Agregados:
+                                <table style="width:100%" class="tbl-qa">
+                                    <tr>
+                                        <th class="table-header">No.</th>
+                                        <th class="table-header">Tema</th>
+                                        <th class="table-header">Descripcion</th>
+                                    </tr>
+                                    <tbody id="bodyTableTemas">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-group" method="post">
+                            <button type="submit" id="BTN_MODIFICARPERMISOS" onClick="" class="btn crud-submit btn-info">Guardar Cambios</button>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- fin del modal agregar usuario -->
     </body>
     <!-- </div> -->
 
@@ -295,7 +339,11 @@ $Usuario=  Session::getSesion("user");
         tempData += "<td>"+value.categoria+"</td>";
         tempData += "<td><button onClick='modificarPermisos("+value.id_usuario+");' type='button' class='btn btn-success'";
         tempData += "data-toggle='modal' data-target='#modificarPermisos'>";
-        tempData += "<i class='ace-icon fa fa-envelope' style='font-size: 20px;'></i></button></td>";
+        tempData += "<i class='ace-icon fa fa-pencil' style='font-size: 20px;'></i></button></td>";
+
+        tempData += "<td><button onClick='modificarTemas("+value.id_usuario+");' type='button' class='btn btn-success'";
+        tempData += "data-toggle='modal' data-target='#modificarTemas'>";
+        tempData += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i></button></td>";
         return tempData;
     }
 
@@ -327,6 +375,31 @@ $Usuario=  Session::getSesion("user");
         }
     }
 
+    function buscarTemas(data)
+    {
+        cadena = $(data).val().toLowerCase();
+        tempData="";
+        if(cadena!="")
+        {
+            $.ajax({
+                url: '../Controller/AdminController.php?Op=Busqueda',
+                type: 'GET',
+                data: 'CADENA='+cadena,
+                success:function(usuarios)
+                {
+                    $.each(usuarios,function(index,value)
+                    {
+                        // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
+                        datos = value.correo+"^_^"+value.nombre+"^_^"+value.categoria+"^_^"+value.id_empleado;
+                        tempData += "<li role='presentation'><a role='menuitem' tabindex='-1'";
+                        tempData += "onClick='seleccionarItem(\""+datos+"\")'>";
+                        tempData += value.nombre+"</a></li>";
+                    });
+                    $("#dropdownEvent").html(tempData);
+                }
+            });
+        }
+    }
     function seleccionarItem(usuarioDatos)
     {
         datos = usuarioDatos.split("^_^");
@@ -416,9 +489,11 @@ $Usuario=  Session::getSesion("user");
         $('#loader').hide();
     }
 
+    idUsuario="";
     function modificarPermisos(id)
     {
         // construirTablaPermisos();
+        idUsuario=id;
         $.ajax({
             url: '../Controller/AdminController.php?Op=ListarPermisos',
             type:'GET',
@@ -430,9 +505,7 @@ $Usuario=  Session::getSesion("user");
             success:function(permisos)
             {
                 // tempData = "";
-                construirTablaPermisosDatos();
-                
-                asignarPermisosTabla();
+                construirTablaPermisosDatos(permisos);
                 $('#loader').hide();
             },
             error:function()
@@ -441,26 +514,24 @@ $Usuario=  Session::getSesion("user");
             }
         });
     }
-    var submodulo={
-        'Catalogo':['Empleados','Temas','Documentos','Asignacion Tema Requisito'],
-        'Cumplimientos':['Validacion','evidencias'],
-        'Informes Geneciales':['Informe'],
-        'Oficios':['Empleados','Autoridad Remitente','Temas','Documento Salida','Documentos Salida','Seguimiento Entrada','Informe Gerencial']
-        };
-        console.log(submodulo);
-        textCheckBox = "<input type='checkbox' style='width:40px;height:40px;margin:7px 0 0;'";
-    function construirTablaPermisosDatos()
+    // var submodulo={
+    //     'Catalogo':['Empleados','Temas','Documentos','Asignacion Tema Requisito'],
+    //     'Cumplimientos':['Validacion','evidencias'],
+    //     'Informes Geneciales':['Informe'],
+    //     'Oficios':['Empleados','Autoridad Remitente','Temas','Documento Salida','Documentos Salida','Seguimiento Entrada','Informe Gerencial']
+    //     };
+    //     console.log(submodulo);
+    //     textCheckBox = "<input type='checkbox' style='width:40px;height:40px;margin:7px 0 0;'";
+    function construirTablaPermisosDatos(permisos)
     {
-        // tempData="";
         $.ajax({
             url: '../Controller/AdminController.php?Op=CrearTablaPermisos',
             type: 'GET',
             success:function(tabla)
             {
-                tempData = tabla;
-                $('#bodyTablePermisos').html(tempData);
-                // console.log(tabla);
-                // return tempData;
+                $('#bodyTablePermisos').html(tabla);
+                asignarPermisosTabla(permisos);
+                console.log("tabla");
             }
         });
         // var tempData="";
@@ -534,34 +605,73 @@ $Usuario=  Session::getSesion("user");
 
     function asignarPermisosTabla(permisos)
     {
+        console.log("permisos");
         idEstructura=2;
+        no = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;' aria-hidden='true'></i>";
+        yes = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00' aria-hidden='true'></i>";
         $.each(permisos,function(index,value)
         {
             if(value.edit=='true')
-                $('#edit_'+idEstructura).html("<i class='fa fa-check-circle-o' aria-hidden='true'></i>");
+                $('#edit_'+value.id_estructura).html(yes);
             else
-                $('#edit_'+idEstructura).html("");
-            if(value.edit=='true')
-                $('#view_'+idEstructura).html("<i class='fa fa-check-circle-o' aria-hidden='true'></i>");
+                $('#edit_'+value.id_estructura).html(no);
+
+            if(value.consult=='true')
+                $('#consult_'+value.id_estructura).html(yes);
             else
-                $('#view_'+idEstructura).html("");
-            if(value.edit=='true')
-                $('#consult_'+idEstructura).html("<i class='fa fa-check-circle-o' aria-hidden='true'></i>");
+                $('#consult_'+value.id_estructura).html(no);
+
+            if(value.new=='true')
+                $('#new_'+value.id_estructura).html(yes);
             else
-                $('#consult_'+idEstructura).html("");
-            if(value.edit=='true')
-                $('#delet_'+idEstructura).html("<i class='fa fa-check-circle-o' aria-hidden='true'></i>");
+                $('#new_'+value.id_estructura).html(no);
+
+            if(value.delete=='true')
+                $('#delete_'+value.id_estructura).html(yes);
             else
-                $('#delet_'+idEstructura).html("");
+                $('#delete_'+value.id_estructura).html(no);
+
             idEstructura++;
         });
     }
     function saveCheckBoxToDataBase(Obj,column,idEstructura)
     {
         //el id de usuario obtenerlo desde afuera
-        console.log(Obj);
-        console.log(column);
-        console.log(idEstructura);
+        no = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;' aria-hidden='true'></i>";
+        yes = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00' aria-hidden='true'></i>";
+        // console.log(Obj);
+        // console.log(column);
+        // console.log(idEstructura);
+        // $(Obj).html("<i class='fa fa-check-circle-o' style='font-size: xx-large;' aria-hidden='true'></i>");
+        ObjI = Obj.getElementsByTagName("i");
+        // ObjI = $(ObjI).parent();
+        // console.log($(Obj).innerHTML);
+        // ObjI = $(Obj).innerHTML
+        id = $(Obj).attr("id");
+        colId = id.split("_");
+        valor="";
+        ($(ObjI[0]).hasClass('fa-times-circle-o'))?valor=true:valor=false;
+        $.ajax({
+                url: '../Controller/AdminController.php?Op=ModificarPermiso',
+                type: 'GET',
+                data: 'COLUMNA='+colId[0]+"&VALOR="+valor+"&ID_USUARIO="+idUsuario+"&ID_ESTRUCTURA="+colId[1],
+                success:function(exito)
+                {
+                    console.log(exito);
+                    if(exito)
+                    {
+                        (valor)?$(Obj).html(yes):$(Obj).html(no);
+                    }
+                    else
+                    {
+                        swalError("Error en el servidor");    
+                    }
+                },
+                error:function()
+                {
+                    swalError("Error en el servidor");
+                }
+            });
     }
 
 </script>
