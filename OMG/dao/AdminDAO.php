@@ -96,7 +96,8 @@ class AdminDAO{
         try
         {
             $query="SELECT tbtemas.no, tbtemas.nombre
-                    FROM temas tbtemas";
+                    FROM temas tbtemas
+                    WHERE tbtemas.padre=0";
             
             $db= AccesoDB::getInstancia();        
             $lista= $db->executeQuery($query);
@@ -108,7 +109,28 @@ class AdminDAO{
             return false;
         }
     }
-
+    
+    
+    public function listarTemasPorUsuario($ID_USUARIO)
+    {
+        try
+        {
+            $query="SELECT tbtemas.no, tbtemas.nombre
+                    FROM usuarios_temas tbusuarios_temas
+                    JOIN temas tbtemas ON tbtemas.id_tema=tbusuarios_temas.id_tema
+                    WHERE tbusuarios_temas.id_usuario=$ID_USUARIO";
+            
+            $db= AccesoDB::getInstancia();
+            $lista= $db->executeQuery($query);
+            
+            return $lista;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
 
     public function insertarUsuario($ID_EMPLEADO, $NOMBRE_USUARIO)
     {

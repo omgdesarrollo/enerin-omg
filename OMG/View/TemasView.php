@@ -33,6 +33,11 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/functionTemasView.js" type="text/javascript"></script>
+               
+                <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
+                <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
+                <link href="../../assets/dhtmlxSuite_v51_std/skins/web/dhtmlx.css" rel="stylesheet" type="text/css"/>
              
             
                 
@@ -61,6 +66,14 @@ $Usuario=  Session::getSesion("user");
                       padding-right: 28px; /*This would hide the scroll bar of the right. To be sure we hide the scrollbar on every browser, increase this value*/
                       padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is one*/
                     }
+                    
+                    div#layout_here {
+                    position: relative;
+                    width: 900px;
+                    height: 350px;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
+                    /*margin: 0 auto;*/
+                    }
             
                     
             </style>    
@@ -68,8 +81,8 @@ $Usuario=  Session::getSesion("user");
 
 	</head>
 
-<body class="no-skin" onload="loadSpinner()">
-    <div id="loader"></div>
+<body class="no-skin">
+    <!--<div id="loader"></div>-->
             
             
 <?php
@@ -79,7 +92,7 @@ require_once 'EncabezadoUsuarioView.php';
 ?>
 
             
-<div style="height: 5px"></div>            
+<!--<div style="height: 5px"></div>            
            
 <div style="position: fixed;">    
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
@@ -99,17 +112,20 @@ require_once 'EncabezadoUsuarioView.php';
     <img src="../../images/base/pdf.png" width="30px" height="30px"> 
 </button>
 
-    <!--Filtros de busqueda-->
+    Filtros de busqueda
 
     <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
 
 </div>
  
-<div style="height: 50px"></div>
+<div style="height: 50px"></div>-->
 
-   
+
+<div id="layout_here"></div>
+
+<div id="treeboxbox_tree"></div>
             
-<table class="table table-bordered table-striped header_fijo"  >
+<!--<table class="table table-bordered table-striped header_fijo"  >
     <thead >
     <tr class="">
      <th class="table-headert" width="8%">No. Tema</th>
@@ -122,12 +138,12 @@ require_once 'EncabezadoUsuarioView.php';
     </tr>
    </thead>
 
-       <!--<tbody id="datosGenerales"  style="position:absolute ;overflow: auto;display:block ;width: 100%">-->
+       <tbody id="datosGenerales"  style="position:absolute ;overflow: auto;display:block ;width: 100%">
 
    <tbody class="hideScrollBar"  id="datosGenerales" style="position: absolute">
    </tbody>
 
-</table>     
+</table>     -->
 
 
                              
@@ -228,9 +244,55 @@ require_once 'EncabezadoUsuarioView.php';
                       var idclausula,si_hay_cambio=false;
 //                      construirContenido();
 //                        listarEmpleados();
-                          listarTemas();
+//                          listarTemas();
+                          
+                          
+var myLayout = new dhtmlXLayoutObject({
+			parent: "layout_here",
+			pattern: "2U",
+			cells: [
+				{id: "a", width: 240, text: "Folders"},
+				{id: "b", text: "Descripcion"}
+				
+			]
+		});
+                
+myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
+	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
+//            myTree.enableHighlighting(true);
 
-		</script> 
+//dataArbol=[["1","0","de"],["2","1","fes"],["3","1","el texto es de la siguiente manera que se puede trabajar "],["5","0","de"]];
+  
+myLayout.cells("a").attachObject("treeboxbox_tree");
+  
+obtenerDatosArbol();  
+
+
+  function obtenerDatosArbol()
+  {
+      $.ajax({
+          url:'../Controller/TemasController.php?Op=Listar',
+          success:function(data)
+          {                                          
+           contruirArbol(data);   
+          }
+      });
+  }
+
+    function contruirArbol(dataArbol)
+    {
+        myTree.deleteChildItems(0);
+        if(dataArbol.length>0){
+        myTree.parse(dataArbol, "jsarray");
+        }
+    }
+        
+    
+		</script>
+                
+                
+                
+                
                 <!--Inicia para el spiner cargando-->
                 <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                 <!--Termina para el spiner cargando-->

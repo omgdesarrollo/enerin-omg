@@ -77,9 +77,23 @@ class AdminModel{
             return false;
         }
     }
-
-
-
+    
+    
+    public function listarTemasPorUsuario($ID_USUARIO)
+    {
+        try
+        {
+            $dao=new AdminDAO();
+            $rec= $dao->listarTemasPorUsuario($ID_USUARIO);
+            
+            return $rec;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
 
     public function insertarUsuario($ID_EMPLEADO, $NOMBRE_USUARIO)
     {

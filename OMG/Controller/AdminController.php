@@ -53,6 +53,13 @@ switch ($Op)
         
         break;
 
+    case 'listarTemasPorUsuario':
+        
+        $lista = $model->listarTemasPorUsuario($_REQUEST("ID_USUARIO"));
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($lista);
+        
+        break;
     
     case 'AgregarUsuario':
         $result = $model->InsertarUsuario($_REQUEST["ID_EMPLEADO"],$_REQUEST["NOMBRE_USUARIO"]);
