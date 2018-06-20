@@ -31,7 +31,7 @@ class AdminDAO{
     {
         try
         {
-            $query="SELECT tbestructura.id_submodulos,tbestructura.descripcion, tbestructura.id_vistas,tbvistas.nombre, tbusuarios_vistas.EDIT,
+            $query="SELECT tbestructura.id_estructura tbestructura.id_submodulos,tbestructura.descripcion, tbestructura.id_vistas,tbvistas.nombre, tbusuarios_vistas.EDIT,
             tbusuarios_vistas.delete, tbusuarios_vistas.new,tbusuarios_vistas.consult 
             FROM usuarios_vistas tbusuarios_vistas
             JOIN estructura tbestructura ON tbusuarios_vistas.id_estructura = tbestructura.id_estructura
@@ -50,6 +50,51 @@ class AdminDAO{
     }
     
     
+    public function listarSubmodulos()
+    {
+        try
+        {
+           $query="SELECT tbsubmodulos.id_submodulos, tbsubmodulos.nombre
+                   FROM submodulos tbsubmodulos WHERE tbsubmodulos.id_submodulos != 1";
+           
+           $db= AccesoDB::getInstancia();
+           $lista= $db->executeQuery($query);
+           
+           return $lista;
+           
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
+    
+    public function listarVistasDeSubmodulos($ID_SUBMODULOS)
+    {
+        try
+        {
+          $query="SELECT tbestructura.id_submodulos, tbestructura.descripcion  
+                  FROM estructura tbestructura
+                  WHERE  tbestructura.id_submodulos=$ID_SUBMODULOS";
+                  
+          $db= AccesoDB::getInstancia();        
+          $lista= $db->executeQuery($query);
+          
+          return $lista;
+          
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
+
+
+
+
+
     public function insertarUsuario($ID_EMPLEADO, $NOMBRE_USUARIO)
     {
         try
@@ -80,10 +125,27 @@ class AdminDAO{
     }
     
     
+    public function actualizarUsuariosVistasPorColumna($COLUMNA,$VALOR,$ID_USUARIO,$ID_ESTRUCTURA)
+    {
+        try
+        {
+            $query="UPDATE usuarios_vistas 
+                    SET ".$COLUMNA."='".$VALOR."' WHERE id_usuario=$ID_USUARIO AND id_estructura=$ID_ESTRUCTURA";
+            
+            $db= AccesoDB::getInstancia();
+            $lista= $db->executeQueryUpdate($query);
+            
+            return $lista;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;        
+        }
+    }
+    
+    
 }
-
-
-
 
 
 ?>

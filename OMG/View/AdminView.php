@@ -65,35 +65,12 @@ $Usuario=  Session::getSesion("user");
                 
         <style>
             
-            .modal
-            {
-                overflow: hidden;
-            }
-            .modal-dialog{
-                margin-right: 0;
-                margin-left: 0;
-            }
-            .modal-header{
-                height:30px;background-color:#444;
-                color:#ddd;
-            }
-            .modal-title{
-                margin-top:-10px;
-                font-size:16px;
-            }
-            .modal-header .close{
-                margin-top:-10px;
-                color:#fff;
-            }
+            
             .modal-body{
                 color:#888;
                 /*max-height: calc(100vh - 210px);*/
                 max-height: calc(100vh - 110px);
                 overflow-y: auto;
-            }
-            .modal-body p {
-                text-align:center;
-                padding-top:10px;
             }
             
             div#winVP{
@@ -229,7 +206,7 @@ $Usuario=  Session::getSesion("user");
 
         <!-- Modal modificar permisos -->
         <div class="modal draggable fade" id="modificarPermisos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
@@ -244,9 +221,9 @@ $Usuario=  Session::getSesion("user");
                                         <th class="table-header">Menu</th>
                                         <th class="table-header">Vistas</th>
                                         <th class="table-header">Ver</th>
-                                        <th class="table-header">Consultar</th>
-                                        <th class="table-header">Editar</th>
+                                        <th class="table-header">Guardar</th>
                                         <th class="table-header">Modificar</th>
+                                        <th class="table-header">Eliminar</th>
                                     </tr>
                                     <tbody id="bodyTablePermisos">
 
@@ -256,7 +233,7 @@ $Usuario=  Session::getSesion("user");
                         </div>
 
                         <div class="form-group" method="post">
-                            <button type="submit" id="BTN_MODIFICARPERMISOS" class="btn crud-submit btn-info">Guardar Cambios</button>
+                            <button type="submit" id="BTN_MODIFICARPERMISOS" onClick="" class="btn crud-submit btn-info">Guardar Cambios</button>
                         </div>
                     </div>
                 </div>
@@ -297,15 +274,7 @@ $Usuario=  Session::getSesion("user");
             },
             error:function(error)
             {
-                swal({
-                        title: '',
-                        text: 'Error en el servidor',
-                        showCancelButton: false,
-                        showConfirmButton: false,
-                        type:"error"
-                    });
-                setTimeout(function(){swal.close();},1500);
-                $('#loader').hide();
+                swalError("Error en el servidor");
             }
         });
     }
@@ -460,12 +429,10 @@ $Usuario=  Session::getSesion("user");
             },
             success:function(permisos)
             {
-                tempData = "";
-                $.each(permisos,function(index,value)
-                {
-                    tempData += construirTablaPermisosDatos(value);
-                });
-                $('#bodyTablePermisos').html(tempData);
+                // tempData = "";
+                construirTablaPermisosDatos();
+                
+                asignarPermisosTabla();
                 $('#loader').hide();
             },
             error:function()
@@ -474,14 +441,129 @@ $Usuario=  Session::getSesion("user");
             }
         });
     }
-    function construirTablaPermisosDatos(value)
+    var submodulo={
+        'Catalogo':['Empleados','Temas','Documentos','Asignacion Tema Requisito'],
+        'Cumplimientos':['Validacion','evidencias'],
+        'Informes Geneciales':['Informe'],
+        'Oficios':['Empleados','Autoridad Remitente','Temas','Documento Salida','Documentos Salida','Seguimiento Entrada','Informe Gerencial']
+        };
+        console.log(submodulo);
+        textCheckBox = "<input type='checkbox' style='width:40px;height:40px;margin:7px 0 0;'";
+    function construirTablaPermisosDatos()
     {
-        tempData = "<tr>";
-        tempData += "<td rowspan='2'>Catalago";
-        tempData += "</td>";
-        tempData += "</tr>";
-        return tempData;
+        // tempData="";
+        $.ajax({
+            url: '../Controller/AdminController.php?Op=CrearTablaPermisos',
+            type: 'GET',
+            success:function(tabla)
+            {
+                tempData = tabla;
+                $('#bodyTablePermisos').html(tempData);
+                // console.log(tabla);
+                // return tempData;
+            }
+        });
+        // var tempData="";
+        // var idEstruct=2;
+        // $.each(submodulo,function(index,value)
+        // {
+        //     tempData += "<tr>";
+        //     tempData2 = "";
+        //     tempData3 = "";
+        //     cont=0;
+        //     $.each(value,function(ind,val)
+        //     {
+        //         console.log(val);
+        //         cont++;
+        //         if(cont==1)
+        //         {
+        //             //ver/guardar/editar/eliminar
+        //             tempData2 =  "<td onClick='alert();' style='border-top:1px solid;'>"+val+"</td>";
+        //             // tempData2 += "<td id='view_"+idEstruct+"' style='border-top: 1px solid;'>"+textCheckBox;
+        //             // tempData2 += "onchange=\"saveCheckBoxToDataBase(this,'view','"+idEstruct+"')\" ></td>";
+
+        //             // tempData2 += "<td id='consult_"+idEstruct+"' style='border-top: 1px solid;'>"+textCheckBox;
+        //             // tempData2 += "onchange=\"saveCheckBoxToDataBase(this,'consult','"+idEstruct+"')\" ></td>";
+
+        //             // tempData2 += "<td id='edit_"+idEstruct+"' style='border-top: 1px solid;'>"+textCheckBox;
+        //             // tempData2 += "onchange=\"saveCheckBoxToDataBase(this,'edit','"+idEstruct+"')\" ></td>";
+
+        //             // tempData2 += "<td id='delet_"+idEstruct+"' style='border-top: 1px solid;'>"+textCheckBox
+        //             // tempData2 += "onchange=\"saveCheckBoxToDataBase(this,'delete','"+idEstruct+"')\" ></td></tr>";
+        //             tempData2 += "<td onClick=\"saveCheckBoxToDataBase(this,'view','"+idEstruct+"')\" id='view_"+idEstruct+"' style='border-top: 1px solid;cursor:pointer;'></td>";
+
+        //             tempData2 += "<td onClick=\"saveCheckBoxToDataBase(this,'new','"+idEstruct+"')\" id='new_"+idEstruct+"' style='border-top: 1px solid;cursor:pointer;'></td>";
+
+        //             tempData2 += "<td onClick=\"saveCheckBoxToDataBase(this,'edit','"+idEstruct+"')\" id='edit_"+idEstruct+"' style='border-top: 1px solid;cursor:pointer;'></td>";
+
+        //             tempData2 += "<td onClick=\"saveCheckBoxToDataBase(this,'delete','"+idEstruct+"')\" id='delet_"+idEstruct+"' style='border-top: 1px solid;cursor:pointer;'></td></tr>";
+        //         }
+        //         else
+        //         {
+        //             tempData3 += "<tr><td>"+val+"</td>";
+
+        //             // tempData3 += "<td id='view_"+idEstruct+"'>"+textCheckBox;
+        //             // tempData3 += "onchange=\"saveCheckBoxToDataBase(this,'view','"+idEstruct+"')\" ></td>";
+
+        //             // tempData3 += "<td id='consult_"+idEstruct+"'>"+textCheckBox;
+        //             // tempData3 += "onchange=\"saveCheckBoxToDataBase(this,'consult','"+idEstruct+"')\" ></td>";
+
+        //             // tempData3 += "<td id='edit_"+idEstruct+"'>"+textCheckBox;
+        //             // tempData3 += "onchange=\"saveCheckBoxToDataBase(this,'edit','"+idEstruct+"')\" ></td>";
+
+        //             // tempData3 += "<td id='delet_"+idEstruct+"'>"+textCheckBox
+        //             // tempData3 += "onchange=\"saveCheckBoxToDataBase(this,'delete','"+idEstruct+"')\" ></td></tr>";
+        //             tempData3 += "<td id='view_"+idEstruct+"' style='cursor:pointer;'>"+textCheckBox;
+        //             tempData3 += "onchange=\"saveCheckBoxToDataBase(this,'view','"+idEstruct+"')\" ></td>";
+
+        //             tempData3 += "<td id='consult_"+idEstruct+"' style='cursor:pointer;'>"+textCheckBox;
+        //             tempData3 += "onchange=\"saveCheckBoxToDataBase(this,'consult','"+idEstruct+"')\" ></td>";
+
+        //             tempData3 += "<td id='edit_"+idEstruct+"' style='cursor:pointer;'>"+textCheckBox;
+        //             tempData3 += "onchange=\"saveCheckBoxToDataBase(this,'edit','"+idEstruct+"')\" ></td>";
+
+        //             tempData3 += "<td id='delet_"+idEstruct+"' style='cursor:pointer;'>"+textCheckBox
+        //             tempData3 += "onchange=\"saveCheckBoxToDataBase(this,'delete','"+idEstruct+"')\" ></td></tr>";
+        //         }
+        //         idEstruct++;
+        //     });
+        //     tempData += "<td style='border-top: 1px solid;' rowspan='"+cont+"'>"+index+"</td>";
+        //     tempData += tempData2+tempData3;
+        // });
     }
+
+    function asignarPermisosTabla(permisos)
+    {
+        idEstructura=2;
+        $.each(permisos,function(index,value)
+        {
+            if(value.edit=='true')
+                $('#edit_'+idEstructura).html("<i class='fa fa-check-circle-o' aria-hidden='true'></i>");
+            else
+                $('#edit_'+idEstructura).html("");
+            if(value.edit=='true')
+                $('#view_'+idEstructura).html("<i class='fa fa-check-circle-o' aria-hidden='true'></i>");
+            else
+                $('#view_'+idEstructura).html("");
+            if(value.edit=='true')
+                $('#consult_'+idEstructura).html("<i class='fa fa-check-circle-o' aria-hidden='true'></i>");
+            else
+                $('#consult_'+idEstructura).html("");
+            if(value.edit=='true')
+                $('#delet_'+idEstructura).html("<i class='fa fa-check-circle-o' aria-hidden='true'></i>");
+            else
+                $('#delet_'+idEstructura).html("");
+            idEstructura++;
+        });
+    }
+    function saveCheckBoxToDataBase(Obj,column,idEstructura)
+    {
+        //el id de usuario obtenerlo desde afuera
+        console.log(Obj);
+        console.log(column);
+        console.log(idEstructura);
+    }
+
 </script>
 <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                 <!--Termina para el spiner cargando-->

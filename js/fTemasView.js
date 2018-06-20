@@ -1,13 +1,10 @@
 
  $(function(){
-                                                         
                         $('.select').on('change', function() {
-                          column="ID_EMPLEADO";
+                            alert("entro aqui ");
+                          column="id_empleado";
                           val=$(this).prop('value');
-                          
-                      
-                              alert("entro aqui ");
-          
+                                                          
                           $.ajax({
                                 url: "../Controller/ClausulasController.php?Op=Modificar",
 				type: "POST",
@@ -85,11 +82,21 @@
 
 
 
-
+function listarEmpleados ()
+{
+  $.ajax({
+      url:'../Controller/EmpleadosController.php?Op=mostrarcombo',
+      type:'GET',
+      success:function(data)
+      {
+          construirContenido(data)
+      }
+  });   
+}
 
 
 //1 .funciones para consultar informacion y construir datos 
-  function construirContenido()
+  function construirContenido(EmpleadosData)
  {
   $("#loader").show();   
   $.ajax({
@@ -104,7 +111,18 @@
           html_data += '<td width="20%" class="celda" contenteditable="true" onClick="showEdit(this)" onkeyup="detectarsihaycambio()" onBlur=\"saveToDatabase(this,\'descripcion_clausula\','+data[count].id_clausula+')\">' +data[count].descripcion_clausula+'</td>';
           html_data += '<td width="10%" class="celda" contenteditable="true" onClick="showEdit(this)" onkeyup="detectarsihaycambio()" onBlur=\"saveToDatabase(this,\'sub_clausula\','+data[count].id_clausula+')\">'+data[count].sub_clausula+'</td>';
           html_data += '<td width="20%" class="celda" contenteditable="true" onClick="showEdit(this)" onkeyup="detectarsihaycambio()" onBlur=\"saveToDatabase(this,\'descripcion_sub_clausula\','+data[count].id_clausula+')\">'+data[count].descripcion_sub_clausula+'</td>';
-          html_data += '<td width="20%" class="celda"   class="id_empleado" >'+data[count].id_empleado+'</td>';
+//          html_data += '<td width="20%" class="celda"   class="id_empleado" >'+data[count].id_empleado+'</td>';
+          
+          html_data +='<td><select class="select" onchange=\"saveComboToDatabase(\'id_empleado\',this,'+data[count].id_clausula+')\">';
+          $.each(EmpleadosData,function(index,value)
+          {
+             html_data +="<option value='"+value.id_empleado+"'";
+             if(data[count].id_empleado==value.id_empleado)
+             html_data += "selected";    
+             html_data +=">"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</option>";
+          });
+          html_data +='</select></td>';
+          
           html_data += '<td width="12%" class="celda" contenteditable="true" onClick="showEdit(this)" onkeyup="detectarsihaycambio()" onBlur=\"saveToDatabase(this,\'descripcion\','+data[count].id_clausula+')\">'+data[count].descripcion+'</td>';
           html_data += '<td width="10%" class="celda" contenteditable="true" onClick="showEdit(this)" onkeyup="detectarsihaycambio()" onBlur=\"saveToDatabase(this,\'plazo\','+data[count].id_clausula+')\">'+data[count].plazo+'</td></tr>';
          }
@@ -204,8 +222,25 @@ function detectarsihaycambio(){
 si_hay_cambio=true;
 }
 
-function saveComboToDatabase(column,id){
-idclausula=id;
+function saveComboToDatabase(column,val,idclausula){
+    alert("entro al save");
+
+//    obj= val;
+//    console.log(obj);
+//    console.log(val);
+    valorobjeto= val[val.selectedIndex].value;
+    console.log(valorobjeto);
+    
+    $.ajax({
+        url: "../Controller/ClausulasController.php?Op=Modificar",
+        type: "POST",
+        data:'column='+column+'&editval='+valorobjeto+'&id='+idclausula,
+        success: function(data){
+        alert("Estos son los datos"+data);    
+                swal("Actualizacion Exitosa!", "Ok!", "success");
+
+        }   
+   });
 
 }
 

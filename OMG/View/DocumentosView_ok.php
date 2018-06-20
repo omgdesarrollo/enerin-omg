@@ -32,38 +32,69 @@ $Usuario=  Session::getSesion("user");
                 
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-                <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>
                 
                 <script src="../../js/jquery.js" type="text/javascript"></script>
-                <script src="../../js/fDocumentosView.js" type="text/javascript"></script>
 
-<style>
+
+            <style>
+                   
+                   .modal-body{
+                      color:#888;
+                       max-height: calc(100vh - 110px);
+                       overflow-y: auto; 
+                    }
+                
+                  
+
+                    
+                    
+/*Inicia estilos para mantener fijo el header*/                    
+                    .table-fixed-header {
+    display: table; /* 1 */
+    position: relative;
+    padding-top: calc(~'2.5em + 2px'); /* 2 */
+    
+    table {
+        margin: 0;
+        margin-top: calc(~"-2.5em - 2px"); /* 2 */
+    }
+    
+    thead th {
+        white-space: nowrap;
         
-.modal-body{
-color:#888;
-max-height: calc(100vh - 110px);
-overflow-y: auto;
-}                    
-
-#sugerenciasclausulas {
-width:350px;
-height:5px;
-overflow: auto;
-}  
-body{
-overflow:hidden;     
+        /* 3 - apply same styling as for thead th */
+        /* 4 - compensation for padding-left */
+        &:before {
+            content: attr(data-header);
+            position: absolute;
+            top: 0;
+            padding: .5em 1em; /* 3 */
+            margin-left: -1em; /* 4 */
+        }
+    }
 }
 
-.hideScrollBar{
-width: 100%;
-height: 100%;
-overflow: auto;
-margin-right: 14px;
-padding-right: 28px; /*This would hide the scroll bar of the right. To be sure we hide the scrollbar on every browser, increase this value*/
-padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is one*/
-}
+ /* 5 - setting height and scrolling */
+.table-container {
+    max-height: 70vh; /* 5 */
+    overflow-y: auto; /* 5 */
         
-</style>   
+        /* 6 - same styling as for thead th */
+        &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        min-height: 2.5em;             /* 6 */
+        border-bottom: 2px solid #DDD; /* 6 */
+        background: #f1f1f1;           /* 6 */
+    }
+}
+ 
+/*Finaliza estilos para mantener fijo el header*/                    
+
+                </style>    
                 
                 
                 
@@ -78,8 +109,10 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
 <?php		
     require_once 'EncabezadoUsuarioView.php';
 ?>
-          
-<div style="height: 5px"></div>             
+
+            
+<div style="height: 5px"></div>
+             
              
 <div style="position: fixed;">        
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
@@ -107,26 +140,95 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
    <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
 </div>
 	     
-<div style="height: 40px"></div>
+             
+          <div style="height: 47px"></div>
           
 
-<table class="table table-bordered table-striped header_fijo"  >
-    <thead >
-    <tr class="">
-     <!--<th class="table-headert" width="8%">No.</th>-->
-     <th class="table-headert" width="21.12%">Clave del Documento</th>
-     <th class="table-headert" width="15.36%">Nombre del Documento</th>
-     <th class="table-headert" width="15.36%">Responsable del Documento</th>
-     <th class="table-headert" width="15.36%">Opcion</th>
-    </tr>
-   </thead>
-
-   <tbody class="hideScrollBar"  id="datosGenerales" style="position: absolute">
-   </tbody>
-
-</table>
-
+          
         
+          <div class="table-fixed-header">
+              <div class="table-container">
+
+                           <table id="idTable" class="tbl-qa">
+		  <thead >
+			  <tr>
+				<th class="table-header" >No.</th>
+                                <th class="table-header">Clave del Documento</th>
+				<th class="table-header">Nombre del Documento</th>				
+                                <th class="table-header">Responsable del Documento</th>					                                
+                                <!--<th class="table-header">Registros</th>-->	
+                                <th class="table-header">Opcion</th>
+			  </tr>
+		  </thead>
+                  
+		  <tbody>
+		  <?php
+                  
+                    
+                  
+                  $Lista = Session::getSesion("listarDocumentos");
+                  $cbxEmp= Session::getSesion("listarEmpleadosComboBox");
+                  $numeracion = 1;
+
+                  foreach ($Lista as $filas) {
+                      if($filas["clave_documento"]!="SIN DOCUMENTO"){
+		  ?>
+			  <tr class="table-row">
+				<td><?php echo $numeracion++;   ?></td>                               
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'clave_documento','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["clave_documento"]; ?></td>
+                                <td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"  onkeyup="detectarsihaycambio(this)"><?php echo $filas["documento"]; ?></td>
+                                
+                                <td> 
+                                    <select   id="id_empleado" class="select"  onchange="saveComboToDatabase('id_empleado', <?php echo $filas["id_documento"]; ?> )">
+                                    <?php
+                                    $s="";
+                                                foreach ($cbxEmp as $value) {
+                                                    if($value["id_empleado"]=="".$filas["id_empleado"]){
+                                                    ?>
+                                    
+                                                        <option value="<?php echo "".$filas["id_empleado"] ?>"  selected ><?php echo "".$filas["nombre_empleado"]." ".$filas["apellido_paterno"]." ".$filas["apellido_materno"]; ?></option>
+                                        
+                                                        <?php
+                                                        }
+                                                        else{
+                                                            ?>
+                                                        }
+                                                             <option value="<?php echo "".$value["id_empleado"] ?>"  ><?php echo "".$value["nombre_empleado"]." ".$value["apellido_paterno"]." ".$value["apellido_materno"]; ?></option>
+                                                             <?php
+                                                        }
+                                                }
+                                    
+                                    ?>
+                                    </select>                                   
+                                </td>
+                                
+                                <!--<td class="text-left" contenteditable="true" onBlur="saveToDatabase(this,'registros','<?php echo $filas["id_documento"]; ?>')" onClick="showEdit(this);"  onkeyup="detectarsihaycambio(this)"><?php echo $filas["registros"]; ?></td>-->
+                                <!--<td><textarea cols="50"  wrap="soft"> <?php // echo $filas["registros"]; ?> </textarea>  </td>-->
+                                <td>
+                                    <button style="font-size:x-large;color:#39c;background:transparent;border:none;" ><i class="fa fa-trash"></i></button> 
+                                </td>
+			  </tr>
+		<?php
+                      }
+		}
+                
+		?>
+		  </tbody>
+		</table>
+                           
+                           
+              </div>
+          </div>    
+   
+            
+            
+			
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+			</a>
+	
+             
                 
                 <!-- Inicio de Seccion Modal Nuevo Documento-->
        <div class="modal draggable fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -206,9 +308,77 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
 		<script>
                     
                       var id_clausula,si_hay_cambio=false;
-                      listarDatos();
+                      $(function(){
+                          
+                          
+                          
+                        $("#CLAVE_DOCUMENTO").keyup(function(){
+                            var valueclavedocumento=$(this).val();
+                            
+                            verificarExiste(valueclavedocumento,"clave_documento");
+                           
+                        });
+                          
+                          
+                        $('.select').on('change', function() {
+                          column="ID_EMPLEADO";
+                          val=$(this).prop('value');
+                           $.ajax({
+                                url: "../Controller/DocumentosController.php?Op=Modificar",
+				type: "POST",
+				data:'column='+column+'&editval='+val+'&id='+id_clausula,
+				success: function(data){
+                                     consultarInformacion("../Controller/DocumentosController.php?Op=Listar");
+                                     swal("Actualizacion Exitosa!", "Ok!", "success")
+							
+                      				
+				}   
+                           });
+                          
+                          
+                        });
+  
+  
                       
-                      
+                        
+                        
+                        $("#btn_guardar").click(function(){
+                                  
+                                    var CLAVE_DOCUMENTO=$("#CLAVE_DOCUMENTO").val();
+                                    var DOCUMENTO=$("#DOCUMENTO").val();
+                                    var ID_EMPLEADOMODAL=$("#ID_EMPLEADOMODAL").val();
+                                    var REGISTROS=$("#REGISTROS").val();
+
+                                   alert("CLAVE_DOCUMENTO :"+CLAVE_DOCUMENTO + "DOCUMENTO :"+DOCUMENTO + "ID_EMPLEADOMODAL :"+ID_EMPLEADOMODAL
+                                                            + "REGISTROS :"+REGISTROS);
+                                  
+                                    
+
+                                    datos=[];
+                                    datos.push(CLAVE_DOCUMENTO);
+                                    datos.push(DOCUMENTO);
+                                    datos.push(ID_EMPLEADOMODAL);
+                                    datos.push(REGISTROS);
+                                    
+                                    saveToDatabaseDatosFormulario(datos);
+                                    
+                        });
+                        
+ 
+
+
+                        $("#btn_limpiar").click(function(){
+                            
+                                  $("#CLAVE_DOCUMENTO").val("");
+                                  $("#DOCUMENTO").val("");
+                                  $("#REGISTROS").val("");
+                                  
+                                                                      
+                        });
+                        
+                        
+  
+                      }); //LLAVE CIERRE FUNCTION
                       
                       
                       
