@@ -30,6 +30,22 @@ class TemaModel{
     }
   
     
+    public function listarHijos($ID_TEMA)
+    {
+        try
+        {
+            $dao= new TemaDAO();
+            $rec= $dao->listarHijos($ID_TEMA);
+            
+            return $rec;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
 }
 
 ?>

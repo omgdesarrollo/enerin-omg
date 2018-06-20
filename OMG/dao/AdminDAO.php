@@ -91,13 +91,13 @@ class AdminDAO{
     }
 
 
-    public function listarTemas()
+    public function listarTemas($cadena)
     {
         try
         {
             $query="SELECT tbtemas.no, tbtemas.nombre
                     FROM temas tbtemas
-                    WHERE tbtemas.padre=0";
+                    WHERE tbtemas.nombre LIKE '%$cadena%' AND tbtemas.padre=0";
             
             $db= AccesoDB::getInstancia();        
             $lista= $db->executeQuery($query);

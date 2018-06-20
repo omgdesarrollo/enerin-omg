@@ -24,7 +24,7 @@ public function mostrarTemas()
     }
 }
 
-public function mostrarSubtemas($ID_TEMA)
+public function listarHijos($ID_TEMA)
 {
     try
     {

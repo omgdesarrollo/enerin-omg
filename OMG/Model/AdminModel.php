@@ -62,12 +62,12 @@ class AdminModel{
         }
     }
     
-    public function listarTemas()
+    public function listarTemas($cadena)
     {
         try
         {
             $dao=new AdminDAO();
-            $rec= $dao->listarTemas();
+            $rec= $dao->listarTemas($cadena);
             
             return $rec;
             
