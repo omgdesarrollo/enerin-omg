@@ -10,13 +10,13 @@ session_start();
 require_once '../Model/SeguimientoEntradaModel.php';
 require_once '../Pojo/SeguimientoEntradaPojo.php';
 require_once '../util/Session.php';
-require_once '../Model/GanttModel.php';
+//require_once '../Model/GanttModel.php';
 
 
 $Op=$_REQUEST["Op"];
 $model=new SeguimientoEntradaModel();
 $pojo= new SeguimientoEntradaPojo();
-$modelGantt=new GanttModel();
+//$modelGantt=new GanttModel();
 
 switch ($Op) {
 	case 'Listar':
