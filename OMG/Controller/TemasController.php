@@ -27,6 +27,7 @@ switch ($Op) {
 	case 'Nuevo':
 		# code...
 		break;	
+        
 
 	case 'Guardar':
 		# code...
