@@ -62,7 +62,25 @@ class AdminModel{
         }
     }
     
-    
+    public function listarTemas()
+    {
+        try
+        {
+            $dao=new AdminDAO();
+            $rec= $dao->listarTemas();
+            
+            return $rec;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
+
+
+
     public function insertarUsuario($ID_EMPLEADO, $NOMBRE_USUARIO)
     {
         try

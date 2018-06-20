@@ -16,17 +16,13 @@ $pojo= new TemaPojo();
 switch ($Op) {
 	case 'Listar':
 
-		$Lista=$model->listarTemas();
-    	Session::setSesion("listarTemas",$Lista);
-//    	$tarjet="../view/principalmodulos.php";
-    	
-//		echo json_encode(array("data" => $Lista));
-//		header("location: login.php");
-        header('Content-type: application/json; charset=utf-8');
-               echo json_encode(array("data" => $Lista));
-//echo $json = json_encode(array("n" => "".$Lista.NOMBRE_EMPLEADO, "a" => "apellido",  "c" => "test"));
-		return $Lista;
-		break;
+            $Lista=$model->mostrarTemas();
+                               
+            header('Content-type: application/json; charset=utf-8'); 
+            echo json_encode($Lista);
+             return $Lista;
+
+                break;
 	
 	case 'Nuevo':
 		# code...

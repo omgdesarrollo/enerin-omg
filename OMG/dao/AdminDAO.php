@@ -91,8 +91,23 @@ class AdminDAO{
     }
 
 
-
-
+    public function listarTemas()
+    {
+        try
+        {
+            $query="SELECT tbtemas.no, tbtemas.nombre
+                    FROM temas tbtemas";
+            
+            $db= AccesoDB::getInstancia();        
+            $lista= $db->executeQuery($query);
+            
+            return $lista;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
 
 
     public function insertarUsuario($ID_EMPLEADO, $NOMBRE_USUARIO)
@@ -143,6 +158,7 @@ class AdminDAO{
             return false;        
         }
     }
+    
     
     
 }
