@@ -44,11 +44,12 @@ switch ($Op)
         
         // header('Content-type: application/json; charset=utf-8');
 		// echo json_encode($lista);
-    break;
+        break;
 
-    case 'listarTemas':
-        $lista = $model->listarTemas($_REQUEST['CADENA']);
+    case 'ListarTemas':
+        $lista = $model->listarTemas($_REQUEST["CADENA"]);
         header('Content-type: application/json; charset=utf-8');
+        // var_dump($lista);
         echo json_encode($lista);
         break;
 
@@ -56,6 +57,10 @@ switch ($Op)
         
         $lista = $model->listarTemasPorUsuario($_REQUEST("ID_USUARIO"));
         header('Content-type: application/json; charset=utf-8');
+        // $v = implode($lista);
+        // var_dump($v);
+        // echo json_encode(htmlspecialchars_decode($lista));
+        // echo utf8_decode(json_decode($lista));
         echo json_encode($lista);
         
         break;

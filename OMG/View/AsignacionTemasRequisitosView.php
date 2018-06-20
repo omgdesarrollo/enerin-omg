@@ -90,8 +90,12 @@ $Usuario=  Session::getSesion("user");
 
 <div id="layout_here"></div>
 
-<div id="treeboxbox_tree"></div>          
-<div id="gridbox" style="width:500px; height:350px; background-color:white;"></div>
+<div id="treeboxbox_tree"></div>   
+
+<div id="temas">
+    <div id="contenido"></div>
+</div>
+<!--<div id="gridbox" style="width:500px; height:350px; background-color:white;"></div>-->
 
 	<script>
             var myLayout, myTreeView, myGrid, myDataView, myMenu, myToolbar;
@@ -99,58 +103,22 @@ $Usuario=  Session::getSesion("user");
 	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
 //            myTree.enableHighlighting(true);
 
-dataArbol=[["1","0","de"],["2","1","fes"],["3","1","el texto es de la siguiente manera que se puede trabajar "],["5","0","de"]];
-   myTree.deleteChildItems(0);
- 
-  if(dataArbol.length>0){
-    myTree.parse(dataArbol, "jsarray");
-  }
+//dataArbol=[["1","0","de"],["2","1","fes"],["3","1","el texto es de la siguiente manera que se puede trabajar "],["5","0","de"]];
+  
+   
+//    obtenerDatosArbol();
 
-ele=[
-	{id: 1, text: "Tema 1", open: 1, items: [
-		{id: 5, text: "requisito", items: [
-			{id: 11, text: "registro 1"},
-			{id: 12, text: "registro 2"}
-		]},
-		{id: 6, text: "requisito 2", open: 1, items: [
-			{id: 19, text: "registro 1"},
-			{id: 20, text: "registro 2"}
-			
-		]},
-		{id: 7, text: "requisito 3", items: [
-			{id: 24, text: "registro 1"},
-			{id: 25, text: "registro 2"}
-		]}
-	]},
-	{id: 2, text: "Tema 2", items: [
-		{id: 8, text: "requisito 4"}
-	]},
-	{id: 3, text: "Tema 3"},
-	{id: 4, text: "Tema 4"}
-]
+
 var myLayout = new dhtmlXLayoutObject({
 			parent: "layout_here",
 			pattern: "2U",
 			cells: [
-				{id: "a", width: 240, text: "Folders"},
+				{id: "a", width: 240, text: "Temas"},
 				{id: "b", text: "Descripcion"}
 				
 			]
 		});
               myLayout.cells("b").hideHeader();  
-                
-                
-
-data2={
-		rows:[
-			{ id:1001,
-		 data:[
-			  "100",
-			  "A Time to Kill"
-			 ] }
-                ]
-};
-
 
 
 
@@ -163,29 +131,36 @@ var myToolbar = myLayout.cells("b").attachToolbar({
 				{type: "button", text: "Eliminar", img: "fa fa-trash-o "}
 			]
 		});
-//            mySidebar = new dhtmlXSideBar({
-//				parent:"sidebarObj",
-//				icons_path: "../../assets/dhtmlxSuite_v51_std/samples/dhtmlxSidebar/common/icons_material/",
-//				width: 180,
-//				json: it
-//			});
-//                       myLayout = new dhtmlXLayoutObject({parent:  document.body,pattern: "2U",cells: [{id: "a", text: "Navegacion", header:true},{id: "b", text: "Visualizacion",header:true}]}); 
-                        myLayout.cells("a").attachObject("treeboxbox_tree");
-                        
-//                        myTreeView = myLayout.cells("a").attachTreeView({
-//				json: ele
-//			});
-                    
+                       myLayout.cells("a").attachObject("treeboxbox_tree");
                 
                         
-                        
-                        
-//		sidebarObj
-//            myLayout.cells("b").attachObject("treeboxbox_tree");
-                        
-                        
                   
-                     
+     function obtenerTemas(){
+          $.ajax({
+            url: '../Controller/RegistrosController.php?Op=GenerarArbol',
+            type: 'GET',
+            data: 'ID_ASIGNACION='+id_asignacion,
+            success:function(data)
+            {
+               
+                $.each(data,function(index,value)
+                {
+                    dataArbol.push([padre,0,value.requisito]);
+                    dataIds.push([padre,value.id_requisito,value.requisito]);
+                    $.each(value[0],function(ind,val)
+                    {
+                        hijo++;
+                        dataArbol.push([hijo,padre,val.registro]);
+                        dataIds.push([hijo,val.id_registro,val.registro]);
+                    });
+                    hijo++;
+                    padre=hijo;
+                });
+//                console.log(dataArbol);
+                showArbol(dataArbol,dataIds);
+            }
+        });
+     }                
         
     // obtenerDatosArbol(1);
     function obtenerDatosArbol(id_asignacion)
@@ -214,8 +189,8 @@ var myToolbar = myLayout.cells("b").attachToolbar({
                     hijo++;
                     padre=hijo;
                 });
-                console.log(dataArbol);
-//                showArbol(dataArbol,dataIds);
+//                console.log(dataArbol);
+                showArbol(dataArbol,dataIds);
             }
         });
     }

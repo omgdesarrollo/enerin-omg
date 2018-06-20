@@ -44,9 +44,8 @@ class AccesoDB {
     public function executeQuery($query ) {
         try {
             $cn = $this->getConnection();
-            
+            // mysql_query("SET NAMES 'utf8'");
             $rs = mysqli_query($cn,$query);
-           
             
             if(mysqli_errno($cn)) {
                 throw new Exception(mysqli_error($cn));

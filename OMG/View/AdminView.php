@@ -255,12 +255,12 @@ $Usuario=  Session::getSesion("user");
                         <div class="form-group">
                             <label class="control-label">Temas: </label>
                             <div class="dropdown">
-                                <input style="width:60%" type="text" class="dropdown-toggle" id="NOMBRETEMA_MODIFICARTEMAS" data-toggle="dropdown" onkeyup="buscarTemas(this)"/>
-                                    <ul style="width:60%;cursor:pointer;" class="dropdown-menu" id="dropdownEventTemas" role="menu" 
+                                <input style="width:80%" type="text" class="dropdown-toggle" id="NOMBRETEMA_MODIFICARTEMAS" data-toggle="dropdown" onkeyup="buscarTemas(this)"/>
+                                    <ul style="width:80%;cursor:pointer;" class="dropdown-menu" id="dropdownEventTemas" role="menu" 
                                     aria-labelledby="menu1"></ul>
                             </div>
                         </div>
-
+                        <div id="INFO_MODIFICARTEMAS"></div>
                         <div class="form-group">
                             <div class="table-container" style="max-height:none;">
                                 Agregados:
@@ -269,6 +269,7 @@ $Usuario=  Session::getSesion("user");
                                         <th class="table-header">No.</th>
                                         <th class="table-header">Tema</th>
                                         <th class="table-header">Descripcion</th>
+                                        <th class="table-header">Opcion</th>
                                     </tr>
                                     <tbody id="bodyTableTemas">
 
@@ -382,24 +383,44 @@ $Usuario=  Session::getSesion("user");
         if(cadena!="")
         {
             $.ajax({
-                url: '../Controller/AdminController.php?Op=Busqueda',
+                url: '../Controller/AdminController.php?Op=ListarTemas',
                 type: 'GET',
                 data: 'CADENA='+cadena,
-                success:function(usuarios)
+                success:function(temas)
                 {
-                    $.each(usuarios,function(index,value)
+                    console.log(temas);
+                    $.each(temas,function(index,value)
                     {
                         // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
-                        datos = value.correo+"^_^"+value.nombre+"^_^"+value.categoria+"^_^"+value.id_empleado;
+                        datos = value.no+"^_^"+value.nombre+"^_^"+value.descripcion;
                         tempData += "<li role='presentation'><a role='menuitem' tabindex='-1'";
-                        tempData += "onClick='seleccionarItem(\""+datos+"\")'>";
-                        tempData += value.nombre+"</a></li>";
+                        tempData += "onClick='seleccionarItemTemas(\""+datos+"\")'>";
+                        tempData += value.no+" - "+value.nombre+"</a></li>";
                     });
-                    $("#dropdownEvent").html(tempData);
+                    $("#dropdownEventTemas").html(tempData);
                 }
             });
         }
     }
+
+    function seleccionarItemTemas(usuarioTemas)
+    {
+        datos = usuarioTemas.split("^_^");
+        // EmpleadoDataG = datos;
+        // usuario = datos[0].split("@");
+        $('#NOMBRETEMA_MODIFICARTEMAS').val(datos[0]);
+        textoHTML = "<div class='form-group'>Nombre: <label class='control-label'>"+datos[1]+"</label></div>";
+        textoHTML += "<div class='form-group'>Correo: <label class='control-label'>"+datos[0]+"</label></div>";
+        textoHTML += "<div class='form-group'>Categoria: <label class='control-label'>"+datos[2]+"</label></div>";
+        textoHTML += "<div class='form-group' method='post'><button onClick='agregarUsuarioBtn()'";
+        textoHTML += "type='submit' class='btn crud-submit btn-info'>Agregar Usuario</button></div>*La contraseña es el correo del empleado";
+        $("#INFO_MODIFICARTEMAS").html(textoHTML);
+    }
+    
+    var EmpleadoDataG;
+    var EmpleadoTemasG;
+    var idUsuario;
+
     function seleccionarItem(usuarioDatos)
     {
         datos = usuarioDatos.split("^_^");
@@ -413,7 +434,7 @@ $Usuario=  Session::getSesion("user");
         textoHTML += "type='submit' class='btn crud-submit btn-info'>Agregar Usuario</button></div>*La contraseña es el correo del empleado";
         $("#INFO_AGREGARUSUARIO").html(textoHTML);
     }
-    var EmpleadoDataG;
+    
     function agregarUsuarioBtn()
     {
         usuario = $('#NOMBREESCRITURA_AGREGARUSUARIO').val();
@@ -489,7 +510,6 @@ $Usuario=  Session::getSesion("user");
         $('#loader').hide();
     }
 
-    idUsuario="";
     function modificarPermisos(id)
     {
         // construirTablaPermisos();

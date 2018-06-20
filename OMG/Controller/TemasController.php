@@ -24,9 +24,15 @@ switch ($Op) {
 
                 break;
 	
-	case 'Nuevo':
-		# code...
+	case 'ListarHijos':
+            
+            $Lista= $model->listarHijos($_REQUEST['ID_TEMA']);
+            header('Content-type: application/json; charset=utf-8'); 
+            echo json_encode($Lista);
+            return $Lista;
+            
 		break;	
+        
 
 	case 'Guardar':
 		# code...
