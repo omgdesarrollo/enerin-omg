@@ -66,7 +66,8 @@ margin-right: 14px;
 padding-right: 28px; /*This would hide the scroll bar of the right. To be sure we hide the scrollbar on every browser, increase this value*/
 padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is one*/
 }
-        
+  
+
 </style>
 
                 
@@ -134,7 +135,7 @@ require_once 'EncabezadoUsuarioView.php';
 
 <!-- Inicio de Seccion Modal -->
 <div class="modal draggable fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog " role="document">
         <div class="modal-content">
           <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">x</span></button>

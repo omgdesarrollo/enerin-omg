@@ -5,12 +5,7 @@ session_start();
 require_once '../Model/EmpleadoModel.php';
 require_once '../Pojo/EmpleadoPojo.php';
 require_once '../Model/GanttModel.php';
-
-
-
 require_once '../util/Session.php';
-
-
 
 $Op=$_REQUEST["Op"];
 $model=new EmpleadoModel();
@@ -76,7 +71,7 @@ switch ($Op) {
           	$numero = count($_POST);
             $tags = array_keys($_POST);// obtiene los nombres de las varibles
             $valores = array_values($_POST);// obtiene los valores de las varibles
-            echo " g";
+            echo " &$##";
 			// var_dump($valores);
 			$arrayTransformado;
 			$listaNo=0;
@@ -104,50 +99,11 @@ switch ($Op) {
                         //la variable de sesion del dataGant se refiere al id de seguimiento entrada que hace 
                         //referencia al folio de entrada de documento de entrada
                         $modelGantt->insertarTareasGantt($arrayTransformado,Session::getSesion("dataGantt"));
-                        $value["id_seguimiento"]=Session::getSesion("dataGantt");
-                        $resultAvanceProgramaGeneral=$modelGantt->calculoAvanceProgramaGeneral($value)[0]["total_avance_programa"];
                         
-                       
-//                        $modelGantt->calculoSumaParents($value);
-//                        echo "f  ".json_encode($resultAvanceProgramaGeneral);
-                        $value["avance_programa"]=$resultAvanceProgramaGeneral;
-                        $modelGantt->updateAvanceProgramaGeneral($value);
-//                        var_dump($resExito);
-//                        echo "d   ".json_encode($res);
+                        
 			header('Content-type: application/json; charset=utf-8');
                         echo json_encode($arrayTransformado);
-			// foreach($valores as $key=>$value)
-			// {
-			// 	echo "\n".$key." : ".$value;
-			// 	$arrayTransformado;
-			// }
-            
-            
-            
-            
-//echo "ca:   ".$numero;
-//echo "valores:  ".$valores."  ---";
-            // crea las variables y les asigna el valor
-//            for($i=0;$i<$numero;$i++){
-//                
-//           echo "d:  ". $tags[$i]=$valores[$i]."<br>";
-//}
-
-//echo "posicon :  ".$tags[35];
-
-
-
-//          echo '<pre>';
-//          
-////          echo ($_POST,true);
-//    echo htmlspecialchars(print_r($_POST, true));
-//    echo '</pre>';
-//gantt_mode: tasks
-            
-            
-//            echo "estas en modificar  ".$editing."      mg   ".$modo_gantt."    ";
-            
-            
+         
             
 	break;
 

@@ -158,7 +158,7 @@ class GanttDao {
     
     
     
-    public function calculoAvanceProgramaGeneral($value)
+    public function calculoAvanceProgramaGeneral($id_seguimiento_que_lleva_al_folio_de_entrada)
     {
         try
         {
@@ -167,7 +167,7 @@ class GanttDao {
 
                    JOIN gantt_tasks tbgantt_tasks ON tbgantt_tasks.id=tbgantt_seguimiento_entrada.id_gantt  
 
-                   WHERE tbgantt_seguimiento_entrada.id_seguimiento_entrada='".$value["id_seguimiento"]."' AND tbgantt_tasks.parent=0";
+                   WHERE tbgantt_seguimiento_entrada.id_seguimiento_entrada='".$id_seguimiento_que_lleva_al_folio_de_entrada."' AND tbgantt_tasks.parent=0";
            $db= AccesoDB::getInstancia();
            $list= $db->executeQuery($query);
            
