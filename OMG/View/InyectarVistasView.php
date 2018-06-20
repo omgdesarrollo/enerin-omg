@@ -6,7 +6,7 @@
 
 
 <div id="temas">
-<iframe src="TemasView.php" style="width: 100%; height: 400px;margin-top: 20px;margin-left: 10px;" name="formularios"></iframe>
+<iframe src="TemasView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
 
 
@@ -36,10 +36,6 @@
 <iframe src="CumplimientosView.php" style="width: 100%; height: 400px;margin-top: 20px;margin-left: 10px;" name="formularios"></iframe>
 </div>
 
-
-<div id="clausulas">
-<iframe src="ClausulasView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
-</div>
 
 
 <div id="entidadesReguladoras">

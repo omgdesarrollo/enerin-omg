@@ -114,10 +114,10 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
     <thead >
     <tr class="">
      <!--<th class="table-headert" width="8%">No.</th>-->
-     <th class="table-headert" width="21.12%">Clave del Documento</th>
-     <th class="table-headert" width="15.36%">Nombre del Documento</th>
-     <th class="table-headert" width="15.36%">Responsable del Documento</th>
-     <th class="table-headert" width="15.36%">Opcion</th>
+     <th class="table-headert" width="24%">Clave del Documento</th>
+     <th class="table-headert" width="24%">Nombre del Documento</th>
+     <th class="table-headert" width="24%">Responsable del Documento</th>
+     <th class="table-headert" width="24%">Opcion</th>
     </tr>
    </thead>
 
