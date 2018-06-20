@@ -101,8 +101,13 @@ function reconstruir(value,carga)
     
     if(carga==0)
     tempData += "<tr id='registro_"+value.id_documento+"'>"
-    tempData += "<td class='celda' width='22%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'documentos','clave_documento',"+value.id_documento+",'id_documento')\"\n\
+    tempData += "<td class='celda' width='20%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'documentos','clave_documento',"+value.id_documento+",'id_documento')\"\n\
                      onkeyup=\"detectarsihaycambio()\">"+value.clave_documento+"</td>";
+    tempData += "<td class='celda' width='20%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'documentos','documento',"+value.id_documento+",'id_documento')\" \n\
+                     onkeyup=\"detectarsihaycambio()\">"+value.documento+"</td>";
+    tempData += "<td class='celda' width='20%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'documentos','id_empleado',"+value.id_documento+",'id_documento')\" \n\
+                     onkeyup=\"detectarsihaycambio()\">"+value.id_empleado+"</td>"
+    tempData += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"><i class="fa fa-trash"></i></button></td>";
     
     if(carga==0)
       tempData+="</tr>";

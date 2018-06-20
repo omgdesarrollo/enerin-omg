@@ -65,35 +65,12 @@ $Usuario=  Session::getSesion("user");
                 
         <style>
             
-            .modal
-            {
-                overflow: hidden;
-            }
-            .modal-dialog{
-                margin-right: 0;
-                margin-left: 0;
-            }
-            .modal-header{
-                height:30px;background-color:#444;
-                color:#ddd;
-            }
-            .modal-title{
-                margin-top:-10px;
-                font-size:16px;
-            }
-            .modal-header .close{
-                margin-top:-10px;
-                color:#fff;
-            }
+            
             .modal-body{
                 color:#888;
                 /*max-height: calc(100vh - 210px);*/
                 max-height: calc(100vh - 110px);
                 overflow-y: auto;
-            }
-            .modal-body p {
-                text-align:center;
-                padding-top:10px;
             }
             
             div#winVP{
@@ -229,7 +206,7 @@ $Usuario=  Session::getSesion("user");
 
         <!-- Modal modificar permisos -->
         <div class="modal draggable fade" id="modificarPermisos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
