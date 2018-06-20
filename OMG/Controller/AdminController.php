@@ -47,10 +47,9 @@ switch ($Op)
     break;
 
     case 'listarTemas':
-        $lista = $model->listarTemas();
+        $lista = $model->listarTemas($_REQUEST['CADENA']);
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($lista);
-        
         break;
 
     case 'listarTemasPorUsuario':
