@@ -14,8 +14,7 @@ switch ($Op){
         Session::setSesion("listarRegistros",$Lista);
         
         header('Content-type: application/json; charset=utf-8');
-        echo json_encode($Lista);
-        
+        echo json_encode($Lista);    
         // return $Lista;
     break;
 
@@ -28,13 +27,13 @@ switch ($Op){
         echo json_encode($Lista);
         
         // return $Lista;
-        break;
+    break;
 
     case 'guardar':
         
         $data = $model->insertarRegistros($_REQUEST["REGISTRO"]);
 		echo $data;
-        break;
+    break;
 
     default:
     # code...

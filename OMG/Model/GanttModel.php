@@ -25,10 +25,11 @@ class GanttModel {
             $inserccion;
             $lista_tareas_verificadas;
             $dao= new GanttDao();
+            $modelGantt= new GanttModel();
             $lista_tareas_verificadas=self::verificarTareasExiste($data);
             foreach ($data as $value) {
                 if (isset($value["id"])) {
-                    foreach ($lista_tareas_verificadas as $value2) {
+                   foreach ($lista_tareas_verificadas as $value2) {
                         if($value["id"]==$value2["id"]){
                             
                                 if($value2["cantidad"]==0){
@@ -48,7 +49,6 @@ class GanttModel {
                                          $dao->deleteTareasDe_Gantt_Seguimiento_Entrada($value);
                                             
                                     }else{
-                                        
                                          $dao->updateTareas($value); 
                                          $dao->updateTareasId_EmpleadoXIdGantt_En_Tabla_Seguimiento_entrada($value);
                                     }
@@ -57,9 +57,9 @@ class GanttModel {
                     }
                 }
             }
-            
-          
-            
+         
+         
+          $modelGantt->calculoAvanceProgramaGeneral($id_seguimiento_que_lleva_al_folio_de_entrada);
             
         } catch (Exception $ex) {
             throw $ex;
@@ -115,20 +115,16 @@ class GanttModel {
         }
     }
     
-    public  function calculoAvanceProgramaGeneral($value)
+    public  function calculoAvanceProgramaGeneral($id_seguimiento_que_lleva_al_folio_de_entrada)
     {
         try
         {
             $dao=new GanttDao();
-            $rec= $dao->calculoAvanceProgramaGeneral($value);
-//            echo "ew:  ".json_encode($rec);
-//            if($rec==""){
-//                echo "trajo null";
-//            } else {
-//                echo "no trajo null";
-//            }
-            
-            
+             $rec= $dao->calculoAvanceProgramaGeneral($id_seguimiento_que_lleva_al_folio_de_entrada);
+             echo "s  : ".$rec[0]["total_avance_programa"];
+             $value["id_seguimiento"]=$id_seguimiento_que_lleva_al_folio_de_entrada;
+             $value["avance_programa"]=$rec[0]["total_avance_programa"];
+            $dao->updateAvanceProgramaGeneral($value);
             return $rec;
         } catch (Exception $ex)
         {
@@ -142,7 +138,7 @@ class GanttModel {
         try{
             
             $dao= new GanttDao();
-            $dao= 
+//            $dao= 
             
             
         } catch (Exception $ex) {

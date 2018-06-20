@@ -38,18 +38,33 @@ switch ($Op)
     	header('Content-type: application/json; charset=utf-8');
 		echo json_encode($lista);
     break;
-    
-    case 'AgregarUsuario':
-        $result = $model->InsertarUsuario($_REQUEST["ID_EMPLEADO"],$_REQUEST["NOMBRE_USUARIO"]);
-        header('Content-type: application/json; charset=utf-8');
-		echo json_encode($result);
-    break;
 
     case 'ListarUsuario':
         $lista = $model->listarUsuario($_REQUEST["ID_EMPLEADO"]);
         
         // header('Content-type: application/json; charset=utf-8');
 		// echo json_encode($lista);
+    break;
+
+    case 'listarTemas':
+        $lista = $model->listarTemas();
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($lista);
+        
+        break;
+
+    case 'listarTemasPorUsuario':
+        
+        $lista = $model->listarTemasPorUsuario($_REQUEST("ID_USUARIO"));
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($lista);
+        
+        break;
+    
+    case 'AgregarUsuario':
+        $result = $model->InsertarUsuario($_REQUEST["ID_EMPLEADO"],$_REQUEST["NOMBRE_USUARIO"]);
+        header('Content-type: application/json; charset=utf-8');
+		echo json_encode($result);
     break;
 
     case 'CrearTablaPermisos':

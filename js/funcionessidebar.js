@@ -8,7 +8,7 @@ function loadDataSideBarCatalogoInformacion(){
         width: 350,
         items: [
           {id: "empleados", text: "Empleados", icon: "empleados.jpg"},
-          {id: "clausulas", text: "Temas", icon: "temas.jpg"},          
+          {id: "temas", text: "Temas", icon: "temas.jpg"},          
           {id: "documentos", text: "Documentos", icon: "documentosn.jpg"},
           //{id: "cumplimientos", text: "Cumplimientos", icon: "cumplimientos.png"},
           {type: "separator"},
@@ -29,10 +29,8 @@ function loadDataSideBarCatalogoInformacion(){
                                        break;  
 
 
-                                       case "clausulas":
-                                            consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
-                                            consultarInformacion("../Controller/EmpleadosController.php?Op=mostrarcombo");
-                                            $("#sidebarObjV").load('InyectarVistasView.php #clausulas');
+                                       case "temas":
+                                            $("#sidebarObjV").load('InyectarVistasView.php #temas');
                                        break;
                                      
 

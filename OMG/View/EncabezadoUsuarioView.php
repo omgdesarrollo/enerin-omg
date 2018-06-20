@@ -140,7 +140,7 @@ foreach ($notifacionescompletas as $value){
                                                                             <?php foreach ($notifacionescompletas as $item){ ?>                                    
 										<li>
 											<a href="#" class="clearfix">
-												<img src="../../assets/probando/images/avatars/avatar5.png" class="msg-photo" alt="admin" />
+												<img src="../../assets/probando/images/avatars/user.jpg" class="msg-photo" alt="admin" />
 												<span class="msg-body">
 													<span class="msg-title">
 														<span class="blue"><?php echo $item["para"] ?>:
@@ -176,7 +176,7 @@ foreach ($notifacionescompletas as $value){
                         <!--seccion de info usuario-->
                             <li class="light-blue dropdown-modal">
 				<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-					<img class="nav-user-photo" src="../../assets/probando/images/avatars/avatar.png" alt="<?php echo $Usuario["NOMBRE_USUARIO"]; ?>" />
+					<img class="nav-user-photo" src="../../assets/probando/images/avatars/user.jpg" alt="<?php echo $Usuario["NOMBRE_USUARIO"]; ?>" />
 					<span class="user-info">
 						<small>Bienvenido,</small>
                                                     <div id=""><?php echo $Usuario["NOMBRE_USUARIO"]; ?></div>

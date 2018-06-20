@@ -72,9 +72,9 @@ function listarDatos()
         {
             $('#loader').show();
         },
-        success:function(datos)
+        success:function(datosDoc)
         {
-            reconstruirTable(datos);
+            listarEmpleados(datosDoc);
         },
         error:function(error)
         {
@@ -83,31 +83,56 @@ function listarDatos()
     });
 };
 
-function reconstruirTable(datos)
+
+function listarEmpleados(datosDoc)
+{
+    $.ajax
+    ({
+        url:'../Controller/EmpleadosController.php?Op=mostrarcombo',
+        type:'GET',
+        success:function(datosEmp)
+        {
+            reconstruirTable(datosDoc,datosEmp);
+        }
+    });
+}
+
+function reconstruirTable(datosDoc,datosEmp)
 {
     cargaTodo=0;
     tempData="";
-    $.each(datos,function(index,value){
-        tempData+= reconstruir(value,cargaTodo);
+    $.each(datosDoc,function(index,value){
+        tempData+= reconstruir(value,cargaTodo,datosEmp);
     });
     
     $("#datosGenerales").html(tempData);
     $("#loader").hide();
 }
 
-function reconstruir(value,carga)
+function reconstruir(value,carga,datosEmp)
 {
     tempData="";
     
     if(carga==0)
     tempData += "<tr id='registro_"+value.id_documento+"'>"
-    tempData += "<td class='celda' width='20%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'documentos','clave_documento',"+value.id_documento+",'id_documento')\"\n\
+    tempData += "<td class='celda' width='25%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'documentos','clave_documento',"+value.id_documento+",'id_documento')\"\n\
                      onkeyup=\"detectarsihaycambio()\">"+value.clave_documento+"</td>";
-    tempData += "<td class='celda' width='20%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'documentos','documento',"+value.id_documento+",'id_documento')\" \n\
+    tempData += "<td class='celda' width='25%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'documentos','documento',"+value.id_documento+",'id_documento')\" \n\
                      onkeyup=\"detectarsihaycambio()\">"+value.documento+"</td>";
-    tempData += "<td class='celda' width='20%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'documentos','id_empleado',"+value.id_documento+",'id_documento')\" \n\
-                     onkeyup=\"detectarsihaycambio()\">"+value.id_empleado+"</td>"
-    tempData += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"><i class="fa fa-trash"></i></button></td>";
+//    tempData += "<td class='celda' width='25%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'documentos','id_empleado',"+value.id_documento+",'id_documento')\" \n\
+//                     onkeyup=\"detectarsihaycambio()\">"+value.id_empleado+"</td>";
+    
+    tempData += '<td><select class="select" onchange=\"saveComboToDatabase(\'id_empleado\',this,'+value.id_documento+')\">';
+    $.each(datosEmp,function(index2,value2)
+    {
+        tempData += "<option value='"+value2.id_empleado+"'>";
+        if(value.id_empleado==value2.id_empleado)
+    });
+    
+    tempData += '</select></td>';
+    
+    
+    tempData += "<td class='celda' width='25%'><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"><i class='fa fa-trash'></i></button></td>";
     
     if(carga==0)
       tempData+="</tr>";
