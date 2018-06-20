@@ -22,7 +22,7 @@ switch ($Op) {
             echo json_encode($Lista);
              return $Lista;
 
-                break;
+         break;
 	
 	case 'ListarHijos':
             
