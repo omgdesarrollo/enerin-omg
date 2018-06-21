@@ -260,7 +260,7 @@ $Usuario=  Session::getSesion("user");
                                     aria-labelledby="menu1"></ul>
                             </div>
                         </div>
-                        <div id="INFO_MODIFICARTEMAS"></div>
+                        <!-- <div id="INFO_MODIFICARTEMAS"></div> -->
                         <div class="form-group">
                             <div class="table-container" style="max-height:none;">
                                 Agregados:
@@ -392,9 +392,9 @@ $Usuario=  Session::getSesion("user");
                     $.each(temas,function(index,value)
                     {
                         // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
-                        datos = value.no+"^_^"+value.nombre+"^_^"+value.descripcion;
+                        datos = value.id_tema+"^_^"+value.no+"^_^"+value.nombre+"^_^"+value.descripcion;
                         tempData += "<li role='presentation'><a role='menuitem' tabindex='-1'";
-                        tempData += "onClick='seleccionarItemTemas(\""+datos+"\")'>";
+                        tempData += "onClick='seleccionarItemTemas("+JSON.stringify(temas)+")'>";
                         tempData += value.no+" - "+value.nombre+"</a></li>";
                     });
                     $("#dropdownEventTemas").html(tempData);
@@ -405,16 +405,46 @@ $Usuario=  Session::getSesion("user");
 
     function seleccionarItemTemas(usuarioTemas)
     {
-        datos = usuarioTemas.split("^_^");
+        //meter directamente a la base de datos
+        console.log(usuarioTemas);
+        // datos = usuarioTemas.split("^_^");        
+        // // datos = value.no+"^_^"+value.nombre+"^_^"+value.descripcion;
+        // val = $('#NOMBRETEMA_MODIFICARTEMAS').val(datos[1]+" - "+datos[2]);
+        // if(val!="")
+        // {
+        //     $.ajax({
+        //         url: '../Controller/AdminController.php?Op=insertaTemaUsuario',
+        //         type: 'POST',
+        //         data: 'ID_USUARIO='+idUsuario+"&ID_TEMA="+datos[0],
+        //         success:function(exito)
+        //         {
+        //             //en exito mandar a llenar la tabla temas
+        //             if(exito)
+        //             {
+        //                 construirTablaTemas();
+        //             }
+        //             else
+        //                 swalError("Error del servidor, no se pudo agregar");
+        //         },
+        //         error:function()
+        //         {
+        //             swalError("Error del servidor, no se pudo agregar");
+        //         }
+        //     });
+        // }
         // EmpleadoDataG = datos;
         // usuario = datos[0].split("@");
-        $('#NOMBRETEMA_MODIFICARTEMAS').val(datos[0]);
-        textoHTML = "<div class='form-group'>Nombre: <label class='control-label'>"+datos[1]+"</label></div>";
-        textoHTML += "<div class='form-group'>Correo: <label class='control-label'>"+datos[0]+"</label></div>";
-        textoHTML += "<div class='form-group'>Categoria: <label class='control-label'>"+datos[2]+"</label></div>";
-        textoHTML += "<div class='form-group' method='post'><button onClick='agregarUsuarioBtn()'";
-        textoHTML += "type='submit' class='btn crud-submit btn-info'>Agregar Usuario</button></div>*La contraseña es el correo del empleado";
-        $("#INFO_MODIFICARTEMAS").html(textoHTML);
+        // $("#INFO_MODIFICARTEMAS").html(textoHTML);
+    }
+
+    function construirTablaTemas(data)
+    {
+        // bodyTableTemas id
+        tempData="";
+        $.each(data,function(index,value)
+        {
+            tempData = "<td>value.<td>";
+        });
     }
     
     var EmpleadoDataG;
