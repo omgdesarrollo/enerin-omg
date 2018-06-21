@@ -53,14 +53,9 @@ switch ($Op)
         echo json_encode($lista);
         break;
 
-    case 'listarTemasPorUsuario':
-        
-        $lista = $model->listarTemasPorUsuario($_REQUEST("ID_USUARIO"));
+    case 'ListarTemasPorUsuario':
+        $lista = $model->listarTemasPorUsuario($_REQUEST["ID_USUARIO"]);
         header('Content-type: application/json; charset=utf-8');
-        // $v = implode($lista);
-        // var_dump($v);
-        // echo json_encode(htmlspecialchars_decode($lista));
-        // echo utf8_decode(json_decode($lista));
         echo json_encode($lista);
         
         break;
@@ -75,7 +70,9 @@ switch ($Op)
         $result = $model->insertarUsuarioTema($_REQUEST['ID_USUARIO'],$_REQUEST['ID_TEMA']);
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($result);
+        break;
 
+    
     case 'CrearTablaPermisos':
         $lista = $model->listarSubmodulos();
         // foreach($lista as $key=>$datos)

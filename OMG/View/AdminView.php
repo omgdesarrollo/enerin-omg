@@ -394,7 +394,7 @@ $Usuario=  Session::getSesion("user");
                         // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
                         datos = value.id_tema+"^_^"+value.no+"^_^"+value.nombre+"^_^"+value.descripcion;
                         tempData += "<li role='presentation'><a role='menuitem' tabindex='-1'";
-                        tempData += "onClick='seleccionarItemTemas("+JSON.stringify(temas)+")'>";
+                        tempData += "onClick='seleccionarItemTemas("+JSON.stringify(value)+")'>";
                         tempData += value.no+" - "+value.nombre+"</a></li>";
                     });
                     $("#dropdownEventTemas").html(tempData);
@@ -405,45 +405,66 @@ $Usuario=  Session::getSesion("user");
 
     function seleccionarItemTemas(usuarioTemas)
     {
-        //meter directamente a la base de datos
-        // console.log(usuarioTemas);
-        // datos = usuarioTemas.split("^_^");        
-        // // datos = value.no+"^_^"+value.nombre+"^_^"+value.descripcion;
-        val = $('#NOMBRETEMA_MODIFICARTEMAS').val(datos[1]+" - "+datos[2]);
+        val = $('#NOMBRETEMA_MODIFICARTEMAS').val(usuarioTemas.no+" - "+usuarioTemas.nombre);
         if(val!="")
         {
             $.ajax({
-                url: '../Controller/AdminController.php?Op=insertaTemaUsuario',
+                url: '../Controller/AdminController.php?Op=AgregarUsuarioTema',
                 type: 'POST',
-                data: 'ID_USUARIO='+idUsuario+"&ID_TEMA="+datos[0],
+                data: 'ID_USUARIO='+idUsuario+"&ID_TEMA="+idTema,
                 success:function(exito)
                 {
                     //en exito mandar a llenar la tabla temas
                     if(exito)
                     {
-                        construirTablaTemas();
+                        $("#bodyTableTemas").append(construirTablaTemas(usuarioTemas));
                     }
                     else
-                        swalError("Error del servidor, no se pudo agregar");
+                    {
+                        val = $('#NOMBRETEMA_MODIFICARTEMAS').val("");
+                        swalError("Error en el servidor, no se pudo agregar");
+                    }
                 },
                 error:function()
                 {
-                    swalError("Error del servidor, no se pudo agregar");
+                    val = $('#NOMBRETEMA_MODIFICARTEMAS').val("");
+                    swalError("Error en el servidor, no se pudo agregar");
                 }
             });
         }
-        // EmpleadoDataG = datos;
-        // usuario = datos[0].split("@");
-        // $("#INFO_MODIFICARTEMAS").html(textoHTML);
     }
 
-    function construirTablaTemas(data)
+    function construirTablaTemas(usuarioTemas)
     {
-        // bodyTableTemas id
-        tempData="";
-        $.each(data,function(index,value)
-        {
-            tempData = "<td>value.<td>";
+        tempData = "<td>"+usuarioTemas.no+"</td>";
+        tempData += "<td>"+usuarioTemas.nombre+"</td>";
+        tempData += "<td>"+usuarioTemas.descripcion+"</td>";
+        tempData += "<td>";
+        tempData += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
+        tempData += "onclick='eliminarTema("+usuarioTemas.id_tema+");'>";
+        tempData += "<i class=\"fa fa-trash\"></i></button></td>";
+        return tempData;
+    }
+
+    function eliminarTema(idTema)
+    {
+        swalSuccess(idUsuario+" Eliminado tema "+idTema);
+        $.ajax({
+            url: '../Controller/AdminController.php?Op=',
+            type: '',
+            data: '',
+            success:function(exito)
+            {
+                if(exito)
+                {
+                }
+                else
+                    swalError("Error en el servidor. No se pudo quitar");
+            },
+            error:function()
+            {
+                swalError("Error en el servidor. No se pudo quitar");
+            }
         });
     }
     
@@ -464,7 +485,30 @@ $Usuario=  Session::getSesion("user");
         textoHTML += "type='submit' class='btn crud-submit btn-info'>Agregar Usuario</button></div>*La contraseña es el correo del empleado";
         $("#INFO_AGREGARUSUARIO").html(textoHTML);
     }
-    
+    function modificarTemas(id)
+    {
+        idUsuario = id;
+        $.ajax({
+            url: '../Controller/AdminController.php?Op=ListarTemasPorUsuario',
+            type: 'GET',
+            data: "ID_USUARIO="+id,
+            success:function(temas)
+            {
+                tempData="";
+                $.each(temas,function(index,value)
+                {
+                    tempData +="<tr>";
+                    tempData += construirTablaTemas(value);
+                    tempData +="</tr>";
+                });
+                $("#bodyTableTemas").html(tempData);
+            },
+            error:function()
+            {
+                swalError("Error en el servidor");
+            }
+        });
+    }
     function agregarUsuarioBtn()
     {
         usuario = $('#NOMBREESCRITURA_AGREGARUSUARIO').val();

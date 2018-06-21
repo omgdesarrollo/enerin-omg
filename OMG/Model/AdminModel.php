@@ -84,9 +84,7 @@ class AdminModel{
         {
             $dao=new AdminDAO();
             $rec= $dao->listarTemasPorUsuario($ID_USUARIO);
-            
             return $rec;
-            
         } catch (Exception $ex)
         {
             throw $ex;

@@ -115,14 +115,13 @@ class AdminDAO{
     {
         try
         {
-            $query="SELECT tbtemas.no, tbtemas.nombre,  tbtemas.descripcion
+            $query="SELECT tbtemas.id_tema, tbtemas.no, tbtemas.nombre, tbtemas.descripcion
                     FROM usuarios_temas tbusuarios_temas
-                    JOIN temas tbtemas ON tbtemas.id_tema=tbusuarios_temas.id_tema
-                    WHERE tbusuarios_temas.id_usuario=$ID_USUARIO";
-            
+                    JOIN temas tbtemas ON tbtemas.id_tema = tbusuarios_temas.id_tema
+                    WHERE tbusuarios_temas.id_usuario = $ID_USUARIO";
+
             $db= AccesoDB::getInstancia();
             $lista= $db->executeQuery($query);
-            
             return $lista;
             
         } catch (Exception $ex)
@@ -165,9 +164,7 @@ class AdminDAO{
     {
         try
         {
-            $query="INSERT INTO usuarios_temas (id_usuario,id_tema) VALUES ($ID_USUARIO,$ID_TEMA)";
-            
-            
+            $query="INSERT INTO usuarios_temas (id_usuario,id_tema) VALUES ($ID_USUARIO,$ID_TEMA)";            
             $db= AccesoDB::getInstancia();
             $lista= $db->executeQueryUpdate($query);
            
