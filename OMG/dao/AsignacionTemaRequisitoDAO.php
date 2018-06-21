@@ -4,6 +4,19 @@ require_once '../ds/AccesoDB.php';
 
 class AsignacionTemaRequisitoDAO {
     //put your code here
+    public function mostrarAsignacionTemas_Requisito(){
+        try{
+            $query="";
+            
+            $db=AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            return $lista;
+        } catch (Exception $ex) {
+
+        }
+    }
+    
+    
     public function mostrarAsignacionTemasRequisitos(){
         try{
 

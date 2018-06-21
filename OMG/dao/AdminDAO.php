@@ -95,14 +95,14 @@ class AdminDAO{
     {
         try
         {
-            $query="SELECT tbtemas.no, tbtemas.nombre
+            $query="SELECT tbtemas.no, tbtemas.nombre, tbtemas.descripcion
                     FROM temas tbtemas
                     WHERE tbtemas.nombre LIKE '%$cadena%' AND tbtemas.padre=0";
-            
+            // echo $query;
             $db= AccesoDB::getInstancia();        
             $lista= $db->executeQuery($query);
-            
             return $lista;
+            // var_dump($lista);
         } catch (Exception $ex)
         {
             throw $ex;
@@ -115,7 +115,7 @@ class AdminDAO{
     {
         try
         {
-            $query="SELECT tbtemas.no, tbtemas.nombre
+            $query="SELECT tbtemas.no, tbtemas.nombre,  tbtemas.descripcion
                     FROM usuarios_temas tbusuarios_temas
                     JOIN temas tbtemas ON tbtemas.id_tema=tbusuarios_temas.id_tema
                     WHERE tbusuarios_temas.id_usuario=$ID_USUARIO";

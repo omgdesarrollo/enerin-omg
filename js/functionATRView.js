@@ -8,10 +8,11 @@ function showArbol(dataArbol,dataIds){
   // data1.push([1,0,"1111"]);
   // data1.push([2,0,"2222"]);
   
-  
-//myTree.deleteChildItems(0);
-//  if(dataArbol.length>0){
-//    myTree.parse(dataArbol, "jsarray");
-//  }
+  myTree.deleteChildItems(0);
+ 
+  if(dataArbol.length>0){
+    myTree.parse(dataArbol, "jsarray");
+  }
+
   
 }

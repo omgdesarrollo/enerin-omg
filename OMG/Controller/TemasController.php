@@ -22,7 +22,7 @@ switch ($Op) {
             echo json_encode($Lista);
              return $Lista;
 
-                break;
+         break;
 	
 	case 'ListarHijos':
             
@@ -32,6 +32,7 @@ switch ($Op) {
             return $Lista;
             
 		break;	
+        
 
 	case 'Guardar':
 		# code...
