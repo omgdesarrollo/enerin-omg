@@ -17,7 +17,7 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>   
                 <!--Para abrir alertas de aviso, success,warning, error-->
                 <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
-                <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+                <!--<link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>-->
                 <!-- ace styles -->
                 <link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
                 
@@ -26,7 +26,7 @@ $Usuario=  Session::getSesion("user");
                 <!--Termina para el spiner cargando-->
                 
                 
-                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+                <!--<link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>-->
                 
                 <script src="../../js/jquery.js" type="text/javascript"></script>
 
@@ -54,7 +54,7 @@ $Usuario=  Session::getSesion("user");
                     height:5px;
                     overflow: auto;
                     }  
-                    body{
+/*                    body{
                     overflow:hidden;     
                     }
                     
@@ -63,9 +63,9 @@ $Usuario=  Session::getSesion("user");
                       height: 100%;
                       overflow: auto;
                       margin-right: 14px;
-                      padding-right: 28px; /*This would hide the scroll bar of the right. To be sure we hide the scrollbar on every browser, increase this value*/
-                      padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is one*/
-                    }
+                      padding-right: 28px; This would hide the scroll bar of the right. To be sure we hide the scrollbar on every browser, increase this value
+                      padding-bottom: 15px; This would hide the scroll bar of the bottom if there is one
+                    }*/
                     
                     div#layout_here {
                     position: relative;
@@ -315,7 +315,7 @@ obtenerDatosArbol();
     function construirSubDirectorio(data)
     {
         
-        tempData1="<table><thead><tr>\n\
+        tempData1="<table class='table table-bordered'><thead><tr class='info'>\n\
                     <th>No</th>\n\
                     <th>Tema</th>\n\
                     <th>Descripcion</th>\n\
