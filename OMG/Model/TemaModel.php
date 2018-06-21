@@ -30,12 +30,12 @@ class TemaModel{
     }
   
     
-    public function listarHijos($ID_TEMA)
+    public function listarHijos($ID)
     {
         try
         {
             $dao= new TemaDAO();
-            $rec= $dao->listarHijos($ID_TEMA);
+            $rec= $dao->listarHijos($ID);
             
             return $rec;
             

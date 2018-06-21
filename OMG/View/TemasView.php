@@ -124,6 +124,8 @@ require_once 'EncabezadoUsuarioView.php';
 <div id="layout_here"></div>
 
 <div id="treeboxbox_tree"></div>
+
+<div id="contenido"></div>
             
 <!--<table class="table table-bordered table-striped header_fijo"  >
     <thead >
@@ -257,11 +259,21 @@ var myLayout = new dhtmlXLayoutObject({
 			]
 		});
                 
+myLayout.cells("b").attachObject("contenido");                
+                
 myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
 	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
 //            myTree.enableHighlighting(true);
 
 //dataArbol=[["1","0","de"],["2","1","fes"],["3","1","el texto es de la siguiente manera que se puede trabajar "],["5","0","de"]];
+
+myTree.attachEvent("onClick", function(id){
+    // your code here
+    obtenerHijos(id);
+    
+//    alert("rama"+id);
+    return true;
+});
   
 myLayout.cells("a").attachObject("treeboxbox_tree");
   
@@ -285,6 +297,40 @@ obtenerDatosArbol();
         if(dataArbol.length>0){
         myTree.parse(dataArbol, "jsarray");
         }
+    }
+    
+    function obtenerHijos(id)
+    {
+        $.ajax({
+            url:'../Controller/TemasController.php?Op=ListarHijos',
+            type:'POST',
+            data:'ID='+id,
+            success:function(data)
+            {
+                construirSubDirectorio(data);
+            }
+        });
+    }
+    
+    function construirSubDirectorio(data)
+    {
+        
+        tempData1="<table><thead><tr>\n\
+                    <th>No</th>\n\
+                    <th>Tema</th>\n\
+                    <th>Descripcion</th>\n\
+                    <th>Plazo</th>\n\
+                    <th>Responsable</th>\n\
+                    </tr></thead><tbody></tbody>";
+                $.each(data, function(index,value){
+//                    tempData1+= ""+value.nombre+"<br>";
+                    tempData1+="<tr><td>"+value.no+"</td>";
+                    tempData1+="<td>"+value.nombre+"</td>";
+                    tempData1+="<td>"+value.descripcion+"</td>";
+                    tempData1+="<td>"+value.plazo+"</td>";
+                    tempData1+="<td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";
+                });
+                $("#contenido").html(tempData1);
     }
         
     
