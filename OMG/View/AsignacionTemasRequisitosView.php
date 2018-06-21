@@ -46,8 +46,8 @@ $Usuario=  Session::getSesion("user");
                
                 div#sidebarObj {
 			position: relative;
-/*			margin-left: 10px;
-			margin-top: 10px;*/
+			margin-left: 10px;
+			margin-top: 10px;
 			width: 900px;
 			height: 350px;
 			box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
@@ -103,9 +103,13 @@ $Usuario=  Session::getSesion("user");
 	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
 //            myTree.enableHighlighting(true);
 
-//dataArbol=[["1","0","de"],["2","1","fes"],["3","1","el texto es de la siguiente manera que se puede trabajar "],["5","0","de"]];
+dataArbol=[["1","0","de"],["2","1","fes"],["3","1","el texto es de la siguiente manera que se puede trabajar "],["5","0","de"]];
   
-   
+    myTree.deleteChildItems(0);
+ 
+  if(dataArbol.length>0){
+    myTree.parse(dataArbol, "jsarray");
+  }
 //    obtenerDatosArbol();
 
 
