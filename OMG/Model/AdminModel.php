@@ -109,7 +109,23 @@ class AdminModel{
         }
     }
     
+    public function insertarUsuarioTema($ID_USUARIO, $ID_TEMA)
+    {
+        try
+        {
+            $dao=new AdminDAO();
+            $rec= $dao->insertarUsuarioTema($ID_USUARIO, $ID_TEMA);
+            
+            return $rec;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
 
+    
     public function actualizarUsuariosVistasPorColumna($COLUMNA, $VALOR, $ID_USUARIO, $ID_ESTRUCTURA)
     {
         try

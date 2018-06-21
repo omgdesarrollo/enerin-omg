@@ -71,6 +71,11 @@ switch ($Op)
 		echo json_encode($result);
     break;
 
+    case 'AgregarUsuarioTema':
+        $result = $model->insertarUsuarioTema($_REQUEST['ID_USUARIO'],$_REQUEST['ID_TEMA']);
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($result);
+
     case 'CrearTablaPermisos':
         $lista = $model->listarSubmodulos();
         // foreach($lista as $key=>$datos)

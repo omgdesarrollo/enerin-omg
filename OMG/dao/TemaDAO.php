@@ -24,13 +24,15 @@ public function mostrarTemas()
     }
 }
 
-public function listarHijos($ID_TEMA)
+public function listarHijos($ID)
 {
     try
     {
-        $query="SELECT tbtemas.no, tbtemas.nombre
-                FROM temas tbtemas
-                WHERE tbtemas.padre=$ID_TEMA";
+        $query="SELECT tbtemas.no, tbtemas.nombre, tbtemas.descripcion, tbtemas.plazo,
+                tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno	
+		FROM temas tbtemas
+                JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
+                WHERE tbtemas.padre=$ID";
         
         $db=  AccesoDB::getInstancia();
         $lista=$db->executeQuery($query);

@@ -95,7 +95,7 @@ class AdminDAO{
     {
         try
         {
-            $query="SELECT tbtemas.no, tbtemas.nombre, tbtemas.descripcion
+            $query="SELECT tbtemas.id_tema,tbtemas.no, tbtemas.nombre, tbtemas.descripcion
                     FROM temas tbtemas
                     WHERE tbtemas.nombre LIKE '%$cadena%' AND tbtemas.padre=0";
             // echo $query;
@@ -161,7 +161,26 @@ class AdminDAO{
         }
     }
     
+    public function insertarUsuarioTema($ID_USUARIO, $ID_TEMA)
+    {
+        try
+        {
+            $query="INSERT INTO usuarios_temas (id_usuario,id_tema) VALUES ($ID_USUARIO,$ID_TEMA)";
+            
+            
+            $db= AccesoDB::getInstancia();
+            $lista= $db->executeQueryUpdate($query);
+           
+            return $lista;            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
     
+
     public function actualizarUsuariosVistasPorColumna($COLUMNA,$VALOR,$ID_USUARIO,$ID_ESTRUCTURA)
     {
         try

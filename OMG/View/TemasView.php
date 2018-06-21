@@ -17,7 +17,7 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>   
                 <!--Para abrir alertas de aviso, success,warning, error-->
                 <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
-                <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+                <!--<link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>-->
                 <!-- ace styles -->
                 <link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
                 
@@ -26,7 +26,7 @@ $Usuario=  Session::getSesion("user");
                 <!--Termina para el spiner cargando-->
                 
                 
-                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+                <!--<link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>-->
                 
                 <script src="../../js/jquery.js" type="text/javascript"></script>
 
@@ -54,7 +54,7 @@ $Usuario=  Session::getSesion("user");
                     height:5px;
                     overflow: auto;
                     }  
-                    body{
+/*                    body{
                     overflow:hidden;     
                     }
                     
@@ -63,9 +63,9 @@ $Usuario=  Session::getSesion("user");
                       height: 100%;
                       overflow: auto;
                       margin-right: 14px;
-                      padding-right: 28px; /*This would hide the scroll bar of the right. To be sure we hide the scrollbar on every browser, increase this value*/
-                      padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is one*/
-                    }
+                      padding-right: 28px; This would hide the scroll bar of the right. To be sure we hide the scrollbar on every browser, increase this value
+                      padding-bottom: 15px; This would hide the scroll bar of the bottom if there is one
+                    }*/
                     
                     div#layout_here {
                     position: relative;
@@ -124,6 +124,11 @@ require_once 'EncabezadoUsuarioView.php';
 <div id="layout_here"></div>
 
 <div id="treeboxbox_tree"></div>
+
+<div id="contenido">
+    
+    
+</div>
             
 <!--<table class="table table-bordered table-striped header_fijo"  >
     <thead >
@@ -245,6 +250,7 @@ require_once 'EncabezadoUsuarioView.php';
 //                      construirContenido();
 //                        listarEmpleados();
 //                          listarTemas();
+                        obtenerDatosArbol();
                           
                           
 var myLayout = new dhtmlXLayoutObject({
@@ -257,34 +263,86 @@ var myLayout = new dhtmlXLayoutObject({
 			]
 		});
                 
-myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
+    myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
 	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
-//            myTree.enableHighlighting(true);
-
-//dataArbol=[["1","0","de"],["2","1","fes"],["3","1","el texto es de la siguiente manera que se puede trabajar "],["5","0","de"]];
-  
+            
+            
+                
 myLayout.cells("a").attachObject("treeboxbox_tree");
-  
-obtenerDatosArbol();  
 
 
-  function obtenerDatosArbol()
-  {
-      $.ajax({
-          url:'../Controller/TemasController.php?Op=Listar',
-          success:function(data)
-          {                                          
-           contruirArbol(data);   
-          }
-      });
-  }
+function obtenerDatosArbol()
+    {
+        $.ajax({
+            url:'../Controller/TemasController.php?Op=Listar',
+            success:function(data)
+            {                                          
+             contruirArbol(data);   
+            }
+        });
+    }
 
-    function contruirArbol(dataArbol)
+function contruirArbol(dataArbol)
     {
         myTree.deleteChildItems(0);
         if(dataArbol.length>0){
         myTree.parse(dataArbol, "jsarray");
         }
+    }
+
+                
+
+//            myTree.enableHighlighting(true);
+
+//dataArbol=[["1","0","de"],["2","1","fes"],["3","1","el texto es de la siguiente manera que se puede trabajar "],["5","0","de"]];
+
+myTree.attachEvent("onClick", function(id){
+    // your code here
+    obtenerHijos(id);
+    
+//    alert("rama"+id);
+    return true;
+});
+  
+myLayout.cells("b").attachObject("contenido");                
+    
+
+
+    
+    function obtenerHijos(id)
+    {
+       $("#contenido").html("<div style='font-size:30px' class='fa fa-refresh fa-spin'></div>"); 
+        $.ajax({
+            url:'../Controller/TemasController.php?Op=ListarHijos',
+            type:'POST',
+            data:'ID='+id,
+            success:function(data)
+            {
+                construirSubDirectorio(data);
+            }
+        });
+    }
+    
+    function construirSubDirectorio(data)
+    {
+        
+        tempData1="<div class='table-responsive'><table class='table table-bordered'><thead><tr class='info'>\n\
+                    <th>No</th>\n\
+                    <th>Tema</th>\n\
+                    <th>Descripcion</th>\n\
+                    <th>Plazo</th>\n\
+                    <th>Responsable</th>\n\
+                    </tr></thead><tbody></tbody>";
+                $.each(data, function(index,value){
+//                    tempData1+= ""+value.nombre+"<br>";
+                    tempData1+="<tr><td>"+value.no+"</td>";
+                    tempData1+="<td>"+value.nombre+"</td>";
+                    tempData1+="<td>"+value.descripcion+"</td>";
+                    tempData1+="<td>"+value.plazo+"</td>";
+                    tempData1+="<td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";
+                });
+            tempData1+="</table></div>";    
+                $("#contenido").html(tempData1);
     }
         
     

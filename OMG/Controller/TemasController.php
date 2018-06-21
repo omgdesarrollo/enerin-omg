@@ -26,7 +26,7 @@ switch ($Op) {
 	
 	case 'ListarHijos':
             
-            $Lista= $model->listarHijos($_REQUEST['ID_TEMA']);
+            $Lista= $model->listarHijos($_REQUEST['ID']);
             header('Content-type: application/json; charset=utf-8'); 
             echo json_encode($Lista);
             return $Lista;
