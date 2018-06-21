@@ -125,10 +125,9 @@ require_once 'EncabezadoUsuarioView.php';
 
 <div id="treeboxbox_tree"></div>
 
-<div id="contenido">
-    
-    
-</div>
+<div id="contenido"></div>
+
+<div id="form_container" style="width:280px;height:250px;"></div>
             
 <!--<table class="table table-bordered table-striped header_fijo"  >
     <thead >
@@ -257,7 +256,7 @@ var myLayout = new dhtmlXLayoutObject({
 			parent: "layout_here",
 			pattern: "2U",
 			cells: [
-				{id: "a", width: 240, text: "Folders"},
+				{id: "a", width: 240, text: "Temas"},
 				{id: "b", text: "Descripcion"}
 				
 			]
@@ -270,6 +269,42 @@ var myLayout = new dhtmlXLayoutObject({
                 
 myLayout.cells("a").attachObject("treeboxbox_tree");
 
+var myToolbar = myLayout.cells("a").attachToolbar({
+			iconset: "awesome",
+			items: [
+                                {id:"agregar", type: "button", text: "Agregar", img: "fa fa-plus-square"},
+				{id:"eliminar", type: "button", text: "Eliminar", img: "fa fa-trash-o "}
+			]
+		});
+
+
+var formStructure = [
+    {type:"radio", name:"color", value:"r", checked:true, label:"Red"},
+    {type:"radio", name:"color", value:"g", label:"Green"},
+    {type:"radio", name:"color", value:"b", label:"Blue"}
+];
+var dhxForm = new dhtmlXForm("form_container", formStructure);
+
+
+myToolbar.attachEvent("onClick", function(id){
+    //your code here
+//    alert("hola"+id);
+    evaluarToolbarSeccionA(id);
+
+});
+
+function evaluarToolbarSeccionA(id)
+{
+    if(id=="agregar")
+    {
+//        alert("entro en agregar");
+        $('#create-item').modal('show');
+    } 
+    if(id=="eliminar")
+    {
+        alert("entro en eliminar");
+    }   
+}
 
 function obtenerDatosArbol()
     {
@@ -306,8 +341,6 @@ myTree.attachEvent("onClick", function(id){
   
 myLayout.cells("b").attachObject("contenido");                
     
-
-
     
     function obtenerHijos(id)
     {
@@ -334,7 +367,6 @@ myLayout.cells("b").attachObject("contenido");
                     <th>Responsable</th>\n\
                     </tr></thead><tbody></tbody>";
                 $.each(data, function(index,value){
-//                    tempData1+= ""+value.nombre+"<br>";
                     tempData1+="<tr><td>"+value.no+"</td>";
                     tempData1+="<td>"+value.nombre+"</td>";
                     tempData1+="<td>"+value.descripcion+"</td>";

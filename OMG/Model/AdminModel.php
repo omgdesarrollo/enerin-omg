@@ -142,6 +142,22 @@ class AdminModel{
         }
     }
     
+    public function eliminarUsuarioTema($ID_USUARIO,$ID_TEMA)
+    {
+        try
+        {
+            $dao=new AdminDAO();
+            $rec= $dao->eliminarUsuarioTema($ID_USUARIO,$ID_TEMA);
+            
+            return $rec;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
 }
 
 ?>

@@ -149,6 +149,14 @@ switch ($Op)
         echo $exito;
     break;
 
+    case 'EliminarUsuarioTema':
+        $result = $model->eliminarUsuarioTema($_REQUEST['ID_USUARIO'],$_REQUEST['ID_TEMA']);
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($result);
+        
+        
+        break;
+
     default:
     return false;
     break;
