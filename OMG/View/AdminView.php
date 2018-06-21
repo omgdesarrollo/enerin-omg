@@ -406,32 +406,32 @@ $Usuario=  Session::getSesion("user");
     function seleccionarItemTemas(usuarioTemas)
     {
         //meter directamente a la base de datos
-        console.log(usuarioTemas);
+        // console.log(usuarioTemas);
         // datos = usuarioTemas.split("^_^");        
         // // datos = value.no+"^_^"+value.nombre+"^_^"+value.descripcion;
-        // val = $('#NOMBRETEMA_MODIFICARTEMAS').val(datos[1]+" - "+datos[2]);
-        // if(val!="")
-        // {
-        //     $.ajax({
-        //         url: '../Controller/AdminController.php?Op=insertaTemaUsuario',
-        //         type: 'POST',
-        //         data: 'ID_USUARIO='+idUsuario+"&ID_TEMA="+datos[0],
-        //         success:function(exito)
-        //         {
-        //             //en exito mandar a llenar la tabla temas
-        //             if(exito)
-        //             {
-        //                 construirTablaTemas();
-        //             }
-        //             else
-        //                 swalError("Error del servidor, no se pudo agregar");
-        //         },
-        //         error:function()
-        //         {
-        //             swalError("Error del servidor, no se pudo agregar");
-        //         }
-        //     });
-        // }
+        val = $('#NOMBRETEMA_MODIFICARTEMAS').val(datos[1]+" - "+datos[2]);
+        if(val!="")
+        {
+            $.ajax({
+                url: '../Controller/AdminController.php?Op=insertaTemaUsuario',
+                type: 'POST',
+                data: 'ID_USUARIO='+idUsuario+"&ID_TEMA="+datos[0],
+                success:function(exito)
+                {
+                    //en exito mandar a llenar la tabla temas
+                    if(exito)
+                    {
+                        construirTablaTemas();
+                    }
+                    else
+                        swalError("Error del servidor, no se pudo agregar");
+                },
+                error:function()
+                {
+                    swalError("Error del servidor, no se pudo agregar");
+                }
+            });
+        }
         // EmpleadoDataG = datos;
         // usuario = datos[0].split("@");
         // $("#INFO_MODIFICARTEMAS").html(textoHTML);
