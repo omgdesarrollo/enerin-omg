@@ -195,7 +195,27 @@ class AdminDAO{
             return false;        
         }
     }
-        
+    
+    
+    public function eliminarUsuarioTema($ID_USUARIO,$ID_TEMA)
+    {
+        try
+        {
+          $query="DELETE FROM usuarios_temas
+                  WHERE id_usuario=$ID_USUARIO AND id_tema=$ID_USUARIO";
+          
+          $db= AccesoDB::getInstancia();
+          $lista= $db->executeQueryUpdate($query);
+          
+          return $lista;
+          
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
 }
 
 
