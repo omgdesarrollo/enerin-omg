@@ -247,6 +247,7 @@ require_once 'EncabezadoUsuarioView.php';
 //                      construirContenido();
 //                        listarEmpleados();
 //                          listarTemas();
+                        obtenerDatosArbol();
                           
                           
 var myLayout = new dhtmlXLayoutObject({
@@ -259,10 +260,35 @@ var myLayout = new dhtmlXLayoutObject({
 			]
 		});
                 
-myLayout.cells("b").attachObject("contenido");                
-                
-myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
+    myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
 	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
+            
+            
+                
+myLayout.cells("a").attachObject("treeboxbox_tree");
+
+
+function obtenerDatosArbol()
+    {
+        $.ajax({
+            url:'../Controller/TemasController.php?Op=Listar',
+            success:function(data)
+            {                                          
+             contruirArbol(data);   
+            }
+        });
+    }
+
+function contruirArbol(dataArbol)
+    {
+        myTree.deleteChildItems(0);
+        if(dataArbol.length>0){
+        myTree.parse(dataArbol, "jsarray");
+        }
+    }
+
+                
+
 //            myTree.enableHighlighting(true);
 
 //dataArbol=[["1","0","de"],["2","1","fes"],["3","1","el texto es de la siguiente manera que se puede trabajar "],["5","0","de"]];
@@ -275,29 +301,10 @@ myTree.attachEvent("onClick", function(id){
     return true;
 });
   
-myLayout.cells("a").attachObject("treeboxbox_tree");
-  
-obtenerDatosArbol();  
+myLayout.cells("b").attachObject("contenido");                
+    
 
 
-  function obtenerDatosArbol()
-  {
-      $.ajax({
-          url:'../Controller/TemasController.php?Op=Listar',
-          success:function(data)
-          {                                          
-           contruirArbol(data);   
-          }
-      });
-  }
-
-    function contruirArbol(dataArbol)
-    {
-        myTree.deleteChildItems(0);
-        if(dataArbol.length>0){
-        myTree.parse(dataArbol, "jsarray");
-        }
-    }
     
     function obtenerHijos(id)
     {
