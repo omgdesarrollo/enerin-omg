@@ -125,7 +125,10 @@ require_once 'EncabezadoUsuarioView.php';
 
 <div id="treeboxbox_tree"></div>
 
-<div id="contenido"></div>
+<div id="contenido">
+    
+    
+</div>
             
 <!--<table class="table table-bordered table-striped header_fijo"  >
     <thead >
@@ -301,6 +304,7 @@ obtenerDatosArbol();
     
     function obtenerHijos(id)
     {
+       $("#contenido").html("<div style='font-size:30px' class='fa fa-refresh fa-spin'></div>"); 
         $.ajax({
             url:'../Controller/TemasController.php?Op=ListarHijos',
             type:'POST',
@@ -315,7 +319,7 @@ obtenerDatosArbol();
     function construirSubDirectorio(data)
     {
         
-        tempData1="<table class='table table-bordered'><thead><tr class='info'>\n\
+        tempData1="<div class='table-responsive'><table class='table table-bordered'><thead><tr class='info'>\n\
                     <th>No</th>\n\
                     <th>Tema</th>\n\
                     <th>Descripcion</th>\n\
@@ -330,6 +334,7 @@ obtenerDatosArbol();
                     tempData1+="<td>"+value.plazo+"</td>";
                     tempData1+="<td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";
                 });
+            tempData1+="</table></div>";    
                 $("#contenido").html(tempData1);
     }
         
