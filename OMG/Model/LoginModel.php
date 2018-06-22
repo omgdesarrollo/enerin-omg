@@ -20,7 +20,12 @@ class LoginModel{
             throw  new Exception("Clave Incorrecta!!!!!");
             }
             
-            $rec["accesos"]= $modelAdmin->listarUsuarioVistas($rec["usuario"]["ID_USUARIO"]);
+        if($dao->validarExistenciaDePermisoParaUsuario($rec["usuario"]["ID_USUARIO"])["Res"]!=0){
+                $rec["accesos"]= $modelAdmin->listarUsuarioVistas($rec["usuario"]["ID_USUARIO"]);
+            } else {
+                $rec["accesos"]="";
+            }
+                        
             
 //            echo json_encode($rec);
             
