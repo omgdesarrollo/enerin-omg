@@ -567,7 +567,7 @@ $Usuario=  Session::getSesion("user");
                     }
                     else
                     {
-                        swal("","El nombre de usuario ya esta disponible","info");
+                        swal("","El nombre de usuario no esta disponible","info");
                     }
                 },
                 error:function()
