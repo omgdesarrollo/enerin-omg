@@ -22,13 +22,11 @@ class AsignacionTemaRequisitoDAO {
 
             
             $query="SELECT tbasignacion_tema_requisito.id_asignacion_tema_requisito, 
-                    tbclausulas.id_clausula, tbclausulas.clausula, tbclausulas.descripcion_clausula,
-                    tbasignacion_tema_requisito.requisito, tbdocumentos.id_documento, tbdocumentos.clave_documento
-                    FROM asignacion_tema_requisito tbasignacion_tema_requisito
-		 
-                    JOIN clausulas tbclausulas ON tbclausulas.id_clausula=tbasignacion_tema_requisito.id_clausula
-                    
-                    JOIN documentos tbdocumentos ON tbdocumentos.id_documento=tbasignacion_tema_requisito.id_documento";
+            tbtemas.id_tema, tbtemas.no,tbtemas.nombre,tbtemas.descripcion,
+            tbdocumentos.id_documento, tbdocumentos.clave_documento
+            FROM asignacion_tema_requisito tbasignacion_tema_requisito
+            JOIN temas tbtemas ON tbtemas.id_tema=tbasignacion_tema_requisito.id_tema
+            JOIN documentos tbdocumentos ON tbdocumentos.id_documento=tbasignacion_tema_requisito.id_documento";
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);

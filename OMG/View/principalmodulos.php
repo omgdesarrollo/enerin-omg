@@ -137,7 +137,8 @@ var gantt=[
 ];
 
   datacontratos=[];
- loadDataContratos();
+  loadEstructuraMaster();
+// loadDataContratos();
     loadDataNotificaciones();
 
   
@@ -325,7 +326,26 @@ function loadDataNotificaciones(){
     
     });
      }
-         
+      
+      function loadEstructuraMaster(){
+            $.ajax({
+                 url: "../Controller/LoadEstructuraPantallaGeneralController.php?Op=Listar",  
+                     async:false,
+                     success: function(r) {
+                        //alert("en:   ");
+//                     datacontratos.push( {id:'oficio',text:''+,img:'oficios.png',type:'button',isbig:true} )
+                     
+                     $.each(r,function(index,value){
+                        // alert("ya entro y "+value.CLAVE_CUMPLIMIENTO);
+                        
+                      datacontratos.push( {id:'contratos',text:value.clave_cumplimiento,img:'oficios.png',type:'button',isbig:true} )
+
+                         })  
+                     }
+            });
+    }
+      
+      
     function logout(){
             swal({
   title: "Cerrar Sesion",
