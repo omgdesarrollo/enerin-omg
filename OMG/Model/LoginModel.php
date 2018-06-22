@@ -20,14 +20,13 @@ class LoginModel{
             throw  new Exception("Clave Incorrecta!!!!!");
             }
             
-//        if($dao->validarExistenciaDePermisoParaUsuario($rec["usuario"]["ID_USUARIO"])["Res"]!=0){
-//                $rec["accesos"]= $modelAdmin->listarUsuarioVistas($rec["usuario"]["ID_USUARIO"]);
-//            } else {
-//                $rec["accesos"]="";
-//            }
+        if($dao->validarExistenciaDePermisoParaUsuario($rec["usuario"]["ID_USUARIO"])[0]["Res"]!=0){
+                $rec["accesos"]= $modelAdmin->listarUsuarioVistas($rec["usuario"]["ID_USUARIO"]);
+            } else {
+                $rec["accesos"]="";
+            }
                         
-            $rec["accesos"]= $modelAdmin->listarUsuarioVistas($rec["usuario"]["ID_USUARIO"]);
-//            echo json_encode($rec);
+
             
             return $rec;
     }  catch (Exception $e){

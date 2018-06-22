@@ -37,7 +37,7 @@ switch ($Op) {
 	case 'GuardarNodo':
 		# code...
          
-                $Lista= $model->insertarNodo($_REQUEST['NO'],$_REQUEST['NOMBRE'],$_REQUEST['DESCRIPCION'],$_REQUEST['PLAZO'],$_REQUEST['NODO'],$_REQUEST['ID_EMPLEADO']);
+                $Lista= $model->insertarNodo($_REQUEST['NO'],$_REQUEST['NOMBRE'],$_REQUEST['DESCRIPCION'],$_REQUEST['PLAZO'],$_REQUEST['NODO'],$_REQUEST['ID_EMPLEADOMODAL']);
                 header('Content-type: application/json; charset=utf-8'); 
                 echo json_encode($Lista);
                 return $Lista;
