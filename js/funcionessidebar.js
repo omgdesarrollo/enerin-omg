@@ -171,9 +171,7 @@ function loadDataSideBarOficiosDocumentacion(){
         consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
         consultarInformacion("../Controller/InformeGerencialController.php?Op=Listar");
         $("#sidebarObjV").load('InyectarVistasView.php #informegerencial');
-    
-
-                        
+                            
     }
     function loadDataSideBarCumplimientosDocumentos(){
         
@@ -191,7 +189,40 @@ function loadDataSideBarOficiosDocumentacion(){
 
           $("#sidebarObjV").load('InyectarVistasView.php #seguimientoevidencias');
                      
-    } 
+    }
+    
+    function loadDataSideBarAjustesUsuario(){
+//         mySidebar = myLayout.cells("a").attachSidebar();
+   
+    mySidebar = new dhtmlXSideBar({
+        parent: "sidebarObj",
+        icons_path: "../../images/base/",    
+                                template:'tiles',
+        width: 350,
+        items: [
+          {id: "permisos", text: "Permisos", icon: "documentoentrada.png"},
+          {id: "ajustes", text: "Ajustes", icon: "documentosalida.png"}
+          
+            
+        ]
+      });
+
+                                 
+                         mySidebar.attachEvent("onSelect", function(id, value){
+                                   switch(id){
+                                       case "permisos":
+                                            $("#sidebarObjV").load('InyectarVistasView.php #documentosEntrada');
+                                       break;  
+                                       
+
+                                       case "ajustes":
+                                            $("#sidebarObjV").load('InyectarVistasView.php #documentosSalida');
+                                       break;
+                                                                              
+                                   }
+      });
+                        
+    }
     
     
     
