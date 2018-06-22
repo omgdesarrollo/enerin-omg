@@ -760,49 +760,55 @@ $Usuario=  Session::getSesion("user");
                     {
                         // (valor)?$(Obj).html(yes):$(Obj).html(no);
                         $(Obj).html( (valor)?yes:no );
-                        if(valor==false)
+                        if(colId[0] != "consult")
                         {
-                            if(colId[0] != "edit")
+                            nuevo = $("#consult_"+colId[1])[0];
+                            ObjN = nuevo.getElementsByTagName("i");
+                            ($(ObjN[0]).hasClass('fa-times-circle-o'))?valor=true:valor=false;
+                            if(valor==true)
                             {
-                                nuevo = $("#edit_"+colId[1])[0];
-                                ObjN = nuevo.getElementsByTagName("i");
-                                ($(ObjN[0]).hasClass('fa-times-circle-o'))?valor=false:valor=true;
-                            }
-                            if(!valor)
-                            {
-                                if(colId[0] != "new")
-                                {
-                                    nuevo = $("#new_"+colId[1])[0];
-                                    ObjN = nuevo.getElementsByTagName("i");
-                                    ($(ObjN[0]).hasClass('fa-times-circle-o'))?valor=false:valor=true;
-                                }
-                            }
-                            if(!valor)
-                            {
-                                if(colId[0] != "delete")
-                                {
-                                    nuevo = $("#delete_"+colId[1])[0];
-                                    ObjN = nuevo.getElementsByTagName("i");
-                                    ($(ObjN[0]).hasClass('fa-times-circle-o'))?valor=false:valor=true;
-                                }
+                                $.ajax({
+                                    url: '../Controller/AdminController.php?Op=ModificarPermiso',
+                                    type: 'POST',
+                                    data: "COLUMNA=consult&VALOR="+valor+"&ID_USUARIO="+idUsuario+"&ID_ESTRUCTURA="+colId[1],
+                                    success:function(exito)
+                                    {
+                                        if(exito==true)
+                                        {
+                                            $("#consult_"+colId[1]).html( (valor)?yes:no );
+                                        }
+                                    },
+                                    error:function()
+                                    {
+                                        swalError("Error en el servidor");
+                                    }
+                                });
+                                // if(colId[0] != "edit")
+                                // {
+                                //     nuevo = $("#edit_"+colId[1])[0];
+                                //     ObjN = nuevo.getElementsByTagName("i");
+                                //     ($(ObjN[0]).hasClass('fa-times-circle-o'))?valor=false:valor=true;
+                                // }
+                                // if(!valor)
+                                // {
+                                //     if(colId[0] != "new")
+                                //     {
+                                //         nuevo = $("#new_"+colId[1])[0];
+                                //         ObjN = nuevo.getElementsByTagName("i");
+                                //         ($(ObjN[0]).hasClass('fa-times-circle-o'))?valor=false:valor=true;
+                                //     }
+                                // }
+                                // if(!valor)
+                                // {
+                                //     if(colId[0] != "delete")
+                                //     {
+                                //         nuevo = $("#delete_"+colId[1])[0];
+                                //         ObjN = nuevo.getElementsByTagName("i");
+                                //         ($(ObjN[0]).hasClass('fa-times-circle-o'))?valor=false:valor=true;
+                                //     }
+                                // }
                             }
                         }
-                        $.ajax({
-                                url: '../Controller/AdminController.php?Op=ModificarPermiso',
-                                type: 'POST',
-                                data: "COLUMNA=consult&VALOR="+valor+"&ID_USUARIO="+idUsuario+"&ID_ESTRUCTURA="+colId[1],
-                                success:function(exito)
-                                {
-                                    if(exito==true)
-                                    {
-                                        $("#consult_"+colId[1]).html( (valor)?yes:no );
-                                    }
-                                },
-                                error:function()
-                                {
-                                    swalError("Error en el servidor");
-                                }
-                            });
                     }
                     else
                     {
