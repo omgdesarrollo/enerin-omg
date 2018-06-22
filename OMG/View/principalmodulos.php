@@ -163,9 +163,11 @@ var gantt=[
         loadDataMenuArriba();
  
                     ribbon.attachEvent("onClick", function(itemIdSeleccion, bId){
-                        // alert(itemIdSeleccion);
+//                         alert(itemIdSeleccion);
                         if(itemIdSeleccion=="sesionusuario")
-                            loadViewUsuario();
+//                            loadViewUsuario();
+                            loadDataSideBarAjustesUsuario();
+                        
                         if(itemIdSeleccion=="cambiaresc")
                             alert("le has picado a cam biar act");
                         
