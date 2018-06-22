@@ -47,20 +47,15 @@ switch ($Op)
         break;
 
     case 'ListarTemas':
-        $lista = $model->listarTemas($_REQUEST["CADENA"]);
+        $lista = $model->listarTemas($_REQUEST["CADENA"],$_REQUEST["ID_USUARIO"]);
         header('Content-type: application/json; charset=utf-8');
         // var_dump($lista);
         echo json_encode($lista);
         break;
 
-    case 'listarTemasPorUsuario':
-        
-        $lista = $model->listarTemasPorUsuario($_REQUEST("ID_USUARIO"));
+    case 'ListarTemasPorUsuario':
+        $lista = $model->listarTemasPorUsuario($_REQUEST["ID_USUARIO"]);
         header('Content-type: application/json; charset=utf-8');
-        // $v = implode($lista);
-        // var_dump($v);
-        // echo json_encode(htmlspecialchars_decode($lista));
-        // echo utf8_decode(json_decode($lista));
         echo json_encode($lista);
         
         break;
@@ -75,7 +70,9 @@ switch ($Op)
         $result = $model->insertarUsuarioTema($_REQUEST['ID_USUARIO'],$_REQUEST['ID_TEMA']);
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($result);
+        break;
 
+    
     case 'CrearTablaPermisos':
         $lista = $model->listarSubmodulos();
         // foreach($lista as $key=>$datos)
@@ -151,10 +148,9 @@ switch ($Op)
 
     case 'EliminarUsuarioTema':
         $result = $model->eliminarUsuarioTema($_REQUEST['ID_USUARIO'],$_REQUEST['ID_TEMA']);
-        header('Content-type: application/json; charset=utf-8');
-        echo json_encode($result);
-        
-        
+        // header('Content-type: application/json; charset=utf-8');//federico si lees esto es para que sepas que esto no va ya que la consulta no regresara una lista, regresara un true o false, recuerdalo
+        // echo json_encode($result);
+        echo $result;
         break;
 
     default:

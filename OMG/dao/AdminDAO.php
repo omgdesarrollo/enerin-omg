@@ -91,13 +91,17 @@ class AdminDAO{
     }
 
 
-    public function listarTemas($cadena)
+    public function listarTemas($CADENA,$ID_USUARIO)
     {
         try
         {
             $query="SELECT tbtemas.id_tema,tbtemas.no, tbtemas.nombre, tbtemas.descripcion
                     FROM temas tbtemas
-                    WHERE tbtemas.nombre LIKE '%$cadena%' AND tbtemas.padre=0";
+                    WHERE tbtemas.nombre LIKE '%$CADENA%' AND tbtemas.padre=0
+                    AND tbtemas.id_tema 
+                    NOT IN( SELECT tbusuario_temas.id_tema FROM usuarios_temas tbusuario_temas 
+                    WHERE tbusuario_temas.id_usuario=$ID_USUARIO )";
+
             // echo $query;
             $db= AccesoDB::getInstancia();        
             $lista= $db->executeQuery($query);
@@ -115,14 +119,13 @@ class AdminDAO{
     {
         try
         {
-            $query="SELECT tbtemas.no, tbtemas.nombre,  tbtemas.descripcion
+            $query="SELECT tbtemas.id_tema, tbtemas.no, tbtemas.nombre, tbtemas.descripcion
                     FROM usuarios_temas tbusuarios_temas
-                    JOIN temas tbtemas ON tbtemas.id_tema=tbusuarios_temas.id_tema
-                    WHERE tbusuarios_temas.id_usuario=$ID_USUARIO";
-            
+                    JOIN temas tbtemas ON tbtemas.id_tema = tbusuarios_temas.id_tema
+                    WHERE tbusuarios_temas.id_usuario = $ID_USUARIO";
+
             $db= AccesoDB::getInstancia();
             $lista= $db->executeQuery($query);
-            
             return $lista;
             
         } catch (Exception $ex)
@@ -165,9 +168,7 @@ class AdminDAO{
     {
         try
         {
-            $query="INSERT INTO usuarios_temas (id_usuario,id_tema) VALUES ($ID_USUARIO,$ID_TEMA)";
-            
-            
+            $query="INSERT INTO usuarios_temas (id_usuario,id_tema) VALUES ($ID_USUARIO,$ID_TEMA)";            
             $db= AccesoDB::getInstancia();
             $lista= $db->executeQueryUpdate($query);
            
@@ -205,11 +206,9 @@ class AdminDAO{
         try
         {
           $query="DELETE FROM usuarios_temas
-                  WHERE id_usuario=$ID_USUARIO AND id_tema=$ID_USUARIO";
-          
+                  WHERE id_usuario=$ID_USUARIO AND id_tema=$ID_TEMA";
           $db= AccesoDB::getInstancia();
           $lista= $db->executeQueryUpdate($query);
-          
           return $lista;
           
         } catch (Exception $ex)

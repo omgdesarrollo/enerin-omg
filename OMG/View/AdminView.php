@@ -211,7 +211,7 @@ $Usuario=  Session::getSesion("user");
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Agregar Usuario</h4>
+                        <h4 class="modal-title" id="myModalLabel">Permisos</h4>
                     </div>
 
                     <div class="modal-body" style="width: -webkit-fill-available;">
@@ -248,15 +248,15 @@ $Usuario=  Session::getSesion("user");
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Agregar Usuario</h4>
+                        <h4 class="modal-title" id="myModalLabel">Temas</h4>
                     </div>
 
                     <div class="modal-body" style="width: -webkit-fill-available;">
                         <div class="form-group">
                             <label class="control-label">Temas: </label>
                             <div class="dropdown">
-                                <input style="width:80%" type="text" class="dropdown-toggle" id="NOMBRETEMA_MODIFICARTEMAS" data-toggle="dropdown" onkeyup="buscarTemas(this)"/>
-                                    <ul style="width:80%;cursor:pointer;" class="dropdown-menu" id="dropdownEventTemas" role="menu" 
+                                <input style="width:100%" type="text" class="dropdown-toggle" id="NOMBRETEMA_MODIFICARTEMAS" data-toggle="dropdown" onkeyup="buscarTemas(this)"/>
+                                    <ul style="width:100%;cursor:pointer;" class="dropdown-menu" id="dropdownEventTemas" role="menu" 
                                     aria-labelledby="menu1"></ul>
                             </div>
                         </div>
@@ -385,16 +385,16 @@ $Usuario=  Session::getSesion("user");
             $.ajax({
                 url: '../Controller/AdminController.php?Op=ListarTemas',
                 type: 'GET',
-                data: 'CADENA='+cadena,
+                data: 'CADENA='+cadena+"&ID_USUARIO="+idUsuario,
                 success:function(temas)
                 {
-                    console.log(temas);
+                    // console.log(temas);
                     $.each(temas,function(index,value)
                     {
                         // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
                         datos = value.id_tema+"^_^"+value.no+"^_^"+value.nombre+"^_^"+value.descripcion;
                         tempData += "<li role='presentation'><a role='menuitem' tabindex='-1'";
-                        tempData += "onClick='seleccionarItemTemas("+JSON.stringify(temas)+")'>";
+                        tempData += "onClick='seleccionarItemTemas("+JSON.stringify(value)+")'>";
                         tempData += value.no+" - "+value.nombre+"</a></li>";
                     });
                     $("#dropdownEventTemas").html(tempData);
@@ -405,46 +405,46 @@ $Usuario=  Session::getSesion("user");
 
     function seleccionarItemTemas(usuarioTemas)
     {
-        //meter directamente a la base de datos
-        // console.log(usuarioTemas);
-        // datos = usuarioTemas.split("^_^");        
-        // // datos = value.no+"^_^"+value.nombre+"^_^"+value.descripcion;
-        val = $('#NOMBRETEMA_MODIFICARTEMAS').val(datos[1]+" - "+datos[2]);
-        if(val!="")
-        {
+        $('#NOMBRETEMA_MODIFICARTEMAS').val(usuarioTemas.no+" - "+usuarioTemas.nombre);
+        // if(val!="")
+        // {
             $.ajax({
-                url: '../Controller/AdminController.php?Op=insertaTemaUsuario',
+                url: '../Controller/AdminController.php?Op=AgregarUsuarioTema',
                 type: 'POST',
-                data: 'ID_USUARIO='+idUsuario+"&ID_TEMA="+datos[0],
+                data: 'ID_USUARIO='+idUsuario+"&ID_TEMA="+usuarioTemas.id_tema,
                 success:function(exito)
                 {
                     //en exito mandar a llenar la tabla temas
                     if(exito)
                     {
-                        construirTablaTemas();
+                        $("#bodyTableTemas").append(construirTablaTemas(usuarioTemas));
                     }
                     else
-                        swalError("Error del servidor, no se pudo agregar");
+                    {
+                        $('#NOMBRETEMA_MODIFICARTEMAS').val("");
+                        swalError("Error en el servidor, no se pudo agregar");
+                    }
                 },
                 error:function()
                 {
-                    swalError("Error del servidor, no se pudo agregar");
+                    $('#NOMBRETEMA_MODIFICARTEMAS').val("");
+                    swalError("Error en el servidor, no se pudo agregar");
                 }
             });
-        }
-        // EmpleadoDataG = datos;
-        // usuario = datos[0].split("@");
-        // $("#INFO_MODIFICARTEMAS").html(textoHTML);
+        // }
     }
 
-    function construirTablaTemas(data)
+    function construirTablaTemas(usuarioTemas)
     {
-        // bodyTableTemas id
-        tempData="";
-        $.each(data,function(index,value)
-        {
-            tempData = "<td>value.<td>";
-        });
+        tempData = "<tr id='idTema_"+usuarioTemas.id_tema+"' >";
+        tempData += "<td>"+usuarioTemas.no+"</td>";
+        tempData += "<td>"+usuarioTemas.nombre+"</td>";
+        tempData += "<td>"+usuarioTemas.descripcion+"</td>";
+        tempData += "<td>";
+        tempData += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
+        tempData += "onclick='eliminarTema("+usuarioTemas.id_tema+");'>";
+        tempData += "<i class=\"fa fa-trash\"></i></button></td></tr>";
+        return tempData;
     }
     
     var EmpleadoDataG;
@@ -464,7 +464,55 @@ $Usuario=  Session::getSesion("user");
         textoHTML += "type='submit' class='btn crud-submit btn-info'>Agregar Usuario</button></div>*La contraseña es el correo del empleado";
         $("#INFO_AGREGARUSUARIO").html(textoHTML);
     }
-    
+    function modificarTemas(id)
+    {
+        idUsuario = id;
+        $.ajax({
+            url: '../Controller/AdminController.php?Op=ListarTemasPorUsuario',
+            type: 'GET',
+            data: "ID_USUARIO="+id,
+            success:function(temas)
+            {
+                tempData="";
+                $.each(temas,function(index,value)
+                {
+                    // tempData +="<tr>";
+                    tempData += construirTablaTemas(value);
+                    // tempData +="</tr>";
+                });
+                $("#bodyTableTemas").html(tempData);
+            },
+            error:function()
+            {
+                swalError("Error en el servidor");
+            }
+        });
+    }
+
+    function eliminarTema(idTema)
+    {
+        swalSuccess(idUsuario+" Eliminado tema "+idTema);
+        $.ajax({
+            url: '../Controller/AdminController.php?Op=EliminarUsuarioTema',
+            type: 'POST',
+            data: 'ID_USUARIO='+idUsuario+'&ID_TEMA='+idTema,
+            success:function(exito)
+            {
+                if(exito==true)
+                {
+                    $("#idTema_"+idTema).remove();
+                    swalSuccess("Eliminado");
+                }
+                else
+                    swalError("Error en el servidor. No se pudo quitar");
+            },
+            error:function()
+            {
+                swalError("Error en el servidor. No se pudo quitar");
+            }
+        });
+    }
+
     function agregarUsuarioBtn()
     {
         usuario = $('#NOMBREESCRITURA_AGREGARUSUARIO').val();
@@ -703,18 +751,68 @@ $Usuario=  Session::getSesion("user");
         ($(ObjI[0]).hasClass('fa-times-circle-o'))?valor=true:valor=false;
         $.ajax({
                 url: '../Controller/AdminController.php?Op=ModificarPermiso',
-                type: 'GET',
+                type: 'POST',
                 data: 'COLUMNA='+colId[0]+"&VALOR="+valor+"&ID_USUARIO="+idUsuario+"&ID_ESTRUCTURA="+colId[1],
                 success:function(exito)
                 {
-                    console.log(exito);
+                    // console.log(exito);
                     if(exito)
                     {
-                        (valor)?$(Obj).html(yes):$(Obj).html(no);
+                        // (valor)?$(Obj).html(yes):$(Obj).html(no);
+                        $(Obj).html( (valor)?yes:no );
+                        if(colId[0] != "consult")
+                        {
+                            nuevo = $("#consult_"+colId[1])[0];
+                            ObjN = nuevo.getElementsByTagName("i");
+                            ($(ObjN[0]).hasClass('fa-times-circle-o'))?valor=true:valor=false;
+                            if(valor==true)
+                            {
+                                $.ajax({
+                                    url: '../Controller/AdminController.php?Op=ModificarPermiso',
+                                    type: 'POST',
+                                    data: "COLUMNA=consult&VALOR="+valor+"&ID_USUARIO="+idUsuario+"&ID_ESTRUCTURA="+colId[1],
+                                    success:function(exito)
+                                    {
+                                        if(exito==true)
+                                        {
+                                            $("#consult_"+colId[1]).html( (valor)?yes:no );
+                                        }
+                                    },
+                                    error:function()
+                                    {
+                                        swalError("Error en el servidor");
+                                    }
+                                });
+                                // if(colId[0] != "edit")
+                                // {
+                                //     nuevo = $("#edit_"+colId[1])[0];
+                                //     ObjN = nuevo.getElementsByTagName("i");
+                                //     ($(ObjN[0]).hasClass('fa-times-circle-o'))?valor=false:valor=true;
+                                // }
+                                // if(!valor)
+                                // {
+                                //     if(colId[0] != "new")
+                                //     {
+                                //         nuevo = $("#new_"+colId[1])[0];
+                                //         ObjN = nuevo.getElementsByTagName("i");
+                                //         ($(ObjN[0]).hasClass('fa-times-circle-o'))?valor=false:valor=true;
+                                //     }
+                                // }
+                                // if(!valor)
+                                // {
+                                //     if(colId[0] != "delete")
+                                //     {
+                                //         nuevo = $("#delete_"+colId[1])[0];
+                                //         ObjN = nuevo.getElementsByTagName("i");
+                                //         ($(ObjN[0]).hasClass('fa-times-circle-o'))?valor=false:valor=true;
+                                //     }
+                                // }
+                            }
+                        }
                     }
                     else
                     {
-                        swalError("Error en el servidor");    
+                        swalError("Error en el servidor");
                     }
                 },
                 error:function()
