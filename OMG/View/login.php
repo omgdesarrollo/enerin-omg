@@ -38,7 +38,7 @@ if (Session:: existeSesion("user")){
 		 <div class="ContentForm">
 		 	<form id="loginform"  method="post" name="FormEntrar">
 		 		<div class="input-group input-group-lg">
-				  <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+				  <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-user"></i></span>
 				  <input type="text" class="form-control" name="usuario" placeholder="Usuario" id="Usuario"  required>
 				</div>
 				<br>

@@ -199,6 +199,8 @@ require_once 'EncabezadoUsuarioView.php';
                                                         <select   id="ID_EMPLEADOMODAL" class="select1">
                                                                 <?php
                                                                 $s="";
+                                                                
+                                                                $cbxE = Session::getSesion("listarEmpleadosComboBox");
                                                                 foreach ($cbxE as $value) {
                                                                 ?>
                                                                 
@@ -240,7 +242,8 @@ require_once 'EncabezadoUsuarioView.php';
      
      $("#temaform").submit(function(e){
          e.preventDefault();
-         var formData = {"NO":$('#NO').val(),"NOMBRE":$('#NOMBRE').val()};
+         var formData = {"NO":$('#NO').val(),"NOMBRE":$('#NOMBRE').val(),"DESCRIPCION":$('#DESCRIPCION').val(),
+                         "PLAZO":$('#PLAZO').val(),"ID_EMPLEADOMODAL":$('#ID_EMPLEADOMODAL').val()};            
          
          $.ajax({
              url:'../Controller/TemasController.php?Op=GuardarNodo',
@@ -251,20 +254,7 @@ require_once 'EncabezadoUsuarioView.php';
                  
              }
          });
-         
-//         var NO=$('#NO').val();
-//         var NOMBRE=$('#NOMBRE').val();
-//         var DESCRIPCION=$('#DESCRIPCION').val();
-//         var PLAZO=$('#PLAZO').val();
-//         var ID_EMPLEADOMODAL
-//         alert("PLAZO"+PLAZO);
-         
-         datos=[];
-         datos.push(NO);
-         datos.push(NOMBRE);
-         datos.push(DESCRIPCION);
-         datos.push(PLAZO);
-         
+                
      });
      
  });                       

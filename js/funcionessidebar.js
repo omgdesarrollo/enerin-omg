@@ -30,6 +30,7 @@ function loadDataSideBarCatalogoInformacion(){
 
 
                                        case "temas":
+                                            consultarInformacion("../Controller/EmpleadosController.php?Op=mostrarcombo");
                                             $("#sidebarObjV").load('InyectarVistasView.php #temas');
                                        break;
                                      
