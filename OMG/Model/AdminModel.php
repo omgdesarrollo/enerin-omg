@@ -159,7 +159,13 @@ class AdminModel{
         {
             $dao = new AdminDAO();
             $rec = $dao->ConsultarExisteUsuario($USUARIO);
-            return $rec;
+            if($rec['res']==0)
+            {   
+                return true;
+            } else {
+                return false;
+            }
+            
         }
         catch(Excepction $ex)
         {
