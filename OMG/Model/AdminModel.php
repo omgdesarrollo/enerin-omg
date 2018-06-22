@@ -62,12 +62,12 @@ class AdminModel{
         }
     }
     
-    public function listarTemas($cadena)
+    public function listarTemas($CADENA,$ID_USUARIO)
     {
         try
         {
             $dao=new AdminDAO();
-            $rec = $dao->listarTemas($cadena);
+            $rec = $dao->listarTemas($CADENA);
             return $rec;
             // var_dump($rec);
         } catch (Exception $ex)
@@ -145,11 +145,9 @@ class AdminModel{
         try
         {
             $dao=new AdminDAO();
-            $rec= $dao->eliminarUsuarioTema($ID_USUARIO,$ID_TEMA);
-            
+            $rec= $dao->eliminarUsuarioTema($ID_USUARIO,$ID_TEMA);            
             return $rec;
-            
-        } catch (Exception $ex)
+        } catch(Exception $ex)
         {
             throw $ex;
             return false;

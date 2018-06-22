@@ -47,7 +47,7 @@ switch ($Op)
         break;
 
     case 'ListarTemas':
-        $lista = $model->listarTemas($_REQUEST["CADENA"]);
+        $lista = $model->listarTemas($_REQUEST["CADENA"],$_REQUEST["ID_USUARIO"]);
         header('Content-type: application/json; charset=utf-8');
         // var_dump($lista);
         echo json_encode($lista);
@@ -148,10 +148,9 @@ switch ($Op)
 
     case 'EliminarUsuarioTema':
         $result = $model->eliminarUsuarioTema($_REQUEST['ID_USUARIO'],$_REQUEST['ID_TEMA']);
-        header('Content-type: application/json; charset=utf-8');
-        echo json_encode($result);
-        
-        
+        // header('Content-type: application/json; charset=utf-8');//federico si lees esto es para que sepas que esto no va ya que la consulta no regresara una lista, regresara un true o false, recuerdalo
+        // echo json_encode($result);
+        echo $result;
         break;
 
     default:

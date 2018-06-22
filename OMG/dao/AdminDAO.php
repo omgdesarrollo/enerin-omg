@@ -91,13 +91,17 @@ class AdminDAO{
     }
 
 
-    public function listarTemas($cadena)
+    public function listarTemas($CADENA,$ID_USUARIO)
     {
         try
         {
             $query="SELECT tbtemas.id_tema,tbtemas.no, tbtemas.nombre, tbtemas.descripcion
                     FROM temas tbtemas
-                    WHERE tbtemas.nombre LIKE '%$cadena%' AND tbtemas.padre=0";
+                    WHERE tbtemas.nombre LIKE '%$CADENA%' AND tbtemas.padre=0
+                    AND tbtemas.id_tema 
+                    NOT IN( SELECT tbusuario_temas.id_tema FROM usuarios_temas tbusuario_temas 
+                    WHERE tbusuario_temas.id_usuario=$ID_USUARIO )";
+
             // echo $query;
             $db= AccesoDB::getInstancia();        
             $lista= $db->executeQuery($query);
@@ -202,11 +206,9 @@ class AdminDAO{
         try
         {
           $query="DELETE FROM usuarios_temas
-                  WHERE id_usuario=$ID_USUARIO AND id_tema=$ID_USUARIO";
-          
+                  WHERE id_usuario=$ID_USUARIO AND id_tema=$ID_TEMA";
           $db= AccesoDB::getInstancia();
           $lista= $db->executeQueryUpdate($query);
-          
           return $lista;
           
         } catch (Exception $ex)

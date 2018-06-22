@@ -211,7 +211,7 @@ $Usuario=  Session::getSesion("user");
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Agregar Usuario</h4>
+                        <h4 class="modal-title" id="myModalLabel">Permisos</h4>
                     </div>
 
                     <div class="modal-body" style="width: -webkit-fill-available;">
@@ -248,15 +248,15 @@ $Usuario=  Session::getSesion("user");
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Agregar Usuario</h4>
+                        <h4 class="modal-title" id="myModalLabel">Temas</h4>
                     </div>
 
                     <div class="modal-body" style="width: -webkit-fill-available;">
                         <div class="form-group">
                             <label class="control-label">Temas: </label>
                             <div class="dropdown">
-                                <input style="width:80%" type="text" class="dropdown-toggle" id="NOMBRETEMA_MODIFICARTEMAS" data-toggle="dropdown" onkeyup="buscarTemas(this)"/>
-                                    <ul style="width:80%;cursor:pointer;" class="dropdown-menu" id="dropdownEventTemas" role="menu" 
+                                <input style="width:100%" type="text" class="dropdown-toggle" id="NOMBRETEMA_MODIFICARTEMAS" data-toggle="dropdown" onkeyup="buscarTemas(this)"/>
+                                    <ul style="width:100%;cursor:pointer;" class="dropdown-menu" id="dropdownEventTemas" role="menu" 
                                     aria-labelledby="menu1"></ul>
                             </div>
                         </div>
@@ -385,10 +385,10 @@ $Usuario=  Session::getSesion("user");
             $.ajax({
                 url: '../Controller/AdminController.php?Op=ListarTemas',
                 type: 'GET',
-                data: 'CADENA='+cadena,
+                data: 'CADENA='+cadena+"&ID_USUARIO="+idUsuario,
                 success:function(temas)
                 {
-                    console.log(temas);
+                    // console.log(temas);
                     $.each(temas,function(index,value)
                     {
                         // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
@@ -405,13 +405,13 @@ $Usuario=  Session::getSesion("user");
 
     function seleccionarItemTemas(usuarioTemas)
     {
-        val = $('#NOMBRETEMA_MODIFICARTEMAS').val(usuarioTemas.no+" - "+usuarioTemas.nombre);
-        if(val!="")
-        {
+        $('#NOMBRETEMA_MODIFICARTEMAS').val(usuarioTemas.no+" - "+usuarioTemas.nombre);
+        // if(val!="")
+        // {
             $.ajax({
                 url: '../Controller/AdminController.php?Op=AgregarUsuarioTema',
                 type: 'POST',
-                data: 'ID_USUARIO='+idUsuario+"&ID_TEMA="+idTema,
+                data: 'ID_USUARIO='+idUsuario+"&ID_TEMA="+usuarioTemas.id_tema,
                 success:function(exito)
                 {
                     //en exito mandar a llenar la tabla temas
@@ -421,51 +421,30 @@ $Usuario=  Session::getSesion("user");
                     }
                     else
                     {
-                        val = $('#NOMBRETEMA_MODIFICARTEMAS').val("");
+                        $('#NOMBRETEMA_MODIFICARTEMAS').val("");
                         swalError("Error en el servidor, no se pudo agregar");
                     }
                 },
                 error:function()
                 {
-                    val = $('#NOMBRETEMA_MODIFICARTEMAS').val("");
+                    $('#NOMBRETEMA_MODIFICARTEMAS').val("");
                     swalError("Error en el servidor, no se pudo agregar");
                 }
             });
-        }
+        // }
     }
 
     function construirTablaTemas(usuarioTemas)
     {
-        tempData = "<td>"+usuarioTemas.no+"</td>";
+        tempData = "<tr id='idTema_"+usuarioTemas.id_tema+"' >";
+        tempData += "<td>"+usuarioTemas.no+"</td>";
         tempData += "<td>"+usuarioTemas.nombre+"</td>";
         tempData += "<td>"+usuarioTemas.descripcion+"</td>";
         tempData += "<td>";
         tempData += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
         tempData += "onclick='eliminarTema("+usuarioTemas.id_tema+");'>";
-        tempData += "<i class=\"fa fa-trash\"></i></button></td>";
+        tempData += "<i class=\"fa fa-trash\"></i></button></td></tr>";
         return tempData;
-    }
-
-    function eliminarTema(idTema)
-    {
-        swalSuccess(idUsuario+" Eliminado tema "+idTema);
-        $.ajax({
-            url: '../Controller/AdminController.php?Op=',
-            type: '',
-            data: '',
-            success:function(exito)
-            {
-                if(exito)
-                {
-                }
-                else
-                    swalError("Error en el servidor. No se pudo quitar");
-            },
-            error:function()
-            {
-                swalError("Error en el servidor. No se pudo quitar");
-            }
-        });
     }
     
     var EmpleadoDataG;
@@ -497,9 +476,9 @@ $Usuario=  Session::getSesion("user");
                 tempData="";
                 $.each(temas,function(index,value)
                 {
-                    tempData +="<tr>";
+                    // tempData +="<tr>";
                     tempData += construirTablaTemas(value);
-                    tempData +="</tr>";
+                    // tempData +="</tr>";
                 });
                 $("#bodyTableTemas").html(tempData);
             },
@@ -509,6 +488,31 @@ $Usuario=  Session::getSesion("user");
             }
         });
     }
+
+    function eliminarTema(idTema)
+    {
+        swalSuccess(idUsuario+" Eliminado tema "+idTema);
+        $.ajax({
+            url: '../Controller/AdminController.php?Op=EliminarUsuarioTema',
+            type: 'POST',
+            data: 'ID_USUARIO='+idUsuario+'&ID_TEMA='+idTema,
+            success:function(exito)
+            {
+                if(exito==true)
+                {
+                    $("#idTema_"+idTema).remove();
+                    swalSuccess("Eliminado");
+                }
+                else
+                    swalError("Error en el servidor. No se pudo quitar");
+            },
+            error:function()
+            {
+                swalError("Error en el servidor. No se pudo quitar");
+            }
+        });
+    }
+
     function agregarUsuarioBtn()
     {
         usuario = $('#NOMBREESCRITURA_AGREGARUSUARIO').val();
@@ -747,18 +751,62 @@ $Usuario=  Session::getSesion("user");
         ($(ObjI[0]).hasClass('fa-times-circle-o'))?valor=true:valor=false;
         $.ajax({
                 url: '../Controller/AdminController.php?Op=ModificarPermiso',
-                type: 'GET',
+                type: 'POST',
                 data: 'COLUMNA='+colId[0]+"&VALOR="+valor+"&ID_USUARIO="+idUsuario+"&ID_ESTRUCTURA="+colId[1],
                 success:function(exito)
                 {
-                    console.log(exito);
+                    // console.log(exito);
                     if(exito)
                     {
-                        (valor)?$(Obj).html(yes):$(Obj).html(no);
+                        // (valor)?$(Obj).html(yes):$(Obj).html(no);
+                        $(Obj).html( (valor)?yes:no );
+                        if(valor==false)
+                        {
+                            if(colId[0] != "edit")
+                            {
+                                nuevo = $("#edit_"+colId[1])[0];
+                                ObjN = nuevo.getElementsByTagName("i");
+                                ($(ObjN[0]).hasClass('fa-times-circle-o'))?valor=false:valor=true;
+                            }
+                            if(!valor)
+                            {
+                                if(colId[0] != "new")
+                                {
+                                    nuevo = $("#new_"+colId[1])[0];
+                                    ObjN = nuevo.getElementsByTagName("i");
+                                    ($(ObjN[0]).hasClass('fa-times-circle-o'))?valor=false:valor=true;
+                                }
+                            }
+                            if(!valor)
+                            {
+                                if(colId[0] != "delete")
+                                {
+                                    nuevo = $("#delete_"+colId[1])[0];
+                                    ObjN = nuevo.getElementsByTagName("i");
+                                    ($(ObjN[0]).hasClass('fa-times-circle-o'))?valor=false:valor=true;
+                                }
+                            }
+                        }
+                        $.ajax({
+                                url: '../Controller/AdminController.php?Op=ModificarPermiso',
+                                type: 'POST',
+                                data: "COLUMNA=consult&VALOR="+valor+"&ID_USUARIO="+idUsuario+"&ID_ESTRUCTURA="+colId[1],
+                                success:function(exito)
+                                {
+                                    if(exito==true)
+                                    {
+                                        $("#consult_"+colId[1]).html( (valor)?yes:no );
+                                    }
+                                },
+                                error:function()
+                                {
+                                    swalError("Error en el servidor");
+                                }
+                            });
                     }
                     else
                     {
-                        swalError("Error en el servidor");    
+                        swalError("Error en el servidor");
                     }
                 },
                 error:function()
