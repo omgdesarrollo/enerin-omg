@@ -200,8 +200,8 @@ function loadDataSideBarOficiosDocumentacion(){
                                 template:'tiles',
         width: 350,
         items: [
-          {id: "permisos", text: "Permisos", icon: "documentoentrada.png"},
-          {id: "ajustes", text: "Ajustes", icon: "documentosalida.png"}
+          {id: "permisos", text: "Permisos", icon: "cumplimientos.png"},
+          {id: "ajustes", text: "Ajustes", icon: "ajustes.png"}
           
             
         ]
