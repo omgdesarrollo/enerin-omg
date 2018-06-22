@@ -152,6 +152,10 @@ switch ($Op)
         // echo json_encode($result);
         echo $result;
         break;
+    case 'ConsultarExisteUsuario':
+        $existe = $model->ConsultarExisteUsuario($_REQUEST["NOMBRE_USUARIO"]);
+        echo $existe;
+    break;
 
     default:
     return false;

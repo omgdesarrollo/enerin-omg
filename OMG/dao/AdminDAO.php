@@ -217,6 +217,25 @@ class AdminDAO{
             return false;
         }
     }
+
+    public function ConsultarExisteUsuario($USUARIO)
+    {
+        try
+        {
+          $query="SELECT COUNT(*) AS res 
+                  FROM usuarios tbusuarios
+                  WHERE tbusuarios.nombre_usuario='$USUARIO'";
+          
+          $db= AccesoDB::getInstancia();
+          $lista= $db->executeQuery($query);
+          return $lista;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
     
 }
 
