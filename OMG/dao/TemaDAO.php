@@ -46,6 +46,25 @@ public function listarHijos($ID)
     }
 }
 
+public function insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO)
+{
+    try
+    {
+        $query="INSERT INTO temas (no,nombre,descripcion,plazo,padre,id_empleado) 
+                VALUES ($NO,'$NOMBRE','$DESCRIPCION','$PLAZO',$NODO,'$ID_EMPLEADO')";
+        
+        $db= AccesoDB::getInstancia();
+        $lista= $db->executeQueryUpdate($query);
+           
+        return $lista;
+        
+    } catch (Exception $ex)
+    {
+        throw $ex;
+        return false;
+    }
+}
+
 }
 
 ?>

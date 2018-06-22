@@ -46,6 +46,22 @@ class TemaModel{
         }
     }
     
+    public function insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO)
+    {
+        try
+        {
+            $dao=new TemaDAO();
+            $rec= $dao->insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO);
+            
+            return $rec;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;        
+        }
+    }
+    
 }
 
 ?>

@@ -28,9 +28,9 @@ $recUser["tokenseguridad"]=$token;
 //    Session::setSesion("token",$jsonToken);
 //    Session::setSesion("user", $token);
     
+    
 
-
-
+    echo json_encode($recUser);
     
     $jsondata['success']=true;
     $jsondata['message']='Correcto';

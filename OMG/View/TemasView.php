@@ -159,12 +159,13 @@ require_once 'EncabezadoUsuarioView.php';
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
 		        <h4 class="modal-title" id="myModalLabel">Crear Nuevo Tema</h4>
 		      </div>
-
+                        
 		      <div class="modal-body">
-	
+                          <form id="temaform">
+                          
                                                 <div class="form-group">
 							<label class="control-label" for="title">No.Tema:</label>
-                                                        <input type="text"  id="CLAUSULA" class="form-control"  />
+                                                        <input type="text"  id="NO" class="form-control"  />
                                                         
                                                     
 							<div class="help-block with-errors"></div>
@@ -174,24 +175,21 @@ require_once 'EncabezadoUsuarioView.php';
                                                 
                                                 <div class="form-group">
 							<label class="control-label" for="title">Tema:</label>
-                                                        <textarea  id="DESCRIPCION_CLAUSULA" class="form-control" data-error="Ingrese la Descripcion del Tema" required></textarea>
+                                                        <textarea  id="NOMBRE" class="form-control" data-error="Ingrese la Descripcion del Tema" required></textarea>
 							<div class="help-block with-errors"></div>
 						</div>                                    
                                     
                                     
 						<div class="form-group">
-							<label class="control-label" for="title">No.Sub-Tema:</label>
-                                                        <textarea  id="SUB_CLAUSULA" class="form-control" data-error="Ingrese el Sub-Tema" required></textarea>
+							<label class="control-label" for="title">Descripcion:</label>
+                                                        <textarea  id="DESCRIPCION" class="form-control" data-error="Ingrese el Sub-Tema" required></textarea>
 							<div class="help-block with-errors"></div>
 						</div>
-                                    
-                                    
-                                                
-                                    
-                                    
+                                                                                                                       
+                                                                        
                                                 <div class="form-group">
-							<label class="control-label" for="title">Sub-Tema:</label>
-                                                        <textarea  id="DESCRIPCION_SUB_CLAUSULA" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<label class="control-label" for="title">Plazo:</label>
+                                                        <textarea  id="PLAZO" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
 							<div class="help-block with-errors"></div>
 						</div>
 
@@ -215,27 +213,13 @@ require_once 'EncabezadoUsuarioView.php';
                                                         
 							<div class="help-block with-errors"></div>
 						</div>
-                                    
-
-                                                <div class="form-group">
-							<label class="control-label" for="title">Descripcion:</label>
-                                                        <textarea  id="DESCRIPCION" class="form-control" data-error="Ingrese la Descripcion" required></textarea>
-							<div class="help-block with-errors"></div>
-						</div>
-                                    
-                                    
-                                                <div class="form-group">
-							<label class="control-label" for="title">Plazo:</label>
-                                                        <textarea  id="PLAZO" class="form-control" data-error="Ingrese el Plazo" required></textarea>
-							<div class="help-block with-errors"></div>
-						</div>
-
-                                                                                            
-                                    
+                                                                        
+                                                                                                                                
 						<div class="form-group">
                                                     <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
                                                     <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
 						</div>
+                          </form>
 
 		      </div>
 		    </div>
@@ -250,6 +234,40 @@ require_once 'EncabezadoUsuarioView.php';
 //                        listarEmpleados();
 //                          listarTemas();
                         obtenerDatosArbol();
+                        
+                        
+ $(function(){
+     
+     $("#temaform").submit(function(e){
+         e.preventDefault();
+         var formData = {"NO":$('#NO').val(),"NOMBRE":$('#NOMBRE').val()};
+         
+         $.ajax({
+             url:'../Controller/TemasController.php?Op=GuardarNodo',
+             type:'POST',
+             data:formData,
+             success:function(data)
+             {
+                 
+             }
+         });
+         
+//         var NO=$('#NO').val();
+//         var NOMBRE=$('#NOMBRE').val();
+//         var DESCRIPCION=$('#DESCRIPCION').val();
+//         var PLAZO=$('#PLAZO').val();
+//         var ID_EMPLEADOMODAL
+//         alert("PLAZO"+PLAZO);
+         
+         datos=[];
+         datos.push(NO);
+         datos.push(NOMBRE);
+         datos.push(DESCRIPCION);
+         datos.push(PLAZO);
+         
+     });
+     
+ });                       
                           
                           
 var myLayout = new dhtmlXLayoutObject({
@@ -361,17 +379,16 @@ myLayout.cells("b").attachObject("contenido");
         
         tempData1="<div class='table-responsive'><table class='table table-bordered'><thead><tr class='info'>\n\
                     <th>No</th>\n\
-                    <th>Tema</th>\n\
+                    <th>Subtema</th>\n\
                     <th>Descripcion</th>\n\
                     <th>Plazo</th>\n\
-                    <th>Responsable</th>\n\
                     </tr></thead><tbody></tbody>";
                 $.each(data, function(index,value){
                     tempData1+="<tr><td>"+value.no+"</td>";
                     tempData1+="<td>"+value.nombre+"</td>";
                     tempData1+="<td>"+value.descripcion+"</td>";
-                    tempData1+="<td>"+value.plazo+"</td>";
-                    tempData1+="<td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";
+                    tempData1+="<td>"+value.plazo+"</td></tr>";
+//                    tempData1+="<td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";
                 });
             tempData1+="</table></div>";    
                 $("#contenido").html(tempData1);
