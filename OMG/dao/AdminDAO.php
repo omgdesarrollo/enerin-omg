@@ -222,7 +222,10 @@ class AdminDAO{
     {
         try
         {
-          $query="";
+          $query="SELECT COUNT(*) AS res 
+                  FROM usuarios tbusuarios
+                  WHERE tbusuarios.nombre_usuario='$USUARIO'";
+          
           $db= AccesoDB::getInstancia();
           $lista= $db->executeQuery($query);
           return $lista;
