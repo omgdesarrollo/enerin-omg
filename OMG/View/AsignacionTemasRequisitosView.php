@@ -27,6 +27,7 @@ $Usuario=  Session::getSesion("user");
         <script src="../../js/jquery.js" type="text/javascript"></script>
 
         <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+        <!--<link href="../../css/lista.css" rel="stylesheet" type="text/css"/>-->
     
         <!--<link href="../../codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>-->
         <!--<script src="../../codebase/dhtmlx.js" type="text/javascript"></script>-->
@@ -73,7 +74,7 @@ $Usuario=  Session::getSesion("user");
 
 	</head>
 
-<body class="no-skin" onload="loadSpinner()">
+<body class="no-skin" >
             <!--<div>Cargando...</div>-->
 
             
@@ -92,25 +93,28 @@ $Usuario=  Session::getSesion("user");
 
 <div id="treeboxbox_tree"></div>   
 
-<div id="temas">
-    <div id="contenido"></div>
-</div>
+<div id="seccionIzquierda">
+    <div id="contenido" >
+    
+    </div>
+    </div>
 <!--<div id="gridbox" style="width:500px; height:350px; background-color:white;"></div>-->
 
 	<script>
-            var myLayout, myTreeView, myGrid, myDataView, myMenu, myToolbar;
+            var myLayout, myTree, myToolbar;
             myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
 	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
 //            myTree.enableHighlighting(true);
 
-dataArbol=[["1","0","de"],["2","1","fes"],["3","1","el texto es de la siguiente manera que se puede trabajar "],["5","0","de"]];
-  
-    myTree.deleteChildItems(0);
- 
-  if(dataArbol.length>0){
-    myTree.parse(dataArbol, "jsarray");
-  }
+//dataArbol=[["1","0","de"],["2","1","fes"],["3","1","el texto es de la siguiente manera que se puede trabajar "],["5","0","de"]];
+//  
+//    myTree.deleteChildItems(0);
+// 
+//  if(dataArbol.length>0){
+//    myTree.parse(dataArbol, "jsarray");
+//  }
 //    obtenerDatosArbol();
+obtenerTemasEnAsignacion();
 
 
 var myLayout = new dhtmlXLayoutObject({
@@ -123,7 +127,7 @@ var myLayout = new dhtmlXLayoutObject({
 			]
 		});
               myLayout.cells("b").hideHeader();  
-
+ myLayout.cells("a").attachObject("seccionIzquierda");
 
 
 
@@ -135,37 +139,28 @@ var myToolbar = myLayout.cells("b").attachToolbar({
 				{type: "button", text: "Eliminar", img: "fa fa-trash-o "}
 			]
 		});
-                       myLayout.cells("a").attachObject("treeboxbox_tree");
+//                       myLayout.cells("a").attachObject("treeboxbox_tree");
                 
                         
                   
-     function obtenerTemas(){
+     function obtenerTemasEnAsignacion(){
+//         alert("e");
           $.ajax({
-            url: '../Controller/RegistrosController.php?Op=GenerarArbol',
-            type: 'GET',
-            data: 'ID_ASIGNACION='+id_asignacion,
+            url: '../Controller/AsignacionTemasRequisitosController.php?Op=Listar',
             success:function(data)
             {
-               
-                $.each(data,function(index,value)
-                {
-                    dataArbol.push([padre,0,value.requisito]);
-                    dataIds.push([padre,value.id_requisito,value.requisito]);
-                    $.each(value[0],function(ind,val)
-                    {
-                        hijo++;
-                        dataArbol.push([hijo,padre,val.registro]);
-                        dataIds.push([hijo,val.id_registro,val.registro]);
-                    });
-                    hijo++;
-                    padre=hijo;
-                });
-//                console.log(dataArbol);
-                showArbol(dataArbol,dataIds);
+                $htmlData="<ul class='list-group'>";
+               $.each(data,function(index,value){
+                  $htmlData+="<li class='list-group-item'><"+value.id_tema+"<span class='badge'>2</li>"; 
+                
+               });
+              $htmlData+="</ul>";
+              $("#contenido").html($htmlData);
+//              contruirLista();
             }
         });
      }                
-        
+
     // obtenerDatosArbol(1);
     function obtenerDatosArbol(id_asignacion)
     {

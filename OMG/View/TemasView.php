@@ -38,8 +38,8 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
                 <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
                 <link href="../../assets/dhtmlxSuite_v51_std/skins/web/dhtmlx.css" rel="stylesheet" type="text/css"/>
-             
-            
+                <!--<link href="../../assets/dhtmlxSuite_v51_std/skins/skyblue/dhtmlx.css" rel="stylesheet" type="text/css"/>-->
+                <!--<link href="../../assets/dhtmlxSuite_v51_std/skins/terrace/dhtmlx.css" rel="stylesheet" type="text/css"/>-->
                 
                 
             <style> 
@@ -237,7 +237,7 @@ require_once 'EncabezadoUsuarioView.php';
                                                     <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
                                                     <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
 						</div>
-
+                       
 		      </div>
 		    </div>
 
@@ -265,7 +265,7 @@ var myLayout = new dhtmlXLayoutObject({
 myLayout.cells("b").attachObject("contenido");                
                 
 myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
-	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
+	    myTree.setImagePath("../../assets/dhtmlxSuite_v51_std/codebase/imgs/dhxtree_material/");
 //            myTree.enableHighlighting(true);
 
 //dataArbol=[["1","0","de"],["2","1","fes"],["3","1","el texto es de la siguiente manera que se puede trabajar "],["5","0","de"]];
