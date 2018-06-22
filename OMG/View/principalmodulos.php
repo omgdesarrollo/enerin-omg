@@ -97,7 +97,7 @@ $Usuario=  Session::getSesion("user");
  var seccionCumplimiento=[
      {id:'documentos',text:'Validacion de Documentos',img:'documentos.png',type:'button',isbig:true} ,
      {id:'evidencias',text:'Evidencias',img:'operaciones.png',type:'button',isbig:true},
-//     {id:'planaccion',text:'Plan de Accion',img:'planaccion.png',type:'button',isbig:true}
+     {id:'planaccion',text:'Plan de Accion',img:'planaccion.png',type:'button',isbig:true}
  ];
  
  
@@ -111,23 +111,23 @@ $Usuario=  Session::getSesion("user");
      {id:'cargaprograma',text:'Carga Programa Gantt',img:'663.png',type:'button',isbig:true},
      {id:'informegerencial',text:'Informe Gerencial',img:'seguimiento.png',type:'button',isbig:true}
  ];
-//  var cambiodeidioma=[
-//      {
-//          id:'cambioespanol',text:'Cambiar a ESPAÑOL',img:'',type:'button',isbig:true
-//      },
-//      {
-//          id:'cambioingles',text:'Cambiar a INGLES',img:'',type:'button',isbig:true
-//      }
-//  ];
+  var cambiodeidioma=[
+      {
+          id:'cambioespanol',text:'Cambiar a ESPAÑOL',img:'',type:'button',isbig:true
+      },
+      {
+          id:'cambioingles',text:'Cambiar a INGLES',img:'',type:'button',isbig:true
+      }
+  ];
 
-// var cambiodeidioma=[
-//      {
-//          id:'cambioespanol',text:'Cambiar a ESPAÑOL',img:'',type:'button',isbig:true
-//      },
-//      {
-//          id:'cambioingles',text:'Cambiar a INGLES',img:'',type:'button',isbig:true
-//      }
-//  ];
+ var cambiodeidioma=[
+      {
+          id:'cambioespanol',text:'Cambiar a ESPAÑOL',img:'',type:'button',isbig:true
+      },
+      {
+          id:'cambioingles',text:'Cambiar a INGLES',img:'',type:'button',isbig:true
+      }
+  ];
   
   
 var gantt=[
@@ -137,8 +137,9 @@ var gantt=[
 ];
 
   datacontratos=[];
+  dataSeccionRibbon=[];
   loadEstructuraMaster();
-// loadDataContratos();
+    loadDataContratos();
     loadDataNotificaciones();
 
   
@@ -216,7 +217,18 @@ var gantt=[
          );
 
  function loadDataMenuArriba(){	
-//	alert("data "+data.id);
+     
+     var inicio2=[
+{id:'00',text:'Seleccion de contrato(Click)' ,items:[
+        
+        {id:'0x1',mode:'cols',text:'Contratos',type:'block',
+            list:datacontratos
+        }
+]}
+
+];
+     
+     
 	var inicio=[
 {id:'00',text:'Seleccion de contrato(Click)' ,items:[
         
@@ -228,17 +240,8 @@ var gantt=[
 	{id:'0x2',mode:'cols',text:'Principal',type:'block', 
 		list:[
 		    {id:'logout',text:'Cerrar',img:'cerrarsesion.png', type:'button',isbig:true}
-//		    {id:'principal',text:'Inicio',img:'inicio.png', type:'button',isbig:true} 
 		   
 		      ]	},
-//	{id:'0x3',mode:'cols',text:'Herramientas',type:'block', 
-//		  		list:seccionHerramientas},	
-	  		
-//	{id:'0x31',mode:'cols',text:'Reporte',type:'block', 
-//	  		list:seccionReporte
-//	  		     
-//	},
-      
                             {id:'0x32',mode:'cols',text:'Catalogo',type:'block',
 		  		list:seccionCatalogo},	
                              
@@ -254,13 +257,6 @@ var gantt=[
                              {id:'0x36',mode:'cols',text:'Usuario',type:'block',
           list:infosesionusuario}
 	] }
-//    ,
-//    {id:'002',text:'Configuraciones' ,items:[
-//        
-//        {id:'0x1',mode:'cols',text:'Cambio de idioma',type:'block',
-//            list:cambiodeidioma
-//        }
-//]}
         ];
     
     
@@ -338,7 +334,7 @@ function loadDataNotificaciones(){
                      $.each(r,function(index,value){
                         // alert("ya entro y "+value.CLAVE_CUMPLIMIENTO);
                         
-                      datacontratos.push( {id:'contratos',text:value.clave_cumplimiento,img:'oficios.png',type:'button',isbig:true} )
+//                      datacontratos.push( {id:'contratos',text:value.clave_cumplimiento,img:'oficios.png',type:'button',isbig:true} )
 
                          })  
                      }
