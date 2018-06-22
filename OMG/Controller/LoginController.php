@@ -13,6 +13,7 @@ try {
     $model=new LoginModel();
     $recUser=$model->validar($usuario,$clave);
     
+    if($recUser["accesos"]!=""){
     $hora = date('H:i');
 $session_id = session_id();
 $token = hash('sha256', $hora.$session_id);
@@ -28,17 +29,23 @@ $recUser["tokenseguridad"]=$token;
 //  $jsonToken["tokenseguridad"]=$token;
 //    Session::setSesion("token",$jsonToken);
 //    Session::setSesion("user", $token);
-    
-    
 
 //    echo json_encode($recUser);
     
     $jsondata['success']=true;
     $jsondata['message']='Correcto';
+     $jsondata['accesos']='si';
 //    $jsondata['seguridad']=$token;
    
     //para redireccionar se guarda en una variable el link
 //    $target="../View/main.php";
+    }else{
+//        echo "no tiene";
+   $jsondata['success']=true;
+    $jsondata['message']='Correcto';
+     $jsondata['accesos']='no';
+    }
+    
 }  catch (Exception $e){
     Session::setSesion("error",$e->getMessage());
     Session::setSesion("usuario", $usuario);

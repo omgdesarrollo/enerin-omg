@@ -10,6 +10,9 @@ jQuery(document).ready(function(){
 						success: function(r){
                                                     //alert("d  "+r.message);
 //                                                    alert("el response tiene "+r.message);
+                                                        if(r.accesos=="no"){
+                                                             $.jGrowl("no tiene acceso a ninguna ventana", { header: 'Encabezado' });
+                                                         }else{
 							if(r.success==true)
 									{
 							$.jGrowl("Cargando  Porfavor Espere......", { sticky: true });
@@ -22,10 +25,12 @@ jQuery(document).ready(function(){
 							setTimeout(function(){ window.location = 'sipasoelusuariopero entro en otro modo c'  }, delay);  
 							}else
 							{
-                                                        if(r.success==false){
+                                                        if(r.success==false ){
 							  $.jGrowl("Porfavor checa tu Usuario y Password", { header: 'Error de inicio de sesion' });
-                                                        }        
                                                         }
+                                                        
+                                                        }
+                                                    }
 							},
                                                         error:function(){
 //                                                            alert("hubo un error al tratar de realizar la peticion ajax ");
