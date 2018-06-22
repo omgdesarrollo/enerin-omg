@@ -153,6 +153,20 @@ class AdminModel{
             return false;
         }
     }
+    public function ConsultarExisteUsuario($USUARIO)
+    {
+        try
+        {
+            $dao = new AdminDAO();
+            $rec = $dao->ConsultarExisteUsuario($USUARIO);
+            return $rec;
+        }
+        catch(Excepction $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
     
 }
 

@@ -217,6 +217,21 @@ class AdminDAO{
             return false;
         }
     }
+
+    public function ConsultarExisteUsuario($USUARIO)
+    {
+        try
+        {
+          $query="";
+          $db= AccesoDB::getInstancia();
+          $lista= $db->executeQuery($query);
+          return $lista;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
     
 }
 
