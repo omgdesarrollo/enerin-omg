@@ -211,12 +211,12 @@ function loadDataSideBarOficiosDocumentacion(){
                          mySidebar.attachEvent("onSelect", function(id, value){
                                    switch(id){
                                        case "permisos":
-                                            $("#sidebarObjV").load('InyectarVistasView.php #documentosEntrada');
+                                            $("#sidebarObjV").load('InyectarVistasView.php #administrarUsuario');
                                        break;  
                                        
 
                                        case "ajustes":
-                                            $("#sidebarObjV").load('InyectarVistasView.php #documentosSalida');
+                                            $("#sidebarObjV").load('InyectarVistasView.php #ajustesUsuario');
                                        break;
                                                                               
                                    }
