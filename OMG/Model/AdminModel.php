@@ -62,12 +62,12 @@ class AdminModel{
         }
     }
     
-    public function listarTemas($cadena)
+    public function listarTemas($CADENA,$ID_USUARIO)
     {
         try
         {
             $dao=new AdminDAO();
-            $rec = $dao->listarTemas($cadena);
+            $rec = $dao->listarTemas($CADENA);
             return $rec;
             // var_dump($rec);
         } catch (Exception $ex)
@@ -84,9 +84,7 @@ class AdminModel{
         {
             $dao=new AdminDAO();
             $rec= $dao->listarTemasPorUsuario($ID_USUARIO);
-            
             return $rec;
-            
         } catch (Exception $ex)
         {
             throw $ex;
@@ -109,7 +107,23 @@ class AdminModel{
         }
     }
     
+    public function insertarUsuarioTema($ID_USUARIO, $ID_TEMA)
+    {
+        try
+        {
+            $dao=new AdminDAO();
+            $rec= $dao->insertarUsuarioTema($ID_USUARIO, $ID_TEMA);
+            
+            return $rec;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
 
+    
     public function actualizarUsuariosVistasPorColumna($COLUMNA, $VALOR, $ID_USUARIO, $ID_ESTRUCTURA)
     {
         try
@@ -120,6 +134,20 @@ class AdminModel{
             return $rec;
             
         } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
+    public function eliminarUsuarioTema($ID_USUARIO,$ID_TEMA)
+    {
+        try
+        {
+            $dao=new AdminDAO();
+            $rec= $dao->eliminarUsuarioTema($ID_USUARIO,$ID_TEMA);            
+            return $rec;
+        } catch(Exception $ex)
         {
             throw $ex;
             return false;

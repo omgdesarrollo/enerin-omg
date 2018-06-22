@@ -125,10 +125,9 @@ require_once 'EncabezadoUsuarioView.php';
 
 <div id="treeboxbox_tree"></div>
 
-<div id="contenido">
-    
-    
-</div>
+<div id="contenido"></div>
+
+<div id="form_container" style="width:280px;height:250px;"></div>
             
 <!--<table class="table table-bordered table-striped header_fijo"  >
     <thead >
@@ -160,12 +159,13 @@ require_once 'EncabezadoUsuarioView.php';
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
 		        <h4 class="modal-title" id="myModalLabel">Crear Nuevo Tema</h4>
 		      </div>
-
+                        
 		      <div class="modal-body">
-	
+                          <form id="temaform">
+                          
                                                 <div class="form-group">
 							<label class="control-label" for="title">No.Tema:</label>
-                                                        <input type="text"  id="CLAUSULA" class="form-control"  />
+                                                        <input type="text"  id="NO" class="form-control"  />
                                                         
                                                     
 							<div class="help-block with-errors"></div>
@@ -175,24 +175,21 @@ require_once 'EncabezadoUsuarioView.php';
                                                 
                                                 <div class="form-group">
 							<label class="control-label" for="title">Tema:</label>
-                                                        <textarea  id="DESCRIPCION_CLAUSULA" class="form-control" data-error="Ingrese la Descripcion del Tema" required></textarea>
+                                                        <textarea  id="NOMBRE" class="form-control" data-error="Ingrese la Descripcion del Tema" required></textarea>
 							<div class="help-block with-errors"></div>
 						</div>                                    
                                     
                                     
 						<div class="form-group">
-							<label class="control-label" for="title">No.Sub-Tema:</label>
-                                                        <textarea  id="SUB_CLAUSULA" class="form-control" data-error="Ingrese el Sub-Tema" required></textarea>
+							<label class="control-label" for="title">Descripcion:</label>
+                                                        <textarea  id="DESCRIPCION" class="form-control" data-error="Ingrese el Sub-Tema" required></textarea>
 							<div class="help-block with-errors"></div>
 						</div>
-                                    
-                                    
-                                                
-                                    
-                                    
+                                                                                                                       
+                                                                        
                                                 <div class="form-group">
-							<label class="control-label" for="title">Sub-Tema:</label>
-                                                        <textarea  id="DESCRIPCION_SUB_CLAUSULA" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<label class="control-label" for="title">Plazo:</label>
+                                                        <textarea  id="PLAZO" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
 							<div class="help-block with-errors"></div>
 						</div>
 
@@ -216,28 +213,14 @@ require_once 'EncabezadoUsuarioView.php';
                                                         
 							<div class="help-block with-errors"></div>
 						</div>
-                                    
-
-                                                <div class="form-group">
-							<label class="control-label" for="title">Descripcion:</label>
-                                                        <textarea  id="DESCRIPCION" class="form-control" data-error="Ingrese la Descripcion" required></textarea>
-							<div class="help-block with-errors"></div>
-						</div>
-                                    
-                                    
-                                                <div class="form-group">
-							<label class="control-label" for="title">Plazo:</label>
-                                                        <textarea  id="PLAZO" class="form-control" data-error="Ingrese el Plazo" required></textarea>
-							<div class="help-block with-errors"></div>
-						</div>
-
-                                                                                            
-                                    
+                                                                        
+                                                                                                                                
 						<div class="form-group">
                                                     <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
                                                     <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
 						</div>
-                       
+                          </form>
+
 		      </div>
 		    </div>
 
@@ -250,22 +233,118 @@ require_once 'EncabezadoUsuarioView.php';
 //                      construirContenido();
 //                        listarEmpleados();
 //                          listarTemas();
+                        obtenerDatosArbol();
+                        
+                        
+ $(function(){
+     
+     $("#temaform").submit(function(e){
+         e.preventDefault();
+         var formData = {"NO":$('#NO').val(),"NOMBRE":$('#NOMBRE').val()};
+         
+         $.ajax({
+             url:'../Controller/TemasController.php?Op=GuardarNodo',
+             type:'POST',
+             data:formData,
+             success:function(data)
+             {
+                 
+             }
+         });
+         
+//         var NO=$('#NO').val();
+//         var NOMBRE=$('#NOMBRE').val();
+//         var DESCRIPCION=$('#DESCRIPCION').val();
+//         var PLAZO=$('#PLAZO').val();
+//         var ID_EMPLEADOMODAL
+//         alert("PLAZO"+PLAZO);
+         
+         datos=[];
+         datos.push(NO);
+         datos.push(NOMBRE);
+         datos.push(DESCRIPCION);
+         datos.push(PLAZO);
+         
+     });
+     
+ });                       
                           
                           
 var myLayout = new dhtmlXLayoutObject({
 			parent: "layout_here",
 			pattern: "2U",
 			cells: [
-				{id: "a", width: 240, text: "Folders"},
+				{id: "a", width: 240, text: "Temas"},
 				{id: "b", text: "Descripcion"}
 				
 			]
 		});
                 
-myLayout.cells("b").attachObject("contenido");                
+    myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
+	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
+            
+            
                 
-myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
-	    myTree.setImagePath("../../assets/dhtmlxSuite_v51_std/codebase/imgs/dhxtree_material/");
+myLayout.cells("a").attachObject("treeboxbox_tree");
+
+var myToolbar = myLayout.cells("a").attachToolbar({
+			iconset: "awesome",
+			items: [
+                                {id:"agregar", type: "button", text: "Agregar", img: "fa fa-plus-square"},
+				{id:"eliminar", type: "button", text: "Eliminar", img: "fa fa-trash-o "}
+			]
+		});
+
+
+var formStructure = [
+    {type:"radio", name:"color", value:"r", checked:true, label:"Red"},
+    {type:"radio", name:"color", value:"g", label:"Green"},
+    {type:"radio", name:"color", value:"b", label:"Blue"}
+];
+var dhxForm = new dhtmlXForm("form_container", formStructure);
+
+
+myToolbar.attachEvent("onClick", function(id){
+    //your code here
+//    alert("hola"+id);
+    evaluarToolbarSeccionA(id);
+
+});
+
+function evaluarToolbarSeccionA(id)
+{
+    if(id=="agregar")
+    {
+//        alert("entro en agregar");
+        $('#create-item').modal('show');
+    } 
+    if(id=="eliminar")
+    {
+        alert("entro en eliminar");
+    }   
+}
+
+function obtenerDatosArbol()
+    {
+        $.ajax({
+            url:'../Controller/TemasController.php?Op=Listar',
+            success:function(data)
+            {                                          
+             contruirArbol(data);   
+            }
+        });
+    }
+
+function contruirArbol(dataArbol)
+    {
+        myTree.deleteChildItems(0);
+        if(dataArbol.length>0){
+        myTree.parse(dataArbol, "jsarray");
+        }
+    }
+
+                
+
 //            myTree.enableHighlighting(true);
 
 //dataArbol=[["1","0","de"],["2","1","fes"],["3","1","el texto es de la siguiente manera que se puede trabajar "],["5","0","de"]];
@@ -278,29 +357,8 @@ myTree.attachEvent("onClick", function(id){
     return true;
 });
   
-myLayout.cells("a").attachObject("treeboxbox_tree");
-  
-obtenerDatosArbol();  
-
-
-  function obtenerDatosArbol()
-  {
-      $.ajax({
-          url:'../Controller/TemasController.php?Op=Listar',
-          success:function(data)
-          {                                          
-           contruirArbol(data);   
-          }
-      });
-  }
-
-    function contruirArbol(dataArbol)
-    {
-        myTree.deleteChildItems(0);
-        if(dataArbol.length>0){
-        myTree.parse(dataArbol, "jsarray");
-        }
-    }
+myLayout.cells("b").attachObject("contenido");                
+    
     
     function obtenerHijos(id)
     {
@@ -321,18 +379,16 @@ obtenerDatosArbol();
         
         tempData1="<div class='table-responsive'><table class='table table-bordered'><thead><tr class='info'>\n\
                     <th>No</th>\n\
-                    <th>Tema</th>\n\
+                    <th>Subtema</th>\n\
                     <th>Descripcion</th>\n\
                     <th>Plazo</th>\n\
-                    <th>Responsable</th>\n\
                     </tr></thead><tbody></tbody>";
                 $.each(data, function(index,value){
-//                    tempData1+= ""+value.nombre+"<br>";
                     tempData1+="<tr><td>"+value.no+"</td>";
                     tempData1+="<td>"+value.nombre+"</td>";
                     tempData1+="<td>"+value.descripcion+"</td>";
-                    tempData1+="<td>"+value.plazo+"</td>";
-                    tempData1+="<td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";
+                    tempData1+="<td>"+value.plazo+"</td></tr>";
+//                    tempData1+="<td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";
                 });
             tempData1+="</table></div>";    
                 $("#contenido").html(tempData1);
