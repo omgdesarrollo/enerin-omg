@@ -64,6 +64,23 @@ class TemaModel{
         }
     }
     
+    
+    public function eliminarNodo($ID)
+    {
+        try
+        {
+            $dao=new TemaDAO();
+            $rec= $dao->eliminarNodo($ID);
+            
+            return $rec;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
 }
 
 ?>

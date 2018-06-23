@@ -88,6 +88,25 @@ public function insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO)
     }
 }
 
+public function eliminarNodo($ID)
+{
+    try
+    {
+        $query="DELETE FROM temas WHERE temas.id_tema=$ID";
+        
+        $db= AccesoDB::getInstancia();
+        $lista= $db->executeQueryUpdate($query);
+        
+        return $lista;
+  
+    } catch (Exception $ex)
+    {
+        throw $ex;
+        return false;
+    }
+}
+
+
 }
 
 ?>

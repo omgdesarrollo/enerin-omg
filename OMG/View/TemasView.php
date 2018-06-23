@@ -384,8 +384,36 @@ function evaluarToolbarSeccionA(id)
     } 
     if(id=="eliminar")
     {
-        alert("entro en eliminar");
+        var level = myTree.getLevel(id_seleccionado);
+        if(level==1)
+        {
+            var subItems= myTree.getSubItems(id_seleccionado);
+            if(subItems=="")
+            {
+                eliminarNodo();
+                console.log("Este es el hijo:"+subItems);
+                alert("Entraste Padre");
+            }
+        } 
+        if(level==2)
+        {
+            eliminarNodo();
+            alert("Entraste Hijo");
+        }
     }   
+}
+
+
+function eliminarNodo()
+{
+    $.ajax({
+        url:'../Controller/TemasController.php?Op=Eliminar',
+        data:'ID='+id_seleccionado,
+        success:function()
+        {
+           obtenerDatosArbol(); 
+        }
+    });
 }
 
 function obtenerDatosArbol()
@@ -458,6 +486,7 @@ function evaluarToolbarSeccionB(id)
     }
     }
 }
+
 
     
     function obtenerHijos(id)
@@ -532,9 +561,7 @@ function evaluarToolbarSeccionB(id)
                     {
                         $(ObjetoThis).css("background","");
                     }   
-            });
-
-        
+            });        
 }
         
     
