@@ -31,7 +31,16 @@ switch ($Op) {
             echo json_encode($Lista);
             return $Lista;
             
-		break;	
+		break;
+            
+        case'ListarDetalles':
+            
+            $Lista= $model->listarDetallesSeleccionados($_REQUEST['ID_TEMA']);
+            header('Content-type: application/json; charset=utf-8'); 
+            echo json_encode($Lista);
+            return $Lista;
+            
+            break;
         
 
 	case 'GuardarNodo':
@@ -51,6 +60,11 @@ switch ($Op) {
 
 	case 'Eliminar':
 		# code...
+            $Lista= $model->eliminarNodo($_REQUEST['ID']);
+            header('Content-type: application/json; charset=utf-8'); 
+            echo json_encode($Lista);
+            return $Lista;
+            
 		break;	
 
 

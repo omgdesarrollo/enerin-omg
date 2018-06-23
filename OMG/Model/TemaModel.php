@@ -35,7 +35,8 @@ class TemaModel{
         try
         {
             $dao= new TemaDAO();
-            $rec= $dao->listarHijos($ID);
+            $rec['datosHijos']= $dao->listarHijos($ID);
+            $rec['detalles']= $dao->listarDetallesSeleccionados($ID);
             
             return $rec;
             
@@ -46,6 +47,7 @@ class TemaModel{
         }
     }
     
+   
     public function insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO)
     {
         try
@@ -59,6 +61,23 @@ class TemaModel{
         {
             throw $ex;
             return false;        
+        }
+    }
+    
+    
+    public function eliminarNodo($ID)
+    {
+        try
+        {
+            $dao=new TemaDAO();
+            $rec= $dao->eliminarNodo($ID);
+            
+            return $rec;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
         }
     }
     
