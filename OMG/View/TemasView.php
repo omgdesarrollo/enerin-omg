@@ -340,6 +340,8 @@ function contruirArbol(dataArbol)
 //dataArbol=[["1","0","de"],["2","1","fes"],["3","1","el texto es de la siguiente manera que se puede trabajar "],["5","0","de"]];
 
 myTree.attachEvent("onClick", function(id){
+//    var id2 = myTree.getSelectedId();
+//    alert("f  "+id2);
     // your code here
     obtenerHijos(id);
     

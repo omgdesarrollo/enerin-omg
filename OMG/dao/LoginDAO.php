@@ -12,7 +12,7 @@ class LoginDAO{
                 $rec=$lista[0];
             }
             return $rec;
-    }  catch (Exception $e){
+    } catch (Exception $e){
         throw $rec;
     }
     }
