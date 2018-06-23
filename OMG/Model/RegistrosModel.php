@@ -21,7 +21,7 @@ class RegistrosModel{
         }
     }
     
-    public function generarDatosArbol($id_asignacion,$todo)
+    public function generarDatosArbol($id_asignacion)
     {
         try
         {
