@@ -77,7 +77,6 @@ class AdminModel{
         }
     }
     
-    
     public function listarTemasPorUsuario($ID_USUARIO)
     {
         try
@@ -159,10 +158,12 @@ class AdminModel{
         {
             $dao = new AdminDAO();
             $rec = $dao->ConsultarExisteUsuario($USUARIO);
-            if($rec['res']==0)
+            if($rec[0]['res']==0)
             {   
                 return true;
-            } else {
+            }
+            else
+            {
                 return false;
             }
             
@@ -173,7 +174,43 @@ class AdminModel{
             return false;
         }
     }
-    
+
+    public function verificarPAss($USUARIO,$CONTRASENA)
+    {
+        try
+        {
+            $dao = new AdminDAO();
+            $rec = $dao->verificarPAss($USUARIO,$CONTRASENA);
+            if($rec['res']!=0)
+            {   
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        catch(Excepction $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
+    public function cambiarPass($USUARIO,$CONTRASENA,$VALOR)
+    {
+        try
+        {
+            $dao = new AdminDAO();
+            $rec = $dao->cambiarPass($USUARIO,$CONTRASENA,$VALOR);
+            return $rec;
+        }
+        catch(Excepction $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
 }
 
 ?>

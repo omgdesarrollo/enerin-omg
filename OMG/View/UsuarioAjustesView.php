@@ -23,6 +23,10 @@ require_once '../util/Session.php';
         <!-- <script src="../../js/is.js" type="text/javascript"></script> -->
         <script src="../../js/tooltip.js" type="text/javascript"></script>
         <script src="../../angular/angular.min.js" type="text/javascript"></script>
+
+        <!-- swalAlert -->
+        <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+        <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
     </head>
 
     <div id="Contenedor" style="margin: 0px auto;">
@@ -30,38 +34,142 @@ require_once '../util/Session.php';
 		<!-- <div class="ContentForm"> -->
         <div class="form-group">
 		 	<!-- <form id="loginform"  method="post" name="FormEntrar"> -->
-                <label class="control-label">Contraña Actual: </label>
-		 		<div class="input-group input-group-lg">
-				    <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-lock"></i></span>
-				    <input id="contraActual" type="password" class="form-control" placeholder="******" required>
-				</div>
-				<br>
+            <label class="control-label">Contraña Actual: </label>
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id=""><i class="glyphicon glyphicon-lock"></i></span>
+                <input onBlur="verificarPass(this)" id="contraActual" type="password" class="form-control" placeholder="******" required>
+                <span class="input-group-addon" id="iconPassActual"><i style="color:red" class="glyphicon glyphicon-remove"></i></span>
+            </div>
+            <br>
 
-                <label class="control-label">Contraseña Nueva: </label>
-				<div class="input-group input-group-lg">
-				    <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-lock"></i></span>
-				    <input id="contraNueva" type="password" class="form-control" placeholder="******" required>
-				</div>
-				<br>
+            <label class="control-label">Contraseña Nueva: </label>
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id=""><i class="glyphicon glyphicon-lock"></i></span>
+                <input onKeyup="checarPass(this)" id="contraNueva" type="password" class="form-control" placeholder="******" required>
+                <span class="input-group-addon" id="iconPassNueva"><i style="color:red" class="glyphicon glyphicon-remove"></i></span>
+            </div>
+            <br>
 
-                <label class="control-label">Repetir Contraseña: </label>
-				<div class="input-group input-group-lg">
-				    <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-lock"></i></span>
-				    <input id="contraNueva2" type="password" class="form-control" placeholder="******" required>
-				</div>
-                <br>
+            <label class="control-label">Repetir Contraseña: </label>
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id=""><i class="glyphicon glyphicon-lock"></i></span>
+                <input onKeyup="checarPass(this)" id="contraNueva2" type="password" class="form-control" placeholder="******" required>
+                <span class="input-group-addon" id="iconPassNueva2"><i style="color:red" class="glyphicon glyphicon-remove"></i></span>
+            </div>
+            <br>
 
-				<button onClick="cambiarPass('hola')" title="Haga clic aquí para cambiar contraseña" class="btn btn-lg btn-primary btn-block btn-signin">
-                Entrar</button>
+            <button onClick="cambiarPass()" title="Haga clic aquí para cambiar contraseña" class="btn btn-lg btn-primary btn-block btn-signin">
+            Entrar</button>
 				<!--<div class="opcioncontra"><a href="">Olvidaste tu contraseña?</a></div>-->
             <!-- </form> -->
     </div>
-			
+
      </div>
      <script>
-        function cambiarPass(data)
+        okpass=false;
+        okpassN=false;
+        function cambiarPass()
         {
-            alert("cambiar contraseña contruyendo");
+            contraA = $("#contraActual").val();
+            contraN = $("#contraNueva").val();
+            $.ajax({
+                url: '../Controller/AdminController.php?Op=CambiarPass',
+                type: 'POST',
+                data: 'PASS='+contraA+"&NEW_PASS="+contraN,
+                success:function(exito)
+                {
+                    if(exito==true)
+                    {
+                        swalSuccess("La contraseña ha sido cambiada");
+                    }
+                    else
+                    {
+                        swalError("No se pudo hacer el cambio de contraseña");
+                    }
+                },
+                error:function()
+                {
+                }
+            });
+        }
+
+        function checarPass(Obj)
+        {
+            pass = $("#contraNueva").val();
+            passN = $("#contraNueva2").val();
+            yes = "<i style='color:#02ff00' class='glyphicon glyphicon-ok'></i>";
+            no = "<i style='color:red' class='glyphicon glyphicon-remove'></i>";
+            if(pass!="" && passN!="")
+            {                
+                if(pass == passN)
+                {
+                    $("#iconPassNueva").html(yes);
+                    $("#iconPassNueva2").html(yes);
+                    okpassN=true;
+                }
+                else
+                {
+                    $("#iconPassNueva").html(no);
+                    $("#iconPassNueva2").html(no);
+                    okpassN=false;
+                }
+            }
+            else
+            {
+                $("#iconPassNueva").html(no);
+                $("#iconPassNueva2").html(no);
+                okpassN=false;
+            }
+        }
+
+        function verificarPass(Obj)
+        {
+            contrasena = $(Obj).val();
+            yes = "<i style='color:#02ff00' class='glyphicon glyphicon-ok'></i>";
+            no = "<i style='color:red' class='glyphicon glyphicon-remove'></i>";
+            $.ajax({
+                url: '../Controller/AdminController.php?Op=VerificarPass',
+                type: 'GET',
+                data: 'PASS='+contrasena,
+                success:function(correcta)
+                {
+                    if(existe==true)
+                    {
+                        $("#iconPassActual").html(yes);
+                    }
+                    else
+                        $("#iconPassActual").html(no);
+                },
+                error:function()
+                {
+                    swalError("Error en el servidor");
+                }
+            });
+        }
+        function swalSuccess(msj)
+        {
+            swal({
+                    title: '',
+                    text: msj,
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                    type:"success"
+                });
+            setTimeout(function(){swal.close();},1500);
+            $('#loader').hide();
+        }
+
+        function swalError(msj)
+        {
+            swal({
+                    title: '',
+                    text: msj,
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                    type:"error"
+                });
+            setTimeout(function(){swal.close();$('#agregarUsuario .close').click()},1500);
+            $('#loader').hide();
         }
      </script>
 </html>
