@@ -67,7 +67,7 @@ class AdminModel{
         try
         {
             $dao=new AdminDAO();
-            $rec = $dao->listarTemas($CADENA);
+            $rec = $dao->listarTemas($CADENA,$ID_USUARIO);
             return $rec;
             // var_dump($rec);
         } catch (Exception $ex)
