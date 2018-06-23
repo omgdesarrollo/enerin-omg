@@ -139,7 +139,7 @@ var myToolbar = myLayout.cells("b").attachToolbar({
 				{type: "button", text: "Eliminar", img: "fa fa-trash-o "}
 			]
 		});
-//                       myLayout.cells("a").attachObject("treeboxbox_tree");
+                       myLayout.cells("b").attachObject("treeboxbox_tree");
                 
                         
                   
@@ -151,7 +151,7 @@ var myToolbar = myLayout.cells("b").attachToolbar({
             {
                 $htmlData="<ul class='list-group'>";
                $.each(data,function(index,value){
-                  $htmlData+="<li class='list-group-item'><"+value.id_tema+"<span class='badge'>2</li>"; 
+                  $htmlData+="<li class='list-group-item'><button onclick='obtenerDatosArbol("+value.id_asignacion_tema_requisito+")' >"+value.id_tema+"</button><span class='badge'></li>"; 
                 
                });
               $htmlData+="</ul>";
@@ -164,6 +164,7 @@ var myToolbar = myLayout.cells("b").attachToolbar({
     // obtenerDatosArbol(1);
     function obtenerDatosArbol(id_asignacion)
     {
+        alert("d");
         $.ajax({
             url: '../Controller/RegistrosController.php?Op=GenerarArbol',
             type: 'GET',
