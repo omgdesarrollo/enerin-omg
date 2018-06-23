@@ -242,6 +242,7 @@ require_once 'EncabezadoUsuarioView.php';
      
      $("#temaform").submit(function(e){
          e.preventDefault();
+         
          var formData = {"NO":$('#NO').val(),"NOMBRE":$('#NOMBRE').val(),"DESCRIPCION":$('#DESCRIPCION').val(),
                          "PLAZO":$('#PLAZO').val(),"ID_EMPLEADOMODAL":$('#ID_EMPLEADOMODAL').val()};            
          
