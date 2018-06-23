@@ -67,7 +67,7 @@ class AdminModel{
         try
         {
             $dao=new AdminDAO();
-            $rec = $dao->listarTemas($CADENA);
+            $rec = $dao->listarTemas($CADENA,$ID_USUARIO);
             return $rec;
             // var_dump($rec);
         } catch (Exception $ex)
@@ -76,7 +76,6 @@ class AdminModel{
             return false;
         }
     }
-    
     
     public function listarTemasPorUsuario($ID_USUARIO)
     {
@@ -159,10 +158,12 @@ class AdminModel{
         {
             $dao = new AdminDAO();
             $rec = $dao->ConsultarExisteUsuario($USUARIO);
-            if($rec['res']==0)
+            if($rec[0]['res']==0)
             {   
                 return true;
-            } else {
+            }
+            else
+            {
                 return false;
             }
             
@@ -173,7 +174,43 @@ class AdminModel{
             return false;
         }
     }
-    
+
+    public function verificarPAss($USUARIO,$CONTRASENA)
+    {
+        try
+        {
+            $dao = new AdminDAO();
+            $rec = $dao->verificarPAss($USUARIO,$CONTRASENA);
+            if($rec['res']!=0)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        catch(Excepction $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
+    public function cambiarPass($USUARIO,$CONTRASENA,$VALOR)
+    {
+        try
+        {
+            $dao = new AdminDAO();
+            $rec = $dao->cambiarPass($USUARIO,$CONTRASENA,$VALOR);
+            return $rec;
+        }
+        catch(Excepction $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
 }
 
 ?>

@@ -139,8 +139,8 @@ switch ($Op)
             $tempData .= $tempData2.$tempData3;
         };
         echo $tempData;
-
     break;
+
     case 'ModificarPermiso':
         $exito = $model->actualizarUsuariosVistasPorColumna($_REQUEST['COLUMNA'], $_REQUEST['VALOR'], $_REQUEST['ID_USUARIO'], $_REQUEST['ID_ESTRUCTURA']);
         echo $exito;
@@ -152,9 +152,22 @@ switch ($Op)
         // echo json_encode($result);
         echo $result;
         break;
+        
     case 'ConsultarExisteUsuario':
         $existe = $model->ConsultarExisteUsuario($_REQUEST["NOMBRE_USUARIO"]);
         echo $existe;
+    break;
+
+    case 'VerificarPass':
+        $usuario = Session::getSesion("user");
+        $existe = $model->verificarPass($usuario["ID_USUARIO"],$_REQUEST["PASS"]);
+        echo $existe;
+    break;
+
+    case 'CambiarPass':
+        $usuario = Session::getSesion("user");
+        $exito = $model->cambiarPass($usuario["ID_USUARIO"],$_REQUEST["PASS"],$_REQUEST["NEW_PASS"]);
+        echo $exito;
     break;
 
     default:

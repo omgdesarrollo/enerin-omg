@@ -168,7 +168,7 @@ class AdminDAO{
     {
         try
         {
-            $query="INSERT INTO usuarios_temas (id_usuario,id_tema) VALUES ($ID_USUARIO,$ID_TEMA)";            
+            $query="INSERT INTO usuarios_temas (id_usuario,id_tema) VALUES ($ID_USUARIO,$ID_TEMA)";
             $db= AccesoDB::getInstancia();
             $lista= $db->executeQueryUpdate($query);
            
@@ -224,7 +224,7 @@ class AdminDAO{
         {
           $query="SELECT COUNT(*) AS res 
                   FROM usuarios tbusuarios
-                  WHERE tbusuarios.nombre_usuario='$USUARIO'";
+                  WHERE tbusuarios.nombre_usuario=$USUARIO";
           
           $db= AccesoDB::getInstancia();
           $lista= $db->executeQuery($query);
@@ -235,8 +235,43 @@ class AdminDAO{
             return false;
         }
     }
-    
-    
+
+    public function verificarPass($USUARIO,$CONTRASENA)
+    {
+        try
+        {
+            $query="SELECT COUNT(*) AS res 
+                  FROM usuarios tbusuarios
+                  WHERE tbusuarios.nombre_usuario=$USUARIO
+                  AND tbusuarios.contra='$CONTRASENA'";
+            // echo $query;
+            $db= AccesoDB::getInstancia();
+            $lista= $db->executeQuery($query);
+            // echo $lista[0]['res'];
+            return $lista[0];
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    public function cambiarPass($USUARIO,$CONTRASENA,$VALOR)
+    {
+        try
+        {
+            $query="UPDATE usuarios tbusuarios
+                SET tbusuarios.contra= '".$VALOR."'
+                WHERE tbusuarios.nombre_usuario=$USUARIO
+                AND tbusuarios.contra='$CONTRASENA'";
+            $db= AccesoDB::getInstancia();
+            $lista= $db->executeQueryUpdate($query);
+            return $lista;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
 }
 
 
