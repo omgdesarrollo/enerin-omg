@@ -121,11 +121,13 @@ require_once 'EncabezadoUsuarioView.php';
 <div style="height: 50px"></div>-->
 
 
-<div id="layout_here"></div>
+<div id="layout_here" style="width:1100px;"></div>
 
 <div id="treeboxbox_tree"></div>
 
 <div id="contenido"></div>
+
+<div id="contenidoDetalles"></div>
 
 <div id="form_container" style="width:280px;height:250px;"></div>
             
@@ -151,8 +153,8 @@ require_once 'EncabezadoUsuarioView.php';
 
 
                              
-       <!-- Inicio de Seccion Modal -->
-       <div class="modal draggable fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+       <!-- Inicio de Seccion Modal Tema-->
+       <div class="modal draggable fade" id="create-itemTema" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -227,11 +229,69 @@ require_once 'EncabezadoUsuarioView.php';
 		    </div>
 
 		  </div>
-		</div>
+       </div>
+       <!--Final de Seccion Modal-->
+       
+       <!-- Inicio de Seccion Modal Sub-Tema-->
+       <div class="modal draggable fade" id="create-itemSubTema" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Crear Nuevo Tema</h4>
+		      </div>
+                        
+		      <div class="modal-body">
+                          <form id="SubTemaform">
+                          
+                                                <div class="form-group">
+							<label class="control-label" for="title">No.Sub-Tema:</label>
+                                                        <input type="text"  id="NO_SUBTEMA" class="form-control"  />
+                                                        
+                                                    
+							<div class="help-block with-errors"></div>
+                                                        <div id="sugerenciasclausulas"></div>
+                                                        
+						</div>
+                                                
+                                                <div class="form-group">
+							<label class="control-label" for="title">Sub-Tema:</label>
+                                                        <textarea  id="NOMBRE_SUBTEMA" class="form-control" data-error="Ingrese la Descripcion del Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>                                    
+                                    
+                                    
+						<div class="form-group">
+							<label class="control-label" for="title">Descripcion:</label>
+                                                        <textarea  id="DESCRIPCION_SUBTEMA" class="form-control" data-error="Ingrese el Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+                                                                                                                       
+                                                                        
+                                                <div class="form-group">
+							<label class="control-label" for="title">Plazo:</label>
+                                                        <textarea  id="PLAZO_SUBTEMA" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+
+                                                                        
+                                                                                                                                
+						<div class="form-group">
+                                                    <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
+                                                    <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
+						</div>
+                          </form>
+
+		      </div>
+		    </div>
+
+		  </div>
+       </div>
        <!--Final de Seccion Modal-->
        
 		<script>  
-                      var idclausula,si_hay_cambio=false;
+                      var idclausula,si_hay_cambio=false, id_seleccionado="";
+                      
 //                      construirContenido();
 //                        listarEmpleados();
 //                          listarTemas();
@@ -244,35 +304,56 @@ require_once 'EncabezadoUsuarioView.php';
          e.preventDefault();
          
          var formData = {"NO":$('#NO').val(),"NOMBRE":$('#NOMBRE').val(),"DESCRIPCION":$('#DESCRIPCION').val(),
-                         "PLAZO":$('#PLAZO').val(),"ID_EMPLEADOMODAL":$('#ID_EMPLEADOMODAL').val()};            
+                         "PLAZO":$('#PLAZO').val(),"NODO":0,"ID_EMPLEADOMODAL":$('#ID_EMPLEADOMODAL').val()};            
          
          $.ajax({
              url:'../Controller/TemasController.php?Op=GuardarNodo',
              type:'POST',
              data:formData,
-             success:function(data)
+             success:function()
              {
-                 
+                 obtenerDatosArbol();
              }
          });
                 
      });
      
- });                       
+     
+     $("#SubTemaform").submit(function(e){
+         e.preventDefault();
+         
+         var formData = {"NO":$('#NO_SUBTEMA').val(),"NOMBRE":$('#NOMBRE_SUBTEMA').val(),"DESCRIPCION":$('#DESCRIPCION_SUBTEMA').val(),
+                         "PLAZO":$('#PLAZO_SUBTEMA').val(),"NODO":id_seleccionado,"ID_EMPLEADOMODAL":""};            
+         
+         $.ajax({
+             url:'../Controller/TemasController.php?Op=GuardarNodo',
+             type:'POST',
+             data:formData,
+             success:function()
+             {
+                 obtenerDatosArbol();
+                 obtenerHijos(id_seleccionado);
+             }
+         });
+                
+     });
+     
+ }); //CIERRA EL $FUNCTION                      
                           
                           
 var myLayout = new dhtmlXLayoutObject({
 			parent: "layout_here",
-			pattern: "2U",
+			pattern: "3W",
 			cells: [
 				{id: "a", width: 240, text: "Temas"},
-				{id: "b", text: "Descripcion"}
+				{id: "b", width: 600, text: "Sub-Temas"},
+                                {id: "c", text: "Detalles"}
 				
 			]
 		});
                 
-    myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
-	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
+myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
+myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
             
             
                 
@@ -282,17 +363,9 @@ var myToolbar = myLayout.cells("a").attachToolbar({
 			iconset: "awesome",
 			items: [
                                 {id:"agregar", type: "button", text: "Agregar", img: "fa fa-plus-square"},
-				{id:"eliminar", type: "button", text: "Eliminar", img: "fa fa-trash-o "}
+				{id:"eliminar", type: "button", text: "Eliminar", img: "fa fa-trash-o"}
 			]
 		});
-
-
-var formStructure = [
-    {type:"radio", name:"color", value:"r", checked:true, label:"Red"},
-    {type:"radio", name:"color", value:"g", label:"Green"},
-    {type:"radio", name:"color", value:"b", label:"Blue"}
-];
-var dhxForm = new dhtmlXForm("form_container", formStructure);
 
 
 myToolbar.attachEvent("onClick", function(id){
@@ -307,7 +380,7 @@ function evaluarToolbarSeccionA(id)
     if(id=="agregar")
     {
 //        alert("entro en agregar");
-        $('#create-item').modal('show');
+        $('#create-itemTema').modal('show');
     } 
     if(id=="eliminar")
     {
@@ -340,19 +413,56 @@ function contruirArbol(dataArbol)
 
 //dataArbol=[["1","0","de"],["2","1","fes"],["3","1","el texto es de la siguiente manera que se puede trabajar "],["5","0","de"]];
 
+
 myTree.attachEvent("onClick", function(id){
     // your code here
     obtenerHijos(id);
     
-//    alert("rama"+id);
+    id_seleccionado=id;
     return true;
 });
+
   
-myLayout.cells("b").attachObject("contenido");                
-    
+myLayout.cells("b").attachObject("contenido");
+
+var myToolbar = myLayout.cells("b").attachToolbar({
+			iconset: "awesome",
+			items: [
+                                {id:"agregar", type: "button", text: "Agregar", img: "fa fa-plus-square"},
+				{id:"eliminar", type: "button", text: "Eliminar", img: "fa fa-trash-o"}
+			]
+		});
+                
+myToolbar.attachEvent("onClick", function(id){
+    //your code here
+    //alert("hola"+id);
+    evaluarToolbarSeccionB(id);
+
+});
+
+function evaluarToolbarSeccionB(id)
+{
+//    alert("Este es el ID:"+id)
+    if(id_seleccionado=="")
+    {
+        alert("No hay tema seleccionado");
+    } else {
+    if(id=="agregar")
+    {
+//        alert("entro en agregar");
+        $('#create-itemSubTema').modal('show');
+    } 
+    if(id=="eliminar")
+    {
+        alert("entro en eliminar");
+    }
+    }
+}
+
     
     function obtenerHijos(id)
     {
+//        alert("Este es el ID Hijo:"+id);
        $("#contenido").html("<div style='font-size:30px' class='fa fa-refresh fa-spin'></div>"); 
         $.ajax({
             url:'../Controller/TemasController.php?Op=ListarHijos',
@@ -360,10 +470,12 @@ myLayout.cells("b").attachObject("contenido");
             data:'ID='+id,
             success:function(data)
             {
-                construirSubDirectorio(data);
+                construirSubDirectorio(data.datosHijos);
+                construirDetalleSeleccionado(data.detalles,id);
             }
         });
     }
+        
     
     function construirSubDirectorio(data)
     {
@@ -375,15 +487,55 @@ myLayout.cells("b").attachObject("contenido");
                     <th>Plazo</th>\n\
                     </tr></thead><tbody></tbody>";
                 $.each(data, function(index,value){
-                    tempData1+="<tr><td>"+value.no+"</td>";
-                    tempData1+="<td>"+value.nombre+"</td>";
-                    tempData1+="<td>"+value.descripcion+"</td>";
-                    tempData1+="<td>"+value.plazo+"</td></tr>";
+                    tempData1+="<tr><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'no',"+value.id_tema+")\">"+value.no+"</td>";
+                    tempData1+="<td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'nombre',"+value.id_tema+")\" >"+value.nombre+"</td>";
+                    tempData1+="<td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'descripcion',"+value.id_tema+")\">"+value.descripcion+"</td>";
+                    tempData1+="<td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'plazo',"+value.id_tema+")\">"+value.plazo+"</td></tr>";
 //                    tempData1+="<td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";
                 });
             tempData1+="</table></div>";    
                 $("#contenido").html(tempData1);
     }
+        
+     
+   myLayout.cells("c").attachObject("contenidoDetalles");
+   
+   
+    function construirDetalleSeleccionado(data,id)
+    {
+        var level = myTree.getLevel(id);
+//        alert("este es el nivel:"+level);
+        tempData2="<div class='table-responsive'><table class='table table-bordered'><thead><tr class='danger'><th>Datos</th><th>Detalles</th></tr></thead><tbody></tbody>";
+                    $.each(data, function(index,value){
+                       tempData2+="<tr><td class='info'>No</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'no',"+value.id_tema+")\">"+value.no+"</td></tr>";
+                       tempData2+="<tr><td class='info'>Tema</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'nombre',"+value.id_tema+")\">"+value.nombre+"</td></tr>";
+                       tempData2+="<tr><td class='info'>Descripcion</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'descripcion',"+value.id_tema+")\">"+value.descripcion+"</td></tr>";
+                       if(level==1)
+                       tempData2+="<tr><td class='info'>Responsable</td><td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";
+                       
+                    });
+        tempData2+="</table></div>";
+   
+        $("#contenidoDetalles").html(tempData2);
+    }
+    
+    
+    function saveToDatabase(ObjetoThis,columna,id) {
+//        alert("entro al save");            
+        
+            $(ObjetoThis).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
+            $.ajax({
+                    url: "../Controller/GeneralController.php?Op=ModificarColumna",
+                    type: "POST",
+                    data:'TABLA=temas &COLUMNA='+columna+' &VALOR='+ObjetoThis.innerHTML+' &ID='+id+' &ID_CONTEXTO=id_tema',
+                    success: function(data)
+                    {
+                        $(ObjetoThis).css("background","");
+                    }   
+            });
+
+        
+}
         
     
 		</script>
