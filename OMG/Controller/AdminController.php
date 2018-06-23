@@ -157,6 +157,18 @@ switch ($Op)
         echo $existe;
     break;
 
+    case 'VerificarPass':
+        $usuario = Session::getSesion("user");
+        $existe = $model->verificarPass($usuario["ID_USUARIO"],$_REQUEST["PASS"],);
+        echo $existe;
+    break;
+
+    case 'CambiarPass':
+        $usuario = Session::getSesion("user");
+        $exito = $model->cambiarPass($usuario["ID_USUARIO"],$_REQUEST["PASS"],$_REQUEST["NEW_PASS"]);
+        echo $exito;
+    break;
+
     default:
     return false;
     break;

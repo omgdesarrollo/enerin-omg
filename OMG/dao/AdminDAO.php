@@ -235,8 +235,40 @@ class AdminDAO{
             return false;
         }
     }
-    
-    
+
+    public function verificarPass($USUARIO,$CONTRASENA)
+    {
+        try
+        {
+          $query="SELECT COUNT(*) AS res 
+                  FROM usuarios tbusuarios
+                  WHERE tbusuarios.nombre_usuario='$USUARIO'" AND tbusuario.contra='$CONTRASENA';
+          $db= AccesoDB::getInstancia();
+          $lista= $db->executeQuery($query);
+          return $lista[0];
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    public function cambiarPass($USUARIO,$CONTRASENA,$VALOR)
+    {
+        try
+        {
+          $query=" UPDATE usuarios tbusuarios
+                    SET tbusuario.contra= '".$VALOR."'
+                    WHERE tbusuarios.nombre_usuario='$USUARIO' AND tbusuario.contra='$CONTRASENA'";
+
+          $db= AccesoDB::getInstancia();
+          $lista= $db->executeQueryUpdate($query);
+          return $lista;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
 }
 
 
