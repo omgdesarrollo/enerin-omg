@@ -47,6 +47,7 @@ $Usuario=  Session::getSesion("user");
                       color:#888;
                       max-height: calc(100vh - 110px);
                       overflow-y: auto;
+                     
                     }                    
                     
                     #sugerenciasclausulas {
@@ -54,9 +55,7 @@ $Usuario=  Session::getSesion("user");
                     height:5px;
                     overflow: auto;
                     }  
-/*                    body{
-                    overflow:hidden;     
-                    }
+                    /*
                     
                     .hideScrollBar{
                       width: 100%;
@@ -69,20 +68,27 @@ $Usuario=  Session::getSesion("user");
                     
                     div#layout_here {
                     position: relative;
-                    width: 900px;
-                    height: 350px;
+                    width: 100%;
+                    height: 392px;
+                    /*overflow: auto;*/
                     box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
                     /*margin: 0 auto;*/
                     }
-            
+                    div#treeboxbox_tree{
+                    /*position: relative;*/
+                    /*width: 900px;*/
+                    height: 350px;
+                    /*overflow: auto;*/
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
+                    }
                     
             </style>    
 
 
 	</head>
 
-<body class="no-skin">
-    <!--<div id="loader"></div>-->
+        <body class="no-skin" onload="load(1)">
+    <div id="loader"></div>
             
             
 <?php
@@ -121,7 +127,7 @@ require_once 'EncabezadoUsuarioView.php';
 <div style="height: 50px"></div>-->
 
 
-<div id="layout_here" style="width:1100px;"></div>
+<div id="layout_here" ></div>
 
 <div id="treeboxbox_tree"></div>
 
@@ -238,7 +244,7 @@ require_once 'EncabezadoUsuarioView.php';
 		    <div class="modal-content">
 		      <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Crear Nuevo Tema</h4>
+		        <h4 class="modal-title" id="myModalLabel">Crear Nuevo Subtema</h4>
 		      </div>
                         
 		      <div class="modal-body">
@@ -332,6 +338,9 @@ require_once 'EncabezadoUsuarioView.php';
              success:function()
              {
                  obtenerDatosArbol();
+                 
+//                 myTree.addItem(formData["NO"],formData['NOMBRE_SUBTEMA'], id_seleccionado);
+//                myTree.openItem(formData.);
                  obtenerHijos(id_seleccionado);
              }
          });
@@ -355,7 +364,7 @@ var myLayout = new dhtmlXLayoutObject({
 myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
 myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
             
-            
+
                 
 myLayout.cells("a").attachObject("treeboxbox_tree");
 
@@ -366,7 +375,6 @@ var myToolbar = myLayout.cells("a").attachToolbar({
 				{id:"eliminar", type: "button", text: "Eliminar", img: "fa fa-trash-o"}
 			]
 		});
-
 
 myToolbar.attachEvent("onClick", function(id){
     //your code here
@@ -428,6 +436,8 @@ function obtenerDatosArbol()
             { 
 //                alert("tiene algo el arbol");
              contruirArbol(data);   
+             load(2);
+             
             },error:function (){
 //                alert("entro en el erro");
             }
@@ -571,6 +581,17 @@ function evaluarToolbarSeccionB(id)
                     }   
             });        
 }
+
+function load(carga){
+    
+    if(carga==1){
+        $("#loader").show();
+    }
+    if(carga==2){
+        $("#loader").hide();
+    }
+}
+
         
     
 		</script>
