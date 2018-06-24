@@ -290,7 +290,7 @@ require_once 'EncabezadoUsuarioView.php';
        <!--Final de Seccion Modal-->
        
 		<script>  
-                      var idclausula,si_hay_cambio=false, id_seleccionado="";
+                      var  id_seleccionado="";
                       
 //                      construirContenido();
 //                        listarEmpleados();
@@ -385,21 +385,20 @@ function evaluarToolbarSeccionA(id)
     if(id=="eliminar")
     {
         var level = myTree.getLevel(id_seleccionado);
-        if(level==1)
-        {
+//        if(level==1)
+//        {
             var subItems= myTree.getSubItems(id_seleccionado);
             if(subItems=="")
             {
                 eliminarNodo();
-                console.log("Este es el hijo:"+subItems);
-                alert("Entraste Padre");
+            }else{
+                alert("no se puede eliminar tiene descendencia");
             }
-        } 
-        if(level==2)
-        {
-            eliminarNodo();
-            alert("Entraste Hijo");
-        }
+//        } 
+//        if(level==2)
+//        {
+//            eliminarNodo();
+//        }
     }   
 }
 
@@ -412,17 +411,25 @@ function eliminarNodo()
         success:function()
         {
            obtenerDatosArbol(); 
+           limpiar("#contenidoDetalles");
+           limpiar("#contenido");
+           id_seleccionado="";
         }
     });
 }
-
+function limpiar(id_div){
+    $(""+id_div).html("");
+}
 function obtenerDatosArbol()
     {
         $.ajax({
             url:'../Controller/TemasController.php?Op=Listar',
             success:function(data)
-            {                                          
+            { 
+//                alert("tiene algo el arbol");
              contruirArbol(data);   
+            },error:function (){
+//                alert("entro en el erro");
             }
         });
     }
@@ -458,8 +465,7 @@ myLayout.cells("b").attachObject("contenido");
 var myToolbar = myLayout.cells("b").attachToolbar({
 			iconset: "awesome",
 			items: [
-                                {id:"agregar", type: "button", text: "Agregar", img: "fa fa-plus-square"},
-				{id:"eliminar", type: "button", text: "Eliminar", img: "fa fa-trash-o"}
+                                {id:"agregar", type: "button", text: "Agregar Subtema", img: "fa fa-plus-square"}
 			]
 		});
                 

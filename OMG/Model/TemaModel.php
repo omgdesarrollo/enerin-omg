@@ -21,8 +21,10 @@ class TemaModel{
                 array($value['id_tema'],$value['padre'],$value['no']."-".$value['nombre']);                
                 $contador++;
             }    
-            
+            if($contador!=0)
             return $resultadoArbol;
+            else
+                return "";
         }  catch (Exception $e)
         {
             throw  $e;
