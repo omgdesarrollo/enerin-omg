@@ -408,7 +408,7 @@ function evaluarToolbarSeccionA(id)
 //                console.log("d:  "+dataArbol);
                 showArbol(dataArbol,dataIds);
                 
-                obtenerTema(id_asignacion_t);
+//                obtenerTema(id_asignacion_t);
                 
             }
         });
