@@ -153,7 +153,7 @@ $(function(){
          var formData = {"ID_ASIGNACION_TEMA_REQUISITO":id_asignacion_t,"REQUISITO":$('#REQUISITO').val()};            
          
          $.ajax({
-             url:'../Controller/TemasController.php?Op=GuardarNodo',
+             url:'../Controller/AsignacionTemasRequisitosController.php?Op=GuardarNodo',
              type:'POST',
              data:formData,
              success:function()
