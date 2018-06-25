@@ -113,7 +113,38 @@ $Usuario=  Session::getSesion("user");
 
 		  </div>
        </div>
+ <div class="modal draggable fade" id="create-itemRegistro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Crear Nuevo Registro</h4>
+		      </div>
+                        
+		      <div class="modal-body">
+                          <form id="formRegistro">
+                                     
+                                                <div class="form-group">
+							<label class="control-label" for="title">Requisito</label>
+                                                        <textarea  id="REGISTRO" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
 
+                                                                        
+                                                                                                                                
+						<div class="form-group">
+                                                    <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
+                                                    <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
+						</div>
+                          </form>
+
+		      </div>
+		    </div>
+
+		  </div>
+       </div>
+            
+            
 
 <div style="height: 10px"></div>
 
@@ -131,7 +162,7 @@ $Usuario=  Session::getSesion("user");
 <!--<div id="gridbox" style="width:500px; height:350px; background-color:white;"></div>-->
 
 	<script>
-            var myLayout, myTree, myToolbar,id_asignacion_t="";
+            var myLayout, myTree, myToolbar,id_asignacion_t=-1,levelv=0;
             myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
 	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
 //            myTree.enableHighlighting(true);
@@ -163,6 +194,25 @@ $(function(){
          });
                 
      }); 
+     
+       $("#formRegistros").submit(function(e){
+         e.preventDefault();
+         alert("dcf  "+id_asignacion_t);
+         var formData = {"ID_ASIGNACION_TEMA_REQUISITO":id_asignacion_t,"REQUISITO":$('#REQUISITO').val()};            
+         
+         $.ajax({
+             url:'../Controller/AsignacionTemasRequisitosController.php?Op=GuardarNodo',
+             type:'POST',
+             data:formData,
+             success:function()
+             {
+                 obtenerDatosArbol(id_asignacion_t);
+             }
+         });
+                
+     }); 
+     
+     
 });
 
 var myLayout = new dhtmlXLayoutObject({
@@ -210,27 +260,55 @@ var myToolbar = myLayout.cells("b").attachToolbar({
 //}
 });
 
+myTree.attachEvent("onClick", function(id){
+//    var id2 = myTree.getSelectedId();
+//    alert("f  "+id2);
+    // your code here}
+    alert("d "+id);
+//    obtenerHijos(id);
+//    
+//    id_seleccionado=id;
+//    return true;
+ levelv = myTree.getLevel(id);
+ 
+// alert("su level es "+level);
+});
+
+
 function evaluarToolbarSeccionA(id)
 {
-    if(id=="agregar")
-    {
-//        alert("entro en agregar");
-        $('#create-itemRequisito').modal('show');
-    } 
-    if(id=="eliminar")
-    {
-        var level = myTree.getLevel(id_seleccionado);
-
-            var subItems= myTree.getSubItems(id_seleccionado);
-            if(subItems=="")
+    if(id_asignacion_t==-1){
+        alert("tema no seleccionado")
+    }else{
+            if(id=="agregar")
             {
-//                eliminarNodo();
-            }else{
-                alert("no se puede eliminar tiene descendencia");
-            }
-    }   
+                if(levelv==0){
+        //        alert("entro en agregar");
+                    $('#create-itemRequisito').modal('show');
+                }
+                   if(levelv==1){
+                        $('#create-itemRegistro').modal('show');
+                   }
+                   if(levelv==2){
+                       
+                   }
+            } 
+            if(id=="eliminar")
+            {
+                var level = myTree.getLevel(id_seleccionado);
+
+                    var subItems= myTree.getSubItems(id_seleccionado);
+                    if(subItems=="")
+                    {
+        //                eliminarNodo();
+                    }else{
+                        alert("no se puede eliminar tiene descendencia");
+                    }
+            } 
+    }
 }
-                        
+               
+               
                   
      function obtenerTemasEnAsignacion(){
 //         alert("e");  
