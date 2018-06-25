@@ -133,8 +133,8 @@ $Usuario=  Session::getSesion("user");
                                                                         
                                                                                                                                 
 						<div class="form-group">
-                                                    <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
-                                                    <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
+                                                    <button type="submit" id="btn_guardar2"  class="btn crud-submit btn-info">Guardar</button>
+                                                    <button type="submit" id="btn_limpiar2"  class="btn crud-submit btn-info">Limpiar</button>
 						</div>
                           </form>
 
@@ -162,7 +162,7 @@ $Usuario=  Session::getSesion("user");
 <!--<div id="gridbox" style="width:500px; height:350px; background-color:white;"></div>-->
 
 	<script>
-            var myLayout, myTree, myToolbar,id_asignacion_t=-1,levelv=0,id_asignacion_r=-1,selec_tema=-1,dataIds_req=[];
+            var myLayout, myTree, myToolbar,id_asignacion_t=-1,levelv=0,id_asignacion_r=-1,selec_tema=-1,id_seleccionado=-1,dataIds_req=[];
             myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
 	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
 //            myTree.enableHighlighting(true);
@@ -180,7 +180,7 @@ obtenerTemasEnAsignacion();
 $(function(){
     $("#formRequisitos").submit(function(e){
          e.preventDefault();
-         alert("dcf  "+id_asignacion_t);
+//         alert("dcf  "+id_asignacion_t);
          var formData = {"ID_ASIGNACION_TEMA_REQUISITO":id_asignacion_t,"REQUISITO":$('#REQUISITO').val()};            
          
          $.ajax({
@@ -195,11 +195,23 @@ $(function(){
                 
      }); 
      
-       $("#formRegistros").submit(function(e){
+       $("#formRegistro").submit(function(e){
          e.preventDefault();
 //         alert("dcf  "+id);
-
-         var formData = {"ID_REQUISITO":id_asignacion_r,"REQUISITO":$('#REGISTRO').val()};            
+        
+//        console.log(dataIds_req);
+        id_req=-1;
+//        console.log(dataIds_req);
+console.log("seleccionado es "+id_seleccionado);
+        $.each(dataIds_req,function(index,value){
+            if(value.padre==id_seleccionado){
+               id_req= value.id_requisito;
+//               alert("d "+id_req);
+            }
+//            alert("d "+value.id_requisito);
+        }); 
+//       if(id_){ 
+         var formData = {"ID_REQUISITO":id_req,"REGISTRO":$('#REGISTRO').val()};            
          
          $.ajax({
              url:'../Controller/AsignacionTemasRequisitosController.php?Op=GuardarSubNodo',
@@ -242,8 +254,10 @@ var myToolbar = myLayout.cells("b").attachToolbar({
 			iconset: "awesome",
 			items: [
 //				{type: "button", text: "Actualizar", img: "fa fa-refresh fa-spin"},
-                                {id:"agregar",type: "button", text: "Agregar", img: "fa fa-save "},
+                                {id:"agregarReq",type: "button", text: "Agregar Requisito", img: "fa fa-save "},
+                                {id:"agregar",type: "button", text: "Agregar Registro", img: "fa fa-save "},
 				{id:"eliminar",type: "button", text: "Eliminar", img: "fa fa-trash-o "}
+                                
 			]
 		});
                        myLayout.cells("b").attachObject("treeboxbox_tree");
@@ -265,13 +279,13 @@ myTree.attachEvent("onClick", function(id){
 //    var id2 = myTree.getSelectedId();
 //    alert("f  "+id2);
     // your code here}
-    alert("d "+id);
+//    alert("d "+id);
 //    obtenerHijos(id);
 //    
 //    id_seleccionado=id;
 //    return true;
  levelv = myTree.getLevel(id);
- 
+ id_seleccionado=id;
 // alert("su level es "+level);
 });
 
@@ -284,11 +298,11 @@ function evaluarToolbarSeccionA(id)
             if(id=="agregar")
             {
                 if( selec_tema==0){
-                   if(levelv==0){
-                        $('#create-itemRequisito').modal('show');
-                        
-                   }
-                   else{
+//                   if(levelv==0){
+//                        $('#create-itemRequisito').modal('show');
+//                        
+//                   }
+//                   else{
                    
                         if(levelv==1){
                             $('#create-itemRegistro').modal('show');
@@ -296,7 +310,7 @@ function evaluarToolbarSeccionA(id)
                        }else{
                         alert("tiene que seleccionar el requisito en donde cargar el registro");   
                        }
-                 }
+//                 }
                 }
                    
             } 
@@ -311,7 +325,18 @@ function evaluarToolbarSeccionA(id)
                     }else{
                         alert("no se puede eliminar tiene descendencia");
                     }
-            } 
+            }
+            
+            if(id=="agregarReq"){
+                $('#create-itemRequisito').modal('show');
+//                alert("fd "+id_asignacion_t);
+//                
+//                
+//               myTreeView.unselectItem(id_seleccionado); 
+//alert("d");
+
+//    id_asignacion_t
+            }
     }
 }
                
@@ -341,6 +366,7 @@ function evaluarToolbarSeccionA(id)
        id_asignacion_t=id_asignacion;
        selec_tema=0;
         levelv=0;
+        dataIds_req.length=0;
 //       alert("d  :"+id_asignacion_t);
 //        id_asignacion_t=id_asignacion;
 //        alert("d");
@@ -358,8 +384,9 @@ function evaluarToolbarSeccionA(id)
                 $.each(data,function(index,value)
                 {
                     dataArbol.push([padre,0,value.requisito]);
-//                    dataIds.push([padre,value.id_requisito,value.requisito]);
-                    dataIds.push(value.id_requisito);
+                    dataIds_req.push({"padre":padre,"id_requisito":value.id_requisito,"requisito":value.requisito});
+//                    dataIds.push({"padre":padre,"id_requisito":value.id_requisito,"requisito":value.requisito});
+//                    dataIds.push(value.id_requisito);
                     $.each(value[0],function(ind,val)
                     {
                         hijo++;
@@ -370,10 +397,11 @@ function evaluarToolbarSeccionA(id)
                     hijo++;
                     padre=hijo;
                 });
-//                console.log(dataArbol);
-                dataIds_req.length=0;
-                dataIds_req.push(dataIds);
-                console.log("d"+dataIds_req)
+                console.log(dataIds_req);
+         
+//                dataIds_req=dataIds;
+//                console.log("d"+dataIds_req);
+//                console.log("d:  "+dataArbol);
                 showArbol(dataArbol,dataIds);
             }
         });
