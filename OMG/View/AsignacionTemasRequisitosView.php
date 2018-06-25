@@ -53,8 +53,8 @@ $Usuario=  Session::getSesion("user");
 		}
                 div#layout_here {
 		position: relative;
-		width: 900px;
-		height: 350px;
+		width: 100%;
+		height: 380px;
                 box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
 		/*margin: 0 auto;*/
                 }
@@ -76,12 +76,43 @@ $Usuario=  Session::getSesion("user");
             <!--<div>Cargando...</div>-->
 
             
+            
+            
 <?php
 
     require_once 'EncabezadoUsuarioView.php';
 
 ?>
+   <div class="modal draggable fade" id="create-itemRequisito" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Crear Nuevo Requisito</h4>
+		      </div>
+                        
+		      <div class="modal-body">
+                          <form id="formRequisitos">
+                                     
+                                                <div class="form-group">
+							<label class="control-label" for="title">Requisito</label>
+                                                        <textarea  id="REQUISITO" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
 
+                                                                        
+                                                                                                                                
+						<div class="form-group">
+                                                    <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
+                                                    <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
+						</div>
+                          </form>
+
+		      </div>
+		    </div>
+
+		  </div>
+       </div>
 
 
 <div style="height: 10px"></div>
@@ -100,7 +131,7 @@ $Usuario=  Session::getSesion("user");
 <!--<div id="gridbox" style="width:500px; height:350px; background-color:white;"></div>-->
 
 	<script>
-            var myLayout, myTree, myToolbar;
+            var myLayout, myTree, myToolbar,id_asignacion_t="";
             myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
 	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
 //            myTree.enableHighlighting(true);
@@ -115,35 +146,95 @@ $Usuario=  Session::getSesion("user");
 //    obtenerDatosArbol();
 obtenerTemasEnAsignacion();
 
+$(function(){
+    $("#formRequisitos").submit(function(e){
+         e.preventDefault();
+         alert("d");
+         var formData = {"ID_ASIGNACION_TEMA_REQUISITO":id_asignacion_t,"REQUISITO":$('#REQUISITO').val()};            
+         
+         $.ajax({
+             url:'../Controller/AsignacionTemasRequisitosController.php?Op=GuardarNodo',
+             type:'POST',
+             data:formData,
+             success:function()
+             {
+                 obtenerDatosArbol(id_asignacion_t);
+             }
+         });
+                
+     }); 
+});
 
 var myLayout = new dhtmlXLayoutObject({
 			parent: "layout_here",
-			pattern: "2U",
+			pattern: "3W",
 			cells: [
 				{id: "a", width: 240, text: "Temas"},
-				{id: "b", text: "Descripcion"}
+				{id: "b",   text: "Requisitos-Registros"},
+                                {id: "c", width: 260,text: "Detalles"}
 				
 			]
 		});
-              myLayout.cells("b").hideHeader();  
+//              myLayout.cells("b").hideHeader();  
  myLayout.cells("a").attachObject("seccionIzquierda");
-
+//var myToolbar1 = myLayout.cells("a").attachToolbar({
+//			iconset: "awesome",
+//			items: [
+////				{type: "button", text: "Actualizar", img: "fa fa-refresh fa-spin"},
+//                                {type: "button", text: "Agregar", img: "fa fa-save "},
+//				{type: "button", text: "Eliminar", img: "fa fa-trash-o "}
+//			]
+//		});
 
 
 var myToolbar = myLayout.cells("b").attachToolbar({
 			iconset: "awesome",
 			items: [
-				{type: "button", text: "Actualizar", img: "fa fa-refresh fa-spin"},
-                                {type: "button", text: "Guardar", img: "fa fa-save "},
-				{type: "button", text: "Eliminar", img: "fa fa-trash-o "}
+//				{type: "button", text: "Actualizar", img: "fa fa-refresh fa-spin"},
+                                {id:"agregar",type: "button", text: "Agregar", img: "fa fa-save "},
+				{id:"eliminar",type: "button", text: "Eliminar", img: "fa fa-trash-o "}
 			]
 		});
                        myLayout.cells("b").attachObject("treeboxbox_tree");
-                
+     
+     
+     
+     myToolbar.attachEvent("onClick", function(id){
+    //your code here
+//    alert("hola"+id);
+//if(id_asignacion_t!=""){
+    evaluarToolbarSeccionA(id);
+//}
+//else{
+//    alert("no tiene tema seleccionado");
+//}
+});
+
+function evaluarToolbarSeccionA(id)
+{
+    if(id=="agregar")
+    {
+//        alert("entro en agregar");
+        $('#create-itemRequisito').modal('show');
+    } 
+    if(id=="eliminar")
+    {
+        var level = myTree.getLevel(id_seleccionado);
+
+            var subItems= myTree.getSubItems(id_seleccionado);
+            if(subItems=="")
+            {
+//                eliminarNodo();
+            }else{
+                alert("no se puede eliminar tiene descendencia");
+            }
+    }   
+}
                         
                   
      function obtenerTemasEnAsignacion(){
-//         alert("e");
+//         alert("e");  
+
           $.ajax({
             url: '../Controller/AsignacionTemasRequisitosController.php?Op=Listar',
             success:function(data)
@@ -162,6 +253,8 @@ var myToolbar = myLayout.cells("b").attachToolbar({
     // obtenerDatosArbol(1);
     function obtenerDatosArbol(id_asignacion)
     {
+       
+//        id_asignacion_t=id_asignacion;
 //        alert("d");
         $.ajax({
             url: '../Controller/RegistrosController.php?Op=GenerarArbol',
