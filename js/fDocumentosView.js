@@ -127,11 +127,11 @@ function reconstruir(value,carga,datosEmp)
     {
         tempData += "<option value='"+value2.id_empleado+"'>";
         if(value.id_empleado==value2.id_empleado)
+            tempData+="selected";
+            tempData+=">"+value2.nombre_empleado+" "+value2.apellido_paterno+" "+value2.apellido_materno+"</option>";
     });
     
     tempData += '</select></td>';
-    
-    
     tempData += "<td class='celda' width='25%'><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"><i class='fa fa-trash'></i></button></td>";
     
     if(carga==0)
