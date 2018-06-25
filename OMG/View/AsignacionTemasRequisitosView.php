@@ -215,11 +215,12 @@ console.log("seleccionado es "+id_seleccionado);
          
          $.ajax({
              url:'../Controller/AsignacionTemasRequisitosController.php?Op=GuardarSubNodo',
-             type:'POST',
+             type:'POST', 
              data:formData,
-             success:function()
+             success:function(data)
              {
-//                 obtenerDatosArbol(id_asignacion_t);
+//                 alert("s");
+                 obtenerDatosArbol(id_asignacion_t);
              }
          });
                 

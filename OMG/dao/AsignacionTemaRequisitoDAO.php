@@ -202,7 +202,7 @@ class AsignacionTemaRequisitoDAO {
         {
             $query="INSERT INTO registros(registro,id_documento)
                     VALUES ('$registro',$id_documento)";
-            echo "".$query;
+//            echo "".$query;
             $db=  AccesoDB::getInstancia();
             $db->executeQueryUpdate($query);
             
