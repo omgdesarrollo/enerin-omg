@@ -1,7 +1,7 @@
 <?php
 
 require_once '../dao/RegistrosDAO.php';
-
+require_once '../dao/TemasDAO.php';
 
 class RegistrosModel{
     
@@ -27,6 +27,8 @@ class RegistrosModel{
         {
             $datosArbol = array();
             $dao=new RegistrosDAO();
+            $daoT=new TemasDAO();
+            $rec= $daoT->listarDetallesSeleccionados($id_asignacion);
             $requisitos= $dao->obtenerRequisitos($id_asignacion);
             foreach($requisitos as $index=>$resultado)
             {

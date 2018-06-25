@@ -443,6 +443,7 @@ function eliminarNodo()
 function limpiar(id_div){
     $(""+id_div).html("");
 }
+
 function obtenerDatosArbol()
     {
         $.ajax({
