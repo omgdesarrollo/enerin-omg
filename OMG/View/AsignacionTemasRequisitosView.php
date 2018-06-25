@@ -132,7 +132,8 @@ $Usuario=  Session::getSesion("user");
                         <div class="form-group">
                             <label class="control-label">Clave/Descripcion: </label>
                             <div class="dropdown">
-                                <input onkeyup="registroClaveEscritura()" style="width:100%" type="text" class="dropdown-toggle" id="CLAVEESCRITURA_AGREGARREGISTRO" data-toggle="dropdown" onkeyup="buscarDocumento(this)" autocomplete="off"/>
+                                <input onBlur="registroClaveEscritura()" style="width:100%" type="text" class="dropdown-toggle" 
+                                id="CLAVEESCRITURA_AGREGARREGISTRO" data-toggle="dropdown" onKeyup="buscarDocumento(this)" autocomplete="off"/>
                                 <ul style="width:100%;cursor:pointer;" class="dropdown-menu" id="dropdownEvent" role="menu" 
                                 aria-labelledby="menu1"></ul>
                             </div>
@@ -193,7 +194,7 @@ obtenerTemasEnAsignacion();
 function buscarDocumento(data)
 {
     cadena = $(data).val().toLowerCase();
-    tempData="";
+    tempData="";    
     if(cadena!="")
     {
         $.ajax({
@@ -216,21 +217,28 @@ function buscarDocumento(data)
     }
 }
 
-var idDocumentoSelect="";
+var idDocumentoSelect=-1;
 function seleccionarItemDocumentos(Documentos)
 {
     $('#CLAVEESCRITURA_AGREGARREGISTRO').val(Documentos.clave_documento);
     idDocumentoSelect=Documentos.id_documento;
     // tempData = "<div class='form-group'>Clave Documento: "+Documentos.clave_documento+"</div>";
-    tempData += "<div class='form-group'>Descripcion Documento: "+Documentos.documento+"</div>";
+    tempData = "<div class='form-group'>Descripcion Documento: "+Documentos.documento+"</div>";
     tempData += "<div class='form-group'>Responsable Documento: "+Documentos.nombre_empleado+"</div>";
     $("#INFO_AGREGARREGISTRO").html(tempData);
 }
+
 function registroClaveEscritura()
 {
     val = $('#CLAVEESCRITURA_AGREGARREGISTRO').val();
     if(val=="")
-        idDocumentoSelect="";
+    {
+        idDocumentoSelect=-1;
+    // tempData = "<div class='form-group'>Clave Documento: "+Documentos.clave_documento+"</div>";
+        tempData = "<div class='form-group'>Descripcion Documento:</div>";
+        tempData += "<div class='form-group'>Responsable Documento:</div>";
+        $("#INFO_AGREGARREGISTRO").html(tempData);
+    }
 }
 
 $(function(){
@@ -265,9 +273,9 @@ console.log("seleccionado es "+id_seleccionado);
 //               alert("d "+id_req);
             }
 //            alert("d "+value.id_requisito);
-        }); 
+        });
 //       if(id_){ 
-         var formData = {"ID_REQUISITO":id_req,"REGISTRO":$('#REGISTRO').val(),"ID_DOCUMENTO":-1};            
+         var formData = {"ID_REQUISITO":id_req,"REGISTRO":$('#REGISTRO').val(),"ID_DOCUMENTO":idDocumentoSelect};
          
          $.ajax({
              url:'../Controller/AsignacionTemasRequisitosController.php?Op=GuardarSubNodo',
