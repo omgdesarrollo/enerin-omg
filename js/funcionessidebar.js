@@ -217,6 +217,7 @@ function loadDataSideBarOficiosDocumentacion(){
                                        
 
                                        case "ajustes":
+                                            // $("#sidebarObjV").load('UsuarioAjustesView.php');
                                             $("#sidebarObjV").load('InyectarVistasView.php #ajustesUsuario');
                                        break;
                                                                               

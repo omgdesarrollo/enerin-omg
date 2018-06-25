@@ -242,7 +242,7 @@ class AdminDAO{
         {
             $query="SELECT COUNT(*) AS res 
                   FROM usuarios tbusuarios
-                  WHERE tbusuarios.nombre_usuario=$USUARIO
+                  WHERE tbusuarios.id_usuario=$USUARIO
                   AND tbusuarios.contra='$CONTRASENA'";
             // echo $query;
             $db= AccesoDB::getInstancia();
@@ -261,7 +261,7 @@ class AdminDAO{
         {
             $query="UPDATE usuarios tbusuarios
                 SET tbusuarios.contra= '".$VALOR."'
-                WHERE tbusuarios.nombre_usuario=$USUARIO
+                WHERE tbusuarios.id_usuario=$USUARIO
                 AND tbusuarios.contra='$CONTRASENA'";
             $db= AccesoDB::getInstancia();
             $lista= $db->executeQueryUpdate($query);
