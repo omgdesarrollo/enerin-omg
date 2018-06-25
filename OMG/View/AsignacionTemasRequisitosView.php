@@ -122,43 +122,56 @@ $Usuario=  Session::getSesion("user");
 		      </div>
                         
 		      <div class="modal-body">
-                          <form id="formRegistro">
-                                     
-                                                <div class="form-group">
-							<label class="control-label" for="title">Registro</label>
-                                                        <textarea  id="REGISTRO" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
-							<div class="help-block with-errors"></div>
-						</div>
+                    <form id="formRegistro">   
+                        <div class="form-group">
+                            <label class="control-label" for="title">Registro</label>
+                            <textarea  id="REGISTRO" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+                            <div class="help-block with-errors"></div>
+                        </div>                                                                                                                          
 
-                                                                        
-                                                                                                                                
-						<div class="form-group">
-                                                    <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
-                                                    <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
-						</div>
-                          </form>
+                        <div class="form-group">
+                            <label class="control-label">Clave/Descripcion: </label>
+                            <div class="dropdown">
+                                <input style="width:100%" type="text" class="dropdown-toggle" id="CLAVEESCRITURA_AGREGARREGISTRO" data-toggle="dropdown" onkeyup="buscarDocumento(this)" autocomplete="off"/>
+                                <ul style="width:100%;cursor:pointer;" class="dropdown-menu" id="dropdownEvent" role="menu" 
+                                aria-labelledby="menu1"></ul>
+                            </div>
+                        </div>
 
+                        <div id="INFO_AGREGARREGISTRO">
+                            <div class="form-group">
+                                Clave Documento:
+                            </div>
+                            <div class="form-group">
+                                Descripcion Documento:
+                            </div>
+                            <div class="form-group">
+                                Responsable Documento:
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
+                            <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
+                        </div>
+
+                    </form>
 		      </div>
 		    </div>
 
 		  </div>
        </div>
             
-            
-
 <div style="height: 10px"></div>
-
 
 <div id="layout_here"></div>
 
 <div id="treeboxbox_tree"></div>   
 
 <div id="seccionIzquierda">
-    <div id="contenido" >
-    
+    <div id="contenido" >    
     </div>
     </div>
-
 <!--<div id="gridbox" style="width:500px; height:350px; background-color:white;"></div>-->
 
 	<script>
@@ -176,6 +189,41 @@ $Usuario=  Session::getSesion("user");
 //  }
 //    obtenerDatosArbol();
 obtenerTemasEnAsignacion();
+
+function buscarDocumento(data)
+{
+    cadena = $(data).val().toLowerCase();
+    tempData="";
+    if(cadena!="")
+    {
+        $.ajax({
+            url: '../Controller/AsignacionDocumentosTemasController.php?Op=BuscarDocumento',
+            type: 'GET',
+            data: 'CADENA='+cadena,
+            success:function(documentos)
+            {
+                $.each(documentos,function(index,value)
+                {
+                    // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
+                    datos = value.id_documento+"^_^"+value.clave_documento+"^_^"+value.documento+"^_^"+value.nombre_empleado;
+                    tempData += "<li role='presentation'><a role='menuitem' tabindex='-1'";
+                    tempData += "onClick='seleccionarItemDocumentos("+JSON.stringify(value)+")'>";
+                    tempData += value.clave_documento+" - "+value.documento+"</a></li>";
+                });
+                $("#dropdownEvent").html(tempData);
+            }
+        });
+    }
+}
+
+function seleccionarItemDocumentos(Documentos)
+{
+    $('#CLAVEESCRITURA_AGREGARREGISTRO').val(Documentos.clave_documento);
+    // tempData = "<div class='form-group'>Clave Documento: "+Documentos.clave_documento+"</div>";
+    tempData += "<div class='form-group'>Descripcion Documento: "+Documentos.documento+"</div>";
+    tempData += "<div class='form-group'>Responsable Documento: "+Documentos.nombre_empleado+"</div>";
+    $("#INFO_AGREGARREGISTRO").html(tempData);
+}
 
 $(function(){
     $("#formRequisitos").submit(function(e){
@@ -265,7 +313,7 @@ myTree.attachEvent("onClick", function(id){
 //    var id2 = myTree.getSelectedId();
 //    alert("f  "+id2);
     // your code here}
-    alert("d "+id);
+    // alert("d "+id);
 //    obtenerHijos(id);
 //    
 //    id_seleccionado=id;
