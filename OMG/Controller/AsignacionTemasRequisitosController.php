@@ -68,7 +68,7 @@ switch ($Op) {
 		break;
             
         case'GuardarNodo':
-            $Lista= $model->insertarRequisitos($_REQUEST['ID_ASIGNACION_TEMA_REQUISITO'],$_REQUEST['ID_REQUISITO']);
+            $Lista= $model->insertarRequisitos($_REQUEST['ID_ASIGNACION_TEMA_REQUISITO'],$_REQUEST['REQUISITO']);
             header('Content-type: application/json; charset=utf-8'); 
             echo json_encode($Lista);
             return $Lista;

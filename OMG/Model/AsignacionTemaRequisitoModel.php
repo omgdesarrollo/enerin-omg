@@ -75,7 +75,7 @@ class AsignacionTemaRequisitoModel {
         }
     }
    
-    public function insertarRequisitos($ID_ASIGNACION)
+    public function insertarRequisitos($ID_ASIGNACION,$requisito)
     {
         try
         {
