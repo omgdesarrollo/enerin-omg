@@ -61,9 +61,27 @@ class AsignacionTemaRequisitoModel {
         
         
     }
+            
     
-    
-    
+    public function obtenerIdTema($ID_ASIGNACION)
+    {
+        try
+        {
+            $dao=new AsignacionTemaRequisitoDAO();
+            $dao->obtenerIdTema($ID_ASIGNACION);
+            
+            return $rec;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
+
+
+
     public function insertar($pojo){
         try{
             $dao=new AsignacionTemaRequisitoDAO();

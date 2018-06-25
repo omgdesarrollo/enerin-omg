@@ -118,6 +118,27 @@ class AsignacionTemaRequisitoDAO {
     }
     
     
+    public function obtenerIdTema($ID_ASIGNACION)
+    {
+        try
+        {
+            $query="SELECT tbasignacion_tema_requisito.id_tema
+                    FROM asignacion_tema_requisito tbasignacion_tema_requisito
+                    WHERE tbasignacion_tema_requisito.id_asignacion_tema_requisito=$ID_ASIGNACION";
+            
+            $db= AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            
+            return $lista;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
+
     public function insertarAsignacionTemaRequisito($id_clausula,$requisito,$id_documento){
         
         try{
@@ -202,7 +223,7 @@ class AsignacionTemaRequisitoDAO {
         {
             $query="INSERT INTO registros(registro,id_documento)
                     VALUES ('$registro',$id_documento)";
-            echo "".$query;
+//            echo "".$query;
             $db=  AccesoDB::getInstancia();
             $db->executeQueryUpdate($query);
             
