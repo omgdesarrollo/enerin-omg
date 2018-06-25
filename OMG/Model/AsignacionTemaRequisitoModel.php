@@ -97,8 +97,8 @@ class AsignacionTemaRequisitoModel {
     {
         try
         {
-            $dao=new AsignacionTemaRequisitoDAO($ID_REQUISITO,$registro);
-            $rec= $dao->insertarRegistro($registro);
+            $dao=new AsignacionTemaRequisitoDAO($ID_REQUISITO,$registro,$id_documento);
+            $rec= $dao->insertarRegistro($registro,$id_documento);
             $ID_REGISTRO= $dao->obtenerMaximoRegistro();
             $resultado= $dao->insertarRegistroTablaCompuesta($ID_REQUISITO, $ID_REGISTRO);
             
