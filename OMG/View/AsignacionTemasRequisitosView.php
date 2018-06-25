@@ -154,10 +154,11 @@ $Usuario=  Session::getSesion("user");
 <div id="treeboxbox_tree"></div>   
 
 <div id="seccionIzquierda">
-    <div id="contenido" >
-    
-    </div>
-    </div>
+    <div id="contenido" ></div>
+</div>
+
+<div id="contenidoDetalles"></div>
+
 
 <!--<div id="gridbox" style="width:500px; height:350px; background-color:white;"></div>-->
 
@@ -227,7 +228,7 @@ console.log("seleccionado es "+id_seleccionado);
      }); 
      
      
-});
+}); //CIERRA $FUNCTION
 
 var myLayout = new dhtmlXLayoutObject({
 			parent: "layout_here",
@@ -261,11 +262,12 @@ var myToolbar = myLayout.cells("b").attachToolbar({
                                 
 			]
 		});
-                       myLayout.cells("b").attachObject("treeboxbox_tree");
+
+myLayout.cells("b").attachObject("treeboxbox_tree");
      
      
      
-     myToolbar.attachEvent("onClick", function(id){
+myToolbar.attachEvent("onClick", function(id){
     //your code here
 //    alert("hola"+id);
 //if(id_asignacion_t!=""){
@@ -350,7 +352,7 @@ function evaluarToolbarSeccionA(id)
             url: '../Controller/AsignacionTemasRequisitosController.php?Op=Listar',
             success:function(data)
             {
-                $htmlData="<ul class='list-group'>";
+               $htmlData="<ul class='list-group'>";
                $.each(data,function(index,value){
                   $htmlData+="<li class='list-group-item'><button onclick='obtenerDatosArbol("+value.id_asignacion_tema_requisito+")' >"+value.id_tema+"</button><span class='badge'></li>"; 
                 
@@ -360,7 +362,8 @@ function evaluarToolbarSeccionA(id)
 //              contruirLista();
             }
         });
-     }                
+     }
+     
     // obtenerDatosArbol(1);
     function obtenerDatosArbol(id_asignacion)
     {
@@ -404,9 +407,48 @@ function evaluarToolbarSeccionA(id)
 //                console.log("d"+dataIds_req);
 //                console.log("d:  "+dataArbol);
                 showArbol(dataArbol,dataIds);
+                
+                obtenerTema(id_asignacion_t);
+                
             }
         });
-    }      
+    }
+    
+    function obtenerTema(id)
+    {
+       $.ajax({
+           url:'../Controller/TemasController.php?Op=ListarHijos',
+           type:'POST',
+           data:'ID='+id,
+           success:function(data)
+           {   
+//               construirSubDirectorio(data.datosHijos);
+               construirDetalleSeleccionado(data.detalles,id);
+           }
+       });
+    }
+    
+myLayout.cells("c").attachObject("contenidoDetalles");
+    
+    function construirDetalleSeleccionado(data,id)
+    {
+//        var level = myTree.getLevel(id);
+//        alert("este es el nivel:"+level);
+        tempData2="<div class='table-responsive'><table class='table table-bordered'><thead><tr class='danger'><th>Datos</th><th>Detalles</th></tr></thead><tbody></tbody>";
+                    $.each(data, function(index,value){
+                       tempData2+="<tr><td class='info'>No</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'no',"+value.id_tema+")\">"+value.no+"</td></tr>";
+                       tempData2+="<tr><td class='info'>Tema</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'nombre',"+value.id_tema+")\">"+value.nombre+"</td></tr>";
+                       tempData2+="<tr><td class='info'>Descripcion</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'descripcion',"+value.id_tema+")\">"+value.descripcion+"</td></tr>";
+//                       if(level==1)
+                       tempData2+="<tr><td class='info'>Responsable</td><td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";
+                       
+                    });
+        tempData2+="</table></div>";
+   
+        $("#contenidoDetalles").html(tempData2);
+    }
+    
+    
         </script>      
 </body>
 
