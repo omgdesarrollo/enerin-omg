@@ -168,6 +168,7 @@ var gantt=[
                         if(itemIdSeleccion=="sesionusuario")
 //                            loadViewUsuario();
                             loadDataSideBarAjustesUsuario();
+                            // $("#sidebarObjV").html('UsuarioAjusteView.php');
                         
                         if(itemIdSeleccion=="cambiaresc")
                             alert("le has picado a cam biar act");
