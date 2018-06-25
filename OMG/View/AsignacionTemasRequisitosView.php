@@ -267,7 +267,7 @@ console.log("seleccionado es "+id_seleccionado);
 //            alert("d "+value.id_requisito);
         }); 
 //       if(id_){ 
-         var formData = {"ID_REQUISITO":id_req,"REGISTRO":$('#REGISTRO').val()};            
+         var formData = {"ID_REQUISITO":id_req,"REGISTRO":$('#REGISTRO').val(),"ID_DOCUMENTO":-1};            
          
          $.ajax({
              url:'../Controller/AsignacionTemasRequisitosController.php?Op=GuardarSubNodo',
