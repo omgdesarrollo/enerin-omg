@@ -125,7 +125,7 @@ $Usuario=  Session::getSesion("user");
                           <form id="formRegistro">
                                      
                                                 <div class="form-group">
-							<label class="control-label" for="title">Requisito</label>
+							<label class="control-label" for="title">Registro</label>
                                                         <textarea  id="REGISTRO" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
 							<div class="help-block with-errors"></div>
 						</div>
@@ -162,7 +162,7 @@ $Usuario=  Session::getSesion("user");
 <!--<div id="gridbox" style="width:500px; height:350px; background-color:white;"></div>-->
 
 	<script>
-            var myLayout, myTree, myToolbar,id_asignacion_t=-1,levelv=0;
+            var myLayout, myTree, myToolbar,id_asignacion_t=-1,levelv=0,id_asignacion_r=-1,selec_tema=-1,dataIds_req=[];
             myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
 	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
 //            myTree.enableHighlighting(true);
@@ -197,16 +197,17 @@ $(function(){
      
        $("#formRegistros").submit(function(e){
          e.preventDefault();
-         alert("dcf  "+id_asignacion_t);
-         var formData = {"ID_ASIGNACION_TEMA_REQUISITO":id_asignacion_t,"REQUISITO":$('#REQUISITO').val()};            
+//         alert("dcf  "+id);
+
+         var formData = {"ID_REQUISITO":id_asignacion_r,"REQUISITO":$('#REGISTRO').val()};            
          
          $.ajax({
-             url:'../Controller/AsignacionTemasRequisitosController.php?Op=GuardarNodo',
+             url:'../Controller/AsignacionTemasRequisitosController.php?Op=GuardarSubNodo',
              type:'POST',
              data:formData,
              success:function()
              {
-                 obtenerDatosArbol(id_asignacion_t);
+//                 obtenerDatosArbol(id_asignacion_t);
              }
          });
                 
@@ -282,16 +283,22 @@ function evaluarToolbarSeccionA(id)
     }else{
             if(id=="agregar")
             {
-                if(levelv==0){
-        //        alert("entro en agregar");
-                    $('#create-itemRequisito').modal('show');
+                if( selec_tema==0){
+                   if(levelv==0){
+                        $('#create-itemRequisito').modal('show');
+                        
+                   }
+                   else{
+                   
+                        if(levelv==1){
+                            $('#create-itemRegistro').modal('show');
+
+                       }else{
+                        alert("tiene que seleccionar el requisito en donde cargar el registro");   
+                       }
+                 }
                 }
-                   if(levelv==1){
-                        $('#create-itemRegistro').modal('show');
-                   }
-                   if(levelv==2){
-                       
-                   }
+                   
             } 
             if(id=="eliminar")
             {
@@ -312,7 +319,7 @@ function evaluarToolbarSeccionA(id)
                   
      function obtenerTemasEnAsignacion(){
 //         alert("e");  
-
+    
           $.ajax({
             url: '../Controller/AsignacionTemasRequisitosController.php?Op=Listar',
             success:function(data)
@@ -332,6 +339,8 @@ function evaluarToolbarSeccionA(id)
     function obtenerDatosArbol(id_asignacion)
     {
        id_asignacion_t=id_asignacion;
+       selec_tema=0;
+        levelv=0;
 //       alert("d  :"+id_asignacion_t);
 //        id_asignacion_t=id_asignacion;
 //        alert("d");
@@ -349,17 +358,22 @@ function evaluarToolbarSeccionA(id)
                 $.each(data,function(index,value)
                 {
                     dataArbol.push([padre,0,value.requisito]);
-                    dataIds.push([padre,value.id_requisito,value.requisito]);
+//                    dataIds.push([padre,value.id_requisito,value.requisito]);
+                    dataIds.push(value.id_requisito);
                     $.each(value[0],function(ind,val)
                     {
                         hijo++;
                         dataArbol.push([hijo,padre,val.registro]);
-                        dataIds.push([hijo,val.id_registro,val.registro]);
+//                        dataIds.push([hijo,val.id_registro,val.registro]);
+//                        dataIds.push([val.id_registro]);
                     });
                     hijo++;
                     padre=hijo;
                 });
 //                console.log(dataArbol);
+                dataIds_req.length=0;
+                dataIds_req.push(dataIds);
+                console.log("d"+dataIds_req)
                 showArbol(dataArbol,dataIds);
             }
         });
