@@ -240,36 +240,14 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
 //                      
 //                    }
 //		}
+         
                 
-                
-                
-                
-                function save(){
-                    aler("valor");
-                }
-                
-                function saveComboToDatabase(column,id){
-                     id_clausula=id;
-               }
+//                function saveComboToDatabase(column,id){
+//                     id_clausula=id;
+//               }
                
                
                
-               function saveToDatabaseDatosFormulario(datos){
-                   alert("datos nombre "+datos[3]);
-                    
-                    	$.ajax({
-                                url: "../Controller/DocumentosController.php?Op=Guardar",
-				type: "POST",
-				data:'CLAVE_DOCUMENTO='+datos[0]+'&DOCUMENTO='+datos[1]+'&ID_EMPLEADO='+datos[2]+'&REGISTROS='+datos[3],
-                                
-				success: function(data){
-                                    
-                                        swal("Guardado Exitoso!", "Ok!", "success")
-                                         consultarInformacion("../Controller/DocumentosController.php?Op=Listar");
-                                      window.location.href("DocumentosView.php");
-				}   
-		   });
-                }
                 
                 
                 
