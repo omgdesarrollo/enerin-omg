@@ -16,12 +16,12 @@ require_once '../util/Session.php';
         <link rel="stylesheet" type="text/css" href="../../css/estilo.css">
         <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
 		<!-- Libreria java scritp de bootstrap -->
-        <script src="../../assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <!-- <script src="../../assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script> -->
                 <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
         <script src="../../js/jquery.min.js" type="text/javascript"></script>
         <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
         <!-- <script src="../../js/is.js" type="text/javascript"></script> -->
-        <script src="../../js/tooltip.js" type="text/javascript"></script>
+        <!-- <script src="../../js/tooltip.js" type="text/javascript"></script> -->
         <script src="../../angular/angular.min.js" type="text/javascript"></script>
 
         <!-- swalAlert -->
@@ -37,7 +37,7 @@ require_once '../util/Session.php';
             <label class="control-label">Contraña Actual: </label>
             <div class="input-group input-group-lg">
                 <span class="input-group-addon" id=""><i class="glyphicon glyphicon-lock"></i></span>
-                <input onBlur="verificarPass(this)" onKeyup="verificarTodo()" id="contraActual" type="password" class="form-control" placeholder="******" required>
+                <input onBlur="verificarPass(this)" id="contraActual" type="password" class="form-control" placeholder="******" required>
                 <span class="input-group-addon" id="iconPassActual"><i style="color:red" class="glyphicon glyphicon-remove"></i></span>
             </div>
             <br>
@@ -59,7 +59,7 @@ require_once '../util/Session.php';
             <br>
 
             <button onClick="cambiarPass()" title="Haga clic aquí para cambiar contraseña" class="btn btn-lg btn-primary btn-block btn-signin">
-            Entrar</button>
+            Cambiar Contraseña</button>
 				<!--<div class="opcioncontra"><a href="">Olvidaste tu contraseña?</a></div>-->
             <!-- </form> -->
     </div>
@@ -68,6 +68,42 @@ require_once '../util/Session.php';
      <script>
         okpass=false;
         okpassN=false;
+        
+        function limpiarFormulario()
+        {
+            no = "<i style='color:red' class='glyphicon glyphicon-remove'></i>";
+            clearInterval(outTime);
+            swal({
+                    title:"",
+                    text: "Se agoto el tiempo de espera para el cambio de contraseña",
+                    type: "info",
+                    showCancelButton: false,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true,
+                    confirmButtonText: "Recargar",
+                    }, function()
+                    {
+                        outTime = setInterval(function(){limpiarFormulario();},30000);
+                        swal.close();
+                        limpiar();
+                    }
+                );
+        }
+        function limpiar()
+        {
+            $("#contraActual").val("");
+            $("#contraNueva").val("");
+            $("#contraNueva2").val("");
+
+            $("#iconPassActual").html(no);
+            $("#iconPassNueva").html(no);
+            $("#iconPassNueva2").html(no);
+            
+            okpass=false;
+            okpassN=false;
+        }
+        outTime = setInterval(function(){limpiarFormulario();},30000);
+
         function cambiarPass()
         {
             contraA = $("#contraActual").val();
@@ -84,7 +120,21 @@ require_once '../util/Session.php';
                         {
                             if(exito==true)
                             {
-                                swalSuccess("La contraseña ha sido cambiada");
+                                clearInterval(outTime);
+                                swal({
+                                    title:"",
+                                    text: "La contraseña se cambio. Inicie sesion de nuevo",
+                                    type: "info",
+                                    showCancelButton: false,
+                                    closeOnConfirm: false,
+                                    showLoaderOnConfirm: true,
+                                    confirmButtonText: "Salir",
+                                    }, function()
+                                    {
+                                        window.parent.location.href="Logout.php";
+                                    }
+                                );
+                                setTimeout(function(){swal.close();window.parent.location.href="Logout.php";},7000);
                             }
                             else
                             {
@@ -120,6 +170,7 @@ require_once '../util/Session.php';
         // }
         function checarPass(Obj)
         {
+            console.log("aq");
             pass = $("#contraNueva").val();
             passN = $("#contraNueva2").val();
             yes = "<i style='color:#02ff00' class='glyphicon glyphicon-ok'></i>";
@@ -158,15 +209,20 @@ require_once '../util/Session.php';
                 data: 'PASS='+contrasena,
                 success:function(correcta)
                 {
-                    if(existe==true)
+                    if(correcta==true)
                     {
                         $("#iconPassActual").html(yes);
+                        okpass=true;
                     }
                     else
+                    {
+                        okpass=false;
                         $("#iconPassActual").html(no);
+                    }
                 },
                 error:function()
                 {
+                    okpass=false;
                     swalError("Error en el servidor");
                 }
             });
