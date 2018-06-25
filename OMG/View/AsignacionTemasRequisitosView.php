@@ -125,7 +125,7 @@ $Usuario=  Session::getSesion("user");
                           <form id="formRegistro">
                                      
                                                 <div class="form-group">
-							<label class="control-label" for="title">Requisito</label>
+							<label class="control-label" for="title">Registro</label>
                                                         <textarea  id="REGISTRO" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
 							<div class="help-block with-errors"></div>
 						</div>
