@@ -12,7 +12,7 @@ class LoginDAO{
                 $rec=$lista[0];
             }
             return $rec;
-    }  catch (Exception $e){
+    } catch (Exception $e){
         throw $rec;
     }
     }
@@ -31,7 +31,7 @@ class LoginDAO{
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             
-            return $lista;
+            return $lista[0];
             
         } catch (Exception $ex)
         {

@@ -145,8 +145,107 @@ class AsignacionTemaRequisitoDAO {
     }
     
     
-
+    public function insertarRequisito($requisito)
+    {
+        try
+        {
+          $query="INSERT INTO requisitos(requisito)
+                  VALUES('$requisito')";
+          
+          $db=  AccesoDB::getInstancia();
+          $db->executeQueryUpdate($query);
+          
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
     
+    public function obtenerMaximoRequisito()
+    {
+        try
+        {
+            $query="SELECT max(id_requisito) as id_requisito FROM requisitos";
+            
+            $db= AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            
+        return $lista[0]['id_requisito'];            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
+
+    public function insertarRequisitoTablaCompuesta($ID_ASIGNACION,$ID_REQUISITO)
+    {
+        try
+        {
+            $query="INSERT INTO asignacion_tema_requisito_requisitos(id_asignacion_tema_requisito,id_requisito)
+                    VALUES($ID_ASIGNACION,$ID_REQUISITO)";
+            
+            $db=  AccesoDB::getInstancia();
+            $db->executeQueryUpdate($query);
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
+    public function insertarRegistro($registro)
+    {
+        try
+        {
+            $query="INSERT INTO registros(registro)
+                    VALUES ('$registro')";
+            
+            $db=  AccesoDB::getInstancia();
+            $db->executeQueryUpdate($query);
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
+    public function obtenerMaximoRegistro()
+    {
+      try
+      {
+          $query="SELECT MAX(id_registro) AS id_registro FROM registros";
+          
+          $db= AccesoDB::getInstancia();
+          $lista=$db->executeQuery($query);
+          
+          return $lista[0]['id_registro'];
+      } catch (Exception $ex)
+      {
+          throw $ex;
+          return false;
+      }
+    }
+    
+    public function insertarRegistroTablaCompuesta($ID_REQUISITO,$ID_REGISTRO)
+    {
+        try
+        {
+            $query="INSERT INTO requisitos_registros (id_requisito,id_registro)
+                    VALUES($ID_REQUISITO,$ID_REGISTRO)";
+            
+            $db=  AccesoDB::getInstancia();
+            $db->executeQueryUpdate($query);            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
     public function actualizarAsignacionTemaRequisito($id_asignacion_tema_requisito, $id_clausula,$requisito){
         try{
              $query="UPDATE asignacion_tema_requisito SET id_clausula='$id_clausula', requisito='$requisito',"
