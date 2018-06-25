@@ -178,7 +178,7 @@ class AsignacionTemaRequisitoDAO {
             return false;
         }
     }
-
+    
 
     public function insertarRequisitoTablaCompuesta($ID_ASIGNACION,$ID_REQUISITO)
     {
@@ -195,7 +195,56 @@ class AsignacionTemaRequisitoDAO {
             return false;
         }
     }
-
+    
+    public function insertarRegistro($registro)
+    {
+        try
+        {
+            $query="INSERT INTO registros(registro)
+                    VALUES ('$registro')";
+            
+            $db=  AccesoDB::getInstancia();
+            $db->executeQueryUpdate($query);
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
+    public function obtenerMaximoRegistro()
+    {
+      try
+      {
+          $query="SELECT MAX(id_registro) AS id_registro FROM registros";
+          
+          $db= AccesoDB::getInstancia();
+          $lista=$db->executeQuery($query);
+          
+          return $lista[0]['id_registro'];
+      } catch (Exception $ex)
+      {
+          throw $ex;
+          return false;
+      }
+    }
+    
+    public function insertarRegistroTablaCompuesta($ID_REQUISITO,$ID_REGISTRO)
+    {
+        try
+        {
+            $query="INSERT INTO requisitos_registros (id_requisito,id_registro)
+                    VALUES($ID_REQUISITO,$ID_REGISTRO)";
+            
+            $db=  AccesoDB::getInstancia();
+            $db->executeQueryUpdate($query);            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
 
     public function actualizarAsignacionTemaRequisito($id_asignacion_tema_requisito, $id_clausula,$requisito){
         try{

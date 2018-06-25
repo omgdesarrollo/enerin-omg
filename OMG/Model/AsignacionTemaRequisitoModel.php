@@ -92,8 +92,25 @@ class AsignacionTemaRequisitoModel {
             return false;
         }
     }
+    
+    public function insertarRegistros()
+    {
+        try
+        {
+            $dao=new AsignacionTemaRequisitoDAO($ID_REQUISITO,$registro);
+            $rec= $dao->insertarRegistro($registro);
+            $ID_REGISTRO= $dao->obtenerMaximoRegistro();
+            $resultado= $dao->insertarRegistroTablaCompuesta($ID_REQUISITO, $ID_REGISTRO);
+            
+            return $resultado;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }        
 
-        public function actualizar($pojo){
+    public function actualizar($pojo){
         try{
             $dao= new AsignacionTemaRequisitoDAO();
 //            $pojo= new EmpleadoPojo();
