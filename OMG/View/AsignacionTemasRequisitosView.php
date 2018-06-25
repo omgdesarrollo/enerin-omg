@@ -132,7 +132,7 @@ $Usuario=  Session::getSesion("user");
                         <div class="form-group">
                             <label class="control-label">Clave/Descripcion: </label>
                             <div class="dropdown">
-                                <input style="width:100%" type="text" class="dropdown-toggle" id="CLAVEESCRITURA_AGREGARREGISTRO" data-toggle="dropdown" onkeyup="buscarDocumento(this)" autocomplete="off"/>
+                                <input onkeyup="registroClaveEscritura()" style="width:100%" type="text" class="dropdown-toggle" id="CLAVEESCRITURA_AGREGARREGISTRO" data-toggle="dropdown" onkeyup="buscarDocumento(this)" autocomplete="off"/>
                                 <ul style="width:100%;cursor:pointer;" class="dropdown-menu" id="dropdownEvent" role="menu" 
                                 aria-labelledby="menu1"></ul>
                             </div>
@@ -216,13 +216,21 @@ function buscarDocumento(data)
     }
 }
 
+var idDocumentoSelect="";
 function seleccionarItemDocumentos(Documentos)
 {
     $('#CLAVEESCRITURA_AGREGARREGISTRO').val(Documentos.clave_documento);
+    idDocumentoSelect=Documentos.id_documento;
     // tempData = "<div class='form-group'>Clave Documento: "+Documentos.clave_documento+"</div>";
     tempData += "<div class='form-group'>Descripcion Documento: "+Documentos.documento+"</div>";
     tempData += "<div class='form-group'>Responsable Documento: "+Documentos.nombre_empleado+"</div>";
     $("#INFO_AGREGARREGISTRO").html(tempData);
+}
+function registroClaveEscritura()
+{
+    val = $('#CLAVEESCRITURA_AGREGARREGISTRO').val();
+    if(val=="")
+        idDocumentoSelect="";
 }
 
 $(function(){
