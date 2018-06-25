@@ -93,7 +93,7 @@ class AsignacionTemaRequisitoModel {
         }
     }
     
-    public function insertarRegistros()
+    public function insertarRegistros($ID_REQUISITO,$registro,$id_documento)
     {
         try
         {
