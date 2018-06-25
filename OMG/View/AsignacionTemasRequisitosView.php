@@ -96,6 +96,7 @@ $Usuario=  Session::getSesion("user");
     
     </div>
     </div>
+
 <!--<div id="gridbox" style="width:500px; height:350px; background-color:white;"></div>-->
 
 	<script>
