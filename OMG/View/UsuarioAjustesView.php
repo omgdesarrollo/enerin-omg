@@ -37,7 +37,7 @@ require_once '../util/Session.php';
             <label class="control-label">Contraña Actual: </label>
             <div class="input-group input-group-lg">
                 <span class="input-group-addon" id=""><i class="glyphicon glyphicon-lock"></i></span>
-                <input onBlur="verificarPass(this)" id="contraActual" type="password" class="form-control" placeholder="******" required>
+                <input onBlur="verificarPass(this)" onKeyup="verificarTodo()" id="contraActual" type="password" class="form-control" placeholder="******" required>
                 <span class="input-group-addon" id="iconPassActual"><i style="color:red" class="glyphicon glyphicon-remove"></i></span>
             </div>
             <br>
@@ -72,27 +72,52 @@ require_once '../util/Session.php';
         {
             contraA = $("#contraActual").val();
             contraN = $("#contraNueva").val();
-            $.ajax({
-                url: '../Controller/AdminController.php?Op=CambiarPass',
-                type: 'POST',
-                data: 'PASS='+contraA+"&NEW_PASS="+contraN,
-                success:function(exito)
+            if(okpass==true && okpassN==true)
+            {
+                if(contraA != contraN)
                 {
-                    if(exito==true)
-                    {
-                        swalSuccess("La contraseña ha sido cambiada");
-                    }
-                    else
-                    {
-                        swalError("No se pudo hacer el cambio de contraseña");
-                    }
-                },
-                error:function()
-                {
+                    $.ajax({
+                        url: '../Controller/AdminController.php?Op=CambiarPass',
+                        type: 'POST',
+                        data: 'PASS='+contraA+"&NEW_PASS="+contraN,
+                        success:function(exito)
+                        {
+                            if(exito==true)
+                            {
+                                swalSuccess("La contraseña ha sido cambiada");
+                            }
+                            else
+                            {
+                                swalError("No se pudo hacer el cambio de contraseña");
+                            }
+                        },
+                        error:function()
+                        {
+                            swalError("Error en el servidor");
+                        }
+                    });
                 }
-            });
+                else
+                {
+                    swal("","No puedes utilizar tu misma contraseña","info");
+                }
+            }
         }
 
+        // function verificarTodo()
+        // {
+        //     //contraActual,contraNueva,contraNueva2
+        //     contraA = $("#contraActual").val();
+        //     contraN = $("#contraNueva").val();
+        //     contraN2 = $("#contraNueva2").val();
+
+        //     if(contraN!="")
+        //     {
+        //     }
+        //     if(contraN2!="")
+        //     {
+        //     }
+        // }
         function checarPass(Obj)
         {
             pass = $("#contraNueva").val();
@@ -146,6 +171,7 @@ require_once '../util/Session.php';
                 }
             });
         }
+
         function swalSuccess(msj)
         {
             swal({

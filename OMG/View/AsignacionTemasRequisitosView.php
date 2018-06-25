@@ -5,8 +5,6 @@ require_once '../util/Session.php';
 $Usuario=  Session::getSesion("user");
 
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -98,6 +96,7 @@ $Usuario=  Session::getSesion("user");
     
     </div>
     </div>
+
 <!--<div id="gridbox" style="width:500px; height:350px; background-color:white;"></div>-->
 
 	<script>
@@ -160,11 +159,10 @@ var myToolbar = myLayout.cells("b").attachToolbar({
             }
         });
      }                
-
     // obtenerDatosArbol(1);
     function obtenerDatosArbol(id_asignacion)
     {
-        alert("d");
+//        alert("d");
         $.ajax({
             url: '../Controller/RegistrosController.php?Op=GenerarArbol',
             type: 'GET',
@@ -193,9 +191,7 @@ var myToolbar = myLayout.cells("b").attachToolbar({
                 showArbol(dataArbol,dataIds);
             }
         });
-    }
-      
-           
+    }      
         </script>      
 </body>
 
