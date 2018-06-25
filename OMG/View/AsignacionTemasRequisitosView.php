@@ -149,7 +149,7 @@ obtenerTemasEnAsignacion();
 $(function(){
     $("#formRequisitos").submit(function(e){
          e.preventDefault();
-         alert("d");
+         alert("dcf  "+id_asignacion_t);
          var formData = {"ID_ASIGNACION_TEMA_REQUISITO":id_asignacion_t,"REQUISITO":$('#REQUISITO').val()};            
          
          $.ajax({
@@ -253,7 +253,8 @@ function evaluarToolbarSeccionA(id)
     // obtenerDatosArbol(1);
     function obtenerDatosArbol(id_asignacion)
     {
-       
+       id_asignacion_t=id_asignacion;
+//       alert("d  :"+id_asignacion_t);
 //        id_asignacion_t=id_asignacion;
 //        alert("d");
         $.ajax({
