@@ -75,7 +75,7 @@ switch ($Op) {
             break;
         
         case'GuardarSubNodo':
-            $Lista= $model->insertarRequisitos($_REQUEST['ID_REQUISITO'],$_REQUEST['REGISTRO']);
+            $Lista= $model->insertarRequisitos($_REQUEST['ID_REQUISITO'],$_REQUEST['REGISTRO'], $_REQUEST['ID_DOCUMENTO']);
             header('Content-type: application/json; charset=utf-8'); 
             echo json_encode($Lista);
             return $Lista;
