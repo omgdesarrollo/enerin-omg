@@ -87,8 +87,8 @@ $Usuario=  Session::getSesion("user");
 
 	</head>
 
-        <body class="no-skin" onload="load(1)">
-    <div id="loader"></div>
+        <body class="no-skin" >
+    <!--<div id="loader"></div>-->
             
             
 <?php
@@ -436,7 +436,7 @@ function obtenerDatosArbol()
             { 
 //                alert("tiene algo el arbol");
              contruirArbol(data);   
-             load(2);
+//             load(2);
              
             },error:function (){
 //                alert("entro en el erro");
