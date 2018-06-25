@@ -74,12 +74,26 @@ class AsignacionTemaRequisitoModel {
                 throw $ex;
         }
     }
-    
-    
-    
-    
-    
-    public function actualizar($pojo){
+   
+    public function insertarRequisitos($ID_ASIGNACION)
+    {
+        try
+        {
+            $dao=new AsignacionTemaRequisitoDAO();
+            $rec= $dao->insertarRequisito($requisito);
+            $ID_REQUISITO= $dao->obtenerMaximoRequisito();
+            $resultado= $dao->insertarRequisitoTablaCompuesta($ID_ASIGNACION, $ID_REQUISITO);
+            
+            
+            return $resultado;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
+        public function actualizar($pojo){
         try{
             $dao= new AsignacionTemaRequisitoDAO();
 //            $pojo= new EmpleadoPojo();

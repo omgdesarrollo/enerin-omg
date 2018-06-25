@@ -66,6 +66,13 @@ switch ($Op) {
 
                 $model->insertar($pojo);    
 		break;
+            
+        case'GuardarNodo':
+            $Lista= $model->insertarRequisitos($_REQUEST['ID_ASIGNACION_TEMA_REQUISITO'],$_REQUEST['ID_REQUISITO']);
+            header('Content-type: application/json; charset=utf-8'); 
+            echo json_encode($Lista);
+            return $Lista;
+            break;
 
 	case 'Modificar':
 		# code...
