@@ -117,7 +117,7 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
      <th class="table-headert" width="24%">Clave del Documento</th>
      <th class="table-headert" width="24%">Nombre del Documento</th>
      <th class="table-headert" width="24%">Responsable del Documento</th>
-     <th class="table-headert" width="24%">Opcion</th>
+     <!--<th class="table-headert" width="24%">Opcion</th>-->
     </tr>
    </thead>
 
@@ -179,12 +179,12 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
 						</div>
                                     
                                                 
-                                                <div class="form-group">
+<!--                                                <div class="form-group">
                                                    
 							<label class="control-label" for="title">Registros:</label>
                                                         <textarea  id="REGISTROS" class="form-control " data-error="Ingrese el Documento" required></textarea>
 							<div class="help-block with-errors"></div>
-						</div>
+						</div>-->
                                                 
                                                 
                                     
@@ -212,34 +212,34 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
                       
                       
                       
-		function showEdit(editableObj) {
-			$(editableObj).css("background","#FFF");
-		} 
-		
-                
-                
-		function saveToDatabase(editableObj,column,id) {
-                    if(si_hay_cambio==true){
-                            $("#btnrefrescar").prop("disabled",true);
-                                $(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
-                                $.ajax({
-                                        url: "../Controller/DocumentosController.php?Op=Modificar",
-                                        type: "POST",
-                                        data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
-                                        success: function(data){
-
-                                                $(editableObj).css("background","#FDFDFD");
-                                                consultarInformacion("../Controller/DocumentosController.php?Op=Listar"); 
-                                                 swal("Actualizacion Exitosa!", "Ok!", "success");
-                                                $("#btnrefrescar").prop("disabled",false);
-                                                si_hay_cambio=false;
-                                        }   
-                           });
-                    }
-                    else{
-                      
-                    }
-		}
+//		function showEdit(editableObj) {
+//			$(editableObj).css("background","#FFF");
+//		} 
+//		
+//                
+//                
+//		function saveToDatabase(editableObj,column,id) {
+//                    if(si_hay_cambio==true){
+//                            $("#btnrefrescar").prop("disabled",true);
+//                                $(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
+//                                $.ajax({
+//                                        url: "../Controller/DocumentosController.php?Op=Modificar",
+//                                        type: "POST",
+//                                        data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
+//                                        success: function(data){
+//
+//                                                $(editableObj).css("background","#FDFDFD");
+//                                                consultarInformacion("../Controller/DocumentosController.php?Op=Listar"); 
+//                                                 swal("Actualizacion Exitosa!", "Ok!", "success");
+//                                                $("#btnrefrescar").prop("disabled",false);
+//                                                si_hay_cambio=false;
+//                                        }   
+//                           });
+//                    }
+//                    else{
+//                      
+//                    }
+//		}
                 
                 
                 
