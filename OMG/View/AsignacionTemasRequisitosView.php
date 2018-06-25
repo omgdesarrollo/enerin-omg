@@ -202,12 +202,12 @@ var myToolbar = myLayout.cells("b").attachToolbar({
      myToolbar.attachEvent("onClick", function(id){
     //your code here
 //    alert("hola"+id);
-if(id_asignacion_t!=""){
+//if(id_asignacion_t!=""){
     evaluarToolbarSeccionA(id);
-}
-else{
-    alert("no tiene tema seleccionado");
-}
+//}
+//else{
+//    alert("no tiene tema seleccionado");
+//}
 });
 
 function evaluarToolbarSeccionA(id)
@@ -234,6 +234,7 @@ function evaluarToolbarSeccionA(id)
                   
      function obtenerTemasEnAsignacion(){
 //         alert("e");  
+
           $.ajax({
             url: '../Controller/AsignacionTemasRequisitosController.php?Op=Listar',
             success:function(data)
@@ -252,7 +253,8 @@ function evaluarToolbarSeccionA(id)
     // obtenerDatosArbol(1);
     function obtenerDatosArbol(id_asignacion)
     {
-        id_asignacion_t=id_asignacion;
+       
+//        id_asignacion_t=id_asignacion;
 //        alert("d");
         $.ajax({
             url: '../Controller/RegistrosController.php?Op=GenerarArbol',
