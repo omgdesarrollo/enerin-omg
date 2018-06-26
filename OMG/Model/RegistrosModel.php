@@ -1,7 +1,8 @@
 <?php
 
 require_once '../dao/RegistrosDAO.php';
-require_once '../dao/TemasDAO.php';
+require_once '../dao/AsignacionTemaRequisitoDAO.php';
+require_once '../dao/TemaDAO.php';
 
 class RegistrosModel{
     
@@ -27,13 +28,18 @@ class RegistrosModel{
         {
             $datosArbol = array();
             $dao=new RegistrosDAO();
-            $daoT=new TemasDAO();
-            $rec= $daoT->listarDetallesSeleccionados($id_asignacion);
-            $requisitos= $dao->obtenerRequisitos($id_asignacion);
-            foreach($requisitos as $index=>$resultado)
+            $daoA= new AsignacionTemaRequisitoDAO();
+            $daoT=new TemaDAO();
+//            $rec= $daoT->listarDetallesSeleccionados($id_asignacion);
+            $requisitos["data"]= $dao->obtenerRequisitos($id_asignacion);
+            foreach($requisitos["data"] as $index=>$resultado)
             {
-                $requisitos[$index][0] = $dao->obtenerRegistros($resultado['id_requisito']);
+                $requisitos["data"][$index][0] = $dao->obtenerRegistros($resultado['id_requisito']);
             }
+            
+        $id_tema=$daoA->obtenerIdTema($id_asignacion);
+         $requisitos["detallesTema"]=$daoT->listarDetallesSeleccionados($id_tema);
+            
             return $requisitos;
         } catch (Exception $ex)
         {

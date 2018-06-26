@@ -99,7 +99,7 @@ class AsignacionTemaRequisitoDAO {
             $db= AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             
-            return $lista;
+            return $lista[0]["id_tema"];
             
         } catch (Exception $ex)
         {

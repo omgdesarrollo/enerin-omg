@@ -737,7 +737,6 @@
     {
         mensaje = $(textAreaNotificacionModal).val();
         enviar_notificacion(mensaje,'admin',0,false);//msj,para,tipomsj,atendido
-        
     }
     
     function enviar_notificacion(mensaje,para,tipoMensaje,atendido)

@@ -75,4 +75,17 @@ class AsignacionDocumentoTemaModel {
             throw $ex;
         }
     }
+
+    public function buscarDocumento($CADENA)
+    {
+        try{
+            $dao = new AsignacionDocumentoTemaDAO();
+            $lista = $dao->buscarDocumento($CADENA);
+           return $lista;
+        } catch(Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
 }

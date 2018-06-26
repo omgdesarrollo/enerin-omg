@@ -100,5 +100,25 @@ class AsignacionDocumentoTemaDAO {
                 throw $ex;
         }
     }
+
+    public function buscarDocumento($CADENA)
+    {
+        try{
+            $query="SELECT tbdocumentos.id_documento, tbdocumentos.clave_documento,tbdocumentos.documento,
+                CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) AS nombre_empleado
+                FROM documentos tbdocumentos
+                JOIN empleados tbempleados ON tbdocumentos.id_empleado = tbempleados.id_empleado
+                WHERE LOWER(tbdocumentos.clave_documento) LIKE '%$CADENA%'
+                OR LOWER(tbdocumentos.documento) LIKE '%$CADENA%'";
+                
+            $db =  AccesoDB::getInstancia();
+            $lista = $db->executeQuery($query);
+            return $lista;
+        }catch(Exception $ex)
+        {
+                throw $ex;
+                return false;
+        }
+    }
     
 }

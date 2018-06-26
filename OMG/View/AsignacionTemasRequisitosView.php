@@ -59,7 +59,9 @@ $Usuario=  Session::getSesion("user");
 		/*margin: 0 auto;*/
                 }
                 
-     
+                div#treeboxbox_tree{
+                   height: 300px; 
+                }
                     
           
           
@@ -122,32 +124,48 @@ $Usuario=  Session::getSesion("user");
 		      </div>
                         
 		      <div class="modal-body">
-                          <form id="formRegistro">
-                                     
-                                                <div class="form-group">
-							<label class="control-label" for="title">Registro</label>
-                                                        <textarea  id="REGISTRO" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
-							<div class="help-block with-errors"></div>
-						</div>
+                    <form id="formRegistro">   
+                        <div class="form-group">
+                            <label class="control-label" for="title">Registro</label>
+                            <textarea  id="REGISTRO" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+                            <div class="help-block with-errors"></div>
+                        </div>                                                                                                                          
 
-                                                                        
-                                                                                                                                
-						<div class="form-group">
-                                                    <button type="submit" id="btn_guardar2"  class="btn crud-submit btn-info">Guardar</button>
-                                                    <button type="submit" id="btn_limpiar2"  class="btn crud-submit btn-info">Limpiar</button>
-						</div>
-                          </form>
+                        <div class="form-group">
+                            <label class="control-label">Clave/Descripcion: </label>
+                            <div class="dropdown">
+                                <input onBlur="registroClaveEscritura()" style="width:100%" type="text" class="dropdown-toggle" 
+                                id="CLAVEESCRITURA_AGREGARREGISTRO" data-toggle="dropdown" onKeyup="buscarDocumento(this)" autocomplete="off"/>
+                                <ul style="width:100%;cursor:pointer;" class="dropdown-menu" id="dropdownEvent" role="menu" 
+                                aria-labelledby="menu1"></ul>
+                            </div>
+                        </div>
 
+                        <div id="INFO_AGREGARREGISTRO">
+                            <div class="form-group">
+                                Clave Documento:
+                            </div>
+                            <div class="form-group">
+                                Descripcion Documento:
+                            </div>
+                            <div class="form-group">
+                                Responsable Documento:
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
+                            <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
+                        </div>
+
+                    </form>
 		      </div>
 		    </div>
 
 		  </div>
        </div>
             
-            
-
 <div style="height: 10px"></div>
-
 
 <div id="layout_here"></div>
 
@@ -177,6 +195,56 @@ $Usuario=  Session::getSesion("user");
 //  }
 //    obtenerDatosArbol();
 obtenerTemasEnAsignacion();
+
+function buscarDocumento(data)
+{
+    cadena = $(data).val().toLowerCase();
+    tempData="";    
+    if(cadena!="")
+    {
+        $.ajax({
+            url: '../Controller/AsignacionDocumentosTemasController.php?Op=BuscarDocumento',
+            type: 'GET',
+            data: 'CADENA='+cadena,
+            success:function(documentos)
+            {
+                $.each(documentos,function(index,value)
+                {
+                    // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
+                    datos = value.id_documento+"^_^"+value.clave_documento+"^_^"+value.documento+"^_^"+value.nombre_empleado;
+                    tempData += "<li role='presentation'><a role='menuitem' tabindex='-1'";
+                    tempData += "onClick='seleccionarItemDocumentos("+JSON.stringify(value)+")'>";
+                    tempData += value.clave_documento+" - "+value.documento+"</a></li>";
+                });
+                $("#dropdownEvent").html(tempData);
+            }
+        });
+    }
+}
+
+var idDocumentoSelect=-1;
+function seleccionarItemDocumentos(Documentos)
+{
+    $('#CLAVEESCRITURA_AGREGARREGISTRO').val(Documentos.clave_documento);
+    idDocumentoSelect=Documentos.id_documento;
+    // tempData = "<div class='form-group'>Clave Documento: "+Documentos.clave_documento+"</div>";
+    tempData = "<div class='form-group'>Descripcion Documento: "+Documentos.documento+"</div>";
+    tempData += "<div class='form-group'>Responsable Documento: "+Documentos.nombre_empleado+"</div>";
+    $("#INFO_AGREGARREGISTRO").html(tempData);
+}
+
+function registroClaveEscritura()
+{
+    val = $('#CLAVEESCRITURA_AGREGARREGISTRO').val();
+    if(val=="")
+    {
+        idDocumentoSelect=-1;
+    // tempData = "<div class='form-group'>Clave Documento: "+Documentos.clave_documento+"</div>";
+        tempData = "<div class='form-group'>Descripcion Documento:</div>";
+        tempData += "<div class='form-group'>Responsable Documento:</div>";
+        $("#INFO_AGREGARREGISTRO").html(tempData);
+    }
+}
 
 $(function(){
     $("#formRequisitos").submit(function(e){
@@ -210,9 +278,9 @@ console.log("seleccionado es "+id_seleccionado);
 //               alert("d "+id_req);
             }
 //            alert("d "+value.id_requisito);
-        }); 
+        });
 //       if(id_){ 
-         var formData = {"ID_REQUISITO":id_req,"REGISTRO":$('#REGISTRO').val(),"ID_DOCUMENTO":-1};            
+         var formData = {"ID_REQUISITO":id_req,"REGISTRO":$('#REGISTRO').val(),"ID_DOCUMENTO":idDocumentoSelect};
          
          $.ajax({
              url:'../Controller/AsignacionTemasRequisitosController.php?Op=GuardarSubNodo',
@@ -282,7 +350,7 @@ myTree.attachEvent("onClick", function(id){
 //    var id2 = myTree.getSelectedId();
 //    alert("f  "+id2);
     // your code here}
-//    alert("d "+id);
+    // alert("d "+id);
 //    obtenerHijos(id);
 //    
 //    id_seleccionado=id;
@@ -385,7 +453,7 @@ function evaluarToolbarSeccionA(id)
                 dataIds=[];
                 padre=1;
                 hijo=1;
-                $.each(data,function(index,value)
+                $.each(data.data,function(index,value)
                 {
                     dataArbol.push([padre,0,value.requisito]);
                     dataIds_req.push({"padre":padre,"id_requisito":value.id_requisito,"requisito":value.requisito});
@@ -407,26 +475,26 @@ function evaluarToolbarSeccionA(id)
 //                console.log("d"+dataIds_req);
 //                console.log("d:  "+dataArbol);
                 showArbol(dataArbol,dataIds);
-                
+                construirDetalleSeleccionado(data.detallesTema,id_asignacion_t);
 //                obtenerTema(id_asignacion_t);
                 
             }
         });
     }
     
-    function obtenerTema(id)
-    {
-       $.ajax({
-           url:'../Controller/TemasController.php?Op=ListarHijos',
-           type:'POST',
-           data:'ID='+id,
-           success:function(data)
-           {   
-//               construirSubDirectorio(data.datosHijos);
-               construirDetalleSeleccionado(data.detalles,id);
-           }
-       });
-    }
+//    function obtenerTema(id)
+//    {
+//       $.ajax({
+//           url:'../Controller/TemasController.php?Op=ListarHijos',
+//           type:'POST',
+//           data:'ID='+id,
+//           success:function(data)
+//           {   
+////               construirSubDirectorio(data.datosHijos);
+//               construirDetalleSeleccionado(data.detalles,id);
+//           }
+//       });
+//    }
     
 myLayout.cells("c").attachObject("contenidoDetalles");
     
@@ -436,12 +504,14 @@ myLayout.cells("c").attachObject("contenidoDetalles");
 //        alert("este es el nivel:"+level);
         tempData2="<div class='table-responsive'><table class='table table-bordered'><thead><tr class='danger'><th>Datos</th><th>Detalles</th></tr></thead><tbody></tbody>";
                     $.each(data, function(index,value){
-                       tempData2+="<tr><td class='info'>No</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'no',"+value.id_tema+")\">"+value.no+"</td></tr>";
-                       tempData2+="<tr><td class='info'>Tema</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'nombre',"+value.id_tema+")\">"+value.nombre+"</td></tr>";
-                       tempData2+="<tr><td class='info'>Descripcion</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'descripcion',"+value.id_tema+")\">"+value.descripcion+"</td></tr>";
+                       tempData2+="<tr><td class='info'>No</td><td>"+value.no+"</td></tr>";
+                       tempData2+="<tr><td class='info'>Tema</td><td>"+value.nombre+"</td></tr>";
+                       tempData2+="<tr><td class='info'>Descripcion</td><td>"+value.descripcion+"</td></tr>";
 //                       if(level==1)
                        tempData2+="<tr><td class='info'>Responsable</td><td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";
                        
+//                       alert("");
+console.log("d");
                     });
         tempData2+="</table></div>";
    
