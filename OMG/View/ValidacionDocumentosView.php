@@ -357,7 +357,7 @@ require_once 'EncabezadoUsuarioView.php';
         $('.checkboxDocumento').on('change', function()
         {          
           var chekeado=$(objetocheckbox).filter('[type=checkbox]')[0]['checked'];
-          alert(chekeado);
+//          alert(chekeado);
             $.ajax({
                 url: "../Controller/ValidacionDocumentosController.php?Op=Modificar",
                 type: "POST",
@@ -402,7 +402,7 @@ require_once 'EncabezadoUsuarioView.php';
       }
       
       function envioCorreo (para,asunto,mensaje){
-          alert("");
+//          alert("");
           $.ajax({
                     url:"../Controller/EmailController.php?Op=envioCorreo",
                     data:"para="+para+"&asunto="+asunto+"&mensaje="+mensaje,
@@ -419,18 +419,19 @@ require_once 'EncabezadoUsuarioView.php';
                  });
       }
       
-    function saveCheckBoxToDataBase(checkbox,column,id){
-                     id_validacion_documento=id;
-                     columna=column;
-                     objetocheckbox=checkbox;
-               }
+    function saveCheckBoxToDataBase(checkbox,column,id)
+    {
+        id_validacion_documento=id;
+        columna=column;
+        objetocheckbox=checkbox;
+    }
             
                 
                 
-		function showEdit(editableObj)
+    function showEdit(editableObj)
     {
-			$(editableObj).css("background","#FFF");
-		}
+        $(editableObj).css("background","#FFF");
+    }
                 
      
      
@@ -621,7 +622,7 @@ require_once 'EncabezadoUsuarioView.php';
          success:function(responseregistros)
          {
              $.each(responseregistros,function(index,value){
-                ValoresRegistros+="<li>"+value.registros+"</li>"; 
+                ValoresRegistros+="<li>"+value.registro+"</li>"; 
              });
              
     ValoresRegistros += "</ul>";
@@ -633,6 +634,7 @@ require_once 'EncabezadoUsuarioView.php';
     
     function mostrarTemaResponsable(id_documento)
     {
+//        alert("Entro al metodo");
         ValoresTemaResponsable = "<table class='tbl-qa'>\n\
                                     <tr>\n\
                                         <th class='table-header'>Tema</th>\n\
@@ -648,7 +650,7 @@ require_once 'EncabezadoUsuarioView.php';
             success:function(responseTemayResponsable)
             {
                 $.each(responseTemayResponsable,function(index,value){
-                  ValoresTemaResponsable+="<tr><td>"+value.clausula+"</td>" ;
+                  ValoresTemaResponsable+="<tr><td>"+value.no+"</td>" ;
                   ValoresTemaResponsable+="<td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";  
 
                 });

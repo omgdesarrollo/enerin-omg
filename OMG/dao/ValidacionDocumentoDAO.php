@@ -5,7 +5,7 @@ class ValidacionDocumentoDAO{
     public function mostrarValidacionDocumentos(){
         try{
             
-            $query="SELECT tbdocumentos.clave_documento, tbdocumentos.documento,
+            $query="SELECT tbvalidacion_documento.id_validacion_documento, tbdocumentos.id_documento, tbdocumentos.clave_documento, tbdocumentos.documento,
 
                     tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno,  	
 
@@ -77,7 +77,7 @@ class ValidacionDocumentoDAO{
  public function obtenerTemayResponsable ($id_documento)
     {
         try{
-            $query="SELECT tbasignacion_tema_requisito.id_tema, tbempleados.id_empleado, tbempleados.nombre_empleado, 
+            $query="SELECT tbasignacion_tema_requisito.id_tema, tbtemas.no, tbempleados.id_empleado, tbempleados.nombre_empleado, 
 		    tbempleados.apellido_paterno, tbempleados.apellido_materno
 
                     FROM validacion_documento tbvalidacion_documento
@@ -95,7 +95,7 @@ class ValidacionDocumentoDAO{
                     JOIN temas tbtemas ON tbtemas.id_tema=tbasignacion_tema_requisito.id_tema
                     JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
 
-                    WHERE tbdocumentos.id_documento=$id_documento";
+                    WHERE tbdocumentos.id_documento=$id_documento GROUP BY tbtemas.no";
             
             
             $db= AccesoDB::getInstancia();
@@ -107,8 +107,54 @@ class ValidacionDocumentoDAO{
             return false;
         }
     }
- 
- 
+    
+    
+    public function obtenerRequisitosporDocumento($id_documento)
+    {
+        try
+        {
+            
+            $query="SELECT tbrequisitos.id_requisito, tbrequisitos.requisito
+
+                    FROM documentos tbdocumentos
+
+                    JOIN registros tbregistros ON tbregistros.id_documento=tbdocumentos.id_documento
+                    JOIN requisitos_registros tbrequisitos_registros ON tbrequisitos_registros.id_registro=tbregistros.id_registro
+                    JOIN requisitos tbrequisitos ON tbrequisitos.id_requisito=tbrequisitos_registros.id_requisito
+                    WHERE tbdocumentos.id_documento=$id_documento GROUP BY tbrequisitos.requisito";
+         
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            
+            return $lista;
+        }  catch (Exception $ex){
+            throw $ex;
+            return false;
+        }
+    }
+
+    
+    public function obtenerRegistrosPorDocumento($id_documento)
+    {
+        try
+        {
+            
+            $query="SELECT tbregistros.id_registro, tbregistros.registro
+
+                    FROM documentos tbdocumentos
+                    JOIN registros tbregistros ON tbregistros.id_documento=tbdocumentos.id_documento
+                    WHERE tbdocumentos.id_documento=$id_documento GROUP BY tbregistros.registro";
+         
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista;
+        }  catch (Exception $ex){
+            throw $ex;
+            return false;
+        }
+    }
+    
     
     public function insertar($id_documento_entrada){
         try{

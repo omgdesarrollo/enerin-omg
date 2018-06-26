@@ -34,17 +34,17 @@ class AsignacionTemaRequisitoModel {
  
     
     
-    public function  obtenerRequisitosporDocumento($id_documento){
-        try{
-            $dao=new AsignacionTemaRequisitoDAO();
-            $rec=$dao->obtenerRequisitosporDocumento($id_documento);
-            
-            
-            return $rec;
-    }  catch (Exception $e){
-        throw  $e;
-    }
-    }        
+//    public function  obtenerRequisitosporDocumento($id_documento){
+//        try{
+//            $dao=new AsignacionTemaRequisitoDAO();
+//            $rec=$dao->obtenerRequisitosporDocumento($id_documento);
+//            
+//            
+//            return $rec;
+//    }  catch (Exception $e){
+//        throw  $e;
+//    }
+//    }        
     
     public function obtenerIdTema($ID_ASIGNACION)
     {
@@ -94,12 +94,12 @@ class AsignacionTemaRequisitoModel {
         }
     }
     
-    public function insertarRegistros($ID_REQUISITO,$registro,$id_documento)
+    public function insertarRegistros($ID_REQUISITO,$registro,$frecuencia,$id_documento)
     {
         try
         {
             $dao=new AsignacionTemaRequisitoDAO($ID_REQUISITO,$registro,$id_documento);
-            $rec= $dao->insertarRegistro($registro,$id_documento);
+            $rec= $dao->insertarRegistro($registro,$id_documento,$frecuencia);
             $ID_REGISTRO= $dao->obtenerMaximoRegistro();
             $resultado= $dao->insertarRegistroTablaCompuesta($ID_REQUISITO, $ID_REGISTRO);
             

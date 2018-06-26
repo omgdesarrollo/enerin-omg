@@ -47,18 +47,34 @@ class ValidacionDocumentoModel{
     }
     
     
-    public function  obtenerRequisitosporDocumento($id_documento){
-        try{
+    public function  obtenerRequisitosporDocumento($id_documento)
+    {
+        try
+        {
             $dao=new ValidacionDocumentoDAO();
             $rec=$dao->obtenerRequisitosporDocumento($id_documento);
-            
-            
+         
             return $rec;
-    }  catch (Exception $e){
-        throw  $e;
-    }
+        } catch (Exception $ex){
+            throw  $ex;
+            return false;
+        }
     }
     
+    public function obtenerRegistrosPorDocumento($id_documento)
+    {
+        try
+        {
+            $dao=new ValidacionDocumentoDAO();
+            $rec=$dao->obtenerRegistrosPorDocumento($id_documento);
+            
+            return $rec;
+            
+        } catch (Exception $ex){
+            throw $ex;
+            return false;
+        }
+    }
     
     
 //    public function insert

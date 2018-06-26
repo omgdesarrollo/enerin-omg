@@ -36,20 +36,6 @@ class DocumentoModel{
     }
     
     
-    public function obtenerRegistrosPorDocumento($id_documento){
-        try{
-            $dao=new DocumentoDAO();
-            $rec=$dao->obtenerRegistrosPorDocumento($id_documento);
-            
-            return $rec;
-            
-        } catch (Exception $e){
-            throw $e;
-        }
-    }
-
-
-    
     public function verificacionExisteClaveandDocumento($registro,$cualverificar){
         try{
             $dao= new DocumentoDAO();
