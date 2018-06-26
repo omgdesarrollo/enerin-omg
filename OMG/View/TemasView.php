@@ -81,6 +81,9 @@ $Usuario=  Session::getSesion("user");
                     /*overflow: auto;*/
                     box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
                     }
+/*                    div#contenido{
+                         height: 150px;
+                    }*/
                     
             </style>    
 
@@ -131,11 +134,11 @@ require_once 'EncabezadoUsuarioView.php';
 
 <div id="treeboxbox_tree"></div>
 
-<div id="contenido"></div>
+<div id="contenido" ></div>
 
 <div id="contenidoDetalles"></div>
 
-<div id="form_container" style="width:280px;height:250px;"></div>
+<!--<div id="form_container" style="width:280px;height:250px;"></div>-->
             
 <!--<table class="table table-bordered table-striped header_fijo"  >
     <thead >

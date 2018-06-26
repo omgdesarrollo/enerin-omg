@@ -59,7 +59,9 @@ $Usuario=  Session::getSesion("user");
 		/*margin: 0 auto;*/
                 }
                 
-     
+                div#treeboxbox_tree{
+                   height: 300px; 
+                }
                     
           
           
@@ -502,9 +504,9 @@ myLayout.cells("c").attachObject("contenidoDetalles");
 //        alert("este es el nivel:"+level);
         tempData2="<div class='table-responsive'><table class='table table-bordered'><thead><tr class='danger'><th>Datos</th><th>Detalles</th></tr></thead><tbody></tbody>";
                     $.each(data, function(index,value){
-                       tempData2+="<tr><td class='info'>No</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'no',"+value.id_tema+")\">"+value.no+"</td></tr>";
-                       tempData2+="<tr><td class='info'>Tema</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'nombre',"+value.id_tema+")\">"+value.nombre+"</td></tr>";
-                       tempData2+="<tr><td class='info'>Descripcion</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'descripcion',"+value.id_tema+")\">"+value.descripcion+"</td></tr>";
+                       tempData2+="<tr><td class='info'>No</td><td>"+value.no+"</td></tr>";
+                       tempData2+="<tr><td class='info'>Tema</td><td>"+value.nombre+"</td></tr>";
+                       tempData2+="<tr><td class='info'>Descripcion</td><td>"+value.descripcion+"</td></tr>";
 //                       if(level==1)
                        tempData2+="<tr><td class='info'>Responsable</td><td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";
                        

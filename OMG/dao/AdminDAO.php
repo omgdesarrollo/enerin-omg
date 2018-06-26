@@ -265,7 +265,6 @@ class AdminDAO{
                 AND tbusuarios.contra='$CONTRASENA'";
             $db= AccesoDB::getInstancia();
             $lista= $db->executeQueryUpdate($query);
-            echo "d ".$query;
             return $lista;
         }catch (Exception $ex)
         {
