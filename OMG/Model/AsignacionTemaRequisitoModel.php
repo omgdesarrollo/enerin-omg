@@ -96,12 +96,13 @@ class AsignacionTemaRequisitoModel {
                 foreach($rec as $valuet){
 //                    $htmlFrontend=$valuet["registro"];
                     $htmlFrontend.="<tr><td class='info'>Registro</td><td>".$valuet['registro']."</td></tr>";
+                    $htmlFrontend.="<tr><td class='info'>Frecuencia</td><td>".$valuet['frecuencia']."</td></tr>";                    
                     $htmlFrontend.="<tr><td class='info'>Clave Documento</td><td>".$valuet['clave_documento']."</td></tr>";
                     if($valuet["documento"]!="")
                     $htmlFrontend.="<tr><td class='info'>Documento</td><td>".$valuet['documento']."</td></tr>";
                     else
                     $htmlFrontend.="<tr><td class='info'>Documento</td><td>SIN DOCUMENTO</td></tr>";
-                    $htmlFrontend.="<tr><td class='info'>Nombre Completo</td><td>".$valuet['nombrecompleto']."</td></tr>";
+                    $htmlFrontend.="<tr><td class='info'>Responsable</td><td>".$valuet['nombrecompleto']."</td></tr>";
                    
                 }
                 $htmlFrontend.="</table></div>";
