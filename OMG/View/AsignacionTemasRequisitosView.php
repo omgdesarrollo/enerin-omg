@@ -385,7 +385,7 @@ function evaluarToolbarSeccionA(id)
                 dataIds=[];
                 padre=1;
                 hijo=1;
-                $.each(data,function(index,value)
+                $.each(data.data,function(index,value)
                 {
                     dataArbol.push([padre,0,value.requisito]);
                     dataIds_req.push({"padre":padre,"id_requisito":value.id_requisito,"requisito":value.requisito});
@@ -407,26 +407,26 @@ function evaluarToolbarSeccionA(id)
 //                console.log("d"+dataIds_req);
 //                console.log("d:  "+dataArbol);
                 showArbol(dataArbol,dataIds);
-                
+                construirDetalleSeleccionado(data.detallesTema,id_asignacion_t);
 //                obtenerTema(id_asignacion_t);
                 
             }
         });
     }
     
-    function obtenerTema(id)
-    {
-       $.ajax({
-           url:'../Controller/TemasController.php?Op=ListarHijos',
-           type:'POST',
-           data:'ID='+id,
-           success:function(data)
-           {   
-//               construirSubDirectorio(data.datosHijos);
-               construirDetalleSeleccionado(data.detalles,id);
-           }
-       });
-    }
+//    function obtenerTema(id)
+//    {
+//       $.ajax({
+//           url:'../Controller/TemasController.php?Op=ListarHijos',
+//           type:'POST',
+//           data:'ID='+id,
+//           success:function(data)
+//           {   
+////               construirSubDirectorio(data.datosHijos);
+//               construirDetalleSeleccionado(data.detalles,id);
+//           }
+//       });
+//    }
     
 myLayout.cells("c").attachObject("contenidoDetalles");
     
@@ -442,6 +442,8 @@ myLayout.cells("c").attachObject("contenidoDetalles");
 //                       if(level==1)
                        tempData2+="<tr><td class='info'>Responsable</td><td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";
                        
+//                       alert("");
+console.log("d");
                     });
         tempData2+="</table></div>";
    
