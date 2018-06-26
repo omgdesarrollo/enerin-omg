@@ -19,7 +19,8 @@ class ValidacionDocumentoModel{
     }
     }
     
-    public function obtenerInfoPorIdValidacionDocumento($id_validacion_documento){
+    public function obtenerInfoPorIdValidacionDocumento($id_validacion_documento)
+    {
         try{
              $dao=new ValidacionDocumentoDAO();
             $rec=$dao->obtenerInfoPorIdValidacionDocumento($id_validacion_documento);
@@ -27,23 +28,53 @@ class ValidacionDocumentoModel{
       
         } catch (Exception $ex) {
 
+        }    
+    }
+    
+    public function obtenerTemayResponsable($id_documento){
+        try{
+            $dao=new ValidacionDocumentoDAO();
+            $rec=$dao->obtenerTemayResponsable($id_documento);
+            
+            return $rec;
+            
+        } catch (Exception $ex){            
+            throw $ex;
+            return false;
         }
         
         
-        
-    }
-    public function  obtenerRequisitosporDocumento($id_documento){
-        try{
-            $dao=new ValidacionDocumentoDAO();
-            $rec=$dao->obtenerRequisitosporDocumento($id_documento);
-            
-            
-            return $rec;
-    }  catch (Exception $e){
-        throw  $e;
-    }
     }
     
+    
+    public function  obtenerRequisitosporDocumento($id_documento)
+    {
+        try
+        {
+            $dao=new ValidacionDocumentoDAO();
+            $rec=$dao->obtenerRequisitosporDocumento($id_documento);
+         
+            return $rec;
+        } catch (Exception $ex){
+            throw  $ex;
+            return false;
+        }
+    }
+    
+    public function obtenerRegistrosPorDocumento($id_documento)
+    {
+        try
+        {
+            $dao=new ValidacionDocumentoDAO();
+            $rec=$dao->obtenerRegistrosPorDocumento($id_documento);
+            
+            return $rec;
+            
+        } catch (Exception $ex){
+            throw $ex;
+            return false;
+        }
+    }
     
     
 //    public function insert

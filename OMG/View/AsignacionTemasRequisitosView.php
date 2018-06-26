@@ -140,7 +140,19 @@ $Usuario=  Session::getSesion("user");
                                 aria-labelledby="menu1"></ul>
                             </div>
                         </div>
-
+                        <div class="form-group">
+                            <label class="control-label">Frecuencia: </label>
+                            <select id="selectFrecuencia" >
+                                <option value="DIARIO">DIARIO</option>
+                                <option value="MENSUAL">MENSUAL</option>
+                                <option value="SEMANAL">SEMANAL</option>
+                                <option value="BIMESTRAL">BIMESTRAL</option>
+                                <option value="ANUAL">ANUAL</option>
+                                 <option value="TIEMPO INDEFINIDO">TIEMPO INDEFINIDO</option>
+                               
+                            </select>
+                        </div>
+                        
                         <div id="INFO_AGREGARREGISTRO">
                             <div class="form-group">
                                 Clave Documento:
@@ -181,19 +193,11 @@ $Usuario=  Session::getSesion("user");
 <!--<div id="gridbox" style="width:500px; height:350px; background-color:white;"></div>-->
 
 	<script>
-            var myLayout, myTree, myToolbar,id_asignacion_t=-1,levelv=0,id_asignacion_r=-1,selec_tema=-1,id_seleccionado=-1,dataIds_req=[];
+            var myLayout, myTree, myToolbar,id_asignacion_t=-1,levelv=0,id_asignacion_r=-1,selec_tema=-1,id_seleccionado=-1,dataIds_req=[],dataIds_reg=[];
             myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
 	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
-//            myTree.enableHighlighting(true);
 
-//dataArbol=[["1","0","de"],["2","1","fes"],["3","1","el texto es de la siguiente manera que se puede trabajar "],["5","0","de"]];
-//  
-//    myTree.deleteChildItems(0);
-// 
-//  if(dataArbol.length>0){
-//    myTree.parse(dataArbol, "jsarray");
-//  }
-//    obtenerDatosArbol();
+
 obtenerTemasEnAsignacion();
 
 function buscarDocumento(data)
@@ -271,7 +275,7 @@ $(function(){
 //        console.log(dataIds_req);
         id_req=-1;
 //        console.log(dataIds_req);
-console.log("seleccionado es "+id_seleccionado);
+//console.log("seleccionado es "+id_seleccionado);
         $.each(dataIds_req,function(index,value){
             if(value.padre==id_seleccionado){
                id_req= value.id_requisito;
@@ -280,7 +284,8 @@ console.log("seleccionado es "+id_seleccionado);
 //            alert("d "+value.id_requisito);
         });
 //       if(id_){ 
-         var formData = {"ID_REQUISITO":id_req,"REGISTRO":$('#REGISTRO').val(),"ID_DOCUMENTO":idDocumentoSelect};
+//$("#selectFrecuencia option[value="+ valor +"]").attr("selected",true)
+         var formData = {"ID_REQUISITO":id_req,"REGISTRO":$('#REGISTRO').val(),"ID_DOCUMENTO":idDocumentoSelect,"FRECUENCIA":$("#selectFrecuencia").prop("value")};
          
          $.ajax({
              url:'../Controller/AsignacionTemasRequisitosController.php?Op=GuardarSubNodo',
@@ -308,16 +313,8 @@ var myLayout = new dhtmlXLayoutObject({
 				
 			]
 		});
-//              myLayout.cells("b").hideHeader();  
  myLayout.cells("a").attachObject("seccionIzquierda");
-//var myToolbar1 = myLayout.cells("a").attachToolbar({
-//			iconset: "awesome",
-//			items: [
-////				{type: "button", text: "Actualizar", img: "fa fa-refresh fa-spin"},
-//                                {type: "button", text: "Agregar", img: "fa fa-save "},
-//				{type: "button", text: "Eliminar", img: "fa fa-trash-o "}
-//			]
-//		});
+
 
 
 var myToolbar = myLayout.cells("b").attachToolbar({
@@ -325,8 +322,8 @@ var myToolbar = myLayout.cells("b").attachToolbar({
 			items: [
 //				{type: "button", text: "Actualizar", img: "fa fa-refresh fa-spin"},
                                 {id:"agregarReq",type: "button", text: "Agregar Requisito", img: "fa fa-save "},
-                                {id:"agregar",type: "button", text: "Agregar Registro", img: "fa fa-save "},
-				{id:"eliminar",type: "button", text: "Eliminar", img: "fa fa-trash-o "}
+                                {id:"agregar",type: "button", text: "Agregar Registro", img: "fa fa-save "}
+//				{id:"eliminar",type: "button", text: "Eliminar", img: "fa fa-trash-o "}
                                 
 			]
 		});
@@ -336,35 +333,32 @@ myLayout.cells("b").attachObject("treeboxbox_tree");
      
      
 myToolbar.attachEvent("onClick", function(id){
-    //your code here
-//    alert("hola"+id);
-//if(id_asignacion_t!=""){
+
     evaluarToolbarSeccionA(id);
-//}
-//else{
-//    alert("no tiene tema seleccionado");
-//}
+
 });
 
 myTree.attachEvent("onClick", function(id){
-//    var id2 = myTree.getSelectedId();
-//    alert("f  "+id2);
-    // your code here}
-    // alert("d "+id);
-//    obtenerHijos(id);
-//    
-//    id_seleccionado=id;
-//    return true;
+
  levelv = myTree.getLevel(id);
  id_seleccionado=id;
-// alert("su level es "+level);
+
+idTree=-1;
+//alert("seleccionado  "+id_seleccionado);
+   $.each(dataIds_req,function(index,value){
+            if(value.padre==id_seleccionado){
+               idTree= value.id_requisito;
+            }
+        });
+ 
+ obtenerInfo(idTree);
 });
 
 
 function evaluarToolbarSeccionA(id)
 {
     if(id_asignacion_t==-1){
-        alert("tema no seleccionado")
+        alert("tema no seleccionado");
     }else{
             if(id=="agregar")
             {
@@ -420,9 +414,9 @@ function evaluarToolbarSeccionA(id)
             url: '../Controller/AsignacionTemasRequisitosController.php?Op=Listar',
             success:function(data)
             {
-               $htmlData="<ul class='list-group'>";
+               $htmlData="<table><t</table><ul class='list-group'>";
                $.each(data,function(index,value){
-                  $htmlData+="<li class='list-group-item'><button onclick='obtenerDatosArbol("+value.id_asignacion_tema_requisito+")' >"+value.id_tema+"</button><span class='badge'></li>"; 
+                  $htmlData+="<li class='list-group-item'><button onclick='obtenerDatosArbol("+value.id_asignacion_tema_requisito+")' >"+value.no+"-"+value.nombre+"</button><span class='badge'></li>"; 
                 
                });
               $htmlData+="</ul>";
@@ -438,7 +432,10 @@ function evaluarToolbarSeccionA(id)
        id_asignacion_t=id_asignacion;
        selec_tema=0;
         levelv=0;
+        cadenaReq="";
+        cadenaReg="";
         dataIds_req.length=0;
+        dataIds_reg.length=0;
 //       alert("d  :"+id_asignacion_t);
 //        id_asignacion_t=id_asignacion;
 //        alert("d");
@@ -455,21 +452,26 @@ function evaluarToolbarSeccionA(id)
                 hijo=1;
                 $.each(data.data,function(index,value)
                 {
-                    dataArbol.push([padre,0,value.requisito]);
+                    cadenaReq=value.requisito;
+//                    cadenaReq.substr(0,6);
+                    dataArbol.push([padre,0,"Requisito-"+ cadenaReq.substr(0,9)+"...."]);
                     dataIds_req.push({"padre":padre,"id_requisito":value.id_requisito,"requisito":value.requisito});
 //                    dataIds.push({"padre":padre,"id_requisito":value.id_requisito,"requisito":value.requisito});
 //                    dataIds.push(value.id_requisito);
                     $.each(value[0],function(ind,val)
                     {
                         hijo++;
-                        dataArbol.push([hijo,padre,val.registro]);
+                        cadenaReg=val.registro;
+                        dataArbol.push([hijo,padre,"Registro-"+cadenaReg.substr(0,9)+"...."]);
+                        
 //                        dataIds.push([hijo,val.id_registro,val.registro]);
+                         dataIds_reg.push({"hijo":hijo,"id_registro":val.id_registro,"registro":val.registro});
 //                        dataIds.push([val.id_registro]);
                     });
                     hijo++;
                     padre=hijo;
                 });
-                console.log(dataIds_req);
+//                console.log(dataIds_reg);
          
 //                dataIds_req=dataIds;
 //                console.log("d"+dataIds_req);
@@ -518,6 +520,43 @@ console.log("d");
         $("#contenidoDetalles").html(tempData2);
     }
     
+    function obtenerInfo(id){
+//        alert("ya has entrado aqui "+data);
+        if(id==-1){
+//         alert("accederas a registros");
+            idTree=-1;
+//alert("el id seleccionado es :  "+id_seleccionado);
+             $.each(dataIds_reg,function(index,value){
+//                 console.log("id_reg:  "+value.hijo);
+                        if(value.hijo==id_seleccionado){
+                               idTree= value.id_registro;
+                        }
+             });        
+            obtenerDetalles_Seleccionado(idTree,"reg"); 
+        }
+        else{
+//            alert("d "+id);
+            obtenerDetalles_Seleccionado(id,"req");
+        }
+    }
+    
+    
+   function obtenerDetalles_Seleccionado(id,tipo){
+
+   $.ajax({
+       url:"../Controller/AsignacionTemasRequisitosController.php?Op=detalles",
+       type:"POST",
+       data:{"id":id,"tipo":tipo},
+       success:function(d){
+//       alert("se hizo ");
+            construirDetalles(d);
+    }
+        });
+    
+    }
+    function construirDetalles(d){    
+        $("#contenidoDetalles").html(d);
+    }
     
         </script>      
 </body>

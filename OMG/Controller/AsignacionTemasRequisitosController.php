@@ -75,13 +75,28 @@ switch ($Op) {
             break;
         
         case'GuardarSubNodo':
-            $Lista= $model->insertarRegistros($_REQUEST['ID_REQUISITO'],$_REQUEST['REGISTRO'], $_REQUEST['ID_DOCUMENTO']);
+            $Lista= $model->insertarRegistros($_REQUEST['ID_REQUISITO'],$_REQUEST['REGISTRO'],$_REQUEST['FRECUENCIA'], $_REQUEST['ID_DOCUMENTO']);
             header('Content-type: application/json; charset=utf-8'); 
             echo json_encode($Lista);
             return $Lista;
             
             break;
-        
+        case 'detalles':
+           $id= $_REQUEST["id"];
+           $tipo=$_REQUEST["tipo"];
+//           if($tipo=="reg" ){
+//               echo "entro en reg";
+                
+               $lista=$model->obtenerDetallesHidrid($id,$tipo);
+//               echo "d";
+//           }
+//           else{
+//               if($tipo=="req"){
+//                   echo "entro en req";
+                  
+//               }
+//           }
+        break;
 
 	case 'Modificar':
 		# code...

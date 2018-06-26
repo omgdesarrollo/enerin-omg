@@ -36,8 +36,8 @@ $("#btn_guardar").click(function(){
             var ID_EMPLEADOMODAL=$("#ID_EMPLEADOMODAL").val();
             var REGISTROS=$("#REGISTROS").val();
 
-           alert("CLAVE_DOCUMENTO :"+CLAVE_DOCUMENTO + "DOCUMENTO :"+DOCUMENTO + "ID_EMPLEADOMODAL :"+ID_EMPLEADOMODAL
-                                    + "REGISTROS :"+REGISTROS);
+//           alert("CLAVE_DOCUMENTO :"+CLAVE_DOCUMENTO + "DOCUMENTO :"+DOCUMENTO + "ID_EMPLEADOMODAL :"+ID_EMPLEADOMODAL
+//                                    + "REGISTROS :"+REGISTROS);
 
 
 
@@ -143,7 +143,7 @@ function reconstruir(value,carga,datosEmp)
 
 function saveToDatabase(ObjetoThis,tabla,columna,id,contexto) 
 {
-        alert("entro al save");            
+//        alert("entro al save");            
         
             $(ObjetoThis).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
             $.ajax({
@@ -162,7 +162,7 @@ function saveToDatabase(ObjetoThis,tabla,columna,id,contexto)
 
 function saveComboToDatabase(column,val,iddocumento)
 {
-    alert("entro al save");
+//    alert("entro al save");
 
     valorobjeto= val[val.selectedIndex].value;
     console.log(valorobjeto);

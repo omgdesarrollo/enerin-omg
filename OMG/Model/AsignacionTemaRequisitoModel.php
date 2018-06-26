@@ -34,34 +34,17 @@ class AsignacionTemaRequisitoModel {
  
     
     
-    public function  obtenerRequisitosporDocumento($id_documento){
-        try{
-            $dao=new AsignacionTemaRequisitoDAO();
-            $rec=$dao->obtenerRequisitosporDocumento($id_documento);
-            
-            
-            return $rec;
-    }  catch (Exception $e){
-        throw  $e;
-    }
-    }
-    
-    
-    
-    public function obtenerTemayResponsable($id_documento){
-        try{
-            $dao=new AsignacionTemaRequisitoDAO();
-            $rec=$dao->obtenerTemayResponsable($id_documento);
-            
-            return $rec;
-            
-        } catch (Exception $ex){            
-            throw $ex;
-        }
-        
-        
-    }
-            
+//    public function  obtenerRequisitosporDocumento($id_documento){
+//        try{
+//            $dao=new AsignacionTemaRequisitoDAO();
+//            $rec=$dao->obtenerRequisitosporDocumento($id_documento);
+//            
+//            
+//            return $rec;
+//    }  catch (Exception $e){
+//        throw  $e;
+//    }
+//    }        
     
     public function obtenerIdTema($ID_ASIGNACION)
     {
@@ -78,7 +61,60 @@ class AsignacionTemaRequisitoModel {
             return false;
         }
     }
+    public function obtenerDetallesHidrid($id,$tipo){
+        try{
+            $dao= new AsignacionTemaRequisitoDAO();
+            $value["id"]=$id;
+            
+            $htmlFrontend="";
+//            $value["tipo"]=$tipo;
+          
+            if($tipo=="req"){
+            
+                $rec= $dao->obtenerDetalles_Req($value);
+                 $htmlFrontend="<div class='table-responsive'><table class='table table-bordered'><thead><tr class='danger'><th>Datos</th><th>Detalles Requisito</th></tr></thead><tbody></tbody>";
+              
+                foreach($rec as $valuet){
+//                    $htmlFrontend=$valuet["registro"];
+                    $htmlFrontend.="<tr><td class='info'>Requisito</td><td>".$valuet['requisito']."</td></tr>";
+//                    $htmlFrontend.="<tr><td class='info'>Clave Documento</td><td>".$valuet['clave_documento']."</td></tr>";
+//                    if($valuet["documento"]!="")
+//                    $htmlFrontend.="<tr><td class='info'>Documento</td><td>".$valuet['documento']."</td></tr>";
+//                    else
+//                    $htmlFrontend.="<tr><td class='info'>Documento</td><td>SIN DOCUMENTO</td></tr>";
+//                    $htmlFrontend.="<tr><td class='info'>Nombre Completo</td><td>".$valuet['nombrecompleto']."</td></tr>";
+                   
+                }
+                $htmlFrontend.="</table></div>";
+                 echo $htmlFrontend;
+            }
+            else{
+              if($tipo=="reg"){
+                  
+            $htmlFrontend="<div class='table-responsive'><table class='table table-bordered'><thead><tr class='danger'><th>Datos</th><th>Detalles Registro</th></tr></thead><tbody></tbody>";
+                $rec= $dao->obtenerDetalles_Reg($value);
+                foreach($rec as $valuet){
+//                    $htmlFrontend=$valuet["registro"];
+                    $htmlFrontend.="<tr><td class='info'>Registro</td><td>".$valuet['registro']."</td></tr>";
+                    $htmlFrontend.="<tr><td class='info'>Clave Documento</td><td>".$valuet['clave_documento']."</td></tr>";
+                    if($valuet["documento"]!="")
+                    $htmlFrontend.="<tr><td class='info'>Documento</td><td>".$valuet['documento']."</td></tr>";
+                    else
+                    $htmlFrontend.="<tr><td class='info'>Documento</td><td>SIN DOCUMENTO</td></tr>";
+                    $htmlFrontend.="<tr><td class='info'>Nombre Completo</td><td>".$valuet['nombrecompleto']."</td></tr>";
+                   
+                }
+                $htmlFrontend.="</table></div>";
+                 echo $htmlFrontend;
+              }
+            }
+            
+        } catch (Exception $ex) {
+            throw $ex;
+           return false;
+        }
 
+    }
 
 
 
@@ -111,12 +147,12 @@ class AsignacionTemaRequisitoModel {
         }
     }
     
-    public function insertarRegistros($ID_REQUISITO,$registro,$id_documento)
+    public function insertarRegistros($ID_REQUISITO,$registro,$frecuencia,$id_documento)
     {
         try
         {
             $dao=new AsignacionTemaRequisitoDAO($ID_REQUISITO,$registro,$id_documento);
-            $rec= $dao->insertarRegistro($registro,$id_documento);
+            $rec= $dao->insertarRegistro($registro,$id_documento,$frecuencia);
             $ID_REGISTRO= $dao->obtenerMaximoRegistro();
             $resultado= $dao->insertarRegistroTablaCompuesta($ID_REQUISITO, $ID_REGISTRO);
             

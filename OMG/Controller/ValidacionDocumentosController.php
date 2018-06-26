@@ -49,48 +49,37 @@ switch ($Op) {
 		//header("location: login.php");
 //echo $json = json_encode(array("n" => "".$Lista.NOMBRE_EMPLEADO, "a" => "apellido",  "c" => "test"));
 		return $Lista;
-		break;    
- 
+		break;           
             
+        case 'MostrarTemayResponsable':
+                                  
+                $Lista=$model->obtenerTemayResponsable($_REQUEST['ID_DOCUMENTO']);
+                
+//                Session::setSesion("obtenerTemayResponsable", $lista);                        
+                header('Content-type: application/json; charset=utf-8');
+                echo json_encode($Lista);
+                return $Lista;
+		break;
             
-	case 'MostrarRequisitosPorDocumento':
+        case 'MostrarRequisitosPorDocumento':
             
-                $id_documento=$_REQUEST["ID_DOCUMENTO"];
-            
-		$Lista=$modelAsignacionTemaRequisito->obtenerRequisitosporDocumento($id_documento);
-    	Session::setSesion("obtenerRequisitosporDocumento",$Lista);
-//    	$tarjet="../view/principalmodulos.php";
-        
-    	header('Content-type: application/json; charset=utf-8');
+                
+                $Lista= $model->obtenerRequisitosporDocumento($_REQUEST['ID_DOCUMENTO']);
+//                Session::setSesion("obtenerRequisitosporDocumento",$Lista);        
+                header('Content-type: application/json; charset=utf-8');
 		echo json_encode( $Lista);
+                return $Lista;
 		break;	
-
-	
+	  
             
         case 'MostrarRegistrosPorDocumento':
                   
-                $id_documento=$_REQUEST["ID_DOCUMENTO"];
-                
-                $lista=$modelDocumento->obtenerRegistrosPorDocumento($id_documento);
-                Session::setSesion("obtenerRegistrosPorDocumento",$lista); 
-                
+                $Lista= $model->obtenerRegistrosPorDocumento($_REQUEST['ID_DOCUMENTO']);
+//                Session::setSesion("obtenerRegistrosPorDocumento",$Lista);                 
                 header('Content-type: application/json; charset=utf-8');
-                echo json_encode($lista);
+                echo json_encode($Lista);
+                return $Lista;
             
-		break;
-         
-            
-            
-        case 'MostrarTemayResponsable':
-                  
-                $id_documento=$_REQUEST["ID_DOCUMENTO"];
-            
-                $lista=$modelAsignacionTemaRequisito->obtenerTemayResponsable($id_documento);
-                Session::setSesion("obtenerTemayResponsable", $lista);
-                        
-                header('Content-type: application/json; charset=utf-8');
-                echo json_encode($lista);
-                        
 		break;    
 
 	case 'Modificar':

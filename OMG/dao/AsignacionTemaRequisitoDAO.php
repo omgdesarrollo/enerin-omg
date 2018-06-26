@@ -67,57 +67,7 @@ class AsignacionTemaRequisitoDAO {
     }
     }
     
-    
-    
-    public function obtenerRequisitosporDocumento($id_documento){
-        try{
-            
-            $query="SELECT tbasignacion_tema_requisito.id_asignacion_tema_requisito, tbasignacion_tema_requisito.requisito
-
-                    FROM  asignacion_tema_requisito tbasignacion_tema_requisito WHERE tbasignacion_tema_requisito.id_documento=$id_documento";
-         
-            $db=  AccesoDB::getInstancia();
-            $lista=$db->executeQuery($query);
-            
-
-            return $lista;
-    }  catch (Exception $ex){
-        //throw $rec;
-        throw $ex;
-    }
-    }
-    
-    
-    public function obtenerTemayResponsable ($id_documento){
-        try{
-            $query="SELECT tbclausulas.clausula, tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno
-
-                    FROM  validacion_documento tbvalidacion_documento
-                                        
-                    
-                    JOIN documentos tbdocumentos ON tbdocumentos.id_documento=tbvalidacion_documento.id_documento
-
-                    JOIN asignacion_tema_requisito tbasignacion_tema_requisito ON 
-                    tbasignacion_tema_requisito.id_documento=tbdocumentos.id_documento
-
-                    JOIN clausulas tbclausulas ON tbclausulas.id_clausula=tbasignacion_tema_requisito.id_clausula
-
-                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbclausulas.id_empleado
-
-                    WHERE tbvalidacion_documento.id_documento=$id_documento";
-            
-            
-            $db= AccesoDB::getInstancia();
-            $lista=$db->executeQuery($query);
-            
-            return $lista;
-            
-        } catch (Exception $ex){
-            throw $ex;
-        }
-    }
-    
-    
+       
     public function obtenerIdTema($ID_ASIGNACION)
     {
         try
@@ -217,12 +167,12 @@ class AsignacionTemaRequisitoDAO {
         }
     }
     
-    public function insertarRegistro($registro,$id_documento)
+    public function insertarRegistro($registro,$id_documento,$frecuencia)
     {
         try
         {
-            $query="INSERT INTO registros(registro,id_documento)
-                    VALUES ('$registro',$id_documento)";
+            $query="INSERT INTO registros(registro,id_documento,frecuencia)
+                    VALUES ('$registro',$id_documento,$frecuencia)";
 //            echo "".$query;
             $db=  AccesoDB::getInstancia();
             $db->executeQueryUpdate($query);
@@ -266,7 +216,34 @@ class AsignacionTemaRequisitoDAO {
             return false;
         }
     }
+public function obtenerDetalles_Req($value){
+    try{
+        $query="select tbrequisitos.requisito from requisitos tbrequisitos where tbrequisitos.id_requisito=".$value["id"];
+        $db= AccesoDB::getInstancia();
+       $lista= $db->executeQuery($query);
+        return $lista;
+    } catch (Exception $ex) {
+        throw $ex;
+    }
+}
+public function obtenerDetalles_Reg($value){
+    try{
+      $query="select tbregistros.id_registro,tbregistros.registro,tbdocumentos.clave_documento,
+        tbdocumentos.documento,CONCAT(tbempleados.nombre_empleado,'',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) nombrecompleto 
+        from registros tbregistros
 
+        JOIN documentos tbdocumentos  ON tbdocumentos.id_documento= tbregistros.id_documento 
+        JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumentos.id_empleado WHERE tbregistros.id_registro=".$value["id"];
+      
+        $db= AccesoDB::getInstancia();
+        $lista=$db->executeQuery($query);
+        return $lista;
+    } catch (Exception $ex) {
+        throw $ex;
+    }
+}
+    
+    
     public function actualizarAsignacionTemaRequisito($id_asignacion_tema_requisito, $id_clausula,$requisito){
         try{
              $query="UPDATE asignacion_tema_requisito SET id_clausula='$id_clausula', requisito='$requisito',"
