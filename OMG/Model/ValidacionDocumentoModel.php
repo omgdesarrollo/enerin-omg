@@ -19,7 +19,8 @@ class ValidacionDocumentoModel{
     }
     }
     
-    public function obtenerInfoPorIdValidacionDocumento($id_validacion_documento){
+    public function obtenerInfoPorIdValidacionDocumento($id_validacion_documento)
+    {
         try{
              $dao=new ValidacionDocumentoDAO();
             $rec=$dao->obtenerInfoPorIdValidacionDocumento($id_validacion_documento);
@@ -27,11 +28,25 @@ class ValidacionDocumentoModel{
       
         } catch (Exception $ex) {
 
+        }    
+    }
+    
+    public function obtenerTemayResponsable($id_documento){
+        try{
+            $dao=new ValidacionDocumentoDAO();
+            $rec=$dao->obtenerTemayResponsable($id_documento);
+            
+            return $rec;
+            
+        } catch (Exception $ex){            
+            throw $ex;
+            return false;
         }
         
         
-        
     }
+    
+    
     public function  obtenerRequisitosporDocumento($id_documento){
         try{
             $dao=new ValidacionDocumentoDAO();

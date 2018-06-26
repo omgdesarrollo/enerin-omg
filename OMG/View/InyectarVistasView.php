@@ -71,6 +71,10 @@
     <iframe src="EvidenciasView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
 
+<div id="cargaprogramatareas">
+    <iframe src="TareasView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
+</div>
+
 <div id="administrarUsuario">
     <iframe src="AdminView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>

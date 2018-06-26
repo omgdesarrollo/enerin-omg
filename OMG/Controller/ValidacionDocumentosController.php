@@ -82,15 +82,13 @@ switch ($Op) {
             
             
         case 'MostrarTemayResponsable':
-                  
-                $id_documento=$_REQUEST["ID_DOCUMENTO"];
-            
-                $lista=$modelAsignacionTemaRequisito->obtenerTemayResponsable($id_documento);
-                Session::setSesion("obtenerTemayResponsable", $lista);
-                        
+                                  
+                $Lista=$model->obtenerTemayResponsable($_REQUEST['ID_DOCUMENTO']);
+                
+//                Session::setSesion("obtenerTemayResponsable", $lista);                        
                 header('Content-type: application/json; charset=utf-8');
-                echo json_encode($lista);
-                        
+                echo json_encode($Lista);
+                return $Lista;
 		break;    
 
 	case 'Modificar':

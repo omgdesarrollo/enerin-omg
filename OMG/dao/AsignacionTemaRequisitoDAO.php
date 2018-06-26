@@ -87,37 +87,7 @@ class AsignacionTemaRequisitoDAO {
     }
     }
     
-    
-    public function obtenerTemayResponsable ($id_documento){
-        try{
-            $query="SELECT tbclausulas.clausula, tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno
-
-                    FROM  validacion_documento tbvalidacion_documento
-                                        
-                    
-                    JOIN documentos tbdocumentos ON tbdocumentos.id_documento=tbvalidacion_documento.id_documento
-
-                    JOIN asignacion_tema_requisito tbasignacion_tema_requisito ON 
-                    tbasignacion_tema_requisito.id_documento=tbdocumentos.id_documento
-
-                    JOIN clausulas tbclausulas ON tbclausulas.id_clausula=tbasignacion_tema_requisito.id_clausula
-
-                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbclausulas.id_empleado
-
-                    WHERE tbvalidacion_documento.id_documento=$id_documento";
-            
-            
-            $db= AccesoDB::getInstancia();
-            $lista=$db->executeQuery($query);
-            
-            return $lista;
-            
-        } catch (Exception $ex){
-            throw $ex;
-        }
-    }
-    
-    
+       
     public function obtenerIdTema($ID_ASIGNACION)
     {
         try
