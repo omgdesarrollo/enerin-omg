@@ -134,7 +134,7 @@ require_once '../util/Session.php';
                                         window.parent.location.href="Logout.php";
                                     }
                                 );
-                                setTimeout(function(){swal.close();window.parent.location.href="Logout.php";},7000);
+//                                setTimeout(function(){swal.close();window.parent.location.href="Logout.php";},7000);
                             }
                             else
                             {

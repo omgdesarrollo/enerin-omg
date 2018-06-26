@@ -386,7 +386,7 @@ myLayout.cells("a").attachObject("treeboxbox_tree");
 var myToolbar = myLayout.cells("a").attachToolbar({
 			iconset: "awesome",
 			items: [
-                                {id:"agregar", type: "button", text: "Agregar", img: "fa fa-plus-square"},
+                                {id:"agregar", type: "button", text: "Agregar Temas", img: "fa fa-plus-square"},
 				{id:"eliminar", type: "button", text: "Eliminar", img: "fa fa-trash-o"}
 			]
 		});
@@ -431,12 +431,16 @@ function eliminarNodo()
     $.ajax({
         url:'../Controller/TemasController.php?Op=Eliminar',
         data:'ID='+id_seleccionado,
-        success:function()
+        success:function(response)
         {
-           obtenerDatosArbol(); 
-           limpiar("#contenidoDetalles");
-           limpiar("#contenido");
-           id_seleccionado="";
+            if(response==true){
+                obtenerDatosArbol(); 
+                limpiar("#contenidoDetalles");
+                limpiar("#contenido");
+                id_seleccionado="";
+            }else{
+                alert("Error no se puede eliminar el tema tiene requisitos");
+            }
         }
     });
 }
