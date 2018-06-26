@@ -81,7 +81,22 @@ switch ($Op) {
             return $Lista;
             
             break;
-        
+        case 'detalles':
+           $id= $_REQUEST["id"];
+           $tipo=$_REQUEST["tipo"];
+//           if($tipo=="reg" ){
+//               echo "entro en reg";
+                
+               $lista=$model->obtenerDetallesHidrid($id,$tipo);
+//               echo "d";
+//           }
+//           else{
+//               if($tipo=="req"){
+//                   echo "entro en req";
+                  
+//               }
+//           }
+        break;
 
 	case 'Modificar':
 		# code...
