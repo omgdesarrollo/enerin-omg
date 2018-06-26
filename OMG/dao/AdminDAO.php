@@ -260,7 +260,7 @@ class AdminDAO{
         try
         {
             $query="UPDATE usuarios tbusuarios
-                SET tbusuarios.contra= '".$VALOR."'
+                SET tbusuarios.contra= '$VALOR'
                 WHERE tbusuarios.id_usuario=$USUARIO
                 AND tbusuarios.contra='$CONTRASENA'";
             $db= AccesoDB::getInstancia();
