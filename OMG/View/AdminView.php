@@ -360,6 +360,7 @@ $Usuario=  Session::getSesion("user");
                 url: '../Controller/AdminController.php?Op=BusquedaEmpleado',
                 type: 'GET',
                 data: 'CADENA='+cadena,
+                async:false,
                 success:function(usuarios)
                 {
                     $.each(usuarios,function(index,value)
@@ -386,6 +387,7 @@ $Usuario=  Session::getSesion("user");
                 url: '../Controller/AdminController.php?Op=ListarTemas',
                 type: 'GET',
                 data: 'CADENA='+cadena+"&ID_USUARIO="+idUsuario,
+                async:false,
                 success:function(temas)
                 {
                     // console.log(temas);

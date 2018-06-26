@@ -161,5 +161,30 @@ class EvidenciasDAO
             return false;
         }
     }
+    public function listarRegistros($CADENA,$ID_TEMA)
+    {
+        try
+        {
+            $query="SELECT tbtemas.nombre, tbtemas.id_tema, tbregistros.registro, tbdocumentos.documento, tbregistros.frecuencia,
+            CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) AS nombre
+            FROM registros tbregistros
+            JOIN documentos tbdocumentos ON tbregistros.id_documento = tbdocumentos.id_documento
+            JOIN empleados tbempleados ON tbdocumentos.id_empleado = tbempleados.id_empleado
+            JOIN requisitos_registros tbrequisitos_registros ON tbrequisitos_registros.id_registro = tbregistros.id_registro
+            JOIN requisitos tbrequisitos ON tbrequisitos.id_requisito = tbrequisitos_registros.id_requisito
+            JOIN asignacion_tema_requisito_requisitos tbasignacion_trr ON tbasignacion_trr.id_requisito = tbrequisitos.id_requisito
+            JOIN asignacion_tema_requisito tbasignacion_tr ON tbasignacion_tr.id_asignacion_tema_requisito = tbasignacion_trr.id_asignacion_tema_requisito
+            JOIN temas tbtemas ON tbasignacion_tr.id_tema = tbtemas.id_tema
+            WHERE tbregistros.id_documento <> -1 AND tbtemas.id_tema = $ID_TEMA AND LOWER(tbregistros.registro) LIKE '%$CADENA%'";
+
+            $db= AccesoDB::getInstancia();
+            $result= $db->executeQuery($query);
+            return $result;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
     
 }
