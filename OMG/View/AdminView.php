@@ -180,7 +180,7 @@ $Usuario=  Session::getSesion("user");
                         <div class="form-group">
                             <label class="control-label">Empleado/Usuario: </label>
                             <div class="dropdown">
-                                <input style="width:60%" type="text" class="dropdown-toggle" id="NOMBREESCRITURA_AGREGARUSUARIO" data-toggle="dropdown" onkeyup="buscarEmpleados(this)"/>
+                                <input style="width:60%" type="text" class="dropdown-toggle" id="NOMBREESCRITURA_AGREGARUSUARIO" data-toggle="dropdown" onkeyup="buscarEmpleados(this)" autocomplete="off"/>
                                     <ul style="width:60%;cursor:pointer;" class="dropdown-menu" id="dropdownEvent" role="menu" 
                                     aria-labelledby="menu1"></ul>* Este sera el nombre de usuario.
                             </div>
@@ -255,7 +255,7 @@ $Usuario=  Session::getSesion("user");
                         <div class="form-group">
                             <label class="control-label">Temas: </label>
                             <div class="dropdown">
-                                <input style="width:100%" type="text" class="dropdown-toggle" id="NOMBRETEMA_MODIFICARTEMAS" data-toggle="dropdown" onkeyup="buscarTemas(this)"/>
+                                <input style="width:100%" type="text" class="dropdown-toggle" id="NOMBRETEMA_MODIFICARTEMAS" data-toggle="dropdown" onkeyup="buscarTemas(this)" autocomplete="off"/>
                                     <ul style="width:100%;cursor:pointer;" class="dropdown-menu" id="dropdownEventTemas" role="menu" 
                                     aria-labelledby="menu1"></ul>
                             </div>

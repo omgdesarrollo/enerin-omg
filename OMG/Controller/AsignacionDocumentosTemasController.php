@@ -83,7 +83,14 @@ switch ($Op) {
 
 	case 'Eliminar':
 		# code...
-		break;	
+		break;
+
+	case 'BuscarDocumento':
+		$lista = $model->buscarDocumento($_REQUEST["CADENA"]);
+		header('Content-type: application/json; charset=utf-8');
+		echo json_encode($lista);
+		break;
+
 	default:
 		# code...
 		break;
