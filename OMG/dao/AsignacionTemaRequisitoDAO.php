@@ -266,7 +266,34 @@ class AsignacionTemaRequisitoDAO {
             return false;
         }
     }
+public function obtenerDetalles_Req($value){
+    try{
+        $query="select tbrequisitos.requisito from requisitos tbrequisitos where tbrequisitos.id_requisito=".$value["id"];
+        $db= AccesoDB::getInstancia();
+       $lista= $db->executeQuery($query);
+        return $lista;
+    } catch (Exception $ex) {
+        throw $ex;
+    }
+}
+public function obtenerDetalles_Reg($value){
+    try{
+      $query="select tbregistros.id_registro,tbregistros.registro,tbdocumentos.clave_documento,
+        tbdocumentos.documento,CONCAT(tbempleados.nombre_empleado,'',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) nombrecompleto 
+        from registros tbregistros
 
+        JOIN documentos tbdocumentos  ON tbdocumentos.id_documento= tbregistros.id_documento 
+        JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumentos.id_empleado WHERE tbregistros.id_registro=".$value["id"];
+      
+        $db= AccesoDB::getInstancia();
+        $lista=$db->executeQuery($query);
+        return $lista;
+    } catch (Exception $ex) {
+        throw $ex;
+    }
+}
+    
+    
     public function actualizarAsignacionTemaRequisito($id_asignacion_tema_requisito, $id_clausula,$requisito){
         try{
              $query="UPDATE asignacion_tema_requisito SET id_clausula='$id_clausula', requisito='$requisito',"

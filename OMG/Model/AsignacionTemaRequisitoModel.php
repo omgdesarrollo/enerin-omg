@@ -78,7 +78,60 @@ class AsignacionTemaRequisitoModel {
             return false;
         }
     }
+    public function obtenerDetallesHidrid($id,$tipo){
+        try{
+            $dao= new AsignacionTemaRequisitoDAO();
+            $value["id"]=$id;
+            
+            $htmlFrontend="";
+//            $value["tipo"]=$tipo;
+          
+            if($tipo=="req"){
+            
+                $rec= $dao->obtenerDetalles_Req($value);
+                 $htmlFrontend="<div class='table-responsive'><table class='table table-bordered'><thead><tr class='danger'><th>Datos</th><th>Detalles Requisito</th></tr></thead><tbody></tbody>";
+              
+                foreach($rec as $valuet){
+//                    $htmlFrontend=$valuet["registro"];
+                    $htmlFrontend.="<tr><td class='info'>Requisito</td><td>".$valuet['requisito']."</td></tr>";
+//                    $htmlFrontend.="<tr><td class='info'>Clave Documento</td><td>".$valuet['clave_documento']."</td></tr>";
+//                    if($valuet["documento"]!="")
+//                    $htmlFrontend.="<tr><td class='info'>Documento</td><td>".$valuet['documento']."</td></tr>";
+//                    else
+//                    $htmlFrontend.="<tr><td class='info'>Documento</td><td>SIN DOCUMENTO</td></tr>";
+//                    $htmlFrontend.="<tr><td class='info'>Nombre Completo</td><td>".$valuet['nombrecompleto']."</td></tr>";
+                   
+                }
+                $htmlFrontend.="</table></div>";
+                 echo $htmlFrontend;
+            }
+            else{
+              if($tipo=="reg"){
+                  
+            $htmlFrontend="<div class='table-responsive'><table class='table table-bordered'><thead><tr class='danger'><th>Datos</th><th>Detalles Registro</th></tr></thead><tbody></tbody>";
+                $rec= $dao->obtenerDetalles_Reg($value);
+                foreach($rec as $valuet){
+//                    $htmlFrontend=$valuet["registro"];
+                    $htmlFrontend.="<tr><td class='info'>Registro</td><td>".$valuet['registro']."</td></tr>";
+                    $htmlFrontend.="<tr><td class='info'>Clave Documento</td><td>".$valuet['clave_documento']."</td></tr>";
+                    if($valuet["documento"]!="")
+                    $htmlFrontend.="<tr><td class='info'>Documento</td><td>".$valuet['documento']."</td></tr>";
+                    else
+                    $htmlFrontend.="<tr><td class='info'>Documento</td><td>SIN DOCUMENTO</td></tr>";
+                    $htmlFrontend.="<tr><td class='info'>Nombre Completo</td><td>".$valuet['nombrecompleto']."</td></tr>";
+                   
+                }
+                $htmlFrontend.="</table></div>";
+                 echo $htmlFrontend;
+              }
+            }
+            
+        } catch (Exception $ex) {
+            throw $ex;
+           return false;
+        }
 
+    }
 
 
 
