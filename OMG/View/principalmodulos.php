@@ -96,8 +96,8 @@ $Usuario=  Session::getSesion("user");
  
  var seccionCumplimiento=[
      {id:'documentos',text:'Validacion de Documentos',img:'documentos.png',type:'button',isbig:true} ,
-     {id:'evidencias',text:'Evidencias',img:'operaciones.png',type:'button',isbig:true},
-     {id:'planaccion',text:'Plan de Accion',img:'planaccion.png',type:'button',isbig:true}
+     {id:'evidencias',text:'Evidencias',img:'operaciones.png',type:'button',isbig:true}
+//     {id:'planaccion',text:'Plan de Accion',img:'planaccion.png',type:'button',isbig:true}
  ];
  
  
