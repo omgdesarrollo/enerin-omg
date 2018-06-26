@@ -5,10 +5,12 @@ require_once '../Model/EvidenciasModel.php';
 require_once '../Pojo/EvidenciasPojo.php';
 require_once '../Model/DocumentoModel.php';
 require_once '../util/Session.php';
+require_once '../Model/AdminModel.php';
 
-$Op=$_REQUEST["Op"];
-$model=new EvidenciasModel();
-$pojo= new EvidenciasPojo();
+$Op = $_REQUEST["Op"];
+$model = new EvidenciasModel();
+$modelAdmin =new AdminModel();
+$pojo = new EvidenciasPojo();
 
 $modelDocumento=new DocumentoModel();
 
@@ -70,7 +72,20 @@ switch ($Op)
         $data = $model->eliminarEvidencia($_REQUEST['ID_EVIDENCIA']);
         echo $data;
     break;
-    
+
+    case 'BuscarTema':
+        $USUARIO = Session::getSesion("user");
+        $lista = $modelAdmin->listarTemas($_REQUEST['CADENA'],$USUARIO["ID_USUARIO"]);
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($lista);
+    break;
+
+    case 'BuscarRegistro':
+        $lista = $model->listarRegistros($_REQUEST['CADENA'],$_REQUEST['ID_TEMA']);
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($lista);
+    break;
+
 	default:
 		echo false;
         break;

@@ -106,7 +106,20 @@ class EvidenciasModel
             return false;
         }
     }
-            
+    
+    public function listarRegistros($CADENA,$ID_TEMA)
+    {
+        try
+        {
+            $dao=new EvidenciasDAO();
+            $result = $dao->listarRegistros($CADENA,$ID_TEMA);            
+            return $result;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
     
 }
 ?>

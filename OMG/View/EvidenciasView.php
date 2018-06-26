@@ -179,16 +179,36 @@
             </div>
 
             <div class="modal-body">
-                <div class="form-group">
+            
+                <!-- <div class="form-group">
                     <label class="control-label" for="title">Clave Documento:</label>
                     <input type="text" class="" onkeyup="getClavesDocumento(this)"/>
                     <select id="CLAVE_NUEVAEVIDENCIAMODAL" class="select1" onchange="select_clavesModal(this)">
                         <option>Sin especificar</option>
                     </select>
                     <div class="help-block with-errors"></div>
-				</div>
+				</div> -->
+
                 <div class="form-group">
-                    Clave: <label id="CLAVE_NUEVAEVIDENCIAMODAL2" class="control-label" for="title"></label>
+                    <label class="control-label">Temas: </label>
+                    <div class="dropdown">
+                        <input style="width:100%" type="text" class="dropdown-toggle" id="NOMBRETEMA_NUEVAEVIDENCIA" data-toggle="dropdown" onkeyup="buscarTemas(this)" autocomplete="off"/>
+                            <ul style="width:100%;cursor:pointer;" class="dropdown-menu" id="dropdownEventTemasEvidencia" role="menu" 
+                            aria-labelledby="NOMBRETEMA_NUEVAEVIDENCIA"></ul>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Registro: </label>
+                    <div class="dropdown">
+                        <input style="width:100%" type="text" class="" id="NOMBREREGISTRO_NUEVAEVIDENCIA" data-toggle="dropdown" onkeyup="buscarRegistros(this)" autocomplete="off"/>
+                            <ul style="width:100%;cursor:pointer;" class="dropdown-menu" id="dropdownEventRegistroEvidencia" role="menu" 
+                            aria-labelledby="NOMBREREGISTRO_NUEVAEVIDENCIA"></ul>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    Frecuencia: <label id="FRECUENCIA_NUEVAEVIDENCIAMODAL" class="control-label" for="title"></label>
                 </div>
                 <div class="form-group">
                     Documento: <label id="DOCUMENTO_NUEVAEVIDENCIAMODAL" class="control-label" for="title"></label>
@@ -198,6 +218,8 @@
                 </div>
                 <div class="form-group">
                     <input id="ID_NUEVAEVIDENCIAMODAL" type="text" value="" style="display: none"/>
+                    <input id="IDTEMA_NUEVAEVIDENCIAMODAL" type="text" value="" style="display: none"/>
+                    <input id="IDREGISTRO_NUEVAEVIDENCIAMODAL" type="text" value="" style="display: none"/>
                 </div>
 
                 <div class="form-group" method="post">
@@ -392,6 +414,107 @@
         // alert("se cargara otro ");
         myFunction();
     }
+
+    function buscarTemas(data)
+    {
+        cadena = $(data).val().toLowerCase();        
+        tempData="";
+        if(cadena!="")
+        {
+            $.ajax({
+                url: '../Controller/EvidenciasController.php?Op=BuscarTema',
+                type: 'GET',
+                data: 'CADENA='+cadena,
+                async:false,
+                success:function(temas)
+                {
+                    // console.log(temas);
+                    $.each(temas,function(index,value)
+                    {
+                        // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
+                        // datos = value.id_tema+"^_^"+value.no+"^_^"+value.nombre+"^_^"+value.descripcion;
+                        tempData += "<li role='presentation'><a role='menuitem' tabindex='-1'";
+                        tempData += "onClick='seleccionarItemTemas("+JSON.stringify(value)+")'>";
+                        tempData += value.no+" - "+value.nombre+"</a></li>";
+                    });
+                    $("#dropdownEventTemasEvidencia").html(tempData);
+                }
+            });
+        }
+        $("#IDTEMA_NUEVAEVIDENCIAMODAL").val(-1);
+    }
+
+    function seleccionarItemTemas(usuarioTemas)
+    {
+        $('#NOMBRETEMA_NUEVAEVIDENCIA').val(usuarioTemas.no+" - "+usuarioTemas.nombre);
+        $("#IDTEMA_NUEVAEVIDENCIAMODAL").val(usuarioTemas.id_tema);
+    }
+
+    function seleccionarItemRegistro(Registros)
+    {
+        $('#NOMBREREGISTRO_NUEVAEVIDENCIA').val(Registros.registros);
+        $("#IDREGISTRO_NUEVAEVIDENCIAMODAL").val(Registros.id_registro);
+    }
+
+    function buscarRegistros(Obj)
+    {
+        idTema = $("#IDTEMA_NUEVAEVIDENCIAMODAL").val();
+        cadena = $(Obj).val().toLowerCase();
+        $("#dropdownEventTemasEvidencia").html("");
+        // tempData="";
+        if(idTema!=-1)
+        {
+            if(cadena!="")
+            {
+                $.ajax({
+                    url: '../Controller/EvidenciasController.php?Op=BuscarRegistro',
+                    type: 'GET',
+                    data: 'ID_TEMA='+idTema+"&CADENA="+cadena,
+                    async:false,
+                    success:function(registros)
+                    {
+                        $.each(registros,function(index,value)
+                        {
+                            // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
+                            // datos = value.id_tema+"^_^"+value.no+"^_^"+value.nombre+"^_^"+value.descripcion;
+                            tempData += "<li role='presentation'><a role='menuitem' tabindex='-1'";
+                            tempData += "onClick='seleccionarItemRegistro("+JSON.stringify(value)+")'>";
+                            tempData += value.registro+"</a></li>";
+                        });
+                        $("#dropdownEventRegistroEvidencia").html(tempData);
+                    },
+                    error:function()
+                    {
+                        swalError("Error en el servidor");
+                    }
+                });
+            }
+            else
+            {
+                $("#FRECUENCIA_NUEVAEVIDENCIAMODAL").html();
+                $("#DOCUMENTO_NUEVAEVIDENCIAMODAL").html();
+                $("#NOMBRE_NUEVAEVIDENCIAMODAL").html();
+            }
+        }
+        else
+        {
+            swal("","Debe seleccionar tema primero","info");
+        }
+    }
+
+    function construir(usuarioTemas)
+    {
+        tempData = "<tr id='idTema_"+usuarioTemas.id_tema+"' >";
+        tempData += "<td>"+usuarioTemas.no+"</td>";
+        tempData += "<td>"+usuarioTemas.nombre+"</td>";
+        tempData += "<td>"+usuarioTemas.descripcion+"</td>";
+        tempData += "<td>";
+        tempData += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
+        tempData += "onclick='eliminarTema("+usuarioTemas.id_tema+");'>";
+        tempData += "<i class=\"fa fa-trash\"></i></button></td></tr>";
+        return tempData;
+    }
+
     function getClavesDocumento(Obj)
     {
         tempData="";
@@ -973,6 +1096,31 @@
         })
     }
     noArchivo=0;
+    function swalSuccess(msj)
+    {
+        swal({
+                title: '',
+                text: msj,
+                showCancelButton: false,
+                showConfirmButton: false,
+                type:"success"
+            });
+        setTimeout(function(){swal.close();},1500);
+        $('#loader').hide();
+    }
+
+    function swalError(msj)
+    {
+        swal({
+                title: '',
+                text: msj,
+                showCancelButton: false,
+                showConfirmButton: false,
+                type:"error"
+            });
+        setTimeout(function(){swal.close();$('#agregarUsuario .close').click()},1500);
+        $('#loader').hide();
+    }
 </script>
 
 <script id="template-upload" type="text/x-tmpl">
