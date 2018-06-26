@@ -77,11 +77,11 @@ $Usuario=  Session::getSesion("user");
                 var arr = [];
                 var nombre_usuario;
 //                dhtmlx.image_path='../../codebase/imgs/';
-                var seccionHerramientas=[
+var seccionHerramientas=[
 					
-					{id:'adjuntar',text:'Adjuntar Documento',img:'attach.png',imgdis:"attach_dis.png", type:'button',isbig:true}	
+    {id:'adjuntar',text:'Adjuntar Documento',img:'attach.png',imgdis:"attach_dis.png", type:'button',isbig:true}	
 	  		      	
-	  		      	//,{id:'cuadre',text:'Cuadre recursos',img:'643.png', imgdis:"643_dis.png",type:'button'}	  		  	
+    //,{id:'cuadre',text:'Cuadre recursos',img:'643.png', imgdis:"643_dis.png",type:'button'}	  		  	
  ];
  
  var seccionReporte=[
@@ -97,9 +97,13 @@ $Usuario=  Session::getSesion("user");
  var seccionCumplimiento=[
      {id:'documentos',text:'Validacion de Documentos',img:'documentos.png',type:'button',isbig:true} ,
      {id:'evidencias',text:'Evidencias',img:'operaciones.png',type:'button',isbig:true},
-     {id:'planaccion',text:'Plan de Accion',img:'planaccion.png',type:'button',isbig:true}
+     //{id:'planaccion',text:'Plan de Accion',img:'planaccion.png',type:'button',isbig:true}
  ];
  
+ 
+ var seccionGantt=[
+     {id:'tareas',text:'Carga Programa Gantt',img:'663.png',type:'button',isbig:true} ,
+ ];
  
  var seccionInformesGerenciales=[
      {id:'informe',text:'Informe',img:'documentos.jpg',type:'button',isbig:true}  
@@ -199,8 +203,8 @@ var gantt=[
                            loadDataSideBarCumplimientosDocumentos();
                        if(itemIdSeleccion=="evidencias")
                            loadDataSideBarCumplimientosEvidencias();
-                       if(itemIdSeleccion=="planaccion")
-                           loadDataSideBarCumplimientosPlanDeAccion();
+                       if(itemIdSeleccion=="tareas")
+                           loadDataSideBarTareasGantt();
                         if(itemIdSeleccion=="catalogooficios")
                            loadDataSideBarOficiosCatalogos();
                        
@@ -233,12 +237,12 @@ var gantt=[
      
      
 	var inicio=[
-{id:'00',text:'Seleccion de contrato(Click)' ,items:[
+        {id:'00',text:'Seleccion de contrato(Click)' ,items:[
         
-        {id:'0x1',mode:'cols',text:'Contratos',type:'block',
-            list:datacontratos
+                            {id:'0x1',mode:'cols',text:'Contratos',type:'block',
+          list:datacontratos
         }
-]},         
+        ]},         
 	{id:'0',text:'OMG', active:true, items:[
 	{id:'0x2',mode:'cols',text:'Principal',type:'block', 
 		list:[
@@ -246,10 +250,13 @@ var gantt=[
 		   
 		      ]	},
                             {id:'0x32',mode:'cols',text:'Catalogo',type:'block',
-		  		list:seccionCatalogo},	
+          list:seccionCatalogo},	
                              
                              {id:'0x33',mode:'cols',text:'Cumplimientos',type:'block',
-		  		list:seccionCumplimiento},
+          list:seccionCumplimiento},
+      
+                             {id:'0x33',mode:'cols',text:'Tareas',type:'block',
+          list:seccionGantt},
                             
                              {id:'0x34',mode:'cols',text:'Informes Gerenciales',type:'block',
           list:seccionInformesGerenciales},

@@ -180,18 +180,23 @@ function loadDataSideBarOficiosDocumentacion(){
         consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");
         $("#sidebarObjV").load('InyectarVistasView.php #validaciondocumentos');                       
     }
-        function loadViewUsuario()
-        {
-            $("#sidebarObjV").load('InyectarVistasView.php #administrarUsuario');
-        }
+                
     
-    
-       function loadDataSideBarCumplimientosEvidencias(){
-
-          $("#sidebarObjV").load('InyectarVistasView.php #seguimientoevidencias');
-                     
+    function loadDataSideBarCumplimientosEvidencias()
+    {
+        $("#sidebarObjV").load('InyectarVistasView.php #seguimientoevidencias');                     
     }
     
+    
+    function loadDataSideBarTareasGantt()
+    {
+        $("#sidebarObjV").load('InyectarVistasView.php #cargaprogramatareas');
+    }
+    
+    function loadViewUsuario()
+    {
+        $("#sidebarObjV").load('InyectarVistasView.php #administrarUsuario');
+    }
     function loadDataSideBarAjustesUsuario(){
 //         mySidebar = myLayout.cells("a").attachSidebar();
    

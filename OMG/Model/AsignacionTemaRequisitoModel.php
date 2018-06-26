@@ -44,24 +44,7 @@ class AsignacionTemaRequisitoModel {
     }  catch (Exception $e){
         throw  $e;
     }
-    }
-    
-    
-    
-    public function obtenerTemayResponsable($id_documento){
-        try{
-            $dao=new AsignacionTemaRequisitoDAO();
-            $rec=$dao->obtenerTemayResponsable($id_documento);
-            
-            return $rec;
-            
-        } catch (Exception $ex){            
-            throw $ex;
-        }
-        
-        
-    }
-            
+    }        
     
     public function obtenerIdTema($ID_ASIGNACION)
     {
