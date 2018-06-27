@@ -98,7 +98,7 @@ class AdminModel{
             $dao=new AdminDAO();
             $rec= $dao->insertarUsuario($ID_EMPLEADO, $NOMBRE_USUARIO);
             
-            return$rec;
+            return $rec;
         } catch (Exception $ex)
         {
         throw $ex;
