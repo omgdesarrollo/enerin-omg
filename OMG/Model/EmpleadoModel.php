@@ -13,18 +13,12 @@ class EmpleadoModel{
 //    private $Correo='';
 //    private $Fecha_Creacion='NOW()';
     
-    public function  listarEmpleados(){
+    public function  listarEmpleados($cadena){
         try{
             $dao=new EmpleadoDAO();
-            $rec=$dao->mostrarEmpleados();
-            
-            /*if($rec==NULL){
-            throw new Exception("Usuario no existe !!!!!");
-            }
-            if($rec["CONTRA"]!=$clave){
-            throw  new Exception("Clave Incorrecta!!!!!");
-            }*/            
+            $rec=$dao->mostrarEmpleados($cadena);           
             return $rec;
+            
     }  catch (Exception $e){
         throw  $e;
     }
@@ -71,26 +65,92 @@ class EmpleadoModel{
     public function insertar($pojo){
         try{
             $dao=new EmpleadoDAO();
+            $model=new EmpleadoModel();
+            $devoldValor="";
+            $resultado= $model->verificarEmpleado($pojo->getCorreo());
+//            echo json_encode($resultado);
 //            $pojo=new EmpleadoPojo();
+            if($resultado[0]['resultado']==0)
+            {   
+                $dao->insertarEmpleados($pojo->getNombreEmpleado(),$pojo->getCategoria(), $pojo->getApellidoPaterno(),$pojo->getApellidoMaterno(),$pojo->getCorreo(),$pojo->getIdentificador());
+                $devoldValor=1;
+            } else {
+            @$result= $dao->verificarIdentificadorSubmodulo($resultado[0]['id_empleado'],$pojo->getIdentificador());
+//            echo "este es el identificador".$result['identificador'];
+//            echo "Este es result:".json_encode($result);
+                if($result['identificador']=="")
+                { 
+                        
+//                    $res= $dao->actualizarIdentificadorSubmodulo($resultado[0]['id_empleado'],$resultado[0]['identificador']."-".$pojo->getIdentificador());
+//                    echo json_encode("esta es la variable res ".$res);
+                    $devoldValor= $dao->listarEmpleado($resultado[0]['id_empleado']);
+                }
+                 else
+                {
+                    $devoldValor=-1;
+                }
+            }
             
-           $dao->insertarEmpleados($pojo->getNombreEmpleado(),$pojo->getCategoria(), $pojo->getApellidoPaterno(),$pojo->getApellidoMaterno(),$pojo->getCorreo());
+            return $devoldValor;
+
         } catch (Exception $ex) {
                 throw $ex;
         }
     }
     
-    public function actualizar($pojo){
-        try{
-            $dao= new EmpleadoDAO();
-//            $pojo= new EmpleadoPojo();
-//            $rec=$dao->actualizarEmpleado($pojo->getIdEmpleado(),$pojo->getNombreEmpleado(),$pojo->getApellidoPaterno(),$pojo->getApellidoMaterno(), $pojo->getCategoria(),$pojo->getCorreo());
-//        $rec=$dao->actualizarEmpleado($pojo->getIdEmpleado(), $pojo->getCorreo());
-        $dao->actualizarEmpleado($pojo->getIdEmpleado(), $pojo->getCorreo());
-//            return $rec;
-        } catch (Exception $ex) {
-                throw $ex;
+    public function verificarEmpleado($correo)
+    {
+        try
+        {
+            $dao=new EmpleadoDAO();
+            $rec= $dao->verificarEmpleado($correo);
+//            if($rec[0]['resultado']==0)
+//            {   
+//                return $rec;
+//            }
+//            else
+//            {
+//                return $rec;
+//            }
+            
+            return $rec;
+                     
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
         }
     }
+    
+    
+    public function actualizarIdentificadorSubmodulo($id, $identificador)
+    {
+        try
+        {
+            $dao=new EmpleadoDAO();
+            $rec= $dao->actualizarIdentificadorSubmodulo($id,$identificador);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
+    
+//    public function actualizar($pojo){
+//        try{
+//            $dao= new EmpleadoDAO();
+////            $pojo= new EmpleadoPojo();
+////            $rec=$dao->actualizarEmpleado($pojo->getIdEmpleado(),$pojo->getNombreEmpleado(),$pojo->getApellidoPaterno(),$pojo->getApellidoMaterno(), $pojo->getCategoria(),$pojo->getCorreo());
+////        $rec=$dao->actualizarEmpleado($pojo->getIdEmpleado(), $pojo->getCorreo());
+//        $dao->actualizarEmpleado($pojo->getIdEmpleado(), $pojo->getCorreo());
+////            return $rec;
+//        } catch (Exception $ex) {
+//                throw $ex;
+//        }
+//    }
     
     public function actualizarPorColumna($COLUMNA,$VALOR,$ID_EMPLEADO){
         try{

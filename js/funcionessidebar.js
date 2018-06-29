@@ -78,7 +78,7 @@ function loadDataSideBarOficiosCatalogos(){
                                 template:'tiles',
         width: 350,
         items: [
-          {id: "empleados", text: "Empleados", icon: "empleados.jpg"},
+          {id: "empleadosoficios", text: "Empleados", icon: "empleados.jpg"},
           {id: "entidadesreguladoras", text: "Autoridad Remitente", icon: "entidadreguladora.png"},
 //          {id: "cumplimientos", text: "Cumplimientos", icon: "cumplimientos.png"},
           {id: "clausulas", text: "Temas", icon: "temas.jpg"}
@@ -92,9 +92,9 @@ function loadDataSideBarOficiosCatalogos(){
                                  
                          mySidebar.attachEvent("onSelect", function(id, value){
                                    switch(id){
-                                       case "empleados":
-                                            consultarInformacion("../Controller/EmpleadosController.php?Op=Listar");                                           
-                                            $("#sidebarObjV").load('InyectarVistasView.php #empleados');
+                                       case "empleadosoficios":
+//                                            consultarInformacion("../Controller/EmpleadosOficiosController.php?Op=Listar");                                           
+                                            $("#sidebarObjV").load('InyectarVistasView.php #empleadosoficios');
                                             //$("#sidebarObjV").load('EmpleadosView.php');
                                        break;  
                                        

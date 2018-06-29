@@ -16,11 +16,10 @@ $pojo= new TemaPojo();
 switch ($Op) {
 	case 'Listar':
 
-            $Lista=$model->mostrarTemas();
-                               
+            $Lista=$model->mostrarTemas("catalogo");                  
             header('Content-type: application/json; charset=utf-8'); 
             echo json_encode($Lista);
-             return $Lista;
+            return $Lista;
 
          break;
 	

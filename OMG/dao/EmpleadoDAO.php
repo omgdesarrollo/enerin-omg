@@ -2,11 +2,12 @@
 require_once '../ds/AccesoDB.php';
 class EmpleadoDAO{
     //consulta los datos de un empleado por su nombre de usuario
-    public function mostrarEmpleados(){
+    public function mostrarEmpleados($cadena){
         try{
 
-              $query="SELECT id_empleado, nombre_empleado, categoria, apellido_paterno, apellido_materno, correo, fecha_creacion 
-                            FROM empleados order by nombre_empleado";            
+              $query="SELECT id_empleado, nombre_empleado, categoria, apellido_paterno, apellido_materno, correo, fecha_creacion, identificador 
+                      FROM empleados 
+                      WHERE empleados.identificador LIKE '%$cadena%' order by nombre_empleado";            
 
 
             $db=  AccesoDB::getInstancia();
@@ -25,7 +26,7 @@ class EmpleadoDAO{
     public function listarEmpleado ($ID_EMPLEADO){
         try
         {
-            $query = "SELECT id_empleado, nombre_empleado, categoria, apellido_paterno, apellido_materno, correo, fecha_creacion
+            $query = "SELECT id_empleado, nombre_empleado, categoria, apellido_paterno, apellido_materno, correo, fecha_creacion, identificador
 
                       FROM empleados
 
@@ -64,7 +65,7 @@ class EmpleadoDAO{
     
     
     
-    public function insertarEmpleados($Nombre,$Categoria,$Apellido_Paterno,$Apellido_Materno,$Correo){
+    public function insertarEmpleados($Nombre,$Categoria,$Apellido_Paterno,$Apellido_Materno,$Correo,$identificador){
         
         try{
             
@@ -75,7 +76,7 @@ class EmpleadoDAO{
             foreach ($lista_id_nuevo_autoincrementado as $value) {
                $id_nuevo= $value["id_empleado"];
             }
-            $query="INSERT INTO empleados(id_empleado,nombre_empleado,categoria,apellido_paterno,apellido_materno,correo)VALUES($id_nuevo,'$Nombre','$Categoria','$Apellido_Paterno','$Apellido_Materno','$Correo');";
+            $query="INSERT INTO empleados(id_empleado,nombre_empleado,categoria,apellido_paterno,apellido_materno,correo,identificador)VALUES($id_nuevo,'$Nombre','$Categoria','$Apellido_Paterno','$Apellido_Materno','$Correo','$identificador');";
             
             $db=  AccesoDB::getInstancia();
             $db->executeQueryUpdate($query);
@@ -86,6 +87,66 @@ class EmpleadoDAO{
         }   
     }
     
+    public function verificarEmpleado($correo)
+    {
+        try
+        {
+            $query="SELECT COUNT(*) AS resultado, tbempleados.id_empleado, tbempleados.identificador  
+                    FROM empleados tbempleados
+                    WHERE tbempleados.correo='$correo'";
+            $db=  AccesoDB::getInstancia();
+            $lista= $db->executeQuery($query);
+            
+            return $lista;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return $ex;
+        }
+    }
+    
+
+    public function verificarIdentificadorSubmodulo($id,$cadena)
+    {
+        try
+        {
+            $query="SELECT tbempleados.identificador
+                    FROM empleados tbempleados
+                    WHERE tbempleados.id_empleado=$id AND tbempleados.identificador LIKE '%$cadena%'";
+            $db=  AccesoDB::getInstancia();
+            $lista= $db->executeQuery($query);
+            
+            return $lista[0];
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }        
+    }
+    
+    public function actualizarIdentificadorSubmodulo($id,$identificador)
+    {
+        try
+        {
+            $query="UPDATE empleados SET identificador='$identificador'
+                    WHERE empleados.id_empleado=$id";
+            $db=  AccesoDB::getInstancia();
+            $lista= $db->executeQueryUpdate($query);
+            
+            return $lista;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
+
+
+
     public function actualizarEmpleado($Id_Empleado,$Nombre,$Apellido_Paterno,$Apellido_Materno,$Categoria,$Correo){
 //    public function actualizarEmpleado($Id_Empleado,$Correo){
         try{

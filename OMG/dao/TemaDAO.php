@@ -5,13 +5,15 @@ class TemaDAO{
     
 
    
-public function mostrarTemas()
+public function mostrarTemas($cadena)
 {
     try
     {
-        $query="SELECT tbtemas.id_tema, tbtemas.no, tbtemas.nombre, tbtemas.descripcion, tbtemas.plazo, tbtemas.padre
+        $query="SELECT tbtemas.id_tema, tbtemas.no, tbtemas.nombre, tbtemas.descripcion, tbtemas.plazo, tbtemas.padre,
+		tbtemas.identificador
                 FROM temas tbtemas
-                JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado";
+                JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
+                WHERE tbtemas.identificador LIKE '%$cadena%'";
 
         $db=  AccesoDB::getInstancia();
         $lista=$db->executeQuery($query);

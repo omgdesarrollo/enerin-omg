@@ -38,7 +38,7 @@ $Usuario=  Session::getSesion("user");
 
                 
                 <script src="../../js/jquery.js" type="text/javascript"></script>
-                
+                <script src="../../js/fTareasView.js" type="text/javascript"></script>
                      
                 
 <style>
@@ -196,12 +196,16 @@ require_once 'EncabezadoUsuarioView.php';
        
                         
                 
-		<script>
-                    si_hay_cambio=false;
-                    listarDatos();               
-                                                   
-                
-		</script>
+<script>
+    si_hay_cambio=false;
+    mostrarTareas();              
+
+function loadSpinner()
+{
+    myFunction();
+}
+
+</script>
 
         <!--Inicia para el spiner cargando-->
         <script src="../../js/loaderanimation.js" type="text/javascript"></script>

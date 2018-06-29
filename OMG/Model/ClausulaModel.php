@@ -20,13 +20,6 @@ class ClausulaModel{
             $dao=new ClausulaDAO();
             $rec=$dao->mostrarClausulas();
             
-            /*if($rec==NULL){
-            throw new Exception("Usuario no existe !!!!!");
-            }
-            if($rec["CONTRA"]!=$clave){
-            throw  new Exception("Clave Incorrecta!!!!!");
-            }*/
-            
             return $rec;
     }  catch (Exception $e){
         throw  $e;
