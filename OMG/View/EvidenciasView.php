@@ -115,8 +115,11 @@
             // array("name"=>"Clave Evidencia","column"=>"text"),
         );
         $titulosTable = 
-            array("Clave","Nombre Documento","Responsable Documento","Registros","Archivo Adjunto",
-                "Fecha Registro","Frecuencia","Acción Correctiva Inmediata","Plan de Acción","Desviación","Validación","Opcion"
+            // array("Clave","Nombre Documento","Responsable Documento","Registros","Archivo Adjunto",
+            //     "Fecha Registro","Frecuencia","Acción Correctiva Inmediata","Plan de Acción","Desviación","Validación","Opcion"
+            //     /*,"Ingresar Oficio Atención","Oficio de Atención"*/);
+            array("No.","Requisito","Registro","Frecuencia","Clave Documento",
+                "Adjuntar Evidencia","Fecha de Registro","Usuario","Acción Correctiva","Plan de Acción","Desviación","Validación","Opcion"
                 /*,"Ingresar Oficio Atención","Oficio de Atención"*/);
     ?>
     
@@ -147,8 +150,13 @@
         <div class="table-container">
             <table id="idTable" class="tbl-qa">
                 <tr>
+                    <th colspan="5" style="background:#efc9c9"></td>
+                    <th colspan="5" style="background:#6FB3E0">Responsable de Evidencia</td>
+                    <th colspan="3" style="background:#a7a6a6">Supervisión</td>
+                </tr>
+                <tr>
                 <?php foreach($titulosTable as $index=>$value)
-                { if($index<4){ ?>
+                { if($index<5){ ?>
                 <th class="backgroundTdTable"><?php echo $value ?></th>
                 <?php }else{ ?>
                     <th class="table-header"><?php echo $value ?></th>
@@ -194,7 +202,10 @@
                     <div class="dropdown">
                         <input style="width:100%" type="text" class="dropdown-toggle" id="NOMBRETEMA_NUEVAEVIDENCIA" data-toggle="dropdown" onkeyup="buscarTemas(this)" autocomplete="off"/>
                             <ul style="width:100%;cursor:pointer;" class="dropdown-menu" id="dropdownEventTemasEvidencia" role="menu" 
-                            aria-labelledby="NOMBRETEMA_NUEVAEVIDENCIA"></ul>
+                            aria-labelledby="NOMBRETEMA_NUEVAEVIDENCIA">
+                            <!-- <li role='presentation'><a role='menuitem' tabindex='-1'>jose</a></li>
+                            <li role='presentation'><a role='menuitem' tabindex='-1'>jesus</a></li> -->
+                            </ul>
                     </div>
                 </div>
 
@@ -203,18 +214,21 @@
                     <div class="dropdown">
                         <input style="width:100%" type="text" class="" id="NOMBREREGISTRO_NUEVAEVIDENCIA" data-toggle="dropdown" onkeyup="buscarRegistros(this)" autocomplete="off"/>
                             <ul style="width:100%;cursor:pointer;" class="dropdown-menu" id="dropdownEventRegistroEvidencia" role="menu" 
-                            aria-labelledby="NOMBREREGISTRO_NUEVAEVIDENCIA"></ul>
+                            aria-labelledby="NOMBREREGISTRO_NUEVAEVIDENCIA">
+                            <!-- <li role='presentation'><a role='menuitem' tabindex='-1'>JAJA</a></li>
+                            <li role='presentation'><a role='menuitem' tabindex='-1'>JIJI</a></li> -->
+                            </ul>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    Frecuencia: <label id="FRECUENCIA_NUEVAEVIDENCIAMODAL" class="control-label" for="title"></label>
+                    <strong>Frecuencia: </strong><label id="FRECUENCIA_NUEVAEVIDENCIAMODAL" class="control-label" for="title"></label>
                 </div>
                 <div class="form-group">
-                    Documento: <label id="DOCUMENTO_NUEVAEVIDENCIAMODAL" class="control-label" for="title"></label>
+                    <strong>Documento: </strong><label id="DOCUMENTO_NUEVAEVIDENCIAMODAL" class="control-label" for="title"></label>
                 </div>
                 <div class="form-group">
-                    Responsable del Documento: <label id="NOMBRE_NUEVAEVIDENCIAMODAL" class="control-label" for="title"></label>
+                    <strong>Responsable del Documento: </strong><label id="NOMBRE_NUEVAEVIDENCIAMODAL" class="control-label" for="title"></label>
                 </div>
                 <div class="form-group">
                     <input id="ID_NUEVAEVIDENCIAMODAL" type="text" value="" style="display: none"/>
@@ -305,15 +319,64 @@
 
 <script>
 
-    var data="";
-    var dataTemp="";
-    var si_hay_cambio=false;    
+    // var data="";
+    // var dataTemp="";
+    var si_hay_cambio=false;
+    dataRegistro="";
     $(function()
     {
         listarDatos();
+            
+            // $("#IDTEMA_NUEVAEVIDENCIAMODAL").val().onChange(function()
+            // {
+            //     alert("Cambio al id del tema");
+            // });
+    });
+
+    $('#BTN_CREAR_NUEVAEVIDENCIAMODAL').click(function()
+    {
+        claveRegistro = $("#IDREGISTRO_NUEVAEVIDENCIAMODAL").val();
+        claveTema = $("#IDTEMA_NUEVAEVIDENCIAMODAL").val();
+        if(claveTema!=-1 && claveRegistro!=-1)
+        {
+            $.ajax
+            ({
+                url: '../Controller/EvidenciasController.php?Op=CrearEvidencia',
+                type: 'POST',
+                data: "ID_REGISTRO="+dataRegistro.id_registro,
+                success:function(data)
+                {
+                    (data==true)?
+                    (swal({
+                        title: '',text: 'Se creo la evidencia',
+                        showCancelButton: false,showConfirmButton: false,
+                        type:"success"
+                        }),
+                        $('#FRECUENCIA_NUEVAEVIDENCIAMODAL').html(""),
+                        $('#DOCUMENTO_NUEVAEVIDENCIAMODAL').html(""),
+                        $('#NOMBRE_NUEVAEVIDENCIAMODAL').html(""),
+                        $('#nuevaEvidenciaModal .close').click()
+                        // listarDatos()
+                    )
+                    :swal({
+                        title: '',
+                        text: 'Error al crear',
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                        type:"error"
+                    });
+                    setTimeout(function(){swal.close();},1500);
+                }
+            });
+        }
+        else
+        {
+            swal("","Selecciona Correctamente","warning");
+        }
     });
     
-    function saveSingleToDatabase(Obj,tabla,columna,id,contexto) {
+    function saveSingleToDatabase(Obj,tabla,columna,id,contexto)
+    {
       
             if(si_hay_cambio==true){
             $("#btnAgregarEvidenciasRefrescar").prop("disabled",true);
@@ -323,8 +386,7 @@
             saveOneToDatabase(Obj.innerHTML,columna,tabla,id,contexto);
             
             si_hay_cambio=false;
-        } 
-
+        }
     }
 
     var tempo = 1;
@@ -434,14 +496,19 @@
                         // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
                         // datos = value.id_tema+"^_^"+value.no+"^_^"+value.nombre+"^_^"+value.descripcion;
                         tempData += "<li role='presentation'><a role='menuitem' tabindex='-1'";
-                        tempData += "onClick='seleccionarItemTemas("+JSON.stringify(value)+")'>";
+                        tempData += " onClick='seleccionarItemTemas("+JSON.stringify(value)+")'> ";
                         tempData += value.no+" - "+value.nombre+"</a></li>";
                     });
                     $("#dropdownEventTemasEvidencia").html(tempData);
                 }
             });
         }
+        $("#FRECUENCIA_NUEVAEVIDENCIAMODAL").html("");
+        $("#DOCUMENTO_NUEVAEVIDENCIAMODAL").html("");
+        $("#NOMBRE_NUEVAEVIDENCIAMODAL").html("");
+        $('#NOMBREREGISTRO_NUEVAEVIDENCIA').val("");
         $("#IDTEMA_NUEVAEVIDENCIAMODAL").val(-1);
+        $("#dropdownEventRegistroEvidencia").html("");
     }
 
     function seleccionarItemTemas(usuarioTemas)
@@ -452,16 +519,22 @@
 
     function seleccionarItemRegistro(Registros)
     {
-        $('#NOMBREREGISTRO_NUEVAEVIDENCIA').val(Registros.registros);
+        $('#NOMBREREGISTRO_NUEVAEVIDENCIA').val(Registros.registro);
+        $('#NOMBRETEMA_NUEVAEVIDENCIA').attr("disabled","true");
         $("#IDREGISTRO_NUEVAEVIDENCIAMODAL").val(Registros.id_registro);
+        $("#FRECUENCIA_NUEVAEVIDENCIAMODAL").html(Registros.frecuencia);
+        $("#DOCUMENTO_NUEVAEVIDENCIAMODAL").html(Registros.documento);
+        $("#NOMBRE_NUEVAEVIDENCIAMODAL").html(Registros.nombre);
+        dataRegistro=Registros;
+        console.log(dataRegistro);
     }
 
     function buscarRegistros(Obj)
     {
         idTema = $("#IDTEMA_NUEVAEVIDENCIAMODAL").val();
         cadena = $(Obj).val().toLowerCase();
-        $("#dropdownEventTemasEvidencia").html("");
-        // tempData="";
+        // alert();
+        tempData="";
         if(idTema!=-1)
         {
             if(cadena!="")
@@ -491,9 +564,11 @@
             }
             else
             {
-                $("#FRECUENCIA_NUEVAEVIDENCIAMODAL").html();
-                $("#DOCUMENTO_NUEVAEVIDENCIAMODAL").html();
-                $("#NOMBRE_NUEVAEVIDENCIAMODAL").html();
+                $("#FRECUENCIA_NUEVAEVIDENCIAMODAL").html("");
+                $("#DOCUMENTO_NUEVAEVIDENCIAMODAL").html("");
+                $("#NOMBRE_NUEVAEVIDENCIAMODAL").html("");
+                $('#NOMBRETEMA_NUEVAEVIDENCIA').removeAttr("disabled");
+                $("#IDREGISTRO_NUEVAEVIDENCIAMODAL").val(-1);
             }
         }
         else
@@ -502,113 +577,74 @@
         }
     }
 
-    function construir(usuarioTemas)
-    {
-        tempData = "<tr id='idTema_"+usuarioTemas.id_tema+"' >";
-        tempData += "<td>"+usuarioTemas.no+"</td>";
-        tempData += "<td>"+usuarioTemas.nombre+"</td>";
-        tempData += "<td>"+usuarioTemas.descripcion+"</td>";
-        tempData += "<td>";
-        tempData += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
-        tempData += "onclick='eliminarTema("+usuarioTemas.id_tema+");'>";
-        tempData += "<i class=\"fa fa-trash\"></i></button></td></tr>";
-        return tempData;
-    }
+    // function construir(usuarioTemas)
+    // {
+    //     tempData = "<tr id='idTema_"+usuarioTemas.id_tema+"' >";
+    //     tempData += "<td>"+usuarioTemas.no+"</td>";
+    //     tempData += "<td>"+usuarioTemas.nombre+"</td>";
+    //     tempData += "<td>"+usuarioTemas.descripcion+"</td>";
+    //     tempData += "<td>";
+    //     tempData += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
+    //     tempData += "onclick='eliminarTema("+usuarioTemas.id_tema+");'>";
+    //     tempData += "<i class=\"fa fa-trash\"></i></button></td></tr>";
+    //     return tempData;
+    // }
 
-    function getClavesDocumento(Obj)
-    {
-        tempData="";
-        cadena = $(Obj).val();
-        if(cadena!="")
-        {
-            $.ajax
-            ({
-                url: '../Controller/EvidenciasController.php?Op=getClavesDocumentos',
-                type: 'GET',
-                data: "CADENA="+cadena,
-                success:function(data)
-                {
-                    if(data!="")
-                    tempData += "<option value=''></option>";
-                    $.each(data,function(index,value)
-                    {
-                        apellidos = value.NOMBRE_EMPLEADO;
-                        if(value.APELLIDO_PATERNO!=null)
-                        {
-                            apellidos += " "+value.APELLIDO_PATERNO+" "+value.APELLIDO_MATERNO;
-                        }
-                        tempData += "<option value='"+value.CLAVE_DOCUMENTO+"+=$="+value.DOCUMENTO;
-                        tempData += "+=$="+apellidos+"+=$="+value.ID_DOCUMENTO+"'>";
-                        tempData += value.CLAVE_DOCUMENTO+"</option>";
-                    });
-                    $('#CLAVE_NUEVAEVIDENCIAMODAL').html(tempData);
-                }
-            });
-        }
-        else
-        {
-            tempData = "<option>Sin especificar</option>";
-            $('#CLAVE_NUEVAEVIDENCIAMODAL').html(tempData);
-        }
-    }
+    // function getClavesDocumento(Obj)
+    // {
+    //     tempData="";
+    //     cadena = $(Obj).val();
+    //     if(cadena!="")
+    //     {
+    //         $.ajax
+    //         ({
+    //             url: '../Controller/EvidenciasController.php?Op=getClavesDocumentos',
+    //             type: 'GET',
+    //             data: "CADENA="+cadena,
+    //             success:function(data)
+    //             {
+    //                 if(data!="")
+    //                 tempData += "<option value=''></option>";
+    //                 $.each(data,function(index,value)
+    //                 {
+    //                     apellidos = value.NOMBRE_EMPLEADO;
+    //                     if(value.APELLIDO_PATERNO!=null)
+    //                     {
+    //                         apellidos += " "+value.APELLIDO_PATERNO+" "+value.APELLIDO_MATERNO;
+    //                     }
+    //                     tempData += "<option value='"+value.CLAVE_DOCUMENTO+"+=$="+value.DOCUMENTO;
+    //                     tempData += "+=$="+apellidos+"+=$="+value.ID_DOCUMENTO+"'>";
+    //                     tempData += value.CLAVE_DOCUMENTO+"</option>";
+    //                 });
+    //                 $('#CLAVE_NUEVAEVIDENCIAMODAL').html(tempData);
+    //             }
+    //         });
+    //     }
+    //     else
+    //     {
+    //         tempData = "<option>Sin especificar</option>";
+    //         $('#CLAVE_NUEVAEVIDENCIAMODAL').html(tempData);
+    //     }
+    // }
 
-    function select_clavesModal(Obj)
-    {
-        tempData = $(Obj).prop("value");
-        tempData = tempData.split("+=$=");
-        if(tempData.length == 4)
-        {
-            $('#CLAVE_NUEVAEVIDENCIAMODAL2').html(tempData[0]);
-            $('#DOCUMENTO_NUEVAEVIDENCIAMODAL').html(tempData[1]);
-            $('#NOMBRE_NUEVAEVIDENCIAMODAL').html(tempData[2]);
-            $('#ID_NUEVAEVIDENCIAMODAL').val(tempData[3]);
-        }
-        else
-        {
-            $('#CLAVE_NUEVAEVIDENCIAMODAL2').html("");
-            $('#DOCUMENTO_NUEVAEVIDENCIAMODAL').html("");
-            $('#NOMBRE_NUEVAEVIDENCIAMODAL').html("");
-        }
-    }
-
-    $('#BTN_CREAR_NUEVAEVIDENCIAMODAL').click(function()
-    {
-        clave = $('#ID_NUEVAEVIDENCIAMODAL').val();
-        if(clave!="")
-        {
-
-            $.ajax
-            ({
-                url: '../Controller/EvidenciasController.php?Op=CrearEvidencia',
-                type: 'POST',
-                data: 'CLAVE_DOCUMENTO='+clave,
-                success:function(data)
-                {
-                    (data)?
-                    (swal({
-                        title: '',text: 'Se creo la evidencia',
-                        showCancelButton: false,showConfirmButton: false,
-                        type:"success"
-                        }),
-                        $('#CLAVE_NUEVAEVIDENCIAMODAL2').html(""),
-                        $('#DOCUMENTO_NUEVAEVIDENCIAMODAL').html(""),
-                        $('#NOMBRE_NUEVAEVIDENCIAMODAL').html(""),
-                        $('#nuevaEvidenciaModal .close').click(),
-                        listarDatos()
-                    )
-                    :swal({
-                        title: '',
-                        text: 'Error al crear',
-                        showCancelButton: false,
-                        showConfirmButton: false,
-                        type:"error"
-                    });
-                    setTimeout(function(){swal.close();},1500);
-
-                }
-            });
-        }
-    });
+    // function select_clavesModal(Obj)
+    // {
+    //     tempData = $(Obj).prop("value");
+    //     tempData = tempData.split("+=$=");
+    //     if(tempData.length == 4)
+    //     {
+    //         $('#CLAVE_NUEVAEVIDENCIAMODAL2').html(tempData[0]);
+    //         $('#DOCUMENTO_NUEVAEVIDENCIAMODAL').html(tempData[1]);
+    //         $('#NOMBRE_NUEVAEVIDENCIAMODAL').html(tempData[2]);
+    //         $('#ID_NUEVAEVIDENCIAMODAL').val(tempData[3]);
+    //     }
+    //     else
+    //     {
+    //         $('#CLAVE_NUEVAEVIDENCIAMODAL2').html("");
+    //         $('#DOCUMENTO_NUEVAEVIDENCIAMODAL').html("");
+    //         $('#NOMBRE_NUEVAEVIDENCIAMODAL').html("");
+    //     }
+    // }
 
     function filterTableAsunt()
     {
