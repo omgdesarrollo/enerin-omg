@@ -11,14 +11,17 @@
  *
  * @author francisco
  */
-class EmpleadoPojo {
-    //put your code here
+class EmpleadoPojo {    
+
+        //put your code here
     private $idEmpleado;
     private $Nombre_Empleado='';
     private $Apellido_Paterno='';
     private $Apellido_Materno='';
     private $Categoria='';
-    private $Correo='';    
+    private $Correo='';
+    private $identificador='';
+    
     
     public function getIdEmpleado(){
         return $this->idEmpleado;
@@ -55,5 +58,12 @@ class EmpleadoPojo {
     }
     public function setCorreo($Correo){
         $this->Correo=$Correo;
+    }
+    
+    function getIdentificador() {
+        return $this->identificador;
+    }
+    function setIdentificador($identificador) {
+        $this->identificador = $identificador;
     }
 }

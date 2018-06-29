@@ -5,12 +5,12 @@ require_once '../dao/TemaDAO.php';
 class TemaModel{
     
     
-    public function  mostrarTemas()
+    public function  mostrarTemas($cadena)
     {
         try
         {
             $dao=new TemaDAO();
-            $rec=$dao->mostrarTemas();                       
+            $rec=$dao->mostrarTemas($cadena);                       
             
             $resultadoArbol;
             $contador=0;
@@ -50,12 +50,12 @@ class TemaModel{
     }
     
    
-    public function insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO)
+    public function insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO,$IDENTIFICADOR)
     {
         try
         {
             $dao=new TemaDAO();
-            $rec= $dao->insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO);
+            $rec= $dao->insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO,$IDENTIFICADOR);
             
             return $rec;
             

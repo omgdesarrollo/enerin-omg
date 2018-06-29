@@ -1,291 +1,312 @@
+obtenerDatosArbol();  
+id_seleccionado="";
 
  $(function(){
-                        $('.select').on('change', function() {
-                            alert("entro aqui ");
-                          column="id_empleado";
-                          val=$(this).prop('value');
-                                                          
-                          $.ajax({
-                                url: "../Controller/ClausulasController.php?Op=Modificar",
-				type: "POST",
-				data:'column='+column+'&editval='+val+'&id='+idclausula,
-				success: function(data){
-                                    
-                                        swal("Actualizacion Exitosa!", "Ok!", "success");
-                                        refresh();
-
-				}   
-                           });
-                       
-                          
-                        });
-                        
-                        
-                        $('#CLAUSULA').keyup(function(){
-                            
-                       var valueclausula = $(this).val();   
-                       if(valueclausula!=""){
-                           var dataString = valueclausula;
-                            loadAutocomplete(dataString);
-                            
-                            
-                       }
-                         
-                           });
-                        
-                        
-                        
-                        
-                        
-                        $("#btn_guardar").click(function(){
-       
-        
-                                    var CLAUSULA=$("#CLAUSULA").val();
-                                    var DESCRIPCION_CLAUSULA=$("#DESCRIPCION_CLAUSULA").val();
-                                    var SUB_CLAUSULA=$("#SUB_CLAUSULA").val();
-                                    var DESCRIPCION_SUB_CLAUSULA=$("#DESCRIPCION_SUB_CLAUSULA").val();
-                                    var ID_EMPLEADOMODAL=$("#ID_EMPLEADOMODAL").val();
-                                    var DESCRIPCION=$("#DESCRIPCION").val();
-                                    var PLAZO=$("#PLAZO").val();
-                            
-
-                                    datos=[];
-                                    datos.push(CLAUSULA);
-                                    datos.push(DESCRIPCION_CLAUSULA);
-                                    datos.push(SUB_CLAUSULA);
-                                    datos.push(DESCRIPCION_SUB_CLAUSULA);
-                                    datos.push(ID_EMPLEADOMODAL);
-                                    datos.push(DESCRIPCION);
-                                    datos.push(PLAZO);
-                                    saveToDatabaseDatosFormulario(datos);
-                                    
-                        });
-                        
- 
-
-
-                        $("#btn_limpiar").click(function(){
-                                  $("#CLAUSULA").val("");
-                                  $("#DESCRIPCION_CLAUSULA").val("");
-                                  $("#SUB_CLAUSULA").val("");
-                                  $("#DESCRIPCION_SUB_CLAUSULA").val("");
-                                  //$("#ID_EMPLEADOMODAL").val("");
-//                                  $("#TEXTO_BREVE").val("");
-                                  $("#DESCRIPCION").val("");
-                                  $("#PLAZO").val("");
-                                                                      
-                        });
-                        
-  
-                      }); //Se cierra el function
-
-
-
-
-function listarEmpleados ()
-{
-  $.ajax({
-      url:'../Controller/EmpleadosController.php?Op=mostrarcombo',
-      type:'GET',
-      success:function(data)
-      {
-          construirContenido(data)
-      }
-  });   
-}
-
-
-//1 .funciones para consultar informacion y construir datos 
-  function construirContenido(EmpleadosData)
- {
-  $("#loader").show();   
-  $.ajax({
-   url:"../Controller/ClausulasController.php?Op=Listar",
-   method:"POST",
-    success:function(data)
-    {
-         var html_data ="";   
-         for(var count=0; count<data.length; count++)
-         {             
-          html_data += '<tr><td width="8%" class="celda" contenteditable="true" onClick="showEdit(this)" onkeyup="detectarsihaycambio()" onBlur=\"saveToDatabase(this,\'clausula\','+data[count].id_clausula+')\">'+data[count].clausula+'</td>';
-          html_data += '<td width="20%" class="celda" contenteditable="true" onClick="showEdit(this)" onkeyup="detectarsihaycambio()" onBlur=\"saveToDatabase(this,\'descripcion_clausula\','+data[count].id_clausula+')\">' +data[count].descripcion_clausula+'</td>';
-          html_data += '<td width="10%" class="celda" contenteditable="true" onClick="showEdit(this)" onkeyup="detectarsihaycambio()" onBlur=\"saveToDatabase(this,\'sub_clausula\','+data[count].id_clausula+')\">'+data[count].sub_clausula+'</td>';
-          html_data += '<td width="20%" class="celda" contenteditable="true" onClick="showEdit(this)" onkeyup="detectarsihaycambio()" onBlur=\"saveToDatabase(this,\'descripcion_sub_clausula\','+data[count].id_clausula+')\">'+data[count].descripcion_sub_clausula+'</td>';
-//          html_data += '<td width="20%" class="celda"   class="id_empleado" >'+data[count].id_empleado+'</td>';
-          
-          html_data +='<td><select class="select" onchange=\"saveComboToDatabase(\'id_empleado\',this,'+data[count].id_clausula+')\">';
-          $.each(EmpleadosData,function(index,value)
-          {
-             html_data +="<option value='"+value.id_empleado+"'";
-             if(data[count].id_empleado==value.id_empleado)
-             html_data += "selected";    
-             html_data +=">"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</option>";
-          });
-          html_data +='</select></td>';
-          
-          html_data += '<td width="12%" class="celda" contenteditable="true" onClick="showEdit(this)" onkeyup="detectarsihaycambio()" onBlur=\"saveToDatabase(this,\'descripcion\','+data[count].id_clausula+')\">'+data[count].descripcion+'</td>';
-          html_data += '<td width="10%" class="celda" contenteditable="true" onClick="showEdit(this)" onkeyup="detectarsihaycambio()" onBlur=\"saveToDatabase(this,\'plazo\','+data[count].id_clausula+')\">'+data[count].plazo+'</td></tr>';
-         }
-         $("#loader").hide();
-         $('#datosGenerales').html(html_data);
-    },
-    error:function()
-    {
-        $("#loader").hide();
-        swal("Error al obtener informacion!", "Ok!", "Error");
-        setTimeout(function(){swal.close();},1000);
-    }       
-    });
- }
- 
-
-function obtener(v){
-    alert("d"+v);
-}
-
-
-//1. termina 
-function consultarInformacion(url){
-              $("#loader").show();
-              $.ajax({  
-                    url: ""+url,  
-                   success: function(r) 
-                   {
-                       $("#idTable").load("ClausulasView.php #idTable")
-                       $("#loader").hide();                        
-                    },
-                    error:function(){
-                       $("#loader").hide();                         
-                    }
-
-             });  
-}
-
-                
-                
-function loadAutocomplete(dataString){
-    $.ajax({
-            type: "POST",
-            url: "../Controller/ClausulasController.php?Op=loadAutoComplete",
-            data: "cadenaclausula="+dataString,
-            success: function(data) 
-            {
-                    var dato="";
-                        $.each(data, function (index,value) {
-                                if(value.sub_clausula!=""){
-                                        dato=value.descripcion_clausula;
-
-                                }
-                        });
-
-                    $('#DESCRIPCION_CLAUSULA').val(dato);
-                    if(dato==""){
-                        $('#DESCRIPCION_CLAUSULA').prop("readonly",false);
-                    }else{
-                        if(dato!=""){
-                            $('#DESCRIPCION_CLAUSULA').prop("readonly",true);   
-                        }
-                    }
-
-
+     
+     $("#temaform").submit(function(e){
+         e.preventDefault();
+         
+         var formData = {"NO":$('#NO').val(),"NOMBRE":$('#NOMBRE').val(),"DESCRIPCION":$('#DESCRIPCION').val(),
+                         "PLAZO":$('#PLAZO').val(),"NODO":0,"ID_EMPLEADOMODAL":$('#ID_EMPLEADOMODAL').val()};            
+         
+         $.ajax({
+             url:'../Controller/TemasController.php?Op=GuardarNodo',
+             type:'POST',
+             data:formData,
+             success:function()
+             {
+                 obtenerDatosArbol();
              }
-        }); 
-}
-                                                                   
-
-function refresh(){
-//   consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
-    construirContenido();
- }
- 
- 
-     function saveToDatabaseDatosFormulario(datos){
-                    
-                    	$.ajax({
-                                url: "../Controller/ClausulasController.php?Op=Guardar",
-				type: "POST",
-				data:'CLAUSULA='+datos[0]+'&DESCRIPCION_CLAUSULA='+datos[1]+'&SUB_CLAUSULA='+datos[2]
-                                                       +'&DESCRIPCION_SUB_CLAUSULA='+datos[3]+'&ID_EMPLEADO='+datos[4]
-                                                       +'&DESCRIPCION='+datos[5]+'&PLAZO='+datos[6],
-                                    success: function(data)
-                                    {
-
-                                            swal("Guardado Exitoso!", "Ok!", "success");
-                                            refresh();
-                                    }   
-		               });
-    }
+         });
                 
+     });
+     
+     
+     $("#SubTemaform").submit(function(e){
+         e.preventDefault();
+         
+         var formData = {"NO":$('#NO_SUBTEMA').val(),"NOMBRE":$('#NOMBRE_SUBTEMA').val(),"DESCRIPCION":$('#DESCRIPCION_SUBTEMA').val(),
+                         "PLAZO":$('#PLAZO_SUBTEMA').val(),"NODO":id_seleccionado,"ID_EMPLEADOMODAL":""};            
+         
+         $.ajax({
+             url:'../Controller/TemasController.php?Op=GuardarNodo',
+             type:'POST',
+             data:formData,
+             success:function()
+             {
+                 obtenerDatosArbol();
+                 
+//                 myTree.addItem(formData["NO"],formData['NOMBRE_SUBTEMA'], id_seleccionado);
+//                myTree.openItem(formData.);
+                 obtenerHijos(id_seleccionado);
+             }
+         });
                 
-function detectarsihaycambio(){
+     });
+     
+     $("btn_limpiar_tema").click(function(){
+         $("#NO").val("");
+         $("#NOMBRE").val("");
+         $("#DESCRIPCION").val("");
+         $("#PLAZO").val("");                 
+     });
+     
+     $("btn_limpiar_SubTema").click(function(){
+         $("#NO_SUBTEMA").val("");
+         $("#NOMBRE_SUBTEMA").val("");
+         $("#DESCRIPCION_SUBTEMA").val("");
+         $("#PLAZO_SUBTEMA").val("");         
+     });
+     
+     
+ }); //CIERRA EL $FUNCTION                      
+                          
+                          
+var myLayout = new dhtmlXLayoutObject({
+			parent: "layout_here",
+			pattern: "3W",
+			cells: [
+				{id: "a", width: 240, text: "Temas"},
+				{id: "b", width: 600, text: "Sub-Temas"},
+                                {id: "c", text: "Detalles"}
+				
+			]
+		});
+                
+myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
+myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
+            
 
-si_hay_cambio=true;
+                
+myLayout.cells("a").attachObject("treeboxbox_tree");
+
+var myToolbar = myLayout.cells("a").attachToolbar({
+			iconset: "awesome",
+			items: [
+                                {id:"agregar", type: "button", text: "Agregar Temas", img: "fa fa-plus-square"},
+				{id:"eliminar", type: "button", text: "Eliminar", img: "fa fa-trash-o"}
+			]
+		});
+
+myToolbar.attachEvent("onClick", function(id){
+    //your code here
+//    alert("hola"+id);
+    evaluarToolbarSeccionA(id);
+
+});
+
+function evaluarToolbarSeccionA(id)
+{
+    if(id=="agregar")
+    {
+//        alert("entro en agregar");
+        $('#create-itemTema').modal('show');
+    } 
+    if(id=="eliminar")
+    {
+        var level = myTree.getLevel(id_seleccionado);
+//        if(level==1)
+//        {
+            var subItems= myTree.getSubItems(id_seleccionado);
+            if(subItems=="")
+            {
+                eliminarNodo();
+            }else{
+                alert("no se puede eliminar tiene descendencia");
+            }
+//        } 
+//        if(level==2)
+//        {
+//            eliminarNodo();
+//        }
+    }   
 }
 
-function saveComboToDatabase(column,val,idclausula){
-    alert("entro al save");
 
-//    obj= val;
-//    console.log(obj);
-//    console.log(val);
-    valorobjeto= val[val.selectedIndex].value;
-    console.log(valorobjeto);
-    
+function eliminarNodo()
+{
     $.ajax({
-        url: "../Controller/ClausulasController.php?Op=Modificar",
-        type: "POST",
-        data:'column='+column+'&editval='+valorobjeto+'&id='+idclausula,
-        success: function(data){
-        alert("Estos son los datos"+data);    
-                swal("Actualizacion Exitosa!", "Ok!", "success");
-
-        }   
-   });
-
+        url:'../Controller/TemasController.php?Op=Eliminar',
+        data:'ID='+id_seleccionado,
+        success:function(response)
+        {
+            if(response==true){
+                obtenerDatosArbol(); 
+                limpiar("#contenidoDetalles");
+                limpiar("#contenido");
+                id_seleccionado="";
+            }else{
+                alert("Error no se puede eliminar el tema tiene requisitos");
+            }
+        }
+    });
+}
+function limpiar(id_div){
+    $(""+id_div).html("");
 }
 
-function saveToDatabase(editableObj,column,id) {
-        alert("entro al save");            
-        if(si_hay_cambio==true)
-        {
-            $("#btnrefrescar").prop("disabled",true);
-            $(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
+function obtenerDatosArbol()
+    {
+        $.ajax({
+            url:'../Controller/TemasController.php?Op=Listar',
+            success:function(data)
+            { 
+//                alert("tiene algo el arbol");
+             contruirArbol(data);   
+//             load(2);
+             
+            },error:function (){
+//                alert("entro en el erro");
+            }
+        });
+    }
+
+function contruirArbol(dataArbol)
+    {
+        myTree.deleteChildItems(0);
+        if(dataArbol.length>0){
+        myTree.parse(dataArbol, "jsarray");
+        }
+    }
+
+                
+
+//            myTree.enableHighlighting(true);
+
+//dataArbol=[["1","0","de"],["2","1","fes"],["3","1","el texto es de la siguiente manera que se puede trabajar "],["5","0","de"]];
+
+
+myTree.attachEvent("onClick", function(id){
+//    var id2 = myTree.getSelectedId();
+//    alert("f  "+id2);
+    // your code here
+    obtenerHijos(id);
+    
+    id_seleccionado=id;
+    return true;
+});
+
+  
+myLayout.cells("b").attachObject("contenido");
+
+var myToolbar = myLayout.cells("b").attachToolbar({
+			iconset: "awesome",
+			items: [
+                                {id:"agregar", type: "button", text: "Agregar Subtema", img: "fa fa-plus-square"}
+			]
+		});
+                
+myToolbar.attachEvent("onClick", function(id){
+    //your code here
+    //alert("hola"+id);
+    evaluarToolbarSeccionB(id);
+
+});
+
+function evaluarToolbarSeccionB(id)
+{
+//    alert("Este es el ID:"+id)
+    if(id_seleccionado=="")
+    {
+        alert("No hay tema seleccionado");
+    } else {
+    if(id=="agregar")
+    {
+//        alert("entro en agregar");
+        $('#create-itemSubTema').modal('show');
+    } 
+    if(id=="eliminar")
+    {
+        alert("entro en eliminar");
+    }
+    }
+}
+
+
+    
+    function obtenerHijos(id)
+    {
+//        alert("Este es el ID Hijo:"+id);
+       $("#contenido").html("<div style='font-size:30px' class='fa fa-refresh fa-spin'></div>"); 
+        $.ajax({
+            url:'../Controller/TemasController.php?Op=ListarHijos',
+            type:'POST',
+            data:'ID='+id,
+            success:function(data)
+            {
+                construirSubDirectorio(data.datosHijos);
+                construirDetalleSeleccionado(data.detalles,id);
+            }
+        });
+    }
+        
+    
+    function construirSubDirectorio(data)
+    {
+        
+        tempData1="<div class='table-responsive'><table class='table table-bordered'><thead><tr class='info'>\n\
+                    <th>No</th>\n\
+                    <th>Subtema</th>\n\
+                    <th>Descripcion</th>\n\
+                    <th>Plazo</th>\n\
+                    </tr></thead><tbody></tbody>";
+                $.each(data, function(index,value){
+                    tempData1+="<tr><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'no',"+value.id_tema+")\">"+value.no+"</td>";
+                    tempData1+="<td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'nombre',"+value.id_tema+")\" >"+value.nombre+"</td>";
+                    tempData1+="<td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'descripcion',"+value.id_tema+")\">"+value.descripcion+"</td>";
+                    tempData1+="<td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'plazo',"+value.id_tema+")\">"+value.plazo+"</td></tr>";
+//                    tempData1+="<td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";
+                });
+            tempData1+="</table></div>";    
+                $("#contenido").html(tempData1);
+    }
+        
+     
+   myLayout.cells("c").attachObject("contenidoDetalles");
+   
+   
+    function construirDetalleSeleccionado(data,id)
+    {
+        var level = myTree.getLevel(id);
+//        alert("este es el nivel:"+level);
+        tempData2="<div class='table-responsive'><table class='table table-bordered'><thead><tr class='danger'><th>Datos</th><th>Detalles</th></tr></thead><tbody></tbody>";
+                    $.each(data, function(index,value){
+                       tempData2+="<tr><td class='info'>No</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'no',"+value.id_tema+")\">"+value.no+"</td></tr>";
+                       tempData2+="<tr><td class='info'>Tema</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'nombre',"+value.id_tema+")\">"+value.nombre+"</td></tr>";
+                       tempData2+="<tr><td class='info'>Descripcion</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'descripcion',"+value.id_tema+")\">"+value.descripcion+"</td></tr>";
+                       if(level==1)
+                       tempData2+="<tr><td class='info'>Responsable</td><td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";
+                       
+                    });
+        tempData2+="</table></div>";
+   
+        $("#contenidoDetalles").html(tempData2);
+    }
+    
+    
+    function saveToDatabase(ObjetoThis,columna,id) {
+//        alert("entro al save");            
+        
+            $(ObjetoThis).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
             $.ajax({
-                    url: "../Controller/ClausulasController.php?Op=Modificar",
+                    url: "../Controller/GeneralController.php?Op=ModificarColumna",
                     type: "POST",
-                    data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
+                    data:'TABLA=temas &COLUMNA='+columna+' &VALOR='+ObjetoThis.innerHTML+' &ID='+id+' &ID_CONTEXTO=id_tema',
                     success: function(data)
                     {
-                            $(editableObj).css("background","#FDFDFD");
-                            swal("Actualizacion Exitosa!", "Ok!", "success");
-                            setTimeout(function(){swal.close();},1000);
-//                            refresh();
-                            $("#btnrefrescar").prop("disabled",false);
-                            si_hay_cambio=false;
-
+                        $(ObjetoThis).css("background","");
                     }   
-            });
-
-        }
-}
-             
-function showEdit(editableObj) {
-        $(editableObj).css("background","#FFF");
-} 
-
-function loadSpinner(){
-        myFunction();
+            });        
 }
 
+function load(carga){
+    
+    if(carga==1){
+        $("#loader").show();
+    }
+    if(carga==2){
+        $("#loader").hide();
+    }
+}
 
-
-		
-                
-                
-                
-                
-                
-                
-                
-                
 
