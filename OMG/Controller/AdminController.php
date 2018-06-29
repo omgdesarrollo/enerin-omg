@@ -47,7 +47,8 @@ switch ($Op)
         break;
 
     case 'ListarTemas':
-        $lista = $model->listarTemas($_REQUEST["CADENA"],$_REQUEST["ID_USUARIO"]);
+        // $CADENA = str_replace(' ', '',$_REQUEST["CADENA"]);
+        $lista = $model->listarTemas(trim($_REQUEST["CADENA"]),$_REQUEST["ID_USUARIO"]);
         header('Content-type: application/json; charset=utf-8');
         // var_dump($lista);
         echo json_encode($lista);

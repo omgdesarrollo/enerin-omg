@@ -97,12 +97,11 @@ class AdminDAO{
         {
             $query="SELECT tbtemas.id_tema,tbtemas.no, tbtemas.nombre, tbtemas.descripcion
                     FROM temas tbtemas
-                    WHERE tbtemas.nombre LIKE '%$CADENA%' AND tbtemas.padre=0
+                    WHERE LOWER(tbtemas.nombre) LIKE '%$CADENA%' AND tbtemas.padre=0
                     AND tbtemas.id_tema 
                     NOT IN( SELECT tbusuario_temas.id_tema FROM usuarios_temas tbusuario_temas 
                     WHERE tbusuario_temas.id_usuario=$ID_USUARIO )";
 
-            // echo $query;
             $db= AccesoDB::getInstancia();        
             $lista= $db->executeQuery($query);
             return $lista;
@@ -113,8 +112,7 @@ class AdminDAO{
             return false;
         }
     }
-    
-    
+        
     public function listarTemasPorUsuario($ID_USUARIO)
     {
         try
