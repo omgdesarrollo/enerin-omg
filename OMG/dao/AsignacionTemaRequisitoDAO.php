@@ -172,7 +172,7 @@ class AsignacionTemaRequisitoDAO {
         try
         {
             $query="INSERT INTO registros(registro,id_documento,frecuencia)
-                    VALUES ('$registro',$id_documento,$frecuencia)";
+                    VALUES ('$registro',$id_documento,'$frecuencia')";
 //            echo "".$query;
             $db=  AccesoDB::getInstancia();
             $db->executeQueryUpdate($query);
@@ -228,7 +228,7 @@ public function obtenerDetalles_Req($value){
 }
 public function obtenerDetalles_Reg($value){
     try{
-      $query="select tbregistros.id_registro,tbregistros.registro,tbdocumentos.clave_documento,
+      $query="select tbregistros.id_registro,tbregistros.registro,tbregistros.frecuencia,tbdocumentos.clave_documento,
         tbdocumentos.documento,CONCAT(tbempleados.nombre_empleado,'',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) nombrecompleto 
         from registros tbregistros
 
