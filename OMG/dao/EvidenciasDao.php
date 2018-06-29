@@ -3,23 +3,34 @@
 require_once '../ds/AccesoDB.php';
 class EvidenciasDAO
 {
-    public function listarEvidencias()
+    public function listarEvidencias($ID_USUARIO)
     {
         try
         {
-            $query = "SELECT tbevidencias.id_evidencias, tbdocumentos.id_documento, tbdocumentos.clave_documento, tbdocumentos.documento,
-                    tbdocumentos.registros,
-
-                    tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno,
-
-                    tbevidencias.clasificacion, tbevidencias.desviacion, tbevidencias.accion_correctiva, tbevidencias.validacion_supervisor,
-                    tbevidencias.plan_accion
-
-                    FROM evidencias tbevidencias
-
-                    JOIN documentos tbdocumentos ON tbdocumentos.id_documento=tbevidencias.id_documento
-
-                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumentos.id_empleado";
+            $query = "SELECT tbrequisitos.id_requisito,tbrequisitos.requisito,
+            tbregistros.id_registro,tbregistros.registro,tbregistros.frecuencia,
+            tbevidencias.id_evidencias,tbevidencias.id_usuario,
+            tbempleados.id_empleado, (
+                SELECT CONCAT(tbempleados.nombre_empleado,' ',
+                    tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)
+                    FROM empleados tbempleados
+                    JOIN usuarios tbusuariosU ON tbusuariosU.id_empleado = tbempleados.id_empleado
+                    WHERE tbusuariosU.id_usuario = tbevidencias.id_usuario
+                ) AS usuario
+            
+            FROM temas tbtemas
+            JOIN asignacion_tema_requisito tbasignacion_tema_requisito ON tbasignacion_tema_requisito.id_tema=tbtemas.id_tema
+            JOIN asignacion_tema_requisito_requisitos tbasignacion_tema_requisito_requisitos
+            ON tbasignacion_tema_requisito_requisitos.id_asignacion_tema_requisito = tbasignacion_tema_requisito.id_asignacion_tema_requisito
+            JOIN requisitos tbrequisitos ON tbrequisitos.id_requisito = tbasignacion_tema_requisito_requisitos.id_requisito
+            JOIN requisitos_registros tbrequisitos_registros ON tbrequisitos_registros.id_requisito = tbrequisitos.id_requisito
+            JOIN registros tbregistros ON tbregistros.id_registro = tbrequisitos_registros.id_registro
+            JOIN evidencias tbevidencias ON tbevidencias.id_registro = tbregistros.id_registro
+            JOIN empleados tbempleados ON tbempleados.id_empleado = tbtemas.id_empleado
+            JOIN usuarios tbusuarios ON tbusuarios.id_empleado = tbempleados.id_empleado
+            
+            WHERE tbusuarios.id_usuario = 2 AND LOWER(tbtemas.identificador) LIKE '%catalogo%'";
+            
             $db = AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
             
@@ -84,14 +95,12 @@ class EvidenciasDAO
             throw $ex;
         }
     }
-    public function crearEvidencia($claveDocumento)
+    public function crearEvidencia($ID_USUARIO,$ID_REGISTRO)
     {
         try
         {
-            $query = "INSERT INTO evidencias (id_documento,clasificacion,desviacion,accion_correctiva,validacion_supervisor,plan_accion,
-								ingresar_oficio_atencion,oficio_atencion)
-                     VALUES ('$claveDocumento','','','','false','','','')";
-            
+            $query = "INSERT INTO evidencias (id_registro,id_usuario,desviacion,accion_correctiva,validacion_supervisor)
+                     VALUES ($ID_REGISTRO,$ID_USUARIO,'false','','false')";
             $db = AccesoDB::getInstancia();
             $res = $db->executeQueryUpdate($query);
             return $res;
@@ -165,7 +174,8 @@ class EvidenciasDAO
     {
         try
         {
-            $query="SELECT tbtemas.nombre, tbtemas.id_tema, tbregistros.registro, tbdocumentos.documento, tbregistros.frecuencia,
+            // tbregistros.frecuencia,
+            $query="SELECT tbtemas.nombre, tbtemas.id_tema, tbregistros.id_registro, tbregistros.registro, tbdocumentos.documento, tbregistros.frecuencia, tbdocumentos.clave_documento, tbrequisitos.id_requisito, tbrequisitos.requisito,
             CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) AS nombre
             FROM registros tbregistros
             JOIN documentos tbdocumentos ON tbregistros.id_documento = tbdocumentos.id_documento
@@ -180,6 +190,27 @@ class EvidenciasDAO
             $db= AccesoDB::getInstancia();
             $result= $db->executeQuery($query);
             return $result;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    public function listarTemas($CADENA,$ID_USUARIO)
+    {
+        try
+        {
+            $query="SELECT tbtemas.id_tema, tbtemas.no, tbtemas.nombre, tbtemas.descripcion
+                FROM usuarios_temas tbusuarios_temas
+                JOIN  temas tbtemas ON tbusuarios_temas.id_tema = tbtemas.id_tema
+                WHERE tbusuarios_temas.id_usuario = $ID_USUARIO AND
+                LOWER(tbtemas.nombre) LIKE '%$CADENA%' AND tbtemas.padre = 0
+                AND tbtemas.identificador LIKE '%catalogo%'";
+            // echo $query;
+            $db= AccesoDB::getInstancia();        
+            $lista= $db->executeQuery($query);
+            return $lista;
+            // var_dump($lista);
         } catch (Exception $ex)
         {
             throw $ex;

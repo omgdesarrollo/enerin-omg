@@ -18,9 +18,9 @@ $modelDocumento=new DocumentoModel();
 switch ($Op)
 {
     case 'Listar':
-    
-		$Lista=$model->listarEvidencias();
-    	 Session::setSesion("listarOperaciones",$Lista);
+        $USUARIO = Session::getSesion("user");
+		$Lista=$model->listarEvidencias($USUARIO["ID_USUARIO"]);
+    	Session::setSesion("listarOperaciones",$Lista);//no se de que es esto JR
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
 		break;
@@ -34,17 +34,15 @@ switch ($Op)
     case 'MostrarRegistrosPorDocumento':
         
         $id_documento=$_REQUEST["ID_DOCUMENTO"];
-        
         $lista=$modelDocumento->obtenerRegistrosPorDocumento($id_documento);
         Session::setSesion("obtenerRegistrosPorDocumento",$lista);
-        
         header('Content-type: application/json; charset=utf-8');
-                echo json_encode($lista);
+        echo json_encode($lista);
         
         break;
     case 'CrearEvidencia':
-
-        $res = $model->crearEvidencia($_REQUEST["CLAVE_DOCUMENTO"]);
+        $usuario = Session::getSesion("user");
+        $res = $model->crearEvidencia($usuario["ID_USUARIO"],$_REQUEST["ID_REGISTRO"]);
         echo $res;
         break;
     
@@ -75,7 +73,7 @@ switch ($Op)
 
     case 'BuscarTema':
         $USUARIO = Session::getSesion("user");
-        $lista = $modelAdmin->listarTemas($_REQUEST['CADENA'],$USUARIO["ID_USUARIO"]);
+        $lista = $model->listarTemas($_REQUEST['CADENA'],$USUARIO["ID_USUARIO"]);
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($lista);
     break;
