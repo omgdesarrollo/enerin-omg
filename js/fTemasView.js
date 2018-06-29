@@ -1,4 +1,6 @@
-                                                
+obtenerDatosArbol();  
+id_seleccionado="";
+
  $(function(){
      
      $("#temaform").submit(function(e){

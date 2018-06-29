@@ -71,12 +71,12 @@ public function listarDetallesSeleccionados($ID)
 }
 
 
-public function insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO)
+public function insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO,$IDENTIFICADOR)
 {
     try
     {
-        $query="INSERT INTO temas (no,nombre,descripcion,plazo,padre,id_empleado) 
-                VALUES ('$NO','$NOMBRE','$DESCRIPCION','$PLAZO',$NODO,'$ID_EMPLEADO')";
+        $query="INSERT INTO temas (no,nombre,descripcion,plazo,padre,id_empleado,identificador) 
+                VALUES ($NO,'$NOMBRE','$DESCRIPCION','$PLAZO',$NODO,'$ID_EMPLEADO','$IDENTIFICADOR')";
         
         $db= AccesoDB::getInstancia();
         $lista= $db->executeQueryUpdate($query);
@@ -89,6 +89,8 @@ public function insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO)
         return false;
     }
 }
+
+
 
 public function eliminarNodo($ID)
 {

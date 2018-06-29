@@ -76,7 +76,8 @@ class EmpleadoDAO{
             foreach ($lista_id_nuevo_autoincrementado as $value) {
                $id_nuevo= $value["id_empleado"];
             }
-            $query="INSERT INTO empleados(id_empleado,nombre_empleado,categoria,apellido_paterno,apellido_materno,correo,identificador)VALUES($id_nuevo,'$Nombre','$Categoria','$Apellido_Paterno','$Apellido_Materno','$Correo','$identificador');";
+            $query="INSERT INTO empleados(id_empleado,nombre_empleado,categoria,apellido_paterno,apellido_materno,correo,identificador)
+                    VALUES($id_nuevo,'$Nombre','$Categoria','$Apellido_Paterno','$Apellido_Materno','$Correo','$identificador')";
             
             $db=  AccesoDB::getInstancia();
             $db->executeQueryUpdate($query);

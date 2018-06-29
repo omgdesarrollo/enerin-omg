@@ -33,7 +33,7 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>
                 <!--<script src="../../js/functionTemasView.js" type="text/javascript"></script>-->
-                <script src="../../js/fTemasView.js" type="text/javascript"></script>
+                
                 <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
                 <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
                 <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
@@ -299,15 +299,15 @@ require_once 'EncabezadoUsuarioView.php';
        <!--Final de Seccion Modal-->
        
 		<script>  
-                      var  id_seleccionado="";
-                      
-                        obtenerDatosArbol();
+//                        id_seleccionado="";
+//                        obtenerDatosArbol();
            
 		</script>
                 
                 
                 
-                
+                <script src="../../js/fTemasView.js" type="text/javascript"></script>
+
                 <!--Inicia para el spiner cargando-->
                 <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                 <!--Termina para el spiner cargando-->
