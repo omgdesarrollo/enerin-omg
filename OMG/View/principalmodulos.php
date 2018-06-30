@@ -164,8 +164,8 @@ var gantt=[
         myLayout.cells("b").attachObject("sidebarObjV");
         
 //                    loadDataContratos();
-//                  loadDataMenuArriba();
-                    loadEstructuraMaster();
+                  loadDataMenuArriba("");
+//                    loadEstructuraMaster();
  
                     ribbon.attachEvent("onClick", function(itemIdSeleccion, bId){
 //                         alert(itemIdSeleccion);
@@ -261,7 +261,7 @@ var gantt=[
         ];
     
     
-ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: "../../images/base/",tabs:iniciodinamic});
+ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: "../../images/base/",tabs:inicio});
   
 //    var dhxWins = new dhtmlXWindows();
 //var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
