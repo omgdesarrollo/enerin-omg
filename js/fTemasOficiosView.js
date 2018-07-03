@@ -10,7 +10,7 @@ id_seleccionado="";
                          "PLAZO":$('#PLAZO').val(),"NODO":0,"ID_EMPLEADOMODAL":$('#ID_EMPLEADOMODAL').val()};            
          
          $.ajax({
-             url:'../Controller/TemasController.php?Op=GuardarNodo',
+             url:'../Controller/TemasOficiosController.php?Op=GuardarNodo',
              type:'POST',
              data:formData,
              success:function()
@@ -29,7 +29,7 @@ id_seleccionado="";
                          "PLAZO":$('#PLAZO_SUBTEMA').val(),"NODO":id_seleccionado,"ID_EMPLEADOMODAL":""};            
          
          $.ajax({
-             url:'../Controller/TemasController.php?Op=GuardarNodo',
+             url:'../Controller/TemasOficiosController.php?Op=GuardarNodo',
              type:'POST',
              data:formData,
              success:function()
@@ -126,7 +126,7 @@ function evaluarToolbarSeccionA(id)
 function eliminarNodo()
 {
     $.ajax({
-        url:'../Controller/TemasController.php?Op=Eliminar',
+        url:'../Controller/TemasOficiosController.php?Op=Eliminar',
         data:'ID='+id_seleccionado,
         success:function(response)
         {
@@ -148,7 +148,7 @@ function limpiar(id_div){
 function obtenerDatosArbol()
     {
         $.ajax({
-            url:'../Controller/TemasController.php?Op=Listar',
+            url:'../Controller/TemasOficiosController.php?Op=Listar',
             success:function(data)
             { 
 //                alert("tiene algo el arbol");
@@ -229,7 +229,7 @@ function evaluarToolbarSeccionB(id)
 //        alert("Este es el ID Hijo:"+id);
        $("#contenido").html("<div style='font-size:30px' class='fa fa-refresh fa-spin'></div>"); 
         $.ajax({
-            url:'../Controller/TemasController.php?Op=ListarHijos',
+            url:'../Controller/TemasOficiosController.php?Op=ListarHijos',
             type:'POST',
             data:'ID='+id,
             success:function(data)

@@ -15,10 +15,11 @@ $pojo= new EmpleadoPojo();
 switch ($Op) {
 	case 'Listar':
 
-            $Lista=$model->listarEmpleados("catalogo");
-            Session::setSesion("listarEmpleados",  $Lista);
-            header('Content-type: application/json; charset=utf-8');
-            echo json_encode($Lista);
+		$Lista=$model->listarEmpleados("oficios");
+              
+    	Session::setSesion("listarEmpleados",  $Lista);
+    	header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
 
 		return $Lista;
 		break;
@@ -65,10 +66,10 @@ switch ($Op) {
                   $pojo->setCategoria($_REQUEST['CATEGORIA']);
                   $pojo->setApellidoMaterno($_REQUEST['APELLIDO_MATERNO']);
                   $pojo->setCorreo($_REQUEST['CORREO']);
-                  $pojo->setIdentificador("catalogo");
-//                  $pojo->
+                  $pojo->setIdentificador("oficios");
+                  
                   $Lista= $model->insertar($pojo);
-		# code...
+                  
                   header('Content-type: application/json; charset=utf-8');
                   echo json_encode($Lista);
                   return $Lista;
@@ -76,20 +77,12 @@ switch ($Op) {
             
             
         case 'GuardarIdentificador':
-            $Lista= $model->actualizarIdentificadorSubmodulo($_REQUEST['ID'],$_REQUEST['IDENTIFICADOR']."-catalogo");
+            $Lista= $model->actualizarIdentificadorSubmodulo($_REQUEST['ID'],$_REQUEST['IDENTIFICADOR']."-oficios");
             header('Content-type: application/json; charset=utf-8');
             echo json_encode($Lista);
             return $Lista;
             
-            break;
-            
-        
-        case'Existencia':
-            
-            $Lista= $model->verificarEmpleado($_REQUEST['CORREO']);
-            echo $Lista;
-            
-            break;
+            break;    
             
 
 	case 'Modificar':

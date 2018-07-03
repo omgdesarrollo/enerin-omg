@@ -90,7 +90,7 @@ var seccionHerramientas=[
  ];
  
  var seccionCatalogo=[
-     {id:'catalogo', text:'Informacion',img:'catalogo.png',type:'button',isbig:true}  
+     {id:'Informacion', text:'Informacion',img:'catalogo.png',type:'button',isbig:true}  
  ];
  
  
@@ -105,8 +105,8 @@ var seccionHerramientas=[
      {id:'tareas',text:'Carga Programa Gantt',img:'663.png',type:'button',isbig:true} ,
  ];
  
- var seccionInformesGerenciales=[
-     {id:'informe',text:'Informe',img:'documentos.jpg',type:'button',isbig:true}  
+ var seccionReportesGerenciales=[
+     {id:'reporte',text:'Reporte',img:'documentos.jpg',type:'button',isbig:true}  
  ];
 
   var seccionOficios=[
@@ -142,9 +142,10 @@ var gantt=[
 
   datacontratos=[];
   dataSeccionRibbon=[];
-  loadEstructuraMaster();
-    loadDataContratos();
-    loadDataNotificaciones();
+//    loadEstructuraMaster();
+//    loadDataContratos();
+//    loadDataNotificaciones();
+   
 
   
  var infosesionusuario=[
@@ -157,15 +158,14 @@ var gantt=[
            //  layout = new dhtmlXLayoutObject({parent: "layoutObj",pattern: "2U",cells: [{id: "a", text: "Navegacion", header:true},{id: "b", text: "Visualizacion",header:true}]});
         
         myLayout = new dhtmlXLayoutObject({parent: "layoutObj",pattern: "2U",cells: [{id: "a", text: "Navegacion", header:true},{id: "b", text: "Visualizacion",header:true}]});
-//			myLayout.cells("a").setWidth(250);
-//                        myLayout.cells("a").setText("Catalogo");
+
         myLayout.cells("a").setWidth(310);
-//         myLayout.cells("a").attachSidebar();
         myLayout.cells("a").attachObject("sidebarObj");
         myLayout.cells("b").attachObject("sidebarObjV");
         
-
-        loadDataMenuArriba();
+//                    loadDataContratos();
+                  loadDataMenuArriba("");
+//                    loadEstructuraMaster();
  
                     ribbon.attachEvent("onClick", function(itemIdSeleccion, bId){
 //                         alert(itemIdSeleccion);
@@ -196,25 +196,32 @@ var gantt=[
                         if(itemIdSeleccion=="pdf")
                            alert("le has picado a pdf");
                         
-                        if(itemIdSeleccion=="catalogo") 
+                        if(itemIdSeleccion=="Informacion") 
                            loadDataSideBarCatalogoInformacion();
                        
-                       if(itemIdSeleccion=="documentos")
+                        if(itemIdSeleccion=="documentos")
                            loadDataSideBarCumplimientosDocumentos();
-                       if(itemIdSeleccion=="evidencias")
-                           loadDataSideBarCumplimientosEvidencias();
-                       if(itemIdSeleccion=="tareas")
-                           loadDataSideBarTareasGantt();
+                       
+                        if(itemIdSeleccion=="evidencias")
+                            loadDataSideBarCumplimientosEvidencias();
+
+                        if(itemIdSeleccion=="tareas")
+                            loadDataSideBarTareasGantt();
+                        
+                        if(itemIdSeleccion=="reporte")
+                            loadDataSideBarReportesGerenciales();
+                        
                         if(itemIdSeleccion=="catalogooficios")
-                           loadDataSideBarOficiosCatalogos();
+                            loadDataSideBarOficiosCatalogos();
                        
                         if(itemIdSeleccion=="documentacion")
-                           loadDataSideBarOficiosDocumentacion();
+                            loadDataSideBarOficiosDocumentacion();
                        
                         if(itemIdSeleccion=="informegerencial")
-                       loadDataInformeGerencial();
-                       if(itemIdSeleccion=="cargaprograma")
-                           loadDataCargaProgramaGantt();
+                            loadDataInformeGerencial();
+                        
+                        if(itemIdSeleccion=="cargaprograma")
+                            loadDataCargaProgramaGantt();
                        
                     });      
                     }	
@@ -223,17 +230,8 @@ var gantt=[
 //                            
          );
 
- function loadDataMenuArriba(){	
-     
-     var inicio2=[
-{id:'00',text:'Seleccion de contrato(Click)' ,items:[
-        
-        {id:'0x1',mode:'cols',text:'Contratos',type:'block',
-            list:datacontratos
-        }
-]}
+ function loadDataMenuArriba(iniciodinamic){	
 
-];
      
      
 	var inicio=[
@@ -258,8 +256,8 @@ var gantt=[
                              {id:'0x33',mode:'cols',text:'Tareas',type:'block',
           list:seccionGantt},
                             
-                             {id:'0x34',mode:'cols',text:'Informes Gerenciales',type:'block',
-          list:seccionInformesGerenciales},
+                             {id:'0x34',mode:'cols',text:'Reportes Gerenciales',type:'block',
+          list:seccionReportesGerenciales},
                              
                              {id:'0x35',mode:'cols',text:'Oficios',type:'block',
           list:seccionOficios},
@@ -270,7 +268,7 @@ var gantt=[
         ];
     
     
-ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: "../../images/base/",tabs: inicio	});
+ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: "../../images/base/",tabs:inicio});
   
 //    var dhxWins = new dhtmlXWindows();
 //var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
@@ -324,33 +322,123 @@ function loadDataNotificaciones(){
                      
                      $.each(r,function(index,value){
                         // alert("ya entro y "+value.CLAVE_CUMPLIMIENTO);
-                      datacontratos.push( {id:'contratos',text:value.clave_cumplimiento,img:'oficios.png',type:'button',isbig:true} )
+                        
+                      datacontratos.push( {id:'contratos',text:value.clave_cumplimiento,img:'oficios.png',type:'button',isbig:true} );
 
                          })                       
                         }    
-
-    
-    });
+        });
      }
       
       function loadEstructuraMaster(){
+      var seccionMenuDinamic=[];
+                var inicio=[
+        {id:'00',text:'Seleccion de contrato(Click)' ,items:[
+        
+                            {id:'0x1',mode:'cols',text:'Contratos',type:'block',
+          list:datacontratos
+        }
+        ]},         
+	{id:'0',text:'OMG', active:true, items:[
+	{id:'0x2',mode:'cols',text:'Principal',type:'block', 
+		list:[
+		    {id:'logout',text:'Cerrar',img:'cerrarsesion.png', type:'button',isbig:true}
+		   
+		      ]	},
+                            {id:'0x32',mode:'cols',text:'Catalogo',type:'block',
+          list:seccionCatalogo},	
+                             
+                             {id:'0x33',mode:'cols',text:'Cumplimientos',type:'block',
+          list:seccionCumplimiento},
+      
+                             {id:'0x33',mode:'cols',text:'Tareas',type:'block',
+          list:seccionGantt},
+                            
+                             {id:'0x34',mode:'cols',text:'Reportes Gerenciales',type:'block',
+          list:seccionReportesGerenciales},
+                             
+                             {id:'0x35',mode:'cols',text:'Oficios',type:'block',
+          list:seccionOficios},
+                             
+                             {id:'0x36',mode:'cols',text:'Usuario',type:'block',
+          list:infosesionusuario}
+	] }
+        ];
+      
+//      alert("va a realizar una reestrucutracion");
+      var contadorid=1;
+      var contadorinternoitems=1;
+//      var tabs=[];
+      var submodulosItems=[];
+      var submodulosItemsDataHelp=[];
+      
+      var seccioneslistadentroItems=[];
+      var seccioneslista_seleccion=[];
+      var iterar=0;
+//      var seccion
             $.ajax({
                  url: "../Controller/LoadEstructuraPantallaGeneralController.php?Op=Listar",  
                      async:false,
                      success: function(r) {
+                         
                         //alert("en:   ");
 //                     datacontratos.push( {id:'oficio',text:''+,img:'oficios.png',type:'button',isbig:true} )
-                     
-                     $.each(r,function(index,value){
-                        // alert("ya entro y "+value.CLAVE_CUMPLIMIENTO);
-                        
-//                      datacontratos.push( {id:'contratos',text:value.clave_cumplimiento,img:'oficios.png',type:'button',isbig:true} )
-
-                         })  
+                     seccionMenuDinamic.push({id:''+(contadorid++),text:'Seleccion de contrato(Click)' ,items:[        
+                            {id:'0',mode:'cols',text:'Contratos',type:'block',list:datacontratos}
+                            ]});
+                      submodulosItems.push({id:''+(contadorid++),mode:'cols',text:'Principal',type:'block', 
+                        list:[
+                                {id:'logout',text:'Cerrar',img:'cerrarsesion.png', type:'button',isbig:true}
+		   
+                              ]	});  
+                        $.each(r,function(index,value){
+// var seccionCatalogo=[
+//     {id:'catalogo', text:'Informacion',img:'catalogo.png',type:'button',isbig:true}  
+// ];
+//                                
+                                   if(value.EDIT=="true" || value.consult=="true" || value.delete=="true" || value.new=="true"){
+                                        var listadentroitems=[];
+                                        listadentroitems.push({id:value.nombre_contenido_sub, text:value.nombre_contenido_sub,img:value.imagen_seccion_up,type:'button',isbig:true});
+                                        
+                                        cont=value.nombre_contenido_sub;
+                                        if(iterar>0){
+                                          $.each(listadentroitems ,function (i,v){
+//                                               alert("w  :"+ v.id);
+                                                 va=v.id;       
+                                                $.each(r,function(i,v){
+//                                                        if(va=!v.){
+//                                                            
+//                                                        }
+//                                                    alert(v)
+                                                });
+                                                
+                                        });  
+                                            
+                                        }
+                                        
+//                                        $.each(listadentroitems ,function (i,v){
+////                                            alert(v.id);
+////                                            if(v.){
+////                                            }
+//                                            v_data=v.id;
+//                                            if(){
+//                                        });
+                                       
+                                            submodulosItems.push({id:''+(contadorid++),mode:'cols',text:''+value.nombre_submodulo,type:'block', list:listadentroitems});
+//                                        }
+                                        iterar++;
+                //                                    iterar=1;
+                                    }
+                              });
+                     seccionMenuDinamic.push({id:""+(contadorid++),text:'OMG', active:true, items:submodulosItems});
+//                            
+                       loadDataMenuArriba(seccionMenuDinamic);
                      }
             });
     }
-      
+    
+    
+   
       
     function logout(){
             swal({
@@ -409,44 +497,9 @@ function loadDataNotificaciones(){
  var layoutWin=dhxWins.createWindow({id:"emp", text:"OMG", left: 20, top: 30,width:430,  height:205,  center:true,resize: true,park:true,modal:true	});
  layoutWin.attachURL("login.php", null, true);
  
-//	w = dhxWins.createWindow({id:"cet", text:"OMG", left: 20, top: 30,width:430,  height:205,  center:true,resize: false,park:false,modal:true	});
-//	w.attachURL("login.php",null, {});
-////	w.setIconCss("iconi"); 	
-////	w.button('park').hide();
-////	w.button('minmax').hide();
-//	if (bclose) w.button('close').hide();
-//	w.attachEvent("onClose", function(win){
-//	    return true;
-//	});
+
 }            
                 
-//		function doOnLoad() {
-//			
-//			//dhxWins = new dhtmlXWindows();
-//			//dhxWins.attachViewportTo("winVP");
-////                        dhxWins.setHeader("dd");
-////                        myLayout.cells("").setText("Folders");
-//			myLayout = new dhtmlXLayoutObject("layoutCatalogoBase", "2U");
-//			myLayout.cells("a").setWidth(250);
-//                        myLayout.cells("a").setText("Catalogo");
-//                            
-//                          //  myLayout.cells("b").hideHeader();
-//                        myLayout.cells("b").setText("Visualizacion");
-//                        myLayout.cells("a").attachObject("layoutCatalogoBase");
-//                        
-//                        
-////                        myTreeView = myLayout.cells("a").attachTreeView({
-////				root_id: "",
-////				iconset: "font_awesome",
-////				items: "xml/directoryTree.php?id={id}"
-////			});
-//                        
-//			//w1 = dhxWins.createWindow("w1", 20, 30, 600, 400);
-//			//myLayout = w1.attachLayout("2U");
-////			myLayout.cells("c").setText("Folders");
-//			// or
-//			// myLayout = new dhtmlXLayoutObject({parent: w1, pattern: "3L"});
-//		}
 
         </script>
         

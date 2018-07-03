@@ -78,10 +78,10 @@ function loadDataSideBarOficiosCatalogos(){
                                 template:'tiles',
         width: 350,
         items: [
-          {id: "empleados", text: "Empleados", icon: "empleados.jpg"},
+          {id: "empleadosoficios", text: "Empleados", icon: "empleados.jpg"},
           {id: "entidadesreguladoras", text: "Autoridad Remitente", icon: "entidadreguladora.png"},
 //          {id: "cumplimientos", text: "Cumplimientos", icon: "cumplimientos.png"},
-          {id: "clausulas", text: "Temas", icon: "temas.jpg"}
+          {id: "temasoficios", text: "Temas", icon: "temas.jpg"}
           /*{type: "separator"},
           {id: "asignaciontema", text: "Asignacion de Tema - Empleado", icon: "asignaciontema.jpg"},
           {id: "asignacionrequisitos", text: "Asignacion de Requisito - Tema", icon: "asignacionrequisitos.png"},
@@ -92,9 +92,9 @@ function loadDataSideBarOficiosCatalogos(){
                                  
                          mySidebar.attachEvent("onSelect", function(id, value){
                                    switch(id){
-                                       case "empleados":
-                                            consultarInformacion("../Controller/EmpleadosController.php?Op=Listar");                                           
-                                            $("#sidebarObjV").load('InyectarVistasView.php #empleados');
+                                       case "empleadosoficios":
+//                                            consultarInformacion("../Controller/EmpleadosOficiosController.php?Op=Listar");                                           
+                                            $("#sidebarObjV").load('InyectarVistasView.php #empleadosoficios');
                                             //$("#sidebarObjV").load('EmpleadosView.php');
                                        break;  
                                        
@@ -111,10 +111,10 @@ function loadDataSideBarOficiosCatalogos(){
                                        break;
                                       
 
-                                       case "clausulas":
-                                            consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
-                                            consultarInformacion("../Controller/EmpleadosController.php?Op=mostrarcombo");
-                                            $("#sidebarObjV").load('InyectarVistasView.php #clausulas');                             
+                                       case "temasoficios":
+//                                            consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
+//                                            consultarInformacion("../Controller/EmpleadosController.php?Op=mostrarcombo");
+                                            $("#sidebarObjV").load('InyectarVistasView.php #temasoficios');                             
                                        break;
                                    }
       });
@@ -124,8 +124,9 @@ function loadDataSideBarOficiosCatalogos(){
 
 
 
-function loadDataSideBarOficiosDocumentacion(){
-//         mySidebar = myLayout.cells("a").attachSidebar();
+function loadDataSideBarOficiosDocumentacion()
+{
+    
    
     mySidebar = new dhtmlXSideBar({
         parent: "sidebarObj",
@@ -162,7 +163,7 @@ function loadDataSideBarOficiosDocumentacion(){
                                    }
       });
                         
-    }
+}
     
     function loadDataInformeGerencial(){
 //         mySidebar = myLayout.cells("a").attachSidebar();
@@ -191,6 +192,38 @@ function loadDataSideBarOficiosDocumentacion(){
     function loadDataSideBarTareasGantt()
     {
         $("#sidebarObjV").load('InyectarVistasView.php #cargaprogramatareas');
+    }
+    
+    function loadDataSideBarReportesGerenciales()
+    {
+        mySidebar = new dhtmlXSideBar({
+        parent: "sidebarObj",
+        icons_path: "../../images/base/",    
+                                template:'tiles',
+        width: 350,
+        items: [
+          {id: "reportesValidacionDocumentos", text: "Reportes de Validacion de Documentos", icon: "documentos.png"},
+          {id: "reportesEvidencias", text: "Reporte de Evidencias", icon: "operaciones.png"}
+          
+            
+        ]
+      });
+
+                                 
+        mySidebar.attachEvent("onSelect", function(id, value){
+                  switch(id){
+                      case "reportesValidacionDocumentos":
+                           $("#sidebarObjV").load('InyectarVistasView.php #reportesValidacionDocumentos');
+                      break;  
+
+
+                      case "documentosSalida":
+                           $("#sidebarObjV").load('InyectarVistasView.php #documentosSalida');
+                      break;
+
+                  }
+      });
+        
     }
     
     function loadViewUsuario()

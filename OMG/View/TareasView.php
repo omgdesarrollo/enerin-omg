@@ -38,7 +38,7 @@ $Usuario=  Session::getSesion("user");
 
                 
                 <script src="../../js/jquery.js" type="text/javascript"></script>
-                
+                <script src="../../js/fTareasView.js" type="text/javascript"></script>
                      
                 
 <style>
@@ -113,20 +113,19 @@ require_once 'EncabezadoUsuarioView.php';
                                 
 <div style="height: 40px"></div>
 
-
  <table class="table table-bordered table-striped header_fijo"  >
     <thead >
     <tr class="">
-     <th class="table-headert" width="8%">Contrato</th>
-     <th class="table-headert" width="21.12%">Tarea</th>
-     <th class="table-headert" width="15.36%">Responsale del Plan</th>
-     <th class="table-headert" width="15.36%">Fecha de Creacion</th>
-     <th class="table-headert" width="15.36%">Fecha de Alarma</th>
-     <th class="table-headert" width="14.4%">Fecha de Cumplimiento</th>
+     <th class="table-headert" width="7.68%">Contrato</th>
+     <th class="table-headert" width="7.68%">Tarea</th>
+     <th class="table-headert" width="14.4%">Responsale del Plan</th>
+     <th class="table-headert" width="14.4%">Fecha de Creacion</th>
+     <th class="table-headert" width="7.68%">Fecha de Alarma</th>
+     <th class="table-headert" width="7.68%">Fecha de Cumplimiento</th>
      <th class="table-headert" width="14.4%">Observaciones</th>
-     <th class="table-headert" width="14.4%">Archivo Adjunto</th>
-     <th class="table-headert" width="14.4%">Registrar Programa</th>
-     <th class="table-headert" width="14.4%">Avance</th>     
+     <th class="table-headert" width="7.68%">Archivo Adjunto</th>
+     <th class="table-headert" width="7.68%">Registrar Programa</th>
+     <th class="table-headert" width="6.72%">Avance</th>     
     </tr>
    </thead>
 
@@ -196,12 +195,16 @@ require_once 'EncabezadoUsuarioView.php';
        
                         
                 
-		<script>
-                    si_hay_cambio=false;
-                    listarDatos();               
-                                                   
-                
-		</script>
+<script>
+    si_hay_cambio=false;
+    mostrarTareas();              
+
+function loadSpinner()
+{
+    myFunction();
+}
+
+</script>
 
         <!--Inicia para el spiner cargando-->
         <script src="../../js/loaderanimation.js" type="text/javascript"></script>

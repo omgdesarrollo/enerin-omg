@@ -3,14 +3,12 @@
 $(function(){
 
     $("#btn_guardar").click(function(){
-        
 
               var NOMBRE_EMPLEADO=$("#NOMBRE_EMPLEADO").val();
               var APELLIDO_PATERNO=$("#APELLIDO_PATERNO").val();
               var APELLIDO_MATERNO=$("#APELLIDO_MATERNO").val();
               var CATEGORIA=$("#CATEGORIA").val();
               var CORREO=$("#CORREO").val();
-              
                 datos=[];
                 datos.push(NOMBRE_EMPLEADO);
                 datos.push(APELLIDO_PATERNO);
@@ -44,7 +42,7 @@ function listarDatos()
 {
     $.ajax
     ({
-        url: '../Controller/EmpleadosController.php?Op=Listar',
+        url: '../Controller/EmpleadosOficiosController.php?Op=Listar',
         type: 'GET',
         beforeSend:function()
         {
@@ -96,7 +94,8 @@ function reconstruir(value,carga)
                                   onkeyup=\"detectarsihaycambio()\">"+value.categoria+"</td>";
                 tempData += "<td class='celda' width='15%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'empleados','correo',"+value.id_empleado+",'id_empleado')\" \n\
                                   onkeyup=\"detectarsihaycambio()\">"+value.correo+"</td>";
-                tempData += "<td class='celda' width='15%'>"+value.fecha_creacion+"</td>";                    
+                tempData += "<td class='celda' width='15%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'empleados','fecha_creacion',"+value.id_empleado+",'id_empleado')\" \n\
+                                  onkeyup=\"detectarsihaycambio()\">"+value.fecha_creacion+"</td>";                    
                 
                 if(carga==0)
                 tempData += "</tr>";
@@ -112,7 +111,7 @@ function reconstruirRow(id)
     tempData="";
     
     $.ajax({
-        url:"../Controller/EmpleadosController.php?Op=ListarEmpleado",
+        url:"../Controller/EmpleadosOficiosController.php?Op=ListarEmpleado",
         type:'GET',
         data:'ID_EMPLEADO='+id,
         success:function(datos)
@@ -199,16 +198,16 @@ function saveSingleToDatabase(Obj,tabla,columna,id,contexto) {
 
 
 
-function saveToDatabaseDatosFormulario(datos)
-{
+function saveToDatabaseDatosFormulario(datos){
+
+                    
 $.ajax({
-         url: "../Controller/EmpleadosController.php?Op=Guardar",
-         type: "POST",
-         data:'NOMBRE_EMPLEADO='+datos[0]+'&APELLIDO_PATERNO='+datos[1]+'&APELLIDO_MATERNO='+datos[2]+'&CATEGORIA='+datos[3]+'&CORREO='+datos[4],
-         success: function(data)
-         {             
-//             alert(data);
-             if(data==1)
+    url: "../Controller/EmpleadosOficiosController.php?Op=Guardar",
+    type: "POST",
+    data:'NOMBRE_EMPLEADO='+datos[0]+'&APELLIDO_PATERNO='+datos[1]+'&APELLIDO_MATERNO='+datos[2]+'&CATEGORIA='+datos[3]+'&CORREO='+datos[4],
+    success: function(data)
+    {
+            if(data==1)
              {
 //                  alert("Entro al true");
                  swal("Guardado Exitoso!", "", "success");
@@ -219,10 +218,10 @@ $.ajax({
                  },1000);
                  
              }
-
+             
              if(data!=1 && data!=-1)
              {
-
+//                 alert("Entro al false");
                  mensaje = "Nombre:"+data[0].nombre_empleado+" "+data[0].apellido_paterno+" "+data[0].apellido_materno;
                  mensaje += "\nCategorita:"+data[0].categoria;
                  mensaje += "\nCorreo:"+data[0].correo;
@@ -234,18 +233,17 @@ $.ajax({
                         showCancelButton: true,
                         confirmButtonText:"Agregar",
                         cancelButtonText:"Regresar",
-//                            closeOnConfirm: false,
-//                            closeCancel: false,
                         showLoaderOnConfirm: true,
                         textLoaderOnConfirm:true,
 
-                        // confirmButtonText: tempo,
+
                         }, function(isConfirm)
                         {
                             if(isConfirm)
                             {
+//                                alert("OK");
                                 $.ajax({
-                                        url:'../Controller/EmpleadosController.php?Op=GuardarIdentificador',
+                                        url:'../Controller/EmpleadosOficiosController.php?Op=GuardarIdentificador',
                                         type:'POST',
                                         data:'ID='+data[0].id_empleado+ '&IDENTIFICADOR='+data[0].identificador,
                                         success:function(resultado)
@@ -260,7 +258,7 @@ $.ajax({
                                                 },1000);                                            
                                             }
                                         }
-                                    
+                                  
                                         });
 
                             }
@@ -278,7 +276,7 @@ $.ajax({
              
              if(data==-1)
              {
-//                alert("Entro al vacio");
+//                 alert("Entro al vacio");
                  swal("Este empleado ya existe", "", "info");
                  setTimeout(function()
                  {
@@ -286,8 +284,9 @@ $.ajax({
                      $("#create-item .close").click();
                  },1000);                                        
              }
-         }   
-     });                     
+    }   
+});
+
 }
 
 

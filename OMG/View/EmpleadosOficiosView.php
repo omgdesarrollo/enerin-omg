@@ -38,8 +38,7 @@ $Usuario=  Session::getSesion("user");
 
                 
                 <script src="../../js/jquery.js" type="text/javascript"></script>
-                <script src="../../js/fEmpleadosView.js" type="text/javascript"></script>
-                     
+                <script src="../../js/fEmpleadosOficiosView.js" type="text/javascript"></script>
                 
 <style>
         
@@ -146,8 +145,7 @@ require_once 'EncabezadoUsuarioView.php';
                     <!--<form data-toggle="validator" action="api/create.php" method="POST">-->
                         <!--<form data-toggle="validator"  >-->
                         <div id="ok"></div>
-                                                
-                                    <div class="form-group">
+                            <div class="form-group">
                                             <label class="control-label" for="title">Nombre:</label>
                                             <input type="text"  id="NOMBRE_EMPLEADO" class="form-control" data-error="Ingrese Nombre" required />
                                             <div id="mensaje1" class="help-block with-errors" ></div>
@@ -170,7 +168,7 @@ require_once 'EncabezadoUsuarioView.php';
                                             <textarea  id="CATEGORIA" class="form-control" data-error="Ingrese Categoria." required></textarea>
                                             <div id="mensaje4" class="help-block with-errors"></div>
                                     </div>
-                        
+
                                     <div class="form-group">
                                             <label class="control-label" for="title">Email:</label>
                                             <textarea  id="CORREO" class="form-control" data-error="Ingrese Email" required></textarea>
