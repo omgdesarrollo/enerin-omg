@@ -370,8 +370,11 @@ function loadDataNotificaciones(){
       var contadorinternoitems=1;
 //      var tabs=[];
       var submodulosItems=[];
+      var submodulosItemsDataHelp=[];
+      
       var seccioneslistadentroItems=[];
       var seccioneslista_seleccion=[];
+      var iterar=0;
 //      var seccion
             $.ajax({
                  url: "../Controller/LoadEstructuraPantallaGeneralController.php?Op=Listar",  
@@ -380,7 +383,7 @@ function loadDataNotificaciones(){
                          
                         //alert("en:   ");
 //                     datacontratos.push( {id:'oficio',text:''+,img:'oficios.png',type:'button',isbig:true} )
-                     seccionMenuDinamic.push( {id:''+(contadorid++),text:'Seleccion de contrato(Click)' ,items:[        
+                     seccionMenuDinamic.push({id:''+(contadorid++),text:'Seleccion de contrato(Click)' ,items:[        
                             {id:'0',mode:'cols',text:'Contratos',type:'block',list:datacontratos}
                             ]});
                       submodulosItems.push({id:''+(contadorid++),mode:'cols',text:'Principal',type:'block', 
@@ -389,33 +392,46 @@ function loadDataNotificaciones(){
 		   
                               ]	});  
                         $.each(r,function(index,value){
-//                            paraconstruirsub=evaluar_persmisos(value);    
-//                                    if(paraconstruirsub!="no"){
-//                                        alert("es no ");
-////                                     submodulosItems.push({id:contadorid++,mode:'cols',text:'Principal',type:'block', });   
-//                                    }
 // var seccionCatalogo=[
 //     {id:'catalogo', text:'Informacion',img:'catalogo.png',type:'button',isbig:true}  
 // ];
-                                
+//                                
                                    if(value.EDIT=="true" || value.consult=="true" || value.delete=="true" || value.new=="true"){
-                                       
-//                                       seccioneslistadentroItems.push({id:value.nombre_contenido_sub});
-                                     
-//                                                for(var i = 0; i < arreglo.length; i++) {
-//                                                  if (arreglo[i].valor== 'b') {
-////                                                    alert("se encuentra objeto!.");
-//                                                  break;
-//                                                  }
-//                                              }
-//                                         alert("si tiene al menos uno trueC");
                                         var listadentroitems=[];
                                         listadentroitems.push({id:value.nombre_contenido_sub, text:value.nombre_contenido_sub,img:value.imagen_seccion_up,type:'button',isbig:true});
-                                        submodulosItems.push({id:''+(contadorid++),mode:'cols',text:''+value.nombre_submodulo,type:'block', list:listadentroitems});
+                                        
+                                        cont=value.nombre_contenido_sub;
+                                        if(iterar>0){
+                                          $.each(listadentroitems ,function (i,v){
+//                                               alert("w  :"+ v.id);
+                                                 va=v.id;       
+                                                $.each(r,function(i,v){
+//                                                        if(va=!v.){
+//                                                            
+//                                                        }
+//                                                    alert(v)
+                                                });
+                                                
+                                        });  
+                                            
+                                        }
+                                        
+//                                        $.each(listadentroitems ,function (i,v){
+////                                            alert(v.id);
+////                                            if(v.){
+////                                            }
+//                                            v_data=v.id;
+//                                            if(){
+//                                        });
+                                       
+                                            submodulosItems.push({id:''+(contadorid++),mode:'cols',text:''+value.nombre_submodulo,type:'block', list:listadentroitems});
+//                                        }
+                                        iterar++;
+                //                                    iterar=1;
                                     }
                               });
                      seccionMenuDinamic.push({id:""+(contadorid++),text:'OMG', active:true, items:submodulosItems});
-                            
+//                            
                        loadDataMenuArriba(seccionMenuDinamic);
                      }
             });
