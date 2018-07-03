@@ -305,8 +305,7 @@ require_once 'EncabezadoUsuarioView.php';
 		</script>
                 
                 
-                
-                <script src="../../js/fTemasView.js" type="text/javascript"></script>
+                <script src="../../js/fTemasOficiosView.js" type="text/javascript"></script>
 
                 <!--Inicia para el spiner cargando-->
                 <script src="../../js/loaderanimation.js" type="text/javascript"></script>

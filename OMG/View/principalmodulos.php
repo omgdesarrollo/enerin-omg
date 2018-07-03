@@ -90,7 +90,7 @@ var seccionHerramientas=[
  ];
  
  var seccionCatalogo=[
-     {id:'catalogo', text:'Informacion',img:'catalogo.png',type:'button',isbig:true}  
+     {id:'Informacion', text:'Informacion',img:'catalogo.png',type:'button',isbig:true}  
  ];
  
  
@@ -105,8 +105,8 @@ var seccionHerramientas=[
      {id:'tareas',text:'Carga Programa Gantt',img:'663.png',type:'button',isbig:true} ,
  ];
  
- var seccionInformesGerenciales=[
-     {id:'informe',text:'Informe',img:'documentos.jpg',type:'button',isbig:true}  
+ var seccionReportesGerenciales=[
+     {id:'reporte',text:'Reporte',img:'documentos.jpg',type:'button',isbig:true}  
  ];
 
   var seccionOficios=[
@@ -143,7 +143,7 @@ var gantt=[
   datacontratos=[];
   dataSeccionRibbon=[];
 //    loadEstructuraMaster();
-    loadDataContratos();
+//    loadDataContratos();
 //    loadDataNotificaciones();
    
 
@@ -199,22 +199,29 @@ var gantt=[
                         if(itemIdSeleccion=="Informacion") 
                            loadDataSideBarCatalogoInformacion();
                        
-                       if(itemIdSeleccion=="documentos")
+                        if(itemIdSeleccion=="documentos")
                            loadDataSideBarCumplimientosDocumentos();
-                       if(itemIdSeleccion=="evidencias")
-                           loadDataSideBarCumplimientosEvidencias();
-                       if(itemIdSeleccion=="tareas")
-                           loadDataSideBarTareasGantt();
+                       
+                        if(itemIdSeleccion=="evidencias")
+                            loadDataSideBarCumplimientosEvidencias();
+
+                        if(itemIdSeleccion=="tareas")
+                            loadDataSideBarTareasGantt();
+                        
+                        if(itemIdSeleccion=="reporte")
+                            loadDataSideBarReportesGerenciales();
+                        
                         if(itemIdSeleccion=="catalogooficios")
-                           loadDataSideBarOficiosCatalogos();
+                            loadDataSideBarOficiosCatalogos();
                        
                         if(itemIdSeleccion=="documentacion")
-                           loadDataSideBarOficiosDocumentacion();
+                            loadDataSideBarOficiosDocumentacion();
                        
                         if(itemIdSeleccion=="informegerencial")
-                       loadDataInformeGerencial();
-                       if(itemIdSeleccion=="cargaprograma")
-                           loadDataCargaProgramaGantt();
+                            loadDataInformeGerencial();
+                        
+                        if(itemIdSeleccion=="cargaprograma")
+                            loadDataCargaProgramaGantt();
                        
                     });      
                     }	
@@ -249,8 +256,8 @@ var gantt=[
                              {id:'0x33',mode:'cols',text:'Tareas',type:'block',
           list:seccionGantt},
                             
-                             {id:'0x34',mode:'cols',text:'Informes Gerenciales',type:'block',
-          list:seccionInformesGerenciales},
+                             {id:'0x34',mode:'cols',text:'Reportes Gerenciales',type:'block',
+          list:seccionReportesGerenciales},
                              
                              {id:'0x35',mode:'cols',text:'Oficios',type:'block',
           list:seccionOficios},
@@ -347,8 +354,8 @@ function loadDataNotificaciones(){
                              {id:'0x33',mode:'cols',text:'Tareas',type:'block',
           list:seccionGantt},
                             
-                             {id:'0x34',mode:'cols',text:'Informes Gerenciales',type:'block',
-          list:seccionInformesGerenciales},
+                             {id:'0x34',mode:'cols',text:'Reportes Gerenciales',type:'block',
+          list:seccionReportesGerenciales},
                              
                              {id:'0x35',mode:'cols',text:'Oficios',type:'block',
           list:seccionOficios},

@@ -12,6 +12,10 @@
 <iframe src="TemasView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
 
+<div id="temasoficios">
+    <iframe src="TemasOficiosView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
+</div>
+
 
 <div id="requisitos">
 <iframe src="RequisitosView.php" style="width: 100%; height: 400px;margin-top: 20px;margin-left: 10px;" name="formularios"></iframe>
@@ -76,6 +80,10 @@
 
 <div id="cargaprogramatareas">
     <iframe src="TareasView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
+</div>
+
+<div id="reportesValidacionDocumentos">
+    <iframe src="ReporteValidacionDocumentosView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
 
 <div id="administrarUsuario">
