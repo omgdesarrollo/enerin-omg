@@ -395,17 +395,17 @@ function loadDataNotificaciones(){
                                         
                                         cont=value.nombre_contenido_sub;
                                         if(iterar>0){
-                                          $.each(listadentroitems ,function (i,v){
-//                                               alert("w  :"+ v.id);
-                                                 va=v.id;       
-                                                $.each(r,function(i,v){
-//                                                        if(va=!v.){
-//                                                            
-//                                                        }
-//                                                    alert(v)
-                                                });
-                                                
-                                        });  
+                                            $.each(listadentroitems ,function (i,v){
+    //                                               alert("w  :"+ v.id);
+                                                   va=v.id;       
+                                                  $.each(r,function(i,v){
+    //                                                        if(va=!v.){
+    //                                                            
+    //                                                        }
+    //                                                    alert(v)
+                                                  });
+
+                                          });  
                                             
                                         }
                                         
