@@ -10,7 +10,7 @@ class EvidenciasDAO
             $query = "SELECT tbrequisitos.id_requisito,tbrequisitos.requisito,
             tbregistros.id_registro,tbregistros.registro,tbregistros.frecuencia,
             tbdocumentos.clave_documento,
-            tbevidencias.id_evidencias,tbevidencias.id_usuario,tbevidencias.accion_correctiva,
+            tbevidencias.id_evidencias,tbevidencias.id_usuario,tbevidencias.accion_correctiva,tbevidencias.validacion_supervisor,
             tbempleados.id_empleado, (
                 SELECT CONCAT(tbempleados.nombre_empleado,' ',
                     tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)
@@ -234,7 +234,7 @@ class EvidenciasDAO
         try
         {
             $db= AccesoDB::getInstancia();
-            $query="UPDATE evidencias SET accion_correctiva = $MENSAJE
+            $query="UPDATE evidencias SET accion_correctiva = '$MENSAJE'
                  WHERE id_evidencias=$ID_EVIDENCIA";
             $result= $db->executeQueryUpdate($query);
             return $result;

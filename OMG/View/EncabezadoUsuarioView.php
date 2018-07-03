@@ -142,7 +142,7 @@ foreach ($notifacionescompletas as $value){
 												<span class="msg-body">
 													<span class="msg-title">
 														<span class="blue">
-															Tiene que atender <?php echo $item["asunto"] ?> de <?php echo $item["nombre"] ?>
+															<?php echo $item["mensaje"].$item["nombre"] ?>
 														</span>
 													</span>
 

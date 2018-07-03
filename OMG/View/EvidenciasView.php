@@ -760,7 +760,7 @@
         tempData = "";
         tempArchivo="";
         noCheck = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true'";//cambiar color azul
-        yesChek = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true'";
+        yesCheck = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true'";
         noMsj = "<i class='fa fa-file-o' style='font-size: xx-large;color:#6FB3E0;cursor:pointer' aria-hidden='true'></i>";
         yesMsj = "<i class='ace-icon fa fa-file-text-o icon-animated-bell' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true'></i>";
         denegado = "<i class='fa fa-ban' style='font-size: xx-large;color:red;' aria-hidden='true'></i>";
@@ -807,7 +807,7 @@
 
                 tempData += "<td>"+value.usuario+"</td>";
                 
-                tempData += "<td style='font-size: -webkit-xxx-large' onClick='MandarNotificacion("+value.id_usuario+","+value.validador+","+value.accion_correctiva+","+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'> ";
+                tempData += "<td style='font-size: -webkit-xxx-large' onClick='MandarNotificacion("+value.id_usuario+","+value.validador+",\""+value.accion_correctiva+"\","+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
 
                 if(value.accion_correctiva!="")
                 {
@@ -818,26 +818,26 @@
                     tempData += noMsj+"</td>";
                 }
 
-                if(value.validador==1)
+                if(value.validador=="1")
                 {
                     tempData += "<td style='font-size: -webkit-xxx-large'><button class='btn btn-info' onClick='#("+value.id_evidencias+");'>";
                     tempData += "Cargar Programa</button></td>";
                     tempData += "<td style='font-size: -webkit-xxx-large'><i class='ace-icon fa fa-deviantart' style='font-size: 20px;color:#6FB3E0;cursor:pointer'></i></td>";
                     tempData += "<td style='font-size: -webkit-xxx-large;'>";
-                    if(value.validacion_supervisor=='true')
+                    if(value.validacion_supervisor=="true")
                         tempData += yesCheck;
                     else
                         tempData += noCheck;
-                    tempData += "onclick=\"saveCheckBoxToDataBase('evidencias','validacion_supervisor','id_evidencias',"+value.id_evidencias+")\"></i></td>";
+                    tempData += "onclick=\"saveCheckBoxToDataBase(this,'evidencias','validacion_supervisor','id_evidencias',"+value.id_evidencias+","+value.id_usuario+")\"></i></td>";
                 }
                 else
                 {
                     tempData += "<td style='font-size: -webkit-xxx-large'>"+denegado+"</td>";
                     tempData += "<td style='font-size: -webkit-xxx-large'>"+denegado+"</td>";
                     if(value.validacion_supervisor=='true')
-                        tempData += "<td style='font-size: -webkit-xxx-large'>"+yesCheck+"></i>";
+                        tempData += "<td style='font-size: -webkit-xxx-large'>"+yesCheck+" onClick='swalInfo(\"Validado por el responsable\")'></i>";
                     else
-                        tempData += "<td style='font-size: -webkit-xxx-large'>"+noCheck+"></i>";
+                        tempData += "<td style='font-size: -webkit-xxx-large'>"+noCheck+" onClick='swalInfo(\"Aun no validado\")'></i>";
                         tempData += "</td>";
                 }
 
@@ -875,61 +875,64 @@
             data: 'ID_EVIDENCIA='+id_evidencias,
             success:function(eliminado)
             {
-                (eliminado==true)?(swal("","Se elimino la evidencia","success"),$('#registro_'+id_evidencias).remove()):swal("","No se pudo eliminar","error");
-                setTimeout(function(){swal.close();},1000);
+                (eliminado==true)?(swalSuccess("Se elimino la evidencia"),$('#registro_'+id_evidencias).remove()):swalError("No se pudo eliminar");
             },
             error:function()
             {
-                swal("","Error del servidor","error");
-                setTimeout(function(){swal.close();},1000);
+                swalError("Error del servidor");
             }
         });
     }
-    function saveCheckBoxToDataBase(checkbox,tabla,column,context,id)
+    function saveCheckBoxToDataBase(checkbox,tabla,column,context,id,idPara)
     {
+        no = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true' onclick=\"saveCheckBoxToDataBase(this,'evidencias','validacion_supervisor','id_evidencias',"+id+")\"></i>";
+        yes = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true' onclick=\"saveCheckBoxToDataBase(this,'evidencias','validacion_supervisor','id_evidencias',"+id+")\"></i>";
         id_validacion_documento=id;
         columna=column;
         objetocheckbox=checkbox;
-        var checked = $(objetocheckbox).filter('[type=checkbox]')[0]['checked'];
-        if(checked==true)
-        {
-            swal({
-                title: "VALIDAR",
-                text: "Una vez validada la evidencia no podra desvalidarla, confirme",
-                type: "warning",
-                showCancelButton: true,
-                closeOnConfirm: false,
-                showLoaderOnConfirm: true,
-                },function(isConfirm)
-                {
-                    if(isConfirm)
-                    {
+        ($(checkbox).hasClass('fa-times-circle-o'))?valor=true:valor=false;
+        alguno = $(checkbox).parent();
+        $(alguno[0]).html( (valor==true)?yes:no);
+        // var checked = $(objetocheckbox).filter('[type=checkbox]')[0]['checked'];
+        // if(checked==true)
+        // {
+        //     swal({
+        //         title: "VALIDAR",
+        //         text: "Una vez validada la evidencia no podra desvalidarla, confirme",
+        //         type: "warning",
+        //         showCancelButton: true,
+        //         closeOnConfirm: false,
+        //         showLoaderOnConfirm: true,
+        //         },function(isConfirm)
+        //         {
+        //             if(isConfirm)
+        //             {
                         $.ajax({
                             url: "../Controller/GeneralController.php?Op=ModificarColumna",
                             type: "POST",
                             data: "TABLA="+tabla+"&COLUMNA="+column+"&ID_CONTEXTO="+context+"&ID="+id+"&VALOR="+true,
                             success: function(data)
                             {
-                                if(data)
+                                if(data==true)
                                 {
-                                    $(objetocheckbox).attr('disabled','true');
-                                    swal("","Evidencia validada");
-                                    setTimeout(function(){swal.close();},1000);
+                                    // $(objetocheckbox).attr('disabled','true');
+                                    swalSuccess("Evidencia validada");
                                     if(columna=="desviacion_mayor")
                                     {
-                                        enviar_notificacion();
+                                        enviar_notificacion("Ha sido validada una Evidencia por ",idPara,0,false,"",id);
+                                        // msj,para,tipomsj,atendido,asunto
                                     }
                                 }
                             }
                             });
-                    }
-                    else
-                    {
-                        inputs = $(objetocheckbox).filter('[type=checkbox]');
-                        inputs[0]['checked']=false;
-                    }
-            });
-        }
+        //             }
+        //             else
+        //             {
+        //                 inputs = $(objetocheckbox).filter('[type=checkbox]');
+        //                 inputs[0]['checked']=false;
+        //             }
+        //     });
+        // }
     }
 
     function MandarNotificacion(idPara,validador,msj,idEvidencia)
@@ -956,26 +959,29 @@
     function enviar_notificacion(mensaje,para,tipoMensaje,atendido,asunto,idEvidencia)
     {
         //   var u=$("#user").val();
-        //   $.ajax({
-        //      url:"../Controller/NotificacionesController.php?Op=EnviarNotificacionHibry",
-        //      data: "PARA="+para+"&MENSAJE="+mensaje+"&ATENDIDO="+atendido+"&TIPO_MENSAJE="+tipoMensaje+"&ASUNTO="+asunto,
-        //      success:function(response)
-        //      {
-        //         (response==true)?
-        //         swalSuccess("Mensaje enviado"):swalError("No se pudo enviar la notificacion");
-        //      },
-        //      error:function()
-        //      {
-        //         swalError("Error en el servidor");
-        //      }
-        //   });
+          $.ajax({
+             url:"../Controller/NotificacionesController.php?Op=EnviarNotificacionHibry",
+             data: "PARA="+para+"&MENSAJE=Ha recibido una Acción Correctiva de &ATENDIDO="+atendido+"&TIPO_MENSAJE="+tipoMensaje+"&ASUNTO="+asunto,
+             success:function(response)
+             {
+                (response==true)?
+                swalSuccess("Mensaje enviado"):swalError("No se pudo enviar la notificacion");
+             },
+             error:function()
+             {
+                swalError("Error en el servidor");
+             }
+          });
           $.ajax({
               url: '../Controller/EvidenciasController.php?Op=MandarAccionCorrectiva',
               type: 'GET',
               data: 'ID_EVIDENCIA='+idEvidencia+'&MENSAJE='+mensaje,
               success:function(enviado)
               {
-                  (enviado==true)?swalSuccess("Accion correctiva enviada"):swalError("No se pudo enviar accion correctiva");
+                  (enviado==true)?(
+                      swalSuccess("Accion correctiva enviada"),
+                      reconstruirRow(idEvidencia)
+                      ):swalError("No se pudo enviar accion correctiva");
               },
               error:function()
               {
@@ -1207,6 +1213,19 @@
                 showCancelButton: false,
                 showConfirmButton: false,
                 type:"success"
+            });
+        setTimeout(function(){swal.close();},1500);
+        $('#loader').hide();
+    }
+    
+    function swalInfo(msj)
+    {
+        swal({
+                title: '',
+                text: msj,
+                showCancelButton: false,
+                showConfirmButton: false,
+                type:"info"
             });
         setTimeout(function(){swal.close();},1500);
         $('#loader').hide();

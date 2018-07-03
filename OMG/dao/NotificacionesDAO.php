@@ -33,9 +33,7 @@ class NotificacionesDAO {
                 WHERE tbnotificaciones.id_para = $ID_USUARIO";
              $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-  
             return $lista;
-    
         } catch (Exception $ex) {
             return false;
         }

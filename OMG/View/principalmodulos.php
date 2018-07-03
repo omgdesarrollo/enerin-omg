@@ -144,7 +144,7 @@ var gantt=[
   dataSeccionRibbon=[];
 //    loadEstructuraMaster();
 //    loadDataContratos();
-//    loadDataNotificaciones();
+   loadDataNotificaciones();
    
 
   
