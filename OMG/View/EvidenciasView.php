@@ -17,6 +17,8 @@
     <!--Bootstrap y fontawesome-->
     <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome-animation.min.css" rel="stylesheet" type="text/css"/>
+    
     <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
 
     <!-- text fonts -->
@@ -297,22 +299,19 @@
 	<div class="modal-dialog" role="document">
         <!-- <div id="loaderModalMostrar"></div> -->
 		<div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-          <h4 class="modal-title" id="myModalLabel">Mandar Notificación</h4>
-        </div>
-
-        <div class="modal-body">
-            <div class="form-group">
-                <label class="control-label" for="title">Mensaje:</label>
-                <textarea id="textAreaNotificacionModal" class="form-control" ></textarea>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">Mandar Notificación</h4>
             </div>
 
-            <div class="form-group" method="post" >
-                <button onClick="notificar()" type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Enviar</button>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="control-label" for="title">Mensaje:</label>
+                    <textarea id="textAreaNotificacionModal" class="form-control" ></textarea>
+                </div>
+                <div class="form-group" method="post" id="BTNENVIAR_MANDARNOTIFICACIONMODAL"></div>
             </div>
         </div>
-      </div>
     </div>
 </div>
 <!--cierre del modal Mensaje-->
@@ -688,6 +687,7 @@
     {
         cargaTodo=0;
         tempData = "";
+        contador=1;
         $.each(data,function(index,value)
         {
             URL = 'filesEvidenciaDocumento/'+value.id_evidencias;
@@ -703,7 +703,8 @@
                   async: false,
                   success: function(todo)
                   {
-                    tempData += reconstruir(todo,value,cargaTodo);
+                    tempData += reconstruir(todo,value,cargaTodo,contador);
+                    contador++;
                   }
                 });
         });
@@ -754,21 +755,29 @@
         });
     }
 
-    function reconstruir(todo,value,carga)
+    function reconstruir(todo,value,carga,contador)
     {
         tempData = "";
         tempArchivo="";
+        noCheck = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true'";//cambiar color azul
+        yesCheck = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true'";
+        noMsj = "<i class='fa fa-file-o' style='font-size: xx-large;color:#6FB3E0;cursor:pointer' aria-hidden='true'></i>";
+        yesMsj = "<i class='ace-icon fa fa-file-text-o icon-animated-bell' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true'></i>";
+        denegado = "<i class='fa fa-ban' style='font-size: xx-large;color:red;' aria-hidden='true'></i>";
         // $.each(todo,function(index,value)
         // {
             nametmp="";
             if(carga==0)
             tempData += "<tr id='registro_"+value.id_evidencias+"'>";
+            tempData += "<td class='nuevoTdTable'>"+contador+"</td>";
+            tempData += "<td class='nuevoTdTable'>"+value.requisito+"</td>";
+            tempData += "<td class='nuevoTdTable'>"+value.registro+"</td>";
+            tempData += "<td class='nuevoTdTable'>"+value.frecuencia+"</td>";
             tempData += "<td class='nuevoTdTable'>"+value.clave_documento+"</td>";
-            tempData += "<td class='nuevoTdTable'>"+value.documento+"</td>";
-            tempData += "<td class='nuevoTdTable'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td>";                    
-            tempData += "<td class='nuevoTdTable' style='font-size: -webkit-xxx-large;'><button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success'";
-            tempData += "data-toggle='modal' data-target='#mostrarRegistrosModal'>";
-            tempData += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i> Ver</button></td>";
+            // tempData += "<td class='nuevoTdTable'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td>";
+            // tempData += "<td class='nuevoTdTable' style='font-size: -webkit-xxx-large;'><button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success'";
+            // tempData += "data-toggle='modal' data-target='#mostrarRegistrosModal'>";
+            // tempData += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i> Ver</button></td>";
             
             tempData += "<td style='font-size: -webkit-xxx-large'><button onClick='mostrar_urls("+value.id_evidencias+");'";
             tempData += "type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
@@ -779,53 +788,84 @@
                 tempArchivo = nametmp[0];
                 // fechaAdjunto=nametmp[0];
                 tempData += "<td>"+nametmp[0]+"</td>";
-                if(value.clasificacion=="")
-                {
-                    tempData += "<td><select class='select'";
-                    tempData += "onchange=\"saveComboToDatabase(this,'evidencias','clasificacion',"+value.id_evidencias+",'id_evidencias')\">";
-                    tempData += "<option value='0' selected></option>";
-                    tempData += "<option value='DIARIO'>DIARIO</option>";
-                    tempData += "<option value='MENSUAL'>MENSUAL</option>";
-                    tempData += "<option value='BIMESTRAL'>BIMESTRAL</option>";
-                    tempData += "<option value='ANUAL'>ANUAL</option>";
-                    tempData += "<option value='TIEMPO INDEFINIDO'>TIEMPO INDEFINIDO</option>";
-                    tempData += "</select></td>";
-                }
-                else
-                {
-                    tempData += "<td>"+value.clasificacion+"</td>";
-                }
-                tempData += "<td contenteditable='true' onBlur=\"saveSingleToDatabase(this,'evidencias','accion_correctiva',"+value.id_evidencias+",'id_evidencias')\"";
-                tempData += " onkeyup=\"detectarsihaycambio(this)\">"+value.accion_correctiva+"</td>";
+                // if(value.clasificacion=="")
+                // {
+                //     tempData += "<td><select class='select'";
+                //     tempData += "onchange=\"saveComboToDatabase(this,'evidencias','clasificacion',"+value.id_evidencias+",'id_evidencias')\">";
+                //     tempData += "<option value='0' selected></option>";
+                //     tempData += "<option value='DIARIO'>DIARIO</option>";
+                //     tempData += "<option value='MENSUAL'>MENSUAL</option>";
+                //     tempData += "<option value='BIMESTRAL'>BIMESTRAL</option>";
+                //     tempData += "<option value='ANUAL'>ANUAL</option>";
+                //     tempData += "<option value='TIEMPO INDEFINIDO'>TIEMPO INDEFINIDO</option>";
+                //     tempData += "</select></td>";
+                // }
+                // else
+                // {
+                    // tempData += "<td>"+value.clasificacion+"</td>";
+                // }
+
+                tempData += "<td>"+value.usuario+"</td>";
                 
-                tempData += "<td style='font-size: -webkit-xxx-large'><button class='btn btn-info' onClick='#("+value.id_evidencias+");'>";
-                tempData += "Cargar Programa</button></td>";
+                tempData += "<td style='font-size: -webkit-xxx-large' onClick='MandarNotificacion("+value.id_usuario+","+value.validador+",\""+value.accion_correctiva+"\","+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
 
-                tempData += "<td style='font-size: -webkit-xxx-large'><button onClick='MandarNotificacion("+value.id_documento+");' type='button' class='btn btn-success'";
-                tempData += "data-toggle='modal' data-target='#MandarNotificacionModal'>";
-                tempData += "<i class='ace-icon fa fa-envelope' style='font-size: 20px;'></i> Escribir desviación</button></td>";
-
-                tempData += "<td style='font-size: -webkit-xxx-large;'><input type='checkbox' style='width:40px;height:40px;margin:28px 0 0;' name='checkbox'";
-                if(value.validacion_supervisor=='true')
-                    tempData += " checked disabled";
+                if(value.accion_correctiva!="")
+                {
+                    tempData += yesMsj+"</td>";
+                }
                 else
-                    tempData += " onchange=\"saveCheckBoxToDataBase(this,'evidencias','validacion_supervisor','id_evidencias',"+value.id_evidencias+")\"";
-                tempData += "></td>"
+                {
+                    tempData += noMsj+"</td>";
+                }
+
+                if(value.validador=="1")
+                {
+                    tempData += "<td style='font-size: -webkit-xxx-large'><button class='btn btn-info' onClick='#("+value.id_evidencias+");'>";
+                    tempData += "Cargar Programa</button></td>";
+                    tempData += "<td style='font-size: -webkit-xxx-large'><i class='ace-icon fa fa-deviantart' style='font-size: 20px;color:#6FB3E0;cursor:pointer'></i></td>";
+                    tempData += "<td style='font-size: -webkit-xxx-large;'>";
+                    if(value.validacion_supervisor=="true")
+                        tempData += yesCheck;
+                    else
+                        tempData += noCheck;
+                    tempData += "onclick=\"saveCheckBoxToDataBase(this,'evidencias','validacion_supervisor','id_evidencias',"+value.id_evidencias+","+value.id_usuario+")\"></i></td>";
+                }
+                else
+                {
+                    tempData += "<td style='font-size: -webkit-xxx-large'>"+denegado+"</td>";
+                    tempData += "<td style='font-size: -webkit-xxx-large'>"+denegado+"</td>";
+                    if(value.validacion_supervisor=='true')
+                        tempData += "<td style='font-size: -webkit-xxx-large'>"+yesCheck+" onClick='swalInfo(\"Validado por el responsable\")'></i>";
+                    else
+                        tempData += "<td style='font-size: -webkit-xxx-large'>"+noCheck+" onClick='swalInfo(\"Aun no validado\")'></i>";
+                        tempData += "</td>";
+                }
+
+                // tempData += "<td style='font-size: -webkit-xxx-large'><button onClick='MandarNotificacion("+value.id_documento+");' type='button' class='btn btn-success'";
+                // tempData += "data-toggle='modal' data-target='#MandarNotificacionModal'>";
+
+                // tempData += "<td contenteditable='true' onBlur=\"saveSingleToDatabase(this,'evidencias','accion_correctiva',"+value.id_evidencias+",'id_evidencias')\"";
+                // tempData += " onkeyup=\"detectarsihaycambio(this)\">"+value.accion_correctiva+"</td>";
+
+                // $tempData2 .= "<td onClick=\"saveCheckBoxToDataBase(this,'consult','$val[id_estructura]')\" id='consult_$val[id_estructura]'
+                //  style='border-top: 1px solid;border-right: 1px solid;cursor:pointer;'></td>"; aqui hacer lo del check validacion
             });
             if(tempArchivo=="")
             {
-                tempData += "<td></td><td></td><td></td><td></td><td></td><td></td>";
+                tempData += "<td></td><td>"+value.usuario+"</td>";
+                tempData += "<td></td><td></td><td></td><td></td>";
                 tempData += "<td>";
                 tempData += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
                 tempData += "onclick='eliminarEvidencia("+value.id_evidencias+");'>";
                 tempData += "<i class=\"fa fa-trash\"></i></button></td>";
             }
-            
             if(carga==0)
             tempData += "</tr>";
         // });
         return tempData;
     }
+
+    
 
     function eliminarEvidencia(id_evidencias)
     {
@@ -835,85 +875,118 @@
             data: 'ID_EVIDENCIA='+id_evidencias,
             success:function(eliminado)
             {
-                (eliminado==true)?(swal("","Se elimino la evidencia","success"),$('#registro_'+id_evidencias).remove()):swal("","No se pudo eliminar","error");
-                setTimeout(function(){swal.close();},1000);
+                (eliminado==true)?(swalSuccess("Se elimino la evidencia"),$('#registro_'+id_evidencias).remove()):swalError("No se pudo eliminar");
             },
             error:function()
             {
-                swal("","Error del servidor","error");
-                setTimeout(function(){swal.close();},1000);
+                swalError("Error del servidor");
             }
         });
     }
-    function saveCheckBoxToDataBase(checkbox,tabla,column,context,id)
+    function saveCheckBoxToDataBase(checkbox,tabla,column,context,id,idPara)
     {
+        no = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true' onclick=\"saveCheckBoxToDataBase(this,'evidencias','validacion_supervisor','id_evidencias',"+id+")\"></i>";
+        yes = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true' onclick=\"saveCheckBoxToDataBase(this,'evidencias','validacion_supervisor','id_evidencias',"+id+")\"></i>";
         id_validacion_documento=id;
         columna=column;
         objetocheckbox=checkbox;
-        var checked = $(objetocheckbox).filter('[type=checkbox]')[0]['checked'];
-        if(checked==true)
-        {
-            swal({
-                title: "VALIDAR",
-                text: "Una vez validada la evidencia no podra desvalidarla, confirme",
-                type: "warning",
-                showCancelButton: true,
-                closeOnConfirm: false,
-                showLoaderOnConfirm: true,
-                },function(isConfirm)
-                {
-                    if(isConfirm)
-                    {
+        ($(checkbox).hasClass('fa-times-circle-o'))?valor=true:valor=false;
+        alguno = $(checkbox).parent();
+        $(alguno[0]).html( (valor==true)?yes:no);
+        // var checked = $(objetocheckbox).filter('[type=checkbox]')[0]['checked'];
+        // if(checked==true)
+        // {
+        //     swal({
+        //         title: "VALIDAR",
+        //         text: "Una vez validada la evidencia no podra desvalidarla, confirme",
+        //         type: "warning",
+        //         showCancelButton: true,
+        //         closeOnConfirm: false,
+        //         showLoaderOnConfirm: true,
+        //         },function(isConfirm)
+        //         {
+        //             if(isConfirm)
+        //             {
                         $.ajax({
                             url: "../Controller/GeneralController.php?Op=ModificarColumna",
                             type: "POST",
                             data: "TABLA="+tabla+"&COLUMNA="+column+"&ID_CONTEXTO="+context+"&ID="+id+"&VALOR="+true,
                             success: function(data)
                             {
-                                if(data)
+                                if(data==true)
                                 {
-                                    $(objetocheckbox).attr('disabled','true');
-                                    swal("","Evidencia validada");
-                                    setTimeout(function(){swal.close();},1000);
+                                    // $(objetocheckbox).attr('disabled','true');
+                                    swalSuccess("Evidencia validada");
                                     if(columna=="desviacion_mayor")
                                     {
-                                        enviar_notificacion();
+                                        enviar_notificacion("Ha sido validada una Evidencia por ",idPara,0,false,"",id);
+                                        // msj,para,tipomsj,atendido,asunto
                                     }
                                 }
                             }
                             });
-                    }
-                    else
-                    {
-                        inputs = $(objetocheckbox).filter('[type=checkbox]');
-                        inputs[0]['checked']=false;
-                    }
-            });
+        //             }
+        //             else
+        //             {
+        //                 inputs = $(objetocheckbox).filter('[type=checkbox]');
+        //                 inputs[0]['checked']=false;
+        //             }
+        //     });
+        // }
+    }
+
+    function MandarNotificacion(idPara,validador,msj,idEvidencia)
+    {
+        if(validador==1)
+        {
+            tempData = "<button onClick='notificar("+idPara+","+idEvidencia+")' type='submit' id='subirArchivos'  class='btn crud-submit btn-info form-control'>Enviar</button>";
+            $("#BTNENVIAR_MANDARNOTIFICACIONMODAL").html(tempData);
+            $("#textAreaNotificacionModal").val(msj);
+        }
+        else
+        {
+            $("#BTNENVIAR_MANDARNOTIFICACIONMODAL").html("");
+            $("#textAreaNotificacionModal").val(msj);
         }
     }
 
-    function notificar(Obj)
+    function notificar(idPara,idEvidencia)
     {
-        mensaje = $(textAreaNotificacionModal).val();
-        enviar_notificacion(mensaje,'admin',0,false);//msj,para,tipomsj,atendido
+        mensaje = $("#textAreaNotificacionModal").val();
+        enviar_notificacion(mensaje,idPara,0,false,"una evidencia",idEvidencia);//msj,para,tipomsj,atendido,asunto
     }
     
-    function enviar_notificacion(mensaje,para,tipoMensaje,atendido)
+    function enviar_notificacion(mensaje,para,tipoMensaje,atendido,asunto,idEvidencia)
     {
         //   var u=$("#user").val();
           $.ajax({
              url:"../Controller/NotificacionesController.php?Op=EnviarNotificacionHibry",
-             data: "PARA="+para+"&MENSAJE="+mensaje+"&ATENDIDO="+atendido+"&TIPO_MENSAJE="+tipoMensaje,
+             data: "PARA="+para+"&MENSAJE=Ha recibido una Acción Correctiva de &ATENDIDO="+atendido+"&TIPO_MENSAJE="+tipoMensaje+"&ASUNTO="+asunto,
              success:function(response)
              {
                 (response==true)?
-                swal("","Mensaje enviado","success"):swal("","No se pudo enviar la notificacion","error");
-                setTimeout(function(){swal.close();},1500);
+                swalSuccess("Mensaje enviado"):swalError("No se pudo enviar la notificacion");
              },
              error:function()
              {
-                swal("","Error del servidor","error");
+                swalError("Error en el servidor");
              }
+          });
+          $.ajax({
+              url: '../Controller/EvidenciasController.php?Op=MandarAccionCorrectiva',
+              type: 'GET',
+              data: 'ID_EVIDENCIA='+idEvidencia+'&MENSAJE='+mensaje,
+              success:function(enviado)
+              {
+                  (enviado==true)?(
+                      swalSuccess("Accion correctiva enviada"),
+                      reconstruirRow(idEvidencia)
+                      ):swalError("No se pudo enviar accion correctiva");
+              },
+              error:function()
+              {
+                  swalError("Error en el servidor");
+              }
           });
     }
 
@@ -1140,6 +1213,19 @@
                 showCancelButton: false,
                 showConfirmButton: false,
                 type:"success"
+            });
+        setTimeout(function(){swal.close();},1500);
+        $('#loader').hide();
+    }
+    
+    function swalInfo(msj)
+    {
+        swal({
+                title: '',
+                text: msj,
+                showCancelButton: false,
+                showConfirmButton: false,
+                type:"info"
             });
         setTimeout(function(){swal.close();},1500);
         $('#loader').hide();

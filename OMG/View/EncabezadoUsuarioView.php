@@ -90,7 +90,7 @@ foreach ($notifacionescompletas as $value){
 						<?php echo $numeroAlarmas." NOTIFICACIONES"; ?>
 					</li>
 
-                                        <li class="dropdown-content" >
+						<li class="dropdown-content" >
 							<ul class="dropdown-menu dropdown-navbar navbar-pink">
 							<?php foreach($NotificacionesAlarma as $item)
 							{ ?>
@@ -130,33 +130,31 @@ foreach ($notifacionescompletas as $value){
 							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
 								<li class="dropdown-header">
 									<i class="ace-icon fa fa-envelope-o"></i>
-									Cantidad de Mensajes(<?php echo "".$contadorNotificaciones ?>)
+										Cantidad de Mensajes(<?php echo "".$contadorNotificaciones ?>)
 								</li>
 
 								<li class="dropdown-content">
 									<ul class="dropdown-menu dropdown-navbar">
-									
-
-                                                                            <?php foreach ($notifacionescompletas as $item){ ?>                                    
-										<li>
-											<a href="#" class="clearfix">
+										<?php foreach ($notifacionescompletas as $item){ ?>                                    
+										<li style="padding-top:5px;border:1px #6FB3E0 solid">
+											<!-- <a style="cursor:pointer" class="clearfix"> -->
 												<img src="../../assets/probando/images/avatars/user.jpg" class="msg-photo" alt="admin" />
 												<span class="msg-body">
 													<span class="msg-title">
-														<span class="blue"><?php echo $item["para"] ?>:
-                                                                                                                Tiene que atender una desviacion de 
-                                                                                                                </span>
-														
+														<span class="blue">
+															<?php echo $item["mensaje"].$item["nombre"] ?>
+														</span>
 													</span>
 
 													<span class="msg-time">
 														<i class="ace-icon fa fa-clock-o"></i>
-														<span><?php echo  $item["fecha_envio"] ?></span>
+														<span><?php echo  $item["fecha_envio"] ?> (Enviado)</span>
+														<i style="color:red;background:transparent;border:none;cursor:pointer" onClick="borrarNotificacion(<?php echo $item['id_notificaciones'] ?>)" class="ace-icon fa fa-trash"></i>
 													</span>
 												</span>
-											</a>
+											<!-- </a> -->
 										</li>
-                                                                            <?php } ?>
+										<?php } ?>
 									</ul>
 								</li>
 
@@ -210,3 +208,26 @@ foreach ($notifacionescompletas as $value){
 </div>
 
 </div>
+<script>
+	function borrarNotificacion(idNoti)
+	{
+		$.ajax({
+			url: '../Controller/NotificacionesController.php?Op=EliminarNotificacion',
+			type: 'GET',
+			data: 'ID_NOTIFICACION='+idNoti,
+			success:function(eliminado)
+			{
+				if(eliminado==true)
+				{
+					swalSuccess("Eliminado");
+				}
+				else
+				swalError("No se pudo eliminar");
+			},
+			error:function()
+			{
+				swalError("Error en el servidor");
+			}
+		});
+	}
+</script>

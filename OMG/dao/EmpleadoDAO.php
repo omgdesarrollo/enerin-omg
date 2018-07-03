@@ -7,7 +7,7 @@ class EmpleadoDAO{
 
               $query="SELECT id_empleado, nombre_empleado, categoria, apellido_paterno, apellido_materno, correo, fecha_creacion, identificador 
                       FROM empleados 
-                      WHERE empleados.identificador LIKE '%$cadena%' order by nombre_empleado";            
+                      WHERE empleados.identificador LIKE '%%' order by nombre_empleado";            
 
 
             $db=  AccesoDB::getInstancia();

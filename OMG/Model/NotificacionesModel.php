@@ -19,10 +19,10 @@ class NotificacionesModel {
 
     
     
-    public function guardarNotificacionHibry($id_usuario_empleado,$mensaje,$tipo,$atendido,$para){
+    public function guardarNotificacionHibry($id_usuario,$id_para,$mensaje,$tipo,$atendido,$asunto){
       try{
             $dao=new NotificacionesDAO();
-            $rec=$dao->guardarNotificacionHibry($id_usuario_empleado, $mensaje, $tipo,$atendido,$para);
+            $rec=$dao->guardarNotificacionHibry($id_usuario,$id_para,$mensaje,$tipo,$atendido,$asunto);
             return $rec;
         }catch (Exception $ex)
         {
@@ -32,21 +32,28 @@ class NotificacionesModel {
     
     }
     
-    public function mostrarNotificacionesCompletas(){
+    public function mostrarNotificacionesCompletas($ID_USUARIO)
+    {
         try{
             $dao= new NotificacionesDAO();
-            $rec= $dao->mostrarNotificacionesCompletas();
+            $rec= $dao->mostrarNotificacionesCompletas($ID_USUARIO);
             return $rec;
         } catch (Exception $ex) {
 
-        }
-        
-        
-        
+        }    
     }
     
-    
-    
+    public function eliminarNotificacion($ID_NOTIFICACION)
+    {
+        try{
+            $dao= new NotificacionesDAO();
+            $rec= $dao->eliminarNotificacion($ID_NOTIFICACION);
+            return $rec;
+        } catch (Exception $ex)
+        {
+            return false;
+        }
+    }
     
     
     

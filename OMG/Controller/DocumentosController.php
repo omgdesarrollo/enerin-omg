@@ -16,17 +16,13 @@ $pojo= new DocumentoPojo();
 switch ($Op) {
 	case 'Listar':
 
-		$Lista=$model->listarDocumentos();         
-    	Session::setSesion("listarDocumentos",$Lista);
-//    	$tarjet="../view/principalmodulos.php";
-    	
-//		echo json_encode(array("data" => $Lista));
-//		header("location: login.php");
+        $Lista=$model->listarDocumentos();         
+//    	Session::setSesion("listarDocumentos",$Lista);
+
         header('Content-type: application/json; charset=utf-8');
-		echo json_encode($Lista);
-//        echo json_encode(array("data" => $Lista));
-//echo $json = json_encode(array("n" => "".$Lista.NOMBRE_EMPLEADO, "a" => "apellido",  "c" => "test"));
-//		return $Lista;
+        echo json_encode($Lista);
+        return $Lista;
+                
 		break;
             
         case 'mostrarcombo':

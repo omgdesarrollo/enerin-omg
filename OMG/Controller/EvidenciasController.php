@@ -59,7 +59,8 @@ switch ($Op)
 	break;
     
     case 'ListarEvidencia':
-    $resultado = $model->listarEvidencia($_REQUEST['ID_EVIDENCIA']);
+    $USUARIO = Session::getSesion("user");
+    $resultado = $model->listarEvidencia($_REQUEST['ID_EVIDENCIA'],$USUARIO["ID_USUARIO"]);
     header('Content-type: application/json; charset=utf-8');
     echo json_encode($resultado);
     break;
@@ -82,6 +83,11 @@ switch ($Op)
         $lista = $model->listarRegistros($_REQUEST['CADENA'],$_REQUEST['ID_TEMA']);
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($lista);
+    break;
+
+    case 'MandarAccionCorrectiva':
+        $exito = $model->mandarAccionCorrectiva($_REQUEST["ID_EVIDENCIA"],$_REQUEST["MENSAJE"]);
+        echo $exito;
     break;
 
 	default:
