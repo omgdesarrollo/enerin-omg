@@ -18,12 +18,12 @@ class EvidenciasModel
         }
     }
     
-    public function listarEvidencia($ID_EVIDENCIA)
+    public function listarEvidencia($ID_EVIDENCIA,$ID_USUARIO)
     {
         try
         {
             $dao = new EvidenciasDAO();
-            $rec = $dao->listarEvidencia($ID_EVIDENCIA);
+            $rec = $dao->listarEvidencia($ID_EVIDENCIA,$ID_USUARIO);
 
             return $rec;
         }catch(Exception $e)
@@ -127,6 +127,20 @@ class EvidenciasModel
         {
             $dao=new EvidenciasDAO();
             $rec = $dao->listarTemas($CADENA,$ID_USUARIO);
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
+    public function mandarAccionCorrectiva($ID_EVIDENCIA,$MENSAJE)
+    {
+        try
+        {
+            $dao=new EvidenciasDAO();
+            $rec = $dao->mandarAccionCorrectiva($ID_EVIDENCIA,$MENSAJE);
             return $rec;
         } catch (Exception $ex)
         {
