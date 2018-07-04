@@ -39,6 +39,8 @@ $Usuario=  Session::getSesion("user");
         <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
         <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
         <script src="../../js/funcionessidebar.js" type="text/javascript"></script>
+        <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
+        <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
         <style>
 		div#sidebarObj {
 			position: relative;
@@ -140,7 +142,10 @@ var gantt=[
     }  
 ];
 
-  datacontratos=[];
+  datacontratos=[
+      {id:'cont',text:'Cambiar',img:'user.png', type:'button',isbig:true}
+  ];
+  
   dataSeccionRibbon=[];
 //    loadEstructuraMaster();
 //    loadDataContratos();
@@ -166,9 +171,12 @@ var gantt=[
 //                    loadDataContratos();
                   loadDataMenuArriba("");
 //                    loadEstructuraMaster();
- 
+                    ribbon.setSizes();
                     ribbon.attachEvent("onClick", function(itemIdSeleccion, bId){
 //                         alert(itemIdSeleccion);
+
+                        if(itemIdSeleccion=="cont")
+                            cambiarCont();
                         if(itemIdSeleccion=="sesionusuario")
 //                            loadViewUsuario();
                             loadDataSideBarAjustesUsuario();
@@ -440,16 +448,26 @@ function loadDataNotificaciones(){
   closeOnConfirm: false,
   showLoaderOnConfirm: true
 }, function () {
-    window.location.href="Logout.php";
+//    window.location.href="Logout.php";
 //  setTimeout(function () {
 //        temporalcierresesion=1;
 //    swal("Sesion finalizada de manera correcta");
 //  }, 2000);
 
  
-});
+}).then(function (result) {
+     window.location.href="Logout.php";
+//  swal({
+//    type: 'success',
+//    html: 'tu seleccionaste ' + result
+//  }).then(function(){
+//       window.location.href="Logout.php";
+//  }) ;
+});;
     }
     
+    
+
     
     
     function loadDataCargaProgramaGantt(){
