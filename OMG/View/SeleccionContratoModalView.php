@@ -38,8 +38,6 @@ $Usuario=  Session::getSesion("user");
 
                 
                 <script src="../../js/jquery.js" type="text/javascript"></script>
-                <script src="../../js/fEmpleadosView.js" type="text/javascript"></script>
-                     
                 
 <style>
         
@@ -80,8 +78,8 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
 
 <div id="loader"></div>
           
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#change-item">
-    Seleccionar Contatos
+<button type="button" class="btn btn-success" onclick="listarCumplimientos()" data-toggle="modal" data-target="#change-item">
+    Seleccionar Contratos
 </button>
   
 
@@ -95,36 +93,10 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
 		      </div>
                         
 		      <div class="modal-body">
-                          <form id="temaform">                                                                          
 
-                                                <div class="form-group">
-							<label class="control-label" for="title">Contratos:</label>
-                                                        
-                                                        <select   id="ID_CUMPLIMIENTO" class="select1">
-                                                                <?php
-                                                                $cbxC = Session::getSesion("listarCumplimientosComboBox");
-                                                                foreach ($cbxC as $value) 
-                                                                {
-                                                                ?>
-                                                                
-                                                                <option value="<?php echo "".$value["id_cumplimiento"] ?>"><?php echo "".$value["clave_cumplimiento"]; ?></option>
-                                                                
-                                                                <?php                                                                
-                                                                }                                    
-                                                                 ?>
-                                                        </select>
-                                                        
-							<div class="help-block with-errors"></div>
-						</div>
-                                                                        
-                                                                                                                                
-						<div class="form-group">
-                                                    <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
-                                                    <button type="submit" id="btn_limpiar_tema"  class="btn crud-submit btn-info">Limpiar</button>
-						</div>
-                          </form>
-
-		      </div>
+                        <div id="contenidomodal" ></div>
+		      
+                      </div>
 		    </div>
 
 		  </div>
@@ -134,10 +106,17 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
        
                         
                 
-		<script>
-                                                                
-		</script>
+<script>
+    
 
+function loadSpinner()
+{
+    myFunction();
+}
+
+</script>
+
+        <script src="../../js/fSeleccionContratoModalView.js" type="text/javascript"></script>
         <!--Inicia para el spiner cargando-->
         <script src="../../js/loaderanimation.js" type="text/javascript"></script>
         <!--Termina para el spiner cargando-->

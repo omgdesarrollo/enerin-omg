@@ -43,8 +43,12 @@ switch ($Op) {
 		return $Lista;
 		break;        
                 
-	case 'Nuevo':
-		# code...
+	case 'obtenerContrato':
+		$Lista=$model->obtenerContratosPorUsuarioPermiso($_REQUEST['ID_USUARIO']);
+                header('Content-type: application/json; charset=utf-8');
+                echo json_encode($Lista);
+		return $Lista;
+            
 		break;	
          
 	case 'Guardar':
