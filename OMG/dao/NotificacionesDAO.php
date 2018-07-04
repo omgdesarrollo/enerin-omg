@@ -30,7 +30,7 @@ class NotificacionesDAO {
                 from notificaciones tbnotificaciones
                 JOIN usuarios tbusuarios ON tbusuarios.id_usuario = tbnotificaciones.id_para
                 JOIN empleados tbempleados ON tbempleados.id_empleado = tbusuarios.id_empleado
-                WHERE tbnotificaciones.id_para = $ID_USUARIO";
+                WHERE tbnotificaciones.id_para = $ID_USUARIO ORDER BY tbnotificaciones.fecha_envio DESC";
              $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             return $lista;

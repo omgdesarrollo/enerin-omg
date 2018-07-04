@@ -20,18 +20,19 @@ class EvidenciasDAO
                 ) AS usuario, (SELECT IF(tbusuarios.id_usuario=tbevidencias.id_usuario,1,0) ) AS validador
             
             FROM temas tbtemas
-            JOIN asignacion_tema_requisito tbasignacion_tema_requisito ON tbasignacion_tema_requisito.id_tema=tbtemas.id_tema
-            JOIN asignacion_tema_requisito_requisitos tbasignacion_tema_requisito_requisitos
+            LEFT JOIN asignacion_tema_requisito tbasignacion_tema_requisito ON tbasignacion_tema_requisito.id_tema=tbtemas.id_tema
+        	LEFT JOIN asignacion_tema_requisito_requisitos tbasignacion_tema_requisito_requisitos
             ON tbasignacion_tema_requisito_requisitos.id_asignacion_tema_requisito = tbasignacion_tema_requisito.id_asignacion_tema_requisito
-            JOIN requisitos tbrequisitos ON tbrequisitos.id_requisito = tbasignacion_tema_requisito_requisitos.id_requisito
-            JOIN requisitos_registros tbrequisitos_registros ON tbrequisitos_registros.id_requisito = tbrequisitos.id_requisito
-            JOIN registros tbregistros ON tbregistros.id_registro = tbrequisitos_registros.id_registro
-            JOIN evidencias tbevidencias ON tbevidencias.id_registro = tbregistros.id_registro
-            JOIN empleados tbempleados ON tbempleados.id_empleado = tbtemas.id_empleado
-            JOIN usuarios tbusuarios ON tbusuarios.id_empleado = tbempleados.id_empleado
-            JOIN documentos tbdocumentos ON tbdocumentos.id_documento = tbregistros.id_documento
+			LEFT JOIN requisitos tbrequisitos ON tbrequisitos.id_requisito = tbasignacion_tema_requisito_requisitos.id_requisito
+			LEFT JOIN requisitos_registros tbrequisitos_registros ON tbrequisitos_registros.id_requisito = tbrequisitos.id_requisito
+            LEFT JOIN registros tbregistros ON tbregistros.id_registro = tbrequisitos_registros.id_registro
+	    	LEFT JOIN evidencias tbevidencias ON tbevidencias.id_registro = tbregistros.id_registro
+			LEFT JOIN empleados tbempleados ON tbempleados.id_empleado = tbtemas.id_empleado
+			LEFT JOIN usuarios tbusuarios ON tbusuarios.id_empleado = tbempleados.id_empleado
+            LEFT JOIN documentos tbdocumentos ON tbdocumentos.id_documento = tbregistros.id_documento
             
-            WHERE tbusuarios.id_usuario = $ID_USUARIO AND LOWER(tbtemas.identificador) LIKE '%catalogo%'";
+            WHERE tbregistros.registro<>'NULL' AND tbusuarios.id_usuario = $ID_USUARIO AND LOWER(tbtemas.identificador) 
+			LIKE '%catalogo%' OR tbevidencias.id_usuario = $ID_USUARIO";
             
             $db = AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);

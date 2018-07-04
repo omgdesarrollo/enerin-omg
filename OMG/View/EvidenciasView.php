@@ -779,7 +779,7 @@
             // tempData += "data-toggle='modal' data-target='#mostrarRegistrosModal'>";
             // tempData += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i> Ver</button></td>";
             
-            tempData += "<td style='font-size: -webkit-xxx-large'><button onClick='mostrar_urls("+value.id_evidencias+");'";
+            tempData += "<td style='font-size: -webkit-xxx-large'><button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+");'";
             tempData += "type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
             tempData += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar</button></td>";
             $.each(todo[0],function(index2,value2)
@@ -828,7 +828,7 @@
                         tempData += yesCheck;
                     else
                         tempData += noCheck;
-                    tempData += "onclick=\"saveCheckBoxToDataBase(this,'evidencias','validacion_supervisor','id_evidencias',"+value.id_evidencias+","+value.id_usuario+")\"></i></td>";
+                    tempData += "onclick=\"validarEvidencia(this,'evidencias','validacion_supervisor','id_evidencias',"+value.id_evidencias+","+value.id_usuario+")\"></i></td>";
                 }
                 else
                 {
@@ -865,8 +865,6 @@
         return tempData;
     }
 
-    
-
     function eliminarEvidencia(id_evidencias)
     {
         $.ajax({
@@ -883,7 +881,12 @@
             }
         });
     }
-    function saveCheckBoxToDataBase(checkbox,tabla,column,context,id,idPara)
+
+    // function validarEvidencia(checkbox,tabla,column,context,id,idPara)
+    // {
+
+    // }
+    function validarEvidencia(checkbox,tabla,column,context,id,idPara)
     {
         no = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true' onclick=\"saveCheckBoxToDataBase(this,'evidencias','validacion_supervisor','id_evidencias',"+id+")\"></i>";
         yes = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true' onclick=\"saveCheckBoxToDataBase(this,'evidencias','validacion_supervisor','id_evidencias',"+id+")\"></i>";
@@ -892,7 +895,6 @@
         objetocheckbox=checkbox;
         ($(checkbox).hasClass('fa-times-circle-o'))?valor=true:valor=false;
         alguno = $(checkbox).parent();
-        $(alguno[0]).html( (valor==true)?yes:no);
         // var checked = $(objetocheckbox).filter('[type=checkbox]')[0]['checked'];
         // if(checked==true)
         // {
@@ -910,18 +912,20 @@
                         $.ajax({
                             url: "../Controller/GeneralController.php?Op=ModificarColumna",
                             type: "POST",
-                            data: "TABLA="+tabla+"&COLUMNA="+column+"&ID_CONTEXTO="+context+"&ID="+id+"&VALOR="+true,
+                            data: "TABLA="+tabla+"&COLUMNA="+column+"&ID_CONTEXTO="+context+"&ID="+id+"&VALOR="+valor,
                             success: function(data)
                             {
                                 if(data==true)
                                 {
                                     // $(objetocheckbox).attr('disabled','true');
+                                    $(alguno[0]).html( (valor==true)?yes:no);
                                     swalSuccess("Evidencia validada");
-                                    if(columna=="desviacion_mayor")
-                                    {
-                                        enviar_notificacion("Ha sido validada una Evidencia por ",idPara,0,false,"",id);
-                                        // msj,para,tipomsj,atendido,asunto
-                                    }
+                                    // if(columna=="desviacion_mayor")
+                                    // {
+                                        enviar_notificacion( ((valor==true)? "Ha sido validada una Evidencia por ":"Ha sido desvalidada una Evidencia por "),idPara,0,false,"",id);
+
+                                        // msj,para,tipomsj,atendido,asunto,idEvidencia
+                                    // }
                                 }
                             }
                             });
@@ -953,26 +957,8 @@
     function notificar(idPara,idEvidencia)
     {
         mensaje = $("#textAreaNotificacionModal").val();
-        enviar_notificacion(mensaje,idPara,0,false,"una evidencia",idEvidencia);//msj,para,tipomsj,atendido,asunto
-    }
-    
-    function enviar_notificacion(mensaje,para,tipoMensaje,atendido,asunto,idEvidencia)
-    {
-        //   var u=$("#user").val();
-          $.ajax({
-             url:"../Controller/NotificacionesController.php?Op=EnviarNotificacionHibry",
-             data: "PARA="+para+"&MENSAJE=Ha recibido una Acción Correctiva de &ATENDIDO="+atendido+"&TIPO_MENSAJE="+tipoMensaje+"&ASUNTO="+asunto,
-             success:function(response)
-             {
-                (response==true)?
-                swalSuccess("Mensaje enviado"):swalError("No se pudo enviar la notificacion");
-             },
-             error:function()
-             {
-                swalError("Error en el servidor");
-             }
-          });
-          $.ajax({
+        enviar_notificacion("Ha recibido una Accion Correctiva de ",idPara,0,false,"una evidencia",idEvidencia);//msj,para,tipomsj,atendido,asunto
+        $.ajax({
               url: '../Controller/EvidenciasController.php?Op=MandarAccionCorrectiva',
               type: 'GET',
               data: 'ID_EVIDENCIA='+idEvidencia+'&MENSAJE='+mensaje,
@@ -987,6 +973,24 @@
               {
                   swalError("Error en el servidor");
               }
+          });
+    }
+    
+    function enviar_notificacion(mensaje,para,tipoMensaje,atendido,asunto,idEvidencia)
+    {
+        //   var u=$("#user").val();
+          $.ajax({
+             url:"../Controller/NotificacionesController.php?Op=EnviarNotificacionHibry",
+             data: "PARA="+para+"&MENSAJE="+mensaje+"&ATENDIDO="+atendido+"&TIPO_MENSAJE="+tipoMensaje+"&ASUNTO="+asunto,
+             success:function(response)
+             {
+                (response==true)?
+                swalSuccess("Validado"):swalError("No se pudo validar");
+             },
+             error:function()
+             {
+                swalError("Error en el servidor");
+             }
           });
     }
 
@@ -1044,7 +1048,7 @@
         agregarArchivosUrl();
     });
 
-    function mostrar_urls(id_evidencia)
+    function mostrar_urls(id_evidencia,validador,validado)
     {
         var tempDocumentolistadoUrl = "";
         URL = 'filesEvidenciaDocumento/'+id_evidencia;
@@ -1077,10 +1081,14 @@
                                                       (index==1)?name=value:name+="-"+value;
                                       });
                                       tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
-                                      tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\">"+name+"</a></td>";
-                                      tempDocumentolistadoUrl += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
-                                      tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
-                                      tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";
+                                      tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\">"+name+"</a></td><td>";
+                                      if(validador!="1" || validado=="false")
+                                      {
+                                        tempDocumentolistadoUrl += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
+                                        tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
+                                        tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button>";
+                                      }
+                                      tempDocumentolistadoUrl += "</td></tr>";
                               });
                               tempDocumentolistadoUrl += "</tbody></table>";
                       }
@@ -1144,7 +1152,7 @@
             {
               if(eliminado)
               {
-                mostrar_urls(ID_EVIDENCIA_DOCUMENTO);
+                mostrar_urls(ID_EVIDENCIA_DOCUMENTO,"0","false");
                 refresh();
                 //eliminar parte del registro en la base de datos
                 swal("","Archivo eliminado");
@@ -1297,7 +1305,7 @@
             <!-- </td> -->
         </tr>
     {% } %}
-    {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO); reconstruirRow(ID_EVIDENCIA_DOCUMENTO); noArchivo=0; } } %}
+    {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO,'0','false'); reconstruirRow(ID_EVIDENCIA_DOCUMENTO); noArchivo=0; } } %}
 </script>
 
         <!--Inicia para el spiner cargando-->

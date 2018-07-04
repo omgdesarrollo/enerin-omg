@@ -49,7 +49,8 @@ switch ($Op) {
             $USUARIO = Session::getSesion("user");
             $lista=$model->mostrarNotificacionesCompletas($USUARIO["ID_USUARIO"]);
             Session::setSesion("notificacionescompletas",$lista);
-            echo 'er   '. json_encode($lista);
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($lista);
 //            Session::setSesion("notify", $);
             
         break;
