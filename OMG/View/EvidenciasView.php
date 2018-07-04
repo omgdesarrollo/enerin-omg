@@ -807,7 +807,7 @@
 
                 tempData += "<td>"+value.usuario+"</td>";
                 
-                tempData += "<td style='font-size: -webkit-xxx-large' onClick='MandarNotificacion("+value.id_usuario+","+value.validador+",\""+value.accion_correctiva+"\","+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
+                tempData += "<td style='font-size: -webkit-xxx-large' onClick='MandarNotificacion("+value.id_usuario+","+value.responsable+",\""+value.accion_correctiva+"\","+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
 
                 if(value.accion_correctiva!="")
                 {
@@ -818,7 +818,7 @@
                     tempData += noMsj+"</td>";
                 }
 
-                if(value.validador=="1")
+                if(value.responsable=="1")
                 {
                     tempData += "<td style='font-size: -webkit-xxx-large'><button class='btn btn-info' onClick='#("+value.id_evidencias+");'>";
                     tempData += "Cargar Programa</button></td>";
@@ -888,8 +888,8 @@
     // }
     function validarEvidencia(checkbox,tabla,column,context,id,idPara)
     {
-        no = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true' onclick=\"saveCheckBoxToDataBase(this,'evidencias','validacion_supervisor','id_evidencias',"+id+")\"></i>";
-        yes = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true' onclick=\"saveCheckBoxToDataBase(this,'evidencias','validacion_supervisor','id_evidencias',"+id+")\"></i>";
+        no = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true' onclick=\"validarEvidencia(this,'evidencias','validacion_supervisor','id_evidencias',"+id+","+idPara+")\"></i>";
+        yes = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true' onclick=\"validarEvidencia(this,'evidencias','validacion_supervisor','id_evidencias',"+id+","+idPara+")\"></i>";
         id_validacion_documento=id;
         columna=column;
         objetocheckbox=checkbox;
@@ -919,14 +919,18 @@
                                 {
                                     // $(objetocheckbox).attr('disabled','true');
                                     $(alguno[0]).html( (valor==true)?yes:no);
-                                    swalSuccess("Evidencia validada");
+                                    // swalSuccess("Evidencia validada");
                                     // if(columna=="desviacion_mayor")
                                     // {
-                                        enviar_notificacion( ((valor==true)? "Ha sido validada una Evidencia por ":"Ha sido desvalidada una Evidencia por "),idPara,0,false,"",id);
+                                        enviar_notificacion( ((valor==true)? "Ha sido validada una Evidencia por ":"Ha sido desvalidada una Evidencia por "),idPara,0,false,"");
 
-                                        // msj,para,tipomsj,atendido,asunto,idEvidencia
+                                        // msj,para,tipomsj,atendido,asunto,idEvidencia((
                                     // }
                                 }
+                            },
+                            error:function()
+                            {
+                                swalError("Error en el servidor");
                             }
                             });
         //             }
@@ -939,9 +943,9 @@
         // }
     }
 
-    function MandarNotificacion(idPara,validador,msj,idEvidencia)
+    function MandarNotificacion(idPara,responsable,msj,idEvidencia)
     {
-        if(validador==1)
+        if(responsable==1)
         {
             tempData = "<button onClick='notificar("+idPara+","+idEvidencia+")' type='submit' id='subirArchivos'  class='btn crud-submit btn-info form-control'>Enviar</button>";
             $("#BTNENVIAR_MANDARNOTIFICACIONMODAL").html(tempData);
@@ -957,7 +961,7 @@
     function notificar(idPara,idEvidencia)
     {
         mensaje = $("#textAreaNotificacionModal").val();
-        enviar_notificacion("Ha recibido una Accion Correctiva de ",idPara,0,false,"una evidencia",idEvidencia);//msj,para,tipomsj,atendido,asunto
+        enviar_notificacion("Ha recibido una Accion Correctiva de ",idPara,0,false,"una evidencia");//msj,para,tipomsj,atendido,asunto
         $.ajax({
               url: '../Controller/EvidenciasController.php?Op=MandarAccionCorrectiva',
               type: 'GET',
@@ -976,7 +980,7 @@
           });
     }
     
-    function enviar_notificacion(mensaje,para,tipoMensaje,atendido,asunto,idEvidencia)
+    function enviar_notificacion(mensaje,para,tipoMensaje,atendido,asunto)
     {
         //   var u=$("#user").val();
           $.ajax({
@@ -985,7 +989,7 @@
              success:function(response)
              {
                 (response==true)?
-                swalSuccess("Validado"):swalError("No se pudo validar");
+                swalSuccess("Se notifico del cambio "):swalError("No se pudo notificar");
              },
              error:function()
              {
@@ -1082,7 +1086,7 @@
                                       });
                                       tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
                                       tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\">"+name+"</a></td><td>";
-                                      if(validador!="1" || validado=="false")
+                                      if(validador=="1" || validado=="false")
                                       {
                                         tempDocumentolistadoUrl += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
                                         tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";

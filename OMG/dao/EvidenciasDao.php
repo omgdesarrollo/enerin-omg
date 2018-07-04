@@ -7,7 +7,7 @@ class EvidenciasDAO
     {
         try
         {
-            $query = "SELECT tbrequisitos.id_requisito,tbrequisitos.requisito,
+            $query = "SELECT tbusuarios.id_empleado,tbrequisitos.id_requisito,tbrequisitos.requisito,
             tbregistros.id_registro,tbregistros.registro,tbregistros.frecuencia,
             tbdocumentos.clave_documento,
             tbevidencias.id_evidencias,tbevidencias.id_usuario,tbevidencias.accion_correctiva,tbevidencias.validacion_supervisor,
@@ -17,7 +17,9 @@ class EvidenciasDAO
                     FROM empleados tbempleados
                     JOIN usuarios tbusuariosU ON tbusuariosU.id_empleado = tbempleados.id_empleado
                     WHERE tbusuariosU.id_usuario = tbevidencias.id_usuario
-                ) AS usuario, (SELECT IF(tbusuarios.id_usuario=tbevidencias.id_usuario,1,0) ) AS validador
+                ) AS usuario, (SELECT IF(tbusuarios.id_usuario=tbevidencias.id_usuario,1,0) ) AS validador,
+                ( SELECT IF( tbempleados.id_empleado = (SELECT tbempleado.id_empleado FROM usuarios tbusuario,empleados tbempleado 
+				    WHERE tbusuario.id_empleado = tbempleado.id_empleado AND tbusuario.id_usuario = 2),1,0) ) AS responsable
             
             FROM temas tbtemas
             LEFT JOIN asignacion_tema_requisito tbasignacion_tema_requisito ON tbasignacion_tema_requisito.id_tema=tbtemas.id_tema
