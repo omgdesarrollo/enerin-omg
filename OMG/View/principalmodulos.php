@@ -216,10 +216,8 @@ var gantt=[
                        
                         if(itemIdSeleccion=="documentacion")
                             loadDataSideBarOficiosDocumentacion();
-                       
                         if(itemIdSeleccion=="informegerencial")
                             loadDataInformeGerencial();
-                        
                         if(itemIdSeleccion=="cargaprograma")
                             loadDataCargaProgramaGantt();
                        
@@ -402,28 +400,21 @@ function loadDataNotificaciones(){
                                         
                                         cont=value.nombre_contenido_sub;
                                         if(iterar>0){
-                                          $.each(listadentroitems ,function (i,v){
-//                                               alert("w  :"+ v.id);
-                                                 va=v.id;       
-                                                $.each(r,function(i,v){
-//                                                        if(va=!v.){
-//                                                            
-//                                                        }
-//                                                    alert(v)
-                                                });
-                                                
-                                        });  
+                                            $.each(listadentroitems ,function (i,v){
+    //                                               alert("w  :"+ v.id);
+                                                   va=v.id;       
+                                                  $.each(r,function(i,v){
+    //                                                        if(va=!v.){
+    //                                                            
+    //                                                        }
+    //                                                    alert(v)
+                                                  });
+
+                                            });  
                                             
                                         }
                                         
-//                                        $.each(listadentroitems ,function (i,v){
-////                                            alert(v.id);
-////                                            if(v.){
-////                                            }
-//                                            v_data=v.id;
-//                                            if(){
-//                                        });
-                                       
+                                        
                                             submodulosItems.push({id:''+(contadorid++),mode:'cols',text:''+value.nombre_submodulo,type:'block', list:listadentroitems});
 //                                        }
                                         iterar++;

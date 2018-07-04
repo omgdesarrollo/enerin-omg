@@ -119,7 +119,7 @@ require_once 'EncabezadoUsuarioView.php';
         <div class="col-md-4">
                 <div class="row align-items-center">
                         <div class="col-1">
-                                <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkValidado">
+                                <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkNoValidado">
                         </div>
                         <div class="col-5">No Validados</div>
                 </div>
@@ -128,7 +128,7 @@ require_once 'EncabezadoUsuarioView.php';
         <div class="col-md-4">
                 <div class="row align-items-center">
                         <div class="col-1">
-                                <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkValidado">
+                                <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkSinDocumento">
                         </div>
                         <div class="col-6">Sin Documento</div>
                 </div>
@@ -227,6 +227,17 @@ require_once 'EncabezadoUsuarioView.php';
 <script>
     listarDatos();
     
+    
+    $(function (){
+//      alert("tene");
+$('#checkValidado').click(function() {
+//        if (!$(this).is(':checked')) {
+//            return confirm("Estas seguro que desea quitarle la seleccion");
+//        }
+alert("d");
+    });
+    
+    });
 //    function consultarInformacion(url)
 //    {
 //        $("#loader").show();
@@ -530,27 +541,7 @@ require_once 'EncabezadoUsuarioView.php';
             <script src="../../assets/probando/js/ace.min.js"></script>
     
 
-                <!--Para cargar archivos-->
-                <script src="../../assets/FileUpload/js/jquery.min.js"></script>
-                <script src="../../assets/FileUpload/js/jquery-ui.min.js"></script>
-                <script src="../../assets/FileUpload/js/tmpl.min.js"></script>
-                <script src="../../assets/FileUpload/js/load-image.all.min.js"></script>
-                <script src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.blueimp-gallery.min.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.iframe-transport.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-process.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-image.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-audio.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-video.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
-                <script src="../../assets/FileUpload/js/main.js"></script>
-                <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
-                <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
-                <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
-                <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
+           
                 
 	</body>
      
