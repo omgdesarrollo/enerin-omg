@@ -83,6 +83,29 @@ class CumplimientoDAO{
         
     }
     
+    public function obtenerContratosPorUsuarioPermiso($ID_USUARIO)
+    {
+        try
+        {
+            $query="SELECT tbusuarios_cumplimientos.id_cumplimiento, tbcumplimientos.clave_cumplimiento, tbcumplimientos.cumplimiento
+                    FROM usuarios_cumplimientos tbusuarios_cumplimientos
+                    JOIN cumplimientos tbcumplimientos ON tbcumplimientos.id_cumplimiento=tbusuarios_cumplimientos.id_cumplimiento
+                    WHERE tbusuarios_cumplimientos.acceso='true' AND tbusuarios_cumplimientos.id_usuario=$ID_USUARIO";
+            
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            return $lista;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+            
+
+
     public function eliminarEmpleado($id_cumplimiento){
         try{
             $query="DELETE FROM cumplimientos WHERE id_cumplimiento=$id_cumplimiento";

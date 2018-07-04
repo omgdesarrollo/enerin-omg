@@ -83,6 +83,26 @@ class CumplimientoModel{
                 throw $ex;
         }
     }
+    
+    
+    public function obtenerContratosPorUsuarioPermiso($ID_USUARIO)
+    {
+        try
+        {
+            $dao=new CumplimientoDAO();
+            $rec= $dao->obtenerContratosPorUsuarioPermiso($ID_USUARIO);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
+
+
+
     public function eliminar(){
         try{
             $dao= new CumplimientoDAO();
