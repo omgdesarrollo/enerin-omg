@@ -41,7 +41,15 @@ $Usuario=  Session::getSesion("user");
         <script src="../../js/funcionessidebar.js" type="text/javascript"></script>
         <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
         <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
+        <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
         <style>
+                .modal-body{
+                      color:#888;
+                      max-height: calc(100vh - 110px);
+                      overflow-y: auto;
+                     
+                    } 
+            
 		div#sidebarObj {
 			position: relative;
 			/*margin-left: 10px;*/
@@ -143,9 +151,8 @@ var gantt=[
 ];
 
   datacontratos=[
-      {id:'cont',text:'Cambiar',img:'user.png', type:'button',isbig:true}
+      {id:'cambiarcontrato',text:'Cambiar Contrato',img:'contratos.png',type:'button',isbig:true}
   ];
-  
   dataSeccionRibbon=[];
 //    loadEstructuraMaster();
 //    loadDataContratos();
@@ -201,9 +208,10 @@ var gantt=[
                         if(itemIdSeleccion=="excel")
                            alert("le has picado a excel ");
                         
-                        if(itemIdSeleccion=="pdf")
-                           alert("le has picado a pdf");
-                        
+                        if(itemIdSeleccion=="cambiarcontrato")
+//                           alert("le has picado a pdf");
+                            loadDataSideBarContratos();        
+//                              loadDataModalCambiarContrato();  
                         if(itemIdSeleccion=="Informacion") 
                            loadDataSideBarCatalogoInformacion();
                        
@@ -243,10 +251,11 @@ var gantt=[
 	var inicio=[
         {id:'00',text:'Seleccion de contrato(Click)' ,items:[
         
-                            {id:'0x1',mode:'cols',text:'Contratos',type:'block',
+                    {id:'0x1',mode:'cols',text:'Contratos',type:'block',
           list:datacontratos
         }
-        ]},         
+        ]},
+    
 	{id:'0',text:'OMG', active:true, items:[
 	{id:'0x2',mode:'cols',text:'Principal',type:'block', 
 		list:[
@@ -392,6 +401,8 @@ function loadDataNotificaciones(){
                      seccionMenuDinamic.push({id:''+(contadorid++),text:'Seleccion de contrato(Click)' ,items:[        
                             {id:'0',mode:'cols',text:'Contratos',type:'block',list:datacontratos}
                             ]});
+                        
+                        
                       submodulosItems.push({id:''+(contadorid++),mode:'cols',text:'Principal',type:'block', 
                         list:[
                                 {id:'logout',text:'Cerrar',img:'cerrarsesion.png', type:'button',isbig:true}
@@ -464,6 +475,30 @@ function loadDataNotificaciones(){
 //       window.location.href="Logout.php";
 //  }) ;
 });;
+    }
+    
+    function loadDataModalCambiarContrato()
+    {
+        alert("Entro aqui");
+       $('#change-item').modal('show');        
+//    var dhxWins = new dhtmlXWindows();
+////var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
+// dhxWins.attachViewportTo("arbolprincipal");
+// var layoutWin=dhxWins.createWindow({id:"emp", text:"OMG", left: 20, top: 30,width:1338,  height:505,  center:true,resize: true,park:true,modal:true	});
+// layoutWin.attachURL("SeleccionContratoModalView.php", null, true);
+// 
+//        dhxWins.attachEvent("onMinimize", function(win){
+//        });
+//        
+//        dhxWins.attachEvent("onShow", function(win){
+//    // code here
+//    alert("d");
+//        });
+//    dhxWins.attachEvent("onHide", function(win){
+//    // your code here
+//    alert("en onhide");
+//});
+
     }
     
     
