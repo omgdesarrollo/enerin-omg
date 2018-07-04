@@ -9,27 +9,30 @@ class EvidenciasDAO
         {
             $query = "SELECT tbrequisitos.id_requisito,tbrequisitos.requisito,
             tbregistros.id_registro,tbregistros.registro,tbregistros.frecuencia,
-            tbevidencias.id_evidencias,tbevidencias.id_usuario,
+            tbdocumentos.clave_documento,
+            tbevidencias.id_evidencias,tbevidencias.id_usuario,tbevidencias.accion_correctiva,tbevidencias.validacion_supervisor,
             tbempleados.id_empleado, (
                 SELECT CONCAT(tbempleados.nombre_empleado,' ',
                     tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)
                     FROM empleados tbempleados
                     JOIN usuarios tbusuariosU ON tbusuariosU.id_empleado = tbempleados.id_empleado
                     WHERE tbusuariosU.id_usuario = tbevidencias.id_usuario
-                ) AS usuario
+                ) AS usuario, (SELECT IF(tbusuarios.id_usuario=tbevidencias.id_usuario,1,0) ) AS validador
             
             FROM temas tbtemas
-            JOIN asignacion_tema_requisito tbasignacion_tema_requisito ON tbasignacion_tema_requisito.id_tema=tbtemas.id_tema
-            JOIN asignacion_tema_requisito_requisitos tbasignacion_tema_requisito_requisitos
+            LEFT JOIN asignacion_tema_requisito tbasignacion_tema_requisito ON tbasignacion_tema_requisito.id_tema=tbtemas.id_tema
+        	LEFT JOIN asignacion_tema_requisito_requisitos tbasignacion_tema_requisito_requisitos
             ON tbasignacion_tema_requisito_requisitos.id_asignacion_tema_requisito = tbasignacion_tema_requisito.id_asignacion_tema_requisito
-            JOIN requisitos tbrequisitos ON tbrequisitos.id_requisito = tbasignacion_tema_requisito_requisitos.id_requisito
-            JOIN requisitos_registros tbrequisitos_registros ON tbrequisitos_registros.id_requisito = tbrequisitos.id_requisito
-            JOIN registros tbregistros ON tbregistros.id_registro = tbrequisitos_registros.id_registro
-            JOIN evidencias tbevidencias ON tbevidencias.id_registro = tbregistros.id_registro
-            JOIN empleados tbempleados ON tbempleados.id_empleado = tbtemas.id_empleado
-            JOIN usuarios tbusuarios ON tbusuarios.id_empleado = tbempleados.id_empleado
+			LEFT JOIN requisitos tbrequisitos ON tbrequisitos.id_requisito = tbasignacion_tema_requisito_requisitos.id_requisito
+			LEFT JOIN requisitos_registros tbrequisitos_registros ON tbrequisitos_registros.id_requisito = tbrequisitos.id_requisito
+            LEFT JOIN registros tbregistros ON tbregistros.id_registro = tbrequisitos_registros.id_registro
+	    	LEFT JOIN evidencias tbevidencias ON tbevidencias.id_registro = tbregistros.id_registro
+			LEFT JOIN empleados tbempleados ON tbempleados.id_empleado = tbtemas.id_empleado
+			LEFT JOIN usuarios tbusuarios ON tbusuarios.id_empleado = tbempleados.id_empleado
+            LEFT JOIN documentos tbdocumentos ON tbdocumentos.id_documento = tbregistros.id_documento
             
-            WHERE tbusuarios.id_usuario = 2 AND LOWER(tbtemas.identificador) LIKE '%catalogo%'";
+            WHERE tbregistros.registro<>'NULL' AND tbevidencias.validacion_supervisor<>'NULL' AND tbusuarios.id_usuario = $ID_USUARIO AND LOWER(tbtemas.identificador) 
+			LIKE '%catalogo%' OR tbevidencias.id_usuario = $ID_USUARIO";
             
             $db = AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
@@ -43,26 +46,35 @@ class EvidenciasDAO
     }
     
     
-    public function listarEvidencia($ID_EVIDENCIA)
+    public function listarEvidencia($ID_EVIDENCIA,$ID_USUARIO)
     {
         try
         {
-            $query = "SELECT tbevidencias.id_evidencias, tbdocumentos.id_documento, tbdocumentos.clave_documento, tbdocumentos.documento,
-                    tbdocumentos.registros,
-
-                    tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno,
-
-                    tbevidencias.clasificacion, tbevidencias.desviacion, tbevidencias.accion_correctiva, tbevidencias.validacion_supervisor,
-                    tbevidencias.plan_accion
-
-                    FROM evidencias tbevidencias
-
-                    JOIN documentos tbdocumentos ON tbdocumentos.id_documento=tbevidencias.id_documento
-
-                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumentos.id_empleado
-                    
-                    WHERE tbevidencias.id_evidencias=$ID_EVIDENCIA";
+            $query = "SELECT tbrequisitos.id_requisito,tbrequisitos.requisito,
+            tbregistros.id_registro,tbregistros.registro,tbregistros.frecuencia,
+            tbdocumentos.clave_documento,
+            tbevidencias.id_evidencias,tbevidencias.id_usuario,tbevidencias.accion_correctiva,
+            tbempleados.id_empleado, (
+                SELECT CONCAT(tbempleados.nombre_empleado,' ',
+                    tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)
+                    FROM empleados tbempleados
+                    JOIN usuarios tbusuariosU ON tbusuariosU.id_empleado = tbempleados.id_empleado
+                    WHERE tbusuariosU.id_usuario = tbevidencias.id_usuario
+                ) AS usuario, (SELECT IF(tbusuarios.id_usuario=tbevidencias.id_usuario,1,0) ) AS validador
             
+            FROM temas tbtemas
+            JOIN asignacion_tema_requisito tbasignacion_tema_requisito ON tbasignacion_tema_requisito.id_tema=tbtemas.id_tema
+            JOIN asignacion_tema_requisito_requisitos tbasignacion_tema_requisito_requisitos
+            ON tbasignacion_tema_requisito_requisitos.id_asignacion_tema_requisito = tbasignacion_tema_requisito.id_asignacion_tema_requisito
+            JOIN requisitos tbrequisitos ON tbrequisitos.id_requisito = tbasignacion_tema_requisito_requisitos.id_requisito
+            JOIN requisitos_registros tbrequisitos_registros ON tbrequisitos_registros.id_requisito = tbrequisitos.id_requisito
+            JOIN registros tbregistros ON tbregistros.id_registro = tbrequisitos_registros.id_registro
+            JOIN evidencias tbevidencias ON tbevidencias.id_registro = tbregistros.id_registro
+            JOIN empleados tbempleados ON tbempleados.id_empleado = tbtemas.id_empleado
+            JOIN usuarios tbusuarios ON tbusuarios.id_empleado = tbempleados.id_empleado
+            JOIN documentos tbdocumentos ON tbdocumentos.id_documento = tbregistros.id_documento
+            
+            WHERE tbusuarios.id_usuario = $ID_USUARIO AND LOWER(tbtemas.identificador) LIKE '%catalogo%' AND tbevidencias.id_evidencias = $ID_EVIDENCIA";
             $db = AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
             
@@ -211,6 +223,22 @@ class EvidenciasDAO
             $lista= $db->executeQuery($query);
             return $lista;
             // var_dump($lista);
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
+    public function mandarAccionCorrectiva($ID_EVIDENCIA,$MENSAJE)
+    {
+        try
+        {
+            $db= AccesoDB::getInstancia();
+            $query="UPDATE evidencias SET accion_correctiva = '$MENSAJE'
+                 WHERE id_evidencias=$ID_EVIDENCIA";
+            $result= $db->executeQueryUpdate($query);
+            return $result;
         } catch (Exception $ex)
         {
             throw $ex;

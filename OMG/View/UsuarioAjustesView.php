@@ -83,7 +83,7 @@ require_once '../util/Session.php';
                     confirmButtonText: "Recargar",
                     }, function()
                     {
-                        outTime = setInterval(function(){limpiarFormulario();},30000);
+                        outTime = setInterval(function(){limpiarFormulario();},35000);
                         swal.close();
                         limpiar();
                     }

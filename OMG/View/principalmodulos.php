@@ -8,7 +8,7 @@ if (Session:: NoExisteSeSion("user")){
     return;
 }
 $urls["fisica"] = "C:xampp/htdocs/enerin-omg/archivos/";
-$urls["logica"] = "".$_SERVER['HTTP_HOST']."/enerin-omg/archivos/";
+$urls["logica"] = "../../../enerin-omg/archivos/";
 //para hallar ruta fisica tanto web como local
 //echo dirname(__FILE__);
 //temrina para hallar ruta fisica tanto web como local 
@@ -154,7 +154,7 @@ var gantt=[
   dataSeccionRibbon=[];
 //    loadEstructuraMaster();
 //    loadDataContratos();
-//    loadDataNotificaciones();
+   loadDataNotificaciones();
    
 
   
@@ -227,10 +227,8 @@ var gantt=[
                        
                         if(itemIdSeleccion=="documentacion")
                             loadDataSideBarOficiosDocumentacion();
-                       
                         if(itemIdSeleccion=="informegerencial")
                             loadDataInformeGerencial();
-                        
                         if(itemIdSeleccion=="cargaprograma")
                             loadDataCargaProgramaGantt();
                        
@@ -416,28 +414,21 @@ function loadDataNotificaciones(){
                                         
                                         cont=value.nombre_contenido_sub;
                                         if(iterar>0){
-                                          $.each(listadentroitems ,function (i,v){
-//                                               alert("w  :"+ v.id);
-                                                 va=v.id;       
-                                                $.each(r,function(i,v){
-//                                                        if(va=!v.){
-//                                                            
-//                                                        }
-//                                                    alert(v)
-                                                });
-                                                
-                                        });  
+                                            $.each(listadentroitems ,function (i,v){
+    //                                               alert("w  :"+ v.id);
+                                                   va=v.id;       
+                                                  $.each(r,function(i,v){
+    //                                                        if(va=!v.){
+    //                                                            
+    //                                                        }
+    //                                                    alert(v)
+                                                  });
+
+                                            });  
                                             
                                         }
                                         
-//                                        $.each(listadentroitems ,function (i,v){
-////                                            alert(v.id);
-////                                            if(v.){
-////                                            }
-//                                            v_data=v.id;
-//                                            if(){
-//                                        });
-                                       
+                                        
                                             submodulosItems.push({id:''+(contadorid++),mode:'cols',text:''+value.nombre_submodulo,type:'block', list:listadentroitems});
 //                                        }
                                         iterar++;
@@ -580,45 +571,22 @@ function loadDataNotificaciones(){
 <!--</div>-->
     <!--<div id="idusuario" type="hidden" value="<?php echo $Usuario["NOMBRE_USUARIO"]; ?>" >-->
 
-    <!-- Inicio de Seccion Modal -->
-<div class="modal draggable fade" id="change-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog " role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">x</span></button>
-            <h4 class="modal-title" id="myModalLabel">Seleccionar Contrato</h4>
-          </div>
 
-          <div id="validacion_empleado" class="modal-body">
-                    <!--<form data-toggle="validator" action="api/create.php" method="POST">-->
-                        <!--<form data-toggle="validator"  >-->
-                        <div id="ok"></div>
-                                                
-                                    <div class="form-group">
-                                            <label class="control-label" for="title">Nombre:</label>
-                                            <input type="text"  id="NOMBRE_EMPLEADO" class="form-control" data-error="Ingrese Nombre" required />
-                                            <div id="mensaje1" class="help-block with-errors" ></div>
-                                    </div>
 
-                                    <div class="form-group">
-                                            <label class="control-label" for="title">Apellido Paterno:</label>
-                                            <textarea  id="APELLIDO_PATERNO" class="form-control" data-error="Ingrese Apellido Paterno." required></textarea>
-                                            <div id="mensaje2"class="help-block with-errors"></div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
-                                        <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
-                                    </div>
-
-                    <!--</form>-->
-
-          </div>
+<div id="popup" style="display: none;">
+    <div class="content-popup">
+        <div class="close"><a href="#" id="close"><img src="images/close.png"/></a></div>
+        <div>
+        	<h2>Contenido POPUP</h2>
+            <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original.</p>
+            <div style="float:left; width:100%;">
+    	<!--<iframe src="" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:35px;" allowTransparency="true"></iframe>-->
+    </div>
         </div>
-
     </div>
 </div>
-<!--Final de Seccion Modal-->
+<div class="popup-overlay"></div>
+
 
 
 </body>
