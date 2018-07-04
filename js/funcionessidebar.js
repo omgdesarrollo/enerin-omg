@@ -194,6 +194,11 @@ function loadDataSideBarOficiosDocumentacion()
         $("#sidebarObjV").load('InyectarVistasView.php #cargaprogramatareas');
     }
     
+    function loadDataSideBarContratos()
+    {
+        $("#sidebarObjV").load('InyectarVistasView.php #cambiarcontrato');
+    }
+    
     function loadDataSideBarReportesGerenciales()
     {
         mySidebar = new dhtmlXSideBar({
