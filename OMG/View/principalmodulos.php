@@ -39,7 +39,15 @@ $Usuario=  Session::getSesion("user");
         <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
         <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
         <script src="../../js/funcionessidebar.js" type="text/javascript"></script>
+        <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
         <style>
+                .modal-body{
+                      color:#888;
+                      max-height: calc(100vh - 110px);
+                      overflow-y: auto;
+                     
+                    } 
+            
 		div#sidebarObj {
 			position: relative;
 			/*margin-left: 10px;*/
@@ -140,7 +148,9 @@ var gantt=[
     }  
 ];
 
-  datacontratos=[];
+  datacontratos=[
+      {id:'cambiarcontrato',text:'Cambiar Contrato',img:'contratos.png',type:'button',isbig:true}
+  ];
   dataSeccionRibbon=[];
 //    loadEstructuraMaster();
 //    loadDataContratos();
@@ -193,9 +203,10 @@ var gantt=[
                         if(itemIdSeleccion=="excel")
                            alert("le has picado a excel ");
                         
-                        if(itemIdSeleccion=="pdf")
-                           alert("le has picado a pdf");
-                        
+                        if(itemIdSeleccion=="cambiarcontrato")
+//                           alert("le has picado a pdf");
+                            loadDataSideBarContratos();        
+//                              loadDataModalCambiarContrato();  
                         if(itemIdSeleccion=="Informacion") 
                            loadDataSideBarCatalogoInformacion();
                        
@@ -237,10 +248,11 @@ var gantt=[
 	var inicio=[
         {id:'00',text:'Seleccion de contrato(Click)' ,items:[
         
-                            {id:'0x1',mode:'cols',text:'Contratos',type:'block',
+                    {id:'0x1',mode:'cols',text:'Contratos',type:'block',
           list:datacontratos
         }
-        ]},         
+        ]},
+    
 	{id:'0',text:'OMG', active:true, items:[
 	{id:'0x2',mode:'cols',text:'Principal',type:'block', 
 		list:[
@@ -386,6 +398,8 @@ function loadDataNotificaciones(){
                      seccionMenuDinamic.push({id:''+(contadorid++),text:'Seleccion de contrato(Click)' ,items:[        
                             {id:'0',mode:'cols',text:'Contratos',type:'block',list:datacontratos}
                             ]});
+                        
+                        
                       submodulosItems.push({id:''+(contadorid++),mode:'cols',text:'Principal',type:'block', 
                         list:[
                                 {id:'logout',text:'Cerrar',img:'cerrarsesion.png', type:'button',isbig:true}
@@ -457,6 +471,30 @@ function loadDataNotificaciones(){
 
  
 });
+    }
+    
+    function loadDataModalCambiarContrato()
+    {
+        alert("Entro aqui");
+       $('#change-item').modal('show');        
+//    var dhxWins = new dhtmlXWindows();
+////var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
+// dhxWins.attachViewportTo("arbolprincipal");
+// var layoutWin=dhxWins.createWindow({id:"emp", text:"OMG", left: 20, top: 30,width:1338,  height:505,  center:true,resize: true,park:true,modal:true	});
+// layoutWin.attachURL("SeleccionContratoModalView.php", null, true);
+// 
+//        dhxWins.attachEvent("onMinimize", function(win){
+//        });
+//        
+//        dhxWins.attachEvent("onShow", function(win){
+//    // code here
+//    alert("d");
+//        });
+//    dhxWins.attachEvent("onHide", function(win){
+//    // your code here
+//    alert("en onhide");
+//});
+
     }
     
     
@@ -541,5 +579,47 @@ function loadDataNotificaciones(){
     </div>
 <!--</div>-->
     <!--<div id="idusuario" type="hidden" value="<?php echo $Usuario["NOMBRE_USUARIO"]; ?>" >-->
+
+    <!-- Inicio de Seccion Modal -->
+<div class="modal draggable fade" id="change-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">x</span></button>
+            <h4 class="modal-title" id="myModalLabel">Seleccionar Contrato</h4>
+          </div>
+
+          <div id="validacion_empleado" class="modal-body">
+                    <!--<form data-toggle="validator" action="api/create.php" method="POST">-->
+                        <!--<form data-toggle="validator"  >-->
+                        <div id="ok"></div>
+                                                
+                                    <div class="form-group">
+                                            <label class="control-label" for="title">Nombre:</label>
+                                            <input type="text"  id="NOMBRE_EMPLEADO" class="form-control" data-error="Ingrese Nombre" required />
+                                            <div id="mensaje1" class="help-block with-errors" ></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                            <label class="control-label" for="title">Apellido Paterno:</label>
+                                            <textarea  id="APELLIDO_PATERNO" class="form-control" data-error="Ingrese Apellido Paterno." required></textarea>
+                                            <div id="mensaje2"class="help-block with-errors"></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
+                                        <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
+                                    </div>
+
+                    <!--</form>-->
+
+          </div>
+        </div>
+
+    </div>
+</div>
+<!--Final de Seccion Modal-->
+
+
 </body>
 </html>

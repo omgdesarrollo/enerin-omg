@@ -215,7 +215,7 @@ require_once 'EncabezadoUsuarioView.php';
                                                                 foreach ($cbxE as $value) {
                                                                 ?>
                                                                 
-                                                                <option value="<?php echo "".$value["id_empleado"] ?>"  ><?php echo "".$value["nombre_empleado"]." ".$value["apellido_paterno"]." ".$value["apellido_materno"]; ?></option>
+                                                                <option value="<?php echo "".$value["id_empleado"] ?>"><?php echo "".$value["nombre_empleado"]." ".$value["apellido_paterno"]." ".$value["apellido_materno"]; ?></option>
                                                                 
                                                                     <?php
                                                                 
