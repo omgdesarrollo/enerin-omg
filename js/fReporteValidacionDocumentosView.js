@@ -1,5 +1,51 @@
 //listarDatos();
+    
+    $(function (){
+//      alert("tene");
+$('#checkValidado').click(function() {
+//        if (!$(this).is(':checked')) {
+//            return confirm("Estas seguro que desea quitarle la seleccion");
+//        }
+//alert("d");
+    cargar("validados");
+    });
+    
+$('#checkNoValidado').click(function() {
+//        if (!$(this).is(':checked')) {
+//            return confirm("Estas seguro que desea quitarle la seleccion");
+//        }
+//alert("d");
+    cargar("novalidados");
+    });
+    
+$('#checkSinDocumento').click(function() {
+//        if (!$(this).is(':checked')) {
+//            return confirm("Estas seguro que desea quitarle la seleccion");
+//        }
+//alert("d");
+    cargar("sindocumento");
+    });
+    
+    
+    });
 
+    function cargar(key){
+        switch (key) {
+    case "validados":
+        alert("entraste en validados");
+    break;
+    case "novalidados":
+        alert("no validados");
+    break;
+    case "sindocumento":
+        alert("sin documento");
+    break;
+    default:
+        
+        break;
+}
+    }
+    
 function listarDatos()
 {
     $.ajax

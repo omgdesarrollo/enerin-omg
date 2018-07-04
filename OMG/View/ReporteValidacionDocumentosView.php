@@ -227,17 +227,13 @@ require_once 'EncabezadoUsuarioView.php';
 <script>
     listarDatos();
     
+
     
-    $(function (){
-//      alert("tene");
-$('#checkValidado').click(function() {
-//        if (!$(this).is(':checked')) {
-//            return confirm("Estas seguro que desea quitarle la seleccion");
-//        }
-alert("d");
-    });
     
-    });
+//    function obtenerDatosValidados(){
+//        
+//        
+//    }
 //    function consultarInformacion(url)
 //    {
 //        $("#loader").show();
