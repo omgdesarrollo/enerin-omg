@@ -16,7 +16,7 @@ switch ($Op) {
         return $Lista;        
 
         break;
-
+    
     default:
         break;
 }

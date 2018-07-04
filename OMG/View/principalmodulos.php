@@ -216,10 +216,8 @@ var gantt=[
                        
                         if(itemIdSeleccion=="documentacion")
                             loadDataSideBarOficiosDocumentacion();
-                       
                         if(itemIdSeleccion=="informegerencial")
                             loadDataInformeGerencial();
-                        
                         if(itemIdSeleccion=="cargaprograma")
                             loadDataCargaProgramaGantt();
                        
@@ -412,18 +410,11 @@ function loadDataNotificaciones(){
     //                                                    alert(v)
                                                   });
 
-                                          });  
+                                            });  
                                             
                                         }
                                         
-//                                        $.each(listadentroitems ,function (i,v){
-////                                            alert(v.id);
-////                                            if(v.){
-////                                            }
-//                                            v_data=v.id;
-//                                            if(){
-//                                        });
-                                       
+                                        
                                             submodulosItems.push({id:''+(contadorid++),mode:'cols',text:''+value.nombre_submodulo,type:'block', list:listadentroitems});
 //                                        }
                                         iterar++;
