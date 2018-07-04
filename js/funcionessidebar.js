@@ -2,16 +2,18 @@
 
  function cambiarCont()
     { 
-        datoscont={};
+        
+        
+        
+        datoscont={ '1': 'Contrato 1',
+                    '2': 'Contrato 2',
+                    '3': 'Contrato 3'
+                };
         
                 swal({
   title: 'Selecciona un contrato',
   input: 'select',
-  inputOptions: {
-    '1': 'Contrato 1',
-    '2': 'Contrato 2',
-    '3': 'Contrato 3'
-  },
+  inputOptions:datoscont,
   inputPlaceholder: 'selecciona un contrato ',
   showCancelButton: true,
   inputValidator: function (value) {

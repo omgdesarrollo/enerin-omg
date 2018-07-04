@@ -182,7 +182,7 @@ var gantt=[
                     ribbon.attachEvent("onClick", function(itemIdSeleccion, bId){
 //                         alert(itemIdSeleccion);
 
-                        if(itemIdSeleccion=="cont")
+                        if(itemIdSeleccion=="cambiarcontrato")
                             cambiarCont();
                         if(itemIdSeleccion=="sesionusuario")
 //                            loadViewUsuario();
@@ -208,9 +208,9 @@ var gantt=[
                         if(itemIdSeleccion=="excel")
                            alert("le has picado a excel ");
                         
-                        if(itemIdSeleccion=="cambiarcontrato")
-//                           alert("le has picado a pdf");
-                            loadDataSideBarContratos();        
+//                        if(itemIdSeleccion=="cambiarcontrato")
+////                           alert("le has picado a pdf");
+//                            loadDataSideBarContratos();        
 //                              loadDataModalCambiarContrato();  
                         if(itemIdSeleccion=="Informacion") 
                            loadDataSideBarCatalogoInformacion();
