@@ -8,7 +8,7 @@ if (Session:: NoExisteSeSion("user")){
     return;
 }
 $urls["fisica"] = "C:xampp/htdocs/enerin-omg/archivos/";
-$urls["logica"] = "".$_SERVER['HTTP_HOST']."/enerin-omg/archivos/";
+$urls["logica"] = "../../../enerin-omg/archivos/";
 //para hallar ruta fisica tanto web como local
 //echo dirname(__FILE__);
 //temrina para hallar ruta fisica tanto web como local 

@@ -122,39 +122,16 @@ foreach ($notifacionescompletas as $value){
                         <!--inicio de seccion de mensajes-->
                         
                         <li class="green dropdown-modal">
-							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
-								<i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
-								<span class="badge badge-success"><?php echo "".$contadorNotificaciones ?></span>
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#" id="CANTIDAD_NOTIFICACIONES2">
 							</a>
 
 							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
-								<li class="dropdown-header">
-									<i class="ace-icon fa fa-envelope-o"></i>
-										Cantidad de Mensajes(<?php echo "".$contadorNotificaciones ?>)
+								<li class="dropdown-header" id="CANTIDAD_NOTIFICACIONES">
+									
 								</li>
 
 								<li class="dropdown-content">
-									<ul class="dropdown-menu dropdown-navbar">
-										<?php foreach ($notifacionescompletas as $item){ ?>                                    
-										<li style="padding-top:5px;border:1px #6FB3E0 solid">
-											<!-- <a style="cursor:pointer" class="clearfix"> -->
-												<img src="../../assets/probando/images/avatars/user.jpg" class="msg-photo" alt="admin" />
-												<span class="msg-body">
-													<span class="msg-title">
-														<span class="blue">
-															<?php echo $item["mensaje"].$item["nombre"] ?>
-														</span>
-													</span>
-
-													<span class="msg-time">
-														<i class="ace-icon fa fa-clock-o"></i>
-														<span><?php echo  $item["fecha_envio"] ?> (Enviado)</span>
-														<i style="color:red;background:transparent;border:none;cursor:pointer" onClick="borrarNotificacion(<?php echo $item['id_notificaciones'] ?>)" class="ace-icon fa fa-trash"></i>
-													</span>
-												</span>
-											<!-- </a> -->
-										</li>
-										<?php } ?>
+									<ul class="dropdown-menu dropdown-navbar" id="LISTA_NOTIFICACIONES">
 									</ul>
 								</li>
 
@@ -209,6 +186,41 @@ foreach ($notifacionescompletas as $value){
 
 </div>
 <script>
+	listarNotificaciones();
+	setInterval(function(){listarNotificaciones();},20000);
+	function listarNotificaciones()
+	{
+		$.ajax({
+			url: '../Controller/NotificacionesController.php?Op=mostrarNotificaciones->Responsable',
+			type: 'GET',
+			success:function(notificaciones)
+			{
+				construirNotificaciones(notificaciones);
+			}
+		});
+	}
+	function construirNotificaciones(notificaciones)
+	{
+		cantidad=0;
+		tempData="";
+		console.log(notificaciones);
+		$.each(notificaciones,function(index,value)
+		{
+			tempData += "<li style='padding-top:5px;border:1px #6FB3E0 solid'>";
+			tempData += "<img src='../../assets/probando/images/avatars/user.jpg' class='msg-photo' alt='admin' />";
+			tempData += "<span class='msg-body'><span class='msg-title'><span class='blue'>"+value.mensaje+" "+value.nombre;
+			tempData += "</span></span>";
+			tempData += "<span class='msg-time'><i class='ace-icon fa fa-clock-o'></i><span>"+value.fecha_envio+"(Enviado)</span>";
+			tempData += "<i style='color:red;background:transparent;border:none;cursor:pointer;float:right;font-size:large;' onClick=\"borrarNotificacion("+value.id_notificaciones+")\" class='ace-icon fa fa-trash'></i>";
+			tempData += "</span></span></li>";
+			cantidad++;
+		});
+		console.log(tempData);
+		$("#CANTIDAD_NOTIFICACIONES").html("<i class='ace-icon fa fa-envelope-o'></i>Cantidad de Mensajes("+cantidad+")");
+		$("#CANTIDAD_NOTIFICACIONES2").html("<i class='ace-icon fa fa-envelope icon-animated-vertical'></i><span class='badge badge-success'>"+cantidad+"</span>");
+		$("#LISTA_NOTIFICACIONES").html(tempData);
+	}
+
 	function borrarNotificacion(idNoti)
 	{
 		$.ajax({
@@ -220,6 +232,7 @@ foreach ($notifacionescompletas as $value){
 				if(eliminado==true)
 				{
 					swalSuccess("Eliminado");
+					listarNotificaciones();
 				}
 				else
 				swalError("No se pudo eliminar");
