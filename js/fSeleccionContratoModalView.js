@@ -1,37 +1,13 @@
 listarCumplimientos();
 
-//listarDatos();
-//
-//function listarDatos()
-//{
-//    $.ajax
-//    ({
-//        url: '../Controller/CumplimientosController.php?Op=obtenerContrato',
-//        type: 'GET',
-//        beforeSend:function()
-//        {
-//            $('#loader').show();
-//        },
-//        success:function(datos)
-//        {
-////            data = datos;
-//            reconstruirTable(datos);
-//        },
-//        error:function(error)
-//        {
-//            $('#loader').hide();
-//        }
-//    });
-//}
 
 function listarCumplimientos()
 {
-    alert("Entro al ajax");
+//    alert("Entro al ajax");
     $.ajax
     ({
         url:'../Controller/CumplimientosController.php?Op=obtenerContrato',
         type:'POST',
-//        data:'ID_USUARIO='+id_usuario,
         success:function(datos)
         {
             reconstruirTable(datos)
