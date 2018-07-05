@@ -95,7 +95,9 @@ class CumplimientoDAO{
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-            return $lista;
+//            $lista1;
+//            $lista1["l"]=array($lista[0],$lista[1]);
+            return $lista1;
             
         } catch (Exception $ex)
         {

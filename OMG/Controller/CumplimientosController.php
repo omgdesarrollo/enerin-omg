@@ -46,7 +46,16 @@ switch ($Op) {
 	case 'obtenerContrato':
             
 		$Lista=$model->obtenerContratosPorUsuarioPermiso(Session::getSesion("user")["ID_USUARIO"]);
+                $data;
+                $cont=0;
+//                foreach($Lista as $value){
+//                    $data[$cont]["list"]=$value["id_cumplimiento"];
+////                    $data[$cont]["list"]=$value["clave_cumplimiento"];
+//                $cont++;
+//                }
                 header('Content-type: application/json; charset=utf-8');
+                
+//                echo json_encode($data);
                 echo json_encode($Lista);
 		return $Lista;
             
