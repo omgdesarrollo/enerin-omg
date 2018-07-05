@@ -209,7 +209,8 @@ var gantt=[
                            alert("le has picado a excel ");
                         
                         if(itemIdSeleccion=="cambiarcontrato")
-                            loadDataSideBarContratos();        
+                            loadDataSideBarContratos();  
+                        
                 
                         if(itemIdSeleccion=="Informacion") 
                            loadDataSideBarCatalogoInformacion();

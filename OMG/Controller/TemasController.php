@@ -16,7 +16,7 @@ $pojo= new TemaPojo();
 switch ($Op) {
 	case 'Listar':
 
-            $Lista=$model->mostrarTemas("catalogo");                  
+            $Lista=$model->mostrarTemas("catalogo", Session::getSesion("s_cont"));                  
             header('Content-type: application/json; charset=utf-8'); 
             echo json_encode($Lista);
             return $Lista;
@@ -45,9 +45,10 @@ switch ($Op) {
 	case 'GuardarNodo':
 		# code...
          
-                $Lista= $model->insertarNodo($_REQUEST['NO'],$_REQUEST['NOMBRE'],$_REQUEST['DESCRIPCION'],$_REQUEST['PLAZO'],$_REQUEST['NODO'],$_REQUEST['ID_EMPLEADOMODAL'],"catalogo");
+                $Lista= $model->insertarNodo($_REQUEST['NO'],$_REQUEST['NOMBRE'],$_REQUEST['DESCRIPCION'],$_REQUEST['PLAZO'],$_REQUEST['NODO'],$_REQUEST['ID_EMPLEADOMODAL'],"catalogo", Session::getSesion("s_cont"));
                 header('Content-type: application/json; charset=utf-8'); 
                 echo json_encode($Lista);
+//                echo "con se ". Session::getSesion("s_cont");
                 return $Lista;
                 
 		break;

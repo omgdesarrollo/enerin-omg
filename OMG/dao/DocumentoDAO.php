@@ -4,7 +4,7 @@
 require_once '../ds/AccesoDB.php';
 class DocumentoDAO{
     //consulta los datos de un empleado por su nombre de usuario
-    public function mostrarDocumentos(){
+    public function mostrarDocumentos($CONTRATO){
         try{
             
             $query="SELECT tbdocumentos.id_documento, tbdocumentos.clave_documento, tbdocumentos.documento,
@@ -12,7 +12,8 @@ class DocumentoDAO{
                     tbempleados.apellido_materno, tbdocumentos.registros FROM documentos tbdocumentos
 
                     JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumentos.id_empleado
-                    ORDER BY  tbdocumentos.clave_documento 
+                    WHERE tbdocumentos.contrato=$CONTRATO
+                    ORDER BY  tbdocumentos.clave_documento  
 ";
             
             $db=  AccesoDB::getInstancia();

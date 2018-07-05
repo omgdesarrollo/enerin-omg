@@ -16,7 +16,7 @@ $pojo= new DocumentoPojo();
 switch ($Op) {
 	case 'Listar':
 
-        $Lista=$model->listarDocumentos();         
+        $Lista=$model->listarDocumentos(Session::getSesion("s_cont"));         
 //    	Session::setSesion("listarDocumentos",$Lista);
 
         header('Content-type: application/json; charset=utf-8');
