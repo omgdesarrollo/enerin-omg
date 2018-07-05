@@ -57,13 +57,32 @@ switch ($Op) {
                 
 //                echo json_encode($data);
                 echo json_encode($Lista);
-		return $Lista;
+//      echo "d  ".   Session::getSesion("s_cont");
+//		return $Lista;
             
 		break;	
          
 	case 'Guardar':
 		# code...
 		break;
+        case 'contratoselec':
+//            if($_REQUEST["obt"]=="false"){
+//               if(isset(Session::getSesion("s_cont")))
+//               {
+//                  echo  Session::getSesion("s_cont");
+//               }else
+//               {
+//                   echo "no";
+//               }
+//            }
+//            else{if()
+            if($_REQUEST["obt"]==false)
+            Session::setSesion("s_cont", $_REQUEST["c"]);
+            else{
+              echo   Session::getSesion ("s_cont");
+            }
+//            }
+        break;
 
 	case 'Modificar':
 		# code...

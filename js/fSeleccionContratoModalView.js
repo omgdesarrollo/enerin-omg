@@ -58,7 +58,15 @@ var jsonObj = {
 //    type: 'success',
 //    html: 'tu has seleccionado el contrato ' + result
 //  });
-});
+
+
+    $.ajax({  
+                        url: "../Controller/CumplimientosController.php?Op=contratoselec&c="+result,  
+                        async:false,
+                        success: function(r) {
+                           }    
+           });
+  });
     
  } 
     
@@ -69,6 +77,10 @@ listarCumplimientos();
 function listarCumplimientos()
 {
 //    alert("Entro al ajax");
+    
+    
+    
+    
     $.ajax
     ({
         url:'../Controller/CumplimientosController.php?Op=obtenerContrato',
@@ -87,6 +99,24 @@ function reconstruirTable(data)
     cargaTodo=0;
     tempData="";
     
+       var c="";
+       
+     $.ajax
+    ({
+        url:'../Controller/CumplimientosController.php?Op=contratoselec&obt=true',
+        type:'POST',
+        async:false,
+        success:function(d)
+        {
+//            reconstruirTable(datos)
+            if(d!=""){
+                c=d;//en esta variable se guarda el contrato seleccionado falta
+            }
+        }                  
+        
+    });
+    alert("contrato seleccionado  "+c);
+    
     $.each(data,function(index,value){
         
             tempData += reconstruir(value,cargaTodo);
@@ -99,12 +129,13 @@ function reconstruirTable(data)
 
 function reconstruir(value,carga)
 {
+ 
     tempData = "";
     
                 if(carga==0)
-                tempData += "<tr id='registro_"+value.id_cumplimiento+"'>";
+                tempData += "<tr  id='registro_"+value.id_cumplimiento+"'>";
                 tempData += "<td class='celda' width='50%'>"+value.clave_cumplimiento+"</td>";
-                tempData += "<td class='celda' width='50%'>"+value.cumplimiento+"</td>";                  
+                tempData += "<td class='celda' width='50%'>"+value.cumplimiento+"</td>";
                 if(carga==0)
                 tempData += "</tr>";
     
