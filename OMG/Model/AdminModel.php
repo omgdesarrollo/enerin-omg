@@ -211,6 +211,20 @@ class AdminModel{
             return false;
         }
     }
+    public function cambiarPermisoCumplimiento($ID_USUARIO,$ID_CUMPLIMIENTO,$VALOR)
+    {
+        try
+        {
+            $dao = new AdminDAO();
+            $rec = $dao->cambiarPermisoCumplimiento($ID_USUARIO,$ID_CUMPLIMIENTO,$VALOR);
+            return $rec;
+        }
+        catch(Excepction $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
 }
 
 ?>

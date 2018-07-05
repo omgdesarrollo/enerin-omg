@@ -271,6 +271,24 @@ class AdminDAO{
             return false;
         }
     }
+
+    public function cambiarPermisoCumplimiento($ID_USUARIO,$ID_CUMPLIMIENTO,$VALOR)
+    {
+        try
+        {
+            $query="UPDATE usuarios_cumplimientos tbusuarios_cumplimientos
+                SET tbusuarios_cumplimientos.acceso = '$VALOR'
+                WHERE tbusuarios_cumplimientos.id_usuario=$ID_USUARIO
+                AND tbusuarios_cumplimientos.id_cumplimiento=$ID_CUMPLIMIENTO";
+            $db= AccesoDB::getInstancia();
+            $exito= $db->executeQueryUpdate($query);
+            return $exito;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
 }
 
 

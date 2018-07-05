@@ -159,8 +159,9 @@ $Usuario=  Session::getSesion("user");
                 <!-- <th class="table-header">Apellido Materno</th> -->
                 <th class="table-header">Correo</th>
                 <th class="table-header">Categoria</th>
-                <th class="table-header">Permisos</th>
+                <th class="table-header">Vistas</th>
                 <th class="table-header">Temas</th>
+                <th class="table-header">Contratos</th>
             </tr>
             <tbody id="bodyTableAgregar">
             </tbody>
@@ -286,11 +287,50 @@ $Usuario=  Session::getSesion("user");
             </div>
         </div>
         <!-- fin del modal agregar usuario -->
+
+        <!-- Modal modificar temas permitidos -->
+        <div class="modal draggable fade" id="permisosContratos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Cumplimientos</h4>
+                    </div>
+
+                    <div class="modal-body" style="width: -webkit-fill-available;">
+                        
+                        <div class="form-group">
+                            <div class="table-container" style="max-height:none;">
+                                <table style="width:100%" class="tbl-qa">
+                                    <tr>
+                                        <th class="table-header">No.</th>
+                                        <th class="table-header">Clave Cumplimiento</th>
+                                        <th class="table-header">Cumplimiento</th>
+                                        <th class="table-header">Ver</th>
+                                    </tr>
+                                    <tbody id="bodyTableContratos">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-group" method="post">
+                            <button type="submit" id="BTN_MODIFICARPERMISOS" onClick="" class="btn crud-submit btn-info">Guardar Cambios</button>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- fin del modal agregar usuario -->
     </body>
     <!-- </div> -->
 
 
 <script>
+    var EmpleadoDataG;
+    var EmpleadoTemasG;
+    var idUsuario;
     function loadSpinner()
     {
         myFunction();
@@ -345,10 +385,84 @@ $Usuario=  Session::getSesion("user");
         tempData += "<td><button onClick='modificarTemas("+value.id_usuario+");' type='button' class='btn btn-success'";
         tempData += "data-toggle='modal' data-target='#modificarTemas'>";
         tempData += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i></button></td>";
+
+        tempData += "<td><button onClick='abrirCumplimientos("+value.id_usuario+");' type='button' class='btn btn-success'";
+        tempData += "data-toggle='modal' data-target='#permisosContratos'>";
+        tempData += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i></button></td>";
+
         return tempData;
     }
 
     // console.log($('#NOMBREESCRITURA_AGREGARUSUARIO').left());
+    function abrirCumplimientos(id_Usuario)
+    {
+        idUsuario=id_Usuario;//GLOBAL
+        tempData="";
+        $.ajax({
+            url:'../Controller/CumplimientosController.php?Op=Listar',
+            type:'GET',
+            data:'ID_USUARIO='+idUsuario,
+            success:function(contratos)
+            {
+                $.each(contratos,function(index,value)
+                {
+                    tempData+= "<tr id='registroContrato_"+value.id_cumplimiento+"'>";
+                    tempData+= construirCumplimientos(value,index);
+                    tempData+= "</tr>";
+                });
+                $("#bodyTableContratos").html(tempData);
+            },
+            error:function()
+            {
+                swalError("Error en el servidor");
+            }
+        });
+    }
+    
+    function asignarPermisoCumplimiento(Obj,idCumplimiento)
+    {
+        no = "fa-times-circle-o";
+        yes = "fa-check-circle-o";
+        console.log(Obj);
+        console.log($(Obj).hasClass(no));
+        ($(Obj).hasClass(no))?valor=true:valor=false;
+        $.ajax({
+                url: '../Controller/AdminController.php?Op=CambiarPermisoCumplimiento',
+                type: 'POST',
+                data: 'ID_USUARIO='+idUsuario+'&ID_CUMPLIMIENTO='+idCumplimiento+'&VALOR='+valor,
+                success:function(exito)
+                {
+                    if(exito)
+                    {
+                        $(Obj).removeClass( (valor)?no:yes );
+                        $(Obj).addClass( (valor)?yes:no );
+                        $(Obj).css("color", (valor)?"#02ff00":"red" );
+                        swalSuccess("Cambio aceptado");
+                    }
+                },
+                error:function()
+                {
+                    swalError("Error en el servidor");
+                }
+        });
+    }
+
+    function construirCumplimientos(cumplimiento,numero)
+    {
+        no = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true' onClick='asignarPermisoCumplimiento(this,"+cumplimiento.id_cumplimiento+")'></i>";
+        yes = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true' onClick='asignarPermisoCumplimiento(this,"+cumplimiento.id_cumplimiento+")'></i>";
+        numero++;
+        tempData = "<td>"+numero+"</td>";
+        tempData += "<td>"+cumplimiento.clave_cumplimiento+"</td>";
+        tempData += "<td>"+cumplimiento.cumplimiento+"</td>";
+        tempData += "<td>";
+        if(cumplimiento.acceso=="true")
+            tempData += yes;
+        else
+            tempData += no;
+        tempData += "</td>";
+        return tempData;
+    }
 
     function buscarEmpleados(data)
     {
@@ -449,10 +563,6 @@ $Usuario=  Session::getSesion("user");
         return tempData;
     }
     
-    var EmpleadoDataG;
-    var EmpleadoTemasG;
-    var idUsuario;
-
     function seleccionarItem(usuarioDatos)
     {
         datos = usuarioDatos.split("^_^");

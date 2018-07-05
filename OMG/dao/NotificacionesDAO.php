@@ -31,7 +31,7 @@ class NotificacionesDAO {
                  tbempleado.apellido_materno) AS nombre 
                  FROM usuarios tbusuarios 
                  JOIN empleados tbempleado ON tbempleado.id_empleado = tbusuarios.id_empleado
-                 WHERE tbusuarios.id_usuario = tbnotificaciones.id_de)
+                 WHERE tbusuarios.id_usuario = tbnotificaciones.id_de) AS nombre
                  
             from notificaciones tbnotificaciones
             JOIN usuarios tbusuarios ON tbusuarios.id_usuario = tbnotificaciones.id_para

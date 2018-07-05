@@ -171,6 +171,11 @@ switch ($Op)
         echo $exito;
     break;
 
+    case 'CambiarPermisoCumplimiento':
+        $exito = $model->cambiarPermisoCumplimiento($_REQUEST["ID_USUARIO"],$_REQUEST["ID_CUMPLIMIENTO"],$_REQUEST["VALOR"]);
+        echo $exito;
+        break;
+
     default:
     return false;
     break;

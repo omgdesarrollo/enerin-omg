@@ -2,10 +2,15 @@
 require_once '../ds/AccesoDB.php';
 class CumplimientoDAO{
     //consulta los datos de un empleado por su nombre de usuario
-    public function mostrarCumplimientos(){
+    public function mostrarCumplimientos($ID_USUARIO){
         try{
                         //$query="SELECT ID_CUMPLIMIENTO, CLAVE_CUMPLIMIENTO, CUMPLIMIENTO FROM CUMPLIMIENTOS";
-                        $query="SELECT id_cumplimiento, clave_cumplimiento, cumplimiento FROM cumplimientos";
+            $query="SELECT tbcumplimientos.id_cumplimiento, tbcumplimientos.clave_cumplimiento, 
+                tbcumplimientos.cumplimiento,tbusuarios_cumplimientos.acceso
+                FROM cumplimientos tbcumplimientos
+                JOIN usuarios_cumplimientos tbusuarios_cumplimientos ON tbusuarios_cumplimientos.id_cumplimiento = tbcumplimientos.id_cumplimiento
+                JOIN usuarios tbusuarios ON tbusuarios.id_usuario = tbusuarios_cumplimientos.id_usuario
+                WHERE tbusuarios.id_usuario = $ID_USUARIO";
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             
@@ -44,7 +49,8 @@ class CumplimientoDAO{
     public function mostrarCumplimientosPorUsuario($usuario){
         try{
                         //$query="SELECT tbcumplimientos.CLAVE_CUMPLIMIENTO FROM USUARIOS  JOIN CUMPLIMIENTOS tbcumplimientos ON usuarios.ID_USUARIO=tbcumplimientos.ID_USUARIO where usuarios.NOMBRE_USUARIO='$usuario'";
-                        $query="SELECT tbcumplimientos.clave_cumplimiento FROM usuarios  JOIN cumplimientos tbcumplimientos ON usuarios.id_usuario=tbcumplimientos.id_usuario where usuarios.nombre_usuario='$usuario'";
+            $query="SELECT tbcumplimientos.clave_cumplimiento FROM usuarios  
+            JOIN cumplimientos tbcumplimientos ON usuarios.id_usuario=tbcumplimientos.id_usuario where usuarios.nombre_usuario='$usuario'";
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             return $lista;

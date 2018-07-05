@@ -13,10 +13,10 @@ class CumplimientoModel{
 //    private $Correo='';
 //    private $Fecha_Creacion='NOW()';
     
-    public function  listarCumplimientos(){
+    public function  listarCumplimientos($ID_USUARIO){
         try{
             $dao=new CumplimientoDAO();
-            $rec=$dao->mostrarCumplimientos();
+            $rec=$dao->mostrarCumplimientos($ID_USUARIO);
             
             /*if($rec==NULL){
             throw new Exception("Usuario no existe !!!!!");

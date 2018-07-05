@@ -852,15 +852,16 @@
             });
             if(tempArchivo=="")
             {
-                if(value.responsable!="1")
-                {
+                
                     tempData += "<td></td><td>"+value.usuario+"</td>";
                     tempData += "<td></td><td></td><td></td><td></td>";
-                    tempData += "<td>";
-                    tempData += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
-                    tempData += "onclick='eliminarEvidencia("+value.id_evidencias+");'>";
-                    tempData += "<i class=\"fa fa-trash\"></i></button></td>";
-                }
+                    if(value.responsable!="1")
+                    {
+                        tempData += "<td>";
+                        tempData += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
+                        tempData += "onclick='eliminarEvidencia("+value.id_evidencias+");'>";
+                        tempData += "<i class=\"fa fa-trash\"></i></button></td>";
+                    }
             }
             if(carga==0)
             tempData += "</tr>";

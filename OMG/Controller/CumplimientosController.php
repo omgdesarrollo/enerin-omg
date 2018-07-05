@@ -17,39 +17,25 @@ $usuarioPojo= new UsuarioPojo();
 
 switch ($Op) {
 	case 'Listar':
-//                $porcampo
-            if($operacionarealizar=="ListarContratosPorUsuario"){              
-//                $Lista=$model->listarCumplimientos();
-                $usuarioPojo->setNombreUsuario($_REQUEST["usuario"]);
-                $Lista=$model->listarCumplimientosPorUsuario($usuarioPojo);
-                Session::setSesion("ListarContratosPorUsuario",$Lista);
-               // $pojo->($_REQUEST['id_cumplimiento']);
-        //    	$tarjet="../view/principalmodulos.php";
-                header('Content-type: application/json; charset=utf-8');
-                echo json_encode($Lista);
-		//header("location: login.php");
-//echo $json = json_encode(array("n" => "".$Lista.NOMBRE_EMPLEADO, "a" => "apellido",  "c" => "test")); 
-            }
-		return $Lista;
-                break;
+		$lista = $model->listarCumplimientos($_REQUEST["ID_USUARIO"]);
+		header('Content-type: application/json; charset=utf-8');
+		echo json_encode($lista);
+		break;
                 
                 
         case 'mostrarcombo':
 		$Lista=$model->listarCumplimientosComboBox();
     	Session::setSesion("listarCumplimientosComboBox",$Lista);
     	header('Content-type: application/json; charset=utf-8');
-
-                echo json_encode($Lista);
+		echo json_encode($Lista);
 		return $Lista;
 		break;        
                 
 	case 'obtenerContrato':
             
 		$Lista=$model->obtenerContratosPorUsuarioPermiso(Session::getSesion("user")["ID_USUARIO"]);
-                header('Content-type: application/json; charset=utf-8');
-                echo json_encode($Lista);
-		return $Lista;
-            
+		header('Content-type: application/json; charset=utf-8');
+		echo json_encode($Lista);
 		break;	
          
 	case 'Guardar':
