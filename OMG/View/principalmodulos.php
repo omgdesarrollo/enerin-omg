@@ -182,8 +182,8 @@ var gantt=[
                     ribbon.attachEvent("onClick", function(itemIdSeleccion, bId){
 //                         alert(itemIdSeleccion);
 
-                        if(itemIdSeleccion=="cambiarcontrato")
-                            cambiarCont();
+//                        if(itemIdSeleccion=="cambiarcontrato")
+//                            cambiarCont();
                         if(itemIdSeleccion=="sesionusuario")
 //                            loadViewUsuario();
                             loadDataSideBarAjustesUsuario();
@@ -208,10 +208,9 @@ var gantt=[
                         if(itemIdSeleccion=="excel")
                            alert("le has picado a excel ");
                         
-//                        if(itemIdSeleccion=="cambiarcontrato")
-////                           alert("le has picado a pdf");
-//                            loadDataSideBarContratos();        
-//                              loadDataModalCambiarContrato();  
+                        if(itemIdSeleccion=="cambiarcontrato")
+                            loadDataSideBarContratos();        
+                
                         if(itemIdSeleccion=="Informacion") 
                            loadDataSideBarCatalogoInformacion();
                        
@@ -476,31 +475,6 @@ function loadDataNotificaciones(){
 //  }) ;
 });;
     }
-    
-    function loadDataModalCambiarContrato()
-    {
-        alert("Entro aqui");
-       $('#change-item').modal('show');        
-//    var dhxWins = new dhtmlXWindows();
-////var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
-// dhxWins.attachViewportTo("arbolprincipal");
-// var layoutWin=dhxWins.createWindow({id:"emp", text:"OMG", left: 20, top: 30,width:1338,  height:505,  center:true,resize: true,park:true,modal:true	});
-// layoutWin.attachURL("SeleccionContratoModalView.php", null, true);
-// 
-//        dhxWins.attachEvent("onMinimize", function(win){
-//        });
-//        
-//        dhxWins.attachEvent("onShow", function(win){
-//    // code here
-//    alert("d");
-//        });
-//    dhxWins.attachEvent("onHide", function(win){
-//    // your code here
-//    alert("en onhide");
-//});
-
-    }
-    
     
 
     
