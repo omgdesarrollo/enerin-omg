@@ -5,7 +5,7 @@ class TemaDAO{
     
 
    
-public function mostrarTemas($cadena)
+public function mostrarTemas($cadena,$contrato)
 {
     try
     {
@@ -13,7 +13,7 @@ public function mostrarTemas($cadena)
 		tbtemas.identificador
                 FROM temas tbtemas
                 JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
-                WHERE tbtemas.identificador LIKE '%$cadena%'";
+                WHERE tbtemas.identificador LIKE '%$cadena%'    and  tbtemas.contrato=$contrato";
 
         $db=  AccesoDB::getInstancia();
         $lista=$db->executeQuery($query);
@@ -71,12 +71,12 @@ public function listarDetallesSeleccionados($ID)
 }
 
 
-public function insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO,$IDENTIFICADOR)
+public function insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO,$IDENTIFICADOR,$CONTRATO)
 {
     try
     {
-        $query="INSERT INTO temas (no,nombre,descripcion,plazo,padre,id_empleado,identificador) 
-                VALUES ($NO,'$NOMBRE','$DESCRIPCION','$PLAZO',$NODO,'$ID_EMPLEADO','$IDENTIFICADOR')";
+        $query="INSERT INTO temas (no,nombre,descripcion,plazo,padre,id_empleado,identificador,contrato) 
+                VALUES ($NO,'$NOMBRE','$DESCRIPCION','$PLAZO',$NODO,'$ID_EMPLEADO','$IDENTIFICADOR',$CONTRATO)";
         
         $db= AccesoDB::getInstancia();
         $lista= $db->executeQueryUpdate($query);
