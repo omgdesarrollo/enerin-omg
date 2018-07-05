@@ -12,33 +12,36 @@
 
  function cambiarCont()
     { 
-  datoscont={};
+//var jsonObj = {
+//    members: 
+//           {
+//            host: "hostName",
+//            viewers: 
+//            {
+//            }
+//        }
+//}
+var jsonObj = {
+    
+        }
+
+  $contador=1;
            $.ajax({  
                      url: "../Controller/CumplimientosController.php?Op=obtenerContrato",  
                      async:false,
                      success: function(r) {
-                        //alert("en:   ");
-//                     datacontratos.push( {id:'oficio',text:''+,img:'oficios.png',type:'button',isbig:true} )
-                     
-//                     $.each(r,function(index,value){
-//                        // alert("ya entro y "+value.CLAVE_CUMPLIMIENTO);
-//                        
-////                      datacontratos.push( {id:'contratos',text:value.clave_cumplimiento,img:'oficios.png',type:'button',isbig:true} );
-////                         datosco   
-//                            
-//                         })
-//                   datoscont={'r.id_cumplimiento':""};
+        $.each(r,function(index,value){
+             jsonObj[value.id_cumplimiento] = value.clave_cumplimiento ;
+                                })
+                       
                         }    
         });
-        
-        
-//        datoscont={ '1': 'Contrato 1' },
-//                   { '2': 'Contrato 2'};
-        
+
+//        console.
                 swal({
   title: 'Selecciona un contrato',
   input: 'select',
-  inputOptions:datoscont,
+  inputOptions:jsonObj,
   inputPlaceholder: 'selecciona un contrato ',
   showCancelButton: true,
   inputValidator: function (value) {
@@ -51,13 +54,13 @@
     });
   }
 }).then(function (result) {
-  swal({
-    type: 'success',
-    html: 'tu has seleccionado el contrato ' + result
-  });
+//  swal({
+//    type: 'success',
+//    html: 'tu has seleccionado el contrato ' + result
+//  });
 });
-    }
     
+ } 
     
 
 listarCumplimientos();
@@ -107,11 +110,3 @@ function reconstruir(value,carga)
     
         return tempData;                                                        
 }
-
-
-
-
-
-
-
-

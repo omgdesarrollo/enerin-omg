@@ -97,7 +97,7 @@ class CumplimientoDAO{
             $lista=$db->executeQuery($query);
 //            $lista1;
 //            $lista1["l"]=array($lista[0],$lista[1]);
-            return $lista1;
+            return $lista;
             
         } catch (Exception $ex)
         {
