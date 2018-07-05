@@ -21,6 +21,8 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
                 <!--Para abrir alertas de aviso, success,warning, error-->       
                 <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+                        <!--Para abrir alertas de aviso, success,warning, error-->       
+                 <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
 
 		<!-- ace styles -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
@@ -36,6 +38,9 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>
 
+                 <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
+                 <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
+                
                 
                 <script src="../../js/jquery.js" type="text/javascript"></script>
                 
@@ -78,7 +83,7 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
 
 <div id="loader"></div>
           
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#change-item">
+<button type="button" id="btn-cont" class="btn btn-success" >
     Seleccionar Contratos
 </button>
 
@@ -124,6 +129,10 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
 <script>
 
     
+    
+    
+    
+    
 
 function loadSpinner()
 {
@@ -138,8 +147,7 @@ function loadSpinner()
         <!--Termina para el spiner cargando-->
         <!--Bootstrap-->
         <script src="../../assets/probando/js/bootstrap.min.js"></script>
-        <!--Para abrir alertas de aviso, success,warning, error-->       
-        <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+
         
         <!--Para abrir alertas del encabezado-->
         <script src="../../assets/probando/js/ace-elements.min.js"></script>
