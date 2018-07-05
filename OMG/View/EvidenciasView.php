@@ -779,7 +779,7 @@
             // tempData += "data-toggle='modal' data-target='#mostrarRegistrosModal'>";
             // tempData += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i> Ver</button></td>";
             
-            tempData += "<td style='font-size: -webkit-xxx-large'><button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+");'";
+            tempData += "<td style='font-size: -webkit-xxx-large'><button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
             tempData += "type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
             tempData += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar</button></td>";
             $.each(todo[0],function(index2,value2)
@@ -852,12 +852,15 @@
             });
             if(tempArchivo=="")
             {
-                tempData += "<td></td><td>"+value.usuario+"</td>";
-                tempData += "<td></td><td></td><td></td><td></td>";
-                tempData += "<td>";
-                tempData += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
-                tempData += "onclick='eliminarEvidencia("+value.id_evidencias+");'>";
-                tempData += "<i class=\"fa fa-trash\"></i></button></td>";
+                if(value.responsable!="1")
+                {
+                    tempData += "<td></td><td>"+value.usuario+"</td>";
+                    tempData += "<td></td><td></td><td></td><td></td>";
+                    tempData += "<td>";
+                    tempData += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
+                    tempData += "onclick='eliminarEvidencia("+value.id_evidencias+");'>";
+                    tempData += "<i class=\"fa fa-trash\"></i></button></td>";
+                }
             }
             if(carga==0)
             tempData += "</tr>";
@@ -1052,7 +1055,7 @@
         agregarArchivosUrl();
     });
 
-    function mostrar_urls(id_evidencia,validador,validado)
+    function mostrar_urls(id_evidencia,validador,validado,id_para)
     {
         var tempDocumentolistadoUrl = "";
         URL = 'filesEvidenciaDocumento/'+id_evidencia;
@@ -1108,7 +1111,8 @@
                       {
                         $('#DocumentolistadoUrlModal').html("");
                       }
-                      tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdEvidenciaDocumento' type='text' style='display:none;' value='"+id_evidencia+"'>";
+                      tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdEvidenciaDocumento' type='text' style='display:none;' value='"+id_evidencia+"'>"
+                      tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdParaDocumento' type='text' style='display:none;' value='"+id_para+"'>";
                       $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
                       $('#fileupload').fileupload
                       ({
@@ -1136,7 +1140,7 @@
     //     });
     // }
     // valor = 8;
-    function borrarArchivo(url)
+    function borrarArchivo(url,id_para)
     {
         // setInterval(aumentador(), 3000);
         swal({
@@ -1159,7 +1163,7 @@
             {
               if(eliminado)
               {
-                mostrar_urls(ID_EVIDENCIA_DOCUMENTO,"0","false");
+                mostrar_urls(ID_EVIDENCIA_DOCUMENTO,"0","false",id_para);
                 refresh();
                 //eliminar parte del registro en la base de datos
                 swal("","Archivo eliminado");
@@ -1312,7 +1316,7 @@
             <!-- </td> -->
         </tr>
     {% } %}
-    {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO,'0','false'); reconstruirRow(ID_EVIDENCIA_DOCUMENTO); noArchivo=0; } } %}
+    {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val(); var ID_PARA_DOCUMENTO = $('#tempInputIdParaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO,'0','false',ID_PARA_DOCUMENTO); reconstruirRow(ID_EVIDENCIA_DOCUMENTO); noArchivo=0; } } %}
 </script>
 
         <!--Inicia para el spiner cargando-->

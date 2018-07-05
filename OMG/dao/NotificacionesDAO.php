@@ -25,12 +25,19 @@ class NotificacionesDAO {
     public function mostrarNotificacionesCompletas($ID_USUARIO){
         try{
             $query = "SELECT tbnotificaciones.id_notificaciones,tbnotificaciones.id_de, tbnotificaciones.id_para, tbnotificaciones.tipo_mensaje, tbnotificaciones.mensaje,
-                tbnotificaciones.atendido, tbnotificaciones.asunto,tbnotificaciones.fecha_envio,
-                CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) AS nombre
-                from notificaciones tbnotificaciones
-                JOIN usuarios tbusuarios ON tbusuarios.id_usuario = tbnotificaciones.id_para
-                JOIN empleados tbempleados ON tbempleados.id_empleado = tbusuarios.id_empleado
-                WHERE tbnotificaciones.id_para = $ID_USUARIO ORDER BY tbnotificaciones.fecha_envio DESC";
+            tbnotificaciones.atendido, tbnotificaciones.asunto,tbnotificaciones.fecha_envio,
+            
+            (SELECT CONCAT(tbempleado.nombre_empleado,' ',tbempleado.apellido_paterno,' ',
+                 tbempleado.apellido_materno) AS nombre 
+                 FROM usuarios tbusuarios 
+                 JOIN empleados tbempleado ON tbempleado.id_empleado = tbusuarios.id_empleado
+                 WHERE tbusuarios.id_usuario = tbnotificaciones.id_de)
+                 
+            from notificaciones tbnotificaciones
+            JOIN usuarios tbusuarios ON tbusuarios.id_usuario = tbnotificaciones.id_para
+            JOIN empleados tbempleados ON tbempleados.id_empleado = tbusuarios.id_empleado
+            WHERE tbnotificaciones.id_para = $ID_USUARIO ORDER BY tbnotificaciones.fecha_envio DESC";
+
              $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             return $lista;
