@@ -1086,7 +1086,11 @@
                                       });
                                       tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
                                       tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\">"+name+"</a></td><td>";
+<<<<<<< HEAD
                                       if(validador==1)
+=======
+                                      if(validador=="1" && validado=="false")
+>>>>>>> e8e185de5b2eb89356e5e7e4a271ede6209b30df
                                       {
                                         if(validado==false)
                                         {
