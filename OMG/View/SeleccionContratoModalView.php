@@ -81,6 +81,21 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
 <button type="button" class="btn btn-success" onclick="listarCumplimientos()" data-toggle="modal" data-target="#change-item">
     Seleccionar Contratos
 </button>
+
+
+<table class="table table-bordered table-striped header_fijo"  >
+    <thead >
+    <tr class="">
+     <!--<th class="table-headert" width="8%">No.</th>-->
+     <th class="table-headert" width="">Clave del contrato</th>
+     <th class="table-headert" width="">Contrato</th>
+    </tr>
+   </thead>
+
+   <tbody class="hideScrollBar"  id="contenido" style="position: absolute">
+   </tbody>
+
+</table>
   
 
 <!-- Inicio de Seccion Modal Tema-->
@@ -107,6 +122,7 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
                         
                 
 <script>
+
     
 
 function loadSpinner()
