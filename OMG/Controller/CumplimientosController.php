@@ -45,10 +45,7 @@ switch ($Op) {
                 
 	case 'obtenerContrato':
             
-//            ;
-//            tbusuarios.
 		$Lista=$model->obtenerContratosPorUsuarioPermiso(Session::getSesion("user")["ID_USUARIO"]);
-//            echo Session::getSesion("user")["ID_USUARIO"];
                 header('Content-type: application/json; charset=utf-8');
                 echo json_encode($Lista);
 		return $Lista;

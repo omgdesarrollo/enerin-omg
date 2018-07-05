@@ -78,7 +78,7 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
 
 <div id="loader"></div>
           
-<button type="button" class="btn btn-success" onclick="listarCumplimientos()" data-toggle="modal" data-target="#change-item">
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#change-item">
     Seleccionar Contratos
 </button>
 
