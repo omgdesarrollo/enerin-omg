@@ -80,8 +80,7 @@ $Usuario=  Session::getSesion("user");
                 }
 	</style>
 	<script>
-            
-            
+                
             
 		var dhxWins, w1,w , myLayout, mySidebar,ribbon,layout;
                 var arr = [];
@@ -516,8 +515,8 @@ function loadDataNotificaciones(){
  var layoutWin=dhxWins.createWindow({id:"emp", text:"OMG", left: 20, top: 30,width:430,  height:205,  center:true,resize: true,park:true,modal:true	});
  layoutWin.attachURL("login.php", null, true);
  
+}
 
-}            
                 
 
         </script>
@@ -578,6 +577,62 @@ function loadDataNotificaciones(){
 <div class="popup-overlay"></div>
 
 
+
+<script>
+cambiarCont();
+
+function cambiarCont()
+    { 
+
+var jsonObj = {
+    
+        }
+
+  $contador=1;
+           $.ajax({  
+                     url: "../Controller/CumplimientosController.php?Op=obtenerContrato",  
+                     async:false,
+                     success: function(r) {
+        $.each(r,function(index,value){
+             jsonObj[value.id_cumplimiento] = value.clave_cumplimiento ;
+                                })
+                       
+                        }    
+        });
+
+                swal({
+  title: 'Selecciona un contrato',
+  input: 'select',
+  inputOptions:jsonObj,
+  inputPlaceholder: 'selecciona un contrato ',
+  showCancelButton: false,
+  inputValidator: function (value) {
+    return new Promise(function (resolve, reject) {
+      if (value !== '') {
+        resolve();
+      } else {
+        reject('requieres seleccionar un contrato ');
+      }
+    });
+  }
+}).then(function (result) {
+//  swal({
+//    type: 'success',
+//    html: 'tu has seleccionado el contrato ' + result
+//  });
+
+
+    $.ajax({  
+                        url: "../Controller/CumplimientosController.php?Op=contratoselec&c="+result,  
+                        async:false,
+                        success: function(r) {
+                           }    
+           });
+  });
+    
+ } 
+
+</script>
 
 </body>
 </html>
