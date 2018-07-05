@@ -4,7 +4,7 @@
     { 
   datoscont={};
            $.ajax({  
-                     url: "../Controller/CumplimientosController.php?Op=obtenerContrato?>",  
+                     url: "../Controller/CumplimientosController.php?Op=obtenerContrato",  
                      async:false,
                      success: function(r) {
                         //alert("en:   ");
@@ -14,8 +14,11 @@
                         // alert("ya entro y "+value.CLAVE_CUMPLIMIENTO);
                         
 //                      datacontratos.push( {id:'contratos',text:value.clave_cumplimiento,img:'oficios.png',type:'button',isbig:true} );
+//                         datosco   
                             
-                         })                       
+                         })
+                         
+                         
                         }    
         });
         

@@ -10,7 +10,7 @@ require_once '../util/Session.php';
 
 
 $Op=$_REQUEST["Op"];
-$operacionarealizar=$_REQUEST["TipoOperacion"];
+@$operacionarealizar=$_REQUEST["TipoOperacion"];
 $model=new CumplimientoModel();
 $cumplimientoPojo= new CumplimientoPojo();
 $usuarioPojo= new UsuarioPojo();
@@ -44,7 +44,11 @@ switch ($Op) {
 		break;        
                 
 	case 'obtenerContrato':
-		$Lista=$model->obtenerContratosPorUsuarioPermiso($_REQUEST['ID_USUARIO']);
+            
+//            ;
+//            tbusuarios.
+		$Lista=$model->obtenerContratosPorUsuarioPermiso(Session::getSesion("user")["ID_USUARIO"]);
+//            echo Session::getSesion("user")["ID_USUARIO"];
                 header('Content-type: application/json; charset=utf-8');
                 echo json_encode($Lista);
 		return $Lista;
