@@ -92,6 +92,8 @@ class CumplimientoModel{
             $dao=new CumplimientoDAO();
             $rec= $dao->obtenerContratosPorUsuarioPermiso($ID_USUARIO);
             
+            
+            
             return $rec;
         } catch (Exception $ex)
         {

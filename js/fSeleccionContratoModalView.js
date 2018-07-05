@@ -32,8 +32,8 @@
         });
         
         
-//        datoscont={ '1': 'Contrato 1' },
-//                   { '2': 'Contrato 2'};
+        datoscont={ '1': 'Contrato 1' },
+                   { '2': 'Contrato 2'};
         
                 swal({
   title: 'Selecciona un contrato',
