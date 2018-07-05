@@ -103,8 +103,8 @@ function reconstruir(value,carga)
     
                 if(carga==0)
                 tempData += "<tr id='registro_"+value.id_cumplimiento+"'>";
-                tempData += "<td class='celda' width='22%'>"+value.clave_cumplimiento+"</td>";
-                tempData += "<td class='celda' width='22%'>"+value.cumplimiento+"</td>";                  
+                tempData += "<td class='celda' width='50%'>"+value.clave_cumplimiento+"</td>";
+                tempData += "<td class='celda' width='50%'>"+value.cumplimiento+"</td>";                  
                 if(carga==0)
                 tempData += "</tr>";
     
