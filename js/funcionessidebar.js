@@ -1,3 +1,62 @@
+
+
+ function cambiarCont()
+    { 
+  datoscont={};
+           $.ajax({  
+                     url: "../Controller/CumplimientosController.php?Op=obtenerContrato",  
+                     async:false,
+                     success: function(r) {
+                        //alert("en:   ");
+//                     datacontratos.push( {id:'oficio',text:''+,img:'oficios.png',type:'button',isbig:true} )
+                     
+                     $.each(r,function(index,value){
+                        // alert("ya entro y "+value.CLAVE_CUMPLIMIENTO);
+                        
+//                      datacontratos.push( {id:'contratos',text:value.clave_cumplimiento,img:'oficios.png',type:'button',isbig:true} );
+//                         datosco   
+                            
+                         })
+                         
+                         
+                        }    
+        });
+        
+        
+        datoscont={ '1': 'Contrato 1',
+                    '2': 'Contrato 2',
+                    '3': 'Contrato 3'
+                };
+        
+                swal({
+  title: 'Selecciona un contrato',
+  input: 'select',
+  inputOptions:datoscont,
+  inputPlaceholder: 'selecciona un contrato ',
+  showCancelButton: true,
+  inputValidator: function (value) {
+    return new Promise(function (resolve, reject) {
+      if (value !== '') {
+        resolve();
+      } else {
+        reject('requieres seleccionar un contrato ');
+      }
+    });
+  }
+}).then(function (result) {
+  swal({
+    type: 'success',
+    html: 'tu has seleccionado el contrato ' + result
+  });
+});
+    }
+
+
+
+
+
+
+
 function loadDataSideBarCatalogoInformacion(){
 //         mySidebar = myLayout.cells("a").attachSidebar();
    
@@ -16,9 +75,7 @@ function loadDataSideBarCatalogoInformacion(){
           //{id: "asignaciondocumentostemas", text: "Asignacion de Documento - Tema", icon: "asignaciondocumento.png"}  
 
         ]
-      });
-      
-                                 
+      });                        
                          mySidebar.attachEvent("onSelect", function(id, value){
                              
                                    switch(id){
@@ -266,6 +323,7 @@ function loadDataSideBarOficiosDocumentacion()
                                                                               
                                    }
       });
+      
                         
     }
     

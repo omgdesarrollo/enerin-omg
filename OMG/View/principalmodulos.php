@@ -39,6 +39,8 @@ $Usuario=  Session::getSesion("user");
         <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
         <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
         <script src="../../js/funcionessidebar.js" type="text/javascript"></script>
+        <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
+        <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
         <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
         <style>
                 .modal-body{
@@ -176,9 +178,12 @@ var gantt=[
 //                    loadDataContratos();
                   loadDataMenuArriba("");
 //                    loadEstructuraMaster();
- 
+                    ribbon.setSizes();
                     ribbon.attachEvent("onClick", function(itemIdSeleccion, bId){
 //                         alert(itemIdSeleccion);
+
+                        if(itemIdSeleccion=="cambiarcontrato")
+                            cambiarCont();
                         if(itemIdSeleccion=="sesionusuario")
 //                            loadViewUsuario();
                             loadDataSideBarAjustesUsuario();
@@ -203,9 +208,9 @@ var gantt=[
                         if(itemIdSeleccion=="excel")
                            alert("le has picado a excel ");
                         
-                        if(itemIdSeleccion=="cambiarcontrato")
-//                           alert("le has picado a pdf");
-                            loadDataSideBarContratos();        
+//                        if(itemIdSeleccion=="cambiarcontrato")
+////                           alert("le has picado a pdf");
+//                            loadDataSideBarContratos();        
 //                              loadDataModalCambiarContrato();  
                         if(itemIdSeleccion=="Informacion") 
                            loadDataSideBarCatalogoInformacion();
@@ -333,7 +338,7 @@ function loadDataNotificaciones(){
                      $.each(r,function(index,value){
                         // alert("ya entro y "+value.CLAVE_CUMPLIMIENTO);
                         
-                      datacontratos.push( {id:'contratos',text:value.clave_cumplimiento,img:'oficios.png',type:'button',isbig:true} );
+//                      datacontratos.push( {id:'contratos',text:value.clave_cumplimiento,img:'oficios.png',type:'button',isbig:true} );
 
                          })                       
                         }    
@@ -454,14 +459,22 @@ function loadDataNotificaciones(){
   closeOnConfirm: false,
   showLoaderOnConfirm: true
 }, function () {
-    window.location.href="Logout.php";
+//    window.location.href="Logout.php";
 //  setTimeout(function () {
 //        temporalcierresesion=1;
 //    swal("Sesion finalizada de manera correcta");
 //  }, 2000);
 
  
-});
+}).then(function (result) {
+     window.location.href="Logout.php";
+//  swal({
+//    type: 'success',
+//    html: 'tu seleccionaste ' + result
+//  }).then(function(){
+//       window.location.href="Logout.php";
+//  }) ;
+});;
     }
     
     function loadDataModalCambiarContrato()
@@ -488,6 +501,8 @@ function loadDataNotificaciones(){
 
     }
     
+    
+
     
     
     function loadDataCargaProgramaGantt(){
