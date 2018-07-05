@@ -6,10 +6,10 @@ require_once '../Pojo/DocumentoPojo.php';
 class DocumentoModel{
     //valida los datos del usuario.
     //retorna el registro del usuario como un arreglo asociativo
-    public function  listarDocumentos(){
+    public function  listarDocumentos($contrato){
         try{
             $dao=new DocumentoDAO();
-            $rec=$dao->mostrarDocumentos();
+            $rec=$dao->mostrarDocumentos($contrato);
             
             return $rec;
     }  catch (Exception $e){
