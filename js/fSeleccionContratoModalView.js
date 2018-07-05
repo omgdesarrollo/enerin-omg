@@ -12,33 +12,44 @@
 
  function cambiarCont()
     { 
-  datoscont={};
+//var jsonObj = {
+//    members: 
+//           {
+//            host: "hostName",
+//            viewers: 
+//            {
+//            }
+//        }
+//}
+var jsonObj = {
+    
+        }
+
+  $contador=1;
            $.ajax({  
                      url: "../Controller/CumplimientosController.php?Op=obtenerContrato",  
                      async:false,
                      success: function(r) {
-                        //alert("en:   ");
-//                     datacontratos.push( {id:'oficio',text:''+,img:'oficios.png',type:'button',isbig:true} )
-                     
-//                     $.each(r,function(index,value){
-//                        // alert("ya entro y "+value.CLAVE_CUMPLIMIENTO);
-//                        
-////                      datacontratos.push( {id:'contratos',text:value.clave_cumplimiento,img:'oficios.png',type:'button',isbig:true} );
-////                         datosco   
-//                            
-//                         })
-//                   datoscont={'r.id_cumplimiento':""};
+        $.each(r,function(index,value){
+             jsonObj[value.id_cumplimiento] = value.clave_cumplimiento ;
+                                })
+                       
                         }    
         });
+<<<<<<< HEAD
         
         
         datoscont={ '1': 'Contrato 1' },
                    { '2': 'Contrato 2'};
         
+=======
+
+//        console.
+>>>>>>> 3b772699a9dea65a9f841c7600d24c424564585a
                 swal({
   title: 'Selecciona un contrato',
   input: 'select',
-  inputOptions:datoscont,
+  inputOptions:jsonObj,
   inputPlaceholder: 'selecciona un contrato ',
   showCancelButton: true,
   inputValidator: function (value) {
@@ -51,13 +62,21 @@
     });
   }
 }).then(function (result) {
-  swal({
-    type: 'success',
-    html: 'tu has seleccionado el contrato ' + result
+//  swal({
+//    type: 'success',
+//    html: 'tu has seleccionado el contrato ' + result
+//  });
+
+
+    $.ajax({  
+                        url: "../Controller/CumplimientosController.php?Op=contratoselec&c="+result,  
+                        async:false,
+                        success: function(r) {
+                           }    
+           });
   });
-});
-    }
     
+ } 
     
 
 listarCumplimientos();
@@ -66,6 +85,10 @@ listarCumplimientos();
 function listarCumplimientos()
 {
 //    alert("Entro al ajax");
+    
+    
+    
+    
     $.ajax
     ({
         url:'../Controller/CumplimientosController.php?Op=obtenerContrato',
@@ -84,6 +107,24 @@ function reconstruirTable(data)
     cargaTodo=0;
     tempData="";
     
+       var c="";
+       
+     $.ajax
+    ({
+        url:'../Controller/CumplimientosController.php?Op=contratoselec&obt=true',
+        type:'POST',
+        async:false,
+        success:function(d)
+        {
+//            reconstruirTable(datos)
+            if(d!=""){
+                c=d;//en esta variable se guarda el contrato seleccionado falta
+            }
+        }                  
+        
+    });
+    alert("contrato seleccionado  "+c);
+    
     $.each(data,function(index,value){
         
             tempData += reconstruir(value,cargaTodo);
@@ -96,22 +137,15 @@ function reconstruirTable(data)
 
 function reconstruir(value,carga)
 {
+ 
     tempData = "";
     
                 if(carga==0)
-                tempData += "<tr id='registro_"+value.id_cumplimiento+"'>";
+                tempData += "<tr  id='registro_"+value.id_cumplimiento+"'>";
                 tempData += "<td class='celda' width='50%'>"+value.clave_cumplimiento+"</td>";
-                tempData += "<td class='celda' width='50%'>"+value.cumplimiento+"</td>";                  
+                tempData += "<td class='celda' width='50%'>"+value.cumplimiento+"</td>";
                 if(carga==0)
                 tempData += "</tr>";
     
         return tempData;                                                        
 }
-
-
-
-
-
-
-
-
