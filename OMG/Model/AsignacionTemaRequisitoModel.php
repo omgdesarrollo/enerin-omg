@@ -6,10 +6,10 @@ require_once '../Pojo/AsignacionTemaRequisitoPojo.php';
 class AsignacionTemaRequisitoModel {
     //put your code here
     
-    public function  listarAsignacionTemasRequisitos($CONTRATO){
+    public function  listarAsignacionTemasRequisitos($CADENA,$CONTRATO){
         try{
             $dao=new AsignacionTemaRequisitoDAO();
-            $rec=$dao->mostrarAsignacionTemasRequisitos($CONTRATO);
+            $rec=$dao->mostrarAsignacionTemasRequisitos($CADENA,$CONTRATO);
             
             
             

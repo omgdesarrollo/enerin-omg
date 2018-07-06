@@ -15,7 +15,7 @@ $pojo= new AsignacionTemaRequisitoPojo();
 switch ($Op) {
 	case 'Listar':
 
-	$Lista=$model->listarAsignacionTemasRequisitos(Session::getSesion("s_cont"));
+	$Lista=$model->listarAsignacionTemasRequisitos("catalogo", Session::getSesion("s_cont"));
     	// Session::setSesion("listarAsignacionTemasRequisitos",$Lista);
 //    	$tarjet="../view/principalmodulos.php";
                 
