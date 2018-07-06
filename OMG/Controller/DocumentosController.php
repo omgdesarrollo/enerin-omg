@@ -55,8 +55,10 @@ switch ($Op) {
             $pojo->setClave_documento($_REQUEST['CLAVE_DOCUMENTO']);
             $pojo->setDocumento($_REQUEST['DOCUMENTO']);
             $pojo->setId_empleado($_REQUEST['ID_EMPLEADO']);
-            $model->insertar($pojo,Session::getSesion("s_cont"));
-            
+            $contrato= Session::getSesion("s_cont");
+//            echo "el contra:   ".$contrato."     |";
+            $model->insertar($pojo,$contrato);
+//            echo Session::getSesion("s_cont");
             
 		break;
 

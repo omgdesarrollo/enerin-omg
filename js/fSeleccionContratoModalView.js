@@ -115,7 +115,7 @@ function reconstruirTable(data)
         }                  
         
     });
-    alert("contrato seleccionado  "+c);
+//    alert("contrato seleccionado  "+c);
     
     $.each(data,function(index,value){
         
