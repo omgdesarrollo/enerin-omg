@@ -17,7 +17,7 @@ class AsignacionTemaRequisitoDAO {
     }
     
     
-    public function mostrarAsignacionTemasRequisitos(){
+    public function mostrarAsignacionTemasRequisitos($CONTRATO){
         try{
 
             
@@ -26,7 +26,8 @@ class AsignacionTemaRequisitoDAO {
             tbdocumentos.id_documento, tbdocumentos.clave_documento
             FROM asignacion_tema_requisito tbasignacion_tema_requisito
             JOIN temas tbtemas ON tbtemas.id_tema=tbasignacion_tema_requisito.id_tema
-            JOIN documentos tbdocumentos ON tbdocumentos.id_documento=tbasignacion_tema_requisito.id_documento";
+            JOIN documentos tbdocumentos ON tbdocumentos.id_documento=tbasignacion_tema_requisito.id_documento 
+            WHERE tbtemas.contrato=$CONTRATO";
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
