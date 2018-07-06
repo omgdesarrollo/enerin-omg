@@ -1,4 +1,4 @@
-
+listarDatos();
 
 $(function(){
                                                                               
@@ -34,18 +34,15 @@ $("#btn_guardar").click(function(){
             var CLAVE_DOCUMENTO=$("#CLAVE_DOCUMENTO").val();
             var DOCUMENTO=$("#DOCUMENTO").val();
             var ID_EMPLEADOMODAL=$("#ID_EMPLEADOMODAL").val();
-            var REGISTROS=$("#REGISTROS").val();
+//            var REGISTROS=$("#REGISTROS").val();
 
-//           alert("CLAVE_DOCUMENTO :"+CLAVE_DOCUMENTO + "DOCUMENTO :"+DOCUMENTO + "ID_EMPLEADOMODAL :"+ID_EMPLEADOMODAL
-//                                    + "REGISTROS :"+REGISTROS);
-
-
+           alert("CLAVE_DOCUMENTO :"+CLAVE_DOCUMENTO + "DOCUMENTO :"+DOCUMENTO + "ID_EMPLEADOMODAL :"+ID_EMPLEADOMODAL);
 
             datos=[];
             datos.push(CLAVE_DOCUMENTO);
             datos.push(DOCUMENTO);
             datos.push(ID_EMPLEADOMODAL);
-            datos.push(REGISTROS);
+//            datos.push(REGISTROS);
 
             saveToDatabaseDatosFormulario(datos);
 
@@ -55,7 +52,7 @@ $("#btn_limpiar").click(function(){
 
           $("#CLAVE_DOCUMENTO").val("");
           $("#DOCUMENTO").val("");
-          $("#REGISTROS").val("");
+//          $("#REGISTROS").val("");
 
 
 });
@@ -173,8 +170,30 @@ function saveComboToDatabase(column,val,iddocumento)
         data:'column='+column+'&editval='+valorobjeto+'&id='+iddocumento,
         success: function(data){
 //        alert("Estos son los datos"+data);    
-                swal("Actualizacion Exitosa!", "Ok!", "success");
+                swal("Actualizacion Exitosa!", "", "success");
+                setTimeout(function(){swal.close();},1000);
         }   
    });
 
+}
+
+function saveToDatabaseDatosFormulario(datos)
+{
+    $.ajax({
+        
+        url:"../Controller/DocumentosController.php?Op=Guardar",
+        type:"POST",
+        data:"CLAVE_DOCUMENTO="+datos[0]+"&DOCUMENTO="+datos[1]+"&ID_EMPLEADO="+datos[2],
+        success:function(data)
+        {
+            swal("Guardado Exitoso!", "", "success");
+                 setTimeout(function()
+                 {
+                     swal.close();
+                     $("#create-item .close").click();
+                 },1000);
+            
+        }
+        
+    });
 }

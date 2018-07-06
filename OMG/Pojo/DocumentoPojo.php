@@ -19,7 +19,6 @@ class DocumentoPojo {
     private $clave_documento='';
     private $documento='';
     private $id_empleado='';
-    private $registros='';
     
     
     
@@ -55,16 +54,7 @@ class DocumentoPojo {
     public function setId_empleado($id_empleado) {
         $this->id_empleado = $id_empleado;
     }
-
-    
-    public function getRegistros() {
-        return $this->registros;
-    }
-
-    public function setRegistros($registros) {
-        $this->registros = $registros;
-    }
-         
+     
     
     
 }

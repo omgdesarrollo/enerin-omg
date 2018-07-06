@@ -51,13 +51,12 @@ class DocumentoModel{
     }
     
     
-    public function insertar($pojo){
+    public function insertar($pojo,$CONTRATO){
         try{
             $dao=new DocumentoDAO();
 //            $pojo=new EmpleadoPojo();
             
-           $dao->insertarDocumentos($pojo->getClave_documento(),$pojo->getDocumento(),$pojo->getId_empleado(),
-                                    $pojo->getRegistros());
+           $dao->insertarDocumentos($pojo->getClave_documento(),$pojo->getDocumento(),$pojo->getId_empleado(),$CONTRATO);
         } catch (Exception $ex) {
                 throw $ex;
         }

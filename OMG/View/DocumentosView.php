@@ -35,7 +35,6 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>
                 
                 <script src="../../js/jquery.js" type="text/javascript"></script>
-                <script src="../../js/fDocumentosView.js" type="text/javascript"></script>
 
 <style>
         
@@ -161,33 +160,22 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
 							<label class="control-label" for="title">Responsable del Documento:</label>
                                                         
                                                         <select   id="ID_EMPLEADOMODAL" class="select1">
+                                                                
                                                                 <?php
-                                                                $s="";
+                                                                $cbxEmp = Session::getSesion("listarEmpleadosComboBox");
                                                                 foreach ($cbxEmp as $value) {
                                                                 ?>
                                                                 
                                                                 <option value="<?php echo "".$value["id_empleado"] ?>"  ><?php echo "".$value["nombre_empleado"]." ".$value["apellido_paterno"]." ".$value["apellido_materno"]; ?></option>
                                                                 
-                                                                    <?php
-                                                                
-                                                                }
-                                    
-                                                                 ?>
+                                                                <?php                                                                
+                                                                }                                    
+                                                                ?>
                                                         </select>
                                                         
 							<div class="help-block with-errors"></div>
 						</div>
-                                    
-                                                
-<!--                                                <div class="form-group">
-                                                   
-							<label class="control-label" for="title">Registros:</label>
-                                                        <textarea  id="REGISTROS" class="form-control " data-error="Ingrese el Documento" required></textarea>
-							<div class="help-block with-errors"></div>
-						</div>-->
-                                                
-                                                
-                                    
+                                                                                                                                    
 						<div class="form-group">
                                                     <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
                                                     <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
@@ -206,7 +194,7 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
 		<script>
                     
                       var id_clausula,si_hay_cambio=false;
-                      listarDatos();
+                      
                       
                       
                       
@@ -417,7 +405,9 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
 
                 
 		</script>
-               
+
+                <script src="../../js/fDocumentosView.js" type="text/javascript"></script>
+
                <!--Inicia para el spiner cargando-->
                <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                <!--Termina para el spiner cargando--> 

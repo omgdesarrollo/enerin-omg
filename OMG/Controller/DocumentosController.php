@@ -55,8 +55,7 @@ switch ($Op) {
             $pojo->setClave_documento($_REQUEST['CLAVE_DOCUMENTO']);
             $pojo->setDocumento($_REQUEST['DOCUMENTO']);
             $pojo->setId_empleado($_REQUEST['ID_EMPLEADO']);
-            $pojo->setRegistros($_REQUEST['REGISTROS']);
-            $model->insertar($pojo);
+            $model->insertar($pojo,Session::getSesion("s_cont"));
             
             
 		break;
