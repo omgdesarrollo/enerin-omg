@@ -17,6 +17,11 @@ switch ($Op) {
 
         break;
     
+    case 'listarparametros(v,nv,sd)':
+    $_REQUEST["check"];
+        
+    break;
+    
     default:
         break;
 }

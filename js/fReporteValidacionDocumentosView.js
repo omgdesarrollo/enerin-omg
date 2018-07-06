@@ -1,13 +1,17 @@
 //listarDatos();
-    
+  parametroscheck={"validado":"false","no_validado":"false","sin_documento":"false"};  
     $(function (){
 //      alert("tene");
 $('#checkValidado').click(function() {
-//        if (!$(this).is(':checked')) {
+        if (!$(this).is(':checked')) {
 //            return confirm("Estas seguro que desea quitarle la seleccion");
-//        }
+             alert("esta en "+$(this).is(':checked'));
+            parametroscheck["validado"]="false";
+        }else{
+            alert("esta  "+$(this).is(':checked'));
+        }
 //alert("d");
-    cargar("validados");
+//    cargar("validados");
     });
     
 $('#checkNoValidado').click(function() {
@@ -32,13 +36,14 @@ $('#checkSinDocumento').click(function() {
     function cargar(key){
         switch (key) {
     case "validados":
-        alert("entraste en validados");
+        
+//        alert("entraste en validados");
     break;
     case "novalidados":
-        alert("no validados");
+//        alert("no validados");
     break;
     case "sindocumento":
-        alert("sin documento");
+//        alert("sin documento");
     break;
     default:
         
