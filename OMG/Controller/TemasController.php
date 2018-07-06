@@ -25,7 +25,7 @@ switch ($Op) {
 	
 	case 'ListarHijos':
             
-            $Lista= $model->listarHijos($_REQUEST['ID']);
+            $Lista= $model->listarHijos("catalogo", Session::getSesion("s_cont"), $_REQUEST['ID']);
             header('Content-type: application/json; charset=utf-8'); 
             echo json_encode($Lista);
             return $Lista;

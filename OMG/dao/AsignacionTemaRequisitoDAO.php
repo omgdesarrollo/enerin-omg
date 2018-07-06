@@ -17,17 +17,17 @@ class AsignacionTemaRequisitoDAO {
     }
     
     
-    public function mostrarAsignacionTemasRequisitos($CONTRATO){
+    public function mostrarAsignacionTemasRequisitos($CADENA,$CONTRATO){
         try{
 
             
             $query="SELECT tbasignacion_tema_requisito.id_asignacion_tema_requisito, 
-            tbtemas.id_tema, tbtemas.no,tbtemas.nombre,tbtemas.descripcion,
-            tbdocumentos.id_documento, tbdocumentos.clave_documento
-            FROM asignacion_tema_requisito tbasignacion_tema_requisito
-            JOIN temas tbtemas ON tbtemas.id_tema=tbasignacion_tema_requisito.id_tema
-            JOIN documentos tbdocumentos ON tbdocumentos.id_documento=tbasignacion_tema_requisito.id_documento 
-            WHERE tbtemas.contrato=$CONTRATO";
+                    tbtemas.id_tema, tbtemas.no,tbtemas.nombre,tbtemas.descripcion,
+                    tbdocumentos.id_documento, tbdocumentos.clave_documento
+                    FROM asignacion_tema_requisito tbasignacion_tema_requisito
+                    JOIN temas tbtemas ON tbtemas.id_tema=tbasignacion_tema_requisito.id_tema
+                    JOIN documentos tbdocumentos ON tbdocumentos.id_documento=tbasignacion_tema_requisito.id_documento 
+                    WHERE tbtemas.identificador LIKE '%$CADENA%' AND tbtemas.contrato=$CONTRATO";
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);

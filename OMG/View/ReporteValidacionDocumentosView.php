@@ -55,7 +55,7 @@ $Usuario=  Session::getSesion("user");
 
             .hideScrollBar{
             width: 100%;
-            height: 100%;
+            height: 50%;
             overflow: auto;
             margin-right: 14px;
             padding-right: 28px; /*This would hide the scroll bar of the right. To be sure we hide the scrollbar on every browser, increase this value*/
