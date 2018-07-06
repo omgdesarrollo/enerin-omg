@@ -3,15 +3,18 @@
     $(function (){
 //      alert("tene");
 $('#checkValidado').click(function() {
-        if (!$(this).is(':checked')) {
+//        if (!$(this).is(':checked')) {
 //            return confirm("Estas seguro que desea quitarle la seleccion");
-             alert("esta en "+$(this).is(':checked'));
-            parametroscheck["validado"]="false";
-        }else{
-            alert("esta  "+$(this).is(':checked'));
-        }
-//alert("d");
-//    cargar("validados");
+//             alert("esta en "+$(this).is(':checked'));
+//            parametroscheck["validado"]="false";
+//            alert("validados");
+//        }else{
+//            alert("esta  "+$(this).is(':checked'));
+             parametroscheck["validado"]=$(this).is(':checked');
+//        }
+//alert("checkeado  "+parametroscheck["validado"]);
+    cargar("validados");
+//alert("d"+parametroscheck["validado"]+"  no validados  "+parametroscheck["no_validado"] );
     });
     
 $('#checkNoValidado').click(function() {
@@ -19,6 +22,7 @@ $('#checkNoValidado').click(function() {
 //            return confirm("Estas seguro que desea quitarle la seleccion");
 //        }
 //alert("d");
+parametroscheck["no_validado"]=$(this).is(':checked');
     cargar("novalidados");
     });
     
@@ -27,6 +31,7 @@ $('#checkSinDocumento').click(function() {
 //            return confirm("Estas seguro que desea quitarle la seleccion");
 //        }
 //alert("d");
+parametroscheck["sin_documento"]=$(this).is(':checked');
     cargar("sindocumento");
     });
     
@@ -38,11 +43,14 @@ $('#checkSinDocumento').click(function() {
     case "validados":
         
 //        alert("entraste en validados");
+            listarDatos();
     break;
     case "novalidados":
+        listarDatos();
 //        alert("no validados");
     break;
     case "sindocumento":
+        listarDatos();
 //        alert("sin documento");
     break;
     default:
@@ -53,10 +61,13 @@ $('#checkSinDocumento').click(function() {
     
 function listarDatos()
 {
+    
+//    console.log(parametroscheck);
     $.ajax
     ({
-        url: '../Controller/ReporteValidacionDocumentosController.php?Op=Listar',
-        type: 'GET',
+        url: '../Controller/ReporteValidacionDocumentosController.php?Op=listarparametros(v,nv,sd)',
+        type: 'POST',
+        data:parametroscheck,
         beforeSend:function()
         {
             $('#loader').show();

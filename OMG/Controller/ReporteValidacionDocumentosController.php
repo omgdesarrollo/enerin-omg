@@ -18,8 +18,13 @@ switch ($Op) {
         break;
     
     case 'listarparametros(v,nv,sd)':
-    $_REQUEST["check"];
-        
+    $v["param"]["v"]=$_REQUEST["validado"];
+    $v["param"]["n_v"]=$_REQUEST["no_validado"];
+    $v["param"]["s_d"]=$_REQUEST["sin_documento"];
+        $Lista=$model->listarValidaciones($v);
+         header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+//        echo $v["param"]["v"];
     break;
     
     default:
