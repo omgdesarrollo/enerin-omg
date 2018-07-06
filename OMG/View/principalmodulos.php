@@ -18,6 +18,7 @@ $urls["logica"] = "../../../enerin-omg/archivos/";
 // $urls[""] = ;
 Session::setSesion("URLS",$urls);
 $Usuario=  Session::getSesion("user");
+
 //$tokenseguridad=  Session::getSesion("token");
 //$tse=$tokenseguridad["tokenseguridad"];
 ?>
@@ -150,7 +151,8 @@ var gantt=[
 ];
 
   datacontratos=[
-      {id:'cambiarcontrato',text:'Cambiar Contrato',img:'contratos.png',type:'button',isbig:true}
+//         {id:'cambiarcontrato',text:'Cambiar Contrato',img:'contratos.png',type:'button',isbig:true}
+         {id:'cambiarcontrato',text:'<div id=\'infocontrato\'>"Contrato Seleccionado:"</div>',img:'contratos.png',type:'button',isbig:true}
   ];
   dataSeccionRibbon=[];
 //    loadEstructuraMaster();
@@ -342,6 +344,24 @@ function loadDataNotificaciones(){
                          })                       
                         }    
         });
+     }
+     
+     
+     function loadDataContratoSeleccionado()
+     {
+         contrato="";
+         $.ajax({
+             url:"../Controller/CumplimientosController.php?Op=contratoselec&obt=true",
+             type:"POST",
+             async:false,
+             success:function(dato)
+             {
+                 if(dato!="")
+                 {
+                    contrato=dato;
+                 }
+             }
+         });
      }
       
       function loadEstructuraMaster(){
