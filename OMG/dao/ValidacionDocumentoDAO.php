@@ -10,7 +10,7 @@ class ValidacionDocumentoDAO{
                     tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno,  	
 
                     tbvalidacion_documento.documento_archivo, tbvalidacion_documento.validacion_documento_responsable,
-                    tbvalidacion_documento.validacion_tema_responsable, tbvalidacion_documento.observacion_documento, 
+                    tbvalidacion_documento.validacion_tema_responsable, 
                     tbvalidacion_documento.plan_accion, tbvalidacion_documento.desviacion_mayor		 	
 
                     FROM validacion_documento tbvalidacion_documento

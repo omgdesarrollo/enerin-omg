@@ -55,7 +55,7 @@ class DocumentoModel{
         try{
             $dao=new DocumentoDAO();
 //            $pojo=new EmpleadoPojo();
-            
+//            echo "lo traje aun en el model  ".$CONTRATO;
            $dao->insertarDocumentos($pojo->getClave_documento(),$pojo->getDocumento(),$pojo->getId_empleado(),$CONTRATO);
         } catch (Exception $ex) {
                 throw $ex;

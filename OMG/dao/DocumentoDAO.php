@@ -66,8 +66,8 @@ class DocumentoDAO{
     }
    
     
-    public function insertarDocumentos($clave_documento,$documento,$id_empleado,$registros,$contrato){
-        
+    public function insertarDocumentos($clave_documento,$documento,$id_empleado,$contrato){
+        echo "aqui en el dao lo tiene  ".$contrato;
         try{
             
             $query_obtenerMaximo_mas_uno="SELECT max(id_documento)+1 as id_documento FROM documentos";
@@ -83,7 +83,7 @@ class DocumentoDAO{
             }
             $query="INSERT INTO documentos(id_documento,clave_documento,documento,id_empleado,contrato)"
                     . "VALUES($id_nuevo,'$clave_documento','$documento',$id_empleado,$contrato)";
-            
+            echo $query;
             $db=  AccesoDB::getInstancia();
             $db->executeQueryUpdate($query);
         } catch (Exception $ex) {

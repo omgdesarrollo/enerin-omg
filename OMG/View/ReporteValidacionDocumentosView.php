@@ -125,14 +125,14 @@ require_once 'EncabezadoUsuarioView.php';
                 </div>
         </div>
 
-        <div class="col-md-4">
+<!--        <div class="col-md-4">
                 <div class="row align-items-center">
                         <div class="col-1">
                                 <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkSinDocumento">
                         </div>
                         <div class="col-6">Sin Documento</div>
                 </div>
-        </div>							
+        </div>							-->
     </div>
 </div>    
 

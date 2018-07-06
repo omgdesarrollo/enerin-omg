@@ -63,6 +63,23 @@ function listarDatos()
 {
     
 //    console.log(parametroscheck);
+
+//data=[];
+// $.getJSON("../Controller/ReporteValidacionDocumentosController.php?Op=listar", function (result) {
+//                        if (dataLength !== result.length) {
+//                            for (var i = dataLength; i < result.length; i++) {
+//                                data.push({
+//                                    x: result[i].id_validacion_documento
+//                                });
+//                            }
+//                            dataLength = result.length;
+//                            chart.render();
+//                        }
+//                    });
+////                   alert("");
+//console.log(data);
+                    
+                    
     $.ajax
     ({
         url: '../Controller/ReporteValidacionDocumentosController.php?Op=listarparametros(v,nv,sd)',
