@@ -173,7 +173,7 @@ var gantt=[
         myLayout.cells("b").attachObject("sidebarObjV");
         
 //                    loadDataContratos();
-                  loadDataMenuArriba("");
+                  loadDataMenuArriba("","NO SELECCIONADO");
 //                    loadEstructuraMaster();
                   
                     ribbon.setSizes();
@@ -242,12 +242,12 @@ var gantt=[
 //                            
          );
 
- function loadDataMenuArriba(iniciodinamic){	
+ function loadDataMenuArriba(iniciodinamic,info){	
 
-     
+//     if(info=="")
      
 	var inicio=[
-        {id:'00',text:'Seleccion de contrato(Click)' ,items:[
+        {id:'00',text:'<div id=\'desc\'>contrato('+info+')</div>' ,items:[
         
                     {id:'0x1',mode:'cols',text:'Contratos',type:'block',
           list:datacontratos
@@ -280,7 +280,7 @@ var gantt=[
     
     
 ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: "../../images/base/",tabs:inicio});
-//$("#r").html("d");
+//$("#desc").append(""+info);
   
 //    var dhxWins = new dhtmlXWindows();
 //var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
@@ -377,7 +377,7 @@ function loadDataNotificaciones(){
       function loadEstructuraMaster(){
       var seccionMenuDinamic=[];
                 var inicio=[
-        {id:'00',text:'Seleccion de contrato(Click)' ,items:[
+        {id:'00',text:'<div id=\'desc\'></div>' ,items:[
         
                             {id:'0x1',mode:'cols',text:'Contratos',type:'block',
           list:datacontratos
@@ -651,12 +651,23 @@ var jsonObj = {
 //    html: 'tu has seleccionado el contrato ' + result
 //  });
 
-
+//alert("d");
     $.ajax({  
-                        url: "../Controller/CumplimientosController.php?Op=contratoselec&c="+result,  
-                        async:false,
+                        url: "../Controller/CumplimientosController.php?Op=contratoselec&c="+result+"&obt=false",  
+                        async:true,
                         success: function(r) {
-                           }    
+                            
+//                            $.each(r,function (index,value){
+////                               $('#desc', window.parent.document).html("d");
+//                            alert("entro aqui ");
+////                            loadDataMenuArriba("",value.clave_cumplimiento);
+//                            });
+//                            alert("e  "+r.id_cumplimieCnto);
+//                            console.log(r.cumplimiento);
+                             loadDataMenuArriba("",r.clave_cumplimiento);
+                            
+//                                $('#desc').html("d1");
+    }    
            });
   });
     

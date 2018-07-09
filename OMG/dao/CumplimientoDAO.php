@@ -50,7 +50,7 @@ class CumplimientoDAO{
             
             $db= AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-            return $lista;
+            return $lista[0];
         } catch (Exception $ex) {
 
         }
