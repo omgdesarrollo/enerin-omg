@@ -19,12 +19,13 @@ function loadDataSideBarCatalogoInformacion(){
 
         ]
       });                        
-                         mySidebar.attachEvent("onSelect", function(id, value){
+                     var evid=    mySidebar.attachEvent("onSelect", function(id, value){
                              
                                    switch(id){
                                        case "empleados":
 //                                            consultarInformacion("../Controller/EmpleadosController.php?Op=Listar");                                           
                                             $("#sidebarObjV").load('InyectarVistasView.php #empleados');
+//                                                  mySidebar.detachEvent(evid);
                                             //$("#sidebarObjV").load('EmpleadosView.php');
                                        break;  
 
@@ -64,6 +65,9 @@ function loadDataSideBarCatalogoInformacion(){
                                        break;
                                    }
       });
+      
+
+      
                         
     }
 
