@@ -45,7 +45,7 @@ var jsonObj = {
   showCancelButton: true,
   inputValidator: function (value) {
     return new Promise(function (resolve, reject) {
-      if (value !== '') {
+      if (value != '') {
         resolve();
       } else {
         reject('requieres seleccionar un contrato');
@@ -57,15 +57,17 @@ var jsonObj = {
 //    type: 'success',
 //    html: 'tu has seleccionado el contrato ' + result
 //  });
-alert("ya");
+//alert("ya");
 
     $.ajax({  
                         url: "../Controller/CumplimientosController.php?Op=contratoselec&c="+result+"&obt=false",  
                         async:false,
                         success: function(r) {
-                            alert("d");
-//                              window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
-//                                window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
+//                            alert("dddf");
+//                              window.parent.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
+                              $('#desc',window.parent.document).html("CONTRATO("+r.clave_cumplimiento+")");
+                               $('#infocontrato',window.parent.document).html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
+//                                window.parent.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
 //                            alert("si te respondio");
                           
                             
