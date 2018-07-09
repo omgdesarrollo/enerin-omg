@@ -807,7 +807,7 @@
 
                 tempData += "<td>"+value.usuario+"</td>";
                 
-                tempData += "<td style='font-size: -webkit-xxx-large' onClick='MandarNotificacion("+value.id_usuario+","+value.responsable+",\""+value.accion_correctiva+"\","+value.id_evidencias+","+value.validador+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
+                tempData += "<td style='font-size: -webkit-xxx-large' onClick='MandarNotificacion("+value.id_responsable+","+value.responsable+",\""+value.accion_correctiva+"\","+value.id_evidencias+","+value.validador+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
 
                 if(value.accion_correctiva!="")
                 {
@@ -975,6 +975,9 @@
     }
     function MandarNotificacion(idPara,responsable,msj,idEvidencia,validador)
     {
+        $.ajax({
+
+        });
         if(responsable!=1 || validador==1)
         {
             tempData = "<button onClick='notificar("+idPara+","+idEvidencia+",\"accion_correctiva\")' type='submit' id='subirArchivos'  class='btn crud-submit btn-info form-control'>Enviar</button>";
