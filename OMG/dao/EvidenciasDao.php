@@ -33,8 +33,8 @@ class EvidenciasDAO
 			LEFT JOIN usuarios tbusuarios ON tbusuarios.id_empleado = tbempleados.id_empleado
             LEFT JOIN documentos tbdocumentos ON tbdocumentos.id_documento = tbregistros.id_documento
             
-            WHERE tbtemas.contrato=$CONTRATO AND tbregistros.registro<>'NULL' AND tbevidencias.validacion_supervisor<>'NULL' AND tbusuarios.id_usuario = $ID_USUARIO AND LOWER(tbtemas.identificador) 
-			LIKE '%catalogo%' OR tbevidencias.id_usuario = $ID_USUARIO";
+            WHERE tbtemas.contrato=$CONTRATO AND (tbregistros.registro<>'NULL' AND tbevidencias.validacion_supervisor<>'NULL' AND tbusuarios.id_usuario = $ID_USUARIO AND LOWER(tbtemas.identificador) 
+			LIKE '%catalogo%' OR tbevidencias.id_usuario = $ID_USUARIO)";
             
             $db = AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
@@ -54,7 +54,7 @@ class EvidenciasDAO
         {
             $query = "SELECT tbusuarios.id_empleado,tbrequisitos.id_requisito,tbrequisitos.requisito,
             tbregistros.id_registro,tbregistros.registro,tbregistros.frecuencia,
-            tbdocumentos.clave_documento,
+            tbdocumentos.clave_documento,tbevidencias.desviacion,
             tbevidencias.id_evidencias,tbevidencias.id_usuario,tbevidencias.accion_correctiva,tbevidencias.validacion_supervisor,
             tbempleados.id_empleado, (
                 SELECT CONCAT(tbempleados.nombre_empleado,' ',
