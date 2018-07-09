@@ -101,6 +101,16 @@ class CumplimientoModel{
             return false;
         }
     }
+    
+    function detallesContratoSeleccionado($v){
+        try{
+            $dao= new CumplimientoDAO();
+            $rec=$dao->detallesContratoSeleccionado($v);
+            return $rec;
+        } catch (Exception $ex) {
+
+        }
+    }
 
 
 

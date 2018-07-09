@@ -48,7 +48,7 @@ var jsonObj = {
       if (value !== '') {
         resolve();
       } else {
-        reject('requieres seleccionar un contrato ');
+        reject('requieres seleccionar un contrato');
       }
     });
   }
@@ -57,12 +57,16 @@ var jsonObj = {
 //    type: 'success',
 //    html: 'tu has seleccionado el contrato ' + result
 //  });
-
+alert("ya");
 
     $.ajax({  
-                        url: "../Controller/CumplimientosController.php?Op=contratoselec&c="+result,  
+                        url: "../Controller/CumplimientosController.php?Op=contratoselec&c="+result+"&obt=false",  
                         async:false,
                         success: function(r) {
+                            
+//                            alert("si te respondio");
+                          
+                            
                            }    
            });
   });

@@ -42,7 +42,19 @@ class CumplimientoDAO{
         throw $ex;
     }
     }
-    
+    public function detallesContratoSeleccionado($v){
+        
+        try{
+            $query="select tbcumplimientos.id_cumplimiento,tbcumplimientos.clave_cumplimiento,
+            tbcumplimientos.cumplimiento from cumplimientos tbcumplimientos  WHERE tbcumplimientos.id_cumplimiento=".$v["contrato"];
+            
+            $db= AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            return $lista[0];
+        } catch (Exception $ex) {
+
+        }
+    }
     
     
     
