@@ -648,6 +648,8 @@ var jsonObj = {
   inputPlaceholder: 'selecciona un contrato ',
   showCancelButton: false,
   showLoaderOnConfirm: true,
+   allowEscapeKey:false,
+   allowOutsideClick: false,
   inputValidator: function (value) {
     return new Promise(function (resolve, reject) {
       if (value !== '') {
