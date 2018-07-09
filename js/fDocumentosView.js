@@ -197,3 +197,122 @@ function saveToDatabaseDatosFormulario(datos)
         
     });
 }
+
+
+//function detectarsihaycambio(value){                   
+//    si_hay_cambio=true;   
+//}
+
+function verificarExiste(dataString,cualverificar){
+
+$.ajax({
+    type: "POST",
+    url: "../Controller/DocumentosController.php?Op=verificacionexisteregistro&cualverificar="+cualverificar,
+    data: "registro="+dataString,
+    success: function(data) {    
+    mensajeerror="";
+
+        $.each(data, function (index,value) {
+            mensajeerror=" El Documento "+value.clave_documento+" Ya Existe";
+        });
+    $("#msgerrorclave").html(mensajeerror);
+        if(mensajeerror!=""){
+            $("#msgerrorclave").css("background","orange");
+            $("#msgerrorclave").css("width","190px");
+            $("#msgerrorclave").css("color","white");
+            $("#btn_guardar").prop("disabled",true);
+        }else{
+            $("#btn_guardar").prop("disabled",false);
+        }
+
+
+
+        }
+    })
+}
+                                 
+                
+                
+function refresh(){
+    listarDatos();
+}
+                
+                
+                
+function loadSpinner(){
+        myFunction();
+}
+
+
+function filterTableClaveDocumento() {
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("idInputClaveDocumento");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("idTable");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      } 
+    }
+}
+
+
+
+function filterTableNombreDocumento() {
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("idInputNombreDocumento");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("idTable");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      } 
+    }
+}
+
+
+function filterTableResponsableDocumento() {
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("idInputResponsableDocumento");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("idTable");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[2];
+      if (td) {
+          select=td.getElementsByTagName("select");
+          $.each(select,function(index,value)
+          {
+                var indexRes = value.selectedIndex;
+                var responsable=value[indexRes].innerHTML;
+                console.log(responsable);
+              if (responsable.toUpperCase().indexOf(filter) > -1)
+              {
+                tr[i].style.display = "";
+              }
+              else
+              {
+                tr[i].style.display = "none";
+              }
+          });
+
+      } 
+    }
+}

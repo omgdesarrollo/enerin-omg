@@ -18,8 +18,9 @@ $Usuario=  Session::getSesion("user");
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
 		<!-- bootstrap & fontawesome -->
-                <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-                <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+
                 <!--Para abrir alertas de aviso, success,warning, error-->       
                 <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
 
@@ -165,7 +166,7 @@ require_once 'EncabezadoUsuarioView.php';
 </button>
     
 <button type="button" class="btn btn-info " onclick="refresh();" >
-    <i class="glyphicon glyphicon-repeat"></i> 
+    <i class="glyphicon glyphicon-repeat"></i>
 </button>
     
     <input type="text" id="idInputClaveAutoridad" onkeyup="filterTableClaveAutoridad()" placeholder="Clave Autoridad Remitente" style="width: 210px;">

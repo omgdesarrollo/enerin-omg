@@ -18,6 +18,7 @@ $urls["logica"] = "../../../enerin-omg/archivos/";
 // $urls[""] = ;
 Session::setSesion("URLS",$urls);
 $Usuario=  Session::getSesion("user");
+
 //$tokenseguridad=  Session::getSesion("token");
 //$tse=$tokenseguridad["tokenseguridad"];
 ?>
@@ -106,18 +107,14 @@ var seccionHerramientas=[
  var seccionCumplimiento=[
      {id:'documentos',text:'Validacion de Documentos',img:'documentos.png',type:'button',isbig:true} ,
      {id:'evidencias',text:'Evidencias',img:'operaciones.png',type:'button',isbig:true},
-     //{id:'planaccion',text:'Plan de Accion',img:'planaccion.png',type:'button',isbig:true}
+     {id:'informecumplimientos',text:'Informe',img:'documentos.jpg',type:'button',isbig:true}
  ];
  
  
- var seccionGantt=[
-     {id:'tareas',text:'Carga Programa Gantt',img:'663.png',type:'button',isbig:true} ,
+ var seccionTareas=[
+     {id:'tareas',text:'Registro de Tareas',img:'tareas.png',type:'button',isbig:true} ,
  ];
  
- var seccionReportesGerenciales=[
-     {id:'reporte',text:'Reporte',img:'documentos.jpg',type:'button',isbig:true}  
- ];
-
   var seccionOficios=[
      {id:'catalogooficios',text:'Catalogos',img:'catalogos.png',type:'button',isbig:true},  
      {id:'documentacion',text:'Documentacion',img:'oficios.png',type:'button',isbig:true},  
@@ -150,7 +147,8 @@ var gantt=[
 ];
 
   datacontratos=[
-      {id:'cambiarcontrato',text:'Cambiar Contrato',img:'contratos.png',type:'button',isbig:true}
+//         {id:'cambiarcontrato',text:'Cambiar Contrato',img:'contratos.png',type:'button',isbig:true}
+         {id:'cambiarcontrato',text:'<div id=\'infocontrato\'>Contrato Seleccionado:</div>',img:'contratos.png',type:'button',isbig:true}
   ];
   dataSeccionRibbon=[];
 //    loadEstructuraMaster();
@@ -177,6 +175,7 @@ var gantt=[
 //                    loadDataContratos();
                   loadDataMenuArriba("");
 //                    loadEstructuraMaster();
+                  
                     ribbon.setSizes();
                     ribbon.attachEvent("onClick", function(itemIdSeleccion, bId){
 //                         alert(itemIdSeleccion);
@@ -221,10 +220,10 @@ var gantt=[
                             loadDataSideBarCumplimientosEvidencias();
 
                         if(itemIdSeleccion=="tareas")
-                            loadDataSideBarTareasGantt();
+                            loadDataSideBarTareas();
                         
-                        if(itemIdSeleccion=="reporte")
-                            loadDataSideBarReportesGerenciales();
+                        if(itemIdSeleccion=="informecumplimientos")
+                            loadDataSideBarInformeCumplimientos();
                         
                         if(itemIdSeleccion=="catalogooficios")
                             loadDataSideBarOficiosCatalogos();
@@ -267,11 +266,9 @@ var gantt=[
                              {id:'0x33',mode:'cols',text:'Cumplimientos',type:'block',
           list:seccionCumplimiento},
       
-                             {id:'0x33',mode:'cols',text:'Tareas',type:'block',
-          list:seccionGantt},
+                             {id:'0x34',mode:'cols',text:'Tareas',type:'block',
+          list:seccionTareas},
                             
-                             {id:'0x34',mode:'cols',text:'Reportes Gerenciales',type:'block',
-          list:seccionReportesGerenciales},
                              
                              {id:'0x35',mode:'cols',text:'Oficios',type:'block',
           list:seccionOficios},
@@ -344,6 +341,37 @@ function loadDataNotificaciones(){
                         }    
         });
      }
+     
+     
+     function loadDataContratoSeleccionado()
+     {
+         contrato="";
+         $.ajax({
+             url:"../Controller/CumplimientosController.php?Op=contratoselec&obt=true",
+             type:"POST",
+             async:false,
+             success:function(dato)
+             {
+                 if(dato!="")
+                 {
+                    contrato += '<div>"El contrato es:"+dato</div>';
+                 }
+                 return contrato;
+             }
+         });
+         
+         $("#infocontrato").html(contrato);
+     }
+     
+     
+//     function contratoSeleccionado(dato)
+//     {
+//         tempData="";
+//         
+//                  tempData+= '<div></div>';         
+//     }
+     
+     
       
       function loadEstructuraMaster(){
       var seccionMenuDinamic=[];

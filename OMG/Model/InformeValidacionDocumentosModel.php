@@ -1,13 +1,13 @@
 <?php
-require_once '../dao/ReporteValidacionDocumentosDAO.php';
+require_once '../dao/InformeValidacionDocumentosDAO.php';
 
-class ReporteValidacionDocumentosModel{
+class InformeValidacionDocumentosModel{
         
     public function listarValidaciones($v)
     {
         try
         {
-            $dao=new ReporteValidacionDocumentosDAO();
+            $dao=new InformeValidacionDocumentosDAO();
             $lista= $dao->listarValidaciones($v);
             
             return $lista;
