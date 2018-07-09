@@ -135,12 +135,12 @@ class EvidenciasModel
         }
     }
 
-    public function mandarAccionCorrectiva($ID_EVIDENCIA,$MENSAJE)
+    public function mandarAccionCorrectiva($ID_EVIDENCIA,$MENSAJE,$COLUMNA)
     {
         try
         {
             $dao=new EvidenciasDAO();
-            $rec = $dao->mandarAccionCorrectiva($ID_EVIDENCIA,$MENSAJE);
+            $rec = $dao->mandarAccionCorrectiva($ID_EVIDENCIA,$MENSAJE,$COLUMNA);
             return $rec;
         } catch (Exception $ex)
         {

@@ -108,147 +108,34 @@ require_once 'EncabezadoUsuarioView.php';
 
 <!--<div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom">--> 
     <div class="table-container">
-        
         <table class="tbl-qa" id="idTable">
-		  <!--<thead>-->
-            
-            
-                            <tr>
-                                <th class="table-header"></th>
-                                <th class="table-header"></th>
-                                <th class="table-header"></th>
-                                <th class="table-header"></th>
-                                <th class="table-header"></th>
-                                <th class="table-header"></th>
-                                <th class="table-header"></th>
-                                <th class="table-header" colspan="2">Validacion</th>
-                                <th class="table-header"></th>
-                                <th class="table-header"></th>
-                          </tr>
-                  
-            
+            <tr>
+                <th class="table-header"></th>
+                <th class="table-header"></th>
+                <th class="table-header"></th>
+                <th class="table-header"></th>
+                <th class="table-header"></th>
+                <th class="table-header"></th>
+                <th class="table-header"></th>
+                <th class="table-header" colspan="2">Validacion</th>
+                <th class="table-header"></th>
+                <th class="table-header"></th>
+            </tr>
 			  <tr>
-				
-                              <th class="table-header">Clave Documento</th>
-                                <th class="table-header">Nombre Documento</th>
-                                <th class="table-header">Responsable del Documento</th>
-                                <th class="table-header">Tema y Responsable</th>
-                                <th class="table-header">Archivo Adjunto</th>
-                                <th class="table-header">Requisitos</th>
-                                <th class="table-header">Registros</th>
-                                <th class="table-header">Responsable Documento</th>
-                                <th class="table-header">Responsable Tema</th>
-                                <th class="table-header">Observaciones</th>
-                                <!--<th class="table-header">Plan de Accion</th>-->
-                                <th class="table-header">Desviacion Mayor</th>
-                                
-			  </tr>
-            
-                          
-		  <!--</thead>-->
-		  <tbody>
-		  <?php
-                  
-                    
-                  
-
-                      $Lista = Session::getSesion("listarValidacionDocumentos");
-                      $ListaReqisitos = Session::getSesion("listarAsignacionTemasRequisitos");
-
-                      foreach ($Lista as $filas)
-                          {
-                          if($filas["clave_documento"]!="SIN DOCUMENTO"){
-                          ?>			 
-                      
-                        <tr class="table-row">
-
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'clave_documento','<?php echo $filas["id_validacion_documento"]; ?>')" 
-                                onClick="showEdit(this);"><?php echo $filas["clave_documento"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_validacion_documento"]; ?>')" 
-                                onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado','<?php echo $filas["id_validacion_documento"]; ?>')" 
-                                onClick="showEdit(this);"><?php echo $filas["nombre_empleado"]." ".$filas["apellido_paterno"]." ".$filas["apellido_materno"]; ?></td>
-
-                                
-                                <td>
-                                        <button onClick="mostrarTemaResponsable(<?php echo $filas['id_documento'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-temaresponsable">		                                
-                                                <i class="ace-icon fa fa-book" style="font-size: 20px;"></i>
-                                                Ver
-                                        </button>
-                                </td>
-                                
-                                
-                                <!-- documento adjunto -->
-                                <td>
-                                  <button onClick="mostrar_urls(<?php echo $filas['id_validacion_documento'] ?>);" type="button" 
-                                  class="btn btn-primary" data-toggle="modal" data-target="#create-itemUrls">
-                                  <i class='fa fa-cloud-upload' style='font-size: 20px'></i>    
-		                                Adjuntar
-                                  </button>
-                                </td>
-                                
-                                <!--Mostrar Requisutos-->
-                                <td>
-                                        <button onClick="mostrarRequisitos(<?php echo $filas['id_documento'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-requisitos">
-                                                <i class="ace-icon fa fa-book" style="font-size: 20px;"></i>
-                                                Ver
-                                        </button>
-                                </td>
-                                
-                                <td>
-                                        <button onClick="mostrarRegistros(<?php echo $filas['id_documento'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-registros">
-                                                <i class="ace-icon fa fa-book" style="font-size: 20px;"></i>
-		                                Ver                                                
-                                        </button>
-                                </td>
-                                
-                           
-                                <td style="background-color: #ccccff">
-                                    <div class="">
-                                        <input type="checkbox" style="width: 40px; height: 40px"  name="checkbox" class="checkboxDocumento" 
-                                            <?php 
-                                            if($filas["validacion_documento_responsable"] == "true"){
-                                                echo "checked";
-                                            }
-                                             ?>
-                                               onchange="saveCheckBoxToDataBase(this,'validacion_documento_responsable',<?php echo $filas["id_validacion_documento"]; ?>)">
-                                    </div>						
-                                </td>
-                                
-                            
-                                <td style="background-color: #ccccff">
-                                    <div class="">
-                                        <input type="checkbox" style="width: 40px; height: 40px" name="checkbox"  class="checkboxDocumento"
-                                            <?php 
-                                            if($filas["validacion_tema_responsable"] == "true"){
-                                                echo "checked";
-                                            }
-                                             ?>
-                                        onchange="saveCheckBoxToDataBase(this,'validacion_tema_responsable',<?php echo $filas["id_validacion_documento"]; ?>)">
-                                    </div>						
-                                </td>
-                                 
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'observacion_documento','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["observacion_documento"]; ?></td>
-                             
-                                <td style="background-color: #ccccff">
-                                    <div class="">
-                                        <input type="checkbox" style="width: 40px; height: 40px" name="checkbox"  class="checkboxDocumento"
-                                            <?php 
-                                            if($filas["desviacion_mayor"] == "true"){
-                                                echo "checked";
-                                            }
-                                             ?>
-                                        onchange="saveCheckBoxToDataBase(this,'desviacion_mayor',<?php echo $filas["id_validacion_documento"]; ?>)">
-                                    </div>						
-                                </td>
-                                
-			  </tr>
-                          
-                            <?php
-                            }
-                          }
-
-                            ?>
+                <th class="table-header">Clave Documento</th>
+                <th class="table-header">Nombre Documento</th>
+                <th class="table-header">Responsable del Documento</th>
+                <th class="table-header">Tema y Responsable</th>
+                <th class="table-header">Archivo Adjunto</th>
+                <th class="table-header">Requisitos</th>
+                <th class="table-header">Registros</th>
+                <th class="table-header">Responsable Documento</th>
+                <th class="table-header">Responsable Tema</th>
+                <th class="table-header">Observaciones</th>
+                <!--<th class="table-header">Plan de Accion</th>-->
+                <th class="table-header">Desviacion Mayor</th>               
+            </tr>
+		  <tbody id="tbodyValidacionDocumentos">
 		  </tbody>
 		</table>
 
@@ -378,13 +265,138 @@ require_once 'EncabezadoUsuarioView.php';
                     }
                 }                
                 });
-    
-        
       });
     
   
     });// Cierra el $function 
- 
+    function listarValidacionDocumentos()
+    {
+        tempData="";
+        $.ajax({
+            url: '../Controller/ValidacionDocumentosView.php?Op=Listar',
+            type:'GET',
+            success:function(documentos)
+            {
+                $.each(documentos,function(index,value)
+                {
+                    tempData += "<tr id='registroDocumento_"+value.id_validacion_documento+"'>"+construirValidacionDocumento(value,index++)+"</tr>";
+                });
+                $("#tbodyValidacionDocumentos").html(tempData);
+            },
+            error:function()
+            {
+
+            }
+        });
+    }
+
+    function construirValidacionDocumento(documento,numero)
+    {        
+        tempData="<td>"+numero+"<td>";
+        tempData+="<td>"+numero+"<td>";
+        tempData+="<td>"+numero+"<td>";
+        tempData+="<td>"+numero+"<td>";
+        
+        <?php
+            $Lista = Session::getSesion("listarValidacionDocumentos");
+            $ListaReqisitos = Session::getSesion("listarAsignacionTemasRequisitos");
+
+                      foreach ($Lista as $filas)
+                          {
+                          if($filas["clave_documento"]!="SIN DOCUMENTO"){
+                          ?>			 
+                      
+                        <tr class="table-row">
+
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'clave_documento','<?php echo $filas["id_validacion_documento"]; ?>')" 
+                                onClick="showEdit(this);"><?php echo $filas["clave_documento"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'documento','<?php echo $filas["id_validacion_documento"]; ?>')" 
+                                onClick="showEdit(this);"><?php echo $filas["documento"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado','<?php echo $filas["id_validacion_documento"]; ?>')" 
+                                onClick="showEdit(this);"><?php echo $filas["nombre_empleado"]." ".$filas["apellido_paterno"]." ".$filas["apellido_materno"]; ?></td>
+
+                                
+                                <td>
+                                        <button onClick="mostrarTemaResponsable(<?php echo $filas['id_documento'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-temaresponsable">		                                
+                                                <i class="ace-icon fa fa-book" style="font-size: 20px;"></i>
+                                                Ver
+                                        </button>
+                                </td>
+                                
+                                
+                                <!-- documento adjunto -->
+                                <td>
+                                  <button onClick="mostrar_urls(<?php echo $filas['id_validacion_documento'] ?>);" type="button" 
+                                  class="btn btn-primary" data-toggle="modal" data-target="#create-itemUrls">
+                                  <i class='fa fa-cloud-upload' style='font-size: 20px'></i>    
+		                                Adjuntar
+                                  </button>
+                                </td>
+                                
+                                <!--Mostrar Requisutos-->
+                                <td>
+                                        <button onClick="mostrarRequisitos(<?php echo $filas['id_documento'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-requisitos">
+                                                <i class="ace-icon fa fa-book" style="font-size: 20px;"></i>
+                                                Ver
+                                        </button>
+                                </td>
+                                
+                                <td>
+                                        <button onClick="mostrarRegistros(<?php echo $filas['id_documento'] ?>);" type="button" class="btn btn-success" data-toggle="modal" data-target="#mostrar-registros">
+                                                <i class="ace-icon fa fa-book" style="font-size: 20px;"></i>
+		                                Ver                                                
+                                        </button>
+                                </td>
+                                
+                           
+                                <td style="background-color: #ccccff">
+                                    <div class="">
+                                        <input type="checkbox" style="width: 40px; height: 40px"  name="checkbox" class="checkboxDocumento" 
+                                            <?php 
+                                            if($filas["validacion_documento_responsable"] == "true"){
+                                                echo "checked";
+                                            }
+                                             ?>
+                                               onchange="saveCheckBoxToDataBase(this,'validacion_documento_responsable',<?php echo $filas["id_validacion_documento"]; ?>)">
+                                    </div>						
+                                </td>
+                                
+                            
+                                <td style="background-color: #ccccff">
+                                    <div class="">
+                                        <input type="checkbox" style="width: 40px; height: 40px" name="checkbox"  class="checkboxDocumento"
+                                            <?php 
+                                            if($filas["validacion_tema_responsable"] == "true"){
+                                                echo "checked";
+                                            }
+                                             ?>
+                                        onchange="saveCheckBoxToDataBase(this,'validacion_tema_responsable',<?php echo $filas["id_validacion_documento"]; ?>)">
+                                    </div>						
+                                </td>
+                                 
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'observacion_documento','<?php echo $filas["id_validacion_documento"]; ?>')" onClick="showEdit(this);" onkeyup="detectarsihaycambio(this)"><?php echo $filas["observacion_documento"]; ?></td>
+                             
+                                <td style="background-color: #ccccff">
+                                    <div class="">
+                                        <input type="checkbox" style="width: 40px; height: 40px" name="checkbox"  class="checkboxDocumento"
+                                            <?php 
+                                            if($filas["desviacion_mayor"] == "true"){
+                                                echo "checked";
+                                            }
+                                             ?>
+                                        onchange="saveCheckBoxToDataBase(this,'desviacion_mayor',<?php echo $filas["id_validacion_documento"]; ?>)">
+                                    </div>						
+                                </td>
+                                
+			  </tr>
+                          
+                            <?php
+                            }
+                          }
+
+                            ?>
+    }
+
       function enviar_notificacion(columna,chekeado,id_validacion_documento){
           var u=$("#user").val();
 //            alert("enviado correccto "+u);

@@ -86,7 +86,7 @@ switch ($Op)
     break;
 
     case 'MandarAccionCorrectiva':
-        $exito = $model->mandarAccionCorrectiva($_REQUEST["ID_EVIDENCIA"],$_REQUEST["MENSAJE"]);
+        $exito = $model->mandarAccionCorrectiva($_REQUEST["ID_EVIDENCIA"],$_REQUEST["MENSAJE"],$_REQUEST["COLUMNA"]);
         echo $exito;
     break;
 

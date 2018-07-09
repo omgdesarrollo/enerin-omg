@@ -29,7 +29,7 @@ switch ($Op) {
 	case 'Listar':
 
 		$Lista=$model->listarValidacionDocumentos();
-    	Session::setSesion("listarValidacionDocumentos",$Lista);
+    	// Session::setSesion("listarValidacionDocumentos",$Lista);
 //    	$tarjet="../view/principalmodulos.php";
     	header('Content-type: application/json; charset=utf-8');
 		echo json_encode( $Lista);

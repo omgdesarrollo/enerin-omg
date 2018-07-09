@@ -9,7 +9,7 @@ class EvidenciasDAO
         {
             $query = "SELECT tbusuarios.id_empleado,tbrequisitos.id_requisito,tbrequisitos.requisito,
             tbregistros.id_registro,tbregistros.registro,tbregistros.frecuencia,
-            tbdocumentos.clave_documento,
+            tbdocumentos.clave_documento,tbevidencias.desviacion,
             tbevidencias.id_evidencias,tbevidencias.id_usuario,tbevidencias.accion_correctiva,tbevidencias.validacion_supervisor,
             tbempleados.id_empleado, (
                 SELECT CONCAT(tbempleados.nombre_empleado,' ',
@@ -235,12 +235,12 @@ class EvidenciasDAO
         }
     }
 
-    public function mandarAccionCorrectiva($ID_EVIDENCIA,$MENSAJE)
+    public function mandarAccionCorrectiva($ID_EVIDENCIA,$MENSAJE,$COLUMNA)
     {
         try
         {
             $db= AccesoDB::getInstancia();
-            $query="UPDATE evidencias SET accion_correctiva = '$MENSAJE'
+            $query="UPDATE evidencias SET ".$COLUMNA." = '$MENSAJE'
                  WHERE id_evidencias=$ID_EVIDENCIA";
             $result= $db->executeQueryUpdate($query);
             return $result;
