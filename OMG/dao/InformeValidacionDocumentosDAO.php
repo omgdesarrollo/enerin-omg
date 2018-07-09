@@ -2,7 +2,7 @@
 require_once '../ds/AccesoDB.php';
 
 
-class ReporteValidacionDocumentosDAO{
+class InformeValidacionDocumentosDAO{
     
     
     public function listarValidaciones($v)

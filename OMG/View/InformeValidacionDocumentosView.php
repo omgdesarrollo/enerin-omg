@@ -33,7 +33,7 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/jquery.js" type="text/javascript"></script>
-                <script src="../../js/fReporteValidacionDocumentosView.js" type="text/javascript"></script>
+                <script src="../../js/fInformeValidacionDocumentosView.js" type="text/javascript"></script>
                
                 
         <style>
@@ -121,7 +121,7 @@ require_once 'EncabezadoUsuarioView.php';
                         <div class="col-1">
                                 <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkNoValidado">
                         </div>
-                        <div class="col-5">No Validados</div>
+                        <div class="col-5">En Proceso</div>
                 </div>
         </div>
 

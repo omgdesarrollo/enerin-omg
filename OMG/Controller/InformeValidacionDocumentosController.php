@@ -1,12 +1,12 @@
 <?php
 
 session_start();
-require_once '../Model/ReporteValidacionDocumentosModel.php';
-require_once '../dao/ReporteValidacionDocumentosDAO.php';
+require_once '../Model/InformeValidacionDocumentosModel.php';
+require_once '../dao/InformeValidacionDocumentosDAO.php';
 require_once '../util/Session.php';
 
 $Op=$_REQUEST["Op"];
-$model=new ReporteValidacionDocumentosModel();
+$model=new InformeValidacionDocumentosModel();
 
 switch ($Op) {
     case 'Listar':

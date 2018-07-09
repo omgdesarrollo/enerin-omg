@@ -82,7 +82,7 @@ function listarDatos()
                     
     $.ajax
     ({
-        url: '../Controller/ReporteValidacionDocumentosController.php?Op=listarparametros(v,nv,sd)',
+        url: '../Controller/InformeValidacionDocumentosController.php?Op=listarparametros(v,nv,sd)',
         type: 'POST',
         data:parametroscheck,
         beforeSend:function()
@@ -137,7 +137,7 @@ function construir(value,carga)
                 }
                 if (value.validacion_tema_responsable=="false")
                 {
-                   tempData += "<td class='celda' width='10%'>No Validado</td>"; 
+                   tempData += "<td class='celda' width='10%'>En Proceso</td>"; 
                 }
                 
                 if(carga==0)
