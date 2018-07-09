@@ -72,8 +72,7 @@ switch ($Op) {
             } else{
                 Session::getSesion ("s_cont");
                 $v["contrato"]=Session::getSesion ("s_cont");
-               header('Content-type: application/json; charset=utf-8');
-             
+               header('Content-type: application/json; charset=utf-8');     
             echo json_encode($model->detallesContratoSeleccionado($v));
             }
 //            }
