@@ -664,7 +664,7 @@ var jsonObj = {
 //                            });
 //                            alert("e  "+r.id_cumplimieCnto);
 //                            console.log(r.cumplimiento);
-                             loadDataMenuArriba("",r.clave_cumplimiento);
+//                             loadDataMenuArriba("",r.clave_cumplimiento);
                             
 //                                $('#desc').html("d1");
     }    
