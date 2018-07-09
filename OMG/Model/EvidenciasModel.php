@@ -5,12 +5,12 @@ require_once '../Pojo/EvidenciasPojo.php';
 
 class EvidenciasModel
 {
-    public function listarEvidencias($ID_USUARIO)
+    public function listarEvidencias($ID_USUARIO,$CONTRATO)
     {
         try
         {
             $dao = new EvidenciasDAO();
-            $rec = $dao->listarEvidencias($ID_USUARIO);
+            $rec = $dao->listarEvidencias($ID_USUARIO,$CONTRATO);
             return $rec;
         }catch(Exception $e)
         {

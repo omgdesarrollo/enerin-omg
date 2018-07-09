@@ -19,7 +19,8 @@ switch ($Op)
 {
     case 'Listar':
         $USUARIO = Session::getSesion("user");
-		$Lista=$model->listarEvidencias($USUARIO["ID_USUARIO"]);
+        $CONTRATO = Session::getSesion("s_cont");
+		$Lista=$model->listarEvidencias($USUARIO["ID_USUARIO"],$CONTRATO);
     	Session::setSesion("listarOperaciones",$Lista);//no se de que es esto JR
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);

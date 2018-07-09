@@ -817,13 +817,12 @@
                 {
                     tempData += noMsj+"</td>";
                 }
-
-                if(value.responsable=="1")
-                {
+                // if(value.validador=="0")
+                // {
                     tempData += "<td style='font-size: -webkit-xxx-large'><button class='btn btn-info' onClick='#("+value.id_evidencias+");'>";
                     tempData += "Cargar Programa</button></td>";
-
                     tempData += "<td style='font-size: -webkit-xxx-large' onClick='MandarNotificacionDesviacion("+value.id_usuario+","+value.responsable+",\""+value.desviacion+"\","+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
+                // }
                     if(value.desviacion!="")
                     {
                         tempData += yesMsj+"</td>";
@@ -833,6 +832,8 @@
                         tempData += noMsj+"</td>";
                     }
 
+                if(value.responsable=="1")
+                {                    
                     tempData += "<td style='font-size: -webkit-xxx-large;'>";
                     if(value.validacion_supervisor=="true")
                         tempData += yesCheck;
@@ -842,8 +843,8 @@
                 }
                 else
                 {
-                    tempData += "<td style='font-size: -webkit-xxx-large'>"+denegado+"</td>";
-                    tempData += "<td style='font-size: -webkit-xxx-large'>"+denegado+"</td>";
+                    // tempData += "<td style='font-size: -webkit-xxx-large'>"+denegado+"</td>";
+                    // tempData += "<td style='font-size: -webkit-xxx-large'>"+denegado+"</td>";
                     if(value.validacion_supervisor=='true')
                         tempData += "<td style='font-size: -webkit-xxx-large'>"+yesCheck+" onClick='swalInfo(\"Validado por el responsable\")'></i>";
                     else
@@ -960,7 +961,7 @@
     {
         if(responsable==1)
         {
-            tempData = "<button onClick='notificar("+idPara+","+idEvidencia+",'desviacion')' type='submit' id='subirArchivos'  class='btn crud-submit btn-info form-control'>Enviar</button>";
+            tempData = "<button onClick='notificar("+idPara+","+idEvidencia+",\"desviacion\")' type='submit' id='subirArchivos'  class='btn crud-submit btn-info form-control'>Enviar</button>";
             $("#BTNENVIAR_MANDARNOTIFICACIONMODAL").html(tempData);
             $("#textAreaNotificacionModal").val(msj);
             $("#myModalLabelMandarNotificacion").html("Mandar Desviación");
@@ -976,7 +977,7 @@
     {
         if(responsable!=1 || validador==1)
         {
-            tempData = "<button onClick='notificar("+idPara+","+idEvidencia+",'accion_correctiva')' type='submit' id='subirArchivos'  class='btn crud-submit btn-info form-control'>Enviar</button>";
+            tempData = "<button onClick='notificar("+idPara+","+idEvidencia+",\"accion_correctiva\")' type='submit' id='subirArchivos'  class='btn crud-submit btn-info form-control'>Enviar</button>";
             $("#BTNENVIAR_MANDARNOTIFICACIONMODAL").html(tempData);
             $("#textAreaNotificacionModal").val(msj);
             $("#myModalLabelMandarNotificacion").html("Enviar Accion Correctiva");
@@ -1119,7 +1120,7 @@
                                                       (index==1)?name=value:name+="-"+value;
                                       });
                                       tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
-                                      tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\">"+name+"</a></td><td>";
+                                      tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\" download='"+name+"'>"+name+"</a></td><td>";
                                       if(validador=="1")
                                       {
                                         if(validado==false)

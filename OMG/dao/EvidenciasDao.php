@@ -3,7 +3,7 @@
 require_once '../ds/AccesoDB.php';
 class EvidenciasDAO
 {
-    public function listarEvidencias($ID_USUARIO)
+    public function listarEvidencias($ID_USUARIO,$CONTRATO)
     {
         try
         {
@@ -33,7 +33,7 @@ class EvidenciasDAO
 			LEFT JOIN usuarios tbusuarios ON tbusuarios.id_empleado = tbempleados.id_empleado
             LEFT JOIN documentos tbdocumentos ON tbdocumentos.id_documento = tbregistros.id_documento
             
-            WHERE tbregistros.registro<>'NULL' AND tbevidencias.validacion_supervisor<>'NULL' AND tbusuarios.id_usuario = $ID_USUARIO AND LOWER(tbtemas.identificador) 
+            WHERE tbtemas.contrato=$CONTRATO AND tbregistros.registro<>'NULL' AND tbevidencias.validacion_supervisor<>'NULL' AND tbusuarios.id_usuario = $ID_USUARIO AND LOWER(tbtemas.identificador) 
 			LIKE '%catalogo%' OR tbevidencias.id_usuario = $ID_USUARIO";
             
             $db = AccesoDB::getInstancia();
@@ -116,8 +116,8 @@ class EvidenciasDAO
     {
         try
         {
-            $query = "INSERT INTO evidencias (id_registro,id_usuario,desviacion,accion_correctiva,validacion_supervisor)
-                     VALUES ($ID_REGISTRO,$ID_USUARIO,'false','','false')";
+            $query = "INSERT INTO evidencias (id_registro,id_usuario)
+                     VALUES ($ID_REGISTRO,$ID_USUARIO)";
             $db = AccesoDB::getInstancia();
             $res = $db->executeQueryUpdate($query);
             return $res;
