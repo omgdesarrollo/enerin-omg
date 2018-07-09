@@ -64,9 +64,11 @@ switch ($Op) {
 //               }
 //            }
 //            else{if()
-            if($_REQUEST["obt"]==false)
+            if($_REQUEST["obt"]=="false"){
             Session::setSesion("s_cont", $_REQUEST["c"]);
-            else{
+            $v["contrato"]=Session::getSesion ("s_cont");
+            echo json_encode($model->detallesContratoSeleccionado($v));
+            } else{
               echo   Session::getSesion ("s_cont");
             }
 //            }

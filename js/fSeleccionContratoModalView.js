@@ -60,9 +60,12 @@ var jsonObj = {
 
 
     $.ajax({  
-                        url: "../Controller/CumplimientosController.php?Op=contratoselec&c="+result,  
+                        url: "../Controller/CumplimientosController.php?Op=contratoselec&c="+result+"&obt=false",  
                         async:false,
                         success: function(r) {
+                            
+                            
+                            
                            }    
            });
   });

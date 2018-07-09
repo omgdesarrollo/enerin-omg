@@ -280,7 +280,7 @@ var gantt=[
     
     
 ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: "../../images/base/",tabs:inicio});
-$("#r").html("d");
+//$("#r").html("d");
   
 //    var dhxWins = new dhtmlXWindows();
 //var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
@@ -345,6 +345,7 @@ function loadDataNotificaciones(){
      
      function loadDataContratoSeleccionado()
      {
+//         alert("entro aqui ");
          contrato="";
          $.ajax({
              url:"../Controller/CumplimientosController.php?Op=contratoselec&obt=true",
