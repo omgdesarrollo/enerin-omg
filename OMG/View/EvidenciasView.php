@@ -992,11 +992,14 @@
     function notificar(idPara,idEvidencia,columna)
     {
         mensaje = $("#textAreaNotificacionModal").val();
-        enviar_notificacion("Ha recibido una Accion Correctiva de ",idPara,0,false,"una evidencia");//msj,para,tipomsj,atendido,asunto
+        if(columna=='accion_correctiva')
+            enviar_notificacion("Ha recibido una Acción Correctiva de ",idPara,0,false,"una evidencia");//msj,para,tipomsj,atendido,asunto
+        else
+            enviar_notificacion("Ha recibido una Desviación de ",idPara,0,false,"una desviacion");//msj,para,tipomsj,atendido,asunto
         $.ajax({
               url: '../Controller/EvidenciasController.php?Op=MandarAccionCorrectiva',
               type: 'GET',
-              data: 'ID_EVIDENCIA='+idEvidencia+'&MENSAJE='+mensaje+'&columna',
+              data: 'ID_EVIDENCIA='+idEvidencia+'&MENSAJE='+mensaje+'&COLUMNA='+columna,
               success:function(enviado)
               {
                   (enviado==true)?(

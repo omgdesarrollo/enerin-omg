@@ -235,12 +235,12 @@ class EvidenciasDAO
         }
     }
 
-    public function mandarAccionCorrectiva($ID_EVIDENCIA,$MENSAJE)
+    public function mandarAccionCorrectiva($ID_EVIDENCIA,$MENSAJE,$COLUMNA)
     {
         try
         {
             $db= AccesoDB::getInstancia();
-            $query="UPDATE evidencias SET accion_correctiva = '$MENSAJE'
+            $query="UPDATE evidencias SET ".$COLUMNA." = '$MENSAJE'
                  WHERE id_evidencias=$ID_EVIDENCIA";
             $result= $db->executeQueryUpdate($query);
             return $result;
