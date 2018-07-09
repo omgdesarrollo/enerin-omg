@@ -487,7 +487,14 @@ function loadDataNotificaciones(){
   type: "warning",
   showCancelButton: true,
   closeOnConfirm: false,
-  showLoaderOnConfirm: true
+  showLoaderOnConfirm: true,
+   preConfirm: function() {
+    return new Promise(function(resolve) {
+      setTimeout(function() {
+        resolve()
+      }, 1000)
+    })
+  }
 }, function () {
 //    window.location.href="Logout.php";
 //  setTimeout(function () {
