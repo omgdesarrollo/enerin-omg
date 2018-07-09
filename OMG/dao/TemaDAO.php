@@ -26,7 +26,7 @@ public function mostrarTemas($cadena,$contrato)
     }
 }
 
-public function listarHijos($ID)
+public function listarHijos($CADENA,$CONTRATO,$ID)
 {
     try
     {
@@ -34,7 +34,7 @@ public function listarHijos($ID)
                 tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno	
 		FROM temas tbtemas
                 JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
-                WHERE tbtemas.padre=$ID";
+                WHERE tbtemas.identificador LIKE '%$CADENA%' AND tbtemas.contrato=$CONTRATO AND tbtemas.padre=$ID";
         
         $db=  AccesoDB::getInstancia();
         $lista=$db->executeQuery($query);

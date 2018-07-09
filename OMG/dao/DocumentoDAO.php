@@ -9,12 +9,11 @@ class DocumentoDAO{
             
             $query="SELECT tbdocumentos.id_documento, tbdocumentos.clave_documento, tbdocumentos.documento,
                     tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno,
-                    tbempleados.apellido_materno, tbdocumentos.registros FROM documentos tbdocumentos
+                    tbempleados.apellido_materno FROM documentos tbdocumentos
 
                     JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumentos.id_empleado
                     WHERE tbdocumentos.contrato=$CONTRATO
-                    ORDER BY  tbdocumentos.clave_documento  
-";
+                    ORDER BY  tbdocumentos.clave_documento";
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
@@ -67,8 +66,8 @@ class DocumentoDAO{
     }
    
     
-    public function insertarDocumentos($clave_documento,$documento,$id_empleado,$registros){
-        
+    public function insertarDocumentos($clave_documento,$documento,$id_empleado,$contrato){
+        echo "aqui en el dao lo tiene  ".$contrato;
         try{
             
             $query_obtenerMaximo_mas_uno="SELECT max(id_documento)+1 as id_documento FROM documentos";
@@ -82,9 +81,9 @@ class DocumentoDAO{
              if($id_nuevo==NULL){
                 $id_nuevo=0;
             }
-            $query="INSERT INTO documentos(id_documento,clave_documento,documento,id_empleado, registros)"
-                    . "VALUES($id_nuevo,'$clave_documento','$documento',$id_empleado,'$registros')";
-            
+            $query="INSERT INTO documentos(id_documento,clave_documento,documento,id_empleado,contrato)"
+                    . "VALUES($id_nuevo,'$clave_documento','$documento',$id_empleado,$contrato)";
+            echo $query;
             $db=  AccesoDB::getInstancia();
             $db->executeQueryUpdate($query);
         } catch (Exception $ex) {

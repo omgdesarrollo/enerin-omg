@@ -88,7 +88,7 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
 </button>
 
 
-<table class="table table-bordered table-striped header_fijo"  style="width: 61%;">
+<table class="table table-bordered table-striped header_fijo"  style="width: 25%;">
     <thead >
     <tr class="">
      <!--<th class="table-headert" width="8%">No.</th>-->

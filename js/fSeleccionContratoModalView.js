@@ -36,16 +36,7 @@ var jsonObj = {
                        
                         }    
         });
-//<<<<<<< HEAD
-        
-        
-        datoscont={ '1': 'Contrato 1' },
-                   { '2': 'Contrato 2'};
-        
-//=======
 
-//        console.
-//>>>>>>> 3b772699a9dea65a9f841c7600d24c424564585a
                 swal({
   title: 'Selecciona un contrato',
   input: 'select',
@@ -78,6 +69,7 @@ var jsonObj = {
     
  } 
     
+
 
 listarCumplimientos();
 
@@ -123,7 +115,7 @@ function reconstruirTable(data)
         }                  
         
     });
-    alert("contrato seleccionado  "+c);
+//    alert("contrato seleccionado  "+c);
     
     $.each(data,function(index,value){
         

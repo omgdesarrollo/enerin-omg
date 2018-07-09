@@ -355,26 +355,6 @@ return correcto;
 }
 
 
-//function consultarInformacion(url){
-//    $('#loader').show();
-//
-//    $.ajax({  
-//     url: ""+url,  
-//    success: function(r) {    
-//    //                     $("#procesando").empty();                       
-//        $("#idTable").load("EmpleadosView.php #idTable");
-//        $('#loader').hide();
-//     },
-//     beforeSend:function(){
-//
-//     },                    
-//     error: function(){
-//        $('#loader').hide();
-//
-//     }
-//
-//    });  
-//}
 
 
 function refresh(){
@@ -386,4 +366,100 @@ function refresh(){
 
 function loadSpinner(){
         myFunction();
+}
+
+
+
+function filterTable() {
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("idInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("idTable");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      } 
+    }
+}
+function filterTableapellidoPaterno() {
+   var input, filter, table, tr, td, i;
+   input = document.getElementById("idInputapellidopaterno");
+   filter = input.value.toUpperCase();
+   table = document.getElementById("idTable");
+   tr = table.getElementsByTagName("tr");
+
+   // Loop through all table rows, and hide those who don't match the search query
+   for (i = 0; i < tr.length; i++) {
+     td = tr[i].getElementsByTagName("td")[1];
+     if (td) {
+       if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+         tr[i].style.display = "";
+       } else {
+         tr[i].style.display = "none";
+       }
+     } 
+   }
+}
+function filterTableapellidoMaterno() {
+   var input, filter, table, tr, td, i;
+   input = document.getElementById("idInputapellidomaterno");
+   filter = input.value.toUpperCase();
+   table = document.getElementById("idTable");
+   tr = table.getElementsByTagName("tr");
+
+   for (i = 0; i < tr.length; i++) {
+     td = tr[i].getElementsByTagName("td")[2];
+     if (td) {
+       if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+         tr[i].style.display = "";
+       } else {
+         tr[i].style.display = "none";
+       }
+     } 
+   }
+}
+function filterTableCategoria(){
+   var input, filter, table, tr, td, i;
+   input = document.getElementById("idInputCategoria");
+   filter = input.value.toUpperCase();
+   table = document.getElementById("idTable");
+   tr = table.getElementsByTagName("tr");
+
+   for (i = 0; i < tr.length; i++) {
+     td = tr[i].getElementsByTagName("td")[3];
+     if (td) {
+       if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+         tr[i].style.display = "";
+       } else {
+         tr[i].style.display = "none";
+       }
+     } 
+   }
+}
+   function filterTableCorreo(){
+       // Declare variables 
+   var input, filter, table, tr, td, i;
+   input = document.getElementById("idInputCorreo");
+   filter = input.value.toUpperCase();
+   table = document.getElementById("idTable");
+   tr = table.getElementsByTagName("tr");
+
+   // Loop through all table rows, and hide those who don't match the search query
+   for (i = 0; i < tr.length; i++) {
+     td = tr[i].getElementsByTagName("td")[4];
+     if (td) {
+       if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+         tr[i].style.display = "";
+       } else {
+         tr[i].style.display = "none";
+       }
+     } 
+   }
 }

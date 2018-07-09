@@ -80,12 +80,9 @@ function loadDataSideBarOficiosCatalogos(){
         items: [
           {id: "empleadosoficios", text: "Empleados", icon: "empleados.jpg"},
           {id: "entidadesreguladoras", text: "Autoridad Remitente", icon: "entidadreguladora.png"},
-//          {id: "cumplimientos", text: "Cumplimientos", icon: "cumplimientos.png"},
           {id: "temasoficios", text: "Temas", icon: "temas.jpg"}
-          /*{type: "separator"},
-          {id: "asignaciontema", text: "Asignacion de Tema - Empleado", icon: "asignaciontema.jpg"},
-          {id: "asignacionrequisitos", text: "Asignacion de Requisito - Tema", icon: "asignacionrequisitos.png"},
-          {id: "asignaciontemadocumento", text: "Asignacion de Tema - Documento", icon: "asignaciondocumento.png"}*/  
+          /*{type: "separator"},*/
+  
         ]
       });
 
@@ -189,26 +186,17 @@ function loadDataSideBarOficiosDocumentacion()
     }
     
     
-    function loadDataSideBarTareasGantt()
+    function loadDataSideBarTareas()
     {
-        $("#sidebarObjV").load('InyectarVistasView.php #cargaprogramatareas');
-    }
-    
-    function loadDataSideBarContratos()
-    {
-        $("#sidebarObjV").load('InyectarVistasView.php #cambiarcontrato');
-    }
-    
-    function loadDataSideBarReportesGerenciales()
-    {
+        
         mySidebar = new dhtmlXSideBar({
         parent: "sidebarObj",
         icons_path: "../../images/base/",    
                                 template:'tiles',
         width: 350,
         items: [
-          {id: "reportesValidacionDocumentos", text: "Reportes de Validacion de Documentos", icon: "documentos.png"},
-          {id: "reportesEvidencias", text: "Reporte de Evidencias", icon: "operaciones.png"}
+          {id: "empleadosTareas", text: "Empleados", icon: "empleados.jpg"},
+          {id: "tareas", text: "Registrar Tareas", icon: "registrarTareas.png"}
           
             
         ]
@@ -217,19 +205,59 @@ function loadDataSideBarOficiosDocumentacion()
                                  
         mySidebar.attachEvent("onSelect", function(id, value){
                   switch(id){
-                      case "reportesValidacionDocumentos":
-                           $("#sidebarObjV").load('InyectarVistasView.php #reportesValidacionDocumentos');
+                      case "empleadosTareas":
+                            $("#sidebarObjV").load('InyectarVistasView.php #empleadosTareas'); 
                       break;  
 
 
-                      case "documentosSalida":
-                           $("#sidebarObjV").load('InyectarVistasView.php #documentosSalida');
+                      case "tareas":
+                           $("#sidebarObjV").load('InyectarVistasView.php #tareas');
+                      break;
+
+                  }
+      });
+    }
+    
+    
+    
+    function loadDataSideBarContratos()
+    {
+        $("#sidebarObjV").load('InyectarVistasView.php #cambiarcontrato');
+    }
+    
+    
+    function loadDataSideBarInformeCumplimientos()
+    {
+        mySidebar = new dhtmlXSideBar({
+        parent: "sidebarObj",
+        icons_path: "../../images/base/",    
+                                template:'tiles',
+        width: 350,
+        items: [
+          {id: "informesValidacionDocumentos", text: "Informe Validacion de Documentos", icon: "documentos.png"},
+          {id: "informesEvidencias", text: "Informe de Evidencias", icon: "operaciones.png"}
+          
+            
+        ]
+      });
+
+                                 
+        mySidebar.attachEvent("onSelect", function(id, value){
+                  switch(id){
+                      case "informesValidacionDocumentos":
+                           $("#sidebarObjV").load('InyectarVistasView.php #informesValidacionDocumentos');
+                      break;  
+
+
+                      case "":
+                           $("#sidebarObjV").load('InyectarVistasView.php #');
                       break;
 
                   }
       });
         
     }
+    
     
     function loadViewUsuario()
     {

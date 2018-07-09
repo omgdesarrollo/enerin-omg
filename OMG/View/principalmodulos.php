@@ -18,6 +18,7 @@ $urls["logica"] = "../../../enerin-omg/archivos/";
 // $urls[""] = ;
 Session::setSesion("URLS",$urls);
 $Usuario=  Session::getSesion("user");
+
 //$tokenseguridad=  Session::getSesion("token");
 //$tse=$tokenseguridad["tokenseguridad"];
 ?>
@@ -80,8 +81,7 @@ $Usuario=  Session::getSesion("user");
                 }
 	</style>
 	<script>
-            
-            
+                
             
 		var dhxWins, w1,w , myLayout, mySidebar,ribbon,layout;
                 var arr = [];
@@ -107,18 +107,14 @@ var seccionHerramientas=[
  var seccionCumplimiento=[
      {id:'documentos',text:'Validacion de Documentos',img:'documentos.png',type:'button',isbig:true} ,
      {id:'evidencias',text:'Evidencias',img:'operaciones.png',type:'button',isbig:true},
-     //{id:'planaccion',text:'Plan de Accion',img:'planaccion.png',type:'button',isbig:true}
+     {id:'informecumplimientos',text:'Informe',img:'documentos.jpg',type:'button',isbig:true}
  ];
  
  
- var seccionGantt=[
-     {id:'tareas',text:'Carga Programa Gantt',img:'663.png',type:'button',isbig:true} ,
+ var seccionTareas=[
+     {id:'tareas',text:'Registro de Tareas',img:'tareas.png',type:'button',isbig:true} ,
  ];
  
- var seccionReportesGerenciales=[
-     {id:'reporte',text:'Reporte',img:'documentos.jpg',type:'button',isbig:true}  
- ];
-
   var seccionOficios=[
      {id:'catalogooficios',text:'Catalogos',img:'catalogos.png',type:'button',isbig:true},  
      {id:'documentacion',text:'Documentacion',img:'oficios.png',type:'button',isbig:true},  
@@ -151,7 +147,8 @@ var gantt=[
 ];
 
   datacontratos=[
-      {id:'cambiarcontrato',text:'Cambiar Contrato',img:'contratos.png',type:'button',isbig:true}
+//         {id:'cambiarcontrato',text:'Cambiar Contrato',img:'contratos.png',type:'button',isbig:true}
+         {id:'cambiarcontrato',text:'<div id=\'infocontrato\'>Contrato Seleccionado:</div>',img:'contratos.png',type:'button',isbig:true}
   ];
   dataSeccionRibbon=[];
 //    loadEstructuraMaster();
@@ -178,6 +175,7 @@ var gantt=[
 //                    loadDataContratos();
                   loadDataMenuArriba("");
 //                    loadEstructuraMaster();
+                  
                     ribbon.setSizes();
                     ribbon.attachEvent("onClick", function(itemIdSeleccion, bId){
 //                         alert(itemIdSeleccion);
@@ -222,10 +220,10 @@ var gantt=[
                             loadDataSideBarCumplimientosEvidencias();
 
                         if(itemIdSeleccion=="tareas")
-                            loadDataSideBarTareasGantt();
+                            loadDataSideBarTareas();
                         
-                        if(itemIdSeleccion=="reporte")
-                            loadDataSideBarReportesGerenciales();
+                        if(itemIdSeleccion=="informecumplimientos")
+                            loadDataSideBarInformeCumplimientos();
                         
                         if(itemIdSeleccion=="catalogooficios")
                             loadDataSideBarOficiosCatalogos();
@@ -268,11 +266,9 @@ var gantt=[
                              {id:'0x33',mode:'cols',text:'Cumplimientos',type:'block',
           list:seccionCumplimiento},
       
-                             {id:'0x33',mode:'cols',text:'Tareas',type:'block',
-          list:seccionGantt},
+                             {id:'0x34',mode:'cols',text:'Tareas',type:'block',
+          list:seccionTareas},
                             
-                             {id:'0x34',mode:'cols',text:'Reportes Gerenciales',type:'block',
-          list:seccionReportesGerenciales},
                              
                              {id:'0x35',mode:'cols',text:'Oficios',type:'block',
           list:seccionOficios},
@@ -284,6 +280,7 @@ var gantt=[
     
     
 ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: "../../images/base/",tabs:inicio});
+$("#r").html("d");
   
 //    var dhxWins = new dhtmlXWindows();
 //var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
@@ -344,6 +341,37 @@ function loadDataNotificaciones(){
                         }    
         });
      }
+     
+     
+     function loadDataContratoSeleccionado()
+     {
+         contrato="";
+         $.ajax({
+             url:"../Controller/CumplimientosController.php?Op=contratoselec&obt=true",
+             type:"POST",
+             async:false,
+             success:function(dato)
+             {
+                 if(dato!="")
+                 {
+                    contrato += '<div>"El contrato es:"+dato</div>';
+                 }
+                 return contrato;
+             }
+         });
+         
+         $("#infocontrato").html(contrato);
+     }
+     
+     
+//     function contratoSeleccionado(dato)
+//     {
+//         tempData="";
+//         
+//                  tempData+= '<div></div>';         
+//     }
+     
+     
       
       function loadEstructuraMaster(){
       var seccionMenuDinamic=[];
@@ -516,8 +544,8 @@ function loadDataNotificaciones(){
  var layoutWin=dhxWins.createWindow({id:"emp", text:"OMG", left: 20, top: 30,width:430,  height:205,  center:true,resize: true,park:true,modal:true	});
  layoutWin.attachURL("login.php", null, true);
  
+}
 
-}            
                 
 
         </script>
@@ -578,6 +606,62 @@ function loadDataNotificaciones(){
 <div class="popup-overlay"></div>
 
 
+
+<script>
+cambiarCont();
+
+function cambiarCont()
+    { 
+
+var jsonObj = {
+    
+        }
+
+  $contador=1;
+           $.ajax({  
+                     url: "../Controller/CumplimientosController.php?Op=obtenerContrato",  
+                     async:false,
+                     success: function(r) {
+        $.each(r,function(index,value){
+             jsonObj[value.id_cumplimiento] = value.clave_cumplimiento ;
+                                })
+                       
+                        }    
+        });
+
+                swal({
+  title: 'Selecciona un contrato',
+  input: 'select',
+  inputOptions:jsonObj,
+  inputPlaceholder: 'selecciona un contrato ',
+  showCancelButton: false,
+  inputValidator: function (value) {
+    return new Promise(function (resolve, reject) {
+      if (value !== '') {
+        resolve();
+      } else {
+        reject('requieres seleccionar un contrato ');
+      }
+    });
+  }
+}).then(function (result) {
+//  swal({
+//    type: 'success',
+//    html: 'tu has seleccionado el contrato ' + result
+//  });
+
+
+    $.ajax({  
+                        url: "../Controller/CumplimientosController.php?Op=contratoselec&c="+result,  
+                        async:false,
+                        success: function(r) {
+                           }    
+           });
+  });
+    
+ } 
+
+</script>
 
 </body>
 </html>

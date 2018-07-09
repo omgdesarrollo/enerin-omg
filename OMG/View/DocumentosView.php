@@ -35,7 +35,6 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>
                 
                 <script src="../../js/jquery.js" type="text/javascript"></script>
-                <script src="../../js/fDocumentosView.js" type="text/javascript"></script>
 
 <style>
         
@@ -103,14 +102,13 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
    <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave del Documento" style="width: 150px">
    <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre del Documento" style="width: 160px">
    <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 190px">
-   <input type="text" id="idInputRegistros" onkeyup="filterTableRegistros()" placeholder="Registros" style="width: 120px">
    <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
 </div>
 	     
 <div style="height: 40px"></div>
           
 
-<table class="table table-bordered table-striped header_fijo"  >
+<table class="table table-bordered table-striped header_fijo" id="idTable">
     <thead >
     <tr class="">
      <!--<th class="table-headert" width="8%">No.</th>-->
@@ -161,33 +159,22 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
 							<label class="control-label" for="title">Responsable del Documento:</label>
                                                         
                                                         <select   id="ID_EMPLEADOMODAL" class="select1">
+                                                                
                                                                 <?php
-                                                                $s="";
+                                                                $cbxEmp = Session::getSesion("listarEmpleadosComboBox");
                                                                 foreach ($cbxEmp as $value) {
                                                                 ?>
                                                                 
                                                                 <option value="<?php echo "".$value["id_empleado"] ?>"  ><?php echo "".$value["nombre_empleado"]." ".$value["apellido_paterno"]." ".$value["apellido_materno"]; ?></option>
                                                                 
-                                                                    <?php
-                                                                
-                                                                }
-                                    
-                                                                 ?>
+                                                                <?php                                                                
+                                                                }                                    
+                                                                ?>
                                                         </select>
                                                         
 							<div class="help-block with-errors"></div>
 						</div>
-                                    
-                                                
-<!--                                                <div class="form-group">
-                                                   
-							<label class="control-label" for="title">Registros:</label>
-                                                        <textarea  id="REGISTROS" class="form-control " data-error="Ingrese el Documento" required></textarea>
-							<div class="help-block with-errors"></div>
-						</div>-->
-                                                
-                                                
-                                    
+                                                                                                                                    
 						<div class="form-group">
                                                     <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
                                                     <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
@@ -203,221 +190,15 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
 
                 
                 
-		<script>
-                    
-                      var id_clausula,si_hay_cambio=false;
-                      listarDatos();
-                      
-                      
-                      
-                      
-                      
-//		function showEdit(editableObj) {
-//			$(editableObj).css("background","#FFF");
-//		} 
-//		
-//                
-//                
-//		function saveToDatabase(editableObj,column,id) {
-//                    if(si_hay_cambio==true){
-//                            $("#btnrefrescar").prop("disabled",true);
-//                                $(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
-//                                $.ajax({
-//                                        url: "../Controller/DocumentosController.php?Op=Modificar",
-//                                        type: "POST",
-//                                        data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
-//                                        success: function(data){
-//
-//                                                $(editableObj).css("background","#FDFDFD");
-//                                                consultarInformacion("../Controller/DocumentosController.php?Op=Listar"); 
-//                                                 swal("Actualizacion Exitosa!", "Ok!", "success");
-//                                                $("#btnrefrescar").prop("disabled",false);
-//                                                si_hay_cambio=false;
-//                                        }   
-//                           });
-//                    }
-//                    else{
-//                      
-//                    }
-//		}
-         
-                
-//                function saveComboToDatabase(column,id){
-//                     id_clausula=id;
-//               }
-               
-               
-               
-                
-                
-                
-                
-      function verificarExiste(dataString,cualverificar){
+<script>
 
-                            $.ajax({
-                                type: "POST",
-                                url: "../Controller/DocumentosController.php?Op=verificacionexisteregistro&cualverificar="+cualverificar,
-                                data: "registro="+dataString,
-                                success: function(data) {    
-                                mensajeerror="";
+      var id_clausula,si_hay_cambio=false;
 
-                                    $.each(data, function (index,value) {
-                                        mensajeerror=" El Documento "+value.clave_documento+" Ya Existe";
-                                    });
-                                $("#msgerrorclave").html(mensajeerror);
-                                    if(mensajeerror!=""){
-                                        $("#msgerrorclave").css("background","orange");
-                                        $("#msgerrorclave").css("width","190px");
-                                        $("#msgerrorclave").css("color","white");
-                                        $("#btn_guardar").prop("disabled",true);
-                                    }else{
-                                        $("#btn_guardar").prop("disabled",false);
-                                    }
-
-
-
-                                    }
-                                })
-                            }
-                                 
-                
-                
-                function refresh(){
-                  consultarInformacion("../Controller/DocumentosController.php?Op=Listar");  
-                }
-                
-                
-                
-                function loadSpinner(){
-                         
-                        myFunction();
-                        
-                         
-                }
-                
-                
-                
-                function consultarInformacion(url){
-                    
-                    $('#loader').show();
-                    $.ajax({  
-                     url: ""+url,
-                    success: function(r) {
-                        $("#idTable").load("DocumentosView.php #idTable");
-                        $('#loader').hide();
-                     },
-                     beforeSend:function(r){
-
-
-                     },
-                     error:function(){
-                         $('#loader').hide();
-                     }
-                 
-                    });  
-                }
-                function detectarsihaycambio(value){
-                    
-                    si_hay_cambio=true;   
-                }
-                
-                
-                function filterTableClaveDocumento() {
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputClaveDocumento");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
-
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[1];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
-                      } 
-                    }
-                }
-                
-                
-                
-                function filterTableNombreDocumento() {
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputNombreDocumento");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
-
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[2];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
-                      } 
-                    }
-                }
-                
-                
-                function filterTableResponsableDocumento() {
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputResponsableDocumento");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
-
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[3];
-                      if (td) {
-                          select=td.getElementsByTagName("select");
-                          $.each(select,function(index,value)
-                          {
-                                var indexRes = value.selectedIndex;
-                                var responsable=value[indexRes].innerHTML;
-                                console.log(responsable);
-                              if (responsable.toUpperCase().indexOf(filter) > -1)
-                              {
-                                tr[i].style.display = "";
-                              }
-                              else
-                              {
-                                tr[i].style.display = "none";
-                              }
-                          });
-
-                      } 
-                    }
-                }
-                
-                
-                function filterTableRegistros() {
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputRegistros");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
-
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[4];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
-                      } 
-                    }
-                }
+</script>
 
                 
-		</script>
-               
+                <script src="../../js/fDocumentosView.js" type="text/javascript"></script>
+
                <!--Inicia para el spiner cargando-->
                <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                <!--Termina para el spiner cargando--> 

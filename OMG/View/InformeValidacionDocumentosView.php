@@ -33,7 +33,7 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/jquery.js" type="text/javascript"></script>
-                <script src="../../js/fReporteValidacionDocumentosView.js" type="text/javascript"></script>
+                <script src="../../js/fInformeValidacionDocumentosView.js" type="text/javascript"></script>
                
                 
         <style>
@@ -55,7 +55,7 @@ $Usuario=  Session::getSesion("user");
 
             .hideScrollBar{
             width: 100%;
-            height: 100%;
+            height: 50%;
             overflow: auto;
             margin-right: 14px;
             padding-right: 28px; /*This would hide the scroll bar of the right. To be sure we hide the scrollbar on every browser, increase this value*/
@@ -121,18 +121,18 @@ require_once 'EncabezadoUsuarioView.php';
                         <div class="col-1">
                                 <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkNoValidado">
                         </div>
-                        <div class="col-5">No Validados</div>
+                        <div class="col-5">En Proceso</div>
                 </div>
         </div>
 
-        <div class="col-md-4">
+<!--        <div class="col-md-4">
                 <div class="row align-items-center">
                         <div class="col-1">
                                 <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkSinDocumento">
                         </div>
                         <div class="col-6">Sin Documento</div>
                 </div>
-        </div>							
+        </div>							-->
     </div>
 </div>    
 
