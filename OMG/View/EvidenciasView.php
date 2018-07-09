@@ -975,9 +975,6 @@
     }
     function MandarNotificacion(idPara,responsable,msj,idEvidencia,validador)
     {
-        $.ajax({
-
-        });
         if(responsable!=1 || validador==1)
         {
             tempData = "<button onClick='notificar("+idPara+","+idEvidencia+",\"accion_correctiva\")' type='submit' id='subirArchivos'  class='btn crud-submit btn-info form-control'>Enviar</button>";
