@@ -247,7 +247,7 @@ var gantt=[
 //     if(info=="")
      
 	var inicio=[
-        {id:'00',text:'<div id=\'desc\'>contrato('+info+')</div>' ,items:[
+        {id:'00',text:'<div id=\'desc\'>contrato(NO SELECCIONADO)</div>' ,items:[
         
                     {id:'0x1',mode:'cols',text:'Contratos',type:'block',
           list:datacontratos
@@ -280,7 +280,7 @@ var gantt=[
     
     
 ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: "../../images/base/",tabs:inicio});
-//$("#desc").append(""+info);
+
   
 //    var dhxWins = new dhtmlXWindows();
 //var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
@@ -665,7 +665,9 @@ var jsonObj = {
 //                            alert("e  "+r.id_cumplimieCnto);
 //                            console.log(r.cumplimiento);
 //                             loadDataMenuArriba("",r.clave_cumplimiento);
-                            
+                                window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
+                                window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
+                                
 //                                $('#desc').html("d1");
     }    
            });
