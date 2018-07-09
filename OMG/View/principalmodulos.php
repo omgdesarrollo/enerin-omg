@@ -173,6 +173,7 @@ var gantt=[
         myLayout.cells("b").attachObject("sidebarObjV");
         
 //                    loadDataContratos();
+detallescontratosiahyseleccionado();
                   loadDataMenuArriba("","NO SELECCIONADO");
 //                    loadEstructuraMaster();
                   
@@ -322,47 +323,47 @@ function loadDataNotificaciones(){
  
                 
                 
-     function loadDataContratos(){
-//         alert("usuario es "+$("#idusuario").val());
-
-          $.ajax({  
-                     url: "../Controller/CumplimientosController.php?Op=Listar&TipoOperacion=ListarContratosPorUsuario&usuario=<?php echo $Usuario["NOMBRE_USUARIO"]; ?>",  
-                     async:false,
-                     success: function(r) {
-                        //alert("en:   ");
-//                     datacontratos.push( {id:'oficio',text:''+,img:'oficios.png',type:'button',isbig:true} )
-                     
-                     $.each(r,function(index,value){
-                        // alert("ya entro y "+value.CLAVE_CUMPLIMIENTO);
-                        
-//                      datacontratos.push( {id:'contratos',text:value.clave_cumplimiento,img:'oficios.png',type:'button',isbig:true} );
-
-                         })                       
-                        }    
-        });
-     }
+//     function loadDataContratos(){
+////         alert("usuario es "+$("#idusuario").val());
+//
+//          $.ajax({  
+//                     url: "../Controller/CumplimientosController.php?Op=Listar&TipoOperacion=ListarContratosPorUsuario&usuario=<?php echo $Usuario["NOMBRE_USUARIO"]; ?>",  
+//                     async:false,
+//                     success: function(r) {
+//                        //alert("en:   ");
+////                     datacontratos.push( {id:'oficio',text:''+,img:'oficios.png',type:'button',isbig:true} )
+//                     
+//                     $.each(r,function(index,value){
+//                        // alert("ya entro y "+value.CLAVE_CUMPLIMIENTO);
+//                        
+////                      datacontratos.push( {id:'contratos',text:value.clave_cumplimiento,img:'oficios.png',type:'button',isbig:true} );
+//
+//                         })                       
+//                        }    
+//        });
+//     }
      
      
-     function loadDataContratoSeleccionado()
-     {
-//         alert("entro aqui ");
-         contrato="";
-         $.ajax({
-             url:"../Controller/CumplimientosController.php?Op=contratoselec&obt=true",
-             type:"POST",
-             async:false,
-             success:function(dato)
-             {
-                 if(dato!="")
-                 {
-                    contrato += '<div>"El contrato es:"+dato</div>';
-                 }
-                 return contrato;
-             }
-         });
-         
-         $("#infocontrato").html(contrato);
-     }
+//     function loadDataContratoSeleccionado()
+//     {
+////         alert("entro aqui ");
+//         contrato="";
+//         $.ajax({
+//             url:"../Controller/CumplimientosController.php?Op=contratoselec&obt=true",
+//             type:"POST",
+//             async:false,
+//             success:function(dato)
+//             {
+//                 if(dato!="")
+//                 {
+//                    contrato += '<div>"El contrato es:"+dato</div>';
+//                 }
+//                 return contrato;
+//             }
+//         });
+//         
+//         $("#infocontrato").html(contrato);
+//     }
      
      
 //     function contratoSeleccionado(dato)
@@ -629,6 +630,8 @@ var jsonObj = {
                        
                         }    
         });
+        
+           
 
                 swal({
   title: 'Selecciona un contrato',
@@ -673,7 +676,29 @@ var jsonObj = {
            });
   });
     
- } 
+ }
+ 
+ function detallescontratosiahyseleccionado(){
+      $.ajax({  
+                        url: "../Controller/CumplimientosController.php?Op=contratoselec&obt=true",  
+                        async:true,
+                        success: function(r) {
+                            
+//                            $.each(r,function (index,value){
+////                               $('#desc', window.parent.document).html("d");
+//                            alert("entro aqui ");
+////                            loadDataMenuArriba("",value.clave_cumplimiento);
+//                            });
+//                            alert("e  "+r.id_cumplimieCnto);
+//                            console.log(r.cumplimiento);
+//                             loadDataMenuArriba("",r.clave_cumplimiento);
+                                window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
+                                window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
+                                
+//                                $('#desc').html("d1");
+    }    
+           });
+ }
 
 </script>
 

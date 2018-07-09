@@ -63,7 +63,8 @@ alert("ya");
                         url: "../Controller/CumplimientosController.php?Op=contratoselec&c="+result+"&obt=false",  
                         async:false,
                         success: function(r) {
-                            
+                              window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
+                                window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
 //                            alert("si te respondio");
                           
                             
