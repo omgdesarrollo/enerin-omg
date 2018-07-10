@@ -223,17 +223,17 @@ foreach ($notifacionescompletas as $value){
 	}
 	function irAVista(direccion,contrato)
 	{
-		ejecutarPrimeraVez=true;
 		id_contrato = '<?php echo Session::getSesion("s_cont");?>';
 		urlActual = window.location.pathname.split("/");
 		urlIr = direccion.split("?");
-		alert(ejecutarPrimeraVez);
 		if(contrato==id_contrato)
 		{
 			if(urlIr[0]==urlActual[urlActual.length-1])
 			{
 				registro = urlIr[1].split("=");
 				mover = registro[1];
+				// contador=1;
+				ejecutarPrimeraVez=true;
 				moverA();
 			}
 			else
