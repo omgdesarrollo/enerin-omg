@@ -350,25 +350,27 @@
                 success:function(data)
                 {
                     (data==true)?
-                    (swal({
-                        title: '',text: 'Se creo la evidencia',
-                        showCancelButton: false,showConfirmButton: false,
-                        type:"success"
-                        }),
+                    (
+                        swalSuccess("Se creo la evidencia"),
+                        // swal({
+                        // title: '',text: 'Se creo la evidencia',
+                        // showCancelButton: false,showConfirmButton: false,
+                        // type:"success"
+                        // }),
                         $('#FRECUENCIA_NUEVAEVIDENCIAMODAL').html(""),
                         $('#DOCUMENTO_NUEVAEVIDENCIAMODAL').html(""),
                         $('#NOMBRE_NUEVAEVIDENCIAMODAL').html(""),
-                        $('#nuevaEvidenciaModal .close').click()
-                        // listarDatos()
+                        $('#nuevaEvidenciaModal .close').click(),
+                        listarDatos()
                     )
-                    :swal({
-                        title: '',
-                        text: 'Error al crear',
-                        showCancelButton: false,
-                        showConfirmButton: false,
-                        type:"error"
-                    });
-                    setTimeout(function(){swal.close();},1500);
+                    :swalErro("Error al crear");
+                    // swal({
+                    //     title: '',
+                    //     text: 'Error al crear',
+                    //     showCancelButton: false,
+                    //     showConfirmButton: false,
+                    //     type:"error"
+                    // });
                 }
             });
         }
