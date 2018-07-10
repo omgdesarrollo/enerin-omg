@@ -268,9 +268,12 @@ foreach ($notifacionescompletas as $value){
 							url:'../Controller/CumplimientosController.php?Op=contratoselec',
 							type:'GET',
 							data:'c='+contrato+"&obt=false",
-							success:function(datos)
+							success:function(r)
 							{
 								window.location.href = direccion;
+                                                                window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
+                                                                window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")"); 
+                                                                
 							},
 							error:function()
 							{
