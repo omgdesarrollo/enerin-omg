@@ -482,10 +482,13 @@
             }
         });
     }
-
-
+    noArchivo=0;
     function refresh()
     {       
+        ejecutarPrimeraVez=false;
+        ejecutando=false;
+        clearInterval(intervalA);
+        clearTimeout(timeOutA);
         listarDatos();
     }
     function filterTable(Obj)
@@ -1288,10 +1291,10 @@
             
         })
     }
-    noArchivo=0;
-    
+    intervalA="";
+    timeOutA="";
     mover = '<?php echo $accion; ?>';
-    contador=1;
+    // contador=1;
     cambio=1;
     ejecutando=false;
     ejecutarPrimeraVez=true;
@@ -1305,7 +1308,7 @@
                 window.location = "#registro_"+mover;
                 ObjB = $("#registro_"+mover)[0];
                 css = $(ObjB).css("background");
-                var a = setInterval(function()
+                intervalA = setInterval(function()
                 {
                     if(cambio==1)
                     {
@@ -1317,16 +1320,23 @@
                         $(ObjB).css("background",css);
                         cambio=1;
                     }
-                    if(contador==26)
-                    {
-                        clearInterval(a);
-                        $(ObjB).css("background",css);
-                        ejecutando=false;
-                        contador=1;
-                        ejecutarPrimeraVez=false;
-                    }
-                    contador++;
-                },400);
+                    // if(contador==10)
+                    // {
+                    //     clearInterval(intervalA);
+                    //     $(ObjB).css("background",css);
+                    //     ejecutando=false;
+                    //     // contador=1;
+                    //     ejecutarPrimeraVez=false;
+                    // }
+                    // contador++;
+                },500);
+                timeOutA = setTimeout(function(){
+                    clearInterval(intervalA);
+                    $(ObjB).css("background",css);
+                    ejecutando=false;
+                    // contador=1;
+                    ejecutarPrimeraVez=false;
+                },10000);
             }
             else
             {

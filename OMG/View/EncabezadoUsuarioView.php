@@ -226,13 +226,14 @@ foreach ($notifacionescompletas as $value){
 		id_contrato = '<?php echo Session::getSesion("s_cont");?>';
 		urlActual = window.location.pathname.split("/");
 		urlIr = direccion.split("?");
-		ejecutarPrimeraVez=true;
 		if(contrato==id_contrato)
 		{
 			if(urlIr[0]==urlActual[urlActual.length-1])
 			{
 				registro = urlIr[1].split("=");
 				mover = registro[1];
+				// contador=1;
+				ejecutarPrimeraVez=true;
 				moverA();
 			}
 			else
