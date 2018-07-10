@@ -6,14 +6,11 @@ class GanttEvidenciasDao {
     
     
     
-    public function obtenerTareasCompletasPorFolioEntrada($folio_entrada){
+    public function obtenerT($v){
         try
         { 
-           $query="SELECT tbempleados.id_empleado user, tbgantt_tasks.id, tbgantt_tasks.text, tbgantt_tasks.start_date, tbgantt_tasks.duration, tbgantt_tasks.progress,tbgantt_tasks.parent  
-                    FROM gantt_seguimiento_entrada tbgantt_seguimiento_entrada
-                    JOIN gantt_tasks tbgantt_tasks ON tbgantt_tasks.id=tbgantt_seguimiento_entrada.id_gantt
-                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbgantt_seguimiento_entrada.id_empleado
-                     WHERE tbgantt_seguimiento_entrada.id_seguimiento_entrada=$folio_entrada";
+           $query="SELECT tbevidencias.user, tbevidencias.id, tbevidencias.text, tbevidencias.start_date, tbevidencias.duration, tbevidencias.progress,tbevidencias.parent  
+                   FROM gantt_evidencias tbevidencias WHERE tbevidencias.id_evidencias=".$v['id_evidencia'];
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             
