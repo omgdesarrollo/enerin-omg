@@ -214,7 +214,7 @@ class EvidenciasDAO
             return false;
         }
     }
-    public function listarTemas($CADENA,$ID_USUARIO)
+    public function listarTemas($CADENA,$ID_USUARIO,$CONTRATO)
     {
         try
         {
@@ -223,7 +223,7 @@ class EvidenciasDAO
                 JOIN  temas tbtemas ON tbusuarios_temas.id_tema = tbtemas.id_tema
                 WHERE tbusuarios_temas.id_usuario = $ID_USUARIO AND
                 LOWER(tbtemas.nombre) LIKE '%$CADENA%' AND tbtemas.padre = 0
-                AND tbtemas.identificador LIKE '%catalogo%'";
+                AND tbtemas.contrato=$CONTRATO AND tbtemas.identificador LIKE '%catalogo%'";
             // echo $query;
             $db= AccesoDB::getInstancia();        
             $lista= $db->executeQuery($query);

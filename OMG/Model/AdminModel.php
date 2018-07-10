@@ -62,12 +62,12 @@ class AdminModel{
         }
     }
     
-    public function listarTemas($CADENA,$ID_USUARIO)
+    public function listarTemas($CADENA,$ID_USUARIO,$CONTRATO)
     {
         try
         {
             $dao=new AdminDAO();
-            $rec = $dao->listarTemas($CADENA,$ID_USUARIO);
+            $rec = $dao->listarTemas($CADENA,$ID_USUARIO,$CONTRATO);
             return $rec;
             // var_dump($rec);
         } catch (Exception $ex)
@@ -77,12 +77,12 @@ class AdminModel{
         }
     }
     
-    public function listarTemasPorUsuario($ID_USUARIO)
+    public function listarTemasPorUsuario($ID_USUARIO,$CONTRATO)
     {
         try
         {
             $dao=new AdminDAO();
-            $rec= $dao->listarTemasPorUsuario($ID_USUARIO);
+            $rec= $dao->listarTemasPorUsuario($ID_USUARIO,$CONTRATO);
             return $rec;
         } catch (Exception $ex)
         {

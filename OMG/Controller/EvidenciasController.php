@@ -75,7 +75,7 @@ switch ($Op)
 
     case 'BuscarTema':
         $USUARIO = Session::getSesion("user");
-        $lista = $model->listarTemas($_REQUEST['CADENA'],$USUARIO["ID_USUARIO"]);
+        $lista = $model->listarTemas($_REQUEST['CADENA'],$USUARIO["ID_USUARIO"], Session::getSesion("s_cont"));
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($lista);
     break;
