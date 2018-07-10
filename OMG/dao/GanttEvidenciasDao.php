@@ -177,7 +177,6 @@ class GanttEvidenciasDao {
 //        }
 //    }
     
-<<<<<<< HEAD
    public function updateAvanceProgramaGeneral($value){
         try{
             $query="update databaseomg.seguimiento_entrada set databaseomg.seguimiento_entrada.AVANCE_PROGRAMA='".$value["avance_programa"]."' where databaseomg.seguimiento_entrada.ID_SEGUIMIENTO_ENTRADA='".$value["id_seguimiento"]."'";
@@ -204,18 +203,6 @@ class GanttEvidenciasDao {
            return false;
        }
    }
-=======
-//   public function updateAvanceProgramaGeneral($value){
-//        try{
-//            $query="update databaseomg.seguimiento_entrada set databaseomg.seguimiento_entrada.AVANCE_PROGRAMA='".$value["avance_programa"]."' where databaseomg.seguimiento_entrada.ID_SEGUIMIENTO_ENTRADA='".$value["id_seguimiento"]."'";
-//            $db= AccesoDB::getInstancia();
-//            $list= $db->executeQueryUpdate($query);
-//            
-//        } catch (Exception $ex) {
-//            throw $ex;
-//        }
-//   } 
->>>>>>> 4a8dfbbcc843b220b9b276367bae033b28a835b3
     
 }
 
