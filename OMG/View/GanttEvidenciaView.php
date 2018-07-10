@@ -2,6 +2,7 @@
 session_start();
 require_once '../util/Session.php';
 if(isset($_REQUEST["id_evid"])){
+//    Session::setSesion("dataValidado", $value)
     Session::setSesion("dataGanttEvidencia",$_REQUEST["id_evid"]);
 //    Session::setSesion("dataGanttFolio_Entrada",$_REQUEST["folio_entrada"]);
 //    echo "el seguimiento de entrada linkeado al de doc de entrada y al folio de entrada   ".$dataGantt=Session::getSesion("dataGantt");;
@@ -416,8 +417,8 @@ gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
     gantt.load("../Controller/GanttEvidenciasController.php?Op=Mostrar_Plan");
 
 
-var dp = new gantt.dataProcessor("../Controller/GanttController.php?Op=Modificar");
-//
+var dp = new gantt.dataProcessor("../Controller/GanttEvidenciasController.php?Op=Modificar");
+////
 dp.init(gantt);
 
 //dp.setTransactionMode("REST");
