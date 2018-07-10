@@ -1268,9 +1268,10 @@
     contador=1;
     cambio=1;
     ejecutando=false;
+    ejecutarPrimeraVez=true;
     function moverA()
     {
-        if(mover!="-1" && ejecutando==false)
+        if(mover!="-1" && ejecutando==false && ejecutarPrimeraVez==true)
         {
             if($("#registro_"+mover)[0]!=undefined)
             {
@@ -1296,6 +1297,7 @@
                         $(ObjB).css("background",css);
                         ejecutando=false;
                         contador=1;
+                        ejecutarPrimeraVez=false;
                     }
                     contador++;
                 },400);
