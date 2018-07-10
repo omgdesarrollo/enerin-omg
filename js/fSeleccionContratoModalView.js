@@ -43,28 +43,39 @@ var jsonObj = {
   inputOptions:jsonObj,
   inputPlaceholder: 'selecciona un contrato ',
   showCancelButton: true,
+  showLoaderOnConfirm: true,
   inputValidator: function (value) {
     return new Promise(function (resolve, reject) {
-      if (value !== '') {
+      if (value != '') {
         resolve();
       } else {
         reject('requieres seleccionar un contrato');
       }
     });
+  },
+  preConfirm: function() {
+    return new Promise(function(resolve) {
+      setTimeout(function() {
+        resolve()
+      }, 1000)
+    })
   }
 }).then(function (result) {
 //  swal({
 //    type: 'success',
 //    html: 'tu has seleccionado el contrato ' + result
 //  });
-alert("ya");
+//alert("ya");
 
     $.ajax({  
                         url: "../Controller/CumplimientosController.php?Op=contratoselec&c="+result+"&obt=false",  
                         async:false,
                         success: function(r) {
-                              window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
-                                window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
+//                            alert("dddf");
+//                              window.parent.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
+                              $('#desc',window.parent.document).html("CONTRATO("+r.clave_cumplimiento+")");
+                               $('#infocontrato',window.parent.document).html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
+//                                window.parent.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
 //                            alert("si te respondio");
                           
                             

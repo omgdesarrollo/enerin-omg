@@ -91,13 +91,13 @@ class AdminDAO{
     }
 
 
-    public function listarTemas($CADENA,$ID_USUARIO)
+    public function listarTemas($CADENA,$ID_USUARIO,$CONTRATO)
     {
         try
         {
-            $query="SELECT tbtemas.id_tema,tbtemas.no, tbtemas.nombre, tbtemas.descripcion
+            $query="SELECT tbtemas.id_tema,tbtemas.no, tbtemas.nombre, tbtemas.descripcion,tbtemas.identificador
                     FROM temas tbtemas
-                    WHERE LOWER(tbtemas.nombre) LIKE '%$CADENA%' AND tbtemas.padre=0
+                    WHERE LOWER(tbtemas.nombre) LIKE '%$CADENA%' AND tbtemas.padre=0 AND tbtemas.contrato=$CONTRATO
                     AND tbtemas.id_tema 
                     NOT IN( SELECT tbusuario_temas.id_tema FROM usuarios_temas tbusuario_temas 
                     WHERE tbusuario_temas.id_usuario=$ID_USUARIO )";
@@ -113,14 +113,14 @@ class AdminDAO{
         }
     }
         
-    public function listarTemasPorUsuario($ID_USUARIO)
+    public function listarTemasPorUsuario($ID_USUARIO,$CONTRATO)
     {
         try
         {
-            $query="SELECT tbtemas.id_tema, tbtemas.no, tbtemas.nombre, tbtemas.descripcion
+            $query="SELECT tbtemas.id_tema, tbtemas.no, tbtemas.nombre, tbtemas.descripcion, tbtemas.identificador
                     FROM usuarios_temas tbusuarios_temas
                     JOIN temas tbtemas ON tbtemas.id_tema = tbusuarios_temas.id_tema
-                    WHERE tbusuarios_temas.id_usuario = $ID_USUARIO";
+                    WHERE tbusuarios_temas.id_usuario = $ID_USUARIO AND tbtemas.contrato=$CONTRATO";
 
             $db= AccesoDB::getInstancia();
             $lista= $db->executeQuery($query);

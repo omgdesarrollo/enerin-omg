@@ -49,8 +49,8 @@
 
 
 
-<div id="entidadesReguladoras">
-<iframe src="EntidadesReguladorasView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
+<div id="autoridadesRemitentes">
+    <iframe src="AutoridadesRemitentesView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
 
 

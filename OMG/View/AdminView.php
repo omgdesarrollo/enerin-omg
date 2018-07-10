@@ -155,8 +155,6 @@ $Usuario=  Session::getSesion("user");
             <tr>
                 <th class="table-header">Usuario</th>
                 <th class="table-header">Nombre</th>
-                <!-- <th class="table-header">Apellido Paterno</th> -->
-                <!-- <th class="table-header">Apellido Materno</th> -->
                 <th class="table-header">Correo</th>
                 <th class="table-header">Categoria</th>
                 <th class="table-header">Vistas</th>
@@ -270,6 +268,7 @@ $Usuario=  Session::getSesion("user");
                                         <th class="table-header">No.</th>
                                         <th class="table-header">Tema</th>
                                         <th class="table-header">Descripcion</th>
+                                        <th class="table-header">Sub-Modulo</th>
                                         <th class="table-header">Opcion</th>
                                     </tr>
                                     <tbody id="bodyTableTemas">
@@ -371,11 +370,9 @@ $Usuario=  Session::getSesion("user");
 
     function construirTablaAgregar(value)
     {
-        // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
+
         tempData = "<td>"+value.nombre_usuario+"</td>";
         tempData += "<td>"+value.nombre+"</td>";
-        // tempData += "<td>"+value.apellido_paterno+"</td>";
-        // tempData += "<td>"+value.apellido_materno+"</td>";
         tempData += "<td>"+value.correo+"</td>";
         tempData += "<td>"+value.categoria+"</td>";
         tempData += "<td><button onClick='modificarPermisos("+value.id_usuario+");' type='button' class='btn btn-success'";
@@ -508,10 +505,10 @@ $Usuario=  Session::getSesion("user");
                     $.each(temas,function(index,value)
                     {
                         // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
-                        datos = value.id_tema+"^_^"+value.no+"^_^"+value.nombre+"^_^"+value.descripcion;
+                        datos = value.id_tema+"^_^"+value.no+"^_^"+value.nombre+"^_^"+value.descripcion+"^_^"+value.identificador;
                         tempData += "<li role='presentation'><a role='menuitem' tabindex='-1'";
                         tempData += "onClick='seleccionarItemTemas("+JSON.stringify(value)+")'>";
-                        tempData += value.no+" - "+value.nombre+"</a></li>";
+                        tempData += value.no+" - "+value.nombre+"- "+value.identificador+"</a></li>";
                     });
                     $("#dropdownEventTemas").html(tempData);
                 }
@@ -556,6 +553,7 @@ $Usuario=  Session::getSesion("user");
         tempData += "<td>"+usuarioTemas.no+"</td>";
         tempData += "<td>"+usuarioTemas.nombre+"</td>";
         tempData += "<td>"+usuarioTemas.descripcion+"</td>";
+        tempData += "<td>"+usuarioTemas.identificador+"</td>";
         tempData += "<td>";
         tempData += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
         tempData += "onclick='eliminarTema("+usuarioTemas.id_tema+");'>";

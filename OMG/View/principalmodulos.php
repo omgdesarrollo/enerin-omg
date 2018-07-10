@@ -33,12 +33,12 @@ $Usuario=  Session::getSesion("user");
 	<link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
         <link href="../../codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
          <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
-         <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+         <!--<link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>-->
          <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 	<script src="../../codebase/dhtmlx.js"></script>
         <script src="../../js/jquery.js" type="text/javascript"></script>
         <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
-        <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+        <!--<script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>-->
         <script src="../../js/funcionessidebar.js" type="text/javascript"></script>
         <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
         <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
@@ -118,7 +118,7 @@ var seccionHerramientas=[
   var seccionOficios=[
      {id:'catalogooficios',text:'Catalogos',img:'catalogos.png',type:'button',isbig:true},  
      {id:'documentacion',text:'Documentacion',img:'oficios.png',type:'button',isbig:true},  
-     {id:'cargaprograma',text:'Carga Programa Gantt',img:'663.png',type:'button',isbig:true},
+     {id:'cargaprograma',text:'Seguimiento Entradas',img:'663.png',type:'button',isbig:true},
      {id:'informegerencial',text:'Informe Gerencial',img:'seguimiento.png',type:'button',isbig:true}
  ];
   var cambiodeidioma=[
@@ -281,7 +281,7 @@ detallescontratosiahyseleccionado();
     
     
 ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: "../../images/base/",tabs:inicio});
-
+//    ribbon.enable("00");
   
 //    var dhxWins = new dhtmlXWindows();
 //var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
@@ -344,26 +344,25 @@ function loadDataNotificaciones(){
 //     }
      
      
-//     function loadDataContratoSeleccionado()
-//     {
-////         alert("entro aqui ");
-//         contrato="";
-//         $.ajax({
-//             url:"../Controller/CumplimientosController.php?Op=contratoselec&obt=true",
-//             type:"POST",
-//             async:false,
-//             success:function(dato)
-//             {
-//                 if(dato!="")
-//                 {
-//                    contrato += '<div>"El contrato es:"+dato</div>';
-//                 }
-//                 return contrato;
-//             }
-//         });
-//         
-//         $("#infocontrato").html(contrato);
-//     }
+     function loadDataContratoSeleccionado()
+     {
+         contrato="";
+         $.ajax({
+             url:"../Controller/CumplimientosController.php?Op=contratoselec&obt=true",
+             type:"POST",
+             async:false,
+             success:function(dato)
+             {
+                 if(dato!="")
+                 {
+                    contrato += '<div>"El contrato es:"</div>';
+                 }
+                 return contrato;
+             }
+         });
+         
+         $("#infocontrato").html(contrato);
+     }
      
      
 //     function contratoSeleccionado(dato)
@@ -487,7 +486,14 @@ function loadDataNotificaciones(){
   type: "warning",
   showCancelButton: true,
   closeOnConfirm: false,
-  showLoaderOnConfirm: true
+  showLoaderOnConfirm: true,
+   preConfirm: function() {
+    return new Promise(function(resolve) {
+      setTimeout(function() {
+        resolve()
+      }, 1000)
+    })
+  }
 }, function () {
 //    window.location.href="Logout.php";
 //  setTimeout(function () {
@@ -636,9 +642,13 @@ var jsonObj = {
                 swal({
   title: 'Selecciona un contrato',
   input: 'select',
+//  html:'<input type=\'text\' disabled>',
   inputOptions:jsonObj,
   inputPlaceholder: 'selecciona un contrato ',
   showCancelButton: false,
+  showLoaderOnConfirm: true,
+   allowEscapeKey:false,
+   allowOutsideClick: false,
   inputValidator: function (value) {
     return new Promise(function (resolve, reject) {
       if (value !== '') {
@@ -647,6 +657,13 @@ var jsonObj = {
         reject('requieres seleccionar un contrato ');
       }
     });
+  },
+  preConfirm: function() {
+    return new Promise(function(resolve) {
+      setTimeout(function() {
+        resolve()
+      }, 1000)
+    })
   }
 }).then(function (result) {
 //  swal({
@@ -659,19 +676,17 @@ var jsonObj = {
                         url: "../Controller/CumplimientosController.php?Op=contratoselec&c="+result+"&obt=false",  
                         async:true,
                         success: function(r) {
-                            
-//                            $.each(r,function (index,value){
-////                               $('#desc', window.parent.document).html("d");
-//                            alert("entro aqui ");
-////                            loadDataMenuArriba("",value.clave_cumplimiento);
-//                            });
-//                            alert("e  "+r.id_cumplimieCnto);
-//                            console.log(r.cumplimiento);
-//                             loadDataMenuArriba("",r.clave_cumplimiento);
+                              swal({
+                                type: 'success',
+                                html: 'tu has seleccionado el contrato ' + r.clave_cumplimiento,    
+                                timer: 2000,
+                                
+                              });
                                 window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
                                 window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
                                 
-//                                $('#desc').html("d1");
+                                
+                                
     }    
            });
   });
@@ -683,19 +698,9 @@ var jsonObj = {
                         url: "../Controller/CumplimientosController.php?Op=contratoselec&obt=true",  
                         async:true,
                         success: function(r) {
-                            
-//                            $.each(r,function (index,value){
-////                               $('#desc', window.parent.document).html("d");
-//                            alert("entro aqui ");
-////                            loadDataMenuArriba("",value.clave_cumplimiento);
-//                            });
-//                            alert("e  "+r.id_cumplimieCnto);
-//                            console.log(r.cumplimiento);
-//                             loadDataMenuArriba("",r.clave_cumplimiento);
+
                                 window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
                                 window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
-                                
-//                                $('#desc').html("d1");
     }    
            });
  }

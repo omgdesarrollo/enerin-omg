@@ -20,7 +20,7 @@ switch ($Op) {
        
 	case 'ListarEmpleados':
 
-	$Lista=$model->listarEmpleados();
+	$Lista=$model->listarEmpleados("");
     	Session::setSesion("listarEmpleados",$Lista);
 //    	$tarjet="../view/principalmodulos.php";
     	header('Content-type: application/json; charset=utf-8');

@@ -107,7 +107,7 @@ class CumplimientoModel{
             $dao= new CumplimientoDAO();
             $rec=$dao->detallesContratoSeleccionado($v);
             return $rec;
-        } catch (Exception $ex) {
+        }catch (Exception $ex) {
 
         }
     }

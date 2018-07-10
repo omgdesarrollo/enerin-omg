@@ -121,12 +121,12 @@ class EvidenciasModel
         }
     }
 
-    public function listarTemas($CADENA,$ID_USUARIO)
+    public function listarTemas($CADENA,$ID_USUARIO,$CONTRATO)
     {
         try
         {
             $dao=new EvidenciasDAO();
-            $rec = $dao->listarTemas($CADENA,$ID_USUARIO);
+            $rec = $dao->listarTemas($CADENA,$ID_USUARIO,$CONTRATO);
             return $rec;
         } catch (Exception $ex)
         {

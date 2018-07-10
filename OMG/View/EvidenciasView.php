@@ -824,7 +824,7 @@
                 }
                 // if(value.validador=="0")
                 // {
-                    tempData += "<td style='font-size: -webkit-xxx-large'><button class='btn btn-info' onClick='#("+value.id_evidencias+");'>";
+                    tempData += "<td style='font-size: -webkit-xxx-large'><button class='btn btn-info' onClick='cargarprogram("+value.id_evidencias+");'>";
                     tempData += "Cargar Programa</button></td>";
                     tempData += "<td style='font-size: -webkit-xxx-large' onClick='MandarNotificacionDesviacion("+value.id_usuario+","+value.responsable+",\""+value.desviacion+"\","+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
                 // }
@@ -1305,6 +1305,27 @@
         }
     }
 
+    function swalError(msj)
+    {
+        swal({
+                title: '',
+                text: msj,
+                showCancelButton: false,
+                showConfirmButton: false,
+                type:"error"
+            });
+        setTimeout(function(){swal.close();$('#agregarUsuario .close').click()},1500);
+        $('#loader').hide();
+    }
+    
+    
+    
+    
+    function cargarprogram(v){
+//    alert("el valor de la evidencia es "+v);
+    window.location.href="GanttEvidenciaView.php?id_evid="+v;
+    }
+    
 </script>
 
 <script id="template-upload" type="text/x-tmpl">
@@ -1361,6 +1382,11 @@
     {% } %}
     {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val(); var ID_PARA_DOCUMENTO = $('#tempInputIdParaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO,'0','false',ID_PARA_DOCUMENTO); reconstruirRow(ID_EVIDENCIA_DOCUMENTO); noArchivo=0; } } %}
 </script>
+    
+    
+    
+    
+                        
 
         <!--Inicia para el spiner cargando-->
         <script src="../../js/loaderanimation.js" type="text/javascript"></script>
