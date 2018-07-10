@@ -1299,10 +1299,8 @@
     
     
     function cargarprogram(v){
-    alert("el valor de la evidencia es "+v);
-    
-    
-    
+//    alert("el valor de la evidencia es "+v);
+    window.location.href="GanttEvidenciaView.php?id_evid="+v;
     }
     
 </script>

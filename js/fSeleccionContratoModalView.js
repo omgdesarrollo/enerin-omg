@@ -43,6 +43,7 @@ var jsonObj = {
   inputOptions:jsonObj,
   inputPlaceholder: 'selecciona un contrato ',
   showCancelButton: true,
+  showLoaderOnConfirm: true,
   inputValidator: function (value) {
     return new Promise(function (resolve, reject) {
       if (value != '') {
@@ -51,6 +52,13 @@ var jsonObj = {
         reject('requieres seleccionar un contrato');
       }
     });
+  },
+  preConfirm: function() {
+    return new Promise(function(resolve) {
+      setTimeout(function() {
+        resolve()
+      }, 1000)
+    })
   }
 }).then(function (result) {
 //  swal({

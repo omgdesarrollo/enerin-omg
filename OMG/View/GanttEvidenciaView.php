@@ -1,14 +1,14 @@
 <?php  
 session_start();
 require_once '../util/Session.php';
-if(isset($_REQUEST["id_documento_entrada"]) && isset($_REQUEST["folio_entrada"])){
-    Session::setSesion("dataGantt",$_REQUEST["id_documento_entrada"]);
-    Session::setSesion("dataGanttFolio_Entrada",$_REQUEST["folio_entrada"]);
+if(isset($_REQUEST["id_evid"])){
+    Session::setSesion("dataGanttEvidencia",$_REQUEST["id_evid"]);
+//    Session::setSesion("dataGanttFolio_Entrada",$_REQUEST["folio_entrada"]);
 //    echo "el seguimiento de entrada linkeado al de doc de entrada y al folio de entrada   ".$dataGantt=Session::getSesion("dataGantt");;
-    echo "<h2><center>El folio de entrada es = ".Session::getSesion("dataGanttFolio_Entrada")."</center><h2>";
+    echo "<h2><center>El id de evidencia = ".Session::getSesion("dataGanttEvidencia")."</center><h2>";
 }else{
-        $dataGantt=Session::getSesion("dataGantt");
-       echo "<h2><center>El folio de entrada es = ".Session::getSesion("dataGanttFolio_Entrada")."</center><h2>";
+        $dataGantt=Session::getSesion("dataGanttEvidencia");
+       echo "<h2><center>El id de evidencia = ".Session::getSesion("dataGanttEvidencia")."</center><h2>";
     }     
 //Session::setSesion("dataGantt",$_REQUEST["id_documento_entrada"]);
   //  Session::setSesion("dataGantt",":(");
@@ -236,7 +236,7 @@ and open the template in the editor.
 //alert("des");
 //                    alert("tarea eliminada es "+id);
                              $.ajax({
-                                url:"../Controller/GanttController.php?Op=EliminarTarea&deleteidtarea="+id,
+//                                url:"../Controller/GanttController.php?Op=EliminarTarea&deleteidtarea="+id,
                                 success:function (res){
 
                                 }
@@ -423,9 +423,9 @@ gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
     gantt.load("../Controller/GanttController.php?Op=MostrarTareasCompletasPorFolioDeEntrada");
 
 
-var dp = new gantt.dataProcessor("../Controller/GanttController.php?Op=Modificar");
-
-dp.init(gantt);
+//var dp = new gantt.dataProcessor("../Controller/GanttController.php?Op=Modificar");
+//
+//dp.init(gantt);
 
 //dp.setTransactionMode("REST");
 
