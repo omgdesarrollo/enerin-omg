@@ -93,8 +93,19 @@
         }
         .backgroundTdTable
         {
-            background: gold;
+            background: #9aca40;
         }
+        
+        .backgroundTdTable2
+        {
+            background: #6FB3E0;
+        }
+        
+        .backgroundTdTable3
+        {
+            background: #DCDCDC;
+        }
+        
         .nuevoTdTable
         {
             border-bottom: 1px solid gold;
@@ -152,18 +163,26 @@
         <div class="table-container">
             <table id="idTable" class="tbl-qa">
                 <tr>
-                    <th colspan="5" style="background:#efc9c9"></td>
+                    <th colspan="5" style="background:#9aca40"></td>
                     <th colspan="5" style="background:#6FB3E0">Responsable de Evidencia</td>
-                    <th colspan="3" style="background:#a7a6a6">Supervisión</td>
+                    <th colspan="3" style="background:#DCDCDC">Supervisión</td>
                 </tr>
                 <tr>
                 <?php foreach($titulosTable as $index=>$value)
                 { if($index<5){ ?>
                 <th class="backgroundTdTable"><?php echo $value ?></th>
-                <?php }else{ ?>
-                    <th class="table-header"><?php echo $value ?></th>
-                <?php   } 
-                } ?>
+                <?php }
+                
+                  if($index>4 && $index<10){?>  
+                <th class="backgroundTdTable2"><?php echo $value ?></th>
+                <?php }
+                
+                if($index>9){ ?>
+                    <th class="backgroundTdTable3"><?php echo $value ?></th>
+                <?php }                
+                }
+                 ?>
+                    
                 </tr>
                 
                 <tbody id="bodyTable">
