@@ -595,9 +595,8 @@ dp.init(gantt);
 //               $.each(res,function(index,value){
 //                   dataEmpleados.push({key:value.id_empleado,label:value.nombre_empleado});
 //             });
-
-
-
+                if(res==true)
+                    gantt.config.readonly = true;       
            }
       });
       

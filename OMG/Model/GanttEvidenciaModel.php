@@ -19,7 +19,7 @@ class GanttEvidenciaModel {
         }
     }
     
-    public function insertarTareasGantt($data,$id_seguimiento_que_lleva_al_folio_de_entrada){
+    public function insertarTareasGantt($data,$v){
        
         try{
             $inserccion;
