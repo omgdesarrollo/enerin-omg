@@ -107,6 +107,12 @@ switch ($Op) {
          
             
 	break;
+        
+        case'ObtenerValidacion':
+            $Lista= $modelGantt->obtenerValidacionSupervisorEvidencias($_REQUEST['ID_']);
+            
+            break;
+        
 
 	case 'Eliminar':
 		# code...

@@ -177,16 +177,32 @@ class GanttEvidenciasDao {
 //        }
 //    }
     
-//   public function updateAvanceProgramaGeneral($value){
-//        try{
-//            $query="update databaseomg.seguimiento_entrada set databaseomg.seguimiento_entrada.AVANCE_PROGRAMA='".$value["avance_programa"]."' where databaseomg.seguimiento_entrada.ID_SEGUIMIENTO_ENTRADA='".$value["id_seguimiento"]."'";
-//            $db= AccesoDB::getInstancia();
-//            $list= $db->executeQueryUpdate($query);
-//            
-//        } catch (Exception $ex) {
-//            throw $ex;
-//        }
-//   } 
+   public function updateAvanceProgramaGeneral($value){
+        try{
+            $query="update databaseomg.seguimiento_entrada set databaseomg.seguimiento_entrada.AVANCE_PROGRAMA='".$value["avance_programa"]."' where databaseomg.seguimiento_entrada.ID_SEGUIMIENTO_ENTRADA='".$value["id_seguimiento"]."'";
+            $db= AccesoDB::getInstancia();
+            $list= $db->executeQueryUpdate($query);
+            
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+   }
+   
+   
+   public function obtenerValidacionSupervisorEvidencias($ID_EVIDENCIAS)
+   {
+       try
+       {
+           $query="SELECT tbevidencias.validacion_supervisor, tbevidencias.id_usuario
+                   FROM evidencias tbevidencias
+                   WHERE tbevidencias.id_evidencias=$ID_EVIDENCIAS";           
+           
+       } catch (Exception $ex)
+       {
+           throw $ex;
+           return false;
+       }
+   }
     
 }
 
