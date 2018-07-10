@@ -845,8 +845,13 @@
                 }
                 // if(value.validador=="0")
                 // {
-                    tempData += "<td style='font-size: -webkit-xxx-large'><button class='btn btn-info' onClick='cargarprogram("+value.id_evidencias+");'>";
-                    tempData += "Cargar Programa</button></td>";
+                    tempData += "<td style='font-size: -webkit-xxx-large'><button class='btn btn-info' onClick='cargarprogram("+value.id_evidencias+","+value.validacion_supervisor+");'>";
+                    if(value.validacion_supervisor=="true")
+                        tempData += "Vizualizar Programa";
+                    else
+                        tempData += "Vizualizar Programa";
+                    
+                    tempData += "</button></td>";
                     tempData += "<td style='font-size: -webkit-xxx-large' onClick='MandarNotificacionDesviacion("+value.id_usuario+","+value.responsable+",\""+value.desviacion+"\","+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
                 // }
                     if(value.desviacion!="")
