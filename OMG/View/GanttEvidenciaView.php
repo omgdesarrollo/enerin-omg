@@ -353,13 +353,6 @@ gantt.templates.task_class = function (start, end, task) {
 	};
 
 
-
-
-
-
-
-
-
 //        	gantt.config.open_tree_initially = true;
 //        	para cerrar las carpetas por default desde el principio
 
