@@ -617,6 +617,7 @@ function loadDataNotificaciones(){
 
 
 <script>
+               
 cambiarCont();
 
 function cambiarCont()
@@ -637,19 +638,19 @@ var jsonObj = {
                        
                         }    
         });
-        
-           
-
                 swal({
-  title: 'Selecciona un contrato',
+  title: 'Selecciona un cumplimiento',
   input: 'select',
+//  html:s,
 //  html:'<input type=\'text\' disabled>',
   inputOptions:jsonObj,
-  inputPlaceholder: 'selecciona un contrato ',
+  inputPlaceholder: 'selecciona un cumplimiento ',
   showCancelButton: false,
   showLoaderOnConfirm: true,
    allowEscapeKey:false,
    allowOutsideClick: false,
+   showConfirmButton: true,
+   confirmButtonText:"Seleccionar",
   inputValidator: function (value) {
     return new Promise(function (resolve, reject) {
       if (value !== '') {
@@ -681,7 +682,6 @@ var jsonObj = {
                                 type: 'success',
                                 html: 'tu has seleccionado el contrato ' + r.clave_cumplimiento,    
                                 timer: 2000,
-                                
                               });
                                 window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
                                 window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
@@ -691,7 +691,7 @@ var jsonObj = {
     }    
            });
   });
-    
+   
  }
  
  function detallescontratosiahyseleccionado(){
