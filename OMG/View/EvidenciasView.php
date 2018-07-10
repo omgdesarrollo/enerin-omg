@@ -1354,7 +1354,7 @@
     function cargarprogram(v,validado){
 //    alert("el valor de la evidencia es "+v);
 //alert("e:  "+validado);
-    window.location.href="GanttEvidenciaView.php?id_evid="+v;
+    window.location.href="GanttEvidenciaView.php?id_evid="+v+"&valid="+validado;
     
 
     }

@@ -39,11 +39,13 @@ switch ($Op) {
 //            
 //            
             header('Content-type: application/json; charset=utf-8');
-            echo json_encode($Lista);
+            echo json_encode(array("data"=>$Lista));
 //        Session::setSesion("", $value)
             
         break;
-    
+        case "Verificar_Validado":
+            
+        break;
     
 	case 'Nuevo':
 		# code...
@@ -94,7 +96,9 @@ switch ($Op) {
 //                        Session::setSesion("", $value);
                         //la variable de sesion del dataGant se refiere al id de seguimiento entrada que hace 
                         //referencia al folio de entrada de documento de entrada
-                        $modelGantt->insertarTareasGantt($arrayTransformado,Session::getSesion("dataGantt"));
+                        
+                        
+//                        $modelGantt->insertarTareasGantt($arrayTransformado,Session::getSesion("dataGantt"));
                         
                         
 			header('Content-type: application/json; charset=utf-8');
