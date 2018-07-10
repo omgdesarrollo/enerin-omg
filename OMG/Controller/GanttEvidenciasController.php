@@ -44,8 +44,12 @@ switch ($Op) {
             
         break;
         case "verificar_valid":
-//            echo "entro ".$_REQUEST["id_evid"];
             
+            $Lista= $modelGantt->obtenerValidacionSupervisorEvidencias($_REQUEST['id_evid']);     
+            
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($Lista);
+            return $Lista;
         break;
     
 	case 'Nuevo':
@@ -108,12 +112,6 @@ switch ($Op) {
             
 	break;
         
-        case'ObtenerValidacion':
-            $Lista= $modelGantt->obtenerValidacionSupervisorEvidencias($_REQUEST['ID_']);
-            
-            break;
-        
-
 	case 'Eliminar':
 		# code...
 		break;	

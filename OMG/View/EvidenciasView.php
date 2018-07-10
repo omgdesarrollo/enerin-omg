@@ -857,11 +857,6 @@
                 }
                 // if(value.validador=="0")
                 // {
-<<<<<<< HEAD
-                    tempData += "<td width='6.4%' style='font-size: -webkit-xxx-large'><button class='btn btn-info' onClick='cargarprogram("+value.id_evidencias+");'>";
-                    tempData += "Cargar Programa</button></td>";
-                    tempData += "<td width='6.4%' style='font-size: -webkit-xxx-large' onClick='MandarNotificacionDesviacion("+value.id_usuario+","+value.responsable+",\""+value.desviacion+"\","+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
-=======
                     tempData += "<td style='font-size: -webkit-xxx-large'><button id='btn_cargaGantt' class='btn btn-info' onClick='cargarprogram("+value.id_evidencias+","+value.validacion_supervisor+");'>";
                     if(value.validacion_supervisor=="true")
                         tempData += "Vizualizar Programa";
@@ -870,7 +865,6 @@
                     
                     tempData += "</button></td>";
                     tempData += "<td style='font-size: -webkit-xxx-large' onClick='MandarNotificacionDesviacion("+value.id_usuario+","+value.responsable+",\""+value.desviacion+"\","+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
->>>>>>> 4a8dfbbcc843b220b9b276367bae033b28a835b3
                 // }
                     if(value.desviacion!="")
                     {
