@@ -79,7 +79,7 @@ function loadDataSideBarOficiosCatalogos(){
         width: 350,
         items: [
           {id: "empleadosoficios", text: "Empleados", icon: "empleados.jpg"},
-          {id: "entidadesreguladoras", text: "Autoridad Remitente", icon: "entidadreguladora.png"},
+          {id: "autoridadesRemitentes", text: "Autoridad Remitente", icon: "entidadreguladora.png"},
           {id: "temasoficios", text: "Temas", icon: "temas.jpg"}
           /*{type: "separator"},*/
   
@@ -96,9 +96,9 @@ function loadDataSideBarOficiosCatalogos(){
                                        break;  
                                        
 
-                                       case "entidadesreguladoras":
-                                            consultarInformacion("../Controller/EntidadesReguladorasController.php?Op=Listar");
-                                            $("#sidebarObjV").load('InyectarVistasView.php #entidadesReguladoras');
+                                       case "autoridadesRemitentes":
+//                                            consultarInformacion("../Controller/EntidadesReguladorasController.php?Op=Listar");
+                                            $("#sidebarObjV").load('InyectarVistasView.php #autoridadesRemitentes');
                                        break;
                                        
 

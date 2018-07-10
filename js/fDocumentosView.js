@@ -112,14 +112,11 @@ function reconstruir(value,carga,datosEmp)
     tempData="";
     
     if(carga==0)
-    tempData += "<tr id='registro_"+value.id_documento+"'>"
+    tempData += "<tr id='registro_"+value.id_documento+"' name='registro_'>"
     tempData += "<td class='celda' width='33%' contenteditable='true' onBlur=\"saveToDatabase(this,'documentos','clave_documento',"+value.id_documento+",'id_documento')\"\n\
                      onkeyup=\"detectarsihaycambio()\">"+value.clave_documento+"</td>";
     tempData += "<td class='celda' width='33%' contenteditable='true' onBlur=\"saveToDatabase(this,'documentos','documento',"+value.id_documento+",'id_documento')\" \n\
-                     onkeyup=\"detectarsihaycambio()\">"+value.documento+"</td>";
-//    tempData += "<td class='celda' width='25%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'documentos','id_empleado',"+value.id_documento+",'id_documento')\" \n\
-//                     onkeyup=\"detectarsihaycambio()\">"+value.id_empleado+"</td>";
-    
+                     onkeyup=\"detectarsihaycambio()\">"+value.documento+"</td>";    
     tempData += '<td class="celda" width="33%"><select class="select" onchange="saveComboToDatabase(\'id_empleado\',this,'+value.id_documento+')">';
         $.each(datosEmp,function(index2,value2)
         {
