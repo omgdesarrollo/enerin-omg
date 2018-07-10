@@ -226,13 +226,14 @@ foreach ($notifacionescompletas as $value){
 		id_contrato = '<?php echo Session::getSesion("s_cont");?>';
 		urlActual = window.location.pathname.split("/");
 		urlIr = direccion.split("?");
-
 		if(contrato==id_contrato)
 		{
 			if(urlIr[0]==urlActual[urlActual.length-1])
 			{
 				registro = urlIr[1].split("=");
 				mover = registro[1];
+				// contador=1;
+				ejecutarPrimeraVez=true;
 				moverA();
 			}
 			else
@@ -271,8 +272,8 @@ foreach ($notifacionescompletas as $value){
 							success:function(r)
 							{
 								window.location.href = direccion;
-                                                                window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
-                                                                window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")"); 
+								window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
+								window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")"); 
                                                                 
 							},
 							error:function()

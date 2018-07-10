@@ -24,8 +24,8 @@ class GanttEvidenciaModel {
         try{
             $inserccion;
             $lista_tareas_verificadas;
-            $dao= new GanttDao();
-            $modelGantt= new GanttModel();
+            $dao= new GanttEvidenciasDao();
+            $modelGantt= new GanttEvidenciaModel();
             $lista_tareas_verificadas=self::verificarTareasExiste($data);
             foreach ($data as $value) {
                 if (isset($value["id"])) {
@@ -34,23 +34,24 @@ class GanttEvidenciaModel {
                             
                                 if($value2["cantidad"]==0){
                                     if($value["parent"]!=""){
-                                         $value["progress"]=0;
-                                         $value["id_empleado"]=$value["user"];
-                                         $value["id_seguimiento_entrada"]=$id_seguimiento_que_lleva_al_folio_de_entrada;
-                                         $dao->insertarTareasGantt($value);
-                                         $dao->insertarTareasConFolioEntrada_de_seguimiento_entrada($value);
+                                        echo "entro en parent";
+//                                         $value["progress"]=0;
+//                                         $value["id_empleado"]=$value["user"];
+//                                         $value["id_seguimiento_entrada"]=$id_seguimiento_que_lleva_al_folio_de_entrada;
+//                                         $dao->insertarTareasGantt($value);
+//                                         $dao->insertarTareasConFolioEntrada_de_seguimiento_entrada($value);
                                     }
                                 }
                                 else{
                                     
                                      if($value["!nativeeditor_status"]=='deleted'){
                                          echo "entro a eliminar la tarea";
-                                         $dao->deleteTareas($value);
-                                         $dao->deleteTareasDe_Gantt_Seguimiento_Entrada($value);
+//                                         $dao->deleteTareas($value);
+//                                         $dao->deleteTareasDe_Gantt_Seguimiento_Entrada($value);
                                             
                                     }else{
-                                         $dao->updateTareas($value); 
-                                         $dao->updateTareasId_EmpleadoXIdGantt_En_Tabla_Seguimiento_entrada($value);
+//                                         $dao->updateTareas($value); 
+//                                         $dao->updateTareasId_EmpleadoXIdGantt_En_Tabla_Seguimiento_entrada($value);
                                     }
                                 }
                         }
@@ -59,7 +60,7 @@ class GanttEvidenciaModel {
             }
          
          
-          $modelGantt->calculoAvanceProgramaGeneral($id_seguimiento_que_lleva_al_folio_de_entrada);
+//          $modelGantt->calculoAvanceProgramaGeneral($id_seguimiento_que_lleva_al_folio_de_entrada);
             
         } catch (Exception $ex) {
             throw $ex;
@@ -70,7 +71,7 @@ class GanttEvidenciaModel {
     
     public static function verificarTareasExiste($array){
         try{
-            $dao= new GanttDao();
+            $dao= new GanttEvidenciasDao();
             $numeroenlistaposicion=0;
             $lista_tarea_verificada_si_existe;
             foreach ($array as $value) {

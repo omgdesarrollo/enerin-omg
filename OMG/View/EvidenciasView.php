@@ -491,10 +491,13 @@
             }
         });
     }
-
-
+    noArchivo=0;
     function refresh()
     {       
+        ejecutarPrimeraVez=false;
+        ejecutando=false;
+        clearInterval(intervalA);
+        clearTimeout(timeOutA);
         listarDatos();
     }
     function filterTable(Obj)
@@ -854,9 +857,20 @@
                 }
                 // if(value.validador=="0")
                 // {
+<<<<<<< HEAD
                     tempData += "<td width='6.4%' style='font-size: -webkit-xxx-large'><button class='btn btn-info' onClick='cargarprogram("+value.id_evidencias+");'>";
                     tempData += "Cargar Programa</button></td>";
                     tempData += "<td width='6.4%' style='font-size: -webkit-xxx-large' onClick='MandarNotificacionDesviacion("+value.id_usuario+","+value.responsable+",\""+value.desviacion+"\","+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
+=======
+                    tempData += "<td style='font-size: -webkit-xxx-large'><button id='btn_cargaGantt' class='btn btn-info' onClick='cargarprogram("+value.id_evidencias+","+value.validacion_supervisor+");'>";
+                    if(value.validacion_supervisor=="true")
+                        tempData += "Vizualizar Programa";
+                    else
+                        tempData += "cargar Programa";
+                    
+                    tempData += "</button></td>";
+                    tempData += "<td style='font-size: -webkit-xxx-large' onClick='MandarNotificacionDesviacion("+value.id_usuario+","+value.responsable+",\""+value.desviacion+"\","+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
+>>>>>>> 4a8dfbbcc843b220b9b276367bae033b28a835b3
                 // }
                     if(value.desviacion!="")
                     {
@@ -972,8 +986,10 @@
                                     // swalSuccess("Evidencia validada");
                                     // if(columna=="desviacion_mayor")
                                     // {
-                                        enviar_notificacion( ((valor==true)? "Ha sido validada una Evidencia por ":"Ha sido desvalidada una Evidencia por "),idPara,0,false,"EvidenciasView.php?accion="+id);
-
+                                    enviar_notificacion( ((valor==true)?
+                                     "Ha sido validada una Evidencia por ":
+                                     "Ha sido desvalidada una Evidencia por "),idPara,0,false,"EvidenciasView.php?accion="+id);
+                                     $("#btn_cargaGantt").html( (valor==true)?"Vizualizar Programa":"Cargar Programa" );
                                         // msj,para,tipomsj,atendido,asunto,idEvidencia((
                                     // }
                                 }
@@ -1290,15 +1306,16 @@
             
         })
     }
-    noArchivo=0;
-    
+    intervalA="";
+    timeOutA="";
     mover = '<?php echo $accion; ?>';
-    contador=1;
+    // contador=1;
     cambio=1;
     ejecutando=false;
+    ejecutarPrimeraVez=true;
     function moverA()
     {
-        if(mover!="-1" && ejecutando==false)
+        if(mover!="-1" && ejecutando==false && ejecutarPrimeraVez==true)
         {
             if($("#registro_"+mover)[0]!=undefined)
             {
@@ -1306,7 +1323,7 @@
                 window.location = "#registro_"+mover;
                 ObjB = $("#registro_"+mover)[0];
                 css = $(ObjB).css("background");
-                var a = setInterval(function()
+                intervalA = setInterval(function()
                 {
                     if(cambio==1)
                     {
@@ -1318,15 +1335,23 @@
                         $(ObjB).css("background",css);
                         cambio=1;
                     }
-                    if(contador==26)
-                    {
-                        clearInterval(a);
-                        $(ObjB).css("background",css);
-                        ejecutando=false;
-                        contador=1;
-                    }
-                    contador++;
-                },400);
+                    // if(contador==10)
+                    // {
+                    //     clearInterval(intervalA);
+                    //     $(ObjB).css("background",css);
+                    //     ejecutando=false;
+                    //     // contador=1;
+                    //     ejecutarPrimeraVez=false;
+                    // }
+                    // contador++;
+                },500);
+                timeOutA = setTimeout(function(){
+                    clearInterval(intervalA);
+                    $(ObjB).css("background",css);
+                    ejecutando=false;
+                    // contador=1;
+                    ejecutarPrimeraVez=false;
+                },10000);
             }
             else
             {
@@ -1351,10 +1376,10 @@
     
     
     
-    function cargarprogram(v){
+    function cargarprogram(v,validado){
 //    alert("el valor de la evidencia es "+v);
-
-    window.location.href="GanttEvidenciaView.php?id_evid="+v;
+//alert("e:  "+validado);
+    window.location.href="GanttEvidenciaView.php?id_evid="+v+"&valid="+validado;
     
 
     }

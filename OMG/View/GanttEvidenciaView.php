@@ -2,6 +2,7 @@
 session_start();
 require_once '../util/Session.php';
 if(isset($_REQUEST["id_evid"])){
+//    Session::setSesion("dataValidado", $value)
     Session::setSesion("dataGanttEvidencia",$_REQUEST["id_evid"]);
 //    Session::setSesion("dataGanttFolio_Entrada",$_REQUEST["folio_entrada"]);
 //    echo "el seguimiento de entrada linkeado al de doc de entrada y al folio de entrada   ".$dataGantt=Session::getSesion("dataGantt");;
@@ -9,6 +10,7 @@ if(isset($_REQUEST["id_evid"])){
 }else{
         $dataGantt=Session::getSesion("dataGanttEvidencia");
        echo "<h2><center>El id de evidencia = ".Session::getSesion("dataGanttEvidencia")."</center><h2>";
+       
     }     
 //Session::setSesion("dataGantt",$_REQUEST["id_documento_entrada"]);
   //  Session::setSesion("dataGantt",":(");
@@ -184,6 +186,8 @@ and open the template in the editor.
 
     
     <div id="gantt_here" style='width:100%; height:100%;'></div>
+    
+    <!--<input id="id_evid" type="text" value="<?php echo Session::getSesion("dataGanttEvidencia") ?>">-->
     </body>
   
     
@@ -353,13 +357,6 @@ gantt.templates.task_class = function (start, end, task) {
 	};
 
 
-
-
-
-
-
-
-
 //        	gantt.config.open_tree_initially = true;
 //        	para cerrar las carpetas por default desde el principio
 
@@ -415,7 +412,7 @@ gantt.config.work_time = true;
 gantt.config.auto_scheduling = true;
 gantt.config.sort = true;
 
-//gantt.config.readonly = true;
+//gantt.config.readonly = false;
 
 
 gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
@@ -423,8 +420,8 @@ gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
     gantt.load("../Controller/GanttEvidenciasController.php?Op=Mostrar_Plan");
 
 
-var dp = new gantt.dataProcessor("../Controller/GanttController.php?Op=Modificar");
-//
+var dp = new gantt.dataProcessor("../Controller/GanttEvidenciasController.php?Op=Modificar");
+////
 dp.init(gantt);
 
 //dp.setTransactionMode("REST");
@@ -589,8 +586,20 @@ dp.init(gantt);
 	};
     
     $(function (){
-        
-      
+      $.ajax({
+          url:"../Controller/GanttEvidenciasController.php?Op=verificar_valid",
+          type:"POST",
+          data:"id_evid=<?php echo Session::getSesion("dataGanttEvidencia") ?>"
+          ,success:function (res){
+//               alert("entraste al success");
+//               $.each(res,function(index,value){
+//                   dataEmpleados.push({key:value.id_empleado,label:value.nombre_empleado});
+//             });
+
+
+
+           }
+      });
       
 //     gantt.batchUpdate(function () {
 ////         alert("se ha cargado el gantt exitosamente");
