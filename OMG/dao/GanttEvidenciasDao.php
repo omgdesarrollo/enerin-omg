@@ -186,7 +186,23 @@ class GanttEvidenciasDao {
         } catch (Exception $ex) {
             throw $ex;
         }
-   } 
+   }
+   
+   
+   public function obtenerValidacionSupervisorEvidencias($ID_EVIDENCIAS)
+   {
+       try
+       {
+           $query="SELECT tbevidencias.validacion_supervisor, tbevidencias.id_usuario
+                   FROM evidencias tbevidencias
+                   WHERE tbevidencias.id_evidencias=$ID_EVIDENCIAS";           
+           
+       } catch (Exception $ex)
+       {
+           throw $ex;
+           return false;
+       }
+   }
     
 }
 

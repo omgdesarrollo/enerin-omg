@@ -134,7 +134,8 @@ class GanttEvidenciaModel {
     }
     
     
-    public function updateAvanceProgramaGeneral($value){
+    public function updateAvanceProgramaGeneral($value)
+    {
         try{
             
             $dao= new GanttDao();
@@ -143,6 +144,22 @@ class GanttEvidenciaModel {
             
         } catch (Exception $ex) {
             throw  $ex;
+        }
+    }
+    
+    
+    public function obtenerValidacionSupervisorEvidencias($ID_EVIDENCIAS)
+    {
+        try
+        {
+            $dao=new GanttEvidenciasDao();
+            $rec= $dao->obtenerValidacionSupervisorEvidencias($ID_EVIDENCIAS);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
         }
     }
 }
