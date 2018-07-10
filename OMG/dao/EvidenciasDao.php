@@ -3,15 +3,15 @@
 require_once '../ds/AccesoDB.php';
 class EvidenciasDAO
 {
-    public function listarEvidencias($ID_USUARIO)
+    public function listarEvidencias($ID_USUARIO,$CONTRATO)
     {
         try
         {
             $query = "SELECT tbusuarios.id_empleado,tbrequisitos.id_requisito,tbrequisitos.requisito,
             tbregistros.id_registro,tbregistros.registro,tbregistros.frecuencia,
-            tbdocumentos.clave_documento,
+            tbdocumentos.clave_documento,tbevidencias.desviacion,
             tbevidencias.id_evidencias,tbevidencias.id_usuario,tbevidencias.accion_correctiva,tbevidencias.validacion_supervisor,
-            tbempleados.id_empleado, (
+            tbempleados.id_empleado,(SELECT tbusuario2.id_usuario FROM usuarios tbusuario2 WHERE tbusuario2.id_empleado=tbempleados.id_empleado)AS id_responsable , (
                 SELECT CONCAT(tbempleados.nombre_empleado,' ',
                     tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)
                     FROM empleados tbempleados
@@ -33,8 +33,8 @@ class EvidenciasDAO
 			LEFT JOIN usuarios tbusuarios ON tbusuarios.id_empleado = tbempleados.id_empleado
             LEFT JOIN documentos tbdocumentos ON tbdocumentos.id_documento = tbregistros.id_documento
             
-            WHERE tbregistros.registro<>'NULL' AND tbevidencias.validacion_supervisor<>'NULL' AND tbusuarios.id_usuario = $ID_USUARIO AND LOWER(tbtemas.identificador) 
-			LIKE '%catalogo%' OR tbevidencias.id_usuario = $ID_USUARIO";
+            WHERE tbtemas.contrato=$CONTRATO AND (tbregistros.registro<>'NULL' AND tbevidencias.validacion_supervisor<>'NULL' AND tbusuarios.id_usuario = $ID_USUARIO AND LOWER(tbtemas.identificador) 
+			LIKE '%catalogo%' OR tbevidencias.id_usuario = $ID_USUARIO)";
             
             $db = AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
@@ -54,9 +54,10 @@ class EvidenciasDAO
         {
             $query = "SELECT tbusuarios.id_empleado,tbrequisitos.id_requisito,tbrequisitos.requisito,
             tbregistros.id_registro,tbregistros.registro,tbregistros.frecuencia,
-            tbdocumentos.clave_documento,
+            tbdocumentos.clave_documento,tbevidencias.desviacion,
             tbevidencias.id_evidencias,tbevidencias.id_usuario,tbevidencias.accion_correctiva,tbevidencias.validacion_supervisor,
-            tbempleados.id_empleado, (
+            tbempleados.id_empleado,(SELECT tbusuario2.id_usuario FROM usuarios tbusuario2 WHERE tbusuario2.id_empleado=tbempleados.id_empleado)AS id_responsable,
+            (
                 SELECT CONCAT(tbempleados.nombre_empleado,' ',
                     tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)
                     FROM empleados tbempleados
@@ -116,8 +117,8 @@ class EvidenciasDAO
     {
         try
         {
-            $query = "INSERT INTO evidencias (id_registro,id_usuario,desviacion,accion_correctiva,validacion_supervisor)
-                     VALUES ($ID_REGISTRO,$ID_USUARIO,'false','','false')";
+            $query = "INSERT INTO evidencias (id_registro,id_usuario)
+                     VALUES ($ID_REGISTRO,$ID_USUARIO)";
             $db = AccesoDB::getInstancia();
             $res = $db->executeQueryUpdate($query);
             return $res;
@@ -235,12 +236,12 @@ class EvidenciasDAO
         }
     }
 
-    public function mandarAccionCorrectiva($ID_EVIDENCIA,$MENSAJE)
+    public function mandarAccionCorrectiva($ID_EVIDENCIA,$MENSAJE,$COLUMNA)
     {
         try
         {
             $db= AccesoDB::getInstancia();
-            $query="UPDATE evidencias SET accion_correctiva = '$MENSAJE'
+            $query="UPDATE evidencias SET ".$COLUMNA." = '$MENSAJE'
                  WHERE id_evidencias=$ID_EVIDENCIA";
             $result= $db->executeQueryUpdate($query);
             return $result;

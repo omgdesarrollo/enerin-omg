@@ -33,12 +33,12 @@ $Usuario=  Session::getSesion("user");
 	<link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
         <link href="../../codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
          <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
-         <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+         <!--<link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>-->
          <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 	<script src="../../codebase/dhtmlx.js"></script>
         <script src="../../js/jquery.js" type="text/javascript"></script>
         <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
-        <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+        <!--<script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>-->
         <script src="../../js/funcionessidebar.js" type="text/javascript"></script>
         <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
         <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
@@ -173,7 +173,8 @@ var gantt=[
         myLayout.cells("b").attachObject("sidebarObjV");
         
 //                    loadDataContratos();
-                  loadDataMenuArriba("");
+detallescontratosiahyseleccionado();
+                  loadDataMenuArriba("","NO SELECCIONADO");
 //                    loadEstructuraMaster();
                   
                     ribbon.setSizes();
@@ -242,12 +243,12 @@ var gantt=[
 //                            
          );
 
- function loadDataMenuArriba(iniciodinamic){	
+ function loadDataMenuArriba(iniciodinamic,info){	
 
-     
+//     if(info=="")
      
 	var inicio=[
-        {id:'00',text:'Seleccion de contrato(Click)' ,items:[
+        {id:'00',text:'<div id=\'desc\'>contrato(NO SELECCIONADO)</div>' ,items:[
         
                     {id:'0x1',mode:'cols',text:'Contratos',type:'block',
           list:datacontratos
@@ -280,7 +281,7 @@ var gantt=[
     
     
 ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: "../../images/base/",tabs:inicio});
-$("#r").html("d");
+//    ribbon.enable("00");
   
 //    var dhxWins = new dhtmlXWindows();
 //var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
@@ -322,25 +323,25 @@ function loadDataNotificaciones(){
  
                 
                 
-     function loadDataContratos(){
-//         alert("usuario es "+$("#idusuario").val());
-
-          $.ajax({  
-                     url: "../Controller/CumplimientosController.php?Op=Listar&TipoOperacion=ListarContratosPorUsuario&usuario=<?php echo $Usuario["NOMBRE_USUARIO"]; ?>",  
-                     async:false,
-                     success: function(r) {
-                        //alert("en:   ");
-//                     datacontratos.push( {id:'oficio',text:''+,img:'oficios.png',type:'button',isbig:true} )
-                     
-                     $.each(r,function(index,value){
-                        // alert("ya entro y "+value.CLAVE_CUMPLIMIENTO);
-                        
-//                      datacontratos.push( {id:'contratos',text:value.clave_cumplimiento,img:'oficios.png',type:'button',isbig:true} );
-
-                         })                       
-                        }    
-        });
-     }
+//     function loadDataContratos(){
+////         alert("usuario es "+$("#idusuario").val());
+//
+//          $.ajax({  
+//                     url: "../Controller/CumplimientosController.php?Op=Listar&TipoOperacion=ListarContratosPorUsuario&usuario=<?php echo $Usuario["NOMBRE_USUARIO"]; ?>",  
+//                     async:false,
+//                     success: function(r) {
+//                        //alert("en:   ");
+////                     datacontratos.push( {id:'oficio',text:''+,img:'oficios.png',type:'button',isbig:true} )
+//                     
+//                     $.each(r,function(index,value){
+//                        // alert("ya entro y "+value.CLAVE_CUMPLIMIENTO);
+//                        
+////                      datacontratos.push( {id:'contratos',text:value.clave_cumplimiento,img:'oficios.png',type:'button',isbig:true} );
+//
+//                         })                       
+//                        }    
+//        });
+//     }
      
      
      function loadDataContratoSeleccionado()
@@ -376,7 +377,7 @@ function loadDataNotificaciones(){
       function loadEstructuraMaster(){
       var seccionMenuDinamic=[];
                 var inicio=[
-        {id:'00',text:'Seleccion de contrato(Click)' ,items:[
+        {id:'00',text:'<div id=\'desc\'></div>' ,items:[
         
                             {id:'0x1',mode:'cols',text:'Contratos',type:'block',
           list:datacontratos
@@ -485,7 +486,14 @@ function loadDataNotificaciones(){
   type: "warning",
   showCancelButton: true,
   closeOnConfirm: false,
-  showLoaderOnConfirm: true
+  showLoaderOnConfirm: true,
+   preConfirm: function() {
+    return new Promise(function(resolve) {
+      setTimeout(function() {
+        resolve()
+      }, 1000)
+    })
+  }
 }, function () {
 //    window.location.href="Logout.php";
 //  setTimeout(function () {
@@ -583,27 +591,27 @@ function loadDataNotificaciones(){
     </div>
 
     
-    <div id="infousuario">
+<!--    <div id="infousuario">
       
-    </div>
+    </div>-->
 <!--</div>-->
-    <!--<div id="idusuario" type="hidden" value="<?php echo $Usuario["NOMBRE_USUARIO"]; ?>" >-->
+    <!--<div id="idusuario" type="hidden" value="<?php // echo $Usuario["NOMBRE_USUARIO"]; ?>" >-->
 
 
 
-<div id="popup" style="display: none;">
+<!--<div id="popup" style="display: none;">
     <div class="content-popup">
         <div class="close"><a href="#" id="close"><img src="images/close.png"/></a></div>
         <div>
         	<h2>Contenido POPUP</h2>
             <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original.</p>
             <div style="float:left; width:100%;">
-    	<!--<iframe src="" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:35px;" allowTransparency="true"></iframe>-->
+    	<iframe src="" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:35px;" allowTransparency="true"></iframe>
     </div>
         </div>
     </div>
 </div>
-<div class="popup-overlay"></div>
+<div class="popup-overlay"></div>-->
 
 
 
@@ -628,13 +636,19 @@ var jsonObj = {
                        
                         }    
         });
+        
+           
 
                 swal({
   title: 'Selecciona un contrato',
   input: 'select',
+//  html:'<input type=\'text\' disabled>',
   inputOptions:jsonObj,
   inputPlaceholder: 'selecciona un contrato ',
   showCancelButton: false,
+  showLoaderOnConfirm: true,
+   allowEscapeKey:false,
+   allowOutsideClick: false,
   inputValidator: function (value) {
     return new Promise(function (resolve, reject) {
       if (value !== '') {
@@ -643,6 +657,13 @@ var jsonObj = {
         reject('requieres seleccionar un contrato ');
       }
     });
+  },
+  preConfirm: function() {
+    return new Promise(function(resolve) {
+      setTimeout(function() {
+        resolve()
+      }, 1000)
+    })
   }
 }).then(function (result) {
 //  swal({
@@ -650,16 +671,39 @@ var jsonObj = {
 //    html: 'tu has seleccionado el contrato ' + result
 //  });
 
-
+//alert("d");
     $.ajax({  
-                        url: "../Controller/CumplimientosController.php?Op=contratoselec&c="+result,  
-                        async:false,
+                        url: "../Controller/CumplimientosController.php?Op=contratoselec&c="+result+"&obt=false",  
+                        async:true,
                         success: function(r) {
-                           }    
+                              swal({
+                                type: 'success',
+                                html: 'tu has seleccionado el contrato ' + r.clave_cumplimiento,    
+                                timer: 2000,
+                                
+                              });
+                                window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
+                                window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
+                                
+                                
+                                
+    }    
            });
   });
     
- } 
+ }
+ 
+ function detallescontratosiahyseleccionado(){
+      $.ajax({  
+                        url: "../Controller/CumplimientosController.php?Op=contratoselec&obt=true",  
+                        async:true,
+                        success: function(r) {
+
+                                window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
+                                window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
+    }    
+           });
+ }
 
 </script>
 

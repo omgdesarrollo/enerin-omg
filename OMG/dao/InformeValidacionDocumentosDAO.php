@@ -11,11 +11,11 @@ class InformeValidacionDocumentosDAO{
         if($v["param"]["v"]=="true"){
 //            echo "fue false";
 //            $query_concat.="AND ";
-            $query_concat.="AND tbvalidacion_documento.validacion_tema_responsable='true'";
+            $query_concat.="AND( tbvalidacion_documento.validacion_tema_responsable='true'";
             if($v["param"]["n_v"]=="true"){
-//                 if($v["param"]["n_v"]=="false"){
-                        $query_concat.="   or tbvalidacion_documento.validacion_tema_responsable='false'";
-//                    }
+                        $query_concat.="   or tbvalidacion_documento.validacion_tema_responsable='false')";
+            }else{
+                 $query_concat.=")";
             }
         }
         if($v["param"]["n_v"]=="true"){

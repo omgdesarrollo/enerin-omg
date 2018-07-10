@@ -64,10 +64,16 @@ switch ($Op) {
 //               }
 //            }
 //            else{if()
-            if($_REQUEST["obt"]==false)
+            if($_REQUEST["obt"]=="false"){
             Session::setSesion("s_cont", $_REQUEST["c"]);
-            else{
-              echo   Session::getSesion ("s_cont");
+            $v["contrato"]=Session::getSesion ("s_cont");
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($model->detallesContratoSeleccionado($v));
+            } else{
+                Session::getSesion ("s_cont");
+                $v["contrato"]=Session::getSesion ("s_cont");
+               header('Content-type: application/json; charset=utf-8');     
+            echo json_encode($model->detallesContratoSeleccionado($v));
             }
 //            }
         break;

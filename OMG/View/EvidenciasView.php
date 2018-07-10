@@ -185,7 +185,7 @@
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
-		        <h4 class="modal-title" id="myModalLabel">Crear Nueva Evidencia</h4>
+		        <h4 class="modal-title" id="myModalLabelNuevaEvidencia">Crear Nueva Evidencia</h4>
             </div>
 
             <div class="modal-body">
@@ -254,7 +254,7 @@
 		<div class="modal-content">                
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-          <h4 class="modal-title" id="myModalLabel">Lista Registros</h4>
+          <h4 class="modal-title" id="myModalLabelMostrarRegistros">Lista Registros</h4>
         </div>
 
         <div class="modal-body">
@@ -275,7 +275,7 @@
                         
             <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-            <h4 class="modal-title" id="myModalLabel">Archivos Adjuntos</h4>
+            <h4 class="modal-title" id="myModalLabelItermUrls">Archivos Adjuntos</h4>
             </div>
 
             <div class="modal-body">
@@ -301,7 +301,7 @@
 		<div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title" id="myModalLabel">Mandar Notificación</h4>
+                <h4 class="modal-title" id="myModalLabelMandarNotificacion">Mandar Notificación</h4>
             </div>
 
             <div class="modal-body">
@@ -807,7 +807,7 @@
 
                 tempData += "<td>"+value.usuario+"</td>";
                 
-                tempData += "<td style='font-size: -webkit-xxx-large' onClick='MandarNotificacion("+value.id_usuario+","+value.responsable+",\""+value.accion_correctiva+"\","+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
+                tempData += "<td style='font-size: -webkit-xxx-large' onClick='MandarNotificacion("+value.id_responsable+","+value.responsable+",\""+value.accion_correctiva+"\","+value.id_evidencias+","+value.validador+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
 
                 if(value.accion_correctiva!="")
                 {
@@ -817,12 +817,23 @@
                 {
                     tempData += noMsj+"</td>";
                 }
+                // if(value.validador=="0")
+                // {
+                    tempData += "<td style='font-size: -webkit-xxx-large'><button class='btn btn-info' onClick='cargarprogram("+value.id_evidencias+");'>";
+                    tempData += "Cargar Programa</button></td>";
+                    tempData += "<td style='font-size: -webkit-xxx-large' onClick='MandarNotificacionDesviacion("+value.id_usuario+","+value.responsable+",\""+value.desviacion+"\","+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
+                // }
+                    if(value.desviacion!="")
+                    {
+                        tempData += yesMsj+"</td>";
+                    }
+                    else
+                    {
+                        tempData += noMsj+"</td>";
+                    }
 
                 if(value.responsable=="1")
-                {
-                    tempData += "<td style='font-size: -webkit-xxx-large'><button class='btn btn-info' onClick='#("+value.id_evidencias+");'>";
-                    tempData += "Cargar Programa</button></td>";
-                    tempData += "<td style='font-size: -webkit-xxx-large'><i class='ace-icon fa fa-deviantart' style='font-size: 20px;color:#6FB3E0;cursor:pointer'></i></td>";
+                {                    
                     tempData += "<td style='font-size: -webkit-xxx-large;'>";
                     if(value.validacion_supervisor=="true")
                         tempData += yesCheck;
@@ -832,8 +843,8 @@
                 }
                 else
                 {
-                    tempData += "<td style='font-size: -webkit-xxx-large'>"+denegado+"</td>";
-                    tempData += "<td style='font-size: -webkit-xxx-large'>"+denegado+"</td>";
+                    // tempData += "<td style='font-size: -webkit-xxx-large'>"+denegado+"</td>";
+                    // tempData += "<td style='font-size: -webkit-xxx-large'>"+denegado+"</td>";
                     if(value.validacion_supervisor=='true')
                         tempData += "<td style='font-size: -webkit-xxx-large'>"+yesCheck+" onClick='swalInfo(\"Validado por el responsable\")'></i>";
                     else
@@ -855,7 +866,7 @@
                 
                     tempData += "<td></td><td>"+value.usuario+"</td>";
                     tempData += "<td></td><td></td><td></td><td></td>";
-                    if(value.responsable!="1")
+                    if(value.responsable!="1" || value.validador==1)
                     {
                         tempData += "<td>";
                         tempData += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
@@ -946,30 +957,50 @@
         //     });
         // }
     }
-
-    function MandarNotificacion(idPara,responsable,msj,idEvidencia)
+    function MandarNotificacionDesviacion(idPara,responsable,msj,idEvidencia)
     {
         if(responsable==1)
         {
-            tempData = "<button onClick='notificar("+idPara+","+idEvidencia+")' type='submit' id='subirArchivos'  class='btn crud-submit btn-info form-control'>Enviar</button>";
+            tempData = "<button onClick='notificar("+idPara+","+idEvidencia+",\"desviacion\")' type='submit' id='subirArchivos'  class='btn crud-submit btn-info form-control'>Enviar</button>";
             $("#BTNENVIAR_MANDARNOTIFICACIONMODAL").html(tempData);
             $("#textAreaNotificacionModal").val(msj);
+            $("#myModalLabelMandarNotificacion").html("Mandar Desviación");
         }
         else
         {
             $("#BTNENVIAR_MANDARNOTIFICACIONMODAL").html("");
             $("#textAreaNotificacionModal").val(msj);
+            $("#myModalLabelMandarNotificacion").html("Desviación Recibida");
+        }
+    }
+    function MandarNotificacion(idPara,responsable,msj,idEvidencia,validador)
+    {
+        if(responsable!=1 || validador==1)
+        {
+            tempData = "<button onClick='notificar("+idPara+","+idEvidencia+",\"accion_correctiva\")' type='submit' id='subirArchivos'  class='btn crud-submit btn-info form-control'>Enviar</button>";
+            $("#BTNENVIAR_MANDARNOTIFICACIONMODAL").html(tempData);
+            $("#textAreaNotificacionModal").val(msj);
+            $("#myModalLabelMandarNotificacion").html("Enviar Accion Correctiva");
+        }
+        else
+        {
+            $("#BTNENVIAR_MANDARNOTIFICACIONMODAL").html("");
+            $("#textAreaNotificacionModal").val(msj);
+            $("#myModalLabelMandarNotificacion").html("Accion Correctiva Recibida");
         }
     }
 
-    function notificar(idPara,idEvidencia)
+    function notificar(idPara,idEvidencia,columna)
     {
         mensaje = $("#textAreaNotificacionModal").val();
-        enviar_notificacion("Ha recibido una Accion Correctiva de ",idPara,0,false,"una evidencia");//msj,para,tipomsj,atendido,asunto
+        if(columna=='accion_correctiva')
+            enviar_notificacion("Ha recibido una Acción Correctiva de ",idPara,0,false,"una evidencia");//msj,para,tipomsj,atendido,asunto
+        else
+            enviar_notificacion("Ha recibido una Desviación de ",idPara,0,false,"una desviacion");//msj,para,tipomsj,atendido,asunto
         $.ajax({
               url: '../Controller/EvidenciasController.php?Op=MandarAccionCorrectiva',
               type: 'GET',
-              data: 'ID_EVIDENCIA='+idEvidencia+'&MENSAJE='+mensaje,
+              data: 'ID_EVIDENCIA='+idEvidencia+'&MENSAJE='+mensaje+'&COLUMNA='+columna,
               success:function(enviado)
               {
                   (enviado==true)?(
@@ -1089,7 +1120,7 @@
                                                       (index==1)?name=value:name+="-"+value;
                                       });
                                       tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
-                                      tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\">"+name+"</a></td><td>";
+                                      tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\" download='"+name+"'>"+name+"</a></td><td>";
                                       if(validador=="1")
                                       {
                                         if(validado==false)
@@ -1263,6 +1294,15 @@
         setTimeout(function(){swal.close();$('#agregarUsuario .close').click()},1500);
         $('#loader').hide();
     }
+    
+    
+    
+    
+    function cargarprogram(v){
+//    alert("el valor de la evidencia es "+v);
+    window.location.href="GanttEvidenciaView.php?id_evid="+v;
+    }
+    
 </script>
 
 <script id="template-upload" type="text/x-tmpl">
@@ -1319,6 +1359,11 @@
     {% } %}
     {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val(); var ID_PARA_DOCUMENTO = $('#tempInputIdParaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO,'0','false',ID_PARA_DOCUMENTO); reconstruirRow(ID_EVIDENCIA_DOCUMENTO); noArchivo=0; } } %}
 </script>
+    
+    
+    
+    
+                        
 
         <!--Inicia para el spiner cargando-->
         <script src="../../js/loaderanimation.js" type="text/javascript"></script>

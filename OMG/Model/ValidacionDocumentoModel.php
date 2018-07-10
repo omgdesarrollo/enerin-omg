@@ -12,7 +12,6 @@ class ValidacionDocumentoModel{
             $dao=new ValidacionDocumentoDAO();
             $rec=$dao->mostrarValidacionDocumentos();
             
-            
             return $rec;
     }  catch (Exception $e){
         throw  $e;
