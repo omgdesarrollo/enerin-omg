@@ -93,8 +93,19 @@
         }
         .backgroundTdTable
         {
-            background: gold;
+            background: #9aca40;
         }
+        
+        .backgroundTdTable2
+        {
+            background: #6FB3E0;
+        }
+        
+        .backgroundTdTable3
+        {
+            background: #DCDCDC;
+        }
+        
         .nuevoTdTable
         {
             border-bottom: 1px solid gold;
@@ -157,18 +168,26 @@
         <div class="table-container">
             <table id="idTable" class="tbl-qa">
                 <tr>
-                    <th colspan="5" style="background:#efc9c9"></td>
+                    <th colspan="5" style="background:#9aca40"></td>
                     <th colspan="5" style="background:#6FB3E0">Responsable de Evidencia</td>
-                    <th colspan="3" style="background:#a7a6a6">Supervisión</td>
+                    <th colspan="3" style="background:#DCDCDC">Supervisión</td>
                 </tr>
                 <tr>
                 <?php foreach($titulosTable as $index=>$value)
                 { if($index<5){ ?>
                 <th class="backgroundTdTable"><?php echo $value ?></th>
-                <?php }else{ ?>
-                    <th class="table-header"><?php echo $value ?></th>
-                <?php   } 
-                } ?>
+                <?php }
+                
+                  if($index>4 && $index<10){?>  
+                <th class="backgroundTdTable2"><?php echo $value ?></th>
+                <?php }
+                
+                if($index>9){ ?>
+                    <th class="backgroundTdTable3"><?php echo $value ?></th>
+                <?php }                
+                }
+                 ?>
+                    
                 </tr>
                 
                 <tbody id="bodyTable">
@@ -826,8 +845,13 @@
                 }
                 // if(value.validador=="0")
                 // {
-                    tempData += "<td style='font-size: -webkit-xxx-large'><button class='btn btn-info' onClick='cargarprogram("+value.id_evidencias+");'>";
-                    tempData += "Cargar Programa</button></td>";
+                    tempData += "<td style='font-size: -webkit-xxx-large'><button class='btn btn-info' onClick='cargarprogram("+value.id_evidencias+","+value.validacion_supervisor+");'>";
+                    if(value.validacion_supervisor=="true")
+                        tempData += "Vizualizar Programa";
+                    else
+                        tempData += "Vizualizar Programa";
+                    
+                    tempData += "</button></td>";
                     tempData += "<td style='font-size: -webkit-xxx-large' onClick='MandarNotificacionDesviacion("+value.id_usuario+","+value.responsable+",\""+value.desviacion+"\","+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
                 // }
                     if(value.desviacion!="")
@@ -1268,9 +1292,10 @@
     contador=1;
     cambio=1;
     ejecutando=false;
+    ejecutarPrimeraVez=true;
     function moverA()
     {
-        if(mover!="-1" && ejecutando==false)
+        if(mover!="-1" && ejecutando==false && ejecutarPrimeraVez==true)
         {
             if($("#registro_"+mover)[0]!=undefined)
             {
@@ -1296,6 +1321,7 @@
                         $(ObjB).css("background",css);
                         ejecutando=false;
                         contador=1;
+                        ejecutarPrimeraVez=false;
                     }
                     contador++;
                 },400);
