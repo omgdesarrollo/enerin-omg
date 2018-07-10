@@ -57,7 +57,6 @@ class AdminDAO{
         {
            $query="SELECT tbsubmodulos.id_submodulos, tbsubmodulos.nombre
                    FROM submodulos tbsubmodulos WHERE tbsubmodulos.id_submodulos != 1";
-           
            $db= AccesoDB::getInstancia();
            $lista= $db->executeQuery($query);
            

@@ -24,6 +24,7 @@ switch ($Op) {
             $atendido = $_REQUEST["ATENDIDO"];//si es leido o no
             $tipo = $_REQUEST["TIPO_MENSAJE"];//0->info, 1->alert, 2->error
             $asunto = $_REQUEST["ASUNTO"];
+            $CONTRATO = Session::getSesion("s_cont");
             // $estado = $_REQUEST["ESTADO"];//
         //     $columna=$_REQUEST["columna"];
             
@@ -33,8 +34,7 @@ switch ($Op) {
             $id_usuario=$usuario["ID_USUARIO"];
             //termina datos de la session 
             // $listaInfValidacionDocumento=$modelValidacionDocumentos->obtenerInfoPorIdValidacionDocumento($id_validacion_documento);
-            $resultado=$model->guardarNotificacionHibry($id_usuario,$id_para,$mensaje,$tipo,$atendido,$asunto);
-
+            $resultado=$model->guardarNotificacionHibry($id_usuario,$id_para,$mensaje,$tipo,$atendido,$asunto,$CONTRATO);
             echo $resultado;
 //            echo "trajo de usuario : ".$dataUsuarioEmpleado;
             // echo "mi usuario es :".json_encode($lista); 

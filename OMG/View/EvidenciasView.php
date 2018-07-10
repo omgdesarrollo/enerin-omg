@@ -104,11 +104,16 @@
         </style>
 </head>
 <!-- <body> -->
-<body class="no-skin" onload="loadSpinner()">
+<body class="no-skin" onload="loadSpinner();">
     <div id="loader"></div>
     
     <?php
         require_once 'EncabezadoUsuarioView.php';
+        if(isset($_REQUEST["accion"]))
+            $accion = $_REQUEST["accion"];
+        else
+            $accion = -1;
+
         $filtrosArray = array(
             array("name"=>"Clave","column"=>0),
             array("name"=>"Nombre Documento","column"=>1),
@@ -315,7 +320,6 @@
     </div>
 </div>
 <!--cierre del modal Mensaje-->
-
 <script>
 
     // var data="";
@@ -710,6 +714,7 @@
         });
         $('#bodyTable').html(tempData);
         $('#loader').hide();
+        moverA();
     }
 
 
@@ -768,7 +773,7 @@
         // {
             nametmp="";
             if(carga==0)
-            tempData += "<tr id='registro_"+value.id_evidencias+"'>";
+            tempData += "<tr name='registro_"+value.id_evidencias+"' id='registro_"+value.id_evidencias+"'>";
             tempData += "<td class='nuevoTdTable'>"+contador+"</td>";
             tempData += "<td class='nuevoTdTable'>"+value.requisito+"</td>";
             tempData += "<td class='nuevoTdTable'>"+value.registro+"</td>";
@@ -937,7 +942,7 @@
                                     // swalSuccess("Evidencia validada");
                                     // if(columna=="desviacion_mayor")
                                     // {
-                                        enviar_notificacion( ((valor==true)? "Ha sido validada una Evidencia por ":"Ha sido desvalidada una Evidencia por "),idPara,0,false,"");
+                                        enviar_notificacion( ((valor==true)? "Ha sido validada una Evidencia por ":"Ha sido desvalidada una Evidencia por "),idPara,0,false,"EvidenciasView.php?accion="+id);
 
                                         // msj,para,tipomsj,atendido,asunto,idEvidencia((
                                     // }
@@ -994,9 +999,9 @@
     {
         mensaje = $("#textAreaNotificacionModal").val();
         if(columna=='accion_correctiva')
-            enviar_notificacion("Ha recibido una Acción Correctiva de ",idPara,0,false,"una evidencia");//msj,para,tipomsj,atendido,asunto
+            enviar_notificacion("Ha recibido una Acción Correctiva de ",idPara,0,false,"EvidenciasView.php?accion="+idEvidencia);//msj,para,tipomsj,atendido,asunto
         else
-            enviar_notificacion("Ha recibido una Desviación de ",idPara,0,false,"una desviacion");//msj,para,tipomsj,atendido,asunto
+            enviar_notificacion("Ha recibido una Desviación de ",idPara,0,false,"EvidenciasView.php?accion="+idEvidencia);//msj,para,tipomsj,atendido,asunto
         $.ajax({
               url: '../Controller/EvidenciasController.php?Op=MandarAccionCorrectiva',
               type: 'GET',
@@ -1256,44 +1261,50 @@
         })
     }
     noArchivo=0;
-    function swalSuccess(msj)
-    {
-        swal({
-                title: '',
-                text: msj,
-                showCancelButton: false,
-                showConfirmButton: false,
-                type:"success"
-            });
-        setTimeout(function(){swal.close();},1500);
-        $('#loader').hide();
-    }
     
-    function swalInfo(msj)
+    mover = '<?php echo $accion; ?>';
+    contador=1;
+    cambio=1;
+    ejecutando=false;
+    function moverA()
     {
-        swal({
-                title: '',
-                text: msj,
-                showCancelButton: false,
-                showConfirmButton: false,
-                type:"info"
-            });
-        setTimeout(function(){swal.close();},1500);
-        $('#loader').hide();
+        if(mover!="-1" && ejecutando==false)
+        {
+            if($("#registro_"+mover)[0]!=undefined)
+            {
+                ejecutando=true;
+                window.location = "#registro_"+mover;
+                ObjB = $("#registro_"+mover)[0];
+                css = $(ObjB).css("background");
+                var a = setInterval(function()
+                {
+                    if(cambio==1)
+                    {
+                        $(ObjB).css("background","#02ff00");
+                        cambio=0;
+                    }
+                    else
+                    {
+                        $(ObjB).css("background",css);
+                        cambio=1;
+                    }
+                    if(contador==26)
+                    {
+                        clearInterval(a);
+                        $(ObjB).css("background",css);
+                        ejecutando=false;
+                        contador=1;
+                    }
+                    contador++;
+                },400);
+            }
+            else
+            {
+                swalInfo("El registro al que desea acceder no existe");
+            }
+        }
     }
 
-    function swalError(msj)
-    {
-        swal({
-                title: '',
-                text: msj,
-                showCancelButton: false,
-                showConfirmButton: false,
-                type:"error"
-            });
-        setTimeout(function(){swal.close();$('#agregarUsuario .close').click()},1500);
-        $('#loader').hide();
-    }
 </script>
 
 <script id="template-upload" type="text/x-tmpl">
