@@ -482,11 +482,24 @@
             }
         });
     }
-
+    noArchivo=0;
+    intervalA="";
+    mover = '<?php echo $accion; ?>';
+    contador=1;
+    cambio=1;
+    ejecutando=false;
+    ejecutarPrimeraVez=true;
 
     function refresh()
     {       
         listarDatos();
+        noArchivo=0;
+        mover = '<?php echo $accion; ?>';
+        contador=1;
+        cambio=1;
+        ejecutando=false;
+        ejecutarPrimeraVez=true;
+        clearInterval(intervalA);
     }
     function filterTable(Obj)
     {
@@ -1288,13 +1301,6 @@
             
         })
     }
-    noArchivo=0;
-    
-    mover = '<?php echo $accion; ?>';
-    contador=1;
-    cambio=1;
-    ejecutando=false;
-    ejecutarPrimeraVez=true;
     function moverA()
     {
         if(mover!="-1" && ejecutando==false && ejecutarPrimeraVez==true)
@@ -1305,7 +1311,7 @@
                 window.location = "#registro_"+mover;
                 ObjB = $("#registro_"+mover)[0];
                 css = $(ObjB).css("background");
-                var a = setInterval(function()
+                intervalA = setInterval(function()
                 {
                     if(cambio==1)
                     {
