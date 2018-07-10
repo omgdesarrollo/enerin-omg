@@ -85,7 +85,7 @@ function reconstruir(value,carga)
     tempData = "";
     
                 if(carga==0)
-                tempData += "<tr id='registro_"+value.id_empleado+"'>";
+                tempData += "<tr id='registro_"+value.id_empleado+"' name='registro_'>";
                 tempData += "<td class='celda' width='22%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'empleados','nombre_empleado',"+value.id_empleado+",'id_empleado')\" \n\
                                   onkeyup=\"detectarsihaycambio()\" >"+value.nombre_empleado+"</td>";
                 tempData += "<td class='celda' width='16%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'empleados','apellido_paterno',"+value.id_empleado+",'id_empleado')\" \n\

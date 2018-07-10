@@ -48,14 +48,14 @@ switch ($Op)
 
     case 'ListarTemas':
         // $CADENA = str_replace(' ', '',$_REQUEST["CADENA"]);
-        $lista = $model->listarTemas(trim($_REQUEST["CADENA"]),$_REQUEST["ID_USUARIO"]);
+        $lista = $model->listarTemas(trim($_REQUEST["CADENA"]),$_REQUEST["ID_USUARIO"],Session::getSesion("s_cont"));
         header('Content-type: application/json; charset=utf-8');
         // var_dump($lista);
         echo json_encode($lista);
         break;
 
     case 'ListarTemasPorUsuario':
-        $lista = $model->listarTemasPorUsuario($_REQUEST["ID_USUARIO"]);
+        $lista = $model->listarTemasPorUsuario($_REQUEST["ID_USUARIO"],Session::getSesion("s_cont"));
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($lista);
         
