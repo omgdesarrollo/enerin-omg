@@ -420,16 +420,16 @@ gantt.config.sort = true;
 
 gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
     gantt.init("gantt_here");
-    gantt.load("../Controller/GanttController.php?Op=MostrarTareasCompletasPorFolioDeEntrada");
+    gantt.load("../Controller/GanttEvidenciasController.php?Op=Mostrar_Plan");
 
 
-//var dp = new gantt.dataProcessor("../Controller/GanttController.php?Op=Modificar");
+var dp = new gantt.dataProcessor("../Controller/GanttController.php?Op=Modificar");
 //
-//dp.init(gantt);
+dp.init(gantt);
 
 //dp.setTransactionMode("REST");
 
-    console.log(dp);
+//    console.log(dp);
     
     //para no actualizar en tiempo real 
 //dp.autoUpdate=false;
@@ -567,7 +567,7 @@ gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
     function obtenerEmpleados(){
         
         $.ajax({
-           url:"../Controller/GanttController.php?Op=ListarEmpleados",
+           url:"../Controller/GanttEvidenciasController.php?Op=ListarEmpleados",
            data:"",
            async:false,
            success:function (res){

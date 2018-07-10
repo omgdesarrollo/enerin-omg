@@ -186,7 +186,7 @@ function loadDataSideBarOficiosDocumentacion()
     
     function loadDataSideBarCumplimientosEvidencias()
     {
-        $("#sidebarObjV").load('InyectarVistasView.php #seguimientoevidencias');                     
+        $("#sidebarObjV").load('InyectarVistasView.php #seguimientoevidencias');
     }
     
     

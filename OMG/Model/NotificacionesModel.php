@@ -19,10 +19,10 @@ class NotificacionesModel {
 
     
     
-    public function guardarNotificacionHibry($id_usuario,$id_para,$mensaje,$tipo,$atendido,$asunto){
+    public function guardarNotificacionHibry($id_usuario,$id_para,$mensaje,$tipo,$atendido,$asunto,$CONTRATO){
       try{
             $dao=new NotificacionesDAO();
-            $rec=$dao->guardarNotificacionHibry($id_usuario,$id_para,$mensaje,$tipo,$atendido,$asunto);
+            $rec=$dao->guardarNotificacionHibry($id_usuario,$id_para,$mensaje,$tipo,$atendido,$asunto,$CONTRATO);
             return $rec;
         }catch (Exception $ex)
         {

@@ -5,10 +5,10 @@ class NotificacionesDAO {
     //put your code here
     
     
-    public function guardarNotificacionHibry($id_usuario,$id_para,$mensaje,$tipo,$atendido,$asunto){
+    public function guardarNotificacionHibry($id_usuario,$id_para,$mensaje,$tipo,$atendido,$asunto,$CONTRATO){
         try{
-            $query="INSERT INTO notificaciones  (id_de,id_para,tipo_mensaje,mensaje,atendido,asunto)
-            VALUES($id_usuario,$id_para,$tipo,'$mensaje','$atendido','$asunto')";
+            $query="INSERT INTO notificaciones  (id_de,id_para,tipo_mensaje,mensaje,atendido,asunto,id_contrato)
+            VALUES($id_usuario,$id_para,$tipo,'$mensaje','$atendido','$asunto',$CONTRATO)";
 
             // echo $query;
             $db= AccesoDB::getInstancia($query);
@@ -25,7 +25,7 @@ class NotificacionesDAO {
     public function mostrarNotificacionesCompletas($ID_USUARIO){
         try{
             $query = "SELECT tbnotificaciones.id_notificaciones,tbnotificaciones.id_de, tbnotificaciones.id_para, tbnotificaciones.tipo_mensaje, tbnotificaciones.mensaje,
-            tbnotificaciones.atendido, tbnotificaciones.asunto,tbnotificaciones.fecha_envio,
+            tbnotificaciones.atendido, tbnotificaciones.asunto,tbnotificaciones.fecha_envio,tbnotificaciones.id_contrato,
             
             (SELECT CONCAT(tbempleado.nombre_empleado,' ',tbempleado.apellido_paterno,' ',
                  tbempleado.apellido_materno) AS nombre 

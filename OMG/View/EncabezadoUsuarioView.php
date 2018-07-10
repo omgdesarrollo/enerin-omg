@@ -187,7 +187,7 @@ foreach ($notifacionescompletas as $value){
 </div>
 <script>
 	listarNotificaciones();
-	setInterval(function(){listarNotificaciones();},20000);
+	// setInterval(function(){listarNotificaciones();},20000);
 	function listarNotificaciones()
 	{
 		$.ajax({
@@ -203,24 +203,88 @@ foreach ($notifacionescompletas as $value){
 	{
 		cantidad=0;
 		tempData="";
-		console.log(notificaciones);
+		// console.log(notificaciones);
 		$.each(notificaciones,function(index,value)
 		{
-			tempData += "<li style='padding-top:5px;border:1px #6FB3E0 solid'>";
+			// direcciones = value.dir;
+			tempData += "<li style='padding-top:5px;border:1px #6FB3E0 solid'><a onClick='irAVista(\""+value.asunto+"\",\""+value.id_contrato+"\")'>";
 			tempData += "<img src='../../assets/probando/images/avatars/user.jpg' class='msg-photo' alt='admin' />";
 			tempData += "<span class='msg-body'><span class='msg-title'><span class='blue'>"+value.mensaje+" "+value.nombre;
-			tempData += "</span></span>";
+			tempData += "</span></span></a>";
 			tempData += "<span class='msg-time'><i class='ace-icon fa fa-clock-o'></i><span>"+value.fecha_envio+"(Enviado)</span>";
 			tempData += "<i style='color:red;background:transparent;border:none;cursor:pointer;float:right;font-size:large;' onClick=\"borrarNotificacion("+value.id_notificaciones+")\" class='ace-icon fa fa-trash'></i>";
 			tempData += "</span></span></li>";
 			cantidad++;
 		});
-		console.log(tempData);
+		// console.log(tempData);
 		$("#CANTIDAD_NOTIFICACIONES").html("<i class='ace-icon fa fa-envelope-o'></i>Cantidad de Mensajes("+cantidad+")");
 		$("#CANTIDAD_NOTIFICACIONES2").html("<i class='ace-icon fa fa-envelope icon-animated-vertical'></i><span class='badge badge-success'>"+cantidad+"</span>");
 		$("#LISTA_NOTIFICACIONES").html(tempData);
 	}
+	function irAVista(direccion,contrato)
+	{
+		id_contrato = '<?php echo Session::getSesion("s_cont");?>';
+		urlActual = window.location.pathname.split("/");
+		urlIr = direccion.split("?");
 
+		if(contrato==id_contrato)
+		{
+			if(urlIr[0]==urlActual[urlActual.length-1])
+			{
+				registro = urlIr[1].split("=");
+				mover = registro[1];
+				moverA();
+			}
+			else
+			{
+				swal({
+                    title:"",
+                    text: "Esta accion cambiara la vista\n¿Desea dejar esta vista?",
+                    type: "warning",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true,
+                    // confirmButtonText: tempo,
+                    }, function()
+                    {
+						window.location.href = direccion;
+                    }
+                );
+			}
+		}
+		else
+		{
+			swal({
+                    title:"",
+                    text: "Esta accion cambiara el contrato y la vista\n¿Desea ejecutar esta acción?",
+                    type: "warning",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true,
+                    // confirmButtonText: tempo,
+                    }, function()
+                    {
+						$.ajax({
+							url:'../Controller/CumplimientosController.php?Op=contratoselec',
+							type:'GET',
+							data:'c='+contrato+"&obt=false",
+							success:function(r)
+							{
+								window.location.href = direccion;
+                                                                window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
+                                                                window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")"); 
+                                                                
+							},
+							error:function()
+							{
+								swalError("Error al cambiar de contrato");
+							}
+						});
+                    }
+                );
+		}
+
+	}
 	function borrarNotificacion(idNoti)
 	{
 		$.ajax({
@@ -243,4 +307,42 @@ foreach ($notifacionescompletas as $value){
 			}
 		});
 	}
+	function swalSuccess(msj)
+    {
+        swal({
+                title: '',
+                text: msj,
+                showCancelButton: false,
+                showConfirmButton: false,
+                type:"success"
+            });
+        setTimeout(function(){swal.close();},1500);
+        $('#loader').hide();
+    }
+    
+    function swalInfo(msj)
+    {
+        swal({
+                title: '',
+                text: msj,
+                showCancelButton: false,
+                showConfirmButton: false,
+                type:"info"
+            });
+        setTimeout(function(){swal.close();},1500);
+        $('#loader').hide();
+    }
+
+    function swalError(msj)
+    {
+        swal({
+                title: '',
+                text: msj,
+                showCancelButton: false,
+                showConfirmButton: false,
+                type:"error"
+            });
+        setTimeout(function(){swal.close();$('#agregarUsuario .close').click()},1500);
+        $('#loader').hide();
+    }
 </script>
