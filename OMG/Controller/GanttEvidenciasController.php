@@ -43,7 +43,8 @@ switch ($Op) {
 //        Session::setSesion("", $value)
             
         break;
-        case "Verificar_Validado":
+        case "verificar_valid":
+//            echo "entro ".$_REQUEST["id_evid"];
             
         break;
     
