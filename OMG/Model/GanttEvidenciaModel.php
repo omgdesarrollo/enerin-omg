@@ -19,7 +19,7 @@ class GanttEvidenciaModel {
         }
     }
     
-    public function insertarTareasGantt($data,$id_seguimiento_que_lleva_al_folio_de_entrada){
+    public function insertarTareasGantt($data,$v){
        
         try{
             $inserccion;
@@ -135,7 +135,8 @@ class GanttEvidenciaModel {
     }
     
     
-    public function updateAvanceProgramaGeneral($value){
+    public function updateAvanceProgramaGeneral($value)
+    {
         try{
             
             $dao= new GanttDao();
@@ -144,6 +145,22 @@ class GanttEvidenciaModel {
             
         } catch (Exception $ex) {
             throw  $ex;
+        }
+    }
+    
+    
+    public function obtenerValidacionSupervisorEvidencias($ID_EVIDENCIAS)
+    {
+        try
+        {
+            $dao=new GanttEvidenciasDao();
+            $rec= $dao->obtenerValidacionSupervisorEvidencias($ID_EVIDENCIAS);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
         }
     }
 }

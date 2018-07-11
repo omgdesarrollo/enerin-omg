@@ -43,8 +43,13 @@ switch ($Op) {
 //        Session::setSesion("", $value)
             
         break;
-        case "Verificar_Validado":
+        case "verificar_valid":
             
+            $Lista= $modelGantt->obtenerValidacionSupervisorEvidencias($_REQUEST['id_evid']);     
+            
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($Lista);
+            return $Lista;
         break;
     
 	case 'Nuevo':
@@ -106,7 +111,7 @@ switch ($Op) {
          
             
 	break;
-
+        
 	case 'Eliminar':
 		# code...
 		break;	

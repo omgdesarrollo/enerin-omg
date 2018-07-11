@@ -33,23 +33,35 @@
     <!--Termina para el spiner cargando-->
                   
     <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+    <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+    <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>
 
     <!--jquery-->
     <script src="../../js/jquery.js" type="text/javascript"></script>
     <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-    
-    <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
-    
+        
     <script src="../../js/jquery.js" type="text/javascript"></script>
 
 
     <style>
         
         .modal-body{
-            color:#888;
-            /*max-height: calc(100vh - 210px);*/
-            max-height: calc(100vh - 110px);
-            overflow-y: auto;
+        color:#888;
+        max-height: calc(100vh - 110px);
+        overflow-y: auto;
+        }
+        
+        body{
+        overflow:hidden;     
+        }
+        
+        .hideScrollBar{
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        margin-right: 14px;
+        padding-right: 28px; /*This would hide the scroll bar of the right. To be sure we hide the scrollbar on every browser, increase this value*/
+        padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is one*/
         }
         
         .validar_formulario{
@@ -57,14 +69,14 @@
             width: 120px; 
             color: white; 
         }
-        .table-fixed-header{
-            display: table; /* 1 */
+/*        .table-fixed-header{
+            display: table;  1 
             position: relative;
-            padding-top: calc(~'2.5em + 2px'); /* 2 */
+            padding-top: calc(~'2.5em + 2px');  2 
     
             table{
                 margin: 0;
-                margin-top: calc(~"-2.5em - 2px"); /* 2 */
+                margin-top: calc(~"-2.5em - 2px");  2 
             }
             thead th{
                 white-space: nowrap;
@@ -72,25 +84,25 @@
                     content: attr(data-header);
                     position: absolute;
                     top: 0;
-                    padding: .5em 1em; /* 3 */
-                    margin-left: -1em; /* 4 */
+                    padding: .5em 1em;  3 
+                    margin-left: -1em;  4 
                 }
             }
-        }
-        .table-container {
-            max-height: 70vh; /* 5 */
-            overflow-y: auto; /* 5 */
+        }*/
+/*        .table-container {
+            max-height: 70vh;  5 
+            overflow-y: auto;  5 
             &:before{
                 content: '';
                 position: absolute;
                 left: 0;
                 right: 0;
                 top: 0;
-                min-height: 2.5em;             /* 6 */
-                border-bottom: 2px solid #DDD; /* 6 */
-                background: #f1f1f1;           /* 6 */
+                min-height: 2.5em;              6 
+                border-bottom: 2px solid #DDD;  6 
+                background: #f1f1f1;            6 
             }
-        }
+        }*/
         .backgroundTdTable
         {
             background: #9aca40;
@@ -106,11 +118,11 @@
             background: #DCDCDC;
         }
         
-        .nuevoTdTable
+/*        .nuevoTdTable
         {
             border-bottom: 1px solid gold;
             background: lightgoldenrodyellow;
-        }
+        }*/
         
         </style>
 </head>
@@ -164,38 +176,35 @@
     
     <div style="height: 50px"></div>
 
-    <!-- <div class="table-fixed-header" style="display:block;" id="myDiv" class="animate-bottom"> -->
-        <div class="table-container">
-            <table id="idTable" class="tbl-qa">
+            <table class="table table-bordered table-striped header_fijo" id="idTable">
                 <tr>
-                    <th colspan="5" style="background:#9aca40"></td>
-                    <th colspan="5" style="background:#6FB3E0">Responsable de Evidencia</td>
-                    <th colspan="3" style="background:#DCDCDC">Supervisión</td>
+                    <th class="table-headert" with="35%" colspan="5" style="background:#9aca40"></td>
+                    <th class="table-headert" with="35%" colspan="5" style="background:#6FB3E0">Responsable de Evidencia</td>
+                    <th class="table-headert" with="30%" colspan="3" style="background:#DCDCDC">Supervisión</td>
                 </tr>
                 <tr>
                 <?php foreach($titulosTable as $index=>$value)
                 { if($index<5){ ?>
-                <th class="backgroundTdTable"><?php echo $value ?></th>
+                <th class="table-headert backgroundTdTable" width="35%"><?php echo $value ?></th>
                 <?php }
                 
                   if($index>4 && $index<10){?>  
-                <th class="backgroundTdTable2"><?php echo $value ?></th>
+                <th class="table-headert backgroundTdTable2" width="35%"><?php echo $value ?></th>
                 <?php }
                 
                 if($index>9){ ?>
-                    <th class="backgroundTdTable3"><?php echo $value ?></th>
+                    <th class="table-headert backgroundTdTable3" width="30%"><?php echo $value ?></th>
                 <?php }                
                 }
                  ?>
                     
                 </tr>
                 
-                <tbody id="bodyTable">
+                <tbody class="hideScrollBar" id="bodyTable" style="position: absolute"> 
                     
                 </tbody>
             </table>
-        </div>
-    <!-- </div> -->
+
 </body>
 
 
@@ -798,17 +807,17 @@
             nametmp="";
             if(carga==0)
             tempData += "<tr name='registro_"+value.id_evidencias+"' id='registro_"+value.id_evidencias+"'>";
-            tempData += "<td class='nuevoTdTable'>"+contador+"</td>";
-            tempData += "<td class='nuevoTdTable'>"+value.requisito+"</td>";
-            tempData += "<td class='nuevoTdTable'>"+value.registro+"</td>";
-            tempData += "<td class='nuevoTdTable'>"+value.frecuencia+"</td>";
-            tempData += "<td class='nuevoTdTable'>"+value.clave_documento+"</td>";
+            tempData += "<td class='nuevoTdTable' width='10%'>"+contador+"</td>";
+            tempData += "<td class='nuevoTdTable' width='10%'>"+value.requisito+"</td>";
+            tempData += "<td class='nuevoTdTable' width='10%'>"+value.registro+"</td>";
+            tempData += "<td class='nuevoTdTable' width='10%'>"+value.frecuencia+"</td>";
+            tempData += "<td class='nuevoTdTable' width='10%'>"+value.clave_documento+"</td>";
             // tempData += "<td class='nuevoTdTable'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td>";
             // tempData += "<td class='nuevoTdTable' style='font-size: -webkit-xxx-large;'><button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success'";
             // tempData += "data-toggle='modal' data-target='#mostrarRegistrosModal'>";
             // tempData += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i> Ver</button></td>";
             
-            tempData += "<td style='font-size: -webkit-xxx-large'><button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
+            tempData += "<td width='6.4%'style='font-size: -webkit-xxx-large'><button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
             tempData += "type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
             tempData += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar</button></td>";
             $.each(todo[0],function(index2,value2)
@@ -816,7 +825,7 @@
                 nametmp = value2.split("^");
                 tempArchivo = nametmp[0];
                 // fechaAdjunto=nametmp[0];
-                tempData += "<td>"+nametmp[0]+"</td>";
+                tempData += "<td width='6.4%'>"+nametmp[0]+"</td>";
                 // if(value.clasificacion=="")
                 // {
                 //     tempData += "<td><select class='select'";
@@ -834,9 +843,9 @@
                     // tempData += "<td>"+value.clasificacion+"</td>";
                 // }
 
-                tempData += "<td>"+value.usuario+"</td>";
+                tempData += "<td width='6.4%'>"+value.usuario+"</td>";
                 
-                tempData += "<td style='font-size: -webkit-xxx-large' onClick='MandarNotificacion("+value.id_responsable+","+value.responsable+",\""+value.accion_correctiva+"\","+value.id_evidencias+","+value.validador+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
+                tempData += "<td width='6.4%' style='font-size: -webkit-xxx-large' onClick='MandarNotificacion("+value.id_responsable+","+value.responsable+",\""+value.accion_correctiva+"\","+value.id_evidencias+","+value.validador+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
 
                 if(value.accion_correctiva!="")
                 {
@@ -868,7 +877,7 @@
 
                 if(value.responsable=="1")
                 {                    
-                    tempData += "<td style='font-size: -webkit-xxx-large;'>";
+                    tempData += "<td width='6.4%' style='font-size: -webkit-xxx-large;'>";
                     if(value.validacion_supervisor=="true")
                         tempData += yesCheck;
                     else
@@ -880,9 +889,9 @@
                     // tempData += "<td style='font-size: -webkit-xxx-large'>"+denegado+"</td>";
                     // tempData += "<td style='font-size: -webkit-xxx-large'>"+denegado+"</td>";
                     if(value.validacion_supervisor=='true')
-                        tempData += "<td style='font-size: -webkit-xxx-large'>"+yesCheck+" onClick='swalInfo(\"Validado por el responsable\")'></i>";
+                        tempData += "<td width='6.4%' style='font-size: -webkit-xxx-large'>"+yesCheck+" onClick='swalInfo(\"Validado por el responsable\")'></i>";
                     else
-                        tempData += "<td style='font-size: -webkit-xxx-large'>"+noCheck+" onClick='swalInfo(\"Aun no validado\")'></i>";
+                        tempData += "<td width='6.4%' style='font-size: -webkit-xxx-large'>"+noCheck+" onClick='swalInfo(\"Aun no validado\")'></i>";
                         tempData += "</td>";
                 }
 
@@ -898,11 +907,11 @@
             if(tempArchivo=="")
             {
                 
-                    tempData += "<td></td><td>"+value.usuario+"</td>";
+                    tempData += "<td width='6.4%'></td><td>"+value.usuario+"</td>";
                     tempData += "<td></td><td></td><td></td><td></td>";
                     if(value.responsable!="1" || value.validador==1)
                     {
-                        tempData += "<td>";
+                        tempData += "<td width='6.4%'>";
                         tempData += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
                         tempData += "onclick='eliminarEvidencia("+value.id_evidencias+");'>";
                         tempData += "<i class=\"fa fa-trash\"></i></button></td>";

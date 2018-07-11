@@ -10,6 +10,7 @@ if(isset($_REQUEST["id_evid"])){
 }else{
         $dataGantt=Session::getSesion("dataGanttEvidencia");
        echo "<h2><center>El id de evidencia = ".Session::getSesion("dataGanttEvidencia")."</center><h2>";
+       
     }     
 //Session::setSesion("dataGantt",$_REQUEST["id_documento_entrada"]);
   //  Session::setSesion("dataGantt",":(");
@@ -185,6 +186,8 @@ and open the template in the editor.
 
     
     <div id="gantt_here" style='width:100%; height:100%;'></div>
+    
+    <!--<input id="id_evid" type="text" value="<?php echo Session::getSesion("dataGanttEvidencia") ?>">-->
     </body>
   
     
@@ -409,7 +412,7 @@ gantt.config.work_time = true;
 gantt.config.auto_scheduling = true;
 gantt.config.sort = true;
 
-//gantt.config.readonly = true;
+//gantt.config.readonly = false;
 
 
 gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
@@ -583,8 +586,19 @@ dp.init(gantt);
 	};
     
     $(function (){
-        
-      
+      $.ajax({
+          url:"../Controller/GanttEvidenciasController.php?Op=verificar_valid",
+          type:"POST",
+          data:"id_evid=<?php echo Session::getSesion("dataGanttEvidencia") ?>"
+          ,success:function (res){
+//               alert("entraste al success");
+//               $.each(res,function(index,value){
+//                   dataEmpleados.push({key:value.id_empleado,label:value.nombre_empleado});
+//             });
+                if(res==true)
+                    gantt.config.readonly = true;       
+           }
+      });
       
 //     gantt.batchUpdate(function () {
 ////         alert("se ha cargado el gantt exitosamente");
