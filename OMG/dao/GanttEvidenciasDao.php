@@ -25,8 +25,12 @@ class GanttEvidenciasDao {
     
     public function insertarTareasGantt($value){
         try{
-           $query="INSERT INTO gantt_tasks(gantt_tasks.id,gantt_tasks.text,gantt_tasks.start_date,duration,progress,parent) "
-                    . "VALUES('".$value["id"]."','".$value["text"]."','".$value["start_date"]."','".$value["duration"]."','".$value["progress"]."','".$value["parent"]."');";
+           $query="INSERT INTO gantt_evidencias(gantt_evidencias.id,gantt_evidencias.text,gantt_evidencias.start_date,
+                   gantt_evidencias.duration,gantt_evidencias.progress,gantt_evidencias.parent,gantt_evidencias.user,gantt_evidencias.id_evidencias)
+
+                   VALUES('".$value["id"]."','".$value["text"]."','".$value["start_date"]."','".$value["duration"]."',
+                          '".$value["progress"]."','".$value["parent"]."','".$value["user"]."','".$value["id_evidencias"]."');";
+           
             echo "d  ".$query;
             $db= AccesoDB::getInstancia();
             $exito=$db->executeQueryUpdate($query);
@@ -74,7 +78,10 @@ class GanttEvidenciasDao {
     
     public function updateTareas($value){
         try{
-        $query="UPDATE gantt_tasks set gantt_tasks.text='".$value["text"]."',gantt_tasks.start_date='".$value["start_date"]."',gantt_tasks.duration='".$value["duration"]."',gantt_tasks.progress='".$value["progress"]."',gantt_tasks.parent='".$value["parent"]."' where gantt_tasks.id='".$value['id']."'";
+        $query="UPDATE gantt_evidencias set gantt_evidencias.text='".$value["text"]."',gantt_evidencias.start_date='".$value["start_date"]."',
+		 gantt_evidencias.duration='".$value["duration"]."',gantt_evidencias.progress='".$value["progress"]."',
+		 gantt_evidencias.parent='".$value["parent"]."',gantt_evidencias.user='".$value["user"]."' where gantt_evidencias.id='".$value['id']."'";
+        
             $db= AccesoDB::getInstancia();
             $list=$db->executeQueryUpdate($query);
 //            echo "s  ".$list;
@@ -87,7 +94,7 @@ class GanttEvidenciasDao {
     
     public function deleteTareas($value){
         try{
-            $query="delete from  gantt_tasks  where gantt_tasks.id='".$value["id"]."'";
+            $query="delete from  gantt_evidencias  where gantt_evidencias.id='".$value["id"]."'";
             $db= AccesoDB::getInstancia();
             $list=$db->executeQueryUpdate($query);
             return $list;
