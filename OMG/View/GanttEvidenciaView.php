@@ -76,8 +76,8 @@ and open the template in the editor.
     
    <!--<script src="../../codebase/ext/dhtmlxgantt_smart_rendering.js"></script>-->
    <script src="../../js/jquery.min.js" type="text/javascript"></script>
-   <script src="../../assets/gantt_5.1.2_com/codebase/sources/ext/dhtmlxgantt_keyboard_navigation.js" type="text/javascript"></script>
-   
+  
+    <div id="lib"></div>
    <link href="../../assets/gantt_5.1.2_com/codebase/skins/dhtmlxgantt_meadow.css" rel="stylesheet" type="text/css"/>
    
     
@@ -632,16 +632,23 @@ dp.init(gantt);
       $.ajax({
           url:"../Controller/GanttEvidenciasController.php?Op=verificar_valid",
           type:"POST",
+          async:false,
           data:"id_evid=<?php echo Session::getSesion("dataGanttEvidencia") ?>"
           ,success:function (res){
                 if(res=="true"){
                         gantt.config.readonly = true;  
                     $("#infoquepuedehacer").html("Solo Visualizacion");
+                   
                 }else
                 {
                     if(res=="false"){
                          gantt.config.readonly = false;  
                     $("#infoquepuedehacer").html("Permitido Edicion");
+                     lib="<script";
+                    lib+="  src=\"../../assets/gantt_5.1.2_com/codebase/sources/ext/dhtmlxgantt_keyboard_navigation.js\"";
+                    lib+="  type=\"text/javascript\">";
+                    lib+="  <\/script>";
+                    $("#lib").html(lib);
                     }
                 }
                 
