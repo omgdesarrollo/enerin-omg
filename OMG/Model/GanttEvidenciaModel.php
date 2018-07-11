@@ -36,6 +36,7 @@ class GanttEvidenciaModel {
             $dao= new GanttEvidenciasDao();
             $modelGantt= new GanttEvidenciaModel();
             $lista_tareas_verificadas=self::verificarTareasExiste($data);
+//            echo "existen ".json_encode($lista_tareas_verificadas);
 //            echo "d  :".$id_evidencia."  -fff";
 //            echo "tareas verificadas : ".json_encode($lista_tareas_verificadas);
             foreach ($data as $value) {
@@ -44,7 +45,7 @@ class GanttEvidenciaModel {
                         if($value["id"]==$value2["id"]){
                             
                                 if($value2["cantidad"]==0){
-                                    if($value["parent"]!=""){
+                                    if(isset($value["parent"])!=""){
                                         echo "entro en parent";
                                          $value["progress"]=0;
                                          $value["id_empleado"]=$value["user"];
@@ -57,11 +58,11 @@ class GanttEvidenciaModel {
                                     
                                      if($value["!nativeeditor_status"]=='deleted'){
                                          echo "entro a eliminar la tarea";
-//                                         $dao->deleteTareas($value);
+                                         $dao->deleteTareas($value);
 //                                         $dao->deleteTareasDe_Gantt_Seguimiento_Entrada($value);
                                             
                                     }else{
-//                                         $dao->updateTareas($value); 
+                                         $dao->updateTareas($value); 
 //                                         $dao->updateTareasId_EmpleadoXIdGantt_En_Tabla_Seguimiento_entrada($value);
                                     }
                                 }
