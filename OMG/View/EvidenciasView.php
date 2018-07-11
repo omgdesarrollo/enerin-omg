@@ -115,7 +115,7 @@
         
         .backgroundTdTable3
         {
-            background: #DCDCDC;
+            background: #307ECC;
         }
         
 /*        .nuevoTdTable
@@ -145,12 +145,8 @@
             // array("name"=>"Clave Evidencia","column"=>"text"),
         );
         $titulosTable = 
-            // array("Clave","Nombre Documento","Responsable Documento","Registros","Archivo Adjunto",
-            //     "Fecha Registro","Frecuencia","Acción Correctiva Inmediata","Plan de Acción","Desviación","Validación","Opcion"
-            //     /*,"Ingresar Oficio Atención","Oficio de Atención"*/);
             array("No.","Requisito","Registro","Frecuencia","Clave Documento",
-                "Adjuntar Evidencia","Fecha de Registro","Usuario","Acción Correctiva","Plan de Acción","Desviación","Validación","Opcion"
-                /*,"Ingresar Oficio Atención","Oficio de Atención"*/);
+                "Adjuntar Evidencia","Fecha de Registro","Usuario","Acción Correctiva","Plan de Acción","Desviación","Validación","Opcion");
     ?>
     
     <div style="position: fixed;">
@@ -176,7 +172,7 @@
     
     <div style="height: 50px"></div>
 
-            <table class="table table-bordered table-striped header_fijo" id="idTable">
+<!--            <table class="table table-bordered table-striped header_fijo" id="idTable">
                 <tr>
                     <th class="table-headert" with="35%" colspan="5" style="background:#9aca40"></td>
                     <th class="table-headert" with="35%" colspan="5" style="background:#6FB3E0">Responsable de Evidencia</td>
@@ -203,7 +199,39 @@
                 <tbody class="hideScrollBar" id="bodyTable" style="position: absolute"> 
                     
                 </tbody>
-            </table>
+            </table>-->
+    
+    <!--<div class="container">-->
+    <table class="table table-bordered table-striped header_fijo" id="idTable">
+        <thead>
+            <tr>
+                <th class="table-headert" colspan="5" style="background:#9aca40"></td>
+                <th class="table-headert" colspan="5" style="background:#6FB3E0">Responsable de Evidencia</td>
+                <th class="table-headert" colspan="3" style="background:#307ECC">Supervisión</td>
+            </tr>
+            <tr class="">
+                <th class="table-headert backgroundTdTable" width="4.8%">No.</th>
+                <th class="table-headert backgroundTdTable" width="9.6%">Requisito</th>
+                <th class="table-headert backgroundTdTable" width="4.8%">Registro</th>
+                <th class="table-headert backgroundTdTable" width="4.8%">Frecuencia</th>
+                <th class="table-headert backgroundTdTable" width="4.8%">Clave Documento</th>
+                <th class="table-headert backgroundTdTable2" width="9.6%">Adjuntar Evidencia</th>
+                <th class="table-headert backgroundTdTable2" width="9.6%">Fecha de Registro</th>
+                <th class="table-headert backgroundTdTable2" width="9.6%">Usuario</th>
+                <th class="table-headert backgroundTdTable2" width="4.8%">Accion Correctiva</th>
+                <th class="table-headert backgroundTdTable2" width="9.6%">Plan de Accion</th>
+                <th class="table-headert" width="9.6%">Desviacion</th>
+                <th class="table-headert" width="4.8%">Validacion</th>
+                <th class="table-headert" width="4.8%">Opcion</th>
+            </tr>
+        </thead>
+        
+        <tbody class="hideScrollBar" id="bodyTable" style="position: absolute">             
+        </tbody>
+        
+    </table>
+    <!--</div>-->
+    
 
 </body>
 
@@ -807,9 +835,9 @@
             nametmp="";
             if(carga==0)
             tempData += "<tr name='registro_"+value.id_evidencias+"' id='registro_"+value.id_evidencias+"'>";
-            tempData += "<td class='nuevoTdTable' width='10%'>"+contador+"</td>";
-            tempData += "<td class='nuevoTdTable' width='10%'>"+value.requisito+"</td>";
-            tempData += "<td class='nuevoTdTable' width='10%'>"+value.registro+"</td>";
+            tempData += "<td class='nuevoTdTable' width='5%'>"+contador+"</td>";
+            tempData += "<td class='nuevoTdTable' width='5%'>"+value.requisito+"</td>";
+            tempData += "<td class='nuevoTdTable' width='5%'>"+value.registro+"</td>";
             tempData += "<td class='nuevoTdTable' width='10%'>"+value.frecuencia+"</td>";
             tempData += "<td class='nuevoTdTable' width='10%'>"+value.clave_documento+"</td>";
             // tempData += "<td class='nuevoTdTable'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td>";
@@ -817,15 +845,15 @@
             // tempData += "data-toggle='modal' data-target='#mostrarRegistrosModal'>";
             // tempData += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i> Ver</button></td>";
             
-            tempData += "<td width='6.4%'style='font-size: -webkit-xxx-large'><button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
+            tempData += "<td width='10%'style='font-size: -webkit-xxx-large'><button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
             tempData += "type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
-            tempData += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar</button></td>";
+            tempData += "<i class='fa fa-cloud-upload' style='font-size: 15px'></i> Adjuntar</button></td>";
             $.each(todo[0],function(index2,value2)
             {
                 nametmp = value2.split("^");
                 tempArchivo = nametmp[0];
                 // fechaAdjunto=nametmp[0];
-                tempData += "<td width='6.4%'>"+nametmp[0]+"</td>";
+                tempData += "<td width='10%'>"+nametmp[0]+"</td>";
                 // if(value.clasificacion=="")
                 // {
                 //     tempData += "<td><select class='select'";
@@ -843,9 +871,9 @@
                     // tempData += "<td>"+value.clasificacion+"</td>";
                 // }
 
-                tempData += "<td width='6.4%'>"+value.usuario+"</td>";
+                tempData += "<td width='10%'>"+value.usuario+"</td>";
                 
-                tempData += "<td width='6.4%' style='font-size: -webkit-xxx-large' onClick='MandarNotificacion("+value.id_responsable+","+value.responsable+",\""+value.accion_correctiva+"\","+value.id_evidencias+","+value.validador+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
+                tempData += "<td width='5%' style='font-size: -webkit-xxx-large' onClick='MandarNotificacion("+value.id_responsable+","+value.responsable+",\""+value.accion_correctiva+"\","+value.id_evidencias+","+value.validador+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
 
                 if(value.accion_correctiva!="")
                 {
@@ -857,14 +885,14 @@
                 }
                 // if(value.validador=="0")
                 // {
-                    tempData += "<td style='font-size: -webkit-xxx-large'><button id='btn_cargaGantt' class='btn btn-info' onClick='cargarprogram("+value.id_evidencias+","+value.validacion_supervisor+");'>";
+                    tempData += "<td width='10%' style='font-size: -webkit-xxx-large'><button id='btn_cargaGantt' class='btn btn-info' onClick='cargarprogram("+value.id_evidencias+","+value.validacion_supervisor+");'>";
                     if(value.validacion_supervisor=="true")
                         tempData += "Vizualizar Programa";
                     else
-                        tempData += "cargar Programa";
+                        tempData += "Cargar Programa";
                     
                     tempData += "</button></td>";
-                    tempData += "<td style='font-size: -webkit-xxx-large' onClick='MandarNotificacionDesviacion("+value.id_usuario+","+value.responsable+",\""+value.desviacion+"\","+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
+                    tempData += "<td width='10%' style='font-size: -webkit-xxx-large' onClick='MandarNotificacionDesviacion("+value.id_usuario+","+value.responsable+",\""+value.desviacion+"\","+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
                 // }
                     if(value.desviacion!="")
                     {
@@ -877,7 +905,7 @@
 
                 if(value.responsable=="1")
                 {                    
-                    tempData += "<td width='6.4%' style='font-size: -webkit-xxx-large;'>";
+                    tempData += "<td width='5%' style='font-size: -webkit-xxx-large;'>";
                     if(value.validacion_supervisor=="true")
                         tempData += yesCheck;
                     else
@@ -889,9 +917,9 @@
                     // tempData += "<td style='font-size: -webkit-xxx-large'>"+denegado+"</td>";
                     // tempData += "<td style='font-size: -webkit-xxx-large'>"+denegado+"</td>";
                     if(value.validacion_supervisor=='true')
-                        tempData += "<td width='6.4%' style='font-size: -webkit-xxx-large'>"+yesCheck+" onClick='swalInfo(\"Validado por el responsable\")'></i>";
+                        tempData += "<td width='5%' style='font-size: -webkit-xxx-large'>"+yesCheck+" onClick='swalInfo(\"Validado por el responsable\")'></i>";
                     else
-                        tempData += "<td width='6.4%' style='font-size: -webkit-xxx-large'>"+noCheck+" onClick='swalInfo(\"Aun no validado\")'></i>";
+                        tempData += "<td width='5%' style='font-size: -webkit-xxx-large'>"+noCheck+" onClick='swalInfo(\"Aun no validado\")'></i>";
                         tempData += "</td>";
                 }
 
@@ -907,11 +935,11 @@
             if(tempArchivo=="")
             {
                 
-                    tempData += "<td width='6.4%'></td><td>"+value.usuario+"</td>";
-                    tempData += "<td></td><td></td><td></td><td></td>";
+                    tempData += "<td width='5%'></td><td>"+value.usuario+"</td>";
+                    tempData += "<td width='5%'></td><td></td><td></td><td></td>";
                     if(value.responsable!="1" || value.validador==1)
                     {
-                        tempData += "<td width='6.4%'>";
+                        tempData += "<td width='5%'>";
                         tempData += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
                         tempData += "onclick='eliminarEvidencia("+value.id_evidencias+");'>";
                         tempData += "<i class=\"fa fa-trash\"></i></button></td>";
@@ -922,6 +950,8 @@
         // });
         return tempData;
     }
+    
+    
 
     function eliminarEvidencia(id_evidencias)
     {
@@ -1307,6 +1337,7 @@
     cambio=1;
     ejecutando=false;
     ejecutarPrimeraVez=true;
+    
     function moverA()
     {
         if(mover!="-1" && ejecutando==false && ejecutarPrimeraVez==true)
@@ -1321,7 +1352,7 @@
                 {
                     if(cambio==1)
                     {
-                        $(ObjB).css("background","#02ff00");
+                        $(ObjB).css("background","#DEB887");
                         cambio=0;
                     }
                     else
