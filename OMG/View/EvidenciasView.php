@@ -22,10 +22,10 @@
     <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
 
     <!-- text fonts -->
-	<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />
+	<!--<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />-->
     <!-- ace styles -->
     <link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-    <link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
+    <!--<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />-->
     <link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
     
     <!--Inicia para el spiner cargando-->
@@ -1404,7 +1404,7 @@
     function cargarprogram(v,validado){
 //    alert("el valor de la evidencia es "+v);
 //alert("e:  "+validado);
-    window.location.href="GanttEvidenciaView.php?id_evid="+v+"&valid="+validado;
+    window.location.href="GanttEvidenciaView.php?id_evid="+v;
     
 
     }
