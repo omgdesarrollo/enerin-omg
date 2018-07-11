@@ -107,16 +107,16 @@ class GanttEvidenciasDao {
     }
     
     
-//    public function deleteTareas($value){
-//        try{
-//            $query="delete from  gantt_evidencias  where gantt_evidencias.id='".$value["id"]."'";
-//            $db= AccesoDB::getInstancia();
-//            $list=$db->executeQueryUpdate($query);
-//            return $list;
-//        } catch (Exception $ex) {
-//            throw  $ex;
-//        }
-//    }
+    public function deleteTareas($value){
+        try{
+            $query="delete from  gantt_evidencias  where gantt_evidencias.id='".$value["id"]."'";
+            $db= AccesoDB::getInstancia();
+            $list=$db->executeQueryUpdate($query);
+            return $list;
+        } catch (Exception $ex) {
+            throw  $ex;
+        }
+    }
 //    public function deleteTareasHijas($value){
 //        try{
 //            $query="delete from  gantt_tasks  where gantt_tasks.parent='".$value["id"]."'";
