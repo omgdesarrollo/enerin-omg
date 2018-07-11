@@ -6,11 +6,17 @@ if(isset($_REQUEST["id_evid"])){
     Session::setSesion("dataGanttEvidencia",$_REQUEST["id_evid"]);
 //    Session::setSesion("dataGanttFolio_Entrada",$_REQUEST["folio_entrada"]);
 //    echo "el seguimiento de entrada linkeado al de doc de entrada y al folio de entrada   ".$dataGantt=Session::getSesion("dataGantt");;
-    echo "<h2><center>El id de evidencia = ".Session::getSesion("dataGanttEvidencia")."</center><h2>";
+    echo "<h4><center>El id de evidencia = ".Session::getSesion("dataGanttEvidencia")."</center><h4>";
+    ?>
+    <center><div id="infoquepuedehacer"></div></center> 
+<?php
 }else{
         $dataGantt=Session::getSesion("dataGanttEvidencia");
        echo "<h2><center>El id de evidencia = ".Session::getSesion("dataGanttEvidencia")."</center><h2>";
+       ?>
        
+        <center><div id="infoquepuedehacer"></div></center> 
+<?php
     }     
 //Session::setSesion("dataGantt",$_REQUEST["id_documento_entrada"]);
   //  Session::setSesion("dataGantt",":(");
@@ -137,12 +143,11 @@ and open the template in the editor.
   </head>
     <body>
         
-        
-     
   <form action="">
       <input type="submit" class="btn btn-info" value="Recargar">      
       
   </form>
+        
         
         <?php  
         
@@ -591,19 +596,17 @@ dp.init(gantt);
           type:"POST",
           data:"id_evid=<?php echo Session::getSesion("dataGanttEvidencia") ?>"
           ,success:function (res){
-//               alert("entraste al success");
-//               $.each(res,function(index,value){
-//                   dataEmpleados.push({key:value.id_empleado,label:value.nombre_empleado});
-//             });
-                
-                if(res=="true")
-                    gantt.config.readonly = true;  
-                else
+                if(res=="true"){
+                        gantt.config.readonly = true;  
+                    $("#infoquepuedehacer").html("Solo Visualizacion");
+                }else
                 {
                     if(res=="false"){
                          gantt.config.readonly = false;  
+                    $("#infoquepuedehacer").html("Permitido Edicion");
                     }
                 }
+                
            }
       });
       
