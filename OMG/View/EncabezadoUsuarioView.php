@@ -207,13 +207,15 @@ foreach ($notifacionescompletas as $value){
 		$.each(notificaciones,function(index,value)
 		{
 			// direcciones = value.dir;
-			tempData += "<li style='padding-top:5px;border:1px #6FB3E0 solid'><a onClick='irAVista(\""+value.asunto+"\",\""+value.id_contrato+"\")'>";
+			tempData += "<a style='cursor:pointer;text-decoration:none;float:left;padding:5px;width:90%;border-bottom:1px #6FB3E0 solid' onClick='irAVista(\""+value.asunto+"\",\""+value.id_contrato+"\")'>";
+			tempData += "<li style='padding-top:5px;'>";
 			tempData += "<img src='../../assets/probando/images/avatars/user.jpg' class='msg-photo' alt='admin' />";
 			tempData += "<span class='msg-body'><span class='msg-title'><span class='blue'>"+value.mensaje+" "+value.nombre;
-			tempData += "</span></span></a>";
+			tempData += "</span></span>";
 			tempData += "<span class='msg-time'><i class='ace-icon fa fa-clock-o'></i><span>"+value.fecha_envio+"(Enviado)</span>";
-			tempData += "<i style='color:red;background:transparent;border:none;cursor:pointer;float:right;font-size:large;' onClick=\"borrarNotificacion("+value.id_notificaciones+")\" class='ace-icon fa fa-trash'></i>";
-			tempData += "</span></span></li>";
+			tempData += "</span></span></li></a>";
+			tempData += "<i style='color:red;background:transparent;border:none;cursor:pointer;float:left;font-size:x-large;padding:5px'";
+			tempData += "onClick=\"borrarNotificacion("+value.id_notificaciones+")\" class='ace-icon fa fa-times-circle'></i>";
 			cantidad++;
 		});
 		// console.log(tempData);
