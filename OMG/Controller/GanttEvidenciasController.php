@@ -52,21 +52,21 @@ switch ($Op) {
             echo json_encode($Lista);
             return $Lista;
         break;
-    
-	case 'Nuevo':
-		# code...
-	break;	
-
-	case 'Guardar':
-	break;
+        case "descendencia":
+            $v["id"]=$_REQUEST["deleteidtarea"];
+            header('Content-type: application/json; charset=utf-8');
+            echo $modelGantt->verificarsitienedescendencia($v);
+//            echo "\'true\'";
+            
+        break;
         case 'EliminarTarea':
-//             if(isset($_REQUEST["deleteidtarea"])){
-////                echo "entro ";
-//                 $value["id"]=$_REQUEST["deleteidtarea"];
-//                $modelGantt->deleteTareaajax ($value);
-//            }else{
-//                echo ":(";
-//            }
+             if(isset($_REQUEST["deleteidtarea"])){
+//                echo "entro ";
+                 $value["id"]=$_REQUEST["deleteidtarea"];
+                $modelGantt->deleteTareaajax ($value);
+            }else{
+                echo ":(";
+            }
         break;
 	case 'Modificar':
           $editing= $_REQUEST["editing"];
@@ -103,14 +103,14 @@ switch ($Op) {
                         //la variable de sesion del dataGant se refiere al id de seguimiento entrada que hace 
                         //referencia al folio de entrada de documento de entrada
                         
-                        
-//                        $modelGantt->insertarTareasGantt($arrayTransformado,Session::getSesion("dataGantt"));
+//                         $value["id_evidencia"]="".Session::getSesion("dataGanttEvidencia");
+//                         echo "el :  ".$value["id_evidencia"];
+                        $modelGantt->insertarTareasGantt($arrayTransformado,Session::getSesion("dataGanttEvidencia"));
                         
                         
 			header('Content-type: application/json; charset=utf-8');
                         echo json_encode($arrayTransformado);
          
-            
 	break;
         
 	case 'Eliminar':

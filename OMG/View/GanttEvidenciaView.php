@@ -147,7 +147,7 @@ and open the template in the editor.
       <input type="submit" class="btn btn-info" value="Recargar">      
       
   </form>
-        
+         <!--<input id="g" type="submit" class="btn btn-info" value="Guardar Cambios">-->      
         
         <?php  
         
@@ -197,7 +197,7 @@ and open the template in the editor.
   
     
     
-  <script type="text/javascript">      
+  <script type="text/javascript">    
 	(function dynamicTaskType() {
 		var delTaskParent;
 
@@ -232,25 +232,63 @@ and open the template in the editor.
 		gantt.attachEvent("onBeforeTaskDelete", function onBeforeTaskDelete(id, task) {
 //			alert("antes");
 //                       gantt.refreshData();
+//                        alert("procedera a eliminarse");
                         delTaskParent = gantt.getParent(id);
-                         
+                        
+//                         alert("d  "+delTaskParent);
 //                        var taskId = gantt.getSelectedId();
 //                        gantt.deleteTask(delTaskParent);
 //                        gantt.deleteTask(delTaskParent);
-			return true;
+//                                alert("el id es : "+id);
+                        var desc=false;
+                        $.ajax({
+                                url:"../Controller/GanttEvidenciasController.php?Op=descendencia&deleteidtarea="+id,
+                                async:false,
+                                success:function (res){
+                                 
+                                            if(res==true){
+//                                                alert("tiene descendencia ");
+                                                 desc=false;
+                                            }else{
+                                                if(res==false){
+//                                                    alert("no tiene descendencia");
+                                                     desc=true;
+                                            }
+                                            }
+                                }
+           
+                              });
+
+
+
+			return desc;
 		});
 
 		gantt.attachEvent("onAfterTaskDelete", function onAfterTaskDelete(id, task) {
 //			alert("s");
 //alert("des");
-//                    alert("tarea eliminada es "+id);
+                    alert("tarea eliminada es "+id);
                              $.ajax({
-//                                url:"../Controller/GanttController.php?Op=EliminarTarea&deleteidtarea="+id,
+                                url:"../Controller/GanttEvidenciasController.php?Op=EliminarTarea&deleteidtarea="+id,
+                                async:false,
                                 success:function (res){
 
                                 }
            
                               });
+//                                var tienehijos=false; 
+//                                 gantt.eachTask(function (child) {
+//                                     tienehijos=true;
+//				if (child.type != gantt.config.types.project) {
+//					totalToDo += child.duration;
+//					totalDone += (child.progress || 0) * child.duration;
+//				}
+//			},id);
+//                                 if(tienehijos==true){
+//                                     alert("tiene hijos ");
+//                                 }else{
+//                                     alert("no tiene");
+//                                 }
                                  
                                 if (delTaskParent != gantt.config.root_id) {
 				gantt.batchUpdate(checkParents(delTaskParent));
@@ -623,7 +661,11 @@ dp.init(gantt);
 //				setTaskType(task);
 //			});
 //		}); 
-      
+//      $("#g").click(function(){
+//     var dp = new gantt.dataProcessor("../Controller/GanttEvidenciasController.php?Op=Modificar");
+//////
+//    
+//            });
     });
     
   </script>

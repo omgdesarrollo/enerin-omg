@@ -18,15 +18,25 @@ class GanttEvidenciaModel {
             return false;
         }
     }
-    
-    public function insertarTareasGantt($data,$v){
+    public function verificarsitienedescendencia($v){
+        try{
+            $dao=new GanttEvidenciasDao();
+            $rec=$dao->verificarsitienedescendencia($v);
+            return $rec;
+        } catch (Exception $ex) {
+
+        }
+    }
+    public function insertarTareasGantt($data,$id_evidencia){
        
         try{
-            $inserccion;
+//            $inserccion;
             $lista_tareas_verificadas;
             $dao= new GanttEvidenciasDao();
             $modelGantt= new GanttEvidenciaModel();
             $lista_tareas_verificadas=self::verificarTareasExiste($data);
+//            echo "d  :".$id_evidencia."  -fff";
+//            echo "tareas verificadas : ".json_encode($lista_tareas_verificadas);
             foreach ($data as $value) {
                 if (isset($value["id"])) {
                    foreach ($lista_tareas_verificadas as $value2) {
@@ -35,10 +45,10 @@ class GanttEvidenciaModel {
                                 if($value2["cantidad"]==0){
                                     if($value["parent"]!=""){
                                         echo "entro en parent";
-//                                         $value["progress"]=0;
-//                                         $value["id_empleado"]=$value["user"];
-//                                         $value["id_seguimiento_entrada"]=$id_seguimiento_que_lleva_al_folio_de_entrada;
-//                                         $dao->insertarTareasGantt($value);
+                                         $value["progress"]=0;
+                                         $value["id_empleado"]=$value["user"];
+                                         $value["id_evidencia"]=$id_evidencia;
+                                         $dao->insertarTareasGantt($value);
 //                                         $dao->insertarTareasConFolioEntrada_de_seguimiento_entrada($value);
                                     }
                                 }
@@ -58,9 +68,7 @@ class GanttEvidenciaModel {
                     }
                 }
             }
-         
-         
-//          $modelGantt->calculoAvanceProgramaGeneral($id_seguimiento_que_lleva_al_folio_de_entrada);
+       
             
         } catch (Exception $ex) {
             throw $ex;
@@ -108,7 +116,7 @@ class GanttEvidenciaModel {
     public function deleteTareaajax($value)
     {
         try{
-            $dao= new GanttDao();
+            $dao= new GanttEvidenciasDao();
             $dao->deleteTareasAjax($value);
             
         } catch (Exception $ex) {
