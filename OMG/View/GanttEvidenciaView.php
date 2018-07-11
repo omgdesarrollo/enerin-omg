@@ -247,11 +247,11 @@ and open the template in the editor.
                                 success:function (res){
                                  
                                             if(res==true){
-//                                                alert("tiene descendencia ");
+                                                alert("tiene descendencia ");
                                                  desc=false;
                                             }else{
                                                 if(res==false){
-//                                                    alert("no tiene descendencia");
+                                                    alert("no tiene descendencia");
                                                      desc=true;
                                             }
                                             }

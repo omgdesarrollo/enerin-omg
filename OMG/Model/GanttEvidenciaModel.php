@@ -24,7 +24,8 @@ class GanttEvidenciaModel {
             $rec=$dao->verificarsitienedescendencia($v);
             return $rec;
         } catch (Exception $ex) {
-
+            throw $ex;
+            return false;
         }
     }
     public function insertarTareasGantt($data,$id_evidencia){
