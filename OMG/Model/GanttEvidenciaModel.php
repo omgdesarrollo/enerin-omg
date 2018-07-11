@@ -149,12 +149,12 @@ class GanttEvidenciaModel {
     }
     
     
-    public function obtenerValidacionSupervisorEvidencias($ID_EVIDENCIAS)
+    public function obtenerValidacionSupervisorEvidencias($v)
     {
         try
         {
             $dao=new GanttEvidenciasDao();
-            $rec= $dao->obtenerValidacionSupervisorEvidencias($ID_EVIDENCIAS);
+            $rec= $dao->obtenerValidacionSupervisorEvidencias($v);
             
             return $rec;
         } catch (Exception $ex)

@@ -189,18 +189,18 @@ class GanttEvidenciasDao {
    }
    
    
-   public function obtenerValidacionSupervisorEvidencias($ID_EVIDENCIAS)
+   public function obtenerValidacionSupervisorEvidencias($v)
    {
        try
        {
-           $query="SELECT tbevidencias.validacion_supervisor, tbevidencias.id_usuario
+           $query="SELECT tbevidencias.validacion_supervisor,tbevidencias.id_usuario
                    FROM evidencias tbevidencias
-                   WHERE tbevidencias.id_evidencias=$ID_EVIDENCIAS";
+                   WHERE tbevidencias.id_evidencias=".$v["id_evidencias"];
 
             $db= AccesoDB::getInstancia();
             $lista= $db->executeQuery($query);
             
-       return $lista[0];
+            return $lista[0]["validacion_supervisor"];
            
        } catch (Exception $ex)
        {

@@ -45,7 +45,8 @@ switch ($Op) {
         break;
         case "verificar_valid":
             
-            $Lista= $modelGantt->obtenerValidacionSupervisorEvidencias($_REQUEST['id_evid']);     
+            $v["id_evidencias"]=$_REQUEST['id_evid'];
+            $Lista= $modelGantt->obtenerValidacionSupervisorEvidencias($v);     
             
             header('Content-type: application/json; charset=utf-8');
             echo json_encode($Lista);

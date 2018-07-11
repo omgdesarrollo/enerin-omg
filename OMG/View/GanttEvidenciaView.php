@@ -596,11 +596,11 @@ dp.init(gantt);
 //                   dataEmpleados.push({key:value.id_empleado,label:value.nombre_empleado});
 //             });
                 
-                if(res.validacion_supervisor=="true")
+                if(res=="true")
                     gantt.config.readonly = true;  
                 else
                 {
-                    if(res.validacion_supervisor=="false"){
+                    if(res=="false"){
                          gantt.config.readonly = false;  
                     }
                 }
