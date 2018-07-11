@@ -595,8 +595,15 @@ dp.init(gantt);
 //               $.each(res,function(index,value){
 //                   dataEmpleados.push({key:value.id_empleado,label:value.nombre_empleado});
 //             });
-                if(res==true)
-                    gantt.config.readonly = true;       
+                
+                if(res.validacion_supervisor=="true")
+                    gantt.config.readonly = true;  
+                else
+                {
+                    if(res.validacion_supervisor=="false"){
+                         gantt.config.readonly = false;  
+                    }
+                }
            }
       });
       
