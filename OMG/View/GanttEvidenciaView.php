@@ -77,12 +77,12 @@ and open the template in the editor.
    <!--<script src="../../codebase/ext/dhtmlxgantt_smart_rendering.js"></script>-->
    <script src="../../js/jquery.min.js" type="text/javascript"></script>
    <script src="../../assets/gantt_5.1.2_com/codebase/sources/ext/dhtmlxgantt_keyboard_navigation.js" type="text/javascript"></script>
-   
    <link href="../../assets/gantt_5.1.2_com/codebase/skins/dhtmlxgantt_meadow.css" rel="stylesheet" type="text/css"/>
-   
-    
-     <link href="../../assets/gantt_5.1.2_com/samples/common/third-party/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    
+   <link href="../../assets/gantt_5.1.2_com/samples/common/third-party/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+   <!--Para abrir alertas de aviso, success,warning, error-->       
+   <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+   <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+   <script src="../../js/jquery.js" type="text/javascript"></script>
     
     
   <style type="text/css">
@@ -244,17 +244,19 @@ and open the template in the editor.
                         $.ajax({
                                 url:"../Controller/GanttEvidenciasController.php?Op=descendencia&deleteidtarea="+id,
                                 async:false,
-                                success:function (res){
+                                success:function (res)
+                                {
                                  
-                                            if(res==true){
-//                                                alert("tiene descendencia ");
-                                                 desc=false;
-                                            }else{
-                                                if(res==false){
+                                    if(res==true){
+//                                        alert("tiene descendencia ");
+                                         swalError("No se puede eliminar la actividad, tiene descendencia");
+                                         desc=false;
+                                    }else{
+                                        if(res==false){
 //                                                    alert("no tiene descendencia");
-                                                     desc=true;
-                                            }
-                                            }
+                                             desc=true;
+                                    }
+                                    }
                                 }
            
                               });
@@ -667,6 +669,19 @@ dp.init(gantt);
 //    
 //            });
     });
+    
+    function swalError(msj)
+    {
+        swal({
+                title: '',
+                text: msj,
+                showCancelButton: false,
+                showConfirmButton: false,
+                type:"error"
+            });
+        setTimeout(function(){swal.close();$('#agregarUsuario .close').click()},1500);
+        $('#loader').hide();
+    }
     
   </script>
   
