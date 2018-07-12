@@ -147,12 +147,13 @@ class InformeValidacionDocumentosDAO{
     }
     
     
-    public function obtenerContratos()
+    public function obtenerContratos($ID_CUMPLIMIENTO)
     {
         try
         {
-            $query="SELECT tbcumplimientos.id_cumplimiento, tbcumplimientos.clave_cumplimiento, tbcumplimientos.cumplimiento
-                    FROM cumplimientos tbcumplimientos";
+            $query="SELECT tbcumplimientos.id_cumplimiento,tbcumplimientos.clave_cumplimiento,tbcumplimientos.cumplimiento
+                    FROM cumplimientos tbcumplimientos
+                    WHERE tbcumplimientos.id_cumplimiento=$ID_CUMPLIMIENTO";
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);

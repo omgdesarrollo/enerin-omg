@@ -3,14 +3,22 @@ require_once '../dao/InformeValidacionDocumentosDAO.php';
 
 class InformeValidacionDocumentosModel{
         
-    public function listarValidaciones($v)
+    public function listarValidaciones($v,$ID_CUMPLIMIENTO)
     {
         try
         {
             $dao=new InformeValidacionDocumentosDAO();
             $lista= $dao->listarValidaciones($v);
             
+            $resultado;
+            foreach($lista as $value)
+            {
+                $list= $dao->obtenerContratos($value['id_cumplimiento'],$ID_CUMPLIMIENTO);
+            $lista['']= $list;
+                echo json_encode($lista); 
+            }                                    
             return $lista;
+            
         } catch (Exception $ex)
         {
             throw $ex;
