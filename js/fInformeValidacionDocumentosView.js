@@ -156,7 +156,7 @@ function mostrarTemaResponsable(id_documento)
                                 </tr>\n\
                                 <tbody>";
     $.ajax ({
-        url:"../Controller/ValidacionDocumentosController.php?Op=MostrarTemayResponsable",
+        url:"../Controller/InformeValidacionDocumentosController.php?Op=MostrarTemayResponsable",
         type:'POST',
         data:'ID_DOCUMENTO='+id_documento,
         success:function(responseTemayResponsable)
