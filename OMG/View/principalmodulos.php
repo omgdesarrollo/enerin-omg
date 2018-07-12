@@ -616,7 +616,14 @@ function loadDataNotificaciones(){
 
 
 <script>
-               
+                //se colocara el function  dentro de otro archivo js y todo lo que tenga dentro 
+                //pero de seleccion de opciones del sidebar 
+// $(function (){
+//     $("#idv_doc").submit(function (){
+//         alert("le has picado"); 
+//     });
+// })  ;        
+ 
 cambiarCont();
 
 function cambiarCont()

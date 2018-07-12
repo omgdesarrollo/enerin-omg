@@ -57,6 +57,12 @@ class InformeValidacionDocumentosDAO{
             return $ex;
         }
     }
+  
+    
+    
+    
+    
+    
     
     
     public function obtenerTemayResponsable ($id_documento)
