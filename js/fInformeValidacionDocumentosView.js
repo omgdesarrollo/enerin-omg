@@ -181,7 +181,7 @@ function mostrarRequisitos(id_documento)
         ValoresRequisitos = "<ul>";
 
         $.ajax ({
-            url: "../Controller/ValidacionDocumentosController.php?Op=MostrarRequisitosPorDocumento",
+            url: "../Controller/InformeValidacionDocumentosController.php?Op=MostrarRequisitosPorDocumento",
             type: 'POST',
             data: 'ID_DOCUMENTO='+id_documento,
             success:function(responserequisitos)
@@ -203,7 +203,7 @@ function mostrarRegistros(id_documento)
  ValoresRegistros = "<ul>";
 
  $.ajax ({
-     url:"../Controller/ValidacionDocumentosController.php?Op=MostrarRegistrosPorDocumento",
+     url:"../Controller/InformeValidacionDocumentosController.php?Op=MostrarRegistrosPorDocumento",
      type: 'POST',
      data: 'ID_DOCUMENTO='+id_documento,
      success:function(responseregistros)
