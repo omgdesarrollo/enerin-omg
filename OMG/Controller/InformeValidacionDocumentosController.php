@@ -22,7 +22,7 @@ switch ($Op) {
     $v["param"]["n_v"]=$_REQUEST["no_validado"];
     $v["param"]["s_d"]=$_REQUEST["sin_documento"];
     $v["param"]["contrato"]= Session::getSesion("s_cont");
-        $Lista=$model->listarValidaciones($v);
+    $Lista=$model->listarValidaciones($v);
          header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
 //        echo $v["param"]["v"];
