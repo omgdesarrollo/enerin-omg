@@ -20,7 +20,7 @@
     <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome-animation.min.css" rel="stylesheet" type="text/css"/>
     
     <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
-
+    
     <!-- text fonts -->
 	<!--<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />-->
     <!-- ace styles -->
@@ -385,6 +385,7 @@
     $(function()
     {
         listarDatos();
+        $.jGrowl("Eliminacion Exitosa", { header: '' })
             
             // $("#IDTEMA_NUEVAEVIDENCIAMODAL").val().onChange(function()
             // {

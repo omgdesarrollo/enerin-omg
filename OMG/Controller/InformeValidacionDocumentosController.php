@@ -27,10 +27,40 @@ switch ($Op) {
         echo json_encode($Lista);
 //        echo $v["param"]["v"];
     break;
+
+    case 'MostrarTemayResponsable':
+                                  
+                $Lista=$model->obtenerTemayResponsable($_REQUEST['ID_DOCUMENTO']);
+                
+//                Session::setSesion("obtenerTemayResponsable", $lista);                        
+                header('Content-type: application/json; charset=utf-8');
+                echo json_encode($Lista);
+                return $Lista;
+		break;
+            
+        case 'MostrarRequisitosPorDocumento':
+            
+                
+                $Lista= $model->obtenerRequisitosporDocumento($_REQUEST['ID_DOCUMENTO']);
+//                Session::setSesion("obtenerRequisitosporDocumento",$Lista);        
+                header('Content-type: application/json; charset=utf-8');
+		echo json_encode( $Lista);
+                return $Lista;
+		break;	
+	  
+            
+        case 'MostrarRegistrosPorDocumento':
+                  
+                $Lista= $model->obtenerRegistrosPorDocumento($_REQUEST['ID_DOCUMENTO']);
+//                Session::setSesion("obtenerRegistrosPorDocumento",$Lista);                 
+                header('Content-type: application/json; charset=utf-8');
+                echo json_encode($Lista);
+                return $Lista;
+            
+		break;
     
     default:
         break;
 }
-
 
 ?>
