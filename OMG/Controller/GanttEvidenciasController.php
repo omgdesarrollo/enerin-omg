@@ -46,6 +46,7 @@ switch ($Op) {
         case "verificar_valid":
             
             $v["id_evidencias"]=$_REQUEST['id_evid'];
+//            Session::setSesion("dataGanttEvidencia",$v["id_evidencias"]);
             $Lista= $modelGantt->obtenerValidacionSupervisorEvidencias($v);     
             
             header('Content-type: application/json; charset=utf-8');
@@ -57,7 +58,6 @@ switch ($Op) {
             header('Content-type: application/json; charset=utf-8');
             echo $modelGantt->verificarsitienedescendencia($v);
 //            echo "\'true\'";
-            
         break;
         case 'EliminarTarea':
              if(isset($_REQUEST["deleteidtarea"])){
