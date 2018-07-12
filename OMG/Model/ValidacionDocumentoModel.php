@@ -30,52 +30,6 @@ class ValidacionDocumentoModel{
         }    
     }
     
-    public function obtenerTemayResponsable($id_documento){
-        try{
-            $dao=new ValidacionDocumentoDAO();
-            $rec=$dao->obtenerTemayResponsable($id_documento);
-            
-            return $rec;
-            
-        } catch (Exception $ex){            
-            throw $ex;
-            return false;
-        }
-        
-        
-    }
-    
-    
-    public function  obtenerRequisitosporDocumento($id_documento)
-    {
-        try
-        {
-            $dao=new ValidacionDocumentoDAO();
-            $rec=$dao->obtenerRequisitosporDocumento($id_documento);
-         
-            return $rec;
-        } catch (Exception $ex){
-            throw  $ex;
-            return false;
-        }
-    }
-    
-    public function obtenerRegistrosPorDocumento($id_documento)
-    {
-        try
-        {
-            $dao=new ValidacionDocumentoDAO();
-            $rec=$dao->obtenerRegistrosPorDocumento($id_documento);
-            
-            return $rec;
-            
-        } catch (Exception $ex){
-            throw $ex;
-            return false;
-        }
-    }
-    
-    
 //    public function insert
     public function insertar($id_documento_entrada){
         try{
