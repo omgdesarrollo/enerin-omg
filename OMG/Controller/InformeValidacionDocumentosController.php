@@ -9,13 +9,7 @@ $Op=$_REQUEST["Op"];
 $model=new InformeValidacionDocumentosModel();
 
 switch ($Op) {
-    case 'Listar':
-        $Lista= $model->listarValidaciones();
-        header('Content-type: application/json; charset=utf-8');
-        echo json_encode($Lista);
-        return $Lista;        
 
-        break;
     
     case 'listarparametros(v,nv,sd)':
     $v["param"]["v"]=$_REQUEST["validado"];
