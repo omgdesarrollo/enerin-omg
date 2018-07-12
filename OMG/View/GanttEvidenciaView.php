@@ -84,7 +84,8 @@ and open the template in the editor.
    <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
    <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
    <script src="../../js/jquery.js" type="text/javascript"></script>
-    
+   <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
+   <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
     
   <style type="text/css">
     html, body{
@@ -251,6 +252,7 @@ and open the template in the editor.
                                     if(res==true){
 //                                        alert("tiene descendencia ");
                                          swalError("No se puede eliminar la actividad, tiene descendencia ");
+                                        
                                          desc=false;
                                     }else{
                                         if(res==false){
@@ -275,7 +277,7 @@ and open the template in the editor.
                                 url:"../Controller/GanttEvidenciasController.php?Op=EliminarTarea&deleteidtarea="+id,
                                 async:false,
                                 success:function (res){
-
+                                            $.jGrowl("Eliminacion Exitosa", { header: '' });
                                 }
            
                               });
