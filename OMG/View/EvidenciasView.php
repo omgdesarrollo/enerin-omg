@@ -40,9 +40,10 @@
     <script src="../../js/jquery.js" type="text/javascript"></script>
     <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
         
-    <script src="../../js/jquery.js" type="text/javascript"></script>
+    <!--<script src="../../js/jquery.js" type="text/javascript"></script>-->
 
-
+<!--<link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
+   <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>-->
     <style>
         
         .modal-body{
@@ -384,6 +385,7 @@
     dataRegistro="";
     $(function()
     {
+//         $.jGrowl("Eliminacion Exitosa", { header: '' });
         listarDatos();
             
             // $("#IDTEMA_NUEVAEVIDENCIAMODAL").val().onChange(function()

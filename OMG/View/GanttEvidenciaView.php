@@ -257,6 +257,7 @@ and open the template in the editor.
                                     }else{
                                         if(res==false){
 //                                                    alert("no tiene descendencia");
+//                                                    $.jGrowl("Eliminacion Exitosa", { header: '' });
                                              desc=true;
                                     }
                                     }
@@ -272,7 +273,7 @@ and open the template in the editor.
 		gantt.attachEvent("onAfterTaskDelete", function onAfterTaskDelete(id, task) {
 //			alert("s");
 //alert("des");
-                    alert("tarea eliminada es "+id);
+//                    alert("tarea eliminada es "+id);
                              $.ajax({
                                 url:"../Controller/GanttEvidenciasController.php?Op=EliminarTarea&deleteidtarea="+id,
                                 async:false,
@@ -423,7 +424,7 @@ gantt.templates.task_class = function (start, end, task) {
         
 gantt.config.columns = [
     {name:"id",   label:"id",   align:"center" },
-		{name: "text", label: "Nombre", tree: true, width: '*'},
+		{name: "text", label: "Nombre",tree: true, width: '*'},
 		
 		{
 			name: "owner", width: 80, align: "center", template: function (item) {
