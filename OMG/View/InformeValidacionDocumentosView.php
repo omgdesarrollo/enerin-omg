@@ -35,6 +35,11 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/jquery.js" type="text/javascript"></script>
                 <script src="../../js/fInformeValidacionDocumentosView.js" type="text/javascript"></script>
                
+               <!--librerias para utilizar componentes de dhtmlx-->
+                <link rel="stylesheet" type="text/css" href="../../codebase/fonts/font_roboto/roboto.css"/>
+                <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
+                <script src="../../codebase/dhtmlx.js"></script>
+                <!--...-->
                 
         <style>
 
@@ -109,7 +114,7 @@ require_once 'EncabezadoUsuarioView.php';
         <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre Documento" style="width: 180px;">
         <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 180px;">
         <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
-        <button id="btnGraficar" class="btn btn-danger">Graficar</button>
+        <input type="submit" id="btnGraficar" class="btn btn-danger" value="Graficar">
         
         
 </div>    
@@ -142,9 +147,7 @@ require_once 'EncabezadoUsuarioView.php';
         </div>
             
             </div>
-        <div class="navbar-header pull-left">
-            d
-        </div>
+        <div id="arbolprincipal"></div>
         <!--<input type="submit"   style=" height: 40px" class="btn btn-info" id="btngraficar" value="Graficar">-->
         
 <!--        <div class="col-md-10">
@@ -266,173 +269,7 @@ require_once 'EncabezadoUsuarioView.php';
     listarDatos();
     
 
-    
-    
-//    function obtenerDatosValidados(){
-//        
-//        
-//    }
-//    function consultarInformacion(url)
-//    {
-//        $("#loader").show();
-//      $.ajax({  
-//            url: ""+url,  
-//          success: function(r) {
-//              $("#idTable").load("ValidacionDocumentosView.php #idTable");
-//              $("#loader").hide();
-//            },
-//            beforeSend:function(r)
-//            {
-//
-//            },
-//            error:function()
-//            {
-//                $("#loader").hide();
-//            }
-//      });  
-//    }
-//                
-//                
-//    function cargadePrograma(foliodeentrada)
-//    {
-//      window.location.href=" GanttView.php?folio_entrada="+foliodeentrada;     
-//    }
-//    
-//   
-//
-//    var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/form-data'>";
-//        ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
-//        ModalCargaArchivo += "<div class='fileupload-buttons'>";
-//        ModalCargaArchivo += "<span class='fileinput-button'>";
-//        ModalCargaArchivo += "<span><a >Agregar Archivos(Click o Arrastrar)...</a></span>";
-//        ModalCargaArchivo += "<input type='file' name='files[]' multiple></span>";
-//        ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
-//        ModalCargaArchivo += "<div class='fileupload-progress' >";
-//        // ModalCargaArchivo += "<div class='progress' role='progressbar' aria-valuemin='0' aria-valuemax='100'></div>";
-//        ModalCargaArchivo += "<div class='progress-extended'>&nbsp;</div>";
-//        ModalCargaArchivo += "</div></div>";
-//        ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
-//    $("#subirArchivos").click(function()
-//    {
-//      agregarArchivosUrl();
-//    });
-//
-//    function mostrar_urls(id_validacion_documento)
-//    {
-//      var tempDocumentolistadoUrl = "";
-//      URL = 'filesValidacionDocumento/'+id_validacion_documento;
-//      $.ajax({
-//          url: '../Controller/ArchivoUploadController.php?Op=CrearUrl',
-//          type: 'GET',
-//          data: 'URL='+URL,
-//          success:function(creado)
-//          {
-//            if(creado)
-//            {
-//              $.ajax({
-//                  url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
-//                  type: 'GET',
-//                  data: 'URL='+URL,
-//                  success: function(todo)
-//                  {
-//                      // console.log(todo[0].length);
-//                      if(todo[0].length!=0)
-//                      {
-//                              tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
-//                              $.each(todo[0], function (index,value)
-//                              {
-//                                      nametmp = value.split("^");
-//                                      name;
-//                                      fecha = nametmp[0];
-//                                      $.each(nametmp, function(index,value)
-//                                      {
-//                                              if(index!=0)
-//                                                      (index==1)?name=value:name+="-"+value;
-//                                      });
-//                                      tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
-//                                      tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\">"+name+"</a></td>";
-//                                      tempDocumentolistadoUrl += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
-//                                      tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
-//                                      tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";
-//                              });
-//                              tempDocumentolistadoUrl += "</tbody></table>";
-//                      }
-//                      if(tempDocumentolistadoUrl == " ")
-//                      {
-//                              tempDocumentolistadoUrl = " No hay archivos agregados ";
-//                      }
-//                      tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdValidacionDocumento' type='text' style='display:none;' value='"+id_validacion_documento+"'>";                  
-//                      $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
-//                      $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
-//                      $('#fileupload').fileupload
-//                      ({
-//                        url: '../View/',
-//                      });
-//                  }
-//              });
-//            }
-//            else
-//            {
-//              swal("","Error del servidor","error");
-//            }
-//          }
-//        });
-//    }
-// 
-//    
-//    function agregarArchivosUrl()
-//    {
-//      var ID_VALIDACION_DOCUMENTO = $('#tempInputIdValidacionDocumento').val();
-//      url = 'filesValidacionDocumento/'+ID_VALIDACION_DOCUMENTO,
-//      $.ajax({
-//        url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
-//        type: 'GET',
-//        data: 'URL='+url,
-//        success:function(creado)
-//        {
-//          if(creado)
-//            $('.start').click();
-//        },
-//        error:function()
-//        {
-//          swal("","Error del servidor","error");
-//        }
-//      });
-//    }
-//    function borrarArchivo(url)
-//    {
-//      swal({
-//          title: "ELIMINAR",
-//          text: "Confirme para eliminar el documento",
-//          type: "warning",
-//          showCancelButton: true,
-//          closeOnConfirm: false,
-//          showLoaderOnConfirm: true
-//        },function()
-//        {
-//          var ID_VALIDACION_DOCUMENTO = $('#tempInputIdValidacionDocumento').val();
-//          $.ajax({
-//            url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
-//            type: 'POST',
-//            data: 'URL='+url,
-//            success: function(eliminado)
-//            {
-//              if(eliminado)
-//              {
-//                mostrar_urls(ID_VALIDACION_DOCUMENTO);
-//                swal("","Archivo eliminado");
-//                setTimeout(function(){swal.close();},1000);
-//              }
-//              else
-//                swal("","Ocurrio un error al elimiar el documento", "error");
-//            },
-//            error:function()
-//            {
-//              swal("","Ocurrio un error al elimiar el documento", "error");
-//            }
-//          });
-//        });
-//    }
+
 //    function filterTableClaveDocumento()
 //    {
 //                // Declare variables 
@@ -573,9 +410,7 @@ require_once 'EncabezadoUsuarioView.php';
             <!--Para abrir alertas del encabezado-->
             <script src="../../assets/probando/js/ace-elements.min.js"></script>
             <script src="../../assets/probando/js/ace.min.js"></script>
-    
-
-           
+       
                 
 	</body>
      

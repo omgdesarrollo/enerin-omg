@@ -36,6 +36,24 @@ parametroscheck["sin_documento"]=$(this).is(':checked');
     });
     
     
+    
+    //seccion de click del boton  graficar
+    
+    $("#btnGraficar").click(function (){
+//window.location
+
+alert("has enbtrado");
+   var dhxWins = new dhtmlXWindows();
+//var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
+ dhxWins.attachViewportTo("arbolprincipal");
+ var layoutWin=dhxWins.createWindow({id:"emp", text:"OMG", left: 20, top: 30,width:1338,  height:505,  center:true,resize: true,park:true,modal:true	});
+ layoutWin.attachURL("../OMG/View/SeguimientoEntradaView.php", null, true);
+ 
+ 
+    
+    });
+    
+    
     });
 
     function cargar(key){
