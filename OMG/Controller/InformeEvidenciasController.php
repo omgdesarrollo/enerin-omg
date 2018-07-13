@@ -22,7 +22,23 @@ switch ($Op) {
         break;
     
     case 'MostrarTemayResponsable':
-        $Lista=$model->obtenerTemayResponsable($_REQUEST['ID_DOCUMENTO'],Session::getSesion("s_cont"));
+        $Lista=$model->obtenerTemayResponsable($_REQUEST['ID_DOCUMENTO'], Session::getSesion("s_cont"));
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+        return $Lista;
+        
+        break;
+    
+    case'MostrarRequisitosPorDocumento':
+        $Lista= $model->obtenerRequisitosporDocumento($_REQUEST['ID_DOCUMENTO'], Session::getSesion("s_cont"));
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+        return $Lista;
+        
+        break;
+    
+    case'MostrarRegistrosPorDocumento':
+        $Lista= $model->obtenerRegistrosporDocumento($_REQUEST['ID_DOCUMENTO'], Session::getSesion("s_cont"));
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
         return $Lista;
