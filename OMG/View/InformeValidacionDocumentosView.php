@@ -48,6 +48,19 @@ $Usuario=  Session::getSesion("user");
             max-height: calc(100vh - 110px);
             overflow-y: auto;
             }                    
+            .modal-lg{
+                width: 100%;
+            }  
+            
+            .modal-backdrop {
+            /*En caso de que quieras modificar el backdrop*/
+            z-index: 1040 !important;
+            }
+
+            .modal {
+                /*En caso de que quieras modificar el modal*/
+                z-index: 1050 !important;
+            }
 
             #sugerenciasclausulas {
             width:350px;
@@ -263,6 +276,29 @@ require_once 'EncabezadoUsuarioView.php';
 
 
 
+
+
+
+
+
+
+
+      <div class="modal draggable fade" id="modalgraficas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog modal-lg" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Personalizacion Graficas </h4>
+		      </div>
+                        
+		      <div class="modal-body">
+                          
+
+		      </div>
+		    </div>
+
+		  </div>
+       </div>
 
                 
 <script>

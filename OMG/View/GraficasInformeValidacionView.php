@@ -44,9 +44,16 @@ and open the template in the editor.
         <?php
         // put your code here
         ?>
-        <div id="ventanawindows"></div>
+        <!--<div id="ventanawindows"></div>-->
         
         
         
+        
+        
+        
+        
+        
+   
     </body>
+      
 </html>
