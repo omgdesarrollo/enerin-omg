@@ -44,7 +44,7 @@ class InformeValidacionDocumentosDAO{
                 FROM validacion_documento tbvalidacion_documento
                 JOIN documentos tbdocumentos ON tbdocumentos.id_documento=tbvalidacion_documento.id_documento
                 JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumentos.id_empleado 
-                WHERE tbdocumentos.CONTRATO= ".$v["param"]["contrato"]."  ".$query_concat;
+                WHERE tbdocumentos.contrato= ".$v["param"]["contrato"]."  ".$query_concat;
 //            echo json_encode($query);
             $db= AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
