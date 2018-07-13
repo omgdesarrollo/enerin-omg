@@ -53,26 +53,25 @@ alert("has enbtrado");
     
     });
 
-    function cargar(key){
-        switch (key) {
-    case "validados":
-        
-//        alert("entraste en validados");
-            listarDatos();
-    break;
-    case "novalidados":
-        listarDatos();
-//        alert("no validados");
-    break;
-    case "sindocumento":
-        listarDatos();
-//        alert("sin documento");
-    break;
-    default:
-        
+        //        alert("entraste en validados");
+                listarDatos();
         break;
-}
+        
+        case "novalidados":
+            listarDatos();
+        //        alert("no validados");
+        break;
+        
+        case "sindocumento":
+            listarDatos();
+        //        alert("sin documento");
+        break;
+        
+        default:
+
+        break;
     }
+}
     
 function listarDatos()
 {

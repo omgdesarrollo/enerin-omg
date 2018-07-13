@@ -253,8 +253,8 @@ function loadDataSideBarOficiosDocumentacion()
                       case "informesValidacionDocumentos":
                            $("#sidebarObjV").load('InyectarVistasView.php #informesValidacionDocumentos');
                       break;  
-                      case "":
-                           $("#sidebarObjV").load('InyectarVistasView.php #');
+                      case "informesEvidencias":
+                           $("#sidebarObjV").load('InyectarVistasView.php #informesEvidencias');
                       break;
 
                   }
