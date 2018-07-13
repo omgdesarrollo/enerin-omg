@@ -36,9 +36,9 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/fInformeValidacionDocumentosView.js" type="text/javascript"></script>
                
                <!--librerias para utilizar componentes de dhtmlx-->
-                <link rel="stylesheet" type="text/css" href="../../codebase/fonts/font_roboto/roboto.css"/>
+<!--                <link rel="stylesheet" type="text/css" href="../../codebase/fonts/font_roboto/roboto.css"/>
                 <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
-                <script src="../../codebase/dhtmlx.js"></script>
+                <script src="../../codebase/dhtmlx.js"></script>-->
                 <!--...-->
                 
         <style>
