@@ -35,7 +35,7 @@ class InformeValidacionDocumentosDAO{
         try
         {
             $query="SELECT tbvalidacion_documento.id_validacion_documento, tbdocumentos.id_documento, tbdocumentos.clave_documento,
- 		 tbdocumentos.documento,
+ 		 tbdocumentos.documento,tbdocumentos.contrato,
 
 		 tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno,  	
 
@@ -158,7 +158,7 @@ class InformeValidacionDocumentosDAO{
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
 
-            return $lista;
+            return $lista[0];
             
         } catch (Exception $ex)
         {

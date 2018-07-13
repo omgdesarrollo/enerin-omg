@@ -17,7 +17,7 @@ switch ($Op) {
     $v["param"]["s_d"]=$_REQUEST["sin_documento"];
     $v["param"]["contrato"]= Session::getSesion("s_cont");
     $Lista=$model->listarValidaciones($v);
-         header('Content-type: application/json; charset=utf-8');
+        header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
 //        echo $v["param"]["v"];
     break;

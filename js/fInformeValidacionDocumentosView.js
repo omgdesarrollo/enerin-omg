@@ -107,8 +107,9 @@ function construirTable(data)
     cargaTodo=0;
     tempData="";
     
-    $.each(data,function(index,value){
-        
+    $.each(data["info"],function(index,value){
+        value["clave_cumplimiento"]=data["detallesContrato"]["clave_cumplimiento"];
+        value["cumplimiento"]=data["detallesContrato"]["cumplimiento"];
             tempData += construir(value,cargaTodo);
     });
      
@@ -123,8 +124,8 @@ function construir(value,carga)
     
                 if(carga==0)
                 tempData += "<tr id='registro_"+value.id_validacion_documento+"'>";
-                tempData += "<td class='celda' width='5%'>No.</td>"
-                tempData += "<td class='celda' width='10%'>Cumplimiento</td>"
+                tempData += "<td class='celda' width='5%'>"+value.clave_cumplimiento+"</td>"
+                tempData += "<td class='celda' width='10%'>"+value.cumplimiento+"</td>"
                 tempData += "<td class='celda' width='10%'><button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
                 tempData += "<td class='celda' width='10%'><button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
                 tempData += "<td class='celda' width='10%'><button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";

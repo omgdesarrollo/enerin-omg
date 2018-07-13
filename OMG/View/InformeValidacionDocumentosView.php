@@ -61,7 +61,16 @@ $Usuario=  Session::getSesion("user");
             padding-right: 28px; /*This would hide the scroll bar of the right. To be sure we hide the scrollbar on every browser, increase this value*/
             padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is one*/
             }
-            
+           
+/*input[type="checkbox"] {
+    display:none;
+}*/
+/*input[type="checkbox"] + label span {
+    display:inline-block;
+    width:19px;
+    height:19px;
+    background:url(../../images/base/_excel.png) left top no-repeat;
+}*/
             
 
         </style>            
@@ -107,33 +116,48 @@ require_once 'EncabezadoUsuarioView.php';
 
 <div class="container">		
     <div class="row">
-        <div class="col-md-4">
-                <div class="row align-items-center">
-                        <div class="col-1">
-                                <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkValidado">
-                        </div>
-                        <div class="col-4">Validados</div>
-                </div>
+        <div class="col-md-2">
+                <!--<div class="row align-items-center">-->
+                        <!--<div class="col-1">-->
+                                <!--<input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkValidado">-->
+                         <!--<div class="col-4">Validados</div>-->
+                        <!--</div>-->
+                       
+                <!--</div>-->
+        <!--</div>-->
+        <div class="form-group">
+        <div class="input-group">
+          <!--<input name="remitosucursal" id="remitosucursal" type="text" required class="form-control" placeholder="Sucursal">-->
+          <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkValidado">
+          <span style="border:none;background-color:transparent;" class="input-group-addon">Validados</span>
+          <!--<input name="remitonumero" id="remitonumero" type="text" required class="form-control" placeholder="Numero">-->
+            <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkNoValidado">
+             <span style="border:none;background-color: transparent;" class="input-group-addon">No Validados</span>
+            
+             <!--<input type="submit"  style="width: 40px; height: 40px" class="btn btn-info" id="btngraficar" value="Graficar">-->
         </div>
-
-        <div class="col-md-4">
-                <div class="row align-items-center">
-                        <div class="col-1">
+            
+        </div>
+        <!--<div class="col-md-2">-->
+                <!--<div class="row align-items-center">-->
+<!--                        <div class="col-1">
                                 <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkNoValidado">
                         </div>
-                        <div class="col-5">En Proceso</div>
-                </div>
-        </div>
+                        <div class="col-5">En Proceso</div>-->
+                <!--</div>-->
+        <!--</div>-->
 
-<!--        <div class="col-md-4">
-                <div class="row align-items-center">
-                        <div class="col-1">
-                                <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkSinDocumento">
-                        </div>
-                        <div class="col-6">Sin Documento</div>
-                </div>
-        </div>							-->
+        <!--<div class="col-md-4">-->
+                <!--<div class="row align-items-center">-->
+                        <!--<div class="col-1">-->
+                                
+                        <!--</div>-->
+                        <!--<div class="col-6">Sin Documento</div>-->
+                <!--</div>-->
+        </div>
+        
     </div>
+     <!--<input type="submit"  style="width: 40px; height: 40px" class="btn btn-info" id="btngraficar" value="Graficar">-->
 </div>    
 
 
