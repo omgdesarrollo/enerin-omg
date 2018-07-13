@@ -52,6 +52,11 @@ alert("has enbtrado");
     
     
     });
+    
+    
+function cargar(key){
+    switch (key) {
+        case "validados":
 
         //        alert("entraste en validados");
                 listarDatos();
