@@ -33,6 +33,36 @@
          }
      }
      
+     public function obtenerRequisitosporDocumento($ID_DOCUMENTO, $CONTRATO)
+     {
+         try
+         {
+             $dao=new InformeEvidenciasDAO();
+             $lista= $dao->obtenerRequisitosporDocumento($ID_DOCUMENTO, $CONTRATO);
+             
+             return $lista;
+         } catch (Exception $ex)
+         {
+             throw $ex;
+             return false;
+         }
+     }
+     
+     public function obtenerRegistrosporDocumento ($ID_DOCUMENTO,$CONTRATO)
+     {
+         try
+         {
+             $dao=new InformeEvidenciasDAO();
+             $lista= $dao->obtenerRegistrosporDocumento($ID_DOCUMENTO,$CONTRATO);
+             
+             return $lista;
+         } catch (Exception $ex)
+         {
+             throw $ex;
+             return false;
+         }
+     }
+     
  }
 
 ?>

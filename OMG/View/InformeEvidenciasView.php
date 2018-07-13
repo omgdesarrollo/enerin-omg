@@ -104,7 +104,7 @@ require_once 'EncabezadoUsuarioView.php';
 
 <div style="height: 40px"></div>
 
-<div class="container">		
+<!--<div class="container">		
     <div class="row">
         <div class="col-md-4">
                 <div class="row align-items-center">
@@ -124,17 +124,72 @@ require_once 'EncabezadoUsuarioView.php';
                 </div>
         </div>
 
-<!--        <div class="col-md-4">
+        <div class="col-md-4">
                 <div class="row align-items-center">
                         <div class="col-1">
                                 <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkSinDocumento">
                         </div>
                         <div class="col-6">Sin Documento</div>
                 </div>
-        </div>							-->
+        </div>							
     </div>
-</div>    
+</div>    -->
 
+
+<div class="container">		
+    <div class="row">
+        <div class="col-md-12">
+                <!--<div class="row align-items-center">-->
+                        <!--<div class="col-1">-->
+                                <!--<input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkValidado">-->
+                         <!--<div class="col-4">Validados</div>-->
+                        <!--</div>-->
+                       
+                <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+        <div class="col-md-2">
+        <div class="input-group">
+          <!--<input name="remitosucursal" id="remitosucursal" type="text" required class="form-control" placeholder="Sucursal">-->
+          <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkValidado">
+          <span style="border:none;background-color:transparent;" class="input-group-addon">Validados</span>
+          <!--<input name="remitonumero" id="remitonumero" type="text" required class="form-control" placeholder="Numero">-->
+            <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkNoValidado">
+             <span style="border:none;background-color: transparent;" class="input-group-addon">En Proceso</span>
+            
+             <!--<input type="submit"  style="width: 40px; height: 40px" class="btn btn-info" id="btngraficar" value="Graficar">-->
+        </div>
+            
+            </div>
+        <div id="arbolprincipal"></div>
+        <!--<input type="submit"   style=" height: 40px" class="btn btn-info" id="btngraficar" value="Graficar">-->
+        
+<!--        <div class="col-md-10">
+             <div class="input-group">
+                 <input type="submit"  style="width: 40px; height: 40px" class="btn btn-info" id="btngraficar" value="Graficar">
+             </div>
+        </div>-->
+        <!--</div>-->
+        <!--<div class="col-md-2">-->
+                <!--<div class="row align-items-center">-->
+<!--                        <div class="col-1">
+                                <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkNoValidado">
+                        </div>
+                        <div class="col-5">En Proceso</div>-->
+                <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="col-md-4">-->
+                <!--<div class="row align-items-center">-->
+                        <!--<div class="col-1">-->
+                                
+                        <!--</div>-->
+                        <!--<div class="col-6">Sin Documento</div>-->
+                <!--</div>-->
+        </div>
+        
+    </div>
+</div>
 
 <table class="table table-bordered table-striped header_fijo tbl-qa" id="idTable ">
     <thead>                              
@@ -164,7 +219,7 @@ require_once 'EncabezadoUsuarioView.php';
 </table>
 
                
-<!-- Inicio moda -->
+<!-- Inicio modal Tema y Responsable -->
 <div class="modal draggable fade" id="mostrar-temaresponsable" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
         <div id="loaderModalMostrar"></div>

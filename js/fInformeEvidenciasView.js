@@ -96,6 +96,12 @@ function construirTable(datos)
         
             tempData += construir(value,cargaTodo);
     });
+    
+//    $.each(datos["info"],function(index,value){
+//        value["clave_cumplimiento"]=datos["detallesContrato"]["clave_cumplimiento"];
+//        value["cumplimiento"]=datos["detallesContrato"]["cumplimiento"];
+//            tempData += construir(value,cargaTodo);
+//    });
      
     $("#datosGenerales").html(tempData);
     $("#loader").hide();
@@ -158,6 +164,47 @@ function mostrarTemaResponsable(id_documento)
                 $('#TemayResponsableListado').html(ValoresTemaResponsable);
         }
     });
+}
+
+function mostrarRequisitos(id_documento)
+{
+        ValoresRequisitos = "<ul>";
+
+        $.ajax ({
+            url: "../Controller/InformeEvidenciasController.php?Op=MostrarRequisitosPorDocumento",
+            type: 'POST',
+            data: 'ID_DOCUMENTO='+id_documento,
+            success:function(datosRequisitos)
+            {
+               $.each(datosRequisitos,function(index,value){
+                
+                ValoresRequisitos+="<li>"+value.requisito+"</li>";                                       
+
+               });
+           ValoresRequisitos += "</ul>";     
+               $('#RequisitosListado').html(ValoresRequisitos);
+            }
+        });
+}
+
+function mostrarRegistros(id_documento)
+{
+ ValoresRegistros = "<ul>";
+
+ $.ajax ({
+     url:"../Controller/InformeEvidenciasController.php?Op=MostrarRegistrosPorDocumento",
+     type: 'POST',
+     data: 'ID_DOCUMENTO='+id_documento,
+     success:function(datosRegistros)
+     {
+         $.each(datosRegistros,function(index,value){
+            ValoresRegistros+="<li>"+value.registro+"</li>"; 
+         });
+
+ValoresRegistros += "</ul>";
+         $('#RegistrosListado').html(ValoresRegistros);
+     }
+ })
 }
 
 

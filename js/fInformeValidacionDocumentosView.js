@@ -217,9 +217,9 @@ function mostrarRequisitos(id_documento)
             url: "../Controller/InformeValidacionDocumentosController.php?Op=MostrarRequisitosPorDocumento",
             type: 'POST',
             data: 'ID_DOCUMENTO='+id_documento,
-            success:function(responserequisitos)
+            success:function(datosRequisitos)
             {
-               $.each(responserequisitos,function(index,value){
+               $.each(datosRequisitos,function(index,value){
                 
                 ValoresRequisitos+="<li>"+value.requisito+"</li>";                                       
 
