@@ -109,6 +109,9 @@ require_once 'EncabezadoUsuarioView.php';
         <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre Documento" style="width: 180px;">
         <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 180px;">
         <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+        <button id="btnGraficar" class="btn btn-danger">Graficar</button>
+        
+        
 </div>    
 
 
@@ -116,7 +119,7 @@ require_once 'EncabezadoUsuarioView.php';
 
 <div class="container">		
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-12">
                 <!--<div class="row align-items-center">-->
                         <!--<div class="col-1">-->
                                 <!--<input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkValidado">-->
@@ -125,19 +128,31 @@ require_once 'EncabezadoUsuarioView.php';
                        
                 <!--</div>-->
         <!--</div>-->
-        <div class="form-group">
+        <!--<div class="form-group">-->
+        <div class="col-md-2">
         <div class="input-group">
           <!--<input name="remitosucursal" id="remitosucursal" type="text" required class="form-control" placeholder="Sucursal">-->
           <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkValidado">
           <span style="border:none;background-color:transparent;" class="input-group-addon">Validados</span>
           <!--<input name="remitonumero" id="remitonumero" type="text" required class="form-control" placeholder="Numero">-->
             <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkNoValidado">
-             <span style="border:none;background-color: transparent;" class="input-group-addon">No Validados</span>
+             <span style="border:none;background-color: transparent;" class="input-group-addon">En Proceso</span>
             
              <!--<input type="submit"  style="width: 40px; height: 40px" class="btn btn-info" id="btngraficar" value="Graficar">-->
         </div>
             
+            </div>
+        <div class="navbar-header pull-left">
+            d
         </div>
+        <!--<input type="submit"   style=" height: 40px" class="btn btn-info" id="btngraficar" value="Graficar">-->
+        
+<!--        <div class="col-md-10">
+             <div class="input-group">
+                 <input type="submit"  style="width: 40px; height: 40px" class="btn btn-info" id="btngraficar" value="Graficar">
+             </div>
+        </div>-->
+        <!--</div>-->
         <!--<div class="col-md-2">-->
                 <!--<div class="row align-items-center">-->
 <!--                        <div class="col-1">
@@ -157,7 +172,6 @@ require_once 'EncabezadoUsuarioView.php';
         </div>
         
     </div>
-     <!--<input type="submit"  style="width: 40px; height: 40px" class="btn btn-info" id="btngraficar" value="Graficar">-->
 </div>    
 
 
