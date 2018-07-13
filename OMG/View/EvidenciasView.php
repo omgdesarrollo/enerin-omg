@@ -385,9 +385,9 @@
     dataRegistro="";
     $(function()
     {
-//         $.jGrowl("Eliminacion Exitosa", { header: '' });
+
         listarDatos();
-        $.jGrowl("Eliminacion Exitosa", { header: '' })
+//        $.jGrowl("Eliminacion Exitosa", { header: '' })
             
             // $("#IDTEMA_NUEVAEVIDENCIAMODAL").val().onChange(function()
             // {

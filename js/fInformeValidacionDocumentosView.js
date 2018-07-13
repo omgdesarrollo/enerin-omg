@@ -36,11 +36,25 @@ parametroscheck["sin_documento"]=$(this).is(':checked');
     });
     
     
-    }); //cierra el function
+    
+    //seccion de click del boton  graficar
+    
+    $("#btnGraficar").click(function (){
+//window.location
 
-function cargar(key){
-    switch (key) {
-        case "validados":
+alert("has enbtrado");
+   var dhxWins = new dhtmlXWindows();
+//var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
+ dhxWins.attachViewportTo("arbolprincipal");
+ var layoutWin=dhxWins.createWindow({id:"emp", text:"OMG", left: 20, top: 30,width:1338,  height:505,  center:true,resize: true,park:true,modal:true	});
+ layoutWin.attachURL("../OMG/View/SeguimientoEntradaView.php", null, true);
+ 
+ 
+    
+    });
+    
+    
+    });
 
         //        alert("entraste en validados");
                 listarDatos();
@@ -110,8 +124,9 @@ function construirTable(data)
     cargaTodo=0;
     tempData="";
     
-    $.each(data,function(index,value){
-        
+    $.each(data["info"],function(index,value){
+        value["clave_cumplimiento"]=data["detallesContrato"]["clave_cumplimiento"];
+        value["cumplimiento"]=data["detallesContrato"]["cumplimiento"];
             tempData += construir(value,cargaTodo);
     });
      
@@ -126,8 +141,8 @@ function construir(value,carga)
     
                 if(carga==0)
                 tempData += "<tr id='registro_"+value.id_validacion_documento+"'>";
-                tempData += "<td class='celda' width='5%'>No.</td>"
-                tempData += "<td class='celda' width='10%'>Cumplimiento</td>"
+                tempData += "<td class='celda' width='5%'>"+value.clave_cumplimiento+"</td>"
+                tempData += "<td class='celda' width='10%'>"+value.cumplimiento+"</td>"
                 tempData += "<td class='celda' width='10%'><button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
                 tempData += "<td class='celda' width='10%'><button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
                 tempData += "<td class='celda' width='10%'><button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";

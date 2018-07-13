@@ -8,8 +8,18 @@ class InformeValidacionDocumentosModel{
         try
         {
             $dao=new InformeValidacionDocumentosDAO();
-            $lista= $dao->listarValidaciones($v);
+            $lista["info"]= $dao->listarValidaciones($v);
+            $lista["detallesContrato"]=$dao->obtenerContratos($v["param"]["contrato"]);
+//          echo "con ".json_encode($contratos);  
+//            $categoria=array();
+//            $valores=array();
+//            $principal = array($categoria,$valores);
+//
+//            array_push($principal[0],"tipo");
+//            array_push($principal[1],"pordia","porhora");
+//            array_push($array, $contratos);
             
+//            
 //            $resultado;
 //            foreach($lista as $value)
 //            {
@@ -18,7 +28,6 @@ class InformeValidacionDocumentosModel{
 //                echo "list ".json_encode($list); 
 //            }                                    
             return $lista;
-            
         } catch (Exception $ex)
         {
             throw $ex;
