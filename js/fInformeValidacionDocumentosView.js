@@ -36,28 +36,60 @@ parametroscheck["sin_documento"]=$(this).is(':checked');
     });
     
     
-    });
+    
+    //seccion de click del boton  graficar
+    
+    $("#btnGraficar").click(function (){
+//window.location
+//alert("has enbtrado");
 
-    function cargar(key){
-        switch (key) {
-    case "validados":
-        
-//        alert("entraste en validados");
-            listarDatos();
-    break;
-    case "novalidados":
-        listarDatos();
-//        alert("no validados");
-    break;
-    case "sindocumento":
-        listarDatos();
-//        alert("sin documento");
-    break;
-    default:
-        
+ $('#modalgraficas').modal('show');
+ 
+// window.top.$("#modalgraficas").modal('show');
+//   var dhxWins = new dhtmlXWindows();
+////var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
+// dhxWins.attachViewportTo("ventanawindows");
+// var layoutWin=dhxWins.createWindow({id:"emp", text:"OMG", left: 20, top: 30,width:1338,  height:505,  center:true,resize: true,park:true,modal:true	});
+// layoutWin.attachURL("GraficasInformeValidacionView.php", null, true);
+//    $('#modalgraficas').modal({
+//    appendTo: $(window.parent.parent.document).find('body'),
+//    overlayCss: {backgroundColor:"#333"}, // Optional overlay style
+//    overlayClose:true, 
+//});
+// Set overlay's width
+//$(window.parent.document).find('#modalgraficas').css('width', '100%');
+
+
+
+    });
+    
+    
+    });
+    
+    
+function cargar(key){
+    switch (key) {
+        case "validados":
+
+        //        alert("entraste en validados");
+                listarDatos();
         break;
-}
+        
+        case "novalidados":
+            listarDatos();
+        //        alert("no validados");
+        break;
+        
+        case "sindocumento":
+            listarDatos();
+        //        alert("sin documento");
+        break;
+        
+        default:
+
+        break;
     }
+}
     
 function listarDatos()
 {
@@ -107,8 +139,9 @@ function construirTable(data)
     cargaTodo=0;
     tempData="";
     
-    $.each(data,function(index,value){
-        
+    $.each(data["info"],function(index,value){
+        value["clave_cumplimiento"]=data["detallesContrato"]["clave_cumplimiento"];
+        value["cumplimiento"]=data["detallesContrato"]["cumplimiento"];
             tempData += construir(value,cargaTodo);
     });
      
@@ -123,8 +156,8 @@ function construir(value,carga)
     
                 if(carga==0)
                 tempData += "<tr id='registro_"+value.id_validacion_documento+"'>";
-                tempData += "<td class='celda' width='5%'>No.</td>"
-                tempData += "<td class='celda' width='10%'>Cumplimiento</td>"
+                tempData += "<td class='celda' width='5%'>"+value.clave_cumplimiento+"</td>"
+                tempData += "<td class='celda' width='10%'>"+value.cumplimiento+"</td>"
                 tempData += "<td class='celda' width='10%'><button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
                 tempData += "<td class='celda' width='10%'><button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
                 tempData += "<td class='celda' width='10%'><button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
@@ -156,7 +189,7 @@ function mostrarTemaResponsable(id_documento)
                                 </tr>\n\
                                 <tbody>";
     $.ajax ({
-        url:"../Controller/ValidacionDocumentosController.php?Op=MostrarTemayResponsable",
+        url:"../Controller/InformeValidacionDocumentosController.php?Op=MostrarTemayResponsable",
         type:'POST',
         data:'ID_DOCUMENTO='+id_documento,
         success:function(responseTemayResponsable)
@@ -181,12 +214,12 @@ function mostrarRequisitos(id_documento)
         ValoresRequisitos = "<ul>";
 
         $.ajax ({
-            url: "../Controller/ValidacionDocumentosController.php?Op=MostrarRequisitosPorDocumento",
+            url: "../Controller/InformeValidacionDocumentosController.php?Op=MostrarRequisitosPorDocumento",
             type: 'POST',
             data: 'ID_DOCUMENTO='+id_documento,
-            success:function(responserequisitos)
+            success:function(datosRequisitos)
             {
-               $.each(responserequisitos,function(index,value){
+               $.each(datosRequisitos,function(index,value){
                 
                 ValoresRequisitos+="<li>"+value.requisito+"</li>";                                       
 
@@ -203,7 +236,7 @@ function mostrarRegistros(id_documento)
  ValoresRegistros = "<ul>";
 
  $.ajax ({
-     url:"../Controller/ValidacionDocumentosController.php?Op=MostrarRegistrosPorDocumento",
+     url:"../Controller/InformeValidacionDocumentosController.php?Op=MostrarRegistrosPorDocumento",
      type: 'POST',
      data: 'ID_DOCUMENTO='+id_documento,
      success:function(responseregistros)

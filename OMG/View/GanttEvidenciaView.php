@@ -6,11 +6,17 @@ if(isset($_REQUEST["id_evid"])){
     Session::setSesion("dataGanttEvidencia",$_REQUEST["id_evid"]);
 //    Session::setSesion("dataGanttFolio_Entrada",$_REQUEST["folio_entrada"]);
 //    echo "el seguimiento de entrada linkeado al de doc de entrada y al folio de entrada   ".$dataGantt=Session::getSesion("dataGantt");;
-    echo "<h2><center>El id de evidencia = ".Session::getSesion("dataGanttEvidencia")."</center><h2>";
+    echo "<h4><center>El id de evidencia = ".Session::getSesion("dataGanttEvidencia")."</center><h4>";
+    ?>
+    <center><div id="infoquepuedehacer"></div></center> 
+<?php
 }else{
         $dataGantt=Session::getSesion("dataGanttEvidencia");
        echo "<h2><center>El id de evidencia = ".Session::getSesion("dataGanttEvidencia")."</center><h2>";
+       ?>
        
+        <center><div id="infoquepuedehacer"></div></center> 
+<?php
     }     
 //Session::setSesion("dataGantt",$_REQUEST["id_documento_entrada"]);
   //  Session::setSesion("dataGantt",":(");
@@ -70,14 +76,16 @@ and open the template in the editor.
     
    <!--<script src="../../codebase/ext/dhtmlxgantt_smart_rendering.js"></script>-->
    <script src="../../js/jquery.min.js" type="text/javascript"></script>
-   <script src="../../assets/gantt_5.1.2_com/codebase/sources/ext/dhtmlxgantt_keyboard_navigation.js" type="text/javascript"></script>
-   
+   <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_keyboard_navigation.js" type="text/javascript"></script>-->
+    <div id="lib"></div>
    <link href="../../assets/gantt_5.1.2_com/codebase/skins/dhtmlxgantt_meadow.css" rel="stylesheet" type="text/css"/>
-   
-    
-     <link href="../../assets/gantt_5.1.2_com/samples/common/third-party/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    
-    
+   <link href="../../assets/gantt_5.1.2_com/samples/common/third-party/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+   <!--Para abrir alertas de aviso, success,warning, error-->       
+   <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+   <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+   <script src="../../js/jquery.js" type="text/javascript"></script>
+   <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
+   <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
     
   <style type="text/css">
     html, body{
@@ -137,12 +145,11 @@ and open the template in the editor.
   </head>
     <body>
         
-        
-     
   <form action="">
       <input type="submit" class="btn btn-info" value="Recargar">      
       
   </form>
+         <!--<input id="g" type="submit" class="btn btn-info" value="Guardar Cambios">-->      
         
         <?php  
         
@@ -192,7 +199,7 @@ and open the template in the editor.
   
     
     
-  <script type="text/javascript">      
+  <script type="text/javascript">    
 	(function dynamicTaskType() {
 		var delTaskParent;
 
@@ -227,12 +234,40 @@ and open the template in the editor.
 		gantt.attachEvent("onBeforeTaskDelete", function onBeforeTaskDelete(id, task) {
 //			alert("antes");
 //                       gantt.refreshData();
+//                        alert("procedera a eliminarse");
                         delTaskParent = gantt.getParent(id);
-                         
+                        
+//                         alert("d  "+delTaskParent);
 //                        var taskId = gantt.getSelectedId();
 //                        gantt.deleteTask(delTaskParent);
 //                        gantt.deleteTask(delTaskParent);
-			return true;
+//                                alert("el id es : "+id);
+                        var desc=false;
+                        $.ajax({
+                                url:"../Controller/GanttEvidenciasController.php?Op=descendencia&deleteidtarea="+id,
+                                async:false,
+                                success:function (res)
+                                {
+                                 
+                                    if(res==true){
+//                                        alert("tiene descendencia ");
+                                         swalError("No se puede eliminar la actividad, tiene descendencia ");
+                                        
+                                         desc=false;
+                                    }else{
+                                        if(res==false){
+//                                                    alert("no tiene descendencia");
+//                                                    $.jGrowl("Eliminacion Exitosa", { header: '' });
+                                             desc=true;
+                                    }
+                                    }
+                                }
+           
+                              });
+
+
+
+			return desc;
 		});
 
 		gantt.attachEvent("onAfterTaskDelete", function onAfterTaskDelete(id, task) {
@@ -240,12 +275,26 @@ and open the template in the editor.
 //alert("des");
 //                    alert("tarea eliminada es "+id);
                              $.ajax({
-//                                url:"../Controller/GanttController.php?Op=EliminarTarea&deleteidtarea="+id,
+                                url:"../Controller/GanttEvidenciasController.php?Op=EliminarTarea&deleteidtarea="+id,
+                                async:false,
                                 success:function (res){
-
+                                            $.jGrowl("Eliminacion Exitosa", { header: '' });
                                 }
            
                               });
+//                                var tienehijos=false; 
+//                                 gantt.eachTask(function (child) {
+//                                     tienehijos=true;
+//				if (child.type != gantt.config.types.project) {
+//					totalToDo += child.duration;
+//					totalDone += (child.progress || 0) * child.duration;
+//				}
+//			},id);
+//                                 if(tienehijos==true){
+//                                     alert("tiene hijos ");
+//                                 }else{
+//                                     alert("no tiene");
+//                                 }
                                  
                                 if (delTaskParent != gantt.config.root_id) {
 				gantt.batchUpdate(checkParents(delTaskParent));
@@ -375,7 +424,7 @@ gantt.templates.task_class = function (start, end, task) {
         
 gantt.config.columns = [
     {name:"id",   label:"id",   align:"center" },
-		{name: "text", label: "Nombre", tree: true, width: '*'},
+		{name: "text", label: "Nombre",tree: true, width: '*'},
 		
 		{
 			name: "owner", width: 80, align: "center", template: function (item) {
@@ -586,17 +635,43 @@ dp.init(gantt);
 	};
     
     $(function (){
+//        var solounavez=0;
       $.ajax({
           url:"../Controller/GanttEvidenciasController.php?Op=verificar_valid",
           type:"POST",
+          async:false,
           data:"id_evid=<?php echo Session::getSesion("dataGanttEvidencia") ?>"
           ,success:function (res){
-//               alert("entraste al success");
-//               $.each(res,function(index,value){
-//                   dataEmpleados.push({key:value.id_empleado,label:value.nombre_empleado});
-//             });
-                if(res==true)
-                    gantt.config.readonly = true;       
+                if(res=="true"){
+                        gantt.config.readonly = true;  
+                    $("#infoquepuedehacer").html("Solo Visualizacion");
+                   
+                }else
+                {
+                    if(res=="false"){
+                        gantt.config.readonly = false;  
+//                        var script = document.createElement('script');
+//                        script.src = 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js';
+//                        document.head.appendChild(script);
+                        $("#infoquepuedehacer").html("Permitido Edicion");
+//                        var nuevoScript = document.createElement("script");
+//                        nuevoScript.type = "text/javascript";
+//                        script.src = "../../assets/gantt_5.1.2_com/codebase/sources/ext/dhtmlxgantt_keyboard_navigation.js";
+//                    if(solounavez==0){
+//                        var s = $('script');
+//                        var libreria = '../../assets/gantt_5.1.2_com/codebase/sources/ext/dhtmlxgantt_keyboard_navigation.js';
+//                        s.attr('src', libreria);
+//                        $(document.head).html(s);
+//                    }
+//                    solounavez++;
+                        lib="<script";
+                        lib+="  src=\"../../assets/gantt_5.1.2_com/codebase/sources/ext/dhtmlxgantt_keyboard_navigation.js\"";
+                        lib+="  type=\"text/javascript\">";
+                        lib+="  <\/script>";
+                        $("#lib").html(lib);
+                    }
+                }
+                
            }
       });
       
@@ -613,8 +688,27 @@ dp.init(gantt);
 //				setTaskType(task);
 //			});
 //		}); 
-      
+//      $("#g").click(function(){
+//     var dp = new gantt.dataProcessor("../Controller/GanttEvidenciasController.php?Op=Modificar");
+//////
+//    
+//            });
     });
+    
+    function swalError(msj)
+    {
+        swal({
+                title: '',
+                text: msj,
+                showCancelButton: false,
+                showConfirmButton: false,
+                type:"error",
+                timer:1500
+            });
+            //esta linea esta de mas mejor pasarselo al objeto json del swal que tiene su key de tiempo 
+//        setTimeout(function(){swal.close();$('#agregarUsuario .close').click()},1500);
+//        $('#loader').hide();
+    }
     
   </script>
   

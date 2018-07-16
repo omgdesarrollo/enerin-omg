@@ -33,13 +33,7 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/jquery.js" type="text/javascript"></script>
-                <script src="../../js/fInformeValidacionDocumentosView.js" type="text/javascript"></script>
-               
-               <!--librerias para utilizar componentes de dhtmlx-->
-<!--                <link rel="stylesheet" type="text/css" href="../../codebase/fonts/font_roboto/roboto.css"/>
-                <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
-                <script src="../../codebase/dhtmlx.js"></script>-->
-                <!--...-->
+                <script src="../../js/fInformeEvidenciasView.js" type="text/javascript"></script>
                 
         <style>
 
@@ -48,19 +42,6 @@ $Usuario=  Session::getSesion("user");
             max-height: calc(100vh - 110px);
             overflow-y: auto;
             }                    
-            .modal-lg{
-                width: 100%;
-            }  
-            
-            .modal-backdrop {
-            /*En caso de que quieras modificar el backdrop*/
-            z-index: 1040 !important;
-            }
-
-            .modal {
-                /*En caso de que quieras modificar el modal*/
-                z-index: 1050 !important;
-            }
 
             #sugerenciasclausulas {
             width:350px;
@@ -79,16 +60,7 @@ $Usuario=  Session::getSesion("user");
             padding-right: 28px; /*This would hide the scroll bar of the right. To be sure we hide the scrollbar on every browser, increase this value*/
             padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is one*/
             }
-           
-/*input[type="checkbox"] {
-    display:none;
-}*/
-/*input[type="checkbox"] + label span {
-    display:inline-block;
-    width:19px;
-    height:19px;
-    background:url(../../images/base/_excel.png) left top no-repeat;
-}*/
+            
             
 
         </style>            
@@ -127,13 +99,42 @@ require_once 'EncabezadoUsuarioView.php';
         <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre Documento" style="width: 180px;">
         <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 180px;">
         <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
-        <input type="submit" id="btnGraficar" class="btn btn-danger" value="Graficar">
-        
-        
 </div>    
 
 
 <div style="height: 40px"></div>
+
+<!--<div class="container">		
+    <div class="row">
+        <div class="col-md-4">
+                <div class="row align-items-center">
+                        <div class="col-1">
+                                <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkValidado">
+                        </div>
+                        <div class="col-4">Validados</div>
+                </div>
+        </div>
+
+        <div class="col-md-4">
+                <div class="row align-items-center">
+                        <div class="col-1">
+                                <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkNoValidado">
+                        </div>
+                        <div class="col-5">En Proceso</div>
+                </div>
+        </div>
+
+        <div class="col-md-4">
+                <div class="row align-items-center">
+                        <div class="col-1">
+                                <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkSinDocumento">
+                        </div>
+                        <div class="col-6">Sin Documento</div>
+                </div>
+        </div>							
+    </div>
+</div>    -->
+
 
 <div class="container">		
     <div class="row">
@@ -188,21 +189,25 @@ require_once 'EncabezadoUsuarioView.php';
         </div>
         
     </div>
-</div>    
-
+</div>
 
 <table class="table table-bordered table-striped header_fijo tbl-qa" id="idTable ">
     <thead>                              
             <tr>
 
-                  <th class="table-header" width="4.8%">No</th>
-                  <th class="table-header" width="9.6%">Cumplimiento</th>
+<!--                  <th class="table-header" width="4.8%">No</th>
+                  <th class="table-header" width="9.6%">Cumplimiento</th>-->
                   <th class="table-header" width="9.6%">Tema</th>
                   <th class="table-header" width="9.6%">Requisitos</th>
                   <th class="table-header" width="9.6%">Registros</th>
                   <th class="table-header" width="14.4%">Clave del Documento</th>
-                  <th class="table-header" width="14.4%">Nombre del Documento</th>
                   <th class="table-header" width="14.4%">Responsable del Documento</th>
+                  <th class="table-header" width="14.4%">Frecuencia</th>
+                  <th class="table-header" width="14.4%">Evidencia</th>
+                  <th class="table-header" width="14.4%">Fecha de Registro</th>
+                  <th class="table-header" width="14.4%">Desviacion</th>
+                  <th class="table-header" width="14.4%">Accion Correctiva</th>
+                  <th class="table-header" width="14.4%">Avance del Plan</th>
                   <th class="table-header" width="9.6%">Estatus</th>
 
             </tr>
@@ -214,7 +219,7 @@ require_once 'EncabezadoUsuarioView.php';
 </table>
 
                
-<!-- Inicio moda -->
+<!-- Inicio modal Tema y Responsable -->
 <div class="modal draggable fade" id="mostrar-temaresponsable" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
         <div id="loaderModalMostrar"></div>
@@ -277,161 +282,12 @@ require_once 'EncabezadoUsuarioView.php';
 
 
 
-
-
-
-
-
-
-      <div class="modal draggable fade" id="modalgraficas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  <div class="modal-dialog modal-lg" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Personalizacion Graficas </h4>
-		      </div>
-                        
-		      <div class="modal-body">
-                          
-
-		      </div>
-		    </div>
-
-		  </div>
-       </div>
-
                 
 <script>
     listarDatos();
-    
-
-
-//    function filterTableClaveDocumento()
-//    {
-//                // Declare variables 
-//      var input, filter, table, tr, td, i;
-//      input = document.getElementById("idInputClaveDocumento");
-//      filter = input.value.toUpperCase();
-//      table = document.getElementById("idTable");
-//      tr = table.getElementsByTagName("tr");
-//
-//      // Loop through all table rows, and hide those who don't match the search query
-//      for (i = 0; i < tr.length; i++) {
-//        td = tr[i].getElementsByTagName("td")[0];
-//        if (td) {
-//          if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-//            tr[i].style.display = "";
-//          } else {
-//            tr[i].style.display = "none";
-//          }
-//        } 
-//      }
-//  }
-//                
-//                
-//  function filterTableNombreDocumento() 
-//  {
-//  // Declare variables 
-//      var input, filter, table, tr, td, i;
-//      input = document.getElementById("idInputNombreDocumento");
-//      filter = input.value.toUpperCase();
-//      table = document.getElementById("idTable");
-//      tr = table.getElementsByTagName("tr");
-//
-//      // Loop through all table rows, and hide those who don't match the search query
-//      for (i = 0; i < tr.length; i++) {
-//        td = tr[i].getElementsByTagName("td")[1];
-//        if (td) {
-//          if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-//            tr[i].style.display = "";
-//          } else {
-//            tr[i].style.display = "none";
-//          }
-//        } 
-//      }
-//  }   
-//  
-//                
-//  function filterTableResponsableDocumento()
-//  {
-//  // Declare variables 
-//    var input, filter, table, tr, td, i;
-//    input = document.getElementById("idInputResponsableDocumento");
-//    filter = input.value.toUpperCase();
-//    table = document.getElementById("idTable");
-//    tr = table.getElementsByTagName("tr");
-//
-//    // Loop through all table rows, and hide those who don't match the search query
-//    for (i = 0; i < tr.length; i++) 
-//    {
-//      td = tr[i].getElementsByTagName("td")[2];
-//      if (td) {
-//        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-//          tr[i].style.display = "";
-//        } else {
-//          tr[i].style.display = "none";
-//        }
-//      } 
-//    }
-//  }
-                
-
+                    
 </script>
 
-<!--    <script id="template-upload" type="text/x-tmpl">
-      {% for (var i=0, file; file=o.files[i]; i++) { %}
-      <tr class="template-upload" style="width:100%">
-              <td>
-              <span class="preview"></span>
-              </td>
-              <td>
-              <p class="name">{%=file.name%}</p>
-              <strong class="error"></strong>
-              </td>
-              <td>
-              <p class="size">Processing...</p>
-               <div class="progress"></div> 
-              </td>
-              <td>
-              {% if (!i && !o.options.autoUpload) { %}
-                      <button class="start" style="display:none;padding: 0px 4px 0px 4px;" disabled>Start</button>
-              {% } %}
-              {% if (!i) { %}
-                      <button class="cancel" style="padding: 0px 4px 0px 4px;color:white">Cancel</button>
-              {% } %}
-              </td>
-      </tr>
-      {% } %} 
-</script>-->
-
-
-<!--<script id="template-download" type="text/x-tmpl">
-{% var t = $('#fileupload').fileupload('active'); var i,file;%}
-  {% for (i=0,file; file=o.files[i]; i++) { %}
-  <tr class="template-download">
-          <td>
-          <span class="preview">
-                  {% if (file.thumbnailUrl) { %}
-                  <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
-                  {% } %}
-          </span>
-          </td>
-          <td>
-          <p class="name">
-                  <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
-          </p>
-          </td>
-          <td>
-          <span class="size">{%=o.formatFileSize(file.size)%}</span>
-          </td>
-           <td> 
-           <button class="delete" style="padding: 0px 4px 0px 4px;" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>Delete</button> 
-           <input type="checkbox" name="delete" value="1" class="toggle"> 
-           </td> 
-  </tr>
-  {% } %}
-  {% if(t == 1){ if( $('#tempInputIdValidacionDocumento').length > 0 ) { var ID_VALIDACION_DOCUMENTO = $('#tempInputIdValidacionDocumento').val(); mostrar_urls(ID_VALIDACION_DOCUMENTO);} } %}
-</script>-->
             
             <!--<script src="../../js/fReporteValidacionDocumentosView.js" type="text/javascript"></script>-->
             <!--Inicia para el spiner cargando-->
@@ -446,7 +302,9 @@ require_once 'EncabezadoUsuarioView.php';
             <!--Para abrir alertas del encabezado-->
             <script src="../../assets/probando/js/ace-elements.min.js"></script>
             <script src="../../assets/probando/js/ace.min.js"></script>
-       
+    
+
+           
                 
 	</body>
      

@@ -235,7 +235,7 @@ function loadDataSideBarOficiosDocumentacion()
         mySidebar = new dhtmlXSideBar({
         parent: "sidebarObj",
         icons_path: "../../images/base/",    
-                                template:'tiles',
+        template:'tiles',
         width: 350,
         items: [
           {id: "informesValidacionDocumentos", text: "Informe Validacion de Documentos", icon: "documentos.png"},
@@ -245,16 +245,16 @@ function loadDataSideBarOficiosDocumentacion()
         ]
       });
 
-                                 
+//             $("#informesValidacionDocumentos").click(function (){
+//                 alert("le ");
+//             });                    
         mySidebar.attachEvent("onSelect", function(id, value){
                   switch(id){
                       case "informesValidacionDocumentos":
                            $("#sidebarObjV").load('InyectarVistasView.php #informesValidacionDocumentos');
                       break;  
-
-
-                      case "":
-                           $("#sidebarObjV").load('InyectarVistasView.php #');
+                      case "informesEvidencias":
+                           $("#sidebarObjV").load('InyectarVistasView.php #informesEvidencias');
                       break;
 
                   }

@@ -22,11 +22,30 @@ class GanttEvidenciasDao {
         }
     }
     
+    public function verificarsitienedescendencia($v){
+         try
+        { 
+           $query="SELECT if(count(*)=0,'false','true') as t
+               FROM gantt_evidencias tbevidencias WHERE tbevidencias.parent=".$v["id"];
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            
+            return $lista[0]["t"];
+            
+          } catch (Exception $ex) {
+              throw $ex;
+              return false;
+        }
+    }
     
     public function insertarTareasGantt($value){
         try{
-           $query="INSERT INTO gantt_tasks(gantt_tasks.id,gantt_tasks.text,gantt_tasks.start_date,duration,progress,parent) "
-                    . "VALUES('".$value["id"]."','".$value["text"]."','".$value["start_date"]."','".$value["duration"]."','".$value["progress"]."','".$value["parent"]."');";
+           $query="INSERT INTO gantt_evidencias(gantt_evidencias.id,gantt_evidencias.text,gantt_evidencias.start_date,
+                   gantt_evidencias.duration,gantt_evidencias.progress,gantt_evidencias.parent,gantt_evidencias.user,gantt_evidencias.id_evidencias)
+
+                   VALUES('".$value["id"]."','".$value["text"]."','".$value["start_date"]."','".$value["duration"]."',
+                          '".$value["progress"]."','".$value["parent"]."','".$value["user"]."','".$value["id_evidencia"]."');";
+           
             echo "d  ".$query;
             $db= AccesoDB::getInstancia();
             $exito=$db->executeQueryUpdate($query);
@@ -59,22 +78,25 @@ class GanttEvidenciasDao {
 //            throw $ex;
 //        }
 //    }
-//    public function verificarTareaExiste($value){
-//        try{
-//            $query="select count(*) as cantidad from gantt_tasks tble_gantt_task  where tble_gantt_task.id='".$value["id"]."'";
-//            $db= AccesoDB::getInstancia();
-//            $list=$db->executeQuery($query);
-////            echo ($list[0]["cantidad"]);
-////            echo json_encode($list[0]["cantidad"]);
-//            return $list;
-//        } catch (Exception $ex) {
-//            throw $ex;
-//        }
-//    }
+    public function verificarTareaExiste($value){
+        try{
+            $query="select count(*) as cantidad from gantt_evidencias tb_gantt_evidencias  where tb_gantt_evidencias.id='".$value["id"]."'";
+            $db= AccesoDB::getInstancia();
+            $list=$db->executeQuery($query);
+//            echo ($list[0]["cantidad"]);
+//            echo json_encode($list[0]["cantidad"]);
+            return $list;
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
     
     public function updateTareas($value){
         try{
-        $query="UPDATE gantt_tasks set gantt_tasks.text='".$value["text"]."',gantt_tasks.start_date='".$value["start_date"]."',gantt_tasks.duration='".$value["duration"]."',gantt_tasks.progress='".$value["progress"]."',gantt_tasks.parent='".$value["parent"]."' where gantt_tasks.id='".$value['id']."'";
+        $query="UPDATE gantt_evidencias set gantt_evidencias.text='".$value["text"]."',gantt_evidencias.start_date='".$value["start_date"]."',
+		 gantt_evidencias.duration='".$value["duration"]."',gantt_evidencias.progress='".$value["progress"]."',
+		 gantt_evidencias.parent='".$value["parent"]."',gantt_evidencias.user='".$value["user"]."' where gantt_evidencias.id='".$value['id']."'";
+        
             $db= AccesoDB::getInstancia();
             $list=$db->executeQueryUpdate($query);
 //            echo "s  ".$list;
@@ -87,7 +109,7 @@ class GanttEvidenciasDao {
     
     public function deleteTareas($value){
         try{
-            $query="delete from  gantt_tasks  where gantt_tasks.id='".$value["id"]."'";
+            $query="delete from  gantt_evidencias  where gantt_evidencias.id='".$value["id"]."'";
             $db= AccesoDB::getInstancia();
             $list=$db->executeQueryUpdate($query);
             return $list;
@@ -144,7 +166,7 @@ class GanttEvidenciasDao {
 //    }
     public function deleteTareasAjax($value){
         try{
-             $query="delete from  gantt_tasks  where gantt_tasks.id='".$value["id"]."'";
+             $query="delete from  gantt_evidencias  where gantt_evidencias.id='".$value["id"]."'";
             $db= AccesoDB::getInstancia();
           $db->executeQueryUpdate($query);
             
@@ -189,18 +211,18 @@ class GanttEvidenciasDao {
    }
    
    
-   public function obtenerValidacionSupervisorEvidencias($ID_EVIDENCIAS)
+   public function obtenerValidacionSupervisorEvidencias($v)
    {
        try
        {
-           $query="SELECT tbevidencias.validacion_supervisor, tbevidencias.id_usuario
+           $query="SELECT tbevidencias.validacion_supervisor,tbevidencias.id_usuario
                    FROM evidencias tbevidencias
-                   WHERE tbevidencias.id_evidencias=$ID_EVIDENCIAS";
+                   WHERE tbevidencias.id_evidencias=".$v["id_evidencias"];
 
             $db= AccesoDB::getInstancia();
             $lista= $db->executeQuery($query);
             
-       return $lista[0];
+            return $lista[0]["validacion_supervisor"];
            
        } catch (Exception $ex)
        {

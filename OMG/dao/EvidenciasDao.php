@@ -252,4 +252,24 @@ class EvidenciasDAO
         }
     }
     
+    public function actualizarFechaValidacion($ID_EVIDENCIAS)
+    {
+        try
+        {
+            
+           
+                $query="UPDATE evidencias tbevidencias SET tbevidencias.fecha_validacion= if(tbevidencias.validacion_supervisor='true',now(),0) 
+                        WHERE tbevidencias.id_evidencias=$ID_EVIDENCIAS";
+                
+           $db= AccesoDB::getInstancia();
+           $result= $db->executeQueryUpdate($query);
+
+           return $result;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
 }

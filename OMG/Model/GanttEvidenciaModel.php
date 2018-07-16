@@ -18,27 +18,39 @@ class GanttEvidenciaModel {
             return false;
         }
     }
-    
-    public function insertarTareasGantt($data,$v){
+    public function verificarsitienedescendencia($v){
+        try{
+            $dao=new GanttEvidenciasDao();
+            $rec=$dao->verificarsitienedescendencia($v);
+            return $rec;
+        } catch (Exception $ex) {
+            throw $ex;
+            return false;
+        }
+    }
+    public function insertarTareasGantt($data,$id_evidencia){
        
         try{
-            $inserccion;
+//            $inserccion;
             $lista_tareas_verificadas;
             $dao= new GanttEvidenciasDao();
             $modelGantt= new GanttEvidenciaModel();
             $lista_tareas_verificadas=self::verificarTareasExiste($data);
+//            echo "existen ".json_encode($lista_tareas_verificadas);
+//            echo "d  :".$id_evidencia."  -fff";
+//            echo "tareas verificadas : ".json_encode($lista_tareas_verificadas);
             foreach ($data as $value) {
                 if (isset($value["id"])) {
                    foreach ($lista_tareas_verificadas as $value2) {
                         if($value["id"]==$value2["id"]){
                             
                                 if($value2["cantidad"]==0){
-                                    if($value["parent"]!=""){
+                                    if(isset($value["parent"])!=""){
                                         echo "entro en parent";
-//                                         $value["progress"]=0;
-//                                         $value["id_empleado"]=$value["user"];
-//                                         $value["id_seguimiento_entrada"]=$id_seguimiento_que_lleva_al_folio_de_entrada;
-//                                         $dao->insertarTareasGantt($value);
+                                         $value["progress"]=0;
+                                         $value["id_empleado"]=$value["user"];
+                                         $value["id_evidencia"]=$id_evidencia;
+                                         $dao->insertarTareasGantt($value);
 //                                         $dao->insertarTareasConFolioEntrada_de_seguimiento_entrada($value);
                                     }
                                 }
@@ -46,11 +58,11 @@ class GanttEvidenciaModel {
                                     
                                      if($value["!nativeeditor_status"]=='deleted'){
                                          echo "entro a eliminar la tarea";
-//                                         $dao->deleteTareas($value);
+                                         $dao->deleteTareas($value);
 //                                         $dao->deleteTareasDe_Gantt_Seguimiento_Entrada($value);
                                             
                                     }else{
-//                                         $dao->updateTareas($value); 
+                                         $dao->updateTareas($value); 
 //                                         $dao->updateTareasId_EmpleadoXIdGantt_En_Tabla_Seguimiento_entrada($value);
                                     }
                                 }
@@ -58,9 +70,7 @@ class GanttEvidenciaModel {
                     }
                 }
             }
-         
-         
-//          $modelGantt->calculoAvanceProgramaGeneral($id_seguimiento_que_lleva_al_folio_de_entrada);
+       
             
         } catch (Exception $ex) {
             throw $ex;
@@ -108,7 +118,7 @@ class GanttEvidenciaModel {
     public function deleteTareaajax($value)
     {
         try{
-            $dao= new GanttDao();
+            $dao= new GanttEvidenciasDao();
             $dao->deleteTareasAjax($value);
             
         } catch (Exception $ex) {
@@ -149,12 +159,12 @@ class GanttEvidenciaModel {
     }
     
     
-    public function obtenerValidacionSupervisorEvidencias($ID_EVIDENCIAS)
+    public function obtenerValidacionSupervisorEvidencias($v)
     {
         try
         {
             $dao=new GanttEvidenciasDao();
-            $rec= $dao->obtenerValidacionSupervisorEvidencias($ID_EVIDENCIAS);
+            $rec= $dao->obtenerValidacionSupervisorEvidencias($v);
             
             return $rec;
         } catch (Exception $ex)

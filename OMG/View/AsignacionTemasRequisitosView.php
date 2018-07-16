@@ -8,39 +8,25 @@ $Usuario=  Session::getSesion("user");
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-		<meta charset="utf-8" />
-		<title>OMG APPS</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="utf-8" />
+        <title>OMG APPS</title>
 
-		<meta name="description" content="overview &amp; stats" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-
-                 
+        <meta name="description" content="overview &amp; stats" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />                 
         <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
         <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
 
- 
-        
         <script src="../../js/jquery.js" type="text/javascript"></script>
 
         <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
-        <!--<link href="../../css/lista.css" rel="stylesheet" type="text/css"/>-->
-    
-        <!--<link href="../../codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>-->
-        <!--<script src="../../codebase/dhtmlx.js" type="text/javascript"></script>-->
-        <!--<link href="../../codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>-->
-        <!--<link href="../../skins/dhtmlx.css" rel="stylesheet" type="text/css"/>-->
         <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
         <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
         <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
         <link href="../../assets/dhtmlxSuite_v51_std/skins/web/dhtmlx.css" rel="stylesheet" type="text/css"/>
         
         
-<!--        <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
-        <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
-        <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
-        <link href="../../assets/dhtmlxSuite_v51_std/skins/material/dhtmlx.css" rel="stylesheet" type="text/css"/>-->
             <style>
                
                 div#sidebarObj {
@@ -74,12 +60,7 @@ $Usuario=  Session::getSesion("user");
 
 	</head>
 
-<body class="no-skin" >
-            <!--<div>Cargando...</div>-->
-
-            
-            
-            
+<body class="no-skin" >            
 <?php
 
     require_once 'EncabezadoUsuarioView.php';
@@ -188,10 +169,6 @@ $Usuario=  Session::getSesion("user");
 </div>
 
 <div id="contenidoDetalles"></div>
-
-
-<!--<div id="gridbox" style="width:500px; height:350px; background-color:white;"></div>-->
-
 	<script>
             var myLayout, myTree, myToolbar,id_asignacion_t=-1,levelv=0,id_asignacion_r=-1,selec_tema=-1,id_seleccionado=-1,dataIds_req=[],dataIds_reg=[];
             myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);

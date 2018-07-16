@@ -90,6 +90,10 @@
     <iframe src="InformeValidacionDocumentosView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
 
+<div id="informesEvidencias">
+    <iframe src="InformeEvidenciasView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
+</div>
+
 <div id="administrarUsuario">
     <iframe src="AdminView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>

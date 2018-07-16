@@ -84,6 +84,10 @@ class EvidenciasModel
         {
             $dao=new EvidenciasDAO();
             $rec= $dao->actualizarEvidenciaPorColumna($COLUMNA, $VALOR, $ID_EVIDENCIAS);
+            if($COLUMNA==validacion_supervisor)
+            {
+                $rec= $dao->actualizarFechaValidacion($ID_EVIDENCIAS);
+            }
             return $rec;
         }catch (Exception $ex) 
         {
@@ -148,6 +152,21 @@ class EvidenciasModel
             return false;
         }
     }
+    
+//    public function actualizarFechaValidacion($ID_EVIDENCIAS, $VALIDACION)
+//    {
+//        try
+//        {
+//            $dao=new EvidenciasDAO();
+//            $rec= $dao->actualizarFechaValidacion($ID_EVIDENCIAS, $VALIDACION);
+//            
+//            return $rec;
+//        } catch (Exception $ex)
+//        {
+//            throw $ex;
+//            return false;
+//        }
+//    }
     
 }
 ?>
