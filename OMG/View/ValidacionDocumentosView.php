@@ -384,7 +384,17 @@ if(isset($_REQUEST["accion"]))
 
         tempData+="<td><button onClick='mostrarTemaResponsable("+JSON.stringify(documento.temasResponsables)+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'>";
         tempData+="<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
-        tempData+="<td><button onClick='mostrar_urls("+documento.id_validacion_documento+",\""+documento.validacion_documento_responsable+"\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
+        
+        if(documento.permiso_total == 0)
+        {
+            if(documento.soy_responsable==1)
+                tempData+="<td><button onClick='mostrar_urls("+documento.id_validacion_documento+",\"true\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
+            else
+                tempData+="<td><button onClick='mostrar_urls("+documento.id_validacion_documento+",\""+documento.validacion_documento_responsable+"\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
+        }
+        else
+            tempData+="<td><button onClick='mostrar_urls("+documento.id_validacion_documento+",\"false\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
+
         tempData+="<i class='fa fa-cloud-upload' style='font-size: 20px'></i>Adjuntar</button></td>";
         tempData+="<td><button onClick='mostrarRequisitos("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'>";
         tempData+="<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
@@ -720,6 +730,8 @@ if(isset($_REQUEST["accion"]))
                       tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdValidacionDocumento' type='text' style='display:none;' value='"+id_validacion_documento+"'>";                  
                     if(detenerCargas!="true")
                         $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
+                    else
+                        $('#DocumentolistadoUrlModal').html("");
                     $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
                     $('#fileupload').fileupload
                     ({
