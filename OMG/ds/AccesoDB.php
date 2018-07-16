@@ -91,12 +91,17 @@ class AccesoDB {
 //    }
     
     function executeQueryUpdate($query) {
-         $cn=$this->getConnection();
+        $cn=$this->getConnection();
         $result = mysqli_query($this->cn,$query);        
-		return $result;		
+		return $result;
     }
-
-    
+    function executeUpdateRowsAfected($query)
+    {
+        $cn=$this->getConnection();
+        $result = mysqli_query($this->cn,$query);
+        $result2 = mysqli_affected_rows($cn);
+		return $result2;
+    }
 }
 
 
