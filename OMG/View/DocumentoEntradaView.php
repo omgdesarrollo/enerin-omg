@@ -721,7 +721,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 //   alert("entro");
        
         
-                                    var ID_CUMPLIMIENTOMODAL=$("#ID_CUMPLIMIENTOMODAL").val();
+//                                    var ID_CUMPLIMIENTOMODAL=$("#ID_CUMPLIMIENTOMODAL").val();
                                     var FOLIO_REFERENCIA=$("#FOLIO_REFERENCIA").val();
                                     var FOLIO_ENTRADA=$("#FOLIO_ENTRADA").val();
                                     var FECHA_RECEPCION=$("#FECHA_RECEPCION").val();
@@ -738,7 +738,7 @@ require_once 'EncabezadoUsuarioView.php';
                                     var OBSERVACIONES=$("#OBSERVACIONES").val();
                                     var MENSAJE_ALERTA=$("#MENSAJE_ALERTA").val();
                                   
-                                   alert("ID_CUMPLIMIENTOMODAL :"+ID_CUMPLIMIENTOMODAL+"FOLIO_REFERENCIA :"+FOLIO_REFERENCIA
+                                   alert("FOLIO_REFERENCIA :"+FOLIO_REFERENCIA
                                         +"FOLIO_ENTRADA :"+FOLIO_ENTRADA+"FECHA_RECEPCION :"+FECHA_RECEPCION+"ASUNTO :"+ASUNTO
                                         +"REMITENTE :"+REMITENTE+"ID_AUTORIDADDMODAL :"+ID_AUTORIDADMODAL+"ID_TEMAMODAL :"+ID_TEMAMODAL
                                         +"CLASIFICACION :"+CLASIFICACION+"STATUS_DOC :"+STATUS_DOC+"STATUS_DOC :"+STATUS_DOC
@@ -746,7 +746,7 @@ require_once 'EncabezadoUsuarioView.php';
                                         +"FECHA_ALARMA :"+FECHA_ALARMA+"DOCUMENTO :"+DOCUMENTO+"OBSERVACIONES :"+OBSERVACIONES);
 
                                     datos=[];
-                                    datos.push(ID_CUMPLIMIENTOMODAL);//0
+//                                    datos.push(ID_CUMPLIMIENTOMODAL);//0
                                     datos.push(FOLIO_REFERENCIA);//1
                                     datos.push(FOLIO_ENTRADA);//2
                                     datos.push(FECHA_RECEPCION);//3
@@ -1241,7 +1241,7 @@ require_once 'EncabezadoUsuarioView.php';
                 $.ajax({
                         url: "../Controller/DocumentosEntradaController.php?Op=Guardar",
                         type: "POST",
-                        data:'ID_CUMPLIMIENTO='+datos[0]+'&FOLIO_REFERENCIA='+datos[1]+'&FOLIO_ENTRADA='+datos[2]+'&FECHA_RECEPCION='+datos[3]
+                        data:'FOLIO_REFERENCIA='+datos[1]+'&FOLIO_ENTRADA='+datos[2]+'&FECHA_RECEPCION='+datos[3]
                                 +'&ASUNTO='+datos[4]+'&REMITENTE='+datos[5]+'&ID_AUTORIDAD='+datos[6]+'&ID_TEMA='+datos[7]+'&CLASIFICACION='+datos[8]
                                 +'&STATUS_DOC='+datos[9]+'&FECHA_ASIGNACION='+datos[10]+'&FECHA_LIMITE_ATENCION='+datos[11]+'&FECHA_ALARMA='+datos[12]
                                 +'&DOCUMENTO='+datos[13]+'&OBSERVACIONES='+datos[14]+'&MENSAJE_ALERTA='+datos[15],
