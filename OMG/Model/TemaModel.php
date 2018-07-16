@@ -30,8 +30,27 @@ class TemaModel{
             throw  $e;
         }
     }
-  
     
+    
+    public function listarTemasComboBox($cadena, $contrato)
+    {
+        try
+        {
+            $dao=new TemaDAO();
+            $lista= $dao->mostrarTemasComboBox($cadena, $contrato);
+            
+            return $lista;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
+
+
+
     public function listarHijos($CADENA,$CONTRATO,$ID)
     {
         try

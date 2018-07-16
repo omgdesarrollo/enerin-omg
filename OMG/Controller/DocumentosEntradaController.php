@@ -22,15 +22,11 @@ $pojoSeguimientoEntrada= new SeguimientoEntradaPojo();
 switch ($Op) {
 	case 'Listar':
 
-		$Lista=$model->listarDocumentosEntrada();
-    	Session::setSesion("listarDocumentosEntrada",$Lista);
-//    	$tarjet="../view/principalmodulos.php";
-    	header('Content-type: application/json; charset=utf-8');
+		$Lista=$model->listarDocumentosEntrada(Session::getSesion("s_cont"));
+                Session::setSesion("listarDocumentosEntrada",$Lista);
+                header('Content-type: application/json; charset=utf-8');
 		echo json_encode( $Lista);
-//                 $traerultimoinsertado=$model->traer_ultimo_insertado();
-//                       echo json_encode($traerultimoinsertado);
-		//header("location: login.php");
-//echo $json = json_encode(array("n" => "".$Lista.NOMBRE_EMPLEADO, "a" => "apellido",  "c" => "test"));
+                
 		return $Lista;
 		break;
             
@@ -65,14 +61,15 @@ switch ($Op) {
                   
 # code...
 	
-		$pojo->setIdCumplimiento($_REQUEST['ID_CUMPLIMIENTO']);
+//		$pojo->setIdCumplimiento($_REQUEST['ID_CUMPLIMIENTO']);
+		$pojo->setIdCumplimiento(Session::getSesion("s_cont"));
 		$pojo->setFolioReferencia($_REQUEST['FOLIO_REFERENCIA']);
 		$pojo->setFolioEntrada($_REQUEST['FOLIO_ENTRADA']);
 		$pojo->setFechaRecepcion($_REQUEST['FECHA_RECEPCION']);
 		$pojo->setAsunto($_REQUEST['ASUNTO']);
 		$pojo->setRemitente($_REQUEST['REMITENTE']);
-		$pojo->setIdEntidad($_REQUEST['ID_ENTIDAD']);
-		$pojo->setIdClausula($_REQUEST['ID_CLAUSULA']);
+		$pojo->setIdAutoridad($_REQUEST['ID_AUTORIDAD']);
+		$pojo->setIdTema($_REQUEST['ID_TEMA']);
 		$pojo->setClasificacion($_REQUEST['CLASIFICACION']);
 		$pojo->setStatusDoc($_REQUEST['STATUS_DOC']);
 		$pojo->setFechaAsignacion($_REQUEST['FECHA_ASIGNACION']);
@@ -127,8 +124,8 @@ switch ($Op) {
 		break;
 
 	case 'Modificar':
-
-		$data = $model->actualizarPorColumna($_REQUEST["name"],$_REQUEST["value"],$_REQUEST["pk"] );
+                $model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );
+//		$data = $model->actualizarPorColumna($_REQUEST["name"],$_REQUEST["value"],$_REQUEST["pk"] );
 		header('Content-type: application/json; charset=utf-8');
 		echo json_encode($data);                  
 	break;
