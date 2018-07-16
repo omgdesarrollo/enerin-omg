@@ -7,15 +7,52 @@ require_once '../Pojo/ValidacionDocumentoPojo.php';
 
 class ValidacionDocumentoModel{
     
-    public function  listarValidacionDocumentos(){
+    public function  listarValidacionDocumentos($USUARIO,$CONTRATO){
         try{
             $dao=new ValidacionDocumentoDAO();
-            $rec=$dao->mostrarValidacionDocumentos();
-            
-            return $rec;
-    }  catch (Exception $e){
-        throw  $e;
+            $rec=$dao->listarValidacionDocumentos($USUARIO,$CONTRATO);
+            return self::construirListaValidacionDocumento($rec);//self porque la funcion es static
+        }catch (Exception $e)
+        {
+            throw  $e;
+        }
     }
+
+    public function listarValidacionDocumento($USUARIO,$CONTRATO,$ID_VALIDACION_D)
+    {
+        try{
+            $dao=new ValidacionDocumentoDAO();
+            $rec=$dao->listarValidacionDocumento($USUARIO,$CONTRATO,$ID_VALIDACION_D);
+            return self::construirListaValidacionDocumento($rec);
+        }catch (Exception $e)
+        {
+            throw  $e;
+        }
+    }
+
+    public static function construirListaValidacionDocumento($rec)
+    {
+        $idDocumento=0;
+        $lista;
+        $contador=-1;
+        $cont=0;
+        foreach($rec as $key=>$value)
+        {
+            if($value["id_documento"]==$idDocumento)
+            {
+                $cont++;
+                $lista[$contador]["temasResponsables"][$cont]=array("id_empleadoT"=>$value["id_empleadoT"],"responsable_tema"=>$value["responsable_tema"],"nombre_tema"=>$value["nombre_tema"],"id_usuarioT"=>$value["id_usuarioT"]);
+            }
+            else
+            {
+                $idDocumento=$value["id_documento"];
+                $contador++;
+                $lista[$contador]=$value;
+                $lista[$contador]["temasResponsables"][$cont]=array("id_empleadoT"=>$value["id_empleadoT"],"responsable_tema"=>$value["responsable_tema"],"nombre_tema"=>$value["nombre_tema"],"id_usuarioT"=>$value["id_usuarioT"]);
+                $cont=0;
+            }
+        }
+        return $lista;
     }
     
     public function obtenerInfoPorIdValidacionDocumento($id_validacion_documento)
@@ -73,9 +110,7 @@ class ValidacionDocumentoModel{
             throw $ex;
             return false;
         }
-    }
-    
-    
+    }    
 //    public function insert
     public function insertar($id_documento_entrada){
         try{
@@ -86,21 +121,17 @@ class ValidacionDocumentoModel{
         }
     }
 
-    
-    
     public function actualizarPorColumna($COLUMNA,$VALOR,$ID_VALIDACION_DOCUMENTO){
         try{
             $dao=new ValidacionDocumentoDAO();
-            $rec= $dao->actualizarValidacionDocumentoPorColumna($COLUMNA, $VALOR, $ID_VALIDACION_DOCUMENTO);
+            $rec= $dao->actualizarPorColumna($COLUMNA, $VALOR, $ID_VALIDACION_DOCUMENTO);
             
             return $rec;
         } catch (Exception $ex) {
             return false;
         }
     }
-    
-    
-    
+
     public function eliminar(){
         try{
             $dao= new ValidacionDocumentoDAO();
@@ -108,6 +139,101 @@ class ValidacionDocumentoModel{
             $dao->eliminarValidacionDocumento($pojo->getId_validacion_documento());
         } catch (Exception $ex) {
             throw $ex;
+        }
+    }
+
+    public function getValidacionTema($ID_VALIDACION_D)
+    {
+        try{
+            $dao= new ValidacionDocumentoDAO();
+            $resp = $dao->getValidacionTema($ID_VALIDACION_D);
+            return $resp;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+    public function getValidacionDocumento($ID_VALIDACION_D)
+    {
+        try{
+            $dao= new ValidacionDocumentoDAO();
+            $resp = $dao->getValidacionDocumento($ID_VALIDACION_D);
+            return $resp;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+    public function getExisteArchivo($ID_VALIDACION_D)
+    {
+        try{
+            $dao= new ValidacionDocumentoDAO();
+            $resp = $dao->getExisteArchivo($ID_VALIDACION_D);
+            return $resp;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+    public function modificarArchivos($ID_VALIDACION_D,$VALOR)
+    {
+        try{
+            $dao= new ValidacionDocumentoDAO();
+            $resp = $dao->modificarArchivos($ID_VALIDACION_D,$VALOR);
+            return $resp;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+    public function listarObservaciones($ID_VALIDACION_D)
+    {
+        try{
+            $dao= new ValidacionDocumentoDAO();
+            $resp = $dao->listarObservaciones($ID_VALIDACION_D);
+            return "[".$resp."]";
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+    public function getNombreUSuario($ID_USUARIO)
+    {
+        try{
+            $dao= new ValidacionDocumentoDAO();
+            $resp = $dao->getNombreUSuario($ID_USUARIO);
+            return $resp;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+    public function enviarObservacion($ID_VALIDACION_DOCUMENTO,$MENSAJE,$ID_USUARIO,$NOMBRE,$FECHA)
+    {
+        try{
+            $dao= new ValidacionDocumentoDAO();
+            $cadena = "{\"idU\":\"".$ID_USUARIO."\",\"msj\":\"".$MENSAJE."\",\"nombre\":\"".$NOMBRE."\",\"fecha\":\"".$FECHA."\"}";
+            $exito = $dao->enviarObservacion($ID_VALIDACION_DOCUMENTO,$cadena);
+            if($exito==1)
+                return "[".$cadena."]";
+            else
+                return 0;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
         }
     }
     
