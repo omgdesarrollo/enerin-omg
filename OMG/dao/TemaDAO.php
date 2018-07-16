@@ -26,6 +26,27 @@ public function mostrarTemas($cadena,$contrato)
     }
 }
 
+
+public function mostrarTemasComboBox($cadena,$contrato)
+{
+    try
+    {
+        $query="SELECT tbtemas.id_tema, tbtemas.no, tbtemas.nombre, tbtemas.descripcion
+                FROM temas tbtemas
+                WHERE tbtemas.PADRE=0 AND tbtemas.identificador LIKE '%$cadena%' AND tbtemas.contrato=$contrato";
+        
+        $db=  AccesoDB::getInstancia();
+        $lista=$db->executeQuery($query);
+        return $lista;
+        
+    } catch (Exception $ex)
+    {
+        throw $ex;
+        return false;
+    }
+}
+
+
 public function listarHijos($CADENA,$CONTRATO,$ID)
 {
     try

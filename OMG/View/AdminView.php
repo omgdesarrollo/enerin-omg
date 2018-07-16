@@ -757,8 +757,8 @@ $Usuario=  Session::getSesion("user");
             success:function(tabla)
             {
                 $('#bodyTablePermisos').html(tabla);
-                asignarPermisosTabla(permisos);
                 console.log("tabla");
+                asignarPermisosTabla(permisos);
             }
         });
         // var tempData="";

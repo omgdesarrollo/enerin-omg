@@ -33,7 +33,7 @@ switch ($Op) {
             break;
             
             
-        case 'mostrarcombo':
+        case 'mostrarCombo':
 		$Lista=$model->listarAutoridadesRemitentesComboBox();
     	Session::setSesion("listarAutoridadesRemitentesComboBox",$Lista);
     	header('Content-type: application/json; charset=utf-8');

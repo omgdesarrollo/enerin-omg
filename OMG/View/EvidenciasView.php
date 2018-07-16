@@ -1095,7 +1095,6 @@
     
     function enviar_notificacion(mensaje,para,tipoMensaje,atendido,asunto)
     {
-        //   var u=$("#user").val();
           $.ajax({
              url:"../Controller/NotificacionesController.php?Op=EnviarNotificacionHibry",
              data: "PARA="+para+"&MENSAJE="+mensaje+"&ATENDIDO="+atendido+"&TIPO_MENSAJE="+tipoMensaje+"&ASUNTO="+asunto,
@@ -1363,15 +1362,6 @@
                         $(ObjB).css("background",css);
                         cambio=1;
                     }
-                    // if(contador==10)
-                    // {
-                    //     clearInterval(intervalA);
-                    //     $(ObjB).css("background",css);
-                    //     ejecutando=false;
-                    //     // contador=1;
-                    //     ejecutarPrimeraVez=false;
-                    // }
-                    // contador++;
                 },500);
                 timeOutA = setTimeout(function(){
                     clearInterval(intervalA);

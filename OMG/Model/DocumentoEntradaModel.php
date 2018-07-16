@@ -26,11 +26,10 @@ class DocumentoEntradaModel{
         }
     }
 
-    public function  listarDocumentosEntrada(){
+    public function  listarDocumentosEntrada($CONTRATO){
         try{
             $dao=new DocumentoEntradaDAO();
-            $rec=$dao->mostrarDocumentosEntrada();
-            
+            $rec=$dao->mostrarDocumentosEntrada($CONTRATO);
             
             return $rec;
     }  catch (Exception $e){
@@ -120,7 +119,7 @@ class DocumentoEntradaModel{
             }
             $exito_inserccion=$dao->insertarDocumentosEntrada($pojo->getIdCumplimiento(),$pojo->getFolioReferencia(),
                    $pojo->getFolioEntrada(),$pojo->getFechaRecepcion(),$pojo->getAsunto(),$pojo->geRemitente(),
-                   $pojo->getIdEntidad(),$pojo->getIdClausula(),$pojo->getClasificacion(),$pojo->getStatusDoc(),
+                   $pojo->getIdAutoridad(),$pojo->getIdTema(),$pojo->getClasificacion(),$pojo->getStatusDoc(),
                    $pojo->getFechaAsignacion(),$pojo->getFechaLimiteAtencion(),$pojo->getFechaAlarma(),
                    $pojo->getDocumento(),$pojo->getObservaciones(),$pojo->getMensajeAlerta());
                 
@@ -138,20 +137,6 @@ class DocumentoEntradaModel{
         }
         return $data;
     }
-    
-    
-    /*
-    public function actualizar($pojo){
-        try{
-            $dao= new ClausulaDAO();
-        $dao->actualizarClausula($pojo->getIdClausula(),$pojo->getClausula(),$pojo->getSubClausula(),
-                $pojo->getDescripcionClausula(),$pojo->getDescripcionSubClausula(),$pojo->getTextoBreve(),
-                $pojo->getDescripcion(),$pojo->getPlazo());
-        } catch (Exception $ex) {
-                throw $ex;
-        }
-    }
-    */
     
     
     public function actualizarPorColumna($COLUMNA,$VALOR,$ID_DOCUMENTO_ENTRADA){

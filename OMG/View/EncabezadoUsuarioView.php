@@ -1,5 +1,4 @@
 
-
 <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 <?php
 
@@ -52,11 +51,11 @@ foreach($Alarmas as $alarma)
 }
 
 
-$notifacionescompletas= Session::getSesion("notificacionescompletas");
-$contadorNotificaciones=0;
-foreach ($notifacionescompletas as $value){
-    $contadorNotificaciones++;
-}
+// $notifacionescompletas= Session::getSesion("notificacionescompletas");
+// $contadorNotificaciones=0;
+// foreach ($notifacionescompletas as $value){
+//     $contadorNotificaciones++;
+// }
 
 
 
@@ -202,26 +201,26 @@ foreach ($notifacionescompletas as $value){
 	function construirNotificaciones(notificaciones)
 	{
 		cantidad=0;
-		tempData="";
+		tempData2="";
 		// console.log(notificaciones);
 		$.each(notificaciones,function(index,value)
 		{
 			// direcciones = value.dir;
-			tempData += "<a style='cursor:pointer;text-decoration:none;float:left;padding:5px;width:90%;border-bottom:1px #6FB3E0 solid' onClick='irAVista(\""+value.asunto+"\",\""+value.id_contrato+"\")'>";
-			tempData += "<li style='padding-top:5px;'>";
-			tempData += "<img src='../../assets/probando/images/avatars/user.jpg' class='msg-photo' alt='admin' />";
-			tempData += "<span class='msg-body'><span class='msg-title'><span class='blue'>"+value.mensaje+" "+value.nombre;
-			tempData += "</span></span>";
-			tempData += "<span class='msg-time'><i class='ace-icon fa fa-clock-o'></i><span>"+value.fecha_envio+"(Enviado)</span>";
-			tempData += "</span></span></li></a>";
-			tempData += "<i style='color:red;background:transparent;border:none;cursor:pointer;float:left;font-size:x-large;padding:5px'";
-			tempData += "onClick=\"borrarNotificacion("+value.id_notificaciones+")\" class='ace-icon fa fa-times-circle'></i>";
+			tempData2 += "<a style='cursor:pointer;text-decoration:none;float:left;padding:5px;width:90%;border-bottom:1px #6FB3E0 solid' onClick='irAVista(\""+value.asunto+"\",\""+value.id_contrato+"\")'>";
+			tempData2 += "<li style='padding-top:5px;'>";
+			tempData2 += "<img src='../../assets/probando/images/avatars/user.jpg' class='msg-photo' alt='admin' />";
+			tempData2 += "<span class='msg-body'><span class='msg-title'><span class='blue'>"+value.mensaje+" "+value.nombre;
+			tempData2 += "</span></span>";
+			tempData2 += "<span class='msg-time'><i class='ace-icon fa fa-clock-o'></i><span>"+value.fecha_envio+"(Enviado)</span>";
+			tempData2 += "</span></span></li></a>";
+			tempData2 += "<i style='color:red;background:transparent;border:none;cursor:pointer;float:left;font-size:x-large;padding:5px'";
+			tempData2 += "onClick=\"borrarNotificacion("+value.id_notificaciones+")\" class='ace-icon fa fa-times-circle'></i>";
 			cantidad++;
 		});
 		// console.log(tempData);
 		$("#CANTIDAD_NOTIFICACIONES").html("<i class='ace-icon fa fa-envelope-o'></i>Cantidad de Mensajes("+cantidad+")");
 		$("#CANTIDAD_NOTIFICACIONES2").html("<i class='ace-icon fa fa-envelope icon-animated-vertical'></i><span class='badge badge-success'>"+cantidad+"</span>");
-		$("#LISTA_NOTIFICACIONES").html(tempData);
+		$("#LISTA_NOTIFICACIONES").html(tempData2);
 	}
 	function irAVista(direccion,contrato)
 	{
