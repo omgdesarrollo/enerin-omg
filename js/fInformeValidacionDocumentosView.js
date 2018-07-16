@@ -1,36 +1,22 @@
-//listarDatos();
-  parametroscheck={"validado":"false","no_validado":"false","sin_documento":"false"};  
+   parametroscheck={"validado":"false","no_validado":"false","sin_documento":"false"}; 
+   __datos=[];
+   
     $(function (){
-//      alert("tene");
+      
+
 $('#checkValidado').click(function() {
-//        if (!$(this).is(':checked')) {
-//            return confirm("Estas seguro que desea quitarle la seleccion");
-//             alert("esta en "+$(this).is(':checked'));
-//            parametroscheck["validado"]="false";
-//            alert("validados");
-//        }else{
-//            alert("esta  "+$(this).is(':checked'));
+
              parametroscheck["validado"]=$(this).is(':checked');
-//        }
-//alert("checkeado  "+parametroscheck["validado"]);
+
     cargar("validados");
-//alert("d"+parametroscheck["validado"]+"  no validados  "+parametroscheck["no_validado"] );
-    });
+});
     
 $('#checkNoValidado').click(function() {
-//        if (!$(this).is(':checked')) {
-//            return confirm("Estas seguro que desea quitarle la seleccion");
-//        }
-//alert("d");
 parametroscheck["no_validado"]=$(this).is(':checked');
     cargar("novalidados");
     });
     
 $('#checkSinDocumento').click(function() {
-//        if (!$(this).is(':checked')) {
-//            return confirm("Estas seguro que desea quitarle la seleccion");
-//        }
-//alert("d");
 parametroscheck["sin_documento"]=$(this).is(':checked');
     cargar("sindocumento");
     });
@@ -40,26 +26,8 @@ parametroscheck["sin_documento"]=$(this).is(':checked');
     //seccion de click del boton  graficar
     
     $("#btnGraficar").click(function (){
-//window.location
-//alert("has enbtrado");
 
  $('#modalgraficas').modal('show');
- 
-// window.top.$("#modalgraficas").modal('show');
-//   var dhxWins = new dhtmlXWindows();
-////var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
-// dhxWins.attachViewportTo("ventanawindows");
-// var layoutWin=dhxWins.createWindow({id:"emp", text:"OMG", left: 20, top: 30,width:1338,  height:505,  center:true,resize: true,park:true,modal:true	});
-// layoutWin.attachURL("GraficasInformeValidacionView.php", null, true);
-//    $('#modalgraficas').modal({
-//    appendTo: $(window.parent.parent.document).find('body'),
-//    overlayCss: {backgroundColor:"#333"}, // Optional overlay style
-//    overlayClose:true, 
-//});
-// Set overlay's width
-//$(window.parent.document).find('#modalgraficas').css('width', '100%');
-
-
 
     });
     
@@ -90,47 +58,76 @@ function cargar(key){
         break;
     }
 }
-    
-function listarDatos()
-{
-    
-//    console.log(parametroscheck);
 
-//data=[];
-// $.getJSON("../Controller/ReporteValidacionDocumentosController.php?Op=listar", function (result) {
-//                        if (dataLength !== result.length) {
-//                            for (var i = dataLength; i < result.length; i++) {
-//                                data.push({
-//                                    x: result[i].id_validacion_documento
-//                                });
-//                            }
-//                            dataLength = result.length;
-//                            chart.render();
-//                        }
-//                    });
-////                   alert("");
-//console.log(data);
-                    
-                    
-    $.ajax
-    ({
-        url: '../Controller/InformeValidacionDocumentosController.php?Op=listarparametros(v,nv,sd)',
-        type: 'POST',
-        data:parametroscheck,
-        beforeSend:function()
-        {
-            $('#loader').show();
-        },
-        success:function(datos)
-        {
-//            data = datos;
-            construirTable(datos);
-        },
-        error:function(error)
-        {
-            $('#loader').hide();
-        }
+function listarDatos()
+{ 
+        __datos=[];
+        datosParamAjaxValues={};
+        datosParamAjaxValues["url"]="../Controller/InformeValidacionDocumentosController.php?Op=listarparametros(v,nv,sd)";
+        datosParamAjaxValues["type"]="POST";
+        datosParamAjaxValues["paramDataValues"]=parametroscheck;
+        datosParamAjaxValues["async"]=false;
+        var variablefunciondatos=function obtenerDatosServer (r){
+        status="validado";
+        $.each(r["info"],function (index,value){
+        if(value.validacion_tema_responsable=="true"){status="validado";}else{status="En proceso";}
+        __datos.push({"clave_doc":value.clave_documento,
+        "temayresponsable":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+        "requisitos":"<button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+        "registros":"<button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+        "nombre_doc":value.documento,
+        "responsable_doc":value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno,
+        "status":status
+        })
+        });
+//        console.log(__datos);
+   }
+   var listfunciones=[variablefunciondatos];
+   ajaxHibrido(datosParamAjaxValues,listfunciones); 
+   
+       $("#jsGrid").jsGrid({
+        width: "100%",
+        height: "300px",
+        sorting: true,
+        paging: true,
+//        autoload: true,
+ 
+        data: __datos,
+        fields: [
+            { name: "clave_doc",textField: "Clave documento", type: "text", width: 150, validate: "required" },
+             { name: "temayresponsable", type: "text", width: 150, validate: "required" },
+             { name: "requisitos", type: "text", width: 150, validate: "required" },
+              { name: "registros", type: "text", width: 150, validate: "required" },
+              { name: "nombre_doc", type: "text", width: 150, validate: "required" },
+              { name: "responsable_doc", type: "text", width: 150, validate: "required" },
+              { name: "status", type: "text", width: 150, validate: "required" }
+//            { name: "Age", type: "number", width: 50 },
+//            { name: "Address", type: "text", width: 200 },
+//            { name: "Country", type: "select", items: countries, valueField: "Id", textField: "Name" },
+//            { name: "Married", type: "checkbox", title: "Is Married", sorting: false },
+//            { type: "control" }
+        ]
     });
+   
+//    $.ajax
+//    ({
+//        url: '../Controller/InformeValidacionDocumentosController.php?Op=listarparametros(v,nv,sd)',
+//        type: 'POST',
+//        data:parametroscheck,
+//        beforeSend:function()
+//        {
+//            $('#loader').show();
+//        },
+//        success:function(datos)
+//        {
+////            data = datos;
+//            construirTable(datos);
+//        },
+//        error:function(error)
+//        {
+//            $('#loader').hide();
+//        }
+//    });
 }
 
 
@@ -148,7 +145,6 @@ function construirTable(data)
     $("#datosGenerales").html(tempData);
     $("#loader").hide();
 }
-
 
 function construir(value,carga)
 {
@@ -250,8 +246,6 @@ ValoresRegistros += "</ul>";
      }
  })
 }
-    
-
 function loadSpinner(){
         myFunction();
 }
