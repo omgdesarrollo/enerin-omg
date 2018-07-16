@@ -33,7 +33,7 @@ class ValidacionDocumentoModel{
     public static function construirListaValidacionDocumento($rec)
     {
         $idDocumento=0;
-        $lista;
+        $lista="";
         $contador=-1;
         $cont=0;
         foreach($rec as $key=>$value)
@@ -67,8 +67,10 @@ class ValidacionDocumentoModel{
         }    
     }
     
-    public function obtenerTemayResponsable($id_documento){
-        try{
+    public function obtenerTemayResponsable($id_documento)
+    {
+        try
+        {
             $dao=new ValidacionDocumentoDAO();
             $rec=$dao->obtenerTemayResponsable($id_documento);
             
