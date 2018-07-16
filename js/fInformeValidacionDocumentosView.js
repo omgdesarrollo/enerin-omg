@@ -43,7 +43,7 @@ parametroscheck["sin_documento"]=$(this).is(':checked');
 //window.location
 //alert("has enbtrado");
 
-// $('#modalgraficas').modal('show');
+ $('#modalgraficas').modal('show');
  
 // window.top.$("#modalgraficas").modal('show');
 //   var dhxWins = new dhtmlXWindows();
@@ -51,11 +51,11 @@ parametroscheck["sin_documento"]=$(this).is(':checked');
 // dhxWins.attachViewportTo("ventanawindows");
 // var layoutWin=dhxWins.createWindow({id:"emp", text:"OMG", left: 20, top: 30,width:1338,  height:505,  center:true,resize: true,park:true,modal:true	});
 // layoutWin.attachURL("GraficasInformeValidacionView.php", null, true);
-    $('#modalgraficas').modal({
-    appendTo: $(window.parent.parent.document).find('body'),
-    overlayCss: {backgroundColor:"#333"}, // Optional overlay style
-    overlayClose:true, 
-});
+//    $('#modalgraficas').modal({
+//    appendTo: $(window.parent.parent.document).find('body'),
+//    overlayCss: {backgroundColor:"#333"}, // Optional overlay style
+//    overlayClose:true, 
+//});
 // Set overlay's width
 //$(window.parent.document).find('#modalgraficas').css('width', '100%');
 
