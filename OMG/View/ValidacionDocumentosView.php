@@ -453,6 +453,7 @@ if(isset($_REQUEST["accion"]))
             data:'ID_VALIDACION_DOCUMENTO='+idDocumento,
             success:function(observaciones)
             {
+                console.log(observaciones);
                 $.each(JSON.parse(observaciones.observaciones),function(index,value)
                 {
                     tempData += construirObservacion(value,observaciones.idUsuario);   

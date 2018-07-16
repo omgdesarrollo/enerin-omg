@@ -34,12 +34,17 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/jquery.js" type="text/javascript"></script>
                 <script src="../../js/fInformeValidacionDocumentosView.js" type="text/javascript"></script>
+                
                
-               <!--librerias para utilizar componentes de dhtmlx-->
-<!--                <link rel="stylesheet" type="text/css" href="../../codebase/fonts/font_roboto/roboto.css"/>
-                <link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
-                <script src="../../codebase/dhtmlx.js"></script>-->
-                <!--...-->
+                
+                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+
+                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+                
+                
+                
                 
         <style>
 
@@ -79,18 +84,6 @@ $Usuario=  Session::getSesion("user");
             padding-right: 28px; /*This would hide the scroll bar of the right. To be sure we hide the scrollbar on every browser, increase this value*/
             padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is one*/
             }
-           
-/*input[type="checkbox"] {
-    display:none;
-}*/
-/*input[type="checkbox"] + label span {
-    display:inline-block;
-    width:19px;
-    height:19px;
-    background:url(../../images/base/_excel.png) left top no-repeat;
-}*/
-            
-
         </style>            
                 
  			 
@@ -138,15 +131,7 @@ require_once 'EncabezadoUsuarioView.php';
 <div class="container">		
     <div class="row">
         <div class="col-md-12">
-                <!--<div class="row align-items-center">-->
-                        <!--<div class="col-1">-->
-                                <!--<input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkValidado">-->
-                         <!--<div class="col-4">Validados</div>-->
-                        <!--</div>-->
-                       
-                <!--</div>-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
+           
         <div class="col-md-2">
         <div class="input-group">
           <!--<input name="remitosucursal" id="remitosucursal" type="text" required class="form-control" placeholder="Sucursal">-->
@@ -161,58 +146,12 @@ require_once 'EncabezadoUsuarioView.php';
             
             </div>
         <div id="arbolprincipal"></div>
-        <!--<input type="submit"   style=" height: 40px" class="btn btn-info" id="btngraficar" value="Graficar">-->
-        
-<!--        <div class="col-md-10">
-             <div class="input-group">
-                 <input type="submit"  style="width: 40px; height: 40px" class="btn btn-info" id="btngraficar" value="Graficar">
-             </div>
-        </div>-->
-        <!--</div>-->
-        <!--<div class="col-md-2">-->
-                <!--<div class="row align-items-center">-->
-<!--                        <div class="col-1">
-                                <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkNoValidado">
-                        </div>
-                        <div class="col-5">En Proceso</div>-->
-                <!--</div>-->
-        <!--</div>-->
-
-        <!--<div class="col-md-4">-->
-                <!--<div class="row align-items-center">-->
-                        <!--<div class="col-1">-->
-                                
-                        <!--</div>-->
-                        <!--<div class="col-6">Sin Documento</div>-->
-                <!--</div>-->
+       
         </div>
         
     </div>
 </div>    
-
-
-<table class="table table-bordered table-striped header_fijo tbl-qa" id="idTable ">
-    <thead>                              
-            <tr>
-
-                  <th class="table-header" width="4.8%">No</th>
-                  <th class="table-header" width="9.6%">Cumplimiento</th>
-                  <th class="table-header" width="9.6%">Tema</th>
-                  <th class="table-header" width="9.6%">Requisitos</th>
-                  <th class="table-header" width="9.6%">Registros</th>
-                  <th class="table-header" width="14.4%">Clave del Documento</th>
-                  <th class="table-header" width="14.4%">Nombre del Documento</th>
-                  <th class="table-header" width="14.4%">Responsable del Documento</th>
-                  <th class="table-header" width="9.6%">Estatus</th>
-
-            </tr>
-    </thead>
-    
-    <tbody class="hideScrollBar"  id="datosGenerales" style="position: absolute">    
-
-    </tbody>
-</table>
-
+<div id="jsGrid"></div>
                
 <!-- Inicio moda -->
 <div class="modal draggable fade" id="mostrar-temaresponsable" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -292,7 +231,7 @@ require_once 'EncabezadoUsuarioView.php';
 		      </div>
                         
 		      <div class="modal-body">
-                          
+                          <div id="jsGrid"></div>
 
 		      </div>
 		    </div>
@@ -304,77 +243,26 @@ require_once 'EncabezadoUsuarioView.php';
 <script>
     listarDatos();
     
-
-
-//    function filterTableClaveDocumento()
-//    {
-//                // Declare variables 
-//      var input, filter, table, tr, td, i;
-//      input = document.getElementById("idInputClaveDocumento");
-//      filter = input.value.toUpperCase();
-//      table = document.getElementById("idTable");
-//      tr = table.getElementsByTagName("tr");
-//
-//      // Loop through all table rows, and hide those who don't match the search query
-//      for (i = 0; i < tr.length; i++) {
-//        td = tr[i].getElementsByTagName("td")[0];
-//        if (td) {
-//          if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-//            tr[i].style.display = "";
-//          } else {
-//            tr[i].style.display = "none";
-//          }
-//        } 
-//      }
-//  }
-//                
-//                
-//  function filterTableNombreDocumento() 
-//  {
-//  // Declare variables 
-//      var input, filter, table, tr, td, i;
-//      input = document.getElementById("idInputNombreDocumento");
-//      filter = input.value.toUpperCase();
-//      table = document.getElementById("idTable");
-//      tr = table.getElementsByTagName("tr");
-//
-//      // Loop through all table rows, and hide those who don't match the search query
-//      for (i = 0; i < tr.length; i++) {
-//        td = tr[i].getElementsByTagName("td")[1];
-//        if (td) {
-//          if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-//            tr[i].style.display = "";
-//          } else {
-//            tr[i].style.display = "none";
-//          }
-//        } 
-//      }
-//  }   
-//  
-//                
-//  function filterTableResponsableDocumento()
-//  {
-//  // Declare variables 
-//    var input, filter, table, tr, td, i;
-//    input = document.getElementById("idInputResponsableDocumento");
-//    filter = input.value.toUpperCase();
-//    table = document.getElementById("idTable");
-//    tr = table.getElementsByTagName("tr");
-//
-//    // Loop through all table rows, and hide those who don't match the search query
-//    for (i = 0; i < tr.length; i++) 
-//    {
-//      td = tr[i].getElementsByTagName("td")[2];
-//      if (td) {
-//        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-//          tr[i].style.display = "";
-//        } else {
-//          tr[i].style.display = "none";
-//        }
-//      } 
-//    }
-//  }
-                
+//    var datos= [
+//        { "Name": "Otto Clay", "Age": 25, "Country": 1, "Address": "Ap #897-1459 Quam Avenue", "Married": false },
+//        { "Name": "Connor Johnston", "Age": 45, "Country": 2, "Address": "Ap #370-4647 Dis Av.", "Married": true },
+//        { "Name": "Lacey Hess", "Age": 29, "Country": 3, "Address": "Ap #365-8835 Integer St.", "Married": false },
+//        { "Name": "Timothy Henson", "Age": 56, "Country": 1, "Address": "911-5143 Luctus Ave", "Married": true },
+//        { "Name": "Ramona Benton", "Age": 32, "Country": 3, "Address": "Ap #614-689 Vehicula Street", "Married": false },
+//        { "Name": "Ramona Benton", "Age": 32, "Country": 3, "Address": "Ap #614-689 Vehicula Street", "Married": false },
+//        { "Name": "Ramona Benton", "Age": 32, "Country": 3, "Address": "Ap #614-689 Vehicula Street", "Married": false },
+//        { "Name": "Ramona Benton", "Age": 32, "Country": 3, "Address": "Ap #614-689 Vehicula Street", "Married": false },
+//        { "Name": "Ramona Benton", "Age": 32, "Country": 3, "Address": "Ap #614-689 Vehicula Street", "Married": false }
+//    ];
+ 
+//    var countries = [
+//        { Name: "", Id: 0 },
+//        { Name: "United States", Id: 1 },
+//        { Name: "Canada", Id: 2 },
+//        { Name: "United Kingdom", Id: 3 }
+//    ];
+ 
+              
 
 </script>
 
