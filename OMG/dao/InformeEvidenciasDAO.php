@@ -8,16 +8,15 @@ class InformeEvidenciasDAO{
         $query_concat="";
         if($v["param"]["v"]=="true"){
             
-            $query_concat.="AND( tbvalidacion_documento.validacion_tema_responsable='true'";
+            $query_concat.="AND( tbevidencias.validacion_supervisor='true'";
             if($v["param"]["n_v"]=="true"){
-                        $query_concat.="   or tbvalidacion_documento.validacion_tema_responsable='false')";
+                        $query_concat.="   or tbevidencias.validacion_supervisor='false')";
             }else{
                  $query_concat.=")";
             }
         }
         if($v["param"]["n_v"]=="true"){
-            $query_concat.=" AND tbvalidacion_documento.validacion_tema_responsable='false'";
-            
+            $query_concat.=" AND tbevidencias.validacion_supervisor='false'";            
         }
         
         try

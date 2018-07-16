@@ -39,6 +39,7 @@ $Usuario=  Session::getSesion("user");
 
                              
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+                <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>
 
                 <!-- cargar archivo -->
                 <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
@@ -216,10 +217,9 @@ require_once 'EncabezadoUsuarioView.php';
                   
 //		  foreach($faq as $k=>$v) {
                     $Lista = Session::getSesion("listarDocumentosEntrada");
-//                   $Lista = PaginacionController::show_rows("ID_ASIGNACION_TEMA_REQUISITO");
                     $cbxCump= Session::getSesion("listarCumplimientosComboBox");
-                    $cbxEnt= Session::getSesion("listarEntidadesReguladorasComboBox");
-                    $cbxClau= Session::getSesion("listarClausulasComboBox");
+                    $cbxAut= Session::getSesion("listarAutoridadesRemitentesComboBox");
+                    $cbxTem= Session::getSesion("listarTemasComboBox");
 //                  
 //                  $datostema
                   $numeracion = 1;
@@ -234,34 +234,8 @@ require_once 'EncabezadoUsuarioView.php';
                       
 			  <tr class="table-row">
 
-                                <!--<td><?php //echo $numeracion++;   ?></td -->
-                                
-                                <td> 
-                                    <select id="id_cumplimiento"class="select" onchange="saveComboToDatabase('id_cumplimiento', <?php echo $filas["id_documento_entrada"]; ?> )">
-                                    <?php
-                                    $s="";
-                                                foreach ($cbxCump as $value) {
-                                                    if($value["id_cumplimiento"]=="".$filas["id_cumplimiento"]){
-                                                    
-                                                    ?>
-                                    
-                                        <option value="<?php echo "".$value["id_cumplimiento"] ?>"  selected ><?php echo "".$value["clave_cumplimiento"]; ?></option>
-                                        
-                                                        <?php
-                                                        }
-                                                        else{
-                                                            ?>
-                                                        }
-                                                             <option value="<?php echo "".$value["id_cumplimiento"] ?>"  ><?php echo "".$value["clave_cumplimiento"]; ?></option>
-                                                             <?php
-                                                        }
-                                                }
-                                    
-                                    ?>
-                                    </select>                                                                     
-                                </td>
-                                
-                                
+                                <!--<td><?php //echo $numeracion++;   ?></td -->                                
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'clave_cumplimiento','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_cumplimiento"]; ?></td>                                                               
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'folio_referencia','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["folio_referencia"]; ?></td>                                                               
                                 <td contenteditable="true" onBlur="saveToDatabase(this,'folio_entrada','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["folio_entrada"]; ?></td>
                                 
@@ -279,22 +253,22 @@ require_once 'EncabezadoUsuarioView.php';
                                 
                                 
                                 <td> 
-                                    <select id="id_entidad" class="select" onchange="saveComboToDatabase('id_entidad', <?php echo $filas["id_documento_entrada"]; ?> )">
+                                    <select id="id_autoridad" class="select" onchange="saveComboToDatabase('id_autoridad', <?php echo $filas["id_documento_entrada"]; ?> )">
                                     <?php
                                     $s="";
-                                                foreach ($cbxEnt as $value) {
-                                                    if($value["id_entidad"]=="".$filas["id_entidad"]){
+                                                foreach ($cbxAut as $value) {
+                                                    if($value["id_autoridad"]=="".$filas["id_autoridad"]){
                                                     
                                                     ?>
                                     
-                                        <option value="<?php echo "".$value["id_entidad"] ?>"  selected ><?php echo "".$value["clave_entidad"]; ?></option>
+                                        <option value="<?php echo "".$value["id_autoridad"] ?>"  selected ><?php echo "".$value["clave_autoridad"]; ?></option>
                                         
                                                         <?php
                                                         }
                                                         else{
                                                             ?>
                                                         }
-                                                             <option value="<?php echo "".$value["id_entidad"] ?>"  ><?php echo "".$value["clave_entidad"]; ?></option>
+                                                             <option value="<?php echo "".$value["id_autoridad"] ?>"  ><?php echo "".$value["clave_autoridad"]; ?></option>
                                                              <?php
                                                         }
                                                 }
@@ -308,19 +282,19 @@ require_once 'EncabezadoUsuarioView.php';
                                     <select id="id_clausula" class="select" onchange="saveComboToDatabase('id_clausula', <?php echo $filas["id_documento_entrada"]; ?> )">
                                     <?php
                                     $s="";
-                                                foreach ($cbxClau as $value) {
-                                                    if($value["id_clausula"]=="".$filas["id_clausula"]){
+                                                foreach ($cbxTem as $value) {
+                                                    if($value["id_tema"]=="".$filas["id_tema"]){
                                                     
                                                     ?>
                                     
-                                        <option value="<?php echo "".$value["id_clausula"] ?>"  selected ><?php echo "".$value["clausula"]; ?></option>
+                                        <option value="<?php echo "".$value["id_tema"] ?>"  selected ><?php echo "".$value["no"]; ?></option>
                                         
                                                         <?php
                                                         }
                                                         else{
                                                             ?>
                                                         }
-                                                             <option value="<?php echo "".$value["id_clausula"] ?>"  ><?php echo "".$value["clausula"]; ?></option>
+                                                             <option value="<?php echo "".$value["id_tema"] ?>"  ><?php echo "".$value["no"]; ?></option>
                                                              <?php
                                                         }
                                                 }
@@ -330,7 +304,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 </td>
                                 
                                     
-                                <td style="background-color: #ccccff" contenteditable="false" onBlur="saveToDatabase(this,'descripcion_clausula','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["descripcion_clausula"]; ?></td>
+                                <td style="background-color: #ccccff" contenteditable="false" onBlur="saveToDatabase(this,'nombre','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre"]; ?></td>
                                 <td style="background-color: #ccccff" contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleado"]; ?></td>
                                 
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'clasificacion','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);">
@@ -443,11 +417,7 @@ require_once 'EncabezadoUsuarioView.php';
 		  </tbody>
 		</table>
 
-                     
 
-<!--			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-			</a>-->
     </div>
 
 </div>
@@ -498,26 +468,12 @@ require_once 'EncabezadoUsuarioView.php';
 
                                         <!-- jjrl -->
                                     <!-- <form action="" id="form_subir"> -->
-                                                <div class="form-group">
-							<label class="control-label" for="title">Contrato:</label>
-                                                        
-                                                        <select   id="ID_CUMPLIMIENTOMODAL" class="select1">
-                                                                <?php
-                                                                $s="";
-                                                                foreach ($cbxCump as $value) {
-                                                                ?>
-                                                                
-                                                                <option value="<?php echo "".$value["id_cumplimiento"] ?>"  ><?php echo "".$value["clave_cumplimiento"]; ?></option>
-                                                                
-                                                                    <?php
-                                                                
-                                                                }
                                     
-                                                                 ?>
-                                                        </select>
-                                                        
+                                                <div class="form-group">
+							<label class="control-label" for="title"><?php echo "Contrato: ".$filas["id_cumplimiento"]; ?></label>
 							<div class="help-block with-errors"></div>
-						</div>
+                                                        <div id="ValidarContratoModal" ></div>
+						</div>    
                           
                                                 
                                                 <div class="form-group">
@@ -564,13 +520,13 @@ require_once 'EncabezadoUsuarioView.php';
                                                 <div class="form-group">
 							<label class="control-label" for="title">Autoridad Remitente:</label>
                                                         
-                                                        <select   id="ID_ENTIDADMODAL" class="select2">
+                                                        <select   id="ID_AUTORIDADMODAL" class="select2">
                                                                 <?php
                                                                 $s="";
-                                                                foreach ($cbxEnt as $value) {
+                                                                foreach ($cbxAut as $value) {
                                                                 ?>
                                                                 
-                                                                <option value="<?php echo "".$value["id_entidad"] ?>"  ><?php echo "".$value["clave_entidad"]; ?></option>
+                                                                <option value="<?php echo "".$value["id_autoridad"] ?>"  ><?php echo "".$value["clave_autoridad"]; ?></option>
                                                                 
                                                                     <?php
                                                                 
@@ -587,13 +543,13 @@ require_once 'EncabezadoUsuarioView.php';
                                                 <div class="form-group">
 							<label class="control-label" for="title">Tema:</label>
                                                         
-                                                        <select   id="ID_CLAUSULAMODAL" class="select3">
+                                                        <select   id="ID_TEMAMODAL" class="select3">
                                                                 <?php
                                                                 $s="";
-                                                                foreach ($cbxClau as $value) {
+                                                                foreach ($cbxTem as $value) {
                                                                 ?>
                                                                 
-                                                                <option value="<?php echo "".$value["id_clausula"] ?>"  ><?php echo "".$value["clausula"]; ?></option>
+                                                                <option value="<?php echo "".$value["id_tema"] ?>"  ><?php echo "".$value["nombre"]; ?></option>
                                                                 
                                                                     <?php
                                                                 
@@ -726,16 +682,14 @@ require_once 'EncabezadoUsuarioView.php';
                           
                           
                         $('.select').on('change', function() {  
-//                          console.log( $(this).prop('value') );
-//                          alert("el value que va a viajar es "+ $(this).prop('value'));
                           
                         if (cualmodificar == "id_cumplimiento") {
     
                          column="id_cumplimiento";
     
-                        } else if (cualmodificar == "id_entidad"){
+                        } else if (cualmodificar == "id_autoridad"){
                           
-                          column="id_entidad";                          
+                          column="id_autoridad";                          
                           
                         } else if (cualmodificar == "status_doc"){
                             
@@ -744,7 +698,7 @@ require_once 'EncabezadoUsuarioView.php';
                             
                         } else {
                             
-                          column="id_clausula";  
+                          column="id_tema";  
                             
                         }
                         
@@ -757,13 +711,6 @@ require_once 'EncabezadoUsuarioView.php';
 				type: "POST",
 				data:'column='+column+'&editval='+val+'&id='+id_documento_entrada,
 				success: function(data){
-                                    
-                                    
-//                                    window.location.href="AsignacionTemasRequisitosView.php?page=1";
-					//$(editableObj).css("background","#FDFDFD");
-//                                        consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
-//                                        consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
-//                                        window.location.href="DocumentoEntradaView.php";
                                         refresh();
 				}   
                            });
@@ -780,8 +727,8 @@ require_once 'EncabezadoUsuarioView.php';
                                     var FECHA_RECEPCION=$("#FECHA_RECEPCION").val();
                                     var ASUNTO=$("#ASUNTO").val();
                                     var REMITENTE=$("#REMITENTE").val();
-                                    var ID_ENTIDADMODAL=$("#ID_ENTIDADMODAL").val();
-                                    var ID_CLAUSULAMODAL=$("#ID_CLAUSULAMODAL").val();
+                                    var ID_AUTORIDADMODAL=$("#ID_AUTORIDADMODAL").val();
+                                    var ID_TEMAMODAL=$("#ID_TEMAMODAL").val();
                                     var CLASIFICACION=$("#CLASIFICACION").val();
                                     var STATUS_DOC=$("#STATUS_DOC").val();
                                     var FECHA_ASIGNACION=$("#FECHA_ASIGNACION").val();
@@ -791,12 +738,12 @@ require_once 'EncabezadoUsuarioView.php';
                                     var OBSERVACIONES=$("#OBSERVACIONES").val();
                                     var MENSAJE_ALERTA=$("#MENSAJE_ALERTA").val();
                                   
-                                //   alert("ID_CUMPLIMIENTOMODAL :"+ID_CUMPLIMIENTOMODAL+"FOLIO_REFERENCIA :"+FOLIO_REFERENCIA
-                                //        +"FOLIO_ENTRADA :"+FOLIO_ENTRADA+"FECHA_RECEPCION :"+FECHA_RECEPCION+"ASUNTO :"+ASUNTO
-                                //        +"REMITENTE :"+REMITENTE+"ID_ENTIDADMODAL :"+ID_ENTIDADMODAL+"ID_CLAUSULAMODAL :"+ID_CLAUSULAMODAL
-                                //        +"CLASIFICACION :"+CLASIFICACION+"STATUS_DOC :"+STATUS_DOC+"STATUS_DOC :"+STATUS_DOC
-                                //        +"FECHA_ASIGNACION :"+FECHA_ASIGNACION+"FECHA_LIMITE_ATENCION :"+FECHA_LIMITE_ATENCION
-                                //        +"FECHA_ALARMA :"+FECHA_ALARMA+"DOCUMENTO :"+DOCUMENTO+"OBSERVACIONES :"+OBSERVACIONES);
+                                   alert("ID_CUMPLIMIENTOMODAL :"+ID_CUMPLIMIENTOMODAL+"FOLIO_REFERENCIA :"+FOLIO_REFERENCIA
+                                        +"FOLIO_ENTRADA :"+FOLIO_ENTRADA+"FECHA_RECEPCION :"+FECHA_RECEPCION+"ASUNTO :"+ASUNTO
+                                        +"REMITENTE :"+REMITENTE+"ID_AUTORIDADDMODAL :"+ID_AUTORIDADMODAL+"ID_TEMAMODAL :"+ID_TEMAMODAL
+                                        +"CLASIFICACION :"+CLASIFICACION+"STATUS_DOC :"+STATUS_DOC+"STATUS_DOC :"+STATUS_DOC
+                                        +"FECHA_ASIGNACION :"+FECHA_ASIGNACION+"FECHA_LIMITE_ATENCION :"+FECHA_LIMITE_ATENCION
+                                        +"FECHA_ALARMA :"+FECHA_ALARMA+"DOCUMENTO :"+DOCUMENTO+"OBSERVACIONES :"+OBSERVACIONES);
 
                                     datos=[];
                                     datos.push(ID_CUMPLIMIENTOMODAL);//0
@@ -805,8 +752,8 @@ require_once 'EncabezadoUsuarioView.php';
                                     datos.push(FECHA_RECEPCION);//3
                                     datos.push(ASUNTO);//4
                                     datos.push(REMITENTE);//5
-                                    datos.push(ID_ENTIDADMODAL);//6
-                                    datos.push(ID_CLAUSULAMODAL);//7
+                                    datos.push(ID_AUTORIDADMODAL);//6
+                                    datos.push(ID_TEMAMODAL);//7
                                     datos.push(CLASIFICACION);//8
                                     datos.push(STATUS_DOC);//9
                                     datos.push(FECHA_ASIGNACION);//10
@@ -1020,14 +967,14 @@ require_once 'EncabezadoUsuarioView.php';
 		
 		function saveToDatabase(editableObj,column,id) {
                     //alert("entraste aqui ");
-			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
+//			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
 			$.ajax({
                                 url: "../Controller/DocumentosEntradaController.php?Op=Modificar",
 				type: "POST",
 				data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
 				success: function(data){
-					$(editableObj).css("background","#FDFDFD");
-                                        
+//					$(editableObj).css("background","#FDFDFD");
+                                    refresh();
 				}   
 		   });
 		}
@@ -1190,19 +1137,6 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 
                 function saveComboToDatabase(column,id){
-//                   value= $("#id_clausula").val();
-//                    //alert("esta es la columna" + column + "este es el" + id);
-//                    alert("este es el id de la clausula " + id + " esta es la columna que se va a editar " + column + " el nuevo dato que va a viajar a la BD " + value);
-//                   //$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
-//                   $.ajax({
-//                                url: "../Controller/AsignacionTemasRequisitosController.php?Op=Modificar",
-//				type: "POST",
-//				data:'column='+column+'&editval='+value+'&id='+id,
-//				success: function(data){
-//                                    
-//					//$(editableObj).css("background","#FDFDFD");
-//				}   
-//		   });
                         id_documento_entrada=id;
                         cualmodificar=column;
                }
@@ -1308,7 +1242,7 @@ require_once 'EncabezadoUsuarioView.php';
                         url: "../Controller/DocumentosEntradaController.php?Op=Guardar",
                         type: "POST",
                         data:'ID_CUMPLIMIENTO='+datos[0]+'&FOLIO_REFERENCIA='+datos[1]+'&FOLIO_ENTRADA='+datos[2]+'&FECHA_RECEPCION='+datos[3]
-                                +'&ASUNTO='+datos[4]+'&REMITENTE='+datos[5]+'&ID_ENTIDAD='+datos[6]+'&ID_CLAUSULA='+datos[7]+'&CLASIFICACION='+datos[8]
+                                +'&ASUNTO='+datos[4]+'&REMITENTE='+datos[5]+'&ID_AUTORIDAD='+datos[6]+'&ID_TEMA='+datos[7]+'&CLASIFICACION='+datos[8]
                                 +'&STATUS_DOC='+datos[9]+'&FECHA_ASIGNACION='+datos[10]+'&FECHA_LIMITE_ATENCION='+datos[11]+'&FECHA_ALARMA='+datos[12]
                                 +'&DOCUMENTO='+datos[13]+'&OBSERVACIONES='+datos[14]+'&MENSAJE_ALERTA='+datos[15],
                         // async: false,
@@ -1494,11 +1428,8 @@ require_once 'EncabezadoUsuarioView.php';
                         }
                 });
         }
-        function loadSpinner()
-        {
-//                    alert("se cargara otro ");
-                myFunction();
-        }
+
+
         function borrarArchivo(url)
         {
 

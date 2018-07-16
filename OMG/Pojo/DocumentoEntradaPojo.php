@@ -21,8 +21,8 @@ class DocumentoEntradaPojo {
     private $fecha_recepcion='';
     private $asunto='';
     private $remitente='';
-    private $id_entidad='';
-    private $id_clausula='';
+    private $id_tema='';
+    private $id_autoridad='';
     private $clasificacion='';
     private $status_doc='';
     private $fecha_asignacion='';
@@ -98,23 +98,23 @@ class DocumentoEntradaPojo {
        $this->Remitente=$remitente;
     }
 
-
-    public function getIdEntidad(){
-        return $this->Id_Entidad;
+    
+    public function getIdTema(){
+        return $this->Id_Tema;
     }
-    public function setIdEntidad($id_entidad){
-       $this->Id_Entidad=$id_entidad;
+    public function setIdTema($id_tema){
+       $this->Id_Tema=$id_tema;
+    }
+
+    
+    public function getIdAutoridad(){
+        return $this->Id_Autoridad;
+    }
+    public function setIdAutoridad($id_autoridad){
+       $this->Id_Autoridad=$id_autoridad;
     }
     
     
-    public function getIdClausula(){
-        return $this->Id_Clausula;
-    }
-    public function setIdClausula($id_clausula){
-       $this->Id_Clausula=$id_clausula;
-    }
-
-
     public function getClasificacion(){
         return $this->Clasificacion;
     }
