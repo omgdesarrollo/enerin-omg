@@ -1,5 +1,5 @@
 
-<!-- <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/> -->
+<link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 <?php
 
 date_default_timezone_set("America/Mexico_city");
