@@ -66,86 +66,26 @@ function cargar(key){
 
 function listarDatos()
 {
-//    $.ajax
-//    ({
-//        url: '../Controller/InformeEvidenciasController.php?Op=listarparametros(v,nv,sd)',
-//        type: 'POST',
-//        data:parametroscheck,
-//        beforeSend:function()
-//        {
-//            $('#loader').show();
-//        },
-//        success:function(datos)
-//        {
-////            data = datos;
-//            construirTable(datos);
-//        },
-//        error:function(error)
-//        {
-//            $('#loader').hide();
-//        }
-//    });
-
-     __datos=[];
-        contador=1;
-        datosParamAjaxValues={};
-        datosParamAjaxValues["url"]="../Controller/InformeEvidenciasController.php?Op=listarparametros(v,nv,sd)";
-        datosParamAjaxValues["type"]="POST";
-        datosParamAjaxValues["paramDataValues"]=parametroscheck;
-        datosParamAjaxValues["async"]=false;
-        var variablefunciondatos=function obtenerDatosServer (r){
-        status="validado";
-        $.each(r,function (index,value){
-        if(value.validacion_supervisor=="true"){status="validado";}else{status="En proceso";}
-        __datos.push({
-            "No":contador++,
-            "Tema":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-            "Requisitos":"<button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-            "Registros":"<button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-            "Clave del Documento":value.clave_documento,
-            "Responsable del Documento":value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno,
-            "Frecuencia":value.frecuencia,
-            "Evidencia":"<button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'><i class='fa fa-cloud-upload' style='font-size: 15px'></i> Ver</button>",
-            "Fecha de Registro":"<i class='fa fa-cloud-upload' style='font-size: 15px'>Fecha</i>",
-            "Desviacion":value.desviacion,
-            "Accion Correctiva":value.accion_correctiva,
-            "Avance del Plan":"<i class='fa fa-cloud-upload' style='font-size: 15px'>%%</i>",
-            "status":status
-        })
-        });
-//        console.log(__datos);
-   }
-   
-   var listfunciones=[variablefunciondatos];
-   ajaxHibrido(datosParamAjaxValues,listfunciones); 
-   
-       $("#jsGrid").jsGrid({
-        width: "100%",
-        height: "300px",
-        heading: true,
-        sorting: true,
-        paging: true,
- 
-        data: __datos,
-        fields: [
-                { name: "No", type: "text", width: 80, validate: "required" },
-                { name: "Tema", type: "text", width: 150, validate: "required" },
-                { name: "Requisitos", type: "text", width: 150, validate: "required" },
-                { name: "Registros", type: "text", width: 150, validate: "required" },
-//                { name: "Clave del Documento",textField: "Clave documento", type: "text", width: 150, validate: "required" },
-                { name: "Clave del Documento", type: "text", width: 150, validate: "required" },    
-                { name: "Responsable del Documento", type: "text", width: 150, validate: "required" },
-                { name: "Frecuencia", type: "text", width: 150, validate: "required" },
-                { name: "Evidencia", type: "text", width: 150, validate: "required" },
-                { name: "Fecha de Registro", type: "text", width: 150, validate: "required" },
-                { name: "Desviacion", type: "text", width: 150, validate: "required" },
-                { name: "Accion Correctiva", type: "text", width: 150, validate: "required" },
-                { name: "Avance del Plan", type: "text", width: 150, validate: "required" },
-                { name: "status", type: "text", width: 150, validate: "required" }
-        ]
+    $.ajax
+    ({
+        url: '../Controller/InformeEvidenciasController.php?Op=listarparametros(v,nv,sd)',
+        type: 'POST',
+        data:parametroscheck,
+        beforeSend:function()
+        {
+            $('#loader').show();
+        },
+        success:function(datos)
+        {
+//            data = datos;
+            construirTable(datos);
+        },
+        error:function(error)
+        {
+            $('#loader').hide();
+        }
     });
 }
-
 
 function construirTable(datos)
 {
