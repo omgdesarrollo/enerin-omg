@@ -13,7 +13,13 @@ $('#checkSinDocumento').click(function() {
 parametroscheck["sin_documento"]=$(this).is(':checked');
     cargar("sindocumento");
     });
+<<<<<<< HEAD
     $("#btnGraficar").click(function (){
+=======
+    
+$("#btnGraficar").click(function (){
+
+>>>>>>> 7d2f003e12930dfa75d2a77e4b1f62ddcde96c08
  $('#modalgraficas').modal('show');
     });
     });
@@ -36,6 +42,7 @@ function cargar(key){
 function listarDatos()
 { 
         __datos=[];
+        contador=1;
         datosParamAjaxValues={};
         datosParamAjaxValues["url"]="../Controller/InformeValidacionDocumentosController.php?Op=listarparametros(v,nv,sd)";
         datosParamAjaxValues["type"]="POST";
@@ -45,16 +52,18 @@ function listarDatos()
         status="validado";
         $.each(r["info"],function(index,value){
           (value.validacion_tema_responsable=="true")?status="validado":status="En Proceso";
-           __datos.push({"clave_doc":value.clave_documento,
-           "temayresponsable":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-           "requisitos":"<button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-           "registros":"<button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-           "nombre_doc":value.documento,
-           "responsable_doc":value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno,
-           "status":status
+           __datos.push({
+           "No":contador++,
+           "Clave del Documento":value.clave_documento,
+           "Nombre del Documento":value.documento,
+           "Responsable del Documento":value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno,
+           "Tema":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+           "Requisitos":"<button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+           "Registros":"<button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+           "Status":status
            })
         });
-   }
+    }
    var listfunciones=[variablefunciondatos];
    ajaxHibrido(datosParamAjaxValues,listfunciones); 
    $("#jsGrid").html();
@@ -67,6 +76,7 @@ function listarDatos()
         data: __datos,
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields: [
+<<<<<<< HEAD
               { name: "clave_doc",label: "Clave documento", type: "text", width: 150, validate: "required" },
               { name: "temayresponsable", type: "text", width: 150, validate: "required" },
               { name: "requisitos", type: "text", width: 150, validate: "required" },
@@ -79,31 +89,65 @@ function listarDatos()
 //            { name: "Country", type: "select", items: countries, valueField: "Id", textField: "Name" },
 //            { name: "Married", type: "checkbox", title: "Is Married", sorting: false },
 //            { type: "control" }
+=======
+//            { name: "clave_doc",textField: "Clave documento", type: "text", width: 150, validate: "required" },
+            { name: "No", type: "text", width: 80, validate: "required" },
+            { name: "Clave del Documento", type: "text", width: 150, validate: "required" },
+            { name: "Nombre del Documento", type: "text", width: 150, validate: "required" },
+            { name: "Responsable del Documento", type: "text", width: 150, validate: "required" },
+            { name: "Tema", type: "text", width: 150, validate: "required" },
+            { name: "Requisitos", type: "text", width: 150, validate: "required" },
+            { name: "Registros", type: "text", width: 150, validate: "required" },
+            { name: "Status", type: "text", width: 150, validate: "required" }
+>>>>>>> 7d2f003e12930dfa75d2a77e4b1f62ddcde96c08
         ]
     });
    
-//    $.ajax
-//    ({
-//        url: '../Controller/InformeValidacionDocumentosController.php?Op=listarparametros(v,nv,sd)',
-//        type: 'POST',
-//        data:parametroscheck,
-//        beforeSend:function()
-//        {
-//            $('#loader').show();
-//        },
-//        success:function(datos)
-//        {
-////            data = datos;
-//            construirTable(datos);
-//        },
-//        error:function(error)
-//        {
-//            $('#loader').hide();
-//        }
-//    });
 }
 
 
+function listarDatosGrafica()
+{
+    __datosGraficar=[
+        {"Conceptos":"Empleados","Seleccion":""},
+        {"Conceptos":"Temas","Seleccion":""}
+    ];
+//           __datosGraficar.push({
+//           "Conceptos":"Empleados",
+//           "Seleccion":"",
+//           });
+//           __datosGraficar.push({
+//               "Conceptos":"Temas",
+//           })
+       
+    __fieldsDatos=[
+            { name: "Conceptos", type: "text", width: 80, validate: "required" },
+            { name: "Seleccion", type: "text", width: 80, validate: "required" }
+    ];
+            
+    
+//   var listfunciones=[variablefunciondatos];
+//   ajaxHibrido(datosParamAjaxValues,listfunciones); 
+   $("#jsGridGrafico").html();
+       $("#jsGridGrafico").jsGrid({
+        width: "20%",
+        height: "200px",
+        heading: true,
+        sorting: true,
+        paging: true,
+        data: __datosGraficar,
+        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+        fields:__fieldsDatos, 
+//                [
+////            { name: "clave_doc",textField: "Clave documento", type: "text", width: 150, validate: "required" },
+//            { name: "Conceptos", type: "text", width: 80, validate: "required" },
+//            { name: "Seleccion", type: "text", width: 80, validate: "required" }
+//
+//
+//        ]
+    });
+    
+}
 //function construirTable(data)
 //{
 //    cargaTodo=0;

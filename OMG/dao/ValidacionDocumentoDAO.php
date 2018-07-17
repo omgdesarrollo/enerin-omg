@@ -47,7 +47,7 @@ class ValidacionDocumentoDAO{
     function listarValidacionDocumento($USUARIO,$CONTRATO,$ID_VALIDACION_D)
     {
         try{
-            $query="SELECT DISTINCT tbdocumentos.id_documento,tbdocumentos.clave_documento,tbdocumentos.documento, tbempleados.id_empleado id_empleadoD,
+            $query="SELECT DISTINCT tbdocumentos.id_documento,tbdocumentos.clave_documento,tbdocumentos.documento, tbempleados.id_empleado id_empleadoD,tbusuarios.id_usuario id_usuarioD,
             CONCAT (tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)AS responsable_documento,
             tbusua2.id_usuario id_usuarioT, tbemplea2.id_empleado id_empleadoT,
             CONCAT (tbemplea2.nombre_empleado,' ',tbemplea2.apellido_paterno,' ',tbemplea2.apellido_materno)AS responsable_tema,tbtemas.nombre nombre_tema,

@@ -88,9 +88,7 @@ require_once 'EncabezadoUsuarioView.php';
         <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre Documento" style="width: 180px;">
         <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 180px;">
         <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
-        <input type="submit" id="btnGraficar" class="btn btn-danger" value="Graficar">
-        
-        
+        <input type="submit" id="btnGraficar" class="btn btn-danger" value="Graficar">    
 </div>    
 
 
@@ -201,8 +199,13 @@ require_once 'EncabezadoUsuarioView.php';
 		        <h4 class="modal-title" id="myModalLabel">Personalizacion Graficas </h4>
 		      </div>
 		      <div class="modal-body">
+<<<<<<< HEAD
                    
+=======
+                          <div id="jsGridGrafico"></div>
+>>>>>>> 7d2f003e12930dfa75d2a77e4b1f62ddcde96c08
 		      </div>
+                        
 		    </div>
 
 		  </div>
@@ -211,6 +214,7 @@ require_once 'EncabezadoUsuarioView.php';
                 
 <script>
     listarDatos();
+    listarDatosGrafica();
     
 //    var datos= [
 //        { "Name": "Otto Clay", "Age": 25, "Country": 1, "Address": "Ap #897-1459 Quam Avenue", "Married": false },

@@ -186,7 +186,7 @@ foreach($Alarmas as $alarma)
 </div>
 <script>
 	listarNotificaciones();
-	// setInterval(function(){listarNotificaciones();},20000);
+	setInterval(function(){listarNotificaciones();},20000);
 	function listarNotificaciones()
 	{
 		$.ajax({

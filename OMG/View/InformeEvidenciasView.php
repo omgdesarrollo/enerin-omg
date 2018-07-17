@@ -71,7 +71,7 @@ $Usuario=  Session::getSesion("user");
 
         </style>            -->
                 
-              <style>
+<!--              <style>
 
             .modal-body{
             color:#888;
@@ -109,7 +109,21 @@ $Usuario=  Session::getSesion("user");
             padding-right: 28px; /*This would hide the scroll bar of the right. To be sure we hide the scrollbar on every browser, increase this value*/
             padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is one*/
             }
-        </style>        
+        </style>        -->
+                
+        <style>
+            .jsgrid-header-row>.jsgrid-header-cell {
+                background-color:#307ECC ;      /* orange */
+                font-family: "Roboto Slab";
+                font-size: 1.2em;
+                color: white;
+                font-weight: normal;
+            }
+            .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                    
+            .modal-lg{width: 100%;}
+            .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
+            body{overflow:hidden;}
+        </style>              
                 
  			 
 </head>
