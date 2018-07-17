@@ -46,6 +46,7 @@ function cargar(key){
 function listarDatos()
 { 
         __datos=[];
+        contador=1;
         datosParamAjaxValues={};
         datosParamAjaxValues["url"]="../Controller/InformeValidacionDocumentosController.php?Op=listarparametros(v,nv,sd)";
         datosParamAjaxValues["type"]="POST";
@@ -55,24 +56,27 @@ function listarDatos()
         status="validado";
         $.each(r["info"],function (index,value){
           (value.validacion_tema_responsable=="true")?status="validado":status="En Proceso";
-           __datos.push({"clave_doc":value.clave_documento,
-           "temayresponsable":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-           "requisitos":"<button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-           "registros":"<button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-           "nombre_doc":value.documento,
-           "responsable_doc":value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno,
-           "status":status
+           __datos.push({
+           "No":contador++,
+           "Clave del Documento":value.clave_documento,
+           "Nombre del Documento":value.documento,
+           "Responsable del Documento":value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno,
+           "Tema":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+           "Requisitos":"<button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+           "Registros":"<button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+           "Status":status
            })
 
         if(value.validacion_tema_responsable=="true"){status="validado";}else{status="En proceso";}
         __datos.push({
-        "clave_doc":value.clave_documento,
-        "temayresponsable":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-        "requisitos":"<button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-        "registros":"<button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-        "nombre_doc":value.documento,
-        "responsable_doc":value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno,
-        "status":status
+           "No":contador++,
+           "Clave del Documento":value.clave_documento,
+           "Nombre del Documento":value.documento,
+           "Responsable del Documento":value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno,
+           "Tema":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+           "Requisitos":"<button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+           "Registros":"<button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+           "Status":status
         })
         });
    }
@@ -88,18 +92,15 @@ function listarDatos()
         data: __datos,
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields: [
-            { name: "clave_doc",textField: "Clave documento", type: "text", width: 150, validate: "required" },
-             { name: "temayresponsable", type: "text", width: 150, validate: "required" },
-             { name: "requisitos", type: "text", width: 150, validate: "required" },
-              { name: "registros", type: "text", width: 150, validate: "required" },
-              { name: "nombre_doc", type: "text", width: 150, validate: "required" },
-              { name: "responsable_doc", type: "text", width: 150, validate: "required" },
-              { name: "status", type: "text", width: 150, validate: "required" }
-//            { name: "Age", type: "number", width: 50 },
-//            { name: "Address", type: "text", width: 200 },
-//            { name: "Country", type: "select", items: countries, valueField: "Id", textField: "Name" },
-//            { name: "Married", type: "checkbox", title: "Is Married", sorting: false },
-//            { type: "control" }
+//            { name: "clave_doc",textField: "Clave documento", type: "text", width: 150, validate: "required" },
+            { name: "No", type: "text", width: 80, validate: "required" },
+            { name: "Clave del Documento", type: "text", width: 150, validate: "required" },
+            { name: "Nombre del Documento", type: "text", width: 150, validate: "required" },
+            { name: "Responsable del Documento", type: "text", width: 150, validate: "required" },
+            { name: "Tema", type: "text", width: 150, validate: "required" },
+            { name: "Requisitos", type: "text", width: 150, validate: "required" },
+            { name: "Registros", type: "text", width: 150, validate: "required" },
+            { name: "Status", type: "text", width: 150, validate: "required" }
         ]
     });
    
