@@ -47,7 +47,12 @@ $Usuario=  Session::getSesion("user");
                 
                 
         <style>
-
+            .my-row-custom-class td:nth-child(2) {
+            background: red;
+            }
+            
+            
+            
             .modal-body{
             color:#888;
             max-height: calc(100vh - 110px);
