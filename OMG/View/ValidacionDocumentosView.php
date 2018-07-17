@@ -486,7 +486,7 @@ if(isset($_REQUEST["accion"]))
                         mostrarObservaciones(idDocumento);
                 },2000);
                     // $("#observacion_msjs").fadeIn(2000);
-                });
+                // });
             },
             error:function()
             {
