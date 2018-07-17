@@ -71,7 +71,8 @@ function listarDatos()
         status="validado";
         $.each(r["info"],function (index,value){
         if(value.validacion_tema_responsable=="true"){status="validado";}else{status="En proceso";}
-        __datos.push({"clave_doc":value.clave_documento,
+        __datos.push({
+        "clave_doc":value.clave_documento,
         "temayresponsable":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
         "requisitos":"<button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
         "registros":"<button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",

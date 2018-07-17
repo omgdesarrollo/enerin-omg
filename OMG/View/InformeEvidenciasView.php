@@ -35,7 +35,13 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/jquery.js" type="text/javascript"></script>
                 <script src="../../js/fInformeEvidenciasView.js" type="text/javascript"></script>
                 
-        <style>
+                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+
+                <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+                
+<!--        <style>
 
             .modal-body{
             color:#888;
@@ -63,7 +69,47 @@ $Usuario=  Session::getSesion("user");
             
             
 
-        </style>            
+        </style>            -->
+                
+              <style>
+
+            .modal-body{
+            color:#888;
+            max-height: calc(100vh - 110px);
+            overflow-y: auto;
+            }                    
+            .modal-lg{
+                width: 100%;
+            }  
+            
+            .modal-backdrop {
+            /*En caso de que quieras modificar el backdrop*/
+            z-index: 1040 !important;
+            }
+
+            .modal {
+                /*En caso de que quieras modificar el modal*/
+                z-index: 1050 !important;
+            }
+
+            #sugerenciasclausulas {
+            width:350px;
+            height:5px;
+            overflow: auto;
+            }  
+            body{
+            overflow:hidden;     
+            }
+
+            .hideScrollBar{
+            width: 100%;
+            height: 50%;
+            overflow: auto;
+            margin-right: 14px;
+            padding-right: 28px; /*This would hide the scroll bar of the right. To be sure we hide the scrollbar on every browser, increase this value*/
+            padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is one*/
+            }
+        </style>        
                 
  			 
 </head>
@@ -139,64 +185,33 @@ require_once 'EncabezadoUsuarioView.php';
 <div class="container">		
     <div class="row">
         <div class="col-md-12">
-                <!--<div class="row align-items-center">-->
-                        <!--<div class="col-1">-->
-                                <!--<input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkValidado">-->
-                         <!--<div class="col-4">Validados</div>-->
-                        <!--</div>-->
-                       
-                <!--</div>-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-        <div class="col-md-2">
-        <div class="input-group">
-          <!--<input name="remitosucursal" id="remitosucursal" type="text" required class="form-control" placeholder="Sucursal">-->
-          <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkValidado">
-          <span style="border:none;background-color:transparent;" class="input-group-addon">Validados</span>
-          <!--<input name="remitonumero" id="remitonumero" type="text" required class="form-control" placeholder="Numero">-->
-            <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkNoValidado">
-             <span style="border:none;background-color: transparent;" class="input-group-addon">En Proceso</span>
-            
-             <!--<input type="submit"  style="width: 40px; height: 40px" class="btn btn-info" id="btngraficar" value="Graficar">-->
-        </div>
-            
-            </div>
-        <div id="arbolprincipal"></div>
-        <!--<input type="submit"   style=" height: 40px" class="btn btn-info" id="btngraficar" value="Graficar">-->
-        
-<!--        <div class="col-md-10">
-             <div class="input-group">
-                 <input type="submit"  style="width: 40px; height: 40px" class="btn btn-info" id="btngraficar" value="Graficar">
-             </div>
-        </div>-->
-        <!--</div>-->
-        <!--<div class="col-md-2">-->
-                <!--<div class="row align-items-center">-->
-<!--                        <div class="col-1">
-                                <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkNoValidado">
-                        </div>
-                        <div class="col-5">En Proceso</div>-->
-                <!--</div>-->
-        <!--</div>-->
+            <div class="col-md-2">
+                <div class="input-group">
+                    <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkValidado">
+                    <span style="border:none;background-color:transparent;" class="input-group-addon">Validados</span>
+                    
+                    <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkNoValidado">
+                    <span style="border:none;background-color: transparent;" class="input-group-addon">En Proceso</span>
+                </div>
 
-        <!--<div class="col-md-4">-->
-                <!--<div class="row align-items-center">-->
-                        <!--<div class="col-1">-->
-                                
-                        <!--</div>-->
-                        <!--<div class="col-6">Sin Documento</div>-->
-                <!--</div>-->
-        </div>
-        
+            </div>
+            
+            <div id="arbolprincipal">
+                
+            </div>
+
+        </div>    
     </div>
 </div>
 
-<table class="table table-bordered table-striped header_fijo tbl-qa" id="idTable ">
+<div id="jsGrid"></div>
+
+<!--<table class="table table-bordered table-striped header_fijo tbl-qa" id="idTable ">
     <thead>                              
             <tr>
 
-<!--                  <th class="table-header" width="4.8%">No</th>
-                  <th class="table-header" width="9.6%">Cumplimiento</th>-->
+                  <th class="table-header" width="4.8%">No</th>
+                  <th class="table-header" width="9.6%">Cumplimiento</th>
                   <th class="table-header" width="9.6%">Tema</th>
                   <th class="table-header" width="9.6%">Requisitos</th>
                   <th class="table-header" width="9.6%">Registros</th>
@@ -216,7 +231,7 @@ require_once 'EncabezadoUsuarioView.php';
     <tbody class="hideScrollBar"  id="datosGenerales" style="position: absolute">    
 
     </tbody>
-</table>
+</table>-->
 
                
 <!-- Inicio modal Tema y Responsable -->
