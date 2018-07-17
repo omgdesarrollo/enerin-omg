@@ -23,7 +23,7 @@ class InformeEvidenciasDAO{
         {
             $query="SELECT tbevidencias.id_evidencias,tbevidencias.desviacion,tbevidencias.accion_correctiva,tbevidencias.validacion_supervisor,
                     tbdocumentos.id_documento,tbdocumentos.clave_documento,
-                    tbempleados.nombre_empleado,
+                    tbempleados.nombre_empleado,tbempleados.apellido_paterno,tbempleados.apellido_materno,
 		    tbregistros.frecuencia		 	
                     FROM evidencias tbevidencias
                     JOIN registros tbregistros ON tbregistros.id_registro=tbevidencias.id_registro  
