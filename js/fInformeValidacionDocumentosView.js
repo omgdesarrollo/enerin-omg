@@ -1,13 +1,8 @@
    parametroscheck={"validado":"false","no_validado":"false","sin_documento":"false"}; 
    __datos=[];
-   
     $(function (){
-      
-
 $('#checkValidado').click(function() {
-
-             parametroscheck["validado"]=$(this).is(':checked');
-
+    parametroscheck["validado"]=$(this).is(':checked');
     cargar("validados");
 });
     
@@ -20,37 +15,26 @@ $('#checkSinDocumento').click(function() {
 parametroscheck["sin_documento"]=$(this).is(':checked');
     cargar("sindocumento");
     });
-    
-    
-    
-    //seccion de click del boton  graficar
-    
     $("#btnGraficar").click(function (){
 
  $('#modalgraficas').modal('show');
 
     });
-    
-    
     });
     
     
 function cargar(key){
     switch (key) {
         case "validados":
-
-        //        alert("entraste en validados");
-                listarDatos();
+         listarDatos();
         break;
         
         case "novalidados":
             listarDatos();
-        //        alert("no validados");
         break;
         
         case "sindocumento":
             listarDatos();
-        //        alert("sin documento");
         break;
         
         default:
@@ -70,6 +54,16 @@ function listarDatos()
         var variablefunciondatos=function obtenerDatosServer (r){
         status="validado";
         $.each(r["info"],function (index,value){
+          (value.validacion_tema_responsable=="true")?status="validado":status="En Proceso";
+           __datos.push({"clave_doc":value.clave_documento,
+           "temayresponsable":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+           "requisitos":"<button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+           "registros":"<button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+           "nombre_doc":value.documento,
+           "responsable_doc":value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno,
+           "status":status
+           })
+
         if(value.validacion_tema_responsable=="true"){status="validado";}else{status="En proceso";}
         __datos.push({
         "clave_doc":value.clave_documento,
@@ -81,19 +75,18 @@ function listarDatos()
         "status":status
         })
         });
-//        console.log(__datos);
    }
    var listfunciones=[variablefunciondatos];
    ajaxHibrido(datosParamAjaxValues,listfunciones); 
-   
+   $("#jsGrid").html();
        $("#jsGrid").jsGrid({
         width: "100%",
         height: "300px",
+        heading: true,
         sorting: true,
         paging: true,
-//        autoload: true,
- 
         data: __datos,
+        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields: [
             { name: "clave_doc",textField: "Clave documento", type: "text", width: 150, validate: "required" },
              { name: "temayresponsable", type: "text", width: 150, validate: "required" },

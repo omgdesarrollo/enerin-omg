@@ -47,43 +47,17 @@ $Usuario=  Session::getSesion("user");
                 
                 
         <style>
-
-            .modal-body{
-            color:#888;
-            max-height: calc(100vh - 110px);
-            overflow-y: auto;
-            }                    
-            .modal-lg{
-                width: 100%;
-            }  
-            
-            .modal-backdrop {
-            /*En caso de que quieras modificar el backdrop*/
-            z-index: 1040 !important;
+            .jsgrid-header-row>.jsgrid-header-cell {
+                background-color:#307ECC ;      /* orange */
+                font-family: "Roboto Slab";
+                font-size: 1.2em;
+                color: white;
+                font-weight: normal;
             }
-
-            .modal {
-                /*En caso de que quieras modificar el modal*/
-                z-index: 1050 !important;
-            }
-
-            #sugerenciasclausulas {
-            width:350px;
-            height:5px;
-            overflow: auto;
-            }  
-            body{
-            overflow:hidden;     
-            }
-
-            .hideScrollBar{
-            width: 100%;
-            height: 50%;
-            overflow: auto;
-            margin-right: 14px;
-            padding-right: 28px; /*This would hide the scroll bar of the right. To be sure we hide the scrollbar on every browser, increase this value*/
-            padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is one*/
-            }
+            .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                    
+            .modal-lg{width: 100%;}
+            .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
+            body{overflow:hidden;}
         </style>            
                 
  			 
@@ -92,8 +66,6 @@ $Usuario=  Session::getSesion("user");
         
         <body class="no-skin" onload="loadSpinner()">
              <div id="loader"></div>
-       
-
 <?php
 
 require_once 'EncabezadoUsuarioView.php';
