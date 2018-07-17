@@ -298,9 +298,20 @@ if(isset($_REQUEST["accion"]))
 		<script>
                     
     var id_validacion_documento,columna,objetocheckbox,si_hay_cambio=false;
-    
+
     $(function()
-    { 
+    {
+        // $("#mostrar-observaciones").close();
+        // $("#mostrar-observaciones").on("shown.bs.modal", function (){ 
+        //     alert('Hi');
+        // });
+        // $("#mostrar-observaciones").modal('show');
+
+        // $("#mostrar-observaciones").on("hide.bs.modal",function(){
+        //     alert("modal cerrado");
+        // });
+
+
         $('.checkboxDocumento').on('change', function()
         {          
           var chekeado=$(objetocheckbox).filter('[type=checkbox]')[0]['checked'];
@@ -439,13 +450,16 @@ if(isset($_REQUEST["accion"]))
         tempData+="></i></td>";
 
         tempData+="<td>";
-        tempData+="<i data-toggle='modal' data-target='#mostrar-observaciones' onClick='mostrarObservaciones("+documento.id_validacion_documento+")' class='ace-icon fa fa-comments' style='font-size:20px;cursor:pointer'></i></td>";
+        tempData+="<i data-toggle='modal' data-target='#mostrar-observaciones' onClick='mostrarObservacionesInicio("+documento.id_validacion_documento+")' class='ace-icon fa fa-comments' style='font-size:20px;cursor:pointer'></i></td>";
         tempData+="<td>X</td>";
         return tempData;
     }
+    intervalObservaciones = setInterval(0);
+    // clearInterval(intervalObservaciones);
 
     function mostrarObservaciones(idDocumento)
     {
+        clearInterval(intervalObservaciones);
         tempData = "";
         $.ajax({
             url:'../Controller/ValidacionDocumentosController.php?Op=ListarObservaciones',
@@ -453,17 +467,26 @@ if(isset($_REQUEST["accion"]))
             data:'ID_VALIDACION_DOCUMENTO='+idDocumento,
             success:function(observaciones)
             {
-                console.log(observaciones);
+                // console.log(observaciones);
                 $.each(JSON.parse(observaciones.observaciones),function(index,value)
                 {
                     tempData += construirObservacion(value,observaciones.idUsuario);   
                 });
                 $("#observacion_msjs").html(tempData);
-                $("#div_observacion_btn").html("<textarea id='textarea_msj' class='area-observaciones'></textarea><button onClick='enviarObservacion("+idDocumento+")' class='btn-observaciones'>Enviar</button>");
                 // $("#observacion_msjs").fadeOut(2000, function(){
                 setTimeout(function(){$("#observacion_msjs").scrollTop($("#observacion_msjs")[0].scrollHeight);},500);
-                //     $("#observacion_msjs").fadeIn(2000);
-                // });
+                // setTimeout(function(){mostrarObservaciones(idDocumento);},2000);
+                intervalObservaciones = setInterval(function()
+                {
+                    if($("#observacion_msjs")[0].scrollHeight == 0 )
+                    {
+                        clearInterval(intervalObservaciones);
+                    }
+                    else
+                        mostrarObservaciones(idDocumento);
+                },2000);
+                    // $("#observacion_msjs").fadeIn(2000);
+                });
             },
             error:function()
             {
@@ -471,17 +494,23 @@ if(isset($_REQUEST["accion"]))
             }
         });
     }
+
+    function mostrarObservacionesInicio(idDocumento)
+    {
+        $("#div_observacion_btn").html("<textarea id='textarea_msj' class='area-observaciones'></textarea><button onClick='enviarObservacion("+idDocumento+")' class='btn-observaciones'>Enviar</button>");
+        mostrarObservaciones(idDocumento);
+    }
     
     // $.when(mostrarObservaciones()).then(alert("A"));
 
 
     function construirObservacion(value,idUsuario)
     {
-        tempData = "<div style='width:100%'><div style='";
+        tempData = "<div class='container' style='width:100%;padding-bottom:5px'><div style='";
         if(idUsuario == value.idU)//flotar a la derecha
         {
             tempData+="float:right;border-radius: 20px 0px 0px 20px;background: springgreen;padding-left:15px'>";
-            tempData+= "<h4 style='float:right;margin:2px'>"+value.msj+"</h4><br><div>";
+            tempData+= "<h4 style='float:right;margin:2px'>"+value.msj+"</h4><br>";
             tempData+= "<h6 style='color:white;float:right;margin:2px'>"+value.fecha+"</h6>";
         }
         else//flotar izquierda
@@ -492,7 +521,8 @@ if(isset($_REQUEST["accion"]))
             tempData+= "<h6 style='color:white;margin:2px'>"+value.fecha+"</h6>";
         }
         // console.log(value);
-        tempData += "</div></div><h1><br></h1>";
+        tempData += "</div></div>";
+        // tempData += "<h1><br></h1>";
         return tempData;
     }
     function enviarObservacion(idValidacionDocumento)
@@ -976,7 +1006,7 @@ if(isset($_REQUEST["accion"]))
 
     idUsuario = <?php echo $Usuario["ID_USUARIO"] ?>;
 
-    function validarTemaR(Obj,columna,idValidacionDocumento,idPara)//listo
+    function validarTemaR(Obj,columna,idValidacionDocumento,involucrados,idPara)//listo
     {
         GetValidacionTema = $.ajax({
             url:'../Controller/ValidacionDocumentosController.php?Op=GetValidacionDocumento',
@@ -989,11 +1019,11 @@ if(isset($_REQUEST["accion"]))
             if(validado==true)
             {
                 validar(idValidacionDocumento,columna,Obj);
-                enviar_notificacion("Ha sido validado un documento por "+value.responsable_tema+" responsable de Tema",idPara,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento);//msj,para,tipomsj,atendido,asunto
+                enviar_notificacion("Ha sido validado un documento por el responsable de Tema",idPara,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento);//msj,para,tipomsj,atendido,asunto
                 $.each(involucrados,function(index,value)
                 {
                     if(value.id_usuarioT!=idUsuario)
-                        enviar_notificacion("Ha sido validado un documento por "+value.responsable_tema+" responsable de Tema",value.id_usuarioT,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento);//msj,para,tipomsj,atendido,asunto
+                        enviar_notificacion("Ha sido validado un documento por el responsable de Tema",value.id_usuarioT,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento);//msj,para,tipomsj,atendido,asunto
                 });
             }
             if(validado==false)
