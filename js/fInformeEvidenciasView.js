@@ -122,9 +122,9 @@ function listarDatos()
        $("#jsGrid").jsGrid({
         width: "100%",
         height: "300px",
+        heading: true,
         sorting: true,
         paging: true,
-//        autoload: true,
  
         data: __datos,
         fields: [
