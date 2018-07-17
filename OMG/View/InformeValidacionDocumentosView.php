@@ -199,11 +199,8 @@ require_once 'EncabezadoUsuarioView.php';
 		        <h4 class="modal-title" id="myModalLabel">Personalizacion Graficas </h4>
 		      </div>
 		      <div class="modal-body">
-<<<<<<< HEAD
-                   
-=======
+
                           <div id="jsGridGrafico"></div>
->>>>>>> 7d2f003e12930dfa75d2a77e4b1f62ddcde96c08
 		      </div>
                         
 		    </div>
