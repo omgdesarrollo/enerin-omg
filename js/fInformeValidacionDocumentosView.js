@@ -1,44 +1,34 @@
-   parametroscheck={"validado":"false","no_validado":"false","sin_documento":"false"}; 
+parametroscheck={"validado":"false","no_validado":"false","sin_documento":"false"}; 
    __datos=[];
-    $(function (){
+    $(function(){
 $('#checkValidado').click(function() {
     parametroscheck["validado"]=$(this).is(':checked');
     cargar("validados");
 });
-    
 $('#checkNoValidado').click(function() {
 parametroscheck["no_validado"]=$(this).is(':checked');
     cargar("novalidados");
     });
-    
 $('#checkSinDocumento').click(function() {
 parametroscheck["sin_documento"]=$(this).is(':checked');
     cargar("sindocumento");
     });
     $("#btnGraficar").click(function (){
-
  $('#modalgraficas').modal('show');
-
     });
     });
-    
-    
 function cargar(key){
     switch (key) {
         case "validados":
          listarDatos();
         break;
-        
         case "novalidados":
             listarDatos();
         break;
-        
         case "sindocumento":
             listarDatos();
         break;
-        
         default:
-
         break;
     }
 }
@@ -53,7 +43,7 @@ function listarDatos()
         datosParamAjaxValues["async"]=false;
         var variablefunciondatos=function obtenerDatosServer (r){
         status="validado";
-        $.each(r["info"],function (index,value){
+        $.each(r["info"],function(index,value){
           (value.validacion_tema_responsable=="true")?status="validado":status="En Proceso";
            __datos.push({"clave_doc":value.clave_documento,
            "temayresponsable":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
@@ -77,9 +67,9 @@ function listarDatos()
         data: __datos,
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields: [
-            { name: "clave_doc",label: "Clave documento", type: "text", width: 150, validate: "required" },
-             { name: "temayresponsable", type: "text", width: 150, validate: "required" },
-             { name: "requisitos", type: "text", width: 150, validate: "required" },
+              { name: "clave_doc",label: "Clave documento", type: "text", width: 150, validate: "required" },
+              { name: "temayresponsable", type: "text", width: 150, validate: "required" },
+              { name: "requisitos", type: "text", width: 150, validate: "required" },
               { name: "registros", type: "text", width: 150, validate: "required" },
               { name: "nombre_doc", type: "text", width: 150, validate: "required" },
               { name: "responsable_doc", type: "text", width: 150, validate: "required" },

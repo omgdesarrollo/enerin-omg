@@ -200,10 +200,8 @@ require_once 'EncabezadoUsuarioView.php';
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
 		        <h4 class="modal-title" id="myModalLabel">Personalizacion Graficas </h4>
 		      </div>
-                        
 		      <div class="modal-body">
-                          <div id="jsGrid"></div>
-
+                   
 		      </div>
 		    </div>
 
@@ -304,9 +302,7 @@ require_once 'EncabezadoUsuarioView.php';
             
             <!--Para abrir alertas del encabezado-->
             <script src="../../assets/probando/js/ace-elements.min.js"></script>
-            <script src="../../assets/probando/js/ace.min.js"></script>
-       
-                
+            <script src="../../assets/probando/js/ace.min.js"></script>       
 	</body>
      
 </html>
