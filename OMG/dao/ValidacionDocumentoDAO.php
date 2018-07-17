@@ -372,7 +372,7 @@ class ValidacionDocumentoDAO{
         try
         {
             $query="UPDATE validacion_documento tbvalidacion_documento 
-            SET tbvalidacion_documento.observaciones = CONCAT(tbvalidacion_documento.observaciones,',','$MENSAJE')
+            SET tbvalidacion_documento.observaciones = IF(tbvalidacion_documento.observaciones!='',CONCAT(tbvalidacion_documento.observaciones,',','$MENSAJE'),'$MENSAJE')
             WHERE tbvalidacion_documento.id_validacion_documento = $ID_VALIDACION_DOCUMENTO";
             $db = AccesoDB::getInstancia();
             $exito = $db->executeUpdateRowsAfected($query);
