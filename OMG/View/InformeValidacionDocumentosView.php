@@ -42,10 +42,6 @@ $Usuario=  Session::getSesion("user");
                 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
 
                  <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
-                
-                
-                
-                
         <style>
             .jsgrid-header-row>.jsgrid-header-cell {
                 background-color:#307ECC ;      /* orange */

@@ -88,7 +88,7 @@ function listarDatos()
         data: __datos,
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields: [
-            { name: "clave_doc",textField: "Clave documento", type: "text", width: 150, validate: "required" },
+            { name: "clave_doc",label: "Clave documento", type: "text", width: 150, validate: "required" },
              { name: "temayresponsable", type: "text", width: 150, validate: "required" },
              { name: "requisitos", type: "text", width: 150, validate: "required" },
               { name: "registros", type: "text", width: 150, validate: "required" },
@@ -125,49 +125,49 @@ function listarDatos()
 }
 
 
-function construirTable(data)
-{
-    cargaTodo=0;
-    tempData="";
-    
-    $.each(data["info"],function(index,value){
-        value["clave_cumplimiento"]=data["detallesContrato"]["clave_cumplimiento"];
-        value["cumplimiento"]=data["detallesContrato"]["cumplimiento"];
-            tempData += construir(value,cargaTodo);
-    });
-     
-    $("#datosGenerales").html(tempData);
-    $("#loader").hide();
-}
+//function construirTable(data)
+//{
+//    cargaTodo=0;
+//    tempData="";
+//    
+//    $.each(data["info"],function(index,value){
+//        value["clave_cumplimiento"]=data["detallesContrato"]["clave_cumplimiento"];
+//        value["cumplimiento"]=data["detallesContrato"]["cumplimiento"];
+//            tempData += construir(value,cargaTodo);
+//    });
+//     
+//    $("#datosGenerales").html(tempData);
+//    $("#loader").hide();
+//}
 
-function construir(value,carga)
-{
-    tempData = "";
-    
-                if(carga==0)
-                tempData += "<tr id='registro_"+value.id_validacion_documento+"'>";
-                tempData += "<td class='celda' width='5%'>"+value.clave_cumplimiento+"</td>"
-                tempData += "<td class='celda' width='10%'>"+value.cumplimiento+"</td>"
-                tempData += "<td class='celda' width='10%'><button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
-                tempData += "<td class='celda' width='10%'><button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
-                tempData += "<td class='celda' width='10%'><button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
-                tempData += "<td class='celda' width='15%'>"+value.clave_documento+"</td>";
-                tempData += "<td class='celda' width='15%'>"+value.documento+"</td>";
-                tempData += "<td class='celda' width='15%'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td>";
-                if(value.validacion_tema_responsable=="true")
-                {
-                   tempData += "<td class='celda' width='10%'>Validado</td>";
-                }
-                if (value.validacion_tema_responsable=="false")
-                {
-                   tempData += "<td class='celda' width='10%'>En Proceso</td>"; 
-                }
-                
-                if(carga==0)
-                tempData += "</tr>";
-    
-        return tempData;                                                        
-}
+//function construir(value,carga)
+//{
+//    tempData = "";
+//    
+//                if(carga==0)
+//                tempData += "<tr id='registro_"+value.id_validacion_documento+"'>";
+//                tempData += "<td class='celda' width='5%'>"+value.clave_cumplimiento+"</td>"
+//                tempData += "<td class='celda' width='10%'>"+value.cumplimiento+"</td>"
+//                tempData += "<td class='celda' width='10%'><button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
+//                tempData += "<td class='celda' width='10%'><button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
+//                tempData += "<td class='celda' width='10%'><button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
+//                tempData += "<td class='celda' width='15%'>"+value.clave_documento+"</td>";
+//                tempData += "<td class='celda' width='15%'>"+value.documento+"</td>";
+//                tempData += "<td class='celda' width='15%'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td>";
+//                if(value.validacion_tema_responsable=="true")
+//                {
+//                   tempData += "<td class='celda' width='10%'>Validado</td>";
+//                }
+//                if (value.validacion_tema_responsable=="false")
+//                {
+//                   tempData += "<td class='celda' width='10%'>En Proceso</td>"; 
+//                }
+//                
+//                if(carga==0)
+//                tempData += "</tr>";
+//    
+//        return tempData;                                                        
+//}
 
 
 function mostrarTemaResponsable(id_documento)
