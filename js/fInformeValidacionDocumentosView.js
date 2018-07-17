@@ -63,17 +63,6 @@ function listarDatos()
            "responsable_doc":value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno,
            "status":status
            })
-
-        if(value.validacion_tema_responsable=="true"){status="validado";}else{status="En proceso";}
-        __datos.push({
-        "clave_doc":value.clave_documento,
-        "temayresponsable":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-        "requisitos":"<button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-        "registros":"<button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-        "nombre_doc":value.documento,
-        "responsable_doc":value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno,
-        "status":status
-        })
         });
    }
    var listfunciones=[variablefunciondatos];
