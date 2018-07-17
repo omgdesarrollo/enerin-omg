@@ -140,7 +140,10 @@ switch ($Op) {
 		$FECHA = strftime("%d/%B/%y %X");
 		$ID_USUARIO = Session::getSesion("user")["ID_USUARIO"];
 		$NOMBRE = $model->getNombreUSuario($ID_USUARIO);
-		$exito["data"] = $model->enviarObservacion($_REQUEST["ID_VALIDACION_DOCUMENTO"],$_REQUEST["MENSAJE"],$ID_USUARIO,$NOMBRE,$FECHA);
+		$MENSAJE = trim($_REQUEST["MENSAJE"],"\n");
+		$MENSAJE2 = str_replace("\n","<br>",$MENSAJE);
+
+		$exito["data"] = $model->enviarObservacion($_REQUEST["ID_VALIDACION_DOCUMENTO"],$MENSAJE2,$ID_USUARIO,$NOMBRE,$FECHA);
 		$exito["idUsuario"] = $ID_USUARIO;
 		header('Content-type: application/json; charset=utf-8');
 		echo json_encode($exito);
