@@ -54,7 +54,6 @@ function listarDatos()
         var variablefunciondatos=function obtenerDatosServer (r){
         status="validado";
         $.each(r["info"],function (index,value){
-<<<<<<< HEAD
           (value.validacion_tema_responsable=="true")?status="validado":status="En Proceso";
            __datos.push({"clave_doc":value.clave_documento,
            "temayresponsable":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
@@ -64,7 +63,7 @@ function listarDatos()
            "responsable_doc":value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno,
            "status":status
            })
-=======
+
         if(value.validacion_tema_responsable=="true"){status="validado";}else{status="En proceso";}
         __datos.push({
         "clave_doc":value.clave_documento,
@@ -75,7 +74,6 @@ function listarDatos()
         "responsable_doc":value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno,
         "status":status
         })
->>>>>>> 04c755cdd6fb690b1b6cc7c3b6b561e27e729ad0
         });
    }
    var listfunciones=[variablefunciondatos];
