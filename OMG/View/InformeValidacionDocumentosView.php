@@ -88,9 +88,7 @@ require_once 'EncabezadoUsuarioView.php';
         <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre Documento" style="width: 180px;">
         <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 180px;">
         <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
-        <input type="submit" id="btnGraficar" class="btn btn-danger" value="Graficar">
-        
-        
+        <input type="submit" id="btnGraficar" class="btn btn-danger" value="Graficar">    
 </div>    
 
 
@@ -202,9 +200,9 @@ require_once 'EncabezadoUsuarioView.php';
 		      </div>
                         
 		      <div class="modal-body">
-                          <div id="jsGrid"></div>
-
+                          <div id="jsGridGrafico"></div>
 		      </div>
+                        
 		    </div>
 
 		  </div>
@@ -213,6 +211,7 @@ require_once 'EncabezadoUsuarioView.php';
                 
 <script>
     listarDatos();
+    listarDatosGrafica();
     
 //    var datos= [
 //        { "Name": "Otto Clay", "Age": 25, "Country": 1, "Address": "Ap #897-1459 Quam Avenue", "Married": false },

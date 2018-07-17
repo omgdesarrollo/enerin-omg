@@ -15,7 +15,8 @@ $('#checkSinDocumento').click(function() {
 parametroscheck["sin_documento"]=$(this).is(':checked');
     cargar("sindocumento");
     });
-    $("#btnGraficar").click(function (){
+    
+$("#btnGraficar").click(function (){
 
  $('#modalgraficas').modal('show');
 
@@ -92,28 +93,51 @@ function listarDatos()
         ]
     });
    
-//    $.ajax
-//    ({
-//        url: '../Controller/InformeValidacionDocumentosController.php?Op=listarparametros(v,nv,sd)',
-//        type: 'POST',
-//        data:parametroscheck,
-//        beforeSend:function()
-//        {
-//            $('#loader').show();
-//        },
-//        success:function(datos)
-//        {
-////            data = datos;
-//            construirTable(datos);
-//        },
-//        error:function(error)
-//        {
-//            $('#loader').hide();
-//        }
-//    });
 }
 
 
+function listarDatosGrafica()
+{
+    __datosGraficar=[
+        {"Conceptos":"Empleados","Seleccion":""},
+        {"Conceptos":"Temas","Seleccion":""}
+    ];
+//           __datosGraficar.push({
+//           "Conceptos":"Empleados",
+//           "Seleccion":"",
+//           });
+//           __datosGraficar.push({
+//               "Conceptos":"Temas",
+//           })
+       
+    __fieldsDatos=[
+            { name: "Conceptos", type: "text", width: 80, validate: "required" },
+            { name: "Seleccion", type: "text", width: 80, validate: "required" }
+    ];
+            
+    
+//   var listfunciones=[variablefunciondatos];
+//   ajaxHibrido(datosParamAjaxValues,listfunciones); 
+   $("#jsGridGrafico").html();
+       $("#jsGridGrafico").jsGrid({
+        width: "20%",
+        height: "200px",
+        heading: true,
+        sorting: true,
+        paging: true,
+        data: __datosGraficar,
+        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+        fields:__fieldsDatos, 
+//                [
+////            { name: "clave_doc",textField: "Clave documento", type: "text", width: 150, validate: "required" },
+//            { name: "Conceptos", type: "text", width: 80, validate: "required" },
+//            { name: "Seleccion", type: "text", width: 80, validate: "required" }
+//
+//
+//        ]
+    });
+    
+}
 //function construirTable(data)
 //{
 //    cargaTodo=0;
