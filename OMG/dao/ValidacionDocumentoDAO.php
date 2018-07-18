@@ -138,7 +138,7 @@ class ValidacionDocumentoDAO{
     public function obtenerTemayResponsable($ID_DOCUMENTO,$CONTRATO)
     {
         try{
-            $query="SELECT DISTINCT tbusuarios.id_usuario,
+            $query="SELECT DISTINCT tbusuarios.id_usuario,tbtemas.nombre,
             CONCAT (tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)AS responsable_tema
             FROM validacion_documento tbvalidacion_documento
             JOIN documentos tbdocumentos ON tbdocumentos.id_documento=tbvalidacion_documento.id_documento
