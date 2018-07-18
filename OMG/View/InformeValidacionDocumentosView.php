@@ -88,9 +88,7 @@ require_once 'EncabezadoUsuarioView.php';
         <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre Documento" style="width: 180px;">
         <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 180px;">
         <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
-        <input type="submit" id="btnGraficar" class="btn btn-danger" value="Graficar">
-        
-        
+        <input type="submit" id="btnGraficar" class="btn btn-danger" value="Graficar">    
 </div>    
 
 
@@ -200,11 +198,11 @@ require_once 'EncabezadoUsuarioView.php';
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
 		        <h4 class="modal-title" id="myModalLabel">Personalizacion Graficas </h4>
 		      </div>
-                        
 		      <div class="modal-body">
-                          <div id="jsGrid"></div>
 
+                          <div id="jsGridGrafico"></div>
 		      </div>
+                        
 		    </div>
 
 		  </div>
@@ -213,6 +211,7 @@ require_once 'EncabezadoUsuarioView.php';
                 
 <script>
     listarDatos();
+    listarDatosGrafica();
     
 //    var datos= [
 //        { "Name": "Otto Clay", "Age": 25, "Country": 1, "Address": "Ap #897-1459 Quam Avenue", "Married": false },
@@ -304,9 +303,7 @@ require_once 'EncabezadoUsuarioView.php';
             
             <!--Para abrir alertas del encabezado-->
             <script src="../../assets/probando/js/ace-elements.min.js"></script>
-            <script src="../../assets/probando/js/ace.min.js"></script>
-       
-                
+            <script src="../../assets/probando/js/ace.min.js"></script>       
 	</body>
      
 </html>
