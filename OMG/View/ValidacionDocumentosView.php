@@ -985,7 +985,7 @@ if(isset($_REQUEST["accion"]))
                     {
                         if(existenArchivos==true)
                         {
-                            validar = validar(idValidacionDocumento,columna,Obj);
+                            validarR = validar(idValidacionDocumento,columna,Obj);
                             $.ajax({
                                 url:'../Controller/ValidacionDocumentosController.php?Op=ObtenerTemayResponsable',
                                 type:'GET',
@@ -994,7 +994,7 @@ if(isset($_REQUEST["accion"]))
                                 {
                                     $.each(responsables,function(index,value)
                                     {
-                                        (validar)?
+                                        (validarR)?
                                         enviar_notificacion("Ha sido validado un documento por el responsable del documento",value.id_usuario,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento)//msj,para,tipomsj,atendido,asunto
                                         :
                                         enviar_notificacion("Ha sido desvalidado un documento por el responsable del documento",value.id_usuario,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento);//msj,para,tipomsj,atendido,asunto
