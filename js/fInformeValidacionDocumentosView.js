@@ -35,7 +35,7 @@ function cargar(key){
 }
 
 function listarDatos()
-{ 
+{
         __datos=[];
         contador=1;
         datosParamAjaxValues={};
@@ -45,20 +45,20 @@ function listarDatos()
         datosParamAjaxValues["async"]=false;
         var variablefunciondatos=function obtenerDatosServer (r){
         status="validado";
-        $.each(r["info"],function(index,value){
-          (value.validacion_tema_responsable=="true")?status="validado":status="En Proceso";
-           __datos.push({
-           "No":contador++,
-           "Clave del Documento":value.clave_documento,
-           "Nombre del Documento":value.documento,
-           "Responsable del Documento":value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno,
-           "Tema":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-           "Requisitos":"<button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-           "Registros":"<button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-           "Status":status
-           })
-        });
-    }
+            $.each(r["info"],function(index,value){
+              (value.validacion_tema_responsable=="true")?status="validado":status="En Proceso";
+               __datos.push({
+               "No":contador++,
+               "Clave del Documento":value.clave_documento,
+               "Nombre del Documento":value.documento,
+               "Responsable del Documento":value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno,
+               "Tema":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+               "Requisitos":"<button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+               "Registros":"<button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+               "Status":status
+               })
+            });
+        }
    var listfunciones=[variablefunciondatos];
    ajaxHibrido(datosParamAjaxValues,listfunciones); 
    $("#jsGrid").html();
@@ -81,7 +81,6 @@ function listarDatos()
             { name: "Status", type: "text", width: 150, validate: "required" }
         ]
     });
-   
 }
 
 
@@ -89,15 +88,12 @@ function listarDatosGrafica()
 {
     __datosGraficar=[
         {"Conceptos":"Empleados","Seleccion":""},
-        {"Conceptos":"Temas","Seleccion":""}
+        {"Conceptos":"Temas","Seleccion":""},
+        {"Conceptos":"Documentos","Seleccion":""},
+        {"Conceptos":"Asignaciones","Seleccion":""},
+        {"Conceptos":"Validacion de Documentos","Seleccion":""},
+        {"Conceptos":"Evidencias","Seleccion":""}
     ];
-//           __datosGraficar.push({
-//           "Conceptos":"Empleados",
-//           "Seleccion":"",
-//           });
-//           __datosGraficar.push({
-//               "Conceptos":"Temas",
-//           })
        
     __fieldsDatos=[
             { name: "Conceptos", type: "text", width: 80, validate: "required" },
@@ -110,12 +106,13 @@ function listarDatosGrafica()
    $("#jsGridGrafico").html();
        $("#jsGridGrafico").jsGrid({
         width: "20%",
-        height: "200px",
+        height: "300px",
         heading: true,
         sorting: true,
         paging: true,
         data: __datosGraficar,
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+        
         fields:__fieldsDatos, 
 //                [
 ////            { name: "clave_doc",textField: "Clave documento", type: "text", width: 150, validate: "required" },
