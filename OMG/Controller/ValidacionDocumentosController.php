@@ -42,15 +42,13 @@ switch ($Op) {
 		echo json_encode( $Lista);
 	break;
             
-        case 'MostrarTemayResponsable':
-                                  
-                $Lista=$model->obtenerTemayResponsable($_REQUEST['ID_DOCUMENTO']);
-                
-//                Session::setSesion("obtenerTemayResponsable", $lista);                        
-                header('Content-type: application/json; charset=utf-8');
-                echo json_encode($Lista);
-                return $Lista;
-		break;
+	case 'ObtenerTemayResponsable':
+		$CONTRATO = Session::getSesion("s_cont");
+		$Lista=$model->obtenerTemayResponsable($_REQUEST['ID_DOCUMENTO'],$CONTRATO);
+		header('Content-type: application/json; charset=utf-8');
+		echo json_encode($Lista);
+		return $Lista;
+	break;
             
         case 'MostrarRequisitosPorDocumento':
             

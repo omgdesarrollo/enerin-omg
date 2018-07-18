@@ -393,7 +393,7 @@ if(isset($_REQUEST["accion"]))
         tempData+="<td>"+documento.documento+"</td>";
         tempData+="<td>"+documento.responsable_documento+"</td>";
 
-        tempData+="<td><button onClick='mostrarTemaResponsable("+JSON.stringify(documento.temasResponsables)+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'>";
+        tempData+="<td><button onClick='mostrarTemaResponsable("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'>";
         tempData+="<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
         
         if(documento.permiso_total == 0)
@@ -423,11 +423,11 @@ if(isset($_REQUEST["accion"]))
         }
         tempData+="font-size: xx-large;cursor:pointer' aria-hidden='true'";
         if(documento.permiso_total==1)
-            tempData+="onClick='validarDocumentoR(this,\"validacion_documento_responsable\","+documento.id_validacion_documento+","+JSON.stringify(documento.temasResponsables)+")'";
+            tempData+="onClick='validarDocumentoR(this,\"validacion_documento_responsable\","+documento.id_validacion_documento+","+documento.id_documento+")'";
         else
         {
             if(documento.soy_responsable==0)
-                tempData+="onClick='validarDocumentoR(this,\"validacion_documento_responsable\","+documento.id_validacion_documento+","+JSON.stringify(documento.temasResponsables)+")'";
+                tempData+="onClick='validarDocumentoR(this,\"validacion_documento_responsable\","+documento.id_validacion_documento+","+documento.id_documento+")'";
             else
                 tempData+="onClick='noAcceso(this)'";
         }
@@ -444,7 +444,7 @@ if(isset($_REQUEST["accion"]))
         }
         tempData+="font-size: xx-large;cursor:pointer' aria-hidden='true'";
         if(documento.soy_responsable==1)
-            tempData+="onClick='validarTemaR(this,\"validacion_tema_responsable\","+documento.id_validacion_documento+","+JSON.stringify(documento.temasResponsables)+","+documento.id_usuarioD+")'";
+            tempData+="onClick='validarTemaR(this,\"validacion_tema_responsable\","+documento.id_validacion_documento+","+documento.id_documento+","+documento.id_usuarioD+")'";
         else
             tempData+="onClick='noAcceso(this)'";
         tempData+="></i></td>";
@@ -818,18 +818,26 @@ if(isset($_REQUEST["accion"]))
         });
     }
     
-    function mostrarTemaResponsable(data)//listo
+    function mostrarTemaResponsable(idDocumento)//listo
     {
         tempData = "";
-        $.each(data,function(index,value)
-        {
-            if(value.nombre_tema!=null)
+        $.ajax({
+            url:'../Controller/ValidacionDocumentosController.php?Op=ObtenerTemayResponsable',
+            type:'GET',
+            data:'ID_DOCUMENTO='+idDocumento,
+            success:function(responsables)
             {
-                tempData += "<tr><td>"+value.nombre_tema+"</td>";
-                tempData += "<td>"+value.responsable_tema+"</td></tr>";
+                $.each(responsables,function(index,value)
+                {
+                    // if(value.nombre!=null)
+                    // {
+                        tempData += "<tr><td>"+value.nombre+"</td>";
+                        tempData += "<td>"+value.responsable_tema+"</td></tr>";
+                    // }
+                });
+                $("#tbodyValidacionDocumentosModal").html(tempData);
             }
         });
-        $("#tbodyValidacionDocumentosModal").html(tempData);
     }
     
     function agregarArchivosUrl()
@@ -955,7 +963,7 @@ if(isset($_REQUEST["accion"]))
         }
     }
     
-    function validarDocumentoR(Obj,columna,idValidacionDocumento,involucrados)//listo
+    function validarDocumentoR(Obj,columna,idValidacionDocumento,idDocumento)//listo
     {
         GetValidacionTema = ({
             url:'../Controller/ValidacionDocumentosController.php?Op=GetValidacionTema',
@@ -977,10 +985,21 @@ if(isset($_REQUEST["accion"]))
                     {
                         if(existenArchivos==true)
                         {
-                            validar(idValidacionDocumento,columna,Obj);
-                            $.each(involucrados,function(index,value)
-                            {
-                                enviar_notificacion("Ha sido validado un documento por el responsable del documento",value.id_usuarioT,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento);//msj,para,tipomsj,atendido,asunto
+                            validar = validar(idValidacionDocumento,columna,Obj);
+                            $.ajax({
+                                url:'../Controller/ValidacionDocumentosController.php?Op=ObtenerTemayResponsable',
+                                type:'GET',
+                                data:'ID_DOCUMENTO='+idDocumento,
+                                success:function(responsables)
+                                {
+                                    $.each(responsables,function(index,value)
+                                    {
+                                        (validar)?
+                                        enviar_notificacion("Ha sido validado un documento por el responsable del documento",value.id_usuarioT,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento)//msj,para,tipomsj,atendido,asunto
+                                        :
+                                        enviar_notificacion("Ha sido desvalidado un documento por el responsable del documento",value.id_usuarioT,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento);//msj,para,tipomsj,atendido,asunto
+                                    });
+                                }
                             });
                         }
                         if(existenArchivos==false)
@@ -1006,7 +1025,7 @@ if(isset($_REQUEST["accion"]))
 
     idUsuario = <?php echo $Usuario["ID_USUARIO"] ?>;
 
-    function validarTemaR(Obj,columna,idValidacionDocumento,involucrados,idPara)//listo
+    function validarTemaR(Obj,columna,idValidacionDocumento,idDocumento,idPara)//listo
     {
         GetValidacionTema = $.ajax({
             url:'../Controller/ValidacionDocumentosController.php?Op=GetValidacionDocumento',
@@ -1018,18 +1037,36 @@ if(isset($_REQUEST["accion"]))
         {
             if(validado==true)
             {
-                validar(idValidacionDocumento,columna,Obj);
-                enviar_notificacion("Ha sido validado un documento por el responsable de Tema",idPara,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento);//msj,para,tipomsj,atendido,asunto
-                $.each(involucrados,function(index,value)
-                {
-                    if(value.id_usuarioT!=idUsuario)
-                        enviar_notificacion("Ha sido validado un documento por el responsable de Tema",value.id_usuarioT,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento);//msj,para,tipomsj,atendido,asunto
+                validarR = validar(idValidacionDocumento,columna,Obj);
+                (validarR)?(
+                enviar_notificacion("Ha sido validado un documento por el responsable de Tema",idPara,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento)//msj,para,tipomsj,atendido,asunto
+                ):(
+                enviar_notificacion("Ha sido desvalidado un documento por el responsable de Tema",idPara,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento)
+                );//msj,para,tipomsj,atendido,asunto
+
+                $.ajax({
+                    url:'../Controller/ValidacionDocumentosController.php?Op=ObtenerTemayResponsable',
+                    type:'GET',
+                    data:'ID_DOCUMENTO='+idDocumento,
+                    success:function(responsables)
+                    {
+                        $.each(responsables,function(index,value)
+                        {
+                            if(value.id_usuario!=idUsuario)
+                            {
+                                (validarR)?
+                                enviar_notificacion("Ha sido validado un documento por el responsable de Tema",value.id_usuario,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento)//msj,para,tipomsj,atendido,asunto
+                                :
+                                enviar_notificacion("Ha sido desvalidado un documento por el responsable de Tema",value.id_usuario,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento);//msj,para,tipomsj,atendido,asunto
+                            }                                
+                        });
+                    }
                 });
             }
             if(validado==false)
                 swalError("Esperando validacion Responsable del documento");
             if(validado==-1)
-                alert("Error en el servidor");   
+                alert("Error en el servidor");
         })
         .fail(function()
         {
@@ -1043,12 +1080,15 @@ if(isset($_REQUEST["accion"]))
         yes = "fa-check-circle-o";
         valor=false;
         ($(Obj).hasClass(no))?valor=true:valor=false;
+        exitoT=false;
         $.ajax({
                 url: '../Controller/ValidacionDocumentosController.php?Op=ModificarColumna',
                 type: 'POST',
                 data: 'ID_VALIDACION_DOCUMENTO='+idValidacionDocumento+'&COLUMNA='+columna+'&VALOR='+valor,
+                async:false,
                 success:function(exito)
                 {
+                    exitoT = valor;
                     if(exito)
                     {
                         $(Obj).removeClass( (valor)?no:yes );
@@ -1064,6 +1104,7 @@ if(isset($_REQUEST["accion"]))
                     swalError("Error en el servidor");
                 }
             });
+        return exitoT;
     }
     function noAcceso(Obj)
     {
