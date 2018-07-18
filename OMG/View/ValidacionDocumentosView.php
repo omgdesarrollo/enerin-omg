@@ -995,9 +995,9 @@ if(isset($_REQUEST["accion"]))
                                     $.each(responsables,function(index,value)
                                     {
                                         (validar)?
-                                        enviar_notificacion("Ha sido validado un documento por el responsable del documento",value.id_usuarioT,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento)//msj,para,tipomsj,atendido,asunto
+                                        enviar_notificacion("Ha sido validado un documento por el responsable del documento",value.id_usuario,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento)//msj,para,tipomsj,atendido,asunto
                                         :
-                                        enviar_notificacion("Ha sido desvalidado un documento por el responsable del documento",value.id_usuarioT,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento);//msj,para,tipomsj,atendido,asunto
+                                        enviar_notificacion("Ha sido desvalidado un documento por el responsable del documento",value.id_usuario,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento);//msj,para,tipomsj,atendido,asunto
                                     });
                                 }
                             });
