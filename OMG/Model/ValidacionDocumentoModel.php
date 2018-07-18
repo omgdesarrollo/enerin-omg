@@ -67,12 +67,12 @@ class ValidacionDocumentoModel{
         }    
     }
     
-    public function obtenerTemayResponsable($id_documento)
+    public function obtenerTemayResponsable($ID_DOCUMENTO,$CONTRATO)
     {
         try
         {
             $dao=new ValidacionDocumentoDAO();
-            $rec=$dao->obtenerTemayResponsable($id_documento);
+            $rec=$dao->obtenerTemayResponsable($ID_DOCUMENTO,$CONTRATO);
             
             return $rec;
             

@@ -135,29 +135,24 @@ class ValidacionDocumentoDAO{
          
     }
  
-    public function obtenerTemayResponsable ($id_documento)
+    public function obtenerTemayResponsable($ID_DOCUMENTO,$CONTRATO)
     {
         try{
-            $query="SELECT tbasignacion_tema_requisito.id_tema, tbtemas.no, tbempleados.id_empleado, tbempleados.nombre_empleado, 
-		    tbempleados.apellido_paterno, tbempleados.apellido_materno
-
-                    FROM validacion_documento tbvalidacion_documento
-
-                    JOIN documentos tbdocumentos ON tbdocumentos.id_documento=tbvalidacion_documento.id_documento
-                    JOIN registros tbregistros ON tbregistros.id_documento=tbdocumentos.id_documento
-                    JOIN requisitos_registros tbrequisitos_registros ON tbrequisitos_registros.id_registro=tbregistros.id_registro
-                    JOIN requisitos tbrequisitos ON tbrequisitos.id_requisito=tbrequisitos_registros.id_requisito
-                    JOIN asignacion_tema_requisito_requisitos tbasignacion_tema_requisito_requisitos ON
-                    tbasignacion_tema_requisito_requisitos.id_requisito=tbrequisitos.id_requisito
-
-                    JOIN asignacion_tema_requisito tbasignacion_tema_requisito ON 
-                    tbasignacion_tema_requisito.id_asignacion_tema_requisito=tbasignacion_tema_requisito_requisitos.id_asignacion_tema_requisito
-
-                    JOIN temas tbtemas ON tbtemas.id_tema=tbasignacion_tema_requisito.id_tema
-                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
-
-                    WHERE tbdocumentos.id_documento=$id_documento GROUP BY tbtemas.no";
-            
+            $query="SELECT DISTINCT tbusuarios.id_usuario,
+            CONCAT (tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)AS responsable_tema
+            FROM validacion_documento tbvalidacion_documento
+            JOIN documentos tbdocumentos ON tbdocumentos.id_documento=tbvalidacion_documento.id_documento
+            JOIN registros tbregistros ON tbregistros.id_documento=tbdocumentos.id_documento
+            JOIN requisitos_registros tbrequisitos_registros ON tbrequisitos_registros.id_registro=tbregistros.id_registro
+            JOIN requisitos tbrequisitos ON tbrequisitos.id_requisito=tbrequisitos_registros.id_requisito
+            JOIN asignacion_tema_requisito_requisitos tbasignacion_tema_requisito_requisitos ON
+            tbasignacion_tema_requisito_requisitos.id_requisito=tbrequisitos.id_requisito
+            JOIN asignacion_tema_requisito tbasignacion_tema_requisito ON 
+            tbasignacion_tema_requisito.id_asignacion_tema_requisito=tbasignacion_tema_requisito_requisitos.id_asignacion_tema_requisito
+            JOIN temas tbtemas ON tbtemas.id_tema=tbasignacion_tema_requisito.id_tema
+            JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
+            JOIN usuarios tbusuarios ON tbusuarios.id_empleado = tbempleados.id_empleado
+            WHERE tbdocumentos.id_documento=$ID_DOCUMENTO AND tbtemas.contrato=$CONTRATO";
             
             $db= AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
