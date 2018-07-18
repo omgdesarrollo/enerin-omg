@@ -393,7 +393,7 @@ if(isset($_REQUEST["accion"]))
         tempData+="<td>"+documento.documento+"</td>";
         tempData+="<td>"+documento.responsable_documento+"</td>";
 
-        tempData+="<td><button onClick='mostrarTemaResponsable("+JSON.stringify(documento.temasResponsables)+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'>";
+        tempData+="<td><button onClick='mostrarTemaResponsable("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'>";
         tempData+="<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
         
         if(documento.permiso_total == 0)
@@ -818,18 +818,26 @@ if(isset($_REQUEST["accion"]))
         });
     }
     
-    function mostrarTemaResponsable(data)//listo
+    function mostrarTemaResponsable(idDocumento)//listo
     {
         tempData = "";
-        $.each(data,function(index,value)
-        {
-            if(value.nombre_tema!=null)
+        $.ajax({
+            url:'../Controller/ValidacionDocumentosController.php?Op=ObtenerTemayResponsable',
+            type:'GET',
+            data:'ID_DOCUMENTO='+idDocumento,
+            success:function(responsables)
             {
-                tempData += "<tr><td>"+value.nombre_tema+"</td>";
-                tempData += "<td>"+value.responsable_tema+"</td></tr>";
+                $.each(responsables,function(index,value)
+                {
+                    // if(value.nombre!=null)
+                    // {
+                        tempData += "<tr><td>"+value.nombre+"</td>";
+                        tempData += "<td>"+value.responsable_tema+"</td></tr>";
+                    // }
+                });
+                $("#tbodyValidacionDocumentosModal").html(tempData);
             }
         });
-        $("#tbodyValidacionDocumentosModal").html(tempData);
     }
     
     function agregarArchivosUrl()
@@ -955,7 +963,7 @@ if(isset($_REQUEST["accion"]))
         }
     }
     
-    function validarDocumentoR(Obj,columna,idValidacionDocumento,involucrados)//listo
+    function validarDocumentoR(Obj,columna,idValidacionDocumento,idDocumento)//listo
     {
         GetValidacionTema = ({
             url:'../Controller/ValidacionDocumentosController.php?Op=GetValidacionTema',
@@ -978,12 +986,20 @@ if(isset($_REQUEST["accion"]))
                         if(existenArchivos==true)
                         {
                             validar = validar(idValidacionDocumento,columna,Obj);
-                            $.each(involucrados,function(index,value)
-                            {
-                                (validar)?
-                                enviar_notificacion("Ha sido validado un documento por el responsable del documento",value.id_usuarioT,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento)//msj,para,tipomsj,atendido,asunto
-                                :
-                                enviar_notificacion("Ha sido desvalidado un documento por el responsable del documento",value.id_usuarioT,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento);//msj,para,tipomsj,atendido,asunto
+                            $.ajax({
+                                url:'../Controller/ValidacionDocumentosController.php?Op=ObtenerTemayResponsable',
+                                type:'GET',
+                                data:'ID_DOCUMENTO='+idDocumento,
+                                success:function(responsables)
+                                {
+                                    $.each(responsables,function(index,value)
+                                    {
+                                        (validar)?
+                                        enviar_notificacion("Ha sido validado un documento por el responsable del documento",value.id_usuarioT,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento)//msj,para,tipomsj,atendido,asunto
+                                        :
+                                        enviar_notificacion("Ha sido desvalidado un documento por el responsable del documento",value.id_usuarioT,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento);//msj,para,tipomsj,atendido,asunto
+                                    });
+                                }
                             });
                         }
                         if(existenArchivos==false)
@@ -1021,25 +1037,27 @@ if(isset($_REQUEST["accion"]))
         {
             if(validado==true)
             {
-                validar = validar(idValidacionDocumento,columna,Obj);
-                (validar)?
+                validarR = validar(idValidacionDocumento,columna,Obj);
+                (validarR)?(
                 enviar_notificacion("Ha sido validado un documento por el responsable de Tema",idPara,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento)//msj,para,tipomsj,atendido,asunto
-                :
-                enviar_notificacion("Ha sido desvalidado un documento por el responsable de Tema",idPara,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento);//msj,para,tipomsj,atendido,asunto
+                ):(
+                enviar_notificacion("Ha sido desvalidado un documento por el responsable de Tema",idPara,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento)
+                );//msj,para,tipomsj,atendido,asunto
+
                 $.ajax({
                     url:'../Controller/ValidacionDocumentosController.php?Op=ObtenerTemayResponsable',
-                    type:'',
+                    type:'GET',
                     data:'ID_DOCUMENTO='+idDocumento,
                     success:function(responsables)
                     {
-                        $.each(involucrados,function(index,value)
+                        $.each(responsables,function(index,value)
                         {
-                            if(value.id_usuarioT!=idUsuario)
+                            if(value.id_usuario!=idUsuario)
                             {
-                                (validar)?
-                                enviar_notificacion("Ha sido validado un documento por el responsable de Tema",value.id_usuarioT,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento)//msj,para,tipomsj,atendido,asunto
+                                (validarR)?
+                                enviar_notificacion("Ha sido validado un documento por el responsable de Tema",value.id_usuario,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento)//msj,para,tipomsj,atendido,asunto
                                 :
-                                enviar_notificacion("Ha sido desvalidado un documento por el responsable de Tema",value.id_usuarioT,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento);//msj,para,tipomsj,atendido,asunto
+                                enviar_notificacion("Ha sido desvalidado un documento por el responsable de Tema",value.id_usuario,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento);//msj,para,tipomsj,atendido,asunto
                             }                                
                         });
                     }
