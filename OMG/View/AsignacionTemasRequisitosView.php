@@ -83,7 +83,13 @@ $Usuario=  Session::getSesion("user");
 							<div class="help-block with-errors"></div>
 						</div>
 
-                                                                        
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <span style="border:none;background-color:transparent;" class="input-group-addon">Con Penalizacion</span>
+                                                        <input type="checkbox" style="width: 40px; height: 40px" class="checkbox" id="checkPenalizado">
+                                                        
+                                                    </div>							
+						</div>    
                                                                                                                                 
 						<div class="form-group">
                                                     <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
@@ -96,6 +102,7 @@ $Usuario=  Session::getSesion("user");
 
 		  </div>
        </div>
+    
  <div class="modal draggable fade" id="create-itemRegistro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
@@ -227,11 +234,20 @@ function registroClaveEscritura()
     }
 }
 
+
+parametroscheck={"penalizado":"false"};
+
 $(function(){
+    
+    $('#checkPenalizado').click(function() {
+        parametroscheck["penalizado"]=$(this).is(':checked');
+        alert(parametroscheck["penalizado"]);
+    });
+    
     $("#formRequisitos").submit(function(e){
          e.preventDefault();
 //         alert("dcf  "+id_asignacion_t);
-         var formData = {"ID_ASIGNACION_TEMA_REQUISITO":id_asignacion_t,"REQUISITO":$('#REQUISITO').val()};            
+         var formData = {"ID_ASIGNACION_TEMA_REQUISITO":id_asignacion_t,"REQUISITO":$('#REQUISITO').val(),"CHECK":parametroscheck["penalizado"]};            
          
          $.ajax({
              url:'../Controller/AsignacionTemasRequisitosController.php?Op=GuardarNodo',

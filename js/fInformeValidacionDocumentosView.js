@@ -89,15 +89,12 @@ function listarDatosGrafica()
 {
     __datosGraficar=[
         {"Conceptos":"Empleados","Seleccion":""},
-        {"Conceptos":"Temas","Seleccion":""}
+        {"Conceptos":"Temas","Seleccion":""},
+        {"Conceptos":"Documentos","Seleccion":""},
+        {"Conceptos":"Asignaciones","Seleccion":""},
+        {"Conceptos":"Validacion de Documentos","Seleccion":""},
+        {"Conceptos":"Evidencias","Seleccion":""}
     ];
-//           __datosGraficar.push({
-//           "Conceptos":"Empleados",
-//           "Seleccion":"",
-//           });
-//           __datosGraficar.push({
-//               "Conceptos":"Temas",
-//           })
        
     __fieldsDatos=[
             { name: "Conceptos", type: "text", width: 80, validate: "required" },
@@ -110,12 +107,13 @@ function listarDatosGrafica()
    $("#jsGridGrafico").html();
        $("#jsGridGrafico").jsGrid({
         width: "20%",
-        height: "200px",
+        height: "300px",
         heading: true,
         sorting: true,
         paging: true,
         data: __datosGraficar,
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+        
         fields:__fieldsDatos, 
 //                [
 ////            { name: "clave_doc",textField: "Clave documento", type: "text", width: 150, validate: "required" },
