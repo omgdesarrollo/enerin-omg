@@ -12,8 +12,12 @@ try {
     //proceso
     $model=new LoginModel();
     $recUser=$model->validar($usuario,$clave);
-    
+   
+    if($recUser["contrato"]!=0){
     if($recUser["accesos"]!=""){
+        
+//        echo "Valor:".json_encode($recUser["contrato"]);
+        
     $hora = date('H:i');
     $session_id = session_id();
     $token = hash('sha256', $hora.$session_id);
@@ -24,30 +28,37 @@ try {
 //    echo "dato";
     Session::setSesion("user",$recUser["usuario"]);
     Session::setSesion("userAcceso",$recUser["accesos"]);
-
-    if ($recUser["cotrato"]!=0){
+//    Session::setSesion("contratoAcceso",$recUser["cotrato"]);
+    
 //  $jsonToken["tokenseguridad"]=$token;
 //    Session::setSesion("token",$jsonToken);
 //    Session::setSesion("user", $token);
 
 //    echo json_encode($recUser);
     
+    
     $jsondata['success']=true;
     $jsondata['message']='Correcto';
-    $jsondata['accesos']='si';
-     $jsondata['cotrato']='si';
+    $jsondata['accesos']='si';                       
+    $jsondata['contrato']='si';
+      
+   
 //    $jsondata['seguridad']=$token;
-    }
     //para redireccionar se guarda en una variable el link
 //    $target="../View/main.php";
     }else{
+        
+        
+       
 //        echo "no tiene";
         $jsondata['success']=true;
         $jsondata['message']='Correcto';
         $jsondata['accesos']='no';
-        $jsondata['cotrato']='no';
+        $jsondata['contrato']='no';
+        
     }
-   
+    
+    }    
     
 }  catch (Exception $e){
     Session::setSesion("error",$e->getMessage());

@@ -12,7 +12,9 @@ class LoginModel{
 
             
             $rec["usuario"]=$dao->consultarPorUsuario($usuario,$clave);
-            $rec["cotrato"]= $dao->validarContratoPorUsuario($rec["usuario"]["ID_USUARIO"]);
+            $rec["contrato"]= $dao->validarContratoPorUsuario($rec["usuario"]["ID_USUARIO"]);
+            
+//            echo "valor rec:".json_encode($rec["usuario"]);
             
             if($rec["usuario"]==NULL){
             throw new Exception("Usuario no existe !!!!!");

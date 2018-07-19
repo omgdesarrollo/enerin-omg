@@ -53,7 +53,7 @@ class LoginDAO{
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             
-        echo json_encode("Aqui entro:".$lista);
+//        echo json_encode("Aqui entro:".$lista);
         
             return $lista[0];
             
