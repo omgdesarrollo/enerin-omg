@@ -34,8 +34,7 @@ jQuery(document).ready(function(){
                                                         }
                                                     }
                                                 }else{
-                                                    if(r.contrato=="no"){
-                                                        
+                                                    if(r.contrato=="no"){   
                                                     $.jGrowl("no tiene cumplimientos asignados", { header: 'cumplimientos' });
                                                     }
                                                 }
