@@ -124,6 +124,7 @@ function listarDatosGrafica()
     });
     
 }
+
 //function construirTable(data)
 //{
 //    cargaTodo=0;
