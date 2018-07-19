@@ -69,19 +69,18 @@ function construirTable(value)
 
   return tempData;
 }
-
-var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='form-data'>";
-    ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
-    ModalCargaArchivo += "<div class='fileupload-buttons'>";
-    ModalCargaArchivo += "<span class='fileinput-button'>";
-    ModalCargaArchivo += "<span id='spanAgregarDocumento'><a >Agregar Archivos(Click o Arrastrar)...</a></span>";
-    ModalCargaArchivo += "<input type='file' name='files[]'></span>";
-    ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
-    ModalCargaArchivo += "<div class='fileupload-progress' >";
-    // ModalCargaArchivo += "<div class='progress' role='progressbar' aria-valuemin='0' aria-valuemax='100'></div>";
-    ModalCargaArchivo += "<div class='progress-extended'>&nbsp;</div>";
-    ModalCargaArchivo += "</div></div>";
-    ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
+    var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/form-data'>";
+                ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
+                ModalCargaArchivo += "<div class='fileupload-buttons'>";
+                ModalCargaArchivo += "<span class='fileinput-button'>";
+                ModalCargaArchivo += "<span><a >Agregar Archivos(Click o Arrastrar)...</a></span>";
+                ModalCargaArchivo += "<input type='file' name='files[]' multiple></span>";
+                ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
+                ModalCargaArchivo += "<div class='fileupload-progress' >";
+                // ModalCargaArchivo += "<div class='progress' role='progressbar' aria-valuemin='0' aria-valuemax='100'></div>";
+                ModalCargaArchivo += "<div class='progress-extended'>&nbsp;</div>";
+                ModalCargaArchivo += "</div></div>";
+                ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
 
 $(function()
 {
@@ -112,7 +111,7 @@ function mostrar_urls(id_tarea)
                     console.log(todo);
                     if(todo[0].length!=0)
                     {
-                        tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
+                        tempDocumentolistadoUrl = "<table style='width:-webkit-fill-available;' class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
                         $.each(todo[0], function (index,value)
                         {
                             nametmp = value.split("^-O-^-M-^-G-^");
@@ -134,8 +133,8 @@ function mostrar_urls(id_tarea)
                     }
                     tempDocumentolistadoUrl += "<input id='tempInputIdTarea' type='text' style='display:none;' value='"+id_tarea+"'>";
                     // tempDocumentolistadoUrl += "<input id='tempInputIdParaDocumento' type='text' style='display:none;' value='"+-1+"'>";
-                    $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
                     $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
+                    $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
                     $('#fileupload').fileupload
                     ({
                         url: '../View/',
