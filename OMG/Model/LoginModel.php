@@ -12,7 +12,7 @@ class LoginModel{
 
             
             $rec["usuario"]=$dao->consultarPorUsuario($usuario,$clave);
-            $rec["contrato"]= $dao->validarContratoPorUsuario($rec["usuario"]["ID_USUARIO"]);
+            
             
 //            echo "valor rec:".json_encode($rec["usuario"]);
             
@@ -27,6 +27,12 @@ class LoginModel{
                 $rec["accesos"]= $modelAdmin->listarUsuarioVistas($rec["usuario"]["ID_USUARIO"]);
             } else {
                 $rec["accesos"]="";
+            }
+            
+            if($dao->validarContratoPorUsuario($rec["usuario"]["ID_USUARIO"])["resultado"]!=0){
+                $rec["contrato"]="si";
+            }else{
+                $rec["contrato"]="no";
             }
                         
             return $rec;
