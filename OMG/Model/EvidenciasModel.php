@@ -78,15 +78,15 @@ class EvidenciasModel
 
     
 
-    public function actualizarPorColumna($COLUMNA,$VALOR,$ID_EVIDENCIAS)
+    public function actualizarPorColumna($COLUMNA,$CONTEXTO,$ID_EVIDENCIAS,$VALOR)
     {
         try
         {
             $dao=new EvidenciasDAO();
-            $rec= $dao->actualizarEvidenciaPorColumna($COLUMNA, $VALOR, $ID_EVIDENCIAS);
-            if($COLUMNA==validacion_supervisor)
+            $rec= $dao->actualizarEvidenciaPorColumna($COLUMNA,$CONTEXTO,$ID_EVIDENCIAS,$VALOR);
+            if($COLUMNA=="validacion_supervisor")
             {
-                $rec= $dao->actualizarFechaValidacion($ID_EVIDENCIAS);
+                $rec = $dao->actualizarFechaValidacion($ID_EVIDENCIAS);
             }
             return $rec;
         }catch (Exception $ex) 

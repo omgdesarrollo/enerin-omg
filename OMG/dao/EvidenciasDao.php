@@ -79,8 +79,8 @@ class EvidenciasDAO
 			LEFT JOIN usuarios tbusuarios ON tbusuarios.id_empleado = tbempleados.id_empleado
             LEFT JOIN documentos tbdocumentos ON tbdocumentos.id_documento = tbregistros.id_documento
             
-            WHERE tbevidencias.id_evidencias = $ID_EVIDENCIA AND tbregistros.registro<>'NULL' AND tbevidencias.validacion_supervisor<>'NULL' AND tbusuarios.id_usuario = $ID_USUARIO AND LOWER(tbtemas.identificador) 
-			LIKE '%catalogo%' OR tbevidencias.id_usuario = $ID_USUARIO";
+            WHERE tbevidencias.id_evidencias = $ID_EVIDENCIA AND (tbregistros.registro<>'NULL' AND tbevidencias.validacion_supervisor<>'NULL' AND tbusuarios.id_usuario = $ID_USUARIO AND LOWER(tbtemas.identificador) 
+			LIKE '%catalogo%' OR tbevidencias.id_usuario = $ID_USUARIO)";
             $db = AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
             
@@ -153,15 +153,13 @@ class EvidenciasDAO
 
     
 
-    public function actualizarEvidenciaPorColumna($COLUMNA,$VALOR,$ID_EVIDENCIAS)
+    public function actualizarEvidenciaPorColumna($COLUMNA,$CONTEXTO,$ID_EVIDENCIAS,$VALOR)
     {     
         try
         {
-            $query="UPDATE evidencias SET ".$COLUMNA."='".$VALOR."'"
-                 ." WHERE id_evidencias=$ID_EVIDENCIAS";
+            $query="UPDATE evidencias SET $COLUMNA='".$VALOR."' WHERE $CONTEXTO=$ID_EVIDENCIAS";
             $db= AccesoDB::getInstancia();
-            $result= $db->executeQueryUpdate($query);
-
+            $result= $db->executeQueryUpdate($query);            
             return $result;
         }catch (Exception $ex)
         {
@@ -256,15 +254,13 @@ class EvidenciasDAO
     {
         try
         {
-            
-           
-                $query="UPDATE evidencias tbevidencias SET tbevidencias.fecha_validacion= if(tbevidencias.validacion_supervisor='true',now(),0) 
-                        WHERE tbevidencias.id_evidencias=$ID_EVIDENCIAS";
-                
+            $query="UPDATE evidencias tbevidencias SET tbevidencias.fecha_validacion= if(tbevidencias.validacion_supervisor='true',now(),0) 
+            WHERE tbevidencias.id_evidencias=$ID_EVIDENCIAS";
+
            $db= AccesoDB::getInstancia();
            $result= $db->executeQueryUpdate($query);
-
            return $result;
+           
         } catch (Exception $ex)
         {
             throw $ex;

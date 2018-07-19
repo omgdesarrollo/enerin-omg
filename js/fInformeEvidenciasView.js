@@ -62,7 +62,62 @@ function cargar(key){
         break;
     }
 }
-
+months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+function mostrar_urls(id_evidencia)
+{
+    var tempData=[];
+    URL = 'filesEvidenciaDocumento/'+id_evidencia;
+    // $.ajax({
+    //     url: '../Controller/ArchivoUploadController.php?Op=CrearUrl',
+    //     type: 'GET',
+    //     data: 'URL='+URL,
+    //     success:function(creado)
+    //     {
+    //     if(creado)
+    //     {
+            $.ajax({
+            url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
+            type: 'GET',
+            data: 'URL='+URL,
+            async:false,
+            success: function(todo)
+            {
+                console.log(todo);
+                if(todo[0].length!=0)
+                {
+                    // tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
+                    $.each(todo[0], function (index,value)
+                    {
+                        nametmp = value.split("^-O-^-M-^-G-^");
+                        fecha = new Date(nametmp[0]*1000);
+                        fecha = fecha.getDay() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+                        tempData["name"] = "<a href=\""+todo[1]+"/"+value+"\" download='"+nametmp[1]+"'>"+nametmp[1]+"</a>";
+                        tempData["fecha"] = fecha;
+                        // tempDocumentolistadoUrl += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
+                        // tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
+                        // tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button>";
+                        // tempDocumentolistadoUrl += "</td></tr>";
+                    });
+                    // tempDocumentolistadoUrl += "</tbody></table>";
+                }
+                else
+                {
+                    tempData["name"] = " Sin archivo";
+                    tempData["fecha"] = " ----------- ";
+                }
+                // $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
+            }
+            });
+            console.log(tempData);
+            return tempData;
+        // }
+        // else
+        // {
+        //     swal("Error en el servidor");
+        // }
+        // }
+    // });
+}
 
 function listarDatos()
 {
@@ -97,6 +152,7 @@ function listarDatos()
         status="validado";
         $.each(r,function (index,value){
         if(value.validacion_supervisor=="true"){status="validado";}else{status="En proceso";}
+        nameDate=mostrar_urls(value.id_evidencias);
         __datos.push({
             "No":contador++,
             "Tema":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
@@ -105,8 +161,11 @@ function listarDatos()
             "Clave del Documento":value.clave_documento,
             "Responsable del Documento":value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno,
             "Frecuencia":value.frecuencia,
-            "Evidencia":"<button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'><i class='fa fa-cloud-upload' style='font-size: 15px'></i> Ver</button>",
-            "Fecha de Registro":"<i class='fa fa-cloud-upload' style='font-size: 15px'>Fecha</i>",
+
+            // "Evidencia":"<button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'><i class='fa fa-cloud-upload' style='font-size: 15px'></i> Ver</button>",
+            "Evidencia":nameDate.name,
+            // "Fecha de Registro":"<i class='fa fa-cloud-upload' style='font-size: 15px'>Fecha</i>",
+            "Fecha de Registro":nameDate.fecha,
             "Desviacion":value.desviacion,
             "Accion Correctiva":value.accion_correctiva,
             "Avance del Plan":"<i class='fa fa-cloud-upload' style='font-size: 15px'>%%</i>",

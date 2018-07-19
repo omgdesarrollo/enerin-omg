@@ -381,6 +381,7 @@
 
     // var data="";
     // var dataTemp="";
+    months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
     var si_hay_cambio=false;
     dataRegistro="";
     $(function()
@@ -853,10 +854,10 @@
             tempData += "<i class='fa fa-cloud-upload' style='font-size: 15px'></i> Adjuntar</button></td>";
             $.each(todo[0],function(index2,value2)
             {
-                nametmp = value2.split("^");
-                tempArchivo = nametmp[0];
-                // fechaAdjunto=nametmp[0];
-                tempData += "<td width='10%'>"+nametmp[0]+"</td>";
+                nametmp = value2.split("^-O-^-M-^-G-^");
+                fecha = new Date(nametmp[0]*1000);
+                fecha = fecha.getDay() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+                tempData += "<td width='10%'>"+fecha+"</td>";
                 // if(value.clasificacion=="")
                 // {
                 //     tempData += "<td><select class='select'";
@@ -982,7 +983,7 @@
         no = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true' onclick=\"validarEvidencia(this,'evidencias','validacion_supervisor','id_evidencias',"+id+","+idPara+")\"></i>";
         yes = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true' onclick=\"validarEvidencia(this,'evidencias','validacion_supervisor','id_evidencias',"+id+","+idPara+")\"></i>";
         id_validacion_documento=id;
-        columna=column;
+        // columna=column;
         objetocheckbox=checkbox;
         ($(checkbox).hasClass('fa-times-circle-o'))?valor=true:valor=false;
         alguno = $(checkbox).parent();
@@ -1001,9 +1002,9 @@
         //             if(isConfirm)
         //             {
                         $.ajax({
-                            url: "../Controller/GeneralController.php?Op=ModificarColumna",
+                            url: "../Controller/EvidenciasController.php?Op=ModificarColumna",
                             type: "POST",
-                            data: "TABLA="+tabla+"&COLUMNA="+column+"&ID_CONTEXTO="+context+"&ID="+id+"&VALOR="+valor,
+                            data: "COLUMNA="+column+"&ID_CONTEXTO="+context+"&ID_EVIDENCIA="+id+"&VALOR="+valor,
                             success: function(data)
                             {
                                 if(data==true)
@@ -1188,9 +1189,10 @@
                               tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
                               $.each(todo[0], function (index,value)
                               {
-                                      nametmp = value.split("^");
+                                      nametmp = value.split("^-O-^-M-^-G-^");
                                       name;
-                                      fecha = nametmp[0];
+                                      fecha = new Date(nametmp[0]*1000);
+                                      fecha = fecha.getDay() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
                                       $.each(nametmp, function(index,value)
                                       {
                                               if(index!=0)
@@ -1456,7 +1458,7 @@
             <!-- </td> -->
         </tr>
     {% } %}
-    {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val(); var ID_PARA_DOCUMENTO = $('#tempInputIdParaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO,'0','false',ID_PARA_DOCUMENTO); reconstruirRow(ID_EVIDENCIA_DOCUMENTO); noArchivo=0; } } %}
+    {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val(); alert(ID_EVIDENCIA_DOCUMENTO); var ID_PARA_DOCUMENTO = $('#tempInputIdParaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO,'0','false',ID_PARA_DOCUMENTO); reconstruirRow(ID_EVIDENCIA_DOCUMENTO); noArchivo=0; } } %}
 </script>
     
     

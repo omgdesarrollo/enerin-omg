@@ -708,7 +708,7 @@ if(isset($_REQUEST["accion"]))
     {
       agregarArchivosUrl();
     });
-
+    months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
     function mostrar_urls(id_validacion_documento,detenerCargas)
     {
       var tempDocumentolistadoUrl = "";
@@ -730,29 +730,25 @@ if(isset($_REQUEST["accion"]))
                       // console.log(todo[0].length);
                       if(todo[0].length!=0)
                       {
-                              tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
-                              $.each(todo[0], function (index,value)
-                              {
-                                      nametmp = value.split("^");
-                                      name;
-                                      fecha = nametmp[0];
-                                      $.each(nametmp, function(index,value)
-                                      {
-                                              if(index!=0)
-                                                      (index==1)?name=value:name+="-"+value;
-                                      });
-                                      tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
-                                      tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\">"+name+"</a></td>";
-                                      if(detenerCargas!="true")
-                                      {
-                                        tempDocumentolistadoUrl += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
-                                        tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
-                                        tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";
-                                      }
-                                      else
-                                      tempDocumentolistadoUrl += "<td></td>";
-                              });
-                              tempDocumentolistadoUrl += "</tbody></table>";
+                            tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
+                            $.each(todo[0], function (index,value)
+                            {
+                                nametmp = value.split("^-O-^-M-^-G-^");
+                                fecha = new Date(nametmp[0]*1000);
+                                fecha = fecha.getDay() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+                                
+                                tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
+                                tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\" download='"+nametmp[1]+"'>"+nametmp[1]+"</a></td>";
+                                if(detenerCargas!="true")
+                                {
+                                    tempDocumentolistadoUrl += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
+                                    tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
+                                    tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";
+                                }
+                                else
+                                    tempDocumentolistadoUrl += "<td></td>";
+                            });
+                            tempDocumentolistadoUrl += "</tbody></table>";
                       }
                       if(tempDocumentolistadoUrl == " ")
                       {
