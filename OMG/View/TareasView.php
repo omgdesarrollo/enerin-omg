@@ -210,8 +210,8 @@ require_once 'EncabezadoUsuarioView.php';
                     <div id="DocumentolistadoUrlModal"></div>
                 </div>
 
-                <div class="form-group" method="post" >
-                    <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Archivo</button>
+                <div class="form-group" method="post">
+                    <button style='width:-webkit-fill-available;' type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Archivo</button>
                 </div>
             </div><!-- cierre div class-body -->
         </div><!-- cierre div class modal-content -->
@@ -244,7 +244,7 @@ function loadSpinner()
             <!-- <div class="progress"></div> -->
             </td>
             <td>
-            {% if (!i && !o.options.autoUpload) { if(noArchivo==0){ %}
+            {% if (!i && !o.options.autoUpload) { { %}
                     <button class="start" style="display:none;padding: 0px 4px 0px 4px;" disabled>Start</button>
             {% } } %}
             {% if (!i) { %}
@@ -252,7 +252,6 @@ function loadSpinner()
             {% } %}
             </td>
         </tr>
-        {% if(i==0){ $('.fileupload-buttonbar').html(""); } %}
     {% noArchivo=1; } %}
 </script>
 
