@@ -41,7 +41,7 @@ try {
     $jsondata['success']=true;
     $jsondata['message']='Correcto';
     $jsondata['accesos']='si';                             
-   
+   $jsondata['contrato']='si';
 //    $jsondata['seguridad']=$token;
     //para redireccionar se guarda en una variable el link
 //    $target="../View/main.php";
