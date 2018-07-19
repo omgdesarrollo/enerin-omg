@@ -8,26 +8,21 @@ jQuery(document).ready(function(){
 						url: "../Controller/LoginController.php",
 						data: formData,
 						success: function(r){
-                                                    
                                                     if(r.success==true){
-                                                       
                                                         var delay = 1000;
                                                         if(r.accesos=="si"){
 //                                                            $.jGrowl("Acceso a vistas exitosa", { sticky: true });
                                                             var delay = 1000;
                                                             if(r.contrato=="si"){
 //                                                                 $.jGrowl("Tiene contrato Asginado", { sticky: true });
-                                                        $.jGrowl("Cargando  Porfavor Espere......", { sticky: true });
-							$.jGrowl("Bienvenido", { header: 'Acceso Permitido' });
-                                                                 var delay = 1000;
-                                                                 setTimeout(function(){ window.location = 'principalmodulos.php'  }, delay);  
-                                                                 
-                                                                 
+                                                                    $.jGrowl("Cargando  Porfavor Espere......", { sticky: true });
+                                                                    $.jGrowl("Bienvenido", { header: 'Acceso Permitido' });
+                                                                    var delay = 1000;
+                                                                    setTimeout(function(){ window.location = 'principalmodulos.php'  }, delay);  
                                                             }else{
                                                                  $.jGrowl("Error no  tiene contrato asignado", { header: 'Error acceso contratos' });
                                                                  var delay = 1000;
                                                             }
-                                                           
                                                         }else
                                                         {
                                                               $.jGrowl("Error no tiene acceso al menos en una vista", { header: 'Error acceso a la vista' });
@@ -41,33 +36,6 @@ jQuery(document).ready(function(){
                                                              var delay = 1000;
                                                         }
                                                     }
-                                                    
-                                                    
-//                                                      if(r.contrato=="si"){
-//                                                        if(r.accesos=="no"){
-//                                                             $.jGrowl("no tiene acceso a ninguna ventana", { header: 'Encabezado' });
-//                                                         }else{
-//							if(r.success==true){
-//							$.jGrowl("Cargando  Porfavor Espere......", { sticky: true });
-//							$.jGrowl("Bienvenido", { header: 'Acceso Permitido' });
-//							var delay = 1000;
-////							setTimeout(function(){ window.location = 'principalmodulos.php'  }, delay);  
-//							}else if (r.success == true){
-//							$.jGrowl("Bienvenido", { header: 'Acceso Permitido' });
-//							var delay = 1000;
-//							setTimeout(function(){ window.location = 'sipasoelusuariopero entro en otro modo c'  }, delay);  
-//							}else
-//							{
-//                                                        if(r.success==false ){
-//							  $.jGrowl("Porfavor checa tu Usuario y Password", { header: 'Error de inicio de sesion' });
-//                                                        }
-//                                                        }
-//                                                        }
-//                                                }else{
-//                                                    if(r.contrato=="no"){   
-//                                                    $.jGrowl("no tiene cumplimientos asignados", { header: 'cumplimientos' });
-//                                                    }
-//                                                }
 							},
                                                         error:function(){
 //                                                            alert("hubo un error al tratar de realizar la peticion ajax ");
