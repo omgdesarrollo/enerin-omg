@@ -52,7 +52,7 @@ try {
        
 //        echo "no tiene";
         $jsondata['success']=true;
-        $jsondata['message']='Correcto';
+        $jsondata['message']='Incorrecto';
         $jsondata['accesos']='no';
         $jsondata['contrato']='no';
         
