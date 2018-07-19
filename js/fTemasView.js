@@ -208,7 +208,9 @@ function evaluarToolbarSeccionB(id)
 //    alert("Este es el ID:"+id)
     if(id_seleccionado=="")
     {
-        alert("No hay tema seleccionado");
+//        alert("No hay tema seleccionado");
+        swal("","Seleccione un Tema","error");
+        setTimeout(function(){swal.close();},1000);
     } else {
     if(id=="agregar")
     {

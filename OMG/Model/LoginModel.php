@@ -9,9 +9,10 @@ class LoginModel{
         try{
             $dao=new LoginDAO();
             $modelAdmin=new AdminModel();
+
             
             $rec["usuario"]=$dao->consultarPorUsuario($usuario,$clave);
-            
+            $rec["cotrato"]= $dao->validarContratoPorUsuario($rec["usuario"]["ID_USUARIO"]);
             
             if($rec["usuario"]==NULL){
             throw new Exception("Usuario no existe !!!!!");
@@ -26,12 +27,25 @@ class LoginModel{
                 $rec["accesos"]="";
             }
                         
-
-            
             return $rec;
     }  catch (Exception $e){
         throw  $e;
     }
+    }
+    
+    public function validarContratoPorUsuario($ID_USUARIO)
+    {
+        try
+        {
+            $dao=new LoginDAO();
+            $rec= $dao->validarContratoPorUsuario($ID_USUARIO);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
     }
 }
 

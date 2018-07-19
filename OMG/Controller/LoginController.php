@@ -15,9 +15,9 @@ try {
     
     if($recUser["accesos"]!=""){
     $hora = date('H:i');
-$session_id = session_id();
-$token = hash('sha256', $hora.$session_id);
-$recUser["tokenseguridad"]=$token;
+    $session_id = session_id();
+    $token = hash('sha256', $hora.$session_id);
+    $recUser["tokenseguridad"]=$token;
 //$json["tokenseguridad"]=$token;
     
 //    echo json_encode($recUser);
@@ -25,7 +25,7 @@ $recUser["tokenseguridad"]=$token;
     Session::setSesion("user",$recUser["usuario"]);
     Session::setSesion("userAcceso",$recUser["accesos"]);
 
-
+    if ($recUser["cotrato"]!=0){
 //  $jsonToken["tokenseguridad"]=$token;
 //    Session::setSesion("token",$jsonToken);
 //    Session::setSesion("user", $token);
@@ -34,17 +34,20 @@ $recUser["tokenseguridad"]=$token;
     
     $jsondata['success']=true;
     $jsondata['message']='Correcto';
-     $jsondata['accesos']='si';
+    $jsondata['accesos']='si';
+     $jsondata['cotrato']='si';
 //    $jsondata['seguridad']=$token;
-   
+    }
     //para redireccionar se guarda en una variable el link
 //    $target="../View/main.php";
     }else{
 //        echo "no tiene";
-   $jsondata['success']=true;
-    $jsondata['message']='Correcto';
-     $jsondata['accesos']='no';
+        $jsondata['success']=true;
+        $jsondata['message']='Correcto';
+        $jsondata['accesos']='no';
+        $jsondata['cotrato']='no';
     }
+   
     
 }  catch (Exception $e){
     Session::setSesion("error",$e->getMessage());

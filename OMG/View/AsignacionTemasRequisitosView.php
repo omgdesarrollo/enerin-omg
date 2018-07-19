@@ -247,7 +247,7 @@ $(function(){
     $("#formRequisitos").submit(function(e){
          e.preventDefault();
 //         alert("dcf  "+id_asignacion_t);
-         var formData = {"ID_ASIGNACION_TEMA_REQUISITO":id_asignacion_t,"REQUISITO":$('#REQUISITO').val(),"CHECK":parametroscheck["penalizado"]};            
+         var formData = {"ID_ASIGNACION_TEMA_REQUISITO":id_asignacion_t,"REQUISITO":$('#REQUISITO').val(),"PENALIZACION":parametroscheck["penalizado"]};            
          
          $.ajax({
              url:'../Controller/AsignacionTemasRequisitosController.php?Op=GuardarNodo',
