@@ -1,7 +1,9 @@
 <?php
 require_once '../ds/AccesoDB.php';
 class LoginDAO{
-    public function consultarPorUsuario($_paramUsuario,$_paramPassword){
+    public function consultarPorUsuario($_paramUsuario,$_paramPassword)
+    {
+        
         try{
             $query="call iniciarSesion('$_paramUsuario','$_paramPassword')";
             
@@ -12,9 +14,9 @@ class LoginDAO{
                 $rec=$lista[0];
             }
             return $rec;
-    } catch (Exception $e){
-        throw $rec;
-    }
+            } catch (Exception $e){
+                throw $rec;
+            }
     }
     
     
@@ -39,5 +41,28 @@ class LoginDAO{
             return $ex;
         }
     }
+    
+    public function validarContratoPorUsuario($ID_USUARIO)
+    {
+        try
+        {
+            $query="SELECT count(*) as resultado
+                    FROM usuarios_cumplimientos tbusuarios_cumplimientos
+                    WHERE tbusuarios_cumplimientos.acceso='true' AND tbusuarios_cumplimientos.ID_USUARIO=$ID_USUARIO";
+//            echo json_encode("Entro al sql:".$query);
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            
+//        echo json_encode("Aqui entro:".$lista);
+        
+            return $lista[0];
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
 }
 ?>

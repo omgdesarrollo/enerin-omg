@@ -9,9 +9,12 @@ class LoginModel{
         try{
             $dao=new LoginDAO();
             $modelAdmin=new AdminModel();
+
             
             $rec["usuario"]=$dao->consultarPorUsuario($usuario,$clave);
             
+            
+//            echo "valor rec:".json_encode($rec["usuario"]);
             
             if($rec["usuario"]==NULL){
             throw new Exception("Usuario no existe !!!!!");
@@ -25,13 +28,32 @@ class LoginModel{
             } else {
                 $rec["accesos"]="";
             }
-                        
-
             
+            if($dao->validarContratoPorUsuario($rec["usuario"]["ID_USUARIO"])["resultado"]!=0){
+                $rec["contrato"]="si";
+            }else{
+                $rec["contrato"]="no";
+            }
+                        
             return $rec;
     }  catch (Exception $e){
         throw  $e;
     }
+    }
+    
+    public function validarContratoPorUsuario($ID_USUARIO)
+    {
+        try
+        {
+            $dao=new LoginDAO();
+            $rec= $dao->validarContratoPorUsuario($ID_USUARIO);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
     }
 }
 

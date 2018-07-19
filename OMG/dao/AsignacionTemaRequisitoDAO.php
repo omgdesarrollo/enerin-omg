@@ -117,12 +117,12 @@ class AsignacionTemaRequisitoDAO {
     }
     
     
-    public function insertarRequisito($requisito)
+    public function insertarRequisito($requisito,$penalizacion)
     {
         try
         {
-          $query="INSERT INTO requisitos(requisito)
-                  VALUES('$requisito')";
+          $query="INSERT INTO requisitos(requisito,penalizacion)
+                  VALUES('$requisito','$penalizacion')";
           
           $db=  AccesoDB::getInstancia();
           $db->executeQueryUpdate($query);

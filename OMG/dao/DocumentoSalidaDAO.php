@@ -1,11 +1,8 @@
 <?php
 require_once '../ds/AccesoDB.php';
 class DocumentoSalidaDAO{
-
     public function mostrarDocumentosSalida(){
         try{
-            
-            
             $query="SELECT tbdocumento_salida.id_documento_salida,tbdocumento_entrada.id_documento_entrada,
                     tbdocumento_entrada.folio_entrada,tbdocumento_salida.folio_salida,
                     tbdocumento_salida.fecha_envio, tbdocumento_salida.asunto,
