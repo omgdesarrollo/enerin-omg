@@ -717,225 +717,187 @@ require_once 'EncabezadoUsuarioView.php';
                           
                           
                         });
-                        $("#btn_guardar").click(function(){
-                                //   alert("entro");
-       
+
+$("#btn_guardar").click(function()
+{
+        var FOLIO_REFERENCIA=$("#FOLIO_REFERENCIA").val();
+        var FOLIO_ENTRADA=$("#FOLIO_ENTRADA").val();
+        var FECHA_RECEPCION=$("#FECHA_RECEPCION").val();
+        var ASUNTO=$("#ASUNTO").val();
+        var REMITENTE=$("#REMITENTE").val();
+        var ID_AUTORIDADMODAL=$("#ID_AUTORIDADMODAL").val();
+        var ID_TEMAMODAL=$("#ID_TEMAMODAL").val();
+        var CLASIFICACION=$("#CLASIFICACION").val();
+        var STATUS_DOC=$("#STATUS_DOC").val();
+        var FECHA_ASIGNACION=$("#FECHA_ASIGNACION").val();
+        var FECHA_LIMITE_ATENCION=$("#FECHA_LIMITE_ATENCION").val();
+        var FECHA_ALARMA=$("#FECHA_ALARMA").val();
+        var DOCUMENTO=$('#fileupload').fileupload('option', 'url');
+        var OBSERVACIONES=$("#OBSERVACIONES").val();
+        var MENSAJE_ALERTA=$("#MENSAJE_ALERTA").val();
         
-//                                    var ID_CUMPLIMIENTOMODAL=$("#ID_CUMPLIMIENTOMODAL").val();
-                                    var FOLIO_REFERENCIA=$("#FOLIO_REFERENCIA").val();
-                                    var FOLIO_ENTRADA=$("#FOLIO_ENTRADA").val();
-                                    var FECHA_RECEPCION=$("#FECHA_RECEPCION").val();
-                                    var ASUNTO=$("#ASUNTO").val();
-                                    var REMITENTE=$("#REMITENTE").val();
-                                    var ID_AUTORIDADMODAL=$("#ID_AUTORIDADMODAL").val();
-                                    var ID_TEMAMODAL=$("#ID_TEMAMODAL").val();
-                                    var CLASIFICACION=$("#CLASIFICACION").val();
-                                    var STATUS_DOC=$("#STATUS_DOC").val();
-                                    var FECHA_ASIGNACION=$("#FECHA_ASIGNACION").val();
-                                    var FECHA_LIMITE_ATENCION=$("#FECHA_LIMITE_ATENCION").val();
-                                    var FECHA_ALARMA=$("#FECHA_ALARMA").val();
-                                    var DOCUMENTO=$('#fileupload').fileupload('option', 'url');
-                                    var OBSERVACIONES=$("#OBSERVACIONES").val();
-                                    var MENSAJE_ALERTA=$("#MENSAJE_ALERTA").val();
-                                  
-                                   alert("FOLIO_REFERENCIA :"+FOLIO_REFERENCIA
-                                        +"FOLIO_ENTRADA :"+FOLIO_ENTRADA+"FECHA_RECEPCION :"+FECHA_RECEPCION+"ASUNTO :"+ASUNTO
-                                        +"REMITENTE :"+REMITENTE+"ID_AUTORIDADDMODAL :"+ID_AUTORIDADMODAL+"ID_TEMAMODAL :"+ID_TEMAMODAL
-                                        +"CLASIFICACION :"+CLASIFICACION+"STATUS_DOC :"+STATUS_DOC+"STATUS_DOC :"+STATUS_DOC
-                                        +"FECHA_ASIGNACION :"+FECHA_ASIGNACION+"FECHA_LIMITE_ATENCION :"+FECHA_LIMITE_ATENCION
-                                        +"FECHA_ALARMA :"+FECHA_ALARMA+"DOCUMENTO :"+DOCUMENTO+"OBSERVACIONES :"+OBSERVACIONES);
+        alert("FOLIO_REFERENCIA :"+FOLIO_REFERENCIA
+        +"FOLIO_ENTRADA :"+FOLIO_ENTRADA+"FECHA_RECEPCION :"+FECHA_RECEPCION+"ASUNTO :"+ASUNTO
+        +"REMITENTE :"+REMITENTE+"ID_AUTORIDADDMODAL :"+ID_AUTORIDADMODAL+"ID_TEMAMODAL :"+ID_TEMAMODAL
+        +"CLASIFICACION :"+CLASIFICACION+"STATUS_DOC :"+STATUS_DOC+"STATUS_DOC :"+STATUS_DOC
+        +"FECHA_ASIGNACION :"+FECHA_ASIGNACION+"FECHA_LIMITE_ATENCION :"+FECHA_LIMITE_ATENCION
+        +"FECHA_ALARMA :"+FECHA_ALARMA+"DOCUMENTO :"+DOCUMENTO+"OBSERVACIONES :"+OBSERVACIONES);
 
-                                    datos=[];
-//                                    datos.push(ID_CUMPLIMIENTOMODAL);//0
-                                    datos.push(FOLIO_REFERENCIA);//1
-                                    datos.push(FOLIO_ENTRADA);//2
-                                    datos.push(FECHA_RECEPCION);//3
-                                    datos.push(ASUNTO);//4
-                                    datos.push(REMITENTE);//5
-                                    datos.push(ID_AUTORIDADMODAL);//6
-                                    datos.push(ID_TEMAMODAL);//7
-                                    datos.push(CLASIFICACION);//8
-                                    datos.push(STATUS_DOC);//9
-                                    datos.push(FECHA_ASIGNACION);//10
-                                    datos.push(FECHA_LIMITE_ATENCION);//11
-                                    datos.push(FECHA_ALARMA);//12
-                                    datos.push(DOCUMENTO);//13
-                                    datos.push(OBSERVACIONES);//14
-                                    datos.push(MENSAJE_ALERTA);//15
-                                    console.log(datos);
-                                todoBien = true;
-                                
-                                $('#ValidarFolioEntradaModal').html('');
-                                $('#ValidarFolioEntradaModal').removeClass("validar_formulario");
-                                
-                                $('#ValidarFechaRecepcionModal').html('');
-                                $('#ValidarFechaRecepcionModal').removeClass("validar_formulario");
-                                
-                                $('#ValidarAsuntoModal').html('');
-                                $('#ValidarAsuntoModal').removeClass("validar_formulario");
-                                
-                                $('#ValidarRemitenteModal').html('');
-                                $('#ValidarRemitenteModal').removeClass("validar_formulario");
-                                
-                                $('#ValidarClasificacionModal').html('');
-                                $('#ValidarClasificacionModal').removeClass("validar_formulario");
-                                
-                                $('#ValidarFechaAsignacionModal').html('');
-                                $('#ValidarFechaAsignacionModal').removeClass("validar_formulario");
-                                
-                                $('#ValidarFechaLimiteAtencionModal').html('');
-                                $('#ValidarFechaLimiteAtencionModal').removeClass("validar_formulario");
-                                
-                                $('#ValidarFechaAlarmaModal').html('');
-                                $('#ValidarFechaAlarmaModal').removeClass("validar_formulario");
-                                
-                                
-                                if(datos[2]=="")
+        datos=[];
+        datos.push("");
+        datos.push(FOLIO_REFERENCIA);//1
+        datos.push(FOLIO_ENTRADA);//2
+        datos.push(FECHA_RECEPCION);//3
+        datos.push(ASUNTO);//4
+        datos.push(REMITENTE);//5
+        datos.push(ID_AUTORIDADMODAL);//6
+        datos.push(ID_TEMAMODAL);//7
+        datos.push(CLASIFICACION);//8
+        datos.push(STATUS_DOC);//9
+        datos.push(FECHA_ASIGNACION);//10
+        datos.push(FECHA_LIMITE_ATENCION);//11
+        datos.push(FECHA_ALARMA);//12
+        datos.push(DOCUMENTO);//13
+        datos.push(OBSERVACIONES);//14
+        datos.push(MENSAJE_ALERTA);//15
+        console.log(datos);
+        todoBien = true;
+        
+        $('#ValidarFolioEntradaModal').html('');
+        $('#ValidarFolioEntradaModal').removeClass("validar_formulario");
+        
+        $('#ValidarFechaRecepcionModal').html('');
+        $('#ValidarFechaRecepcionModal').removeClass("validar_formulario");
+        
+        $('#ValidarAsuntoModal').html('');
+        $('#ValidarAsuntoModal').removeClass("validar_formulario");
+        
+        $('#ValidarRemitenteModal').html('');
+        $('#ValidarRemitenteModal').removeClass("validar_formulario");
+        
+        $('#ValidarClasificacionModal').html('');
+        $('#ValidarClasificacionModal').removeClass("validar_formulario");
+        
+        $('#ValidarFechaAsignacionModal').html('');
+        $('#ValidarFechaAsignacionModal').removeClass("validar_formulario");
+        
+        $('#ValidarFechaLimiteAtencionModal').html('');
+        $('#ValidarFechaLimiteAtencionModal').removeClass("validar_formulario");
+        
+        $('#ValidarFechaAlarmaModal').html('');
+        $('#ValidarFechaAlarmaModal').removeClass("validar_formulario");
+        
+        
+//         if(datos[2]=="")
+//         {
+//                 todoBien = false;
+//                 $('#ValidarFolioEntradaModal').html('*Campo requerido');
+//                 $('#ValidarFolioEntradaModal').addClass("validar_formulario");
+//         }
+//         if(datos[3]=="")
+//         {
+// //                                   verificar si esta correcto!!! 
+// //                                   recepcionF = new Date(datos[3]);
+// //                                   recepcionF = new Date(recepcionF.getFullYear(),recepcionF.getMonth(),recepcionF.getDate()); 
+                
+//                 todoBien = false;
+//                 $('#ValidarFechaRecepcionModal').html('*Campo requerido');
+//                 $('#ValidarFechaRecepcionModal').addClass("validar_formulario");
+                
+//         }
+//         if(datos[4]=="")
+//         {
+//                 todoBien = false;
+//                 $('#ValidarAsuntoModal').html('*Campo requerido');
+//                 $('#ValidarAsuntoModal').addClass("validar_formulario");
+//         }
+//         if(datos[5]=="")
+//         {
+//                 todoBien = false;
+//                 $('#ValidarRemitenteModal').html('*Campo requerido');
+//                 $('#ValidarRemitenteModal').addClass("validar_formulario");
+//         }
+//         if(datos[8]=="")
+//         {
+//                 todoBien = false;
+//                 $('#ValidarClasificacionModal').html('*Campo requerido');
+//                 $('#ValidarClasificacionModal').addClass("validar_formulario");
+//         }
+        
+        alert(datos[10]);
+        if(datos[10]!="")
+        {
+                asignacionF = new Date(datos[10]);
+                asignacionF = new Date(asignacionF.getFullYear(),asignacionF.getMonth(),asignacionF.getDate());
+                alert(asignacionF);
+                if(datos[11]!="")
+                {
+                        limiteF = new Date(datos[11]);
+                        limiteF = new Date(limiteF.getFullYear(),limiteF.getMonth(),limiteF.getDate());
+                        alert(limiteF);
+                        if(limiteF >= asignacionF)
+                        {
+                                // console.log("Limite mayor o igual a la fecha de asignacion");
+                                if(datos[12]!="")
                                 {
-                                    todoBien = false;
-                                    $('#ValidarFolioEntradaModal').html('*Campo requerido');
-                                    $('#ValidarFolioEntradaModal').addClass("validar_formulario");
-                                }
-                                if(datos[3]=="")
-                                {
-//                                   verificar si esta correcto!!! 
-//                                   recepcionF = new Date(datos[3]);
-//                                   recepcionF = new Date(recepcionF.getFullYear(),recepcionF.getMonth(),recepcionF.getDate()); 
-                                   
-                                    todoBien = false;
-                                    $('#ValidarFechaRecepcionModal').html('*Campo requerido');
-                                    $('#ValidarFechaRecepcionModal').addClass("validar_formulario");
-                                   
-                                }
-                                if(datos[4]=="")
-                                {
-                                    todoBien = false;
-                                    $('#ValidarAsuntoModal').html('*Campo requerido');
-                                    $('#ValidarAsuntoModal').addClass("validar_formulario");
-                                }
-                                if(datos[5]=="")
-                                {
-                                    todoBien = false;
-                                    $('#ValidarRemitenteModal').html('*Campo requerido');
-                                    $('#ValidarRemitenteModal').addClass("validar_formulario");
-                                }
-                                if(datos[8]=="")
-                                {
-                                    todoBien = false;
-                                    $('#ValidarClasificacionModal').html('*Campo requerido');
-                                    $('#ValidarClasificacionModal').addClass("validar_formulario");
-                                }
-                                
-                                
-                                
-                                
-                                if(datos[10]!="")
-                                {
-                                    asignacionF = new Date(datos[10]);
-                                    asignacionF = new Date(asignacionF.getFullYear(),asignacionF.getMonth(),asignacionF.getDate());
-                                    if(datos[11]!="")
-                                    {
-                                        limiteF = new Date(datos[11]);
-                                        limiteF = new Date(limiteF.getFullYear(),limiteF.getMonth(),limiteF.getDate());
-                                        
-                                        if(limiteF >= asignacionF)
+                                        alarmaF = new Date(datos[12]);
+                                        alarmaF = new Date(alarmaF.getFullYear(),alarmaF.getMonth(),alarmaF.getDate());
+                                        if(limiteF < alarmaF)
                                         {
-                                            // console.log("Limite mayor o igual a la fecha de asignacion");
-                                            if(datos[12]!="")
-                                            {
-                                                alarmaF = new Date(datos[12]);
-                                                alarmaF = new Date(alarmaF.getFullYear(),alarmaF.getMonth(),alarmaF.getDate());
-                                                if(limiteF < alarmaF)
-                                                {
-                                                        // console.log("Alarma menor o igual a la fecha de limite");
-                                                        todoBien = false;
-                                                        $('#ValidarFechaAlarmaModal').html('*La Fecha Alarma no puede ser mayor que la Fecha Limite');
-                                                        $('#ValidarFechaAlarmaModal').addClass("validar_formulario");
-                                                }
-                                                if(alarmaF < asignacionF)
-                                                {
-                                                        // console.log("Alarma mayor o igual a la fecha de asignacion");
-                                                }
-                                                else
-                                                {
-                                                        // console.log("La fecha de Alarma no puede ser antes de la asignación");
-                                                        //$
-                                                        todoBien = false;
-                                                        $('#ValidarFechaAlarmaModal').html('*La Fecha Alarma no puede ser menor que la Fecha Asginacion');
-                                                        $('#ValidarFechaAlarmaModal').addClass("validar_formulario");
-                                                }
-                                            }
-                                        }
-                                        else
-                                        {
-                                                // console.log("La fecha limite no puede ser antes de la asignación");
+                                                // console.log("Alarma menor o igual a la fecha de limite");
                                                 todoBien = false;
-                                                $('#ValidarFechaLimiteAtencionModal').html('*La Fecha Limite no puede ser menor que la Fecha Asginacion');
-                                                $('#ValidarFechaLimiteAtencionModal').addClass("validar_formulario");
-                                                
+                                                $('#ValidarFechaAlarmaModal').html('*La Fecha Alarma no puede ser mayor que la Fecha Limite');
+                                                $('#ValidarFechaAlarmaModal').addClass("validar_formulario");
                                         }
-                                    }
-                                    else
-                                    {
-                                        //Campo requerido limite$
-                                                todoBien = false;
-                                                $('#ValidarFechaLimiteAtencionModal').html('*Campo requerido');
-                                                $('#ValidarFechaLimiteAtencionModal').addClass("validar_formulario");
-
-                                    }
-                                    if(datos[3]!="")
-                                    {
-                                        recepcionF = new Date(datos[3]);
-                                        recepcionF = new Date(recepcionF.getFullYear(),recepcionF.getMonth(),recepcionF.getDate());
-                                        if(recepcionF > asignacionF)
+                                        if(alarmaF < asignacionF)
                                         {
-                                            todoBien = false;
-                                            $('#ValidarFechaRecepcionModal').html('*La Fecha de recepcion no puede ser mayor a la fecha de asignacion');
-                                            $('#ValidarFechaRecepcionModal').addClass("validar_formulario");
+                                                // console.log("Alarma mayor o igual a la fecha de asignacion");
+                                                todoBien = false;
+                                                $('#ValidarFechaAlarmaModal').html('*La Fecha Alarma no puede ser menor que la Fecha Asginacion');
+                                                $('#ValidarFechaAlarmaModal').addClass("validar_formulario");
                                         }
-                                    }
-                                    
                                 }
-                                else {
-                                
-                                    //campo requerido asignacion
-                                                  todoBien = false;
-                                                  $('#ValidarFechaAsignacionModal').html('*Campo requerido');
-                                                $('#ValidarFechaAsignacionModal').addClass("validar_formulario");
-
-                                }
-                                console.log((todoBien) ? " BIEN " : "Tus valores estan mal/ se pintara en el modal todo lo que sea erroneo o incompleto");
-                                // var peticion = new XMLHttpRequest();
-                                // console.log("2");
-                                //progreso
-                                // peticion.upload.addEventListener("Progress",(event)=>
-                                // {
-                                //         var porcentaje = Math.round((event.loaded/event.total) * 100);
-                                //         console.log(porcentaje);
-                                        // barra_estado.style.width = porcentaje+'%';
-                                        // span.innerHTML = porcentaje+'%';
-                                // });
-                                // console.log("3");
-                                //finalizar
-                                // peticion.addEventListener("load",()=>
-                                // {
-                                        // barra_estado.classList.add('barra_verde');
-                                        // console.log("Proceso completado");
-                                // });
-                                // peticion.open('post','../../subir.php');
-                                // peticion.send(new FormData());
-                                //cancelar
-                                // botton_cancelar.addEventListener("click",()=>
-                                // {
-                                //         peticion.abort();
-                                //         barra_estado.classList.remove('barra_verde');
-                                //         barra_estado.classList.add('barra_roja');
-                                //         span.innerHTML = "proceso Cancelado";
-                                // });
-                                if(todoBien == true)
-                                    saveToDatabaseDatosFormulario(datos);
-                        // });
-                        });
+                        }
+                        else
+                        {
+                                // console.log("La fecha limite no puede ser antes de la asignación");
+                                todoBien = false;
+                                $('#ValidarFechaLimiteAtencionModal').html('*La Fecha Limite no puede ser menor que la Fecha Asginacion');
+                                $('#ValidarFechaLimiteAtencionModal').addClass("validar_formulario");
+                        }
+                }
+                else
+                {
+                        //Campo requerido limite$
+                        todoBien = false;
+                        $('#ValidarFechaLimiteAtencionModal').html('*Campo requerido');
+                        $('#ValidarFechaLimiteAtencionModal').addClass("validar_formulario");
+                }
+                if(datos[3]!="")
+                {
+                        recepcionF = new Date(datos[3]);
+                        recepcionF = new Date(recepcionF.getFullYear(),recepcionF.getMonth(),recepcionF.getDate());
+                        if(recepcionF > asignacionF)
+                        {
+                                todoBien = false;
+                                $('#ValidarFechaRecepcionModal').html('*La Fecha de recepcion no puede ser mayor a la fecha de asignacion');
+                                $('#ValidarFechaRecepcionModal').addClass("validar_formulario");
+                        }
+                }
+                
+        }
+        else
+        {
+                //campo requerido asignacion
+                todoBien = false;
+                $('#ValidarFechaAsignacionModal').html('*Campo requerido');
+                $('#ValidarFechaAsignacionModal').addClass("validar_formulario");
+        }
+        console.log((todoBien) ? " BIEN " : "Tus valores estan mal/ se pintara en el modal todo lo que sea erroneo o incompleto");
+        if(todoBien == true)
+                saveToDatabaseDatosFormulario(datos);
+// });
+});
                         
                         
                         $("#btn_limpiar").click(function(){
@@ -1192,14 +1154,13 @@ require_once 'EncabezadoUsuarioView.php';
     
     
     
-    function verificarExiste(dataString,cualverificar){
-//          alert("fdf");
-                    //Le pasamos el valor del input al ajax
+    function verificarExiste(dataString,cualverificar)
+    {
        $.ajax({
-                                type: "POST",
-                                url: "../Controller/DocumentosEntradaController.php?Op=verificacionexisteregistro&cualverificar="+cualverificar,
-                                data: "registro="+dataString,
-                                success: function(data) {    
+                type: "POST",
+                url: "../Controller/DocumentosEntradaController.php?Op=verificacionexisteregistro&cualverificar="+cualverificar,
+                data: "registro="+dataString,
+                success: function(data) {    
                 mensajeerror="";
 
                     $.each(data, function (index,value) {
@@ -1228,16 +1189,15 @@ require_once 'EncabezadoUsuarioView.php';
 
     
     
-    function loadSpinner(){
-//                    alert("se cargara otro ");
-                        myFunction();
-                }
+    function loadSpinner()
+    {
+        myFunction();
+        }
                 
          
                 
-        function saveToDatabaseDatosFormulario(datos){
-//                    alert("datos nombre "+datos[0]);
-                // var ID_DOCUMENTO;
+        function saveToDatabaseDatosFormulario(datos)
+        {
                 $.ajax({
                         url: "../Controller/DocumentosEntradaController.php?Op=Guardar",
                         type: "POST",
@@ -1462,69 +1422,71 @@ require_once 'EncabezadoUsuarioView.php';
                                 });
                         });
         }
-                function filterTableFolioEntrada() {
-                // Declare variables 
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputFolioEntrada");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
+        
+        function filterTableFolioEntrada()
+        {
+        // Declare variables 
+                var input, filter, table, tr, td, i;
+                input = document.getElementById("idInputFolioEntrada");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("idTable");
+                tr = table.getElementsByTagName("tr");
 
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[2];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
-                      } 
-                    }
+                // Loop through all table rows, and hide those who don't match the search query
+                for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[2];
+                if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                } else {
+                        tr[i].style.display = "none";
                 }
-                
-                function filterTableAsunto() {
-                // Declare variables 
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputAsunto");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
+                } 
+                }
+        }
+        
+        function filterTableAsunto() {
+        // Declare variables 
+                var input, filter, table, tr, td, i;
+                input = document.getElementById("idInputAsunto");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("idTable");
+                tr = table.getElementsByTagName("tr");
 
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[4];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
-                      } 
-                    }
+                // Loop through all table rows, and hide those who don't match the search query
+                for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[4];
+                if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                } else {
+                        tr[i].style.display = "none";
                 }
-                
-                
-                function filterTableRemitente() {
-                // Declare variables 
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputRemitente");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
+                } 
+                }
+        }
+        
+        
+        function filterTableRemitente() {
+        // Declare variables 
+                var input, filter, table, tr, td, i;
+                input = document.getElementById("idInputRemitente");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("idTable");
+                tr = table.getElementsByTagName("tr");
 
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[5];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
-                      } 
-                    }
+                // Loop through all table rows, and hide those who don't match the search query
+                for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[5];
+                if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                } else {
+                        tr[i].style.display = "none";
                 }
+                } 
+                }
+        }
                 
                 function filterTableAutoridadRemitente() {
                 // Declare variables 
