@@ -10,6 +10,8 @@ jQuery(document).ready(function(){
 						success: function(r){
                                                     //alert("d  "+r.message);
 //                                                    alert("el response tiene "+r.message);
+//                                                    if(r.)
+                                                      if(r.contrato=="si"){
                                                         if(r.accesos=="no"){
                                                              $.jGrowl("no tiene acceso a ninguna ventana", { header: 'Encabezado' });
                                                          }else{
@@ -31,6 +33,12 @@ jQuery(document).ready(function(){
                                                         
                                                         }
                                                     }
+                                                }else{
+                                                    if(r.contrato=="no"){
+                                                        
+                                                    $.jGrowl("no tiene cumplimientos asignados", { header: 'cumplimientos' });
+                                                    }
+                                                }
 							},
                                                         error:function(){
 //                                                            alert("hubo un error al tratar de realizar la peticion ajax ");
