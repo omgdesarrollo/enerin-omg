@@ -13,7 +13,7 @@ try {
     $model=new LoginModel();
     $recUser=$model->validar($usuario,$clave);
    
-    if($recUser["contrato"]!=0){
+    if($recUser["contrato"]=="si"){
     if($recUser["accesos"]!=""){
         
 //        echo "Valor:".json_encode($recUser["contrato"]);
@@ -52,13 +52,30 @@ try {
        
 //        echo "no tiene";
         $jsondata['success']=true;
-        $jsondata['message']='Incorrecto';
+        $jsondata['message']='Correcto';
         $jsondata['accesos']='no';
-        $jsondata['contrato']='no';
+        $jsondata['contrato']='si';
         
     }
     
-    }    
+    }
+    
+        else{
+            if($recUser["contrato"]=="no"){
+                
+                
+               
+                    $jsondata['success']=true;
+                    $jsondata['message']='Correcto';
+                     if($recUser["accesos"]!=""){
+                        $jsondata['accesos']='si';
+                    }else{
+                         $jsondata['accesos']='no';
+                    }
+                    $jsondata['contrato']='no';
+            }
+            
+       }    
     
 }  catch (Exception $e){
     Session::setSesion("error",$e->getMessage());
