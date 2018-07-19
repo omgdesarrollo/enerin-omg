@@ -191,20 +191,99 @@ require_once 'EncabezadoUsuarioView.php';
     </div>
 </div>
 <!--Final de Seccion Modal-->
-  
-       
+
+<!-- Inicio de Seccion Modal Archivos-->
+<div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+        <!-- <div id="loaderModalMostrar"></div> -->
+		<div class="modal-content">
                         
-                
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <h4 class="modal-title" id="myModalLabelItermUrls">Archivos Adjuntos</h4>
+            </div>
+
+            <div class="modal-body">
+                <div id="DocumentolistadoUrl"></div>
+
+                <div class="form-group">
+                    <div id="DocumentolistadoUrlModal"></div>
+                </div>
+
+                <div class="form-group" method="post" >
+                    <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Archivo</button>
+                </div>
+            </div><!-- cierre div class-body -->
+        </div><!-- cierre div class modal-content -->
+    </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal -->
+
+</body>
 <script>
     si_hay_cambio=false;
-    mostrarTareas();              
+    mostrarTareas();
 
 function loadSpinner()
 {
     myFunction();
 }
-
 </script>
+
+<script id="template-upload" type="text/x-tmpl">
+    {% for (var i=0, file; file=o.files[i]; i++) { %}
+        <tr class="template-upload" style="width:100%">
+            <td>
+            <span class="preview"></span>
+            </td>
+            <td>
+            <p class="name">{%=file.name%}</p>
+            <strong class="error"></strong>
+            </td>
+            <td>
+            <p class="size">Processing...</p>
+            <!-- <div class="progress"></div> -->
+            </td>
+            <td>
+            {% if (!i && !o.options.autoUpload) { if(noArchivo==0){ %}
+                    <button class="start" style="display:none;padding: 0px 4px 0px 4px;" disabled>Start</button>
+            {% } } %}
+            {% if (!i) { %}
+                    <button class="cancel" style="padding: 0px 4px 0px 4px;color:white">Cancel</button>
+            {% } %}
+            </td>
+        </tr>
+        {% if(i==0){ $('.fileupload-buttonbar').html(""); } %}
+    {% noArchivo=1; } %}
+</script>
+
+<script id="template-download" type="text/x-tmpl">
+    {% var t = $('#fileupload').fileupload('active'); var i,file;%}
+    {% for (i=0,file; file=o.files[i]; i++) { %}
+        <tr class="template-download">
+            <td>
+            <span class="preview">
+                    {% if (file.thumbnailUrl) { %}
+                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                    {% } %}
+            </span>
+            </td>
+            <td>
+            <p class="name">
+                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+            </p>
+            </td>
+            <td>
+            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+            </td>
+            <!-- <td> -->
+            <!-- <button class="delete" style="padding: 0px 4px 0px 4px;" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>Delete</button> -->
+            <!-- <input type="checkbox" name="delete" value="1" class="toggle"> -->
+            <!-- </td> -->
+        </tr>
+    {% } %}
+    {% if(t == 1){ if( $('#tempInputIdTarea').length > 0 ) { var ID_TAREA = $('#tempInputIdTarea').val(); mostrar_urls(ID_TAREA); reconstruirRow(ID_TAREA); noArchivo=0; } } %}
+</script>
+
 
         <!--Inicia para el spiner cargando-->
         <script src="../../js/loaderanimation.js" type="text/javascript"></script>
@@ -217,5 +296,25 @@ function loadSpinner()
         <!--Para abrir alertas del encabezado-->
         <script src="../../assets/probando/js/ace-elements.min.js"></script>
         <script src="../../assets/probando/js/ace.min.js"></script>
-    </body>
+    <!-- js cargar archivo -->
+    <script src="../../assets/FileUpload/js/jquery.min.js"></script>
+        <script src="../../assets/FileUpload/js/jquery-ui.min.js"></script>
+        <script src="../../assets/FileUpload/js/tmpl.min.js"></script>
+        <script src="../../assets/FileUpload/js/load-image.all.min.js"></script>
+        <script src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.blueimp-gallery.min.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.iframe-transport.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.fileupload.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.fileupload-process.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.fileupload-image.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.fileupload-audio.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.fileupload-video.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
+        <script src="../../assets/FileUpload/js/main.js"></script>
+        <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
+        <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
+        <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
+        <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
 </html>
