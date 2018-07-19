@@ -12,39 +12,53 @@ try {
     //proceso
     $model=new LoginModel();
     $recUser=$model->validar($usuario,$clave);
-    
+   
+    if($recUser["contrato"]!=0){
     if($recUser["accesos"]!=""){
+        
+//        echo "Valor:".json_encode($recUser["contrato"]);
+        
     $hora = date('H:i');
-$session_id = session_id();
-$token = hash('sha256', $hora.$session_id);
-$recUser["tokenseguridad"]=$token;
+    $session_id = session_id();
+    $token = hash('sha256', $hora.$session_id);
+    $recUser["tokenseguridad"]=$token;
 //$json["tokenseguridad"]=$token;
     
 //    echo json_encode($recUser);
 //    echo "dato";
     Session::setSesion("user",$recUser["usuario"]);
     Session::setSesion("userAcceso",$recUser["accesos"]);
-
-
+//    Session::setSesion("contratoAcceso",$recUser["cotrato"]);
+    
 //  $jsonToken["tokenseguridad"]=$token;
 //    Session::setSesion("token",$jsonToken);
 //    Session::setSesion("user", $token);
 
 //    echo json_encode($recUser);
     
+    
     $jsondata['success']=true;
     $jsondata['message']='Correcto';
-     $jsondata['accesos']='si';
-//    $jsondata['seguridad']=$token;
+    $jsondata['accesos']='si';                       
+    $jsondata['contrato']='si';
+      
    
+//    $jsondata['seguridad']=$token;
     //para redireccionar se guarda en una variable el link
 //    $target="../View/main.php";
     }else{
+        
+        
+       
 //        echo "no tiene";
-   $jsondata['success']=true;
-    $jsondata['message']='Correcto';
-     $jsondata['accesos']='no';
+        $jsondata['success']=true;
+        $jsondata['message']='Correcto';
+        $jsondata['accesos']='no';
+        $jsondata['contrato']='no';
+        
     }
+    
+    }    
     
 }  catch (Exception $e){
     Session::setSesion("error",$e->getMessage());

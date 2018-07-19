@@ -20,7 +20,7 @@ jQuery(document).ready(function(){
 							$.jGrowl("Cargando  Porfavor Espere......", { sticky: true });
 							$.jGrowl("Bienvenido", { header: 'Acceso Permitido' });
 							var delay = 1000;
-							setTimeout(function(){ window.location = 'principalmodulos.php'  }, delay);  
+//							setTimeout(function(){ window.location = 'principalmodulos.php'  }, delay);  
 							}else if (r.success == true){
 							$.jGrowl("Bienvenido", { header: 'Acceso Permitido' });
 							var delay = 1000;

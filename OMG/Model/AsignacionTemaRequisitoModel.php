@@ -130,12 +130,12 @@ class AsignacionTemaRequisitoModel {
         }
     }
    
-    public function insertarRequisitos($ID_ASIGNACION,$requisito)
+    public function insertarRequisitos($ID_ASIGNACION,$requisito,$penalizacion)
     {
         try
         {
             $dao=new AsignacionTemaRequisitoDAO();
-            $rec= $dao->insertarRequisito($requisito);
+            $rec= $dao->insertarRequisito($requisito,$penalizacion);
             $ID_REQUISITO= $dao->obtenerMaximoRequisito();
             $resultado= $dao->insertarRequisitoTablaCompuesta($ID_ASIGNACION, $ID_REQUISITO);
             
