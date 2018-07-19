@@ -32,10 +32,21 @@ switch ($Op) {
 		break;
 		
 	case 'listarUrls':
-		$contrato = Session::getSesion("s_cont");
-		$url = $_REQUEST['URL'];
-		$urls = Session::getSesion("URLS");
-		$files = scandir($urls["fisica"].$contrato."/".$url);//Se forma la url fisica
+		if(isset($_REQUEST["SIN_CONTRATO"]))
+		{
+			$url = $_REQUEST['URL'];
+			$urls = Session::getSesion("URLS");
+			$urlIR = $urls["fisica"].$url;
+			$files = scandir($urlIR);//Se forma la url fisica
+		}
+		else
+		{
+			$contrato = Session::getSesion("s_cont");
+			$url = $_REQUEST['URL'];
+			$urls = Session::getSesion("URLS");
+			$urlIR = $urls["fisica"].$contrato."/".$url;
+			$files = scandir($urlIR);//Se forma la url fisica
+		}
 		$archivosNames = array();
 		foreach($files as $index=>$value)
 		{
@@ -45,24 +56,36 @@ switch ($Op) {
 			}
 		}
 		$todo[0] = $archivosNames;
-		$todo[1] = $urls["logica"].$contrato."/".$url;
+		$todo[1] = $urlIR;
 		header('Content-type: application/json; charset=utf-8');
 		echo json_encode($todo);
 		break;
 	
 	case 'EliminarArchivo':
 		// $data = $model->eliminar_archivo($_REQUEST['ID_DOCUMENTO'],$_REQUEST['ARCHIVO_NAME']);
-		$contrato = Session::getSesion("s_cont");
 		$urlTemp = Session::getSesion("URLS");
-		$url = $urlTemp["fisica"].$contrato."/".$_REQUEST["URL"];
+		if(isset($_REQUEST["SIN_CONTRATO"]))
+			$url = $urlTemp["fisica"].$_REQUEST["URL"];
+		else
+		{
+			$contrato = Session::getSesion("s_cont");
+			$url = $urlTemp["fisica"].$contrato."/".$_REQUEST["URL"];
+		}
+
 		$eliminado = $model->eliminar_archivoFisico($url);
 		header('Content-type: application/json; charset=utf-8');
 		echo $eliminado;
 		break;
 
 	case 'CrearUrl':
-		$contrato = Session::getSesion("s_cont");
-		$url = $contrato."/".$_REQUEST["URL"];
+		if(isset($_REQUEST["SIN_CONTRATO"]))
+			$url = $_REQUEST["URL"];
+		else
+		{
+			$contrato = Session::getSesion("s_cont");
+			$url = $contrato."/".$_REQUEST["URL"];	
+		}
+		
 		$carpetaDestino = "../../archivos/".$url;
 		$creado=true;
 		if(!file_exists($carpetaDestino))
