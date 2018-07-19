@@ -1,5 +1,5 @@
 parametroscheck={"validado":"false","no_validado":"false","sin_documento":"false"}; 
-   __datos=[];
+__datos=[];
 $(function(){
 $('#checkValidado').click(function() {
     parametroscheck["validado"]=$(this).is(':checked');
