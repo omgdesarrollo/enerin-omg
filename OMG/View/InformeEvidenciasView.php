@@ -308,13 +308,29 @@ require_once 'EncabezadoUsuarioView.php';
     </div><!-- cierre div class="modal-dialog" -->
 </div><!-- cierre del modal Requisitos-->
 
+<!-- Inicio modal adjuntar documento -->
+<div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+        <div id="loaderModalMostrar"></div>
+		<div class="modal-content">                
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
+          <h4 class="modal-title" id="myModalLabel">Archivos Adjuntos</h4>
+        </div>
 
+        <div class="modal-body">
+          <div id="DocumentolistadoUrl"></div>
+  
+          <div class="form-group">
+                  <div id="DocumentolistadoUrlModal"></div>
+          </div>
+        </div><!-- cierre div class-body -->
+      </div><!-- cierre div class modal-content -->
+    </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal -->
 
-
-                
 <script>
     listarDatos();
-                    
 </script>
 
             

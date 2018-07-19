@@ -9,7 +9,7 @@ class DocumentoSalidaDAO{
             $query="SELECT tbdocumento_salida.id_documento_salida,tbdocumento_entrada.id_documento_entrada,
                     tbdocumento_entrada.folio_entrada,tbdocumento_salida.folio_salida,
                     tbdocumento_salida.fecha_envio, tbdocumento_salida.asunto,
-                    tbentidad_reguladora.clave_entidad,tbdocumento_salida.destinatario,
+                    tbautoridad_remitente.clave_autoridad clave_entidad,tbdocumento_salida.destinatario,
                     tbempleados.nombre_empleado,tbempleados.apellido_paterno, 
                     tbempleados.apellido_materno, tbdocumento_salida.documento,
                     tbdocumento_salida.observaciones FROM documento_salida tbdocumento_salida
@@ -17,13 +17,13 @@ class DocumentoSalidaDAO{
                     JOIN documento_entrada tbdocumento_entrada ON
                     tbdocumento_entrada.id_documento_entrada=tbdocumento_salida.id_documento_entrada
 
-                    JOIN entidad_reguladora tbentidad_reguladora ON
-                    tbentidad_reguladora.id_entidad=tbdocumento_entrada.id_entidad
+                    JOIN autoridad_remitente tbautoridad_remitente ON
+                    tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad
 
-                    JOIN clausulas tbclausulas ON
-                    tbclausulas.id_clausula=tbdocumento_entrada.id_clausula
+                    JOIN temas tbtemas ON
+                    tbtemas.id_tema=tbdocumento_entrada.id_tema
 
-                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbclausulas.id_empleado";
+                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado";
 
 
             $db=  AccesoDB::getInstancia();

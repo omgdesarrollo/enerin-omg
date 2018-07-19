@@ -1319,7 +1319,7 @@ require_once 'EncabezadoUsuarioView.php';
         {
                 agregarArchivosUrl();
         });
-
+        months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
         function mostrar_urls(id_documento_entrada)
         {
                 var tempDocumentolistadoUrl = "";
@@ -1353,16 +1353,12 @@ require_once 'EncabezadoUsuarioView.php';
                                                                                         tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
                                                                                         $.each(todo[0], function (index,value)
                                                                                         {
-                                                                                                nametmp = value.split("^");
-                                                                                                name;
-                                                                                                fecha = nametmp[0];
-                                                                                                $.each(nametmp, function(index,value)
-                                                                                                {
-                                                                                                        if(index!=0)
-                                                                                                                (index==1)?name=value:name+="-"+value;
-                                                                                                });                                                                        
+                                                                                                nametmp = value.split("^-O-^-M-^-G-^");
+                                                                                                fecha = new Date(nametmp[0]*1000);
+                                                                                                fecha = fecha.getDay() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+                                                                                                
                                                                                                 tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
-                                                                                                tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\">"+name+"</a></td>";
+                                                                                                tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\" download='"+nametmp[1]+"'>"+nametmp[1]+"</a></td>";
                                                                                                 tempDocumentolistadoUrl += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
                                                                                                 tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
                                                                                                 tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";

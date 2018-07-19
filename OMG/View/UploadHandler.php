@@ -1106,10 +1106,11 @@ echo "d   :".$this->get_full_url();
             // $file_path2 = "http://localhost:80/enerin-omg/archivos/files".$newUrl.$file->name;//el que descarga web
             date_default_timezone_set("America/Mexico_city");
             $hoy = new Datetime();
-	        $hoy = strftime("%d-%B-%y %Hh-%Mm-%Ss");
+            // $hoy = strftime("%d-%B-%y %X");
+            $hoy = $hoy->getTimestamp();
             // $hoy = new Datetime($hoy);
             // echo "fecha : ".$hoy;
-            $file_path = $Urls["fisica"].$newUrl."/".$hoy."^".$file->name;//el que guarda local
+            $file_path = $Urls["fisica"].$newUrl."/".$hoy."^-O-^-M-^-G-^".$file->name;//el que guarda local
             echo $file_path;
             // $file_path2 = "http://localhost:80/enerin-omg/archivos/files".$newUrl.$file->name;//el que descarga local
             // $filePath = array();
