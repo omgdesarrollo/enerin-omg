@@ -183,14 +183,6 @@ require_once 'EncabezadoUsuarioView.php';
 </div><!-- cierre del modal Requisitos-->
 
 
-
-
-
-
-
-
-
-
       <div class="modal draggable fade" id="modalgraficas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		  <div class="modal-dialog modal-lg" role="document">
 		    <div class="modal-content">
