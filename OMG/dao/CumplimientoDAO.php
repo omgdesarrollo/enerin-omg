@@ -45,8 +45,9 @@ class CumplimientoDAO{
     public function detallesContratoSeleccionado($v){
         
         try{
-            $query="select tbcumplimientos.id_cumplimiento,tbcumplimientos.clave_cumplimiento,
-            tbcumplimientos.cumplimiento from cumplimientos tbcumplimientos  WHERE tbcumplimientos.id_cumplimiento=".$v["contrato"];
+            $query="SELECT tbcumplimientos.id_cumplimiento,tbcumplimientos.clave_cumplimiento,tbcumplimientos.cumplimiento 
+                    FROM cumplimientos tbcumplimientos  
+                    WHERE tbcumplimientos.id_cumplimiento=".$v["contrato"];
             
             $db= AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
@@ -110,11 +111,9 @@ class CumplimientoDAO{
                     JOIN cumplimientos tbcumplimientos ON tbcumplimientos.id_cumplimiento=tbusuarios_cumplimientos.id_cumplimiento
                     WHERE tbusuarios_cumplimientos.acceso='true' AND tbusuarios_cumplimientos.id_usuario=$ID_USUARIO";
             
-            
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-//            $lista1;
-//            $lista1["l"]=array($lista[0],$lista[1]);
+            
             return $lista;
             
         } catch (Exception $ex)
