@@ -72,7 +72,7 @@ $filtrosArray = array(
     array('name'=>'Clave Documento','id'=>'clave_documento'),
     array('name'=>'Nombre Documento','id'=>'documento'),
     // array('name'=>'Nombre Documento','id'=>'nombre_documento'),
-    array('name'=>'Responsable Documento','id'=>'nombre_empleado'),
+    array('name'=>'Responsable Documento','id'=>'nombrecompleto'),
     
     // array("name"=>"Clave Evidencia","column"=>"text"),
 );
