@@ -205,6 +205,7 @@ $.ajax({
 //             alert(data);
              if(data==1)
              {
+                 refresh();
 //                  alert("Entro al true");
                  swal("Guardado Exitoso!", "", "success");
                  setTimeout(function()
@@ -281,6 +282,7 @@ $.ajax({
                      $("#create-item .close").click();
                  },1000);                                        
              }
+            
          }   
      });                     
 }
