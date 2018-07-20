@@ -41,7 +41,9 @@ $Usuario=  Session::getSesion("user");
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
                 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
 
-                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+                <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+
+                <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
         <style>
             .jsgrid-header-row>.jsgrid-header-cell {
                 background-color:#307ECC ;      /* orange */
@@ -66,6 +68,14 @@ $Usuario=  Session::getSesion("user");
 
 require_once 'EncabezadoUsuarioView.php';
 
+$filtrosArray = array(
+    array('name'=>'Clave Documento','id'=>'clave_documento'),
+    array('name'=>'Nombre Documento','id'=>'documento'),
+    // array('name'=>'Nombre Documento','id'=>'nombre_documento'),
+    array('name'=>'Responsable Documento','id'=>'nombre_empleado'),
+    
+    // array("name"=>"Clave Evidencia","column"=>"text"),
+);
 ?>
 
              
@@ -84,9 +94,16 @@ require_once 'EncabezadoUsuarioView.php';
     <img src="../../images/base/pdf.png" width="30px" height="30px"> 
 </button>    
 
-        <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave Documento" style="width: 180px;">
+        <!-- <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave Documento" style="width: 180px;">
         <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre Documento" style="width: 180px;">
-        <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 180px;">
+        <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 180px;"> -->
+        
+        <?php foreach($filtrosArray as $value)
+        { ?>
+        <input id="<?php echo $value['id'] ?>" type="text" onkeyup="filtroSupremo()" 
+        placeholder="<?php echo $value['name'] ?>" style="width: 120px;">
+        <?php } ?>
+
         <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
         <input type="submit" id="btnGraficar" class="btn btn-danger" value="Graficar">    
 </div>    
@@ -202,8 +219,10 @@ require_once 'EncabezadoUsuarioView.php';
 
                 
 <script>
+    dataListado = [];
     listarDatos();
     listarDatosGrafica();
+    filtros = '<?php echo json_encode($filtrosArray) ?>';
     
 //    var datos= [
 //        { "Name": "Otto Clay", "Age": 25, "Country": 1, "Address": "Ap #897-1459 Quam Avenue", "Married": false },

@@ -1,5 +1,5 @@
 parametroscheck={"validado":"false","no_validado":"false","sin_documento":"false"}; 
-__datos=[];
+// __datos=[];
 $(function(){
 $('#checkValidado').click(function() {
     parametroscheck["validado"]=$(this).is(':checked');
@@ -33,7 +33,47 @@ function cargar(key){
         break;
     }
 }
-
+function reconstruirTable(datos)
+{
+    __datos=[];
+    $.each(datos,function(index,value){
+        (value.validacion_tema_responsable=="true")?status="validado":status="En Proceso";
+         __datos.push({
+         "No":contador++,
+         "Clave del Documento":value.clave_documento,
+         "Nombre del Documento":value.documento,
+         "Responsable del Documento":value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno,
+         "Tema":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+         "Requisitos":"<button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+         "Registros":"<button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+         "Status":status
+         })
+      });
+      construir(__datos);
+}
+function construir(datosF)
+{
+    $("#jsGrid").html("");
+    $("#jsGrid").jsGrid({
+    width: "100%",
+    height: "300px",
+    heading: true,
+    sorting: true,
+    paging: true,
+    data: datosF,
+    pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+    fields: [
+        { name: "No", type: "text", width: 80, validate: "required" },
+        { name: "Clave del Documento", type: "text", width: 150, validate: "required" },
+        { name: "Nombre del Documento", type: "text", width: 150, validate: "required" },
+        { name: "Responsable del Documento", type: "text", width: 150, validate: "required" },
+        { name: "Tema", type: "text", width: 150, validate: "required" },
+        { name: "Requisitos", type: "text", width: 150, validate: "required" },
+        { name: "Registros", type: "text", width: 150, validate: "required" },
+        { name: "Status", type: "text", width: 150, validate: "required" }
+    ]
+    });
+}
 function listarDatos()
 {
         __datos=[];
@@ -43,7 +83,8 @@ function listarDatos()
         datosParamAjaxValues["type"]="POST";
         datosParamAjaxValues["paramDataValues"]=parametroscheck;
         datosParamAjaxValues["async"]=false;
-        var variablefunciondatos=function obtenerDatosServer (r){
+        var variablefunciondatos=function obtenerDatosServer (r)
+        {
         status="validado";
             $.each(r["info"],function(index,value){
               (value.validacion_tema_responsable=="true")?status="validado":status="En Proceso";
@@ -58,29 +99,13 @@ function listarDatos()
                "Status":status
                })
             });
+            dataListado = r["info"];
+            console.log(r["info"])
         }
    var listfunciones=[variablefunciondatos];
    ajaxHibrido(datosParamAjaxValues,listfunciones); 
-   $("#jsGrid").html();
-       $("#jsGrid").jsGrid({
-        width: "100%",
-        height: "300px",
-        heading: true,
-        sorting: true,
-        paging: true,
-        data: __datos,
-        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
-        fields: [
-            { name: "No", type: "text", width: 80, validate: "required" },
-            { name: "Clave del Documento", type: "text", width: 150, validate: "required" },
-            { name: "Nombre del Documento", type: "text", width: 150, validate: "required" },
-            { name: "Responsable del Documento", type: "text", width: 150, validate: "required" },
-            { name: "Tema", type: "text", width: 150, validate: "required" },
-            { name: "Requisitos", type: "text", width: 150, validate: "required" },
-            { name: "Registros", type: "text", width: 150, validate: "required" },
-            { name: "Status", type: "text", width: 150, validate: "required" }
-        ]
-    });
+   construir(__datos);
+//    return __datos;
 }
 
 

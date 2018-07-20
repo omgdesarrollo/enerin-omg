@@ -39,7 +39,8 @@
     <!--jquery-->
     <script src="../../js/jquery.js" type="text/javascript"></script>
     <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-        
+    
+    <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
     <!--<script src="../../js/jquery.js" type="text/javascript"></script>-->
 
 <!--<link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
@@ -139,10 +140,10 @@
             $accion = -1;
 
         $filtrosArray = array(
-            array("name"=>"Clave","column"=>0),
-            array("name"=>"Nombre Documento","column"=>1),
-            array("name"=>"Responsable","column"=>2),
-            array("name"=>"Clasificación","column"=>6),
+            array('name'=>'Clave Documento','id'=>'clave_documento'),
+            // array('name'=>'Nombre Documento','id'=>'nombre_documento'),
+            array('name'=>'Responsable Documento','id'=>'usuario'),
+            array('name'=>'Frecuencia','id'=>'frecuencia'),
             // array("name"=>"Clave Evidencia","column"=>"text"),
         );
         $titulosTable = 
@@ -166,7 +167,7 @@
 
         <?php foreach($filtrosArray as $value)
         { ?>
-        <input type="text" onkeyup="filterTable(this)" 
+        <input id="<?php echo $value['id'] ?>" type="text" onkeyup="filtroSupremo()" 
         placeholder="<?php echo $value['name'] ?>" style="width: 120px;">
         <?php } ?>
     </div>
@@ -384,6 +385,7 @@
     months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
     var si_hay_cambio=false;
     dataRegistro="";
+    dataListado=[];
     $(function()
     {
 
@@ -514,7 +516,7 @@
             },
             success:function(datos)
             {
-                data = datos;
+                dataListado = datos;
                 reconstruirTable(datos);
             },
             error:function(error)
@@ -954,8 +956,6 @@
         // });
         return tempData;
     }
-    
-    
 
     function eliminarEvidencia(id_evidencias)
     {
@@ -1393,16 +1393,14 @@
         $('#loader').hide();
     }
     
-    
-    
-    
-    function cargarprogram(v,validado){
+    function cargarprogram(v,validado)
+    {
 //    alert("el valor de la evidencia es "+v);
 //alert("e:  "+validado);
     window.location.href="GanttEvidenciaView.php?id_evid="+v;
     
-
     }
+    filtros = '<?php echo json_encode($filtrosArray) ?>';
     
 </script>
 
@@ -1460,45 +1458,40 @@
     {% } %}
     {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val(); alert(ID_EVIDENCIA_DOCUMENTO); var ID_PARA_DOCUMENTO = $('#tempInputIdParaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO,'0','false',ID_PARA_DOCUMENTO); reconstruirRow(ID_EVIDENCIA_DOCUMENTO); noArchivo=0; } } %}
 </script>
-    
-    
-    
-    
-                        
 
-        <!--Inicia para el spiner cargando-->
-        <script src="../../js/loaderanimation.js" type="text/javascript"></script>
-        <!--Termina para el spiner cargando-->
-        
-        <!--Bootstrap-->
-        <script src="../../assets/probando/js/bootstrap.min.js"></script>
-        <!--Para abrir alertas de aviso, success,warning, error-->
-        <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+    <!--Inicia para el spiner cargando-->
+    <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+    <!--Termina para el spiner cargando-->
+    
+    <!--Bootstrap-->
+    <script src="../../assets/probando/js/bootstrap.min.js"></script>
+    <!--Para abrir alertas de aviso, success,warning, error-->
+    <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
 
-        <!--Para abrir alertas del encabezado-->
-        <script src="../../assets/probando/js/ace-elements.min.js"></script>
-        <script src="../../assets/probando/js/ace.min.js"></script>        
+    <!--Para abrir alertas del encabezado-->
+    <script src="../../assets/probando/js/ace-elements.min.js"></script>
+    <script src="../../assets/probando/js/ace.min.js"></script>
 
-        <!-- js cargar archivo -->
-        <script src="../../assets/FileUpload/js/jquery.min.js"></script>
-        <script src="../../assets/FileUpload/js/jquery-ui.min.js"></script>
-        <script src="../../assets/FileUpload/js/tmpl.min.js"></script>
-        <script src="../../assets/FileUpload/js/load-image.all.min.js"></script>
-        <script src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>
-        <script src="../../assets/FileUpload/js/jquery.blueimp-gallery.min.js"></script>
-        <script src="../../assets/FileUpload/js/jquery.iframe-transport.js"></script>
-        <script src="../../assets/FileUpload/js/jquery.fileupload.js"></script>
-        <script src="../../assets/FileUpload/js/jquery.fileupload-process.js"></script>
-        <script src="../../assets/FileUpload/js/jquery.fileupload-image.js"></script>
-        <script src="../../assets/FileUpload/js/jquery.fileupload-audio.js"></script>
-        <script src="../../assets/FileUpload/js/jquery.fileupload-video.js"></script>
-        <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
-        <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
-        <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
-        <script src="../../assets/FileUpload/js/main.js"></script>
-        <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
-        <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
-        <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
-        <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
+    <!-- js cargar archivo -->
+    <script src="../../assets/FileUpload/js/jquery.min.js"></script>
+    <script src="../../assets/FileUpload/js/jquery-ui.min.js"></script>
+    <script src="../../assets/FileUpload/js/tmpl.min.js"></script>
+    <script src="../../assets/FileUpload/js/load-image.all.min.js"></script>
+    <script src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.blueimp-gallery.min.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.iframe-transport.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-process.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-image.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-audio.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-video.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
+    <script src="../../assets/FileUpload/js/main.js"></script>
+    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
+    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
+    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
+    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
 </body>
 </html>
