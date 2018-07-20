@@ -98,14 +98,14 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
     <img src="../../images/base/pdf.png" width="30px" height="30px"> 
 </button>
 
-<!--   <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave del Documento" style="width: 150px">
+   <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave del Documento" style="width: 150px">
    <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre del Documento" style="width: 160px">
-   <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 190px">-->
+   <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 190px">
    <?php
-   foreach ($filtrosArray as $value)
+   //foreach ($filtrosArray as $value)
    { ?> 
-    <input id="<?php echo $value['id'] ?>" type="text" onkeyup="filtroSupremo()" 
-    placeholder="<?php echo $value['name'] ?>" style="width: 120px;">  
+<!--    <input id="<?php echo $value['id'] ?>" type="text" onkeyup="filtroSupremo()" 
+    placeholder="<?php echo $value['name'] ?>" style="width: 120px;">  -->
    <?php } ?>
     
     <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
@@ -198,9 +198,10 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
                 
 <script>
 
-      var id_clausula,si_hay_cambio=false,dataListado = [];
+      var id_clausula,si_hay_cambio=false;
+//              dataListado = [];
      
-      filtros = '<?php echo json_encode($filtrosArray) ?>';
+//      filtros = '<?php echo json_encode($filtrosArray) ?>';
 
 </script>
 
