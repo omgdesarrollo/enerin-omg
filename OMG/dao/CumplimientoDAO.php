@@ -49,6 +49,8 @@ class CumplimientoDAO{
                     FROM cumplimientos tbcumplimientos  
                     WHERE tbcumplimientos.id_cumplimiento=".$v["contrato"];
             
+
+            
             $db= AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             return $lista[0];
