@@ -6,9 +6,10 @@ class GeneralDAO{
     
     public function actualizarColumnaPorTabla($TABLA,$COLUMNA,$VALOR,$ID,$ID_CONTEXT)
     {
+        echo "entro aqui ";
         try {
             $query="UPDATE $TABLA SET $COLUMNA='$VALOR' WHERE $ID_CONTEXT=$ID";
-            // echo $query;
+            echo $query;
             $db= AccesoDB::getInstancia();
             $result= $db->executeQueryUpdate($query);
             
