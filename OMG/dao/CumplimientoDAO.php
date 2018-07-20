@@ -111,12 +111,9 @@ class CumplimientoDAO{
                     JOIN cumplimientos tbcumplimientos ON tbcumplimientos.id_cumplimiento=tbusuarios_cumplimientos.id_cumplimiento
                     WHERE tbusuarios_cumplimientos.acceso='true' AND tbusuarios_cumplimientos.id_usuario=$ID_USUARIO";
             
-//            echo "Este es el query:.$query";
-            
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-//            $lista1;
-//            $lista1["l"]=array($lista[0],$lista[1]);
+            
             return $lista;
             
         } catch (Exception $ex)
