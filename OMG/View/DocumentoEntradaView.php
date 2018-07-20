@@ -470,7 +470,7 @@ require_once 'EncabezadoUsuarioView.php';
                                     <!-- <form action="" id="form_subir"> -->
                                     
                                                 <div class="form-group">
-							<label class="control-label" for="title"><?php echo "Contrato: ".$filas["id_cumplimiento"]; ?></label>
+							<label class="control-label" for="title"><?php echo "Contrato: ".Session::getSesion("s_cont"); ?></label>
 							<div class="help-block with-errors"></div>
                                                         <div id="ValidarContratoModal" ></div>
 						</div>    
