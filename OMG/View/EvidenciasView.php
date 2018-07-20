@@ -139,10 +139,10 @@
             $accion = -1;
 
         $filtrosArray = array(
-            array("name"=>"Clave","column"=>0),
-            array("name"=>"Nombre Documento","column"=>1),
-            array("name"=>"Responsable","column"=>2),
-            array("name"=>"Clasificación","column"=>6),
+            array('name'=>'Clave Documento','id'=>'clave_documento'),
+            // array('name'=>'Nombre Documento','id'=>'nombre_documento'),
+            array('name'=>'Responsable Documento','id'=>'usuario'),
+            array('name'=>'Frecuencia','id'=>'frecuencia'),
             // array("name"=>"Clave Evidencia","column"=>"text"),
         );
         $titulosTable = 
@@ -166,7 +166,7 @@
 
         <?php foreach($filtrosArray as $value)
         { ?>
-        <input type="text" onkeyup="filterTable(this)" 
+        <input id="<?php echo $value['id'] ?>" type="text" onkeyup="filtroSupremo()" 
         placeholder="<?php echo $value['name'] ?>" style="width: 120px;">
         <?php } ?>
     </div>
@@ -514,7 +514,7 @@
             },
             success:function(datos)
             {
-                data = datos;
+                dataListado = datos;
                 reconstruirTable(datos);
             },
             error:function(error)
@@ -954,8 +954,6 @@
         // });
         return tempData;
     }
-    
-    
 
     function eliminarEvidencia(id_evidencias)
     {
@@ -1393,16 +1391,58 @@
         $('#loader').hide();
     }
     
-    
-    
-    
-    function cargarprogram(v,validado){
+    function cargarprogram(v,validado)
+    {
 //    alert("el valor de la evidencia es "+v);
 //alert("e:  "+validado);
     window.location.href="GanttEvidenciaView.php?id_evid="+v;
     
-
     }
+    // filtros = [];
+    filtros = '<?php echo json_encode($filtrosArray) ?>';
+    dataListado="";
+    function filtroSupremo()
+    {
+        data = JSON.parse(filtros);
+        newData = [];
+        $.each(data,function(index,value)
+        {
+            ($("#"+value.id).val()!="") ? newData.push(value):console.log();
+        });
+        DataFinal=dataListado;
+        $.each(newData,function(index,value)
+        {
+            DataTemp=[];
+            $.each(dataListado,function(indexList,valueList)
+            {
+                $.each(valueList,function(ind,val)
+                {
+                    if(ind==value.id)
+                    {
+                        ( val.toLowerCase().indexOf( $("#"+value.id).val().toLowerCase() ) != -1 ) ? DataTemp.push(valueList) :  console.log();
+                    }
+                });
+            });
+
+            dataT=[];
+
+            $.each(DataFinal,function(indF,valF)
+            {
+                $.each(DataTemp,function(indT,valT)
+                {
+                    (valF.id_evidencias.indexOf(valT.id_evidencias) != -1 ) ?  dataT.push(valF): console.log();
+                });
+            });
+            if(DataFinal.length!=0)
+                DataFinal=dataT;
+        });
+        console.log(DataFinal);
+        reconstruirTable(DataFinal);
+    }
+    // array('name'=>'Clave','id'=>'clave'),
+    //         array('name'=>'Nombre Documento','id'=>'nombre_documento'),
+    //         array('name'=>'Responsable','id'=>'responsable'),
+    //         array('name'=>'Clasificación','id'=>'clasificacion'),
     
 </script>
 
