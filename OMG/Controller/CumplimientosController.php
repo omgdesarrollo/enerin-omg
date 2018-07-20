@@ -33,22 +33,15 @@ switch ($Op) {
                 
 	case 'obtenerContrato':
             
-		$Lista=$model->obtenerContratosPorUsuarioPermiso(Session::getSesion("user")["ID_USUARIO"]);
-                $data;
-                $cont=0;
-//                foreach($Lista as $value){
-//                    $data[$cont]["list"]=$value["id_cumplimiento"];
-////                    $data[$cont]["list"]=$value["clave_cumplimiento"];
-//                $cont++;
-//                }
-                header('Content-type: application/json; charset=utf-8');
-                
-//                echo json_encode($data);
-                echo json_encode($Lista);
-//      echo "d  ".   Session::getSesion("s_cont");
-//		return $Lista;
-            
-		break;	
+		$lista=$model->obtenerContratosPorUsuarioPermiso(Session::getSesion("user")["ID_USUARIO"]);
+		header('Content-type: application/json; charset=utf-8');
+		foreach($lista as $key=>$value)
+		{
+			foreach($value as $key2=>$val)
+				$lista[$key][$key2] = utf8_encode($val);
+		}
+			echo json_encode($lista);
+		break;
          
 	case 'Guardar':
 		# code...
