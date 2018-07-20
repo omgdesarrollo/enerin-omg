@@ -1,4 +1,4 @@
-listarDatos();
+ listarDatos();
 
 $(function(){
                                                                               
