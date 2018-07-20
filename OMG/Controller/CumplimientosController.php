@@ -34,8 +34,9 @@ switch ($Op) {
 	case 'obtenerContrato':
             
 		$Lista=$model->obtenerContratosPorUsuarioPermiso(Session::getSesion("user")["ID_USUARIO"]);
-                $data;
-                $cont=0;
+//                $data;
+//                $cont=0;
+//                
 //                foreach($Lista as $value){
 //                    $data[$cont]["list"]=$value["id_cumplimiento"];
 ////                    $data[$cont]["list"]=$value["clave_cumplimiento"];
