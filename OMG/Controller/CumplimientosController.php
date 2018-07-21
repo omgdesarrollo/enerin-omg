@@ -18,6 +18,11 @@ $usuarioPojo= new UsuarioPojo();
 switch ($Op) {
 	case 'Listar':
 		$lista = $model->listarCumplimientos($_REQUEST["ID_USUARIO"]);
+		foreach($lista as $key=>$value)
+		{
+			foreach($value as $key2=>$value2)
+				$lista[$key][$key2] = utf8_encode($value2);
+		}
 		header('Content-type: application/json; charset=utf-8');
 		echo json_encode($lista);
 		break;

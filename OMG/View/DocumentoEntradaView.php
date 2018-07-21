@@ -1292,7 +1292,6 @@ $("#btn_guardar").click(function()
                                 if(Id_cumplimiento!="")
                                 {
                                         URL = 'filesDocumento/Entrada/'+Id_cumplimiento+"/"+id_documento_entrada;
-//                                        alert(URL);
                                         $.ajax({
                                                 url: '../Controller/ArchivoUploadController.php?Op=CrearUrl',
                                                 type: 'GET',
