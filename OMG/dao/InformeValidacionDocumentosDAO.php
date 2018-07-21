@@ -21,17 +21,7 @@ class InformeValidacionDocumentosDAO{
         if($v["param"]["n_v"]=="true"){
             $query_concat.=" AND tbvalidacion_documento.validacion_tema_responsable='false'";
             
-        }
-//        else
-//        {
-//            $query_concat.="AND tbvalidacion_documento.validacion_tema_responsable=false";
-//        }
-//        if($v["param"]["s_d"]=="false"){
-//            
-//        }else{
-//            $query_concat.="AND tbvalidacion_documento.validacion_tema_responsable=false";
-//        }
-//        
+        } 
         try
         {
             $query="SELECT tbvalidacion_documento.id_validacion_documento, tbdocumentos.id_documento, tbdocumentos.clave_documento,
