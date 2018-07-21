@@ -163,7 +163,7 @@ function saveSingleToDatabase(Obj,tabla,columna,id,contexto) {
  function saveOneToDatabase(valor,columna,tabla,id,contexto)
     {
         $.ajax({
-                url: "../Controller/ElCrackController.php?Op=ModificarColumna",
+                url: "../Controller/GeneralController.php?Op=ModificarColumna",
                 type: 'GET',
                 data: 'TABLA='+tabla+'&COLUMNA='+columna+'&VALOR='+valor+'&ID='+id+'&ID_CONTEXTO='+contexto,
                 success: function(modificado)
