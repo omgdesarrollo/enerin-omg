@@ -21,23 +21,13 @@ class InformeValidacionDocumentosDAO{
         if($v["param"]["n_v"]=="true"){
             $query_concat.=" AND tbvalidacion_documento.validacion_tema_responsable='false'";
             
-        }
-//        else
-//        {
-//            $query_concat.="AND tbvalidacion_documento.validacion_tema_responsable=false";
-//        }
-//        if($v["param"]["s_d"]=="false"){
-//            
-//        }else{
-//            $query_concat.="AND tbvalidacion_documento.validacion_tema_responsable=false";
-//        }
-//        
+        } 
         try
         {
             $query="SELECT tbvalidacion_documento.id_validacion_documento, tbdocumentos.id_documento, tbdocumentos.clave_documento,
  		 tbdocumentos.documento,tbdocumentos.contrato,
 
-		 tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno,  	
+		 tbempleados.id_empleado,concat(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) nombrecompleto,  	
 
 		 tbvalidacion_documento.validacion_tema_responsable
 
@@ -48,6 +38,8 @@ class InformeValidacionDocumentosDAO{
 //            echo json_encode($query);
             $db= AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
+//            echo "entro ";
+            
             
             return $lista;
             

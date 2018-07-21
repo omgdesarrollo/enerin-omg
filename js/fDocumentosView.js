@@ -1,4 +1,4 @@
-listarDatos();
+ listarDatos();
 
 $(function(){
                                                                               
@@ -183,6 +183,7 @@ function saveToDatabaseDatosFormulario(datos)
         data:"CLAVE_DOCUMENTO="+datos[0]+"&DOCUMENTO="+datos[1]+"&ID_EMPLEADO="+datos[2],
         success:function(data)
         {
+            refresh();
             swal("Guardado Exitoso!", "", "success");
                  setTimeout(function()
                  {

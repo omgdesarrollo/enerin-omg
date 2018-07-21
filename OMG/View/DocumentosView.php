@@ -32,10 +32,9 @@ $Usuario=  Session::getSesion("user");
                 
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-                <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>
-                
+                <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>                
                 <script src="../../js/jquery.js" type="text/javascript"></script>
-
+                <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
 <style>
         
 .modal-body{
@@ -102,7 +101,14 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
    <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave del Documento" style="width: 150px">
    <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre del Documento" style="width: 160px">
    <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 190px">
-   <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+   <?php
+   //foreach ($filtrosArray as $value)
+   { ?> 
+<!--    <input id="<?php echo $value['id'] ?>" type="text" onkeyup="filtroSupremo()" 
+    placeholder="<?php echo $value['name'] ?>" style="width: 120px;">  -->
+   <?php } ?>
+    
+    <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
 </div>
 	     
 <div style="height: 40px"></div>
@@ -193,10 +199,12 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
 <script>
 
       var id_clausula,si_hay_cambio=false;
+//              dataListado = [];
+     
+//      filtros = '<?php echo json_encode($filtrosArray) ?>';
 
 </script>
 
-                
                 <script src="../../js/fDocumentosView.js" type="text/javascript"></script>
 
                <!--Inicia para el spiner cargando-->

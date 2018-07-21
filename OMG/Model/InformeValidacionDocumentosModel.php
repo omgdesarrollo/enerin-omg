@@ -9,7 +9,7 @@ class InformeValidacionDocumentosModel{
         {
             $dao=new InformeValidacionDocumentosDAO();
             $lista["info"]= $dao->listarValidaciones($v);
-            $lista["detallesContrato"]=$dao->obtenerContratos($v["param"]["contrato"]);
+//            $lista["detallesContrato"]=$dao->obtenerContratos($v["param"]["contrato"]);
 //          echo "con ".json_encode($contratos);  
 //            $categoria=array();
 //            $valores=array();
