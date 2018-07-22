@@ -190,7 +190,6 @@ function saveToDatabaseDatosFormulario(datos)
                      swal.close();
                      $("#create-item .close").click();
                  },1000);
-            
         }
         
     });
