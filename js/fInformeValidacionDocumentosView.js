@@ -1,24 +1,32 @@
 parametroscheck={"validado":"false","no_validado":"false","sin_documento":"false"}; 
 // __datos=[];
 $(function(){
-$('#checkValidado').click(function() {
-    parametroscheck["validado"]=$(this).is(':checked');
-    cargar("validados");
-});
-$('#checkNoValidado').click(function() {
-parametroscheck["no_validado"]=$(this).is(':checked');
-    cargar("novalidados");
+    $('#checkValidado').click(function()
+    {
+        parametroscheck["validado"]=$(this).is(':checked');
+        cargar("validados");
     });
-$('#checkSinDocumento').click(function() {
-parametroscheck["sin_documento"]=$(this).is(':checked');
-    cargar("sindocumento");
-    });    
-$("#btnGraficar").click(function (){
 
- $('#modalgraficas').modal('show');
+    $('#checkNoValidado').click(function()
+    {
+        parametroscheck["no_validado"]=$(this).is(':checked');
+        cargar("novalidados");
+        });
+
+    $('#checkSinDocumento').click(function()
+    {
+        parametroscheck["sin_documento"]=$(this).is(':checked');
+        cargar("sindocumento");
     });
+
+    $("#btnGraficar").click(function ()
+    {
+        $('#modalgraficas').modal('show');
     });
-function cargar(key){
+});
+
+function cargar(key)
+{
     switch (key) {
         case "validados":
          listarDatos();
