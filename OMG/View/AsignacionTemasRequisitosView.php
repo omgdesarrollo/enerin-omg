@@ -315,8 +315,8 @@ var myToolbar = myLayout.cells("b").attachToolbar({
 			items: [
 //				{type: "button", text: "Actualizar", img: "fa fa-refresh fa-spin"},
                                 {id:"agregarReq",type: "button", text: "Agregar Requisito", img: "fa fa-save "},
-                                {id:"agregar",type: "button", text: "Agregar Registro", img: "fa fa-save "}
-//				{id:"eliminar",type: "button", text: "Eliminar", img: "fa fa-trash-o "}
+                                {id:"agregar",type: "button", text: "Agregar Registro", img: "fa fa-save "},
+				{id:"eliminar",type: "button", text: "Eliminar", img: "fa fa-trash-o "}
                                 
 			]
 		});
@@ -327,7 +327,7 @@ myLayout.cells("b").attachObject("treeboxbox_tree");
      
 myToolbar.attachEvent("onClick", function(id){
 
-    evaluarToolbarSeccionA(id);
+    evaluarToolbarSeccion(id);
 
 });
 
@@ -348,10 +348,12 @@ idTree=-1;
 });
 
 
-function evaluarToolbarSeccionA(id)
+function evaluarToolbarSeccion(id)
 {
     if(id_asignacion_t==-1){
-        alert("tema no seleccionado");
+//        alert(id_asignacion_t);
+        swal("","Seleccione un Tema","error");
+        setTimeout(function(){swal.close();},1500);
     }else{
             if(id=="agregar")
             {
@@ -366,24 +368,13 @@ function evaluarToolbarSeccionA(id)
                             $('#create-itemRegistro').modal('show');
 
                        }else{
-                        alert("tiene que seleccionar el requisito en donde cargar el registro");   
+                            swal("","Seleccione un Requisito","error");
+                            setTimeout(function(){swal.close();},1500);
                        }
 //                 }
                 }
                    
             } 
-            if(id=="eliminar")
-            {
-                var level = myTree.getLevel(id_seleccionado);
-
-                    var subItems= myTree.getSubItems(id_seleccionado);
-                    if(subItems=="")
-                    {
-        //                eliminarNodo();
-                    }else{
-                        alert("no se puede eliminar tiene descendencia");
-                    }
-            }
             
             if(id=="agregarReq"){
                 $('#create-itemRequisito').modal('show');
@@ -394,6 +385,30 @@ function evaluarToolbarSeccionA(id)
 //alert("d");
 
 //    id_asignacion_t
+            }
+            
+            if(id=="eliminar")
+            {
+                    var level = myTree.getLevel(id_seleccionado);
+                    var subItems= myTree.getSubItems(id_seleccionado);
+//                    alert(level);
+//                    alert(subItems);                    
+                    if(level==0){
+//                        alert(subItems);
+                      swal("","Seleccione un Requisito","error");
+                      setTimeout(function(){swal.close();},1500);  
+                    } else {
+                        
+                        if(subItems==0)
+                        {
+                            alert("Si se puede eliminar el registro");
+            //                eliminarNodo();
+                        }else{
+//                            alert("Registros: "+subItems);
+                            swal("","El requisito tiene Registros","error");
+                            setTimeout(function(){swal.close();},1500);
+                        }
+                    }    
             }
     }
 }

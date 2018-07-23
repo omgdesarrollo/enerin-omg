@@ -189,6 +189,38 @@ function loadDataSideBarOficiosDocumentacion()
         $("#sidebarObjV").load('InyectarVistasView.php #seguimientoevidencias');
     }
     
+    function loadDataSideBarProcesos()
+    {
+        
+        mySidebar = new dhtmlXSideBar({
+        parent: "sidebarObj",
+        icons_path: "../../images/base/",    
+                                template:'tiles',
+        width: 350,
+        items: [
+          {id: "catalogoProcesos", text: "Catalogo", icon: "catalogoProcesos.png"},
+          {id: "reportesProcesos", text: "Reportes", icon: "reportesProcesos.png"}
+          
+            
+        ]
+      });
+
+                                 
+        mySidebar.attachEvent("onSelect", function(id, value){
+                  switch(id){
+                      case "catalogoProcesos":
+                            $("#sidebarObjV").load('InyectarVistasView.php #catalogoProcesos'); 
+                      break;  
+
+
+                      case "tareas":
+                           $("#sidebarObjV").load('InyectarVistasView.php #tareas');
+                      break;
+
+                  }
+      });
+    }
+    
     
     function loadDataSideBarTareas()
     {
@@ -222,7 +254,7 @@ function loadDataSideBarOficiosDocumentacion()
       });
     }
     
-    
+            
     
     function loadDataSideBarContratos()
     {
