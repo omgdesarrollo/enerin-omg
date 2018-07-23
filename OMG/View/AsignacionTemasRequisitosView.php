@@ -327,7 +327,7 @@ myLayout.cells("b").attachObject("treeboxbox_tree");
      
 myToolbar.attachEvent("onClick", function(id){
 
-    evaluarToolbarSeccion(id);
+    evaluarToolbarSeccionB(id);
 
 });
 
@@ -348,7 +348,7 @@ idTree=-1;
 });
 
 
-function evaluarToolbarSeccion(id)
+function evaluarToolbarSeccionB(id)
 {
     if(id_asignacion_t==-1){
 //        alert(id_asignacion_t);
