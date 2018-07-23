@@ -527,10 +527,10 @@ function loadDataNotificaciones(){
     
     
     function loadDataCargaProgramaGantt(){
-          consultarInformacion("../Controller/EmpleadosController.php?Op=Listar"); 
-          consultarInformacion("../Controller/EmpleadosController.php?Op=mostrarcombo"); 
-          
-          consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
+//          consultarInformacion("../Controller/EmpleadosController.php?Op=Listar"); 
+//          consultarInformacion("../Controller/EmpleadosController.php?Op=mostrarcombo"); 
+//          
+//          consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
         
     var dhxWins = new dhtmlXWindows();
 //var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);

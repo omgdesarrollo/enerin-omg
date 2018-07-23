@@ -32,7 +32,7 @@ class ValidacionDocumentoModel{
 
     public static function construirListaValidacionDocumento($rec)
     {
-        $idDocumento=0;
+        $idDocumento=-1;
         $lista="";
         $contador=-1;
         $cont=0;
