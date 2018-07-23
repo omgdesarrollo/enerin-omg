@@ -278,13 +278,31 @@ public function obtenerDetalles_Reg($value){
     }
     
     
-    public function eliminarAsignacionTemaRequisito($id_asignacion_tema_requisito){
-        try{
-            $query="DELETE FROM asignacion_tema_requisito WHERE id_asignacion_tema_requisito=$id_asignacion_tema_requisito";
+//    public function eliminarAsignacionTemaRequisito($id_asignacion_tema_requisito){
+//        try{
+//            $query="DELETE FROM asignacion_tema_requisito WHERE id_asignacion_tema_requisito=$id_asignacion_tema_requisito";
+//            $db=  AccesoDB::getInstancia();
+//            $db->executeQueryUpdate($query);
+//        } catch (Exception $ex) {
+//                throw $ex;
+//        }
+//    }
+    
+    
+    public function eliminarNodoRegistro($ID_REGISTRO)
+    {
+        try
+        {
+            $query="DELETE FROM registros
+                    WHERE registros.id_registro=$ID_REGISTRO";
+            
             $db=  AccesoDB::getInstancia();
             $db->executeQueryUpdate($query);
-        } catch (Exception $ex) {
-                throw $ex;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
         }
     }
     
