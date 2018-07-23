@@ -241,7 +241,7 @@ $(function(){
     
     $('#checkPenalizado').click(function() {
         parametroscheck["penalizado"]=$(this).is(':checked');
-        alert(parametroscheck["penalizado"]);
+//        alert(parametroscheck["penalizado"]);
     });
     
     $("#formRequisitos").submit(function(e){
