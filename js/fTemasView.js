@@ -144,7 +144,7 @@ function eliminarNodo()
                 id_seleccionado="";
             }else{
 //                alert("Error no se puede eliminar el tema tiene requisitos");
-                swal("","El Tema tiene Asignado Requisitos","error");
+                swal("","El Tema tiene asignado Requisitos o esta asignado a un usuario","error");
                 setTimeout(function(){swal.close();},1500);
             }
         }
