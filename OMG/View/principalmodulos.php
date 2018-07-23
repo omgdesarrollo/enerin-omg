@@ -94,10 +94,10 @@ var seccionHerramientas=[
     //,{id:'cuadre',text:'Cuadre recursos',img:'643.png', imgdis:"643_dis.png",type:'button'}	  		  	
  ];
  
- var seccionReporte=[
-      {id:'excel',text:'Excel',img:'File_XLS_Excel.png', type:'button'},
-      {id:'pdf',text:'PDF',img:'FILE_PDF.png', type:'button'}
- ];
+// var seccionReporte=[
+//      {id:'excel',text:'Excel',img:'File_XLS_Excel.png', type:'button'},
+//      {id:'pdf',text:'PDF',img:'FILE_PDF.png', type:'button'}
+// ];
  
  var seccionCatalogo=[
      {id:'Informacion', text:'Informacion',img:'catalogo.png',type:'button',isbig:true}  
@@ -110,10 +110,15 @@ var seccionHerramientas=[
      {id:'informecumplimientos',text:'Informe',img:'documentos.jpg',type:'button',isbig:true}
  ];
  
+  var seccionProcesos=[
+     {id:'procesos',text:'Reportes',img:'procesos.png',type:'button',isbig:true} ,
+ ];
  
  var seccionTareas=[
      {id:'tareas',text:'Registro de Tareas',img:'tareas.png',type:'button',isbig:true} ,
  ];
+ 
+
  
   var seccionOficios=[
      {id:'catalogooficios',text:'Catalogos',img:'catalogos.png',type:'button',isbig:true},  
@@ -219,6 +224,9 @@ detallescontratosiahyseleccionado();
                        
                         if(itemIdSeleccion=="evidencias")
                             loadDataSideBarCumplimientosEvidencias();
+                        
+                        if(itemIdSeleccion=="procesos")
+                            loadDataSideBarProcesos();
 
                         if(itemIdSeleccion=="tareas")
                             loadDataSideBarTareas();
@@ -267,14 +275,16 @@ detallescontratosiahyseleccionado();
                              {id:'0x33',mode:'cols',text:'Cumplimientos',type:'block',
           list:seccionCumplimiento},
       
-                             {id:'0x34',mode:'cols',text:'Tareas',type:'block',
+                             {id:'0x34',mode:'cols',text:'Procesos',type:'block',
+          list:seccionProcesos},
+      
+                             {id:'0x35',mode:'cols',text:'Tareas',type:'block',
           list:seccionTareas},
                             
-                             
-                             {id:'0x35',mode:'cols',text:'Oficios',type:'block',
+                             {id:'0x36',mode:'cols',text:'Oficios',type:'block',
           list:seccionOficios},
                              
-                             {id:'0x36',mode:'cols',text:'Usuario',type:'block',
+                             {id:'0x37',mode:'cols',text:'Usuario',type:'block',
           list:infosesionusuario}
 	] }
         ];
