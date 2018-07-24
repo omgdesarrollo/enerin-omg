@@ -114,7 +114,7 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
 <div style="height: 40px"></div>
           
 
-<table class="table table-bordered table-striped header_fijo" id="idTable">
+<table class="table table-bordered table-striped " id="idTable">
     <thead >
     <tr class="">
      <!--<th class="table-headert" width="8%">No.</th>-->
@@ -125,7 +125,7 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
     </tr>
    </thead>
 
-   <tbody class="hideScrollBar"  id="datosGenerales" style="position: absolute">
+   <tbody class="hideScrollBar"  id="datosGenerales" style="">
    </tbody>
 
 </table>

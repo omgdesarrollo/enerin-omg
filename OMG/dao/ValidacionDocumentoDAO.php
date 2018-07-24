@@ -36,7 +36,6 @@ class ValidacionDocumentoDAO{
                 )";
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-
             return $lista;
         }catch (Exception $ex)
         {

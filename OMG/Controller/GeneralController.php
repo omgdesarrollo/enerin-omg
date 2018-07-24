@@ -1,6 +1,7 @@
 <?php
 session_start();
-require '../Model/GeneralModel.php';
+require_once '../Model/GeneralModel.php';
+require_once '../util/Session.php';
 
 $Op=$_REQUEST["Op"];
 $model=new GeneralModel();

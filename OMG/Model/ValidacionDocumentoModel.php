@@ -33,7 +33,7 @@ class ValidacionDocumentoModel{
     public static function construirListaValidacionDocumento($rec)
     {
         $idDocumento=-1;
-        $lista="";
+        $lista=array();
         $contador=-1;
         $cont=0;
         foreach($rec as $key=>$value)

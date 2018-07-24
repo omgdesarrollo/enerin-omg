@@ -45,8 +45,14 @@ $Usuario=  Session::getSesion("user");
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
                 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+                
+                <script src="https://unpkg.com/ag-grid-enterprise@18.1.1/dist/ag-grid-enterprise.min.js"></script>
+                
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <script src="../../js/fSeguimientoEntradas.js" type="text/javascript"></script>	 
+                
+                
+                
 	</head>
 
         
@@ -62,7 +68,7 @@ require_once 'EncabezadoUsuarioView.php';
 <div style="height: 5px"></div>
 
              
-<div style="position: fixed;">                          
+<!--<div style="position: fixed;">                          
 <button type="button" class="btn btn-info " onclick="refresh();" >
     <i class="glyphicon glyphicon-repeat"></i> 
 </button>
@@ -74,11 +80,13 @@ require_once 'EncabezadoUsuarioView.php';
         <input type="text" id="idInputStatus" onkeyup="filterTableStatus()" placeholder="Status" style="width: 120px;">    
         <input type="text" id="idInputResponsablePlan" onkeyup="filterTableResponsablePlan()" placeholder="Responsable Plan" style="width: 180px;">
         <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
-</div>    
+</div>    -->
 
 
 <div style="height: 47px"></div>
 <div id="jsGrid"> </div>
+
+
 <!--<div class="contenedortable" style="position: fixed;">   
         <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Folio de Entrada" style="width: 200px;">
         <input type="text" id="idInputEntidad" onkeyup="filterTableEntidad()" placeholder="Buscar Por Entidad" style="width: 150px;">
