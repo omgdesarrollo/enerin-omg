@@ -26,7 +26,7 @@ switch ($Op) {
      
         case 'mostrarCombo':
             $Lista=$model->listarTemasComboBox("oficios", Session::getSesion("s_cont"));
-            Session::setSesion("listarTemasComboBox",$Lista);
+            // Session::setSesion("listarTemasComboBox",$Lista);
             header('Content-type: application/json; charset=utf-8'); 
             echo json_encode($Lista);
             return $Lista;

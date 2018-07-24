@@ -1,7 +1,7 @@
 function filtroSupremo()
 {
-    data = JSON.parse(filtros);
-    newData = [];    
+    data = filtros;
+    newData = [];
     $.each(data,function(index,value)
     {
         ($("#"+value.id).val()!="") ? newData.push(value):console.log();

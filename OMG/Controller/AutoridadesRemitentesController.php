@@ -17,7 +17,7 @@ switch ($Op) {
 
 		$Lista=$model->listarAutoridadesRemitentes();
 //    	Session::setSesion("listarAutoridadesRemitentes",$Lista);
-        header('Content-type: application/json; charset=utf-8');
+                header('Content-type: application/json; charset=utf-8');
 //                echo json_encode(array("data"=>$Lista));        
                 echo json_encode($Lista);        
 

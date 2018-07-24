@@ -15,10 +15,7 @@ class DocumentoEntradaModel{
         try
         {
             $dao = new DocumentoEntradaDAO();
-
-
             $rec = $dao->getFechaAlarma();
-
             return $rec;
         }catch(Exception $e)
         {
@@ -27,14 +24,25 @@ class DocumentoEntradaModel{
     }
 
     public function  listarDocumentosEntrada($CONTRATO){
-        try{
+        try
+        {
             $dao=new DocumentoEntradaDAO();
-            $rec=$dao->mostrarDocumentosEntrada($CONTRATO);
-            
+            $rec=$dao->mostrarDocumentosEntrada($CONTRATO);    
             return $rec;
-    }  catch (Exception $e){
-        throw  $e;
+        }  catch (Exception $e){
+            throw  $e;
+        }
     }
+
+    public function  listarDocumentoEntrada($ID_DOCUMENTO_ENTRADA){
+        try
+        {
+            $dao=new DocumentoEntradaDAO();
+            $rec=$dao->listarDocumentoEntrada($ID_DOCUMENTO_ENTRADA);
+            return $rec;
+        }  catch (Exception $e){
+            throw  $e;
+        }
     }
     
     public function  listarCumplimientoPorId_Entrada($id_entrada){
@@ -111,29 +119,31 @@ class DocumentoEntradaModel{
         $data=array();        
         try{
             $dao=new DocumentoEntradaDAO();
-            //$carpeta ='enerin-omgapps.com/enerin-omg/archivos/files/'.$pojo->getIdCumplimiento();
-             $carpeta ='../../archivos/files/'.$pojo->getIdCumplimiento();
-            if(!file_exists($carpeta))
-            {
-                mkdir($carpeta,0777,true);
-            }
+            // //$carpeta ='enerin-omgapps.com/enerin-omg/archivos/files/'.$pojo->getIdCumplimiento();
+            //  $carpeta ='../../archivos/files/'.$pojo->getIdCumplimiento();
+            // if(!file_exists($carpeta))
+            // {
+            //     mkdir($carpeta,0777,true);
+            // }
             $exito_inserccion=$dao->insertarDocumentosEntrada($pojo->getIdCumplimiento(),$pojo->getFolioReferencia(),
                    $pojo->getFolioEntrada(),$pojo->getFechaRecepcion(),$pojo->getAsunto(),$pojo->geRemitente(),
                    $pojo->getIdAutoridad(),$pojo->getIdTema(),$pojo->getClasificacion(),$pojo->getStatusDoc(),
                    $pojo->getFechaAsignacion(),$pojo->getFechaLimiteAtencion(),$pojo->getFechaAlarma(),
                    $pojo->getDocumento(),$pojo->getObservaciones(),$pojo->getMensajeAlerta());
                 
-            $id_nuevo=$dao->traer_ultimo_insertado();
-            $carpeta = $carpeta."/".$id_nuevo;
-            if(!file_exists($carpeta))
-            {
-                mkdir($carpeta,0777,true);
-            }
-            $data[0]=$pojo->getIdCumplimiento();
-            $data[1]=$id_nuevo;
-            $data[2]=$exito_inserccion;
-        } catch (Exception $ex) {
+            // $id_nuevo=$dao->traer_ultimo_insertado();
+            // $carpeta = $carpeta."/".$id_nuevo;
+            // if(!file_exists($carpeta))
+            // {
+            //     mkdir($carpeta,0777,true);
+            // }
+            // $data[0]=$pojo->getIdCumplimiento();
+            // $data[1]=$id_nuevo;
+            return $exito_inserccion;
+        }catch (Exception $ex)
+        {
                 throw $ex;
+                return -1;
         }
         return $data;
     }

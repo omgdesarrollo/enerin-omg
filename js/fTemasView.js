@@ -313,6 +313,7 @@ function evaluarToolbarSeccionB(id)
         tempData2+="</table></div>";
    
         $("#contenidoDetalles").html(tempData2);
+        
     }
     
     
@@ -340,5 +341,6 @@ function load(carga){
         $("#loader").hide();
     }
 }
+
 
 

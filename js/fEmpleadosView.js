@@ -1,7 +1,9 @@
 
 
 $(function(){
-
+$('.modal-dialog').draggable({
+    handle: ".modal-header"
+  });
     $("#btn_guardar").click(function(){
         
 
