@@ -65,14 +65,14 @@ id_seleccionado="";
                 
      });
      
-     $("btn_limpiar_tema").click(function(){
+     $("#btn_limpiar_Tema").click(function(){
          $("#NO").val("");
          $("#NOMBRE").val("");
          $("#DESCRIPCION").val("");
          $("#PLAZO").val("");                 
      });
      
-     $("btn_limpiar_SubTema").click(function(){
+     $("#btn_limpiar_SubTema").click(function(){
          $("#NO_SUBTEMA").val("");
          $("#NOMBRE_SUBTEMA").val("");
          $("#DESCRIPCION_SUBTEMA").val("");
