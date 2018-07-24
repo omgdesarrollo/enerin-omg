@@ -187,6 +187,7 @@ foreach($Alarmas as $alarma)
 <script>
 	listarNotificaciones();
 	setInterval(function(){listarNotificaciones();},20000);
+
 	function listarNotificaciones()
 	{
 		$.ajax({
@@ -198,6 +199,7 @@ foreach($Alarmas as $alarma)
 			}
 		});
 	}
+
 	function construirNotificaciones(notificaciones)
 	{
 		cantidad=0;
@@ -222,6 +224,7 @@ foreach($Alarmas as $alarma)
 		$("#CANTIDAD_NOTIFICACIONES2").html("<i class='ace-icon fa fa-envelope icon-animated-vertical'></i><span class='badge badge-success'>"+cantidad+"</span>");
 		$("#LISTA_NOTIFICACIONES").html(tempData2);
 	}
+
 	function irAVista(direccion,contrato)
 	{
 		id_contrato = '<?php echo Session::getSesion("s_cont");?>';
@@ -287,6 +290,7 @@ foreach($Alarmas as $alarma)
 		}
 
 	}
+
 	function borrarNotificacion(idNoti)
 	{
 		$.ajax({
@@ -309,6 +313,7 @@ foreach($Alarmas as $alarma)
 			}
 		});
 	}
+
 	function swalSuccess(msj)
     {
         swal({
@@ -331,7 +336,7 @@ foreach($Alarmas as $alarma)
                 showConfirmButton: false,
                 type:"info"
             });
-        setTimeout(function(){swal.close();},1500);
+        setTimeout(function(){swal.close();},2000);
         $('#loader').hide();
     }
 

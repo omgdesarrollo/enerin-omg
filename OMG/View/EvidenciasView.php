@@ -139,19 +139,12 @@
         else
             $accion = -1;
 
-        $filtrosArray = array(
-            array('name'=>'Clave Documento','id'=>'clave_documento'),
-            // array('name'=>'Nombre Documento','id'=>'nombre_documento'),
-            array('name'=>'Responsable Documento','id'=>'usuario'),
-            array('name'=>'Frecuencia','id'=>'frecuencia'),
-            // array("name"=>"Clave Evidencia","column"=>"text"),
-        );
         $titulosTable = 
             array("No.","Requisito","Registro","Frecuencia","Clave Documento",
                 "Adjuntar Evidencia","Fecha de Registro","Usuario","Acción Correctiva","Plan de Acción","Desviación","Validación","Opcion");
     ?>
     
-    <div style="position: fixed;">
+    <div id="headerFiltros" style="position: fixed;">
 
         <button onClick="" type="button" 
         class="btn btn-success" data-toggle="modal" data-target="#nuevaEvidenciaModal">
@@ -165,11 +158,6 @@
 
         <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
 
-        <?php foreach($filtrosArray as $value)
-        { ?>
-        <input id="<?php echo $value['id'] ?>" type="text" onkeyup="filtroSupremo()" 
-        placeholder="<?php echo $value['name'] ?>" style="width: 120px;">
-        <?php } ?>
     </div>
     
     <div style="height: 50px"></div>
@@ -383,6 +371,20 @@
     // var data="";
     // var dataTemp="";
     months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+    
+    filtros = [{'name':'Clave Documento','id':'clave_documento'},{'name':'Responsable Documento','id':'usuario'},{'name':'Frecuencia','id':'frecuencia'}];
+    construirFiltros();
+    function construirFiltros()
+    {
+        tempData = "";
+        $.each(filtros,function(index,value)
+        {
+            console.log(value);
+            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' placeholder='"+value.name+"' style='width: auto;'>";
+        });
+        $("#headerFiltros").append(tempData);
+    }
+
     var si_hay_cambio=false;
     dataRegistro="";
     dataListado=[];
@@ -539,7 +541,6 @@
         console.log($(Obj).attr("placeholder"));
         // console.log($(Obj).attr("type"));
         // console.log(columna);
-
     }
     function loadSpinner()
     {
@@ -1400,7 +1401,6 @@
     window.location.href="GanttEvidenciaView.php?id_evid="+v;
     
     }
-    filtros = '<?php echo json_encode($filtrosArray) ?>';
     
 </script>
 

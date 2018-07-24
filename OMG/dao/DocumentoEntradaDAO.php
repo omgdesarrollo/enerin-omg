@@ -26,7 +26,7 @@ class DocumentoEntradaDAO{
     
     public function mostrarDocumentosEntrada($CONTRATO){
         try{
-            $query="SELECT tbcumplimientos.id_cumplimiento,tbcumplimientos.clave_cumplimiento,
+            $query="SELECT
                     tbdocumento_entrada.id_documento_entrada, tbdocumento_entrada.folio_referencia,
                     tbdocumento_entrada.folio_entrada, tbdocumento_entrada.fecha_recepcion,
                     tbdocumento_entrada.asunto, tbdocumento_entrada.remitente,
@@ -37,24 +37,47 @@ class DocumentoEntradaDAO{
                     tbdocumento_entrada.fecha_asignacion, tbdocumento_entrada.fecha_limite_atencion,
                     tbdocumento_entrada.fecha_alarma, tbdocumento_entrada.documento,
                     tbdocumento_entrada.observaciones
-
                     FROM documento_entrada tbdocumento_entrada
-
                     JOIN cumplimientos tbcumplimientos ON tbcumplimientos.id_cumplimiento=tbdocumento_entrada.id_cumplimiento
                     JOIN autoridad_remitente tbautoridad_remitente ON tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad
                     JOIN temas tbtemas ON tbtemas.id_tema=tbdocumento_entrada.id_tema
                     JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
                     WHERE tbcumplimientos.id_cumplimiento=$CONTRATO"; 
-
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-            
-
             return $lista;
-    }  catch (Exception $ex){
-        //throw $rec;
-        throw $ex;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
     }
+
+    public function listarDocumentoEntrada($ID_DOCUMENTO_ENTRADA){
+        try{
+            $query="SELECT tbdocumento_entrada.id_documento_entrada, tbdocumento_entrada.folio_referencia,
+            tbdocumento_entrada.folio_entrada, tbdocumento_entrada.fecha_recepcion,
+            tbdocumento_entrada.asunto, tbdocumento_entrada.remitente,
+            tbautoridad_remitente.id_autoridad, tbautoridad_remitente.clave_autoridad,
+            tbtemas.id_tema, tbtemas.no, tbtemas.nombre, tbtemas.descripcion,       
+            tbempleados.nombre_empleado,tbempleados.apellido_paterno, tbempleados.apellido_materno,       
+            tbdocumento_entrada.clasificacion, tbdocumento_entrada.status_doc,
+            tbdocumento_entrada.fecha_asignacion, tbdocumento_entrada.fecha_limite_atencion,
+            tbdocumento_entrada.fecha_alarma, tbdocumento_entrada.documento,
+            tbdocumento_entrada.observaciones
+            FROM documento_entrada tbdocumento_entrada
+            JOIN autoridad_remitente tbautoridad_remitente ON tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad
+            JOIN temas tbtemas ON tbtemas.id_tema=tbdocumento_entrada.id_tema
+            JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
+            WHERE tbdocumento_entrada.id_documento_entrada = $ID_DOCUMENTO_ENTRADA";
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            return $lista;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
     }
     
     

@@ -21,16 +21,17 @@ $pojoSeguimientoEntrada= new SeguimientoEntradaPojo();
 
 switch ($Op) {
 	case 'Listar':
-
-		$Lista=$model->listarDocumentosEntrada(Session::getSesion("s_cont"));
-                Session::setSesion("listarDocumentosEntrada",$Lista);
-                header('Content-type: application/json; charset=utf-8');
-		echo json_encode( $Lista);
-                
-		return $Lista;
+			$Lista=$model->listarDocumentosEntrada(Session::getSesion("s_cont"));
+			header('Content-type: application/json; charset=utf-8');
+			echo json_encode( $Lista);
 		break;
-            
-            
+
+	case 'ListarUno':
+		$Lista=$model->listarDocumentoEntrada($_REQUEST["ID_DOCUMENTO"]);
+		header('Content-type: application/json; charset=utf-8');
+		echo json_encode( $Lista);
+	break;
+
         case 'mostrarcombo':
 		$Lista=$model->listarDocumentosEntradaComboBox();
     	Session::setSesion("listarDocumentosEntradaComboBox",$Lista);
@@ -85,14 +86,13 @@ switch ($Op) {
 			// }
 		//   print_r($_REQUEST['MENSAJE_DOCUMENTO']);
 		//   print_r($_FILEs['DOCUMENTO']); 
-		$data = $model->insertar($pojo);
+		$exito = $model->insertar($pojo);
 						
 						// echo "e".json_encode($data[2]);
 		//   echo $data[0];
 		//  $jsonData['ID_CUMPLIMIENTO'] = $data[0];
 
 		// $jsonData['ID_DOCUMENTO'] = $data[1];
-		$valores = 'filesDocumento/Entrada/'.$data[0].'/'.$data[1];
 		// Session::setSesion("newUrl",$valores);
 		// $valores[0]=$dato[0]
 
@@ -102,12 +102,16 @@ switch ($Op) {
 		//   echo json_encode($jsonData);
 		// return $data;
 		
-		$traerultimoinsertado=$model->traer_ultimo_insertado();  
+		$traerultimoinsertado=$model->traer_ultimo_insertado();
+		$valores = 'filesDocumento/Entrada/'.$traerultimoinsertado;
 	//   echo json_encode("guarda documento");
 		$modelSeguimientoEntrada->insertar($traerultimoinsertado);
-	
-		header('Content-type: application/json; charset=utf-8');
-		echo json_encode($valores);                           
+
+		// header('Content-type: application/json; charset=utf-8');
+		if($exito == true)
+			echo $valores;
+		else
+			echo $exito;
 		break;
 
 	case "AlmacenarArchivosServer":
@@ -124,10 +128,10 @@ switch ($Op) {
 		break;
 
 	case 'Modificar':
-                $model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );
+		$data=$model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );
 //		$data = $model->actualizarPorColumna($_REQUEST["name"],$_REQUEST["value"],$_REQUEST["pk"] );
 		header('Content-type: application/json; charset=utf-8');
-		echo json_encode($data);                  
+		echo json_encode($data);
 	break;
 
 	case 'verificacionexisteregistro':
