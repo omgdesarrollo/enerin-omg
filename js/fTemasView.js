@@ -283,10 +283,10 @@ function evaluarToolbarSeccionB(id)
                     <th>Plazo</th>\n\
                     </tr></thead><tbody></tbody>";
                 $.each(data, function(index,value){
-                    tempData1+="<tr><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'no',"+value.id_tema+")\">"+value.no+"</td>";
-                    tempData1+="<td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'nombre',"+value.id_tema+")\" >"+value.nombre+"</td>";
-                    tempData1+="<td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'descripcion',"+value.id_tema+")\">"+value.descripcion+"</td>";
-                    tempData1+="<td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'plazo',"+value.id_tema+")\">"+value.plazo+"</td></tr>";
+                    tempData1+="<tr><td contenteditable='true'  onBlur=\"saveToDatabase(this,'no',"+value.id_tema+")\">"+value.no+"</td>";
+                    tempData1+="<td contenteditable='true'  onBlur=\"saveToDatabase(this,'nombre',"+value.id_tema+")\" >"+value.nombre+"</td>";
+                    tempData1+="<td contenteditable='true'  onBlur=\"saveToDatabase(this,'descripcion',"+value.id_tema+")\">"+value.descripcion+"</td>";
+                    tempData1+="<td contenteditable='true'  onBlur=\"saveToDatabase(this,'plazo',"+value.id_tema+")\">"+value.plazo+"</td></tr>";
 //                    tempData1+="<td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";
                 });
             tempData1+="</table></div>";    
