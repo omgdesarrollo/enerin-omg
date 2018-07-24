@@ -201,12 +201,26 @@ class AsignacionTemaRequisitoModel {
         }
     }
     
-    public function eliminarNodoRegistro()
+    public function eliminarNodoRegistro($ID_REGISTRO)
     {
         try
         {
-            $dao=new AsignacionTemaRequisitoDAO($ID_REGISTRO);
+            $dao=new AsignacionTemaRequisitoDAO();
             $dao->eliminarNodoRegistro($ID_REGISTRO);
+            
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
+    public function eliminarNodoRequisito($ID_REQUISITO)
+    {
+        try
+        {
+            $dao=new AsignacionTemaRequisitoDAO();
+            $dao->eliminarNodoRequisito($ID_REQUISITO);
             
         }catch (Exception $ex)
         {

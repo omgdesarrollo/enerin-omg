@@ -105,9 +105,18 @@ switch ($Op) {
 
                 break;
 
-	case 'Eliminar':
+	case 'EliminarRegistro':
 		# code...
-		break;	
+            
+            $model->eliminarNodoRegistro($_REQUEST['ID_REGISTRO']);
+		break;
+            
+        case 'EliminarRequisito':
+		# code...
+            
+            $model->eliminarNodoRequisito($_REQUEST['ID_REQUISITO']);
+		break;    
+            
 	default:
 		# code...
 		break;

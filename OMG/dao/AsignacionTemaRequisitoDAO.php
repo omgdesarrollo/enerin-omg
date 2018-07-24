@@ -306,4 +306,22 @@ public function obtenerDetalles_Reg($value){
         }
     }
     
+    
+    public function eliminarNodoRequisito($ID_REQUISITO)
+    {
+        try
+        {
+            $query="DELETE FROM requisitos
+                    WHERE requisitos.id_requisito=$ID_REQUISITO";
+            
+            $db=  AccesoDB::getInstancia();
+            $db->executeQueryUpdate($query);
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
 }
