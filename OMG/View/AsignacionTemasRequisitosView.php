@@ -40,18 +40,20 @@ $Usuario=  Session::getSesion("user");
                 div#layout_here {
 		position: relative;
 		width: 100%;
-		height: 380px;
+		height: 392px;
                 box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
 		/*margin: 0 auto;*/
                 }
                 
                 div#treeboxbox_tree{
-                   height: 300px; 
+                   height: 300px;
+                   box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
                 }
                     
-          
-          
-          
+                .altotablascrollbar{
+                         height: 320px;
+                    }
+                    
           
                 </style>    
                 
@@ -461,12 +463,13 @@ function evaluarToolbarSeccionB(id)
             url: '../Controller/AsignacionTemasRequisitosController.php?Op=Listar',
             success:function(data)
             {
-               $htmlData="<table><t</table><ul class='list-group'>";
+               $htmlData="<div  style='overflow-y:auto;' class='table-responsive altotablascrollbar'><ul class='list-group'>";
                $.each(data,function(index,value){
-                  $htmlData+="<li class='list-group-item'><button onclick='obtenerDatosArbol("+value.id_asignacion_tema_requisito+")' >"+value.no+"-"+value.nombre+"</button><span class='badge'></li>"; 
+//                  $htmlData+="<li class='list-group-item'><button onclick='obtenerDatosArbol("+value.id_asignacion_tema_requisito+")' >"+value.no+"-"+value.nombre+"</button><span class='badge'></li>"; 
+                  $htmlData+="<li class='list-group-item' style='background-color:#fff;'><a style='color: #000;' onclick='obtenerDatosArbol("+value.id_asignacion_tema_requisito+")' >"+value.no+"-"+value.nombre+"</a><span class='badge'></li>"; 
                 
                });
-              $htmlData+="</ul>";
+              $htmlData+="</ul></div>";
               $("#contenido").html($htmlData);
 //              contruirLista();
             }
@@ -551,7 +554,7 @@ myLayout.cells("c").attachObject("contenidoDetalles");
     {
 //        var level = myTree.getLevel(id);
 //        alert("este es el nivel:"+level);
-        tempData2="<div class='table-responsive'><table class='table table-bordered'><thead><tr class='danger'><th>Datos</th><th>Detalles</th></tr></thead><tbody></tbody>";
+        tempData2="<div class='table-responsive altotablascrollbar'><table class='table table-bordered'><thead><tr class='danger'><th>Datos</th><th>Detalles</th></tr></thead><tbody></tbody>";
                     $.each(data, function(index,value){
                        tempData2+="<tr><td class='info'>No</td><td>"+value.no+"</td></tr>";
                        tempData2+="<tr><td class='info'>Tema</td><td>"+value.nombre+"</td></tr>";
