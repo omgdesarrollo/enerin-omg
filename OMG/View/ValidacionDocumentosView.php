@@ -345,7 +345,7 @@ if(isset($_REQUEST["accion"]))
         tempData="";
         $.ajax({
             url: '../Controller/ValidacionDocumentosController.php?Op=ListarTodo',
-            type:'GET',
+            type:'POST',
             success:function(documentos)
             {
                 $.each(documentos,function(index,value)

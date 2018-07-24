@@ -1,7 +1,9 @@
 
 
 $(function(){
-
+$('.modal-dialog').draggable({
+    handle: ".modal-header"
+  });
     $("#btn_guardar").click(function(){
         
 
@@ -134,6 +136,8 @@ function reconstruirRow(id)
             setTimeout(function(){swal.close();},1000);
         }
     })   
+
+
 }
 
 
@@ -164,7 +168,7 @@ function saveSingleToDatabase(Obj,tabla,columna,id,contexto) {
     {
         $.ajax({
                 url: "../Controller/GeneralController.php?Op=ModificarColumna",
-                type: 'GET',
+                type: 'POST',
                 data: 'TABLA='+tabla+'&COLUMNA='+columna+'&VALOR='+valor+'&ID='+id+'&ID_CONTEXTO='+contexto,
                 success: function(modificado)
                 {

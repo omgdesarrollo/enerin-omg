@@ -29,6 +29,7 @@ $Usuario=  Session::getSesion("user");
                 <!--<link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>-->
                 
                 <script src="../../js/jquery.js" type="text/javascript"></script>
+      
 
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>
@@ -77,13 +78,16 @@ $Usuario=  Session::getSesion("user");
                     div#treeboxbox_tree{
                     /*position: relative;*/
                     /*width: 900px;*/
-                    height: 350px;
+                    height: 300px;
                     /*overflow: auto;*/
                     box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
                     }
 /*                    div#contenido{
                          height: 150px;
                     }*/
+                    .altotablascrollbar{
+                         height: 320px;
+                    }
                     
             </style>    
 
@@ -172,7 +176,6 @@ require_once 'EncabezadoUsuarioView.php';
 		      </div>
                         
 		      <div class="modal-body">
-                          <form id="temaform">
                           
                                                 <div class="form-group">
 							<label class="control-label" for="title">No.Tema:</label>
@@ -186,21 +189,21 @@ require_once 'EncabezadoUsuarioView.php';
                                                 
                                                 <div class="form-group">
 							<label class="control-label" for="title">Tema:</label>
-                                                        <textarea  id="NOMBRE" class="form-control" data-error="Ingrese la Descripcion del Tema" required></textarea>
+                                                        <textarea  id="NOMBRE" class="form-control" data-error="Ingrese la Descripcion del Tema" ></textarea>
 							<div class="help-block with-errors"></div>
 						</div>                                    
                                     
                                     
 						<div class="form-group">
 							<label class="control-label" for="title">Descripcion:</label>
-                                                        <textarea  id="DESCRIPCION" class="form-control" data-error="Ingrese el Sub-Tema" required></textarea>
+                                                        <textarea  id="DESCRIPCION" class="form-control" data-error="Ingrese el Sub-Tema" ></textarea>
 							<div class="help-block with-errors"></div>
 						</div>
                                                                                                                        
                                                                         
                                                 <div class="form-group">
 							<label class="control-label" for="title">Plazo:</label>
-                                                        <textarea  id="PLAZO" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+                                                        <textarea  id="PLAZO" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" ></textarea>
 							<div class="help-block with-errors"></div>
 						</div>
 
@@ -232,7 +235,7 @@ require_once 'EncabezadoUsuarioView.php';
                                                     <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
                                                     <button type="submit" id="btn_limpiar_tema"  class="btn crud-submit btn-info">Limpiar</button>
 						</div>
-                          </form>
+                     
 
 		      </div>
 		    </div>
@@ -251,7 +254,7 @@ require_once 'EncabezadoUsuarioView.php';
 		      </div>
                         
 		      <div class="modal-body">
-                          <form id="SubTemaform">
+                         
                           
                                                 <div class="form-group">
 							<label class="control-label" for="title">No.Sub-Tema:</label>
@@ -286,10 +289,10 @@ require_once 'EncabezadoUsuarioView.php';
                                                                         
                                                                                                                                 
 						<div class="form-group">
-                                                    <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
+                                                    <button type="submit" id="btn_guardarSub"  class="btn crud-submit btn-info">Guardar</button>
                                                     <button type="submit" id="btn_limpiar_SubTema"  class="btn crud-submit btn-info">Limpiar</button>
 						</div>
-                          </form>
+                        
 
 		      </div>
 		    </div>

@@ -46,10 +46,12 @@ $Usuario=  Session::getSesion("user");
                 }
                 
                 div#treeboxbox_tree{
-                   height: 300px; 
+                   height: 250px; 
                 }
-                    
-          
+                    .altotablalistacrollbar{
+                         height: 320px;
+                    } 
+                
           
           
           
@@ -180,6 +182,8 @@ $Usuario=  Session::getSesion("user");
             var myLayout, myTree, myToolbar,id_asignacion_t=-1,levelv=0,id_asignacion_r=-1,selec_tema=-1,id_seleccionado=-1,dataIds_req=[],dataIds_reg=[];
             myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
 	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
+            
+            id_nodo="",tipo_nodo="";
 
 
 obtenerTemasEnAsignacion();
@@ -241,7 +245,7 @@ $(function(){
     
     $('#checkPenalizado').click(function() {
         parametroscheck["penalizado"]=$(this).is(':checked');
-        alert(parametroscheck["penalizado"]);
+//        alert(parametroscheck["penalizado"]);
     });
     
     $("#formRequisitos").submit(function(e){
@@ -315,8 +319,8 @@ var myToolbar = myLayout.cells("b").attachToolbar({
 			items: [
 //				{type: "button", text: "Actualizar", img: "fa fa-refresh fa-spin"},
                                 {id:"agregarReq",type: "button", text: "Agregar Requisito", img: "fa fa-save "},
-                                {id:"agregar",type: "button", text: "Agregar Registro", img: "fa fa-save "}
-//				{id:"eliminar",type: "button", text: "Eliminar", img: "fa fa-trash-o "}
+                                {id:"agregar",type: "button", text: "Agregar Registro", img: "fa fa-save "},
+				{id:"eliminar",type: "button", text: "Eliminar", img: "fa fa-trash-o "}
                                 
 			]
 		});
@@ -327,7 +331,7 @@ myLayout.cells("b").attachObject("treeboxbox_tree");
      
 myToolbar.attachEvent("onClick", function(id){
 
-    evaluarToolbarSeccionA(id);
+    evaluarToolbarSeccionB(id);
 
 });
 
@@ -348,10 +352,12 @@ idTree=-1;
 });
 
 
-function evaluarToolbarSeccionA(id)
+function evaluarToolbarSeccionB(id)
 {
     if(id_asignacion_t==-1){
-        alert("tema no seleccionado");
+//        alert(id_asignacion_t);
+        swal("","Seleccione un Tema","error");
+        setTimeout(function(){swal.close();},1500);
     }else{
             if(id=="agregar")
             {
@@ -366,24 +372,13 @@ function evaluarToolbarSeccionA(id)
                             $('#create-itemRegistro').modal('show');
 
                        }else{
-                        alert("tiene que seleccionar el requisito en donde cargar el registro");   
+                            swal("","Seleccione un Requisito","error");
+                            setTimeout(function(){swal.close();},1500);
                        }
 //                 }
                 }
                    
             } 
-            if(id=="eliminar")
-            {
-                var level = myTree.getLevel(id_seleccionado);
-
-                    var subItems= myTree.getSubItems(id_seleccionado);
-                    if(subItems=="")
-                    {
-        //                eliminarNodo();
-                    }else{
-                        alert("no se puede eliminar tiene descendencia");
-                    }
-            }
             
             if(id=="agregarReq"){
                 $('#create-itemRequisito').modal('show');
@@ -395,10 +390,71 @@ function evaluarToolbarSeccionA(id)
 
 //    id_asignacion_t
             }
+            
+            if(id=="eliminar")
+            {
+                    var level = myTree.getLevel(id_seleccionado);
+                    var subItems= myTree.getSubItems(id_seleccionado);
+                    alert("Este es el level: "+level);
+                    alert("Este es el subItems: "+subItems);
+                    
+                    if(level==0){
+//                        alert(subItems);
+                      swal("","Seleccione un Requisito","error");
+                      setTimeout(function(){swal.close();},1500);  
+                    } else {
+                                
+//                                  if(tipo_nodo="req")
+//                                    {
+                                          if(subItems=="")
+                                            { 
+                                                alert("Si se puede eliminar el Requisito: "+subItems);
+                                                eliminarNodoRequisito();
+                                            } else{
+                                                        swal("","El requisito tiene Registros","error");
+                                                        setTimeout(function(){swal.close();},1500);
+                                                   }       
+//                                    } else {
+//                                                if(tipo_nodo="reg")
+//                                                    {
+//                                                            alert("Si se puede eliminar el registro");
+//                                                            eliminarNodoRegistro();
+//                                                    } 
+//                                      } 
+                    }                   
+                        
+            }
+                    
+                    
+                    
     }
 }
                
-               
+  
+    function eliminarNodoRegistro()
+    {
+        $.ajax({
+            url:"../Controller/AsignacionTemasRequisitosController.php?Op=EliminarRegistro",
+            data:"ID_REGISTRO="+id_nodo,
+            success:function(data)
+            {
+                obtenerDatosArbol();
+            }
+        });
+    }
+    
+    function eliminarNodoRequisito()
+    {
+        $.ajax({
+            url:"../Controller/AsignacionTemasRequisitosController.php?Op=EliminarRequisito",
+            data:"ID_REQUISITO="+id_nodo,
+            success:function(data)
+            {
+                obtenerDatosArbol();
+            }
+        });
+    }
+  
                   
      function obtenerTemasEnAsignacion(){
 //         alert("e");  
@@ -407,12 +463,12 @@ function evaluarToolbarSeccionA(id)
             url: '../Controller/AsignacionTemasRequisitosController.php?Op=Listar',
             success:function(data)
             {
-               $htmlData="<table><t</table><ul class='list-group'>";
+               $htmlData="<div class='altotablalistacrollbar'><ul class='list-group '>";
                $.each(data,function(index,value){
                   $htmlData+="<li class='list-group-item'><button onclick='obtenerDatosArbol("+value.id_asignacion_tema_requisito+")' >"+value.no+"-"+value.nombre+"</button><span class='badge'></li>"; 
                 
                });
-              $htmlData+="</ul>";
+              $htmlData+="</ul></div>";
               $("#contenido").html($htmlData);
 //              contruirLista();
             }
@@ -535,7 +591,11 @@ console.log("d");
     
     
    function obtenerDetalles_Seleccionado(id,tipo){
-
+       
+//    alert(id);
+//    alert(tipo);
+    id_nodo=id;
+    tipo_nodo=tipo;
    $.ajax({
        url:"../Controller/AsignacionTemasRequisitosController.php?Op=detalles",
        type:"POST",

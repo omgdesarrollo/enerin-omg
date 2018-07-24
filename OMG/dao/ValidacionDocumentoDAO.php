@@ -27,7 +27,7 @@ class ValidacionDocumentoDAO{
             LEFT JOIN temas tbtemas ON tbtemas.id_tema = tbasignacion_tema_requisito.id_tema
             LEFT JOIN empleados tbemplea2 ON tbemplea2.id_empleado = tbtemas.id_empleado
             LEFT JOIN usuarios tbusua2 ON tbusua2.id_empleado = tbemplea2.id_empleado
-            WHERE tbdocumentos.id_documento!=0 AND tbtemas.contrato=$CONTRATO AND 
+            WHERE tbdocumentos.id_documento!=-1 AND tbtemas.contrato=$CONTRATO AND 
                 IF(tbusuarios.id_usuario = $USUARIO,
                         tbusuarios.id_usuario = $USUARIO AND
                         tbdocumentos.id_empleado = tbusuarios.id_empleado,
@@ -36,7 +36,6 @@ class ValidacionDocumentoDAO{
                 )";
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-
             return $lista;
         }catch (Exception $ex)
         {
@@ -70,7 +69,7 @@ class ValidacionDocumentoDAO{
             LEFT JOIN temas tbtemas ON tbtemas.id_tema = tbasignacion_tema_requisito.id_tema
             LEFT JOIN empleados tbemplea2 ON tbemplea2.id_empleado = tbtemas.id_empleado
             LEFT JOIN usuarios tbusua2 ON tbusua2.id_empleado = tbemplea2.id_empleado
-            WHERE tbdocumentos.id_documento!=0 AND tbvalidacion_documento.id_validacion_documento=$ID_VALIDACION_D AND tbtemas.contrato=$CONTRATO AND 
+            WHERE tbdocumentos.id_documento!=-1 AND tbvalidacion_documento.id_validacion_documento=$ID_VALIDACION_D AND tbtemas.contrato=$CONTRATO AND 
                 IF(tbusuarios.id_usuario = $USUARIO,
                         tbusuarios.id_usuario = $USUARIO AND
                         tbdocumentos.id_empleado = tbusuarios.id_empleado,

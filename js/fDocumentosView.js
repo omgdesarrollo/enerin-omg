@@ -36,7 +36,7 @@ $("#btn_guardar").click(function(){
             var ID_EMPLEADOMODAL=$("#ID_EMPLEADOMODAL").val();
 //            var REGISTROS=$("#REGISTROS").val();
 
-           alert("CLAVE_DOCUMENTO :"+CLAVE_DOCUMENTO + "DOCUMENTO :"+DOCUMENTO + "ID_EMPLEADOMODAL :"+ID_EMPLEADOMODAL);
+//           alert("CLAVE_DOCUMENTO :"+CLAVE_DOCUMENTO + "DOCUMENTO :"+DOCUMENTO + "ID_EMPLEADOMODAL :"+ID_EMPLEADOMODAL);
 
             datos=[];
             datos.push(CLAVE_DOCUMENTO);

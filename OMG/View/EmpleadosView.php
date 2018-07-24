@@ -38,6 +38,7 @@ $Usuario=  Session::getSesion("user");
 
                 
                 <script src="../../js/jquery.js" type="text/javascript"></script>
+                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
                 <script src="../../js/fEmpleadosView.js" type="text/javascript"></script>
                      
                 

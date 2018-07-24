@@ -5,7 +5,7 @@ class SeguimientoEntradaDAO{
     public function mostrarSeguimientoEntradas(){
         try{
                 $query="SELECT tbseguimiento_entrada.id_seguimiento_entrada, tbseguimiento_entrada.avance_programa, 
-                    tbdocumento_entrada.id_documento_entrada, tbdocumento_entrada.folio_entrada, tbentidad_reguladora.clave_entidad,
+                    tbdocumento_entrada.id_documento_entrada, tbdocumento_entrada.folio_entrada, tbautoridad_remitente.clave_autoridad,
                     tbdocumento_entrada.asunto,
        
 		 tbempleados.id_empleado id_empleadotema, tbempleados.nombre_empleado nombre_empleadotema, 
@@ -21,12 +21,12 @@ class SeguimientoEntradaDAO{
                     JOIN   documento_entrada tbdocumento_entrada ON 
                     tbdocumento_entrada.id_documento_entrada=tbseguimiento_entrada.id_documento_entrada
                     
-                    JOIN clausulas tbclausulas ON tbclausulas.id_clausula=tbdocumento_entrada.id_clausula
+                    JOIN temas tbtemas ON tbtemas.id_tema=tbdocumento_entrada.id_tema
 		 
-                    JOIN entidad_reguladora tbentidad_reguladora ON
-                    tbentidad_reguladora.id_entidad=tbdocumento_entrada.id_entidad
+                    JOIN autoridad_remitente tbautoridad_remitente ON
+                    tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad
 
-                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbclausulas.id_empleado
+                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
                     
                     JOIN empleados tbempleadosplan ON tbempleadosplan.id_empleado=tbseguimiento_entrada.id_empleado";
             

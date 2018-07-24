@@ -3,9 +3,9 @@ id_seleccionado="";
 
  $(function(){
      
-     $("#temaform").submit(function(e){
+     $("#btn_guardar").click(function(e){
          e.preventDefault();
-         
+//         $("#temaform").css("disabled",true);
          var formData = {"NO":$('#NO').val(),"NOMBRE":$('#NOMBRE').val(),"DESCRIPCION":$('#DESCRIPCION').val(),
                          "PLAZO":$('#PLAZO').val(),"NODO":0,"ID_EMPLEADOMODAL":$('#ID_EMPLEADOMODAL').val()};            
          
@@ -13,16 +13,27 @@ id_seleccionado="";
              url:'../Controller/TemasController.php?Op=GuardarNodo',
              type:'POST',
              data:formData,
-             success:function()
+             success:function(r)
              {
-                 obtenerDatosArbol();
+               
+                 if(r==false){
+                     swal("","Error en el servidor","error");
+                    setTimeout(function(){swal.close();},1500);
+                 }else{
+                     if(r==true){
+                       swal("","Guardado Exitoso","success");
+                       setTimeout(function(){swal.close();},1500);
+                         obtenerDatosArbol();
+                     }
+                 }
+                 
              }
          });
                 
      });
      
      
-     $("#SubTemaform").submit(function(e){
+     $("#btn_guardarSub").click(function(e){
          e.preventDefault();
          
          var formData = {"NO":$('#NO_SUBTEMA').val(),"NOMBRE":$('#NOMBRE_SUBTEMA').val(),"DESCRIPCION":$('#DESCRIPCION_SUBTEMA').val(),
@@ -32,26 +43,36 @@ id_seleccionado="";
              url:'../Controller/TemasController.php?Op=GuardarNodo',
              type:'POST',
              data:formData,
-             success:function()
+             success:function(r)
              {
-                 obtenerDatosArbol();
+                    if(r==false){
+                     swal("","Error en el servidor","error");
+                    setTimeout(function(){swal.close();},1500);
+                 }else{
+                     if(r==true){
+                       swal("","Guardado Exitoso","success");
+                       setTimeout(function(){swal.close();},1500);
+                         obtenerDatosArbol();
+                          obtenerHijos(id_seleccionado);
+                     }
+                 }
                  
 //                 myTree.addItem(formData["NO"],formData['NOMBRE_SUBTEMA'], id_seleccionado);
 //                myTree.openItem(formData.);
-                 obtenerHijos(id_seleccionado);
+                
              }
          });
                 
      });
      
-     $("btn_limpiar_tema").click(function(){
+     $("#btn_limpiar_tema").click(function(){
          $("#NO").val("");
          $("#NOMBRE").val("");
          $("#DESCRIPCION").val("");
          $("#PLAZO").val("");                 
      });
      
-     $("btn_limpiar_SubTema").click(function(){
+     $("#btn_limpiar_SubTema").click(function(){
          $("#NO_SUBTEMA").val("");
          $("#NOMBRE_SUBTEMA").val("");
          $("#DESCRIPCION_SUBTEMA").val("");
@@ -144,7 +165,7 @@ function eliminarNodo()
                 id_seleccionado="";
             }else{
 //                alert("Error no se puede eliminar el tema tiene requisitos");
-                swal("","El Tema tiene Asignado Requisitos","error");
+                swal("","El Tema tiene asignado Requisitos o esta asignado a un usuario","error");
                 setTimeout(function(){swal.close();},1500);
             }
         }
@@ -255,17 +276,17 @@ function evaluarToolbarSeccionB(id)
     function construirSubDirectorio(data)
     {
         
-        tempData1="<div class='table-responsive'><table class='table table-bordered'><thead><tr class='info' id='registro_' name='registro_'>\n\
+        tempData1="<div  style='overflow-y:auto;' class='table-responsive altotablascrollbar'><table class='table table-bordered'><thead><tr class='info' id='registro_' name='registro_'>\n\
                     <th>No</th>\n\
                     <th>Subtema</th>\n\
                     <th>Descripcion</th>\n\
                     <th>Plazo</th>\n\
                     </tr></thead><tbody></tbody>";
                 $.each(data, function(index,value){
-                    tempData1+="<tr><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'no',"+value.id_tema+")\">"+value.no+"</td>";
-                    tempData1+="<td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'nombre',"+value.id_tema+")\" >"+value.nombre+"</td>";
-                    tempData1+="<td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'descripcion',"+value.id_tema+")\">"+value.descripcion+"</td>";
-                    tempData1+="<td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'plazo',"+value.id_tema+")\">"+value.plazo+"</td></tr>";
+                    tempData1+="<tr><td contenteditable='true'  onBlur=\"saveToDatabase(this,'no',"+value.id_tema+")\">"+value.no+"</td>";
+                    tempData1+="<td contenteditable='true'  onBlur=\"saveToDatabase(this,'nombre',"+value.id_tema+")\" >"+value.nombre+"</td>";
+                    tempData1+="<td contenteditable='true'  onBlur=\"saveToDatabase(this,'descripcion',"+value.id_tema+")\">"+value.descripcion+"</td>";
+                    tempData1+="<td contenteditable='true'  onBlur=\"saveToDatabase(this,'plazo',"+value.id_tema+")\">"+value.plazo+"</td></tr>";
 //                    tempData1+="<td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";
                 });
             tempData1+="</table></div>";    
@@ -292,6 +313,7 @@ function evaluarToolbarSeccionB(id)
         tempData2+="</table></div>";
    
         $("#contenidoDetalles").html(tempData2);
+        
     }
     
     
@@ -319,5 +341,6 @@ function load(carga){
         $("#loader").hide();
     }
 }
+
 
 

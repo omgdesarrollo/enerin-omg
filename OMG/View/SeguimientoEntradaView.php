@@ -42,120 +42,22 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
 
+                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
                 
-                <style>
-                    
-                    .modal
-                    {
-                        overflow: hidden;
-                    }
-                    .modal-dialog{
-                        margin-right: 0;
-                        margin-left: 0;
-                    }
-                    .modal-header{
-                      height:30px;background-color:#444;
-                      color:#ddd;
-                    }
-                    .modal-title{
-                      margin-top:-10px;
-                      font-size:16px;
-                    }
-                    .modal-header .close{
-                      margin-top:-10px;
-                      color:#fff;
-                    }
-                    .modal-body{
-                      color:#888;
-                       /*max-height: calc(100vh - 210px);*/
-                      max-height: calc(100vh - 110px);
-                      overflow-y: auto;
-                    }
-                    .modal-body p {
-                      text-align:center;
-                      padding-top:10px;
-                    }
-                    
-                                    
-                    div#winVP {
-			position: relative;
-			height: 350px;
-			border: 1px solid #dfdfdf;
-			margin: 10px;
-		}
+                <script src="https://unpkg.com/ag-grid-enterprise@18.1.1/dist/ag-grid-enterprise.min.js"></script>
                 
-                   
-                    
-/*                .main-encabezado {
-                        background: #333;
-                        color: white;
-                        height: 80px;
-
-                        width: 100%;  hacemos que la cabecera ocupe el ancho completo de la página 
-                        left: 0;  Posicionamos la cabecera al lado izquierdo 
-                        top: 0;  Posicionamos la cabecera pegada arriba 
-                        position: fixed;  Hacemos que la cabecera tenga una posición fija 
-                    }    */
-                    
-/*Inicia estilos para mantener fijo el header*/                    
-                    .table-fixed-header {
-    display: table; /* 1 */
-    position: relative;
-    padding-top: calc(~'2.5em + 2px'); /* 2 */
-    
-    table {
-        margin: 0;
-        margin-top: calc(~"-2.5em - 2px"); /* 2 */
-    }
-    
-    thead th {
-        white-space: nowrap;
-        
-        /* 3 - apply same styling as for thead th */
-        /* 4 - compensation for padding-left */
-        &:before {
-            content: attr(data-header);
-            position: absolute;
-            top: 0;
-            padding: .5em 1em; /* 3 */
-            margin-left: -1em; /* 4 */
-        }
-    }
-}
-
- /* 5 - setting height and scrolling */
-.table-container {
-    max-height: 70vh; /* 5 */
-    overflow-y: auto; /* 5 */
-        
-        /* 6 - same styling as for thead th */
-        &:before {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        min-height: 2.5em;             /* 6 */
-        border-bottom: 2px solid #DDD; /* 6 */
-        background: #f1f1f1;           /* 6 */
-    }
-}
- 
-/*Finaliza estilos para mantener fijo el header*/                    
-                                      
-                    
-                </style>
+                <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+                <script src="../../js/fSeguimientoEntradas.js" type="text/javascript"></script>	 
                 
-                    
                 
- 			 
+                
 	</head>
 
         
-        <body class="no-skin" onload="loadSpinner()">
-             <div id="loader"></div>
-       
-
+        <body class="no-skin" >
+             <!--<div id="loader"></div>-->
 <?php
 
 require_once 'EncabezadoUsuarioView.php';
@@ -166,7 +68,7 @@ require_once 'EncabezadoUsuarioView.php';
 <div style="height: 5px"></div>
 
              
-<div style="position: fixed;">                          
+<!--<div style="position: fixed;">                          
 <button type="button" class="btn btn-info " onclick="refresh();" >
     <i class="glyphicon glyphicon-repeat"></i> 
 </button>
@@ -178,10 +80,11 @@ require_once 'EncabezadoUsuarioView.php';
         <input type="text" id="idInputStatus" onkeyup="filterTableStatus()" placeholder="Status" style="width: 120px;">    
         <input type="text" id="idInputResponsablePlan" onkeyup="filterTableResponsablePlan()" placeholder="Responsable Plan" style="width: 180px;">
         <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
-</div>    
+</div>    -->
 
 
 <div style="height: 47px"></div>
+<div id="jsGrid"> </div>
 
 
 <!--<div class="contenedortable" style="position: fixed;">   
@@ -197,11 +100,11 @@ require_once 'EncabezadoUsuarioView.php';
              
 
              
-<div class="table-fixed-header"  id="" class="animate-bottom"> 
+<!--<div class="table-fixed-header"  id="" class="animate-bottom"> 
     <div class="table-container">
         
         <table class="tbl-qa" id="idTable">
-		  <!--<thead>-->
+		  <thead>
 			  <tr>
 				
                                 <th class="table-header">Folio de Entrada</th>
@@ -218,24 +121,24 @@ require_once 'EncabezadoUsuarioView.php';
                                 <th class="table-header">Registrar Programa</th>
                                 <th class="table-header">Avance del Programa</th>
 			  </tr>
-		  <!--</thead>-->
+		  </thead>
 		  <tbody>
 		  <?php
                   
                     
                   
 //		  foreach($faq as $k=>$v) {
-                      $Lista = Session::getSesion("listarSeguimientoEntradas");
-                      $cbxEmp= Session::getSesion("listarEmpleadosComboBox");
-                      $cbxEmpleadoPlan= Session::getSesion("listarEmpleadosComboBox");
-                      $cbxEmpleadoPlan1= Session::getSesion("listarEmpleadosComboBox");
-                      $numeracion = 1;
+//                      $Lista = Session::getSesion("listarSeguimientoEntradas");
+//                      $cbxEmp= Session::getSesion("listarEmpleadosComboBox");
+//                      $cbxEmpleadoPlan= Session::getSesion("listarEmpleadosComboBox");
+//                      $cbxEmpleadoPlan1= Session::getSesion("listarEmpleadosComboBox");
+//                      $numeracion = 1;
                       foreach ($Lista as $filas) { 
                         ?>
 			 
                         <tr class="table-row">
 
-                                <!--<td><?php //echo $numeracion++;   ?></td -->
+                                <td><?php //echo $numeracion++;   ?></td 
                                 
                                 
                                 
@@ -268,55 +171,55 @@ require_once 'EncabezadoUsuarioView.php';
                                    <?php
                                    
                                     //Inicia Status Logico
-                                    $alarm = new Datetime($filas['fecha_alarma']);
-                                    $alarm = strftime("%d-%B-%y",$alarm -> getTimestamp());
-                                    $alarm = new Datetime($alarm);
-                                    
-                                    $flimite = new Datetime($filas['fecha_limite_atencion']);// Guarda en una variable la fecha de la base de datos
-                                    $flimite = strftime("%d-%B-%y",$flimite -> getTimestamp());// Esta da el formato: dia. mes y año, sin guardar las horas 
-                                    $flimite = new Datetime($flimite);//Se guarda en este formato y se reinicializan las horas a 00.
-                                    
-                                    $hoy = new Datetime();
-                                    $hoy = strftime("%d - %B - %y");
-                                    $hoy = new Datetime($hoy);
+//                                    $alarm = new Datetime($filas['fecha_alarma']);
+//                                    $alarm = strftime("%d-%B-%y",$alarm -> getTimestamp());
+//                                    $alarm = new Datetime($alarm);
+//                                    
+//                                    $flimite = new Datetime($filas['fecha_limite_atencion']);// Guarda en una variable la fecha de la base de datos
+//                                    $flimite = strftime("%d-%B-%y",$flimite -> getTimestamp());// Esta da el formato: dia. mes y año, sin guardar las horas 
+//                                    $flimite = new Datetime($flimite);//Se guarda en este formato y se reinicializan las horas a 00.
+//                                    
+//                                    $hoy = new Datetime();
+//                                    $hoy = strftime("%d - %B - %y");
+//                                    $hoy = new Datetime($hoy);
                                
 
                                     
-                                    if($filas["status_doc"]== 1){
-
-                                        if ($flimite <= $hoy){
-
-                                            if($flimite == $hoy){
-                                                
-                                                echo "Tiempo Limite";
-                                                
-                                            } else {
-                                                
-                                                echo "Tiempo Vencido";  
-                                            }
-                                                  
-                                        } else{
-                                            
-                                          if ($alarm <= $hoy){
-                                              
-                                              echo "Alerta Vencida";
-                                                                                           
-                                          } else {
-                                                  echo "En Tiempo";
-                                              }                                           
-                                        }
-                                       
-                                     
-                                    } //Primer If 
+//                                    if($filas["status_doc"]== 1){
+//
+//                                        if ($flimite <= $hoy){
+//
+//                                            if($flimite == $hoy){
+//                                                
+//                                                echo "Tiempo Limite";
+//                                                
+//                                            } else {
+//                                                
+//                                                echo "Tiempo Vencido";  
+//                                            }
+//                                                  
+//                                        } else{
+//                                            
+//                                          if ($alarm <= $hoy){
+//                                              
+//                                              echo "Alerta Vencida";
+//                                                                                           
+//                                          } else {
+//                                                  echo "En Tiempo";
+//                                              }                                           
+//                                        }
+//                                       
+//                                     
+//                                    } //Primer If 
                                     
                                   
-                                    if($filas["status_doc"]== 2){
-                                        echo "Suspendido";
-                                        
-                                    } if($filas["status_doc"]== 3){
-                                        echo "Terminado";
-                                        
-                                    } 
+//                                    if($filas["status_doc"]== 2){
+//                                        echo "Suspendido";
+//                                        
+//                                    } if($filas["status_doc"]== 3){
+//                                        echo "Terminado";
+//                                        
+//                                    } 
                                    
                                     //Termina Status Logico
                                    
@@ -371,10 +274,10 @@ require_once 'EncabezadoUsuarioView.php';
                                             <i class='fa fa-cloud-upload' style='font-size: 20px'></i>
                                             Mostrar
                                         </button>
-                                        <!-- <?php echo $filas['id_documento_entrada']; ?> -->
+                                         <?php echo $filas['id_documento_entrada']; ?> 
                                 </td>
                                 
-                                <!--<td contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php // echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php // echo $filas["documento"]; ?></td>-->
+                                <td contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php // echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php // echo $filas["documento"]; ?></td>
                                 <td ><button class="btn btn-success" onClick="cargadePrograma('<?php echo $filas["id_documento_entrada"]; ?>','<?php echo $filas["folio_entrada"] ?>')">Registrar</button></td>
                                 <td><?php echo $filas["avance_programa"]; ?></td>
 			  </tr>
@@ -388,12 +291,12 @@ require_once 'EncabezadoUsuarioView.php';
 
                      
 
-<!--			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-			</a>-->
+			</a>
     </div>                    
 	
-</div>
+</div>-->
 
 
 
@@ -429,103 +332,9 @@ require_once 'EncabezadoUsuarioView.php';
                 
                 
                 
-		<script>
-                    
-                var id_seguimiento_entrada;
-                
-                                            
-                      $(function(){
-                          
-                        $('.select').on('change', function() {
-                          console.log( $(this).prop('value') );
-                          
-                          column="ID_EMPLEADO";
-                          val=$(this).prop('value');
-                          alert("el value que va a viajar es "+val+" y el id del seguimiento : "+id_seguimiento_entrada);
-                          
-                          $.ajax({
-                                url: "../Controller/SeguimientoEntradasController.php?Op=Modificar",
-				type: "POST",
-				data:'column='+column+'&editval='+val+'&id='+id_seguimiento_entrada,
-				
-				success: function(data){
-//                                    window.location.href="AsignacionTemasRequisitosView.php?page=1";
-					//$(editableObj).css("background","#FDFDFD");
-//                                        consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
-//                                        consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
-//                                        window.location.href="SeguimientoEntradaView.php";
-				}   
-                           });
-                          
-                          
-                        });
-  
-  
-                      });
-                      
-                      
-                                                  
-		function showEdit(editableObj) {
-			$(editableObj).css("background","#FFF");
-		} 
-		
-                
-		function saveToDatabase(editableObj,column,id) {
-                    //alert("entraste aqui ");
-			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
-			$.ajax({
-                                url: "../Controller/SeguimientoEntradasController.php?Op=Modificar",
-				type: "POST",
-				data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
-				success: function(data){
-					$(editableObj).css("background","#FDFDFD");
-                                        
-				}   
-		   });
-		}
-                
-                
-                function saveComboToDatabase(column,id){
-
-
-                        id_seguimiento_entrada=id;
-                        
-               }
-              
-               
-    function refresh(){
-                  consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");  
-//                  window.location.href="SeguimientoEntradaView.php";  
-                }
-    
-    
-    function loadSpinner(){
-        myFunction();
-    }           
-              
-               
-    function consultarInformacion(url){
-        
-        $("#loader").show();
-        $.ajax({  
-            url: ""+url,  
-            success: function(r) {
-                $("#idTable").load("SeguimientoEntradaView.php #idTable")
-                $("#loader").hide();
-
-            },
-            beforeSend:function(r){
-
-            },
-            error:function(){
-                $("#loader").hide();
-            }
-                 
-        });  
-    }
-    
-    
-    
+		<script>                 
+                var id_seguimiento_entrada;    
+                listarDatosSeguimientoEntrada();
     function mostrar_urls(id_documento_entrada)
         {
                 var tempDocumentolistadoUrl = "";
@@ -611,145 +420,7 @@ require_once 'EncabezadoUsuarioView.php';
     }
     
     
-    function filterTable() {
-                // Declare variables 
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInput");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
-
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[0];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
-                      } 
-                    }
-                }
-                
-                
-        function filterTableEntidad() {
-                // Declare variables 
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputEntidad");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
-
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[1];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
-                      } 
-                    }
-                }   
-                
-                
-        function filterTableAsunto() {
-                // Declare variables 
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputAsunto");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
-
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[2];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
-                      } 
-                    }
-                }        
-                
-                
-        function filterTableResponsable() {
-                // Declare variables 
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputResponsable");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
-
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[3];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
-                      } 
-                    }
-                }
-                
-                
-        function filterTableStatus() {
-                // Declare variables 
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputStatus");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
-
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[7];
-                      if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                          tr[i].style.display = "";
-                        } else {
-                          tr[i].style.display = "none";
-                        }
-                      } 
-                    }
-                }
-                function filterTableResponsablePlan() {
-                // Declare variables 
-                    var input, filter, table, tr, td, i;
-                    input = document.getElementById("idInputResponsablePlan");
-                    filter = input.value.toUpperCase();
-                    table = document.getElementById("idTable");
-                    tr = table.getElementsByTagName("tr");
-
-                    // Loop through all table rows, and hide those who don't match the search query
-                    for (i = 0; i < tr.length; i++) {
-                      td = tr[i].getElementsByTagName("td")[9];
-                      if (td) {
-                        select=td.getElementsByTagName("select");
-                          $.each(select,function(index,value)
-                          {
-                                var indexRes = value.selectedIndex;
-                                var responsable=value[indexRes].innerHTML;
-                                console.log(responsable);
-                              if (responsable.toUpperCase().indexOf(filter) > -1)
-                              {
-                                tr[i].style.display = "";
-                              }
-                              else
-                              {
-                                tr[i].style.display = "none";
-                              }
-//                            console.log(value.options(ind));
-                          });
-                      } 
-                    }
-                }
+    
                 
     
 		</script>
