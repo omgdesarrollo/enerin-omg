@@ -77,7 +77,7 @@ $Usuario=  Session::getSesion("user");
                     div#treeboxbox_tree{
                     /*position: relative;*/
                     /*width: 900px;*/
-                    height: 350px;
+                    height: 300px;
                     /*overflow: auto;*/
                     box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
                     }
