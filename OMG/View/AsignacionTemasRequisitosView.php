@@ -180,6 +180,8 @@ $Usuario=  Session::getSesion("user");
             var myLayout, myTree, myToolbar,id_asignacion_t=-1,levelv=0,id_asignacion_r=-1,selec_tema=-1,id_seleccionado=-1,dataIds_req=[],dataIds_reg=[];
             myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
 	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
+            
+            id_nodo="",tipo_nodo="";
 
 
 obtenerTemasEnAsignacion();
@@ -391,29 +393,66 @@ function evaluarToolbarSeccionB(id)
             {
                     var level = myTree.getLevel(id_seleccionado);
                     var subItems= myTree.getSubItems(id_seleccionado);
-//                    alert(level);
-//                    alert(subItems);                    
+                    alert("Este es el level: "+level);
+                    alert("Este es el subItems: "+subItems);
+                    
                     if(level==0){
 //                        alert(subItems);
                       swal("","Seleccione un Requisito","error");
                       setTimeout(function(){swal.close();},1500);  
                     } else {
+                                
+//                                  if(tipo_nodo="req")
+//                                    {
+                                          if(subItems=="")
+                                            { 
+                                                alert("Si se puede eliminar el Requisito: "+subItems);
+                                                eliminarNodoRequisito();
+                                            } else{
+                                                        swal("","El requisito tiene Registros","error");
+                                                        setTimeout(function(){swal.close();},1500);
+                                                   }       
+//                                    } else {
+//                                                if(tipo_nodo="reg")
+//                                                    {
+//                                                            alert("Si se puede eliminar el registro");
+//                                                            eliminarNodoRegistro();
+//                                                    } 
+//                                      } 
+                    }                   
                         
-                        if(subItems==0)
-                        {
-                            alert("Si se puede eliminar el registro");
-            //                eliminarNodo();
-                        }else{
-//                            alert("Registros: "+subItems);
-                            swal("","El requisito tiene Registros","error");
-                            setTimeout(function(){swal.close();},1500);
-                        }
-                    }    
             }
+                    
+                    
+                    
     }
 }
                
-               
+  
+    function eliminarNodoRegistro()
+    {
+        $.ajax({
+            url:"../Controller/AsignacionTemasRequisitosController.php?Op=EliminarRegistro",
+            data:"ID_REGISTRO="+id_nodo,
+            success:function(data)
+            {
+                obtenerDatosArbol();
+            }
+        });
+    }
+    
+    function eliminarNodoRequisito()
+    {
+        $.ajax({
+            url:"../Controller/AsignacionTemasRequisitosController.php?Op=EliminarRequisito",
+            data:"ID_REQUISITO="+id_nodo,
+            success:function(data)
+            {
+                obtenerDatosArbol();
+            }
+        });
+    }
+  
                   
      function obtenerTemasEnAsignacion(){
 //         alert("e");  
@@ -550,7 +589,11 @@ console.log("d");
     
     
    function obtenerDetalles_Seleccionado(id,tipo){
-
+       
+//    alert(id);
+//    alert(tipo);
+    id_nodo=id;
+    tipo_nodo=tipo;
    $.ajax({
        url:"../Controller/AsignacionTemasRequisitosController.php?Op=detalles",
        type:"POST",
