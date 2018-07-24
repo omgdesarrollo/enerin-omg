@@ -48,9 +48,7 @@ $Usuario=  Session::getSesion("user");
                 div#treeboxbox_tree{
                    height: 250px; 
                 }
-                    .altotablalistacrollbar{
-                         height: 320px;
-                    } 
+                  
                 
           
           
