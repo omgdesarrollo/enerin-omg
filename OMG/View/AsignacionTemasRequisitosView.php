@@ -46,10 +46,12 @@ $Usuario=  Session::getSesion("user");
                 }
                 
                 div#treeboxbox_tree{
-                   height: 300px; 
+                   height: 250px; 
                 }
-                    
-          
+                    .altotablalistacrollbar{
+                         height: 320px;
+                    } 
+                
           
           
           
@@ -461,12 +463,12 @@ function evaluarToolbarSeccionB(id)
             url: '../Controller/AsignacionTemasRequisitosController.php?Op=Listar',
             success:function(data)
             {
-               $htmlData="<table><t</table><ul class='list-group'>";
+               $htmlData="<div class='altotablalistacrollbar'><ul class='list-group '>";
                $.each(data,function(index,value){
                   $htmlData+="<li class='list-group-item'><button onclick='obtenerDatosArbol("+value.id_asignacion_tema_requisito+")' >"+value.no+"-"+value.nombre+"</button><span class='badge'></li>"; 
                 
                });
-              $htmlData+="</ul>";
+              $htmlData+="</ul></div>";
               $("#contenido").html($htmlData);
 //              contruirLista();
             }
