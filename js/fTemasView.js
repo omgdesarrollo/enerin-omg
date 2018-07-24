@@ -276,7 +276,7 @@ function evaluarToolbarSeccionB(id)
     function construirSubDirectorio(data)
     {
         
-        tempData1="<div class='table-responsive'><table class='table table-bordered'><thead><tr class='info' id='registro_' name='registro_'>\n\
+        tempData1="<div  style='overflow-y:auto;' class='table-responsive altotablascrollbar'><table class='table table-bordered'><thead><tr class='info' id='registro_' name='registro_'>\n\
                     <th>No</th>\n\
                     <th>Subtema</th>\n\
                     <th>Descripcion</th>\n\

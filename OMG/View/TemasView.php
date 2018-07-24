@@ -84,8 +84,8 @@ $Usuario=  Session::getSesion("user");
 /*                    div#contenido{
                          height: 150px;
                     }*/
-                    div#contenido{
-                         height: 300px;
+                    .altotablascrollbar{
+                         height: 320px;
                     }
                     
             </style>    
