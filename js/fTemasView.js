@@ -5,7 +5,7 @@ id_seleccionado="";
      
      $("#temaform").submit(function(e){
          e.preventDefault();
-         
+         $("#temaform").css("disabled",true);
          var formData = {"NO":$('#NO').val(),"NOMBRE":$('#NOMBRE').val(),"DESCRIPCION":$('#DESCRIPCION').val(),
                          "PLAZO":$('#PLAZO').val(),"NODO":0,"ID_EMPLEADOMODAL":$('#ID_EMPLEADOMODAL').val()};            
          
