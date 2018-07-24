@@ -3,9 +3,9 @@ id_seleccionado="";
 
  $(function(){
      
-     $("#temaform").submit(function(e){
+     $("#btn_guardar").click(function(e){
          e.preventDefault();
-         $("#temaform").css("disabled",true);
+//         $("#temaform").css("disabled",true);
          var formData = {"NO":$('#NO').val(),"NOMBRE":$('#NOMBRE').val(),"DESCRIPCION":$('#DESCRIPCION').val(),
                          "PLAZO":$('#PLAZO').val(),"NODO":0,"ID_EMPLEADOMODAL":$('#ID_EMPLEADOMODAL').val()};            
          
@@ -33,7 +33,7 @@ id_seleccionado="";
      });
      
      
-     $("#SubTemaform").submit(function(e){
+     $("#btn_guardarSub").click(function(e){
          e.preventDefault();
          
          var formData = {"NO":$('#NO_SUBTEMA').val(),"NOMBRE":$('#NOMBRE_SUBTEMA').val(),"DESCRIPCION":$('#DESCRIPCION_SUBTEMA').val(),
@@ -65,7 +65,7 @@ id_seleccionado="";
                 
      });
      
-     $("#btn_limpiar_Tema").click(function(){
+     $("#btn_limpiar_tema").click(function(){
          $("#NO").val("");
          $("#NOMBRE").val("");
          $("#DESCRIPCION").val("");
