@@ -8,6 +8,7 @@ function listarDatosSeguimientoEntrada()
 {
         __datos=[];
         contador=1;
+        status="undefined";
         datosParamAjaxValues={};
         datosParamAjaxValues["url"]="../Controller/SeguimientoEntradasController.php?Op=Listar";
         datosParamAjaxValues["type"]="GET";
@@ -15,7 +16,20 @@ function listarDatosSeguimientoEntrada()
         datosParamAjaxValues["async"]=false;
         var variablefunciondatos=function obtenerDatosServer (r){
         $.each(r,function (index,value){
-       
+            
+       if(value.status_doc=="1"){
+           status="En Proceso";
+           alert("en");
+       }
+       if(value.status_doc=="2"){
+           status="Suspendido";
+           alert("suspendidp")
+       }
+       if(value.status_doc=="3"){
+           status="Terminado";
+           alert("terminado");
+       }
+        r["value.status_doc"]=""+status;
 //        nameDate=mostrar_urls(value.id_evidencias);
         __datos.push({
             "No":contador++,
@@ -44,7 +58,10 @@ function listarDatosSeguimientoEntrada()
         filtering: true,
         heading: true,
         sorting: true,
+        editing: true,
         paging: true,
+        noDataContent: "Not found",
+        
         data: __datos,
         fields: [
                 { name: "No", type: "text", width: 80, validate: "required" },
@@ -61,7 +78,8 @@ function listarDatosSeguimientoEntrada()
                 { name: "archivo adjunto", type: "text", width: 80, validate: "required" },
                 { name: "registrar programa", type: "text", width: 80, validate: "required" },
                 { name: "avance del programa", type: "text", width: 80, validate: "required" },
-        ]
+        ],
+         rowClick: function(args) {  }
     });
 }
 

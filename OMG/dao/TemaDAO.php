@@ -97,7 +97,7 @@ public function insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO,
     try
     {
         $query="INSERT INTO temas (no,nombre,descripcion,plazo,padre,id_empleado,identificador,contrato) 
-                VALUES ($NO,'$NOMBRE','$DESCRIPCION','$PLAZO',$NODO,'$ID_EMPLEADO','$IDENTIFICADOR',$CONTRATO)";
+                VALUES ('$NO','$NOMBRE','$DESCRIPCION','$PLAZO',$NODO,'$ID_EMPLEADO','$IDENTIFICADOR',$CONTRATO)";
         
         $db= AccesoDB::getInstancia();
         $lista= $db->executeQueryUpdate($query);

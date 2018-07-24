@@ -13,9 +13,20 @@ id_seleccionado="";
              url:'../Controller/TemasController.php?Op=GuardarNodo',
              type:'POST',
              data:formData,
-             success:function()
+             success:function(r)
              {
-                 obtenerDatosArbol();
+               
+                 if(r==false){
+                     swal("","Error en el servidor","error");
+                    setTimeout(function(){swal.close();},1500);
+                 }else{
+                     if(r==true){
+                       swal("","Guardado Exitoso","success");
+                       setTimeout(function(){swal.close();},1500);
+                         obtenerDatosArbol();
+                     }
+                 }
+                 
              }
          });
                 
@@ -32,13 +43,23 @@ id_seleccionado="";
              url:'../Controller/TemasController.php?Op=GuardarNodo',
              type:'POST',
              data:formData,
-             success:function()
+             success:function(r)
              {
-                 obtenerDatosArbol();
+                    if(r==false){
+                     swal("","Error en el servidor","error");
+                    setTimeout(function(){swal.close();},1500);
+                 }else{
+                     if(r==true){
+                       swal("","Guardado Exitoso","success");
+                       setTimeout(function(){swal.close();},1500);
+                         obtenerDatosArbol();
+                          obtenerHijos(id_seleccionado);
+                     }
+                 }
                  
 //                 myTree.addItem(formData["NO"],formData['NOMBRE_SUBTEMA'], id_seleccionado);
 //                myTree.openItem(formData.);
-                 obtenerHijos(id_seleccionado);
+                
              }
          });
                 
