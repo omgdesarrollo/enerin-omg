@@ -11,12 +11,12 @@ function listarDatosSeguimientoEntrada()
         status="undefined";
         datosParamAjaxValues={};
         datosParamAjaxValues["url"]="../Controller/SeguimientoEntradasController.php?Op=Listar";
-        datosParamAjaxValues["type"]="GET";
+        datosParamAjaxValues["type"]="POST";
 //        datosParamAjaxValues["paramDataValues"]=parametroscheck;
         datosParamAjaxValues["async"]=false;
         var variablefunciondatos=function obtenerDatosServer (r){
         $.each(r,function (index,value){
-            
+//           alert("f"+value.asunto);
        if(value.status_doc=="1"){
            status="En Proceso";
            alert("en");
@@ -29,7 +29,8 @@ function listarDatosSeguimientoEntrada()
            status="Terminado";
            alert("terminado");
        }
-        r["value.status_doc"]=""+status;
+       evaluarFechasCondicion("seguimientoentrada");
+       value.status_doc=""+status;
 //        nameDate=mostrar_urls(value.id_evidencias);
         __datos.push({
             "No":contador++,
@@ -79,9 +80,22 @@ function listarDatosSeguimientoEntrada()
                 { name: "registrar programa", type: "text", width: 80, validate: "required" },
                 { name: "avance del programa", type: "text", width: 80, validate: "required" },
         ],
-         rowClick: function(args) {  }
+         rowClick: function(args) { 
+         alert("le has picado ");
+         }
     });
 }
+function evaluarFechasCondicion(vistaaevaluar){
+    
+    
+    switch(vistaaevaluar){
+        case "seguimientoentrada":
+            
+        break;
+    }
+    
+}
+
 
 
 

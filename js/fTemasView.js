@@ -5,6 +5,7 @@ id_seleccionado="";
      
      $("#btn_guardar").click(function(e){
          e.preventDefault();
+         $("#btn_guardar").attr("disabled", "disabled");
 //         $("#temaform").css("disabled",true);
          var formData = {"NO":$('#NO').val(),"NOMBRE":$('#NOMBRE').val(),"DESCRIPCION":$('#DESCRIPCION').val(),
                          "PLAZO":$('#PLAZO').val(),"NODO":0,"ID_EMPLEADOMODAL":$('#ID_EMPLEADOMODAL').val()};            
@@ -19,11 +20,13 @@ id_seleccionado="";
                  if(r==false){
                      swal("","Error en el servidor","error");
                     setTimeout(function(){swal.close();},1500);
+                     $("#btn_guardar").removeAttr("disabled");
                  }else{
                      if(r==true){
                        swal("","Guardado Exitoso","success");
                        setTimeout(function(){swal.close();},1500);
-                         obtenerDatosArbol();
+                        obtenerDatosArbol();
+                        $("#btn_guardar").removeAttr("disabled");
                      }
                  }
                  
@@ -35,7 +38,7 @@ id_seleccionado="";
      
      $("#btn_guardarSub").click(function(e){
          e.preventDefault();
-         
+         $("#btn_guardarSub").attr("disabled", "disabled");
          var formData = {"NO":$('#NO_SUBTEMA').val(),"NOMBRE":$('#NOMBRE_SUBTEMA').val(),"DESCRIPCION":$('#DESCRIPCION_SUBTEMA').val(),
                          "PLAZO":$('#PLAZO_SUBTEMA').val(),"NODO":id_seleccionado,"ID_EMPLEADOMODAL":""};            
          
@@ -45,8 +48,10 @@ id_seleccionado="";
              data:formData,
              success:function(r)
              {
+              
                     if(r==false){
                      swal("","Error en el servidor","error");
+                        $("#btn_guardarSub").removeAttr("disabled");
                     setTimeout(function(){swal.close();},1500);
                  }else{
                      if(r==true){
@@ -54,6 +59,7 @@ id_seleccionado="";
                        setTimeout(function(){swal.close();},1500);
                          obtenerDatosArbol();
                           obtenerHijos(id_seleccionado);
+                       $("#btn_guardarSub").removeAttr("disabled");
                      }
                  }
                  
