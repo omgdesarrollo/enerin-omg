@@ -1217,7 +1217,13 @@
                       if(tempDocumentolistadoUrl == "")
                       {
                             tempDocumentolistadoUrl = " No hay archivos agregados ";
-                            $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
+                            if(validador=="1")
+                            {
+                                if(validado==false)
+                                {
+                                    $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
+                                }
+                            }
                       }
                       else
                       {

@@ -227,7 +227,7 @@ require_once 'EncabezadoUsuarioView.php';
 		<div class="modal-content">
                         
 		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="font-size:inherit" aria-hidden="true">×</span></button>
 		        <h4 class="modal-title" id="myModalLabel">Archivos Adjuntos</h4>
 		      </div>
 
@@ -256,7 +256,7 @@ require_once 'EncabezadoUsuarioView.php';
                 <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="font-size:inherit" aria-hidden="true">×</span></button>
 		        <h4 class="modal-title" id="myModalLabel">Crear Nueva Entrada</h4>
 		      </div>
 
@@ -394,10 +394,11 @@ var id_documento_entrada;
 var cualmodificar;
 var dataListado;
 $("#create-item").draggable();
+$("#create-itemUrls").draggable();
+
 function construirFiltros()
 {
         tempData = "";
-        
         $.each(filtros,function(index,value)
         {
                 entrado=0;
@@ -423,7 +424,6 @@ function construirFiltros()
                         entrado=0;
                 }
         });
-        console.log(tempData);
         $("#headerFiltros").append(tempData);
 }
 
@@ -507,36 +507,21 @@ $(function()
                 verificarExiste(valuefolioentrada,"folio_entrada");
         });
                                         
-        $('.select').on('change', function()
-        {
-                if (cualmodificar == "id_cumplimiento")
-                {
-                        column="id_cumplimiento";
-                }
-                else
-                        if (cualmodificar == "id_autoridad")
-                        {
-                                column="id_autoridad";
-                        }
-                        else
-                                if (cualmodificar == "status_doc")
-                                {
-                                        column="status_doc";
-                                }else
-                                {
-                                        column="id_tema";
-                                }
-                val=$(this).prop('value');
-                $.ajax({
-                        url: "../Controller/DocumentosEntradaController.php?Op=Modificar",
-                        type: "POST",
-                        data:'column='+column+'&editval='+val+'&id='+id_documento_entrada,
-                        success: function(data)
-                        {
-                                refresh();
-                        }   
-                        });
-        });
+        // $('.select').on('change', function()
+        // {
+                // if (cualmodificar == "id_autoridad")
+                // {
+                //         column="id_autoridad";
+                // }
+                // else
+                //         if (cualmodificar == "status_doc")
+                //         {
+                //                 column="status_doc";
+                //         }else
+                //         {
+                //                 column="id_tema";
+                //         }
+        // });
 
         $("#btn_guardar").click(function()
         {
@@ -721,6 +706,7 @@ $(function()
                 $("#OBSERVACIONES").val("");        
         });
 
+        
 });//Se cierra el $function
 
 function reconstruirTable2(datos)
@@ -809,7 +795,7 @@ function reconstruir(value)
         tempData += "<td contenteditable='true' onBlur='saveToDatabase(this,\"folio_referencia\","+value.id_documento_entrada+")'";
         tempData += "onClick='showEdit(this);'>"+value.folio_referencia+"</td>";
 
-        tempData += "<td contenteditable='true' onBlur='saveToDatabase(this,\"folio_entrada\","+value.id_documento_entrada+")'";
+        tempData += "<td onBlur='saveToDatabase(this,\"folio_entrada\","+value.id_documento_entrada+")'";
         tempData += "onClick='showEdit(this);'>"+value.folio_entrada+"</td>";
                                 
         tempData += "<td><input style='' value='"+value.fecha_recepcion+"' onBlur='saveToDatabaseDates(this,\"fecha_recepcion\","+value.id_documento_entrada+",";
@@ -818,18 +804,18 @@ function reconstruir(value)
         tempData += "<td contenteditable='true' onBlur='saveToDatabase(this,\"asunto\","+value.id_documento_entrada+")' onClick='showEdit(this);'>"+value.asunto+"</td>";
         tempData += "<td contenteditable='true' onBlur='saveToDatabase(this,\"remitente\","+value.id_documento_entrada+")' onClick='showEdit(this);'>"+value.remitente+"</td>";
 
-        tempData += "<td><select id='id_autoridad' class='select' onchange='saveComboToDatabase('id_autoridad',"+value.id_documento_entrada+")'>";
+        tempData += "<td><select id='id_autoridad' class='select' onchange='saveComboToDatabase(this,\"id_autoridad\","+value.id_documento_entrada+")'>";
         $.each(thisAutoridad,function(index,val)
         {
                 if(val.id_autoridad==value.id_autoridad)
-                        tempData += "<option value='"+val.id_autoridad+"'  selected >"+val.clave_autoridad+"</option>";
+                        tempData += "<option value='"+val.id_autoridad+"' selected >"+val.clave_autoridad+"</option>";
                 else
                         tempData += "<option value='"+val.id_autoridad+"' >"+val.clave_autoridad+"</option>";
         });
         tempData += "</select></td>";
         
         tempData += "<td style='background-color: #ccccff'>";
-        tempData += "<select id='id_clausula' class='select' onchange='saveComboToDatabase(\"id_clausula\","+value.id_documento_entrada+")'>";
+        tempData += "<select id='id_clausula' class='select' onchange='saveComboToDatabase(this,\"id_clausula\","+value.id_documento_entrada+")'>";
         $.each(thisTemas,function(index,val)
         {
                 if(val.id_tema == value.id_tema)
@@ -854,7 +840,7 @@ function reconstruir(value)
                 tempData += "Informativo";
         tempData += "</td>";
                                                                 
-        tempData += "<td><select id='id_status' class='select' onchange='saveComboToDatabase(\"status_doc\","+value.id_documento_entrada+")'>";
+        tempData += "<td><select id='id_status' class='select' onchange='saveComboToDatabase(this,\"status_doc\","+value.id_documento_entrada+")'>";
         if(value.status_doc == 1)
         {
                 tempData += "<option value='1' selected>En proceso</option>";
@@ -939,6 +925,12 @@ function listarDatos(id_documento)
                                 {
                                         dataListado = datos;
                                         reconstruirTable(datos);
+                                        $("td").dblclick(function()
+                                        {
+                                                $(this).prop("contenteditable",true);
+                                                // $(this).select();
+                                                console.log($(this));
+                                        });
                                 },
                                 error:function(error)
                                 {
@@ -955,10 +947,16 @@ function listarDatos(id_documento)
                                 {
                                         $.each(datos,function(index,value)
                                         {
-                                                tempData += reconstruirTable(value);
+                                                tempData += reconstruir(value);
+                                                componerDataListado(value);
                                         });
                                         $("#registro_"+id_documento).html(tempData);
                                         $('#loader').hide();
+                                        $("td").dblclick(function()
+                                        {
+                                                
+                                                $(this).prop("contenteditable",true);
+                                        });
                                 },
                                 error:function(error)
                                 {
@@ -971,22 +969,42 @@ function listarDatos(id_documento)
         ajaxAutoridades.fail(function(){swalError("Error en el servidor");});
 }
 
+function componerDataListado(value)// id de la vista documento
+{
+        dataListado;
+        id_vista = value.id_documento_entrada;
+        id_string = "id_documento_entrada"
+        $.each(dataListado,function(indexList,valueList)
+        {
+            $.each(valueList,function(ind,val)
+            {
+                if(ind == id_string)
+                        ( val.indexOf(id_vista) != -1 ) ? ( dataListado[indexList]=value ):  console.log();
+            });
+        });
+        // console.log(dataListado);
+}
+
 function showEdit(editableObj)
 {
-        $(editableObj).css("background","#FFF");
+        // $(editableObj).css("background","#FFF");
+        
 }
 		
 function saveToDatabase(editableObj,column,id)
 {
         //alert("entraste aqui ");
 //			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
+        // alert("");
         $.ajax({
                 url: "../Controller/DocumentosEntradaController.php?Op=Modificar",
                 type: "POST",
                 data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
-                success: function(data){
+                success: function(data)
+                {
 //					$(editableObj).css("background","#FDFDFD");
-                        refresh();
+                                        // $("td").prop("contenteditable",false);
+                                        listarDatos(id);
                 }
         });
 }
@@ -1137,10 +1155,24 @@ function compararFechaAlarma(val,fasignacion,flimite)//listo
         return true;
 }
                 
-function saveComboToDatabase(column,id)
+function saveComboToDatabase(Obj,column,id_documento_entrada)
 {
-        id_documento_entrada=id;
-        cualmodificar=column;
+        val=$(Obj).prop('value');
+        $.ajax({
+                url: "../Controller/DocumentosEntradaController.php?Op=Modificar",
+                type: "POST",
+                data:'column='+column+'&editval='+val+'&id='+id_documento_entrada,
+                success: function(data)
+                {
+                        (data==true)?(  swalSuccess("Modificado"), listarDatos(id_documento_entrada) ):console.log();
+                        
+                },
+                error:function()
+                {
+                        swalError("Error en el servidor");
+                }
+        });
+
 }
         
         
