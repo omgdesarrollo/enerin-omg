@@ -3,10 +3,6 @@ session_start();
 require_once '../util/Session.php';
 $Usuario=  Session::getSesion("user");
 ?>
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -46,8 +42,7 @@ $Usuario=  Session::getSesion("user");
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
                 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
                 
-                <script src="https://unpkg.com/ag-grid-enterprise@18.1.1/dist/ag-grid-enterprise.min.js"></script>
-                
+               
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <script src="../../js/fSeguimientoEntradas.js" type="text/javascript"></script>	 
                 

@@ -16,3 +16,11 @@ function showArbol(dataArbol,dataIds){
 
   
 }
+
+
+
+
+
+
+
+

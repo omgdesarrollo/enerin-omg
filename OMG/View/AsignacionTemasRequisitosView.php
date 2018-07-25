@@ -531,20 +531,6 @@ function evaluarToolbarSeccionB(id)
         });
     }
     
-//    function obtenerTema(id)
-//    {
-//       $.ajax({
-//           url:'../Controller/TemasController.php?Op=ListarHijos',
-//           type:'POST',
-//           data:'ID='+id,
-//           success:function(data)
-//           {   
-////               construirSubDirectorio(data.datosHijos);
-//               construirDetalleSeleccionado(data.detalles,id);
-//           }
-//       });
-//    }
-    
 myLayout.cells("c").attachObject("contenidoDetalles");
     
     function construirDetalleSeleccionado(data,id)
@@ -605,9 +591,37 @@ console.log("d");
         });
     
     }
+    
+    
     function construirDetalles(d){    
         $("#contenidoDetalles").html(d);
     }
+    
+    function obtenerDatosParaArbol()
+    {
+        $.ajax({
+            url:'../Controller/TemasController.php?Op=Listar',
+            success:function(data)
+            { 
+//                alert("tiene algo el arbol");
+             contruirElArbol(data);   
+//             load(2);
+             
+            },error:function (){
+//                alert("entro en el erro");
+            }
+        });
+    }
+
+function contruirElArbol(dataArbol)
+    {
+        myTree.deleteChildItems(0);
+        if(dataArbol.length>0){
+        myTree.parse(dataArbol, "jsarray");
+        }
+    }
+    
+    
     
         </script>      
 </body>
