@@ -833,16 +833,26 @@
         sorting: true,
         paging: true,
         autoload: true,
+        pageSize: 10,
         deleteConfirm:"Estas seguro que desea eliminar la evidencia",
          rowClick: function(args) {
              alert("le has picado "+args);
+//             console.log(args);
+                    alert("este es el id de evidencia seleccionado"+args["item"].id_evidencia);
              
 //            showDetailsDialog("Edit", args.item);
         },
         data: datosF,
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields: [
-        { name: "id_evidencia", type: "text", width: 28, validate: "required" },
+        {
+        headerTemplate: function() {
+        return $("<button>").attr("type", "button").text("Delete")
+            .on("click", function () {
+                deleteSelectedItems();
+            });
+        },
+        { name: "id_evidencia", textField: "Name", type: "text", width: 28, validate: "required" },
         { name: "no", type: "text", width: 28, validate: "required" },
         { name: "requisito", type: "text", width: 150, validate: "required" },
         { name: "Nombre del Documento", type: "text", width: 150, validate: "required" },
