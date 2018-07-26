@@ -851,6 +851,7 @@
             .on("click", function () {
                 deleteSelectedItems();
             });
+        }
         },
         { name: "id_evidencia", textField: "Name", type: "text", width: 28, validate: "required" },
         { name: "no", type: "text", width: 28, validate: "required" },
