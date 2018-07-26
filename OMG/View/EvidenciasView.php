@@ -34,7 +34,7 @@
                   
     <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
     <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
-    <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>
+    <!--<link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>-->
 
     <!--jquery-->
     <script src="../../js/jquery.js" type="text/javascript"></script>
@@ -55,9 +55,7 @@
    <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>-->
 
    <!-- JSGRID -->
-    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
-    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+   
     <style>
         .jsgrid-header-row>.jsgrid-header-cell
         {
@@ -93,26 +91,7 @@
             color: white; 
         }
 
-        .backgroundTdTable
-        {
-            background: #9aca40;
-        }
-        
-        .backgroundTdTable2
-        {
-            background: #6FB3E0;
-        }
-        
-        .backgroundTdTable3
-        {
-            background: #307ECC;
-        }
-        
-/*        .nuevoTdTable
-        {
-            border-bottom: 1px solid gold;
-            background: lightgoldenrodyellow;
-        }*/
+ 
          .modal-lg{width: 100%;}
         </style>
 </head>
@@ -402,16 +381,43 @@
     var si_hay_cambio=false;
     dataRegistro="";
     dataListado=[];
+    dataTodo=[];
+//    $("#jsGrid").jsGrid({
+//        width: "100%",
+//        height: "200px",
+//        heading: true,
+//        sorting: true,
+//        paging: true,
+//        data: [],
+//        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+//        fields: [
+//            { name: "no", type: "text", width: 80, validate: "required" },
+//            { name: "requisito", type: "text", width: 150, validate: "required" },
+//            { name: "Nombre del Documento", type: "text", width: 150, validate: "required" },
+//            { name: "registro", type: "text", width: 150, validate: "required" },
+//            { name: "frecuencia", type: "text", width: 150, validate: "required" },
+//            { name: "clave_documento", type: "text", width: 150, validate: "required" },
+//            { name: "adjuntar_evidencia", type: "text", width: 150, validate: "required" },
+//            { name: "fecha_registro", type: "text", width: 150, validate: "required" },
+//            { name: "usuario", type: "text", width: 80, validate: "required" },
+//            { name: "accion_correctiva", type: "text", width: 80, validate: "required" },
+//            { name: "plan_accion", type: "text", width: 80, validate: "required" },
+//            { name: "desviacion", type: "text", width: 80, validate: "required" },
+//            {name: "validacion", type: "text", width: 80, validate: "required" },
+//            {name: "opcion", type: "text", width: 80, validate: "required" }
+//        ]
+//        });
     $(function()
     {
-
-        listarDatos();
+//alert("ds");
+//        listarDatos();
 //        $.jGrowl("Eliminacion Exitosa", { header: '' })
             
             // $("#IDTEMA_NUEVAEVIDENCIAMODAL").val().onChange(function()
             // {
             //     alert("Cambio al id del tema");
             // });
+             
     });
 
     $('#BTN_CREAR_NUEVAEVIDENCIAMODAL').click(function()
@@ -526,6 +532,7 @@
         ({
             url: '../Controller/EvidenciasController.php?Op=Listar',
             type: 'GET',
+            async:false,
             beforeSend:function()
             {
                 $('#loader').show();
@@ -797,15 +804,21 @@
                     // $.each(datos,function(index,value)
                     // {
                         // (value.validacion_tema_responsable=="true")?status="validado":status="En Proceso";
-                            __datos.push(JSON.parse(reconstruir(todo,value,index++)));
+                           
+                        __datos.push(JSON.parse(reconstruir(todo,value,index++)));
+//                            construir(__datos);
                     // });
                   }
                 });
+//                dataTodo = __datos;
         });
+//        dataTodo = __datos;
         console.log(__datos);
         // $('#bodyTable').html(tempData);
         // $('#loader').hide();
-        construir(__datos);
+       construir((__datos.length==0)?[]:__datos);
+
+//construirGrid(__datos);
         moverA();
     }
 
@@ -821,15 +834,22 @@
         data: datosF,
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields: [
-            // { name: "No", type: "text", width: 80, validate: "required" },
-            // { name: "Clave del Documento", type: "text", width: 150, validate: "required" },
-            // { name: "Nombre del Documento", type: "text", width: 150, validate: "required" },
-            // { name: "Responsable del Documento", type: "text", width: 150, validate: "required" },
-            // { name: "Tema", type: "text", width: 150, validate: "required" },
-            // { name: "Requisitos", type: "text", width: 150, validate: "required" },
-            // { name: "Registros", type: "text", width: 150, validate: "required" },
-            // { name: "Status", type: "text", width: 150, validate: "required" }
-            { name: "accion_correctiva", type: "text", width: 80, validate: "required" }
+        { name: "no", type: "text", validate: "required" },
+        { name: "requisito", type: "text", validate: "required" },
+        { name: "Nombre del Documento", type: "text", validate: "required" },
+        { name: "registro", type: "text", validate: "required" },
+        { name: "frecuencia", type: "text", validate: "required" },
+        { name: "clave_documento", type: "text", validate: "required" },
+        { name: "adjuntar_evidencia", type: "text", validate: "required" },
+        { name: "fecha_registro", type: "text", validate: "required" },
+        { name: "usuario", type: "text", validate: "required" },
+        { name: "accion_correctiva", type: "text", validate: "required" },
+        { name: "plan_accion", type: "text", validate: "required" },
+        { name: "desviacion", type: "text", validate: "required" },
+        {name: "validacion", type: "text", validate: "required" },
+        {name: "opcion", type: "text", validate: "required" }
+    ]
+            
 // adjuntar_evidencia:
 // clave_documento:
 // desviacion:
@@ -841,7 +861,6 @@
 // requisito:
 // usuario:
 // validacion:
-        ]
         });
     }
 
@@ -1088,7 +1107,7 @@
                 
                 if(value.responsable=="1")
                 {                    
-                    tempData += "\"validacion\":\"<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onclick='validarEvidencia(this,'evidencias','validacion_supervisor','id_evidencias',"+value.id_evidencias+","+value.id_usuario+")+'>";
+                    tempData += "\"validacion\":\"<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onclick='validarEvidencia(this,'evidencias','validacion_supervisor','id_evidencias',"+value.id_evidencias+","+value.id_usuario+")'>";
                     if(value.validacion_supervisor=="true")
                         tempData += yesCheck+"</button>\",";
                     else
@@ -1104,7 +1123,7 @@
                     else
                     {
                         tempData += "\"validacion\":\"<button style='font-size:x-large;color:#39c;background:transparent;border:none;'  onClick='swalInfo(\'Aun no validado\')'>";
-                        tempData += noCheck+"</button>\"";
+                        tempData += noCheck+"</button>\",";
                     }
                 }
             });
@@ -1125,10 +1144,12 @@
                     else
                         tempData += "\"opcion\":\"\"";
 
-            }
+            }else
+            tempData += "\"opcion\":\"\"";
             // if(carga==0)
             // tempData += "</tr>";
         tempData +="}";
+        console.log(tempData);
         return tempData;
     }
 
@@ -1155,6 +1176,7 @@
     // }
     function validarEvidencia(checkbox,tabla,column,context,id,idPara)
     {
+       
         no = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true' onclick=\"validarEvidencia(this,'evidencias','validacion_supervisor','id_evidencias',"+id+","+idPara+")\"></i>";
         yes = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true' onclick=\"validarEvidencia(this,'evidencias','validacion_supervisor','id_evidencias',"+id+","+idPara+")\"></i>";
         id_validacion_documento=id;
@@ -1573,7 +1595,10 @@
         setTimeout(function(){swal.close();$('#agregarUsuario .close').click()},1500);
         $('#loader').hide();
     }
-     listarDatosGrid();
+//    listarDatosGrid();
+//    construirGrid(dataTodo);
+    listarDatos();
+//      construir(dataTodo);
     function cargarprogram(v,validado)
     {
 //    alert("el valor de la evidencia es "+v);

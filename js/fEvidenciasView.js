@@ -10,7 +10,7 @@ function listarDatosGrid(){
             $.each(r,function(index,value){
 //              (value.validacion_tema_responsable=="true")?status="validado":status="En Proceso";
                __datos.push({
-               "No":value.contador,
+               "No":index++,
                "Requisito":"",
                "Registro":"",
                "Frecuencia":"",
@@ -36,8 +36,10 @@ function listarDatosGrid(){
 
 function construirGrid(datosF)
 {
-    $("#listadatosGrid").html("");
-    $("#listadatosGrid").jsGrid({
+    console.log("A"+datosF);
+    
+    $("#jsGrid").html("");
+    $("#jsGrid").jsGrid({
     width: "100%",
     height: "200px",
     heading: true,
