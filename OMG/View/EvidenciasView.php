@@ -40,13 +40,32 @@
     <script src="../../js/jquery.js" type="text/javascript"></script>
     <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
     
+    
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+
+    
     <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
+    <script src="../../js/fEvidenciasView.js" type="text/javascript"></script>
+      <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
     <!--<script src="../../js/jquery.js" type="text/javascript"></script>-->
 
 <!--<link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
    <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>-->
+
+   <!-- JSGRID -->
+   
     <style>
-        
+        .jsgrid-header-row>.jsgrid-header-cell
+        {
+                background-color:#307ECC ;      /* orange */
+                font-family: "Roboto Slab";
+                font-size: 1.2em;
+                color: white;
+                font-weight: normal;
+        }
+
         .modal-body{
         color:#888;
         max-height: calc(100vh - 110px);
@@ -71,61 +90,9 @@
             width: 120px; 
             color: white; 
         }
-/*        .table-fixed-header{
-            display: table;  1 
-            position: relative;
-            padding-top: calc(~'2.5em + 2px');  2 
-    
-            table{
-                margin: 0;
-                margin-top: calc(~"-2.5em - 2px");  2 
-            }
-            thead th{
-                white-space: nowrap;
-                &:before{
-                    content: attr(data-header);
-                    position: absolute;
-                    top: 0;
-                    padding: .5em 1em;  3 
-                    margin-left: -1em;  4 
-                }
-            }
-        }*/
-/*        .table-container {
-            max-height: 70vh;  5 
-            overflow-y: auto;  5 
-            &:before{
-                content: '';
-                position: absolute;
-                left: 0;
-                right: 0;
-                top: 0;
-                min-height: 2.5em;              6 
-                border-bottom: 2px solid #DDD;  6 
-                background: #f1f1f1;            6 
-            }
-        }*/
-        .backgroundTdTable
-        {
-            background: #9aca40;
-        }
-        
-        .backgroundTdTable2
-        {
-            background: #6FB3E0;
-        }
-        
-        .backgroundTdTable3
-        {
-            background: #307ECC;
-        }
-        
-/*        .nuevoTdTable
-        {
-            border-bottom: 1px solid gold;
-            background: lightgoldenrodyellow;
-        }*/
-        
+
+ 
+         .modal-lg{width: 100%;}
         </style>
 </head>
 <!-- <body> -->
@@ -139,9 +106,9 @@
         else
             $accion = -1;
 
-        $titulosTable = 
-            array("No.","Requisito","Registro","Frecuencia","Clave Documento",
-                "Adjuntar Evidencia","Fecha de Registro","Usuario","Acción Correctiva","Plan de Acción","Desviación","Validación","Opcion");
+        // $titulosTable = 
+            // array("No.","Requisito","Registro","Frecuencia","Clave Documento",
+            //     "Adjuntar Evidencia","Fecha de Registro","Usuario","Acción Correctiva","Plan de Acción","Desviación","Validación","Opcion");
     ?>
     
     <div id="headerFiltros" style="position: fixed;">
@@ -191,8 +158,8 @@
                 </tbody>
             </table>-->
     
-    <!--<div class="container">-->
-    <table class="table table-bordered table-striped header_fijo" id="idTable">
+    <div id="jsGrid"></div>
+    <!-- <table class="table table-bordered table-striped header_fijo" id="idTable">
         <thead>
             <tr>
                 <th class="table-headert" colspan="5" style="background:#9aca40"></td>
@@ -219,7 +186,7 @@
         <tbody class="hideScrollBar" id="bodyTable" style="position: absolute">             
         </tbody>
         
-    </table>
+    </table> -->
     <!--</div>-->
     
 
@@ -320,7 +287,7 @@
 
 <!-- Inicio de Seccion Modal Archivos-->
 <div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog " role="document">
         <!-- <div id="loaderModalMostrar"></div> -->
 		<div class="modal-content">
                         
@@ -365,9 +332,35 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal draggable fade" id="evidenciasPrueba" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+        <!-- <div id="loaderModalMostrar"></div> -->
+		<div class="modal-content">                
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title" id="myModalLabelMostrarRegistros">Lista Registros</h4>
+        </div>
+
+        <div class="modal-body">
+            <div id="listadatosGrid"></div>
+        </div> 
+      </div> 
+    </div> 
+</div> 
+
+
+  <button onClick="" type="button" 
+        class="btn btn-success" data-toggle="modal" data-target="#evidenciasPrueba">
+            demostracion
+        </button>
+
+
+
 <!--cierre del modal Mensaje-->
 <script>
-
+   
     // var data="";
     // var dataTemp="";
     months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
@@ -388,16 +381,43 @@
     var si_hay_cambio=false;
     dataRegistro="";
     dataListado=[];
+    dataTodo=[];
+//    $("#jsGrid").jsGrid({
+//        width: "100%",
+//        height: "200px",
+//        heading: true,
+//        sorting: true,
+//        paging: true,
+//        data: [],
+//        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+//        fields: [
+//            { name: "no", type: "text", width: 80, validate: "required" },
+//            { name: "requisito", type: "text", width: 150, validate: "required" },
+//            { name: "Nombre del Documento", type: "text", width: 150, validate: "required" },
+//            { name: "registro", type: "text", width: 150, validate: "required" },
+//            { name: "frecuencia", type: "text", width: 150, validate: "required" },
+//            { name: "clave_documento", type: "text", width: 150, validate: "required" },
+//            { name: "adjuntar_evidencia", type: "text", width: 150, validate: "required" },
+//            { name: "fecha_registro", type: "text", width: 150, validate: "required" },
+//            { name: "usuario", type: "text", width: 80, validate: "required" },
+//            { name: "accion_correctiva", type: "text", width: 80, validate: "required" },
+//            { name: "plan_accion", type: "text", width: 80, validate: "required" },
+//            { name: "desviacion", type: "text", width: 80, validate: "required" },
+//            {name: "validacion", type: "text", width: 80, validate: "required" },
+//            {name: "opcion", type: "text", width: 80, validate: "required" }
+//        ]
+//        });
     $(function()
     {
-
-        listarDatos();
+//alert("ds");
+//        listarDatos();
 //        $.jGrowl("Eliminacion Exitosa", { header: '' })
             
             // $("#IDTEMA_NUEVAEVIDENCIAMODAL").val().onChange(function()
             // {
             //     alert("Cambio al id del tema");
             // });
+             
     });
 
     $('#BTN_CREAR_NUEVAEVIDENCIAMODAL').click(function()
@@ -512,6 +532,7 @@
         ({
             url: '../Controller/EvidenciasController.php?Op=Listar',
             type: 'GET',
+            async:false,
             beforeSend:function()
             {
                 $('#loader').show();
@@ -717,29 +738,29 @@
     //     }
     // }
 
-    function filterTableAsunt()
-    {
-        var input, filter, table, tr, td, i;
-        input = document.getElementById("idInputAsunto");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("idTable");
-        tr = table.getElementsByTagName("tr");
+    // function filterTableAsunt()
+    // {
+    //     var input, filter, table, tr, td, i;
+    //     input = document.getElementById("idInputAsunto");
+    //     filter = input.value.toUpperCase();
+    //     table = document.getElementById("idTable");
+    //     tr = table.getElementsByTagName("tr");
 
-        for (i = 0; i < tr.length; i++)
-        {
-            td = tr[i].getElementsByTagName("td")[4];
-            if (td)
-            {
-                if (td.innerHTML.toUpperCase().indexOf(filter) > -1)
-                {
-                    tr[i].style.display = "";
-                }else
-                {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
+    //     for (i = 0; i < tr.length; i++)
+    //     {
+    //         td = tr[i].getElementsByTagName("td")[4];
+    //         if (td)
+    //         {
+    //             if (td.innerHTML.toUpperCase().indexOf(filter) > -1)
+    //             {
+    //                 tr[i].style.display = "";
+    //             }else
+    //             {
+    //                 tr[i].style.display = "none";
+    //             }
+    //         }
+    //     }
+    // }
 //    function getDataTable()
 //    {        
 //        // $('#bodyTable').html(data);
@@ -754,13 +775,14 @@
 //            }
 //        });
 //    }
-    
-    function reconstruirTable(data)
+
+    function reconstruirTable(datos)
     {
-        cargaTodo=0;
-        tempData = "";
-        contador=1;
-        $.each(data,function(index,value)
+        // cargaTodo=0;
+        // tempData = "";
+        // contador=1;
+        __datos=[];
+        $.each(datos,function(index,value)
         {
             URL = 'filesEvidenciaDocumento/'+value.id_evidencias;
             $.ajax({
@@ -775,16 +797,76 @@
                   async: false,
                   success: function(todo)
                   {
-                    tempData += reconstruir(todo,value,cargaTodo,contador);
-                    contador++;
+                    // tempData += reconstruir(todo,value,cargaTodo,contador);
+                    // console.log("["+tempData+"]");
+                    // console.log(JSON.parse("["+tempData+"]"));
+                    // contador++;
+                    // $.each(datos,function(index,value)
+                    // {
+                        // (value.validacion_tema_responsable=="true")?status="validado":status="En Proceso";
+                           
+                        __datos.push(JSON.parse(reconstruir(todo,value,index++)));
+//                            construir(__datos);
+                    // });
                   }
                 });
+//                dataTodo = __datos;
         });
-        $('#bodyTable').html(tempData);
-        $('#loader').hide();
+//        dataTodo = __datos;
+        console.log(__datos);
+        // $('#bodyTable').html(tempData);
+        // $('#loader').hide();
+       construir((__datos.length==0)?[]:__datos);
+
+//construirGrid(__datos);
         moverA();
     }
 
+    function construir(datosF)
+    {
+        $("#jsGrid").html("");
+        $("#jsGrid").jsGrid({
+        width: "100%",
+        height: "300px",
+        heading: true,
+        sorting: true,
+        paging: true,
+        data: datosF,
+        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+        fields: [
+        { name: "no", type: "text", width: 28, validate: "required" },
+        { name: "requisito", type: "text", width: 150, validate: "required" },
+        { name: "Nombre del Documento", type: "text", width: 150, validate: "required" },
+        { name: "registro", type: "text", width: 150, validate: "required" },
+        { name: "frecuencia", type: "text", width: 120, validate: "required" },
+        { name: "clave_documento", type: "text", width: 128, validate: "required" },
+        { name: "adjuntar_evidencia", type: "text", width: 140, validate: "required" },
+        { name: "fecha_registro", type: "text", width: 120, validate: "required" },
+        { name: "usuario", type: "text", width: 150, validate: "required" },
+        { name: "accion_correctiva", type: "text", width: 130, validate: "required" },
+        { name: "plan_accion", type: "text", width: 150, validate: "required" },
+        { name: "desviacion", type: "text", width: 120, validate: "required" },
+        {name: "validacion", type: "text", width: 200, validate: "required" },
+        {name: "opcion", type: "text", width: 90, validate: "required" }
+    ]
+            
+// adjuntar_evidencia:
+// clave_documento:
+// desviacion:
+// fecha_registro:
+// frecuencia:
+// no:
+// plan_accion:
+// registro:
+// requisito:
+// usuario:
+// validacion:
+        });
+    }
+
+    // function reconstruirTable(data)
+    // {
+    // }
 
     function reconstruirRow(id)
     {
@@ -828,7 +910,7 @@
         });
     }
 
-    function reconstruir(todo,value,carga,contador)
+    function reconstruir2(todo,value,carga,contador)
     {
         tempData = "";
         tempArchivo="";
@@ -842,11 +924,11 @@
             nametmp="";
             if(carga==0)
             tempData += "<tr name='registro_"+value.id_evidencias+"' id='registro_"+value.id_evidencias+"'>";
-            tempData += "<td class='nuevoTdTable' style='width:5%'>"+contador+"</td>";
-            tempData += "<td class='nuevoTdTable' style='width:5%'>"+value.requisito+"</td>";
-            tempData += "<td class='nuevoTdTable' style='width:5%'>"+value.registro+"</td>";
-            tempData += "<td class='nuevoTdTable' style='width:10%'>"+value.frecuencia+"</td>";
-            tempData += "<td class='nuevoTdTable' style='width:10%'>"+value.clave_documento+"</td>";
+            tempData += "<td class='nuevoTdTable'  width='5%'>"+contador+"</td>";
+            tempData += "<td class='nuevoTdTable' width='5%'>"+value.requisito+"</td>";
+            tempData += "<td class='nuevoTdTable' width='5%'>"+value.registro+"</td>";
+            tempData += "<td class='nuevoTdTable' width='10%'>"+value.frecuencia+"</td>";
+            tempData += "<td class='nuevoTdTable' width='10%'>"+value.clave_documento+"</td>";
             // tempData += "<td class='nuevoTdTable'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td>";
             // tempData += "<td class='nuevoTdTable' style='font-size: -webkit-xxx-large;'><button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success'";
             // tempData += "data-toggle='modal' data-target='#mostrarRegistrosModal'>";
@@ -957,6 +1039,120 @@
         // });
         return tempData;
     }
+    
+    function reconstruir(todo,value,contador)//listo
+    {
+        // tempData = "";
+        tempData = "{";
+        // contador==1?tempData = "{":tempData = "{";
+        tempArchivo="";
+        noCheck = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true'></i>";
+        yesCheck = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true'></i>";
+        noMsj = "<i class='fa fa-file-o' style='font-size: xx-large;color:#6FB3E0;cursor:pointer' aria-hidden='true'></i>";
+        yesMsj = "<i class='ace-icon fa fa-file-text-o icon-animated-bell' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true'></i>";
+        denegado = "<i class='fa fa-ban' style='font-size: xx-large;color:red;' aria-hidden='true'></i>";
+            nametmp="";
+            // if(carga==0)
+            // tempData += "<tr name='registro_"+value.id_evidencias+"' id='registro_"+value.id_evidencias+"'>";
+            tempData += "\"id_evidencia\":\""+value.id_evidencias+"\",";
+            tempData += "\"no\":"+contador+",";
+            tempData += "\"requisito\":\""+value.requisito+"\",";
+            tempData += "\"registro\":\""+value.registro+"\",";
+            tempData += "\"frecuencia\":\""+value.frecuencia+"\",";
+            tempData += "\"clave_documento\":\""+value.clave_documento+"\",";
+            
+            tempData += "\"adjuntar_evidencia\":\"<button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
+            tempData += "type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
+            tempData += "<i class='fa fa-cloud-upload' style='font-size: 15px'></i> Adjuntar</button>\",";
+            $.each(todo[0],function(index2,value2)
+            {
+                tempArchivo="a";
+                nametmp = value2.split("^-O-^-M-^-G-^");
+                fecha = new Date(nametmp[0]*1000);
+                fecha = fecha.getDay() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+                tempData += "\"fecha_registro\":\""+fecha+"\",";
+
+                tempData += "\"usuario\":\""+value.usuario+"\",";
+
+                tempData += "\"accion_correctiva\":\"<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='MandarNotificacion("+value.id_responsable+","+value.responsable+",\'"+value.accion_correctiva+"\',"+value.id_evidencias+","+value.validador+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
+                if(value.accion_correctiva!="")
+                {
+                    // tempData += "\"accion_correctiva\":"+yesMsj;
+                    tempData += noMsj+"</button>\",";
+                    // tempData += " data-toggle='modal' data-target='#MandarNotificacionModal'></i>";
+                }
+                else
+                {
+                    // tempData += "\"accion_correctiva\":<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='MandarNotificacion("+value.id_responsable+","+value.responsable+",\'"+value.accion_correctiva+"\',"+value.id_evidencias+","+value.validador+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
+                    tempData += noMsj+"</button>\",";
+                }
+                // tempData += " onClick='MandarNotificacion("+value.id_responsable+","+value.responsable+",\""+value.accion_correctiva+"\","+value.id_evidencias+","+value.validador+");' data-toggle='modal' data-target='#MandarNotificacionModal'></i>,";
+                
+                tempData += "\"plan_accion\":\"<button id='btn_cargaGantt' class='btn btn-info' onClick='cargarprogram("+value.id_evidencias+","+value.validacion_supervisor+");'>";
+                if(value.validacion_supervisor=="true")
+                    tempData += "Vizualizar Programa";
+                else
+                    tempData += "Cargar Programa";
+                
+                tempData += "</button>\",";
+
+                tempData += "\"desviacion\":\"<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='MandarNotificacionDesviacion("+value.id_usuario+","+value.responsable+",\'"+value.desviacion+"\',"+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
+                if(value.desviacion!="")
+                {
+                    tempData += yesMsj+"</button>\",";
+                }
+                else
+                {
+                    tempData += noMsj+"</button>\",";
+                }
+                
+                if(value.responsable=="1")
+                {                    
+                    tempData += "\"validacion\":\"<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onclick='validarEvidencia(this,'evidencias','validacion_supervisor','id_evidencias',"+value.id_evidencias+","+value.id_usuario+")'>";
+                    if(value.validacion_supervisor=="true")
+                        tempData += yesCheck+"</button>\",";
+                    else
+                        tempData += noCheck+"</button>\",";
+                }
+                else
+                {
+                    if(value.validacion_supervisor=='true')
+                    {
+                        tempData += "\"validacion\":\"<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='swalInfo(\'Validado por el responsable\')'>";
+                        tempData += yesCheck+"</button>\",";
+                    }
+                    else
+                    {
+                        tempData += "\"validacion\":\"<button style='font-size:x-large;color:#39c;background:transparent;border:none;'  onClick='swalInfo(\'Aun no validado\')'>";
+                        tempData += noCheck+"</button>\",";
+                    }
+                }
+            });
+            if(tempArchivo=="")
+            {
+                    tempData += "\"fecha_registro\":\"\",";
+                    tempData += "\"usuario\":\""+value.usuario+"\",";
+                    tempData += "\"accion_correctiva\":\"\",";
+                    tempData += "\"plan_accion\":\"\",";
+                    tempData += "\"desviacion\":\"\",";
+                    tempData += "\"validacion\":\"\",";
+                    if(value.responsable!="1" || value.validador==1)
+                    {                        
+                        tempData += "\"opcion\":\"<button style='font-size:x-large;color:#39c;background:transparent;border:none;'";
+                        tempData += "onclick='eliminarEvidencia("+value.id_evidencias+");'>";
+                        tempData += "<i class='fa fa-trash'></i></button>\"";
+                    }
+                    else
+                        tempData += "\"opcion\":\"\"";
+
+            }else
+            tempData += "\"opcion\":\"\"";
+            // if(carga==0)
+            // tempData += "</tr>";
+        tempData +="}";
+        console.log(tempData);
+        return tempData;
+    }
 
     function eliminarEvidencia(id_evidencias)
     {
@@ -981,6 +1177,7 @@
     // }
     function validarEvidencia(checkbox,tabla,column,context,id,idPara)
     {
+       
         no = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true' onclick=\"validarEvidencia(this,'evidencias','validacion_supervisor','id_evidencias',"+id+","+idPara+")\"></i>";
         yes = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true' onclick=\"validarEvidencia(this,'evidencias','validacion_supervisor','id_evidencias',"+id+","+idPara+")\"></i>";
         id_validacion_documento=id;
@@ -1399,7 +1596,10 @@
         setTimeout(function(){swal.close();$('#agregarUsuario .close').click()},1500);
         $('#loader').hide();
     }
-    
+//    listarDatosGrid();
+//    construirGrid(dataTodo);
+    listarDatos();
+//      construir(dataTodo);
     function cargarprogram(v,validado)
     {
 //    alert("el valor de la evidencia es "+v);
@@ -1407,6 +1607,12 @@
     window.location.href="GanttEvidenciaView.php?id_evid="+v;
     
     }
+    
+    
+    
+    
+    
+    
     
 </script>
 
@@ -1501,3 +1707,6 @@
     <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
 </body>
 </html>
+
+
+

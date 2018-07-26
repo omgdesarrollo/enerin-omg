@@ -201,7 +201,7 @@ class EvidenciasDAO
             JOIN asignacion_tema_requisito_requisitos tbasignacion_trr ON tbasignacion_trr.id_requisito = tbrequisitos.id_requisito
             JOIN asignacion_tema_requisito tbasignacion_tr ON tbasignacion_tr.id_asignacion_tema_requisito = tbasignacion_trr.id_asignacion_tema_requisito
             JOIN temas tbtemas ON tbasignacion_tr.id_tema = tbtemas.id_tema
-            WHERE tbregistros.id_documento <> -1 AND tbtemas.id_tema = $ID_TEMA AND LOWER(tbregistros.registro) LIKE '%$CADENA%'";
+            WHERE  tbtemas.id_tema = $ID_TEMA AND LOWER(tbregistros.registro) LIKE '%$CADENA%'";
 
             $db= AccesoDB::getInstancia();
             $result= $db->executeQuery($query);

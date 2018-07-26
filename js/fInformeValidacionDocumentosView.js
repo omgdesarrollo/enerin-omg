@@ -77,6 +77,7 @@ function construir(datosF)
 }
 function listarDatos()
 {
+    
         __datos=[];
         contador=1;
         datosParamAjaxValues={};
