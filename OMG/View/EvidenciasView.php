@@ -824,6 +824,7 @@
 
     function construir(datosF)
     {
+        console.log(datosF);
         $("#jsGrid").html("");
         $("#jsGrid").jsGrid({
         width: "100%",
@@ -835,7 +836,7 @@
         autoload: true,
         pageSize: 10,
         deleteConfirm:"Estas seguro que desea eliminar la evidencia",
-         rowClick: function(args) {
+        rowClick: function(args) {
              alert("le has picado "+args);
 //             console.log(args);
                     alert("este es el id de evidencia seleccionado"+args["item"].id_evidencia);
@@ -845,14 +846,7 @@
         data: datosF,
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields: [
-        {
-        headerTemplate: function() {
-        return $("<button>").attr("type", "button").text("Delete")
-            .on("click", function () {
-                deleteSelectedItems();
-            });
-        }
-        },
+        
         { name: "id_evidencia", textField: "Name", type: "text", width: 28, validate: "required" },
         { name: "no", type: "text", width: 28, validate: "required" },
         { name: "requisito", type: "text", width: 150, validate: "required" },
@@ -869,11 +863,17 @@
         {name: "validacion", type: "text", width: 200, validate: "required" },
         {name: "opcion", type: "text", width: 90, validate: "required" },
         { type: "control" }
-    ],
-    deleteConfirm: function(item) {
-            return "El no \"" + item.no + "\" Probablemente se eliminara?";
-        }
-            
+    ],deleteConfirm: function(item) {
+        res="undefined"
+        res=confirmarBorrarRegistroEvidencia();
+//        if(item.opcion==""){
+//            
+//        }else{
+//        }
+        
+//        return confirm("Are you sure?");
+     }
+  
 // adjuntar_evidencia:
 // clave_documento:
 // desviacion:
@@ -886,41 +886,35 @@
 // usuario:
 // validacion:
         });
-        
-//    var showDetailsDialog = function(dialogType, client) {
-//        $("#name").val(client.Name);
-//        $("#age").val(client.Age);
-//        $("#address").val(client.Address);
-//        $("#country").val(client.Country);
-//        $("#married").prop("checked", client.Married);
-// 
-//        formSubmitHandler = function() {
-//            saveClient(client, dialogType === "Add");
-//        };
-// 
-//        $("#detailsDialog").dialog("option", "title", dialogType + " Client")
-//                .dialog("open");
-//    };
-    
-//    var saveClient = function(client, isNew) {
-//        $.extend(client, {
-//            Name: $("#name").val(),
-//            Age: parseInt($("#age").val(), 10),
-//            Address: $("#address").val(),
-//            Country: parseInt($("#country").val(), 10),
-//            Married: $("#married").is(":checked")
-//        });
-// 
-//        $("#jsGrid").jsGrid(isNew ? "insertItem" : "updateItem", client);
-// 
-//        $("#detailsDialog").dialog("close");
-//    };
+ 
      
     }
 
     // function reconstruirTable(data)
     // {
     // }
+
+function confirmarBorrarRegistroEvidencia(){
+     swal({
+          title: "ELIMINAR",
+          text: "Al eliminar este registro se eliminara toda la evidencia registrada. ¿Desea continuar?",
+          type: "warning",
+          showCancelButton: true,
+          closeOnConfirm: false,
+          showLoaderOnConfirm: true,
+          confirmButtonText: "Eliminar",
+          cancelButtonText: "Cancelar",
+        },function(res){
+            if(res){
+                  swal("","Eliminacion Exitosa","success");
+              }
+              else{
+                 swal("","Error Al Eliminar","Error");
+             }
+        });
+        
+}
+
 
     function reconstruirRow(id)
     {
@@ -1214,7 +1208,8 @@
             data: 'ID_EVIDENCIA='+id_evidencias,
             success:function(eliminado)
             {
-                (eliminado==true)?(swalSuccess("Se elimino la evidencia"),$('#registro_'+id_evidencias).remove()):swalError("No se pudo eliminar");
+//                (eliminado==true)?(swalSuccess("Se elimino la evidencia"),$('#registro_'+id_evidencias).remove()):swalError("No se pudo eliminar");
+                 (eliminado==true)?(swalSuccess("Se elimino la evidencia")):swalError("No se pudo eliminar");
             },
             error:function()
             {
