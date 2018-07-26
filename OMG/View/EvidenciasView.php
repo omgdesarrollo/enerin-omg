@@ -776,6 +776,8 @@
                   success: function(todo)
                   {
                     tempData += reconstruir(todo,value,cargaTodo,contador);
+                    console.log("["+tempData+"]");
+                    console.log(JSON.parse("["+tempData+"]"));
                     contador++;
                   }
                 });
@@ -828,7 +830,7 @@
         });
     }
 
-    function reconstruir(todo,value,carga,contador)
+    function reconstruir2(todo,value,carga,contador)
     {
         tempData = "";
         tempArchivo="";
@@ -955,6 +957,120 @@
             if(carga==0)
             tempData += "</tr>";
         // });
+        return tempData;
+    }
+    jajaja();
+    function jajaja()
+    {
+        
+    }
+    function reconstruir(todo,value,carga,contador)
+    {
+        tempData = "";
+        contador==1?tempData = "{":tempData = ",{";
+        tempArchivo="";
+        noCheck = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true'></i>";
+        yesCheck = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true'></i>";
+        noMsj = "<i class='fa fa-file-o' style='font-size: xx-large;color:#6FB3E0;cursor:pointer' aria-hidden='true'></i>";
+        yesMsj = "<i class='ace-icon fa fa-file-text-o icon-animated-bell' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true'></i>";
+        denegado = "<i class='fa fa-ban' style='font-size: xx-large;color:red;' aria-hidden='true'></i>";
+            nametmp="";
+            // if(carga==0)
+            // tempData += "<tr name='registro_"+value.id_evidencias+"' id='registro_"+value.id_evidencias+"'>";
+            tempData += "\"no\":"+contador+",";
+            tempData += "\"requisito\":\""+value.requisito+"\",";
+            tempData += "\"registro\":\""+value.registro+"\",";
+            tempData += "\"frecuencia\":\""+value.frecuencia+"\",";
+            tempData += "\"clave_documento\":\""+value.clave_documento+"\",";
+            
+            tempData += "\"adjuntar_evidencia\":\"<button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
+            tempData += "type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
+            tempData += "<i class='fa fa-cloud-upload' style='font-size: 15px'></i> Adjuntar</button>\",";
+            $.each(todo[0],function(index2,value2)
+            {
+                tempArchivo="a";
+                nametmp = value2.split("^-O-^-M-^-G-^");
+                fecha = new Date(nametmp[0]*1000);
+                fecha = fecha.getDay() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+                tempData += "\"fecha_registro\":\""+fecha+"\",";
+
+                tempData += "\"usuario\":\""+value.usuario+"\",";
+
+                tempData += "\"accion_correctiva\":\"<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='MandarNotificacion("+value.id_responsable+","+value.responsable+",\'"+value.accion_correctiva+"\',"+value.id_evidencias+","+value.validador+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
+                if(value.accion_correctiva!="")
+                {
+                    // tempData += "\"accion_correctiva\":"+yesMsj;
+                    tempData += noMsj+"</button>\",";
+                    // tempData += " data-toggle='modal' data-target='#MandarNotificacionModal'></i>";
+                }
+                else
+                {
+                    // tempData += "\"accion_correctiva\":<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='MandarNotificacion("+value.id_responsable+","+value.responsable+",\'"+value.accion_correctiva+"\',"+value.id_evidencias+","+value.validador+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
+                    tempData += noMsj+"</button>\",";
+                }
+                // tempData += " onClick='MandarNotificacion("+value.id_responsable+","+value.responsable+",\""+value.accion_correctiva+"\","+value.id_evidencias+","+value.validador+");' data-toggle='modal' data-target='#MandarNotificacionModal'></i>,";
+                
+                tempData += "\"plan_accion\":\"<button id='btn_cargaGantt' class='btn btn-info' onClick='cargarprogram("+value.id_evidencias+","+value.validacion_supervisor+");'>";
+                if(value.validacion_supervisor=="true")
+                    tempData += "Vizualizar Programa";
+                else
+                    tempData += "Cargar Programa";
+                
+                tempData += "</button>\",";
+
+                tempData += "\"desviacion\":\"<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='MandarNotificacionDesviacion("+value.id_usuario+","+value.responsable+",\'"+value.desviacion+"\',"+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
+                if(value.desviacion!="")
+                {
+                    tempData += yesMsj+"</button>\",";
+                }
+                else
+                {
+                    tempData += noMsj+"</button>\",";
+                }
+                
+                if(value.responsable=="1")
+                {                    
+                    tempData += "\"validacion\":\"<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onclick='validarEvidencia(this,'evidencias','validacion_supervisor','id_evidencias',"+value.id_evidencias+","+value.id_usuario+")+'>";
+                    if(value.validacion_supervisor=="true")
+                        tempData += yesCheck+"</button>\",";
+                    else
+                        tempData += noCheck+"</button>\",";
+                }
+                else
+                {
+                    if(value.validacion_supervisor=='true')
+                    {
+                        tempData += "\"validacion\":\"<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='swalInfo(\'Validado por el responsable\')'>";
+                        tempData += yesCheck+"</button>\",";
+                    }
+                    else
+                    {
+                        tempData += "\"validacion\":\"<button style='font-size:x-large;color:#39c;background:transparent;border:none;'  onClick='swalInfo(\'Aun no validado\')'>";
+                        tempData += noCheck+"</button>\"";
+                    }
+                }
+            });
+            if(tempArchivo=="")
+            {
+                    tempData += "\"fecha_registro\":\"\",";
+                    tempData += "\"usuario\":\""+value.usuario+"\",";
+                    tempData += "\"accion_correctiva\":\"\",";
+                    tempData += "\"plan_accion\":\"\",";
+                    tempData += "\"desviacion\":\"\",";
+                    tempData += "\"validacion\":\"\",";
+                    if(value.responsable!="1" || value.validador==1)
+                    {                        
+                        tempData += "\"opcion\":\"<button style='font-size:x-large;color:#39c;background:transparent;border:none;'";
+                        tempData += "onclick='eliminarEvidencia("+value.id_evidencias+");'>";
+                        tempData += "<i class='fa fa-trash'></i></button>\"";
+                    }
+                    else
+                        tempData += "\"opcion\":\"\"";
+
+            }
+            // if(carga==0)
+            // tempData += "</tr>";
+        tempData +="}";
         return tempData;
     }
 
