@@ -138,9 +138,18 @@ class AsignacionTemaRequisitoModel {
             $rec= $dao->insertarRequisito($requisito,$penalizacion);
             $ID_REQUISITO= $dao->obtenerMaximoRequisito();
             $resultado= $dao->insertarRequisitoTablaCompuesta($ID_ASIGNACION, $ID_REQUISITO);
+//            echo "valor rec ".json_encode($rec);
+                
+            $datoLista="";
+            if($rec==true && $resultado==true)
+            {
+               $datoLista=true; 
+            }else{
+               $datoLista=false; 
+            }
+//            echo "valor final: ".json_encode($datoLista);
+            return $datoLista;
             
-            
-            return $resultado;
         } catch (Exception $ex)
         {
             throw $ex;
@@ -157,7 +166,16 @@ class AsignacionTemaRequisitoModel {
             $ID_REGISTRO= $dao->obtenerMaximoRegistro();
             $resultado= $dao->insertarRegistroTablaCompuesta($ID_REQUISITO, $ID_REGISTRO);
             
-            return $resultado;
+            $datoRegistro="";
+            if($rec==true && $resultado==true)
+            {
+                $datoRegistro=true;
+            }else{
+                $datoRegistro=false;
+            }
+            
+//            echo "valor final: ".json_encode($datoRegistro);
+            return $datoRegistro;
         } catch (Exception $ex)
         {
             throw $ex;
@@ -201,19 +219,6 @@ class AsignacionTemaRequisitoModel {
         }
     }
     
-    public function eliminarNodoRegistro($ID_REGISTRO)
-    {
-        try
-        {
-            $dao=new AsignacionTemaRequisitoDAO();
-            $dao->eliminarNodoRegistro($ID_REGISTRO);
-            
-        }catch (Exception $ex)
-        {
-            throw $ex;
-            return false;
-        }
-    }
     
     public function eliminarNodoRequisito($ID_REQUISITO)
     {
@@ -226,6 +231,28 @@ class AsignacionTemaRequisitoModel {
         {
             throw $ex;
             return false;
+        }
+    }
+    
+    public function eliminarNodoRegistro($ID_REGISTRO)
+    {
+        try
+        {    
+            $exito=0;
+            $dao=new AsignacionTemaRequisitoDAO();
+            $evidencia= $dao->obtenerRegistrodeEvidencia($ID_REGISTRO);
+            if($evidencia==0)
+            {
+                $exito= $dao->eliminarNodoRegistro($ID_REGISTRO);
+
+            }
+            
+            return $exito;
+//            echo "Este es el valor: ".json_encode($exito);            
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
         }
     }
 }

@@ -101,7 +101,8 @@ public function insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO,
         
         $db= AccesoDB::getInstancia();
         $lista= $db->executeQueryUpdate($query);
-           
+        
+//        echo "valor lista: ".json_encode($lista);
         return $lista;
         
     } catch (Exception $ex)

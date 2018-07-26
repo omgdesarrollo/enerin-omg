@@ -828,12 +828,31 @@
         $("#jsGrid").jsGrid({
         width: "100%",
         height: "300px",
+        editing: false,
         heading: true,
         sorting: true,
         paging: true,
+        autoload: true,
+        pageSize: 10,
+        deleteConfirm:"Estas seguro que desea eliminar la evidencia",
+         rowClick: function(args) {
+             alert("le has picado "+args);
+//             console.log(args);
+                    alert("este es el id de evidencia seleccionado"+args["item"].id_evidencia);
+             
+//            showDetailsDialog("Edit", args.item);
+        },
         data: datosF,
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields: [
+        {
+        headerTemplate: function() {
+        return $("<button>").attr("type", "button").text("Delete")
+            .on("click", function () {
+                deleteSelectedItems();
+            });
+        },
+        { name: "id_evidencia", textField: "Name", type: "text", width: 28, validate: "required" },
         { name: "no", type: "text", width: 28, validate: "required" },
         { name: "requisito", type: "text", width: 150, validate: "required" },
         { name: "Nombre del Documento", type: "text", width: 150, validate: "required" },
@@ -847,8 +866,12 @@
         { name: "plan_accion", type: "text", width: 150, validate: "required" },
         { name: "desviacion", type: "text", width: 120, validate: "required" },
         {name: "validacion", type: "text", width: 200, validate: "required" },
-        {name: "opcion", type: "text", width: 90, validate: "required" }
-    ]
+        {name: "opcion", type: "text", width: 90, validate: "required" },
+        { type: "control" }
+    ],
+    deleteConfirm: function(item) {
+            return "El no \"" + item.no + "\" Probablemente se eliminara?";
+        }
             
 // adjuntar_evidencia:
 // clave_documento:
@@ -862,6 +885,36 @@
 // usuario:
 // validacion:
         });
+        
+//    var showDetailsDialog = function(dialogType, client) {
+//        $("#name").val(client.Name);
+//        $("#age").val(client.Age);
+//        $("#address").val(client.Address);
+//        $("#country").val(client.Country);
+//        $("#married").prop("checked", client.Married);
+// 
+//        formSubmitHandler = function() {
+//            saveClient(client, dialogType === "Add");
+//        };
+// 
+//        $("#detailsDialog").dialog("option", "title", dialogType + " Client")
+//                .dialog("open");
+//    };
+    
+//    var saveClient = function(client, isNew) {
+//        $.extend(client, {
+//            Name: $("#name").val(),
+//            Age: parseInt($("#age").val(), 10),
+//            Address: $("#address").val(),
+//            Country: parseInt($("#country").val(), 10),
+//            Married: $("#married").is(":checked")
+//        });
+// 
+//        $("#jsGrid").jsGrid(isNew ? "insertItem" : "updateItem", client);
+// 
+//        $("#detailsDialog").dialog("close");
+//    };
+     
     }
 
     // function reconstruirTable(data)
@@ -934,7 +987,7 @@
             // tempData += "data-toggle='modal' data-target='#mostrarRegistrosModal'>";
             // tempData += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i> Ver</button></td>";
             
-            tempData += "<td width='10%'style='font-size: -webkit-xxx-large'><button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
+            tempData += "<td style='font-size: -webkit-xxx-large;width:5% '><button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
             tempData += "type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
             tempData += "<i class='fa fa-cloud-upload' style='font-size: 15px'></i> Adjuntar</button></td>";
             $.each(todo[0],function(index2,value2)
@@ -942,7 +995,7 @@
                 nametmp = value2.split("^-O-^-M-^-G-^");
                 fecha = new Date(nametmp[0]*1000);
                 fecha = fecha.getDay() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-                tempData += "<td width='10%'>"+fecha+"</td>";
+                tempData += "<td style='width:10%'>"+fecha+"</td>";
                 // if(value.clasificacion=="")
                 // {
                 //     tempData += "<td><select class='select'";

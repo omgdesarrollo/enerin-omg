@@ -125,8 +125,10 @@ class AsignacionTemaRequisitoDAO {
                   VALUES('$requisito','$penalizacion')";
           
           $db=  AccesoDB::getInstancia();
-          $db->executeQueryUpdate($query);
+          $lista= $db->executeQueryUpdate($query);      
+//          echo "lista insertar requisitos: ".json_encode($lista);
           
+          return $lista;
         } catch (Exception $ex)
         {
             throw $ex;
@@ -160,7 +162,10 @@ class AsignacionTemaRequisitoDAO {
                     VALUES($ID_ASIGNACION,$ID_REQUISITO)";
             
             $db=  AccesoDB::getInstancia();
-            $db->executeQueryUpdate($query);
+            $lista= $db->executeQueryUpdate($query);
+//            echo "lista insertar requisitos: ".json_encode($lista);
+            
+            return $lista;          
         } catch (Exception $ex)
         {
             throw $ex;
@@ -176,8 +181,10 @@ class AsignacionTemaRequisitoDAO {
                     VALUES ('$registro',$id_documento,'$frecuencia')";
 //            echo "".$query;
             $db=  AccesoDB::getInstancia();
-            $db->executeQueryUpdate($query);
+            $lista= $db->executeQueryUpdate($query);
             
+            
+            return $lista;
         } catch (Exception $ex)
         {
             throw $ex;
@@ -210,7 +217,9 @@ class AsignacionTemaRequisitoDAO {
                     VALUES($ID_REQUISITO,$ID_REGISTRO)";
             
             $db=  AccesoDB::getInstancia();
-            $db->executeQueryUpdate($query);            
+            $lista= $db->executeQueryUpdate($query);
+
+            return $lista;
         } catch (Exception $ex)
         {
             throw $ex;
@@ -289,24 +298,6 @@ public function obtenerDetalles_Reg($value){
 //    }
     
     
-    public function eliminarNodoRegistro($ID_REGISTRO)
-    {
-        try
-        {
-            $query="DELETE FROM registros
-                    WHERE registros.id_registro=$ID_REGISTRO";
-            
-            $db=  AccesoDB::getInstancia();
-            $db->executeQueryUpdate($query);
-            
-        } catch (Exception $ex)
-        {
-            throw $ex;
-            return false;
-        }
-    }
-    
-    
     public function eliminarNodoRequisito($ID_REQUISITO)
     {
         try
@@ -324,4 +315,43 @@ public function obtenerDetalles_Reg($value){
         }
     }
     
+    
+    public function eliminarNodoRegistro($ID_REGISTRO)
+    {
+        try
+        {
+            $query="DELETE FROM registros
+                    WHERE registros.id_registro=$ID_REGISTRO";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista= $db->executeQueryUpdate($query);
+            
+            return $lista;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
+    
+    public function obtenerRegistrodeEvidencia($ID_REGISTRO)
+    {
+        try
+        {
+            $query="SELECT COUNT(*) AS resultado
+                    FROM evidencias tbevidencias
+                    WHERE tbevidencias.id_registro=$ID_REGISTRO";
+            
+            $db= AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+        return $lista[0]['resultado'];
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
 }

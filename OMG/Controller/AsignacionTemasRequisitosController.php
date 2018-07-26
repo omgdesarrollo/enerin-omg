@@ -78,6 +78,7 @@ switch ($Op) {
             $Lista= $model->insertarRegistros($_REQUEST['ID_REQUISITO'],$_REQUEST['REGISTRO'],$_REQUEST['FRECUENCIA'], $_REQUEST['ID_DOCUMENTO']);
             header('Content-type: application/json; charset=utf-8'); 
             echo json_encode($Lista);
+            
             return $Lista;
             
             break;
@@ -108,7 +109,9 @@ switch ($Op) {
 	case 'EliminarRegistro':
 		# code...
             
-            $model->eliminarNodoRegistro($_REQUEST['ID_REGISTRO']);
+            $Lista= $model->eliminarNodoRegistro($_REQUEST['ID_REGISTRO']);
+//            header('Content-type: application/json; charset=utf-8'); 
+            echo $Lista;
 		break;
             
         case 'EliminarRequisito':

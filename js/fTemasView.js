@@ -141,6 +141,8 @@ function evaluarToolbarSeccionA(id)
             var subItems= myTree.getSubItems(id_seleccionado);
             if(subItems=="")
             {
+                swal("","Se elimino correctamente el Dato","success");
+                setTimeout(function(){swal.close();},1500);
                 eliminarNodo();
             }else{
 //                alert("no se puede eliminar tiene descendencia");
