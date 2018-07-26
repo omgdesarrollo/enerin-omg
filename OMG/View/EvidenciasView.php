@@ -351,10 +351,6 @@
 </div> 
 
 
-  <button onClick="" type="button" 
-        class="btn btn-success" data-toggle="modal" data-target="#evidenciasPrueba">
-            demostracion
-        </button>
 
 
 
