@@ -836,11 +836,11 @@
         autoload: true,
         pageSize: 10,
         deleteConfirm:"Estas seguro que desea eliminar la evidencia",
-        rowClick: function(args) {
-             alert("le has picado "+args);
+        rowClick: function(args)
+        {
+            //  alert("le has picado "+args);
 //             console.log(args);
-                    alert("este es el id de evidencia seleccionado"+args["item"].id_evidencia);
-             
+                    // alert("este es el id de evidencia seleccionado"+args["item"].id_evidencia);     
 //            showDetailsDialog("Edit", args.item);
         },
         data: datosF,
