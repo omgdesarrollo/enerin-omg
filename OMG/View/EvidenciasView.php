@@ -828,12 +828,21 @@
         $("#jsGrid").jsGrid({
         width: "100%",
         height: "300px",
+        editing: false,
         heading: true,
         sorting: true,
         paging: true,
+        autoload: true,
+        deleteConfirm:"Estas seguro que desea eliminar la evidencia",
+         rowClick: function(args) {
+             alert("le has picado "+args);
+             
+//            showDetailsDialog("Edit", args.item);
+        },
         data: datosF,
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields: [
+        { name: "id_evidencia", type: "text", width: 28, validate: "required" },
         { name: "no", type: "text", width: 28, validate: "required" },
         { name: "requisito", type: "text", width: 150, validate: "required" },
         { name: "Nombre del Documento", type: "text", width: 150, validate: "required" },
@@ -847,8 +856,12 @@
         { name: "plan_accion", type: "text", width: 150, validate: "required" },
         { name: "desviacion", type: "text", width: 120, validate: "required" },
         {name: "validacion", type: "text", width: 200, validate: "required" },
-        {name: "opcion", type: "text", width: 90, validate: "required" }
-    ]
+        {name: "opcion", type: "text", width: 90, validate: "required" },
+        { type: "control" }
+    ],
+    deleteConfirm: function(item) {
+            return "El no \"" + item.no + "\" Probablemente se eliminara?";
+        }
             
 // adjuntar_evidencia:
 // clave_documento:
@@ -862,6 +875,36 @@
 // usuario:
 // validacion:
         });
+        
+//    var showDetailsDialog = function(dialogType, client) {
+//        $("#name").val(client.Name);
+//        $("#age").val(client.Age);
+//        $("#address").val(client.Address);
+//        $("#country").val(client.Country);
+//        $("#married").prop("checked", client.Married);
+// 
+//        formSubmitHandler = function() {
+//            saveClient(client, dialogType === "Add");
+//        };
+// 
+//        $("#detailsDialog").dialog("option", "title", dialogType + " Client")
+//                .dialog("open");
+//    };
+    
+//    var saveClient = function(client, isNew) {
+//        $.extend(client, {
+//            Name: $("#name").val(),
+//            Age: parseInt($("#age").val(), 10),
+//            Address: $("#address").val(),
+//            Country: parseInt($("#country").val(), 10),
+//            Married: $("#married").is(":checked")
+//        });
+// 
+//        $("#jsGrid").jsGrid(isNew ? "insertItem" : "updateItem", client);
+// 
+//        $("#detailsDialog").dialog("close");
+//    };
+     
     }
 
     // function reconstruirTable(data)
