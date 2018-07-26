@@ -842,7 +842,7 @@
         data: datosF,
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields: [
-        { name: "id_evidencia", textField: "Name", type: "text", width: 28, validate: "required" },
+        { name: "id_evidencia", textField: "Name", type: "text", width: "auto", validate: "required" },
         { name: "no", type: "text", width: 28, validate: "required" },
         { name: "requisito", type: "text", width: 150, validate: "required" },
         { name: "registro", type: "text", width: 150, validate: "required" },
@@ -1215,10 +1215,12 @@ function confirmarBorrarRegistroEvidencia(){
         no = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true' onclick=\"validarEvidencia(this,'evidencias','validacion_supervisor','id_evidencias',"+id+","+idPara+")\"></i>";
         yes = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true' onclick=\"validarEvidencia(this,'evidencias','validacion_supervisor','id_evidencias',"+id+","+idPara+")\"></i>";
         id_validacion_documento=id;
-        // columna=column;
         objetocheckbox=checkbox;
-        ($(checkbox).hasClass('fa-times-circle-o'))?valor=true:valor=false;
-        alguno = $(checkbox).parent();
+        Obj = $(checkbox);
+        Obj = Obj[0].children;
+        ($(Obj).hasClass('fa-times-circle-o'))?valor=true:valor=false;
+        // alert(valor);
+        // alguno = $(checkbox).parent();
         // var checked = $(objetocheckbox).filter('[type=checkbox]')[0]['checked'];
         // if(checked==true)
         // {
@@ -1241,17 +1243,14 @@ function confirmarBorrarRegistroEvidencia(){
                             {
                                 if(data==true)
                                 {
-                                    // $(objetocheckbox).attr('disabled','true');
-                                    $(alguno[0]).html( (valor==true)?yes:no);
-                                    // swalSuccess("Evidencia validada");
-                                    // if(columna=="desviacion_mayor")
-                                    // {
+                                    $(Obj[0]).removeClass( (valor==true)?'fa-times-circle-o' : "fa-check-circle-o" );
+                                    $(Obj[0]).addClass( (valor==true)? 'fa-check-circle-o' : 'fa-times-circle-o' );
+                                    $(Obj[0]).css("color", (valor==true)? "#02ff00" : "red" );
+
                                     enviar_notificacion( ((valor==true)?
                                      "Ha sido validada una Evidencia por ":
                                      "Ha sido desvalidada una Evidencia por "),idPara,0,false,"EvidenciasView.php?accion="+id);
                                      $("#btn_cargaGantt").html( (valor==true)?"Vizualizar Programa":"Cargar Programa" );
-                                        // msj,para,tipomsj,atendido,asunto,idEvidencia((
-                                    // }
                                 }
                             },
                             error:function()
