@@ -879,7 +879,6 @@
  
      
     }
-    }
 
     // function reconstruirTable(data)
     // {
@@ -903,6 +902,7 @@ function confirmarBorrarRegistroEvidencia(){
                  swal("","Error Al Eliminar","Error");
              }
         });
+    }
         
 
 
