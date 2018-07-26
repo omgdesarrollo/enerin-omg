@@ -824,6 +824,7 @@
 
     function construir(datosF)
     {
+        console.log(datosF);
         $("#jsGrid").html("");
         $("#jsGrid").jsGrid({
         width: "100%",
@@ -835,7 +836,7 @@
         autoload: true,
         pageSize: 10,
         deleteConfirm:"Estas seguro que desea eliminar la evidencia",
-         rowClick: function(args) {
+        rowClick: function(args) {
              alert("le has picado "+args);
 //             console.log(args);
                     alert("este es el id de evidencia seleccionado"+args["item"].id_evidencia);
@@ -884,7 +885,24 @@
     // {
     // }
 
-
+function confirmarBorrarRegistroEvidencia(){
+     swal({
+          title: "ELIMINAR",
+          text: "Al eliminar este registro se eliminara toda la evidencia registrada. ¿Desea continuar?",
+          type: "warning",
+          showCancelButton: true,
+          closeOnConfirm: false,
+          showLoaderOnConfirm: true,
+          confirmButtonText: "Eliminar",
+          cancelButtonText: "Cancelar",
+        },function(res){
+            if(res){
+                  swal("","Eliminacion Exitosa","success");
+              }
+              else{
+                 swal("","Error Al Eliminar","Error");
+             }
+        });
         
 
 
