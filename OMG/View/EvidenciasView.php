@@ -53,8 +53,21 @@
 
 <!--<link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
    <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>-->
+
+   <!-- JSGRID -->
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
     <style>
-        
+        .jsgrid-header-row>.jsgrid-header-cell
+        {
+                background-color:#307ECC ;      /* orange */
+                font-family: "Roboto Slab";
+                font-size: 1.2em;
+                color: white;
+                font-weight: normal;
+        }
+
         .modal-body{
         color:#888;
         max-height: calc(100vh - 110px);
@@ -114,9 +127,9 @@
         else
             $accion = -1;
 
-        $titulosTable = 
-            array("No.","Requisito","Registro","Frecuencia","Clave Documento",
-                "Adjuntar Evidencia","Fecha de Registro","Usuario","Acción Correctiva","Plan de Acción","Desviación","Validación","Opcion");
+        // $titulosTable = 
+            // array("No.","Requisito","Registro","Frecuencia","Clave Documento",
+            //     "Adjuntar Evidencia","Fecha de Registro","Usuario","Acción Correctiva","Plan de Acción","Desviación","Validación","Opcion");
     ?>
     
     <div id="headerFiltros" style="position: fixed;">
@@ -166,8 +179,8 @@
                 </tbody>
             </table>-->
     
-    <!--<div class="container">-->
-    <table class="table table-bordered table-striped header_fijo" id="idTable">
+    <div id="jsGrid"></div>
+    <!-- <table class="table table-bordered table-striped header_fijo" id="idTable">
         <thead>
             <tr>
                 <th class="table-headert" colspan="5" style="background:#9aca40"></td>
@@ -194,7 +207,7 @@
         <tbody class="hideScrollBar" id="bodyTable" style="position: absolute">             
         </tbody>
         
-    </table>
+    </table> -->
     <!--</div>-->
     
 
@@ -718,29 +731,29 @@
     //     }
     // }
 
-    function filterTableAsunt()
-    {
-        var input, filter, table, tr, td, i;
-        input = document.getElementById("idInputAsunto");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("idTable");
-        tr = table.getElementsByTagName("tr");
+    // function filterTableAsunt()
+    // {
+    //     var input, filter, table, tr, td, i;
+    //     input = document.getElementById("idInputAsunto");
+    //     filter = input.value.toUpperCase();
+    //     table = document.getElementById("idTable");
+    //     tr = table.getElementsByTagName("tr");
 
-        for (i = 0; i < tr.length; i++)
-        {
-            td = tr[i].getElementsByTagName("td")[4];
-            if (td)
-            {
-                if (td.innerHTML.toUpperCase().indexOf(filter) > -1)
-                {
-                    tr[i].style.display = "";
-                }else
-                {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
+    //     for (i = 0; i < tr.length; i++)
+    //     {
+    //         td = tr[i].getElementsByTagName("td")[4];
+    //         if (td)
+    //         {
+    //             if (td.innerHTML.toUpperCase().indexOf(filter) > -1)
+    //             {
+    //                 tr[i].style.display = "";
+    //             }else
+    //             {
+    //                 tr[i].style.display = "none";
+    //             }
+    //         }
+    //     }
+    // }
 //    function getDataTable()
 //    {        
 //        // $('#bodyTable').html(data);
@@ -755,13 +768,14 @@
 //            }
 //        });
 //    }
-    
-    function reconstruirTable(data)
+
+    function reconstruirTable(datos)
     {
-        cargaTodo=0;
-        tempData = "";
-        contador=1;
-        $.each(data,function(index,value)
+        // cargaTodo=0;
+        // tempData = "";
+        // contador=1;
+        __datos=[];
+        $.each(datos,function(index,value)
         {
             URL = 'filesEvidenciaDocumento/'+value.id_evidencias;
             $.ajax({
@@ -776,18 +790,64 @@
                   async: false,
                   success: function(todo)
                   {
-                    tempData += reconstruir(todo,value,cargaTodo,contador);
-                    console.log("["+tempData+"]");
-                    console.log(JSON.parse("["+tempData+"]"));
-                    contador++;
+                    // tempData += reconstruir(todo,value,cargaTodo,contador);
+                    // console.log("["+tempData+"]");
+                    // console.log(JSON.parse("["+tempData+"]"));
+                    // contador++;
+                    // $.each(datos,function(index,value)
+                    // {
+                        // (value.validacion_tema_responsable=="true")?status="validado":status="En Proceso";
+                            __datos.push(JSON.parse(reconstruir(todo,value,index++)));
+                    // });
                   }
                 });
         });
-        $('#bodyTable').html(tempData);
-        $('#loader').hide();
+        console.log(__datos);
+        // $('#bodyTable').html(tempData);
+        // $('#loader').hide();
+        construir(__datos);
         moverA();
     }
 
+    function construir(datosF)
+    {
+        $("#jsGrid").html("");
+        $("#jsGrid").jsGrid({
+        width: "100%",
+        height: "300px",
+        heading: true,
+        sorting: true,
+        paging: true,
+        data: datosF,
+        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+        fields: [
+            // { name: "No", type: "text", width: 80, validate: "required" },
+            // { name: "Clave del Documento", type: "text", width: 150, validate: "required" },
+            // { name: "Nombre del Documento", type: "text", width: 150, validate: "required" },
+            // { name: "Responsable del Documento", type: "text", width: 150, validate: "required" },
+            // { name: "Tema", type: "text", width: 150, validate: "required" },
+            // { name: "Requisitos", type: "text", width: 150, validate: "required" },
+            // { name: "Registros", type: "text", width: 150, validate: "required" },
+            // { name: "Status", type: "text", width: 150, validate: "required" }
+            { name: "accion_correctiva", type: "text", width: 80, validate: "required" }
+// adjuntar_evidencia:
+// clave_documento:
+// desviacion:
+// fecha_registro:
+// frecuencia:
+// no:
+// plan_accion:
+// registro:
+// requisito:
+// usuario:
+// validacion:
+        ]
+        });
+    }
+
+    // function reconstruirTable(data)
+    // {
+    // }
 
     function reconstruirRow(id)
     {
@@ -960,15 +1020,12 @@
         // });
         return tempData;
     }
-    jajaja();
-    function jajaja()
+    
+    function reconstruir(todo,value,contador)//listo
     {
-        
-    }
-    function reconstruir(todo,value,carga,contador)
-    {
-        tempData = "";
-        contador==1?tempData = "{":tempData = ",{";
+        // tempData = "";
+        tempData = "{";
+        // contador==1?tempData = "{":tempData = "{";
         tempArchivo="";
         noCheck = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true'></i>";
         yesCheck = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true'></i>";
