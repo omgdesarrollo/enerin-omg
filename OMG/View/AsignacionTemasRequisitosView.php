@@ -74,7 +74,7 @@ $Usuario=  Session::getSesion("user");
 		      </div>
                         
 		      <div class="modal-body">
-                          <form id="formRequisitos">
+                          <!--<form id="formRequisitos">-->
                                      
                                                 <div class="form-group">
 							<label class="control-label" for="title">Requisito</label>
@@ -91,16 +91,17 @@ $Usuario=  Session::getSesion("user");
 						</div>    
                                                                                                                                 
 						<div class="form-group">
-                                                    <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
-                                                    <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
+                                                    <button type="submit" id="btn_guardar_req"  class="btn crud-submit btn-info">Guardar</button>
+                                                    <button type="submit" id="btn_limpiar_req"  class="btn crud-submit btn-info">Limpiar</button>
 						</div>
-                          </form>
+                          <!--</form>-->
 
 		      </div>
 		    </div>
 
 		  </div>
        </div>
+
     
  <div class="modal draggable fade" id="create-itemRegistro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		  <div class="modal-dialog" role="document">
@@ -111,7 +112,7 @@ $Usuario=  Session::getSesion("user");
 		      </div>
                         
 		      <div class="modal-body">
-                    <form id="formRegistro">   
+                    <!--<form id="formRegistro">-->   
                         <div class="form-group">
                             <label class="control-label" for="title">Registro</label>
                             <textarea  id="REGISTRO" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
@@ -153,11 +154,11 @@ $Usuario=  Session::getSesion("user");
                         </div>
                         
                         <div class="form-group">
-                            <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
-                            <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
+                            <button type="submit" id="btn_guardar_reg"  class="btn crud-submit btn-info">Guardar</button>
+                            <button type="submit" id="btn_limpiar_reg"  class="btn crud-submit btn-info">Limpiar</button>
                         </div>
 
-                    </form>
+                    <!--</form>-->
 		      </div>
 		    </div>
 
@@ -175,6 +176,8 @@ $Usuario=  Session::getSesion("user");
 </div>
 
 <div id="contenidoDetalles"></div>
+
+
 	<script>
             var myLayout, myTree, myToolbar,id_asignacion_t=-1,levelv=0,id_asignacion_r=-1,selec_tema=-1,id_seleccionado=-1,dataIds_req=[],dataIds_reg=[];
             myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
@@ -245,25 +248,49 @@ $(function(){
 //        alert(parametroscheck["penalizado"]);
     });
     
-    $("#formRequisitos").submit(function(e){
+    $("#btn_guardar_req").click(function(e){
          e.preventDefault();
+         $("#btn_guardar_req").attr("disabled", "disabled");
 //         alert("dcf  "+id_asignacion_t);
-         var formData = {"ID_ASIGNACION_TEMA_REQUISITO":id_asignacion_t,"REQUISITO":$('#REQUISITO').val(),"PENALIZACION":parametroscheck["penalizado"]};            
+         var formData = {"ID_ASIGNACION_TEMA_REQUISITO":id_asignacion_t,"REQUISITO":$('#REQUISITO').val(),"PENALIZACION":parametroscheck["penalizado"]}; 
          
+         
+//         alert(formData);
          $.ajax({
              url:'../Controller/AsignacionTemasRequisitosController.php?Op=GuardarNodo',
              type:'POST',
              data:formData,
-             success:function()
+             success:function(r)
              {
-                 obtenerDatosArbol(id_asignacion_t);
+//                alert("Entro al success");
+                 if(r==false)
+                 {
+                     swal("","Error en el servidor","error");
+                     setTimeout(function(){swal.close();},1500);
+                     $("#btn_guardar_req").removeAttr("disabled")
+                 } else{
+                     if(r==true)
+                     {
+                         swal("","Guardado Exitoso","success");
+                         setTimeout(function(){swal.close();},1500);
+                         obtenerDatosArbol(id_asignacion_t);
+                         $("#btn_guardar_req").removeAttr("disabled")
+                     }
+                 }
              }
          });
                 
-     }); 
+     });
      
-       $("#formRegistro").submit(function(e){
+     
+     $("btn_limpiar_req").click(function(){
+         $("#REQUISITO").val("");
+     });
+               
+     
+     $("#btn_guardar_reg").click(function(e){
          e.preventDefault();
+         $("#btn_guardar_reg").attr("disabled", "disabled");
 //         alert("dcf  "+id);
         
 //        console.log(dataIds_req);
@@ -280,19 +307,38 @@ $(function(){
 //       if(id_){ 
 //$("#selectFrecuencia option[value="+ valor +"]").attr("selected",true)
          var formData = {"ID_REQUISITO":id_req,"REGISTRO":$('#REGISTRO').val(),"ID_DOCUMENTO":idDocumentoSelect,"FRECUENCIA":$("#selectFrecuencia").prop("value")};
-         
+//         alert("Entro al ajax");
          $.ajax({
              url:'../Controller/AsignacionTemasRequisitosController.php?Op=GuardarSubNodo',
              type:'POST', 
              data:formData,
-             success:function(data)
+             success:function(r)
              {
-//                 alert("s");
-                 obtenerDatosArbol(id_asignacion_t);
+//                 alert("Entro al success");
+                 if(r==false)
+                 {
+//                     alert("Entro al if");
+                     swal("","Error en el servidor","error");
+                     setTimeout(function(){swal.close();},1500);
+                     $("#btn_guardar_reg").removeAttr("disabled")
+                 }else{
+                     if(r==true)
+                     {
+                         swal("","Guardado Exitoso","success");
+                         setTimeout(function(){swal.close();},1500);
+                         obtenerDatosArbol(id_asignacion_t);
+                         $("#btn_guardar_reg").removeAttr("disabled")
+                     }
+                 }
+
              }
          });
                 
-     }); 
+     });
+     
+     $("btn_limpiar_reg").click(function(){
+         $("#REGISTRO").val("");
+     });
      
      
 }); //CIERRA $FUNCTION
@@ -392,32 +438,42 @@ function evaluarToolbarSeccionB(id)
             {
                     var level = myTree.getLevel(id_seleccionado);
                     var subItems= myTree.getSubItems(id_seleccionado);
-                    alert("Este es el level: "+level);
-                    alert("Este es el subItems: "+subItems);
-                    
+//                    alert("Este es el level: "+level);
+//                    alert("Este es el subItems: "+subItems);                    
                     if(level==0){
 //                        alert(subItems);
-                      swal("","Seleccione un Requisito","error");
+                      swal("","Seleccione un Requisito o Registro","error");
                       setTimeout(function(){swal.close();},1500);  
                     } else {
-                                
-//                                  if(tipo_nodo="req")
-//                                    {
+//                             alert("Este es el level: "+level);
+//                             alert("Este es el subItems: "+subItems);
+//                             alert("Este es el nodo: "+tipo_nodo);   
+                                  if(tipo_nodo=="req")
+                                    {
                                           if(subItems=="")
                                             { 
-                                                alert("Si se puede eliminar el Requisito: "+subItems);
-                                                eliminarNodoRequisito();
+//                                                alert("Si se puede eliminar el Requisito: ");
+                                                swal("","Se elimino correctamente el Requisito","success");
+                                                setTimeout(function(){swal.close();},1500);
+                                                eliminarNodoRequisito();    
                                             } else{
                                                         swal("","El requisito tiene Registros","error");
                                                         setTimeout(function(){swal.close();},1500);
                                                    }       
-//                                    } else {
-//                                                if(tipo_nodo="reg")
-//                                                    {
+                                    } else {
+//                                            alert("Este es el level: "+level);
+//                                            alert("Este es el subItems: "+subItems);  
+                                                if(tipo_nodo=="reg" && level==2)
+                                                    {
 //                                                            alert("Si se puede eliminar el registro");
-//                                                            eliminarNodoRegistro();
-//                                                    } 
-//                                      } 
+                                                            eliminarNodoRegistro();
+//                                                            obtenerDatosArbol(id_asignacion_t);
+                                                    } 
+//                                                    else{
+//                                                        swal("","Seleccione un Requisito o Registro","error");
+//                                                        setTimeout(function(){swal.close();},1500);
+//                                                    }
+                                      } 
                     }                   
                         
             }
@@ -426,19 +482,7 @@ function evaluarToolbarSeccionB(id)
                     
     }
 }
-               
-  
-    function eliminarNodoRegistro()
-    {
-        $.ajax({
-            url:"../Controller/AsignacionTemasRequisitosController.php?Op=EliminarRegistro",
-            data:"ID_REGISTRO="+id_nodo,
-            success:function(data)
-            {
-                obtenerDatosArbol();
-            }
-        });
-    }
+    
     
     function eliminarNodoRequisito()
     {
@@ -447,10 +491,37 @@ function evaluarToolbarSeccionB(id)
             data:"ID_REQUISITO="+id_nodo,
             success:function(data)
             {
-                obtenerDatosArbol();
+                obtenerDatosArbol(id_asignacion_t);
             }
         });
     }
+ 
+    function eliminarNodoRegistro()
+    {
+        $.ajax({
+            url:"../Controller/AsignacionTemasRequisitosController.php?Op=EliminarRegistro",
+            data:"ID_REGISTRO="+id_nodo,
+            success:function(data)
+            {
+                if(data==1)
+                {   
+//                    alert("Este es el data: "+data)
+                    swal("","Se elimino correctamente el Registro","success");
+                    setTimeout(function(){swal.close();},1500);
+                    obtenerDatosArbol(id_asignacion_t);
+                } else{
+//                    alert("Este es el data: "+data)
+                    if(data==0)
+                    {    
+                    swal("","El Registro esta cargado en Evidencias","error");
+                    setTimeout(function(){swal.close();},1500);
+                    }
+                }    
+            }   
+        });
+    }
+    
+
   
                   
      function obtenerTemasEnAsignacion(){

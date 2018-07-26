@@ -18,22 +18,26 @@ $Usuario=  Session::getSesion("user");
 
 		<!-- bootstrap & fontawesome -->
                 <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-                
+                <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+
                 <!--Para abrir alertas de aviso, success,warning, error-->       
                 <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
 
 		<!-- ace styles -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+                <link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
 
 	
                 <!--Inicia para el spiner cargando-->
                 <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
                 <!--Termina para el spiner cargando-->
                 
-                <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-                <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>                
+                <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+                <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>
+                
                 <script src="../../js/jquery.js" type="text/javascript"></script>
+                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
                 <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
 <style>
         
@@ -60,7 +64,14 @@ margin-right: 14px;
 padding-right: 28px; /*This would hide the scroll bar of the right. To be sure we hide the scrollbar on every browser, increase this value*/
 padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is one*/
 }
-        
+
+.header_doc {
+  width: 72%;
+  height: 283px;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
 </style>   
                 
                 
@@ -114,18 +125,18 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
 <div style="height: 40px"></div>
           
 
-<table class="table table-bordered table-striped " id="idTable">
+<table class="table table-bordered table-striped header_doc" id="idTable">
     <thead >
     <tr class="">
      <!--<th class="table-headert" width="8%">No.</th>-->
-     <th class="table-headert" width="24%">Clave del Documento</th>
-     <th class="table-headert" width="24%">Nombre del Documento</th>
-     <th class="table-headert" width="24%">Responsable del Documento</th>
+        <th class="table-headert" style="width:24%;">Clave del Documento</th>
+     <th class="table-headert" style="width:24%;">Nombre del Documento</th>
+     <th class="table-headert" style="width:24%;">Responsable del Documento</th>
      <!--<th class="table-headert" width="24%">Opcion</th>-->
     </tr>
    </thead>
 
-   <tbody class="hideScrollBar"  id="datosGenerales" style="">
+   <tbody class="hideScrollBar"  id="datosGenerales" style="position: absolute; height: 283px">
    </tbody>
 
 </table>

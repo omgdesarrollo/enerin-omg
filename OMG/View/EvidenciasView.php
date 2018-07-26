@@ -987,7 +987,7 @@
             // tempData += "data-toggle='modal' data-target='#mostrarRegistrosModal'>";
             // tempData += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i> Ver</button></td>";
             
-            tempData += "<td width='10%'style='font-size: -webkit-xxx-large'><button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
+            tempData += "<td style='font-size: -webkit-xxx-large;width:5% '><button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
             tempData += "type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
             tempData += "<i class='fa fa-cloud-upload' style='font-size: 15px'></i> Adjuntar</button></td>";
             $.each(todo[0],function(index2,value2)
@@ -995,7 +995,7 @@
                 nametmp = value2.split("^-O-^-M-^-G-^");
                 fecha = new Date(nametmp[0]*1000);
                 fecha = fecha.getDay() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-                tempData += "<td width='10%'>"+fecha+"</td>";
+                tempData += "<td style='width:10%'>"+fecha+"</td>";
                 // if(value.clasificacion=="")
                 // {
                 //     tempData += "<td><select class='select'";
