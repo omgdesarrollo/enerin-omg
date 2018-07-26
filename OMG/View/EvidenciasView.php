@@ -1097,6 +1097,7 @@
             nametmp="";
             // if(carga==0)
             // tempData += "<tr name='registro_"+value.id_evidencias+"' id='registro_"+value.id_evidencias+"'>";
+            tempData += "\"id_evidencia\":\""+value.id_evidencias+"\",";
             tempData += "\"no\":"+contador+",";
             tempData += "\"requisito\":\""+value.requisito+"\",";
             tempData += "\"registro\":\""+value.registro+"\",";
