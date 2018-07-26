@@ -845,11 +845,9 @@
         data: datosF,
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields: [
-        
         { name: "id_evidencia", textField: "Name", type: "text", width: 28, validate: "required" },
         { name: "no", type: "text", width: 28, validate: "required" },
         { name: "requisito", type: "text", width: 150, validate: "required" },
-        { name: "Nombre del Documento", type: "text", width: 150, validate: "required" },
         { name: "registro", type: "text", width: 150, validate: "required" },
         { name: "frecuencia", type: "text", width: 120, validate: "required" },
         { name: "clave_documento", type: "text", width: 128, validate: "required" },
@@ -863,15 +861,7 @@
         {name: "opcion", type: "text", width: 90, validate: "required" },
         { type: "control" }
     ],deleteConfirm: function(item) {
-        res="undefined"
-        res=confirmarBorrarRegistroEvidencia();
-//        if(item.opcion==""){
-//            
-//        }else{
-//        }
-        
-//        return confirm("Are you sure?");
-     }
+
   
 // adjuntar_evidencia:
 // clave_documento:
@@ -884,35 +874,19 @@
 // requisito:
 // usuario:
 // validacion:
-        });
+    }});
  
      
+    }
     }
 
     // function reconstruirTable(data)
     // {
     // }
 
-function confirmarBorrarRegistroEvidencia(){
-     swal({
-          title: "ELIMINAR",
-          text: "Al eliminar este registro se eliminara toda la evidencia registrada. ¿Desea continuar?",
-          type: "warning",
-          showCancelButton: true,
-          closeOnConfirm: false,
-          showLoaderOnConfirm: true,
-          confirmButtonText: "Eliminar",
-          cancelButtonText: "Cancelar",
-        },function(res){
-            if(res){
-                  swal("","Eliminacion Exitosa","success");
-              }
-              else{
-                 swal("","Error Al Eliminar","Error");
-             }
-        }
+
         
-}
+
 
 
     function reconstruirRow(id)
