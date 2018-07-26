@@ -40,7 +40,15 @@
     <script src="../../js/jquery.js" type="text/javascript"></script>
     <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
     
+    
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+
+    
     <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
+    <script src="../../js/fEvidenciasView.js" type="text/javascript"></script>
+      <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
     <!--<script src="../../js/jquery.js" type="text/javascript"></script>-->
 
 <!--<link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
@@ -84,40 +92,7 @@
             width: 120px; 
             color: white; 
         }
-/*        .table-fixed-header{
-            display: table;  1 
-            position: relative;
-            padding-top: calc(~'2.5em + 2px');  2 
-    
-            table{
-                margin: 0;
-                margin-top: calc(~"-2.5em - 2px");  2 
-            }
-            thead th{
-                white-space: nowrap;
-                &:before{
-                    content: attr(data-header);
-                    position: absolute;
-                    top: 0;
-                    padding: .5em 1em;  3 
-                    margin-left: -1em;  4 
-                }
-            }
-        }*/
-/*        .table-container {
-            max-height: 70vh;  5 
-            overflow-y: auto;  5 
-            &:before{
-                content: '';
-                position: absolute;
-                left: 0;
-                right: 0;
-                top: 0;
-                min-height: 2.5em;              6 
-                border-bottom: 2px solid #DDD;  6 
-                background: #f1f1f1;            6 
-            }
-        }*/
+
         .backgroundTdTable
         {
             background: #9aca40;
@@ -138,7 +113,7 @@
             border-bottom: 1px solid gold;
             background: lightgoldenrodyellow;
         }*/
-        
+         .modal-lg{width: 100%;}
         </style>
 </head>
 <!-- <body> -->
@@ -333,7 +308,7 @@
 
 <!-- Inicio de Seccion Modal Archivos-->
 <div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog " role="document">
         <!-- <div id="loaderModalMostrar"></div> -->
 		<div class="modal-content">
                         
@@ -378,9 +353,35 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal draggable fade" id="evidenciasPrueba" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+        <!-- <div id="loaderModalMostrar"></div> -->
+		<div class="modal-content">                
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title" id="myModalLabelMostrarRegistros">Lista Registros</h4>
+        </div>
+
+        <div class="modal-body">
+            <div id="listadatosGrid"></div>
+        </div> 
+      </div> 
+    </div> 
+</div> 
+
+
+  <button onClick="" type="button" 
+        class="btn btn-success" data-toggle="modal" data-target="#evidenciasPrueba">
+            demostracion
+        </button>
+
+
+
 <!--cierre del modal Mensaje-->
 <script>
-
+   
     // var data="";
     // var dataTemp="";
     months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
@@ -904,7 +905,7 @@
             nametmp="";
             if(carga==0)
             tempData += "<tr name='registro_"+value.id_evidencias+"' id='registro_"+value.id_evidencias+"'>";
-            tempData += "<td class='nuevoTdTable' width='5%'>"+contador+"</td>";
+            tempData += "<td class='nuevoTdTable'  width='5%'>"+contador+"</td>";
             tempData += "<td class='nuevoTdTable' width='5%'>"+value.requisito+"</td>";
             tempData += "<td class='nuevoTdTable' width='5%'>"+value.registro+"</td>";
             tempData += "<td class='nuevoTdTable' width='10%'>"+value.frecuencia+"</td>";
@@ -1572,7 +1573,7 @@
         setTimeout(function(){swal.close();$('#agregarUsuario .close').click()},1500);
         $('#loader').hide();
     }
-    
+     listarDatosGrid();
     function cargarprogram(v,validado)
     {
 //    alert("el valor de la evidencia es "+v);
@@ -1580,6 +1581,12 @@
     window.location.href="GanttEvidenciaView.php?id_evid="+v;
     
     }
+    
+    
+    
+    
+    
+    
     
 </script>
 
@@ -1674,3 +1681,6 @@
     <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
 </body>
 </html>
+
+
+
