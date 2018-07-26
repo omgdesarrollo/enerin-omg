@@ -805,7 +805,7 @@
                     // {
                         // (value.validacion_tema_responsable=="true")?status="validado":status="En Proceso";
                            
-                        __datos.push(JSON.parse(reconstruir(todo,value,index++)));
+                        __datos.push(reconstruir(todo,value,index++));
 //                            construir(__datos);
                     // });
                   }
@@ -813,7 +813,7 @@
 //                dataTodo = __datos;
         });
 //        dataTodo = __datos;
-        console.log(__datos);
+        // console.log(__datos);
         // $('#bodyTable').html(tempData);
         // $('#loader').hide();
        construir((__datos.length==0)?[]:__datos);
@@ -1039,12 +1039,19 @@
         // });
         return tempData;
     }
+
+    // jajaja();
+    // function jajaja()
+    // {
+    //     var b = {};
+    //     b.val = "yo";
+    //     b.lol = "tu";
+    //     console.log(b);
+    // }
     
     function reconstruir(todo,value,contador)//listo
     {
-        // tempData = "";
-        tempData = "{";
-        // contador==1?tempData = "{":tempData = "{";
+        tempData = new Object();
         tempArchivo="";
         noCheck = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true'></i>";
         yesCheck = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true'></i>";
@@ -1053,104 +1060,95 @@
         denegado = "<i class='fa fa-ban' style='font-size: xx-large;color:red;' aria-hidden='true'></i>";
             nametmp="";
             // if(carga==0)
-            // tempData += "<tr name='registro_"+value.id_evidencias+"' id='registro_"+value.id_evidencias+"'>";
-            tempData += "\"id_evidencia\":\""+value.id_evidencias+"\",";
-            tempData += "\"no\":"+contador+",";
-            tempData += "\"requisito\":\""+value.requisito+"\",";
-            tempData += "\"registro\":\""+value.registro+"\",";
-            tempData += "\"frecuencia\":\""+value.frecuencia+"\",";
-            tempData += "\"clave_documento\":\""+value.clave_documento+"\",";
+            tempData.id_evidencia = value.id_evidencias;
+            tempData.no = contador;
+            tempData.requisito = value.requisito;
+            tempData.registro = value.registro;
+            tempData.frecuencia = value.frecuencia;
+            tempData.clave_documento = value.clave_documento;
             
-            tempData += "\"adjuntar_evidencia\":\"<button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
-            tempData += "type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
-            tempData += "<i class='fa fa-cloud-upload' style='font-size: 15px'></i> Adjuntar</button>\",";
+            tempData.adjuntar_evidencia = "<button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
+            tempData.adjuntar_evidencia += "type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
+            tempData.adjuntar_evidencia += "<i class='fa fa-cloud-upload' style='font-size: 15px'></i> Adjuntar</button>";
             $.each(todo[0],function(index2,value2)
             {
                 tempArchivo="a";
                 nametmp = value2.split("^-O-^-M-^-G-^");
                 fecha = new Date(nametmp[0]*1000);
                 fecha = fecha.getDay() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-                tempData += "\"fecha_registro\":\""+fecha+"\",";
+                tempData.fecha_registro = fecha;
 
-                tempData += "\"usuario\":\""+value.usuario+"\",";
+                tempData.usuario = value.usuario;
 
-                tempData += "\"accion_correctiva\":\"<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='MandarNotificacion("+value.id_responsable+","+value.responsable+",\'"+value.accion_correctiva+"\',"+value.id_evidencias+","+value.validador+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
+                tempData.accion_correctiva = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='MandarNotificacion("+value.id_responsable+","+value.responsable+",\""+value.accion_correctiva+"\","+value.id_evidencias+","+value.validador+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
                 if(value.accion_correctiva!="")
                 {
-                    // tempData += "\"accion_correctiva\":"+yesMsj;
-                    tempData += noMsj+"</button>\",";
-                    // tempData += " data-toggle='modal' data-target='#MandarNotificacionModal'></i>";
+                    tempData.accion_correctiva += yesMsj+"</button>";
                 }
                 else
                 {
-                    // tempData += "\"accion_correctiva\":<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='MandarNotificacion("+value.id_responsable+","+value.responsable+",\'"+value.accion_correctiva+"\',"+value.id_evidencias+","+value.validador+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
-                    tempData += noMsj+"</button>\",";
+                    tempData.accion_correctiva += noMsj+"</button>";
                 }
-                // tempData += " onClick='MandarNotificacion("+value.id_responsable+","+value.responsable+",\""+value.accion_correctiva+"\","+value.id_evidencias+","+value.validador+");' data-toggle='modal' data-target='#MandarNotificacionModal'></i>,";
                 
-                tempData += "\"plan_accion\":\"<button id='btn_cargaGantt' class='btn btn-info' onClick='cargarprogram("+value.id_evidencias+","+value.validacion_supervisor+");'>";
+                tempData.plan_accion = "<button id='btn_cargaGantt' class='btn btn-info' onClick='cargarprogram("+value.id_evidencias+","+value.validacion_supervisor+");'>";
                 if(value.validacion_supervisor=="true")
-                    tempData += "Vizualizar Programa";
+                    tempData.plan_accion += "Vizualizar Programa";
                 else
-                    tempData += "Cargar Programa";
+                    tempData.plan_accion += "Cargar Programa";
                 
-                tempData += "</button>\",";
+                tempData.plan_accion += "</button>";
 
-                tempData += "\"desviacion\":\"<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='MandarNotificacionDesviacion("+value.id_usuario+","+value.responsable+",\'"+value.desviacion+"\',"+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
+                tempData.desviacion = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='MandarNotificacionDesviacion("+value.id_usuario+","+value.responsable+",\""+value.desviacion+"\","+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
                 if(value.desviacion!="")
                 {
-                    tempData += yesMsj+"</button>\",";
+                    tempData.desviacion += yesMsj+"</button>";
                 }
                 else
                 {
-                    tempData += noMsj+"</button>\",";
+                    tempData.desviacion += noMsj+"</button>";
                 }
                 
                 if(value.responsable=="1")
                 {                    
-                    tempData += "\"validacion\":\"<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onclick='validarEvidencia(this,'evidencias','validacion_supervisor','id_evidencias',"+value.id_evidencias+","+value.id_usuario+")'>";
+                    tempData.validacion = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='validarEvidencia(this,\"evidencias\",\"validacion_supervisor\",\"id_evidencias\","+value.id_evidencias+","+value.id_usuario+")'>";
                     if(value.validacion_supervisor=="true")
-                        tempData += yesCheck+"</button>\",";
+                        tempData.validacion += yesCheck+"</button>";
                     else
-                        tempData += noCheck+"</button>\",";
+                        tempData.validacion += noCheck+"</button>";
                 }
                 else
                 {
                     if(value.validacion_supervisor=='true')
                     {
-                        tempData += "\"validacion\":\"<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='swalInfo(\'Validado por el responsable\')'>";
-                        tempData += yesCheck+"</button>\",";
+                        tempData.validacion = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='swalInfo(\"Validadopor el responsable\")'>";
+                        tempData.validacion += yesCheck+"</button>";
                     }
                     else
                     {
-                        tempData += "\"validacion\":\"<button style='font-size:x-large;color:#39c;background:transparent;border:none;'  onClick='swalInfo(\'Aun no validado\')'>";
-                        tempData += noCheck+"</button>\",";
+                        tempData.validacion = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;'  onClick='swalInfo(\"Aun no validado\")'>";
+                        tempData.validacion += noCheck+"</button>";
                     }
                 }
             });
             if(tempArchivo=="")
             {
-                    tempData += "\"fecha_registro\":\"\",";
-                    tempData += "\"usuario\":\""+value.usuario+"\",";
-                    tempData += "\"accion_correctiva\":\"\",";
-                    tempData += "\"plan_accion\":\"\",";
-                    tempData += "\"desviacion\":\"\",";
-                    tempData += "\"validacion\":\"\",";
+                    tempData.fecha_registro="";
+                    tempData.usuario="";
+                    tempData.accion_correctiva="";
+                    tempData.plan_accion="";
+                    tempData.desviacion="";
+                    tempData.validacion="";
                     if(value.responsable!="1" || value.validador==1)
                     {                        
-                        tempData += "\"opcion\":\"<button style='font-size:x-large;color:#39c;background:transparent;border:none;'";
-                        tempData += "onclick='eliminarEvidencia("+value.id_evidencias+");'>";
-                        tempData += "<i class='fa fa-trash'></i></button>\"";
+                        tempData.opcion = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;'";
+                        tempData.opcion += "onclick='eliminarEvidencia("+value.id_evidencias+");'>";
+                        tempData.opcion += "<i class='fa fa-trash'></i></button>";
                     }
                     else
-                        tempData += "\"opcion\":\"\"";
+                        tempData.opcion="";
 
             }else
-            tempData += "\"opcion\":\"\"";
-            // if(carga==0)
-            // tempData += "</tr>";
-        tempData +="}";
-        console.log(tempData);
+            tempData.opcion="";
         return tempData;
     }
 
