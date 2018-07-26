@@ -842,17 +842,17 @@
             nametmp="";
             if(carga==0)
             tempData += "<tr name='registro_"+value.id_evidencias+"' id='registro_"+value.id_evidencias+"'>";
-            tempData += "<td class='nuevoTdTable' width='5%'>"+contador+"</td>";
-            tempData += "<td class='nuevoTdTable' width='5%'>"+value.requisito+"</td>";
-            tempData += "<td class='nuevoTdTable' width='5%'>"+value.registro+"</td>";
-            tempData += "<td class='nuevoTdTable' width='10%'>"+value.frecuencia+"</td>";
-            tempData += "<td class='nuevoTdTable' width='10%'>"+value.clave_documento+"</td>";
+            tempData += "<td class='nuevoTdTable' style='width:5%'>"+contador+"</td>";
+            tempData += "<td class='nuevoTdTable' style='width:5%'>"+value.requisito+"</td>";
+            tempData += "<td class='nuevoTdTable' style='width:5%'>"+value.registro+"</td>";
+            tempData += "<td class='nuevoTdTable' style='width:10%'>"+value.frecuencia+"</td>";
+            tempData += "<td class='nuevoTdTable' style='width:10%'>"+value.clave_documento+"</td>";
             // tempData += "<td class='nuevoTdTable'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td>";
             // tempData += "<td class='nuevoTdTable' style='font-size: -webkit-xxx-large;'><button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success'";
             // tempData += "data-toggle='modal' data-target='#mostrarRegistrosModal'>";
             // tempData += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i> Ver</button></td>";
             
-            tempData += "<td width='10%'style='font-size: -webkit-xxx-large'><button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
+            tempData += "<td style='font-size: -webkit-xxx-large;width:5% '><button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
             tempData += "type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
             tempData += "<i class='fa fa-cloud-upload' style='font-size: 15px'></i> Adjuntar</button></td>";
             $.each(todo[0],function(index2,value2)
@@ -860,7 +860,7 @@
                 nametmp = value2.split("^-O-^-M-^-G-^");
                 fecha = new Date(nametmp[0]*1000);
                 fecha = fecha.getDay() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-                tempData += "<td width='10%'>"+fecha+"</td>";
+                tempData += "<td style='width:10%'>"+fecha+"</td>";
                 // if(value.clasificacion=="")
                 // {
                 //     tempData += "<td><select class='select'";
