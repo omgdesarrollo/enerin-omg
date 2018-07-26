@@ -10,7 +10,7 @@ function listarDatosGrid(){
             $.each(r,function(index,value){
 //              (value.validacion_tema_responsable=="true")?status="validado":status="En Proceso";
                __datos.push({
-               "No":contador++,
+               "No":value.contador,
                "Requisito":"",
                "Registro":"",
                "Frecuencia":"",
