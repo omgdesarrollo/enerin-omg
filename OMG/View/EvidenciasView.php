@@ -34,7 +34,7 @@
                   
     <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
     <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
-    <!--<link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>-->
+    <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>
 
     <!--jquery-->
     <script src="../../js/jquery.js" type="text/javascript"></script>
@@ -834,20 +834,20 @@
         data: datosF,
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields: [
-        { name: "no", type: "text", validate: "required" },
-        { name: "requisito", type: "text", validate: "required" },
-        { name: "Nombre del Documento", type: "text", validate: "required" },
-        { name: "registro", type: "text", validate: "required" },
-        { name: "frecuencia", type: "text", validate: "required" },
-        { name: "clave_documento", type: "text", validate: "required" },
-        { name: "adjuntar_evidencia", type: "text", validate: "required" },
-        { name: "fecha_registro", type: "text", validate: "required" },
-        { name: "usuario", type: "text", validate: "required" },
-        { name: "accion_correctiva", type: "text", validate: "required" },
-        { name: "plan_accion", type: "text", validate: "required" },
-        { name: "desviacion", type: "text", validate: "required" },
-        {name: "validacion", type: "text", validate: "required" },
-        {name: "opcion", type: "text", validate: "required" }
+        { name: "no", type: "text", width: 28, validate: "required" },
+        { name: "requisito", type: "text", width: 150, validate: "required" },
+        { name: "Nombre del Documento", type: "text", width: 150, validate: "required" },
+        { name: "registro", type: "text", width: 150, validate: "required" },
+        { name: "frecuencia", type: "text", width: 120, validate: "required" },
+        { name: "clave_documento", type: "text", width: 128, validate: "required" },
+        { name: "adjuntar_evidencia", type: "text", width: 140, validate: "required" },
+        { name: "fecha_registro", type: "text", width: 120, validate: "required" },
+        { name: "usuario", type: "text", width: 150, validate: "required" },
+        { name: "accion_correctiva", type: "text", width: 130, validate: "required" },
+        { name: "plan_accion", type: "text", width: 150, validate: "required" },
+        { name: "desviacion", type: "text", width: 120, validate: "required" },
+        {name: "validacion", type: "text", width: 200, validate: "required" },
+        {name: "opcion", type: "text", width: 90, validate: "required" }
     ]
             
 // adjuntar_evidencia:
