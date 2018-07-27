@@ -49,6 +49,10 @@ $Usuario=  Session::getSesion("user");
 
                 <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
 
+                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+
             <style>
                     .modal
                     {
@@ -172,7 +176,7 @@ require_once 'EncabezadoUsuarioView.php';
 <div style="height: 50px"></div>
 
 
-
+<div id="jsGrid"></div>
 <!--<div class="contenedortable" style="position: fixed;">   
     <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Folio de Entrada" style="width: 200px;">
 </div >
@@ -180,17 +184,17 @@ require_once 'EncabezadoUsuarioView.php';
 
 <div style="height: 36px"></div>-->
              
-             
- <div class="table-fixed-header" style="display:block;" id="myDiv" class="animate-bottom"> 
+
+ <!-- <div class="table-fixed-header" style="display:block;" id="myDiv" class="animate-bottom"> 
 		
     <div class="table-container">
         
         <table id="idTable" class="tbl-qa">
-		  <!--<thead>-->
+		  <thead>
 			  <tr>
 				
-                                <!-- <th class="table-header">Contrato</th> -->
-                                <th class="table-header">Referencia</th>
+                                <th class="table-header">Contrato</th>
+                                <! <th class="table-header">Referencia</th>
                                 <th class="table-header">Folio de Entrada</th>
                                 <th class="table-header">Fecha Recepcion</th>
                                 <th class="table-header">Asunto</th>
@@ -205,18 +209,18 @@ require_once 'EncabezadoUsuarioView.php';
                                 <th class="table-header">Fecha Limite</th>
                                 <th class="table-header">Fecha Alarma</th>
                                 <th class="table-header">Archivo Adjunto</th>
-                                <th class="table-header">Observaciones</th>
+                                <th class="table-header">Observaciones</th> -->
                                 
-			  </tr>
+			  <!-- </tr> -->
 		  <!--</thead>-->
-		  <tbody id="tbodyDatos">
-		  </tbody>
-		</table>
+		  <!-- <tbody id="tbodyDatos"> -->
+		  <!-- </tbody> -->
+		<!-- </table> -->
 
 
-    </div>
+    <!-- </div> -->
 
-</div>
+<!-- </div> -->
 
 
 
@@ -729,7 +733,7 @@ function reconstruirTable2(datos)
       construir(__datos);
 }
 
-function construir2(datosF)
+function construirGrid(datosF)//listooo 12
 {
     $("#jsGrid").html("");
     $("#jsGrid").jsGrid({
@@ -741,19 +745,19 @@ function construir2(datosF)
     data: datosF,
     pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
     fields: [
-        { name: "No", type: "text", width: 80, validate: "required" },
-        { name: "Clave del Documento", type: "text", width: 150, validate: "required" },
-        { name: "Nombre del Documento", type: "text", width: 150, validate: "required" },
-        { name: "Responsable del Documento", type: "text", width: 150, validate: "required" },
-        { name: "Tema", type: "text", width: 150, validate: "required" },
-        { name: "Requisitos", type: "text", width: 150, validate: "required" },
-        { name: "Registros", type: "text", width: 150, validate: "required" },
-        { name: "Status", type: "text", width: 150, validate: "required" }
+        { name: "referencia", type: "text", width: 80, validate: "required" },
+        { name: "folio_entrada", type: "text", width: 150, validate: "required" },
+        { name: "fecha_recepcion", type: "text", width: 150, validate: "required" },
+        // { name: "Responsable del Documento", type: "text", width: 150, validate: "required" },
+        // { name: "Tema", type: "text", width: 150, validate: "required" },
+        // { name: "Requisitos", type: "text", width: 150, validate: "required" },
+        // { name: "Registros", type: "text", width: 150, validate: "required" },
+        // { name: "Status", type: "text", width: 150, validate: "required" }
     ]
     });
 }
 
-function listarDatos2()
+function listarDatos2()//borrar
 {
         __datos=[];
         contador=1;
@@ -785,8 +789,94 @@ function listarDatos2()
    construir(__datos);
 //    return __datos;
 }
+function reconstruir(value)//listoooo
+{
+        tempData = new Object();
 
-function reconstruir(value)
+        tempData.id_documento_entrada = value.id_documento_entrada;
+        tempData.referencia = value.folio_referencia;
+
+        tempData.folio_entrada = value.folio_entrada;
+                                
+        tempData.fecha_recepcion = "<input style='' value='"+value.fecha_recepcion+"' onBlur='saveToDatabaseDates(this,\"fecha_recepcion\","+value.id_documento_entrada+",";
+        tempData.fecha_recepcion += value.fecha_asignacion+","+value.fecha_limite_atencion+","+value.fecha_alarma+")' type='date'/>";
+
+        // tempData.fecha_recepcion = "<input value='"+value.fecha_recepcion+"' type='date' />";
+
+        tempData.asunto = value.asunto;
+        tempData.remitente = value.remitente;
+
+        tempData.autoridad_remitente = "<select id='id_autoridad' class='select' onchange='saveComboToDatabase(this,\"id_autoridad\","+value.id_documento_entrada+")'>";
+        $.each(thisAutoridad,function(index,val)
+        {
+                if(val.id_autoridad==value.id_autoridad)
+                        tempData.autoridad_remitente += "<option value='"+val.id_autoridad+"' selected >"+val.clave_autoridad+"</option>";
+                else
+                        tempData.autoridad_remitente += "<option value='"+val.id_autoridad+"' >"+val.clave_autoridad+"</option>";
+        });
+        tempData.autoridad_remitente += "</select>";
+        
+        // tempData += "<td style='background-color: #ccccff'>";
+        tempData.no_tema = "<select id='id_clausula' class='select' onchange='saveComboToDatabase(this,\"id_clausula\","+value.id_documento_entrada+")'>";
+        $.each(thisTemas,function(index,val)
+        {
+                if(val.id_tema == value.id_tema)
+                        tempData.no_tema += "<option value='"+val.id_tema+"'  selected >"+val.no+"</option>";
+                else
+                        tempData.no_tema += "<option value='"+val.id_tema+"' >"+val.no+"</option>";
+        });
+        tempData.no_tema += "</select></td>";
+                                
+        // tempData += "<td style='background-color: #ccccff' contenteditable='false' onBlur='saveToDatabase(this,\"nombre\","+value.id_documento_entrada+")'";
+        tempData.nombre_tema = value.nombre;
+        
+        // tempData += "<td style='background-color: #ccccff' contenteditable='false' onBlur='saveToDatabase(this,\"nombre_empleado\","+value.id_documento_entrada+")'";
+        tempData.nombre_empleado = value.nombre_empleado;
+                                
+        // tempData.clasificacion = "<td contenteditable='false' onBlur='saveToDatabase(this,\"clasificacion\","+value.id_documento_entrada+")'>";
+        if(value.clasificacion == 1)
+                tempData.clasificacion = "Con Limite de Tiempo";   
+        if (value.clasificacion == 2)
+                tempData.clasificacion = "Sin Limite de Tiempo";
+        if (value.clasificacion == 3)
+                tempData.clasificacion = "Informativo";
+        // tempData += "</td>";
+                                                                
+        tempData.status = "<select id='id_status' class='select' onchange='saveComboToDatabase(this,\"status_doc\","+value.id_documento_entrada+")'>";
+        tempData.status += "<option value='1'";
+        if(value.status_doc == 1)
+                tempData.status += "selected";
+        tempData.status += ">En proceso</option>";
+
+        tempData.status += "<option value='2'";
+        if(value.status_doc == 2)
+                 tempData.status += "selected";
+        tempData.status += ">Suspendido</option>";
+
+        tempData.status += "<option value='3'";
+        if(value.status_doc == 3)
+                tempData.status += "selected";
+        tempData.status += ">Terminado</option>";
+
+        tempData.status += "</select>";
+
+        tempData.fecha_asignacion = "<input style='' value='"+value.fecha_asignacion+"' onBlur='saveToDatabaseDates(this,\"fecha_asignacion\","+value.id_documento_entrada;
+        tempData.fecha_asignacion += ",\""+value.fecha_asignacion+"\",\""+value.fecha_limite_atencion+"\",\""+value.fecha_alarma+"\")' type='date'/>";
+
+        tempData.fecha_limite_atencion = "<input style='' value='"+value.fecha_limite_atencion+"' onBlur='saveToDatabaseDates(this,\"fecha_limite_atencion\","+value.id_documento_entrada;
+        tempData.fecha_limite_atencion += ",\""+value.fecha_asignacion+"\",\""+value.fecha_limite_atencion+"\",\""+value.fecha_alarma+"\")' type='date'/>";
+
+        tempData.fecha_alarma = "<input style='' value='"+value.fecha_alarma+"' onBlur='saveToDatabaseDates(this,\"fecha_alarma\","+value.id_documento_entrada;
+        tempData.fecha_alarma += ",\""+value.fecha_asignacion+"\",\""+value.fecha_limite_atencion+"\",\""+value.fecha_alarma+"\")' type='date'/>";
+
+        tempData.adjuntar_archivo = "<button onClick='mostrar_urls("+value.id_documento_entrada+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
+        tempData.adjuntar_archivo += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i>Mostrar</button>";
+                                
+        tempData.observaciones = value.observaciones;
+        return tempData;
+}
+
+function reconstruir2(value)//borrar
 {
         tempData = "";
         // tempData += "<td contenteditable='false' onBlur='saveToDatabase(this,\"clave_cumplimiento\","+value.id_documento_entrada+")'";
@@ -877,18 +967,22 @@ function reconstruir(value)
         return tempData;
 }
 
-function reconstruirTable(datos)
+function reconstruirTable(datos)//listooo
 {
-        tempData="";
+        __datos=[];
         $.each(datos,function(index,value)
         {
-                tempData += "<tr id='registro_"+value.id_documento_entrada+"' class='table-row'>"+reconstruir(value)+"</tr>";
+                // tempData += "<tr id='registro_"+value.id_documento_entrada+"' class='table-row'>"+reconstruir(value)+"</tr>";
+                __datos.push(reconstruir(value));
         });
-        $("#tbodyDatos").html(tempData);
-        $('#loader').hide();
+        // $("#tbodyDatos").html(tempData);
+        // $('#loader').hide();
+        console.log(__datos);
+        construirGrid(__datos);
+
 }
 
-listarDatos(-1);
+// listarDatos(-1);
 var thisTemas;
 var thisAutoridad;
 function listarDatos(id_documento)
@@ -921,15 +1015,16 @@ function listarDatos(id_documento)
                                 ajaxListado = ({
                                 url:'../Controller/DocumentosEntradaController.php?Op=Listar',
                                 type: 'GET',
+                                async:false,
                                 success:function(datos)
                                 {
-                                        dataListado = datos;
+                                        dataListado = datos;                                        
                                         reconstruirTable(datos);
                                         $("td").dblclick(function()
                                         {
                                                 $(this).prop("contenteditable",true);
                                                 // $(this).select();
-                                                console.log($(this));
+                                                // console.log($(this));
                                         });
                                 },
                                 error:function(error)
@@ -988,7 +1083,7 @@ function componerDataListado(value)// id de la vista documento
 function showEdit(editableObj)
 {
         // $(editableObj).css("background","#FFF");
-        
+
 }
 		
 function saveToDatabase(editableObj,column,id)
@@ -1584,7 +1679,7 @@ function Habilitar_DesabilitarFechas(accion)
         $("#FECHA_ALARMA").prop("disabled",accion);
         $("#MENSAJE_ALERTA").prop("disabled",accion);
 }
-
+listarDatos(-1);
 
 </script>
 <script id="template-upload" type="text/x-tmpl">

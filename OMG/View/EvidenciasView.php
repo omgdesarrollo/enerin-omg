@@ -774,9 +774,6 @@
 
     function reconstruirTable(datos)
     {
-        // cargaTodo=0;
-        // tempData = "";
-        // contador=1;
         __datos=[];
         $.each(datos,function(index,value)
         {
@@ -793,28 +790,11 @@
                   async: false,
                   success: function(todo)
                   {
-                    // tempData += reconstruir(todo,value,cargaTodo,contador);
-                    // console.log("["+tempData+"]");
-                    // console.log(JSON.parse("["+tempData+"]"));
-                    // contador++;
-                    // $.each(datos,function(index,value)
-                    // {
-                        // (value.validacion_tema_responsable=="true")?status="validado":status="En Proceso";
-                           
                         __datos.push(reconstruir(todo,value,index++));
-//                            construir(__datos);
-                    // });
                   }
                 });
-//                dataTodo = __datos;
         });
-//        dataTodo = __datos;
-        // console.log(__datos);
-        // $('#bodyTable').html(tempData);
-        // $('#loader').hide();
-       construir((__datos.length==0)?[]:__datos);
-
-//construirGrid(__datos);
+       construir(__datos);
         moverA();
     }
 
@@ -823,57 +803,40 @@
         console.log(datosF);
         $("#jsGrid").html("");
         $("#jsGrid").jsGrid({
-        width: "100%",
-        height: "300px",
-        editing: false,
-        heading: true,
-        sorting: true,
-        paging: true,
-        autoload: true,
-        pageSize: 10,
-        deleteConfirm:"Estas seguro que desea eliminar la evidencia",
-        rowClick: function(args)
-        {
-            //  alert("le has picado "+args);
-//             console.log(args);
-                    // alert("este es el id de evidencia seleccionado"+args["item"].id_evidencia);     
-//            showDetailsDialog("Edit", args.item);
-        },
-        data: datosF,
-        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
-        fields: [
-        { name: "id_evidencia", textField: "Name", type: "text", width: "auto", validate: "required" },
-        { name: "no", type: "text", width: 28, validate: "required" },
-        { name: "requisito", type: "text", width: 150, validate: "required" },
-        { name: "registro", type: "text", width: 150, validate: "required" },
-        { name: "frecuencia", type: "text", width: 120, validate: "required" },
-        { name: "clave_documento", type: "text", width: 128, validate: "required" },
-        { name: "adjuntar_evidencia", type: "text", width: 140, validate: "required" },
-        { name: "fecha_registro", type: "text", width: 120, validate: "required" },
-        { name: "usuario", type: "text", width: 150, validate: "required" },
-        { name: "accion_correctiva", type: "text", width: 130, validate: "required" },
-        { name: "plan_accion", type: "text", width: 150, validate: "required" },
-        { name: "desviacion", type: "text", width: 120, validate: "required" },
-        {name: "validacion", type: "text", width: 200, validate: "required" },
-        {name: "opcion", type: "text", width: 90, validate: "required" },
-        { type: "control" }
-    ],deleteConfirm: function(item) {
-
-  
-// adjuntar_evidencia:
-// clave_documento:
-// desviacion:
-// fecha_registro:
-// frecuencia:
-// no:
-// plan_accion:
-// registro:
-// requisito:
-// usuario:
-// validacion:
-    }});
- 
-     
+            width: "100%",
+            height: "300px",
+            editing: false,
+            heading: true,
+            sorting: true,
+            paging: true,
+            autoload: true,
+            pageSize: 10,
+            deleteConfirm:"Estas seguro que desea eliminar la evidencia",
+            rowClick: function(args)
+            {
+            },
+            data: datosF,
+            pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+            fields: [
+            { name: "id_evidencia", textField: "Name", type: "text", width: "auto", validate: "required" },
+            { name: "no", type: "text", width: 28, validate: "required" },
+            { name: "requisito", type: "text", width: 150, validate: "required" },
+            { name: "registro", type: "text", width: 150, validate: "required" },
+            { name: "frecuencia", type: "text", width: 120, validate: "required" },
+            { name: "clave_documento", type: "text", width: 128, validate: "required" },
+            { name: "adjuntar_evidencia", type: "text", width: 140, validate: "required" },
+            { name: "fecha_registro", type: "text", width: 120, validate: "required" },
+            { name: "usuario", type: "text", width: 150, validate: "required" },
+            { name: "accion_correctiva", type: "text", width: 130, validate: "required" },
+            { name: "plan_accion", type: "text", width: 150, validate: "required" },
+            { name: "desviacion", type: "text", width: 120, validate: "required" },
+            {name: "validacion", type: "text", width: 200, validate: "required" },
+            {name: "opcion", type: "text", width: 90, validate: "required" },
+            { type: "control" }
+            ],deleteConfirm: function(item)
+            {
+            }
+        }); 
     }
 
     // function reconstruirTable(data)
@@ -1267,6 +1230,7 @@ function confirmarBorrarRegistroEvidencia(){
         //     });
         // }
     }
+    
     function MandarNotificacionDesviacion(idPara,responsable,msj,idEvidencia)
     {
         if(responsable==1)
@@ -1283,6 +1247,7 @@ function confirmarBorrarRegistroEvidencia(){
             $("#myModalLabelMandarNotificacion").html("Desviación Recibida");
         }
     }
+
     function MandarNotificacion(idPara,responsable,msj,idEvidencia,validador)
     {
         if(responsable!=1 || validador==1)
