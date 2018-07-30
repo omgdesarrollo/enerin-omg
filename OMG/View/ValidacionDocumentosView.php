@@ -1000,7 +1000,7 @@ if(isset($_REQUEST["accion"]))
                         }
                         if(existenArchivos==false)
                         {
-                            swal("","Adjuntar archivos primero","info");
+                            swal("","Debe de adjuntar un archivo antes de Validar","info");
                         }
                         if(validado==-1)
                         {
@@ -1108,7 +1108,7 @@ if(isset($_REQUEST["accion"]))
         yes = "fa-check-circle-o";
         valor=false;
         ($(Obj).hasClass(no))?valor=false:valor=true;
-        swalInfo( ((valor)?"Documento validado":"Esparando al Responsable") );
+        swalInfo( ((valor)?"Documento validado":"Esperando al Responsable") );
     }
 
     function modificarArchivos(idValidacionDocumento,valor)

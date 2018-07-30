@@ -2,6 +2,7 @@
 
 require_once '../dao/DocumentoDAO.php';
 require_once '../Pojo/DocumentoPojo.php';
+require_once '../Model/EmpleadoModel.php';
 
 class DocumentoModel{
     //valida los datos del usuario.
@@ -9,7 +10,10 @@ class DocumentoModel{
     public function  listarDocumentos($contrato){
         try{
             $dao=new DocumentoDAO();
-            $rec=$dao->mostrarDocumentos($contrato);
+            $model=new EmpleadoModel();
+            
+            $rec['doc']=$dao->mostrarDocumentos($contrato);
+            $rec['empl']=$model->listarEmpleadosComboBox();
             
             return $rec;
     }  catch (Exception $e){

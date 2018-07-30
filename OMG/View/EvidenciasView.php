@@ -741,9 +741,6 @@
 
     function reconstruirTable(datos)
     {
-        // cargaTodo=0;
-        // tempData = "";
-        // contador=1;
         __datos=[];
         $.each(datos,function(index,value)
         {
@@ -760,21 +757,9 @@
                   async: false,
                   success: function(todo)
                   {
-                    // tempData += reconstruir(todo,value,cargaTodo,contador);
-                    // console.log("["+tempData+"]");
-                    // console.log(JSON.parse("["+tempData+"]"));
-                    // contador++;
-                    // $.each(datos,function(index,value)
-                    // {
-                        // (value.validacion_tema_responsable=="true")?status="validado":status="En Proceso";
-                           
                         __datos.push(reconstruir(todo,value,index++));
-//                            construir(__datos);
-                    // });
-                    
                   }
                 });
-//                dataTodo = __datos;
         });
 //        dataTodo = __datos;
         // console.log(__datos);
@@ -1330,6 +1315,7 @@ function confirmarBorrarRegistroEvidencia(){
         //     });
         // }
     }
+    
     function MandarNotificacionDesviacion(idPara,responsable,msj,idEvidencia)
     {
         if(responsable==1)
@@ -1346,6 +1332,7 @@ function confirmarBorrarRegistroEvidencia(){
             $("#myModalLabelMandarNotificacion").html("Desviación Recibida");
         }
     }
+
     function MandarNotificacion(idPara,responsable,msj,idEvidencia,validador)
     {
         if(responsable!=1 || validador==1)

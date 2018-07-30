@@ -52,9 +52,6 @@ class EmpleadoDAO{
 
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-            
-
-            return $lista;
 
             return $lista;
     }  catch (Exception $ex){

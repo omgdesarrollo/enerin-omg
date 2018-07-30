@@ -309,7 +309,7 @@ function loadDataSideBarOficiosDocumentacion()
         width: 350,
         items: [
           {id: "permisos", text: "Permisos", icon: "cumplimientos.png"},
-          {id: "ajustes", text: "Ajustes", icon: "ajustes.png"}
+          {id: "ajustes", text: "Cambiar Contraseña", icon: "ajustes.png"}
           
             
         ]

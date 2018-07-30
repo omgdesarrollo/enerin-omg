@@ -225,8 +225,9 @@ class AsignacionTemaRequisitoModel {
         try
         {
             $dao=new AsignacionTemaRequisitoDAO();
-            $dao->eliminarNodoRequisito($ID_REQUISITO);
+            $lista= $dao->eliminarNodoRequisito($ID_REQUISITO);
             
+            return $lista;
         }catch (Exception $ex)
         {
             throw $ex;
