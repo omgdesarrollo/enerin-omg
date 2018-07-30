@@ -21,6 +21,21 @@ class GeneralDAO{
         }
     }
     
+    
+    public function actualizarColumnas()
+    {
+        try
+        {
+            $query="";
+            
+        } catch(Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+
     public function eliminarRegistroPorTabla($TABLA,$ID)
     {
         try 

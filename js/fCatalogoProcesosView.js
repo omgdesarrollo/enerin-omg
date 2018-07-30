@@ -10,27 +10,28 @@ function listarDatos()
         datosParamAjaxValues["url"]="../Controller/CatalogoProcesosController.php?Op=listar";
         datosParamAjaxValues["type"]="POST";
         datosParamAjaxValues["async"]=false;
-        var variablefunciondatos=function obtenerDatosServer (data){
+        var variablefunciondatos=function obtenerDatosServer (data)
+        {
 
-        $.each(data,function (index,value){
+            $.each(data,function (index,value){
 
-        __datos.push({
-//            "No":contador++,
-//            "Tema":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-//            "Requisitos":"<button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-//            "Registros":"<button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-            "Clave del Contrato":value.clave_contrato,
-            "Region Fiscal":value.region_fiscal,
-            "Ubicacion del Punto de Medicion":value.ubicacion_punto_medicion,
-            "Tag del Patin de Medicion":value.tag_patin_medicion,
-            "Tipo de Medidor":value.tipo_medidor,
-            "Tag del Medidor":value.tag_medidor,
-            "clasificacion del Sistema de Medicion":value.clasificacion_sistema_medicion,
-            "Tipo de Hidrocarburo":value.tipo_hidrocarburo
-        })
-        });
+            __datos.push({
+    //            "No":contador++,
+    //            "Tema":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+    //            "Requisitos":"<button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+    //            "Registros":"<button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+                "Clave del Contrato":value.clave_contrato,
+                "Region Fiscal":value.region_fiscal,
+                "Ubicacion del Punto de Medicion":value.ubicacion_punto_medicion,
+                "Tag del Patin de Medicion":value.tag_patin_medicion,
+                "Tipo de Medidor":value.tipo_medidor,
+                "Tag del Medidor":value.tag_medidor,
+                "clasificacion del Sistema de Medicion":value.clasificacion_sistema_medicion,
+                "Tipo de Hidrocarburo":value.tipo_hidrocarburo
+            })
+            });
 //        console.log(__datos);
-   }
+        }
    
    var listfunciones=[variablefunciondatos];
    ajaxHibrido(datosParamAjaxValues,listfunciones); 

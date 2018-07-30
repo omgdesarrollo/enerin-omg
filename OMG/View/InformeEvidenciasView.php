@@ -41,76 +41,6 @@ $Usuario=  Session::getSesion("user");
 
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 
-<!--        <style>
-
-            .modal-body{
-            color:#888;
-            max-height: calc(100vh - 110px);
-            overflow-y: auto;
-            }                    
-
-            #sugerenciasclausulas {
-            width:350px;
-            height:5px;
-            overflow: auto;
-            }  
-            body{
-            overflow:hidden;     
-            }
-
-            .hideScrollBar{
-            width: 100%;
-            height: 50%;
-            overflow: auto;
-            margin-right: 14px;
-            padding-right: 28px; /*This would hide the scroll bar of the right. To be sure we hide the scrollbar on every browser, increase this value*/
-            padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is one*/
-            }
-            
-            
-
-        </style>            -->
-                
-<!--              <style>
-
-            .modal-body{
-            color:#888;
-            max-height: calc(100vh - 110px);
-            overflow-y: auto;
-            }                    
-            .modal-lg{
-                width: 100%;
-            }  
-            
-            .modal-backdrop {
-            /*En caso de que quieras modificar el backdrop*/
-            z-index: 1040 !important;
-            }
-
-            .modal {
-                /*En caso de que quieras modificar el modal*/
-                z-index: 1050 !important;
-            }
-
-            #sugerenciasclausulas {
-            width:350px;
-            height:5px;
-            overflow: auto;
-            }  
-            body{
-            overflow:hidden;     
-            }
-
-            .hideScrollBar{
-            width: 100%;
-            height: 50%;
-            overflow: auto;
-            margin-right: 14px;
-            padding-right: 28px; /*This would hide the scroll bar of the right. To be sure we hide the scrollbar on every browser, increase this value*/
-            padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is one*/
-            }
-        </style>        -->
-                
         <style>
             .jsgrid-header-row>.jsgrid-header-cell {
                 background-color:#307ECC ;      /* orange */
@@ -164,38 +94,6 @@ require_once 'EncabezadoUsuarioView.php';
 
 <div style="height: 40px"></div>
 
-<!--<div class="container">		
-    <div class="row">
-        <div class="col-md-4">
-                <div class="row align-items-center">
-                        <div class="col-1">
-                                <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkValidado">
-                        </div>
-                        <div class="col-4">Validados</div>
-                </div>
-        </div>
-
-        <div class="col-md-4">
-                <div class="row align-items-center">
-                        <div class="col-1">
-                                <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkNoValidado">
-                        </div>
-                        <div class="col-5">En Proceso</div>
-                </div>
-        </div>
-
-        <div class="col-md-4">
-                <div class="row align-items-center">
-                        <div class="col-1">
-                                <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkSinDocumento">
-                        </div>
-                        <div class="col-6">Sin Documento</div>
-                </div>
-        </div>							
-    </div>
-</div>    -->
-
-
 <div class="container">		
     <div class="row">
         <div class="col-md-12">
@@ -219,33 +117,6 @@ require_once 'EncabezadoUsuarioView.php';
 </div>
 
 <div id="jsGrid"></div>
-
-<!--<table class="table table-bordered table-striped header_fijo tbl-qa" id="idTable ">
-    <thead>                              
-            <tr>
-
-                  <th class="table-header" width="4.8%">No</th>
-                  <th class="table-header" width="9.6%">Cumplimiento</th>
-                  <th class="table-header" width="9.6%">Tema</th>
-                  <th class="table-header" width="9.6%">Requisitos</th>
-                  <th class="table-header" width="9.6%">Registros</th>
-                  <th class="table-header" width="14.4%">Clave del Documento</th>
-                  <th class="table-header" width="14.4%">Responsable del Documento</th>
-                  <th class="table-header" width="14.4%">Frecuencia</th>
-                  <th class="table-header" width="14.4%">Evidencia</th>
-                  <th class="table-header" width="14.4%">Fecha de Registro</th>
-                  <th class="table-header" width="14.4%">Desviacion</th>
-                  <th class="table-header" width="14.4%">Accion Correctiva</th>
-                  <th class="table-header" width="14.4%">Avance del Plan</th>
-                  <th class="table-header" width="9.6%">Estatus</th>
-
-            </tr>
-    </thead>
-    
-    <tbody class="hideScrollBar"  id="datosGenerales" style="position: absolute">    
-
-    </tbody>
-</table>-->
 
                
 <!-- Inicio modal Tema y Responsable -->
@@ -334,7 +205,6 @@ require_once 'EncabezadoUsuarioView.php';
 </script>
 
             
-            <!--<script src="../../js/fReporteValidacionDocumentosView.js" type="text/javascript"></script>-->
             <!--Inicia para el spiner cargando-->
             <script src="../../js/loaderanimation.js" type="text/javascript"></script>
             <!--Termina para el spiner cargando-->

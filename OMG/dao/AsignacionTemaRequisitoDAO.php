@@ -306,8 +306,9 @@ public function obtenerDetalles_Reg($value){
                     WHERE requisitos.id_requisito=$ID_REQUISITO";
             
             $db=  AccesoDB::getInstancia();
-            $db->executeQueryUpdate($query);
+            $lista= $db->executeQueryUpdate($query);
             
+            return $lista;
         } catch (Exception $ex)
         {
             throw $ex;

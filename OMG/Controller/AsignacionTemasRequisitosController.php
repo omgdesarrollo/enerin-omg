@@ -117,7 +117,8 @@ switch ($Op) {
         case 'EliminarRequisito':
 		# code...
             
-            $model->eliminarNodoRequisito($_REQUEST['ID_REQUISITO']);
+            $Lista= $model->eliminarNodoRequisito($_REQUEST['ID_REQUISITO']);
+            echo $Lista;
 		break;    
             
 	default:

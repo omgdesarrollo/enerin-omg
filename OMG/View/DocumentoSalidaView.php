@@ -360,7 +360,7 @@ require_once 'EncabezadoUsuarioView.php';
                                                                 $s="";
                                                                 foreach ($cbxDE as $value) {
                                                                 ?>
-                                                                
+                             
                                                                 <option value="<?php echo "".$value["id_documento_entrada"] ?>"  ><?php echo "".$value["folio_entrada"]; ?></option>
                                                                 
                                                                     <?php
