@@ -48,7 +48,7 @@
     
     <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
     <script src="../../js/fEvidenciasView.js" type="text/javascript"></script>
-      <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+      <!--<script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>-->
     <!--<script src="../../js/jquery.js" type="text/javascript"></script>-->
 
 <!--<link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
@@ -96,8 +96,8 @@
         </style>
 </head>
 <!-- <body> -->
-<body class="no-skin" onload="loadSpinner();">
-    <div id="loader"></div>
+<body class="no-skin" >
+    <!--<div id="loader"></div>-->
     
     <?php
         require_once 'EncabezadoUsuarioView.php';
@@ -118,10 +118,10 @@
             Agregar Nuevo Registro
         </button>
 
-        <button id="btnAgregarEvidenciasRefrescar" type="button" 
+<!--        <button id="btnAgregarEvidenciasRefrescar" type="button" 
         class="btn btn-info " onclick="refresh();" >
             <i class="glyphicon glyphicon-repeat"></i> 
-        </button>
+        </button>-->
 
         <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
 
@@ -159,36 +159,6 @@
             </table>-->
     
     <div id="jsGrid"></div>
-    <!-- <table class="table table-bordered table-striped header_fijo" id="idTable">
-        <thead>
-            <tr>
-                <th class="table-headert" colspan="5" style="background:#9aca40"></td>
-                <th class="table-headert" colspan="5" style="background:#6FB3E0">Responsable de Evidencia</td>
-                <th class="table-headert" colspan="3" style="background:#307ECC">Supervisión</td>
-            </tr>
-            <tr class="">
-                <th class="table-headert backgroundTdTable" width="4.8%">No.</th>
-                <th class="table-headert backgroundTdTable" width="9.6%">Requisito</th>
-                <th class="table-headert backgroundTdTable" width="4.8%">Registro</th>
-                <th class="table-headert backgroundTdTable" width="4.8%">Frecuencia</th>
-                <th class="table-headert backgroundTdTable" width="4.8%">Clave Documento</th>
-                <th class="table-headert backgroundTdTable2" width="9.6%">Adjuntar Evidencia</th>
-                <th class="table-headert backgroundTdTable2" width="9.6%">Fecha de Registro</th>
-                <th class="table-headert backgroundTdTable2" width="9.6%">Usuario</th>
-                <th class="table-headert backgroundTdTable2" width="4.8%">Accion Correctiva</th>
-                <th class="table-headert backgroundTdTable2" width="9.6%">Plan de Accion</th>
-                <th class="table-headert" width="9.6%">Desviacion</th>
-                <th class="table-headert" width="4.8%">Validacion</th>
-                <th class="table-headert" width="4.8%">Opcion</th>
-            </tr>
-        </thead>
-        
-        <tbody class="hideScrollBar" id="bodyTable" style="position: absolute">             
-        </tbody>
-        
-    </table> -->
-    <!--</div>-->
-    
 
 </body>
 
@@ -207,15 +177,6 @@
             </div>
 
             <div class="modal-body">
-            
-                <!-- <div class="form-group">
-                    <label class="control-label" for="title">Clave Documento:</label>
-                    <input type="text" class="" onkeyup="getClavesDocumento(this)"/>
-                    <select id="CLAVE_NUEVAEVIDENCIAMODAL" class="select1" onchange="select_clavesModal(this)">
-                        <option>Sin especificar</option>
-                    </select>
-                    <div class="help-block with-errors"></div>
-				</div> -->
 
                 <div class="form-group">
                     <label class="control-label">Temas: </label>
@@ -356,7 +317,7 @@
 
 <!--cierre del modal Mensaje-->
 <script>
-   
+   var gridInstance;
     // var data="";
     // var dataTemp="";
     months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
@@ -378,31 +339,8 @@
     dataRegistro="";
     dataListado=[];
     dataTodo=[];
-//    $("#jsGrid").jsGrid({
-//        width: "100%",
-//        height: "200px",
-//        heading: true,
-//        sorting: true,
-//        paging: true,
-//        data: [],
-//        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
-//        fields: [
-//            { name: "no", type: "text", width: 80, validate: "required" },
-//            { name: "requisito", type: "text", width: 150, validate: "required" },
-//            { name: "Nombre del Documento", type: "text", width: 150, validate: "required" },
-//            { name: "registro", type: "text", width: 150, validate: "required" },
-//            { name: "frecuencia", type: "text", width: 150, validate: "required" },
-//            { name: "clave_documento", type: "text", width: 150, validate: "required" },
-//            { name: "adjuntar_evidencia", type: "text", width: 150, validate: "required" },
-//            { name: "fecha_registro", type: "text", width: 150, validate: "required" },
-//            { name: "usuario", type: "text", width: 80, validate: "required" },
-//            { name: "accion_correctiva", type: "text", width: 80, validate: "required" },
-//            { name: "plan_accion", type: "text", width: 80, validate: "required" },
-//            { name: "desviacion", type: "text", width: 80, validate: "required" },
-//            {name: "validacion", type: "text", width: 80, validate: "required" },
-//            {name: "opcion", type: "text", width: 80, validate: "required" }
-//        ]
-//        });
+    __refresh=false;
+
     $(function()
     {
 //alert("ds");
@@ -418,6 +356,9 @@
 
     $('#BTN_CREAR_NUEVAEVIDENCIAMODAL').click(function()
     {
+//        $("#grid").jsGrid("insertItem", { Name: "John", Age: 25, Country: 2 }).done(function() {
+//            console.log("insertion completed");
+//        });
         claveRegistro = $("#IDREGISTRO_NUEVAEVIDENCIAMODAL").val();
         claveTema = $("#IDTEMA_NUEVAEVIDENCIAMODAL").val();
         if(claveTema!=-1 && claveRegistro!=-1)
@@ -427,21 +368,23 @@
                 url: '../Controller/EvidenciasController.php?Op=CrearEvidencia',
                 type: 'POST',
                 data: "ID_REGISTRO="+dataRegistro.id_registro,
+                async:false,
                 success:function(data)
                 {
                     (data==true)?
                     (
                         swalSuccess("Se creo la evidencia"),
+                window.location.href=""
                         // swal({
                         // title: '',text: 'Se creo la evidencia',
                         // showCancelButton: false,showConfirmButton: false,
                         // type:"success"
                         // }),
-                        $('#FRECUENCIA_NUEVAEVIDENCIAMODAL').html(""),
-                        $('#DOCUMENTO_NUEVAEVIDENCIAMODAL').html(""),
-                        $('#NOMBRE_NUEVAEVIDENCIAMODAL').html(""),
-                        $('#nuevaEvidenciaModal .close').click(),
-                        listarDatos()
+//                        $('#FRECUENCIA_NUEVAEVIDENCIAMODAL').html(""),
+//                        $('#DOCUMENTO_NUEVAEVIDENCIAMODAL').html(""),
+//                        $('#NOMBRE_NUEVAEVIDENCIAMODAL').html(""),
+//                        $('#nuevaEvidenciaModal .close').click(),
+//                        listarDatos()
                     )
                     :swalErro("Error al crear");
                     // swal({
@@ -451,7 +394,31 @@
                     //     showConfirmButton: false,
                     //     type:"error"
                     // });
-                }
+//                     listarDatos();
+//                     $("#jsGrid").jsGrid("refresh");
+
+//                        var gridInstance;     
+//                    console.log(gridInstance);
+//                    $("#jsGrid").jsGrid("insertItem");
+//                     gridInstance = args.grid;  
+//                    gridInstance["data"].push(
+//                        {id_evidencia: "77", no: 11, requisito: "Elbueno", registro: "Vamos", frecuencia: "DIARIO"});
+//                 $("#jsGrid").jsGrid("refresh");
+//                         gridInstance["data"].
+
+                    var $grid = $("#jsGrid");
+//                    $grid.jsGrid("option", "pageIndex", 1);
+//                    $grid.jsGrid("loadData");
+//                    $grid["0"]["draggable"]=true;
+                    console.log("lo va hacer ");
+                    console.log($grid);    
+//                    $("#jsGrid").html("");
+                    __refresh=false;
+//                    listarDatos();
+                    
+//                    $("#jsGrid").jsGrid("option", "data",__datosGlobales);
+                    }
+                    
             });
         }
         else
@@ -531,7 +498,7 @@
             async:false,
             beforeSend:function()
             {
-                $('#loader').show();
+//                $('#loader').show();
             },
             success:function(datos)
             {
@@ -540,7 +507,7 @@
             },
             error:function(error)
             {
-                $('#loader').hide();
+//                $('#loader').hide();
             }
         });
     }
@@ -804,6 +771,7 @@
                         __datos.push(reconstruir(todo,value,index++));
 //                            construir(__datos);
                     // });
+                    
                   }
                 });
 //                dataTodo = __datos;
@@ -812,7 +780,14 @@
         // console.log(__datos);
         // $('#bodyTable').html(tempData);
         // $('#loader').hide();
-       construir((__datos.length==0)?[]:__datos);
+        if(__refresh==false){
+            __datosGlobales=__datos;
+            construir((__datos.length==0)?[]:__datos);
+        }
+        else{
+            if(__refresh==true)
+            __datosGlobales=(__datos.length==0)?[]:__datos;
+        }
 
 //construirGrid(__datos);
         moverA();
@@ -820,60 +795,147 @@
 
     function construir(datosF)
     {
-        console.log(datosF);
+        
+//        console.log(datosF);
         $("#jsGrid").html("");
         $("#jsGrid").jsGrid({
+        onInit: function(args) {
+            gridInstance = args.grid;
+//            alert("entrara a cargar");
+        }, onDataLoading: function(args) {
+   
+//        alert("es");
+//        console.log(args);
+    },
+    onRefreshing: function(args) {
+        
+//        alert("esta refresecando los datos ");
+    },
         width: "100%",
         height: "300px",
-        editing: false,
+//        editing: true,
         heading: true,
         sorting: true,
         paging: true,
-        autoload: true,
+        
+        autoload:true,
         pageSize: 10,
-        deleteConfirm:"Estas seguro que desea eliminar la evidencia",
+        pageButtonCount: 5,
+        updateOnResize: true,
+        confirmDeleting: true,
+//        controller:datosF,
         rowClick: function(args)
         {
-            //  alert("le has picado "+args);
+//              alert("le has picado "+args);
 //             console.log(args);
-                    // alert("este es el id de evidencia seleccionado"+args["item"].id_evidencia);     
+//                     alert("este es el id de evidencia seleccionado"+args["item"].id_evidencia);     
 //            showDetailsDialog("Edit", args.item);
         },
+        
         data: datosF,
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields: [
-        { name: "id_evidencia", textField: "Name", type: "text", width: "auto", validate: "required" },
-        { name: "no", type: "text", width: 28, validate: "required" },
-        { name: "requisito", type: "text", width: 150, validate: "required" },
-        { name: "registro", type: "text", width: 150, validate: "required" },
-        { name: "frecuencia", type: "text", width: 120, validate: "required" },
-        { name: "clave_documento", type: "text", width: 128, validate: "required" },
-        { name: "adjuntar_evidencia", type: "text", width: 140, validate: "required" },
-        { name: "fecha_registro", type: "text", width: 120, validate: "required" },
-        { name: "usuario", type: "text", width: 150, validate: "required" },
-        { name: "accion_correctiva", type: "text", width: 130, validate: "required" },
-        { name: "plan_accion", type: "text", width: 150, validate: "required" },
-        { name: "desviacion", type: "text", width: 120, validate: "required" },
-        {name: "validacion", type: "text", width: 200, validate: "required" },
-        {name: "opcion", type: "text", width: 90, validate: "required" },
-        { type: "control" }
-    ],deleteConfirm: function(item) {
+        { name: "id_evidencia", type: "text",fields:"f", width: "auto", validate: "required",visible:false },
+        { name: "no", title:"No",type: "text", width: 28, validate: "required" },
+        { name: "requisito",title:"Requisito", type: "text", width: 150, validate: "required" },
+        { name: "registro",title:"Registro", type: "text", width: 150, validate: "required" },
+        { name: "frecuencia",title:"Frecuencia", type: "text", width: 120, validate: "required" },
+        { name: "clave_documento",title:"Clave Documento", type: "text", width: 128, validate: "required" },
+        { name: "adjuntar_evidencia",title:"Adjuntar Evidencia", type: "text", width: 140, validate: "required" },
+        { name: "fecha_registro",title:"Fecha Registro", type: "text", width: 120, validate: "required" },
+        { name: "usuario",title:"Usuario", type: "text", width: 150, validate: "required" },
+        { name: "accion_correctiva",title:"Accion Correctiva", type: "text", width: 130, validate: "required" },
+        { name: "plan_accion",title:"Plan Accion", type: "text", width: 150, validate: "required" },
+        { name: "desviacion",title:"Desviacion", type: "text", width: 120, validate: "required" },
+        {name: "validacion",title:"Validacion", type: "text", width: 200, validate: "required" },
+        {name: "opcion",title:"Opcion", type: "text", width: 90, validate: "required",visible:false},
+       
+//        { name: "Country", type: "select", items: [{Name:"dd",Id:0},{Name:"seleccion",Id:1}],selectedIndex:0, valueField: "Id", textField: "Name",
+//                validate: { message: "Country should be specified", validator: function(value) { return value > 0; } } },
+        {type: "control" },
+        {name:"eliminar",visible:false}
+        
+    ],itemTemplate: function(value,item) {
+        
+        },
+//         deleteConfirm: function(item) {
+////            return "La Evidencia se va eliminar esta seguro?";
+//        },
+//          deleteItem: function(item) {
+//              alert("este metos");
+//          },
+          onItemDeleted: function(args) {
+              if(args["item"]["eliminar"]=="si"){
+                  eliminarEvidencia(args["item"]["id_evidencia"]);
+              }
+              
+          },
+          deleteConfirm: function(args) {
+//                var string = "d";
+                return "seguro que desea eliminar el registro de evidencia"
+//                $("#deleteDialog").dialog("open");
+//                $("#deleteDialogText").text(string);
+//                swal({
+//                     title: "ELIMINAR",
+//                     text: "Al eliminar este registro se eliminara toda la evidencia registrada. ¿Desea continuar?",
+//                     type: "warning",
+//                     showCancelButton: true,
+//                     closeOnConfirm: false,
+//                     showLoaderOnConfirm: true,
+//                     confirmButtonText: "Eliminar",
+//                     cancelButtonText: "Cancelar",
+//                   },function(res){
+//                       if(res){
+//                             swal("","Eliminacion Exitosa","success");
+//                         }
+//                         else{
+//                            swal("","Error Al Eliminar","Error");
+//                        }
+//                   });
+        
+          },
+          onItemDeleting: function(args) {
+              
+//              console.log("entro aqui");
+//              console.log(args);
+// args.cancel = true;
+              if(args["item"]["opcion"]!=""){
+                    args["item"]["eliminar"]="si";
+                    eliminarEvidenciaGrid(args,args["item"]["id_evidencia"]);   
+                }
+                else{
+                    args.cancel = true;
+                    args["item"]["eliminar"]="no";
+                     swal("","Error no se puede Eliminar ya contiene archivos adjuntos","error");
+                    setTimeout(function(){swal.close();},1500);
+                }
+            
 
-  
-// adjuntar_evidencia:
-// clave_documento:
-// desviacion:
-// fecha_registro:
-// frecuencia:
-// no:
-// plan_accion:
-// registro:
-// requisito:
-// usuario:
-// validacion:
-    }});
- 
-     
+
+          }
+        });
+        console.log(gridInstance);
+//     $( "#jsGrid" ).jsGrid ("fieldOption" ,"no","visible",false);
+//     $( "#jsGrid" ).jsGrid ("fieldOption" ,"no","optionValue","fd","visible",true);
+    }
+    
+    
+       function eliminarEvidenciaGrid(args,id_evidencias)
+    {
+        $.ajax({
+            url: '../Controller/EvidenciasController.php?Op=EliminarEvidencia',
+            type: 'POST',
+            data: 'ID_EVIDENCIA='+id_evidencias,
+            async:false,
+            success:function(eliminado)
+            {
+                 if(eliminado==true){swalSuccess("Se elimino la evidencia");}else{swalError("No se pudo eliminar"); args.cancel = true;  }
+            },
+            error:function()
+            {
+                swalError("Error del servidor");
+            }
+        });
     }
 
     // function reconstruirTable(data)
@@ -1184,6 +1246,7 @@ function confirmarBorrarRegistroEvidencia(){
 
             }else
             tempData.opcion="";
+            tempData["eliminar"]="";
         return tempData;
     }
 
