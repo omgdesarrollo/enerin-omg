@@ -101,15 +101,15 @@ class AsignacionDocumentoTemaDAO {
         }
     }
 
-    public function buscarDocumento($CADENA)
+    public function buscarDocumento($CADENA,$CONTRATO)
     {
         try{
             $query="SELECT tbdocumentos.id_documento, tbdocumentos.clave_documento,tbdocumentos.documento,
                 CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) AS nombre_empleado
                 FROM documentos tbdocumentos
                 JOIN empleados tbempleados ON tbdocumentos.id_empleado = tbempleados.id_empleado
-                WHERE LOWER(tbdocumentos.clave_documento) LIKE '%$CADENA%'
-                OR LOWER(tbdocumentos.documento) LIKE '%$CADENA%'";
+                WHERE tbdocumentos.contrato = $CONTRATO AND ( LOWER(tbdocumentos.clave_documento) LIKE '%$CADENA%'
+                OR LOWER(tbdocumentos.documento) LIKE '%$CADENA%' )";
                 
             $db =  AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);

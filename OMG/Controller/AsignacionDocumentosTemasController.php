@@ -86,7 +86,8 @@ switch ($Op) {
 		break;
 
 	case 'BuscarDocumento':
-		$lista = $model->buscarDocumento($_REQUEST["CADENA"]);
+		$contrato = Session::getSesion("s_cont");
+		$lista = $model->buscarDocumento($_REQUEST["CADENA"],$contrato);
 		header('Content-type: application/json; charset=utf-8');
 		echo json_encode($lista);
 		break;
