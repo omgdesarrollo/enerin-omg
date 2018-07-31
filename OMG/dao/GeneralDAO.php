@@ -50,6 +50,20 @@ class GeneralDAO{
             return false;
         }
     }
+
+    public function actualizar($QUERY)
+    {
+        try 
+        {
+            $db=  AccesoDB::getInstancia();
+            $update = $db->executeUpdateRowsAfected($QUERY);
+            return $update;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
     
 }
 
