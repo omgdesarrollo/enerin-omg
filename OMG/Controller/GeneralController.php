@@ -14,6 +14,7 @@ switch ($Op)
     break;
 
     case'updateColumnas':
+        $resultado = $model->actualizarColumnas($_REQUEST['TABLA'],$_REQUEST['COLUMNAS'],$_REQUEST['ID'],Session::getSesion("s_cont")); 
         
         break;
 
