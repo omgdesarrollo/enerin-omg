@@ -22,12 +22,15 @@ class GeneralDAO{
     }
     
     
-    public function actualizarColumnas()
+    public function actualizarColumnas($CADENA)
     {
         try
         {
-            $query="";
+            $db=  AccesoDB::getInstancia();
+            $lista= $db->executeQueryUpdate($CADENA);
             
+            return $lista;
+                    
         } catch(Exception $ex)
         {
             throw $ex;

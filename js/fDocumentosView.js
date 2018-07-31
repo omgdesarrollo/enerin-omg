@@ -76,29 +76,34 @@ function saveUpdateToDatabase(args)
 //      columnas=new Object();
       columnas={};
       id_afectado=args['item']['id_principal'][0];
-      console.log(id_afectado);
+      console.log(args['item']['id_principal'][0]);
 //      columnas['nombre']="nom";
 
       $.each(args['item'],function(index,value){
           if(args['previousItem'][index]!=value && value!="")
           {
+              if(index!='id_principal'){
 //              console.log("Entro aqui");
-              columnas[index]=value;
+                    columnas[index]=value;
+                    console.log(index);
+                }
           }
+            
 //          console.log(args['previousItem'][index]);
       });
+      
+      console.log(columnas);
       
       $.ajax({
           url:"../Controller/GeneralController.php?Op=updateColumnas",
           type:"POST",
-          data:'TABLA="documentos" &COLUMNAS='+columnas+' &ID='+id_afectado+'',
-          success:function()
+          data:'TABLA="documentos" &COLUMNAS='+columnas+' &ID='+id_afectado+'',          
+          success:function(data)
           {
               
           }
       });
-      
-//      console.log(columnas);
+//    console.log(columnas);
       
 }
 

@@ -56,7 +56,7 @@ function listarDatosSeguimientoEntrada()
        $("#jsGrid").jsGrid({
         width: "100%",
         height: "300px",
-        filtering: true,
+//        filtering: true,
         heading: true,
         sorting: true,
         editing: true,
