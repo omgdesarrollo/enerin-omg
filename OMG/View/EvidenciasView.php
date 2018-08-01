@@ -925,7 +925,7 @@
      onOptionChanged:function(a){
          alert("se reconocio cambio");
               },
-          onItemDeleted: function(args) {
+          onItemDeleted: function(args){
               if(args["item"]["eliminar"]=="si"){
                   eliminarEvidencia(args["item"]["id_evidencia"]);
 <<<<<<< HEAD
@@ -963,7 +963,6 @@
 =======
 //                  $("#jsGrid").jsGrid("insertItem");
               }
-              
           },
           onItemDeleting: function(args) {
 //            alert("procedera a eliminarse");  
