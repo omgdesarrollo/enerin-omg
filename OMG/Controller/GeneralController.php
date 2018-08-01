@@ -18,6 +18,14 @@ switch ($Op)
         
         break;
 
+    case 'Actualizar':
+    // $CONTRATO = Session::getSesion("s_cont");
+        header('Content-type: application/json; charset=utf-8'); 
+        $COLUMNAS = json_decode($_REQUEST["COLUMNAS_VALOR"]);
+        $ID = json_decode($_REQUEST["ID_CONTEXTO"]);
+        $resultado = $model->actualizar($_REQUEST["TABLA"],$COLUMNAS,$ID);
+        echo json_encode($resultado);
+    break;
 
     default: 
         echo false;

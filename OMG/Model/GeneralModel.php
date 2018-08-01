@@ -27,7 +27,35 @@ class GeneralModel{
             return false;
         }    
     }
-    
+
+    public function actualizar($TABLA,$COLUMNAS_VALOR,$ID_CONTEXTO)
+    {
+        try
+        {
+            $dao=new GeneralDAO();
+            $query="UPDATE $TABLA ";
+
+            $index=0;
+            foreach($COLUMNAS_VALOR as $key=>$value)
+            {
+                if($index!=0)
+                    $query .= " , ";
+                $query .= "SET $key = '$value'";
+                $index++;
+            }
+            foreach($ID_CONTEXTO as $key=>$value)
+            {
+                $query .= " WHERE $key = $value ";
+            }
+            // listar por ID no se puede ya que cada vista lista de difentes formas
+            $update = $dao->actualizar($query);
+            return ($update!=0)?1:0;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }    
+    }
     
     public function actualizarColumnas($TABLA, $COLUMNAS,$ID,$CONTRATO)
     {
