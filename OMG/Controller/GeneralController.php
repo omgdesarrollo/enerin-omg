@@ -14,9 +14,18 @@ switch ($Op)
     break;
 
     case'updateColumnas':
+        $resultado = $model->actualizarColumnas($_REQUEST['TABLA'],$_REQUEST['COLUMNAS'],$_REQUEST['ID'],Session::getSesion("s_cont")); 
         
         break;
 
+    case 'Actualizar':
+    // $CONTRATO = Session::getSesion("s_cont");
+        header('Content-type: application/json; charset=utf-8'); 
+        $COLUMNAS = json_decode($_REQUEST["COLUMNAS_VALOR"]);
+        $ID = json_decode($_REQUEST["ID_CONTEXTO"]);
+        $resultado = $model->actualizar($_REQUEST["TABLA"],$COLUMNAS,$ID);
+        echo json_encode($resultado);
+    break;
 
     default: 
         echo false;

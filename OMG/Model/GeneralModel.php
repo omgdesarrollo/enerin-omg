@@ -27,6 +27,71 @@ class GeneralModel{
             return false;
         }    
     }
+
+    public function actualizar($TABLA,$COLUMNAS_VALOR,$ID_CONTEXTO)
+    {
+        try
+        {
+            $dao=new GeneralDAO();
+            $query="UPDATE $TABLA ";
+
+            $index=0;
+            foreach($COLUMNAS_VALOR as $key=>$value)
+            {
+                if($index!=0)
+                    $query .= " , ";
+                $query .= "SET $key = '$value'";
+                $index++;
+            }
+            foreach($ID_CONTEXTO as $key=>$value)
+            {
+                $query .= " WHERE $key = $value ";
+            }
+            // listar por ID no se puede ya que cada vista lista de difentes formas
+            $update = $dao->actualizar($query);
+            return ($update!=0)?1:0;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }    
+    }
+    
+    public function actualizarColumnas($TABLA, $COLUMNAS,$ID,$CONTRATO)
+    {
+        try
+        {
+            $ROWS="";
+            $columna_id="";
+            $valor_id="";
+                    
+            $CADENA="UPDATE $TABLA SET $ROWS,contrato=$CONTRATO  
+                     WHERE $ID";
+            
+            $prueba=$ID[0][0];
+            
+            echo "valores del ID: ".json_encode($prueba);
+
+//            $ID = json_decode($columna_id);        
+//            echo "valor ID: ".json_decode($columna_id);
+            
+            $dao=new GeneralDAO();
+            $rec= $dao->actualizarColumnas($CADENA);
+            
+            foreach ($COLUMNAS as $index => $value) {
+                
+                $ROWS=$COLUMNAS[$index][$value];
+            }
+//            echo "Valores Columnas: ".json_encode($COLUMNAS);
+            echo "valor ROWS: ".json_encode($ROWS);
+//            return $CADENA;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
     
     
 }

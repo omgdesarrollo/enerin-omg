@@ -54,88 +54,54 @@ $Usuario=  Session::getSesion("user");
                 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
 
             <style>
-                    .modal
-                    {
-                        overflow: hidden;
-                    }
-                    .modal-dialog{
-                        margin-right: 0;
-                        margin-left: 0;
-                    }
-                    .modal-header{
-                      height:30px;background-color:#444;
-                      color:#ddd;
-                    }
-                    .modal-title{
-                      margin-top:-10px;
-                      font-size:16px;
-                    }
-                    .modal-header .close{
-                      margin-top:-10px;
-                      color:#fff;
-                    }
-                    .modal-body{
-                      color:#888;
-                       /*max-height: calc(100vh - 210px);*/
-                      max-height: calc(100vh - 110px);
-                      overflow-y: auto;
-                    }
-                    .modal-body p {
-                      text-align:center;
-                      padding-top:10px;
-                    }
-                    
-                    .validar_formulario{
-                       background: blue; 
-                       width: 100%; 
-                       color: white; 
-                    }
+                .jsgrid-header-row>.jsgrid-header-cell
+                {
+                        background-color:#307ECC ;      /* orange */
+                        font-family: "Roboto Slab";
+                        font-size: 1.2em;
+                        color: white;
+                        font-weight: normal;
+                }
 
-
-                    
-/*Inicia estilos para mantener fijo el header*/                    
- .table-fixed-header {
-    display: table; /* 1 */
-    position: relative;
-    padding-top: calc(~'2.5em + 2px'); /* 2 */
-    
-    table {
-        margin: 0;
-        margin-top: calc(~"-2.5em - 2px"); /* 2 */
-    }
-    
-    thead th {
-        white-space: nowrap;
-        
-        /* 3 - apply same styling as for thead th */
-        /* 4 - compensation for padding-left */
-        &:before {
-            content: attr(data-header);
-            position: absolute;
-            top: 0;
-            padding: .5em 1em; /* 3 */
-            margin-left: -1em; /* 4 */
-        }
-    }
-}
-
- /* 5 - setting height and scrolling */
-.table-container {
-    max-height: 70vh; /* 5 */
-    overflow-y: auto; /* 5 */
-        
-        /* 6 - same styling as for thead th */
-        &:before {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        min-height: 2.5em;             /* 6 */
-        border-bottom: 2px solid #DDD; /* 6 */
-        background: #f1f1f1;           /* 6 */
-    }
-}
+                .modal
+                {
+                overflow: hidden;
+                }
+                .modal-dialog{
+                margin-right: 0;
+                margin-left: 0;
+                }
+                .modal-header{
+                height:30px;background-color:#444;
+                color:#ddd;
+                }
+                .modal-title{
+                margin-top:-10px;
+                font-size:16px;
+                }
+                .modal-header .close{
+                margin-top:-10px;
+                color:#fff;
+                }
+                .modal-body{
+                color:#888;
+                /*max-height: calc(100vh - 210px);*/
+                max-height: calc(100vh - 110px);
+                overflow-y: auto;
+                }
+                .modal-body p {
+                text-align:center;
+                padding-top:10px;
+                }
+                
+                .validar_formulario{
+                background: blue; 
+                width: 100%; 
+                color: white; 
+                }
+                body{
+                        /* overflow:hidden; */
+                }
  
 /*Finaliza estilos para mantener fijo el header*/                     
                     
@@ -174,7 +140,6 @@ require_once 'EncabezadoUsuarioView.php';
 
 
 <div style="height: 50px"></div>
-
 
 <div id="jsGrid"></div>
 <!--<div class="contenedortable" style="position: fixed;">   
@@ -397,6 +362,8 @@ construirFiltros();
 var id_documento_entrada;
 var cualmodificar;
 var dataListado;
+var thisTemas;
+var thisAutoridad;
 $("#create-item").draggable();
 $("#create-itemUrls").draggable();
 
@@ -735,27 +702,140 @@ function reconstruirTable2(datos)
 
 function construirGrid(datosF)//listooo 12
 {
-    $("#jsGrid").html("");
-    $("#jsGrid").jsGrid({
-    width: "100%",
-    height: "300px",
-    heading: true,
-    sorting: true,
-    paging: true,
-    data: datosF,
-    pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
-    fields: [
-        { name: "referencia", type: "text", width: 80, validate: "required" },
-        { name: "folio_entrada", type: "text", width: 150, validate: "required" },
-        { name: "fecha_recepcion", type: "text", width: 150, validate: "required" },
-        // { name: "Responsable del Documento", type: "text", width: 150, validate: "required" },
-        // { name: "Tema", type: "text", width: 150, validate: "required" },
-        // { name: "Requisitos", type: "text", width: 150, validate: "required" },
-        // { name: "Registros", type: "text", width: 150, validate: "required" },
-        // { name: "Status", type: "text", width: 150, validate: "required" }
-    ]
-    });
+        widthNormal=120;
+        widthDate=150;
+        jsGrid.fields.date = MyDateField;
+        $("#jsGrid").html("");
+        $("#jsGrid").jsGrid({
+        width: "100%",
+        height: "100%",
+        editing:true,
+        heading: true,
+        sorting: true,
+        paging: true,
+        data: datosF,
+        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+        fields: [
+                { name: "id_principal", visible:false },
+                { name: "folio_referencia", title: "Referencia", type: "text", width:widthNormal, validate: "",editing:false},
+                { name: "folio_entrada", title: "Folio Entrada", type: "text", width:widthNormal, validate: "required",editing:false},
+                // { name: "fecha_recepcion", title: "Fecha Recepción", type: "text", width, validate: "required" },
+                { name: "fecha_recepcion", title: "Fecha Recepción", type: "date", width:widthDate},
+
+                { name: "asunto", title: "Asunto", type: "text", width:widthNormal, validate: "required",editing:false},
+                { name: "remitente", title: "Remitente", type: "text", width:widthNormal, validate: "required",editing:false},
+
+                { name: "id_autoridad", title: "Autoridad Remitente", type: "select",
+                        items:thisAutoridad,
+                        valueField:"id_autoridad",
+                        textField:"clave_autoridad"
+                        },
+
+                { name: "id_tema", title: "Numero Tema", type: "select",
+                        items:thisTemas,
+                        valueField:"id_tema",
+                        textField:"no"},
+
+                { name: "nombre", title: "Nombre Tema", type: "text", width:widthNormal, validate: "required", editing:false },
+                { name: "nombre_empleado", title: "Responsable Tema", type: "text", width:widthNormal, validate: "required", editing:false },
+
+                { name: "clasificacion", title: "Clasificación", type: "select", width:widthNormal,valueField:"clasificacion",textField:"descripcion",
+                        items:[{"clasificacion":"1","descripcion":"Con limite de tiempo"},{"clasificacion":"2","descripcion":"Sin limite de tiempo"},{"clasificacion":"3","descripcion":"Informativo"}]
+                },
+
+                { name: "fecha_asignacion", title: "Fecha Asignación", type: "date", width:widthDate, validate: "required" },
+                { name: "fecha_limite_atencion", title: "Fecha Limite Atención", type: "date", width:widthDate, validate: "required" },
+                { name: "fecha_alarma", title: "Fecha Alarma", type: "date", width:widthDate, validate: "required" },
+                { name: "adjuntar_archivo", title: "Adjuntar Archivos", type: "text", width:widthNormal, validate: "required", editing:false },
+                { name: "observaciones", title: "Observaciones", type: "text", width:widthNormal },
+                {type:"control"}
+        ],
+        onItemEditing: function(args)
+        {
+        },
+        onItemUpdated: function(args)
+        {
+                columnas={};
+                id_afectado=args["item"]["id_principal"][0];
+                $.each(args["item"],function(index,value)
+                {
+                        if(args["previousItem"][index] != value && value!="")
+                        {
+                                if(index!="id_principal" && !value.includes("<button"))
+                                {
+                                        columnas[index]=value;
+                                }
+                        }
+                });
+                if(columnas!="")
+                {
+                        $.ajax({
+                                url: '../Controller/GeneralController.php?Op=Actualizar',
+                                type:'GET',
+                                data:'TABLA=documento_entrada'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
+                                success:function(exito)
+                                {
+                                        console.log(exito);
+                                }
+                        });
+                }
+        }
+        });
 }
+
+var MyDateField = function(config)
+{
+        // data = {};
+    jsGrid.Field.call(this, config);
+    console.log(this);
+};
+ 
+MyDateField.prototype = new jsGrid.Field
+({        
+        css: "date-field",
+        align: "center",
+        sorter: function(date1, date2)
+        {
+                console.log("haber cuando entra aqui");
+                console.log(date1);
+                console.log(date2);
+        },
+        itemTemplate: function(value)
+        {
+                fecha="0000-00-00";
+                // console.log(this);
+                this[this.name] = value;
+                // console.log(data);
+                if(value!=fecha)
+                {
+                        date = new Date(value);
+                        fecha = date.getDate()+1 +" "+ months[date.getMonth()] +" "+ date.getFullYear();
+                        return fecha;
+                }
+                else
+                        return "Sin fecha";
+        },
+        insertTemplate: function(value)
+        {},
+        editTemplate: function(value)
+        {
+                console.log(this);
+                fecha="0000-00-00";
+                if(value!=fecha)
+                {
+                        fecha=value;
+                }
+                return this._inputDate = $("<input>").attr({type:"date",value:fecha,style:"margin:-5px;width:145px"});
+        },
+        insertValue: function()
+        {},
+        editValue: function()
+        {
+                return $(this._inputDate).val();
+        }
+});
+
+
 
 function listarDatos2()//borrar
 {
@@ -793,86 +873,97 @@ function reconstruir(value)//listoooo
 {
         tempData = new Object();
 
-        tempData.id_documento_entrada = value.id_documento_entrada;
-        tempData.referencia = value.folio_referencia;
+        tempData["id_principal"] = [{"id_documento_entrada" : value.id_documento_entrada}];
+        tempData["folio_referencia"] = value.folio_referencia;
 
-        tempData.folio_entrada = value.folio_entrada;
-                                
-        tempData.fecha_recepcion = "<input style='' value='"+value.fecha_recepcion+"' onBlur='saveToDatabaseDates(this,\"fecha_recepcion\","+value.id_documento_entrada+",";
-        tempData.fecha_recepcion += value.fecha_asignacion+","+value.fecha_limite_atencion+","+value.fecha_alarma+")' type='date'/>";
+        tempData["folio_entrada"] = value.folio_entrada;
+
+        tempData["fecha_recepcion"] = value.fecha_recepcion;
+        // tempData.fecha_recepcion = "<input style='' value='"+value.fecha_recepcion+"' onBlur='saveToDatabaseDates(this,\"fecha_recepcion\","+value.id_documento_entrada+",";
+        // tempData.fecha_recepcion += value.fecha_asignacion+","+value.fecha_limite_atencion+","+value.fecha_alarma+")' type='date'/>";
 
         // tempData.fecha_recepcion = "<input value='"+value.fecha_recepcion+"' type='date' />";
 
-        tempData.asunto = value.asunto;
-        tempData.remitente = value.remitente;
-
-        tempData.autoridad_remitente = "<select id='id_autoridad' class='select' onchange='saveComboToDatabase(this,\"id_autoridad\","+value.id_documento_entrada+")'>";
-        $.each(thisAutoridad,function(index,val)
-        {
-                if(val.id_autoridad==value.id_autoridad)
-                        tempData.autoridad_remitente += "<option value='"+val.id_autoridad+"' selected >"+val.clave_autoridad+"</option>";
-                else
-                        tempData.autoridad_remitente += "<option value='"+val.id_autoridad+"' >"+val.clave_autoridad+"</option>";
-        });
-        tempData.autoridad_remitente += "</select>";
+        tempData["asunto"] = value.asunto;
+        tempData["remitente"] = value.remitente;
         
+        // tempData["autoridad_remitente"] = "<select id='id_autoridad' class='select' onchange='saveComboToDatabase(this,\"id_autoridad\","+value.id_documento_entrada+")'>";
+        // $.each(thisAutoridad,function(index,val)
+        // {
+        //         if(val.id_autoridad==value.id_autoridad)
+        //                 tempData.autoridad_remitente += "<option value='"+val.id_autoridad+"' selected >"+val.clave_autoridad+"</option>";
+        //         else
+        //                 tempData.autoridad_remitente += "<option value='"+val.id_autoridad+"' >"+val.clave_autoridad+"</option>";
+        // });
+        // tempData.autoridad_remitente += "</select>";
+        
+        tempData["id_autoridad"] = value.id_autoridad;
+
         // tempData += "<td style='background-color: #ccccff'>";
-        tempData.no_tema = "<select id='id_clausula' class='select' onchange='saveComboToDatabase(this,\"id_clausula\","+value.id_documento_entrada+")'>";
-        $.each(thisTemas,function(index,val)
-        {
-                if(val.id_tema == value.id_tema)
-                        tempData.no_tema += "<option value='"+val.id_tema+"'  selected >"+val.no+"</option>";
-                else
-                        tempData.no_tema += "<option value='"+val.id_tema+"' >"+val.no+"</option>";
-        });
-        tempData.no_tema += "</select></td>";
+        // tempData.no_tema = "<select id='id_clausula' class='select' onchange='saveComboToDatabase(this,\"id_clausula\","+value.id_documento_entrada+")'>";
+        // console.log(thisTemas);
+        // $.each(thisTemas,function(index,val)
+        // {
+                // if(val.id_tema == value.id_tema)
+                        // tempData.no_tema += "<option value='"+val.id_tema+"'  selected >"+val.no+"</option>";
+                // else
+                        // tempData.no_tema += "<option value='"+val.id_tema+"' >"+val.no+"</option>";
+        // });
+        // tempData.no_tema += "</select>";
+
+        tempData["id_tema"] = value.id_tema;
                                 
         // tempData += "<td style='background-color: #ccccff' contenteditable='false' onBlur='saveToDatabase(this,\"nombre\","+value.id_documento_entrada+")'";
-        tempData.nombre_tema = value.nombre;
+        tempData["nombre"] = value.nombre;
         
         // tempData += "<td style='background-color: #ccccff' contenteditable='false' onBlur='saveToDatabase(this,\"nombre_empleado\","+value.id_documento_entrada+")'";
-        tempData.nombre_empleado = value.nombre_empleado;
+        tempData["nombre_empleado"] = value.nombre_empleado;
                                 
         // tempData.clasificacion = "<td contenteditable='false' onBlur='saveToDatabase(this,\"clasificacion\","+value.id_documento_entrada+")'>";
-        if(value.clasificacion == 1)
-                tempData.clasificacion = "Con Limite de Tiempo";   
-        if (value.clasificacion == 2)
-                tempData.clasificacion = "Sin Limite de Tiempo";
-        if (value.clasificacion == 3)
-                tempData.clasificacion = "Informativo";
+        // tempData.clasificacion = value.clasificacion;
+        // if(value.clasificacion == 1)
+        //         tempData.clasificacion += "Con Limite de Tiempo";   
+        // if (value.clasificacion == 2)
+        //         tempData.clasificacion += "Sin Limite de Tiempo";
+        // if (value.clasificacion == 3)
+        //         tempData.clasificacion += "Informativo";
         // tempData += "</td>";
                                                                 
-        tempData.status = "<select id='id_status' class='select' onchange='saveComboToDatabase(this,\"status_doc\","+value.id_documento_entrada+")'>";
-        tempData.status += "<option value='1'";
-        if(value.status_doc == 1)
-                tempData.status += "selected";
-        tempData.status += ">En proceso</option>";
+        // tempData.status = "<select id='id_status' class='select' onchange='saveComboToDatabase(this,\"status_doc\","+value.id_documento_entrada+")'>";
+        // tempData.status += "<option value='1'";
+        // if(value.status_doc == 1)
+        //         tempData.status += "selected";
+        // tempData.status += ">En proceso</option>";
 
-        tempData.status += "<option value='2'";
-        if(value.status_doc == 2)
-                 tempData.status += "selected";
-        tempData.status += ">Suspendido</option>";
+        // tempData.status += "<option value='2'";
+        // if(value.status_doc == 2)
+        //          tempData.status += "selected";
+        // tempData.status += ">Suspendido</option>";
 
-        tempData.status += "<option value='3'";
-        if(value.status_doc == 3)
-                tempData.status += "selected";
-        tempData.status += ">Terminado</option>";
+        // tempData.status += "<option value='3'";
+        // if(value.status_doc == 3)
+        //         tempData.status += "selected";
+        // tempData.status += ">Terminado</option>";
 
-        tempData.status += "</select>";
+        // tempData.status += "</select>";
+        tempData["clasificacion"] = value.clasificacion;
+        // tempData.fecha_asignacion = "<input style='' value='"+value.fecha_asignacion+"' onBlur='saveToDatabaseDates(this,\"fecha_asignacion\","+value.id_documento_entrada;
+        // tempData.fecha_asignacion += ",\""+value.fecha_asignacion+"\",\""+value.fecha_limite_atencion+"\",\""+value.fecha_alarma+"\")' type='date'/>";
 
-        tempData.fecha_asignacion = "<input style='' value='"+value.fecha_asignacion+"' onBlur='saveToDatabaseDates(this,\"fecha_asignacion\","+value.id_documento_entrada;
-        tempData.fecha_asignacion += ",\""+value.fecha_asignacion+"\",\""+value.fecha_limite_atencion+"\",\""+value.fecha_alarma+"\")' type='date'/>";
+        tempData["fecha_asignacion"] = value.fecha_asignacion;
 
-        tempData.fecha_limite_atencion = "<input style='' value='"+value.fecha_limite_atencion+"' onBlur='saveToDatabaseDates(this,\"fecha_limite_atencion\","+value.id_documento_entrada;
-        tempData.fecha_limite_atencion += ",\""+value.fecha_asignacion+"\",\""+value.fecha_limite_atencion+"\",\""+value.fecha_alarma+"\")' type='date'/>";
+        // tempData.fecha_limite_atencion = "<input style='' value='"+value.fecha_limite_atencion+"' onBlur='saveToDatabaseDates(this,\"fecha_limite_atencion\","+value.id_documento_entrada;
+        // tempData.fecha_limite_atencion += ",\""+value.fecha_asignacion+"\",\""+value.fecha_limite_atencion+"\",\""+value.fecha_alarma+"\")' type='date'/>";
+        tempData["fecha_limite_atencion"] = value.fecha_limite_atencion;
 
-        tempData.fecha_alarma = "<input style='' value='"+value.fecha_alarma+"' onBlur='saveToDatabaseDates(this,\"fecha_alarma\","+value.id_documento_entrada;
-        tempData.fecha_alarma += ",\""+value.fecha_asignacion+"\",\""+value.fecha_limite_atencion+"\",\""+value.fecha_alarma+"\")' type='date'/>";
+        // tempData.fecha_alarma = "<input style='' value='"+value.fecha_alarma+"' onBlur='saveToDatabaseDates(this,\"fecha_alarma\","+value.id_documento_entrada;
+        // tempData.fecha_alarma += ",\""+value.fecha_asignacion+"\",\""+value.fecha_limite_atencion+"\",\""+value.fecha_alarma+"\")' type='date'/>";
+        tempData["fecha_alarma"] = value.fecha_alarma;
 
-        tempData.adjuntar_archivo = "<button onClick='mostrar_urls("+value.id_documento_entrada+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
-        tempData.adjuntar_archivo += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i>Mostrar</button>";
+        tempData["adjuntar_archivo"] = "<button onClick='mostrar_urls("+value.id_documento_entrada+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
+        tempData["adjuntar_archivo"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i>Mostrar</button>";
                                 
-        tempData.observaciones = value.observaciones;
+        tempData["observaciones"] = value.observaciones;
         return tempData;
 }
 
@@ -967,6 +1058,14 @@ function reconstruir2(value)//borrar
         return tempData;
 }
 
+// jaja();
+// function jaja()
+// {
+//         _datos = new Object();
+//         _datos["Referéncia_Nueva"] = "HóLA";
+//         console.log(_datos);
+// }
+
 function reconstruirTable(datos)//listooo
 {
         __datos=[];
@@ -975,28 +1074,50 @@ function reconstruirTable(datos)//listooo
                 // tempData += "<tr id='registro_"+value.id_documento_entrada+"' class='table-row'>"+reconstruir(value)+"</tr>";
                 __datos.push(reconstruir(value));
         });
-        // $("#tbodyDatos").html(tempData);
-        // $('#loader').hide();
-        console.log(__datos);
+
+        // console.log(__datos);
+
+        // $.each(__datos,function(index,value)
+        // {
+        //         _datos = new Object();
+        //         _datos["Referencia"] = value.referencia;
+        //         _datos["Folio Entrada"] = value.folio_entrada;
+        //         _datos["Fecha Recepción"] = value.fecha_recepcion;
+        //         _datos["Asunto"] = value.asunto;
+        //         _datos["Remitente"] = value.remitente;
+        //         _datos["Autoridad Remitente"] = value.autoridad_remitente;
+        //         _datos["Numero Tema"] = value.no_tema;
+        //         _datos["Nombre Tema"] = value.nombre_tema;
+        //         _datos["Responsable Tema"] = value.nombre_empleado;
+        //         _datos["Clasificación"] = value.clasificacion;
+        //         _datos["Fecha Asignación"] = value.fecha_asignacion;
+        //         _datos["Fecha Limite Atención"] = value.fecha_limite_atencion;
+        //         _datos["Fecha Alarma"] = value.fecha_alarma;
+        //         _datos["Adjuntar Archivos"] = value.adjuntar_archivo;
+        //         _datos["Observaciones"] = value.observaciones;
+        //         _datosF.push(_datos);
+        // });
+
         construirGrid(__datos);
 
 }
 
 // listarDatos(-1);
-var thisTemas;
-var thisAutoridad;
+
 function listarDatos(id_documento)
 {
         tempData="";
         ajaxTemas = ({
                 url:'../Controller/TemasOficiosController.php?Op=mostrarCombo',
                 type:'GET',
+                async:false,
         });
 
         ajaxAutoridades = $.ajax
         ({
                 url:'../Controller/AutoridadesRemitentesController.php?Op=Listar',
                 type: 'GET',
+                async:false,
                 beforeSend:function()
                 {
                         $('#loader').show();
@@ -1155,20 +1276,20 @@ function saveToDatabaseDates(editableObj,column,id,fasignacion,flimite,falarma,f
                 (editableObj.value=="")? ejecutarAjax=false :editableObj.style="color:limegreen";
                 fecha = frecepcion;
         }
-        if(ejecutarAjax==true)
-        {
-                $.ajax({
-                        url: "../Controller/DocumentosEntradaController.php?Op=Modificar",
-                        type: "POST",
-                        data:'column='+column+'&editval='+editableObj.value+'&id='+id,
-                        success: function(data)
-                        {
-                                (data)? (listarDatos(id), editableObj.style="color:limegreen"):editableObj.value=fecha;
-                        }
-                });
-        }
-        else
-                editableObj.value=fecha;
+        // if(ejecutarAjax==true)
+        // {
+        //         $.ajax({
+        //                 url: "../Controller/DocumentosEntradaController.php?Op=Modificar",
+        //                 type: "POST",
+        //                 data:'column='+column+'&editval='+editableObj.value+'&id='+id,
+        //                 success: function(data)
+        //                 {
+        //                         (data)? (listarDatos(id), editableObj.style="color:limegreen"):editableObj.value=fecha;
+        //                 }
+        //         });
+        // }
+        // else
+        //         editableObj.value=fecha;
 }
 
 function compararFechaAsignacion(val,flimite,falarma)//listo
