@@ -40,14 +40,15 @@
     <script src="../../js/jquery.js" type="text/javascript"></script>
     <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
     
-    
-    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
-    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
-
-    
+    <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
+    <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
+    <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
+    <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
     <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
     <script src="../../js/fEvidenciasView.js" type="text/javascript"></script>
+    
       <!--<script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>-->
     <!--<script src="../../js/jquery.js" type="text/javascript"></script>-->
 
@@ -97,7 +98,7 @@
 </head>
 <!-- <body> -->
 <body class="no-skin" >
-    <!--<div id="loader"></div>-->
+    <div id="loader"></div>
     
     <?php
         require_once 'EncabezadoUsuarioView.php';
@@ -118,10 +119,10 @@
             Agregar Nuevo Registro
         </button>
 
-<!--        <button id="btnAgregarEvidenciasRefrescar" type="button" 
+        <button id="btnAgregarEvidenciasRefrescar" type="button" 
         class="btn btn-info " onclick="refresh();" >
             <i class="glyphicon glyphicon-repeat"></i> 
-        </button>-->
+        </button>
 
         <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
 
@@ -317,6 +318,22 @@
 
 <!--cierre del modal Mensaje-->
 <script>
+    
+    var myGrid;
+		function doOnLoad(){
+			myGrid = new dhtmlXGridObject('gridbox');
+			myGrid.setImagePath("../../../codebase/imgs/");
+			myGrid.setHeader("Sales, Book Title, Author");
+			myGrid.setInitWidths("70,250,*");
+			myGrid.setColAlign("right,left,left");
+			myGrid.setColTypes("dyn,ed,ed");
+			myGrid.setColSorting("int,str,str");
+			myGrid.init();
+			myGrid.load("../common/data.json","json");
+		}
+    
+    
+    
    var gridInstance;
     // var data="";
     // var dataTemp="";
@@ -374,7 +391,7 @@
                     (data==true)?
                     (
                         swalSuccess("Se creo la evidencia"),
-                window.location.href=""
+//                window.location.href=""
                         // swal({
                         // title: '',text: 'Se creo la evidencia',
                         // showCancelButton: false,showConfirmButton: false,
@@ -385,6 +402,7 @@
 //                        $('#NOMBRE_NUEVAEVIDENCIAMODAL').html(""),
 //                        $('#nuevaEvidenciaModal .close').click(),
 //                        listarDatos()
+                            refresh()
                     )
                     :swalErro("Error al crear");
                     // swal({
@@ -518,7 +536,33 @@
         ejecutando=false;
         clearInterval(intervalA);
         clearTimeout(timeOutA);
-        listarDatos();
+//        listarDatos();
+//        construir();
+//gridInstance["onRefreshing"]["name"]="onRefreshing";
+//gridInstance.onRefreshing=function (args){
+//    
+//    alert("lo");
+//};
+//$("#jsGrid").jsGrid("onRefreshing");
+//alert("l");
+
+
+//["controller"]:function (){
+//    console.log("si lo hizo");
+//}
+//gridInstance["controller"].loadData(); 
+//gridInstance["controller"].search(); 
+//gridInstance= $("#jsGrid").data("JSGrid");
+
+   $("#jsGrid").jsGrid("loadData");
+//gridInstance["onRefreshing"](); 
+
+//gridInstance["onInit"]();
+// $( "#jsGrid" ).jsGrid("fieldOption" ,"no","visible",false);
+//$("#jsGrid").jsGrid("render").done(function() {
+//    console.log("rendering completed and data loaded");
+//});
+    console.log(gridInstance);
     }
     function filterTable(Obj)
     {
@@ -754,60 +798,97 @@
                   url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
                   type: 'GET',
                   data: 'URL='+URL,
-                  async: false,
+                  async:false,
                   success: function(todo)
                   {
                         __datos.push(reconstruir(todo,value,index++));
                   }
                 });
         });
+//        moverA();
+        return __datos;
+        
+        
 //        dataTodo = __datos;
         // console.log(__datos);
         // $('#bodyTable').html(tempData);
         // $('#loader').hide();
-        if(__refresh==false){
-            __datosGlobales=__datos;
-            construir((__datos.length==0)?[]:__datos);
-        }
-        else{
-            if(__refresh==true)
-            __datosGlobales=(__datos.length==0)?[]:__datos;
-        }
+//        if(__refresh==false){
+////            alert("entra");
+//            __datosGlobales=__datos;
+//            construir((__datos.length==0)?[]:__datos);
+//        }
+//        else{
+//            if(__refresh==true)
+//            __datosGlobales=(__datos.length==0)?[]:__datos;
+//        }
 
 //construirGrid(__datos);
-        moverA();
+        
     }
 
     function construir(datosF)
     {
-        
 //        console.log(datosF);
-        $("#jsGrid").html("");
-        $("#jsGrid").jsGrid({
+//      gridInstance= $("#jsGrid").html("");
+//      gridInstance=$("#jsGrid");
+//      gridInstance.html("");
+//      db;
+//       (function(){
+             db={
+                loadData: function(filter) {
+                    alert("recepcion de datos");
+      //              alert("obtencion de datos");
+                       return listarDatosTodos();
+      //            return $.ajax({url: "../bin/s.php",data:filter});   
+              },
+                  insertItem: function(item) {
+                      alert("va a insertar");
+                  return $.ajax({
+                      type: "POST",
+                      url: "/itemsfdf",
+                      data: item
+                  });
+              },
+           } 
+//        });
+      window.db = db; 
+      
+      
+   $("#jsGrid").jsGrid({
         onInit: function(args) {
-            gridInstance = args.grid;
+//        alert("va anetrar");
+//            gridInstance = args.grid;
+//            gridInstance = args;
+//            console.log(gridInstance);
+//             console.log("termino y empieza el otro");
 //            alert("entrara a cargar");
         }, onDataLoading: function(args) {
-   
-//        alert("es");
-//        console.log(args);
+            $("#loader").show();
+    },
+    onDataLoaded:function(args){
+      
+             console.log("--on data");
+        console.log(gridInstance);
+             console.log("t----...");
+        $("#loader").hide();
     },
     onRefreshing: function(args) {
-        
-//        alert("esta refresecando los datos ");
+//        alert("d");
     },
         width: "100%",
         height: "300px",
 //        editing: true,
+        inserting:true,
         heading: true,
         sorting: true,
         paging: true,
-        
         autoload:true,
         pageSize: 10,
         pageButtonCount: 5,
         updateOnResize: true,
         confirmDeleting: true,
+        controller:db,
 //        controller:datosF,
         rowClick: function(args)
         {
@@ -816,8 +897,8 @@
 //                     alert("este es el id de evidencia seleccionado"+args["item"].id_evidencia);     
 //            showDetailsDialog("Edit", args.item);
         },
-        
-        data: datosF,
+//        
+//        data: datosF,
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields: [
         { name: "id_evidencia", type: "text",fields:"f", width: "auto", validate: "required",visible:false },
@@ -840,18 +921,14 @@
         {type: "control" },
         {name:"eliminar",visible:false}
         
-    ],itemTemplate: function(value,item) {
-        
-        },
-//         deleteConfirm: function(item) {
-////            return "La Evidencia se va eliminar esta seguro?";
-//        },
-//          deleteItem: function(item) {
-//              alert("este metos");
-//          },
+    ],
+     onOptionChanged:function(a){
+         alert("se reconocio cambio");
+              },
           onItemDeleted: function(args) {
               if(args["item"]["eliminar"]=="si"){
                   eliminarEvidencia(args["item"]["id_evidencia"]);
+<<<<<<< HEAD
                   alert("onItemDeleted: "+onItemDeleted);
               }
               
@@ -883,6 +960,14 @@
           },
           onItemDeleting: function(args) {
                 alert("onItemDeleting: "+onItemDeleting);
+=======
+//                  $("#jsGrid").jsGrid("insertItem");
+              }
+              
+          },
+          onItemDeleting: function(args) {
+//            alert("procedera a eliminarse");  
+>>>>>>> 908ef349a887e362acae5c11480ea39cf8eeeda7
 //              console.log("entro aqui");
 //              console.log(args);
 // args.cancel = true;
@@ -901,10 +986,59 @@
 
           }
         });
-        console.log(gridInstance);
+        
+        
+        
+       
+       gridInstance= $("#jsGrid").data("JSGrid");
+//       $("#jsGrid").jsGrid("loadData");
+//       gridInstance.methodName("deleteItem",1); 
+        
+//        console.log(gridInstance);
 //     $( "#jsGrid" ).jsGrid ("fieldOption" ,"no","visible",false);
 //     $( "#jsGrid" ).jsGrid ("fieldOption" ,"no","optionValue","fd","visible",true);
+//jsGrid.setDefaults ( "no" , { 
+//    ancho : 150 , 
+//    css : "text-field-cls" 
+//});
+
+//gridInstance.loadData=function (args){
+//    alert("n ");
+//};
+//gridInstance.loadData=function (){
+//    alert("");
+//};
+//console.log("empieza");
+//console.log(grid);
+console.log("termina el otro ");
+console.log(gridInstance);
     }
+    
+    function listarDatosTodos()
+    {
+        d=[];
+        $.ajax
+        ({
+            url: '../Controller/EvidenciasController.php?Op=Listar',
+            type: 'GET',
+            async:false,
+            beforeSend:function()
+            {
+//                $('#loader').show();
+            },
+            success:function(datos)
+            {
+                dataListado = datos;
+                d=reconstruirTable(datos);
+            },
+            error:function(error)
+            {
+//                $('#loader').hide();
+            }
+        });
+        return d;
+    }
+    
     
     
        function eliminarEvidenciaGrid(args,id_evidencias)
@@ -1592,6 +1726,8 @@ function confirmarBorrarRegistroEvidencia(){
         {
           if(creado)
             $('.start').click();
+//        gridInstance["data"]["fecha_registro"]="d";
+//        console.log(gridInstance);
         },
         error:function()
         {
@@ -1683,7 +1819,8 @@ function confirmarBorrarRegistroEvidencia(){
     }
 //    listarDatosGrid();
 //    construirGrid(dataTodo);
-    listarDatos();
+//    listarDatos();
+    construir();
 //      construir(dataTodo);
     function cargarprogram(v,validado)
     {

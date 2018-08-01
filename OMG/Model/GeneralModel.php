@@ -33,20 +33,21 @@ class GeneralModel{
         try
         {
             $dao=new GeneralDAO();
-            $query="UPDATE $TABLA ";
+            $query="UPDATE $TABLA SET";
 
             $index=0;
             foreach($COLUMNAS_VALOR as $key=>$value)
             {
                 if($index!=0)
                     $query .= " , ";
-                $query .= "SET $key = '$value'";
+                $query .= " $key = '$value'";
                 $index++;
             }
             foreach($ID_CONTEXTO as $key=>$value)
             {
                 $query .= " WHERE $key = $value ";
             }
+
             // listar por ID no se puede ya que cada vista lista de difentes formas
             $update = $dao->actualizar($query);
             return ($update!=0)?1:0;

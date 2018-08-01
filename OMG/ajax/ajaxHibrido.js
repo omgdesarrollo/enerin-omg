@@ -13,8 +13,7 @@ function ajaxHibrido(paramAjaxValues,funciones){
         success:function(response)
         {    
             funciones[0](response);
-//            $('#loader').hide();
-                
+//            $('#loader').hide();    
         },
         error:function(error)
         {

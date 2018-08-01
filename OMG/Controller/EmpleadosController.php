@@ -66,8 +66,7 @@ switch ($Op) {
                   $pojo->setCategoria($_REQUEST['CATEGORIA']);
                   $pojo->setApellidoMaterno($_REQUEST['APELLIDO_MATERNO']);
                   $pojo->setCorreo($_REQUEST['CORREO']);
-                  $pojo->setIdentificador("catalogo");
-//                  $pojo->
+                //   $pojo->setIdentificador("catalogo");
                   $Lista= $model->insertar($pojo);
 		# code...
                   header('Content-type: application/json; charset=utf-8');
@@ -85,9 +84,8 @@ switch ($Op) {
             break;
             
         
-        case'Existencia':
-            
-            $Lista= $model->verificarEmpleado($_REQUEST['CORREO']);
+        case'VerificaCorreo':
+            $Lista= $model->verificaCorreo($_REQUEST['CORREO']);
             echo $Lista;
             
             break;
