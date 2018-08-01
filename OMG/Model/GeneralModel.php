@@ -52,10 +52,10 @@ class GeneralModel{
             
             foreach ($COLUMNAS as $index => $value) {
                 
-                $ROWS=$COLUMNAS[$index][$value];
+            echo "El valor de".$index[0]."es:".$value[0];
             }
 //            echo "Valores Columnas: ".json_encode($COLUMNAS);
-            echo "valor ROWS: ".json_encode($ROWS);
+            echo "valor foreach: ".json_encode($value);
 //            return $CADENA;
             
         } catch (Exception $ex)

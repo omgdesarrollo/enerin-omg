@@ -275,7 +275,8 @@ function evaluarToolbarSeccionB(id)
             success:function(data)
             {
                 construirSubDirectorio(data.datosHijos);
-                construirDetalleSeleccionado(data.detalles,id);
+//                construirDetalleSeleccionado(data.detalles,id);
+                listarEmpleados(data.detalles,id);
             }
         });
     }
@@ -305,7 +306,20 @@ function evaluarToolbarSeccionB(id)
    myLayout.cells("c").attachObject("contenidoDetalles");
    
    
-    function construirDetalleSeleccionado(data,id)
+   function listarEmpleados(data,id)
+   {
+       $.ajax({
+           url:"../Controller/EmpleadosController.php?Op=mostrarcombo",
+           type:"GET",
+           success:function(datosEmp)
+           {
+               construirDetalleSeleccionado(data,id,datosEmp);
+           }
+       });
+   }
+   
+   
+    function construirDetalleSeleccionado(data,id,datosEmp)
     {
         var level = myTree.getLevel(id);
 //        alert("este es el nivel:"+level);
@@ -315,7 +329,17 @@ function evaluarToolbarSeccionB(id)
                        tempData2+="<tr><td class='info'>Tema</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'nombre',"+value.id_tema+")\">"+value.nombre+"</td></tr>";
                        tempData2+="<tr><td class='info'>Descripcion</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'descripcion',"+value.id_tema+")\">"+value.descripcion+"</td></tr>";
                        if(level==1)
-                       tempData2+="<tr><td class='info'>Responsable</td><td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";
+//                       tempData2+="<tr><td class='info'>Responsable</td><td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";
+                       tempData2+='<tr><td class="info">Responsable</td><td><select class="select" onchange="saveComboToDatabase(\'id_empleado\',this,'+value.id_tema+')">';
+                        $.each(datosEmp, function(index2,value2)
+                        {
+//                            alert("Entro al foreach");
+                               tempData2 += "<option value='"+value2.id_empleado+"'";
+                            if(value.id_empleado==value2.id_empleado)
+                               tempData2+="selected";
+                               tempData2+=">"+value2.nombre_empleado+" "+value2.apellido_paterno+" "+value2.apellido_materno+"</option>";                            
+                        });
+                       tempData2+='</select></td></tr>';
                        
                     });
         tempData2+="</table></div>";
@@ -325,7 +349,8 @@ function evaluarToolbarSeccionB(id)
     }
     
     
-    function saveToDatabase(ObjetoThis,columna,id) {
+function saveToDatabase(ObjetoThis,columna,id) 
+{
 //        alert("entro al save");            
         
             $(ObjetoThis).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
@@ -338,6 +363,28 @@ function evaluarToolbarSeccionB(id)
                         $(ObjetoThis).css("background","");
                     }   
             });        
+}
+
+
+function saveComboToDatabase(column,val,idTema)
+{
+//    alert("entro al save");
+
+    valorobjeto= val[val.selectedIndex].value;
+    console.log(valorobjeto);
+    
+    $.ajax({
+        url: "../Controller/GeneralController.php?Op=ModificarColumna",
+        type: "POST",
+//        data:'column='+column+'&editval='+valorobjeto+'&id='+idTema,
+        data:'TABLA=temas &COLUMNA='+column+' &VALOR='+valorobjeto+' &ID='+idTema+' &ID_CONTEXTO=id_tema',
+        success: function(data){
+//        alert("Estos son los datos"+data);    
+                swal("","Actualizacion Exitosa!", "success");
+                setTimeout(function(){swal.close();},1000);
+        }   
+   });
+
 }
 
 function load(carga){

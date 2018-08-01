@@ -74,7 +74,7 @@ public function listarDetallesSeleccionados($ID)
     try
     {
         $query="SELECT tbtemas.id_tema, tbtemas.no, tbtemas.nombre, tbtemas.descripcion, tbtemas.plazo,
-                tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno	
+                tbempleados.id_empleado,tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno	
                 FROM temas tbtemas
                 JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
                 WHERE tbtemas.id_tema=$ID";
@@ -111,8 +111,6 @@ public function insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO,
         return false;
     }
 }
-
-
 
 public function eliminarNodo($ID)
 {
