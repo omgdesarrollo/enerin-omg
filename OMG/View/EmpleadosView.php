@@ -40,6 +40,7 @@ $Usuario=  Session::getSesion("user");
                 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
 
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+                <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
 
                 
                 
@@ -73,6 +74,11 @@ require_once 'EncabezadoUsuarioView.php';
 
              
 <div style="position: fixed;">    
+
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#crea_empleado">
+		Agregar Empleado
+</button>
+
 <button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
     <i class="glyphicon glyphicon-repeat"></i>   
 </button>
@@ -85,24 +91,110 @@ require_once 'EncabezadoUsuarioView.php';
 </button>
 <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
     <img src="../../images/base/pdf.png" width="30px" height="30px"> 
-</button>    
+</button> 
 
         <!--<input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave Documento" style="width: 180px;">-->
         <!--<input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre Documento" style="width: 180px;">-->
         <!--<input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 180px;">-->
-        <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
-</div>    
-
-
+        
+</div>
 <div style="height: 40px"></div>
+<div id="headerFiltros" style=""><i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i></div>
+<!-- <div style="height: 40px"></div> -->
 
 
 <div id="jsGrid"></div>
 
-       
+<!-- Inicio de Seccion Modal -->
+<div class="modal draggable fade" id="crea_empleado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">x</span></button>
+                <h4 class="modal-title" id="myModalLabel">Crear Nuevo Empleado</h4>
+            </div>
+
+            <div id="validacion_empleado" class="modal-body">
+                <div id="ok"></div>
+                    <div class="form-group">
+                        <label class="control-label" for="title">Nombre:</label>
+                        <input type="text"  id="NOMBRE_EMPLEADO" class="form-control" data-error="Ingrese Nombre" required />
+                        <div id="mensaje1" class="help-block with-errors" ></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="title">Apellido Paterno:</label>
+                        <textarea  id="APELLIDO_PATERNO" class="form-control" data-error="Ingrese Apellido Paterno." required></textarea>
+                        <div id="mensaje2"class="help-block with-errors"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="title">Apellido Materno:</label>
+                        <textarea  id="APELLIDO_MATERNO" class="form-control" data-error="Ingrese Apellido Materno." required></textarea>
+                        <div id="mensaje3" class="help-block with-errors"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="title">Categoria:</label>
+                        <textarea  id="CATEGORIA" class="form-control" data-error="Ingrese Categoria." required></textarea>
+                        <div id="mensaje4" class="help-block with-errors"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="title">Email:</label>
+                        <textarea  id="CORREO" class="form-control" data-error="Ingrese Email" required></textarea>
+                        <div id="mensaje5"class="help-block with-errors"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" id="btn_crearEmpleado"  class="btn crud-submit btn-info">Guardar</button>
+                        <button type="submit" id="btn_limpiarEmpleado"  class="btn crud-submit btn-info">Limpiar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Final de Seccion Modal-->
 
 <script>
+
+$(function()
+{
+    $("#btn_crearEmpleado").click(function()
+    {
+        var nombre = $("#NOMBRE_EMPLEADO").val();
+        var apellido_paterno = $("#APELLIDO_PATERNO").val();
+        var apellido_materno = $("#APELLIDO_MATERNO").val();
+        var categoria = $("#CATEGORIA").val();
+        var email = $("#CORREO").val();
+        insertarEmpleado();
+    });
+
+    $("#btn_limpiarEmpleado").click(function()
+    {
+        $("#NOMBRE_EMPLEADO").val("");
+        $("#APELLIDO_PATERNO").val("");
+        $("#APELLIDO_MATERNO").val("");
+        $("#CATEGORIA").val("");
+        $("#CORREO").val("");
+    });
+
+    $("#CORREO").keyup(function()
+    {
+        console.log($("#CORREO").val());
+        $.ajax({
+            url:'',
+            type:'',
+            data:'',
+            
+        });
+    });
+});
+
+construirFiltros();
 listarDatos();
+
 </script>
 
 

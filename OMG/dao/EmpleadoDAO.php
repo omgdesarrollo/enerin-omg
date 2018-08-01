@@ -85,7 +85,7 @@ class EmpleadoDAO{
         }   
     }
     
-    public function verificarEmpleado($correo)
+    public function verificaCorreo($correo)
     {
         try
         {

@@ -1,11 +1,14 @@
 function filtroSupremo()
 {
-    data = filtros;
-    newData = [];
-    $.each(data,function(index,value)
+    // data = filtros;
+    newData = [];    
+    $.each(filtros,function(index,value)
     {
         ($("#"+value.id).val()!="") ? newData.push(value):console.log();
     });
+    // console.log(filtros);
+    // console.log(newData);
+    // console.log(dataListado);
     DataFinal=dataListado;
     $.each(newData,function(index,value)
     {
