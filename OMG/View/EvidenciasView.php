@@ -852,6 +852,7 @@
           onItemDeleted: function(args) {
               if(args["item"]["eliminar"]=="si"){
                   eliminarEvidencia(args["item"]["id_evidencia"]);
+                  alert("onItemDeleted: "+onItemDeleted);
               }
               
           },
@@ -877,10 +878,11 @@
 //                            swal("","Error Al Eliminar","Error");
 //                        }
 //                   });
+                    alert("deleteConfirm: "+deleteConfirm);
         
           },
           onItemDeleting: function(args) {
-              
+                alert("onItemDeleting: "+onItemDeleting);
 //              console.log("entro aqui");
 //              console.log(args);
 // args.cancel = true;

@@ -63,7 +63,12 @@ function listarDatos()
 //        alert("Entro al Updated: "+args); 
         saveUpdateToDatabase(args);
 //        console.log(args);
-    }
+    },
+    
+    deleteItem: function(args) {
+            alert("Entro al Delete: "+args);
+            console.log(args);
+        }
         
     });
 }
@@ -95,16 +100,15 @@ function saveUpdateToDatabase(args)
       console.log(columnas);
       
       $.ajax({
-          url:"../Controller/GeneralController.php?Op=updateColumnas",
+          url:"../Controller/GeneralController.php?Op=Actualizar",
           type:"POST",
-          data:'TABLA="documentos" &COLUMNAS='+columnas+' &ID='+id_afectado+'',          
+          data:'TABLA="documentos" &COLUMNAS_VALOR='+columnas+' &ID_CONTEXTO='+id_afectado+'',          
           success:function(data)
           {
               
           }
       });
-//    console.log(columnas);
-      
+//    console.log(columnas);      
 }
 
 
