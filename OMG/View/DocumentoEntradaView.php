@@ -755,6 +755,7 @@ function construirGrid(datosF)//listooo 12
         },
         onItemUpdated: function(args)
         {
+                console.log(args);
                 columnas={};
                 id_afectado=args["item"]["id_principal"][0];
                 $.each(args["item"],function(index,value)
@@ -1791,8 +1792,7 @@ function CambioStatusDocumentoEntrada()
                 }
         }
 }
-                
-                
+
 function Habilitar_DesabilitarFechas(accion)
 {
         $("#FECHA_ASIGNACION").prop("disabled",accion);

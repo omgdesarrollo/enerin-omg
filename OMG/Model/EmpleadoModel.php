@@ -59,9 +59,6 @@ class EmpleadoModel{
     }
     
     
-    
-    
-    
     public function insertar($pojo){
         try{
             $dao=new EmpleadoDAO();
@@ -98,12 +95,12 @@ class EmpleadoModel{
         }
     }
     
-    public function verificarEmpleado($correo)
+    public function verificaCorreo($correo)
     {
         try
         {
             $dao=new EmpleadoDAO();
-            $rec= $dao->verificarEmpleado($correo);
+            $rec= $dao->verificaCorreo($correo);
 //            if($rec[0]['resultado']==0)
 //            {   
 //                return $rec;
@@ -118,7 +115,7 @@ class EmpleadoModel{
         } catch (Exception $ex)
         {
             throw $ex;
-            return false;
+            return -1;
         }
     }
     
