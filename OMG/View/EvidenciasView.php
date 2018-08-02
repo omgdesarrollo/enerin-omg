@@ -1462,7 +1462,6 @@ function confirmarBorrarRegistroEvidencia(){
           async:false,
           success:function(creado)
           {
-              alert(creado);
             if(creado==1)
             {
               $.ajax({
