@@ -159,8 +159,6 @@ require_once 'EncabezadoUsuarioView.php';
 
 <script>
 
-
-
 $(function()
 {
     $("#btn_crearEmpleado").click(function()

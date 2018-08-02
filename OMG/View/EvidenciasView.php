@@ -1586,6 +1586,7 @@ function confirmarBorrarRegistroEvidencia(){
 
     function mostrar_urls(id_evidencia,validador,validado,id_para)
     {
+        console.log(id_evidencia,validador,validado,id_para);
         var tempDocumentolistadoUrl = "";
         URL = 'filesEvidenciaDocumento/'+id_evidencia;
         $.ajax({
@@ -1621,8 +1622,10 @@ function confirmarBorrarRegistroEvidencia(){
                                       tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\" download='"+name+"'>"+name+"</a></td><td>";
                                       if(validador=="1")
                                       {
+                                          alert("validador");
                                         if(validado==false)
                                         {
+                                            alert("validado");
                                             tempDocumentolistadoUrl += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
                                             tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
                                             tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button>";
@@ -1654,6 +1657,7 @@ function confirmarBorrarRegistroEvidencia(){
                       ({
                         url: '../View/',
                       });
+                      console.log(tempDocumentolistadoUrl);
                   }
               });
             }
@@ -1699,7 +1703,7 @@ function confirmarBorrarRegistroEvidencia(){
             {
               if(eliminado)
               {
-                mostrar_urls(ID_EVIDENCIA_DOCUMENTO,"0","false",id_para);
+                mostrar_urls(ID_EVIDENCIA_DOCUMENTO,"1",false,id_para);
                 refresh();
                 //eliminar parte del registro en la base de datos
                 swal("","Archivo eliminado");
@@ -1892,7 +1896,7 @@ function confirmarBorrarRegistroEvidencia(){
             <!-- </td> -->
         </tr>
     {% } %}
-    {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val(); alert(ID_EVIDENCIA_DOCUMENTO); var ID_PARA_DOCUMENTO = $('#tempInputIdParaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO,'0','false',ID_PARA_DOCUMENTO); reconstruirRow(ID_EVIDENCIA_DOCUMENTO); noArchivo=0; } } %}
+    {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val(); alert(ID_EVIDENCIA_DOCUMENTO); var ID_PARA_DOCUMENTO = $('#tempInputIdParaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO,'1',false,ID_PARA_DOCUMENTO); reconstruirRow(ID_EVIDENCIA_DOCUMENTO); noArchivo=0; } } %}
 </script>
 
     <!--Inicia para el spiner cargando-->

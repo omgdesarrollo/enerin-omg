@@ -112,17 +112,17 @@ function reconstruir(value,index)
 
 function componerDataListado(value)// id de la vista documento
 {
-        dataListado;
-        id_vista = value.id_documento_entrada;
-        id_string = "id_documento_entrada"
-        $.each(dataListado,function(indexList,valueList)
+    dataListado;
+    id_vista = value.id_documento_entrada;
+    id_string = "id_documento_entrada"
+    $.each(dataListado,function(indexList,valueList)
+    {
+        $.each(valueList,function(ind,val)
         {
-            $.each(valueList,function(ind,val)
-            {
-                if(ind == id_string)
-                        ( val.indexOf(id_vista) != -1 ) ? ( dataListado[indexList]=value ):  console.log();
-            });
+            if(ind == id_string)
+                    ( val.indexOf(id_vista) != -1 ) ? ( dataListado[indexList]=value ):  console.log();
         });
+    });
 }
 
 function insertarEmpleado(empleadoDatos)
