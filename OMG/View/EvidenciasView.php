@@ -1453,13 +1453,13 @@ function confirmarBorrarRegistroEvidencia(){
 
     function mostrar_urls(id_evidencia,validador,validado,id_para)
     {
-        console.log(id_evidencia,validador,validado,id_para);
         var tempDocumentolistadoUrl = "";
         URL = 'filesEvidenciaDocumento/'+id_evidencia;
         $.ajax({
           url: '../Controller/ArchivoUploadController.php?Op=CrearUrl',
           type: 'GET',
           data: 'URL='+URL,
+          async:false
           success:function(creado)
           {
             if(creado)
@@ -1468,6 +1468,7 @@ function confirmarBorrarRegistroEvidencia(){
                   url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
                   type: 'GET',
                   data: 'URL='+URL,
+                  async:false
                   success: function(todo)
                   {
                       // console.log(todo[0].length);
@@ -1524,7 +1525,6 @@ function confirmarBorrarRegistroEvidencia(){
                       ({
                         url: '../View/',
                       });
-                      console.log(tempDocumentolistadoUrl);
                   }
               });
             }
