@@ -228,7 +228,7 @@ class AsignacionTemaRequisitoDAO {
     }
 public function obtenerDetalles_Req($value){
     try{
-        $query="select tbrequisitos.requisito from requisitos tbrequisitos where tbrequisitos.id_requisito=".$value["id"];
+        $query="select tbrequisitos.id_requisito,tbrequisitos.requisito from requisitos tbrequisitos where tbrequisitos.id_requisito=".$value["id"];
         $db= AccesoDB::getInstancia();
        $lista= $db->executeQuery($query);
         return $lista;
