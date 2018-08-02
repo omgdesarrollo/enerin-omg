@@ -1448,27 +1448,28 @@ function confirmarBorrarRegistroEvidencia(){
     $("#subirArchivos").click(function()
     {
         agregarArchivosUrl();
-        
+        $("#subirArchivos").attr("disabled",true);
     });
 
     function mostrar_urls(id_evidencia,validador,validado,id_para)
     {
+        $('#loader').show();
         var tempDocumentolistadoUrl = "";
         URL = 'filesEvidenciaDocumento/'+id_evidencia;
         $.ajax({
           url: '../Controller/ArchivoUploadController.php?Op=CrearUrl',
           type: 'GET',
           data: 'URL='+URL,
-          async:false
+        //   async:false,
           success:function(creado)
           {
-            if(creado)
+            if(creado==1)
             {
               $.ajax({
                   url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
                   type: 'GET',
                   data: 'URL='+URL,
-                  async:false
+                //   async:false,
                   success: function(todo)
                   {
                       // console.log(todo[0].length);
@@ -1490,10 +1491,8 @@ function confirmarBorrarRegistroEvidencia(){
                                       tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\" download='"+name+"'>"+name+"</a></td><td>";
                                       if(validador=="1")
                                       {
-                                          alert("validador");
                                         if(validado==false)
                                         {
-                                            alert("validado");
                                             tempDocumentolistadoUrl += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
                                             tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
                                             tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button>";
@@ -1525,12 +1524,15 @@ function confirmarBorrarRegistroEvidencia(){
                       ({
                         url: '../View/',
                       });
+                      $("#subirArchivos").removeAttr("disabled");
+                      $('#loader').hide();
                   }
               });
             }
             else
             {
               swal("","Error del servidor","error");
+              $('#loader').hide();
             }
           }
         });
