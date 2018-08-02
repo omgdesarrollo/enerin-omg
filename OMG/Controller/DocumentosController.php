@@ -88,6 +88,12 @@ switch ($Op) {
     
 	case 'Eliminar':
 		# code...
+            header('Content-type: application/json; charset=utf-8'); 
+            $ID_DOCUMENTO = json_decode($_REQUEST['ID'],true);
+            $Lista= $model->eliminarDocumento($ID_DOCUMENTO['id_documento']);
+            echo json_encode($Lista);
+
+            return $Lista;
 		break;	
 
 

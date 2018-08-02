@@ -922,69 +922,40 @@
         {name:"eliminar",visible:false}
         
     ],
-     onOptionChanged:function(a){
+    
+    onOptionChanged:function(a){
          alert("se reconocio cambio");
-              },
-          onItemDeleted: function(args){
-              if(args["item"]["eliminar"]=="si"){
-                  eliminarEvidencia(args["item"]["id_evidencia"]);
-<<<<<<< HEAD
-                  alert("onItemDeleted: "+onItemDeleted);
-              }
+    },
               
-          },
-          deleteConfirm: function(args) {
-//                var string = "d";
-                return "seguro que desea eliminar el registro de evidencia"
-//                $("#deleteDialog").dialog("open");
-//                $("#deleteDialogText").text(string);
-//                swal({
-//                     title: "ELIMINAR",
-//                     text: "Al eliminar este registro se eliminara toda la evidencia registrada. ¿Desea continuar?",
-//                     type: "warning",
-//                     showCancelButton: true,
-//                     closeOnConfirm: false,
-//                     showLoaderOnConfirm: true,
-//                     confirmButtonText: "Eliminar",
-//                     cancelButtonText: "Cancelar",
-//                   },function(res){
-//                       if(res){
-//                             swal("","Eliminacion Exitosa","success");
-//                         }
-//                         else{
-//                            swal("","Error Al Eliminar","Error");
-//                        }
-//                   });
-                    alert("deleteConfirm: "+deleteConfirm);
-        
-          },
-          onItemDeleting: function(args) {
-                alert("onItemDeleting: "+onItemDeleting);
-=======
+    onItemDeleted: function(args){
+       console.log("entro a onItemDeleted");
+        if(args["item"]["eliminar"]=="si"){
+            eliminarEvidencia(args["item"]["id_evidencia"]);
 //                  $("#jsGrid").jsGrid("insertItem");
-              }
-          },
-          onItemDeleting: function(args) {
+        }
+    },
+    
+    onItemDeleting: function(args) {
 //            alert("procedera a eliminarse");  
->>>>>>> 908ef349a887e362acae5c11480ea39cf8eeeda7
-//              console.log("entro aqui");
-//              console.log(args);
+        console.log("entro a onItemDeleting");
+        console.log(args);
 // args.cancel = true;
-              if(args["item"]["opcion"]!=""){
-                    args["item"]["eliminar"]="si";
-                    eliminarEvidenciaGrid(args,args["item"]["id_evidencia"]);   
-                }
-                else{
-                    args.cancel = true;
-                    args["item"]["eliminar"]="no";
-                     swal("","Error no se puede Eliminar ya contiene archivos adjuntos","error");
-                    setTimeout(function(){swal.close();},1500);
-                }
-            
-
-
+        if(args["item"]["opcion"]!=""){
+              args["item"]["eliminar"]="si";
+              eliminarEvidenciaGrid(args,args["item"]["id_evidencia"]);   
           }
-        });
+          else{
+              args.cancel = true;
+              args["item"]["eliminar"]="no";
+               swal("","Error no se puede Eliminar ya contiene archivos adjuntos","error");
+              setTimeout(function(){swal.close();},1500);
+          }
+
+
+
+    }
+    
+    });
         
         
         

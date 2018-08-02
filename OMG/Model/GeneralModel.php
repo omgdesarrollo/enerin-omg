@@ -39,8 +39,10 @@ class GeneralModel{
             foreach($COLUMNAS_VALOR as $key=>$value)
             {
                 if($index!=0)
+                {
                     $query .= " , ";
-                $query .= " $key = '$value'";
+                }
+                    $query .= " $key = '$value'";
                 $index++;
             }
             foreach($ID_CONTEXTO as $key=>$value)
