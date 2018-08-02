@@ -78,7 +78,7 @@ require_once 'EncabezadoUsuarioView.php';
     Agregar Documento
 </button>    
     
-<button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
+<button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh('refrescarTable');" >
     <i class="glyphicon glyphicon-repeat"></i>   
 </button>
 
@@ -168,7 +168,8 @@ require_once 'EncabezadoUsuarioView.php';
        
 
 <script>
-listarDatos();
+construirFiltros();
+listarjsGrid();
 </script>
 
 

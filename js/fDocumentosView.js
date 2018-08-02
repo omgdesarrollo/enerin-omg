@@ -43,62 +43,61 @@ filtros =
 [
     {'name':'Clave','id':'clave_documento',type:'text'},
     {'name':'Documento','id':'documento',type:'text'},
-    {'name':'Responsable','id':'id_empleado',type:'combobox'}
-
+//    {'name':'Responsable','id':'id_empleado',type:'combobox',data:consultarEmpleados()}
 ];
 
 
-function construirFiltros()
-{
-    tempData = "";
-    $.each(filtros,function(index,value)
-    {
-        if(value.type == "date")
-        {
-            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' style='width: auto;display:none;'>";
-            tempData += "<input type='date' onChange='construirFiltroSelect(this,\""+value.id+"\")' placeholder='"+value.name+"' style='width:auto;margin:2px;'>";
-        }
-        if(value.type == "text")
-        {
-            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' placeholder='"+value.name+"' style='width:auto;margin:2px;'>";
-        }
-        if(value.type == "combobox")
-        {
-            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' style='width:auto;display:none'>";
-            tempData += construirFiltrosCombobox(value.data,value.id);
-        }
-    });
-    $("#headerFiltros").append(tempData);
-}
-
-function construirFiltrosCombobox(datos,id)
-{
-    tempData="";
-    tempData = "<select onChange='construirFiltrosComboboxSelect(this,\""+id+"\")' margin:2px;>";
-    tempData += "<option value='-1'>Responsable del Documento</option>";
-    $.each(datos,function(index,value)
-    {
-            tempData += "<option value='"+value.id+"'>"+value.descripcion+"</option>";
-    });
-    tempData += "</select>";
-    return tempData;
-}
-
-function construirFiltroSelect(Obj,id)
-{
-    val = $(Obj).val();
-    if(val=="-1")
-            $("#"+id).val("");
-    else
-            $("#"+id).val(val);
-    filtroSupremo();
-}
-
-
+//function construirFiltros()
+//{
+//    tempData = "";
+//    $.each(filtros,function(index,value)
+//    {
+//        if(value.type == "date")
+//        {
+//            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' style='width: auto;display:none;'>";
+//            tempData += "<input type='date' onChange='construirFiltroSelect(this,\""+value.id+"\")' placeholder='"+value.name+"' style='width:auto;margin:2px;'>";
+//        }
+//        if(value.type == "text")
+//        {
+//            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' placeholder='"+value.name+"' style='width:auto;margin:2px;'>";
+//        }
+//        if(value.type == "combobox")
+//        {
+//            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' style='width:auto;display:none'>";
+//            tempData += construirFiltrosCombobox(value.data,value.id);
+//        }
+//    });
+//    $("#headerFiltros").append(tempData);
+//}
+//
+//function construirFiltrosCombobox(datos,id)
+//{
+//    tempData="";
+//    tempData = "<select onChange='construirFiltrosComboboxSelect(this,\""+id+"\")' margin:2px;>";
+//    tempData += "<option value='-1'>Responsable del Documento</option>";
+//    $.each(datos,function(index,value)
+//    {
+//            tempData += "<option value='"+value.id+"'>"+value.descripcion+"</option>";
+//    });
+//    tempData += "</select>";
+//    return tempData;
+//}
+//
+//function construirFiltroSelect(Obj,id)
+//{
+//    val = $(Obj).val();
+//    if(val=="-1")
+//            $("#"+id).val("");
+//    else
+//            $("#"+id).val(val);
+//    filtroSupremo();
+//}
 
 
 
-function listarDatos()
+
+
+function listarDatos(queRetornar)
 {
 //    alert("Entro a listar datos");
     __datos=[];
@@ -138,21 +137,68 @@ function listarDatos()
     var listfunciones=[variablefunciondatos];
     ajaxHibrido(datosParamAjaxValues,listfunciones);
     
+   if(queRetornar==1)
+   {
+       console.log(__datos);
+      return __datos; 
+   }else{
+      return __datosCBE;
+      console.log(__datosCBE);
+   }
+//   
+//   console.log(__datos);
+
+//    return __datos;
+}
+
+
+function listarjsGrid()
+{  
+    db={
+                loadData: function(filter) {
+//                    console.log("Entro al loadData");
+//                    console.log(listarDatos(1));
+                        return listarDatos(1);
+              },
+                  insertItem: function(item) {
+                      return item;
+              },
+           } 
+           
+    window.db = db; 
+    
     $("#jsGrid").jsGrid({
+        
+        onInit: function(args){
+            gridInstance=args;
+              jsGrid.ControlField.prototype.editButton=true;
+              jsGrid.Grid.prototype.autoload=true;
+        }, 
+        onDataLoading: function(args) {
+            $("#loader").show();
+        },
+        onDataLoaded:function(args){
+            $("#loader").hide();
+        },
+        onRefreshing: function(args) {
+        },
+        
         width: "100%",
         height: "300px",
         editing: true,
         heading: true,
         sorting: true,
         paging: true,
-        
-       
-        data: __datos,
+        controller:db,
+        filtering:true,
+//        data: __datos,
         fields: [
                 { name: "id_principal",visible:false },
                 { name: "clave_documento",title:"Clave del Documento", type: "text", width: 80, validate: "required" },
                 { name: "documento",title:"Nombre del Documento", type: "text", width: 150, validate: "required" },
-                { name: "id_empleado",title:"Responsable del Documento", type: "select", items:__datosCBE,valueField: "id_empleado", textField: "Name", width: 150, validate: "required" },
+                { name: "id_empleado",title:"Responsable del Documento", type: "select", items:listarDatos(0),valueField: "id_empleado", textField: "Name", width: 150, validate: "required",filterValue: function() { 
+                return this.items[this.filterControl.val()][this.textField];
+                }},
                 {type:"control"}
         ],
         
@@ -170,17 +216,9 @@ function listarDatos()
 
         }
         
-        
-//        onItemDeleted: function(args){
-//            console.log("entro a onItemDeleted");
-//            if(args["item"]["eliminar"]=="si"){
-//                eliminarEvidencia(args["item"]["id_evidencia"]);
-////                  $("#jsGrid").jsGrid("insertItem");
-//            }
-//        }
-        
     });
 }
+
 
 function saveUpdateToDatabase(args) 
 { 
@@ -241,7 +279,6 @@ function eliminarDocumento(args)
 //            alert("Entro al success "+data);
             if(data==false)
             {
-                listarDatos();
                 swal("","El Documento esta validado o asignado a un Registro","error");
                 setTimeout(function(){swal.close();},1500);
             }else{
@@ -301,17 +338,35 @@ function saveToDatabaseDatosFormulario(datos)
         data:"CLAVE_DOCUMENTO="+datos[0]+"&DOCUMENTO="+datos[1]+"&ID_EMPLEADO="+datos[2],
         success:function(data)
         {
-            listarDatos();
-            swal("Guardado Exitoso!", "", "success");
-            setTimeout(function(){swal.close();$("#create-item .close").click();},1000);
+//            swal("Guardado Exitoso!", "", "success");
+//            setTimeout(function(){swal.close();$("#create-item .close").click();},1000);
+            refresh('agregarDocumento');
+
         }
         
     });
 }
 
-function refresh()
+function refresh(evaluar)
 {
-    listarDatos();
+    switch(evaluar)
+    {
+        case 'agregarDocumento':
+           $("#jsGrid").jsGrid("render").done(function() {
+            swal("Guardado Exitoso!", "", "success");
+            setTimeout(function(){swal.close();$("#create-item .close").click();},1000);
+        });
+        
+        break;
+        
+        case 'refrescarTable':
+            $("#jsGrid").jsGrid("render").done(function() {
+            swal("Se cargaron correctamente los Datos", "", "success");
+            setTimeout(function(){swal.close();$("#create-item .close").click();},1000);
+        });    
+            
+            break;
+    }    
 }
 
 function loadSpinner()
