@@ -40,9 +40,13 @@
     <script src="../../js/jquery.js" type="text/javascript"></script>
     <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
     
-    <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
+<!--    <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
-    <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
+    <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>-->
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+    
     <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
     <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
@@ -159,7 +163,7 @@
                 </tbody>
             </table>-->
     
-    <div id="jsGrid"></div>
+    <div id="grid"></div>
 
 </body>
 
@@ -334,7 +338,7 @@
     
     
     
-   var gridInstance;
+   var gridInstance,db={};
     // var data="";
     // var dataTemp="";
     months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
@@ -424,14 +428,14 @@
 //                 $("#jsGrid").jsGrid("refresh");
 //                         gridInstance["data"].
 
-                    var $grid = $("#jsGrid");
-//                    $grid.jsGrid("option", "pageIndex", 1);
-//                    $grid.jsGrid("loadData");
-//                    $grid["0"]["draggable"]=true;
-                    console.log("lo va hacer ");
-                    console.log($grid);    
-//                    $("#jsGrid").html("");
-                    __refresh=false;
+//                    var $grid = $("#jsGrid");
+////                    $grid.jsGrid("option", "pageIndex", 1);
+////                    $grid.jsGrid("loadData");
+////                    $grid["0"]["draggable"]=true;
+//                    console.log("lo va hacer ");
+//                    console.log($grid);    
+////                    $("#jsGrid").html("");
+//                    __refresh=false;
 //                    listarDatos();
                     
 //                    $("#jsGrid").jsGrid("option", "data",__datosGlobales);
@@ -530,40 +534,7 @@
         });
     }
     noArchivo=0;
-    function refresh()
-    {       
-        ejecutarPrimeraVez=false;
-        ejecutando=false;
-        clearInterval(intervalA);
-        clearTimeout(timeOutA);
-//        listarDatos();
-//        construir();
-//gridInstance["onRefreshing"]["name"]="onRefreshing";
-//gridInstance.onRefreshing=function (args){
-//    
-//    alert("lo");
-//};
-//$("#jsGrid").jsGrid("onRefreshing");
-//alert("l");
 
-
-//["controller"]:function (){
-//    console.log("si lo hizo");
-//}
-//gridInstance["controller"].loadData(); 
-//gridInstance["controller"].search(); 
-//gridInstance= $("#jsGrid").data("JSGrid");
-
-   $("#jsGrid").jsGrid("loadData");
-//gridInstance["onRefreshing"](); 
-
-//gridInstance["onInit"]();
-// $( "#jsGrid" ).jsGrid("fieldOption" ,"no","visible",false);
-//$("#jsGrid").jsGrid("render").done(function() {
-//    console.log("rendering completed and data loaded");
-//});
-    console.log(gridInstance);
-    }
     function filterTable(Obj)
     {
         console.log($(Obj).attr("placeholder"));
@@ -806,75 +777,34 @@
                 });
         });
 //        moverA();
-        return __datos;
-        
-        
-//        dataTodo = __datos;
-        // console.log(__datos);
-        // $('#bodyTable').html(tempData);
-        // $('#loader').hide();
-//        if(__refresh==false){
-////            alert("entra");
-//            __datosGlobales=__datos;
-//            construir((__datos.length==0)?[]:__datos);
-//        }
-//        else{
-//            if(__refresh==true)
-//            __datosGlobales=(__datos.length==0)?[]:__datos;
-//        }
-
-//construirGrid(__datos);
-        
+//            mover()
+        return __datos;   
     }
 
     function construir(datosF)
     {
-//        console.log(datosF);
-//      gridInstance= $("#jsGrid").html("");
-//      gridInstance=$("#jsGrid");
-//      gridInstance.html("");
-//      db;
-//       (function(){
-             db={
+         db={
                 loadData: function(filter) {
-                    alert("recepcion de datos");
-      //              alert("obtencion de datos");
-                       return listarDatosTodos();
-      //            return $.ajax({url: "../bin/s.php",data:filter});   
+                        return listarDatosTodos();
               },
                   insertItem: function(item) {
-                      alert("va a insertar");
-                  return $.ajax({
-                      type: "POST",
-                      url: "/itemsfdf",
-                      data: item
-                  });
+                      return item;
               },
            } 
-//        });
-      window.db = db; 
-      
-      
-   $("#jsGrid").jsGrid({
-        onInit: function(args) {
-//        alert("va anetrar");
-//            gridInstance = args.grid;
-//            gridInstance = args;
-//            console.log(gridInstance);
-//             console.log("termino y empieza el otro");
-//            alert("entrara a cargar");
+           
+      window.db = db;   
+$("#grid").jsGrid({
+        onInit: function(args){
+            gridInstance=args;
+              jsGrid.ControlField.prototype.editButton=false;
+              jsGrid.Grid.prototype.autoload=true;
         }, onDataLoading: function(args) {
             $("#loader").show();
     },
     onDataLoaded:function(args){
-      
-             console.log("--on data");
-        console.log(gridInstance);
-             console.log("t----...");
         $("#loader").hide();
     },
     onRefreshing: function(args) {
-//        alert("d");
     },
         width: "100%",
         height: "300px",
@@ -886,104 +816,68 @@
         autoload:true,
         pageSize: 10,
         pageButtonCount: 5,
+//        pageLoading :true,
         updateOnResize: true,
         confirmDeleting: true,
         controller:db,
-//        controller:datosF,
         rowClick: function(args)
         {
-//              alert("le has picado "+args);
-//             console.log(args);
-//                     alert("este es el id de evidencia seleccionado"+args["item"].id_evidencia);     
-//            showDetailsDialog("Edit", args.item);
         },
-//        
-//        data: datosF,
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields: [
-        { name: "id_evidencia", type: "text",fields:"f", width: "auto", validate: "required",visible:false },
-        { name: "no", title:"No",type: "text", width: 28, validate: "required" },
-        { name: "requisito",title:"Requisito", type: "text", width: 150, validate: "required" },
-        { name: "registro",title:"Registro", type: "text", width: 150, validate: "required" },
-        { name: "frecuencia",title:"Frecuencia", type: "text", width: 120, validate: "required" },
-        { name: "clave_documento",title:"Clave Documento", type: "text", width: 128, validate: "required" },
-        { name: "adjuntar_evidencia",title:"Adjuntar Evidencia", type: "text", width: 140, validate: "required" },
-        { name: "fecha_registro",title:"Fecha Registro", type: "text", width: 120, validate: "required" },
-        { name: "usuario",title:"Usuario", type: "text", width: 150, validate: "required" },
-        { name: "accion_correctiva",title:"Accion Correctiva", type: "text", width: 130, validate: "required" },
-        { name: "plan_accion",title:"Plan Accion", type: "text", width: 150, validate: "required" },
-        { name: "desviacion",title:"Desviacion", type: "text", width: 120, validate: "required" },
-        {name: "validacion",title:"Validacion", type: "text", width: 200, validate: "required" },
-        {name: "opcion",title:"Opcion", type: "text", width: 90, validate: "required",visible:false},
-       
-//        { name: "Country", type: "select", items: [{Name:"dd",Id:0},{Name:"seleccion",Id:1}],selectedIndex:0, valueField: "Id", textField: "Name",
-//                validate: { message: "Country should be specified", validator: function(value) { return value > 0; } } },
+        { name: "id_evidencia", type: "text",fields:"f", width: "auto",visible:false },
+        { name: "no", title:"No",type: "text", width: 28 },
+        { name: "requisito",title:"Requisito", type: "text", width: 150 },
+        { name: "registro",title:"Registro", type: "text", width: 150  },
+        { name: "frecuencia",title:"Frecuencia", type: "text", width: 120  },
+        { name: "clave_documento",title:"Clave Documento", type: "text",  width: 128 },
+        { name: "adjuntar_evidencia",title:"Adjuntar Evidencia", type: "text",  width: 140 },
+        { name: "fecha_registro",title:"Fecha Registro", type: "text", width: 120 },
+        { name: "usuario",title:"Usuario", type: "text", width:150 },
+        { name: "accion_correctiva",title:"Accion Correctiva", type: "text", width: 130},
+        { name: "plan_accion",title:"Plan Accion", type: "text", width: 170 },
+        { name: "desviacion",title:"Desviacion", type: "text", width: 120},
+        {name: "validacion",title:"Validacion", type: "text", width: 200 },
         {type: "control" },
         {name:"eliminar",visible:false}
-        
     ],
-    
-    onOptionChanged:function(a){
-         alert("se reconocio cambio");
-    },
-              
-    onItemDeleted: function(args){
-       console.log("entro a onItemDeleted");
-        if(args["item"]["eliminar"]=="si"){
-            eliminarEvidencia(args["item"]["id_evidencia"]);
-//                  $("#jsGrid").jsGrid("insertItem");
-        }
-    },
-    
-    onItemDeleting: function(args) {
-//            alert("procedera a eliminarse");  
-        console.log("entro a onItemDeleting");
-        console.log(args);
-// args.cancel = true;
-        if(args["item"]["opcion"]!=""){
-              args["item"]["eliminar"]="si";
-              eliminarEvidenciaGrid(args,args["item"]["id_evidencia"]);   
-          }
-          else{
-              args.cancel = true;
-              args["item"]["eliminar"]="no";
-               swal("","Error no se puede Eliminar ya contiene archivos adjuntos","error");
-              setTimeout(function(){swal.close();},1500);
-          }
-
-
-
+     onOptionChanged:function(a){
+              },
+          onItemDeleted: function(args){
+              if(args["item"]["eliminar"]=="si"){
+                  eliminarEvidencia(args["item"]["id_evidencia"]);
+              }
+          },
+          onItemDeleting: function(args) {
+              if(args["item"]["eliminar"]=="si"){
+//                    args["item"]["eliminar"]="si";
+                    eliminarEvidenciaGrid(args,args["item"]["id_evidencia"]);   
+                }
+                else{
+                    args.cancel = true;
+                    args["item"]["eliminar"]="no";
+                     swal("","Error no se puede Eliminar ya contiene archivos adjuntos","error");
+                    setTimeout(function(){swal.close();},1500);
+                }
+          },
+          onItemInserting: function(args) {
+            },
+            onItemInserted:function (args){
+            }
+        });
+      
     }
-    
-    });
-        
-        
-        
-       
-       gridInstance= $("#jsGrid").data("JSGrid");
-//       $("#jsGrid").jsGrid("loadData");
-//       gridInstance.methodName("deleteItem",1); 
-        
-//        console.log(gridInstance);
-//     $( "#jsGrid" ).jsGrid ("fieldOption" ,"no","visible",false);
-//     $( "#jsGrid" ).jsGrid ("fieldOption" ,"no","optionValue","fd","visible",true);
-//jsGrid.setDefaults ( "no" , { 
-//    ancho : 150 , 
-//    css : "text-field-cls" 
-//});
-
-//gridInstance.loadData=function (args){
-//    alert("n ");
-//};
-//gridInstance.loadData=function (){
-//    alert("");
-//};
-//console.log("empieza");
-//console.log(grid);
-console.log("termina el otro ");
-console.log(gridInstance);
+        function refresh()
+    {       
+        ejecutarPrimeraVez=false;
+        ejecutando=false;
+        clearInterval(intervalA);
+        clearTimeout(timeOutA);
+        $("#grid").jsGrid("render").done(function() {
+            swalSuccess("Evidencia Registrada Exitosamente");
+        });
+//$("#grid").jsGrid("refresh");
     }
-    
     function listarDatosTodos()
     {
         d=[];
@@ -1331,13 +1225,17 @@ function confirmarBorrarRegistroEvidencia(){
                         tempData.opcion = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;'";
                         tempData.opcion += "onclick='eliminarEvidencia("+value.id_evidencias+");'>";
                         tempData.opcion += "<i class='fa fa-trash'></i></button>";
+                         tempData["eliminar"]="si";
                     }
-                    else
+                    else{
                         tempData.opcion="";
+                         tempData["eliminar"]="no";
+                    }
 
-            }else
+            }else{
             tempData.opcion="";
-            tempData["eliminar"]="";
+            tempData["eliminar"]="no";
+            }
         return tempData;
     }
 
@@ -1539,7 +1437,7 @@ function confirmarBorrarRegistroEvidencia(){
         ModalCargaArchivo += "<div class='fileupload-buttons'>";
         ModalCargaArchivo += "<span class='fileinput-button'>";
         ModalCargaArchivo += "<span id='spanAgregarDocumento'><a >Agregar Archivos(Click o Arrastrar)...</a></span>";
-        ModalCargaArchivo += "<input type='file' name='files[]'></span>";
+        ModalCargaArchivo += "<input type='file' name='files[]' ></span>";
         ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
         ModalCargaArchivo += "<div class='fileupload-progress' >";
         // ModalCargaArchivo += "<div class='progress' role='progressbar' aria-valuemin='0' aria-valuemax='100'></div>";
@@ -1550,10 +1448,12 @@ function confirmarBorrarRegistroEvidencia(){
     $("#subirArchivos").click(function()
     {
         agregarArchivosUrl();
+        
     });
 
     function mostrar_urls(id_evidencia,validador,validado,id_para)
     {
+        console.log(id_evidencia,validador,validado,id_para);
         var tempDocumentolistadoUrl = "";
         URL = 'filesEvidenciaDocumento/'+id_evidencia;
         $.ajax({
@@ -1589,8 +1489,10 @@ function confirmarBorrarRegistroEvidencia(){
                                       tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\" download='"+name+"'>"+name+"</a></td><td>";
                                       if(validador=="1")
                                       {
+                                          alert("validador");
                                         if(validado==false)
                                         {
+                                            alert("validado");
                                             tempDocumentolistadoUrl += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
                                             tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
                                             tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button>";
@@ -1622,6 +1524,7 @@ function confirmarBorrarRegistroEvidencia(){
                       ({
                         url: '../View/',
                       });
+                      console.log(tempDocumentolistadoUrl);
                   }
               });
             }
@@ -1667,11 +1570,12 @@ function confirmarBorrarRegistroEvidencia(){
             {
               if(eliminado)
               {
-                mostrar_urls(ID_EVIDENCIA_DOCUMENTO,"0","false",id_para);
-                refresh();
+                mostrar_urls(ID_EVIDENCIA_DOCUMENTO,"1",false,id_para);
+//                refresh();
                 //eliminar parte del registro en la base de datos
                 swal("","Archivo eliminado");
                 setTimeout(function(){swal.close();},1000);
+                 refresh();
               }
               else
                 swal("","Ocurrio un error al elimiar el documento", "error");
@@ -1694,8 +1598,10 @@ function confirmarBorrarRegistroEvidencia(){
         data: 'URL='+url,
         success:function(creado)
         {
-          if(creado)
+          if(creado){
             $('.start').click();
+//            refresh();
+            }
 //        gridInstance["data"]["fecha_registro"]="d";
 //        console.log(gridInstance);
         },
@@ -1860,7 +1766,7 @@ function confirmarBorrarRegistroEvidencia(){
             <!-- </td> -->
         </tr>
     {% } %}
-    {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val(); alert(ID_EVIDENCIA_DOCUMENTO); var ID_PARA_DOCUMENTO = $('#tempInputIdParaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO,'0','false',ID_PARA_DOCUMENTO); reconstruirRow(ID_EVIDENCIA_DOCUMENTO); noArchivo=0; } } %}
+    {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();var ID_PARA_DOCUMENTO = $('#tempInputIdParaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO,'1',false,ID_PARA_DOCUMENTO); refresh(); noArchivo=0; } } %}
 </script>
 
     <!--Inicia para el spiner cargando-->
@@ -1877,8 +1783,8 @@ function confirmarBorrarRegistroEvidencia(){
     <script src="../../assets/probando/js/ace.min.js"></script>
 
     <!-- js cargar archivo -->
-    <script src="../../assets/FileUpload/js/jquery.min.js"></script>
-    <script src="../../assets/FileUpload/js/jquery-ui.min.js"></script>
+<!--    <script src="../../assets/FileUpload/js/jquery.min.js"></script>
+    <script src="../../assets/FileUpload/js/jquery-ui.min.js"></script>-->
     <script src="../../assets/FileUpload/js/tmpl.min.js"></script>
     <script src="../../assets/FileUpload/js/load-image.all.min.js"></script>
     <script src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>

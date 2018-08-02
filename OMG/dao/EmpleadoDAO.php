@@ -26,21 +26,16 @@ class EmpleadoDAO{
     public function listarEmpleado ($ID_EMPLEADO){
         try
         {
-            $query = "SELECT id_empleado, nombre_empleado, categoria, apellido_paterno, apellido_materno, correo, fecha_creacion, identificador
-
+            $query = "SELECT id_empleado, nombre_empleado, categoria, apellido_paterno, apellido_materno, correo, fecha_creacion
                       FROM empleados
-
                       WHERE id_empleado=$ID_EMPLEADO";
-            
             $db = AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
-            
             return $lista;
-            
-        } catch (Exception $ex)
+        }catch (Exception $ex)
         {
             throw $ex;
-            return false;
+            return -1;
         }
     }
 
@@ -77,11 +72,12 @@ class EmpleadoDAO{
                     VALUES($id_nuevo,'$Nombre','$Categoria','$Apellido_Paterno','$Apellido_Materno','$Correo','$identificador')";
             
             $db=  AccesoDB::getInstancia();
-            $db->executeQueryUpdate($query);
-
-            
-        } catch (Exception $ex) {
+            $exito = $db->executeUpdateRowsAfected($query);
+            return ($exito != 0)?[0=>1,"id_nuevo"=>$id_nuevo]:[0=>0,"id_nuevo"=>$id_nuevo ];
+        }catch (Exception $ex)
+        {
                 throw $ex;
+                return -1;
         }   
     }
     
@@ -89,18 +85,16 @@ class EmpleadoDAO{
     {
         try
         {
-            $query="SELECT COUNT(*) AS resultado, tbempleados.id_empleado, tbempleados.identificador  
+            $query="SELECT COUNT(*) AS resultado
                     FROM empleados tbempleados
                     WHERE tbempleados.correo='$correo'";
             $db=  AccesoDB::getInstancia();
             $lista= $db->executeQuery($query);
-            
-            return $lista;
-            
-        } catch (Exception $ex)
+            return $lista[0]["resultado"];
+        }catch (Exception $ex)
         {
             throw $ex;
-            return $ex;
+            return -1;
         }
     }
     

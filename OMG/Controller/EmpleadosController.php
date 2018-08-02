@@ -59,20 +59,28 @@ switch ($Op) {
 		# code...
 		break;	
 
-	case 'Guardar':
-               
-                  $pojo->setNombreEmpleado($_REQUEST['NOMBRE_EMPLEADO']);
-                  $pojo->setApellidoPaterno($_REQUEST['APELLIDO_PATERNO']);
-                  $pojo->setCategoria($_REQUEST['CATEGORIA']);
-                  $pojo->setApellidoMaterno($_REQUEST['APELLIDO_MATERNO']);
-                  $pojo->setCorreo($_REQUEST['CORREO']);
-                //   $pojo->setIdentificador("catalogo");
-                  $Lista= $model->insertar($pojo);
-		# code...
-                  header('Content-type: application/json; charset=utf-8');
-                  echo json_encode($Lista);
-                  return $Lista;
-		break;
+    case 'Guardar':
+        header('Content-type: application/json; charset=utf-8');
+        // echo $_REQUEST["EmpleadoDatos"];
+        $data = json_decode( $_REQUEST["EmpleadoDatos"],true );
+        // var_dump($data);
+        // $data = json_encode($data);
+        // foreach($data as $key => $value)
+        //     echo $key." - ".$value;
+        $pojo->setNombreEmpleado($data["nombre"]);
+        $pojo->setApellidoPaterno($data["apellido_paterno"]);
+        $pojo->setCategoria($data["categoria"]);
+        $pojo->setApellidoMaterno($data["apellido_materno"]);
+        $pojo->setCorreo($data["email"]);
+
+        // echo $pojo->getNombreEmpleado;
+
+      $pojo->setIdentificador("catalogo");
+
+        $Lista= $model->insertar($pojo);
+        echo json_encode($Lista);
+        // return $Lista;
+    break;
             
             
         case 'GuardarIdentificador':
@@ -84,12 +92,24 @@ switch ($Op) {
             break;
             
         
-        case'VerificaCorreo':
-            $Lista= $model->verificaCorreo($_REQUEST['CORREO']);
-            echo $Lista;
-            
+        case 'VerificaCorreo':
+            $existe = $model->verificaCorreo($_REQUEST['CORREO']);
+            echo $existe;
             break;
-            
+        
+        case 'VerificaCorreoWeb':// ya no funciona se requiere pago
+            $email = $_REQUEST["CORREO"];
+            $key = "xTUfzTSfuUAJ65zM7Xyhb";
+            $url = "https://app.verificaremails.com/api/verifyEmail?secret=".$key."&email=".$email;
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true );
+            $response = curl_exec($ch);
+            echo $response;
+            curl_close($ch);            
+            break;
 
 	case 'Modificar':
 		# code...
@@ -117,7 +137,7 @@ switch ($Op) {
 		# code...
 		break;	
 	default:
-		# code...
+		return -1;
 		break;
 }
 

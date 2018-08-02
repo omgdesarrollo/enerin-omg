@@ -5,54 +5,10 @@ filtros =
     {'name':'Apellido Materno','id':'apellido_materno',type:'text'},
     {'name':'Categoria','id':'categoria',type:'text'},
     {'name':'Correo','id':'correo',type:'text'},
-    {'name':'Fecha Creación','id':'fecha_creacion',type:'date'}
+    {'name':'Fecha Creación','id':'fecha_creacion',type:'date'},
+    // {'name':'Autoridad','id':'id_autoridad',type:'combobox',data: consultarAutoridades() },
 ];
-
-function construirFiltros()
-{
-    tempData = "";
-    $.each(filtros,function(index,value)
-    {
-        if(value.type == "date")
-        {
-            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' style='width: auto;display:none;'>";
-            tempData += "<input type='date' onChange='construirFiltroSelect(this,\""+value.id+"\")' placeholder='"+value.name+"' style='width:auto;margin:2px;'>";
-        }
-        if(value.type == "text")
-        {
-            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' placeholder='"+value.name+"' style='width:auto;margin:2px;'>";
-        }
-        if(value.type == "combobox")
-        {
-            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' style='width:auto;display:none'>";
-            tempData += construirFiltrosCombobox(value.data,value.id);
-        }
-    });
-    $("#headerFiltros").append(tempData);
-}
-
-function construirFiltrosCombobox(datos,id)
-{
-    tempData="";
-    tempData = "<select onChange='construirFiltrosComboboxSelect(this,\""+id+"\")' margin:2px;>";
-    tempData += "<option value='-1'>Autoridad Remitente</option>";
-    $.each(autoridades,function(index,value)
-    {
-            tempData += "<option value='"+value.id+"'>"+value.descripcion+"</option>";
-    });
-    tempData += "</select>";
-    return tempData;
-}
-
-function construirFiltroSelect(Obj,id)
-{
-    val = $(Obj).val();
-    if(val=="-1")
-            $("#"+id).val("");
-    else
-            $("#"+id).val(val);
-    filtroSupremo();
-}
+correoEmail=false;
 
 function construirGrid(__datos)
 {
@@ -156,24 +112,82 @@ function reconstruir(value,index)
 
 function componerDataListado(value)// id de la vista documento
 {
-        dataListado;
-        id_vista = value.id_documento_entrada;
-        id_string = "id_documento_entrada"
-        $.each(dataListado,function(indexList,valueList)
+    dataListado;
+    id_vista = value.id_documento_entrada;
+    id_string = "id_documento_entrada"
+    $.each(dataListado,function(indexList,valueList)
+    {
+        $.each(valueList,function(ind,val)
         {
-            $.each(valueList,function(ind,val)
-            {
-                if(ind == id_string)
-                        ( val.indexOf(id_vista) != -1 ) ? ( dataListado[indexList]=value ):  console.log();
-            });
+            if(ind == id_string)
+                    ( val.indexOf(id_vista) != -1 ) ? ( dataListado[indexList]=value ):  console.log();
         });
+    });
 }
 
-function insertarEmpleado()
+function insertarEmpleado(empleadoDatos)
 {
-    
+    if(correoEmail)
+    {
+        $.ajax({
+            url:'../Controller/EmpleadosController.php?Op=Guardar',
+            type:'POST',
+            data:'EmpleadoDatos='+JSON.stringify(empleadoDatos),
+            async:false,
+            success:function(datos)
+            {
+                if( typeof(datos) == "object")
+                {
+                    tempData;
+                    swalSuccess("Creado");
+                    $.each(datos,function(index,value)
+                    {
+                        tempData = reconstruir(value,index);
+                    });
+                    $("#jsGrid").jsGrid("insertItem",tempData).done(function()
+                    {
+                        $("#crea_empleado .close ").click();
+                    });
+                }
+                else
+                {
+                    if( datos == 0 )
+                        swalError("Error, No se pudo crear");
+                    else
+                    {
+                        swalInfo("Creado, Pero no listado, Actualice");
+                    }
+                }
+            },
+            error:function()
+            {
+                swalError("Error en el servidor");
+            }
+        });
+    }
+    else
+    {
+        swalInfo("El correo no es correcto");
+    }
 }
 
-function loadSpinner(){
+function loadSpinner()
+{
         myFunction();
+}
+
+function refresh()
+{
+    construirFiltros();
+    listarDatos();
+}
+
+function checarVacio(datos)
+{
+    $.each(datos,function(index,value)
+    {
+        if(value=="")
+            return false;
+    });
+    return true;
 }

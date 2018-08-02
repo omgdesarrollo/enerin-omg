@@ -16,9 +16,9 @@ $Usuario=  Session::getSesion("user");
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
 		<!-- bootstrap & fontawesome -->
-                <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-                <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+            <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+            <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+            <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
 
 		<!-- ace styles -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
@@ -99,7 +99,7 @@ require_once 'EncabezadoUsuarioView.php';
         
 </div>
 <div style="height: 40px"></div>
-<div id="headerFiltros" style=""><i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i></div>
+<div id="headerFiltros" style=""></div>
 <!-- <div style="height: 40px"></div> -->
 
 
@@ -147,7 +147,7 @@ require_once 'EncabezadoUsuarioView.php';
                     </div>
 
                     <div class="form-group">
-                        <button type="submit" id="btn_crearEmpleado"  class="btn crud-submit btn-info">Guardar</button>
+                        <button type="submit" id="btn_crearEmpleado" disabled class="btn crud-submit btn-info">Guardar</button>
                         <button type="submit" id="btn_limpiarEmpleado"  class="btn crud-submit btn-info">Limpiar</button>
                     </div>
                 </div>
@@ -163,12 +163,13 @@ $(function()
 {
     $("#btn_crearEmpleado").click(function()
     {
-        var nombre = $("#NOMBRE_EMPLEADO").val();
-        var apellido_paterno = $("#APELLIDO_PATERNO").val();
-        var apellido_materno = $("#APELLIDO_MATERNO").val();
-        var categoria = $("#CATEGORIA").val();
-        var email = $("#CORREO").val();
-        insertarEmpleado();
+        empleadoDatos=new Object();
+        empleadoDatos.nombre = $("#NOMBRE_EMPLEADO").val();
+        empleadoDatos.apellido_paterno = $("#APELLIDO_PATERNO").val();
+        empleadoDatos.apellido_materno = $("#APELLIDO_MATERNO").val();
+        empleadoDatos.categoria = $("#CATEGORIA").val();
+        empleadoDatos.email = $("#CORREO").val();
+        (checarVacio(empleadoDatos)) ? insertarEmpleado(empleadoDatos) : swalError("Completar campos");
     });
 
     $("#btn_limpiarEmpleado").click(function()
@@ -182,13 +183,44 @@ $(function()
 
     $("#CORREO").keyup(function()
     {
-        console.log($("#CORREO").val());
-        $.ajax({
-            url:'',
-            type:'',
-            data:'',
-            
-        });
+        correo = $("#CORREO").val();
+        $("#btn_crearEmpleado").attr("disabled",true);
+        var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        correoEmail = regex.test(correo) ? true : false;
+        if(correoEmail)
+        {
+            $.ajax({
+                url:'../Controller/EmpleadosController.php?Op=VerificaCorreo',
+                type:'GET',
+                data:'CORREO='+correo,
+                success:function(disponible)
+                {
+                    if(disponible != 0)
+                    {
+                        swalError("Correo no disponible");
+                        $("#CORREO").val(correo.slice(0,-1));
+                        correoEmail=false;
+                    }
+                    else
+                    // {
+                        $("#btn_crearEmpleado").removeAttr("disabled");
+                        // $.ajax({
+                        //     url:'../Controller/EmpleadosController.php?Op=VerificaCorreoWeb',
+                        //     type:'GET',
+                        //     data:'CORREO='+correo,
+                        //     success:function(exito)
+                        //     {
+                                
+                        //     }
+                        // });
+                    // }
+                },
+                error:function()
+                {
+                    swalError("Error en el servidor");
+                }
+            });
+        }
     });
 });
 
@@ -196,22 +228,36 @@ construirFiltros();
 listarDatos();
 
 </script>
+    <!--Inicia para el spiner cargando-->
+    <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+    <!--Termina para el spiner cargando-->
+    
+    <!--Bootstrap-->
+    <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
+    <!--Para abrir alertas de aviso, success,warning, error-->       
+    <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+    
+    <!--Para abrir alertas del encabezado-->
+    <script src="../../assets/probando/js/ace-elements.min.js"></script>
+    <script src="../../assets/probando/js/ace.min.js"></script>
 
-
-            <!--Inicia para el spiner cargando-->
-            <script src="../../js/loaderanimation.js" type="text/javascript"></script>
-            <!--Termina para el spiner cargando-->
-           
-            <!--Bootstrap-->
-            <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
-            <!--Para abrir alertas de aviso, success,warning, error-->       
-            <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+    <!-- <script src="../../assets/FileUpload/js/jquery.min.js"></script>
+        <script src="../../assets/FileUpload/js/jquery-ui.min.js"></script> -->
+        <script src="../../assets/FileUpload/js/tmpl.min.js"></script>
+        <script src="../../assets/FileUpload/js/load-image.all.min.js"></script>
+        <script src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.blueimp-gallery.min.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.iframe-transport.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.fileupload.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.fileupload-process.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.fileupload-image.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.fileupload-audio.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.fileupload-video.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
+        <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
+        <script src="../../assets/FileUpload/js/main.js"></script>
             
-            <!--Para abrir alertas del encabezado-->
-            <script src="../../assets/probando/js/ace-elements.min.js"></script>
-            <script src="../../assets/probando/js/ace.min.js"></script>
-          
-                
 	</body>
      
 </html>
