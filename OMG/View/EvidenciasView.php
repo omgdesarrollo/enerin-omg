@@ -874,7 +874,7 @@ $("#grid").jsGrid({
         clearInterval(intervalA);
         clearTimeout(timeOutA);
         $("#grid").jsGrid("render").done(function() {
-            swal("","Evidencia Registrada Exotisamente","sucess");
+            swalSuccess("Evidencia Registrada Exitosamente");
         });
 //$("#grid").jsGrid("refresh");
     }
