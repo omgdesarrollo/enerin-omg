@@ -1,14 +1,56 @@
+function construirFiltros()
+{
+    tempData = "<i class='ace-icon fa fa-search' style='color: #0099ff;font-size: 20px;'></i>";
+    $.each(filtros,function(index,value)
+    {
+        if(value.type == "date")
+        {
+            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' style='width: auto;display:none;'>";
+            tempData += "<input type='date' onChange='construirFiltroSelect(this,\""+value.id+"\")' placeholder='"+value.name+"' style='width:auto;margin:2px;'>";
+        }
+        if(value.type == "text")
+        {
+            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' placeholder='"+value.name+"' style='width:auto;margin:2px;'>";
+        }
+        if(value.type == "combobox")
+        {
+            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' style='width:auto;display:none'>";
+            tempData += construirFiltrosCombobox(value.data,value.name,value.id);
+        }
+    });
+    $("#headerFiltros").html(tempData);
+}
+
+function construirFiltrosCombobox(datos,name,id)
+{
+    tempData="";
+    tempData = "<select onChange='construirFiltrosComboboxSelect(this,\""+id+"\")' margin:2px;>";
+    tempData += "<option value='-1'>"+name+"</option>";
+    $.each(autoridades,function(index,value)
+    {
+            tempData += "<option value='"+value.id+"'>"+value.descripcion+"</option>";
+    });
+    tempData += "</select>";
+    return tempData;
+}
+
+function construirFiltroSelect(Obj,id)
+{
+    val = $(Obj).val();
+    if(val=="-1")
+            $("#"+id).val("");
+    else
+            $("#"+id).val(val);
+    filtroSupremo();
+}
+
 function filtroSupremo()
 {
-    // data = filtros;
     newData = [];    
     $.each(filtros,function(index,value)
     {
         ($("#"+value.id).val()!="") ? newData.push(value):console.log();
     });
-    // console.log(filtros);
-    // console.log(newData);
-    // console.log(dataListado);
     DataFinal=dataListado;
     $.each(newData,function(index,value)
     {

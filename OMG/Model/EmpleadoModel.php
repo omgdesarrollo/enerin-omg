@@ -64,34 +64,32 @@ class EmpleadoModel{
             $dao=new EmpleadoDAO();
             $model=new EmpleadoModel();
             $devoldValor="";
-            $resultado= $model->verificarEmpleado($pojo->getCorreo());
+            $lista=array();
+            // $resultado= $model->verificarEmpleado($pojo->getCorreo());
 //            echo json_encode($resultado);
-//            $pojo=new EmpleadoPojo();
-            if($resultado[0]['resultado']==0)
-            {   
-                $dao->insertarEmpleados($pojo->getNombreEmpleado(),$pojo->getCategoria(), $pojo->getApellidoPaterno(),$pojo->getApellidoMaterno(),$pojo->getCorreo(),$pojo->getIdentificador());
-                $devoldValor=1;
-            } else {
-            @$result= $dao->verificarIdentificadorSubmodulo($resultado[0]['id_empleado'],$pojo->getIdentificador());
+        //    $pojo=new EmpleadoPojo();
+            // if($resultado[0]['resultado']==0)
+            // {   
+            $exito = $dao->insertarEmpleados($pojo->getNombreEmpleado(),$pojo->getCategoria(), $pojo->getApellidoPaterno(),$pojo->getApellidoMaterno(),$pojo->getCorreo(),$pojo->getIdentificador());
+                // $devoldValor=1;
+            // } else {
+            // @$result= $dao->verificarIdentificadorSubmodulo($resultado[0]['id_empleado'],$pojo->getIdentificador());
 //            echo "este es el identificador".$result['identificador'];
 //            echo "Este es result:".json_encode($result);
-                if($result['identificador']=="")
-                { 
-                        
+            if($exito[0] = 1)
+            { 
+                    
 //                    $res= $dao->actualizarIdentificadorSubmodulo($resultado[0]['id_empleado'],$resultado[0]['identificador']."-".$pojo->getIdentificador());
 //                    echo json_encode("esta es la variable res ".$res);
-                    $devoldValor= $dao->listarEmpleado($resultado[0]['id_empleado']);
-                }
-                 else
-                {
-                    $devoldValor=-1;
-                }
+                $lista = $dao->listarEmpleado($exito['id_nuevo']);
             }
-            
-            return $devoldValor;
-
-        } catch (Exception $ex) {
-                throw $ex;
+            else
+                return $exito[0];
+            return $lista;
+        }catch(Exception $ex)
+        {
+            throw $ex;
+            return -1;
         }
     }
     
