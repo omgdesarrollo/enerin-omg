@@ -15,12 +15,29 @@ function construirGrid(__datos)
     console.log(__datos);
     $("#jsGrid").html("");
     $("#jsGrid").jsGrid({
+        onInit: function(args)
+        {
+            // gridInstance=args;
+            jsGrid.ControlField.prototype.editButton=true;
+            jsGrid.ControlField.prototype.deleteButton=false;
+            jsGrid.Grid.prototype.autoload=true;
+        },
+        onDataLoading: function(args)
+        {
+            $("#loader").show();
+        },
+        onDataLoaded:function(args)
+        {
+            $("#loader").hide();
+        },
         width: "100%",
         height: "300px",
         editing: true,
         heading: true,
         sorting: true,
         paging: true,
+        pageSize: 5,
+        pageButtonCount: 5,
         data: __datos,
         fields: 
         [
@@ -173,7 +190,7 @@ function insertarEmpleado(empleadoDatos)
 
 function loadSpinner()
 {
-        myFunction();
+    myFunction();
 }
 
 function refresh()

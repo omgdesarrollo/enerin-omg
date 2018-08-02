@@ -781,35 +781,39 @@
         return __datos;   
     }
 
-    function construir(datosF)
+function construir(datosF)
+{
+    db=
     {
-         db={
-                loadData: function(filter) {
-                        return listarDatosTodos();
-              },
-                  insertItem: function(item) {
-                      return item;
-              },
-           } 
-           
-      window.db = db;   
-$("#grid").jsGrid({
-        onInit: function(args){
+        loadData: function(filter)
+        {
+            return listarDatosTodos();
+        },
+        insertItem: function(item)
+        {
+            return item;
+        },
+    } 
+    window.db = db;
+    $("#grid").jsGrid({
+        onInit: function(args)
+        {
             gridInstance=args;
-              jsGrid.ControlField.prototype.editButton=false;
-              jsGrid.Grid.prototype.autoload=true;
-        }, onDataLoading: function(args) {
+            jsGrid.ControlField.prototype.editButton=false;
+            jsGrid.Grid.prototype.autoload=true;
+        },
+        onDataLoading: function(args)
+        {
             $("#loader").show();
-    },
-    onDataLoaded:function(args){
-        $("#loader").hide();
-    },
-    onRefreshing: function(args) {
-    },
+        },
+        onDataLoaded:function(args)
+        {
+            $("#loader").hide();
+        },
+        onRefreshing: function(args)
+        {},
         width: "100%",
         height: "300px",
-//        editing: true,
-        filtering:true,
         inserting:true,
         heading: true,
         sorting: true,
@@ -817,141 +821,144 @@ $("#grid").jsGrid({
         autoload:true,
         pageSize: 10,
         pageButtonCount: 5,
-//        pageLoading :true,
         updateOnResize: true,
         confirmDeleting: true,
         controller:db,
         rowClick: function(args)
-        {
-        },
+        {},
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
-        fields: [
-        { name: "id_evidencia", type: "text",fields:"f", width: "auto",visible:false },
-        { name: "no", title:"No",type: "text", width: 28 },
-        { name: "requisito",title:"Requisito", type: "text", width: 150 },
-        { name: "registro",title:"Registro", type: "text", width: 150  },
-        { name: "frecuencia",title:"Frecuencia", type: "text", width: 120  },
-        { name: "clave_documento",title:"Clave Documento", type: "text",  width: 128 },
-        { name: "adjuntar_evidencia",title:"Adjuntar Evidencia", type: "text",  width: 140 },
-        { name: "fecha_registro",title:"Fecha Registro", type: "text", width: 120 },
-        { name: "usuario",title:"Usuario", type: "text", width:150 },
-        { name: "accion_correctiva",title:"Accion Correctiva", type: "text", width: 130},
-        { name: "plan_accion",title:"Plan Accion", type: "text", width: 170 },
-        { name: "desviacion",title:"Desviacion", type: "text", width: 120},
-        {name: "validacion",title:"Validacion", type: "text", width: 200 },
-        {type: "control" },
-        {name:"eliminar",visible:false}
-    ],
-     onOptionChanged:function(a){
-              },
-          onItemDeleted: function(args){
-              if(args["item"]["eliminar"]=="si"){
+        fields:
+        [
+            { name: "id_principal", type: "text",fields:"f", width: "auto",visible:false },
+            { name: "no", title:"No",type: "text", width: 28 },
+            { name: "requisito",title:"Requisito", type: "text", width: 150 },
+            { name: "registro",title:"Registro", type: "text", width: 150  },
+            { name: "frecuencia",title:"Frecuencia", type: "text", width: 120  },
+            { name: "clave_documento",title:"Clave Documento", type: "text",  width: 128 },
+            { name: "adjuntar_evidencia",title:"Adjuntar Evidencia", type: "text",  width: 140 },
+            { name: "fecha_registro",title:"Fecha Registro", type: "text", width: 120 },
+            { name: "usuario",title:"Usuario", type: "text", width:150 },
+            { name: "accion_correctiva",title:"Accion Correctiva", type: "text", width: 130},
+            { name: "plan_accion",title:"Plan Accion", type: "text", width: 170 },
+            { name: "desviacion",title:"Desviacion", type: "text", width: 120},
+            {name: "validacion",title:"Validacion", type: "text", width: 200 },
+            {type: "control" },
+            {name:"eliminar",visible:false}
+        ],
+        onOptionChanged:function(a)
+        {},
+        onItemDeleted: function(args)
+        {
+              if(args["item"]["eliminar"]=="si")
+              {
                   eliminarEvidencia(args["item"]["id_evidencia"]);
               }
-          },
-          onItemDeleting: function(args) {
-              if(args["item"]["eliminar"]=="si"){
-//                    args["item"]["eliminar"]="si";
-                    eliminarEvidenciaGrid(args,args["item"]["id_evidencia"]);   
-                }
-                else{
-                    args.cancel = true;
-                    args["item"]["eliminar"]="no";
-                     swal("","Error no se puede Eliminar ya contiene archivos adjuntos","error");
-                    setTimeout(function(){swal.close();},1500);
-                }
-          },
-          onItemInserting: function(args) {
-            },
-            onItemInserted:function (args){
+        },
+        onItemDeleting: function(args)
+        {
+            if(args["item"]["eliminar"]=="si")
+            {
+                eliminarEvidenciaGrid(args,args["item"]["id_evidencia"]);   
             }
-        });
-      
-    }
-        function refresh()
-    {       
-        ejecutarPrimeraVez=false;
-        ejecutando=false;
-        clearInterval(intervalA);
-        clearTimeout(timeOutA);
-        $("#grid").jsGrid("render").done(function() {
-            swalSuccess("Datos Cargados Exitosamente");
-        });
-//$("#grid").jsGrid("refresh");
-    }
-    function listarDatosTodos()
+            else
+            {
+                args.cancel = true;
+                args["item"]["eliminar"]="no";
+                swal("","Error no se puede Eliminar ya contiene archivos adjuntos","error");
+                setTimeout(function(){swal.close();},1500);
+            }
+        },
+        onItemInserting: function(args)
+        {},
+        onItemInserted:function (args)
+        {}
+    });
+}
+
+function refresh()
+{       
+    ejecutarPrimeraVez=false;
+    ejecutando=false;
+    clearInterval(intervalA);
+    clearTimeout(timeOutA);
+    $("#grid").jsGrid("render").done(function()
     {
-        d=[];
-        $.ajax
-        ({
-            url: '../Controller/EvidenciasController.php?Op=Listar',
-            type: 'GET',
-            async:false,
-            beforeSend:function()
-            {
-//                $('#loader').show();
-            },
-            success:function(datos)
-            {
-                dataListado = datos;
-                d=reconstruirTable(datos);
-            },
-            error:function(error)
-            {
-//                $('#loader').hide();
-            }
-        });
-        return d;
-    }
+        swalSuccess("Evidencia Registrada Exitosamente");
+    });
+}
+
+function listarDatosTodos()
+{
+    d=[];
+    $.ajax
+    ({
+        url: '../Controller/EvidenciasController.php?Op=Listar',
+        type: 'GET',
+        async:false,
+        beforeSend:function()
+        {},
+        success:function(datos)
+        {
+            dataListado = datos;
+            d=reconstruirTable(datos);
+        },
+        error:function(error)
+        {}
+    });
+    return d;
+}
     
     
     
-       function eliminarEvidenciaGrid(args,id_evidencias)
-    {
-        $.ajax({
-            url: '../Controller/EvidenciasController.php?Op=EliminarEvidencia',
-            type: 'POST',
-            data: 'ID_EVIDENCIA='+id_evidencias,
-            async:false,
-            success:function(eliminado)
-            {
-                 if(eliminado==true){swalSuccess("Se elimino la evidencia");}else{swalError("No se pudo eliminar"); args.cancel = true;  }
-            },
-            error:function()
-            {
-                swalError("Error del servidor");
-            }
-        });
-    }
+       function eliminarEvidenciaGrid(args,id_evidencias)//listo jsgrid
+        {
+            $.ajax({
+                url: '../Controller/EvidenciasController.php?Op=EliminarEvidencia',
+                type: 'POST',
+                data: 'ID_EVIDENCIA='+id_evidencias,
+                async:false,
+                success:function(eliminado)
+                {
+                    if(eliminado==true){swalSuccess("Se elimino la evidencia");}else{swalError("No se pudo eliminar"); args.cancel = true;  }
+                },
+                error:function()
+                {
+                    swalError("Error del servidor");
+                }
+            });
+        }
 
     // function reconstruirTable(data)
     // {
     // }
 
-function confirmarBorrarRegistroEvidencia(){
-     swal({
-          title: "ELIMINAR",
-          text: "Al eliminar este registro se eliminara toda la evidencia registrada. ¿Desea continuar?",
-          type: "warning",
-          showCancelButton: true,
-          closeOnConfirm: false,
-          showLoaderOnConfirm: true,
-          confirmButtonText: "Eliminar",
-          cancelButtonText: "Cancelar",
-        },function(res){
+function confirmarBorrarRegistroEvidencia()
+{
+    swal({
+        title: "ELIMINAR",
+        text: "Al eliminar este registro se eliminara toda la evidencia registrada. ¿Desea continuar?",
+        type: "warning",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        showLoaderOnConfirm: true,
+        confirmButtonText: "Eliminar",
+        cancelButtonText: "Cancelar",
+        },
+        function(res)
+        {
             if(res){
-                  swal("","Eliminacion Exitosa","success");
-              }
-              else{
-                 swal("","Error Al Eliminar","Error");
-             }
+                swal("","Eliminacion Exitosa","success");
+            }
+            else{
+                swal("","Error Al Eliminar","Error");
+            }
         });
-    }
+}
         
 
 
 
-    function reconstruirRow(id)
+    function reconstruirRow(id)//eliminar cuando quede jsgrid
     {
         cargaUno=1;
         tempData = "";
@@ -993,7 +1000,7 @@ function confirmarBorrarRegistroEvidencia(){
         });
     }
 
-    function reconstruir2(todo,value,carga,contador)
+    function reconstruir2(todo,value,carga,contador)//eliminar cuando quede jsgrid
     {
         tempData = "";
         tempArchivo="";
@@ -1132,7 +1139,7 @@ function confirmarBorrarRegistroEvidencia(){
     //     console.log(b);
     // }
     
-    function reconstruir(todo,value,contador)//listo
+    function reconstruir(todo,value,contador)//listo jsgrid
     {
         tempData = new Object();
         tempArchivo="";
@@ -1143,99 +1150,102 @@ function confirmarBorrarRegistroEvidencia(){
         denegado = "<i class='fa fa-ban' style='font-size: xx-large;color:red;' aria-hidden='true'></i>";
             nametmp="";
             // if(carga==0)
-            tempData.id_evidencia = value.id_evidencias;
-            tempData.no = contador;
-            tempData.requisito = value.requisito;
-            tempData.registro = value.registro;
-            tempData.frecuencia = value.frecuencia;
-            tempData.clave_documento = value.clave_documento;
+            tempData["id_principal"] =  [{'id_evidencias':value.id_evidencias}];
+            tempData["no"] = contador;
+            tempData["requisito"] = value.requisito;
+            tempData["registro"] = value.registro;
+            tempData["frecuencia"] = value.frecuencia;
+            tempData["clave_documento"] = value.clave_documento;
             
-            tempData.adjuntar_evidencia = "<button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
-            tempData.adjuntar_evidencia += "type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
-            tempData.adjuntar_evidencia += "<i class='fa fa-cloud-upload' style='font-size: 15px'></i> Adjuntar</button>";
+            tempData["adjuntar_evidencia"] = "<button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
+            tempData["adjuntar_evidencia"] += "type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
+            tempData["adjuntar_evidencia"] += "<i class='fa fa-cloud-upload' style='font-size: 15px'></i> Adjuntar</button>";
             $.each(todo[0],function(index2,value2)
             {
                 tempArchivo="a";
                 nametmp = value2.split("^-O-^-M-^-G-^");
                 fecha = new Date(nametmp[0]*1000);
                 fecha = fecha.getDay() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-                tempData.fecha_registro = fecha;
+                tempData["fecha_registro"] = fecha;
 
-                tempData.usuario = value.usuario;
+                tempData["usuario"] = value.usuario;
 
-                tempData.accion_correctiva = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='MandarNotificacion("+value.id_responsable+","+value.responsable+",\""+value.accion_correctiva+"\","+value.id_evidencias+","+value.validador+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
+                tempData["accion_correctiva"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='MandarNotificacion("+value.id_responsable+","+value.responsable+",\""+value.accion_correctiva+"\","+value.id_evidencias+","+value.validador+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
                 if(value.accion_correctiva!="")
                 {
-                    tempData.accion_correctiva += yesMsj+"</button>";
+                    tempData["accion_correctiva"] += yesMsj+"</button>";
                 }
                 else
                 {
-                    tempData.accion_correctiva += noMsj+"</button>";
+                    tempData["accion_correctiva"] += noMsj+"</button>";
                 }
                 
-                tempData.plan_accion = "<button id='btn_cargaGantt' class='btn btn-info' onClick='cargarprogram("+value.id_evidencias+","+value.validacion_supervisor+");'>";
+                tempData["plan_accion"] = "<button id='btn_cargaGantt' class='btn btn-info' onClick='cargarprogram("+value.id_evidencias+","+value.validacion_supervisor+");'>";
                 if(value.validacion_supervisor=="true")
-                    tempData.plan_accion += "Vizualizar Programa";
+                    tempData["plan_accion"] += "Vizualizar Programa";
                 else
-                    tempData.plan_accion += "Cargar Programa";
+                    tempData["plan_accion"] += "Cargar Programa";
                 
-                tempData.plan_accion += "</button>";
+                tempData["plan_accion"] += "</button>";
 
-                tempData.desviacion = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='MandarNotificacionDesviacion("+value.id_usuario+","+value.responsable+",\""+value.desviacion+"\","+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
+                tempData["desviacion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='MandarNotificacionDesviacion("+value.id_usuario+","+value.responsable+",\""+value.desviacion+"\","+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
                 if(value.desviacion!="")
                 {
-                    tempData.desviacion += yesMsj+"</button>";
+                    tempData["desviacion"] += yesMsj+"</button>";
                 }
                 else
                 {
-                    tempData.desviacion += noMsj+"</button>";
+                    tempData["desviacion"] += noMsj+"</button>";
                 }
                 
                 if(value.responsable=="1")
                 {                    
-                    tempData.validacion = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='validarEvidencia(this,\"evidencias\",\"validacion_supervisor\",\"id_evidencias\","+value.id_evidencias+","+value.id_usuario+")'>";
+                    tempData["validacion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='validarEvidencia(this,\"evidencias\",\"validacion_supervisor\",\"id_evidencias\","+value.id_evidencias+","+value.id_usuario+")'>";
                     if(value.validacion_supervisor=="true")
-                        tempData.validacion += yesCheck+"</button>";
+                        tempData["validacion"] += yesCheck+"</button>";
                     else
-                        tempData.validacion += noCheck+"</button>";
+                        tempData["validacion"] += noCheck+"</button>";
                 }
                 else
                 {
                     if(value.validacion_supervisor=='true')
                     {
-                        tempData.validacion = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='swalInfo(\"Validadopor el responsable\")'>";
-                        tempData.validacion += yesCheck+"</button>";
+                        tempData["validacion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='swalInfo(\"Validadopor el responsable\")'>";
+                        tempData["validacion"] += yesCheck+"</button>";
                     }
                     else
                     {
-                        tempData.validacion = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;'  onClick='swalInfo(\"Aun no validado\")'>";
-                        tempData.validacion += noCheck+"</button>";
+                        tempData["validacion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;'  onClick='swalInfo(\"Aun no validado\")'>";
+                        tempData["validacion"] += noCheck+"</button>";
                     }
                 }
             });
             if(tempArchivo=="")
             {
-                    tempData.fecha_registro="";
-                    tempData.usuario=value.usuario;
-                    tempData.accion_correctiva="";
-                    tempData.plan_accion="";
-                    tempData.desviacion="";
-                    tempData.validacion="";
+                    tempData["fecha_registro"]="";
+                    tempData["usuario"]=value.usuario;
+                    tempData["accion_correctiva"]="";
+                    tempData["plan_accion"]="";
+                    tempData["desviacion"]="";
+                    tempData["validacion"]="";
                     if(value.responsable!="1" || value.validador==1)
                     {                        
-                        tempData.opcion = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;'";
-                        tempData.opcion += "onclick='eliminarEvidencia("+value.id_evidencias+");'>";
-                        tempData.opcion += "<i class='fa fa-trash'></i></button>";
+                        tempData["opcion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;'";
+                        tempData["opcion"] += "onclick='eliminarEvidencia("+value.id_evidencias+");'>";
+                        tempData["opcion"] += "<i class='fa fa-trash'></i></button>";
                          tempData["eliminar"]="si";
                     }
-                    else{
-                        tempData.opcion="";
-                         tempData["eliminar"]="no";
+                    else
+                    {
+                        tempData["opcion"]="";//esto ya no sirve quitalo entonces igual el de arriba
+                        tempData["eliminar"]="no";
                     }
 
-            }else{
-            tempData.opcion="";
-            tempData["eliminar"]="no";
+            }
+            else
+            {
+                tempData["opcion"]="";
+                tempData["eliminar"]="no";
             }
         return tempData;
     }
@@ -1454,14 +1464,13 @@ function confirmarBorrarRegistroEvidencia(){
 
     function mostrar_urls(id_evidencia,validador,validado,id_para)
     {
-        // $('#loader').show();
         var tempDocumentolistadoUrl = "";
         URL = 'filesEvidenciaDocumento/'+id_evidencia;
         $.ajax({
           url: '../Controller/ArchivoUploadController.php?Op=CrearUrl',
           type: 'GET',
           data: 'URL='+URL,
-        //   async:false,
+          async:false,
           success:function(creado)
           {
             if(creado==1)
@@ -1470,7 +1479,7 @@ function confirmarBorrarRegistroEvidencia(){
                   url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
                   type: 'GET',
                   data: 'URL='+URL,
-                //   async:false,
+                  async:false,
                   success: function(todo)
                   {
                       // console.log(todo[0].length);
@@ -1526,7 +1535,6 @@ function confirmarBorrarRegistroEvidencia(){
                         url: '../View/',
                       });
                       $("#subirArchivos").removeAttr("disabled");
-                    //   $('#loader').hide();
                   }
               });
             }
