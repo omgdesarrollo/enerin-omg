@@ -80,16 +80,29 @@ class DocumentoModel{
     
     
     
-    public function eliminar(){
+    public function eliminarDocumento($ID_DOCUMENTO){
         try{
             $dao= new DocumentoDAO();
-            $pojo= new DocumentoPojo();
-            $dao->eliminarClausula($pojo->getIdDocumento());
-//            return $rec;
+            $registros= $dao->verificarExistenciadeDocumentoEnRegistros($ID_DOCUMENTO);
+            $validacion= $dao->verificarSiDocumentoEstaValidado($ID_DOCUMENTO);
+            $exito=false;
+            if($registros==0)
+            {
+                if($validacion==0)
+                {
+                    $exito= $dao->eliminarDocumento($ID_DOCUMENTO);                     
+                }
+            } 
+//            echo "Registros: ".json_encode($registros);
+//            echo "validacion: ".json_encode($validacion);
+            return $exito;            
         } catch (Exception $ex) {
             throw $ex;
+            return -1;
         }
     }
+    
+    
     
     
     

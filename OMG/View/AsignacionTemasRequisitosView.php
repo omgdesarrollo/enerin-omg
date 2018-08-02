@@ -52,6 +52,7 @@ $Usuario=  Session::getSesion("user");
                 .altotablascrollbar{
                          height: 320px;
                     }
+                       
                 </style>    
                 
                 
@@ -266,7 +267,7 @@ $(function(){
                  if(r==false)
                  {
                      swal("","Error en el servidor","error");
-                     setTimeout(function(){swal.close();},1500);
+                     setTimeout(function(){swal.close();$("#create-itemRequisito .close").click();},1500);
                      $("#btn_guardar_req").removeAttr("disabled")
                  } else{
                      if(r==true)
@@ -325,8 +326,9 @@ $(function(){
                      if(r==true)
                      {
                          swal("","Guardado Exitoso","success");
-                         setTimeout(function(){swal.close();},1500);
+                         setTimeout(function(){swal.close();$("#create-itemRegistro . close").click();},1500);
                          obtenerDatosArbol(id_asignacion_t);
+                         
                          $("#btn_guardar_reg").removeAttr("disabled")
                      }
                  }
@@ -531,10 +533,10 @@ function evaluarToolbarSeccionB(id)
             url: '../Controller/AsignacionTemasRequisitosController.php?Op=Listar',
             success:function(data)
             {
-               $htmlData="<div  style='overflow-y:auto;' class='table-responsive altotablascrollbar'><ul class='list-group'>";
+               $htmlData="<div style='overflow-y:auto;' class='table-responsive altotablascrollbar'><ul class='list-group'>";
                $.each(data,function(index,value){
 //                  $htmlData+="<li class='list-group-item'><button onclick='obtenerDatosArbol("+value.id_asignacion_tema_requisito+")' >"+value.no+"-"+value.nombre+"</button><span class='badge'></li>"; 
-                  $htmlData+="<li class='list-group-item' style='background-color:#fff;'><a style='color: #000;' onclick='obtenerDatosArbol("+value.id_asignacion_tema_requisito+")' >"+value.no+"-"+value.nombre+"</a><span class='badge'></li>"; 
+                  $htmlData+="<li class='list-group-item' style='background-color:#32CD32;'><div style='background-color:#32CD32;color:#fff;font-size:20px;' onclick='obtenerDatosArbol("+value.id_asignacion_tema_requisito+")'>"+value.no+"-"+value.nombre+"</div><span class='badge'></li>"; 
                 
                });
               $htmlData+="</ul></div>";

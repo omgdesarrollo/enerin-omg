@@ -111,16 +111,63 @@ class DocumentoDAO{
     
     
     
-    public function eliminarDocumento($id_documento){
+    public function eliminarDocumento($ID_DOCUMENTO){
         try{
-            $query="DELETE FROM documentos WHERE id_documento=$id_documento";
+            $query="DELETE FROM documentos WHERE id_documento=$ID_DOCUMENTO";
             $db=  AccesoDB::getInstancia();
-            $db->executeQueryUpdate($query);
+            $lista= $db->executeQueryUpdate($query);
+            
+//           echo "Este es el query en eliminar: ".json_encode($query);
+            return $lista;
         } catch (Exception $ex) {
                 throw $ex;
+                return -1;
         }
     }
+    
+    public function verificarExistenciadeDocumentoEnRegistros($ID_DOCUMENTO)
+    {
+        try
+        {
+            $query="SELECT COUNT(*) AS resultado
+                    FROM registros tbregistros
+                    WHERE tbregistros.id_documento=$ID_DOCUMENTO";
+            
+            $db= AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
 
+            return $lista[0]['resultado'];
+//            echo "Este es el query registros: ".json_encode($query);                        
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+        
+    }
+
+    public function verificarSiDocumentoEstaValidado($ID_DOCUMENTO)
+    {
+        try
+        {
+            $query="SELECT COUNT(*) AS resultado
+                    FROM validacion_documento tbvalidacion_documento
+                    WHERE tbvalidacion_documento.validacion_documento_responsable='true' OR tbvalidacion_documento.validacion_tema_responsable='true' 
+                    AND tbvalidacion_documento.id_documento=$ID_DOCUMENTO";
+            $db= AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            
+//            echo "Este es el query validado: ".json_encode($query);                        
+
+            return $lista[0]['resultado'];
+                    
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
 
 }
 ?>
