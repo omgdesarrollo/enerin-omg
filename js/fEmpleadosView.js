@@ -19,7 +19,7 @@ function construirGrid(__datos)
         {
             // gridInstance=args;
             jsGrid.ControlField.prototype.editButton=true;
-            jsGrid.ControlField.prototype.deleteButton=false;
+            // jsGrid.ControlField.prototype.deleteButton=false;
             jsGrid.Grid.prototype.autoload=true;
         },
         onDataLoading: function(args)
@@ -48,7 +48,7 @@ function construirGrid(__datos)
             { name: "categoria",title:"Categoria", type: "text", width: 150, validate: "required" },
             { name: "correo",title:"Correo", type: "text", width: 150, validate: "required" },
             { name: "fecha_creacion",title:"Fecha Creacion", type: "text", width: 150, validate: "required",editing: false},
-            {type:"control"}
+            {name:"cancel", type:"control", }
         ],
         onItemUpdated: function(args)
         {
@@ -124,6 +124,7 @@ function reconstruir(value,index)
     tempData["categoria"] = value.categoria;
     tempData["correo"] = value.correo;
     tempData["fecha_creacion"] = value.fecha_creacion;
+    tempData["cancel"]=false;
     return tempData;
 }
 
