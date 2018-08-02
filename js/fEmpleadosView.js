@@ -15,12 +15,29 @@ function construirGrid(__datos)
     console.log(__datos);
     $("#jsGrid").html("");
     $("#jsGrid").jsGrid({
+        onInit: function(args)
+        {
+            // gridInstance=args;
+            jsGrid.ControlField.prototype.editButton=true;
+            // jsGrid.ControlField.prototype.deleteButton=false;
+            jsGrid.Grid.prototype.autoload=true;
+        },
+        onDataLoading: function(args)
+        {
+            $("#loader").show();
+        },
+        onDataLoaded:function(args)
+        {
+            $("#loader").hide();
+        },
         width: "100%",
         height: "300px",
         editing: true,
         heading: true,
         sorting: true,
         paging: true,
+        pageSize: 5,
+        pageButtonCount: 5,
         data: __datos,
         fields: 
         [
@@ -31,7 +48,7 @@ function construirGrid(__datos)
             { name: "categoria",title:"Categoria", type: "text", width: 150, validate: "required" },
             { name: "correo",title:"Correo", type: "text", width: 150, validate: "required" },
             { name: "fecha_creacion",title:"Fecha Creacion", type: "text", width: 150, validate: "required",editing: false},
-            {type:"control"}
+            {name:"cancel", type:"control", }
         ],
         onItemUpdated: function(args)
         {
@@ -107,6 +124,7 @@ function reconstruir(value,index)
     tempData["categoria"] = value.categoria;
     tempData["correo"] = value.correo;
     tempData["fecha_creacion"] = value.fecha_creacion;
+    tempData["cancel"]=false;
     return tempData;
 }
 
@@ -173,7 +191,7 @@ function insertarEmpleado(empleadoDatos)
 
 function loadSpinner()
 {
-        myFunction();
+    myFunction();
 }
 
 function refresh()
