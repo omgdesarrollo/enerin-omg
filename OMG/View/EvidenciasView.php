@@ -809,6 +809,7 @@ $("#grid").jsGrid({
         width: "100%",
         height: "300px",
 //        editing: true,
+        filtering:true,
         inserting:true,
         heading: true,
         sorting: true,
@@ -874,7 +875,7 @@ $("#grid").jsGrid({
         clearInterval(intervalA);
         clearTimeout(timeOutA);
         $("#grid").jsGrid("render").done(function() {
-            swalSuccess("Evidencia Registrada Exitosamente");
+            swalSuccess("Datos Cargados Exitosamente");
         });
 //$("#grid").jsGrid("refresh");
     }
@@ -1215,7 +1216,7 @@ function confirmarBorrarRegistroEvidencia(){
             if(tempArchivo=="")
             {
                     tempData.fecha_registro="";
-                    tempData.usuario="";
+                    tempData.usuario=value.usuario;
                     tempData.accion_correctiva="";
                     tempData.plan_accion="";
                     tempData.desviacion="";
