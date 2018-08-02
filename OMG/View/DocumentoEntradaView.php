@@ -1878,8 +1878,8 @@ listarDatos(-1);
           
 
                 <!-- js cargar archivo -->
-                <script src="../../assets/FileUpload/js/jquery.min.js"></script>
-                <script src="../../assets/FileUpload/js/jquery-ui.min.js"></script>
+                <!-- <script src="../../assets/FileUpload/js/jquery.min.js"></script>
+                <script src="../../assets/FileUpload/js/jquery-ui.min.js"></script> -->
                 <script src="../../assets/FileUpload/js/tmpl.min.js"></script>
                 <script src="../../assets/FileUpload/js/load-image.all.min.js"></script>
                 <script src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>
