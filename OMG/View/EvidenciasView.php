@@ -777,58 +777,18 @@
                 });
         });
 //        moverA();
-        return __datos;
-        
-        
-//        dataTodo = __datos;
-        // console.log(__datos);
-        // $('#bodyTable').html(tempData);
-        // $('#loader').hide();
-//        if(__refresh==false){
-////            alert("entra");
-//            __datosGlobales=__datos;
-//            construir((__datos.length==0)?[]:__datos);
-//        }
-//        else{
-//            if(__refresh==true)
-//            __datosGlobales=(__datos.length==0)?[]:__datos;
-//        }
-
-//construirGrid(__datos);
-        
+//            mover()
+        return __datos;   
     }
 
     function construir(datosF)
     {
          db={
                 loadData: function(filter) {
-                    alert("recepcion de datos");
-      //              alert("obtencion de datos");
-//                        console.log("empezo el listado de todos")
-//                        console.log(listarDatosTodos());
-//                        console.log("termino el listado de toso");
                         return listarDatosTodos();
-                       
-      //            return $.ajax({url: "../bin/s.php",data:filter});   
               },
                   insertItem: function(item) {
-                      
-//                      alert("va a insertar -->"+item["id_evidencia"]);
-//                        db["loadData"]();
-//                           alert("se   "+item["no"]);
-//                           console.log(item);
-////                           item.grid.data=[];
-//                           console.log("e--  ");
-//                           console.log(item);
-//                           console.log("termina ");
-//                           alert("el grid es "+grid["data"][0]["no"]);
-//                        gridInstance.gdata.push(item);
                       return item;
-//                  return $.ajax({
-//                      type: "POST",
-//                      url: "/itemsfdf",
-//                      data: item
-//                  });
               },
            } 
            
@@ -836,26 +796,15 @@
 $("#grid").jsGrid({
         onInit: function(args){
             gridInstance=args;
-//        alert("va anetrar");
-//            gridInstance = args.grid;
-//            gridInstance = args;
-            console.log("lo inicio teniendo");
-            console.log(args);
-            console.log("lo termino teniendo ");
               jsGrid.ControlField.prototype.editButton=false;
               jsGrid.Grid.prototype.autoload=true;
         }, onDataLoading: function(args) {
             $("#loader").show();
     },
     onDataLoaded:function(args){
-      
-        console.log("--on dataoaded");
-        console.log(args.grid);
-        console.log("--- aqui termina el data loades");
         $("#loader").hide();
     },
     onRefreshing: function(args) {
-//        alert("d");
     },
         width: "100%",
         height: "300px",
@@ -891,22 +840,15 @@ $("#grid").jsGrid({
         {name: "validacion",title:"Validacion", type: "text", width: 200 },
         {type: "control" },
         {name:"eliminar",visible:false}
-        
     ],
      onOptionChanged:function(a){
-//         alert("se reconocio cambio");
               },
           onItemDeleted: function(args){
               if(args["item"]["eliminar"]=="si"){
                   eliminarEvidencia(args["item"]["id_evidencia"]);
-//                  $("#jsGrid").jsGrid("insertItem");
               }
           },
           onItemDeleting: function(args) {
-//            alert("procedera a eliminarse");  
-//              console.log("entro aqui");
-//              console.log(args);
-// args.cancel = true;
               if(args["item"]["eliminar"]=="si"){
 //                    args["item"]["eliminar"]="si";
                     eliminarEvidenciaGrid(args,args["item"]["id_evidencia"]);   
@@ -917,100 +859,24 @@ $("#grid").jsGrid({
                      swal("","Error no se puede Eliminar ya contiene archivos adjuntos","error");
                     setTimeout(function(){swal.close();},1500);
                 }
-            
-
-
           },
           onItemInserting: function(args) {
-              
-              alert("f");
-              console.log("--oniteminserting");
-              console.log(args);
-              console.log("--fin on iteminserting");
-        // cancel insertion of the item with empty 'name' field
-//            if(args.item.no == "") {
-//                args.cancel = true;
-//                alert("Specify the name of the item!");
-//            }
-            
             },
             onItemInserted:function (args){
-                alert("insertado");
             }
         });
-        
-        
-        
-       
-//       gridInstance= $("#grid").data("JSGrid");
-       
-//       $("#jsGrid").jsGrid("loadData");
-//       gridInstance.methodName("deleteItem",1); 
-//     $("#jsGrid" ).jsGrid ("fieldOption" ,"no","visible",false);
-//jsGrid.setDefaults ( "no" , { 
-//    ancho : 150 , 
-//    css : "text-field-cls" 
-//});
-
-
-//console.log("empieza");
-//console.log(gridContenedor);
-//console.log(grid);
-//console.log("emepezo ");
-//  console.log(jsGrid);
-//console.log("termina el otro ");
-//console.log(gridInstance);
+      
     }
         function refresh()
     {       
-//        ejecutarPrimeraVez=false;
-//        ejecutando=false;
-//        clearInterval(intervalA);
-//        clearTimeout(timeOutA);
-        
-        
-//gridInstance["onRefreshing"]["name"]="onRefreshing";
-//gridInstance.onRefreshing=function (args){
-
-
-
-//["controller"]:function (){
-//    console.log("si lo hizo");
-//}
-//gridInstance["controller"].loadData();
-// db["insertItem"]({"id_evidencia":20,"no":8});
-
-//gridInstance["data"].push({});
-
-
-//gridInstance["controller"].search(); 
-//gridInstance= $("#jsGrid").data("JSGrid");
-
-
-//           db["insertItem"]();
-//           jsGrid.call(loadData());
-//gridInstance["onRefreshing"](); 
-
-//    jsGrid.ControlField.prototype.deleteButton=false;
-//       jsGrid.ControlField.prototype.editButton=true;
-//       jsGrid.Grid.prototype.onRefreshed();
-       
-//       jsGrid.refresh();
-//jsGrid.Grid.prototype.refresh;
-//jsGrid.Grid.prototype.reset;
-//construir("");
-//gridInstance["grid"].data.push({no:30});
-//gridInstance["item"]={no:30};
-
-//db["insertItem"](gridInstance);
-$("#grid").jsGrid("insertItem",{no:43})
-//    console.log(jsGrid);
-//    gridInstance["data"].push(listarDatosTodos());
-//    db["insertItem"]();
-//    $("#grid") . jsGrid("insertItem", { no: "D" })
-//    console.log("--gridInstance --");
-//    console.log(gridInstance);
-//    console.log("--fin del gridInstance--");
+        ejecutarPrimeraVez=false;
+        ejecutando=false;
+        clearInterval(intervalA);
+        clearTimeout(timeOutA);
+        $("#grid").jsGrid("render").done(function() {
+            swal("","Evidencia Registrada Exotisamente","sucess");
+        });
+//$("#grid").jsGrid("refresh");
     }
     function listarDatosTodos()
     {
@@ -1582,6 +1448,7 @@ function confirmarBorrarRegistroEvidencia(){
     $("#subirArchivos").click(function()
     {
         agregarArchivosUrl();
+        
     });
 
     function mostrar_urls(id_evidencia,validador,validado,id_para)
@@ -1726,8 +1593,10 @@ function confirmarBorrarRegistroEvidencia(){
         data: 'URL='+url,
         success:function(creado)
         {
-          if(creado)
+          if(creado){
             $('.start').click();
+//            refresh();
+            }
 //        gridInstance["data"]["fecha_registro"]="d";
 //        console.log(gridInstance);
         },
@@ -1892,7 +1761,7 @@ function confirmarBorrarRegistroEvidencia(){
             <!-- </td> -->
         </tr>
     {% } %}
-    {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val(); alert(ID_EVIDENCIA_DOCUMENTO); var ID_PARA_DOCUMENTO = $('#tempInputIdParaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO,'0','false',ID_PARA_DOCUMENTO); reconstruirRow(ID_EVIDENCIA_DOCUMENTO); noArchivo=0; } } %}
+    {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();var ID_PARA_DOCUMENTO = $('#tempInputIdParaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO,'0','false',ID_PARA_DOCUMENTO); refresh(); noArchivo=0; } } %}
 </script>
 
     <!--Inicia para el spiner cargando-->
