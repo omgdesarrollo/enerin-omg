@@ -1453,7 +1453,7 @@ function confirmarBorrarRegistroEvidencia(){
 
     function mostrar_urls(id_evidencia,validador,validado,id_para)
     {
-        $('#loader').show();
+        // $('#loader').show();
         var tempDocumentolistadoUrl = "";
         URL = 'filesEvidenciaDocumento/'+id_evidencia;
         $.ajax({
@@ -1525,7 +1525,7 @@ function confirmarBorrarRegistroEvidencia(){
                         url: '../View/',
                       });
                       $("#subirArchivos").removeAttr("disabled");
-                      $('#loader').hide();
+                    //   $('#loader').hide();
                   }
               });
             }
