@@ -40,6 +40,7 @@ $Usuario=  Session::getSesion("user");
                 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
 
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+                <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
 
                 
                 
@@ -72,7 +73,11 @@ require_once 'EncabezadoUsuarioView.php';
 ?>
 
              
-<div style="position: fixed;">    
+<div style="position: fixed;">
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
+    Agregar Documento
+</button>    
+    
 <button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
     <i class="glyphicon glyphicon-repeat"></i>   
 </button>
@@ -87,18 +92,79 @@ require_once 'EncabezadoUsuarioView.php';
     <img src="../../images/base/pdf.png" width="30px" height="30px"> 
 </button>    
 
-        <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave Documento" style="width: 180px;">
+<!--        <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave Documento" style="width: 180px;">
         <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre Documento" style="width: 180px;">
         <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 180px;">
-        <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+        <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>-->
 </div>    
 
-
 <div style="height: 40px"></div>
-
+<div id="headerFiltros" style=""><i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i></div>
 
 <div id="jsGrid"></div>
 
+
+                <!-- Inicio de Seccion Modal Nuevo Documento-->
+       <div class="modal draggable fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Crear Nuevo Documento</h4>
+		      </div>
+
+		      <div class="modal-body">
+		      	
+                                    
+                                    
+                                                <div class="form-group">
+							<label class="control-label" for="title">Clave del Documento:</label>
+                                                        <textarea  id="CLAVE_DOCUMENTO" class="form-control" data-error="Ingrese la Clave del Documento" required></textarea>
+							<div class="help-block with-errors"></div>
+                                                        <div id="msgerrorclave" ></div>
+						</div>
+                                    
+                                                <div class="form-group">
+                                                   
+							<label class="control-label" for="title">Documento:</label>
+                                                        <textarea  id="DOCUMENTO" class="form-control " data-error="Ingrese el Documento" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+                                    
+                                    
+                                    
+                                                <div class="form-group">
+							<label class="control-label" for="title">Responsable del Documento:</label>
+                                                        
+                                                        <select   id="ID_EMPLEADOMODAL" class="select1">
+                                                                
+                                                                <?php
+                                                                $cbxEmp = Session::getSesion("listarEmpleadosComboBox");
+                                                                foreach ($cbxEmp as $value) {
+                                                                ?>
+                                                                
+                                                                <option value="<?php echo "".$value["id_empleado"] ?>"  ><?php echo "".$value["nombre_empleado"]." ".$value["apellido_paterno"]." ".$value["apellido_materno"]; ?></option>
+                                                                
+                                                                <?php                                                                
+                                                                }                                    
+                                                                ?>
+                                                        </select>
+                                                        
+							<div class="help-block with-errors"></div>
+						</div>
+                                                                                                                                    
+						<div class="form-group">
+                                                    <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
+                                                    <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
+						</div>
+
+
+		      </div>
+		    </div>
+
+		  </div>
+		</div>
+       <!--Final de Seccion Modal-->
        
 
 <script>
