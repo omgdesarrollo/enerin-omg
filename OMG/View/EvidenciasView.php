@@ -428,14 +428,14 @@
 //                 $("#jsGrid").jsGrid("refresh");
 //                         gridInstance["data"].
 
-                    var $grid = $("#jsGrid");
-//                    $grid.jsGrid("option", "pageIndex", 1);
-//                    $grid.jsGrid("loadData");
-//                    $grid["0"]["draggable"]=true;
-                    console.log("lo va hacer ");
-                    console.log($grid);    
-//                    $("#jsGrid").html("");
-                    __refresh=false;
+//                    var $grid = $("#jsGrid");
+////                    $grid.jsGrid("option", "pageIndex", 1);
+////                    $grid.jsGrid("loadData");
+////                    $grid["0"]["draggable"]=true;
+//                    console.log("lo va hacer ");
+//                    console.log($grid);    
+////                    $("#jsGrid").html("");
+//                    __refresh=false;
 //                    listarDatos();
                     
 //                    $("#jsGrid").jsGrid("option", "data",__datosGlobales);
@@ -1567,10 +1567,11 @@ function confirmarBorrarRegistroEvidencia(){
               if(eliminado)
               {
                 mostrar_urls(ID_EVIDENCIA_DOCUMENTO,"0","false",id_para);
-                refresh();
+//                refresh();
                 //eliminar parte del registro en la base de datos
                 swal("","Archivo eliminado");
                 setTimeout(function(){swal.close();},1000);
+                 refresh();
               }
               else
                 swal("","Ocurrio un error al elimiar el documento", "error");
