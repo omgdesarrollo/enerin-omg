@@ -77,5 +77,6 @@ function filtroSupremo()
         if(DataFinal.length!=0)
             DataFinal=dataT;
     });
-    reconstruirTable(DataFinal);
+    // reconstruirTable(DataFinal);
+    // $("#jsGrid").jsGrid("");
 }

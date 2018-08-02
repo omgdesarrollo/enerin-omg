@@ -830,6 +830,7 @@ function construir(datosF)
         fields:
         [
             { name: "id_principal", type: "text",fields:"f", width: "auto",visible:false },
+            { name: "id_validador", type: "text",fields:"f", width: "auto",visible:false },
             { name: "no", title:"No",type: "text", width: 28 },
             { name: "requisito",title:"Requisito", type: "text", width: 150 },
             { name: "registro",title:"Registro", type: "text", width: 150  },
@@ -842,31 +843,42 @@ function construir(datosF)
             { name: "plan_accion",title:"Plan Accion", type: "text", width: 170 },
             { name: "desviacion",title:"Desviacion", type: "text", width: 120},
             {name: "validacion",title:"Validacion", type: "text", width: 200 },
-            {type: "control" },
+            { type: "control" },
             {name:"eliminar",visible:false}
         ],
         onOptionChanged:function(a)
         {},
         onItemDeleted: function(args)
         {
-              if(args["item"]["eliminar"]=="si")
-              {
-                  eliminarEvidencia(args["item"]["id_evidencia"]);
-              }
+            id_afectado = "";
+            if(args["item"]["eliminar"]=="si")
+            {
+                $.each(args["item"]["id_principal"][0],function(index,value)
+                {
+                    id_afectado = value;
+                });
+                eliminarEvidencia(id_afectado);
+            }
         },
         onItemDeleting: function(args)
         {
-            if(args["item"]["eliminar"]=="si")
+            id_afectado = "";
+            if(args["item"]["validador"]== "1")
             {
-                eliminarEvidenciaGrid(args,args["item"]["id_evidencia"]);   
+                $.each(args["item"]["id_principal"][0],function(index,value)
+                {
+                    id_afectado = value;
+                });
+                if(args["item"]["eliminar"]=="si")
+                    eliminarEvidenciaGrid(id_afectado);
+                else
+                {
+                    args.cancel = true;
+                    swalError("Error no se puede Eliminar ya contiene archivos adjuntos");
+                }
             }
             else
-            {
-                args.cancel = true;
-                args["item"]["eliminar"]="no";
-                swal("","Error no se puede Eliminar ya contiene archivos adjuntos","error");
-                setTimeout(function(){swal.close();},1500);
-            }
+                swalInfo("Tu no eres responsable de la evidencia");
         },
         onItemInserting: function(args)
         {},
@@ -1149,8 +1161,8 @@ function confirmarBorrarRegistroEvidencia()
         yesMsj = "<i class='ace-icon fa fa-file-text-o icon-animated-bell' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true'></i>";
         denegado = "<i class='fa fa-ban' style='font-size: xx-large;color:red;' aria-hidden='true'></i>";
             nametmp="";
-            // if(carga==0)
             tempData["id_principal"] =  [{'id_evidencias':value.id_evidencias}];
+            tempData["validador"] = value.validador;
             tempData["no"] = contador;
             tempData["requisito"] = value.requisito;
             tempData["registro"] = value.registro;
@@ -1228,19 +1240,14 @@ function confirmarBorrarRegistroEvidencia()
                     tempData["plan_accion"]="";
                     tempData["desviacion"]="";
                     tempData["validacion"]="";
-                    if(value.responsable!="1" || value.validador==1)
-                    {                        
-                        tempData["opcion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;'";
-                        tempData["opcion"] += "onclick='eliminarEvidencia("+value.id_evidencias+");'>";
-                        tempData["opcion"] += "<i class='fa fa-trash'></i></button>";
-                         tempData["eliminar"]="si";
+                    if(value.validador=="1")
+                    {
+                        tempData["eliminar"]="si";
                     }
                     else
                     {
-                        tempData["opcion"]="";//esto ya no sirve quitalo entonces igual el de arriba
                         tempData["eliminar"]="no";
                     }
-
             }
             else
             {
