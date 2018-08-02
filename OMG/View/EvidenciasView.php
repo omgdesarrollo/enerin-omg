@@ -1453,23 +1453,23 @@ function confirmarBorrarRegistroEvidencia(){
 
     function mostrar_urls(id_evidencia,validador,validado,id_para)
     {
-        // $('#loader').show();
         var tempDocumentolistadoUrl = "";
         URL = 'filesEvidenciaDocumento/'+id_evidencia;
         $.ajax({
           url: '../Controller/ArchivoUploadController.php?Op=CrearUrl',
           type: 'GET',
           data: 'URL='+URL,
-        //   async:false,
+          async:false,
           success:function(creado)
           {
+              alert(creado);
             if(creado==1)
             {
               $.ajax({
                   url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
                   type: 'GET',
                   data: 'URL='+URL,
-                //   async:false,
+                  async:false,
                   success: function(todo)
                   {
                       // console.log(todo[0].length);
@@ -1525,7 +1525,6 @@ function confirmarBorrarRegistroEvidencia(){
                         url: '../View/',
                       });
                       $("#subirArchivos").removeAttr("disabled");
-                    //   $('#loader').hide();
                   }
               });
             }
