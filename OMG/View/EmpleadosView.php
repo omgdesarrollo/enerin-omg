@@ -168,6 +168,7 @@ $(function()
         var apellido_materno = $("#APELLIDO_MATERNO").val();
         var categoria = $("#CATEGORIA").val();
         var email = $("#CORREO").val();
+//        $("#jsGrid") . jsGrid("insertItem", { nombre_empleado: "D" })
         insertarEmpleado();
     });
 
