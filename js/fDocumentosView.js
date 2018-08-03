@@ -281,15 +281,17 @@ function saveUpdateToDatabase(args)
       console.log(args);
 //      columnas=new Object();
       columnas={};
+       entro=0;
       id_afectado=args['item']['id_principal'][0];
 //      console.log(args['item']['id_principal'][0]);
 //      columnas['nombre']="nom";
       $.each(args['item'],function(index,value){
           if(args['previousItem'][index]!=value && value!="")
           {
-              if(index!='id_principal'){
+              if(index!='id_principal' && !value.includes("<button")){
 //              console.log("Entro aqui");
                     columnas[index]=value;
+                    entro=1;
 //                    console.log(index);
                 }
           }            
@@ -297,7 +299,7 @@ function saveUpdateToDatabase(args)
       });
       
 //      console.log(columnas);
-      if(columnas!="")
+      if(entro!=0)
       {
           console.log("Valor columnas: "+columnas);
         $.ajax({

@@ -46,7 +46,8 @@ function construirFiltroSelect(Obj,id)
 
 function filtroSupremo()
 {
-    newData = [];    
+    $("#jsGrid").jsGrid("cancelEdit");
+    newData = [];
     $.each(filtros,function(index,value)
     {
         ($("#"+value.id).val()!="") ? newData.push(value):console.log();
@@ -77,6 +78,5 @@ function filtroSupremo()
         if(DataFinal.length!=0)
             DataFinal=dataT;
     });
-    // reconstruirTable(DataFinal);
-    // $("#jsGrid").jsGrid("");
+    reconstruirTable(DataFinal);
 }
