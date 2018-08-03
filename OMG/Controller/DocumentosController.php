@@ -27,7 +27,7 @@ switch ($Op) {
             
         case 'mostrarcombo':
 		$Lista=$model->listarDocumentosComboBox();
-    	Session::setSesion("listarDocumentosComboBox",$Lista);
+//    	Session::setSesion("listarDocumentosComboBox",$Lista);
 //    	$tarjet="../view/principalmodulos.php";
     	header('Content-type: application/json; charset=utf-8');
 //		echo json_encode($Lista);

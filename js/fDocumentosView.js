@@ -1,3 +1,4 @@
+
 $(function(){
                                                                               
 $("#CLAVE_DOCUMENTO").keyup(function(){
@@ -97,6 +98,16 @@ filtros =
 
 
 
+var ____listaDeTodoTipoDeVariantes={"todoloquetienequeverconfiltros":{filtroAlPrincipioDeTodosLosCampos:false}};
+
+//simbologia
+//                _=funcion
+//                __=variables
+//                ___=objetos
+//                ____=listas de objetos
+
+
+
 function listarDatos(queRetornar)
 {
 //    alert("Entro a listar datos");
@@ -158,7 +169,34 @@ function listarjsGrid()
                 loadData: function(filter) {
 //                    console.log("Entro al loadData");
 //                    console.log(listarDatos(1));
-                        return listarDatos(1);
+//                    alert("e");
+//                        console.log(filter);
+//                        return listarDatos(1);
+                        
+//                          var __filter = $("#jsGrid").jsGrid("getFilter");
+//            console.log(__filter);
+//             return $.grep(this.clients, function(client) {
+//                return (!filter.Name || client.Name.indexOf(filter.Name) > -1)
+//                    && (!filter.Age || client.Age === filter.Age)
+//                    && (!filter.Address || client.Address.indexOf(filter.Address) > -1)
+//                    && (filter.Married === undefined || client.Married === filter.Married);
+//            });
+
+            return $.grep(listarDatos(1),function (data){
+                var objetoSinFiltroDeCombo={"comparacionesFiltros":(!filter.clave_documento || data.clave_documento.indexOf(filter.clave_documento) > -1)
+                       &&(!filter.documento || data.documento.indexOf(filter.documento)> -1)};
+                var objetoConTodosLosFiltros={"comparacionesFiltros":(!filter.clave_documento || data.clave_documento.indexOf(filter.clave_documento) > -1)
+                       &&(!filter.documento || data.documento.indexOf(filter.documento)> -1)
+                       &&(!filter.id_empleado || data.id_empleado.indexOf(filter.id_empleado)> -1)};
+                if(____listaDeTodoTipoDeVariantes["todoloquetienequeverconfiltros"]["filtroAlPrincipioDeTodosLosCampos"]==false){
+                    ____listaDeTodoTipoDeVariantes["todoloquetienequeverconfiltros"]["filtroAlPrincipioDeTodosLosCampos"]=true;
+                    return objetoSinFiltroDeCombo["comparacionesFiltros"];
+                }else
+                {
+                    return objetoConTodosLosFiltros["comparacionesFiltros"];
+                }
+//                       &&(!filter.id_empleado || data.id_empleado(filter.id_empleado)> -1) ;
+            });
               },
                   insertItem: function(item) {
                       return item;
@@ -170,21 +208,27 @@ function listarjsGrid()
     $("#jsGrid").jsGrid({
         
         onInit: function(args){
+            console.log(jsGrid);
             gridInstance=args;
               jsGrid.ControlField.prototype.editButton=true;
               jsGrid.Grid.prototype.autoload=true;
+//              jsGrid.Field.prototype.filtering=false;
+//                jsGrid.Field.prototype.filtering=true;
+//                jsGrid.Field.prototype.visible=false;
         }, 
         onDataLoading: function(args) {
             $("#loader").show();
         },
         onDataLoaded:function(args){
             $("#loader").hide();
+//              jsGrid.Field.prototype.filtering=true;
         },
         onRefreshing: function(args) {
         },
         
         width: "100%",
         height: "300px",
+        autoload:true,
         editing: true,
         heading: true,
         sorting: true,
@@ -194,10 +238,13 @@ function listarjsGrid()
 //        data: __datos,
         fields: [
                 { name: "id_principal",visible:false },
-                { name: "clave_documento",title:"Clave del Documento", type: "text", width: 80, validate: "required" },
-                { name: "documento",title:"Nombre del Documento", type: "text", width: 150, validate: "required" },
-                { name: "id_empleado",title:"Responsable del Documento", type: "select", items:listarDatos(0),valueField: "id_empleado", textField: "Name", width: 150, validate: "required",filterValue: function() { 
-                return this.items[this.filterControl.val()][this.textField];
+                { name: "clave_documento",title:"Clave del Documento", type: "textarea", validate: "required"},
+                { name: "documento",title:"Nombre del Documento", type: "textarea",  validate: "required" },
+                { name: "id_empleado",title:"Responsable del Documento", type: "select", items:listarDatos(0),valueField: "id_empleado", textField: "Name", validate: "required",autosearch: false,filterValue: function() { 
+//                       console.log("dentro del name");
+//                        console.log(this.items[this.filterControl.val()][this.valueField]);
+//                        console.log("termina dentro del name");
+                return this.items[this.filterControl.val()][this.valueField];
                 }},
                 {type:"control"}
         ],
@@ -207,7 +254,13 @@ function listarjsGrid()
             saveUpdateToDatabase(args);
         },
     
-        
+//        editRowRenderer :function (item, itemIndex){
+////            alert("le");
+//            console.log(item);
+//            console.log("--");
+//            console.log(itemIndex);
+//            return item;
+//        },
             
     
         onItemDeleting: function(args) {
@@ -217,6 +270,7 @@ function listarjsGrid()
         }
         
     });
+   
 }
 
 
@@ -352,6 +406,7 @@ function refresh(evaluar)
     switch(evaluar)
     {
         case 'agregarDocumento':
+            ____listaDeTodoTipoDeVariantes["todoloquetienequeverconfiltros"]["filtroAlPrincipioDeTodosLosCampos"]=false;
            $("#jsGrid").jsGrid("render").done(function() {
             swal("Guardado Exitoso!", "", "success");
             setTimeout(function(){swal.close();$("#create-item .close").click();},1000);
@@ -360,6 +415,8 @@ function refresh(evaluar)
         break;
         
         case 'refrescarTable':
+            ____listaDeTodoTipoDeVariantes["todoloquetienequeverconfiltros"]["filtroAlPrincipioDeTodosLosCampos"]=false;
+            
             $("#jsGrid").jsGrid("render").done(function() {
             swal("Se cargaron correctamente los Datos", "", "success");
             setTimeout(function(){swal.close();$("#create-item .close").click();},1000);
