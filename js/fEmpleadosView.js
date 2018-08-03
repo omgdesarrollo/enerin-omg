@@ -18,7 +18,7 @@ function construirGrid(__datos)
         {
             // gridInstance=args;
             jsGrid.ControlField.prototype.editButton=true;
-            // jsGrid.ControlField.prototype.deleteButton=false;
+             jsGrid.ControlField.prototype.deleteButton=false;
             jsGrid.Grid.prototype.autoload=true;
         },
         onDataLoading: function(args)
@@ -73,7 +73,6 @@ function construirGrid(__datos)
                                 success:function(exito)
                                 {
 //                                    alert("d");
-console.log("d");
                                         console.log(exito);
                                 }
                         });
