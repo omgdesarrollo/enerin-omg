@@ -31,7 +31,6 @@ function construirFiltrosCombobox(datos,name,id,descripcion)
     {
             tempData += "<option value='"+value[id]+"'>"+value[descripcion]+"</option>";
     });
-    alert("");
     tempData += "</select>";
     return tempData;
 }
