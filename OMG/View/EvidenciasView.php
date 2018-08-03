@@ -383,8 +383,12 @@
                 type: 'POST',
                 data: "ID_REGISTRO="+dataRegistro.id_registro,
                 async:false,
+                beforesend:function (){
+                    alert("se empezaran a listar los datos");
+                },
                 success:function(data)
                 {
+                    
                     (data==true)?
                     (
                         swalSuccess("Se creo la evidencia"),
@@ -399,6 +403,7 @@
 //                        $('#NOMBRE_NUEVAEVIDENCIAMODAL').html(""),
 //                        $('#nuevaEvidenciaModal .close').click(),
 //                        listarDatos()
+
                             refresh()
                     )
                     :swalErro("Error al crear");
