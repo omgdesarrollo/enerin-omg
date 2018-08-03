@@ -965,16 +965,20 @@ function preguntarEliminar(data)
 
 }
 
-function refresh()
+function refresh(evaluar)
 {       
     ejecutarPrimeraVez=false;
     ejecutando=false;
     clearInterval(intervalA);
     clearTimeout(timeOutA);
-    $("#grid").jsGrid("render").done(function()
-    {
-        swalSuccess("Evidencia Registrada Exitosamente");
-    });
+//    switch(evaluar){
+//        case "refreshBoton":
+            $("#grid").jsGrid("render").done(function()
+            {
+                swalSuccess("Evidencia Registrada Exitosamente");
+            });
+//        break;
+//    }
 }
 
 function listarDatosTodos()
