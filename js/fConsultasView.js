@@ -92,8 +92,6 @@ function listarjsGrid()
                 { name: "requisito",title:"Requisito", type: "text", width: 150, validate: "required" },
                 { name: "penalizacion",title:"Penalizacion", type: "text", width: 150, validate: "required" },
                 { name: "registro",title:"Registro", type: "text", width: 150, validate: "required" },
-                { name: "id_evidencia",title:"Evidencia", type: "text", width: 150, validate: "required" },
-                { name: "id_cumplimiento",title:"Cumplimiento", type: "text", width: 150, validate: "required" },
                 
                 {type:"control"}
         ],
