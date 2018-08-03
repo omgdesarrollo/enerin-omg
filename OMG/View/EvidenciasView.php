@@ -776,6 +776,7 @@
 
 function construir(datosF)
 {
+    jsGrid.fields.customControl = MyCControlField;
     db=
     {
         loadData: function(filter)
@@ -789,6 +790,19 @@ function construir(datosF)
     } 
     window.db = db;
     $("#grid").jsGrid({
+        // loadIndicator:
+        // { 
+        //     show:function()
+        //     {
+        //         console.log ( "carga iniciada" );
+        //         $("#loader").show();
+        //     },
+        //     hide:function()
+        //     {
+        //         console.log ( "carga terminada" );
+        //         $("#loader").hide();
+        //     }
+        // },
         onInit: function(args)
         {
             gridInstance=args;
@@ -807,7 +821,7 @@ function construir(datosF)
         {},
         width: "100%",
         height: "300px",
-        inserting:true,
+        inserting:false,
         heading: true,
         sorting: true,
         paging: true,
@@ -818,12 +832,14 @@ function construir(datosF)
         confirmDeleting: true,
         controller:db,
         rowClick: function(args)
-        {},
+        {
+            // console.log(args);
+        },
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields:
         [
             { name: "id_principal", type: "text",fields:"f", width: "auto",visible:false },
-            { name: "id_validador", type: "text",fields:"f", width: "auto",visible:false },
+            { name: "validador", type: "text",fields:"f", width: "auto",visible:false },
             { name: "no", title:"No",type: "text", width: 28 },
             { name: "requisito",title:"Requisito", type: "text", width: 150 },
             { name: "registro",title:"Registro", type: "text", width: 150  },
@@ -836,48 +852,117 @@ function construir(datosF)
             { name: "plan_accion",title:"Plan Accion", type: "text", width: 170 },
             { name: "desviacion",title:"Desviacion", type: "text", width: 120},
             {name: "validacion",title:"Validacion", type: "text", width: 200 },
-            { type: "control" },
+            {name:"delete", title:"", type: "customControl" },
             {name:"eliminar",visible:false}
         ],
         onOptionChanged:function(a)
         {},
-        onItemDeleted: function(args)
-        {
-            id_afectado = "";
-            if(args["item"]["eliminar"]=="si")
-            {
-                $.each(args["item"]["id_principal"][0],function(index,value)
-                {
-                    id_afectado = value;
-                });
-                eliminarEvidencia(id_afectado);
-            }
-        },
-        onItemDeleting: function(args)
-        {
-            id_afectado = "";
-            if(args["item"]["validador"]== "1")
-            {
-                $.each(args["item"]["id_principal"][0],function(index,value)
-                {
-                    id_afectado = value;
-                });
-                if(args["item"]["eliminar"]=="si")
-                    eliminarEvidenciaGrid(id_afectado);
-                else
-                {
-                    args.cancel = true;
-                    swalError("Error no se puede Eliminar ya contiene archivos adjuntos");
-                }
-            }
-            else
-                swalInfo("Tu no eres responsable de la evidencia");
-        },
+        // onItemDeleted: function(args)
+        // {
+        //     id_afectado = "";
+        //     if(args["item"]["eliminar"]=="si")
+        //     {
+        //         $.each(args["item"]["id_principal"][0],function(index,value)
+        //         {
+        //             id_afectado = value;
+        //         });
+        //         eliminarEvidencia(id_afectado);
+        //     }
+        // },
+        // onItemDeleting: function(args)
+        // {
+        //     alert("YO");
+        //     id_afectado = "";
+        //     if(args["item"]["validador"]== "1")
+        //     {
+        //         $.each(args["item"]["id_principal"][0],function(index,value)
+        //         {
+        //             id_afectado = value;
+        //         });
+        //         if(args["item"]["eliminar"]=="si")
+        //             eliminarEvidenciaGrid(id_afectado);
+        //         else
+        //         {
+        //             args.cancel = true;
+        //             swalError("Error no se puede Eliminar ya contiene archivos adjuntos");
+        //         }
+        //     }
+        //     else
+        //         swalInfo("Tu no eres responsable de la evidencia");
+        // },
         onItemInserting: function(args)
         {},
         onItemInserted:function (args)
         {}
     });
+}
+
+var MyCControlField = function(config)
+{
+        // data = {};
+    jsGrid.Field.call(this, config);
+    // console.log(this);
+};
+ 
+MyCControlField.prototype = new jsGrid.Field
+({        
+        css: "date-field",
+        align: "center",
+        sorter: function(date1, date2)
+        {
+                console.log("haber cuando entra aqui");
+                console.log(date1);
+                console.log(date2);
+        },
+        itemTemplate: function(value,todo)
+        {
+            console.log(todo);
+            console.log(value);
+            if(todo.eliminar=="no")
+                return "";
+            else
+                return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button', type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
+        },
+        insertTemplate: function(value)
+        {
+        },
+        editTemplate: function(value)
+        {
+        },
+        insertValue: function()
+        {
+        },
+        editValue: function()
+        {
+        }
+});
+
+function preguntarEliminar(data)
+{
+    console.log(data);
+    swal({
+        title: "",
+        text: "¿Eliminar Evidencia?",
+        type: "info",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        showLoaderOnConfirm: true,
+        confirmButtonText: "Eliminar",
+        cancelButtonText: "Cancelar",
+        },
+        function(confirmacion)
+        {
+            if(confirmacion)
+            {
+                eliminarEvidencia(data.id_principal[0].id_evidencias);
+            }
+            else
+            {
+                
+            }
+        });
+    // $("#grid").jsGrid("deleteItem",row);
+
 }
 
 function refresh()
@@ -1155,6 +1240,7 @@ function confirmarBorrarRegistroEvidencia()
         denegado = "<i class='fa fa-ban' style='font-size: xx-large;color:red;' aria-hidden='true'></i>";
             nametmp="";
             tempData["id_principal"] =  [{'id_evidencias':value.id_evidencias}];
+            tempData["delete"] = [{'id_evidencias':value.id_evidencias,"validador":value.validador }];
             tempData["validador"] = value.validador;
             tempData["no"] = contador;
             tempData["requisito"] = value.requisito;
@@ -1259,7 +1345,11 @@ function confirmarBorrarRegistroEvidencia()
             success:function(eliminado)
             {
 //                (eliminado==true)?(swalSuccess("Se elimino la evidencia"),$('#registro_'+id_evidencias).remove()):swalError("No se pudo eliminar");
-                 (eliminado==true)?(swalSuccess("Se elimino la evidencia")):swalError("No se pudo eliminar");
+                 (eliminado==true)?
+                 (
+                     swalSuccess("Se elimino la evidencia"),
+                     refresh()
+                ):swalError("No se pudo eliminar");
             },
             error:function()
             {

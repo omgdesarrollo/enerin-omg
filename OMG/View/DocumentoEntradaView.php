@@ -704,7 +704,7 @@ function construirGrid(datosF)//listooo 12
 {
         widthNormal=120;
         widthDate=150;
-        jsGrid.fields.date = MyDateField;
+        jsGrid.fields.date = MyDateField;        
         $("#jsGrid").html("");
         $("#jsGrid").jsGrid({
         width: "100%",
