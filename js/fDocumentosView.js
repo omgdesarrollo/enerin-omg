@@ -299,6 +299,7 @@ function saveUpdateToDatabase(args)
 //      console.log(columnas);
       if(columnas!="")
       {
+          console.log("Valor columnas: "+columnas);
         $.ajax({
             url:"../Controller/GeneralController.php?Op=Actualizar",
             type:"POST",
