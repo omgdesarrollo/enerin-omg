@@ -954,7 +954,7 @@ function preguntarEliminar(data)
         {
             if(confirmacion)
             {
-                
+                eliminarEvidencia(data.id_principal[0].id_evidencias);
             }
             else
             {
@@ -1345,7 +1345,11 @@ function confirmarBorrarRegistroEvidencia()
             success:function(eliminado)
             {
 //                (eliminado==true)?(swalSuccess("Se elimino la evidencia"),$('#registro_'+id_evidencias).remove()):swalError("No se pudo eliminar");
-                 (eliminado==true)?(swalSuccess("Se elimino la evidencia")):swalError("No se pudo eliminar");
+                 (eliminado==true)?
+                 (
+                     swalSuccess("Se elimino la evidencia"),
+                     refresh()
+                ):swalError("No se pudo eliminar");
             },
             error:function()
             {
