@@ -15,27 +15,30 @@ function construirFiltros()
         if(value.type == "combobox")
         {
             tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' style='width:auto;display:none'>";
-            tempData += construirFiltrosCombobox(value.data,value.name,value.id);
+            tempData += construirFiltrosCombobox(value.data,value.name,value.id,value.descripcion);
         }
     });
     $("#headerFiltros").html(tempData);
 }
 
-function construirFiltrosCombobox(datos,name,id)
+function construirFiltrosCombobox(datos,name,id,descripcion)
 {
+    // console.log(datos);
     tempData="";
-    tempData = "<select onChange='construirFiltrosComboboxSelect(this,\""+id+"\")' margin:2px;>";
+    tempData = "<select onChange='construirFiltroSelect(this,\""+id+"\")' margin:2px;>";
     tempData += "<option value='-1'>"+name+"</option>";
-    $.each(autoridades,function(index,value)
+    $.each(datos,function(index,value)
     {
-            tempData += "<option value='"+value.id+"'>"+value.descripcion+"</option>";
+            tempData += "<option value='"+value[id]+"'>"+value[descripcion]+"</option>";
     });
+    alert("");
     tempData += "</select>";
     return tempData;
 }
 
 function construirFiltroSelect(Obj,id)
 {
+    // console.log(Obj,id);
     val = $(Obj).val();
     if(val=="-1")
             $("#"+id).val("");

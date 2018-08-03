@@ -133,13 +133,12 @@ require_once 'EncabezadoUsuarioView.php';
     <i class="glyphicon glyphicon-repeat"></i> 
 </button>
 
-<div id="headerFiltros">
-</div>
 
 </div>  
-
-
-<div style="height: 50px"></div>
+<br><br><br>
+<div style="float:left" id="headerFiltros">
+</div>
+<!-- <div style="height: 50px"></div> -->
 
 <div id="jsGrid"></div>
 <!--<div class="contenedortable" style="position: fixed;">   
@@ -356,7 +355,14 @@ require_once 'EncabezadoUsuarioView.php';
 <script>
 
 
-filtros = [{'name':'Folio de Entrada','id':'folio_entrada'},{'name':'Asunto','id':'asunto'},{'name':'Remitente','id':'remitente'},{'name':'Autoridad Remitente','id':'id_autoridad'},{'name':'Responsable Tema','id':'nombre_empleado'},{'name':'Clasificación','id':'clasificacion'}];
+filtros = [
+                {name:'Folio de Entrada',id:'folio_entrada',type:"text"},
+                {name:'Asunto',id:'asunto',type:"text"},
+                {name:'Remitente',id:'remitente',type:"text"},
+                {name:'Autoridad Remitente',id:'id_autoridad',type:"combobox",data:listarAutoridades(),descripcion:"clave_autoridad"},
+                {name:'Responsable Tema',id:'nombre_empleado',type:"text"},
+                {name:'No Tema',id:'id_tema',type:"combobox",data:listarTemas(),descripcion:"no"}
+        ];
 construirFiltros();
 
 var id_documento_entrada;
@@ -367,67 +373,37 @@ var thisAutoridad;
 $("#create-item").draggable();
 $("#create-itemUrls").draggable();
 
-function construirFiltros()
-{
-        tempData = "";
-        $.each(filtros,function(index,value)
-        {
-                entrado=0;
-                if(value.id == "id_autoridad")
-                {
-                        tempData += construirFiltrosCombobox(value.id);
-                        tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' placeholder='"+value.name+"' style='width:auto;display:none'>";
-                        entrado=1;
-                }
-                if(value.id == "clasificacion")
-                {
-                        tempData += "<select onChange='construirFiltrosComboboxSelect(this,\""+value.id+"\")'>";
-                        tempData += "<option value='-1'>Clasificación</option>";
-                        tempData += "<option value='1'>En proceso</option>";
-                        tempData += "<option value='2'>Suspendido</option>";
-                        tempData += "<option value='3'>Terminado</option></select>";
-                        tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' placeholder='"+value.name+"' style='width:auto;display:none'>";
-                        entrado=1;
-                }
-                if(entrado==0)
-                {
-                        tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' placeholder='"+value.name+"' style='width: auto;'>";
-                        entrado=0;
-                }
-        });
-        $("#headerFiltros").append(tempData);
-}
 
-function construirFiltrosCombobox(id)
+function listarAutoridades()
 {
-        tempData="";
+        tempData=[];
         $.ajax({
                 url:'../Controller/AutoridadesRemitentesController.php?Op=Listar',
                 type: 'GET',
                 async:false,
                 success:function(autoridades)
                 {
-                        tempData = "<select onChange='construirFiltrosComboboxSelect(this,\""+id+"\")'>";
-                        tempData += "<option value='-1'>Autoridad Remitente</option>";
-                        $.each(autoridades,function(index,value)
-                        {
-                                tempData += "<option value='"+value.id_autoridad+"'>"+value.clave_autoridad+"</option>";
-                                return tempData;
-                        });
-                        tempData += "</select>";
+                        tempData = autoridades;
+                        thisAutoridad = autoridades;
                 }
         });
         return tempData;
 }
 
-function construirFiltrosComboboxSelect(Obj,id)
+function listarTemas()
 {
-        val = $(Obj).val();
-        if(val=="-1")
-                $("#"+id).val("");
-        else
-                $("#"+id).val(val);
-        filtroSupremo();
+        tempData=[];
+        $.ajax({
+                url:'../Controller/TemasOficiosController.php?Op=mostrarCombo',
+                type:'GET',
+                async:false,
+                success:function(temas)
+                {
+                        thisTemas = temas;
+                        tempData = temas;
+                }
+        });
+        return tempData;
 }
 
 function DocumentoArchivoAgregarModalF()
@@ -708,7 +684,7 @@ function construirGrid(datosF)//listooo 12
         $("#jsGrid").html("");
         $("#jsGrid").jsGrid({
         width: "100%",
-        height: "100%",
+        height: "300px",
         editing:true,
         heading: true,
         sorting: true,
@@ -1108,30 +1084,30 @@ function reconstruirTable(datos)//listooo
 function listarDatos(id_documento)
 {
         tempData="";
-        ajaxTemas = ({
-                url:'../Controller/TemasOficiosController.php?Op=mostrarCombo',
-                type:'GET',
-                async:false,
-        });
+        // ajaxTemas = ({
+        //         url:'../Controller/TemasOficiosController.php?Op=mostrarCombo',
+        //         type:'GET',
+        //         async:false,
+        // });
 
-        ajaxAutoridades = $.ajax
-        ({
-                url:'../Controller/AutoridadesRemitentesController.php?Op=Listar',
-                type: 'GET',
-                async:false,
-                beforeSend:function()
-                {
-                        $('#loader').show();
-                }
-        });
+        // ajaxAutoridades = $.ajax
+        // ({
+        //         url:'../Controller/AutoridadesRemitentesController.php?Op=Listar',
+        //         type: 'GET',
+        //         async:false,
+        //         beforeSend:function()
+        //         {
+        //                 $('#loader').show();
+        //         }
+        // });
         
-        ajaxAutoridades.done(function(autoridades)
-        {
-                thisAutoridad = autoridades;
-                $.ajax(ajaxTemas).done(function(temas)
-                {
-                        thisTemas = temas;
-                        var ajaxListado;
+        // ajaxAutoridades.done(function(autoridades)
+        // {
+                // thisAutoridad = autoridades;
+                // $.ajax(ajaxTemas).done(function(temas)
+                // {
+                //         thisTemas = temas;
+                //         var ajaxListado;
                         if(id_documento==-1)
                         {
                                 ajaxListado = ({
@@ -1160,6 +1136,7 @@ function listarDatos(id_documento)
                                 url:'../Controller/DocumentosEntradaController.php?Op=ListarUno',
                                 type: 'GET',
                                 data:'ID_DOCUMENTO='+id_documento,
+                                async:false,
                                 success:function(datos)
                                 {
                                         $.each(datos,function(index,value)
@@ -1181,9 +1158,9 @@ function listarDatos(id_documento)
                                 }
                                 });
                         $.ajax(ajaxListado);
-                }).fail(function(){swalError("Error en el servidor");});
-        });
-        ajaxAutoridades.fail(function(){swalError("Error en el servidor");});
+                // }).fail(function(){swalError("Error en el servidor");});
+        // });
+        // ajaxAutoridades.fail(function(){swalError("Error en el servidor");});
 }
 
 function componerDataListado(value)// id de la vista documento

@@ -12,7 +12,6 @@ correoEmail=false;
 
 function construirGrid(__datos)
 {
-    console.log(__datos);
     $("#jsGrid").html("");
     $("#jsGrid").jsGrid({
         onInit: function(args)
@@ -109,10 +108,11 @@ function reconstruirTable(_datos)
     __datos=[];
     $.each(_datos,function(index,value)
     {
-        // __datos.push(reconstruir(value,index));
+        __datos.push(reconstruir(value,index));
     });
     // $("#jsGrid").jsGrid("loadData");
-    // construirGrid(__datos);
+    construirGrid(__datos);
+    $("#loader").hide();
 }
 
 function reconstruir(value,index)
