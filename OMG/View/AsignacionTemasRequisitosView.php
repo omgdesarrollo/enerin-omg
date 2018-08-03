@@ -534,7 +534,7 @@ function evaluarToolbarSeccionB(id)
                $htmlData="<div style='overflow-y:auto;' class='table-responsive altotablascrollbar'><ul class='list-group'>";
                $.each(data,function(index,value){
 //                  $htmlData+="<li class='list-group-item'><button onclick='obtenerDatosArbol("+value.id_asignacion_tema_requisito+")' >"+value.no+"-"+value.nombre+"</button><span class='badge'></li>"; 
-                  $htmlData+="<li class='list-group-item' style='background-color:#E6E6FA;'><div style='background-color:#E6E6FA;color:#000000;font-size:20px;' onclick='obtenerDatosArbol("+value.id_asignacion_tema_requisito+")'>"+value.no+"-"+value.nombre+"</div><span class='badge'></li>"; 
+                  $htmlData+="<li class='list-group-item' style='background-color:#E6E6FA;'><div style='background-color:#E6E6FA;color:#000000;' onclick='obtenerDatosArbol("+value.id_asignacion_tema_requisito+")'>"+value.no+"-"+value.nombre+"</div><span class='badge'></li>"; 
                 
                });
               $htmlData+="</ul></div>";
