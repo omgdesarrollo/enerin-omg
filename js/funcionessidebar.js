@@ -271,7 +271,8 @@ function loadDataSideBarOficiosDocumentacion()
         width: 350,
         items: [
           {id: "informesValidacionDocumentos", text: "Informe Validacion de Documentos", icon: "documentos.png"},
-          {id: "informesEvidencias", text: "Informe de Evidencias", icon: "operaciones.png"}
+          {id: "informesEvidencias", text: "Informe de Evidencias", icon: "operaciones.png"},
+          {id: "consultas", text: "Consultas", icon: "consultas.png"}
           
             
         ]
@@ -287,6 +288,10 @@ function loadDataSideBarOficiosDocumentacion()
                       break;  
                       case "informesEvidencias":
                            $("#sidebarObjV").load('InyectarVistasView.php #informesEvidencias');
+                      break;
+                      
+                      case "consultas":
+                           $("#sidebarObjV").load('InyectarVistasView.php #consultas');
                       break;
 
                   }
