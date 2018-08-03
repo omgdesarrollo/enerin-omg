@@ -34,12 +34,16 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/jquery.js" type="text/javascript"></script>
 
+                <!--  -->
                 
+
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
                 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
 
+                <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+                <script src="../../js/fCatalogoProcesosView.js" type="text/javascript"></script>
                 
         <style>
             .jsgrid-header-row>.jsgrid-header-cell {
@@ -85,20 +89,23 @@ require_once 'EncabezadoUsuarioView.php';
     <img src="../../images/base/pdf.png" width="30px" height="30px"> 
 </button>    
 
-        <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave Documento" style="width: 180px;">
+        <!-- <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave Documento" style="width: 180px;">
         <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre Documento" style="width: 180px;">
-        <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 180px;">
-        <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+        <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 180px;"> -->
 </div>    
 
 
-<div style="height: 40px"></div>
+<br><br><br>
+<div style="float:left" id="headerFiltros">
+</div>
 
-<div id="jsGrid"></div
+<div id="jsGrid"></div>
 
 
 
 <script>
+    construirFiltros();
+    listarDatos();
 </script>
     
             <script src="../../js/fCatalogoProcesosView.js" type="text/javascript"></script>

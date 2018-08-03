@@ -1,23 +1,24 @@
 <?php
+session_start();
+
 require_once '../Model/CatalogoProcesosModel.php';
 require_once '../util/Session.php';
 
 $Op=$_REQUEST["Op"];
-
 $model=new CatalogoProcesosModel();
 
-
-switch ($Op) {
+switch ($Op)
+{
     case 'listar':
-        $Lista=$model->listarCatalogoProcesos();
-        header('Content-type: application/json; charset=utf-8'); 
+        $CONTRATO = Session::getSesion("s_cont");
+        $Lista = $model->listarCatalogo($CONTRATO);
+        header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
-        return $Lista;
-
-        break;
+    break;
 
     default:
-        break;
+        echo -1;
+    break;
 }
 
 

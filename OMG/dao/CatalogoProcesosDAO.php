@@ -4,26 +4,23 @@ require_once '../ds/AccesoDB.php';
 class CatalogoProcesosDAO{
     
     
-public function listarCatalogoProcesos()
+public function listarCatalogo($CONTRATO)
 {
     try
     {
-        $query="SELECT tbcatalogo_procesos.id_catalogo, tbcatalogo_procesos.clave_contrato, tbcatalogo_procesos.region_fiscal, 
-		 tbcatalogo_procesos.ubicacion_punto_medicion, tbcatalogo_procesos.tag_patin_medicion,
-		 tbcatalogo_procesos.tipo_medidor,tbcatalogo_procesos.tag_medidor,
-		 tbcatalogo_procesos.clasificacion_sistema_medicion, tbcatalogo_procesos.tipo_hidrocarburo
-		 	
-                FROM catalogo_procesos tbcatalogo_procesos";
-        
+        $query="SELECT tbcatalogo_reporte.id_contrato, tbcatalogo_reporte.clave_contrato, tbcatalogo_reporte.region_fiscal,
+        tbcatalogo_reporte.ubicacion, tbcatalogo_reporte.tag_patin, tbcatalogo_reporte.tipo_medidor,
+        tbcatalogo_reporte.tag_medidor, tbcatalogo_reporte.clasificacion,
+        tbcatalogo_reporte.hidrocarburo
+        FROM catalogo_reporte tbcatalogo_reporte
+        WHERE tbcatalogo_reporte.contrato = $CONTRATO";
         $db=  AccesoDB::getInstancia();
-        $lista=$db->executeQuery($query);
-
+        $lista = $db->executeQuery($query);
         return $lista;
-        
     } catch (Exception $ex)
     {
         throw $ex;
-        return false;
+        return -1;
     }
 }
 

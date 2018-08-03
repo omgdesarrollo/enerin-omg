@@ -108,8 +108,6 @@
             // array("No.","Requisito","Registro","Frecuencia","Clave Documento",
             //     "Adjuntar Evidencia","Fecha de Registro","Usuario","Acción Correctiva","Plan de Acción","Desviación","Validación","Opcion");
     ?>
-    
-    <div id="headerFiltros" style="position: fixed;">
 
         <button onClick="" type="button" 
         class="btn btn-success" data-toggle="modal" data-target="#nuevaEvidenciaModal">
@@ -121,11 +119,15 @@
             <i class="glyphicon glyphicon-repeat"></i> 
         </button>
 
-        <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+        <!-- <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i> -->
 
     </div>
-    
-    <div style="height: 50px"></div>
+
+    <br><br><br>
+    <div style="float:left" id="headerFiltros">
+    </div>
+
+    <!-- <div style="height: 50px"></div> -->
 
 <!--            <table class="table table-bordered table-striped header_fijo" id="idTable">
                 <tr>
