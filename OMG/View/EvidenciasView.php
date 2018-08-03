@@ -965,7 +965,7 @@ function preguntarEliminar(data)
 
 }
 
-function refresh(evaluar)
+function refresh()
 {       
     ejecutarPrimeraVez=false;
     ejecutando=false;
@@ -975,11 +975,11 @@ function refresh(evaluar)
 //        case "refreshBoton":
             $("#grid").jsGrid("render").done(function()
             {
-                swalSuccess("Evidencia Registrada Exitosamente");
+                swalSuccess("Datos Cargados Exitosamente");
             });
 //        break;
-//    }
-}
+    }
+
 
 function listarDatosTodos()
 {
@@ -1407,7 +1407,7 @@ function confirmarBorrarRegistroEvidencia()
                                     enviar_notificacion( ((valor==true)?
                                      "Ha sido validada una Evidencia por ":
                                      "Ha sido desvalidada una Evidencia por "),idPara,0,false,"EvidenciasView.php?accion="+id);
-                                     $("#btn_cargaGantt").html( (valor==true)?"Vizualizar Programa":"Cargar Programa" );
+//                                     $("#btn_cargaGantt").html( (valor==true)?"Vizualizar Programa":"Cargar Programa" );
                                 }
                             },
                             error:function()
@@ -1491,8 +1491,12 @@ function confirmarBorrarRegistroEvidencia()
              data: "PARA="+para+"&MENSAJE="+mensaje+"&ATENDIDO="+atendido+"&TIPO_MENSAJE="+tipoMensaje+"&ASUNTO="+asunto,
              success:function(response)
              {
-                (response==true)?
-                swalSuccess("Se notifico del cambio "):swalError("No se pudo notificar");
+                (response==true)?(
+                    swalSuccess("Se notifico del cambio "),
+                     refresh()
+                 )
+                :swalError("No se pudo notificar");
+               
              },
              error:function()
              {

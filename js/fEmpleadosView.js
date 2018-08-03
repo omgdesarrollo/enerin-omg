@@ -53,7 +53,6 @@ function construirGrid(__datos)
         {
                 console.log(args);
                 columnas={};
-                entro=0;
                 id_afectado=args["item"]["id_principal"][0];
                 $.each(args["item"],function(index,value)
                 {
@@ -62,11 +61,10 @@ function construirGrid(__datos)
                                 if(index!="id_principal" && !value.includes("<button"))
                                 {
                                         columnas[index]=value;
-                                        entro=1;
                                 }
                         }
                 });
-                if(entro!=0)
+                if(Object.keys(columnas).length!=0)
                 {
                         $.ajax({
                                 url: '../Controller/GeneralController.php?Op=Actualizar',

@@ -291,15 +291,11 @@ function saveUpdateToDatabase(args)
               if(index!='id_principal' && !value.includes("<button")){
 //              console.log("Entro aqui");
                     columnas[index]=value;
-                    entro=1;
-//                    console.log(index);
                 }
           }            
 //          console.log(args['previousItem'][index]);
       });
-      
-//      console.log(columnas);
-      if(entro!=0)
+      if(Object.keys(columnas).length!=0)
       {
           console.log("Valor columnas: "+columnas);
         $.ajax({
