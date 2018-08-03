@@ -76,7 +76,7 @@ class AsignacionTemaRequisitoModel {
               
                 foreach($rec as $valuet){
 //                    $htmlFrontend=$valuet["registro"];
-                    $htmlFrontend.="<tr><td class='info'>Requisito</td><td>".$valuet['requisito']."</td></tr>";
+                    $htmlFrontend.="<tr><td class='info'>Requisito</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabaseRequisitos(this,'requisito',".$valuet['id_requisito'].")\">".$valuet['requisito']."</td></tr>";
 //                    $htmlFrontend.="<tr><td class='info'>Clave Documento</td><td>".$valuet['clave_documento']."</td></tr>";
 //                    if($valuet["documento"]!="")
 //                    $htmlFrontend.="<tr><td class='info'>Documento</td><td>".$valuet['documento']."</td></tr>";
@@ -95,7 +95,7 @@ class AsignacionTemaRequisitoModel {
                 $rec= $dao->obtenerDetalles_Reg($value);
                 foreach($rec as $valuet){
 //                    $htmlFrontend=$valuet["registro"];
-                    $htmlFrontend.="<tr><td class='info'>Registro</td><td>".$valuet['registro']."</td></tr>";
+                    $htmlFrontend.="<tr><td class='info'>Registro</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabaseRegistros(this,'registro',".$valuet['id_registro'].")\">".$valuet['registro']."</td></tr>";
                     $htmlFrontend.="<tr><td class='info'>Frecuencia</td><td>".$valuet['frecuencia']."</td></tr>";                    
                     $htmlFrontend.="<tr><td class='info'>Clave Documento</td><td>".$valuet['clave_documento']."</td></tr>";
                     if($valuet["documento"]!="")

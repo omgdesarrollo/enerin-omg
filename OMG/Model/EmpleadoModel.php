@@ -45,7 +45,7 @@ class EmpleadoModel{
         try{
             $dao=new EmpleadoDAO();
             $rec=$dao->mostrarEmpleadosComboBox();
-            
+           
             /*if($rec==NULL){
             throw new Exception("Usuario no existe !!!!!");
             }

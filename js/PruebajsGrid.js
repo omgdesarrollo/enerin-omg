@@ -207,7 +207,7 @@ $("#jsGrid").jsGrid({
             { name: "Name", type: "textarea", width: 150 },
             { name: "Age", type: "number", width: 50 },
             { name: "Address", type: "text", width: 200 },
-            { name: "Country", type: "select", items: db.countries, valueField: "Id", textField: "Name", filterValue: function() { 
+            { name: "Country", type: "select", items: db.countries, valueField: "Id", textField: "Name", filterValue: function() {
                 return this.items[this.filterControl.val()][this.textField];
             }},
             { name: "Married", type: "checkbox", title: "Is Married", sorting: false },

@@ -31,13 +31,18 @@ $Usuario=  Session::getSesion("user");
                 <!--Termina para el spiner cargando-->
                 
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+                <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/jquery.js" type="text/javascript"></script>
                 <script src="../../js/fDocumentosView.js" type="text/javascript"></script>
 
-                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+<!--                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
-                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>-->
+                <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
+                <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
+
 
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
@@ -52,6 +57,7 @@ $Usuario=  Session::getSesion("user");
                 color: white;
                 font-weight: normal;
             }
+       
             .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                    
             .modal-lg{width: 100%;}
             .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
@@ -78,7 +84,7 @@ require_once 'EncabezadoUsuarioView.php';
     Agregar Documento
 </button>    
     
-<button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
+<button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh('refrescarTable');" >
     <i class="glyphicon glyphicon-repeat"></i>   
 </button>
 
@@ -99,7 +105,7 @@ require_once 'EncabezadoUsuarioView.php';
 </div>    
 
 <div style="height: 40px"></div>
-<div id="headerFiltros" style=""><i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i></div>
+<!--<div id="headerFiltros" style=""><i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i></div>-->
 
 <div id="jsGrid"></div>
 
@@ -168,7 +174,18 @@ require_once 'EncabezadoUsuarioView.php';
        
 
 <script>
-listarDatos();
+    // var textarea = document.querySelector('textarea');
+//
+//textarea.addEventListener('keydown', autosize);
+//             
+//function autosize(){
+//  var el = this;
+//  setTimeout(function(){
+//    el.style.cssText = 'height:auto; padding:0';
+//    el.style.cssText = 'height:' + el.scrollHeight + 'px';
+//  },0);
+//}
+listarjsGrid();
 </script>
 
 
