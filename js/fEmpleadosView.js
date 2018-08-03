@@ -54,6 +54,7 @@ function construirGrid(__datos)
         {
                 console.log(args);
                 columnas={};
+                entro=0;
                 id_afectado=args["item"]["id_principal"][0];
                 $.each(args["item"],function(index,value)
                 {
@@ -62,10 +63,11 @@ function construirGrid(__datos)
                                 if(index!="id_principal" && !value.includes("<button"))
                                 {
                                         columnas[index]=value;
+                                        entro=1;
                                 }
                         }
                 });
-                if(columnas!="")
+                if(entro!=0)
                 {
                         $.ajax({
                                 url: '../Controller/GeneralController.php?Op=Actualizar',
@@ -73,6 +75,8 @@ function construirGrid(__datos)
                                 data:'TABLA=empleados'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
                                 success:function(exito)
                                 {
+//                                    alert("d");
+console.log("d");
                                         console.log(exito);
                                 }
                         });
