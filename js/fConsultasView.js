@@ -1,25 +1,29 @@
 
-function listarDatos(queRetornar)
+function listarDatos()
 {
 //    alert("Entro a listar datos");
     __datos=[];
     
     datosParamAjaxValues={};
-    datosParamAjaxValues["url"]="../Controller/DocumentosController.php?Op=Listar";
+    datosParamAjaxValues["url"]="../Controller/ConsultasController.php?Op=Listar";
     datosParamAjaxValues["type"]="POST";
     datosParamAjaxValues["async"]=false;
     
     var variablefunciondatos=function obtenerDatosServer (data)
     {        
-        $.each(data.doc,function(index,value){
+        $.each(data,function(index,value){
 //          alert("Valores each: "+value);
 
             __datos.push({
-                "id_principal":[{'id_documento':value.id_documento}],
-                "clave_documento":value.clave_documento,
-                "documento":value.documento,
+                "id_principal":[{'id_tema':value.id_tema}],
+                "no":value.no,
+                "nombre":value.nombre,
 //                "Responsable del Documento":value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno           
-                "id_empleado":value.id_empleado
+                "id_empleado":value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno,
+                "total_requisitos":value.total_requisitos,
+                "resultado":value.resultado,
+                "total_registros":value.total_registros,
+                
             })
         });
     }
@@ -27,18 +31,7 @@ function listarDatos(queRetornar)
     var listfunciones=[variablefunciondatos];
     ajaxHibrido(datosParamAjaxValues,listfunciones);
     
-   if(queRetornar==1)
-   {
-       console.log(__datos);
-      return __datos; 
-   }else{
-      return __datosCBE;
-      console.log(__datosCBE);
-   }
-//   
-//   console.log(__datos);
-
-//    return __datos;
+    return __datos;
 }
 
 
@@ -48,7 +41,7 @@ function listarjsGrid()
                 loadData: function(filter) {
 //                    console.log("Entro al loadData");
 //                    console.log(listarDatos(1));
-                        return listarDatos(1);
+                        return listarDatos();
               },
                   insertItem: function(item) {
                       return item;
@@ -61,8 +54,9 @@ function listarjsGrid()
         
         onInit: function(args){
             gridInstance=args;
-              jsGrid.ControlField.prototype.editButton=true;
-              jsGrid.Grid.prototype.autoload=true;
+                jsGrid.ControlField.prototype.editButton=false;
+                jsGrid.ControlField.prototype.deleteButton=false;
+                jsGrid.Grid.prototype.autoload=true;
         }, 
         onDataLoading: function(args) {
             $("#loader").show();
@@ -75,7 +69,7 @@ function listarjsGrid()
         
         width: "100%",
         height: "300px",
-        editing: true,
+//        editing: true,
         heading: true,
         sorting: true,
         paging: true,
@@ -87,29 +81,15 @@ function listarjsGrid()
                 { name: "no",title:"No.Tema", type: "text", width: 80, validate: "required" },
                 { name: "nombre",title:"Tema", type: "text", width: 150, validate: "required" },
                 { name: "id_empleado",title:"Responsable del Tema", type: "text", width: 150, validate: "required" },
-                { name: "no",title:"No.Sub-Tema", type: "text", width: 150, validate: "required" },
-                { name: "nombre",title:"Sub-Tema", type: "text", width: 150, validate: "required" },
-                { name: "requisito",title:"Requisito", type: "text", width: 150, validate: "required" },
-                { name: "penalizacion",title:"Penalizacion", type: "text", width: 150, validate: "required" },
-                { name: "registro",title:"Registro", type: "text", width: 150, validate: "required" },
+//                { name: "no",title:"No.Sub-Tema", type: "text", width: 150, validate: "required" },
+//                { name: "nombre",title:"Sub-Tema", type: "text", width: 150, validate: "required" },
+                { name: "total_requisitos",title:"Requisito", type: "text", width: 150, validate: "required" },
+                { name: "resultado",title:"Penalizacion", type: "text", width: 150, validate: "required" },
+                { name: "total_registros",title:"Registro", type: "text", width: 150, validate: "required" },
                 
                 {type:"control"}
-        ],
-        
-        onItemUpdated: function(args) {
-//            console.log(args);
-            saveUpdateToDatabase(args);
-        },
-    
-        
-            
-    
-        onItemDeleting: function(args) {
-//            console.log(args);
-            eliminarDocumento(args);
-
-        }
-        
+        ]
+                
     });
 }
 

@@ -17,7 +17,6 @@ switch ($Op) {
 	case 'Listar':
 
         $Lista=$model->listarDocumentos(Session::getSesion("s_cont"));         
-//    	Session::setSesion("listarDocumentos",$Lista);
 
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
