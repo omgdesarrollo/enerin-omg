@@ -42,7 +42,7 @@ $(document).on("keydown", function (e) {
 jQuery(function($){	$(document).ajaxStart(function(){blockpage();}).ajaxStop(function(){ unBlockpage();});});
 	
 function blockpage(img){ $('body').append("<div id='blockpage' class='blockpage'></div>");
-if (img===undefined)$('body').append("<div id='blockpageimg' class='blockpageimg'><img src=\"imagenes/cargando.gif\"><h4> Espere un momento...</h4></div>");}
+if (img===undefined)$('body').append("<div id='blockpageimg' class='blockpageimg'><img src=\"../../images/base/loader.gif\"><h4> Espere un momento...</h4></div>");}
 
 function unBlockpage(){ setTimeout(function(){ $("#blockpage").remove();$("#blockpageimg").remove(); }, 200);}
 

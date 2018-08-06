@@ -51,6 +51,8 @@
     <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
     <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
     <script src="../../js/fEvidenciasView.js" type="text/javascript"></script>
+    <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
+    
    
     <style>
         .jsgrid-header-row>.jsgrid-header-cell
@@ -782,7 +784,7 @@ function construir(datosF)
         onDataLoading: function(args)
         {
             
-           
+                 loadBlockUi();
         },
         onDataLoaded:function(args)
         {
@@ -823,8 +825,8 @@ function construir(datosF)
             { name: "plan_accion",title:"Plan Accion", type: "text", width: 170 },
             { name: "desviacion",title:"Desviacion", type: "text", width: 120},
             {name: "validacion",title:"Validacion", type: "text", width: 200 },
-            {name:"delete", title:"", type: "customControl" },
-            {name:"eliminar",visible:false}
+            {name:"delete", title:"Opcion", type: "customControl" },
+            {name:"eliminar",title:"Opcion",visible:false}
         ],
         onOptionChanged:function(a)
         {},
@@ -946,6 +948,7 @@ function refresh()
 //    clearTimeout(timeOutA);
 ////    switch(evaluar){
 ////        case "refreshBoton":
+            loadBlockUi();
             $("#grid").jsGrid("render").done(function()
             {
 //                swalSuccess("Datos Cargados Exitosamente");
@@ -953,7 +956,19 @@ function refresh()
 ////        break;
     }
 
+function loadBlockUi(){
+     $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF">Espere Por Favor</span>', css: { 
+                       border: 'none', 
+                       padding: '15px', 
+                       backgroundColor: '#000', 
+                       '-webkit-border-radius': '10px', 
+                       '-moz-border-radius': '10px', 
+                       opacity: .5, 
+                       color: '#fff' 
+                        },overlayCSS: { backgroundColor: '#000000',opacity:0.1,cursor:'wait'} }); 
 
+                   setTimeout($.unblockUI, 2000);  
+    }
 function listarDatosTodos(datosF)
 {
     if(datosF==undefined)

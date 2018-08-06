@@ -298,7 +298,7 @@
 //var jsonObj = {
 //                
 //        }
-        alert();
+//        alert();
 // jsonObj["1"] = "Diario" ;
 //  jsonObj["2"] = "Mensual" ;
   
@@ -308,8 +308,8 @@
   input: 'select',
 //  html:s,
 //  html:'<input type=\'text\' disabled>',
-  inputOptions:{1:"diario",2:"Mensual"},
-  inputPlaceholder: 'selecciona un cumplimiento ',
+  inputOptions:{"1":"DIARIO","2":"MENSUAL"},
+  inputPlaceholder: 'selecciona un reporte ',
   showCancelButton: false,
   showLoaderOnConfirm: true,
    allowEscapeKey:false,
@@ -333,10 +333,10 @@
     })
   }
 }).then(function (result) {
-//  swal({
-//    type: 'success',
-//    html: 'tu has seleccionado el contrato ' + result
-//  });
+  swal({
+    type: 'success',
+    html: 'Seleccion Exitosa '
+  });
 
 //alert("d");
   });
