@@ -170,6 +170,7 @@ $(function()
         empleadoDatos.categoria = $("#CATEGORIA").val();
         empleadoDatos.email = $("#CORREO").val();
         (checarVacio(empleadoDatos)) ? insertarEmpleado(empleadoDatos) : swalError("Completar campos");
+        
     });
 
     $("#btn_limpiarEmpleado").click(function()

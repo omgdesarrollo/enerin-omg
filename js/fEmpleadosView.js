@@ -204,10 +204,11 @@ function refresh()
 
 function checarVacio(datos)
 {
+    vacio=true;
     $.each(datos,function(index,value)
     {
         if(value=="")
-            return false;
+            vacio=false;
     });
-    return true;
+    return vacio;
 }

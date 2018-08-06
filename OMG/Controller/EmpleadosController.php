@@ -16,8 +16,7 @@ switch ($Op) {
 	case 'Listar':
 
             $Lista=$model->listarEmpleados("catalogo");
-            Session::setSesion("listarEmpleados",  $Lista);
-          
+            Session::setSesion("listarEmpleados",  $Lista);          
             header('Content-type: application/json; charset=utf-8');
             echo json_encode($Lista);
 
@@ -72,10 +71,8 @@ switch ($Op) {
         $pojo->setCategoria($data["categoria"]);
         $pojo->setApellidoMaterno($data["apellido_materno"]);
         $pojo->setCorreo($data["email"]);
-
-        // echo $pojo->getNombreEmpleado;
-
-      $pojo->setIdentificador("catalogo");
+        
+        $pojo->setIdentificador("catalogo");
 
         $Lista= $model->insertar($pojo);
         echo json_encode($Lista);

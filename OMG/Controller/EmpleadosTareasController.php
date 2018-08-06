@@ -15,11 +15,10 @@ $pojo= new EmpleadoPojo();
 switch ($Op) {
 	case 'Listar':
 
-		$Lista=$model->listarEmpleados("tareas");
-              
-    	Session::setSesion("listarEmpleados",  $Lista);
-    	header('Content-type: application/json; charset=utf-8');
-        echo json_encode($Lista);
+            $Lista=$model->listarEmpleados("tareas");  
+            Session::setSesion("listarEmpleados",  $Lista);
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($Lista);
 
 		return $Lista;
 		break;
@@ -60,19 +59,20 @@ switch ($Op) {
 		break;	
 
 	case 'Guardar':
-               
+                  header('Content-type: application/json; charset=utf-8');
+                  $data = json_decode( $_REQUEST["EmpleadoDatos"],true );
+                  
                   $pojo->setNombreEmpleado($_REQUEST['NOMBRE_EMPLEADO']);
                   $pojo->setApellidoPaterno($_REQUEST['APELLIDO_PATERNO']);
                   $pojo->setCategoria($_REQUEST['CATEGORIA']);
                   $pojo->setApellidoMaterno($_REQUEST['APELLIDO_MATERNO']);
                   $pojo->setCorreo($_REQUEST['CORREO']);
+                  
                   $pojo->setIdentificador("tareas");
                   
                   $Lista= $model->insertar($pojo);
-                  
-                  header('Content-type: application/json; charset=utf-8');
                   echo json_encode($Lista);
-                  return $Lista;
+//                  return $Lista;
 		break;
             
             
