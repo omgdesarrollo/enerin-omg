@@ -1,187 +1,155 @@
-listarDatos();
+filtros = [
+            {name:"ID del Contrato o Asignación",id:"clave_contrato",type:"text"},
+            {name:"Region Fiscal",id:"region_fiscal",type:"text"},
+            {name:"Ubicación del Punto de Medición",id:"ubicacion",type:"text"},
+            {name:"Tag del Patin de Medición",id:"tag_patin",type:"text"},
+            {name:"Tipo de Medidor",id:"tipo_medidor",type:"text"},
+            {name:"Tag del Medidor",id:"tag_medidor",type:"text"},
+            {name:"Clasificación del Sistema de Medición",id:"clasificacion",type:"text"},
+            {name:"Tipo de Hidrocarburo",id:"hidrocarburo",type:"text"},
+        ];
 
-
-function listarDatos()
+function reconstruir(value,index)
 {
+    tempData = new Object();
+    tempData["no"] = index;
+    tempData["id_principal"] = [{"id_contrato":value.id_contrato}];
+    tempData["region_fiscal"] = value.region_fiscal;
+    tempData["clave_contrato"] = value.clave_contrato;
+    tempData["ubicacion"] = value.ubicacion;
+    tempData["tag_patin"] = value.tag_patin;
+    tempData["tipo_medidor"] = value.tipo_medidor;
+    tempData["tag_medidor"] = value.tag_medidor;
+    tempData["clasificacion"] = value.clasificacion;
+    tempData["hidrocarburo"] = value.hidrocarburo;
+    tempData["delete"] = "1";
+    return tempData;
+}
 
-     __datos=[];
-//        contador=1;
-        datosParamAjaxValues={};
-        datosParamAjaxValues["url"]="../Controller/CatalogoProcesosController.php?Op=listar";
-        datosParamAjaxValues["type"]="POST";
-        datosParamAjaxValues["async"]=false;
-        var variablefunciondatos=function obtenerDatosServer (data)
-        {
+function reconstruirTable(_datos)
+{
+    __datos=[];
+    $.each(_datos,function(index,value)
+    {
+        __datos.push(reconstruir(value,index++));
+    });
+    construirGrid(__datos);
+    $("#loader").hide();
+}
 
-            $.each(data,function (index,value){
-
-            __datos.push({
-    //            "No":contador++,
-    //            "Tema":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-    //            "Requisitos":"<button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-    //            "Registros":"<button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-                "Clave del Contrato":value.clave_contrato,
-                "Region Fiscal":value.region_fiscal,
-                "Ubicacion del Punto de Medicion":value.ubicacion_punto_medicion,
-                "Tag del Patin de Medicion":value.tag_patin_medicion,
-                "Tipo de Medidor":value.tipo_medidor,
-                "Tag del Medidor":value.tag_medidor,
-                "clasificacion del Sistema de Medicion":value.clasificacion_sistema_medicion,
-                "Tipo de Hidrocarburo":value.tipo_hidrocarburo
-            })
-            });
-//        console.log(__datos);
-        }
-   
-   var listfunciones=[variablefunciondatos];
-   ajaxHibrido(datosParamAjaxValues,listfunciones); 
-   
-       $("#jsGrid").jsGrid({
+function construirGrid(__datos)
+{
+    jsGrid.fields.customControl = MyCControlField;
+    $("#jsGrid").jsGrid({
         width: "100%",
         height: "300px",
         heading: true,
         sorting: true,
         paging: true,
- 
         data: __datos,
+        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields: [
-                { name: "Clave del Contrato", type: "text", width: 80, validate: "required" },
-                { name: "Region Fiscal", type: "text", width: 150, validate: "required" },
-                { name: "Ubicacion del Punto de Medicion", type: "text", width: 150, validate: "required" },
-                { name: "Tag del Patin de Medicion", type: "text", width: 150, validate: "required" },
-                { name: "Tipo de Medidor", type: "text", width: 150, validate: "required" },    
-                { name: "Tag del Medidor", type: "text", width: 150, validate: "required" },
-                { name: "clasificacion del Sistema de Medicion", type: "text", width: 150, validate: "required" },
-                { name: "Tipo de Hidrocarburo", type: "text", width: 150, validate: "required" }
+                { name:"id_principal", visible:false},
+                { name:"clave_contrato", title: "ID del Contrato o Asignación", type: "text", width: 150, validate: "required" },
+                { name:"region_fiscal", title: "Region Fiscal", type: "text", width: 150, validate: "required" },
+                { name:"ubicacion", title: "Ubicación del Punto de Medición", type: "text", width: 150, validate: "required" },
+                { name:"tag_patin", title: "Tag del Patin de Medición", type: "text", width: 130, validate: "required" },
+                { name:"tipo_medidor", title: "Tipo de Medidor", type: "text", width: 150, validate: "required" },    
+                { name:"tag_medidor", title: "Tag del Medidor", type: "text", width: 130, validate: "required" },
+                { name:"clasificacion", title: "Clasificación del Sistema de Medición", type: "text", width: 150, validate: "required" },
+                { name:"hidrocarburo", title: "Tipo de Hidrocarburo", type: "text", width: 150, validate: "required" },
+                { name:"delete", title:"Opción", type:"customControl" }
         ]
     });
 }
 
-
-function construirTable(datos)
+var MyCControlField = function(config)
 {
-    cargaTodo=0;
-    tempData="";
-    
-    $.each(datos,function(index,value){
-        
-            tempData += construir(value,cargaTodo);
-    });
-    
-//    $.each(datos["info"],function(index,value){
-//        value["clave_cumplimiento"]=datos["detallesContrato"]["clave_cumplimiento"];
-//        value["cumplimiento"]=datos["detallesContrato"]["cumplimiento"];
-//            tempData += construir(value,cargaTodo);
-//    });
-     
-    $("#datosGenerales").html(tempData);
-    $("#loader").hide();
-}
-
-function construir(value,cargaTodo)
-{
-    tempData="";
-    
-    if(cargaTodo==0)
-        tempData += "<tr id='registro_"+value.id_evidencias+"'>";
-        tempData += "<td class='celda' width='10%' style='font-size: -webkit-xxx-large'><button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
-        tempData += "<td class='celda' width='10%' style='font-size: -webkit-xxx-large'><button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
-        tempData += "<td class='celda' width='10%' style='font-size: -webkit-xxx-large'><button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
-        tempData += "<td class='celda' width='15%'>"+value.clave_documento+"</td>";
-        tempData += "<td class='celda' width='15%'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td>";
-        tempData += "<td class='celda' width='15%'>"+value.frecuencia+"</td>";
-        tempData += "<td width='10%'style='font-size: -webkit-xxx-large'><button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
-        tempData += "type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
-        tempData += "<i class='fa fa-cloud-upload' style='font-size: 15px'></i> Ver</button></td>";
-        tempData += "<td class='celda' width='5%'>Fecha Registro</td>"
-        tempData += "<td class='celda' width='15%'>"+value.desviacion+"</td>";
-        tempData += "<td class='celda' width='15%'>"+value.accion_correctiva+"</td>";
-        tempData += "<td class='celda' width='5%'>Avance del Programa</td>"
-        if(value.validacion_supervisor=="true")
-                {
-                   tempData += "<td class='celda' width='10%'>Validado</td>";
-                }
-                if (value.validacion_supervisor=="false")
-                {
-                   tempData += "<td class='celda' width='10%'>En Proceso</td>"; 
-                }
-     if(cargaTodo==0)
-        tempData += "</tr>";
-    
-    return tempData;
-}
-
-
-function mostrarTemaResponsable(id_documento)
-{
-    ValoresTemaResponsable = "<table class='tbl-qa'>\n\
-                                <tr>\n\
-                                    <th class='table-header'>Tema</th>\n\
-                                    <th class='table-header'>Responsable del Tema</th>\n\
-                                </tr>\n\
-                                <tbody>";
-    
-    $.ajax({
-        url:'../Controller/InformeEvidenciasController.php?Op=MostrarTemayResponsable',
-        type:'POST',
-        data:'ID_DOCUMENTO='+id_documento,
-        success:function(datosTemaResponsable)
+    jsGrid.Field.call(this, config);
+};
+ 
+MyCControlField.prototype = new jsGrid.Field
+({        
+        css: "date-field",
+        align: "center",
+        sorter: function(date1, date2)
         {
-            $.each(datosTemaResponsable,function(index,value){
-                ValoresTemaResponsable+="<tr><td>"+value.no+"</td>" ;
-                ValoresTemaResponsable+="<td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";
-            });
-                ValoresTemaResponsable += "</tbody></table>";
-                $('#TemayResponsableListado').html(ValoresTemaResponsable);
+                console.log("haber cuando entra aqui");
+                console.log(date1);
+                console.log(date2);
+        },
+        itemTemplate: function(value,todo)
+        {
+            // console.log(todo);
+            // console.log(value);
+            if(todo.delete=="no")
+                return "";
+            else
+                return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button', type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
+        },
+        insertTemplate: function(value)
+        {
+        },
+        editTemplate: function(value)
+        {
+        },
+        insertValue: function()
+        {
+        },
+        editValue: function()
+        {
         }
-    });
+});
+
+function listarDatos()
+{
+
+    __datos=[];
+    datosParamAjaxValues={};
+    datosParamAjaxValues["url"]="../Controller/CatalogoProcesosController.php?Op=listar";
+    datosParamAjaxValues["type"]="POST";
+    datosParamAjaxValues["async"]=false;
+    var variablefunciondatos=function obtenerDatosServer(data)
+    {
+        dataListado = data;
+        $.each(data,function (index,value)
+        {
+            __datos.push( reconstruir(value,index++) );
+        });
+    }
+    var listfunciones=[variablefunciondatos];
+    ajaxHibrido(datosParamAjaxValues,listfunciones);
+    construirGrid(__datos);
 }
 
-function mostrarRequisitos(id_documento)
+function preguntarEliminar(data)
 {
-        ValoresRequisitos = "<ul>";
-
-        $.ajax ({
-            url: "../Controller/InformeEvidenciasController.php?Op=MostrarRequisitosPorDocumento",
-            type: 'POST',
-            data: 'ID_DOCUMENTO='+id_documento,
-            success:function(datosRequisitos)
+    console.log(data);
+    swal({
+        title: "",
+        text: "¿Eliminar Registro?",
+        type: "info",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        showLoaderOnConfirm: true,
+        confirmButtonText: "Eliminar",
+        cancelButtonText: "Cancelar",
+        },
+        function(confirmacion)
+        {
+            if(confirmacion)
             {
-               $.each(datosRequisitos,function(index,value){
-                
-                ValoresRequisitos+="<li>"+value.requisito+"</li>";                                       
-
-               });
-           ValoresRequisitos += "</ul>";     
-               $('#RequisitosListado').html(ValoresRequisitos);
+                eliminarRegistro(data.id_principal[0].id_contrato);
             }
         });
 }
 
-function mostrarRegistros(id_documento)
+function refresh()
 {
- ValoresRegistros = "<ul>";
-
- $.ajax ({
-     url:"../Controller/InformeEvidenciasController.php?Op=MostrarRegistrosPorDocumento",
-     type: 'POST',
-     data: 'ID_DOCUMENTO='+id_documento,
-     success:function(datosRegistros)
-     {
-         $.each(datosRegistros,function(index,value){
-            ValoresRegistros+="<li>"+value.registro+"</li>"; 
-         });
-
-ValoresRegistros += "</ul>";
-         $('#RegistrosListado').html(ValoresRegistros);
-     }
- })
+    construirFiltros();
+    listarDatos();
 }
-
-
 
 function loadSpinner(){
         myFunction();
 }
-
-    

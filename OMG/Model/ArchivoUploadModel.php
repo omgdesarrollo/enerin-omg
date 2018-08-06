@@ -65,5 +65,53 @@ class ArchivoUploadModel{
         // }
         return $data;
     }
+
+    public function listar_urls($CONTRATO,$URL)//LA URL YA DEBE VENIR CON EL ID A BUSCAR
+    {
+        if($CONTRATO==-1)
+			$url = $URL;
+		else
+		{
+			// $contrato = Session::getSesion("s_cont");
+			$url = $CONTRATO."/".$URL;	
+		}
+
+		$carpetaDestino = "../../archivos/".$url;
+		$creado=true;
+		if(!file_exists($carpetaDestino))
+		{
+			$creado = mkdir($carpetaDestino,0777,true);
+		}
+		
+		if($creado == true)
+		{
+			if($CONTRATO==-1)
+			{
+				$url = $_REQUEST['URL'];
+				$urls = Session::getSesion("URLS");
+				$urlIR = $urls["fisica"].$url;
+				$files = scandir($urlIR);//Se forma la url fisica
+			}
+			else
+			{
+				// $contrato = Session::getSesion("s_cont");
+				$url = $URL;
+				$urls = Session::getSesion("URLS");
+				$urlIR = $urls["fisica"].$CONTRATO."/".$url;
+				$files = scandir($urlIR);//Se forma la url fisica
+			}
+			$archivosNames = array();
+			foreach($files as $index=>$value)
+			{
+				if($index>=2)
+				{
+					$archivosNames[$index-2] = $value;
+				}
+			}
+			$todo[0] = $archivosNames;
+			$todo[1] = $urlIR;
+            return $todo;
+		}
+    }
 }
 ?>
