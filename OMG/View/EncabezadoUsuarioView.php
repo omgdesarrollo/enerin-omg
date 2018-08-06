@@ -1,5 +1,12 @@
 
 <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<style>
+.icon-animated-vertical
+{
+    animation-iteration-count: infinite;
+}
+</style>
+
 <?php
 
 date_default_timezone_set("America/Mexico_city");
@@ -121,7 +128,9 @@ foreach($Alarmas as $alarma)
                         <!--inicio de seccion de mensajes-->
                         
                         <li class="green dropdown-modal">
-							<a data-toggle="dropdown" class="dropdown-toggle" href="#" id="CANTIDAD_NOTIFICACIONES2">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<i id="CANTIDAD_NOTIFICACIONES2_ICON" class='ace-icon fa fa-envelope icon-animated-vertical'></i>
+								<span id="CANTIDAD_NOTIFICACIONES2" class='badge badge-success'></span>
 							</a>
 
 							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
@@ -148,7 +157,7 @@ foreach($Alarmas as $alarma)
                         
                         
                         <!--seccion de info usuario-->
-                            <li class="light-blue dropdown-modal">
+                <li class="light-blue dropdown-modal">
 				<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 					<img class="nav-user-photo" src="../../assets/probando/images/avatars/user.jpg" alt="<?php echo $Usuario["NOMBRE_USUARIO"]; ?>" />
 					<span class="user-info">
@@ -186,7 +195,7 @@ foreach($Alarmas as $alarma)
 </div>
 <script>
 	listarNotificaciones();
-	setInterval(function(){listarNotificaciones();},20000);
+	setInterval(function(){listarNotificaciones();},25000);
 
 	function listarNotificaciones()
 	{
@@ -204,7 +213,6 @@ foreach($Alarmas as $alarma)
 	{
 		cantidad=0;
 		tempData2="";
-		// console.log(notificaciones);
 		$.each(notificaciones,function(index,value)
 		{
 			// direcciones = value.dir;
@@ -219,10 +227,16 @@ foreach($Alarmas as $alarma)
 			tempData2 += "onClick=\"borrarNotificacion("+value.id_notificaciones+")\" class='ace-icon fa fa-times-circle'></i>";
 			cantidad++;
 		});
-		// console.log(tempData);
 		$("#CANTIDAD_NOTIFICACIONES").html("<i class='ace-icon fa fa-envelope-o'></i>Cantidad de Mensajes("+cantidad+")");
-		$("#CANTIDAD_NOTIFICACIONES2").html("<i class='ace-icon fa fa-envelope icon-animated-vertical'></i><span class='badge badge-success'>"+cantidad+"</span>");
+		$("#CANTIDAD_NOTIFICACIONES2").html(cantidad);
 		$("#LISTA_NOTIFICACIONES").html(tempData2);
+		$("#CANTIDAD_NOTIFICACIONES2_ICON").removeAttr("class","ace-icon fa fa-envelope icon-animated-vertical");
+		$("#CANTIDAD_NOTIFICACIONES2_ICON").attr("class","ace-icon fa fa-envelope icon-animated-vertical");
+		$("#CANTIDAD_NOTIFICACIONES2_ICON").removeAttr("style","animation-play-state: paused");
+		setTimeout(function()
+		{
+			$("#CANTIDAD_NOTIFICACIONES2_ICON").attr("style","animation-play-state: paused");
+		},5000);
 	}
 
 	function irAVista(direccion,contrato)
@@ -301,7 +315,7 @@ foreach($Alarmas as $alarma)
 			{
 				if(eliminado==true)
 				{
-					swalSuccess("Eliminado");
+					// swalSuccess("Eliminado");
 					listarNotificaciones();
 				}
 				else

@@ -689,6 +689,8 @@ function construirGrid(datosF)//listooo 12
         heading: true,
         sorting: true,
         paging: true,
+        pageSize: 5,
+        pageButtonCount: 5,
         data: datosF,
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields: [
@@ -758,6 +760,7 @@ function construirGrid(datosF)//listooo 12
                 }
         }
         });
+        // $("#loader").hide();
 }
 
 var MyDateField = function(config)
@@ -813,39 +816,6 @@ MyDateField.prototype = new jsGrid.Field
 });
 
 
-
-function listarDatos2()//borrar
-{
-        __datos=[];
-        contador=1;
-        datosParamAjaxValues={};
-        datosParamAjaxValues["url"]="../Controller/InformeValidacionDocumentosController.php?Op=listarparametros(v,nv,sd)";
-        datosParamAjaxValues["type"]="POST";
-        datosParamAjaxValues["paramDataValues"]=parametroscheck;
-        datosParamAjaxValues["async"]=false;
-        var variablefunciondatos=function obtenerDatosServer (r)
-        {
-        status="validado";
-            $.each(r["info"],function(index,value){
-              (value.validacion_tema_responsable=="true")?status="validado":status="En Proceso";
-               __datos.push({
-               "No":contador++,
-               "Clave del Documento":value.clave_documento,
-               "Nombre del Documento":value.documento,
-               "Responsable del Documento":value.nombrecompleto,
-               "Tema":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-               "Requisitos":"<button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-               "Registros":"<button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-               "Status":status
-               })
-            });
-            dataListado = r["info"];
-        }
-   var listfunciones=[variablefunciondatos];
-   ajaxHibrido(datosParamAjaxValues,listfunciones); 
-   construir(__datos);
-//    return __datos;
-}
 function reconstruir(value)//listoooo
 {
         tempData = new Object();
@@ -1512,63 +1482,49 @@ $("#subirArchivos").click(function()
 {
         agregarArchivosUrl();
 });
+
 months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+
 function mostrar_urls(id_documento_entrada)
 {
         var tempDocumentolistadoUrl = "";
         URL = 'filesDocumento/Entrada/'+id_documento_entrada;
         $.ajax({
-                url: '../Controller/ArchivoUploadController.php?Op=CrearUrl',
+                url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
                 type: 'GET',
                 data: 'URL='+URL,
-                success:function(creado)
+                success: function(todo)
                 {
-                        if(creado)
+                        if(todo[0].length!=0)
                         {
-                                $.ajax({
-                                        url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
-                                        type: 'GET',
-                                        data: 'URL='+URL,
-                                        success: function(todo)
-                                        {
-                                                // console.log(todo[0].length);
-                                                if(todo[0].length!=0)
-                                                {
-                                                        tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
-                                                        $.each(todo[0], function (index,value)
-                                                        {
-                                                                nametmp = value.split("^-O-^-M-^-G-^");
-                                                                fecha = new Date(nametmp[0]*1000);
-                                                                fecha = fecha.getDay() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-                                                                
-                                                                tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
-                                                                tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\" download='"+nametmp[1]+"'>"+nametmp[1]+"</a></td>";
-                                                                tempDocumentolistadoUrl += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
-                                                                tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
-                                                                tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";
-                                                        });
-                                                        tempDocumentolistadoUrl += "</tbody></table>";
-                                                }
-                                                if(tempDocumentolistadoUrl == " ")
-                                                {
-                                                        tempDocumentolistadoUrl = " No hay archivos agregados ";
-                                                }
-                                                tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdDocumento' type='text' style='display:none;' value='"+id_documento_entrada+"'>";
-                                                // alert(tempDocumentolistadoUrl);
-                                                $('#DocumentoEntradaAgregarModal').html(" ");
-                                                $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
-                                                $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
-                                                // $('#fileupload').fileupload();
-                                                $('#fileupload').fileupload({
-                                                url: '../View/',
-                                                });
-                                        }
+                                tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
+                                $.each(todo[0], function (index,value)
+                                {
+                                        nametmp = value.split("^-O-^-M-^-G-^");
+                                        fecha = new Date(nametmp[0]*1000);
+                                        fecha = fecha.getDate() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+                                        
+                                        tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
+                                        tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\" download='"+nametmp[1]+"'>"+nametmp[1]+"</a></td>";
+                                        tempDocumentolistadoUrl += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
+                                        tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
+                                        tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";
                                 });
+                                tempDocumentolistadoUrl += "</tbody></table>";
                         }
-                        else
+                        if(tempDocumentolistadoUrl == " ")
                         {
-                                swal("","Error del servidor","error");
+                                tempDocumentolistadoUrl = " No hay archivos agregados ";
                         }
+                        tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdDocumento' type='text' style='display:none;' value='"+id_documento_entrada+"'>";
+                        // alert(tempDocumentolistadoUrl);
+                        $('#DocumentoEntradaAgregarModal').html(" ");
+                        $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
+                        $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
+                        // $('#fileupload').fileupload();
+                        $('#fileupload').fileupload({
+                        url: '../View/',
+                        });
                 }
         });
 }

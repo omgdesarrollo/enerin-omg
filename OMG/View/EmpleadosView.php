@@ -73,7 +73,7 @@ require_once 'EncabezadoUsuarioView.php';
 ?>
 
              
-<div style="position: fixed;">    
+<div style="position: fixed;">
 
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#crea_empleado">
 		Agregar Empleado
