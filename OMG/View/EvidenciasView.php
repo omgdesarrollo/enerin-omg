@@ -1426,14 +1426,14 @@ function mostrar_urls(id_evidencia,validador,validado,id_para)
                     nametmp = value.split("^-O-^-M-^-G-^");
                     name;
                     fecha = new Date(nametmp[0]*1000);
-                    fecha = fecha.getDay() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+                    fecha = fecha.getDate()+" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
                     $.each(nametmp, function(index,value)
                     {
                         if(index!=0)
                             (index==1)?name=value:name+="-"+value;
                     });
                     tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
-                    tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\" download='"+name+"'>"+name+"</a></td><td>";
+                    tempDocumentolistadoUrl += "<a download='"+name+"' href=\""+todo[1]+"/"+value+"\" target='blank'>"+name+"</a></td><td>";
                     if(validador=="1")
                     {
                         if(validado==false)
