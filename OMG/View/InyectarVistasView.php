@@ -114,4 +114,7 @@
 <div id="cambiarcontrato">
     <iframe src="SeleccionContratoModalView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
+<div id="reportes">
+    <iframe src="ReportesView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
+</div>
 

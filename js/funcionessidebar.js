@@ -213,8 +213,9 @@ function loadDataSideBarOficiosDocumentacion()
                       break;  
 
 
-                      case "tareas":
-                           $("#sidebarObjV").load('InyectarVistasView.php #tareas');
+                      case "reportesProcesos":
+                          
+                        $("#sidebarObjV").load('InyectarVistasView.php #reportes'); 
                       break;
 
                   }
@@ -338,6 +339,9 @@ function loadDataSideBarOficiosDocumentacion()
       
                         
     }
+    
+    
+    
     
     
     

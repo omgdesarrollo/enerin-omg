@@ -19,7 +19,7 @@
     <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome-animation.min.css" rel="stylesheet" type="text/css"/>
     
-    <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+    <link async href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
     
     <!-- text fonts -->
 	<!--<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />-->
@@ -29,20 +29,19 @@
     <link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
     
     <!--Inicia para el spiner cargando-->
-    <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+    <link async href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
     <!--Termina para el spiner cargando-->
                   
     <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-    <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
-    <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>
+    <link async href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+<!--    <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>-->
 
     <!--jquery-->
     <script src="../../js/jquery.js" type="text/javascript"></script>
     <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-    
-<!--    <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
-    <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>-->
+    <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
@@ -52,14 +51,8 @@
     <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
     <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
     <script src="../../js/fEvidenciasView.js" type="text/javascript"></script>
+    <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
     
-      <!--<script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>-->
-    <!--<script src="../../js/jquery.js" type="text/javascript"></script>-->
-
-<!--<link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
-   <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>-->
-
-   <!-- JSGRID -->
    
     <style>
         .jsgrid-header-row>.jsgrid-header-cell
@@ -95,7 +88,7 @@
 </head>
 <!-- <body> -->
 <body class="no-skin" >
-    <div id="loader"></div>
+    <!--<div id="loader"></div>-->
     
     <?php
         require_once 'EncabezadoUsuarioView.php';
@@ -214,7 +207,7 @@
                     <input id="IDTEMA_NUEVAEVIDENCIAMODAL" type="text" value="" style="display: none"/>
                     <input id="IDREGISTRO_NUEVAEVIDENCIAMODAL" type="text" value="" style="display: none"/>
                 </div>
-
+                
                 <div class="form-group" method="post">
                     <button type="submit" id="BTN_CREAR_NUEVAEVIDENCIAMODAL" class="btn crud-submit btn-info">Crear Evidencia</button>
                 </div>
@@ -383,7 +376,7 @@
                 },
                 success:function(data)
                 {
-                    
+                   
                     (data==true)?
                     (
                         swalSuccess("Se creo la evidencia"),
@@ -402,36 +395,6 @@
                             refresh()
                     )
                     :swalErro("Error al crear");
-                    // swal({
-                    //     title: '',
-                    //     text: 'Error al crear',
-                    //     showCancelButton: false,
-                    //     showConfirmButton: false,
-                    //     type:"error"
-                    // });
-//                     listarDatos();
-//                     $("#jsGrid").jsGrid("refresh");
-
-//                        var gridInstance;     
-//                    console.log(gridInstance);
-//                    $("#jsGrid").jsGrid("insertItem");
-//                     gridInstance = args.grid;  
-//                    gridInstance["data"].push(
-//                        {id_evidencia: "77", no: 11, requisito: "Elbueno", registro: "Vamos", frecuencia: "DIARIO"});
-//                 $("#jsGrid").jsGrid("refresh");
-//                         gridInstance["data"].
-
-//                    var $grid = $("#jsGrid");
-////                    $grid.jsGrid("option", "pageIndex", 1);
-////                    $grid.jsGrid("loadData");
-////                    $grid["0"]["draggable"]=true;
-//                    console.log("lo va hacer ");
-//                    console.log($grid);    
-////                    $("#jsGrid").html("");
-//                    __refresh=false;
-//                    listarDatos();
-                    
-//                    $("#jsGrid").jsGrid("option", "data",__datosGlobales);
                     }
                     
             });
@@ -813,13 +776,15 @@ function construir(datosF)
         // },
         onInit: function(args)
         {
+            
             gridInstance=args;
             jsGrid.ControlField.prototype.editButton=false;
             jsGrid.Grid.prototype.autoload=true;
         },
         onDataLoading: function(args)
         {
-            $("#loader").show();
+            
+                 loadBlockUi();
         },
         onDataLoaded:function(args)
         {
@@ -860,8 +825,8 @@ function construir(datosF)
             { name: "plan_accion",title:"Plan Accion", type: "text", width: 170 },
             { name: "desviacion",title:"Desviacion", type: "text", width: 120},
             {name: "validacion",title:"Validacion", type: "text", width: 200 },
-            {name:"delete", title:"", type: "customControl" },
-            {name:"eliminar",visible:false}
+            {name:"delete", title:"Opcion", type: "customControl" },
+            {name:"eliminar",title:"Opcion",visible:false}
         ],
         onOptionChanged:function(a)
         {},
@@ -975,20 +940,35 @@ function preguntarEliminar(data)
 
 function refresh()
 {       
-    ejecutarPrimeraVez=false;
-    ejecutando=false;
-    clearInterval(intervalA);
-    clearTimeout(timeOutA);
-//    switch(evaluar){
-//        case "refreshBoton":
+       
+                   
+//    ejecutarPrimeraVez=false;
+//    ejecutando=false;
+//    clearInterval(intervalA);
+//    clearTimeout(timeOutA);
+////    switch(evaluar){
+////        case "refreshBoton":
+            loadBlockUi();
             $("#grid").jsGrid("render").done(function()
             {
-                swalSuccess("Datos Cargados Exitosamente");
+//                swalSuccess("Datos Cargados Exitosamente");
             });
-//        break;
+////        break;
     }
 
+function loadBlockUi(){
+     $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF">Espere Por Favor</span>', css: { 
+                       border: 'none', 
+                       padding: '15px', 
+                       backgroundColor: '#000', 
+                       '-webkit-border-radius': '10px', 
+                       '-moz-border-radius': '10px', 
+                       opacity: .5, 
+                       color: '#fff' 
+                        },overlayCSS: { backgroundColor: '#000000',opacity:0.1,cursor:'wait'} }); 
 
+                   setTimeout($.unblockUI, 2000);  
+    }
 function listarDatosTodos(datosF)
 {
     if(datosF==undefined)
@@ -1461,14 +1441,14 @@ function mostrar_urls(id_evidencia,validador,validado,id_para)
                     nametmp = value.split("^-O-^-M-^-G-^");
                     name;
                     fecha = new Date(nametmp[0]*1000);
-                    fecha = fecha.getDay() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+                    fecha = fecha.getDate()+" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
                     $.each(nametmp, function(index,value)
                     {
                         if(index!=0)
                             (index==1)?name=value:name+="-"+value;
                     });
                     tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
-                    tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\" download='"+name+"'>"+name+"</a></td><td>";
+                    tempDocumentolistadoUrl += "<a download='"+name+"' href=\""+todo[1]+"/"+value+"\" target='blank'>"+name+"</a></td><td>";
                     if(validador=="1")
                     {
                         if(validado==false)
@@ -1762,12 +1742,12 @@ function mostrarRegistros(id_documento)
     <!-- js cargar archivo -->
 <!--    <script src="../../assets/FileUpload/js/jquery.min.js"></script>
     <script src="../../assets/FileUpload/js/jquery-ui.min.js"></script>-->
-    <script src="../../assets/FileUpload/js/tmpl.min.js"></script>
-    <script src="../../assets/FileUpload/js/load-image.all.min.js"></script>
-    <script src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>
-    <script src="../../assets/FileUpload/js/jquery.blueimp-gallery.min.js"></script>
-    <script src="../../assets/FileUpload/js/jquery.iframe-transport.js"></script>
-    <script src="../../assets/FileUpload/js/jquery.fileupload.js"></script>
+    <script  src="../../assets/FileUpload/js/tmpl.min.js"></script>
+    <script  src="../../assets/FileUpload/js/load-image.all.min.js"></script>
+    <script  src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>
+    <script  src="../../assets/FileUpload/js/jquery.blueimp-gallery.min.js"></script>
+    <script  src="../../assets/FileUpload/js/jquery.iframe-transport.js"></script>
+    <script  src="../../assets/FileUpload/js/jquery.fileupload.js"></script>
     <script src="../../assets/FileUpload/js/jquery.fileupload-process.js"></script>
     <script src="../../assets/FileUpload/js/jquery.fileupload-image.js"></script>
     <script src="../../assets/FileUpload/js/jquery.fileupload-audio.js"></script>
@@ -1776,10 +1756,10 @@ function mostrarRegistros(id_documento)
     <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
     <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
     <script src="../../assets/FileUpload/js/main.js"></script>
-    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
-    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
-    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
-    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
+    <noscript><link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
+    <noscript><link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
+    <link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
+    <link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
 </body>
 </html>
 

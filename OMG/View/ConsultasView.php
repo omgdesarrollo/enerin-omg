@@ -74,9 +74,7 @@ require_once 'EncabezadoUsuarioView.php';
 
              
 <div style="position: fixed;">
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
-    Agregar Documento
-</button>    
+ 
     
 <button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh('refrescarTable');" >
     <i class="glyphicon glyphicon-repeat"></i>   

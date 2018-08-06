@@ -90,6 +90,7 @@ class ArchivoUploadModel{
 				$url = $_REQUEST['URL'];
 				$urls = Session::getSesion("URLS");
 				$urlIR = $urls["fisica"].$url;
+                                $urlLogica = $urls["logica"].$url;
 				$files = scandir($urlIR);//Se forma la url fisica
 			}
 			else
@@ -98,6 +99,7 @@ class ArchivoUploadModel{
 				$url = $URL;
 				$urls = Session::getSesion("URLS");
 				$urlIR = $urls["fisica"].$CONTRATO."/".$url;
+                                $urlLogica = $urls["logica"].$CONTRATO."/".$url;
 				$files = scandir($urlIR);//Se forma la url fisica
 			}
 			$archivosNames = array();
@@ -109,7 +111,7 @@ class ArchivoUploadModel{
 				}
 			}
 			$todo[0] = $archivosNames;
-			$todo[1] = $urlIR;
+			$todo[1] = $urlLogica;
             return $todo;
 		}
     }

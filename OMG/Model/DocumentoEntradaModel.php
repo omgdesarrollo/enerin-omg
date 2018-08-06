@@ -46,7 +46,7 @@ class DocumentoEntradaModel{
     }
     
     public function  listarCumplimientoPorId_Entrada($id_entrada){
-        try{
+    try{
             $dao=new DocumentoEntradaDAO();
             $rec=$dao->listarCumplimientoPorId_Entrada($id_entrada);
             

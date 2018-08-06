@@ -77,6 +77,7 @@ switch ($Op) {
             echo json_encode($Lista);
             } else{
 //                Session::getSesion ("s_cont");
+                
                 $v["contrato"]=Session::getSesion ("s_cont");
                 $Lista= $model->detallesContratoSeleccionado($v);
                 
