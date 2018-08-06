@@ -343,39 +343,38 @@
    
  }
  
-    function precargados(){
-    region_fiscal="<select>";
-    pm="<select>";
-    tpm="<select>";
-    tm="<select>";
-    clasificacionsistemamedicion="<select>";
-    th="<select>";
-    
-    
-     $.ajax({
-			url 		: '../Controller/CatalogoProcesosController.php?Op=listar',
-			success 	: function(r) {
-				console.log(r);
+    function precargados()
+    {
+        region_fiscal="<select>";
+        pm="<select>";
+        tpm="<select>";
+        tm="<select>";
+        clasificacionsistemamedicion="<select>";
+        th="<select>";
+        
+        $.ajax({
+            url 		: '../Controller/CatalogoProcesosController.php?Op=listar',
+            success 	: function(r)
+            {
+                console.log(r);
 //                                    $("#contrato").val(r["clave_cumplimiento"]);
-                                $.each(r,function (index,value){
-                                    region_fiscal+="<option>"+value["region_fiscal"]+"</option>";
-                                    pm+="<option>"+value["ubicacion_punto_medicion"]+"</option>";
-                                    tpm+="<option>"+value["tag_patin_medicion"]+"</option>";
-                                    tm+="<option>"+value["tipo_medidor"]+"</option>";
-                                    clasificacionsistemamedicion+="<option>"+value["clasificacion_sistema_medicion"]+"</option>";
-                                    th+="<option>"+value["tipo_hidrocarburo"]+"</option>";
-                                }
-                                      
-                                    )
-            $("#region_fiscal").html(region_fiscal);
-             $("#pm").html(pm);
-              $("#tpm").html(tpm);
-               $("#tm").html(region_fiscal);
+                $.each(r,function (index,value)
+                {
+                    region_fiscal+="<option>"+value["region_fiscal"]+"</option>";
+                    pm+="<option>"+value["ubicacion"]+"</option>";
+                    tpm+="<option>"+value["tag_patin"]+"</option>";
+                    tm+="<option>"+value["tipo_medidor"]+"</option>";
+                    clasificacionsistemamedicion+="<option>"+value["clasificacion"]+"</option>";
+                    th+="<option>"+value["hidrocarburo"]+"</option>";
+                });
+                $("#region_fiscal").html(region_fiscal);
+                $("#pm").html(pm);
+                $("#tpm").html(tpm);
+                $("#tm").html(region_fiscal);
                 $("#clasificacionsistemamedicion").html(clasificacionsistemamedicion);
-                 $("#th").html(th);
-
-				}
-	});
+                $("#th").html(th);
+            }
+        });
     }
     
     function descargarReporte(){
