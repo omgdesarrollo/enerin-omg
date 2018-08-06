@@ -16,6 +16,21 @@ switch ($Op)
         echo json_encode($Lista);
     break;
 
+    case 'Guardar':
+        header('Content-type: application/json; charset=utf-8');
+        $datos = json_decode($_REQUEST["DATOS"],true);
+        $CONTRATO = Session::getSesion("s_cont");
+        $exito = $model->guardarCatalogo($CONTRATO,$datos);
+        echo $exito;
+    break;
+
+    case 'BuscarID':
+        $CONTRATO = Session::getSesion("s_cont");
+        $Lista = $model->buscarID($_REQUEST["CADENA"],$CONTRATO);
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+    break;
+
     default:
         echo -1;
     break;

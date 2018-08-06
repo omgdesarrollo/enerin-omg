@@ -6,10 +6,12 @@ require_once '../Pojo/EvidenciasPojo.php';
 require_once '../Model/DocumentoModel.php';
 require_once '../util/Session.php';
 require_once '../Model/AdminModel.php';
+require_once '../Model/ArchivoUploadModel.php';
 
 $Op = $_REQUEST["Op"];
 $model = new EvidenciasModel();
 $modelAdmin =new AdminModel();
+$modelArchivo = new ArchivoUploadModel();
 $pojo = new EvidenciasPojo();
 
 $modelDocumento=new DocumentoModel();
@@ -19,8 +21,21 @@ switch ($Op)
 {
     case 'Listar':
         $USUARIO = Session::getSesion("user");
+        // $CONTRATO;
+		// if(isset($_REQUEST["SIN_CONTRATO"]))
+		// {
+		// 	$CONTRATO=-1;
+		// }
+		// else
         $CONTRATO = Session::getSesion("s_cont");
-		$Lista=$model->listarEvidencias($USUARIO["ID_USUARIO"],$CONTRATO);
+
+        $Lista=$model->listarEvidencias($USUARIO["ID_USUARIO"],$CONTRATO);
+        foreach($Lista as $key => $value)
+        {
+            $url = $_REQUEST["URL"].$value["id_evidencias"];
+            $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
+        }
+
     	Session::setSesion("listarOperaciones",$Lista);//no se de que es esto JR
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);

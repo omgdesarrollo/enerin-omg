@@ -43,7 +43,7 @@ class UploadHandler
     public function __construct($options = null, $initialize = true, $error_messages = null) {
         session_start();
         require_once '../util/Session.php';
-echo "d   :".$this->get_full_url();
+// echo "d   :".$this->get_full_url();
         // $newUrl=  Session::getSesion("newUrl");
         // echo $newUrl."---";
         $this->response = array();
@@ -1111,7 +1111,7 @@ echo "d   :".$this->get_full_url();
             // $hoy = new Datetime($hoy);
             // echo "fecha : ".$hoy;
             $file_path = $Urls["fisica"].$newUrl."/".$hoy."^-O-^-M-^-G-^".$file->name;//el que guarda local
-            echo $file_path;
+            // echo $file_path;
             // $file_path2 = "http://localhost:80/enerin-omg/archivos/files".$newUrl.$file->name;//el que descarga local
             // $filePath = array();
             // if(Session::getSesion("archivos_urls") == null)
@@ -1145,7 +1145,7 @@ echo "d   :".$this->get_full_url();
             $append_file = $content_range && is_file($file_path) &&
                 $file->size > $this->get_file_size($file_path);
 
-            echo $append_file."s \n---";
+            // echo $append_file."s \n---";
             if ($uploaded_file && is_uploaded_file($uploaded_file)) {
                 // multipart/formdata uploads (POST method uploads)
                 if ($append_file) {

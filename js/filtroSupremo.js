@@ -10,7 +10,7 @@ function construirFiltros()
         }
         if(value.type == "text")
         {
-            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' placeholder='"+value.name+"' style='width:auto;margin:2px;'>";
+            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' placeholder='"+value.name+"' style='width:auto;margin:2px;text-overflow:ellipsis;'>";
         }
         if(value.type == "combobox")
         {
@@ -48,6 +48,7 @@ function construirFiltroSelect(Obj,id)
 
 function filtroSupremo()
 {
+    $("#loader").show();
     $("#jsGrid").jsGrid("cancelEdit");
     newData = [];
     $.each(filtros,function(index,value)
@@ -81,4 +82,5 @@ function filtroSupremo()
             DataFinal=dataT;
     });
     reconstruirTable(DataFinal);
+    $("#loader").hide();
 }

@@ -1,5 +1,12 @@
 filtros = [
-            {name:"Clave Contrato",id:"clave_contrato",type:"text"}
+            {name:"ID del Contrato o Asignación",id:"clave_contrato",type:"text"},
+            {name:"Region Fiscal",id:"region_fiscal",type:"text"},
+            {name:"Ubicación del Punto de Medición",id:"ubicacion",type:"text"},
+            {name:"Tag del Patin de Medición",id:"tag_patin",type:"text"},
+            {name:"Tipo de Medidor",id:"tipo_medidor",type:"text"},
+            {name:"Tag del Medidor",id:"tag_medidor",type:"text"},
+            {name:"Clasificación del Sistema de Medición",id:"clasificacion",type:"text"},
+            {name:"Tipo de Hidrocarburo",id:"hidrocarburo",type:"text"},
         ];
 
 function reconstruir(value,index)
@@ -43,7 +50,7 @@ function construirGrid(__datos)
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields: [
                 { name:"id_principal", visible:false},
-                { name:"clave_contrato", title: "Clave Contrato", type: "text", width: 150, validate: "required" },
+                { name:"clave_contrato", title: "ID del Contrato o Asignación", type: "text", width: 150, validate: "required" },
                 { name:"region_fiscal", title: "Region Fiscal", type: "text", width: 150, validate: "required" },
                 { name:"ubicacion", title: "Ubicación del Punto de Medición", type: "text", width: 150, validate: "required" },
                 { name:"tag_patin", title: "Tag del Patin de Medición", type: "text", width: 130, validate: "required" },

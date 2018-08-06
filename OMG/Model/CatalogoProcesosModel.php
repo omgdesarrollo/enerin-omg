@@ -3,20 +3,65 @@ require_once '../dao/CatalogoProcesosDAO.php';
 
 class CatalogoProcesosModel{
 
-public function listarCatalogo($CONTRATO)
-{
-    try
+    public function listarCatalogo($CONTRATO)
     {
-        $dao=new CatalogoProcesosDAO();
-        $lista= $dao->listarCatalogo($CONTRATO);
-        return $lista;
-    }catch (Exception $ex)
-    {
-        throw $ex;
-        return -1;
+        try
+        {
+            $dao=new CatalogoProcesosDAO();
+            $lista= $dao->listarCatalogo($CONTRATO);
+            return $lista;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
     }
-}
 
+    public function guardarCatalogo($CONTRATO,$DATOS)
+    {
+        try
+        {
+            $dao=new CatalogoProcesosDAO();
+            // INSERT INTO asignacion_tema_requisito(id_asignacion_tema_requisito,id_clausula,requisito,id_documento)"
+            // . "VALUES($id_nuevo,$id_clausula,'$requisito',$id_documento)";
+            $bandera=0;
+            $query = "INSERT INTO catalogo_reporte(";
+            $queryC = "";
+            $queryV = "VALUES(";
+            foreach($DATOS as $key=>$value)
+            {
+                if($bandera!=0)
+                {
+                    $queryC.=",";
+                    $queryV.=",";
+                }
+                $queryC.=$key;
+                $queryV.= "'$value'";
+                $bandera=1;
+            }
 
+            $query .= $queryC.",contrato) ".$queryV.",$CONTRATO)";
+            $exito = $dao->guardarCatalogo($query);
+            return $exito;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+    public function buscarID($CADENA,$CONTRATO)
+    {
+        try
+        {
+            $dao = new CatalogoProcesosDAO();
+            $lista = $dao->buscarID($CADENA,$CONTRATO);
+            return $lista;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 }
 ?>
