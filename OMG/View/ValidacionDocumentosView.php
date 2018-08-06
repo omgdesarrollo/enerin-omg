@@ -127,13 +127,13 @@ if(isset($_REQUEST["accion"]))
     <img src="../../images/base/pdf.png" width="30px" height="30px"> 
 </button>    
 
-        <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave Documento" style="width: 180px;">
+        <!-- <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave Documento" style="width: 180px;">
         <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre Documento" style="width: 180px;">
-        <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 180px;">
+        <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 180px;"> -->
 
         <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
 
-</div>    
+</div>
 
 
 <div style="height: 40px"></div>
@@ -155,7 +155,8 @@ if(isset($_REQUEST["accion"]))
                 <th class="table-header"></th>
                 <th class="table-header"></th>
             </tr>
-			  <tr>
+
+            <tr>
                 <th class="table-header">No.</th>
                 <th class="table-header">Clave Documento</th>
                 <th class="table-header">Nombre Documento</th>
@@ -168,12 +169,11 @@ if(isset($_REQUEST["accion"]))
                 <th class="table-header">Responsable Tema</th>
                 <th class="table-header">Observaciones</th>
                 <!--<th class="table-header">Plan de Accion</th>-->
-                <th class="table-header">Desviacion Mayor</th>               
+                <th class="table-header">Desviacion Mayor</th>
             </tr>
 		  <tbody id="tbodyValidacionDocumentos">
 		  </tbody>
 		</table>
-
     </div>
 <!--</div>-->
 
@@ -385,7 +385,7 @@ if(isset($_REQUEST["accion"]))
     }
 
     function construirValidacionDocumento(documento,numero)//listo
-    {        
+    {
         no = "fa-times-circle-o";
         yes = "fa-check-circle-o";
         tempData="<td>"+numero+"</td>";
@@ -454,6 +454,98 @@ if(isset($_REQUEST["accion"]))
         tempData+="<td>X</td>";
         return tempData;
     }
+
+    function construir()
+    {
+        no = "fa-times-circle-o";
+        yes = "fa-check-circle-o";
+        tempData = new Object();
+
+        tempData["no"] = numero;
+        tempData["id_principal"] = [{"id_documento":documento.id_documento}];
+        // tempData="<td>"+numero+"</td>";
+        tempData["clave_documento"] = documento.id_documento;
+        // tempData+="<td>"+documento.clave_documento+"</td>";
+        tempData["documento"] = documento.documento;
+        // tempData+="<td>"+documento.documento+"</td>";
+        tempData["responsable_documento"] = documento.responsable_documento;
+        // tempData+="<td>"+documento.responsable_documento+"</td>";
+
+        tempData["tema_responsableBTN"] = "<button onClick='mostrarTemaResponsable("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'>";
+        tempData["tema_responsableBTN"] += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>";
+
+        // tempData+="<td><button onClick='mostrarTemaResponsable("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'>";
+        // tempData+="<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
+        
+        if(documento.permiso_total == 0)
+        {
+            if(documento.soy_responsable==1)
+                // tempData+="<td><button onClick='mostrar_urls("+documento.id_validacion_documento+",\"true\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
+                tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\"true\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
+            else
+                tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\""+documento.validacion_documento_responsable+"\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
+            // tempData+="<td><button onClick='mostrar_urls("+documento.id_validacion_documento+",\""+documento.validacion_documento_responsable+"\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
+        }
+        else
+            tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\"false\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>"
+            // tempData+="<button onClick='mostrar_urls("+documento.id_validacion_documento+",\"false\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
+
+        tempData["mostrar_urlsBTN"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i>Adjuntar</button>";
+        // tempData+="<i class='fa fa-cloud-upload' style='font-size: 20px'></i>Adjuntar</button></td>";
+
+        tempData["requisitosBTN"] = "<button onClick='mostrarRequisitos("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'>";
+        tempData["requisitosBTN"] += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>";
+        // tempData+="<td><button onClick='mostrarRequisitos("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'>";
+        // tempData+="<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
+
+        tempData["registrosBTN"] = "<button onClick='mostrarRegistros("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'>";
+        // tempData+="<td><button onClick='mostrarRegistros("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'>";
+        tempData["registroBTN"] += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
+        // tempData+="<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
+
+        // tempData+="<td>";
+        if(documento.validacion_documento_responsable=="true")
+        {
+            tempData["validacion_documento_responsable"] = "<i class='fa "+yes+"' style='color:#02ff00;";
+        }
+        else
+        {
+            tempData["validacion_documento_responsable"] = tempData+="<i class='fa "+no+"' style='color:red;";
+        }
+        tempData["validacion_documento_responsable"] += "font-size: xx-large;cursor:pointer' aria-hidden='true'";
+        if(documento.permiso_total==1)
+            tempData["validacion_documento_responsable"] += "onClick='validarDocumentoR(this,\"validacion_documento_responsable\","+documento.id_validacion_documento+","+documento.id_documento+")'";
+        else
+        {
+            if(documento.soy_responsable==0)
+            tempData["validacion_documento_responsable"] += "onClick='validarDocumentoR(this,\"validacion_documento_responsable\","+documento.id_validacion_documento+","+documento.id_documento+")'";
+            else
+            tempData["validacion_documento_responsable"] += "onClick='noAcceso(this)'";
+        }
+        tempData["validacion_documento_responsable"] += "></i>";
+
+        // tempData+="<td>";
+        if(documento.validacion_tema_responsable=="true")
+        {
+            tempData+="<i class='fa "+yes+"' style='color:#02ff00;";
+        }
+        else
+        {
+            tempData+="<i class='fa "+no+"' style='color:red;";
+        }
+        tempData+="font-size: xx-large;cursor:pointer' aria-hidden='true'";
+        if(documento.soy_responsable==1)
+            tempData+="onClick='validarTemaR(this,\"validacion_tema_responsable\","+documento.id_validacion_documento+","+documento.id_documento+","+documento.id_usuarioD+")'";
+        else
+            tempData+="onClick='noAcceso(this)'";
+        tempData+="></i></td>";
+
+        tempData+="<td>";
+        tempData+="<i data-toggle='modal' data-target='#mostrar-observaciones' onClick='mostrarObservacionesInicio("+documento.id_validacion_documento+")' class='ace-icon fa fa-comments' style='font-size:20px;cursor:pointer'></i></td>";
+        tempData+="<td>X</td>";
+        return tempData;
+    }
+
     intervalObservaciones = setInterval(0);
     // clearInterval(intervalObservaciones);
 
