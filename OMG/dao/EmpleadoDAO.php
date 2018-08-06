@@ -14,8 +14,6 @@ class EmpleadoDAO{
             $lista=$db->executeQuery($query);
 
             return $lista;
-
-            return $lista;
     }  catch (Exception $ex){
         throw $ex;
         return false;
