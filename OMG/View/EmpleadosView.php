@@ -41,11 +41,8 @@ $Usuario=  Session::getSesion("user");
 
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
-<<<<<<< HEAD
-=======
                 <script src="../../js/tools.js" type="text/javascript"></script>
 
->>>>>>> e99ccc5db0c88080c0a35164baae4a0f09ba84a9
                 
                 
         <style>
