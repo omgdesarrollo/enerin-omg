@@ -36,9 +36,9 @@ $Usuario=  Session::getSesion("user");
 
         <script src="../../js/jquery.js" type="text/javascript"></script>
         <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-        <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
+<!--        <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
         <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
-        <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
+        <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>-->
         <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
         <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
@@ -1201,8 +1201,8 @@ if(isset($_REQUEST["accion"]))
     
 
                 <!--Para cargar archivos-->
-                <script src="../../assets/FileUpload/js/jquery.min.js"></script>
-                <script src="../../assets/FileUpload/js/jquery-ui.min.js"></script>
+<!--                <script src="../../assets/FileUpload/js/jquery.min.js"></script>
+                <script src="../../assets/FileUpload/js/jquery-ui.min.js"></script>-->
                 <script src="../../assets/FileUpload/js/tmpl.min.js"></script>
                 <script src="../../assets/FileUpload/js/load-image.all.min.js"></script>
                 <script src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>
