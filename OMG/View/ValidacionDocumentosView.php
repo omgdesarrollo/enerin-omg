@@ -15,10 +15,10 @@ $Usuario=  Session::getSesion("user");
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
-		<!-- bootstrap & fontawesome -->
-                <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-                <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+        <!-- bootstrap & fontawesome -->
+        <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
 
 		<!-- ace styles -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
@@ -26,17 +26,38 @@ $Usuario=  Session::getSesion("user");
 		<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
-                <!--Inicia para el spiner cargando-->
-                <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
-                <!--Termina para el spiner cargando-->
-                
-                <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
-                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-                <script src="../../js/jquery.js" type="text/javascript"></script>
+        <!--Inicia para el spiner cargando-->
+        <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+        <!--Termina para el spiner cargando-->
+        
+        <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+        <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+        <script src="../../js/jquery.js" type="text/javascript"></script>
+
+        <script src="../../js/jquery.js" type="text/javascript"></script>
+        <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+        <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
+        <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
+        <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+        <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+
+        <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+        <script src="../../js/fValidacionDocumentosView.js" type="text/javascript"></script>
+        <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
                
                 
                 
-                <style>
+<style>
+.jsgrid-header-row>.jsgrid-header-cell 
+{
+    background-color:#307ECC ;      /* orange */
+    font-family: "Roboto Slab";
+    font-size: 1.2em;
+    color: white;
+    font-weight: normal;
+}
 .div-observacion-msjs
 {
     width: 100%;
@@ -131,53 +152,17 @@ if(isset($_REQUEST["accion"]))
         <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre Documento" style="width: 180px;">
         <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 180px;"> -->
 
-        <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
-
+        <!-- <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i> -->
 </div>
 
 
-<div style="height: 40px"></div>
+<br><br><br>
+<div style="float:left" id="headerFiltros">
+</div>
 
+<div id="jsGrid"></div>
 
-<!--<div class="table-fixed-header" style="display:none;" id="myDiv" class="animate-bottom">--> 
-    <div class="table-container">
-        <table class="tbl-qa" id="idTable">
-            <tr>
-                <th class="table-header"></th>
-                <th class="table-header"></th>
-                <th class="table-header"></th>
-                <th class="table-header"></th>
-                <th class="table-header"></th>
-                <th class="table-header"></th>
-                <th class="table-header"></th>
-                <th class="table-header" colspan="2">Validacion</th>
-                <th class="table-header"></th>
-                <th class="table-header"></th>
-                <th class="table-header"></th>
-            </tr>
-
-            <tr>
-                <th class="table-header">No.</th>
-                <th class="table-header">Clave Documento</th>
-                <th class="table-header">Nombre Documento</th>
-                <th class="table-header">Responsable del Documento</th>
-                <th class="table-header">Temas y Responsables</th>
-                <th class="table-header">Archivo Adjunto</th>
-                <th class="table-header">Requisitos</th>
-                <th class="table-header">Registros</th>
-                <th class="table-header">Responsable Documento</th>
-                <th class="table-header">Responsable Tema</th>
-                <th class="table-header">Observaciones</th>
-                <!--<th class="table-header">Plan de Accion</th>-->
-                <th class="table-header">Desviacion Mayor</th>
-            </tr>
-		  <tbody id="tbodyValidacionDocumentos">
-		  </tbody>
-		</table>
-    </div>
-<!--</div>-->
-
-
+<!-- <div style="height: 40px"></div> -->
                
 <!-- Inicio modal adjuntar documento -->
 <div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -298,6 +283,22 @@ if(isset($_REQUEST["accion"]))
 		<script>
                     
     var id_validacion_documento,columna,objetocheckbox,si_hay_cambio=false;
+    filtros = 
+    [
+        {'name':'Clave Documento','id':'clave_documento',type:'text'},
+        {'name':'Documento','id':'documento',type:'text'},
+        {'name':'Responsable Documento','id':'responsable_documento',type:'text'},
+        {'name':'Validacion','id':'validacion',type:'combobox',data:construirValidacionCombo(),descripcion:"validacion"},
+        
+    ];
+    dataListado=[];
+    construirFiltros();
+    listarDatos();
+
+    function construirValidacionCombo()
+    {
+        return [{validacion:"Validado"},{validacion:"No validado"}];
+    }
 
     $(function()
     {
@@ -338,14 +339,16 @@ if(isset($_REQUEST["accion"]))
                 });
       });
     
-    listarValidacionDocumentos();
+    // listarValidacionDocumentos();
     });// Cierra el $function 
+
     function listarValidacionDocumentos()//listo
     {
         tempData="";
         $.ajax({
             url: '../Controller/ValidacionDocumentosController.php?Op=ListarTodo',
             type:'POST',
+            async:false,
             success:function(documentos)
             {
                 $.each(documentos,function(index,value)
@@ -455,7 +458,7 @@ if(isset($_REQUEST["accion"]))
         return tempData;
     }
 
-    function construir()
+    function construir(documento,numero)
     {
         no = "fa-times-circle-o";
         yes = "fa-check-circle-o";
@@ -527,22 +530,23 @@ if(isset($_REQUEST["accion"]))
         // tempData+="<td>";
         if(documento.validacion_tema_responsable=="true")
         {
-            tempData+="<i class='fa "+yes+"' style='color:#02ff00;";
+            tempData["validacion_tema_responsable"] += "<i class='fa "+yes+"' style='color:#02ff00;";
         }
         else
         {
-            tempData+="<i class='fa "+no+"' style='color:red;";
+            tempData["validacion_tema_responsable"] += "<i class='fa "+no+"' style='color:red;";
         }
-        tempData+="font-size: xx-large;cursor:pointer' aria-hidden='true'";
+        tempData["validacion_tema_responsable"] += "font-size: xx-large;cursor:pointer' aria-hidden='true'";
+        
         if(documento.soy_responsable==1)
-            tempData+="onClick='validarTemaR(this,\"validacion_tema_responsable\","+documento.id_validacion_documento+","+documento.id_documento+","+documento.id_usuarioD+")'";
+            tempData["validacion_tema_responsable"] += "onClick='validarTemaR(this,\"validacion_tema_responsable\","+documento.id_validacion_documento+","+documento.id_documento+","+documento.id_usuarioD+")'";
         else
-            tempData+="onClick='noAcceso(this)'";
-        tempData+="></i></td>";
+            tempData["validacion_tema_responsable"] += "onClick='noAcceso(this)'";
+        tempData+="></i>";
 
-        tempData+="<td>";
-        tempData+="<i data-toggle='modal' data-target='#mostrar-observaciones' onClick='mostrarObservacionesInicio("+documento.id_validacion_documento+")' class='ace-icon fa fa-comments' style='font-size:20px;cursor:pointer'></i></td>";
-        tempData+="<td>X</td>";
+        // tempData+="<td>";
+        tempData["observaciones"] += "<i data-toggle='modal' data-target='#mostrar-observaciones' onClick='mostrarObservacionesInicio("+documento.id_validacion_documento+")' class='ace-icon fa fa-comments' style='font-size:20px;cursor:pointer'></i>";
+        tempData["desviacion_mayor"] += "X";
         return tempData;
     }
 
@@ -776,11 +780,10 @@ if(isset($_REQUEST["accion"]))
     {
       myFunction();
     }
-                
-                
+    
     function cargadePrograma(foliodeentrada)
     {
-      window.location.href=" GanttView.php?folio_entrada="+foliodeentrada;     
+      window.location.href=" GanttView.php?folio_entrada="+foliodeentrada;
     }
     
     var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/form-data'>";
@@ -801,71 +804,7 @@ if(isset($_REQUEST["accion"]))
       agregarArchivosUrl();
     });
     months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
-    function mostrar_urls(id_validacion_documento,detenerCargas)
-    {
-      var tempDocumentolistadoUrl = "";
-      URL = 'filesValidacionDocumento/'+id_validacion_documento;
-      $.ajax({
-          url: '../Controller/ArchivoUploadController.php?Op=CrearUrl',
-          type: 'GET',
-          data: 'URL='+URL,
-          success:function(creado)
-          {
-            if(creado)
-            {
-              $.ajax({
-                  url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
-                  type: 'GET',
-                  data: 'URL='+URL,
-                  success: function(todo)
-                  {
-                      // console.log(todo[0].length);
-                      if(todo[0].length!=0)
-                      {
-                            tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
-                            $.each(todo[0], function (index,value)
-                            {
-                                nametmp = value.split("^-O-^-M-^-G-^");
-                                fecha = new Date(nametmp[0]*1000);
-                                fecha = fecha.getDay() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-                                
-                                tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
-                                tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\" download='"+nametmp[1]+"'>"+nametmp[1]+"</a></td>";
-                                if(detenerCargas!="true")
-                                {
-                                    tempDocumentolistadoUrl += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
-                                    tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
-                                    tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";
-                                }
-                                else
-                                    tempDocumentolistadoUrl += "<td></td>";
-                            });
-                            tempDocumentolistadoUrl += "</tbody></table>";
-                      }
-                      if(tempDocumentolistadoUrl == " ")
-                      {
-                              tempDocumentolistadoUrl = " No hay archivos agregados ";
-                      }
-                      tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdValidacionDocumento' type='text' style='display:none;' value='"+id_validacion_documento+"'>";                  
-                    if(detenerCargas!="true")
-                        $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
-                    else
-                        $('#DocumentolistadoUrlModal').html("");
-                    $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
-                    $('#fileupload').fileupload
-                    ({
-                        url: '../View/',
-                    });
-                  }
-              });
-            }
-            else
-            {
-              swal("","Error del servidor","error");
-            }
-          }
-        });
-    }
+    
     
     function mostrarRequisitos(id_documento)//listo
     {
@@ -984,72 +923,6 @@ if(isset($_REQUEST["accion"]))
         });
     }
 
-    function filterTableClaveDocumento()
-    {
-                // Declare variables 
-      var input, filter, table, tr, td, i;
-      input = document.getElementById("idInputClaveDocumento");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("idTable");
-      tr = table.getElementsByTagName("tr");
-
-      // Loop through all table rows, and hide those who don't match the search query
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-          if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        } 
-      }
-    }
-                
-    function filterTableNombreDocumento() 
-    {
-    // Declare variables 
-        var input, filter, table, tr, td, i;
-        input = document.getElementById("idInputNombreDocumento");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("idTable");
-        tr = table.getElementsByTagName("tr");
-
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[1];
-            if (td) {
-            if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
-            } 
-        }
-    }   
-          
-    function filterTableResponsableDocumento()
-    {
-    // Declare variables 
-        var input, filter, table, tr, td, i;
-        input = document.getElementById("idInputResponsableDocumento");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("idTable");
-        tr = table.getElementsByTagName("tr");
-
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) 
-        {
-        td = tr[i].getElementsByTagName("td")[2];
-        if (td) {
-            if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-            } else {
-            tr[i].style.display = "none";
-            }
-        } 
-        }
-    }
     
     function validarDocumentoR(Obj,columna,idValidacionDocumento,idDocumento)//listo
     {
@@ -1194,6 +1067,7 @@ if(isset($_REQUEST["accion"]))
             });
         return exitoT;
     }
+
     function noAcceso(Obj)
     {
         no = "fa-times-circle-o";
