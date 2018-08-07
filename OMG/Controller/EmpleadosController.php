@@ -16,8 +16,7 @@ switch ($Op) {
 	case 'Listar':
 
             $Lista=$model->listarEmpleados("catalogo");
-            Session::setSesion("listarEmpleados",  $Lista);
-          
+            Session::setSesion("listarEmpleados",  $Lista);          
             header('Content-type: application/json; charset=utf-8');
             echo json_encode($Lista);
 
@@ -61,21 +60,15 @@ switch ($Op) {
 
     case 'Guardar':
         header('Content-type: application/json; charset=utf-8');
-        // echo $_REQUEST["EmpleadoDatos"];
         $data = json_decode( $_REQUEST["EmpleadoDatos"],true );
-        // var_dump($data);
-        // $data = json_encode($data);
-        // foreach($data as $key => $value)
-        //     echo $key." - ".$value;
-        $pojo->setNombreEmpleado($data["nombre"]);
+
+        $pojo->setNombreEmpleado($data["nombre_empleado"]);
         $pojo->setApellidoPaterno($data["apellido_paterno"]);
         $pojo->setCategoria($data["categoria"]);
         $pojo->setApellidoMaterno($data["apellido_materno"]);
         $pojo->setCorreo($data["email"]);
-
-        // echo $pojo->getNombreEmpleado;
-
-      $pojo->setIdentificador("catalogo");
+        
+        $pojo->setIdentificador("catalogo");
 
         $Lista= $model->insertar($pojo);
         echo json_encode($Lista);
