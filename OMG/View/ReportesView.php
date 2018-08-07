@@ -37,23 +37,25 @@
 <!--    <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>-->
 
     <!--jquery-->
-    <script src="../../js/jquery.js" type="text/javascript"></script>
-    <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+    
     <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../../css/dhtmlx.css" rel="stylesheet" type="text/css"/>
     <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
-<!--    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
-        <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>-->
-        <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
-              <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
-        <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
-<script src="../../js/filtroSupremo.js" type="text/javascript"></script>
+    <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
+    <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
+    <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
     <script src="../../js/fEvidenciasView.js" type="text/javascript"></script>
-    
-    <script src="../../js/dhtmlxFunctions.js" type="text/javascript"></script>
-    <script src="../../js/formulario.js" type="text/javascript"></script>
+    <script src="../../js/jquery.js" type="text/javascript"></script>
+    <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+    <!--<script src="../../js/dhtmlxFunctions.js" type="text/javascript"></script>-->
+    <!--<script src="../../js/formulario.js" type="text/javascript"></script>-->
     <script src="../../js/tools.js" type="text/javascript"></script>
+    <script src="../../js/dhtmlxExtGrid.js" type="text/javascript"></script>
+    <script src="../../js/dhtmlxdataprocessor.js" type="text/javascript"></script>
+    <script src="../../js/dhtmlxFunctions.js" type="text/javascript"></script>
+    <script src="../../js/dhtmlx.js" type="text/javascript"></script>
     <style>
         .jsgrid-header-row>.jsgrid-header-cell
         {

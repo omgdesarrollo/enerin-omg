@@ -22,11 +22,15 @@ $Usuario=  Session::getSesion("user");
 
         <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
         <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
-        <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
+        <!--<link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>-->
         <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
         <link href="../../assets/dhtmlxSuite_v51_std/skins/web/dhtmlx.css" rel="stylesheet" type="text/css"/>
-        
-        
+       
+        <script src="../../js/tools.js" type="text/javascript"></script>
+      
+        <script src="../../js/dhtmlxExtGrid.js" type="text/javascript"></script>
+        <script src="../../js/dhtmlxFunctions.js" type="text/javascript"></script>
+        <script src="../../js/dhtmlxdataprocessor.js" type="text/javascript"></script>
             <style>
                
                 div#sidebarObj {
@@ -120,12 +124,13 @@ $Usuario=  Session::getSesion("user");
 
                         <div class="form-group">
                             <label class="control-label">Clave/Descripcion: </label>
-                            <div class="dropdown">
-                                <input onBlur="registroClaveEscritura()" style="width:100%" type="text" class="dropdown-toggle" 
+                            <div id='comboclave_descripcion'  style='width: 100%;float: Left;'></div>
+                            <!--<div class="dropdown">-->
+<!--                                <input onBlur="registroClaveEscritura()" style="width:100%" type="text" class="dropdown-toggle" 
                                 id="CLAVEESCRITURA_AGREGARREGISTRO" data-toggle="dropdown" onKeyup="buscarDocumento(this)" autocomplete="off"/>
                                 <ul style="width:100%;cursor:pointer;" class="dropdown-menu" id="dropdownEvent" role="menu" 
-                                aria-labelledby="menu1"></ul>
-                            </div>
+                                aria-labelledby="menu1"></ul>-->
+                            <!--</div>-->
                         </div>
                         <div class="form-group">
                             <label class="control-label">Frecuencia: </label>
@@ -184,7 +189,7 @@ $Usuario=  Session::getSesion("user");
             
             id_nodo="",tipo_nodo="";
 
-
+	      combo = new dhtmlXCombo("comboclave_descripcion");	
 obtenerTemasEnAsignacion();
 
 function buscarDocumento(data)
