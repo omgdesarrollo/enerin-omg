@@ -179,17 +179,36 @@ $Usuario=  Session::getSesion("user");
     <div id="contenido" ></div>
 </div>
 
-<div id="contenidoDetalles"></div>
-
+<!--<div id="contenidoDetalles"></div>-->
+<div id="gridbox"></div>
 
 	<script>
             var myLayout, myTree, myToolbar,id_asignacion_t=-1,levelv=0,id_asignacion_r=-1,selec_tema=-1,id_seleccionado=-1,dataIds_req=[],dataIds_reg=[];
             myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
-	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
+	    myTree.setImagePath("../../css/imgs/dhxtree_material/");
+            
+            grid=new dhtmlXGridObject({parent : 'gridbox'});
+			grid.setImagesPath("images/../include/css/imgs/");
+			grid.setHeader("Descripcion,Nuevo,Editar,Borrar,Imprimir,idPagina,ubicacionNivel");
+			grid.setInitWidths("395,140,140,140,140,50,50,50");
+			grid.setColTypes("ed,ch,ch,ch,ch,ed,ed,ed");	
+			grid.setColumnIds("nombreNivel,nuevo,editar,borrar,imprimir,idPagina,ubicacionNivel");
+			grid.setColAlign("left,center,center,center,center,center,center");
+			grid.enableAlterCss("even","uneven");
+			grid.enableMultiselect(true);
+			grid.enableAccessKeyMap(true);
+			grid.init();
+			dp = createDataProcessor(grid);
+			dp.setVerificator(1,not_empty);	
+			grid.setColumnHidden(5,true);
+			grid.setColumnHidden(6,true);
+            
+            
+            
             
             id_nodo="",tipo_nodo="";
 
-	      combo = new dhtmlXCombo("comboclave_descripcion");	
+//	      combo = new dhtmlXCombo("comboclave_descripcion");	
 obtenerTemasEnAsignacion();
 
 function buscarDocumento(data)
@@ -626,7 +645,7 @@ myLayout.cells("c").attachObject("contenidoDetalles");
                     });
         tempData2+="</table></div>";
    
-        $("#contenidoDetalles").html(tempData2);
+//        $("#contenidoDetalles").html(tempData2);
     }
     
     function obtenerInfo(id){
@@ -650,7 +669,7 @@ myLayout.cells("c").attachObject("contenidoDetalles");
     }
     
     
-   function obtenerDetalles_Seleccionado(id,tipo){
+   function obtenerDetalles_Seleccionado(id,tipo){//funcion que recibe el id del requisito o registro ,tipo significa requisito-registro
        
 //    alert(id);
 //    alert(tipo);
@@ -667,8 +686,6 @@ myLayout.cells("c").attachObject("contenidoDetalles");
         });
     
     }
-    
-    
     function construirDetalles(d){    
         $("#contenidoDetalles").html(d);
     }
