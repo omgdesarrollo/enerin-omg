@@ -80,6 +80,7 @@ and open the template in the editor.
     <div id="lib"></div>
    <link href="../../assets/gantt_5.1.2_com/codebase/skins/dhtmlxgantt_meadow.css" rel="stylesheet" type="text/css"/>
    <link href="../../assets/gantt_5.1.2_com/samples/common/third-party/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+   
    <!--Para abrir alertas de aviso, success,warning, error-->       
    <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
    <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>

@@ -25,7 +25,7 @@ function construirFiltrosCombobox(datos,name,id,descripcion)
 {
     // console.log(datos);
     tempData="";
-    tempData = "<select onChange='construirFiltroSelect(this,\""+id+"\")' margin:2px;>";
+    tempData = "<select onChange='construirFiltroSelect(this,\""+id+"\")' style='margin:2px;'>";
     tempData += "<option value='-1'>"+name+"</option>";
     $.each(datos,function(index,value)
     {

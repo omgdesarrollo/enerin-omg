@@ -22,11 +22,15 @@ $Usuario=  Session::getSesion("user");
 
         <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
         <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
-        <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
+        <!--<link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>-->
         <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
         <link href="../../assets/dhtmlxSuite_v51_std/skins/web/dhtmlx.css" rel="stylesheet" type="text/css"/>
-        
-        
+       
+        <script src="../../js/tools.js" type="text/javascript"></script>
+      
+        <script src="../../js/dhtmlxExtGrid.js" type="text/javascript"></script>
+        <script src="../../js/dhtmlxFunctions.js" type="text/javascript"></script>
+        <script src="../../js/dhtmlxdataprocessor.js" type="text/javascript"></script>
             <style>
                
                 div#sidebarObj {
@@ -120,12 +124,13 @@ $Usuario=  Session::getSesion("user");
 
                         <div class="form-group">
                             <label class="control-label">Clave/Descripcion: </label>
-                            <div class="dropdown">
-                                <input onBlur="registroClaveEscritura()" style="width:100%" type="text" class="dropdown-toggle" 
+                            <div id='comboclave_descripcion'  style='width: 100%;float: Left;'></div>
+                            <!--<div class="dropdown">-->
+<!--                                <input onBlur="registroClaveEscritura()" style="width:100%" type="text" class="dropdown-toggle" 
                                 id="CLAVEESCRITURA_AGREGARREGISTRO" data-toggle="dropdown" onKeyup="buscarDocumento(this)" autocomplete="off"/>
                                 <ul style="width:100%;cursor:pointer;" class="dropdown-menu" id="dropdownEvent" role="menu" 
-                                aria-labelledby="menu1"></ul>
-                            </div>
+                                aria-labelledby="menu1"></ul>-->
+                            <!--</div>-->
                         </div>
                         <div class="form-group">
                             <label class="control-label">Frecuencia: </label>
@@ -175,16 +180,35 @@ $Usuario=  Session::getSesion("user");
 </div>
 
 <div id="contenidoDetalles"></div>
-
+<!--<div id="gridbox"></div>-->
 
 	<script>
             var myLayout, myTree, myToolbar,id_asignacion_t=-1,levelv=0,id_asignacion_r=-1,selec_tema=-1,id_seleccionado=-1,dataIds_req=[],dataIds_reg=[];
             myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
 	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
             
+//            grid=new dhtmlXGridObject({parent : 'gridbox'});
+//			grid.setImagesPath("images/../include/css/imgs/");
+//			grid.setHeader("Descripcion,Nuevo,Editar,Borrar,Imprimir,idPagina,ubicacionNivel");
+//			grid.setInitWidths("395,140,140,140,140,50,50,50");
+//			grid.setColTypes("ed,ch,ch,ch,ch,ed,ed,ed");	
+//			grid.setColumnIds("nombreNivel,nuevo,editar,borrar,imprimir,idPagina,ubicacionNivel");
+//			grid.setColAlign("left,center,center,center,center,center,center");
+//			grid.enableAlterCss("even","uneven");
+//			grid.enableMultiselect(true);
+//			grid.enableAccessKeyMap(true);
+//			grid.init();
+//			dp = createDataProcessor(grid);
+//			dp.setVerificator(1,not_empty);	
+//			grid.setColumnHidden(5,true);
+//			grid.setColumnHidden(6,true);
+            
+            
+            
+            
             id_nodo="",tipo_nodo="";
 
-
+//	      combo = new dhtmlXCombo("comboclave_descripcion");	
 obtenerTemasEnAsignacion();
 
 function buscarDocumento(data)
@@ -621,7 +645,7 @@ myLayout.cells("c").attachObject("contenidoDetalles");
                     });
         tempData2+="</table></div>";
    
-        $("#contenidoDetalles").html(tempData2);
+//        $("#contenidoDetalles").html(tempData2);
     }
     
     function obtenerInfo(id){
@@ -645,7 +669,7 @@ myLayout.cells("c").attachObject("contenidoDetalles");
     }
     
     
-   function obtenerDetalles_Seleccionado(id,tipo){
+   function obtenerDetalles_Seleccionado(id,tipo){//funcion que recibe el id del requisito o registro ,tipo significa requisito-registro
        
 //    alert(id);
 //    alert(tipo);
@@ -662,8 +686,6 @@ myLayout.cells("c").attachObject("contenidoDetalles");
         });
     
     }
-    
-    
     function construirDetalles(d){    
         $("#contenidoDetalles").html(d);
     }
