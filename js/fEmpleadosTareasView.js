@@ -1,3 +1,70 @@
+
+$(function()
+{
+    $("#btn_crearEmpleado").click(function()
+    {
+        empleadoDatos=new Object();
+        empleadoDatos.nombre_empleado = $("#NOMBRE_EMPLEADO").val();
+        empleadoDatos.apellido_paterno = $("#APELLIDO_PATERNO").val();
+        empleadoDatos.apellido_materno = $("#APELLIDO_MATERNO").val();
+        empleadoDatos.categoria = $("#CATEGORIA").val();
+        empleadoDatos.email = $("#CORREO").val();
+        (checarVacio(empleadoDatos)) ? insertarEmpleado(empleadoDatos) : swalError("Completar campos");
+    });
+
+    $("#btn_limpiarEmpleado").click(function()
+    {
+        $("#NOMBRE_EMPLEADO").val("");
+        $("#APELLIDO_PATERNO").val("");
+        $("#APELLIDO_MATERNO").val("");
+        $("#CATEGORIA").val("");
+        $("#CORREO").val("");
+    });
+
+    $("#CORREO").keyup(function()
+    {
+        correo = $("#CORREO").val();
+        $("#btn_crearEmpleado").attr("disabled",true);
+        var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        correoEmail = regex.test(correo) ? true : false;
+        if(correoEmail)
+        {
+            $.ajax({
+                url:'../Controller/EmpleadosTareasController.php?Op=VerificaCorreo',
+                type:'GET',
+                data:'CORREO='+correo,
+                success:function(disponible)
+                {
+                    if(disponible != 0)
+                    {
+                        swalError("Correo no disponible");
+                        $("#CORREO").val(correo.slice(0,-1));
+                        correoEmail=false;
+                    }
+                    else
+                    // {
+                        $("#btn_crearEmpleado").removeAttr("disabled");
+                        // $.ajax({
+                        //     url:'../Controller/EmpleadosController.php?Op=VerificaCorreoWeb',
+                        //     type:'GET',
+                        //     data:'CORREO='+correo,
+                        //     success:function(exito)
+                        //     {
+                                
+                        //     }
+                        // });
+                    // }
+                },
+                error:function()
+                {
+                    swalError("Error en el servidor");
+                }
+            });
+        }
+    });
+}); //CIERRA EL (FUNCTION())
+
+
 filtros = 
 [
     {'name':'Nombre','id':'nombre_empleado',type:'text'},
@@ -72,13 +139,19 @@ function construirGrid(__datos)
                                 data:'TABLA=empleados'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
                                 success:function(exito)
                                 {
-//                                    alert("d");
-                                        console.log(exito);
+                                    swal("","Actualizacion Exitosa!","success");
+                                    setTimeout(function(){swal.close();},1000);
+                                },
+                                error:function()
+                                {
+                                    swal("","Error en el servidor","error");
+                                    setTimeout(function(){swal.close();},1500);
                                 }
                         });
                 }
         }
     });
+    $("#loader").hide();
 }
 
 function listarDatos()
@@ -102,6 +175,7 @@ function listarDatos()
     ajaxHibrido(datosParamAjaxValues,listfunciones);
 
     construirGrid(__datos);
+    
 }
 
 function reconstruirTable(_datos)
@@ -206,8 +280,9 @@ function checarVacio(datos)
 {
     $.each(datos,function(index,value)
     {
+        vacio=true;
         if(value=="")
-            return false;
+            vacio=false;
     });
-    return true;
+    return vacio;
 }

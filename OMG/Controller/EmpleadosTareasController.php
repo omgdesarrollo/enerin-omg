@@ -62,11 +62,11 @@ switch ($Op) {
                   header('Content-type: application/json; charset=utf-8');
                   $data = json_decode( $_REQUEST["EmpleadoDatos"],true );
                   
-                  $pojo->setNombreEmpleado($_REQUEST['NOMBRE_EMPLEADO']);
-                  $pojo->setApellidoPaterno($_REQUEST['APELLIDO_PATERNO']);
-                  $pojo->setCategoria($_REQUEST['CATEGORIA']);
-                  $pojo->setApellidoMaterno($_REQUEST['APELLIDO_MATERNO']);
-                  $pojo->setCorreo($_REQUEST['CORREO']);
+                  $pojo->setNombreEmpleado($data["nombre_empleado"]);
+                  $pojo->setApellidoPaterno($data["apellido_paterno"]);
+                  $pojo->setCategoria($data["categoria"]);
+                  $pojo->setApellidoMaterno($data["apellido_materno"]);
+                  $pojo->setCorreo($data["email"]);
                   
                   $pojo->setIdentificador("tareas");
                   
@@ -82,7 +82,12 @@ switch ($Op) {
             echo json_encode($Lista);
             return $Lista;
             
-            break;    
+            break;
+        
+        case 'VerificaCorreo':
+            $existe = $model->verificaCorreo($_REQUEST['CORREO']);
+            echo $existe;
+            break;
             
 
 	case 'Modificar':

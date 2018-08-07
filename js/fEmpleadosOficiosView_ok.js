@@ -42,7 +42,7 @@ function listarDatos()
 {
     $.ajax
     ({
-        url: '../Controller/EmpleadosTareasController.php?Op=Listar',
+        url: '../Controller/EmpleadosOficiosController.php?Op=Listar',
         type: 'GET',
         beforeSend:function()
         {
@@ -111,7 +111,7 @@ function reconstruirRow(id)
     tempData="";
     
     $.ajax({
-        url:"../Controller/EmpleadosTareasController.php?Op=ListarEmpleado",
+        url:"../Controller/EmpleadosOficiosController.php?Op=ListarEmpleado",
         type:'GET',
         data:'ID_EMPLEADO='+id,
         success:function(datos)
@@ -202,7 +202,7 @@ function saveToDatabaseDatosFormulario(datos){
 
                     
 $.ajax({
-    url: "../Controller/EmpleadosTareasController.php?Op=Guardar",
+    url: "../Controller/EmpleadosOficiosController.php?Op=Guardar",
     type: "POST",
     data:'NOMBRE_EMPLEADO='+datos[0]+'&APELLIDO_PATERNO='+datos[1]+'&APELLIDO_MATERNO='+datos[2]+'&CATEGORIA='+datos[3]+'&CORREO='+datos[4],
     success: function(data)
@@ -243,7 +243,7 @@ $.ajax({
                             {
 //                                alert("OK");
                                 $.ajax({
-                                        url:'../Controller/EmpleadosTareasController.php?Op=GuardarIdentificador',
+                                        url:'../Controller/EmpleadosOficiosController.php?Op=GuardarIdentificador',
                                         type:'POST',
                                         data:'ID='+data[0].id_empleado+ '&IDENTIFICADOR='+data[0].identificador,
                                         success:function(resultado)
@@ -355,14 +355,19 @@ return correcto;
 }
 
 
+
+
 function refresh(){
     listarDatos();
 }
 
 
+
+
 function loadSpinner(){
         myFunction();
 }
+
 
 
 function filterTable() {
@@ -429,6 +434,26 @@ function filterTableCategoria(){
 
    for (i = 0; i < tr.length; i++) {
      td = tr[i].getElementsByTagName("td")[3];
+     if (td) {
+       if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+         tr[i].style.display = "";
+       } else {
+         tr[i].style.display = "none";
+       }
+     } 
+   }
+}
+   function filterTableCorreo(){
+       // Declare variables 
+   var input, filter, table, tr, td, i;
+   input = document.getElementById("idInputCorreo");
+   filter = input.value.toUpperCase();
+   table = document.getElementById("idTable");
+   tr = table.getElementsByTagName("tr");
+
+   // Loop through all table rows, and hide those who don't match the search query
+   for (i = 0; i < tr.length; i++) {
+     td = tr[i].getElementsByTagName("td")[4];
      if (td) {
        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
          tr[i].style.display = "";

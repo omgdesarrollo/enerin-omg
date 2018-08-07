@@ -60,13 +60,9 @@ switch ($Op) {
 
     case 'Guardar':
         header('Content-type: application/json; charset=utf-8');
-        // echo $_REQUEST["EmpleadoDatos"];
         $data = json_decode( $_REQUEST["EmpleadoDatos"],true );
-        // var_dump($data);
-        // $data = json_encode($data);
-        // foreach($data as $key => $value)
-        //     echo $key." - ".$value;
-        $pojo->setNombreEmpleado($data["nombre"]);
+
+        $pojo->setNombreEmpleado($data["nombre_empleado"]);
         $pojo->setApellidoPaterno($data["apellido_paterno"]);
         $pojo->setCategoria($data["categoria"]);
         $pojo->setApellidoMaterno($data["apellido_materno"]);
