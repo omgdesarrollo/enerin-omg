@@ -109,7 +109,7 @@ require_once 'EncabezadoUsuarioView.php';
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="closeLetra">X</span>
                 </button>
-		        <h4 class="modal-title" id="myModalLabelNuevaEvidencia">Crear Nueva Evidencia</h4>
+		        <h4 class="modal-title" id="myModalLabelNuevaEvidencia">Crear Nuevo Registro</h4>
             </div>
 
             <div class="modal-body">

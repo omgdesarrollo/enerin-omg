@@ -1,465 +1,288 @@
 
-
-$(function(){
-
-    $("#btn_guardar").click(function(){
-
-              var NOMBRE_EMPLEADO=$("#NOMBRE_EMPLEADO").val();
-              var APELLIDO_PATERNO=$("#APELLIDO_PATERNO").val();
-              var APELLIDO_MATERNO=$("#APELLIDO_MATERNO").val();
-              var CATEGORIA=$("#CATEGORIA").val();
-              var CORREO=$("#CORREO").val();
-                datos=[];
-                datos.push(NOMBRE_EMPLEADO);
-                datos.push(APELLIDO_PATERNO);
-                datos.push(APELLIDO_MATERNO);
-                datos.push(CATEGORIA);
-                datos.push(CORREO);
-                correcto=validarCamposVacios(datos);
-//                alert("e  : "+correcto);
-                if(correcto!==false){
-
-                saveToDatabaseDatosFormulario(datos);
-            }else{
-              
-            }
-
-    });
-
-     $("#btn_limpiar").click(function(){
-              $("#NOMBRE_EMPLEADO").val("");
-              $("#APELLIDO_PATERNO").val("");
-              $("#APELLIDO_MATERNO").val("");
-              $("#CATEGORIA").val("");
-              $("#CORREO").val("");
-    });
-
-
-}); // se cierra el $function
-
-
-function listarDatos()
+$(function()
 {
-    $.ajax
-    ({
-        url: '../Controller/EmpleadosOficiosController.php?Op=Listar',
-        type: 'GET',
-        beforeSend:function()
-        {
-            $('#loader').show();
-        },
-        success:function(datos)
-        {
-//            data = datos;
-            reconstruirTable(datos);
-        },
-        error:function(error)
-        {
-            $('#loader').hide();
-        }
-    });
-}
-
-
-
-function reconstruirTable(data)
-{
-    cargaTodo=0;
-    tempData="";
-    
-    $.each(data,function(index,value){
-        
-            tempData += reconstruir(value,cargaTodo);
-    });
-     
-    $("#datosGenerales").html(tempData);
-    $("#loader").hide();
-}
-
-
-
-function reconstruir(value,carga)
-{
-    tempData = "";
-    
-                if(carga==0)
-                tempData += "<tr id='registro_"+value.id_empleado+"' name='registro_'>";
-                tempData += "<td class='celda' width='22%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'empleados','nombre_empleado',"+value.id_empleado+",'id_empleado')\" \n\
-                                  onkeyup=\"detectarsihaycambio()\" >"+value.nombre_empleado+"</td>";
-                tempData += "<td class='celda' width='16%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'empleados','apellido_paterno',"+value.id_empleado+",'id_empleado')\" \n\
-                                  onkeyup=\"detectarsihaycambio()\">"+value.apellido_paterno+"</td>";
-                tempData += "<td class='celda' width='16%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'empleados','apellido_materno',"+value.id_empleado+",'id_empleado')\" \n\
-                                  onkeyup=\"detectarsihaycambio()\">"+value.apellido_materno+"</td>";
-                tempData += "<td class='celda' width='16%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'empleados','categoria',"+value.id_empleado+",'id_empleado')\" \n\
-                                  onkeyup=\"detectarsihaycambio()\">"+value.categoria+"</td>";
-                tempData += "<td class='celda' width='15%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'empleados','correo',"+value.id_empleado+",'id_empleado')\" \n\
-                                  onkeyup=\"detectarsihaycambio()\">"+value.correo+"</td>";
-                tempData += "<td class='celda' width='15%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'empleados','fecha_creacion',"+value.id_empleado+",'id_empleado')\" \n\
-                                  onkeyup=\"detectarsihaycambio()\">"+value.fecha_creacion+"</td>";                    
-                
-                if(carga==0)
-                tempData += "</tr>";
-    
-        return tempData;                                                        
-}
-
-
-function reconstruirRow(id)
-{
-    //alert("Entro en ReconstruirRow");
-    cargaUno=1;
-    tempData="";
-    
-    $.ajax({
-        url:"../Controller/EmpleadosOficiosController.php?Op=ListarEmpleado",
-        type:'GET',
-        data:'ID_EMPLEADO='+id,
-        success:function(datos)
-        {
-            //alert("entro al success"+"-"+datos);
-            $.each(datos, function(index,value){
-                
-               tempData = reconstruir(value,cargaUno);
-               $('#registro_'+id).html(tempData);
-               $('#loader').hide();
-               swal("","Modificado","success");
-               setTimeout(function(){swal.close();},1000);
-               
-            });
-        },
-        error:function()
-        {
-            swal("","Error del servidor","error");
-            setTimeout(function(){swal.close();},1000);
-        }
-    })   
-}
-
-
-function detectarsihaycambio() {
-                    
-    si_hay_cambio=true;
-}
-
-
-function saveSingleToDatabase(Obj,tabla,columna,id,contexto) {
-    console.log(Obj.innerHTML+"-"+columna+"-"+tabla+"-"+id+"-"+contexto+"-"+si_hay_cambio);
-            if(si_hay_cambio==true){
-            //alert("si hay cambio");    
-            $("#btnrefrescar").prop("disabled",true);
-            
-            $(Obj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
-            
-            saveOneToDatabase(Obj.innerHTML,columna,tabla,id,contexto);
-            //$(Obj).css("background","#FDFDFD");
-           
-            si_hay_cambio=false;
-
-        } 
-
-    }
-      
- function saveOneToDatabase(valor,columna,tabla,id,contexto)
+    $("#btn_crearEmpleado").click(function()
     {
-        //alert("Entro aqui");
-        $.ajax({
-                url: "../Controller/GeneralController.php?Op=ModificarColumna",
-                type: 'GET',
-                data: 'TABLA='+tabla+'&COLUMNA='+columna+'&VALOR='+valor+'&ID='+id+'&ID_CONTEXTO='+contexto,
-                success: function(modificado)
+        empleadoDatos=new Object();
+        empleadoDatos.nombre_empleado = $("#NOMBRE_EMPLEADO").val();
+        empleadoDatos.apellido_paterno = $("#APELLIDO_PATERNO").val();
+        empleadoDatos.apellido_materno = $("#APELLIDO_MATERNO").val();
+        empleadoDatos.categoria = $("#CATEGORIA").val();
+        empleadoDatos.email = $("#CORREO").val();
+        (checarVacio(empleadoDatos)) ? insertarEmpleado(empleadoDatos) : swalError("Completar campos");
+    });
+
+    $("#btn_limpiarEmpleado").click(function()
+    {
+        $("#NOMBRE_EMPLEADO").val("");
+        $("#APELLIDO_PATERNO").val("");
+        $("#APELLIDO_MATERNO").val("");
+        $("#CATEGORIA").val("");
+        $("#CORREO").val("");
+    });
+
+    $("#CORREO").keyup(function()
+    {
+        correo = $("#CORREO").val();
+        $("#btn_crearEmpleado").attr("disabled",true);
+        var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        correoEmail = regex.test(correo) ? true : false;
+        if(correoEmail)
+        {
+            $.ajax({
+                url:'../Controller/EmpleadosOficiosController.php?Op=VerificaCorreo',
+                type:'GET',
+                data:'CORREO='+correo,
+                success:function(disponible)
                 {
-//                    alert("Entro en modificado"+modificado);
-                    if(modificado==true)
+                    if(disponible != 0)
                     {
-//                        alert("Entro en modificado true"+modificado);
-                        reconstruirRow(id);
-//                         $('#loader').hide();
-//                         swal("","Modificado","success");
-//                         setTimeout(function(){swal.close();},1000);
+                        swalError("Correo no disponible");
+                        $("#CORREO").val(correo.slice(0,-1));
+                        correoEmail=false;
                     }
                     else
-                    {
-                        $('#loader').hide();
-                        swal("","Ocurrio un error al modificar", "error");
-                    }
-                  $("#btnrefrescar").prop("disabled",false);  
+                    // {
+                        $("#btn_crearEmpleado").removeAttr("disabled");
+                        // $.ajax({
+                        //     url:'../Controller/EmpleadosController.php?Op=VerificaCorreoWeb',
+                        //     type:'GET',
+                        //     data:'CORREO='+correo,
+                        //     success:function(exito)
+                        //     {
+                                
+                        //     }
+                        // });
+                    // }
                 },
                 error:function()
                 {
-                    $('#loader').hide();
-                    swal("","Ocurrio un error al modificar", "error");
-                    $("#btnrefrescar").prop("disabled",false);
+                    swalError("Error en el servidor");
                 }
             });
+        }
+    });
+}); //CIERRA EL (FUNCTION())
+
+
+filtros = 
+[
+    {'name':'Nombre','id':'nombre_empleado',type:'text'},
+    {'name':'Apellido Paterno','id':'apellido_paterno',type:'text'},
+    {'name':'Apellido Materno','id':'apellido_materno',type:'text'},
+    {'name':'Categoria','id':'categoria',type:'text'},
+    {'name':'Correo','id':'correo',type:'text'},
+    {'name':'Fecha Creación','id':'fecha_creacion',type:'date'},
+    // {'name':'Autoridad','id':'id_autoridad',type:'combobox',data: consultarAutoridades() },
+];
+correoEmail=false;
+
+function construirGrid(__datos)
+{
+    $("#jsGrid").html("");
+    $("#jsGrid").jsGrid({
+        onInit: function(args)
+        {
+            // gridInstance=args;
+            jsGrid.ControlField.prototype.editButton=true;
+             jsGrid.ControlField.prototype.deleteButton=false;
+            jsGrid.Grid.prototype.autoload=true;
+        },
+        onDataLoading: function(args)
+        {
+            $("#loader").show();
+        },
+        onDataLoaded:function(args)
+        {
+            $("#loader").hide();
+        },
+        width: "100%",
+        height: "300px",
+        editing: true,
+        heading: true,
+        sorting: true,
+        paging: true,
+        pageSize: 5,
+        pageButtonCount: 5,
+        data: __datos,
+        fields: 
+        [
+            { name: "id_principal",visible:false},
+            { name: "nombre_empleado",title:"Nombre", type: "text", width: 80, validate: "required" },
+            { name: "apellido_paterno",title:"Apellido Paterno", type: "text", width: 150, validate: "required" },
+            { name: "apellido_materno",title:"Apellido Materno", type: "text", width: 150, validate: "required" },
+            { name: "categoria",title:"Categoria", type: "text", width: 150, validate: "required" },
+            { name: "correo",title:"Correo", type: "text", width: 150, validate: "required" },
+            { name: "fecha_creacion",title:"Fecha Creacion", type: "text", width: 150, validate: "required",editing: false},
+            {name:"cancel", type:"control", }
+        ],
+        onItemUpdated: function(args)
+        {
+                console.log(args);
+                columnas={};
+                id_afectado=args["item"]["id_principal"][0];
+                $.each(args["item"],function(index,value)
+                {
+                        if(args["previousItem"][index] != value && value!="")
+                        {
+                                if(index!="id_principal" && !value.includes("<button"))
+                                {
+                                        columnas[index]=value;
+                                }
+                        }
+                });
+                if(Object.keys(columnas).length!=0)
+                {
+                        $.ajax({
+                                url: '../Controller/GeneralController.php?Op=Actualizar',
+                                type:'GET',
+                                data:'TABLA=empleados'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
+                                success:function(exito)
+                                {
+                                    swal("","Actualizacion Exitosa!","success");
+                                    setTimeout(function(){swal.close();},1000);
+                                },
+                                error:function()
+                                {
+                                    swal("","Error en el servidor","error");
+                                    setTimeout(function(){swal.close();},1500);
+                                }
+                        });
+                }
+        }
+    });
+    $("#loader").hide();
+}
+
+function listarDatos()
+{
+     __datos=[];
+     datosParamAjaxValues={};
+     datosParamAjaxValues["url"]="../Controller/EmpleadosOficiosController.php?Op=Listar";
+     datosParamAjaxValues["type"]="POST";
+     datosParamAjaxValues["async"]=false;
+     
+     var variablefunciondatos=function obtenerDatosServer(data)
+    {
+        dataListado = data;
+        $.each(data,function(index,value)
+        {
+            __datos.push( reconstruir(value,index) );
+        });
     }
     
+    var listfunciones=[variablefunciondatos];
+    ajaxHibrido(datosParamAjaxValues,listfunciones);
+
+    construirGrid(__datos);
     
-    
+}
 
-
-
-function saveToDatabaseDatosFormulario(datos){
-
-                    
-$.ajax({
-    url: "../Controller/EmpleadosOficiosController.php?Op=Guardar",
-    type: "POST",
-    data:'NOMBRE_EMPLEADO='+datos[0]+'&APELLIDO_PATERNO='+datos[1]+'&APELLIDO_MATERNO='+datos[2]+'&CATEGORIA='+datos[3]+'&CORREO='+datos[4],
-    success: function(data)
+function reconstruirTable(_datos)
+{
+    __datos=[];
+    $.each(_datos,function(index,value)
     {
-            if(data==1)
-             {
-//                  alert("Entro al true");
-                 swal("Guardado Exitoso!", "", "success");
-                 setTimeout(function()
-                 {
-                     swal.close();
-                     $("#create-item .close").click();
-                 },1000);
-                 
-             }
-             
-             if(data!=1 && data!=-1)
-             {
-//                 alert("Entro al false");
-                 mensaje = "Nombre:"+data[0].nombre_empleado+" "+data[0].apellido_paterno+" "+data[0].apellido_materno;
-                 mensaje += "\nCategorita:"+data[0].categoria;
-                 mensaje += "\nCorreo:"+data[0].correo;
-                 mensaje += "\nDesea agregar el empleado a este modulo?";
-                 swal({
-                        title:"Ya existe este empleado:",
-                        text: mensaje,
-                        type: "info",
-                        showCancelButton: true,
-                        confirmButtonText:"Agregar",
-                        cancelButtonText:"Regresar",
-                        showLoaderOnConfirm: true,
-                        textLoaderOnConfirm:true,
-
-
-                        }, function(isConfirm)
-                        {
-                            if(isConfirm)
-                            {
-//                                alert("OK");
-                                $.ajax({
-                                        url:'../Controller/EmpleadosOficiosController.php?Op=GuardarIdentificador',
-                                        type:'POST',
-                                        data:'ID='+data[0].id_empleado+ '&IDENTIFICADOR='+data[0].identificador,
-                                        success:function(resultado)
-                                        {
-                                            if(resultado==true)
-                                            {
-                                                swal("Guardado Exitoso!", "", "success");
-                                                setTimeout(function()
-                                                {
-                                                    swal.close();
-                                                    $("#create-item .close").click();
-                                                },1000);                                            
-                                            }
-                                        }
-                                  
-                                        });
-
-                            }
-                            else{
-//                                alert("cancel");
-                                $("#NOMBRE_EMPLEADO").val("");
-                                $("#APELLIDO_PATERNO").val("");
-                                $("#APELLIDO_MATERNO").val("");
-                                $("#CATEGORIA").val("");
-                                $("#CORREO").val("");                                
-                            }
-                                    
-                     });                                  
-             }
-             
-             if(data==-1)
-             {
-//                 alert("Entro al vacio");
-                 swal("Este empleado ya existe", "", "info");
-                 setTimeout(function()
-                 {
-                     swal.close();
-                     $("#create-item .close").click();
-                 },1000);                                        
-             }
-    }   
-});
-
+        __datos.push(reconstruir(value,index));
+    });
+    // $("#jsGrid").jsGrid("loadData");
+    construirGrid(__datos);
+    $("#loader").hide();
 }
 
-
-function validarCamposVacios(datos){
-    correcto=false;
-    var expr = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
-    //alert("entro "+datos[0]+" "+datos[1]+" "+datos[2]+" "+datos[3]+" "+datos[4]+"");
-
-if(datos[0] == ""){
-$("#mensaje1").fadeIn();
-$("#mensaje1").append("Ingrese El Nombre");
-$("#mensaje1").css("background-color","red");
-$("#mensaje1").css("width", "35%");
-
-correcto=false;
-
-} else{
-    $("#mensaje1").fadeOut();
-    correcto=true;
-    if(datos[1] == ""){
-        $("#mensaje2").fadeIn();
-        $("#mensaje2").append("Ingrese El Apellido Paterno");
-        correcto=false;
-
-
-    } else {
-         $("#mensaje2").fadeOut();
-         correcto=true;
-         if(datos[2] == ""){
-              $("#mensaje3").fadeIn();
-              $("#mensaje3").append("Ingrese El Apeliido Materno");
-              correcto=false;
-
-         } else {
-                $("#mensaje3").fadeOut();
-                 correcto=true;
-                if(datos[3] == ""){
-                    $("#mensaje4").fadeIn();
-                    $("#mensaje4").append("Ingrese Categoria");
-                    correcto=false;
-
-                } else {
-                       $("#mensaje4").fadeOut();
-                       correcto=true;
-                       if(datos[4] == "" || !expr.test(datos[4])){
-                       $("#mensaje5").fadeIn();
-                        $("#mensaje5").html("Ingrese Correo");
-                         correcto=false;
-
-                       }else{
-                            $("#mensaje5").fadeOut();
-                            correcto=true;
-
-                       }
-
-                       } //cuarto else
-
-                }// tercer else
-
-}//segundo else
-
-
-} //primer else
-
-return correcto;    
+function reconstruir(value,index)
+{
+    tempData = new Object();
+    tempData["id_principal"] = [{'id_empleado':value.id_empleado}];
+    tempData["nombre_empleado"] = value.nombre_empleado;
+    tempData["apellido_materno"] = value.apellido_materno;
+    tempData["apellido_paterno"] = value.apellido_paterno;
+    tempData["categoria"] = value.categoria;
+    tempData["correo"] = value.correo;
+    tempData["fecha_creacion"] = value.fecha_creacion;
+    tempData["cancel"]=false;
+    return tempData;
 }
 
+function componerDataListado(value)// id de la vista documento
+{
+    dataListado;
+    id_vista = value.id_documento_entrada;
+    id_string = "id_documento_entrada"
+    $.each(dataListado,function(indexList,valueList)
+    {
+        $.each(valueList,function(ind,val)
+        {
+            if(ind == id_string)
+                    ( val.indexOf(id_vista) != -1 ) ? ( dataListado[indexList]=value ):  console.log();
+        });
+    });
+}
 
+function insertarEmpleado(empleadoDatos)
+{
+    if(correoEmail)
+    {
+        $.ajax({
+            url:'../Controller/EmpleadosOficiosController.php?Op=Guardar',
+            type:'POST',
+            data:'EmpleadoDatos='+JSON.stringify(empleadoDatos),
+            async:false,
+            success:function(datos)
+            {
+                if( typeof(datos) == "object")
+                {
+                    tempData;
+                    swalSuccess("Creado");
+                    $.each(datos,function(index,value)
+                    {
+                        tempData = reconstruir(value,index);
+                    });
+                    $("#jsGrid").jsGrid("insertItem",tempData).done(function()
+                    {
+                        $("#crea_empleado .close ").click();
+                    });
+                }
+                else
+                {
+                    if( datos == 0 )
+                        swalError("Error, No se pudo crear");
+                    else
+                    {
+                        swalInfo("Creado, Pero no listado, Actualice");
+                    }
+                }
+            },
+            error:function()
+            {
+                swalError("Error en el servidor");
+            }
+        });
+    }
+    else
+    {
+        swalInfo("El correo no es correcto");
+    }
+}
 
+function loadSpinner()
+{
+    myFunction();
+}
 
-function refresh(){
+function refresh()
+{
+    construirFiltros();
     listarDatos();
 }
 
-
-
-
-function loadSpinner(){
-        myFunction();
-}
-
-
-
-function filterTable() {
-    var input, filter, table, tr, td, i;
-    input = document.getElementById("idInput");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("idTable");
-    tr = table.getElementsByTagName("tr");
-
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[0];
-      if (td) {
-        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
-        }
-      } 
-    }
-}
-function filterTableapellidoPaterno() {
-   var input, filter, table, tr, td, i;
-   input = document.getElementById("idInputapellidopaterno");
-   filter = input.value.toUpperCase();
-   table = document.getElementById("idTable");
-   tr = table.getElementsByTagName("tr");
-
-   // Loop through all table rows, and hide those who don't match the search query
-   for (i = 0; i < tr.length; i++) {
-     td = tr[i].getElementsByTagName("td")[1];
-     if (td) {
-       if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-         tr[i].style.display = "";
-       } else {
-         tr[i].style.display = "none";
-       }
-     } 
-   }
-}
-function filterTableapellidoMaterno() {
-   var input, filter, table, tr, td, i;
-   input = document.getElementById("idInputapellidomaterno");
-   filter = input.value.toUpperCase();
-   table = document.getElementById("idTable");
-   tr = table.getElementsByTagName("tr");
-
-   for (i = 0; i < tr.length; i++) {
-     td = tr[i].getElementsByTagName("td")[2];
-     if (td) {
-       if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-         tr[i].style.display = "";
-       } else {
-         tr[i].style.display = "none";
-       }
-     } 
-   }
-}
-function filterTableCategoria(){
-   var input, filter, table, tr, td, i;
-   input = document.getElementById("idInputCategoria");
-   filter = input.value.toUpperCase();
-   table = document.getElementById("idTable");
-   tr = table.getElementsByTagName("tr");
-
-   for (i = 0; i < tr.length; i++) {
-     td = tr[i].getElementsByTagName("td")[3];
-     if (td) {
-       if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-         tr[i].style.display = "";
-       } else {
-         tr[i].style.display = "none";
-       }
-     } 
-   }
-}
-   function filterTableCorreo(){
-       // Declare variables 
-   var input, filter, table, tr, td, i;
-   input = document.getElementById("idInputCorreo");
-   filter = input.value.toUpperCase();
-   table = document.getElementById("idTable");
-   tr = table.getElementsByTagName("tr");
-
-   // Loop through all table rows, and hide those who don't match the search query
-   for (i = 0; i < tr.length; i++) {
-     td = tr[i].getElementsByTagName("td")[4];
-     if (td) {
-       if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-         tr[i].style.display = "";
-       } else {
-         tr[i].style.display = "none";
-       }
-     } 
-   }
+function checarVacio(datos)
+{
+    $.each(datos,function(index,value)
+    {
+        vacio=true;
+        if(value=="")
+            vacio=false;
+    });
+    return vacio;
 }

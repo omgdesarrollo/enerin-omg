@@ -41,7 +41,11 @@ $Usuario=  Session::getSesion("user");
 
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
+<<<<<<< HEAD
+=======
+                <script src="../../js/tools.js" type="text/javascript"></script>
 
+>>>>>>> e99ccc5db0c88080c0a35164baae4a0f09ba84a9
                 
                 
         <style>
@@ -158,71 +162,6 @@ require_once 'EncabezadoUsuarioView.php';
 <!--Final de Seccion Modal-->
 
 <script>
-
-$(function()
-{
-    $("#btn_crearEmpleado").click(function()
-    {
-        empleadoDatos=new Object();
-        empleadoDatos.nombre = $("#NOMBRE_EMPLEADO").val();
-        empleadoDatos.apellido_paterno = $("#APELLIDO_PATERNO").val();
-        empleadoDatos.apellido_materno = $("#APELLIDO_MATERNO").val();
-        empleadoDatos.categoria = $("#CATEGORIA").val();
-        empleadoDatos.email = $("#CORREO").val();
-        (checarVacio(empleadoDatos)) ? insertarEmpleado(empleadoDatos) : swalError("Completar campos");
-    });
-
-    $("#btn_limpiarEmpleado").click(function()
-    {
-        $("#NOMBRE_EMPLEADO").val("");
-        $("#APELLIDO_PATERNO").val("");
-        $("#APELLIDO_MATERNO").val("");
-        $("#CATEGORIA").val("");
-        $("#CORREO").val("");
-    });
-
-    $("#CORREO").keyup(function()
-    {
-        correo = $("#CORREO").val();
-        $("#btn_crearEmpleado").attr("disabled",true);
-        var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        correoEmail = regex.test(correo) ? true : false;
-        if(correoEmail)
-        {
-            $.ajax({
-                url:'../Controller/EmpleadosController.php?Op=VerificaCorreo',
-                type:'GET',
-                data:'CORREO='+correo,
-                success:function(disponible)
-                {
-                    if(disponible != 0)
-                    {
-                        swalError("Correo no disponible");
-                        $("#CORREO").val(correo.slice(0,-1));
-                        correoEmail=false;
-                    }
-                    else
-                    // {
-                        $("#btn_crearEmpleado").removeAttr("disabled");
-                        // $.ajax({
-                        //     url:'../Controller/EmpleadosController.php?Op=VerificaCorreoWeb',
-                        //     type:'GET',
-                        //     data:'CORREO='+correo,
-                        //     success:function(exito)
-                        //     {
-                                
-                        //     }
-                        // });
-                    // }
-                },
-                error:function()
-                {
-                    swalError("Error en el servidor");
-                }
-            });
-        }
-    });
-});
 
 construirFiltros();
 listarDatos();

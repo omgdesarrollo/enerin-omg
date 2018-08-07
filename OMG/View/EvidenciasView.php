@@ -14,26 +14,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <title></title>
     
-    <!--Bootstrap y fontawesome -->
+    <!--Bootstrap y fontawesome-->
     <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome-animation.min.css" rel="stylesheet" type="text/css"/>
     
     <link async href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
     
-    <!-- text fonts  -->
-	<!--<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" /> -->
-    <!-- ace styles  -->
+    <!-- text fonts -->
+	<!--<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />-->
+    <!-- ace styles -->
     <link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-    <!--<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" /> -->
+    <!--<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />-->
     <link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
     
-    <!--Inicia para el spiner cargando -->
+    <!--Inicia para el spiner cargando-->
     <link async href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
-    <!--Termina para el spiner cargando -->
+    <!--Termina para el spiner cargando-->
                   
     <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
     <link async href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+<!--    <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>-->
 
     <!--jquery-->
     <script src="../../js/jquery.js" type="text/javascript"></script>
@@ -50,6 +51,8 @@
     <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
     <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
     <script src="../../js/fEvidenciasView.js" type="text/javascript"></script>
+    <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
+    
    
     <style>
         .jsgrid-header-row>.jsgrid-header-cell
@@ -83,9 +86,9 @@
 
         </style>
 </head>
-<!-- <body>  -->
+<!-- <body> -->
 <body class="no-skin" >
-    <!--<div id="loader"></div>--> 
+    <!--<div id="loader"></div>-->
     
     <?php
         require_once 'EncabezadoUsuarioView.php';
@@ -109,13 +112,51 @@
             <i class="glyphicon glyphicon-repeat"></i> 
         </button>
 
+        <!-- <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i> -->
+
+    </div>
+
+    <br><br>
+    <div style="float:left" id="headerFiltros">
+    </div>
+
+    <!-- <div style="height: 50px"></div> -->
+
+<!--            <table class="table table-bordered table-striped header_fijo" id="idTable">
+                <tr>
+                    <th class="table-headert" with="35%" colspan="5" style="background:#9aca40"></td>
+                    <th class="table-headert" with="35%" colspan="5" style="background:#6FB3E0">Responsable de Evidencia</td>
+                    <th class="table-headert" with="30%" colspan="3" style="background:#DCDCDC">Supervisión</td>
+                </tr>
+                <tr>
+                <?php foreach($titulosTable as $index=>$value)
+                { if($index<5){ ?>
+                <th class="table-headert backgroundTdTable" width="35%"><?php echo $value ?></th>
+                <?php }
+                
+                  if($index>4 && $index<10){?>  
+                <th class="table-headert backgroundTdTable2" width="35%"><?php echo $value ?></th>
+                <?php }
+                
+                if($index>9){ ?>
+                    <th class="table-headert backgroundTdTable3" width="30%"><?php echo $value ?></th>
+                <?php }                
+                }
+                 ?>
+                    
+                </tr>
+                
+                <tbody class="hideScrollBar" id="bodyTable" style="position: absolute"> 
+                    
+                </tbody>
+            </table>-->
     
     <div id="grid"></div>
 
 </body>
 
 
-
+<!-- Inicio de Seccion Modal Crear nueva Evidencia-->
 <div class="modal draggable fade" id="nuevaEvidenciaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -134,6 +175,8 @@
                         <input style="width:100%" type="text" class="dropdown-toggle" id="NOMBRETEMA_NUEVAEVIDENCIA" data-toggle="dropdown" onkeyup="buscarTemas(this)" autocomplete="off"/>
                             <ul style="width:100%;cursor:pointer;" class="dropdown-menu" id="dropdownEventTemasEvidencia" role="menu" 
                             aria-labelledby="NOMBRETEMA_NUEVAEVIDENCIA">
+                            <!-- <li role='presentation'><a role='menuitem' tabindex='-1'>jose</a></li>
+                            <li role='presentation'><a role='menuitem' tabindex='-1'>jesus</a></li> -->
                             </ul>
                     </div>
                 </div>
@@ -144,6 +187,8 @@
                         <input style="width:100%" type="text" class="" id="NOMBREREGISTRO_NUEVAEVIDENCIA" data-toggle="dropdown" onkeyup="buscarRegistros(this)" autocomplete="off"/>
                             <ul style="width:100%;cursor:pointer;" class="dropdown-menu" id="dropdownEventRegistroEvidencia" role="menu" 
                             aria-labelledby="NOMBREREGISTRO_NUEVAEVIDENCIA">
+                            <!-- <li role='presentation'><a role='menuitem' tabindex='-1'>JAJA</a></li>
+                            <li role='presentation'><a role='menuitem' tabindex='-1'>JIJI</a></li> -->
                             </ul>
                     </div>
                 </div>
@@ -170,12 +215,12 @@
         </div>
     </div>
 </div>
-<!--Final de Seccion Modal -->
+<!--Final de Seccion Modal-->
 
 <!-- Inicio modal Registros -->
 <div class="modal draggable fade" id="mostrarRegistrosModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
-     
+        <!-- <div id="loaderModalMostrar"></div> -->
 		<div class="modal-content">                
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -188,11 +233,12 @@
       </div> 
     </div> 
 </div> 
+<!--cierre del modal Registros-->
 
-
-
+<!-- Inicio de Seccion Modal Archivos-->
 <div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog " role="document">
+        <!-- <div id="loaderModalMostrar"></div> -->
 		<div class="modal-content">
                         
             <div class="modal-header">
@@ -211,15 +257,15 @@
                 <div class="form-group" method="post" >
                     <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Archivo</button>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
+            </div><!-- cierre div class-body -->
+        </div><!-- cierre div class modal-content -->
+    </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal -->
 
-
+<!-- Inicio modal Mensaje -->
 <div class="modal draggable fade" id="MandarNotificacionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
-      
+        <!-- <div id="loaderModalMostrar"></div> -->
 		<div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -239,7 +285,7 @@
 
 <div class="modal draggable fade" id="evidenciasPrueba" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog modal-lg" role="document">
-      
+        <!-- <div id="loaderModalMostrar"></div> -->
 		<div class="modal-content">                
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -252,6 +298,8 @@
       </div> 
     </div> 
 </div> 
+
+<!--cierre del modal Mensaje-->
 <script>
     
     var myGrid;
@@ -736,7 +784,7 @@ function construir(datosF)
         onDataLoading: function(args)
         {
             
-           
+                 loadBlockUi();
         },
         onDataLoaded:function(args)
         {
@@ -777,8 +825,8 @@ function construir(datosF)
             { name: "plan_accion",title:"Plan Accion", type: "text", width: 170 },
             { name: "desviacion",title:"Desviacion", type: "text", width: 120},
             {name: "validacion",title:"Validacion", type: "text", width: 200 },
-            {name:"delete", title:"", type: "customControl" },
-            {name:"eliminar",visible:false}
+            {name:"delete", title:"Opcion", type: "customControl" },
+            {name:"eliminar",title:"Opcion",visible:false}
         ],
         onOptionChanged:function(a)
         {},
@@ -900,14 +948,28 @@ function refresh()
 //    clearTimeout(timeOutA);
 ////    switch(evaluar){
 ////        case "refreshBoton":
+            loadBlockUi();
             $("#grid").jsGrid("render").done(function()
             {
 //                swalSuccess("Datos Cargados Exitosamente");
             });
+            
 ////        break;
     }
 
+function loadBlockUi(){
+     $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF">Espere Por Favor</span>', css: { 
+                       border: 'none', 
+                       padding: '15px', 
+                       backgroundColor: '#000', 
+                       '-webkit-border-radius': '10px', 
+                       '-moz-border-radius': '10px', 
+                       opacity: .5, 
+                       color: '#fff' 
+                        },overlayCSS: { backgroundColor: '#000000',opacity:0.1,cursor:'wait'} }); 
 
+                   setTimeout($.unblockUI, 2000);  
+    }
 function listarDatosTodos(datosF)
 {
     if(datosF==undefined)
@@ -1380,14 +1442,14 @@ function mostrar_urls(id_evidencia,validador,validado,id_para)
                     nametmp = value.split("^-O-^-M-^-G-^");
                     name;
                     fecha = new Date(nametmp[0]*1000);
-                    fecha = fecha.getDay() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+                    fecha = fecha.getDate()+" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
                     $.each(nametmp, function(index,value)
                     {
                         if(index!=0)
                             (index==1)?name=value:name+="-"+value;
                     });
                     tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
-                    tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\" download='"+name+"'>"+name+"</a></td><td>";
+                    tempDocumentolistadoUrl += "<a download='"+name+"' href=\""+todo[1]+"/"+value+"\" target='blank'>"+name+"</a></td><td>";
                     if(validador=="1")
                     {
                         if(validado==false)
@@ -1622,7 +1684,7 @@ function mostrarRegistros(id_documento)
             </td>
             <td>
             <p class="size">Processing...</p>
-            <!-- <div class="progress"></div>  -->
+            <!-- <div class="progress"></div> -->
             </td>
             <td>
             {% if (!i && !o.options.autoUpload) { if(noArchivo==0){ %}
@@ -1665,16 +1727,22 @@ function mostrarRegistros(id_documento)
     {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();var ID_PARA_DOCUMENTO = $('#tempInputIdParaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO,'1',false,ID_PARA_DOCUMENTO); refresh(); noArchivo=0; } } %}
 </script>
 
+    <!--Inicia para el spiner cargando-->
     <script src="../../js/loaderanimation.js" type="text/javascript"></script>
-
+    <!--Termina para el spiner cargando-->
+    
+    <!--Bootstrap-->
     <script src="../../assets/probando/js/bootstrap.min.js"></script>
+    <!--Para abrir alertas de aviso, success,warning, error-->
     <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+
+    <!--Para abrir alertas del encabezado-->
     <script src="../../assets/probando/js/ace-elements.min.js"></script>
     <script src="../../assets/probando/js/ace.min.js"></script>
 
-    <!-- js cargar archivo  -->
+    <!-- js cargar archivo -->
 <!--    <script src="../../assets/FileUpload/js/jquery.min.js"></script>
-    <script src="../../assets/FileUpload/js/jquery-ui.min.js"></script> -->
+    <script src="../../assets/FileUpload/js/jquery-ui.min.js"></script>-->
     <script  src="../../assets/FileUpload/js/tmpl.min.js"></script>
     <script  src="../../assets/FileUpload/js/load-image.all.min.js"></script>
     <script  src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>

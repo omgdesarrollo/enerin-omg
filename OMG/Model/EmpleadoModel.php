@@ -99,14 +99,6 @@ class EmpleadoModel{
         {
             $dao=new EmpleadoDAO();
             $rec= $dao->verificaCorreo($correo);
-//            if($rec[0]['resultado']==0)
-//            {   
-//                return $rec;
-//            }
-//            else
-//            {
-//                return $rec;
-//            }
             
             return $rec;
                      
