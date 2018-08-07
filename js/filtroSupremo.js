@@ -39,6 +39,7 @@ function construirFiltroSelect(Obj,id)
 {
     // console.log(Obj,id);
     val = $(Obj).val();
+    console.log(val);
     if(val=="-1")
             $("#"+id).val("");
     else

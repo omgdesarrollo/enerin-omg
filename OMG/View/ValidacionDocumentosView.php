@@ -288,16 +288,20 @@ if(isset($_REQUEST["accion"]))
         {'name':'Clave Documento','id':'clave_documento',type:'text'},
         {'name':'Documento','id':'documento',type:'text'},
         {'name':'Responsable Documento','id':'responsable_documento',type:'text'},
-        {'name':'Validacion','id':'validacion',type:'combobox',data:construirValidacionCombo(),descripcion:"validacion"},
-        
+        {'name':'Validacion Documento Responsable','id':'validacion_documento_responsable',type:'combobox',data:construirValidacionDCombo(),descripcion:"descripcion"},
+        {'name':'Validacion Tema Responsable','id':'validacion_tema_responsable',type:'combobox',data:construirValidacionTCombo(),descripcion:"descripcion"},
     ];
     dataListado=[];
     construirFiltros();
     listarDatos();
 
-    function construirValidacionCombo()
+    function construirValidacionDCombo()
     {
-        return [{validacion:"Validado"},{validacion:"No validado"}];
+        return [{ validacion_documento_responsable:"true",descripcion:"Validado"},{validacion_documento_responsable:"false",descripcion:"No Validado"}];
+    }
+    function construirValidacionTCombo()
+    {
+        return [{ validacion_tema_responsable:"true",descripcion:"Validado"},{validacion_tema_responsable:"false",descripcion:"No Validado"}];
     }
 
     $(function()
@@ -365,7 +369,7 @@ if(isset($_REQUEST["accion"]))
         moverA();
     }
 
-    function listarValidacionDocumento(idValidacionDocumento)
+    function listarValidacionDocumento(idValidacionDocumento,no)
     {
         tempData="";
         $.ajax({
@@ -374,11 +378,18 @@ if(isset($_REQUEST["accion"]))
             data:'ID_VALIDACION_DOCUMENTO='+idValidacionDocumento,
             success:function(documentos)
             {
+                tempData = new Object();
                 $.each(documentos,function(index,value)
                 {
-                    tempData += construirValidacionDocumento(value,index++);
+                    // tempData += construirValidacionDocumento(value,index++);
+                    tampData = reconstruir(value,no);
                 });
-                $("#registroDocumento_"+idValidacionDocumento).html(tempData);
+                // $("#registroDocumento_"+idValidacionDocumento).html(tempData);
+                console.log(tempData);
+                $("#jsGrid").jsGrid("updateItem", tempData).done
+                (function(){
+                    alert();
+                });
             },
             error:function()
             {
@@ -924,7 +935,7 @@ if(isset($_REQUEST["accion"]))
     }
 
     
-    function validarDocumentoR(Obj,columna,idValidacionDocumento,idDocumento)//listo
+    function validarDocumentoR(Obj,columna,idValidacionDocumento,idDocumento,no)//listo
     {
         GetValidacionTema = ({
             url:'../Controller/ValidacionDocumentosController.php?Op=GetValidacionTema',
@@ -946,7 +957,7 @@ if(isset($_REQUEST["accion"]))
                     {
                         if(existenArchivos==true)
                         {
-                            validarR = validar(idValidacionDocumento,columna,Obj);
+                            validarR = validar(idValidacionDocumento,columna,Obj,no);
                             $.ajax({
                                 url:'../Controller/ValidacionDocumentosController.php?Op=ObtenerTemayResponsable',
                                 type:'GET',
@@ -1035,7 +1046,7 @@ if(isset($_REQUEST["accion"]))
         });
     }
 
-    function validar(idValidacionDocumento,columna,Obj)//listo
+    function validar(idValidacionDocumento,columna,Obj,no)//listo
     {
         no = "fa-times-circle-o";
         yes = "fa-check-circle-o";
@@ -1056,7 +1067,7 @@ if(isset($_REQUEST["accion"]))
                         $(Obj).addClass( (valor)?yes:no );
                         $(Obj).css("color", (valor)?"#02ff00":"red" );
                         swalSuccess("Cambio aceptado");
-                        listarValidacionDocumento(idValidacionDocumento);
+                        listarValidacionDocumento(idValidacionDocumento,no);
                         //aqui mandar notificacion
                     }
                 },
