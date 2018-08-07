@@ -35,6 +35,8 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
                 <!--Termina para el spiner cargando-->
                 
+                <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+                <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/jquery.js" type="text/javascript"></script>
                 <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
                              
@@ -62,51 +64,18 @@ $Usuario=  Session::getSesion("user");
                         color: white;
                         font-weight: normal;
                 }
-
-                .modal
-                {
-                overflow: hidden;
-                }
-                .modal-dialog{
-                margin-right: 0;
-                margin-left: 0;
-                }
-                .modal-header{
-                height:30px;background-color:#444;
-                color:#ddd;
-                }
-                .modal-title{
-                margin-top:-10px;
-                font-size:16px;
-                }
-                .modal-header .close{
-                margin-top:-10px;
-                color:#fff;
-                }
-                .modal-body{
-                color:#888;
-                /*max-height: calc(100vh - 210px);*/
-                max-height: calc(100vh - 110px);
-                overflow-y: auto;
-                }
-                .modal-body p {
-                text-align:center;
-                padding-top:10px;
-                }
                 
+                .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                    
+                .modal-lg{width: 100%;}
+                .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
+                body{overflow:hidden;}
+              
                 .validar_formulario{
                 background: blue; 
                 width: 100%; 
                 color: white; 
                 }
-                body{
-                        /* overflow:hidden; */
-                }
- 
-/*Finaliza estilos para mantener fijo el header*/                     
-                    
-                    
-                    
+                  
                 </style>
  
                     
@@ -195,7 +164,7 @@ require_once 'EncabezadoUsuarioView.php';
 		<div class="modal-content">
                         
 		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="font-size:inherit" aria-hidden="true">×</span></button>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="font-size:inherit" aria-hidden="true" class="closeLetra">×</span></button>
 		        <h4 class="modal-title" id="myModalLabel">Archivos Adjuntos</h4>
 		      </div>
 

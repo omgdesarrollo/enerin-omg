@@ -76,15 +76,76 @@ filtros =
     {'name':'Fecha Creación','id':'fecha_creacion',type:'date'},
     // {'name':'Autoridad','id':'id_autoridad',type:'combobox',data: consultarAutoridades() },
 ];
+
+var dataListado=[];
 correoEmail=false;
 
-function construirGrid(__datos)
+
+
+
+
+function listarDatos(datosF)
 {
-    $("#jsGrid").html("");
+//    console.log(datosF);
+    if(datosF==undefined)
+    {
+    $.ajax({
+        url: '../Controller/EmpleadosController.php?Op=Listar',
+        type: 'GET',
+        async:false,
+        beforeSend:function()
+        {
+            
+        },
+        success:function(datos)
+        {
+            dataListado = datos;
+            d=reconstruirTab(datos);
+        },
+        error:function(error)
+        {
+            
+        }
+    });
+    
+    } else{
+        d = reconstruirTab(datosF);
+    }
+    return d;
+   
+}
+
+
+function reconstruirTab(datos)
+{
+    __datos=[];
+    $.each(datos,function(index,value){
+        __datos.push(reconstruir(value,index++));
+    });
+    return __datos;
+}
+
+
+//function listarjsGrid(__datos)
+function construirGrid(datosF)
+{
+    db={
+        loadData: function(filter)
+        {
+            return listarDatos(datosF);
+        },
+        insertItem: function(item)
+        {
+            return item;
+        }
+    };
+    
+    window.db = db;
+//    $("#jsGrid").html("");
     $("#jsGrid").jsGrid({
         onInit: function(args)
         {
-            // gridInstance=args;
+             gridInstance=args;
             jsGrid.ControlField.prototype.editButton=true;
              jsGrid.ControlField.prototype.deleteButton=false;
             jsGrid.Grid.prototype.autoload=true;
@@ -97,15 +158,21 @@ function construirGrid(__datos)
         {
             $("#loader").hide();
         },
+        onRefreshing: function(args) {
+        },
+        
         width: "100%",
         height: "300px",
+        autoload:true,
         editing: true,
         heading: true,
         sorting: true,
         paging: true,
         pageSize: 5,
         pageButtonCount: 5,
-        data: __datos,
+        controller:db,
+        filtering:false,
+//        data: __datos,
         fields: 
         [
             { name: "id_principal",visible:false},
@@ -140,6 +207,10 @@ function construirGrid(__datos)
                                 data:'TABLA=empleados'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
                                 success:function(exito)
                                 {
+                                    $("#jsGrid").jsGrid("render").done(function()
+                                    {
+                                //                swalSuccess("Datos Cargados Exitosamente");
+                                    });
                                     swal("","Actualizacion Exitosa!","success");
                                     setTimeout(function(){swal.close();},1000);
                                 },
@@ -155,29 +226,9 @@ function construirGrid(__datos)
     $("#loader").hide();
 }
 
-function listarDatos()
-{
-     __datos=[];
-     datosParamAjaxValues={};
-     datosParamAjaxValues["url"]="../Controller/EmpleadosController.php?Op=Listar";
-     datosParamAjaxValues["type"]="POST";
-     datosParamAjaxValues["async"]=false;
-     
-     var variablefunciondatos=function obtenerDatosServer(data)
-    {
-        dataListado = data;
-        $.each(data,function(index,value)
-        {
-            __datos.push( reconstruir(value,index) );
-        });
-    }
-    
-    var listfunciones=[variablefunciondatos];
-    ajaxHibrido(datosParamAjaxValues,listfunciones);
 
-    construirGrid(__datos);
-}
 
+//Para construir los Filtros
 function reconstruirTable(_datos)
 {
     __datos=[];
@@ -272,9 +323,31 @@ function loadSpinner()
 
 function refresh()
 {
-    construirFiltros();
-    listarDatos();
+//    alert("refresh");
+    loadBlockUi();
+//    construirFiltros();
+//    listarDatos();
+    $("#jsGrid").jsGrid("render").done(function()
+    {
+//                swalSuccess("Datos Cargados Exitosamente");
+    });
 }
+
+function loadBlockUi()
+{
+     $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF">Espere Por Favor</span>', css: { 
+                       border: 'none', 
+                       padding: '15px', 
+                       backgroundColor: '#000', 
+                       '-webkit-border-radius': '10px', 
+                       '-moz-border-radius': '10px', 
+                       opacity: .5, 
+                       color: '#fff' 
+                        },overlayCSS: { backgroundColor: '#000000',opacity:0.1,cursor:'wait'} }); 
+
+                   setTimeout($.unblockUI, 2000);  
+}
+
 
 function checarVacio(datos)
 {
