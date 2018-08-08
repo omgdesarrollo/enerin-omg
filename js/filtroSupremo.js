@@ -25,6 +25,10 @@ function construirFiltros()
             tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' style='width:100%;display:none'>";
             tempData += construirFiltrosCombobox(value.data,value.name,value.id,value.descripcion);
         }
+        if(value.type == "opcion")
+        {
+            tempData += "<input class='jsgrid-button jsgrid-clear-filter-button' type='button' onClick='limpiarFiltros()'>";
+        }
         tempData += "</td>"
         $(".jsgrid-filter-row").append(tempData);
     });
@@ -100,6 +104,7 @@ function filtroSupremo()
 
 function aplicarFiltro(DataFinal)
 {
+    console.log(DataFinal);
     __datos=[];
     $.each(DataFinal,function (index,value)
         {
@@ -121,4 +126,12 @@ function mostrarFiltros()
         $('.jsgrid-filter-row').removeClass("display-view");
         $('.jsgrid-filter-row').addClass("display-none");
     }
+}
+
+function limpiarFiltros()
+{
+    $.each(filtros,function(index,value)
+    {
+        $("#"+value.id).val("");
+    });
 }

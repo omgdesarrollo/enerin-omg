@@ -1,12 +1,13 @@
 filtros = [
-            {name:"ID del Contrato o Asignación",id:"clave_contrato",type:"text",width:150},
-            {name:"Region Fiscal",id:"region_fiscal",type:"text",width:150},
+            {name:"ID del Contrato o Asignación",id:"clave_contrato",type:"text"},
+            {name:"Region Fiscal",id:"region_fiscal",type:"text"},
             {name:"Ubicación del Punto de Medición",id:"ubicacion",type:"text",width:150},
             {name:"Tag del Patin de Medición",id:"tag_patin",type:"text",width:130},
             {name:"Tipo de Medidor",id:"tipo_medidor",type:"text",width:150},
             {name:"Tag del Medidor",id:"tag_medidor",type:"text",width:130},
             {name:"Clasificación del Sistema de Medición",id:"clasificacion",type:"text",width:150},
             {name:"Tipo de Hidrocarburo",id:"hidrocarburo",type:"text",width:150},
+            {name:"",id:"",type:"opcion"}
         ];
 
 function reconstruir(value,index)
@@ -47,7 +48,7 @@ function construirGrid()
         loadData: function()
         {
 
-            console.log(DataGrid);
+            // console.log(DataGrid);
 //            gridInstance.grid.onInit();
                 return DataGrid;
             // }
