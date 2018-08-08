@@ -75,7 +75,7 @@ function construirGrid()
             // $("#loader").hide();
 //            console.log("lo termino ");
             $('.jsgrid-filter-row').removeAttr("style",'display:none');
-            $('.jsgrid-filter-row').addClass("display-none");
+//            $('.jsgrid-filter-row').addClass("mostrar");
         },
         width: "100%",
         height: "300px",
