@@ -645,7 +645,7 @@ myLayout.cells("c").attachObject("contenidoDetalles");
                     });
         tempData2+="</table></div>";
    
-//        $("#contenidoDetalles").html(tempData2);
+        $("#contenidoDetalles").html(tempData2);
     }
     
     function obtenerInfo(id){

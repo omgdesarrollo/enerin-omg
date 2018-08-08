@@ -50,12 +50,10 @@ function construirFiltroSelect(Obj,id)
     val = $(Obj).val();
     console.log(val);
     if(val=="-1")
-    {
-        $("#"+id).value("");
-    }
+        $("#"+id).val("");
     else
     {
-        $("#"+id).value(val);
+        $("#"+id).val(val);
     }
     filtroSupremo();
 }
@@ -95,8 +93,5 @@ function filtroSupremo()
         if(DataFinal.length!=0)
             DataFinal=dataT;
     });
-    dataListado=DataFinal;
-    aplicarFiltro();
-    // reconstruirTable(DataFinal);
-    // $("#loader").hide();
+    aplicarFiltro(DataFinal);
 }

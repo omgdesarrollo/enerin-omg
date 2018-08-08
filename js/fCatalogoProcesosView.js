@@ -46,17 +46,10 @@ function construirGrid()
     {
         loadData: function()
         {
-            // if(cargarFiltro==0)
-            // {
-            //     alert("cargando todo");
-            //     return listarDatos();
-            //     cargarFiltro=1;
-            // }
-            // else
-            // {
-            //     alert("cargando filtro");
-            alert("1");
-                return dataListado;
+
+            console.log(DataGrid);
+//            gridInstance.grid.onInit();
+                return DataGrid;
             // }
         },
         // insertItem: function(item)
@@ -64,13 +57,15 @@ function construirGrid()
         //     return item;
         // },
     } 
-    window.db = db;
-    $("#jsGrid").jsGrid({
-        onInit: function(args)
-        {
-            // gridInstance=args;
-            // jsGrid.Grid.prototype.autoload=true;
-        },
+//    window.db = db;
+    gridCompleto=$("#jsGrid").jsGrid({
+         onInit: function(args)
+         {
+             console.log("no ");
+             console.log(args);
+             gridInstance=args.grid;
+             jsGrid.Grid.prototype.autoload=true;
+         },
         onDataLoading: function(args)
         {
             loadBlockUi();
@@ -78,6 +73,9 @@ function construirGrid()
         onDataLoaded:function(args)
         {
             // $("#loader").hide();
+//            console.log("lo termino ");
+            $('.jsgrid-filter-row').removeAttr("style",'display:none');
+            $('.jsgrid-filter-row').addClass("display-none");
         },
         width: "100%",
         height: "300px",
@@ -86,7 +84,8 @@ function construirGrid()
         paging: true,
         autoload:true,
         controller:db,
-        // data: dataListado,
+        pageLoading:false,
+        // data: __datos,
         pageSize: 10,
         pageButtonCount: 5,
         updateOnResize: true,
@@ -105,6 +104,9 @@ function construirGrid()
                 { name:"delete", title:"Opción", type:"customControl" }
         ]
     });
+    
+    
+    console.log(gridCompleto);
 }
 
 var MyCControlField = function(config)
@@ -164,7 +166,8 @@ function listarDatos()
     var listfunciones=[variablefunciondatos];
     ajaxHibrido(datosParamAjaxValues,listfunciones);
     // construirGrid(__datos);
-    return __datos;
+    DataGrid=__datos;
+//    return __datos;
 }
 
 function preguntarEliminar(data)
@@ -213,19 +216,15 @@ function loadBlockUi()
     },overlayCSS: { backgroundColor: '#000000',opacity:0.1,cursor:'wait'} }); 
     setTimeout($.unblockUI, 2000);
 }
-
-function aplicarFiltro()
+DataGrid=[];
+function aplicarFiltro(DataFinal)
 {
-    console.log("AA2");
-    filtroHTML = $(".jsgrid-filter-row").html();
-    console.log(filtroHTML);
-    // $("#jsGrid").html("");
-    // construirGrid();
-    $("#jsGrid").jsGrid("render")
-    .done(function(){
-        $('.jsgrid-filter-row').removeAttr("style",'display:none');
-        $('.jsgrid-filter-row').addClass("display-view");
-        $(".jsgrid-filter-row").html(filtroHTML);
-    });
+    __datos=[];
+    $.each(DataFinal,function (index,value)
+        {
+            __datos.push( reconstruir(value,index++) );
+        });
+    DataGrid=__datos;
+    gridInstance.loadData();
     ;
 }
