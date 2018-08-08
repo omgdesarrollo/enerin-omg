@@ -5,6 +5,8 @@ function construirFiltros()
     $('.jsgrid-filter-row').removeAttr("style",'display:none');
     $('.jsgrid-filter-row').addClass("display-none");
     $(".jsgrid-filter-row").html("");
+    $("#headerOpciones").append("<button type='button' class='btn btn-info' onClick='mostrarFiltros()'><i class='ace-icon fa fa-search'></i></button>");
+
     $.each(filtros,function(index,value)
     {
         tam = value.width - 10;
@@ -105,4 +107,18 @@ function aplicarFiltro(DataFinal)
         });
     DataGrid=__datos;
     gridInstance.loadData();
+}
+
+function mostrarFiltros()
+{
+    if($('.jsgrid-filter-row').hasClass("display-none"))
+    {
+        $('.jsgrid-filter-row').removeClass("display-none");
+        $('.jsgrid-filter-row').addClass("display-view");
+    }
+    else
+    {
+        $('.jsgrid-filter-row').removeClass("display-view");
+        $('.jsgrid-filter-row').addClass("display-none");
+    }
 }
