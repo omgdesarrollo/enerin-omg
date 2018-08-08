@@ -18,7 +18,7 @@ function construirFiltros()
         }
         if(value.type == "text")
         {
-            tempData += "<input id='"+value.id+"' type='text' onkeyup='pressEnter()' value='' style='width:100%;'>";
+            tempData += "<input id='"+value.id+"' type='text' onkeyup='pressEnter(event)' value='' style='width:100%;'>";
         }
         if(value.type == "combobox")
         {

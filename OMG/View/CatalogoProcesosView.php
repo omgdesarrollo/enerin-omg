@@ -207,6 +207,7 @@ background:transparent;border:none;float:right;margin-left:15px;-->
         //NO SE PUEDEN CAMBIAR LOS NOMBRES DE LOS KEY DEL OBJECTO DATOS YA QUE ESTAN LIGADOS A LA BASE DE DATOS
         datos=new Object();
         datos.clave_contrato = clave_contrato==""? $("#INPUT_CONTRATO_NUEVOREGISTRO").val() : clave_contrato;
+
         datos.region_fiscal = region_fiscal==""? $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").val() : region_fiscal;
         datos.ubicacion = ubicacion==""? $("#INPUT_UBICACION_NUEVOREGISTRO").val() : ubicacion;
         datos.tag_patin = $("#INPUT_TAGPATIN_NUEVOREGISTRO").val();
@@ -215,9 +216,7 @@ background:transparent;border:none;float:right;margin-left:15px;-->
         datos.clasificacion = $("#INPUT_CLASIFICACION_NUEVOREGISTRO").val();
         datos.hidrocarburo = $("#INPUT_HIDROCARBURO_NUEVOREGISTRO ").val();
 
-        listo = 
-        ( 
-        datos.clave_contrato!=""?
+        listo = ( datos.clave_contrato!=""?
         datos.region_fiscal!=""?
         datos.ubicacion!=""?
         datos.tag_patin!=""?
@@ -225,9 +224,7 @@ background:transparent;border:none;float:right;margin-left:15px;-->
         datos.tag_medidor!=""?
         datos.clasificacion!=""?
         datos.hidrocarburo!=""?
-        true : false: false: false: false: false: false: false: false 
-        );
-
+        true : false: false: false: false: false: false: false: false );
         listo ? insertarRegistro(datos) : swalInfo("Campos requeridos");
     });
 
@@ -242,77 +239,6 @@ background:transparent;border:none;float:right;margin-left:15px;-->
         $("#INPUT_CLASIFICACION_NUEVOREGISTRO").val("");
         $("#INPUT_HIDROCARBURO_NUEVOREGISTRO ").val("");
     });
-
-    function insertarRegistro(datos)
-    {
-        $.ajax({
-            url:'../Controller/CatalogoProcesosController.php?Op=Guardar',
-            type:'POST',
-            data:'DATOS='+JSON.stringify(datos),
-            success:function(exito)
-            {
-                if(exito==1)
-                {
-                    swalSuccess("Registro Creado");
-                    //mandar a insertar al grid
-                }
-                else
-                {
-                    swalError("Error al crear");
-                }
-            },
-            error:function()
-            {
-                swalError("Error en el servidor");
-            }
-        });
-    }
-
-    function buscarIdContrato(Obj)
-    {
-        $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").attr("disabled",true);
-        $("#INPUT_UBICACION_NUEVOREGISTRO").attr("disabled",true);
-        val = $(Obj).val();
-        if(val!="")
-        {
-            $.ajax({
-                url:'../Controller/CatalogoProcesosController.php?Op=BuscarID',
-                type:'GET',
-                data:'CADENA='+val,
-                success:function(datos)
-                {
-                    if(typeof(datos)=="object")
-                    {
-                        if(datos.length!=0)
-                        {
-                            $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").val(datos[0].region_fiscal);
-                            $("#INPUT_UBICACION_NUEVOREGISTRO").val(datos[0].ubicacion);
-                            $("#INPUT_CONTRATO_NUEVOREGISTRO").val(datos[0].clave_contrato);
-                            region_fiscal = datos[0].region_fiscal;
-                            ubicacion = datos[0].ubicacion;
-                            contrato = datos[0].clave_contrato;
-                        }
-                        else
-                        {
-                            $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").removeAttr("disabled");
-                            $("#INPUT_UBICACION_NUEVOREGISTRO").removeAttr("disabled");
-                            region_fiscal = "";
-                            ubicacion = "";
-                            contrato = "";
-                        }
-                    }
-                    else
-                    {
-                        swalError("Error al intentar comprar clave de contrato");
-                    }
-                },
-                error:function()
-                {
-                    swalError("Error en el servidor");
-                }
-            });
-        }
-    }
 </script>
     
             <script src="../../js/fCatalogoProcesosView.js" type="text/javascript"></script>

@@ -173,6 +173,77 @@ function preguntarEliminar(data)
         });
 }
 
+function insertarRegistro(datos)
+{
+    $.ajax({
+        url:'../Controller/CatalogoProcesosController.php?Op=Guardar',
+        type:'POST',
+        data:'DATOS='+JSON.stringify(datos),
+        success:function(exito)
+        {
+            if(exito==1)
+            {
+                swalSuccess("Registro Creado");
+                //mandar a insertar al grid
+            }
+            else
+            {
+                swalError("Error al crear");
+            }
+        },
+        error:function()
+        {
+            swalError("Error en el servidor");
+        }
+    });
+}
+
+function buscarIdContrato(Obj)
+{
+    $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").attr("disabled",true);
+    $("#INPUT_UBICACION_NUEVOREGISTRO").attr("disabled",true);
+    val = $(Obj).val();
+    if(val!="")
+    {
+        $.ajax({
+            url:'../Controller/CatalogoProcesosController.php?Op=BuscarID',
+            type:'GET',
+            data:'CADENA='+val,
+            success:function(datos)
+            {
+                if(typeof(datos)=="object")
+                {
+                    if(datos.length!=0)
+                    {
+                        $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").val(datos[0].region_fiscal);
+                        $("#INPUT_UBICACION_NUEVOREGISTRO").val(datos[0].ubicacion);
+                        $("#INPUT_CONTRATO_NUEVOREGISTRO").val(datos[0].clave_contrato);
+                        region_fiscal = datos[0].region_fiscal;
+                        ubicacion = datos[0].ubicacion;
+                        contrato = datos[0].clave_contrato;
+                    }
+                    else
+                    {
+                        $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").removeAttr("disabled");
+                        $("#INPUT_UBICACION_NUEVOREGISTRO").removeAttr("disabled");
+                        region_fiscal = "";
+                        ubicacion = "";
+                        contrato = "";
+                    }
+                }
+                else
+                {
+                    swalError("Error al intentar comprar clave de contrato");
+                }
+            },
+            error:function()
+            {
+                swalError("Error en el servidor");
+            }
+        });
+    }
+}
+
 function refresh()
 {
     listarDatos();
