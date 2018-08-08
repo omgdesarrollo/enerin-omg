@@ -57,12 +57,10 @@ function construirGrid()
         //     return item;
         // },
     } 
-//    window.db = db;
-    gridCompleto=$("#jsGrid").jsGrid({
+
+    $("#jsGrid").jsGrid({
          onInit: function(args)
          {
-             console.log("no ");
-             console.log(args);
              gridInstance=args.grid;
              jsGrid.Grid.prototype.autoload=true;
          },
@@ -75,7 +73,7 @@ function construirGrid()
             // $("#loader").hide();
 //            console.log("lo termino ");
             $('.jsgrid-filter-row').removeAttr("style",'display:none');
-            $('.jsgrid-filter-row').addClass("display-none");
+//            $('.jsgrid-filter-row').addClass("mostrar");
         },
         width: "100%",
         height: "300px",
@@ -104,9 +102,7 @@ function construirGrid()
                 { name:"delete", title:"Opción", type:"customControl" }
         ]
     });
-    
-    
-    console.log(gridCompleto);
+
 }
 
 var MyCControlField = function(config)
@@ -216,15 +212,4 @@ function loadBlockUi()
     },overlayCSS: { backgroundColor: '#000000',opacity:0.1,cursor:'wait'} }); 
     setTimeout($.unblockUI, 2000);
 }
-DataGrid=[];
-function aplicarFiltro(DataFinal)
-{
-    __datos=[];
-    $.each(DataFinal,function (index,value)
-        {
-            __datos.push( reconstruir(value,index++) );
-        });
-    DataGrid=__datos;
-    gridInstance.loadData();
-    ;
-}
+

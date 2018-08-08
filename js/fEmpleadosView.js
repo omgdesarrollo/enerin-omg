@@ -84,11 +84,9 @@ correoEmail=false;
 
 
 
-function listarDatos(datosF)
+function listarDatos()
 {
-//    console.log(datosF);
-    if(datosF==undefined)
-    {
+__datos=[];
     $.ajax({
         url: '../Controller/EmpleadosController.php?Op=Listar',
         type: 'GET',
@@ -100,18 +98,18 @@ function listarDatos(datosF)
         success:function(datos)
         {
             dataListado = datos;
-            d=reconstruirTab(datos);
+//            d=reconstruirTab(datos);
+            $.each(datos,function(index,value){
+                __datos.push(reconstruir(value,index++));
+            });
         },
         error:function(error)
         {
             
         }
     });
-    
-    } else{
-        d = reconstruirTab(datosF);
-    }
-    return d;
+  
+ DataGrid=__datos;
    
 }
 
@@ -127,28 +125,27 @@ function reconstruirTab(datos)
 
 
 //function listarjsGrid(__datos)
-function construirGrid(datosF)
+function construirGrid()
 {
     db={
-        loadData: function(filter)
+        loadData: function()
         {
-            return listarDatos(datosF);
+            return DataGrid;
         },
         insertItem: function(item)
         {
             return item;
         }
     };
-    
-    window.db = db;
+
 //    $("#jsGrid").html("");
     $("#jsGrid").jsGrid({
         onInit: function(args)
         {
-             gridInstance=args;
+             gridInstance=args.grid;//linea gridinstance requerida no cambiar pasar el args.grid de esta forma si no , no funcionara
             jsGrid.ControlField.prototype.editButton=true;
              jsGrid.ControlField.prototype.deleteButton=false;
-            jsGrid.Grid.prototype.autoload=true;
+            jsGrid.Grid.prototype.autoload=true;//linea requerida no cambiar o quitar
         },
         onDataLoading: function(args)
         {
@@ -157,6 +154,7 @@ function construirGrid(datosF)
         onDataLoaded:function(args)
         {
             $("#loader").hide();
+             $('.jsgrid-filter-row').removeAttr("style",'display:none');
         },
         onRefreshing: function(args) {
         },

@@ -50,10 +50,9 @@ $Usuario=  Session::getSesion("user");
             {
                 display:none;
             }
-            .display-view
-            {
-                display:flex;
-            }
+/*            .mostrar{
+                display:"";
+            }*/
             .jsgrid-header-row>.jsgrid-header-cell 
             {
                 background-color:#307ECC ;      /* orange */
@@ -194,6 +193,7 @@ require_once 'EncabezadoUsuarioView.php';
 </div>
 
 <script>
+    DataGrid=[];
     listarDatos();
     cargarFiltro=0;
     construirGrid();
@@ -318,11 +318,11 @@ require_once 'EncabezadoUsuarioView.php';
         if($('.jsgrid-filter-row').hasClass("display-none"))
         {
             $('.jsgrid-filter-row').removeClass("display-none");
-            $('.jsgrid-filter-row').addClass("display-view");
+//            $('.jsgrid-filter-row').addClass("display-view");
         }
         else
         {
-            $('.jsgrid-filter-row').removeClass("display-view");
+//            $('.jsgrid-filter-row').removeClass("display-view");
             $('.jsgrid-filter-row').addClass("display-none");
         }
     }

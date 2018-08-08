@@ -8,7 +8,7 @@ function construirFiltros()
     $.each(filtros,function(index,value)
     {
         tam = value.width - 10;
-        tempData = "<td class='jsgrid-cell' style='min-width:"+value.width+"px;'>";
+        tempData = "<td class='jsgrid-cell' style='width:"+value.width+"px;'>";
         if(value.type == "date")
         {
             tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' style='width: 100%;display:none;'>";
@@ -94,4 +94,15 @@ function filtroSupremo()
             DataFinal=dataT;
     });
     aplicarFiltro(DataFinal);
+}
+
+function aplicarFiltro(DataFinal)
+{
+    __datos=[];
+    $.each(DataFinal,function (index,value)
+        {
+            __datos.push( reconstruir(value,index++) );
+        });
+    DataGrid=__datos;
+    gridInstance.loadData();
 }

@@ -36,7 +36,7 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/jquery.js" type="text/javascript"></script>
                 <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
 
-                <script src="../../js/fEmpleadosView.js" type="text/javascript"></script>
+               
 
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
@@ -45,7 +45,7 @@ $Usuario=  Session::getSesion("user");
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
                 <script src="../../js/tools.js" type="text/javascript"></script>
-
+ <script src="../../js/fEmpleadosView.js" type="text/javascript"></script>
                 
                 
         <style>
@@ -55,6 +55,10 @@ $Usuario=  Session::getSesion("user");
                 font-size: 1.2em;
                 color: white;
                 font-weight: normal;
+            }
+             .display-none
+            {
+                display:none;
             }
             .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                    
             .modal-lg{width: 100%;}
@@ -163,9 +167,9 @@ require_once 'EncabezadoUsuarioView.php';
 
 <script>
 
-construirFiltros();
+listarDatos();
 construirGrid();
-
+construirFiltros();
 </script>
     <!--Inicia para el spiner cargando-->
     <script src="../../js/loaderanimation.js" type="text/javascript"></script>
