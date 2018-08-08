@@ -201,6 +201,7 @@ background:transparent;border:none;float:right;margin-left:15px;-->
     region_fiscal="";
     ubicacion="";
     clave_contrato="";
+    
     $("#BTN_CREAR_NUEVOREGISTROMODAL").click(function()
     {
         //NO SE PUEDEN CAMBIAR LOS NOMBRES DE LOS KEY DEL OBJECTO DATOS YA QUE ESTAN LIGADOS A LA BASE DE DATOS
