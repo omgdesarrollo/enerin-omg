@@ -34,10 +34,6 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/jquery.js" type="text/javascript"></script>
-<<<<<<< HEAD
-              
-=======
->>>>>>> 941143806fad6b7d590d728305d1b59f5c379363
 
 <!--                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
@@ -48,11 +44,7 @@ $Usuario=  Session::getSesion("user");
 
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
-<<<<<<< HEAD
-  <script src="../../js/fDocumentosView.js" type="text/javascript"></script>
-=======
                 <script src="../../js/fDocumentosView.js" type="text/javascript"></script>
->>>>>>> 941143806fad6b7d590d728305d1b59f5c379363
                 
                 
         <style>

@@ -91,8 +91,7 @@ function filtroSupremo()
         if(DataFinal.length!=0)
             DataFinal=dataT;
     });
-    dataListado=DataFinal;
-    aplicarFiltro();
+    aplicarFiltro(DataFinal);
     // reconstruirTable(DataFinal);
     // $("#loader").hide();
 }

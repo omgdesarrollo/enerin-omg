@@ -285,8 +285,10 @@ function listarjsGrid()
         }
         
     });
-    $("#jsGrid").jsGrid("clearFilter");
-   
+//    $("#jsGrid").jsGrid("clearFilter");
+console.log("empezara con grid instance");
+   console.log(gridInstance);
+   console.log("termina grid instance");
 }
 
 var MySelectField = function(config)
