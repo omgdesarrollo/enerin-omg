@@ -112,7 +112,7 @@ function listarDatos(queRetornar)
 {
 //    alert("Entro a listar datos");
     __datos=[];
-    __datosCBE=[];
+    // __datosCBE=[];
     
     datosParamAjaxValues={};
     datosParamAjaxValues["url"]="../Controller/DocumentosController.php?Op=Listar";
@@ -121,6 +121,8 @@ function listarDatos(queRetornar)
     
     var variablefunciondatos=function obtenerDatosServer (data)
     {
+        tamanoData = data.lengt;
+        console.log(data);
         $.each(data.empl,function(index,value){
 //            alert(data.empl);
               __datosCBE.push({
@@ -140,7 +142,7 @@ function listarDatos(queRetornar)
                 "clave_documento":value.clave_documento,
                 "documento":value.documento,
 //                "Responsable del Documento":value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno           
-                "id_empleado":value.id_empleado
+                "id_empleado":value.id_documento,
             })
         });
     }
@@ -150,21 +152,24 @@ function listarDatos(queRetornar)
     
    if(queRetornar==1)
    {
-       console.log(__datos);
+//       console.log(__datos);
       return __datos; 
    }else{
+        // console.log("V",__datosCBE);
       return __datosCBE;
-      console.log(__datosCBE);
+//      console.log(__datosCBE);
    }
 //   
 //   console.log(__datos);
 
 //    return __datos;
 }
-
-
+__datosCBE=[];
+primera = 0;
+tamanoData=0;
 function listarjsGrid()
 {  
+    jsGrid.fields.fselect = MySelectField;
     db={
                 loadData: function(filter) {
 //                    console.log("Entro al loadData");
@@ -181,20 +186,35 @@ function listarjsGrid()
 //                    && (!filter.Address || client.Address.indexOf(filter.Address) > -1)
 //                    && (filter.Married === undefined || client.Married === filter.Married);
 //            });
+            // console.log(filter);
+            return $.grep(listarDatos(1),function (data)
+            {
+                console.log(tamanoData);
+                // if(primera==1)
+                // {
+                    var objetoSinFiltroDeCombo={"comparacionesFiltros":(!filter.clave_documento || data.clave_documento.indexOf(filter.clave_documento) > -1)
+                        &&(!filter.documento || data.documento.indexOf(filter.documento)> -1)};
+                    var objetoConTodosLosFiltros={"comparacionesFiltros":(!filter.clave_documento || data.clave_documento.indexOf(filter.clave_documento) > -1)
+                        &&(!filter.documento || data.documento.indexOf(filter.documento)> -1)
+                        &&(!filter.id_empleado || data.id_empleado.indexOf(filter.id_empleado)> -1)};
 
-            return $.grep(listarDatos(1),function (data){
-                var objetoSinFiltroDeCombo={"comparacionesFiltros":(!filter.clave_documento || data.clave_documento.indexOf(filter.clave_documento) > -1)
-                       &&(!filter.documento || data.documento.indexOf(filter.documento)> -1)};
-                var objetoConTodosLosFiltros={"comparacionesFiltros":(!filter.clave_documento || data.clave_documento.indexOf(filter.clave_documento) > -1)
-                       &&(!filter.documento || data.documento.indexOf(filter.documento)> -1)
-                       &&(!filter.id_empleado || data.id_empleado.indexOf(filter.id_empleado)> -1)};
-                if(____listaDeTodoTipoDeVariantes["todoloquetienequeverconfiltros"]["filtroAlPrincipioDeTodosLosCampos"]==false){
-                    ____listaDeTodoTipoDeVariantes["todoloquetienequeverconfiltros"]["filtroAlPrincipioDeTodosLosCampos"]=true;
-                    return objetoSinFiltroDeCombo["comparacionesFiltros"];
-                }else
-                {
-                    return objetoConTodosLosFiltros["comparacionesFiltros"];
-                }
+                    if(primera != tamanoData)
+                    {
+                        // ____listaDeTodoTipoDeVariantes["todoloquetienequeverconfiltros"]["filtroAlPrincipioDeTodosLosCampos"]=true;
+                        // return objetoSinFiltroDeCombo["comparacionesFiltros"];
+                        primera++;
+                        return data;
+                    }
+                    else
+                    {
+                        return objetoConTodosLosFiltros["comparacionesFiltros"];
+                    }
+                // }
+                // else
+                // {
+                //     return data;
+                // }
+                // primera=1;
 //                       &&(!filter.id_empleado || data.id_empleado(filter.id_empleado)> -1) ;
             });
               },
@@ -204,11 +224,10 @@ function listarjsGrid()
            } 
            
     window.db = db; 
-    
     $("#jsGrid").jsGrid({
         
         onInit: function(args){
-            console.log(jsGrid);
+            // console.log(jsGrid);
             gridInstance=args;
               jsGrid.ControlField.prototype.editButton=true;
               jsGrid.Grid.prototype.autoload=true;
@@ -223,8 +242,9 @@ function listarjsGrid()
             $("#loader").hide();
 //              jsGrid.Field.prototype.filtering=true;
         },
-        onRefreshing: function(args) {
-        },
+        onRefreshing: function(args)
+        {},
+        filterTemplate: function(data){alert("data");},
         
         width: "100%",
         height: "300px",
@@ -240,12 +260,14 @@ function listarjsGrid()
                 { name: "id_principal",visible:false },
                 { name: "clave_documento",title:"Clave del Documento", type: "textarea", validate: "required"},
                 { name: "documento",title:"Nombre del Documento", type: "textarea",  validate: "required" },
+                // { name: "id_empleado",title:"Responsable del Documento", type:"fselect"},
                 { name: "id_empleado",title:"Responsable del Documento", type: "select", items:listarDatos(0),valueField: "id_empleado", textField: "Name", validate: "required",autosearch: false,filterValue: function() { 
-//                       console.log("dentro del name");
-//                        console.log(this.items[this.filterControl.val()][this.valueField]);
-//                        console.log("termina dentro del name");
+                      console.log("dentro del name");
+                       console.log(this.items[this.filterControl.val()][this.valueField]);
+                       console.log("termina dentro del name");
                 return this.items[this.filterControl.val()][this.valueField];
                 }},
+                
                 {type:"control"}
         ],
         
@@ -253,14 +275,7 @@ function listarjsGrid()
 //            console.log(args);
             saveUpdateToDatabase(args);
         },
-    
-//        editRowRenderer :function (item, itemIndex){
-////            alert("le");
-//            console.log(item);
-//            console.log("--");
-//            console.log(itemIndex);
-//            return item;
-//        },
+
             
     
         onItemDeleting: function(args) {
@@ -270,9 +285,57 @@ function listarjsGrid()
         }
         
     });
+    $("#jsGrid").jsGrid("clearFilter");
    
 }
 
+var MySelectField = function(config)
+{
+    jsGrid.Field.call(this, config);
+};
+ 
+MySelectField.prototype = new jsGrid.Field
+({        
+        css: "date-field",
+        align: "center",
+        sorter: function(date1, date2)
+        {
+                console.log("haber cuando entra aqui");
+                console.log(date1);
+                console.log(date2);
+        },
+        itemTemplate: function(value,todo)
+        {
+            // console.log(todo);
+            // console.log(value);
+            tempData = "<select><option value='1'>NADA</option></select>";
+            return tempData;
+            // if(todo.delete=="no")
+                // return "";
+            // else
+                // return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button', type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
+        },
+        insertTemplate: function(value)
+        {
+            tempData = "<select><option value='1'>NADA</option></select>";
+            return tempData;
+        },
+        editTemplate: function(value)
+        {
+            tempData = "<select><option value='1'>NADA</option></select>";
+            return tempData;
+        },
+        insertValue: function()
+        {
+            tempData = "<select><option value='1'>NADA</option></select>";
+            return tempData;
+        },
+        editValue: function()
+        {
+            tempData = "<select><option value='1'>NADA</option></select>";
+            return tempData;
+        }
+});
 
 function saveUpdateToDatabase(args) 
 { 
