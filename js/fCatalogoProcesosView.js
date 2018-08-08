@@ -35,7 +35,6 @@ function reconstruirTable(_datos)
         __datos.push(reconstruir(value,index++));
     });
     construirGrid(__datos);
-    // $("#loader").hide();
 }
 
 var db={};
@@ -47,18 +46,13 @@ function construirGrid()
     {
         loadData: function()
         {
-
-            // console.log(DataGrid);
-//            gridInstance.grid.onInit();
-                return DataGrid;
-            // }
+            return DataGrid;
         },
         // insertItem: function(item)
         // {
         //     return item;
         // },
     } 
-
     $("#jsGrid").jsGrid({
          onInit: function(args)
          {
@@ -71,10 +65,7 @@ function construirGrid()
         },
         onDataLoaded:function(args)
         {
-            // $("#loader").hide();
-//            console.log("lo termino ");
             $('.jsgrid-filter-row').removeAttr("style",'display:none');
-//            $('.jsgrid-filter-row').addClass("mostrar");
         },
         width: "100%",
         height: "300px",
@@ -84,7 +75,6 @@ function construirGrid()
         autoload:true,
         controller:db,
         pageLoading:false,
-        // data: __datos,
         pageSize: 10,
         pageButtonCount: 5,
         updateOnResize: true,
@@ -123,8 +113,6 @@ MyCControlField.prototype = new jsGrid.Field
         },
         itemTemplate: function(value,todo)
         {
-            // console.log(todo);
-            // console.log(value);
             if(todo.delete=="no")
                 return "";
             else
@@ -161,14 +149,11 @@ function listarDatos()
     }
     var listfunciones=[variablefunciondatos];
     ajaxHibrido(datosParamAjaxValues,listfunciones);
-    // construirGrid(__datos);
     DataGrid = __datos;
-//    return __datos;
 }
 
 function preguntarEliminar(data)
 {
-    console.log(data);
     swal({
         title: "",
         text: "¿Eliminar Registro?",
@@ -190,18 +175,18 @@ function preguntarEliminar(data)
 
 function refresh()
 {
-//    construirFiltros();
     listarDatos();
     gridInstance.loadData();
 }
 
-function loadSpinner(){
-        myFunction();
-}
+// function loadSpinner()
+// {
+//     myFunction();
+// }
 
 function loadBlockUi()
 {
-    $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF">Espere Por Favor</span>', css:
+    $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF"> Espere Por Favor</span>', css:
     { 
         border: 'none', 
         padding: '15px', 

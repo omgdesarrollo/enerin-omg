@@ -67,9 +67,9 @@ $Usuario=  Session::getSesion("user");
  			 
 </head>
 
-        
-        <body class="no-skin" onload="loadSpinner()">
-             <div id="loader"></div>
+<body class="no-skin" onload="">
+
+<!-- <div id="loader"></div> -->
        
 
 <?php
