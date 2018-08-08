@@ -16,6 +16,15 @@ switch ($Op) {
         return $Lista;
         
         break;
+    
+    case 'Guardar':
+        header('Content-type: application/json; charset=utf-8');
+        $data= json_decode($_REQUEST['tareaDatos'],true);
+        
+        $Lista= $model->insertarTarea($data['contrato'],$data['tarea'],$data['fecha_creacion'],$data['fecha_alarma'],
+                                      $data['fecha_cumplimiento'],$data['observaciones'],$archivo_adjunto="archivo",$data['id_empleado']);
+        echo json_encode($Lista);                
+        break;
 
     default:
         break;
