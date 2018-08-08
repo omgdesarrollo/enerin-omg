@@ -16,7 +16,7 @@ function construirFiltros()
         }
         if(value.type == "text")
         {
-            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' style='width:100%;'>";
+            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' value='' style='width:100%;'>";
         }
         if(value.type == "combobox")
         {
@@ -50,9 +50,11 @@ function construirFiltroSelect(Obj,id)
     val = $(Obj).val();
     console.log(val);
     if(val=="-1")
-            $("#"+id).val("");
+        $("#"+id).val("");
     else
-            $("#"+id).val(val);
+    {
+        $("#"+id).val(val);
+    }
     filtroSupremo();
 }
 
@@ -92,6 +94,4 @@ function filtroSupremo()
             DataFinal=dataT;
     });
     aplicarFiltro(DataFinal);
-    // reconstruirTable(DataFinal);
-    // $("#loader").hide();
 }
