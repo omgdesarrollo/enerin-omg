@@ -9,27 +9,33 @@ function construirFiltros()
 
     $.each(filtros,function(index,value)
     {
-        tam = value.width - 10;
-        tempData = "<td class='jsgrid-cell' style='width:"+value.width+"px;'>";
+        // tam = value.width - 10;
+        tempData = "<td class='jsgrid-cell'>";
         if(value.type == "date")
         {
-            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' style='width: 100%;display:none;'>";
+            tempData += "<input id='"+value.id+"' type='text' onkeyup='pressEnter()' style='width: 100%;display:none;'>";
             tempData += "<input type='date' onChange='construirFiltroSelect(this,\""+value.id+"\")' style='width:100%;margin:2px;'>";
         }
         if(value.type == "text")
         {
-            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' value='' style='width:100%;'>";
+            tempData += "<input id='"+value.id+"' type='text' onkeyup='pressEnter(event)' value='' style='width:100%;'>";
         }
         if(value.type == "combobox")
         {
-            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' style='width:100%;display:none'>";
+            tempData += "<input id='"+value.id+"' type='text' onkeyup='pressEnter()' style='width:100%;display:none'>";
             tempData += construirFiltrosCombobox(value.data,value.name,value.id,value.descripcion);
+        }
+        if(value.type == "opcion")
+        {
+            tempData += "<input id='"+value.id+"' type='text' onkeyup='pressEnter()' style='width:100%;display:none'>";
+            tempData += "<input class='jsgrid-button jsgrid-clear-filter-button' type='button' onClick='limpiarFiltros()'>";
+            tempData += "<input class='jsgrid-button jsgrid-search-button' type='button' title='Search' onClick='filtroSupremo()'>";
         }
         tempData += "</td>"
         $(".jsgrid-filter-row").append(tempData);
     });
     // $("#headerFiltros").html(tempData);
-    // $(".jsgrid-filter-row").html(tempData);
+    // $(".jsgrid-filter-row").html(tempData);jaja
 }
 
 function construirFiltrosCombobox(datos,name,id,descripcion)
@@ -37,7 +43,7 @@ function construirFiltrosCombobox(datos,name,id,descripcion)
     // console.log(datos);
     tempData="";
     tempData = "<select onChange='construirFiltroSelect(this,\""+id+"\")' style='margin:2px;'>";
-    tempData += "<option value='-1'>"+name+"</option>";
+    tempData += "<option value='-1'> -> Todos <- </option>";
     $.each(datos,function(index,value)
     {
             tempData += "<option value='"+value[id]+"'>"+value[descripcion]+"</option>";
@@ -50,14 +56,21 @@ function construirFiltroSelect(Obj,id)
 {
     // console.log(Obj,id);
     val = $(Obj).val();
-    console.log(val);
     if(val=="-1")
         $("#"+id).val("");
     else
     {
         $("#"+id).val(val);
     }
-    filtroSupremo();
+    // filtroSupremo();
+}
+
+function pressEnter(ev)
+{
+    if(ev.keyCode == 13)
+    {
+        filtroSupremo();
+    }
 }
 
 function filtroSupremo()
@@ -100,6 +113,7 @@ function filtroSupremo()
 
 function aplicarFiltro(DataFinal)
 {
+    console.log(DataFinal);
     __datos=[];
     $.each(DataFinal,function (index,value)
         {
@@ -121,4 +135,15 @@ function mostrarFiltros()
         $('.jsgrid-filter-row').removeClass("display-view");
         $('.jsgrid-filter-row').addClass("display-none");
     }
+}
+
+function limpiarFiltros()
+{
+    $.each(filtros,function(index,value)
+    {
+        // console.log(value.id);
+        // console.log($("#"+value.id).val());
+        $("#"+value.id).val("");
+    });
+    filtroSupremo();
 }

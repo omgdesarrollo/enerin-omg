@@ -359,6 +359,7 @@ function listarAutoridades()
         return tempData;
 }
 
+
 function listarTemas()
 {
         tempData=[];
@@ -625,25 +626,25 @@ $(function()
         
 });//Se cierra el $function
 
-function reconstruirTable2(datos)
-{
-    __datos=[];
-     contador=1;
-    $.each(datos,function(index,value){
-        (value.validacion_tema_responsable=="true")?status="validado":status="En Proceso";
-         __datos.push({
-        "No":contador++,
-        "Clave del Documento":value.clave_documento,
-        "Nombre del Documento":value.documento,
-        "Responsable del Documento":value.nombrecompleto,
-        "Tema":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-        "Requisitos":"<button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-        "Registros":"<button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-        "Status":status
-         })
-      });
-      construir(__datos);
-}
+//function reconstruirTable2(datos)
+//{
+//    __datos=[];
+//     contador=1;
+//    $.each(datos,function(index,value){
+//        (value.validacion_tema_responsable=="true")?status="validado":status="En Proceso";
+//         __datos.push({
+//        "No":contador++,
+//        "Clave del Documento":value.clave_documento,
+//        "Nombre del Documento":value.documento,
+//        "Responsable del Documento":value.nombrecompleto,
+//        "Tema":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+//        "Requisitos":"<button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+//        "Registros":"<button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+//        "Status":status
+//         })
+//      });
+//      construir(__datos);
+//}
 
 function construirGrid(datosF)//listooo 12
 {

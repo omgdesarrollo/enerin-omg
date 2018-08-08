@@ -1,3 +1,45 @@
+$(function()
+{
+    $("#btn_crearTarea").click(function()
+    {
+        tareaDatos=new Object();
+        tareaDatos.contrato = $("#CONTRATO").val();
+        tareaDatos.tarea = $("#TAREA").val();
+        tareaDatos.id_empleado = $("#ID_EMPLEADOMODAL").val();
+        tareaDatos.fecha_creacion = $("#FECHA_CREACION").val();
+        tareaDatos.fecha_alarma = $("#FECHA_ALARMA").val();
+        tareaDatos.fecha_cumplimiento = $("#FECHA_CUMPLIMIENTO").val();
+        tareaDatos.observaciones = $("#OBSERVACIONES").val();
+        
+        listo=
+            (
+                tareaDatos.contrato!=""?
+                tareaDatos.tarea!=""?
+                tareaDatos.id_empleado!=""?
+                tareaDatos.fecha_creacion!=""?
+                tareaDatos.fecha_alarma!=""?
+                tareaDatos.fecha_cumplimiento!=""?
+                tareaDatos.observaciones!=""?
+                true: false: false: false: false: false: false: false                                                               
+            );
+        
+            listo ? insertarTareas(tareaDatos):swalError("Completar campos");
+    });
+    
+    $("#btn_limpiarModalTarea").click(function()
+    {
+        $("#CONTRATO").val("");
+        $("#TAREA").val("");
+        $("#ID_EMPLEADOMODAL").val("");
+        $("#FECHA_CREACION").val("");
+        $("#FECHA_ALARMA").val("");
+        $("#FECHA_CUMPLIMIENTO").val("");
+        $("#OBSERVACIONES").val("");        
+    });
+
+});
+
+
 var dataListado=[];
 
 function construirGrid(datosF)
@@ -151,13 +193,73 @@ function reconstruir(value,index)
     tempData["fecha_alarma"]=value.fecha_alarma;
     tempData["fecha_cumplimiento"]=value.fecha_cumplimiento;
     tempData["observaciones"]=value.observaciones;
-    tempData["archivo_adjunto"]=value.archivo_adjunto;
+    tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_tarea+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
+    tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i>Mostrar</button>";
+//    tempData["archivo_adjunto"]=value.archivo_adjunto;
+    tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info' onClick='cargarprogram("+value.id_tarea+")'>Cargar Programa</button>";    
     tempData["avance_programa"]=value.avance_programa;
     return tempData;
 }
 
 
+function archivoyComboboxparaModal()
+{
+  $.ajax({
+      url:"../Controller/EmpleadosController.php?Op=mostrarcombo",
+      type:"GET",
+      success:function(empleados)
+      {
+          tempData="";
+          $.each(empleados,function(index,value)
+          {
+              tempData+="<option value='"+value.id_empleado+"'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</option>"
+          }); 
+          
+          $("#ID_EMPLEADOMODAL").html(tempData);
+      }
+  });   
+}
 
+
+function insertarTareas(tareaDatos)
+{
+    $.ajax({
+        url:"../Controller/TareasController.php?Op=Guardar",
+        type:"POST",
+        data:"tareaDatos="+JSON.stringify(tareaDatos),
+        async:false,
+        success:function(datos)
+        {
+            if(typeof(datos) == "object")
+            {
+                tempData;
+                swalSuccess("Tarea Creada");
+                $.each(datos,function(index,value)
+                {
+                   tempData= reconstruir(value,index);  
+                });
+                
+                $("#jsGrid").jsGrid("insertItem",tempData).done(function()
+                {
+                    $("#crea_tarea .close ").click();
+                });
+                
+            } else{
+                if(datos==0)
+                {
+                    swalError("Error, No se pudo crear la Tarea");                    
+                } else{
+                    swalInfo("Creado, Pero no listado, Actualice");
+                }                
+            }
+            
+        },
+        error:function()
+            {
+                swalError("Error en el servidor");
+            }
+    });
+}
 
 
 

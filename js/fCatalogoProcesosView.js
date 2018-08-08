@@ -1,12 +1,13 @@
 filtros = [
             {name:"ID del Contrato o Asignación",id:"clave_contrato",type:"text",width:150},
-            {name:"Region Fiscal",id:"region_fiscal",type:"text",width:150},
+            {name:"Region Fiscal",id:"region_fiscal",type:"text",witdh:150},
             {name:"Ubicación del Punto de Medición",id:"ubicacion",type:"text",width:150},
             {name:"Tag del Patin de Medición",id:"tag_patin",type:"text",width:130},
             {name:"Tipo de Medidor",id:"tipo_medidor",type:"text",width:150},
             {name:"Tag del Medidor",id:"tag_medidor",type:"text",width:130},
             {name:"Clasificación del Sistema de Medición",id:"clasificacion",type:"text",width:150},
             {name:"Tipo de Hidrocarburo",id:"hidrocarburo",type:"text",width:150},
+            {name:"opcion",id:"opcion",type:"opcion"}
         ];
 
 function reconstruir(value,index)
@@ -34,7 +35,6 @@ function reconstruirTable(_datos)
         __datos.push(reconstruir(value,index++));
     });
     construirGrid(__datos);
-    // $("#loader").hide();
 }
 
 var db={};
@@ -46,18 +46,13 @@ function construirGrid()
     {
         loadData: function()
         {
-
-            console.log(DataGrid);
-//            gridInstance.grid.onInit();
-                return DataGrid;
-            // }
+            return DataGrid;
         },
         // insertItem: function(item)
         // {
         //     return item;
         // },
     } 
-
     $("#jsGrid").jsGrid({
          onInit: function(args)
          {
@@ -70,10 +65,7 @@ function construirGrid()
         },
         onDataLoaded:function(args)
         {
-            // $("#loader").hide();
-//            console.log("lo termino ");
             $('.jsgrid-filter-row').removeAttr("style",'display:none');
-//            $('.jsgrid-filter-row').addClass("mostrar");
         },
         width: "100%",
         height: "300px",
@@ -84,7 +76,6 @@ function construirGrid()
         autoload:true,
         controller:db,
         pageLoading:false,
-        // data: __datos,
         pageSize: 10,
         pageButtonCount: 5,
         updateOnResize: true,
@@ -125,8 +116,6 @@ MyCControlField.prototype = new jsGrid.Field
         },
         itemTemplate: function(value,todo)
         {
-            // console.log(todo);
-            // console.log(value);
             if(todo.delete=="no")
                 return "";
             else
@@ -148,7 +137,6 @@ MyCControlField.prototype = new jsGrid.Field
 
 function listarDatos()
 {
-
     __datos=[];
     datosParamAjaxValues={};
     datosParamAjaxValues["url"]="../Controller/CatalogoProcesosController.php?Op=listar";
@@ -164,14 +152,11 @@ function listarDatos()
     }
     var listfunciones=[variablefunciondatos];
     ajaxHibrido(datosParamAjaxValues,listfunciones);
-    // construirGrid(__datos);
-    DataGrid=__datos;
-//    return __datos;
+    DataGrid = __datos;
 }
 
 function preguntarEliminar(data)
 {
-    console.log(data);
     swal({
         title: "",
         text: "¿Eliminar Registro?",
@@ -191,20 +176,91 @@ function preguntarEliminar(data)
         });
 }
 
+function insertarRegistro(datos)
+{
+    $.ajax({
+        url:'../Controller/CatalogoProcesosController.php?Op=Guardar',
+        type:'POST',
+        data:'DATOS='+JSON.stringify(datos),
+        success:function(exito)
+        {
+            if(exito==1)
+            {
+                swalSuccess("Registro Creado");
+                //mandar a insertar al grid
+            }
+            else
+            {
+                swalError("Error al crear");
+            }
+        },
+        error:function()
+        {
+            swalError("Error en el servidor");
+        }
+    });
+}
+
+function buscarIdContrato(Obj)
+{
+    $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").attr("disabled",true);
+    $("#INPUT_UBICACION_NUEVOREGISTRO").attr("disabled",true);
+    val = $(Obj).val();
+    if(val!="")
+    {
+        $.ajax({
+            url:'../Controller/CatalogoProcesosController.php?Op=BuscarID',
+            type:'GET',
+            data:'CADENA='+val,
+            success:function(datos)
+            {
+                if(typeof(datos)=="object")
+                {
+                    if(datos.length!=0)
+                    {
+                        $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").val(datos[0].region_fiscal);
+                        $("#INPUT_UBICACION_NUEVOREGISTRO").val(datos[0].ubicacion);
+                        $("#INPUT_CONTRATO_NUEVOREGISTRO").val(datos[0].clave_contrato);
+                        region_fiscal = datos[0].region_fiscal;
+                        ubicacion = datos[0].ubicacion;
+                        contrato = datos[0].clave_contrato;
+                    }
+                    else
+                    {
+                        $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").removeAttr("disabled");
+                        $("#INPUT_UBICACION_NUEVOREGISTRO").removeAttr("disabled");
+                        region_fiscal = "";
+                        ubicacion = "";
+                        contrato = "";
+                    }
+                }
+                else
+                {
+                    swalError("Error al intentar comprar clave de contrato");
+                }
+            },
+            error:function()
+            {
+                swalError("Error en el servidor");
+            }
+        });
+    }
+}
+
 function refresh()
 {
-//    construirFiltros();
     listarDatos();
     gridInstance.loadData();
 }
 
-function loadSpinner(){
-        myFunction();
-}
+// function loadSpinner()
+// {
+//     myFunction();
+// }
 
 function loadBlockUi()
 {
-    $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF">Espere Por Favor</span>', css:
+    $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF"> Espere Por Favor</span>', css:
     { 
         border: 'none', 
         padding: '15px', 
