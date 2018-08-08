@@ -190,8 +190,9 @@ function preguntarEliminar(data)
 
 function refresh()
 {
-    construirFiltros();
+//    construirFiltros();
     listarDatos();
+    gridInstance.loadData();
 }
 
 function loadSpinner(){
