@@ -50,10 +50,10 @@ $Usuario=  Session::getSesion("user");
             {
                 display:none;
             }
-            .display-view
+/*            .display-view
             {
                 display:flex;
-            }
+            }*/
             .jsgrid-header-row>.jsgrid-header-cell 
             {
                 background-color:#307ECC ;      /* orange */
