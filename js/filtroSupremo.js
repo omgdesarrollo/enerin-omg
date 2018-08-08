@@ -1,24 +1,33 @@
 function construirFiltros()
 {
-    tempData = "<i class='ace-icon fa fa-search' style='color: #0099ff;font-size: 20px;'></i>";
+    // tempData = "<i class='ace-icon fa fa-search' style='color: #0099ff;font-size: 20px;'></i>";
+    // tempData = "";
+    $('.jsgrid-filter-row').removeAttr("style",'display:none');
+    $('.jsgrid-filter-row').addClass("display-none");
+    $(".jsgrid-filter-row").html("");
     $.each(filtros,function(index,value)
     {
+        tam = value.width - 10;
+        tempData = "<td class='jsgrid-cell' style='min-width:"+value.width+"px;'>";
         if(value.type == "date")
         {
-            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' style='width: auto;display:none;'>";
-            tempData += "<input type='date' onChange='construirFiltroSelect(this,\""+value.id+"\")' placeholder='"+value.name+"' style='width:auto;margin:2px;'>";
+            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' style='width: 100%;display:none;'>";
+            tempData += "<input type='date' onChange='construirFiltroSelect(this,\""+value.id+"\")' style='width:100%;margin:2px;'>";
         }
         if(value.type == "text")
         {
-            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' placeholder='"+value.name+"' style='width:auto;margin:2px;text-overflow:ellipsis;'>";
+            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' style='width:100%;'>";
         }
         if(value.type == "combobox")
         {
-            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' style='width:auto;display:none'>";
+            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' style='width:100%;display:none'>";
             tempData += construirFiltrosCombobox(value.data,value.name,value.id,value.descripcion);
         }
+        tempData += "</td>"
+        $(".jsgrid-filter-row").append(tempData);
     });
-    $("#headerFiltros").html(tempData);
+    // $("#headerFiltros").html(tempData);
+    // $(".jsgrid-filter-row").html(tempData);
 }
 
 function construirFiltrosCombobox(datos,name,id,descripcion)
@@ -49,7 +58,7 @@ function construirFiltroSelect(Obj,id)
 
 function filtroSupremo()
 {
-    $("#loader").show();
+    // $("#loader").show();
     $("#jsGrid").jsGrid("cancelEdit");
     newData = [];
     $.each(filtros,function(index,value)
@@ -82,6 +91,8 @@ function filtroSupremo()
         if(DataFinal.length!=0)
             DataFinal=dataT;
     });
-    reconstruirTable(DataFinal);
-    $("#loader").hide();
+    dataListado=DataFinal;
+    aplicarFiltro();
+    // reconstruirTable(DataFinal);
+    // $("#loader").hide();
 }

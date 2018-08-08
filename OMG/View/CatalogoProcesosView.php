@@ -43,8 +43,17 @@ $Usuario=  Session::getSesion("user");
         <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
         <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
         <script src="../../js/fCatalogoProcesosView.js" type="text/javascript"></script>
+        <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
                 
         <style>
+            .display-none
+            {
+                display:none;
+            }
+            .display-view
+            {
+                display:flex;
+            }
             .jsgrid-header-row>.jsgrid-header-cell 
             {
                 background-color:#307ECC ;      /* orange */
@@ -94,10 +103,23 @@ require_once 'EncabezadoUsuarioView.php';
     <img src="../../images/base/pdf.png" width="30px" height="30px"> 
 </button>
 
+<button onClick="mostrarFiltros()">Mostrar Filtros</button>
 </div>
 
 <br><br><br>
-<div style="float:left" id="headerFiltros">
+<!-- <div class="jsgrid" style="position: relative;width: 100%;"> -->
+    <!-- <div class="jsgrid-grid-header jsgrid-header-scrollbar">
+        <div class="jsgrid-table">
+            <div class="jsgrid-header-row" id="headerFiltros"> -->
+                <!-- <div class="jsgrid-header-cell jsgrid-header-sortable"> -->
+                    <!-- <div id="headerFiltros"> -->
+                <!-- </div> -->
+            <!-- </div>
+        </div>
+    <div> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- float:left; -->
 </div>
 
 <div id="jsGrid"></div>
@@ -169,8 +191,10 @@ require_once 'EncabezadoUsuarioView.php';
 </div>
 
 <script>
-    construirFiltros();
     listarDatos();
+    cargarFiltro=0;
+    construirGrid();
+    construirFiltros();
     region_fiscal="";
     ubicacion="";
     clave_contrato="";
@@ -280,6 +304,23 @@ require_once 'EncabezadoUsuarioView.php';
                     swalError("Error en el servidor");
                 }
             });
+        }
+    }
+
+    function mostrarFiltros()
+    {
+        // alert("");
+        // $('.jsgrid-filter-row').removeAttr("style",'display:none');
+        // console.log($('.jsgrid-filter-row').hasClass("display-none"));
+        if($('.jsgrid-filter-row').hasClass("display-none"))
+        {
+            $('.jsgrid-filter-row').removeClass("display-none");
+            $('.jsgrid-filter-row').addClass("display-view");
+        }
+        else
+        {
+            $('.jsgrid-filter-row').removeClass("display-view");
+            $('.jsgrid-filter-row').addClass("display-none");
         }
     }
 </script>

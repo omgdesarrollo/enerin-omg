@@ -1,12 +1,12 @@
 filtros = [
-            {name:"ID del Contrato o Asignación",id:"clave_contrato",type:"text"},
-            {name:"Region Fiscal",id:"region_fiscal",type:"text"},
-            {name:"Ubicación del Punto de Medición",id:"ubicacion",type:"text"},
-            {name:"Tag del Patin de Medición",id:"tag_patin",type:"text"},
-            {name:"Tipo de Medidor",id:"tipo_medidor",type:"text"},
-            {name:"Tag del Medidor",id:"tag_medidor",type:"text"},
-            {name:"Clasificación del Sistema de Medición",id:"clasificacion",type:"text"},
-            {name:"Tipo de Hidrocarburo",id:"hidrocarburo",type:"text"},
+            {name:"ID del Contrato o Asignación",id:"clave_contrato",type:"text",width:150},
+            {name:"Region Fiscal",id:"region_fiscal",type:"text",width:150},
+            {name:"Ubicación del Punto de Medición",id:"ubicacion",type:"text",width:150},
+            {name:"Tag del Patin de Medición",id:"tag_patin",type:"text",width:130},
+            {name:"Tipo de Medidor",id:"tipo_medidor",type:"text",width:150},
+            {name:"Tag del Medidor",id:"tag_medidor",type:"text",width:130},
+            {name:"Clasificación del Sistema de Medición",id:"clasificacion",type:"text",width:150},
+            {name:"Tipo de Hidrocarburo",id:"hidrocarburo",type:"text",width:150},
         ];
 
 function reconstruir(value,index)
@@ -34,19 +34,63 @@ function reconstruirTable(_datos)
         __datos.push(reconstruir(value,index++));
     });
     construirGrid(__datos);
-    $("#loader").hide();
+    // $("#loader").hide();
 }
 
-function construirGrid(__datos)
+var db={};
+
+function construirGrid()
 {
     jsGrid.fields.customControl = MyCControlField;
+    db=
+    {
+        loadData: function()
+        {
+            // if(cargarFiltro==0)
+            // {
+            //     alert("cargando todo");
+            //     return listarDatos();
+            //     cargarFiltro=1;
+            // }
+            // else
+            // {
+            //     alert("cargando filtro");
+            alert("1");
+                return dataListado;
+            // }
+        },
+        // insertItem: function(item)
+        // {
+        //     return item;
+        // },
+    } 
+    window.db = db;
     $("#jsGrid").jsGrid({
+        // onInit: function(args)
+        // {
+            // gridInstance=args;
+        //     jsGrid.Grid.prototype.autoload=true;
+        // },
+        onDataLoading: function(args)
+        {
+            loadBlockUi();
+        },
+        onDataLoaded:function(args)
+        {
+            // $("#loader").hide();
+        },
         width: "100%",
         height: "300px",
         heading: true,
         sorting: true,
         paging: true,
-        data: __datos,
+        autoload:true,
+        controller:db,
+        // data: __datos,
+        pageSize: 10,
+        pageButtonCount: 5,
+        updateOnResize: true,
+        confirmDeleting: true,
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields: [
                 { name:"id_principal", visible:false},
@@ -119,7 +163,8 @@ function listarDatos()
     }
     var listfunciones=[variablefunciondatos];
     ajaxHibrido(datosParamAjaxValues,listfunciones);
-    construirGrid(__datos);
+    // construirGrid(__datos);
+    return __datos;
 }
 
 function preguntarEliminar(data)
@@ -152,4 +197,28 @@ function refresh()
 
 function loadSpinner(){
         myFunction();
+}
+
+function loadBlockUi()
+{
+    $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF">Espere Por Favor</span>', css:
+    { 
+        border: 'none', 
+        padding: '15px', 
+        backgroundColor: '#000', 
+        '-webkit-border-radius': '10px', 
+        '-moz-border-radius': '10px', 
+        opacity: .5, 
+        color: '#fff' 
+    },overlayCSS: { backgroundColor: '#000000',opacity:0.1,cursor:'wait'} }); 
+    setTimeout($.unblockUI, 2000);
+}
+
+function aplicarFiltro()
+{
+    console.log("AA2");
+    // $("#jsGrid").jsGrid("search",dataListado)
+    $("#jsGrid").jsGrid("refresh");
+    // .done(function(){});
+    ;
 }

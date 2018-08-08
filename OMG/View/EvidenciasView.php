@@ -783,7 +783,6 @@ function construir(datosF)
         },
         onDataLoading: function(args)
         {
-            
                  loadBlockUi();
         },
         onDataLoaded:function(args)
