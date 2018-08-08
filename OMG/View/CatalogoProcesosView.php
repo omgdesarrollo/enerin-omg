@@ -190,6 +190,7 @@ require_once 'EncabezadoUsuarioView.php';
 </div>
 
 <script>
+    DataGrid=[];
     listarDatos();
     cargarFiltro=0;
     construirGrid();

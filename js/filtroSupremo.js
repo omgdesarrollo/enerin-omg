@@ -95,3 +95,14 @@ function filtroSupremo()
     });
     aplicarFiltro(DataFinal);
 }
+
+function aplicarFiltro(DataFinal)
+{
+    __datos=[];
+    $.each(DataFinal,function (index,value)
+        {
+            __datos.push( reconstruir(value,index++) );
+        });
+    DataGrid=__datos;
+    gridInstance.loadData();
+}
