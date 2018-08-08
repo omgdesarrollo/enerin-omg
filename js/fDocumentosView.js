@@ -7,8 +7,6 @@ $("#CLAVE_DOCUMENTO").keyup(function(){
     verificarExiste(valueclavedocumento,"clave_documento");
 
 });
-
-
 $("#btn_guardar").click(function(){
 
             var CLAVE_DOCUMENTO=$("#CLAVE_DOCUMENTO").val();
@@ -117,7 +115,7 @@ function listarDatos(queRetornar)
     datosParamAjaxValues={};
     datosParamAjaxValues["url"]="../Controller/DocumentosController.php?Op=Listar";
     datosParamAjaxValues["type"]="POST";
-    datosParamAjaxValues["async"]=false;
+    datosParamAjaxValues["async"]=true;
     
     var variablefunciondatos=function obtenerDatosServer (data)
     {

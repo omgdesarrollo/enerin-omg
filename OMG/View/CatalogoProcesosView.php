@@ -78,8 +78,9 @@ require_once 'EncabezadoUsuarioView.php';
 
 ?>
 
-<div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
+<div id="headerOpciones" style="">
 
+    
 <button onClick="" type="button" class="btn btn-success" data-toggle="modal" data-target="#nuevoRegistro">
     Agregar Nuevo Registro
 </button>
@@ -108,7 +109,6 @@ background:transparent;border:none;float:right;margin-left:15px;
 background:transparent;border:none;float:right;margin-left:15px;-->
 </div>
 
-<br><br><br>
 <!-- <div class="jsgrid" style="position: relative;width: 100%;"> -->
     <!-- <div class="jsgrid-grid-header jsgrid-header-scrollbar">
         <div class="jsgrid-table">

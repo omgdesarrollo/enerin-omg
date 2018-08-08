@@ -79,6 +79,7 @@ function construirGrid()
         height: "300px",
         heading: true,
         sorting: true,
+//        sorter:true,
         paging: true,
         autoload:true,
         controller:db,
@@ -101,6 +102,8 @@ function construirGrid()
                 { name:"hidrocarburo", title: "Tipo de Hidrocarburo", type: "text", width: 150, validate: "required" },
                 { name:"delete", title:"Opción", type:"customControl" }
         ]
+        
+        
     });
 
 }
