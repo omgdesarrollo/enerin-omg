@@ -193,8 +193,9 @@ background:transparent;border:none;float:right;margin-left:15px;-->
 </div>
 
 <script>
+    DataGrid = [];
+    dataListado = [];
     listarDatos();
-    cargarFiltro=0;
     construirGrid();
     construirFiltros();
     region_fiscal="";

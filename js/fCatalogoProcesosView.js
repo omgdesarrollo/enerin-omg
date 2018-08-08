@@ -1,13 +1,13 @@
 filtros = [
-            {name:"ID del Contrato o Asignación",id:"clave_contrato",type:"text"},
-            {name:"Region Fiscal",id:"region_fiscal",type:"text"},
+            {name:"ID del Contrato o Asignación",id:"clave_contrato",type:"text",width:150},
+            {name:"Region Fiscal",id:"region_fiscal",type:"text",witdh:150},
             {name:"Ubicación del Punto de Medición",id:"ubicacion",type:"text",width:150},
             {name:"Tag del Patin de Medición",id:"tag_patin",type:"text",width:130},
             {name:"Tipo de Medidor",id:"tipo_medidor",type:"text",width:150},
             {name:"Tag del Medidor",id:"tag_medidor",type:"text",width:130},
             {name:"Clasificación del Sistema de Medición",id:"clasificacion",type:"text",width:150},
             {name:"Tipo de Hidrocarburo",id:"hidrocarburo",type:"text",width:150},
-            {name:"",id:"",type:"opcion"}
+            {name:"opcion",id:"opcion",type:"opcion"}
         ];
 
 function reconstruir(value,index)
@@ -146,7 +146,6 @@ MyCControlField.prototype = new jsGrid.Field
 
 function listarDatos()
 {
-
     __datos=[];
     datosParamAjaxValues={};
     datosParamAjaxValues["url"]="../Controller/CatalogoProcesosController.php?Op=listar";
@@ -163,7 +162,7 @@ function listarDatos()
     var listfunciones=[variablefunciondatos];
     ajaxHibrido(datosParamAjaxValues,listfunciones);
     // construirGrid(__datos);
-    DataGrid=__datos;
+    DataGrid = __datos;
 //    return __datos;
 }
 
