@@ -22,7 +22,7 @@ function construirFiltros()
         }
         if(value.type == "combobox")
         {
-            tempData += "<input id='"+value.id+"' type='text' onkeyup='pressEnter()' style='width:100%;display:none'>";
+            tempData += "<input id='"+value.id+"' type='text' onkeyup='pressEnter(event)' style='width:100%;display:none'>";
             tempData += construirFiltrosCombobox(value.data,value.name,value.id,value.descripcion);
         }
         if(value.type == "opcion")
