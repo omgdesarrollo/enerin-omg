@@ -50,9 +50,6 @@ $Usuario=  Session::getSesion("user");
             {
                 display:none;
             }
-/*            .mostrar{
-                display:"";
-            }*/
             .jsgrid-header-row>.jsgrid-header-cell 
             {
                 background-color:#307ECC ;      /* orange */
@@ -81,29 +78,28 @@ require_once 'EncabezadoUsuarioView.php';
 
 ?>
 
-             
-<div style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
+<div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
 
 <button onClick="" type="button" class="btn btn-success" data-toggle="modal" data-target="#nuevoRegistro">
     Agregar Nuevo Registro
 </button>
 
 <button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();">
-    <i class="glyphicon glyphicon-repeat"></i>   
+    <i class="glyphicon glyphicon-repeat"></i>
 </button>
 
-<button type="button" class="btn btn-info " onClick="mostrarFiltros()">
+<!-- <button type="button" class="btn btn-info " onClick="mostrarFiltros()">
     <i class='ace-icon fa fa-search'></i>
-</button>
+</button> -->
 
 <button style="background:transparent;border:none;float:right;margin-left:15px;" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
     <img src="../../images/base/_excel.png" width="30px" height="30px">
 </button>
 <button style="background:transparent;border:none;float:right;margin-left:15px;" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
-    <img src="../../images/base/word.png" width="30px" height="30px"> 
+    <img src="../../images/base/word.png" width="30px" height="30px">
 </button>
 <button style="background:transparent;border:none;float:right;margin-left:15px;" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
-    <img src="../../images/base/pdf.png" width="30px" height="30px"> 
+    <img src="../../images/base/pdf.png" width="30px" height="30px">
 </button>
 
 </div>
@@ -193,7 +189,6 @@ require_once 'EncabezadoUsuarioView.php';
 </div>
 
 <script>
-    DataGrid=[];
     listarDatos();
     cargarFiltro=0;
     construirGrid();
@@ -307,23 +302,6 @@ require_once 'EncabezadoUsuarioView.php';
                     swalError("Error en el servidor");
                 }
             });
-        }
-    }
-
-    function mostrarFiltros()
-    {
-        // alert("");
-        // $('.jsgrid-filter-row').removeAttr("style",'display:none');
-        // console.log($('.jsgrid-filter-row').hasClass("display-none"));
-        if($('.jsgrid-filter-row').hasClass("display-none"))
-        {
-            $('.jsgrid-filter-row').removeClass("display-none");
-//            $('.jsgrid-filter-row').addClass("display-view");
-        }
-        else
-        {
-//            $('.jsgrid-filter-row').removeClass("display-view");
-            $('.jsgrid-filter-row').addClass("display-none");
         }
     }
 </script>
