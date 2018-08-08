@@ -43,8 +43,13 @@ $Usuario=  Session::getSesion("user");
         <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
         <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
         <script src="../../js/fCatalogoProcesosView.js" type="text/javascript"></script>
+        <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
                 
         <style>
+            .display-none
+            {
+                display:none;
+            }
             .jsgrid-header-row>.jsgrid-header-cell 
             {
                 background-color:#307ECC ;      /* orange */
@@ -73,31 +78,50 @@ require_once 'EncabezadoUsuarioView.php';
 
 ?>
 
-             
-<div style="position: fixed;">
+<div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
 
 <button onClick="" type="button" class="btn btn-success" data-toggle="modal" data-target="#nuevoRegistro">
     Agregar Nuevo Registro
 </button>
 
-<button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
-    <i class="glyphicon glyphicon-repeat"></i>   
+<button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();">
+    <i class="glyphicon glyphicon-repeat"></i>
 </button>
 
-<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
+<!-- <button type="button" class="btn btn-info " onClick="mostrarFiltros()">
+    <i class='ace-icon fa fa-search'></i>
+</button> -->
+<div class="pull-right">
+<button  type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
     <img src="../../images/base/_excel.png" width="30px" height="30px">
 </button>
-<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
-    <img src="../../images/base/word.png" width="30px" height="30px"> 
+<button  type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
+    <img src="../../images/base/word.png" width="30px" height="30px">
 </button>
-<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
-    <img src="../../images/base/pdf.png" width="30px" height="30px"> 
-</button>
-
+<button  type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
+    <img src="../../images/base/pdf.png" width="30px" height="30px">
+</button> 
+</div>
+    <!--<div class="pull-right"></div>-->
+<!--background:transparent;border:none;float:right;margin-left:15px;
+background:transparent;border:none;float:right;margin-left:15px;
+background:transparent;border:none;float:right;margin-left:15px;-->
 </div>
 
 <br><br><br>
-<div style="float:left" id="headerFiltros">
+<!-- <div class="jsgrid" style="position: relative;width: 100%;"> -->
+    <!-- <div class="jsgrid-grid-header jsgrid-header-scrollbar">
+        <div class="jsgrid-table">
+            <div class="jsgrid-header-row" id="headerFiltros"> -->
+                <!-- <div class="jsgrid-header-cell jsgrid-header-sortable"> -->
+                    <!-- <div id="headerFiltros"> -->
+                <!-- </div> -->
+            <!-- </div>
+        </div>
+    <div> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- float:left; -->
 </div>
 
 <div id="jsGrid"></div>
@@ -169,8 +193,10 @@ require_once 'EncabezadoUsuarioView.php';
 </div>
 
 <script>
-    construirFiltros();
     listarDatos();
+    cargarFiltro=0;
+    construirGrid();
+    construirFiltros();
     region_fiscal="";
     ubicacion="";
     clave_contrato="";

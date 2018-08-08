@@ -34,7 +34,9 @@ $Usuario=  Session::getSesion("user");
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
 		                                
                 <script src="../../js/jquery.js" type="text/javascript"></script>
-
+                <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
+                <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
                 
                 <!--Inicia para el spiner cargando-->
                 <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
@@ -51,84 +53,20 @@ $Usuario=  Session::getSesion("user");
                 
                 
     <style>
-      .modal
-      {
-          overflow: hidden;
-      }
-      .modal-dialog{
-          margin-right: 0;
-          margin-left: 0;
-      }
-      .modal-header{
-        height:30px;background-color:#444;
-        color:#ddd;
-      }
-      .modal-title{
-        margin-top:-10px;
-        font-size:16px;
-      }
-      .modal-header .close{
-        margin-top:-10px;
-        color:#fff;
-      }
-      .modal-body{
-        color:#888;
-          /*max-height: calc(100vh - 210px);*/
-        max-height: calc(100vh - 110px);
-        overflow-y: auto;
-      }
-      .modal-body p {
-        text-align:center;
-        padding-top:10px;
-      }
+         .jsgrid-header-row>.jsgrid-header-cell {
+                background-color:#307ECC ;      /* orange */
+                font-family: "Roboto Slab";
+                font-size: 1.2em;
+                color: white;
+                font-weight: normal;
+            }
+            .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                    
+            .modal-lg{width: 100%;}
+            .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
+            body{overflow:hidden;}
+  
                     
-                    
-                    
-/*Inicia estilos para mantener fijo el header*/                    
-    .table-fixed-header {
-      display: table; /* 1 */
-      position: relative;
-      padding-top: calc(~'2.5em + 2px'); /* 2 */
-    
-    table{
-        margin: 0;
-        margin-top: calc(~"-2.5em - 2px"); /* 2 */
-    }
-    
-    thead th {
-        white-space: nowrap;
-        
-        /* 3 - apply same styling as for thead th */
-        /* 4 - compensation for padding-left */
-        &:before {
-            content: attr(data-header);
-            position: absolute;
-            top: 0;
-            padding: .5em 1em; /* 3 */
-            margin-left: -1em; /* 4 */
-        }
-    }
-  }
-
- /* 5 - setting height and scrolling */
-  .table-container {
-    max-height: 70vh; /* 5 */
-    overflow-y: auto; /* 5 */
-        
-        /* 6 - same styling as for thead th */
-        &:before {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        min-height: 2.5em;             /* 6 */
-        border-bottom: 2px solid #DDD; /* 6 */
-        background: #f1f1f1;           /* 6 */
-    }
-  }
- 
-/*Finaliza estilos para mantener fijo el header*/                    
+             
                     
                     
   </style>
@@ -179,24 +117,29 @@ require_once 'EncabezadoUsuarioView.php';
 <div style="height: 55px"></div>-->
 
                    
-<div class="table-fixed-header" style="display:block;" id="myDiv" class="animate-bottom"> 
-    <div class="table-container">
-        
-        <table id="idTable" class="tbl-qa">
-			  <tr>
+<!--<div class="table-fixed-header" style="display:block;" id="myDiv" class="animate-bottom">--> 
+    <div class="jsgrid" id="jsGrid" style="position: relative; height: 300px; width: 100%;">
+        <div class="jsgrid-grid-header jsgrid-header-scrollbar">
+        <table  class="jsgrid-table">
+            <tbody>
+                <tr class="jsgrid-header-row">
 				
-                                <th class="table-header">Folio de Entrada</th>
-                                <th class="table-header">Folio de Salida</th>
-                                <th class="table-header">Responsable del Tema</th>
-                                <th class="table-header">Fecha de Envio</th>
-                                <th class="table-header">Asunto</th>
-                                <th class="table-header">Remitente</th>
-                                <th class="table-header">Autoridad Remitente</th>                                
-                                <th class="table-header">Archivo Adjunto</th>
-                                <th class="table-header">Observaciones</th>              
+                                <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 100px;">Folio de Entrada</th>
+                                <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 100px;">Folio de Salida</th>
+                                <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 100px;">Responsable del Tema</th>
+                                <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 100px;">Fecha de Envio</th>
+                                <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 100px;">Asunto</th>
+                                <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 100px;">Remitente</th>
+                                <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 100px;">Autoridad Remitente</th>                                
+                                <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 100px;">Archivo Adjunto</th>
+                                <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 100px;">Observaciones</th>              
                                
                                 
 			  </tr>
+            </tbody>
+        </table>
+        </div>
+                         <div class="jsgrid-grid-body" style="height: 172px;"><table class="jsgrid-table">
 		  <tbody>
 		  <?php
                   
@@ -217,11 +160,11 @@ require_once 'EncabezadoUsuarioView.php';
 //                   $nombreempleado=$Lista[$k]["NOMBRE_EMPLEADO"];
                   foreach ($Lista as $filas) { 
 		  ?>
-			  <tr class="table-row">
+			  <tr class="jsgrid-row">
 
                                 <!--<td><?php //echo $numeracion++;   ?></td -->
                                 
-                              <td style="background-color: #ccccff"> 
+                              <td class="jsgrid-cell" style="width: 100px;"> 
                                     <select id="id_documento_entrada" class="select" onchange="saveComboToDatabase('id_documento_entrada', <?php echo $filas["id_documento_salida"]; ?> )">
                                     <?php
                                     $s="";
@@ -246,10 +189,10 @@ require_once 'EncabezadoUsuarioView.php';
                                     </select>                                                                     
                                 </td>
                                 
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'folio_salida','<?php echo $filas["id_documento_salida"]; ?>')" onClick="showEdit(this);"><?php echo $filas["folio_salida"]; ?></td>
-                                <td style="background-color: #ccccff" contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleado"]." ".$filas["apellido_paterno"]." ".$filas["apellido_materno"]; ?></td>    
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'fecha_envio','<?php echo $filas["id_documento_salida"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_envio"]; ?></td>
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'asunto','<?php echo $filas["id_documento_salida"]; ?>')" onClick="showEdit(this);"><?php echo $filas["asunto"]; ?></td>
+                                <td class="jsgrid-cell" style="width: 100px;" contenteditable="true" onBlur="saveToDatabase(this,'folio_salida','<?php echo $filas["id_documento_salida"]; ?>')" onClick="showEdit(this);"><?php echo $filas["folio_salida"]; ?></td>
+                                <td class="jsgrid-cell" style="width: 100px;" style="background-color: #ccccff" contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleado','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleado"]." ".$filas["apellido_paterno"]." ".$filas["apellido_materno"]; ?></td>    
+                                <td class="jsgrid-cell" style="width: 100px;" contenteditable="true" onBlur="saveToDatabase(this,'fecha_envio','<?php echo $filas["id_documento_salida"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_envio"]; ?></td>
+                                <td class="jsgrid-cell" style="width: 100px;" contenteditable="true" onBlur="saveToDatabase(this,'asunto','<?php echo $filas["id_documento_salida"]; ?>')" onClick="showEdit(this);"><?php echo $filas["asunto"]; ?></td>
                                 
                                 
 <!--                                <td> 
@@ -304,10 +247,10 @@ require_once 'EncabezadoUsuarioView.php';
                                 </td>-->
                                 
                                 
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'destinatario','<?php echo $filas["id_documento_salida"]; ?>')" onClick="showEdit(this);"><?php echo $filas["destinatario"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'clave_entidad','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_entidad"]; ?></td>                              
+                                <td class="jsgrid-cell" style="width: 100px;" contenteditable="true" onBlur="saveToDatabase(this,'destinatario','<?php echo $filas["id_documento_salida"]; ?>')" onClick="showEdit(this);"><?php echo $filas["destinatario"]; ?></td>
+                                <td class="jsgrid-cell" style="width: 100px;" contenteditable="false" onBlur="saveToDatabase(this,'clave_entidad','<?php echo $filas["id_documento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_entidad"]; ?></td>                              
                                 
-                                <td>
+                                <td class="jsgrid-cell" style="width: 100px;">
                                   <button onClick="mostrar_urls(<?php echo $filas['id_documento_salida'] ?>);" type="button" 
                                   class="btn btn-info" data-toggle="modal" data-target="#create-itemUrls">
                                       <i class='fa fa-cloud-upload' style='font-size: 20px'></i>  
@@ -315,7 +258,7 @@ require_once 'EncabezadoUsuarioView.php';
                                   </button>
                                 </td>
                                 
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'observaciones','<?php echo $filas["id_documento_salida"]; ?>')" onClick="showEdit(this);"><?php echo $filas["observaciones"]; ?></td>
+                                <td class="jsgrid-cell" style="width: 100px;" contenteditable="true" onBlur="saveToDatabase(this,'observaciones','<?php echo $filas["id_documento_salida"]; ?>')" onClick="showEdit(this);"><?php echo $filas["observaciones"]; ?></td>
                                 
                                 
 			  </tr>
@@ -326,7 +269,7 @@ require_once 'EncabezadoUsuarioView.php';
 		?>
 		  </tbody>
 		</table>
-
+        </div>
                  
 
 <!--			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
@@ -335,7 +278,7 @@ require_once 'EncabezadoUsuarioView.php';
 
     </div>                    
 	
-</div>
+<!--</div>-->
              
              
              
