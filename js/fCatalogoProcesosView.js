@@ -66,11 +66,11 @@ function construirGrid()
     } 
     window.db = db;
     $("#jsGrid").jsGrid({
-        // onInit: function(args)
-        // {
+        onInit: function(args)
+        {
             // gridInstance=args;
-        //     jsGrid.Grid.prototype.autoload=true;
-        // },
+            // jsGrid.Grid.prototype.autoload=true;
+        },
         onDataLoading: function(args)
         {
             loadBlockUi();
@@ -86,7 +86,7 @@ function construirGrid()
         paging: true,
         autoload:true,
         controller:db,
-        // data: __datos,
+        // data: dataListado,
         pageSize: 10,
         pageButtonCount: 5,
         updateOnResize: true,
@@ -217,8 +217,15 @@ function loadBlockUi()
 function aplicarFiltro()
 {
     console.log("AA2");
-    // $("#jsGrid").jsGrid("search",dataListado)
-    $("#jsGrid").jsGrid("refresh");
-    // .done(function(){});
+    filtroHTML = $(".jsgrid-filter-row").html();
+    console.log(filtroHTML);
+    // $("#jsGrid").html("");
+    // construirGrid();
+    $("#jsGrid").jsGrid("render")
+    .done(function(){
+        $('.jsgrid-filter-row').removeAttr("style",'display:none');
+        $('.jsgrid-filter-row').addClass("display-view");
+        $(".jsgrid-filter-row").html(filtroHTML);
+    });
     ;
 }
