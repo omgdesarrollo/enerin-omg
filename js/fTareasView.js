@@ -267,3 +267,13 @@ function loadSpinner()
 {
     myFunction();
 }
+
+
+//area de gantt
+
+function cargarprogram(value){
+    alert("d  "+value);
+}
+
+
+//finaliza area de gantt

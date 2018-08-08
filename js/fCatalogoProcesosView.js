@@ -96,7 +96,7 @@ function construirGrid()
         
         
     });
-
+return 1;
 }
 
 var MyCControlField = function(config)
@@ -153,6 +153,7 @@ function listarDatos()
     var listfunciones=[variablefunciondatos];
     ajaxHibrido(datosParamAjaxValues,listfunciones);
     DataGrid = __datos;
+    return 1;
 }
 
 function preguntarEliminar(data)

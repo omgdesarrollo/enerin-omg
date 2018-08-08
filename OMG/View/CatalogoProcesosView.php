@@ -16,9 +16,9 @@ $Usuario=  Session::getSesion("user");
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
 		<!-- bootstrap & fontawesome -->
-        <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-        <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
 
 		<!-- ace styles -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
@@ -27,23 +27,27 @@ $Usuario=  Session::getSesion("user");
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
         <!--Inicia para el spiner cargando-->
-        <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
-        <!--Termina para el spiner cargando-->
-        
-        <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
-        <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-        <script src="../../js/jquery.js" type="text/javascript"></script>
-        <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-        <!--  -->
+                <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+                <!--Termina para el spiner cargando-->
 
-        <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
-        <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+                <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+                <script src="../../js/jquery.js" type="text/javascript"></script>
+                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+                <!--LIBRERIAS DEL DHTMLX  -->
+                <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
+                <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
+                <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
+                <!--FIN DE LIBRERIA>-->
+<!--https://dhtmlx.com/docs/products/dhtmlxCombo/samples/01_init/03_object_api_init.html-->
+                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
 
-        <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
-        <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
-        <script src="../../js/fCatalogoProcesosView.js" type="text/javascript"></script>
-        <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
+                <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
+                <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+                <script src="../../js/fCatalogoProcesosView.js" type="text/javascript"></script>
+                <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
                 
         <style>
             .display-none
@@ -69,7 +73,7 @@ $Usuario=  Session::getSesion("user");
 
 <body class="no-skin" onload="">
 
-<!-- <div id="loader"></div> -->
+<!-- <div id="loader"></div> 
        
 
 <?php
@@ -195,7 +199,7 @@ background:transparent;border:none;float:right;margin-left:15px;-->
 <script>
     DataGrid = [];
     dataListado = [];
-    $.when(listarDatos(), construirGrid()).done(function(dataUno, dataDos) {//IMPORTANTE NO BORRAR NO PREGUNTEN SOLO NO BORRAR 'FVAZCONCELOS' :D 
+    $.when(listarDatos(),construirGrid()).done(function(dataListarDatos, dataConstruirGrid) {//IMPORTANTE NO BORRAR NO PREGUNTEN SOLO NO BORRAR 'FVAZCONCELOS' :D
         construirFiltros();
     });
     
