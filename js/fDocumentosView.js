@@ -115,7 +115,7 @@ function listarDatos(queRetornar)
     datosParamAjaxValues={};
     datosParamAjaxValues["url"]="../Controller/DocumentosController.php?Op=Listar";
     datosParamAjaxValues["type"]="POST";
-    datosParamAjaxValues["async"]=true;
+    datosParamAjaxValues["async"]=false;
     
     var variablefunciondatos=function obtenerDatosServer (data)
     {

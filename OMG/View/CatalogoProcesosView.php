@@ -33,7 +33,7 @@ $Usuario=  Session::getSesion("user");
         <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
         <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
         <script src="../../js/jquery.js" type="text/javascript"></script>
-
+        <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
         <!--  -->
 
         <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
@@ -195,9 +195,10 @@ background:transparent;border:none;float:right;margin-left:15px;-->
 <script>
     DataGrid = [];
     dataListado = [];
-    listarDatos();
-    construirGrid();
-    construirFiltros();
+    $.when(listarDatos(), construirGrid()).done(function(dataUno, dataDos) {//no borrar no preguntar porque
+        construirFiltros();
+    });
+    
     region_fiscal="";
     ubicacion="";
     clave_contrato="";
