@@ -96,16 +96,19 @@ require_once 'EncabezadoUsuarioView.php';
     <i class='ace-icon fa fa-search'></i>
 </button>
 
-<button style="background:transparent;border:none;float:right;margin-left:15px;" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
+<button  type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
     <img src="../../images/base/_excel.png" width="30px" height="30px">
 </button>
-<button style="background:transparent;border:none;float:right;margin-left:15px;" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
+<button  type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
     <img src="../../images/base/word.png" width="30px" height="30px"> 
 </button>
-<button style="background:transparent;border:none;float:right;margin-left:15px;" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
+<button  type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
     <img src="../../images/base/pdf.png" width="30px" height="30px"> 
 </button>
-
+    <!--<div class="pull-right"></div>-->
+<!--background:transparent;border:none;float:right;margin-left:15px;
+background:transparent;border:none;float:right;margin-left:15px;
+background:transparent;border:none;float:right;margin-left:15px;-->
 </div>
 
 <br><br><br>
