@@ -31,8 +31,10 @@ $Usuario=  Session::getSesion("user");
                 <!--Termina para el spiner cargando-->
                 
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+                <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/jquery.js" type="text/javascript"></script>
+                <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
                 <script src="../../js/fEmpleadosOficiosView.js" type="text/javascript"></script>
                 
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
@@ -160,7 +162,7 @@ require_once 'EncabezadoUsuarioView.php';
 <script>
 
 construirFiltros();
-listarDatos();
+construirGrid();
 
 </script>
     <!--Inicia para el spiner cargando-->

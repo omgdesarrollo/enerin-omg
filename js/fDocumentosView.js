@@ -152,12 +152,12 @@ function listarDatos(queRetornar)
     
    if(queRetornar==1)
    {
-    //    console.log(__datos);
-    //    console.log("V",__datosCBE);
+//       console.log(__datos);
       return __datos; 
    }else{
         // console.log("V",__datosCBE);
       return __datosCBE;
+//      console.log(__datosCBE);
    }
 //   
 //   console.log(__datos);
@@ -275,14 +275,7 @@ function listarjsGrid()
 //            console.log(args);
             saveUpdateToDatabase(args);
         },
-    
-//        editRowRenderer :function (item, itemIndex){
-////            alert("le");
-//            console.log(item);
-//            console.log("--");
-//            console.log(itemIndex);
-//            return item;
-//        },
+
             
     
         onItemDeleting: function(args) {
