@@ -195,7 +195,7 @@ background:transparent;border:none;float:right;margin-left:15px;-->
 <script>
     DataGrid = [];
     dataListado = [];
-    $.when(listarDatos(), construirGrid()).done(function(dataUno, dataDos) {//no borrar no preguntar porque
+    $.when(listarDatos(), construirGrid()).done(function(dataUno, dataDos) {//IMPORTANTE NO BORRAR NO PREGUNTEN SOLO NO BORRAR 'FVAZCONCELOS' :D 
         construirFiltros();
     });
     
