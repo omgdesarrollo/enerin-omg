@@ -44,7 +44,24 @@ class CatalogoProcesosDAO{
         {
             $query="SELECT DISTINCT tbcatalogo_reporte.clave_contrato, tbcatalogo_reporte.region_fiscal, tbcatalogo_reporte.ubicacion
                     FROM catalogo_reporte tbcatalogo_reporte
-                    WHERE tbcatalogo_reporte.contrato = $CONTRATO AND tbcatalogo_reporte.clave_contrato = '$CADENA'";
+                    WHERE tbcatalogo_reporte.contrato = $CONTRATO AND tbcatalogo_reporte.region_fiscal LIKE '%$CADENA%'";
+            $db = AccesoDB::getInstancia();
+            $exito = $db->executeQuery($query);
+            return $exito;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+    public function buscarRegionesFiscales($CONTRATO)
+    {
+        try
+        {
+            $query="SELECT DISTINCT tbcatalogo_reporte.region_fiscal
+                    FROM catalogo_reporte tbcatalogo_reporte
+                    WHERE tbcatalogo_reporte.contrato = $CONTRATO";
             $db = AccesoDB::getInstancia();
             $exito = $db->executeQuery($query);
             return $exito;

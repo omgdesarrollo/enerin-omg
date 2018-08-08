@@ -137,14 +137,19 @@ background:transparent;border:none;float:right;margin-left:15px;-->
             </div>
 
             <div class="modal-body">
+                
                 <div class="form-group">
-                    <label class="control-label">ID de Contrato o Asignación: </label>
-                    <input class="form-control" type="text" id="INPUT_CONTRATO_NUEVOREGISTRO" onBlur="buscarIdContrato(this)"/>
+                    <label class="control-label">Región Fiscal: </label>
+                    <!-- <input class="form-control" id="INPUT_REGIONFISCAL_NUEVOREGISTRO" onKeyUp="buscarPorRegionFiscal(this)"/> -->
+                    <div class="dropdown">
+                        <input type="text" class="dropdown-toggle" id="INPUT_REGIONFISCAL_NUEVOREGISTRO" data-toggle="dropdown" onkeyup="buscarPorRegionFiscal(this)" autocomplete="off"/>
+                            <ul style="cursor:pointer;" class="dropdown-menu" id="dropdownEvent" role="menu" aria-labelledby="menu1"></ul>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label">Región Fiscal: </label>
-                    <input class="form-control" type="text" id="INPUT_REGIONFISCAL_NUEVOREGISTRO" disabled/>
+                    <label class="control-label">ID de Contrato o Asignación: </label>
+                    <textarea class="form-control" type="text" id="INPUT_CONTRATO_NUEVOREGISTRO" style="min-width: -webkit-fill-available;max-width: -webkit-fill-available;" disabled></textarea>
                 </div>
 
                 <div class="form-group">
