@@ -65,6 +65,9 @@ $(function()
 }); //CIERRA EL $(FUNCTION())
 
 
+var dataListado=[];
+correoEmail=false;
+
 
 filtros = 
 [
@@ -76,12 +79,6 @@ filtros =
     {'name':'Fecha Creación','id':'fecha_creacion',type:'date'},
     // {'name':'Autoridad','id':'id_autoridad',type:'combobox',data: consultarAutoridades() },
 ];
-
-var dataListado=[];
-correoEmail=false;
-
-
-
 
 
 function listarDatos()
@@ -282,11 +279,12 @@ function insertarEmpleado(empleadoDatos)
                 if( typeof(datos) == "object")
                 {
                     tempData;
-                    swalSuccess("Creado");
+                    swalSuccess("Empleado Creado");
                     $.each(datos,function(index,value)
                     {
                         tempData = reconstruir(value,index);
                     });
+                    
                     $("#jsGrid").jsGrid("insertItem",tempData).done(function()
                     {
                         $("#crea_empleado .close ").click();
@@ -313,6 +311,7 @@ function insertarEmpleado(empleadoDatos)
         swalInfo("El correo no es correcto");
     }
 }
+
 
 function loadSpinner()
 {

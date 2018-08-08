@@ -35,7 +35,6 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/jquery.js" type="text/javascript"></script>
                 <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
-                <script src="../../js/fTareasView.js" type="text/javascript"></script>
                 
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
@@ -44,6 +43,8 @@ $Usuario=  Session::getSesion("user");
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
                 <script src="../../js/tools.js" type="text/javascript"></script>
+                <script src="../../js/fTareasView.js" type="text/javascript"></script>
+
 
                 
                 
@@ -78,7 +79,7 @@ require_once 'EncabezadoUsuarioView.php';
              
 <div style="position: fixed;">
 
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#crea_empleado">
+<button onClick="archivoyComboboxparaModal();" type="button" class="btn btn-success" data-toggle="modal" data-target="#crea_tarea">
     Agregar Tarea
 </button>
 
@@ -109,7 +110,7 @@ require_once 'EncabezadoUsuarioView.php';
 <div id="jsGrid"></div>
 
 <!-- Inicio de Seccion Modal -->
-<div class="modal draggable fade" id="crea_empleado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal draggable fade" id="crea_tarea" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog " role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -118,40 +119,53 @@ require_once 'EncabezadoUsuarioView.php';
             </div>
 
             <div id="validacion_empleado" class="modal-body">
-                <div id="ok"></div>
+                <!--<div id="ok"></div>-->
                     <div class="form-group">
-                        <label class="control-label" for="title">Nombre:</label>
-                        <input type="text"  id="NOMBRE_EMPLEADO" class="form-control" data-error="Ingrese Nombre" required />
+                        <label class="control-label" for="title">Contrato:</label>
+                        <input type="text"  id="CONTRATO" class="form-control" data-error="Ingrese el Contrato" required />
                         <div id="mensaje1" class="help-block with-errors" ></div>
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label" for="title">Apellido Paterno:</label>
-                        <textarea  id="APELLIDO_PATERNO" class="form-control" data-error="Ingrese Apellido Paterno." required></textarea>
+                        <label class="control-label" for="title"> Tarea:</label>
+                        <textarea  id="TAREA" class="form-control" data-error="Ingrese la Tarea" required></textarea>
                         <div id="mensaje2"class="help-block with-errors"></div>
                     </div>
-
+                
                     <div class="form-group">
-                        <label class="control-label" for="title">Apellido Materno:</label>
-                        <textarea  id="APELLIDO_MATERNO" class="form-control" data-error="Ingrese Apellido Materno." required></textarea>
+                        <label class="control-label" for="title">Responsable del Plan:</label>
+                        <select id="ID_EMPLEADOMODAL" class="select2">
+                        </select>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                
+                    <div class="form-group">
+                        <label class="control-label" for="title">Fecha de Creacion:</label>
+                        <input type="date" id="FECHA_CREACION" class="form-control" data-error="Ingrese la Fecha de Recepcion" required>
                         <div id="mensaje3" class="help-block with-errors"></div>
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label" for="title">Categoria:</label>
-                        <textarea  id="CATEGORIA" class="form-control" data-error="Ingrese Categoria." required></textarea>
+                        <label class="control-label" for="title">Fecha de Alarma:</label>                         
+                        <input type="date" id="FECHA_ALARMA" class="form-control" data-error="Ingrese la Fecha de Alarma" required>
                         <div id="mensaje4" class="help-block with-errors"></div>
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label" for="title">Email:</label>
-                        <textarea  id="CORREO" class="form-control" data-error="Ingrese Email" required></textarea>
+                        <label class="control-label" for="title">Fecha de Cumplimiento:</label>
+                        <input type="date" id="FECHA_CUMPLIMIENTO" class="form-control" data-error="Ingrese la Fecha de Cumplimiento" required></textarea>
                         <div id="mensaje5"class="help-block with-errors"></div>
+                    </div>
+                
+                    <div class="form-group">
+                        <label class="control-label" for="title"> Observaciones:</label>
+                        <textarea  id="OBSERVACIONES" class="form-control" data-error="Ingrese una observacion" required></textarea>
+                        <div id="mensaje6"class="help-block with-errors"></div>
                     </div>
 
                     <div class="form-group">
-                        <button type="submit" id="btn_crearEmpleado" disabled class="btn crud-submit btn-info">Guardar</button>
-                        <button type="submit" id="btn_limpiarEmpleado"  class="btn crud-submit btn-info">Limpiar</button>
+                        <button style="width:49%;" type="submit" id="btn_crearTarea" class="btn crud-submit btn-info">Guardar</button>
+                        <button style="width:49%;" type="submit" id="btn_limpiarModalTarea"  class="btn crud-submit btn-info">Limpiar</button>
                     </div>
                 </div>
             </div>

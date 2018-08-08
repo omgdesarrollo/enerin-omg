@@ -206,7 +206,6 @@ background:transparent;border:none;float:right;margin-left:15px;-->
         //NO SE PUEDEN CAMBIAR LOS NOMBRES DE LOS KEY DEL OBJECTO DATOS YA QUE ESTAN LIGADOS A LA BASE DE DATOS
         datos=new Object();
         datos.clave_contrato = clave_contrato==""? $("#INPUT_CONTRATO_NUEVOREGISTRO").val() : clave_contrato;
-
         datos.region_fiscal = region_fiscal==""? $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").val() : region_fiscal;
         datos.ubicacion = ubicacion==""? $("#INPUT_UBICACION_NUEVOREGISTRO").val() : ubicacion;
         datos.tag_patin = $("#INPUT_TAGPATIN_NUEVOREGISTRO").val();
@@ -215,7 +214,9 @@ background:transparent;border:none;float:right;margin-left:15px;-->
         datos.clasificacion = $("#INPUT_CLASIFICACION_NUEVOREGISTRO").val();
         datos.hidrocarburo = $("#INPUT_HIDROCARBURO_NUEVOREGISTRO ").val();
 
-        listo = ( datos.clave_contrato!=""?
+        listo = 
+        ( 
+        datos.clave_contrato!=""?
         datos.region_fiscal!=""?
         datos.ubicacion!=""?
         datos.tag_patin!=""?
@@ -223,7 +224,9 @@ background:transparent;border:none;float:right;margin-left:15px;-->
         datos.tag_medidor!=""?
         datos.clasificacion!=""?
         datos.hidrocarburo!=""?
-        true : false: false: false: false: false: false: false: false );
+        true : false: false: false: false: false: false: false: false 
+        );
+
         listo ? insertarRegistro(datos) : swalInfo("Campos requeridos");
     });
 
