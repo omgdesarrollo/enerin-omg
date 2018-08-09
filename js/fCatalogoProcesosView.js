@@ -216,6 +216,7 @@ $(function(){
         val = $(".dhxcombo_input").val();
         items = prueva(val);
         // dhtmlXComboFromSelect("combobox_region");
+        myCombo.clearAll();
         myCombo.addOption(items);
     });
 });
