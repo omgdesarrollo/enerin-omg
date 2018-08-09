@@ -210,13 +210,22 @@ $(function(){
     {
         mostrarComboDHTML();
     });
-
-    $(".dhxcombo_input").keyup(function()
+    algo=false;
+    $(".dhxcombo_input").keyup(function(event)
     {
-        val = $(".dhxcombo_input").val();
-        items = prueva(val);
-        // dhtmlXComboFromSelect("combobox_region");
-        myCombo.addOption(items);
+        console.log(event.keyCode);
+        // if(event.keyCode == 13)
+        if(algo)
+        {
+            algo = false;
+            val = $(".dhxcombo_input").val();
+            items = prueva(val);
+            // dhtmlXComboFromSelect("combobox_region");
+            myCombo.addOption(items);
+            
+        }
+        else
+            algo = true;
     });
 });
 
