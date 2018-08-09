@@ -3,13 +3,10 @@ var app=angular.module('omgApp',[]);
 app.controller('empleadosCtrl',function($scope){
 //  this.dataEmpleados=datosEmpleados;  
 $scope.dataEmpleados=datosEmpleados;  
-
     
 $scope.guardarEmpleado=function (){
-
-    
+   
 }
-
 });
 
 
