@@ -161,13 +161,11 @@ function construirGrid()
         autoload:true,
         editing: true,
         heading: true,
-        sorting: true,
         paging: true,
         pageSize: 5,
         pageButtonCount: 5,
         controller:db,
         filtering:false,
-//        data: __datos,
         fields: 
         [
             { name: "id_principal",visible:false},

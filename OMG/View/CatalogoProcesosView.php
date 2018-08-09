@@ -16,9 +16,9 @@ $Usuario=  Session::getSesion("user");
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
 		<!-- bootstrap & fontawesome -->
-        <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-        <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
 
 		<!-- ace styles -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
@@ -27,23 +27,27 @@ $Usuario=  Session::getSesion("user");
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
         <!--Inicia para el spiner cargando-->
-        <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
-        <!--Termina para el spiner cargando-->
-        
-        <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
-        <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-        <script src="../../js/jquery.js" type="text/javascript"></script>
+                <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+                <!--Termina para el spiner cargando-->
 
-        <!--  -->
+                <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+                <script src="../../js/jquery.js" type="text/javascript"></script>
+                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+                <!--LIBRERIAS DEL DHTMLX  -->
+                <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
+                <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
+                <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
+                <!--FIN DE LIBRERIA>-->
+<!--https://dhtmlx.com/docs/products/dhtmlxCombo/samples/01_init/03_object_api_init.html-->
+                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
 
-        <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
-        <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
-
-        <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
-        <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
-        <script src="../../js/fCatalogoProcesosView.js" type="text/javascript"></script>
-        <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
+                <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
+                <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+                <script src="../../js/fCatalogoProcesosView.js" type="text/javascript"></script>
+                <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
                 
         <style>
             .display-none
@@ -58,6 +62,27 @@ $Usuario=  Session::getSesion("user");
                 color: white;
                 font-weight: normal;
             }
+            div.combo_info
+            {
+                color: gray;
+                font-size: 11px;
+                padding-bottom: 5px;
+                padding-left: 2px;
+                font-family: Tahoma;
+            }
+            div.dhxcombolist_material
+            {
+                z-index: 2000;
+            }
+            .dhxcombo_material
+            {
+                width:600px;
+            }
+            /* div.dhxcombo_material.dhxcombo_actv
+            {
+                position:absolute;
+            } */
+            
             .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                    
             .modal-lg{width: 100%;}
             .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
@@ -69,7 +94,7 @@ $Usuario=  Session::getSesion("user");
 
 <body class="no-skin" onload="">
 
-<!-- <div id="loader"></div> -->
+<!-- <div id="loader"></div>  -->
        
 
 <?php
@@ -80,6 +105,7 @@ require_once 'EncabezadoUsuarioView.php';
 
 <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
 
+    
 <button onClick="" type="button" class="btn btn-success" data-toggle="modal" data-target="#nuevoRegistro">
     Agregar Nuevo Registro
 </button>
@@ -107,7 +133,6 @@ require_once 'EncabezadoUsuarioView.php';
 background:transparent;border:none;float:right;margin-left:15px;
 background:transparent;border:none;float:right;margin-left:15px;-->
 </div>
-
 <br><br><br>
 <!-- <div class="jsgrid" style="position: relative;width: 100%;"> -->
     <!-- <div class="jsgrid-grid-header jsgrid-header-scrollbar">
@@ -141,46 +166,44 @@ background:transparent;border:none;float:right;margin-left:15px;-->
                 <div class="form-group">
                     <label class="control-label">Región Fiscal: </label>
                     <!-- <input class="form-control" id="INPUT_REGIONFISCAL_NUEVOREGISTRO" onKeyUp="buscarPorRegionFiscal(this)"/> -->
-                    <div class="dropdown">
-                        <input type="text" class="dropdown-toggle" id="INPUT_REGIONFISCAL_NUEVOREGISTRO" data-toggle="dropdown" onkeyup="buscarPorRegionFiscal(this)" autocomplete="off"/>
-                            <ul style="cursor:pointer;" class="dropdown-menu" id="dropdownEvent" role="menu" aria-labelledby="menu1"></ul>
-                    </div>
+                    <div id="INPUT_REGIONFISCAL_NUEVOREGISTRO" style="witdth:500px"></div>
+                    <!-- <select id='combobox_region' style="width:500px"></select> -->
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="control-label">ID de Contrato o Asignación: </label>
                     <textarea class="form-control" type="text" id="INPUT_CONTRATO_NUEVOREGISTRO" style="min-width: -webkit-fill-available;max-width: -webkit-fill-available;" disabled></textarea>
-                </div>
+                </div> -->
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="control-label">Ubicación del Punto de Medición: </label>
                     <input class="form-control" type="text" id="INPUT_UBICACION_NUEVOREGISTRO" disabled/>
-                </div>
+                </div> -->
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="control-label">Tag del Patín de Medición: </label>
                     <input class="form-control" type="text" id="INPUT_TAGPATIN_NUEVOREGISTRO"/>
-                </div>
+                </div> -->
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="control-label">Tipo de Medidor: </label>
                     <input class="form-control" type="text" id="INPUT_TIPOMEDIDOR_NUEVOREGISTRO"/>
-                </div>
+                </div> -->
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="control-label">Tag del Medidor: </label>
                     <input class="form-control" type="text" id="INPUT_TAGMEDIDOR_NUEVOREGISTRO"/>
-                </div>
+                </div> -->
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="control-label">Clasificación del Sistema de Medición: </label>
                     <input class="form-control" type="text" id="INPUT_CLASIFICACION_NUEVOREGISTRO"/>
-                </div>
+                </div> -->
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="control-label">Tipo de Hidrocarburo: </label>
                     <input class="form-control" type="text" id="INPUT_HIDROCARBURO_NUEVOREGISTRO"/>
-                </div>
+                </div> -->
 
                 <!-- <div class="form-group">
                     <input id="ID_NUEVAEVIDENCIAMODAL" type="text" value="" style="display: none"/>
@@ -188,10 +211,10 @@ background:transparent;border:none;float:right;margin-left:15px;-->
                     <input id="IDREGISTRO_NUEVAEVIDENCIAMODAL" type="text" value="" style="display: none"/>
                 </div> -->
 
-                <div class="form-group" method="post" style="text-align:center">
+                <!-- <div class="form-group" method="post" style="text-align:center">
                     <button type="submit" id="BTN_CREAR_NUEVOREGISTROMODAL" class="btn crud-submit btn-info" style="width:49%" >Crear Registro</button>
                     <button type="submit" id="BTN_LIMPIAR_NUEVOREGISTROMODAL" class="btn crud-submit btn-info" style="width:49%">Limpiar</button>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -200,12 +223,16 @@ background:transparent;border:none;float:right;margin-left:15px;-->
 <script>
     DataGrid = [];
     dataListado = [];
-    listarDatos();
-    construirGrid();
-    construirFiltros();
+    $.when(listarDatos(),construirGrid()).done(function(dataListarDatos, dataConstruirGrid) {//IMPORTANTE NO BORRAR NO PREGUNTEN SOLO NO BORRAR 'FVAZCONCELOS' :D
+        construirFiltros();
+    });
+    
     region_fiscal="";
     ubicacion="";
     clave_contrato="";
+    
+    buscarPorRegionFiscal();
+
     $("#BTN_CREAR_NUEVOREGISTROMODAL").click(function()
     {
         //NO SE PUEDEN CAMBIAR LOS NOMBRES DE LOS KEY DEL OBJECTO DATOS YA QUE ESTAN LIGADOS A LA BASE DE DATOS
