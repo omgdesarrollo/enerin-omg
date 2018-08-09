@@ -37,25 +37,19 @@
 <!--    <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>-->
 
     <!--jquery-->
-    
+        <script src="../../js/jquery.js" type="text/javascript"></script>
+    <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
     <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../css/dhtmlx.css" rel="stylesheet" type="text/css"/>
     <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
-    <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
+    <!--<script src="../../js/jqueryblockUI.js" type="text/javascript"></script>-->
     <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
-    <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
-    <script src="../../js/fEvidenciasView.js" type="text/javascript"></script>
-    <script src="../../js/jquery.js" type="text/javascript"></script>
-    <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+    <!--<script src="../../js/filtroSupremo.js" type="text/javascript"></script>-->
+
     <!--<script src="../../js/dhtmlxFunctions.js" type="text/javascript"></script>-->
     <!--<script src="../../js/formulario.js" type="text/javascript"></script>-->
     <script src="../../js/tools.js" type="text/javascript"></script>
-    <script src="../../js/dhtmlxExtGrid.js" type="text/javascript"></script>
-    <script src="../../js/dhtmlxdataprocessor.js" type="text/javascript"></script>
-    <script src="../../js/dhtmlxFunctions.js" type="text/javascript"></script>
-    <script src="../../js/dhtmlx.js" type="text/javascript"></script>
     <style>
         .jsgrid-header-row>.jsgrid-header-cell
         {
@@ -476,115 +470,6 @@
 
 
 
-
-
-
-
-
-function construir(datosF)
-{
-    jsGrid.fields.customControl = MyCControlField;
-    db=
-    {
-        loadData: function(filter)
-        {
-            loadBlockUi();
-          return listarDatosTodos();
-        },
-        insertItem: function(item)
-        {
-            return item;
-        },
-    } 
-    window.db = db;
-    $("#grid").jsGrid({
-        onInit: function(args)
-        {
-            
-            gridInstance=args;
-            jsGrid.ControlField.prototype.editButton=false;
-            jsGrid.Grid.prototype.autoload=true;
-        },
-        onDataLoading: function(args)
-        {
-            
-           
-        },
-        onDataLoaded:function(args)
-        {
-            $("#loader").hide();
-        },
-        onRefreshing: function(args)
-        {},
-        width: "100%",
-        height: "300px",
-        inserting:false,
-        heading: true,
-        sorting: true,
-        paging: true,
-        autoload:true,
-        pageSize: 10,
-        pageButtonCount: 5,
-        updateOnResize: true,
-        confirmDeleting: true,
-        controller:db,
-        rowClick: function(args)
-        {
-            // console.log(args);
-        },
-        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
-        fields:
-        [
-            { name: "id_principal", type: "text",fields:"f", width: "auto",visible:false },
-            { name: "validador", type: "text",fields:"f", width: "auto",visible:false },
-            { name: "no", title:"No",type: "text", width: 28 },
-            { name: "requisito",title:"Requisito", type: "text", width: 150 },
-            { name: "registro",title:"Registro", type: "text", width: 150  },
-            { name: "frecuencia",title:"Frecuencia", type: "text", width: 120  },
-            { name: "clave_documento",title:"Clave Documento", type: "text",  width: 128 },
-            { name: "adjuntar_evidencia",title:"Adjuntar Evidencia", type: "text",  width: 140 },
-            { name: "fecha_registro",title:"Fecha Registro", type: "text", width: 120 },
-            { name: "usuario",title:"Usuario", type: "text", width:150 },
-            { name: "accion_correctiva",title:"Accion Correctiva", type: "text", width: 130},
-            { name: "plan_accion",title:"Plan Accion", type: "text", width: 170 },
-            { name: "desviacion",title:"Desviacion", type: "text", width: 120},
-            {name: "validacion",title:"Validacion", type: "text", width: 200 },
-            {name:"delete", title:"", type: "customControl" },
-            {name:"eliminar",visible:false}
-        ],
-        onOptionChanged:function(a)
-        {},
-        onItemInserting: function(args)
-        {},
-        onItemInserted:function (args)
-        {}
-    });
-}
-
-function refresh()
-{       
-
-            $("#grid").jsGrid("render").done(function()
-            {
-//                swalSuccess("Datos Cargados Exitosamente");
-            });
-
-    }
-
-
-function loadBlockUi(){
-     $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF">Espere Por Favor</span>', css: { 
-                       border: 'none', 
-                       padding: '15px', 
-                       backgroundColor: '#000', 
-                       '-webkit-border-radius': '10px', 
-                       '-moz-border-radius': '10px', 
-                       opacity: .5, 
-                       color: '#fff' 
-                        },overlayCSS: { backgroundColor: '#000000',opacity:0.1,cursor:'wait'} }); 
-
-                   setTimeout($.unblockUI, 2000);  
-    }
 
 
     

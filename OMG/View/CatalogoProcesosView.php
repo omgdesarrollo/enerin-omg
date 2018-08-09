@@ -34,12 +34,11 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/jquery.js" type="text/javascript"></script>
                 <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-                <!--LIBRERIAS DEL DHTMLX  -->
+                <!--  -->
                 <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
                 <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
                 <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
-                <!--FIN DE LIBRERIA>-->
-<!--https://dhtmlx.com/docs/products/dhtmlxCombo/samples/01_init/03_object_api_init.html-->
+                
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
                 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
@@ -165,9 +164,7 @@ background:transparent;border:none;float:right;margin-left:15px;-->
                 
                 <div class="form-group">
                     <label class="control-label">Región Fiscal: </label>
-                    <!-- <input class="form-control" id="INPUT_REGIONFISCAL_NUEVOREGISTRO" onKeyUp="buscarPorRegionFiscal(this)"/> -->
                     <div id="INPUT_REGIONFISCAL_NUEVOREGISTRO" style="witdth:500px"></div>
-                    <!-- <select id='combobox_region' style="width:500px"></select> -->
                 </div>
 
                 <!-- <div class="form-group">
@@ -211,10 +208,10 @@ background:transparent;border:none;float:right;margin-left:15px;-->
                     <input id="IDREGISTRO_NUEVAEVIDENCIAMODAL" type="text" value="" style="display: none"/>
                 </div> -->
 
-                <!-- <div class="form-group" method="post" style="text-align:center">
+                <div class="form-group" method="post" style="text-align:center">
                     <button type="submit" id="BTN_CREAR_NUEVOREGISTROMODAL" class="btn crud-submit btn-info" style="width:49%" >Crear Registro</button>
                     <button type="submit" id="BTN_LIMPIAR_NUEVOREGISTROMODAL" class="btn crud-submit btn-info" style="width:49%">Limpiar</button>
-                </div> -->
+                </div>
             </div>
         </div>
     </div>
@@ -224,6 +221,7 @@ background:transparent;border:none;float:right;margin-left:15px;-->
     DataGrid = [];
     dataListado = [];
     $.when(listarDatos(),construirGrid()).done(function(dataListarDatos, dataConstruirGrid) {//IMPORTANTE NO BORRAR NO PREGUNTEN SOLO NO BORRAR 'FVAZCONCELOS' :D
+        inicializarFiltros();
         construirFiltros();
     });
     
