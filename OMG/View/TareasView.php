@@ -31,17 +31,22 @@ $Usuario=  Session::getSesion("user");
                 <!--Termina para el spiner cargando-->
                 
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
-                <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/jquery.js" type="text/javascript"></script>
-                <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
-                
+
+
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
                 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+                
+                <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
+                <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
+                
+                
 
-                <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
+                <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+
                 <script src="../../js/tools.js" type="text/javascript"></script>
                 <script src="../../js/fTareasView.js" type="text/javascript"></script>
 
@@ -67,8 +72,7 @@ $Usuario=  Session::getSesion("user");
 
         
 <body class="no-skin" onload="loadSpinner()">
-<div id="loader"></div>
-       
+<!--<div id="loader"></div>-->     
 
 <?php
 
@@ -76,8 +80,7 @@ require_once 'EncabezadoUsuarioView.php';
 
 ?>
 
-             
-<div style="position: fixed;">
+<div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">             
 
 <button onClick="archivoyComboboxparaModal();" type="button" class="btn btn-success" data-toggle="modal" data-target="#crea_tarea">
     Agregar Tarea
@@ -87,6 +90,7 @@ require_once 'EncabezadoUsuarioView.php';
     <i class="glyphicon glyphicon-repeat"></i>   
 </button>
 
+<div class="pull-right">    
 <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
     <img src="../../images/base/_excel.png" width="30px" height="30px">
 </button>
@@ -95,17 +99,12 @@ require_once 'EncabezadoUsuarioView.php';
 </button>
 <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
     <img src="../../images/base/pdf.png" width="30px" height="30px"> 
-</button> 
-
-        <!--<input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave Documento" style="width: 180px;">-->
-        <!--<input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre Documento" style="width: 180px;">-->
-        <!--<input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 180px;">-->
-        
+</button>       
 </div>
-<div style="height: 40px"></div>
-<div id="headerFiltros" style=""></div>
-<!-- <div style="height: 40px"></div> -->
+    
+</div>
 
+<br><br><br>
 
 <div id="jsGrid"></div>
 
@@ -174,10 +173,43 @@ require_once 'EncabezadoUsuarioView.php';
 </div>
 <!--Final de Seccion Modal-->
 
+<!-- Inicio de Seccion Modal Archivos-->
+<div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+        <div id="loaderModalMostrar"></div>
+		<div class="modal-content">
+                        
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="font-size:inherit" aria-hidden="true" class="closeLetra">×</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Archivos Adjuntos</h4>
+		      </div>
+
+		      <div class="modal-body">
+                        <div id="DocumentolistadoUrl"></div>
+
+                        
+                        <div class="form-group">
+                                <div id="DocumentolistadoUrlModal"></div>
+			</div>
+
+                        <div class="form-group" method="post" >
+                                <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Archivo</button>
+                        </div>
+                      </div><!-- cierre div class-body -->
+                </div><!-- cierre div class modal-content -->
+        </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal -->
+
+
 <script>
 
-//construirFiltros();
+DataGrid = [];
+dataListado = [];
+EmpleadosCombobox=[];
+listarDatos();
 construirGrid();
+inicializarFiltros();
+construirFiltros();
 
 </script>
 

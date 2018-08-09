@@ -102,27 +102,9 @@ require_once 'EncabezadoUsuarioView.php';
     <img src="../../images/base/pdf.png" width="30px" height="30px">
 </button> 
 </div>
-    <!--<div class="pull-right"></div>-->
-<!--background:transparent;border:none;float:right;margin-left:15px;
-background:transparent;border:none;float:right;margin-left:15px;
-background:transparent;border:none;float:right;margin-left:15px;-->
 </div>
 
 <br><br><br>
-<!-- <div class="jsgrid" style="position: relative;width: 100%;"> -->
-    <!-- <div class="jsgrid-grid-header jsgrid-header-scrollbar">
-        <div class="jsgrid-table">
-            <div class="jsgrid-header-row" id="headerFiltros"> -->
-                <!-- <div class="jsgrid-header-cell jsgrid-header-sortable"> -->
-                    <!-- <div id="headerFiltros"> -->
-                <!-- </div> -->
-            <!-- </div>
-        </div>
-    <div> -->
-<!-- </div> -->
-<!-- </div> -->
-<!-- float:left; -->
-</div>
 
 <div id="jsGrid"></div>
 
