@@ -26,6 +26,8 @@ $Usuario=  Session::getSesion("user");
         <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
         <link href="../../assets/dhtmlxSuite_v51_std/skins/web/dhtmlx.css" rel="stylesheet" type="text/css"/>
        
+        
+        
         <script src="../../js/tools.js" type="text/javascript"></script>
       
         <script src="../../js/dhtmlxExtGrid.js" type="text/javascript"></script>
@@ -124,13 +126,13 @@ $Usuario=  Session::getSesion("user");
 
                         <div class="form-group">
                             <label class="control-label">Clave/Descripcion: </label>
-                            <div id='comboclave_descripcion'  style='width: 100%;float: Left;'></div>
-                            <!--<div class="dropdown">-->
-<!--                                <input onBlur="registroClaveEscritura()" style="width:100%" type="text" class="dropdown-toggle" 
+<!--                            <div id='comboclave_descripcion'  ></div>-->
+                            <div class="dropdown">
+                                <input onBlur="registroClaveEscritura()" style="width:100%" type="text" class="dropdown-toggle" 
                                 id="CLAVEESCRITURA_AGREGARREGISTRO" data-toggle="dropdown" onKeyup="buscarDocumento(this)" autocomplete="off"/>
                                 <ul style="width:100%;cursor:pointer;" class="dropdown-menu" id="dropdownEvent" role="menu" 
-                                aria-labelledby="menu1"></ul>-->
-                            <!--</div>-->
+                                aria-labelledby="menu1"></ul>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label">Frecuencia: </label>
@@ -174,38 +176,38 @@ $Usuario=  Session::getSesion("user");
 <div id="layout_here"></div>
 
 <div id="treeboxbox_tree"></div>   
+<!--//no borrar-->
+
+<!--<div id="treeboxbox_tree" style="width:550px;height:250px;background-color:white;"></div></body>-->
 
 <div id="seccionIzquierda">
     <div id="contenido" ></div>
 </div>
 
-<div id="contenidoDetalles"></div>
+<!--<div id="comboclave_descripcion"></div>-->
 <!--<div id="gridbox"></div>-->
 
 	<script>
             var myLayout, myTree, myToolbar,id_asignacion_t=-1,levelv=0,id_asignacion_r=-1,selec_tema=-1,id_seleccionado=-1,dataIds_req=[],dataIds_reg=[];
             myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
 	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
-            
-//            grid=new dhtmlXGridObject({parent : 'gridbox'});
-//			grid.setImagesPath("images/../include/css/imgs/");
-//			grid.setHeader("Descripcion,Nuevo,Editar,Borrar,Imprimir,idPagina,ubicacionNivel");
-//			grid.setInitWidths("395,140,140,140,140,50,50,50");
-//			grid.setColTypes("ed,ch,ch,ch,ch,ed,ed,ed");	
-//			grid.setColumnIds("nombreNivel,nuevo,editar,borrar,imprimir,idPagina,ubicacionNivel");
-//			grid.setColAlign("left,center,center,center,center,center,center");
-//			grid.enableAlterCss("even","uneven");
-//			grid.enableMultiselect(true);
-//			grid.enableAccessKeyMap(true);
-//			grid.init();
-//			dp = createDataProcessor(grid);
-//			dp.setVerificator(1,not_empty);	
-//			grid.setColumnHidden(5,true);
-//			grid.setColumnHidden(6,true);
-            
-            
-            
-            
+//            myCombo = new dhtmlXCombo({
+//				parent: "comboclave_descripcion",
+//				width: 230,
+//				filter: true,
+//				name: "combo",
+//				items: [
+//					{value: "1", text: "The Adventures of Tom Sawyer"},
+//					{value: "2", text: "The Dead Zone", selected: true},
+//					{value: "3", text: "The First Men in the Moon"},
+//					{value: "4", text: "The Girl Who Loved Tom Gordon"},
+//					{value: "5", text: "The Green Mile"},
+//					{value: "6", text: "The Invisible Man"},
+//					{value: "7", text: "The Island of Doctor Moreau"},
+//					{value: "8", text: "The Prince and the Pauper"}
+//				]
+//			});
+                        
             id_nodo="",tipo_nodo="";
 
 //	      combo = new dhtmlXCombo("comboclave_descripcion");	

@@ -61,6 +61,12 @@ $Usuario=  Session::getSesion("user");
                 color: white;
                 font-weight: normal;
             }
+            
+                        .display-none
+            {
+                display:none;
+            }
+            
             .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                    
             .modal-lg{width: 100%;}
             .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
@@ -206,6 +212,7 @@ require_once 'EncabezadoUsuarioView.php';
 DataGrid = [];
 dataListado = [];
 EmpleadosCombobox=[];
+filtros=[];
 listarDatos();
 construirGrid();
 inicializarFiltros();

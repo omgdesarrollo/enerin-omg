@@ -17,6 +17,7 @@ function ajaxHibrido(paramAjaxValues,funciones){
         },
         error:function(error)
         {
+            
 //            $('#loader').hide();
         }
     }       

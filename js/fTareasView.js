@@ -39,14 +39,12 @@ $(function()
 
 }); //CIERRA $(function())
 
-filtros=[];
-
 function inicializarFiltros()
 {    
     filtros =[
             {id:"contrato",type:"text"},
             {id:"tarea",type:"text"},
-            {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_empleado"},
+            {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
             {id:"fecha_creacion",type:"date"},
             {id:"fecha_alarma",type:"date"},
             {id:"fecha_cumplimiento",type:"date"},
@@ -54,6 +52,7 @@ function inicializarFiltros()
             {id:"archivo_adjunto",type:"text"},
             {id:"registrar_programa",type:"text"},
             {id:"avance_programa",type:"text"},
+            {name:"opcion",id:"opcion",type:"opcion"}
          ];    
 }
 
@@ -65,13 +64,8 @@ function construirGrid()
             loadData: function()
             {
                 return DataGrid;
-            }
-//        insertItem: function(item)
-//        {
-//            return item;
-//        }
+            },
         };
-//    window.db = db;
     
     $("#jsGrid").jsGrid({
         onInit: function(args)
@@ -85,23 +79,20 @@ function construirGrid()
         },
         onDataLoaded:function(args)
         {
-//            $("#loader").hide();
             $('.jsgrid-filter-row').removeAttr("style",'display:none');
         },
-//        onRefreshing: function(args) {
-//        },
         
         width: "100%",
         height: "300px",
         autoload:true,
-        editing: true,
         heading: true,
         sorting: true,
+        editing: true,
         paging: true,
+        controller:db,
         pageLoading:false,
         pageSize: 5,
         pageButtonCount: 5,
-        controller:db,
         updateOnResize: true,
         confirmDeleting: true,
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
@@ -285,7 +276,7 @@ function insertarTareas(tareaDatos)
 function listarEmpleados()
 {
     $.ajax({
-        url:"../Controller/EmpleadosController.php?Op=mostrarcombo",
+        url:"../Controller/EmpleadosController.php?Op=nombresCompletos",
         type:"GET",
         async:false,
         success:function(empleadosComb)
@@ -370,3 +361,12 @@ function loadBlockUi()
     },overlayCSS: { backgroundColor: '#000000',opacity:0.1,cursor:'wait'} }); 
     setTimeout($.unblockUI, 2000);
 }
+
+//area de gantt
+
+function cargarprogram(value){
+    alert("d  "+value);
+}
+
+
+//finaliza area de gantt

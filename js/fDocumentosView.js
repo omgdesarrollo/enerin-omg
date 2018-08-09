@@ -7,8 +7,6 @@ $("#CLAVE_DOCUMENTO").keyup(function(){
     verificarExiste(valueclavedocumento,"clave_documento");
 
 });
-
-
 $("#btn_guardar").click(function(){
 
             var CLAVE_DOCUMENTO=$("#CLAVE_DOCUMENTO").val();

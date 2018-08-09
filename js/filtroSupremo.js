@@ -1,16 +1,20 @@
+primero = true;
 function construirFiltros()
 {
     // tempData = "<i class='ace-icon fa fa-search' style='color: #0099ff;font-size: 20px;'></i>";
-    // tempData = "";
+    tempData = "";
     $('.jsgrid-filter-row').removeAttr("style",'display:none');
     $('.jsgrid-filter-row').addClass("display-none");
     $(".jsgrid-filter-row").html("");
-    $("#headerOpciones").append("<button type='button' class='btn btn-info' onClick='mostrarFiltros()'><i class='ace-icon fa fa-search'></i></button>");
-
+    if(primero)
+    {
+        $("#headerOpciones").append("<button type='button' class='btn btn-info' onClick='mostrarFiltros()'><i class='ace-icon fa fa-search'></i></button>");
+        primero=false;
+    }
     $.each(filtros,function(index,value)
     {
         // tam = value.width - 10;
-        tempData = "<td class='jsgrid-cell'>";
+        tempData += "<td class='jsgrid-cell'>";
         if(value.type == "date")
         {
             tempData += "<input id='"+value.id+"' type='text' onkeyup='pressEnter()' style='width: 100%;display:none;'>";
@@ -32,7 +36,7 @@ function construirFiltros()
             tempData += "<input class='jsgrid-button jsgrid-search-button' type='button' title='Search' onClick='filtroSupremo()'>";
         }
         tempData += "</td>"
-        $(".jsgrid-filter-row").append(tempData);
+        $(".jsgrid-filter-row").html(tempData);
     });
     // $("#headerFiltros").html(tempData);
     // $(".jsgrid-filter-row").html(tempData);jaja

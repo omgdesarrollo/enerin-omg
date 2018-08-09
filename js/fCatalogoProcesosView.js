@@ -1,14 +1,19 @@
-filtros = [
-            {name:"ID del Contrato o Asignación",id:"clave_contrato",type:"text"},
-            {name:"Region Fiscal",id:"region_fiscal",type:"text"},
-            {name:"Ubicación del Punto de Medición",id:"ubicacion",type:"text"},
-            {name:"Tag del Patin de Medición",id:"tag_patin",type:"text"},
-            {name:"Tipo de Medidor",id:"tipo_medidor",type:"text"},
-            {name:"Tag del Medidor",id:"tag_medidor",type:"text"},
-            {name:"Clasificación del Sistema de Medición",id:"clasificacion",type:"text"},
-            {name:"Tipo de Hidrocarburo",id:"hidrocarburo",type:"text"},
-            {name:"opcion",id:"opcion",type:"opcion"}
-        ];
+filtros = [];
+
+function inicializarFiltros()
+{
+    filtros = [
+        {name:"ID del Contrato o Asignación",id:"clave_contrato",type:"text"},
+        {name:"Region Fiscal",id:"region_fiscal",type:"text"},
+        {name:"Ubicación del Punto de Medición",id:"ubicacion",type:"text"},
+        {name:"Tag del Patin de Medición",id:"tag_patin",type:"text"},
+        {name:"Tipo de Medidor",id:"tipo_medidor",type:"text"},
+        {name:"Tag del Medidor",id:"tag_medidor",type:"text"},
+        {name:"Clasificación del Sistema de Medición",id:"clasificacion",type:"text"},
+        {name:"Tipo de Hidrocarburo",id:"hidrocarburo",type:"text"},
+        {name:"opcion",id:"opcion",type:"opcion"}
+    ];
+}
 
 function reconstruir(value,index)
 {
@@ -48,10 +53,6 @@ function construirGrid()
             {
                 return DataGrid;
             },
-            // insertItem: function(item)
-            // {
-            //     return item;
-            // },
         };
     
     $("#jsGrid").jsGrid({
@@ -73,11 +74,12 @@ function construirGrid()
         autoload:true,
         heading: true,
         sorting: true,
-        paging: true,        
+//        sorter:true,
+        paging: true,
+        controller:db,
         pageLoading:false,
         pageSize: 10,
         pageButtonCount: 5,
-        controller:db,
         updateOnResize: true,
         confirmDeleting: true,
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
@@ -93,8 +95,9 @@ function construirGrid()
                 { name:"hidrocarburo", title: "Tipo de Hidrocarburo", type: "text", width: 150, validate: "required" },
                 { name:"delete", title:"Opción", type:"customControl" }
         ]
+        
+        
     });
-
 }
 
 var MyCControlField = function(config)
@@ -151,6 +154,7 @@ function listarDatos()
     var listfunciones=[variablefunciondatos];
     ajaxHibrido(datosParamAjaxValues,listfunciones);
     DataGrid = __datos;
+    return 1;
 }
 
 function preguntarEliminar(data)
@@ -198,51 +202,133 @@ function insertarRegistro(datos)
         }
     });
 }
-
-function buscarIdContrato(Obj)
-{
-    $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").attr("disabled",true);
-    $("#INPUT_UBICACION_NUEVOREGISTRO").attr("disabled",true);
-    val = $(Obj).val();
-    if(val!="")
+$(function(){
+    $(".dhxcombo_select_button").click(function()
     {
-        $.ajax({
-            url:'../Controller/CatalogoProcesosController.php?Op=BuscarID',
-            type:'GET',
-            data:'CADENA='+val,
-            success:function(datos)
+        mostrarComboDHTML();
+    });
+
+    $(".dhxcombo_input").click(function()
+    {
+        mostrarComboDHTML();
+    });
+
+    $(".dhxcombo_input").keyup(function(event)
+    {
+        mostrarComboDHTML();
+    });
+    primera = true;
+    myCombo.attachEvent("onChange", function(value, text)
+    {
+        if(primera)
+        {
+            alert(value);
+            alert(text);
+            primera = false;
+        }
+        else
+            primera = true;
+        
+    });
+});
+
+function g()
+{
+    
+}
+
+function mostrarComboDHTML()
+{
+    index = new Object();
+    index["z-index"] = 2000;
+    index.visibility = $(".dhxcombolist_material").css("visibility");
+    index.width = $(".dhxcombolist_material").css("width");
+    index.top = $(".dhxcombolist_material").css("top");
+    index.left = $(".dhxcombolist_material").css("left");
+    $(".dhxcombolist_material").css(index);
+}
+var myCombo;
+
+function buscarPorRegionFiscal()
+{
+    datsA=[];
+    $.ajax({
+        url:'../Controller/CatalogoProcesosController.php?Op=BuscarID',
+        type:'GET',
+        data:'CADENA=',
+        async:false,
+        success:function(datos)
+        {
+            $.each(datos,function(index,value)
             {
-                if(typeof(datos)=="object")
-                {
-                    if(datos.length!=0)
-                    {
-                        $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").val(datos[0].region_fiscal);
-                        $("#INPUT_UBICACION_NUEVOREGISTRO").val(datos[0].ubicacion);
-                        $("#INPUT_CONTRATO_NUEVOREGISTRO").val(datos[0].clave_contrato);
-                        region_fiscal = datos[0].region_fiscal;
-                        ubicacion = datos[0].ubicacion;
-                        contrato = datos[0].clave_contrato;
-                    }
-                    else
-                    {
-                        $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").removeAttr("disabled");
-                        $("#INPUT_UBICACION_NUEVOREGISTRO").removeAttr("disabled");
-                        region_fiscal = "";
-                        ubicacion = "";
-                        contrato = "";
-                    }
-                }
-                else
-                {
-                    swalError("Error al intentar comprar clave de contrato");
-                }
-            },
-            error:function()
-            {
-                swalError("Error en el servidor");
-            }
-        });
-    }
+                datsA.push({value:index,text:value.region_fiscal});
+            });
+        }
+    });
+    // return datsA;
+    myCombo = new dhtmlXCombo({
+        parent: "INPUT_REGIONFISCAL_NUEVOREGISTRO",
+        width: 400,
+        filter: true,
+        name: "combo",
+        items:datsA,
+        // onChange:function()
+        // {
+        //     alert("Lo he cambiado");
+        // }
+    });
+    // val = $(Obj).val();
+    // if(val!="")
+    // {
+    //     $.ajax({
+    //         url:'../Controller/CatalogoProcesosController.php?Op=BuscarID',
+    //         type:'GET',
+    //         data:'CADENA='+val,
+    //         success:function(datos)
+    //         {
+    //             if(typeof(datos)=="object")
+    //             {
+    //                 if(datos.length!=0)
+    //                 {
+    //                     tempData = "";
+    //                     $.each(datos,function(index,value)
+    //                     {
+    //                         // datos = value.correo+"^_^"+value.nombre+"^_^"+value.categoria+"^_^"+value.id_empleado;
+    //                         tempData += "<li role='presentation'><a role='menuitem' tabindex='-1'";
+    //                         tempData += "onClick='seleccionarItem(\""+value.region_fiscal+"\")'>";
+    //                         tempData += value.region_fiscal+"</a></li>";
+    //                         // $("#INPUT_CONTRATO_NUEVOREGISTRO").val(value.clave_contrato);
+    //                     });
+    //                         // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
+    //                     $("#dropdownEvent").html(tempData);
+                        
+    //                     // $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").val(datos[0].region_fiscal);
+    //                     // $("#INPUT_UBICACION_NUEVOREGISTRO").val(datos[0].ubicacion);
+    //                     // $("#INPUT_CONTRATO_NUEVOREGISTRO").val(datos[0].clave_contrato);
+    //                     // region_fiscal = datos[0].region_fiscal;
+    //                     // ubicacion = datos[0].ubicacion;
+    //                     // contrato = datos[0].clave_contrato;
+    //                 }
+    //                 else
+    //                 {
+    //                     // $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").removeAttr("disabled");
+    //                     // $("#INPUT_UBICACION_NUEVOREGISTRO").removeAttr("disabled");
+    //                     // region_fiscal = "";
+    //                     // ubicacion = "";
+    //                     // contrato = "";
+    //                 }
+    //             }
+    //             else
+    //             {
+    //                 swalError("Error al intentar comprar clave de contrato");
+    //             }
+    //         },
+    //         error:function()
+    //         {
+    //             swalError("Error en el servidor");
+    //         }
+    //     });
+    // }
 }
 
 function refresh()
