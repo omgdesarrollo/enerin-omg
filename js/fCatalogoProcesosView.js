@@ -210,7 +210,7 @@ $(function(){
     {
         mostrarComboDHTML();
     });
-    
+
     $(".dhxcombo_input").keyup(function()
     {
         val = $(".dhxcombo_input").val();
