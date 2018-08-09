@@ -63,5 +63,20 @@ class CatalogoProcesosModel{
             return -1;
         }
     }
+
+    public function buscarRegionesFiscales($CONTRATO)
+    {
+        try
+        {
+            $dao = new CatalogoProcesosDAO();
+            $lista = $dao->buscarRegionesFiscales($CONTRATO);
+            return $lista;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
 }
 ?>

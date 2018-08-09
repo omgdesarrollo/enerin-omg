@@ -96,7 +96,6 @@ function construirGrid()
         
         
     });
-return 1;
 }
 
 var MyCControlField = function(config)
@@ -201,51 +200,153 @@ function insertarRegistro(datos)
         }
     });
 }
-
-function buscarIdContrato(Obj)
-{
-    $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").attr("disabled",true);
-    $("#INPUT_UBICACION_NUEVOREGISTRO").attr("disabled",true);
-    val = $(Obj).val();
-    if(val!="")
+$(function(){
+    $(".dhxcombo_select_button").click(function()
     {
-        $.ajax({
-            url:'../Controller/CatalogoProcesosController.php?Op=BuscarID',
-            type:'GET',
-            data:'CADENA='+val,
-            success:function(datos)
-            {
-                if(typeof(datos)=="object")
-                {
-                    if(datos.length!=0)
-                    {
-                        $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").val(datos[0].region_fiscal);
-                        $("#INPUT_UBICACION_NUEVOREGISTRO").val(datos[0].ubicacion);
-                        $("#INPUT_CONTRATO_NUEVOREGISTRO").val(datos[0].clave_contrato);
-                        region_fiscal = datos[0].region_fiscal;
-                        ubicacion = datos[0].ubicacion;
-                        contrato = datos[0].clave_contrato;
-                    }
-                    else
-                    {
-                        $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").removeAttr("disabled");
-                        $("#INPUT_UBICACION_NUEVOREGISTRO").removeAttr("disabled");
-                        region_fiscal = "";
-                        ubicacion = "";
-                        contrato = "";
-                    }
-                }
-                else
-                {
-                    swalError("Error al intentar comprar clave de contrato");
-                }
-            },
-            error:function()
-            {
-                swalError("Error en el servidor");
-            }
-        });
-    }
+        mostrarComboDHTML();
+    });
+
+    $(".dhxcombo_input").click(function()
+    {
+        mostrarComboDHTML();
+    });
+
+    $(".dhxcombo_input").keyup(function()
+    {
+        val = $(".dhxcombo_input").val();
+        items = prueva(val);
+        // dhtmlXComboFromSelect("combobox_region");
+        myCombo.addOption(items);
+    });
+});
+
+function mostrarComboDHTML()
+{
+    /* display: none; */
+    index = new Object();
+    // $(".dhxcombolist_material").css("z-index: 2000;");
+    index["z-index"] = 2000;
+    index.visibility = $(".dhxcombolist_material").css("visibility");
+    index.width = $(".dhxcombolist_material").css("width");
+    index.top = $(".dhxcombolist_material").css("top");
+    index.left = $(".dhxcombolist_material").css("left");
+    $(".dhxcombolist_material").css(index);
+}
+
+// prueva("");
+function aplicarCss()
+{
+    myCombo = dhtmlXComboFromSelect("combobox_region");
+    $(".dhxcombo_material").attr("style","width:600px");
+    $(".dhxcombo_input").attr("style","width:90%");
+    $(".dhxcombo_input").val("");
+}
+
+function prueva(cadena)
+{
+    datsA=[];
+    $.ajax({
+        url:'../Controller/CatalogoProcesosController.php?Op=BuscarID',
+        type:'GET',
+        data:'CADENA='+cadena,
+        async:false,
+        success:function(datos)
+        {
+            // dats = "";
+            $.each(datos,function(index,value){
+                // dats += "<option value="+value.region_fiscal+">"+value.region_fiscal+"</option>";
+                // dats.value = index;
+                // dats.text = value.clave_contrato;
+                datsA.push({value:index,text:value.region_fiscal});
+            });
+            // dats +=  "";
+            // $("#combobox_region").html(dats);
+            // aplicarCss();
+            // datsA = dats;
+        }
+    });
+    // console.log(datsA);
+    return datsA;
+}
+var myCombo;
+function buscarPorRegionFiscal()
+{
+    // $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").attr("disabled",true);
+    // $("#INPUT_UBICACION_NUEVOREGISTRO").attr("disabled",true);
+    myCombo = new dhtmlXCombo({
+        parent: "INPUT_REGIONFISCAL_NUEVOREGISTRO",
+        width: 400,
+        filter: true,
+        name: "combo",
+        items:[],
+        // items: [
+        //     {value: "1", text: "The Adventures of Tom Sawyer"},
+        //     {value: "2", text: "The Dead Zone", selected: true},
+        //     {value: "3", text: "The First Men in the Moon"},
+        //     {value: "4", text: "The Girl Who Loved Tom Gordon"},
+        //     {value: "5", text: "The Green Mile"},
+        //     {value: "6", text: "The Invisible Man"},
+        //     {value: "7", text: "The Island of Doctor Moreau"},
+        //     {value: "8", text: "The Prince and the Pauper"}
+        // ],
+        // json:prueva(),
+        // onChange:function()
+        // {
+        //     alert("Lo he cambiado");
+        // }
+    });
+    // val = $(Obj).val();
+    // if(val!="")
+    // {
+    //     $.ajax({
+    //         url:'../Controller/CatalogoProcesosController.php?Op=BuscarID',
+    //         type:'GET',
+    //         data:'CADENA='+val,
+    //         success:function(datos)
+    //         {
+    //             if(typeof(datos)=="object")
+    //             {
+    //                 if(datos.length!=0)
+    //                 {
+    //                     tempData = "";
+    //                     $.each(datos,function(index,value)
+    //                     {
+    //                         // datos = value.correo+"^_^"+value.nombre+"^_^"+value.categoria+"^_^"+value.id_empleado;
+    //                         tempData += "<li role='presentation'><a role='menuitem' tabindex='-1'";
+    //                         tempData += "onClick='seleccionarItem(\""+value.region_fiscal+"\")'>";
+    //                         tempData += value.region_fiscal+"</a></li>";
+    //                         // $("#INPUT_CONTRATO_NUEVOREGISTRO").val(value.clave_contrato);
+    //                     });
+    //                         // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
+    //                     $("#dropdownEvent").html(tempData);
+                        
+    //                     // $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").val(datos[0].region_fiscal);
+    //                     // $("#INPUT_UBICACION_NUEVOREGISTRO").val(datos[0].ubicacion);
+    //                     // $("#INPUT_CONTRATO_NUEVOREGISTRO").val(datos[0].clave_contrato);
+    //                     // region_fiscal = datos[0].region_fiscal;
+    //                     // ubicacion = datos[0].ubicacion;
+    //                     // contrato = datos[0].clave_contrato;
+    //                 }
+    //                 else
+    //                 {
+    //                     // $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").removeAttr("disabled");
+    //                     // $("#INPUT_UBICACION_NUEVOREGISTRO").removeAttr("disabled");
+    //                     // region_fiscal = "";
+    //                     // ubicacion = "";
+    //                     // contrato = "";
+    //                 }
+    //             }
+    //             else
+    //             {
+    //                 swalError("Error al intentar comprar clave de contrato");
+    //             }
+    //         },
+    //         error:function()
+    //         {
+    //             swalError("Error en el servidor");
+    //         }
+    //     });
+    // }
 }
 
 function refresh()

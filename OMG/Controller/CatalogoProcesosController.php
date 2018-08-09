@@ -12,6 +12,13 @@ switch ($Op)
     case 'listar':
         $CONTRATO = Session::getSesion("s_cont");
         $Lista = $model->listarCatalogo($CONTRATO);
+        foreach($Lista as $key => $value)
+        {
+            foreach($value as $k=>$val)
+            {
+                $Lista[$key][$k] = utf8_encode($val);
+            }
+        }
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
     break;
@@ -27,6 +34,27 @@ switch ($Op)
     case 'BuscarID':
         $CONTRATO = Session::getSesion("s_cont");
         $Lista = $model->buscarID($_REQUEST["CADENA"],$CONTRATO);
+        foreach($Lista as $key => $value)
+        {
+            foreach($value as $k=>$val)
+            {
+                $Lista[$key][$k] = utf8_encode($val);
+            }
+        }
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+    break;
+
+    case 'BuscarRegionesFiscales':
+        $CONTRATO = Session::getSesion("s_cont");
+        $Lista = $model->buscarRegionesFiscales($CONTRATO);
+        foreach($Lista as $key => $value)
+        {
+            foreach($value as $k=>$val)
+            {
+                $Lista[$key][$k] = utf8_encode($val);
+            }
+        }
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
     break;

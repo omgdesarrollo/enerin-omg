@@ -61,6 +61,27 @@ $Usuario=  Session::getSesion("user");
                 color: white;
                 font-weight: normal;
             }
+            div.combo_info
+            {
+                color: gray;
+                font-size: 11px;
+                padding-bottom: 5px;
+                padding-left: 2px;
+                font-family: Tahoma;
+            }
+            div.dhxcombolist_material
+            {
+                z-index: 2000;
+            }
+            .dhxcombo_material
+            {
+                width:600px;
+            }
+            /* div.dhxcombo_material.dhxcombo_actv
+            {
+                position:absolute;
+            } */
+            
             .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                    
             .modal-lg{width: 100%;}
             .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
@@ -72,7 +93,7 @@ $Usuario=  Session::getSesion("user");
 
 <body class="no-skin" onload="">
 
-<!-- <div id="loader"></div> -->
+<!-- <div id="loader"></div>  -->
        
 
 <?php
@@ -81,7 +102,7 @@ require_once 'EncabezadoUsuarioView.php';
 
 ?>
 
-<div id="headerOpciones" style="">
+<div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
 
     
 <button onClick="" type="button" class="btn btn-success" data-toggle="modal" data-target="#nuevoRegistro">
@@ -111,7 +132,7 @@ require_once 'EncabezadoUsuarioView.php';
 background:transparent;border:none;float:right;margin-left:15px;
 background:transparent;border:none;float:right;margin-left:15px;-->
 </div>
-
+<br><br><br>
 <!-- <div class="jsgrid" style="position: relative;width: 100%;"> -->
     <!-- <div class="jsgrid-grid-header jsgrid-header-scrollbar">
         <div class="jsgrid-table">
@@ -140,45 +161,48 @@ background:transparent;border:none;float:right;margin-left:15px;-->
             </div>
 
             <div class="modal-body">
-                <div class="form-group">
-                    <label class="control-label">ID de Contrato o Asignación: </label>
-                    <input class="form-control" type="text" id="INPUT_CONTRATO_NUEVOREGISTRO" onBlur="buscarIdContrato(this)"/>
-                </div>
-
+                
                 <div class="form-group">
                     <label class="control-label">Región Fiscal: </label>
-                    <input class="form-control" type="text" id="INPUT_REGIONFISCAL_NUEVOREGISTRO" disabled/>
+                    <!-- <input class="form-control" id="INPUT_REGIONFISCAL_NUEVOREGISTRO" onKeyUp="buscarPorRegionFiscal(this)"/> -->
+                    <div id="INPUT_REGIONFISCAL_NUEVOREGISTRO" style="witdth:500px"></div>
+                    <!-- <select id='combobox_region' style="width:500px"></select> -->
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
+                    <label class="control-label">ID de Contrato o Asignación: </label>
+                    <textarea class="form-control" type="text" id="INPUT_CONTRATO_NUEVOREGISTRO" style="min-width: -webkit-fill-available;max-width: -webkit-fill-available;" disabled></textarea>
+                </div> -->
+
+                <!-- <div class="form-group">
                     <label class="control-label">Ubicación del Punto de Medición: </label>
                     <input class="form-control" type="text" id="INPUT_UBICACION_NUEVOREGISTRO" disabled/>
-                </div>
+                </div> -->
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="control-label">Tag del Patín de Medición: </label>
                     <input class="form-control" type="text" id="INPUT_TAGPATIN_NUEVOREGISTRO"/>
-                </div>
+                </div> -->
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="control-label">Tipo de Medidor: </label>
                     <input class="form-control" type="text" id="INPUT_TIPOMEDIDOR_NUEVOREGISTRO"/>
-                </div>
+                </div> -->
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="control-label">Tag del Medidor: </label>
                     <input class="form-control" type="text" id="INPUT_TAGMEDIDOR_NUEVOREGISTRO"/>
-                </div>
+                </div> -->
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="control-label">Clasificación del Sistema de Medición: </label>
                     <input class="form-control" type="text" id="INPUT_CLASIFICACION_NUEVOREGISTRO"/>
-                </div>
+                </div> -->
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="control-label">Tipo de Hidrocarburo: </label>
                     <input class="form-control" type="text" id="INPUT_HIDROCARBURO_NUEVOREGISTRO"/>
-                </div>
+                </div> -->
 
                 <!-- <div class="form-group">
                     <input id="ID_NUEVAEVIDENCIAMODAL" type="text" value="" style="display: none"/>
@@ -186,10 +210,10 @@ background:transparent;border:none;float:right;margin-left:15px;-->
                     <input id="IDREGISTRO_NUEVAEVIDENCIAMODAL" type="text" value="" style="display: none"/>
                 </div> -->
 
-                <div class="form-group" method="post" style="text-align:center">
+                <!-- <div class="form-group" method="post" style="text-align:center">
                     <button type="submit" id="BTN_CREAR_NUEVOREGISTROMODAL" class="btn crud-submit btn-info" style="width:49%" >Crear Registro</button>
                     <button type="submit" id="BTN_LIMPIAR_NUEVOREGISTROMODAL" class="btn crud-submit btn-info" style="width:49%">Limpiar</button>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -206,6 +230,8 @@ background:transparent;border:none;float:right;margin-left:15px;-->
     ubicacion="";
     clave_contrato="";
     
+    buscarPorRegionFiscal();
+
     $("#BTN_CREAR_NUEVOREGISTROMODAL").click(function()
     {
         //NO SE PUEDEN CAMBIAR LOS NOMBRES DE LOS KEY DEL OBJECTO DATOS YA QUE ESTAN LIGADOS A LA BASE DE DATOS
