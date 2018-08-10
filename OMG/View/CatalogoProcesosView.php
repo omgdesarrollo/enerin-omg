@@ -53,10 +53,6 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
                 
         <style>
-            .display-none
-            {
-                display:none;
-            }
             .jsgrid-header-row>.jsgrid-header-cell 
             {
                 background-color:#307ECC ;      /* orange */
@@ -65,6 +61,12 @@ $Usuario=  Session::getSesion("user");
                 color: white;
                 font-weight: normal;
             }
+            
+                        .display-none
+            {
+                display:none;
+            }
+            
             div.combo_info
             {
                 color: gray;
@@ -132,26 +134,8 @@ $Usuario=  Session::getSesion("user");
     <img src="../../images/base/pdf.png" width="35px" height="auto">
 </button> 
 </div>
-    <!--<div class="pull-right"></div>-->
-<!--background:transparent;border:none;float:right;margin-left:15px;
-background:transparent;border:none;float:right;margin-left:15px;
-background:transparent;border:none;float:right;margin-left:15px;-->
 </div>
 <br><br><br>
-<!-- <div class="jsgrid" style="position: relative;width: 100%;"> -->
-    <!-- <div class="jsgrid-grid-header jsgrid-header-scrollbar">
-        <div class="jsgrid-table">
-            <div class="jsgrid-header-row" id="headerFiltros"> -->
-                <!-- <div class="jsgrid-header-cell jsgrid-header-sortable"> -->
-                    <!-- <div id="headerFiltros"> -->
-                <!-- </div> -->
-            <!-- </div>
-        </div>
-    <div> -->
-<!-- </div> -->
-<!-- </div> -->
-<!-- float:left; -->
-</div>
 
 <div id="jsGrid"></div>
 

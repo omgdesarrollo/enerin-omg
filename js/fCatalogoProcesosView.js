@@ -2,15 +2,15 @@
 function inicializarFiltros()
 {
     filtros = [
-        {type:"none"},
-        {name:"ID del Contrato o Asignación",id:"clave_contrato",type:"text",width:150},
-        {name:"Region Fiscal",id:"region_fiscal",type:"text",witdh:150},
-        {name:"Ubicación del Punto de Medición",id:"ubicacion",type:"text",width:150},
-        {name:"Tag del Patin de Medición",id:"tag_patin",type:"text",width:130},
-        {name:"Tipo de Medidor",id:"tipo_medidor",type:"text",width:150},
-        {name:"Tag del Medidor",id:"tag_medidor",type:"text",width:130},
-        {name:"Clasificación del Sistema de Medición",id:"clasificacion",type:"text",width:150},
-        {name:"Tipo de Hidrocarburo",id:"hidrocarburo",type:"text",width:150},
+        {id:"noneUno", type:"none"},
+        {name:"ID del Contrato o Asignación",id:"clave_contrato",type:"text"},
+        {name:"Region Fiscal",id:"region_fiscal",type:"text"},
+        {name:"Ubicación del Punto de Medición",id:"ubicacion",type:"text"},
+        {name:"Tag del Patin de Medición",id:"tag_patin",type:"text"},
+        {name:"Tipo de Medidor",id:"tipo_medidor",type:"text"},
+        {name:"Tag del Medidor",id:"tag_medidor",type:"text"},
+        {name:"Clasificación del Sistema de Medición",id:"clasificacion",type:"text"},
+        {name:"Tipo de Hidrocarburo",id:"hidrocarburo",type:"text"},
         {name:"opcion",id:"opcion",type:"opcion"}
     ];
 }
@@ -33,32 +33,29 @@ function reconstruir(value,index)
     return tempData;
 }
 
-function reconstruirTable(_datos)
-{
-    __datos=[];
-    $.each(_datos,function(index,value)
-    {
-        __datos.push(reconstruir(value,index++));
-    });
-    construirGrid(__datos);
-}
+//function reconstruirTable(_datos)
+//{
+//    __datos=[];
+//    $.each(_datos,function(index,value)
+//    {
+//        __datos.push(reconstruir(value,index++));
+//    });
+//    construirGrid(__datos);
+//}
 
 var db={};
 
 function construirGrid()
 {
     jsGrid.fields.customControl = MyCControlField;
-    db=
-    {
-        loadData: function()
+        db=
         {
-            return DataGrid;
-        },
-        // insertItem: function(item)
-        // {
-        //     return item;
-        // },
-    } 
+            loadData: function()
+            {
+                return DataGrid;
+            },
+        };
+    
     $("#jsGrid").jsGrid({
          onInit: function(args)
          {
@@ -75,11 +72,11 @@ function construirGrid()
         },
         width: "100%",
         height: "300px",
+        autoload:true,
         heading: true,
         sorting: true,
 //        sorter:true,
         paging: true,
-        autoload:true,
         controller:db,
         pageLoading:false,
         pageSize: 10,

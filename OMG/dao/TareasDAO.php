@@ -22,7 +22,7 @@ class TareasDAO{
         } catch (Exception $ex)
         {
             throw $ex;
-            return $ex;
+            return -1;
         }
     }
 
@@ -48,7 +48,7 @@ class TareasDAO{
             $db=  AccesoDB::getInstancia();
             $lista= $db->executeQueryUpdate($query);
             
-            echo json_encode($query);
+//            echo json_encode($query);
             return $lista;
         } catch (Exception $ex)
         {

@@ -532,11 +532,11 @@ function loadDataNotificaciones(){
 //          
 //          consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
         
-    var dhxWins = new dhtmlXWindows();
-//var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
- dhxWins.attachViewportTo("arbolprincipal");
- var layoutWin=dhxWins.createWindow({id:"emp", text:"OMG", left: 20, top: 30,width:1338,  height:505,  center:true,resize: true,park:true,modal:true	});
- layoutWin.attachURL("SeguimientoEntradaView.php", null, true);
+         var dhxWins = new dhtmlXWindows();
+        //var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
+         dhxWins.attachViewportTo("arbolprincipal");
+         var layoutWin=dhxWins.createWindow({id:"emp", text:"OMG", left: 20, top: 30,width:1338,  height:505,  center:true,resize: true,park:true,modal:true	});
+         layoutWin.attachURL("SeguimientoEntradaView.php", null, true);
  
         dhxWins.attachEvent("onMinimize", function(win){
     // your code here

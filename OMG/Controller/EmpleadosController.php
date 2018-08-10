@@ -50,10 +50,14 @@ switch ($Op) {
 		//header("location: login.php");
 //echo $json = json_encode(array("n" => "".$Lista.NOMBRE_EMPLEADO, "a" => "apellido",  "c" => "test"));
 		return $Lista;
-		break;	    
+		break;
             
-            
-	
+        case 'nombresCompletos':   
+            $Lista= $model->nombresCompletosCombobox();
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($Lista);
+            break;
+        
 	case 'Nuevo':
 		# code...
 		break;	

@@ -84,8 +84,8 @@ function pressEnter(ev)
 function filtroSupremo()
 {
     // $("#loader").show();
-    console.log(dataListado);
-    console.log(filtros);
+    // console.log(dataListado);
+    // console.log(filtros);
     $("#jsGrid").jsGrid("cancelEdit");
     newData = [];
     // console.log(filtros);
