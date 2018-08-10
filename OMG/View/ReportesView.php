@@ -35,13 +35,12 @@
     <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
     <link async href="../../css/modal.css" rel="stylesheet" type="text/css"/>
 <!--    <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>-->
-
     <!--jquery-->
         <script src="../../js/jquery.js" type="text/javascript"></script>
     <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-    <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
+<!--    <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
-    <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
+    <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>-->
     <!--<script src="../../js/jqueryblockUI.js" type="text/javascript"></script>-->
     <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
@@ -49,7 +48,13 @@
 
     <!--<script src="../../js/dhtmlxFunctions.js" type="text/javascript"></script>-->
     <!--<script src="../../js/formulario.js" type="text/javascript"></script>-->
+    <!--LIBRERIA DE dhtmlx-->
+    <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
+    <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
+    <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
+    <!--TERMINA LIBRERIA DE dhtmlx-->
     <script src="../../js/tools.js" type="text/javascript"></script>
+    <script src="../../js/fReportesView.js" type="text/javascript"></script>
     <style>
         .jsgrid-header-row>.jsgrid-header-cell
         {
@@ -59,13 +64,17 @@
                 color: white;
                 font-weight: normal;
         }
-            .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                    
-            .modal-lg{width: 100%;}
-            .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
-            body{overflow:hidden;}
-       
-      
-  
+/*        .dhxcombo_select_img{
+            background-image: "../../images/base/loader.gif";
+        }*/
+        .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                    
+        .modal-lg{width: 100%;}
+        .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
+        body{overflow:hidden;}
+         div#myventana{
+/*                  position: relative;*/
+                    height:400px; 
+                }
         fieldset {padding: 1px;}
 		.readonly{ background: #F2F2F2 }
 		td { margin: 2px; padding: 2px; }
@@ -91,13 +100,14 @@
     
     <div id="headerFiltros" style="position: fixed;">
 
-        <button onClick="" type="button" 
-        class="btn btn-success" data-toggle="modal" data-target="#nuevaReporteModal">
+        <button  type="button" onclick="ventanaWindowsEmergente()"
+        class="btn btn-success">
             Agregar Nuevo Reporte Diario
         </button>
-<button type="button" onclick="seleccionReporte()">Generar Reporte
+          <!--class="btn btn-success" data-toggle="modal" data-target="#nuevaReporteModal">-->
+<!--<button type="button" onclick="seleccionReporte()">Generar Reporte
     <img src="../../images/base/_excel.png" width="30px" height="30px">
-</button>
+</button>-->
 <!--        <button id="btnAgregarEvidenciasRefrescar" type="button" 
         class="btn btn-info " onclick="refresh();" >
             <i class="glyphicon glyphicon-repeat"></i> 
@@ -107,41 +117,29 @@
 
     </div>
     
-    <div style="height: 50px"></div>
 
-<!--            <table class="table table-bordered table-striped header_fijo" id="idTable">
-                <tr>
-                    <th class="table-headert" with="35%" colspan="5" style="background:#9aca40"></td>
-                    <th class="table-headert" with="35%" colspan="5" style="background:#6FB3E0">Responsable de Evidencia</td>
-                    <th class="table-headert" with="30%" colspan="3" style="background:#DCDCDC">Supervisión</td>
-                </tr>
-                <tr>
-                <?php foreach($titulosTable as $index=>$value)
-                { if($index<5){ ?>
-                <th class="table-headert backgroundTdTable" width="35%"><?php echo $value ?></th>
-                <?php }
-                
-                  if($index>4 && $index<10){?>  
-                <th class="table-headert backgroundTdTable2" width="35%"><?php echo $value ?></th>
-                <?php }
-                
-                if($index>9){ ?>
-                    <th class="table-headert backgroundTdTable3" width="30%"><?php echo $value ?></th>
-                <?php }                
-                }
-                 ?>
+<div class="modal draggable fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="closeLetra">X</span>
+                </button>
+		        <h4 class="modal-title" id="myModalLabelNuevaEvidencia">Crear Nuevo Reporte</h4>
+            </div>
+
+            <div class="modal-body">
+     
+                <div id="contenidoFormulario">
                     
-                </tr>
-                
-                <tbody class="hideScrollBar" id="bodyTable" style="position: absolute"> 
                     
-                </tbody>
-            </table>-->
-    
-    <div id="grid"></div>
-
-</body>
-
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+</div>
 
 
 
@@ -251,31 +249,10 @@
 
 
 
-<div class="modal draggable fade" id="evidenciasPrueba" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog modal-lg" role="document">
-        <!-- <div id="loaderModalMostrar"></div> -->
-		<div class="modal-content">                
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-          <h4 class="modal-title" id="myModalLabelMostrarRegistros">Lista Registros</h4>
-        </div>
-
-        <div class="modal-body">
-            <div id="listadatosGrid"></div>
-        </div> 
-      </div> 
-    </div> 
-</div> 
-
-
-
-
-
 <!--cierre del modal Mensaje-->
 <script>
-    loadData();
-		
-    
+
+
     function loadData(){
          $.ajax({
 			url 		: '../Controller/CumplimientosController.php?Op=contratoselec&obt=true',
@@ -288,56 +265,7 @@
 	});
     }
     
-    function seleccionReporte()
-    { 
-
-//var jsonObj = {
-//                
-//        }
-//        alert();
-// jsonObj["1"] = "Diario" ;
-//  jsonObj["2"] = "Mensual" ;
-  
-
-                swal({
-  title: 'Selecciona un reporte ',
-  input: 'select',
-//  html:s,
-//  html:'<input type=\'text\' disabled>',
-  inputOptions:{"1":"DIARIO","2":"MENSUAL"},
-  inputPlaceholder: 'selecciona un reporte ',
-  showCancelButton: false,
-  showLoaderOnConfirm: true,
-   allowEscapeKey:false,
-   allowOutsideClick: false,
-   showConfirmButton: true,
-   confirmButtonText:"Seleccionar",
-  inputValidator: function (value) {
-    return new Promise(function (resolve, reject) {
-      if (value !== '') {
-        resolve();
-      } else {
-        reject('requieres seleccionar ');
-      }
-    });
-  },
-  preConfirm: function() {
-    return new Promise(function(resolve) {
-      setTimeout(function() {
-        resolve()
-      }, 1000)
-    })
-  }
-}).then(function (result) {
-  swal({
-    type: 'success',
-    html: 'Seleccion Exitosa '
-  });
-
-//alert("d");
-  });
-   
- }
+ 
  
     function precargados()
     {
@@ -372,122 +300,10 @@
             }
         });
     }
-    
-    function descargarReporte(){
-        
-	var urlx ='rpd_print.action?paramContrato=${contrato}&paramIdCentroTrabajo=';
-	parent.blockPageReport("Preparando Reporte diario");//
-  	$.fileDownload(urlx, {
-	  successCallback: function (url) { parent.unBlockPageReport(); },
-	    failCallback: function (html, url) { 
-	    	parent.unBlockPageReport(); 
-	    	dhtmlx.alert({	title:"OMG",	type:"alert-error",text:"Ocurrio un error al generar el reporte diario intentelo nuevamente."  	});
-	    }
-	});      		
-}
-    
-   var gridInstance,db={};
-    // var data="";
-    // var dataTemp="";
-
-
-
-
-    dataRegistro="";
-    dataListado=[];
-    dataTodo=[];
-
-    $(function()
-    {
-//alert("ds");
-//        listarDatos();
-//        $.jGrowl("Eliminacion Exitosa", { header: '' })
-            
-            // $("#IDTEMA_NUEVAEVIDENCIAMODAL").val().onChange(function()
-            // {
-            //     alert("Cambio al id del tema");
-            // });
-             
-    });
-
-    $('#BTN_CREAR_NUEVAEVIDENCIAMODAL').click(function()
-    {
-//        $("#grid").jsGrid("insertItem", { Name: "John", Age: 25, Country: 2 }).done(function() {
-//            console.log("insertion completed");
-//        });
-        claveRegistro = $("#IDREGISTRO_NUEVAEVIDENCIAMODAL").val();
-        claveTema = $("#IDTEMA_NUEVAEVIDENCIAMODAL").val();
-        if(claveTema!=-1 && claveRegistro!=-1)
-        {
-            $.ajax
-            ({
-                url: '../Controller/EvidenciasController.php?Op=CrearEvidencia',
-                type: 'POST',
-                data: "ID_REGISTRO="+dataRegistro.id_registro,
-                async:false,
-                beforesend:function (){
-                    alert("se empezaran a listar los datos");
-                },
-                success:function(data)
-                {
-                   
-                    (data==true)?
-                    (
-                        swalSuccess("Se creo la evidencia"),
-//                window.location.href=""
-                        // swal({
-                        // title: '',text: 'Se creo la evidencia',
-                        // showCancelButton: false,showConfirmButton: false,
-                        // type:"success"
-                        // }),
-//                        $('#FRECUENCIA_NUEVAEVIDENCIAMODAL').html(""),
-//                        $('#DOCUMENTO_NUEVAEVIDENCIAMODAL').html(""),
-//                        $('#NOMBRE_NUEVAEVIDENCIAMODAL').html(""),
-//                        $('#nuevaEvidenciaModal .close').click(),
-//                        listarDatos()
-
-                            refresh()
-                    )
-                    :swalErro("Error al crear");
-                    }
-                    
-            });
-        }
-        else
-        {
-            swal("","Selecciona Correctamente","warning");
-        }
-    });
-    
- 
-
-    function loadSpinner()
-    {
-        // alert("se cargara otro ");
-        myFunction();
-    }
-
-
-
-
-
-
-    
-    
-
-
-
-        
-
-
-
-    
-
-   
 
     
 </script>
-
+<div id="myventana"></div>
 
 
 
