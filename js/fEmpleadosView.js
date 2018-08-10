@@ -282,6 +282,7 @@ function insertarEmpleado(empleadoDatos)
                     {
                         tempData = reconstruir(value,index);
                     });
+                    console.log(tempData);
                     
                     $("#jsGrid").jsGrid("insertItem",tempData).done(function()
                     {

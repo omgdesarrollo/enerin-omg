@@ -8,9 +8,9 @@ class TareasModel{
         try
         {
             $dao=new TareasDAO();
-            $lista= $dao->listarTareas();        
-            return $lista;
-            
+            $rec= $dao->listarTareas();
+
+            return $rec;            
         } catch (Exception $ex)
         {
             throw $ex;
@@ -18,14 +18,21 @@ class TareasModel{
         }
     }
     
-    public function insertarTarea($contrato,$tarea,$fecha_creacion,$fecha_alarma,$fecha_cumplimiento,$observaciones,$archivo_adjunto,$id_empleado)
+    public function insertarTarea($contrato,$tarea,$fecha_creacion,$fecha_alarma,$fecha_cumplimiento,$observaciones,$id_empleado)
     {
         try
         {
             $dao=new TareasDAO();
-            $rec= $dao->insertarTarea($contrato, $tarea, $fecha_creacion, $fecha_alarma, $fecha_cumplimiento, $observaciones, $archivo_adjunto,$id_empleado);
+            $exito= $dao->insertarTarea($contrato, $tarea, $fecha_creacion, $fecha_alarma, $fecha_cumplimiento,$observaciones,$id_empleado);
             
-            return $rec;
+            if($exito[0] = 1)
+            {
+                $lista = $dao->listarTarea($exito['id_nuevo']);
+            }
+            else
+                return $exito[0];
+            return $lista;
+
         } catch (Exception $ex)
         {
             throw $ex;

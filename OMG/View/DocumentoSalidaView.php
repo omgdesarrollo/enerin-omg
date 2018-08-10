@@ -42,7 +42,8 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                 <!--Termina para el spiner cargando-->
-
+                
+                <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 <!-- cargar archivo -->
                 <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
@@ -288,7 +289,7 @@ require_once 'EncabezadoUsuarioView.php';
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="font-size:inherit" aria-hidden="true">×</span></button>
 		        <h4 class="modal-title" id="myModalLabel">Crear Nueva Salida</h4>
 		      </div>
 
@@ -362,8 +363,8 @@ require_once 'EncabezadoUsuarioView.php';
                                                                        
                                     
 						<div class="form-group">
-                                                    <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
-                                                    <button type="submit" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
+                                                    <button type="submit" style="width:49%" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
+                                                    <button type="submit" style="width:49%" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
 						</div>
 
 		      		<!--</form>-->
