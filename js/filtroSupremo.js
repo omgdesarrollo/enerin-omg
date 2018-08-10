@@ -9,7 +9,7 @@ function construirFiltros()
     if(primero)
     {
         $("#headerOpciones").append("<button type='button' class='btn btn-info' onClick='mostrarFiltros()'><i class='ace-icon fa fa-search'></i></button>");
-        primero=true;
+        primero=false;
     }
     $.each(filtros,function(index,value)
     {

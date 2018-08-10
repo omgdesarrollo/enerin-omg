@@ -41,24 +41,38 @@ class EmpleadoModel{
     }
 
     
-        public function  listarEmpleadosComboBox(){
+    public function  listarEmpleadosComboBox()
+    {
         try{
             $dao=new EmpleadoDAO();
             $rec=$dao->mostrarEmpleadosComboBox();
-           
-            /*if($rec==NULL){
-            throw new Exception("Usuario no existe !!!!!");
-            }
-            if($rec["CONTRA"]!=$clave){
-            throw  new Exception("Clave Incorrecta!!!!!");
-            }*/            
+         
             return $rec;
-    }  catch (Exception $e){
-        throw  $e;
-    }
+        }  catch (Exception $e){
+            throw  $e;
+            return -1;
+        }
+    
     }
     
-    
+    public function nombresCompletosCombobox()
+    {
+       try
+       {
+           $dao=new EmpleadoDAO();
+           $rec= $dao->nombresCompletosCombobox();
+           
+           return $rec;
+       } catch (Exception $ex)
+       {
+           throw $ex;
+           return -1;
+       }
+    }
+
+
+
+
     public function insertar($pojo){
         try{
             $dao=new EmpleadoDAO();

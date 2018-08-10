@@ -1,14 +1,19 @@
-filtros = [
-            {name:"ID del Contrato o Asignación",id:"clave_contrato",type:"text",width:150},
-            {name:"Region Fiscal",id:"region_fiscal",type:"text",witdh:150},
-            {name:"Ubicación del Punto de Medición",id:"ubicacion",type:"text",width:150},
-            {name:"Tag del Patin de Medición",id:"tag_patin",type:"text",width:130},
-            {name:"Tipo de Medidor",id:"tipo_medidor",type:"text",width:150},
-            {name:"Tag del Medidor",id:"tag_medidor",type:"text",width:130},
-            {name:"Clasificación del Sistema de Medición",id:"clasificacion",type:"text",width:150},
-            {name:"Tipo de Hidrocarburo",id:"hidrocarburo",type:"text",width:150},
-            {name:"opcion",id:"opcion",type:"opcion"}
-        ];
+filtros = [];
+
+function inicializarFiltros()
+{
+    filtros = [
+        {name:"ID del Contrato o Asignación",id:"clave_contrato",type:"text"},
+        {name:"Region Fiscal",id:"region_fiscal",type:"text"},
+        {name:"Ubicación del Punto de Medición",id:"ubicacion",type:"text"},
+        {name:"Tag del Patin de Medición",id:"tag_patin",type:"text"},
+        {name:"Tipo de Medidor",id:"tipo_medidor",type:"text"},
+        {name:"Tag del Medidor",id:"tag_medidor",type:"text"},
+        {name:"Clasificación del Sistema de Medición",id:"clasificacion",type:"text"},
+        {name:"Tipo de Hidrocarburo",id:"hidrocarburo",type:"text"},
+        {name:"opcion",id:"opcion",type:"opcion"}
+    ];
+}
 
 function reconstruir(value,index)
 {
@@ -27,32 +32,29 @@ function reconstruir(value,index)
     return tempData;
 }
 
-function reconstruirTable(_datos)
-{
-    __datos=[];
-    $.each(_datos,function(index,value)
-    {
-        __datos.push(reconstruir(value,index++));
-    });
-    construirGrid(__datos);
-}
+//function reconstruirTable(_datos)
+//{
+//    __datos=[];
+//    $.each(_datos,function(index,value)
+//    {
+//        __datos.push(reconstruir(value,index++));
+//    });
+//    construirGrid(__datos);
+//}
 
 var db={};
 
 function construirGrid()
 {
     jsGrid.fields.customControl = MyCControlField;
-    db=
-    {
-        loadData: function()
+        db=
         {
-            return DataGrid;
-        },
-        // insertItem: function(item)
-        // {
-        //     return item;
-        // },
-    } 
+            loadData: function()
+            {
+                return DataGrid;
+            },
+        };
+    
     $("#jsGrid").jsGrid({
          onInit: function(args)
          {
@@ -69,11 +71,11 @@ function construirGrid()
         },
         width: "100%",
         height: "300px",
+        autoload:true,
         heading: true,
         sorting: true,
 //        sorter:true,
         paging: true,
-        autoload:true,
         controller:db,
         pageLoading:false,
         pageSize: 10,
@@ -211,21 +213,33 @@ $(function(){
         mostrarComboDHTML();
     });
 
-    $(".dhxcombo_input").keyup(function()
+    $(".dhxcombo_input").keyup(function(event)
     {
-        val = $(".dhxcombo_input").val();
-        items = prueva(val);
-        // dhtmlXComboFromSelect("combobox_region");
-        myCombo.clearAll();
-        myCombo.addOption(items);
+        mostrarComboDHTML();
+    });
+    primera = true;
+    myCombo.attachEvent("onChange", function(value, text)
+    {
+        if(primera)
+        {
+            alert(value);
+            alert(text);
+            primera = false;
+        }
+        else
+            primera = true;
+        
     });
 });
 
+function g()
+{
+    
+}
+
 function mostrarComboDHTML()
 {
-    /* display: none; */
     index = new Object();
-    // $(".dhxcombolist_material").css("z-index: 2000;");
     index["z-index"] = 2000;
     index.visibility = $(".dhxcombolist_material").css("visibility");
     index.width = $(".dhxcombolist_material").css("width");
@@ -233,64 +247,31 @@ function mostrarComboDHTML()
     index.left = $(".dhxcombolist_material").css("left");
     $(".dhxcombolist_material").css(index);
 }
+var myCombo;
 
-// prueva("");
-function aplicarCss()
-{
-    myCombo = dhtmlXComboFromSelect("combobox_region");
-    $(".dhxcombo_material").attr("style","width:600px");
-    $(".dhxcombo_input").attr("style","width:90%");
-    $(".dhxcombo_input").val("");
-}
-
-function prueva(cadena)
+function buscarPorRegionFiscal()
 {
     datsA=[];
     $.ajax({
         url:'../Controller/CatalogoProcesosController.php?Op=BuscarID',
         type:'GET',
-        data:'CADENA='+cadena,
+        data:'CADENA=',
         async:false,
         success:function(datos)
         {
-            // dats = "";
-            $.each(datos,function(index,value){
-                // dats += "<option value="+value.region_fiscal+">"+value.region_fiscal+"</option>";
-                // dats.value = index;
-                // dats.text = value.clave_contrato;
+            $.each(datos,function(index,value)
+            {
                 datsA.push({value:index,text:value.region_fiscal});
             });
-            // dats +=  "";
-            // $("#combobox_region").html(dats);
-            // aplicarCss();
-            // datsA = dats;
         }
     });
-    // console.log(datsA);
-    return datsA;
-}
-var myCombo;
-function buscarPorRegionFiscal()
-{
-    // $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").attr("disabled",true);
-    // $("#INPUT_UBICACION_NUEVOREGISTRO").attr("disabled",true);
+    // return datsA;
     myCombo = new dhtmlXCombo({
         parent: "INPUT_REGIONFISCAL_NUEVOREGISTRO",
         width: 400,
         filter: true,
         name: "combo",
-        items:[],
-        // items: [
-        //     {value: "1", text: "The Adventures of Tom Sawyer"},
-        //     {value: "2", text: "The Dead Zone", selected: true},
-        //     {value: "3", text: "The First Men in the Moon"},
-        //     {value: "4", text: "The Girl Who Loved Tom Gordon"},
-        //     {value: "5", text: "The Green Mile"},
-        //     {value: "6", text: "The Invisible Man"},
-        //     {value: "7", text: "The Island of Doctor Moreau"},
-        //     {value: "8", text: "The Prince and the Pauper"}
-        // ],
-        // json:prueva(),
+        items:datsA,
         // onChange:function()
         // {
         //     alert("Lo he cambiado");

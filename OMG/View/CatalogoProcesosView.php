@@ -49,10 +49,6 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
                 
         <style>
-            .display-none
-            {
-                display:none;
-            }
             .jsgrid-header-row>.jsgrid-header-cell 
             {
                 background-color:#307ECC ;      /* orange */
@@ -61,6 +57,12 @@ $Usuario=  Session::getSesion("user");
                 color: white;
                 font-weight: normal;
             }
+            
+                        .display-none
+            {
+                display:none;
+            }
+            
             div.combo_info
             {
                 color: gray;
@@ -127,26 +129,8 @@ require_once 'EncabezadoUsuarioView.php';
     <img src="../../images/base/pdf.png" width="30px" height="30px">
 </button> 
 </div>
-    <!--<div class="pull-right"></div>-->
-<!--background:transparent;border:none;float:right;margin-left:15px;
-background:transparent;border:none;float:right;margin-left:15px;
-background:transparent;border:none;float:right;margin-left:15px;-->
 </div>
 <br><br><br>
-<!-- <div class="jsgrid" style="position: relative;width: 100%;"> -->
-    <!-- <div class="jsgrid-grid-header jsgrid-header-scrollbar">
-        <div class="jsgrid-table">
-            <div class="jsgrid-header-row" id="headerFiltros"> -->
-                <!-- <div class="jsgrid-header-cell jsgrid-header-sortable"> -->
-                    <!-- <div id="headerFiltros"> -->
-                <!-- </div> -->
-            <!-- </div>
-        </div>
-    <div> -->
-<!-- </div> -->
-<!-- </div> -->
-<!-- float:left; -->
-</div>
 
 <div id="jsGrid"></div>
 
@@ -164,9 +148,7 @@ background:transparent;border:none;float:right;margin-left:15px;-->
                 
                 <div class="form-group">
                     <label class="control-label">Región Fiscal: </label>
-                    <!-- <input class="form-control" id="INPUT_REGIONFISCAL_NUEVOREGISTRO" onKeyUp="buscarPorRegionFiscal(this)"/> -->
                     <div id="INPUT_REGIONFISCAL_NUEVOREGISTRO" style="witdth:500px"></div>
-                    <!-- <select id='combobox_region' style="width:500px"></select> -->
                 </div>
 
                 <!-- <div class="form-group">
@@ -210,10 +192,10 @@ background:transparent;border:none;float:right;margin-left:15px;-->
                     <input id="IDREGISTRO_NUEVAEVIDENCIAMODAL" type="text" value="" style="display: none"/>
                 </div> -->
 
-                <!-- <div class="form-group" method="post" style="text-align:center">
+                <div class="form-group" method="post" style="text-align:center">
                     <button type="submit" id="BTN_CREAR_NUEVOREGISTROMODAL" class="btn crud-submit btn-info" style="width:49%" >Crear Registro</button>
                     <button type="submit" id="BTN_LIMPIAR_NUEVOREGISTROMODAL" class="btn crud-submit btn-info" style="width:49%">Limpiar</button>
-                </div> -->
+                </div>
             </div>
         </div>
     </div>
@@ -223,6 +205,7 @@ background:transparent;border:none;float:right;margin-left:15px;-->
     DataGrid = [];
     dataListado = [];
     $.when(listarDatos(),construirGrid()).done(function(dataListarDatos, dataConstruirGrid) {//IMPORTANTE NO BORRAR NO PREGUNTEN SOLO NO BORRAR 'FVAZCONCELOS' :D
+        inicializarFiltros();
         construirFiltros();
     });
     
