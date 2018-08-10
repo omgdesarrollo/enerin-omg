@@ -77,7 +77,7 @@ filtros =
     {'name':'Categoria','id':'categoria',type:'text'},
     {'name':'Correo','id':'correo',type:'text'},
     {'name':'Fecha Creación','id':'fecha_creacion',type:'date'},
-    // {'name':'Autoridad','id':'id_autoridad',type:'combobox',data: consultarAutoridades() },
+    // {'name':'Autoridad','id':'id_autoridad',type:'combobox',data: consultarAutoridades(),descripcion:"" },
 ];
 
 

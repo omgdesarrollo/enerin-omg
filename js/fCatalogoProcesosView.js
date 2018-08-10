@@ -1,8 +1,8 @@
-filtros = [];
 
 function inicializarFiltros()
 {
     filtros = [
+        {type:"none"},
         {name:"ID del Contrato o Asignación",id:"clave_contrato",type:"text",width:150},
         {name:"Region Fiscal",id:"region_fiscal",type:"text",witdh:150},
         {name:"Ubicación del Punto de Medición",id:"ubicacion",type:"text",width:150},
@@ -18,6 +18,7 @@ function inicializarFiltros()
 function reconstruir(value,index)
 {
     tempData = new Object();
+    ultimoNumeroGrid = index;
     tempData["no"] = index;
     tempData["id_principal"] = [{"id_contrato":value.id_contrato}];
     tempData["region_fiscal"] = value.region_fiscal;
@@ -88,6 +89,7 @@ function construirGrid()
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields: [
                 { name:"id_principal", visible:false},
+                {name:"no", title:"No",width:60,type:"text"},
                 { name:"clave_contrato", title: "ID del Contrato o Asignación", type: "text", width: 150, validate: "required" },
                 { name:"region_fiscal", title: "Region Fiscal", type: "text", width: 150, validate: "required" },
                 { name:"ubicacion", title: "Ubicación del Punto de Medición", type: "text", width: 150, validate: "required" },
@@ -98,8 +100,6 @@ function construirGrid()
                 { name:"hidrocarburo", title: "Tipo de Hidrocarburo", type: "text", width: 150, validate: "required" },
                 { name:"delete", title:"Opción", type:"customControl" }
         ]
-        
-        
     });
 }
 
@@ -151,13 +151,36 @@ function listarDatos()
         dataListado = data;
         $.each(data,function (index,value)
         {
-            __datos.push( reconstruir(value,index++) );
+            __datos.push( reconstruir(value,index+1) );
         });
     }
     var listfunciones=[variablefunciondatos];
     ajaxHibrido(datosParamAjaxValues,listfunciones);
     DataGrid = __datos;
     return 1;
+}
+
+function listarUno(ID_insertado)
+{
+    $.ajax({
+        url:'../Controller/CatalogoProcesosController.php?Op=listarUno',
+        type:'GET',
+        data:'ID_CONTRATO='+ID_insertado,
+        success:function(datos)
+        {
+            tempData = new Object();
+            $.each(datos,function(index,value){
+                tempData = reconstruir(value,ultimoNumeroGrid+1);
+            });
+            dataListado.push(datos);
+            DataGrid.push(tempData);
+            $("#jsGrid").jsGrid("insertItem",tempData);
+        },
+        error:function()
+        {
+            swalError("Error en el servidor al intentar agregar el registro a la vista");
+        }
+    });
 }
 
 function preguntarEliminar(data)
@@ -181,6 +204,33 @@ function preguntarEliminar(data)
         });
 }
 
+function eliminarRegistro(id)
+{
+    $.ajax({
+        url:'../Controller/CatalogoProcesosController.php?Op=EliminarRegistro',
+        type:'GET',
+        data:'ID_CONTRATO='+id,
+        success:function(respuesta)
+        {
+            if(respuesta==-2)
+            {
+                swalInfo("No se puede eliminar, Ya esta en uso");
+            }
+            else
+            {
+                if(respuesta==1)
+                    swalSuccess("Registro Eliminado");
+                else
+                    swalError("No se pudo eliminar");
+            }
+        },
+        error:function()
+        {
+            swalError("Error en el servidor");
+        }
+    });
+}
+
 function insertarRegistro(datos)
 {
     $.ajax({
@@ -189,10 +239,10 @@ function insertarRegistro(datos)
         data:'DATOS='+JSON.stringify(datos),
         success:function(exito)
         {
-            if(exito==1)
+            if(exito!=-2 && exito!=-1)
             {
+                listarUno(exito);
                 swalSuccess("Registro Creado");
-                //mandar a insertar al grid
             }
             else
             {
@@ -205,40 +255,28 @@ function insertarRegistro(datos)
         }
     });
 }
+
+var RegionesFiscalesComboDhtml;
+var contratoComboDhtml;
+var ubicacionComboDhtml;
 $(function(){
-    $(".dhxcombo_select_button").click(function()
-    {
-        mostrarComboDHTML();
-    });
-
-    $(".dhxcombo_input").click(function()
-    {
-        mostrarComboDHTML();
-    });
-
-    $(".dhxcombo_input").keyup(function(event)
-    {
-        mostrarComboDHTML();
-    });
     primera = true;
-    myCombo.attachEvent("onChange", function(value, text)
+    RegionesFiscalesComboDhtml.attachEvent("onChange", function(value, text)
     {
         if(primera)
         {
-            alert(value);
-            alert(text);
+            region_fiscal=text;
+            selectItemCombo(value,text);
             primera = false;
         }
         else
             primera = true;
-        
+    });
+    RegionesFiscalesComboDhtml.attachEvent("onOpen", function()
+    {
+        this.DOMlist.style.zIndex = 2000;
     });
 });
-
-function g()
-{
-    
-}
 
 function mostrarComboDHTML()
 {
@@ -250,88 +288,94 @@ function mostrarComboDHTML()
     index.left = $(".dhxcombolist_material").css("left");
     $(".dhxcombolist_material").css(index);
 }
-var myCombo;
 
-function buscarPorRegionFiscal()
+function selectItemCombo(value,text)
 {
-    datsA=[];
+    buscarPorRegionFiscal(text);
+}
+
+function buscarPorRegionFiscal(cadena)
+{
+    datosDhtmlContrato=[];
+    datosDhtmlUbicacion=[];
     $.ajax({
         url:'../Controller/CatalogoProcesosController.php?Op=BuscarID',
         type:'GET',
-        data:'CADENA=',
+        data:'CADENA='+cadena,
         async:false,
         success:function(datos)
         {
             $.each(datos,function(index,value)
             {
-                datsA.push({value:index,text:value.region_fiscal});
+                if(index==0)
+                datosDhtmlContrato.push({value:index,text:value.clave_contrato});
+                datosDhtmlUbicacion.push({value:index,text:value.ubicacion});
             });
+        },
+        error:function()
+        {
+            swalError("Error en el servidor");
         }
     });
-    // return datsA;
-    myCombo = new dhtmlXCombo({
+    contratoComboDhtml.clearAll();
+    contratoComboDhtml.addOption(datosDhtmlContrato);
+    ubicacionComboDhtml.clearAll();
+    ubicacionComboDhtml.addOption(datosDhtmlUbicacion);
+
+    contratoComboDhtml.getOptionsCount()!=0 ?
+    ( contratoComboDhtml.selectOption(0),contratoComboDhtml.disable(),clave_contrato = contratoComboDhtml.getSelectedText()) : (clave_contrato="",contratoComboDhtml.enable());
+}
+
+function buscarRegionesFiscales()
+{
+    datosDhtml=[];
+    $.ajax({
+        url:'../Controller/CatalogoProcesosController.php?Op=BuscarRegionesFiscales',
+        type:'GET',
+        async:false,
+        success:function(datos)
+        {
+            $.each(datos,function(index,value)
+            {
+                datosDhtml.push({value:index,text:value.region_fiscal});
+            });
+        },
+        error:function()
+        {
+            swalError("Error en el servidor");
+        }
+    });
+    RegionesFiscalesComboDhtml = new dhtmlXCombo({
         parent: "INPUT_REGIONFISCAL_NUEVOREGISTRO",
-        width: 400,
+        width: 540,
         filter: true,
         name: "combo",
-        items:datsA,
-        // onChange:function()
-        // {
-        //     alert("Lo he cambiado");
-        // }
+        index:"2000",
+        items:datosDhtml,
     });
-    // val = $(Obj).val();
-    // if(val!="")
-    // {
-    //     $.ajax({
-    //         url:'../Controller/CatalogoProcesosController.php?Op=BuscarID',
-    //         type:'GET',
-    //         data:'CADENA='+val,
-    //         success:function(datos)
-    //         {
-    //             if(typeof(datos)=="object")
-    //             {
-    //                 if(datos.length!=0)
-    //                 {
-    //                     tempData = "";
-    //                     $.each(datos,function(index,value)
-    //                     {
-    //                         // datos = value.correo+"^_^"+value.nombre+"^_^"+value.categoria+"^_^"+value.id_empleado;
-    //                         tempData += "<li role='presentation'><a role='menuitem' tabindex='-1'";
-    //                         tempData += "onClick='seleccionarItem(\""+value.region_fiscal+"\")'>";
-    //                         tempData += value.region_fiscal+"</a></li>";
-    //                         // $("#INPUT_CONTRATO_NUEVOREGISTRO").val(value.clave_contrato);
-    //                     });
-    //                         // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
-    //                     $("#dropdownEvent").html(tempData);
-                        
-    //                     // $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").val(datos[0].region_fiscal);
-    //                     // $("#INPUT_UBICACION_NUEVOREGISTRO").val(datos[0].ubicacion);
-    //                     // $("#INPUT_CONTRATO_NUEVOREGISTRO").val(datos[0].clave_contrato);
-    //                     // region_fiscal = datos[0].region_fiscal;
-    //                     // ubicacion = datos[0].ubicacion;
-    //                     // contrato = datos[0].clave_contrato;
-    //                 }
-    //                 else
-    //                 {
-    //                     // $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").removeAttr("disabled");
-    //                     // $("#INPUT_UBICACION_NUEVOREGISTRO").removeAttr("disabled");
-    //                     // region_fiscal = "";
-    //                     // ubicacion = "";
-    //                     // contrato = "";
-    //                 }
-    //             }
-    //             else
-    //             {
-    //                 swalError("Error al intentar comprar clave de contrato");
-    //             }
-    //         },
-    //         error:function()
-    //         {
-    //             swalError("Error en el servidor");
-    //         }
-    //     });
-    // }
+    contratoComboDhtml = new dhtmlXCombo({
+        parent: "INPUT_CONTRATO_NUEVOREGISTRO",
+        width: 540,
+        filter: true,
+        name: "combo",
+        items:[],
+    });
+    contratoComboDhtml.attachEvent("onOpen",function()
+    {
+        this.DOMlist.style.zIndex = 2000;
+    });
+    
+    ubicacionComboDhtml = new dhtmlXCombo({
+        parent: "INPUT_UBICACION_NUEVOREGISTRO",
+        width: 540,
+        filter: true,
+        name: "combo",
+        items:[],
+    });
+    ubicacionComboDhtml.attachEvent("onOpen",function()
+    {
+        this.DOMlist.style.zIndex = 2000;
+    });
 }
 
 function refresh()
@@ -339,11 +383,6 @@ function refresh()
     listarDatos();
     gridInstance.loadData();
 }
-
-// function loadSpinner()
-// {
-//     myFunction();
-// }
 
 function loadBlockUi()
 {

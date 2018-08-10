@@ -22,7 +22,7 @@ function construirFiltros()
         }
         if(value.type == "text")
         {
-            tempData += "<input id='"+value.id+"' type='text' onkeyup='pressEnter(event)' value='' style='width:100%;'>";
+            tempData += "<input id='"+value.id+"' type='text' onkeyup='pressEnter(event)' style='width:100%;'>";
         }
         if(value.type == "combobox")
         {
@@ -34,6 +34,10 @@ function construirFiltros()
             tempData += "<input id='"+value.id+"' type='text' onkeyup='pressEnter()' style='width:100%;display:none'>";
             tempData += "<input class='jsgrid-button jsgrid-clear-filter-button' type='button' onClick='limpiarFiltros()'>";
             tempData += "<input class='jsgrid-button jsgrid-search-button' type='button' title='Search' onClick='filtroSupremo()'>";
+        }
+        if(value.type == "none")
+        {
+            tempData += "<input id='"+value.id+"' type='text' onkeyup='pressEnter()' style='width:100%;display:none'>";
         }
         tempData += "</td>"
         $(".jsgrid-filter-row").html(tempData);
@@ -80,12 +84,16 @@ function pressEnter(ev)
 function filtroSupremo()
 {
     // $("#loader").show();
+    console.log(dataListado);
+    console.log(filtros);
     $("#jsGrid").jsGrid("cancelEdit");
     newData = [];
+    // console.log(filtros);
     $.each(filtros,function(index,value)
     {
         ($("#"+value.id).val()!="") ? newData.push(value):console.log();
     });
+    // console.log(newData);
     DataFinal=dataListado;
     $.each(newData,function(index,value)
     {
@@ -100,7 +108,7 @@ function filtroSupremo()
                 }
             });
         });
-
+        // console.log(DataTemp);
         dataT=[];
         $.each(DataFinal,function(indF,valF)
         {

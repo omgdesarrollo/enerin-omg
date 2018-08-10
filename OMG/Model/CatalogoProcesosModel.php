@@ -17,6 +17,20 @@ class CatalogoProcesosModel{
         }
     }
 
+    public function listarUno($ID_CONTRATO)
+    {
+        try
+        {
+            $dao=new CatalogoProcesosDAO();
+            $lista= $dao->listarUno($ID_CONTRATO);
+            return $lista;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
     public function guardarCatalogo($CONTRATO,$DATOS)
     {
         try
@@ -77,6 +91,42 @@ class CatalogoProcesosModel{
             return -1;
         }
     }
-    
+
+    public function buscarTagMedidor($CONTRATO,$TAG_MEDIDOR)
+    {
+        try
+        {
+            $dao = new CatalogoProcesosDAO();
+            $exito = $dao->buscarTagMedidor($CONTRATO,$TAG_MEDIDOR);
+            return $exito;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+    public function eliminarRegistro($ID_CONTRATO)
+    {
+        try
+        {
+            $dao = new CatalogoProcesosDAO();
+            $permiso = $dao->permisoDeEliminar($ID_CONTRATO);
+            $exito = 0;
+            if($permiso == 0)
+            {
+                $exito = $dao->eliminarRegistro($ID_CONTRATO);
+                if($exito != 1 )
+                    $exito = -3;
+            }
+            else
+                $exito = -2;
+            return $exito;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 }
 ?>
