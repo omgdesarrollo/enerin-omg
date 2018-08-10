@@ -1,7 +1,6 @@
 primero = true;
 function construirFiltros()
 {
-    // tempData = "<i class='ace-icon fa fa-search' style='color: #0099ff;font-size: 20px;'></i>";
     tempData = "";
     $('.jsgrid-filter-row').removeAttr("style",'display:none');
     $('.jsgrid-filter-row').addClass("display-none");
@@ -13,7 +12,6 @@ function construirFiltros()
     }
     $.each(filtros,function(index,value)
     {
-        // tam = value.width - 10;
         tempData += "<td class='jsgrid-cell'>";
         if(value.type == "date")
         {
@@ -42,8 +40,6 @@ function construirFiltros()
         tempData += "</td>"
         $(".jsgrid-filter-row").html(tempData);
     });
-    // $("#headerFiltros").html(tempData);
-    // $(".jsgrid-filter-row").html(tempData);jaja
 }
 
 function construirFiltrosCombobox(datos,name,id,descripcion)
@@ -83,17 +79,12 @@ function pressEnter(ev)
 
 function filtroSupremo()
 {
-    // $("#loader").show();
-    // console.log(dataListado);
-    // console.log(filtros);
     $("#jsGrid").jsGrid("cancelEdit");
     newData = [];
-    // console.log(filtros);
     $.each(filtros,function(index,value)
     {
         ($("#"+value.id).val()!="") ? newData.push(value):console.log();
     });
-    // console.log(newData);
     DataFinal=dataListado;
     $.each(newData,function(index,value)
     {
@@ -108,7 +99,6 @@ function filtroSupremo()
                 }
             });
         });
-        // console.log(DataTemp);
         dataT=[];
         $.each(DataFinal,function(indF,valF)
         {
@@ -128,9 +118,9 @@ function aplicarFiltro(DataFinal)
     console.log(DataFinal);
     __datos=[];
     $.each(DataFinal,function (index,value)
-        {
-            __datos.push( reconstruir(value,index++) );
-        });
+    {
+        __datos.push( reconstruir(value,index+1) );
+    });
     DataGrid=__datos;
     gridInstance.loadData();
 }
@@ -153,8 +143,6 @@ function limpiarFiltros()
 {
     $.each(filtros,function(index,value)
     {
-        // console.log(value.id);
-        // console.log($("#"+value.id).val());
         $("#"+value.id).val("");
     });
     filtroSupremo();

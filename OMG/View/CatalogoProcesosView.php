@@ -208,9 +208,9 @@ $Usuario=  Session::getSesion("user");
 </div>
 
 <script>
-    var DataGrid;
-    var dataListado;
-    var filtros;
+    var DataGrid=[];
+    var dataListado=[];
+    var filtros=[];
     ultimoNumeroGrid=0;
 
     $.when(

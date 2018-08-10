@@ -44,7 +44,6 @@ function reconstruir(value,index)
 //}
 
 var db={};
-
 function construirGrid()
 {
     jsGrid.fields.customControl = MyCControlField;
@@ -70,6 +69,11 @@ function construirGrid()
         {
             $('.jsgrid-filter-row').removeAttr("style",'display:none');
         },
+        rowClick:function(args)
+        {
+            // console.log(args);
+            // argsGlobal=args;
+        },
         width: "100%",
         height: "300px",
         autoload:true,
@@ -82,7 +86,7 @@ function construirGrid()
         pageSize: 10,
         pageButtonCount: 5,
         updateOnResize: true,
-        confirmDeleting: true,
+        confirmDeleting: false,
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields: [
                 { name:"id_principal", visible:false},
@@ -96,7 +100,33 @@ function construirGrid()
                 { name:"clasificacion", title: "Clasificación del Sistema de Medición", type: "text", width: 150, validate: "required" },
                 { name:"hidrocarburo", title: "Tipo de Hidrocarburo", type: "text", width: 150, validate: "required" },
                 { name:"delete", title:"Opción", type:"customControl" }
-        ]
+                // {type:"control"}
+        ],
+        onItemDeleted:function(args)
+        {
+            // console.log("deleted");
+            // console.log(args);
+            // console.log(argsGlobal);
+            // // if(preguntarEliminar(args.item))
+            //     // args.cancel = true;
+        },
+        onItemDeleting:function(args)
+        {
+            // console.log("deleting");
+            // console.log(args);
+            // argsGlobal = args;
+            // preguntarEliminar(args.item);
+            // if(ifeliminar==0)
+            // {
+            //     args.cancel = true;
+            //     ifeliminar=1;
+            // }
+            // else
+            //     gridInstance.onItemDeleted(args);
+            // args.cancel = preguntarEliminar(args.item);
+                //  = true;
+            // console.log("jajaja");
+        }
     });
 }
 
@@ -106,7 +136,7 @@ var MyCControlField = function(config)
 };
  
 MyCControlField.prototype = new jsGrid.Field
-({        
+({
         css: "date-field",
         align: "center",
         sorter: function(date1, date2)
@@ -169,9 +199,9 @@ function listarUno(ID_insertado)
             $.each(datos,function(index,value){
                 tempData = reconstruir(value,ultimoNumeroGrid+1);
             });
-            dataListado.push(datos);
+            $("#jsGrid").jsGrid("insertItem",tempData).done(function(){});
+            dataListado.push(datos[0]);
             DataGrid.push(tempData);
-            $("#jsGrid").jsGrid("insertItem",tempData);
         },
         error:function()
         {
@@ -182,6 +212,7 @@ function listarUno(ID_insertado)
 
 function preguntarEliminar(data)
 {
+    // valor = true;
     swal({
         title: "",
         text: "¿Eliminar Registro?",
@@ -198,15 +229,21 @@ function preguntarEliminar(data)
             {
                 eliminarRegistro(data.id_principal[0].id_contrato);
             }
+            else
+            {
+            }
         });
+        // return eliminarRegistro(data.id_principal[0].id_contrato);
 }
 
 function eliminarRegistro(id)
 {
+    // val = true;
     $.ajax({
         url:'../Controller/CatalogoProcesosController.php?Op=EliminarRegistro',
         type:'GET',
         data:'ID_CONTRATO='+id,
+        async:false,
         success:function(respuesta)
         {
             if(respuesta==-2)
@@ -216,7 +253,58 @@ function eliminarRegistro(id)
             else
             {
                 if(respuesta==1)
-                    swalSuccess("Registro Eliminado");
+                {
+                    
+                    // listarDatos();
+                    // $.ajax({
+                    //     url:'../Controller/CatalogoProcesosController.php?Op=listarUno',
+                    //     type:'GET',
+                    //     data:'ID_CONTRATO='+id,
+                    //     success:function(datos)
+                        // {
+                            // console.log("aqui");
+                            dataListadoTemp=[];
+                            dataItem = [];
+                            numeroEliminar=0;
+                            itemEliminar={};
+                    //         tempData = new Object();
+                    //         $.each(datos,function(index,value){
+                    //             tempData = reconstruir(value,ultimoNumeroGrid+1);
+                    //         });
+
+                            // dataListado.push(datos);
+                            // DataGrid.push(tempData);
+                            $.each(dataListado,function(index,value)
+                            {
+                                value.id_contrato != id ? dataListadoTemp.push(value) : (dataItem.push(value), numeroEliminar=index+1);
+                                // JSON.stringify(value).indexOf( JSON.stringify(datos[0]) ) != -1 ? console.log() : dataListadoTemp.push(value);
+                            });
+                            // console.log(dataListado);
+                            itemEliminar = reconstruir(dataItem[0],numeroEliminar);
+                            // console.log(itemEliminar);
+                            DataGrid = [];
+                            dataListado = dataListadoTemp;
+                            $.each(dataListado,function(index,value)
+                            {
+                                DataGrid.push( reconstruir(value,index+1) );
+                            });
+                            // console.log(DataGrid);
+                            // $("#jsGrid").jsGrid("deleteItem",$(".jsgrid-row jsgrid-selected-row"));
+
+                            // console.log("final");
+                            // val = false;
+                            // argsGlobal.cancel = false;
+                            // console.log(gridInstance.onItemDeleting());
+                            swalSuccess("Registro Eliminado");
+                            gridInstance.loadData();
+                            // $("#jsGrid").jsGrid("insertItem",tempData);
+                        // },
+                        // error:function()
+                        // {
+                        //     swalError("Error en el servidor al intentar eliminar el registro de la vista");
+                        // }
+                    // });
+                }
                 else
                     swalError("No se pudo eliminar");
             }
@@ -226,6 +314,7 @@ function eliminarRegistro(id)
             swalError("Error en el servidor");
         }
     });
+    // return false;
 }
 
 function insertarRegistro(datos)
