@@ -1,7 +1,6 @@
 primero = true;
 function construirFiltros()
 {
-    // tempData = "<i class='ace-icon fa fa-search' style='color: #0099ff;font-size: 20px;'></i>";
     tempData = "";
     $('.jsgrid-filter-row').removeAttr("style",'display:none');
     $('.jsgrid-filter-row').addClass("display-none");
@@ -13,7 +12,6 @@ function construirFiltros()
     }
     $.each(filtros,function(index,value)
     {
-        // tam = value.width - 10;
         tempData += "<td class='jsgrid-cell'>";
         if(value.type == "date")
         {
@@ -22,7 +20,7 @@ function construirFiltros()
         }
         if(value.type == "text")
         {
-            tempData += "<input id='"+value.id+"' type='text' onkeyup='pressEnter(event)' value='' style='width:100%;'>";
+            tempData += "<input id='"+value.id+"' type='text' onkeyup='pressEnter(event)' style='width:100%;'>";
         }
         if(value.type == "combobox")
         {
@@ -35,11 +33,13 @@ function construirFiltros()
             tempData += "<input class='jsgrid-button jsgrid-clear-filter-button' type='button' onClick='limpiarFiltros()'>";
             tempData += "<input class='jsgrid-button jsgrid-search-button' type='button' title='Search' onClick='filtroSupremo()'>";
         }
+        if(value.type == "none")
+        {
+            tempData += "<input id='"+value.id+"' type='text' onkeyup='pressEnter()' style='width:100%;display:none'>";
+        }
         tempData += "</td>"
         $(".jsgrid-filter-row").html(tempData);
     });
-    // $("#headerFiltros").html(tempData);
-    // $(".jsgrid-filter-row").html(tempData);jaja
 }
 
 function construirFiltrosCombobox(datos,name,id,descripcion)
@@ -79,7 +79,6 @@ function pressEnter(ev)
 
 function filtroSupremo()
 {
-    // $("#loader").show();
     $("#jsGrid").jsGrid("cancelEdit");
     newData = [];
     $.each(filtros,function(index,value)
@@ -100,7 +99,6 @@ function filtroSupremo()
                 }
             });
         });
-
         dataT=[];
         $.each(DataFinal,function(indF,valF)
         {
@@ -120,9 +118,9 @@ function aplicarFiltro(DataFinal)
     console.log(DataFinal);
     __datos=[];
     $.each(DataFinal,function (index,value)
-        {
-            __datos.push( reconstruir(value,index++) );
-        });
+    {
+        __datos.push( reconstruir(value,index+1) );
+    });
     DataGrid=__datos;
     gridInstance.loadData();
 }
@@ -145,8 +143,6 @@ function limpiarFiltros()
 {
     $.each(filtros,function(index,value)
     {
-        // console.log(value.id);
-        // console.log($("#"+value.id).val());
         $("#"+value.id).val("");
     });
     filtroSupremo();
