@@ -284,7 +284,7 @@ function reconstruir(value,index)
     tempData["fecha_cumplimiento"]=value.fecha_cumplimiento;
     tempData["observaciones"]=value.observaciones;
     tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_tarea+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
-    tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i>Mostrar</button>";
+    tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
     tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info' onClick='cargarprogram("+value.id_tarea+")'>Cargar Programa</button>";    
     tempData["avance_programa"]=value.avance_programa;
     tempData["delete"]= [{"existe_programa":value.existe_programa,"existe_archivo":value.archivosUpload[0].length}];
