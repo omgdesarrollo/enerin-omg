@@ -81,6 +81,11 @@ $Usuario=  Session::getSesion("user");
             .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                    
             .modal-lg{width: 100%;}
             .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
+            
+            .jsgrid-grid-body
+            {
+                /* height:450px; */
+            }
             body{overflow:hidden;}
         </style>              
                 
