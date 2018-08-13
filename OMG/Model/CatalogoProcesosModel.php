@@ -177,6 +177,8 @@ class CatalogoProcesosModel{
                 $update2 = $dao->actualizar($query2);
                 // if($update2!=0)?$dao->
             }
+            // echo $query;
+            // echo $query2;
             return $update==-1 ? $update2!=0 ? 2 : -2 : $update==0 ? $update2!=0 ? 3 : -3 : $update2!=0 ? 4 : -4;//2 se hizo el segundo, 3 no se hizo el primero solo el segundo, 4 se hizo todo
         }catch (Exception $ex)
         {

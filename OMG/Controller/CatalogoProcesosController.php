@@ -97,7 +97,7 @@ switch ($Op)
         $REGION = utf8_decode($_REQUEST["REGION"]);
         $resultado = $model->actualizar($_REQUEST["TABLA"],$COLUMNAS,$ID,$REGION);
 
-        $resultado==1?$model->()
+        // $resultado==1?$model->()
 
         echo json_encode($resultado);
     break;

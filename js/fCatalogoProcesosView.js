@@ -402,7 +402,7 @@ function saveUpdateToDatabase(args)
             data:'TABLA=catalogo_reporte'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado)+"&REGION="+region_fiscalTemp,
             success:function(data)
             {
-                if(data == 1)
+                if(data > 0 )
                 {
                     swalSuccess("Actualizacion Exitosa!");
                     refresh();
