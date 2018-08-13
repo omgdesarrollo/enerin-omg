@@ -79,6 +79,24 @@ class TareasDAO{
     }
     
     
+    public function eliminarTarea($ID_TAREA)
+    {
+        try
+        {
+            $query="DELETE FROM tareas
+                    WHERE tareas.existe_programa=0 AND tareas.id_tarea=$ID_TAREA";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista= $db->executeQueryUpdate($query);
+            
+            return $lista;            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return-1;
+        }
+    }
+    
 }
 
 ?>

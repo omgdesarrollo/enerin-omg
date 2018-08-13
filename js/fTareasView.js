@@ -10,6 +10,7 @@ $(function()
         tareaDatos.fecha_alarma = $("#FECHA_ALARMA").val();
         tareaDatos.fecha_cumplimiento = $("#FECHA_CUMPLIMIENTO").val();
         tareaDatos.observaciones = $("#OBSERVACIONES").val();
+        tareaDatos.archivo_adjunto = $('#fileupload').fileupload('option', 'url');
         
         listo=
             (
@@ -35,6 +36,12 @@ $(function()
         $("#FECHA_ALARMA").val("");
         $("#FECHA_CUMPLIMIENTO").val("");
         $("#OBSERVACIONES").val("");        
+    });
+    
+    
+    $("#subirArchivos").click(function()
+    {
+        agregarArchivosUrl();
     });
 
 }); //CIERRA $(function())
@@ -162,23 +169,25 @@ function construirGrid()
             }
         },
         
-        onItemDeleting: function(args) {
+        onItemDeleting: function(args) 
+        {
             id_afectado= args['item']['id_principal'][0];
     
             $.ajax({
                 url:"../Controller/TareasController.php?Op=Eliminar",
                 type:"POST",
-                data:"ID="+JSON.stringify(id_afectado),
+                data:"ID_TAREA="+JSON.stringify(id_afectado),
                 success:function(data)
                 {
-        //            alert("Entro al success "+data);
+                    alert("Entro al success "+data);
                     if(data==false)
                     {
-                        swal("","La Tarea tiene cargado un archivo o asignado una Tarea","error");
+                        swal("","La Tarea tiene cargado un Programa","error");
                         setTimeout(function(){swal.close();},1500);
                     }else{
                         if(data==true)
                         {
+                            actualizarDespuesdeEditaryEliminar();
                             swal("","Se elimino correctamente La Tarea","success");
                             setTimeout(function(){swal.close();},1500);
                         }
@@ -197,11 +206,14 @@ function construirGrid()
     
 }
 
+
+
+
 function listarDatos()
 {
     __datos=[];
     datosParamAjaxValues={};
-    datosParamAjaxValues["url"]="../Controller/TareasController.php?Op=Listar";
+    datosParamAjaxValues["url"]="../Controller/TareasController.php?Op=Listar&URL=Tareas/";
     datosParamAjaxValues["type"]="GET";
     datosParamAjaxValues["async"]=false;
     
@@ -348,7 +360,7 @@ function mostrar_urls(id_tarea)
         $.ajax({
                 url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
                 type: 'GET',
-                data: 'URL='+URL,
+                data: 'URL='+URL+'&SIN_CONTRATO=',
                 async:false,
                 success: function(todo)
                 {
@@ -397,11 +409,8 @@ var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/
                 ModalCargaArchivo += "</div></div>";
                 ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
                 
-$("#subirArchivos").click(function()
-{
-        agregarArchivosUrl();
-});
 
+months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 
 function agregarArchivosUrl()
 {
@@ -410,7 +419,7 @@ function agregarArchivosUrl()
         $.ajax({
                 url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
                 type: 'GET',
-                data: 'URL='+url,
+                data: 'URL='+url+'&SIN_CONTRATO=',
                 success:function(creado)
                 {
                         if(creado==true)
@@ -440,7 +449,7 @@ function borrarArchivo(url)
                         $.ajax({
                                 url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
                                 type: 'GET',
-                                data: 'URL='+url,
+                                data: 'URL='+url+'&SIN_CONTRATO=',
                                 success: function(eliminado)
                                 {
                                         // eliminar = eliminado;

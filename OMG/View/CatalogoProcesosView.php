@@ -48,6 +48,7 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
 
                 <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
+                <script src="../../js/tools.js" type="text/javascript"></script>
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <script src="../../js/fCatalogoProcesosView.js" type="text/javascript"></script>
                 <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>

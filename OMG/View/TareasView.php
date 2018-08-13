@@ -22,7 +22,7 @@ $Usuario=  Session::getSesion("user");
                 <!--Para abrir alertas de aviso, success,warning, error--> 
                 <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
 
-		<!-- ace styles -->
+		<!-- ace styles Para Encabezado-->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
                 
                 <!--Inicia para el spiner cargando-->
@@ -31,24 +31,21 @@ $Usuario=  Session::getSesion("user");
                 
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
+                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/jquery.js" type="text/javascript"></script>
                 <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-                
-
-                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-
-                <!-- cargar archivo -->
-                <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
-                <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
-                <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
-                <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
-                                
-                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
-                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
-                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
-                
                 <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
-                <script src="../../js/tools.js" type="text/javascript"></script>
+                
+<!--                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>-->
+                
+                <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
+                <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
+                
+                
+                <!--<script src="../../js/tools.js" type="text/javascript"></script>-->
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
                 <script src="../../js/fTareasView.js" type="text/javascript"></script>
@@ -65,7 +62,7 @@ $Usuario=  Session::getSesion("user");
                 font-weight: normal;
             }
             
-                        .display-none
+            .display-none
             {
                 display:none;
             }
@@ -80,8 +77,7 @@ $Usuario=  Session::getSesion("user");
 </head>
 
         
-<body class="no-skin" onload="loadSpinner()">
-<!--<div id="loader"></div>-->     
+<body class="no-skin">     
 
 <?php
 
@@ -95,7 +91,7 @@ require_once 'EncabezadoUsuarioView.php';
     Agregar Tarea
 </button>
 
-    <button type="button" id="btnAgregarDocumentoEntradaRefrescar" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
+<button type="button" id="btnAgregarDocumentoEntradaRefrescar" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
     <i class="glyphicon glyphicon-repeat"></i>   
 </button>
 
@@ -314,9 +310,12 @@ construirFiltros();
         <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
         <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
         <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
-        <script src="../../assets/FileUpload/js/main.js"></script>
+        <!--<script src="../../assets/FileUpload/js/main.js"></script>-->
         
-        
+        <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
+        <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
+        <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
+        <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
             
 	</body>
      

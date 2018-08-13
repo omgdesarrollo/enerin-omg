@@ -51,14 +51,18 @@ switch ($Op) {
 
 	case 'Guardar':
 		# code...
-            $pojo->setClave_documento($_REQUEST['CLAVE_DOCUMENTO']);
-            $pojo->setDocumento($_REQUEST['DOCUMENTO']);
-            $pojo->setId_empleado($_REQUEST['ID_EMPLEADO']);
+            header('Content-type: application/json; charset=utf-8');
+            $data= json_decode($_REQUEST['documentoDatos'],true);
+  
+            $pojo->setClave_documento($data['clave_documento']);
+            $pojo->setDocumento($data['documento']);
+            $pojo->setId_empleado($data['id_empleado']);
             $contrato= Session::getSesion("s_cont");
 //            echo "el contra:   ".$contrato."     |";
-            $model->insertar($pojo,$contrato);
+            $Lista= $model->insertar($pojo,$contrato);
 //            echo Session::getSesion("s_cont");
-            
+            echo json_encode($Lista);
+            return $Lista;
 		break;
 
 	case 'Modificar':
@@ -88,10 +92,10 @@ switch ($Op) {
 	case 'Eliminar':
 		# code...
             header('Content-type: application/json; charset=utf-8'); 
-            $ID_DOCUMENTO = json_decode($_REQUEST['ID'],true);
-            $Lista= $model->eliminarDocumento($ID_DOCUMENTO['id_documento']);
-            echo json_encode($Lista);
+            $data = json_decode($_REQUEST['ID_DOCUMENTO'],true);
+            $Lista= $model->eliminarDocumento($data['id_documento']);
 
+            echo json_encode($Lista);
             return $Lista;
 		break;	
 

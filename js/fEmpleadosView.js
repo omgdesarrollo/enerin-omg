@@ -8,8 +8,16 @@ $(function()
         empleadoDatos.apellido_materno = $("#APELLIDO_MATERNO").val();
         empleadoDatos.categoria = $("#CATEGORIA").val();
         empleadoDatos.email = $("#CORREO").val();
-        (checarVacio(empleadoDatos)) ? insertarEmpleado(empleadoDatos) : swalError("Completar campos");
-        
+//        (checarVacio(empleadoDatos)) ? insertarEmpleado(empleadoDatos) : swalError("Completar campos");
+        listo=
+            (
+                empleadoDatos.nombre_empleado!=""?
+                empleadoDatos.apellido_paterno!=""?
+                empleadoDatos.apellido_materno!=""?
+                empleadoDatos.categoria!=""?        
+                true: false: false: false: false                      
+            );   
+                listo ? insertarEmpleado(empleadoDatos) : swalError("Completar campos");
     });
 
     $("#btn_limpiarEmpleado").click(function()
@@ -65,60 +73,31 @@ $(function()
 }); //CIERRA EL $(FUNCTION())
 
 
-var dataListado=[];
-correoEmail=false;
+var correoEmail=false;
 
 
-filtros = 
-[
-    {'name':'Nombre','id':'nombre_empleado',type:'text'},
-    {'name':'Apellido Paterno','id':'apellido_paterno',type:'text'},
-    {'name':'Apellido Materno','id':'apellido_materno',type:'text'},
-    {'name':'Categoria','id':'categoria',type:'text'},
-    {'name':'Correo','id':'correo',type:'text'},
-    {'name':'Fecha Creación','id':'fecha_creacion',type:'date'},
-    // {'name':'Autoridad','id':'id_autoridad',type:'combobox',data: consultarAutoridades(),descripcion:"" },
-];
-
-
-function listarDatos()
+function inicializarFiltros()
 {
-__datos=[];
-    $.ajax({
-        url: '../Controller/EmpleadosController.php?Op=Listar',
-        type: 'GET',
-        async:false,
-        beforeSend:function()
-        {
-            
-        },
-        success:function(datos)
-        {
-            dataListado = datos;
-//            d=reconstruirTab(datos);
-            $.each(datos,function(index,value){
-                __datos.push(reconstruir(value,index++));
-            });
-        },
-        error:function(error)
-        {
-            
-        }
-    });
-  
- DataGrid=__datos;
-   
+    filtros =[
+        {'name':'Nombre','id':'nombre_empleado',type:'text'},
+        {'name':'Apellido Paterno','id':'apellido_paterno',type:'text'},
+        {'name':'Apellido Materno','id':'apellido_materno',type:'text'},
+        {'name':'Categoria','id':'categoria',type:'text'},
+        {'name':'Correo','id':'correo',type:'text'},
+        {'name':'Fecha Creación','id':'fecha_creacion',type:'date'},
+        {name:"opcion",id:"opcion",type:"opcion"}
+    ];
 }
 
 
-function reconstruirTab(datos)
-{
-    __datos=[];
-    $.each(datos,function(index,value){
-        __datos.push(reconstruir(value,index++));
-    });
-    return __datos;
-}
+//function reconstruirTab(datos)
+//{
+//    __datos=[];
+//    $.each(datos,function(index,value){
+//        __datos.push(reconstruir(value,index++));
+//    });
+//    return __datos;
+//}
 
 
 //function listarjsGrid(__datos)
@@ -140,18 +119,17 @@ function construirGrid()
         onInit: function(args)
         {
              gridInstance=args.grid;//linea gridinstance requerida no cambiar pasar el args.grid de esta forma si no , no funcionara
-            jsGrid.ControlField.prototype.editButton=true;
-             jsGrid.ControlField.prototype.deleteButton=false;
+//            jsGrid.ControlField.prototype.editButton=true;
+            jsGrid.ControlField.prototype.deleteButton=false;
             jsGrid.Grid.prototype.autoload=true;//linea requerida no cambiar o quitar
         },
         onDataLoading: function(args)
         {
-            $("#loader").show();
+            loadBlockUi();
         },
         onDataLoaded:function(args)
         {
-            $("#loader").hide();
-             $('.jsgrid-filter-row').removeAttr("style",'display:none');
+            $('.jsgrid-filter-row').removeAttr("style",'display:none');
         },
         onRefreshing: function(args) {
         },
@@ -159,13 +137,18 @@ function construirGrid()
         width: "100%",
         height: "300px",
         autoload:true,
-        editing: true,
         heading: true,
+        sorting: true,
+        editing: true,
         paging: true,
+        controller:db,
+        pageLoading:false,
         pageSize: 5,
         pageButtonCount: 5,
-        controller:db,
-        filtering:false,
+        updateOnResize: true,
+        confirmDeleting: true,
+        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+        
         fields: 
         [
             { name: "id_principal",visible:false},
@@ -216,22 +199,39 @@ function construirGrid()
                 }
         }
     });
-    $("#loader").hide();
+}
+
+function listarDatos()
+{
+    __datos=[];
+    datosParamAjaxValues={};
+    datosParamAjaxValues["url"]="../Controller/EmpleadosController.php?Op=Listar";
+    datosParamAjaxValues["type"]="GET";
+    datosParamAjaxValues["async"]=false;
+    
+    var variablefunciondatos=function obtenerDatosServer(data)
+    {
+        dataListado = data;
+        $.each(data,function(index,value)
+        {
+            __datos.push(reconstruir(value,index++));
+        });
+    }
+    var listfunciones=[variablefunciondatos];
+    ajaxHibrido(datosParamAjaxValues,listfunciones);
+    DataGrid = __datos;
 }
 
 
-
-//Para construir los Filtros
+//PARA FILTROS
 function reconstruirTable(_datos)
 {
     __datos=[];
     $.each(_datos,function(index,value)
     {
-        __datos.push(reconstruir(value,index));
+        __datos.push(reconstruir(value,index++));
     });
-    // $("#jsGrid").jsGrid("loadData");
     construirGrid(__datos);
-    $("#loader").hide();
 }
 
 function reconstruir(value,index)
@@ -248,20 +248,20 @@ function reconstruir(value,index)
     return tempData;
 }
 
-function componerDataListado(value)// id de la vista documento
-{
-    dataListado;
-    id_vista = value.id_documento_entrada;
-    id_string = "id_documento_entrada"
-    $.each(dataListado,function(indexList,valueList)
-    {
-        $.each(valueList,function(ind,val)
-        {
-            if(ind == id_string)
-                    ( val.indexOf(id_vista) != -1 ) ? ( dataListado[indexList]=value ):  console.log();
-        });
-    });
-}
+//function componerDataListado(value)// id de la vista documento
+//{
+//    dataListado;
+//    id_vista = value.id_documento_entrada;
+//    id_string = "id_documento_entrada"
+//    $.each(dataListado,function(indexList,valueList)
+//    {
+//        $.each(valueList,function(ind,val)
+//        {
+//            if(ind == id_string)
+//                    ( val.indexOf(id_vista) != -1 ) ? ( dataListado[indexList]=value ):  console.log();
+//        });
+//    });
+//}
 
 function insertarEmpleado(empleadoDatos)
 {
@@ -319,14 +319,10 @@ function loadSpinner()
 
 function refresh()
 {
-//    alert("refresh");
-    loadBlockUi();
-//    construirFiltros();
-//    listarDatos();
-    $("#jsGrid").jsGrid("render").done(function()
-    {
-//                swalSuccess("Datos Cargados Exitosamente");
-    });
+    listarDatos();
+    inicializarFiltros();
+    construirFiltros();
+    gridInstance.loadData();
 }
 
 function loadBlockUi()
@@ -345,13 +341,13 @@ function loadBlockUi()
 }
 
 
-function checarVacio(datos)
-{
-    vacio=true;
-    $.each(datos,function(index,value)
-    {
-        if(value=="")
-            vacio=false;
-    });
-    return vacio;
-}
+//function checarVacio(datos)
+//{
+//    vacio=true;
+//    $.each(datos,function(index,value)
+//    {
+//        if(value=="")
+//            vacio=false;
+//    });
+//    return vacio;
+//}

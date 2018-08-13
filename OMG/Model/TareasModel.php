@@ -37,10 +37,25 @@ class TareasModel{
         {
             throw $ex;
             return -1;
-        }
-        
+        }        
     }
     
+    public function eliminarTarea($ID_TAREA)
+    {
+        try
+        {
+            $dao= new TareasDAO();
+            $rec= $dao->eliminarTarea($ID_TAREA);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+            
 }
 
 
