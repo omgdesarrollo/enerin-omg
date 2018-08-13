@@ -87,7 +87,7 @@ class ArchivoUploadModel{
 		{
 			if($CONTRATO==-1)
 			{
-				$url = $_REQUEST['URL'];
+//				$url = $_REQUEST['URL'];
 				$urls = Session::getSesion("URLS");
 				$urlIR = $urls["fisica"].$url;
                                 $urlLogica = $urls["logica"].$url;
@@ -96,7 +96,7 @@ class ArchivoUploadModel{
 			else
 			{
 				// $contrato = Session::getSesion("s_cont");
-				$url = $URL;
+//				$url = $URL;
 				$urls = Session::getSesion("URLS");
 				$urlIR = $urls["fisica"].$CONTRATO."/".$url;
                                 $urlLogica = $urls["logica"].$CONTRATO."/".$url;

@@ -138,13 +138,13 @@ if(isset($_REQUEST["accion"]))
     <i class="glyphicon glyphicon-repeat"></i>   
 </button>
 
-<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
+<button style="width:51;height:42" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
     <img src="../../images/base/_excel.png" width="30px" height="30px">
 </button>
-<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
+<button style="width:51;height:42" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
     <img src="../../images/base/word.png" width="30px" height="30px"> 
 </button>
-<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
+<button style="width:51;height:42" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
     <img src="../../images/base/pdf.png" width="30px" height="30px"> 
 </button>    
 

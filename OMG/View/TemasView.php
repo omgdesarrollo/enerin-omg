@@ -142,30 +142,7 @@ require_once 'EncabezadoUsuarioView.php';
 
 <div id="contenidoDetalles"></div>
 
-<!--<div id="form_container" style="width:280px;height:250px;"></div>-->
-            
-<!--<table class="table table-bordered table-striped header_fijo"  >
-    <thead >
-    <tr class="">
-     <th class="table-headert" width="8%">No. Tema</th>
-     <th class="table-headert" width="20%">Tema</th>
-     <th class="table-headert" width="10%">No.Sub-tema</th>
-     <th class="table-headert" width="20%">Sub-tema</th>
-     <th class="table-headert" width="20%">Responsable del tema</th>
-     <th class="table-headert" width="12%">Descripcion</th>
-     <th class="table-headert" width="10%">Plazo</th>
-    </tr>
-   </thead>
-
-       <tbody id="datosGenerales"  style="position:absolute ;overflow: auto;display:block ;width: 100%">
-
-   <tbody class="hideScrollBar"  id="datosGenerales" style="position: absolute">
-   </tbody>
-
-</table>     -->
-
-
-                             
+                                         
        <!-- Inicio de Seccion Modal Tema-->
        <div class="modal draggable fade" id="create-itemTema" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		  <div class="modal-dialog" role="document">
@@ -232,8 +209,8 @@ require_once 'EncabezadoUsuarioView.php';
                                                                         
                                                                                                                                 
 						<div class="form-group">
-                                                    <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
-                                                    <button type="submit" id="btn_limpiar_tema"  class="btn crud-submit btn-info">Limpiar</button>
+                                                    <button type="submit" style="width:49%" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
+                                                    <button type="submit" style="width:49%" id="btn_limpiar_tema"  class="btn crud-submit btn-info">Limpiar</button>
 						</div>
                      
 
@@ -289,8 +266,8 @@ require_once 'EncabezadoUsuarioView.php';
                                                                         
                                                                                                                                 
 						<div class="form-group">
-                                                    <button type="submit" id="btn_guardarSub"  class="btn crud-submit btn-info">Guardar</button>
-                                                    <button type="submit" id="btn_limpiar_SubTema"  class="btn crud-submit btn-info">Limpiar</button>
+                                                    <button type="submit" style="width:49%" id="btn_guardarSub"  class="btn crud-submit btn-info">Guardar</button>
+                                                    <button type="submit" style="width:49%" id="btn_limpiar_SubTema"  class="btn crud-submit btn-info">Limpiar</button>
 						</div>
                         
 

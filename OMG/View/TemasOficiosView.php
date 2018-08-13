@@ -229,8 +229,8 @@ require_once 'EncabezadoUsuarioView.php';
                                                                         
                                                                                                                                 
 						<div class="form-group">
-                                                    <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
-                                                    <button type="submit" id="btn_limpiar_tema"  class="btn crud-submit btn-info">Limpiar</button>
+                                                    <button type="submit" style="width:49%" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
+                                                    <button type="submit" style="width:49%" id="btn_limpiar_tema"  class="btn crud-submit btn-info">Limpiar</button>
 						</div>
                           </form>
 
@@ -286,8 +286,8 @@ require_once 'EncabezadoUsuarioView.php';
                                                                         
                                                                                                                                 
 						<div class="form-group">
-                                                    <button type="submit" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
-                                                    <button type="submit" id="btn_limpiar_SubTema"  class="btn crud-submit btn-info">Limpiar</button>
+                                                    <button type="submit" style="width:49%" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
+                                                    <button type="submit" style="width:49%" id="btn_limpiar_SubTema"  class="btn crud-submit btn-info">Limpiar</button>
 						</div>
                           </form>
 
