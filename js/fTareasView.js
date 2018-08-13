@@ -538,7 +538,7 @@ function eliminarRegistro(item)
         data:"ID_TAREA="+JSON.stringify(id_afectado),
         success:function(data)
         {
-            alert("Entro al success "+data);
+//            alert("Entro al success "+data);
             if(data==false)
             {
 //                swal("","La Tarea tiene cargado un Programa","error");
