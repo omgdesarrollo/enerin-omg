@@ -53,33 +53,44 @@ function construirGrid()
             {
                 return DataGrid;
             },
+            updateItem:function()
+            {
+                // console.log(a);
+            }
         };
     
     $("#jsGrid").jsGrid({
-         onInit: function(args)
-         {
-             gridInstance=args.grid;
-             jsGrid.Grid.prototype.autoload=true;
-         },
+        onInit: function(args)
+        {
+            gridInstance=args.grid;
+            jsGrid.Grid.prototype.editButton=true;
+            jsGrid.Grid.prototype.autoload=true;
+        },
         onDataLoading: function(args)
         {
             loadBlockUi();
         },
         onDataLoaded:function(args)
         {
-            $('.jsgrid-filter-row').removeAttr("style",'display:none');
+            // $('.jsgrid-filter-row').removeAttr("style",'display:none');
         },
-        rowClick:function(args)
-        {
+        // rowClick:function(args)
+        // {
             // console.log(args);
             // argsGlobal=args;
-        },
+        // },
+        // sortStrategies:function(a)
+        // {
+        //     console.log("A",a);
+        // },
         width: "100%",
         height: "300px",
         autoload:true,
         heading: true,
         sorting: true,
-//        sorter:true,
+        editing: true,
+        // selecting: false,
+    //    sorter:true,
         paging: true,
         controller:db,
         pageLoading:false,
@@ -91,16 +102,16 @@ function construirGrid()
         fields: [
                 { name:"id_principal", visible:false},
                 {name:"no", title:"No",width:60,type:"text"},
-                { name:"clave_contrato", title: "ID del Contrato o Asignación", type: "text", width: 150, validate: "required" },
+                { name:"clave_contrato", title: "ID del Contrato o Asignación", type: "text", width: 150, validate: "required"},
                 { name:"region_fiscal", title: "Region Fiscal", type: "text", width: 150, validate: "required" },
                 { name:"ubicacion", title: "Ubicación del Punto de Medición", type: "text", width: 150, validate: "required" },
                 { name:"tag_patin", title: "Tag del Patin de Medición", type: "text", width: 130, validate: "required" },
                 { name:"tipo_medidor", title: "Tipo de Medidor", type: "text", width: 150, validate: "required" },    
                 { name:"tag_medidor", title: "Tag del Medidor", type: "text", width: 130, validate: "required" },
                 { name:"clasificacion", title: "Clasificación del Sistema de Medición", type: "text", width: 150, validate: "required" },
-                { name:"hidrocarburo", title: "Tipo de Hidrocarburo", type: "text", width: 150, validate: "required" },
-                { name:"delete", title:"Opción", type:"customControl" }
-                // {type:"control"}
+                { name:"hidrocarburo", title: "Tipo de Hidrocarburo", type: "text", width: 150, validate: "required"},
+                { name:"delete", title:"Opción", type:"customControl",sorting:""},
+                // {type:"control",editButton: true}
         ],
         onItemDeleted:function(args)
         {
@@ -127,6 +138,12 @@ function construirGrid()
                 //  = true;
             // console.log("jajaja");
         }
+        ,
+        onItemUpdated:function(args)
+        {
+            console.log("aqui entro");
+            saveUpdateToDatabase(args);
+        },
     });
 }
 
@@ -141,22 +158,29 @@ MyCControlField.prototype = new jsGrid.Field
         align: "center",
         sorter: function(date1, date2)
         {
-                console.log("haber cuando entra aqui");
-                console.log(date1);
-                console.log(date2);
+            console.log("haber cuando entra aqui");
+            console.log(date1);
+            console.log(date2);
+            // return 1;
         },
         itemTemplate: function(value,todo)
         {
             if(todo.delete=="no")
                 return "";
             else
-                return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button', type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
+                return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button ',title:"Eliminar", type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
         },
         insertTemplate: function(value)
         {
         },
         editTemplate: function(value)
         {
+            // return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button', type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
+            // return this._inputEditUpdate = $("<input>").attr( {class:'jsgrid-button jsgrid-update-button', type:'button',onClick:"alert();"});
+            // return this._inputEditUpdate = $("<input>").attr( {class:'jsgrid-button jsgrid-cancel-edit-button', type:'button',onClick:"alert();"});
+            val = "<input class='jsgrid-button jsgrid-update-button' type='button' title='Actualizar' onClick='aceptarEdicion()'>";
+            val += "<input class='jsgrid-button jsgrid-cancel-edit-button' type='button' title='Cancelar Edición' onClick='cancelarEdicion()'>";
+            return val;
         },
         insertValue: function()
         {
@@ -165,6 +189,16 @@ MyCControlField.prototype = new jsGrid.Field
         {
         }
 });
+
+function cancelarEdicion()
+{
+    $("#jsGrid").jsGrid("cancelEdit");
+}
+
+function aceptarEdicion()
+{
+    gridInstance.updateItem();
+}
 
 function listarDatos()
 {
@@ -340,6 +374,50 @@ function insertarRegistro(datos)
             swalError("Error en el servidor");
         }
     });
+}
+
+function saveUpdateToDatabase(args)
+{
+    console.log(args);
+    columnas=new Object();
+    entro=0;
+    id_afectado = args['item']['id_principal'][0];
+    region_fiscalTemp = args['previousItem']['region_fiscal'];
+    $.each(args['item'],function(index,value)
+    {
+        if(args['previousItem'][index]!=value && value!="")
+        {
+            if(index!='id_principal' && !value.includes("<button"))
+            {
+                columnas[index]=value;
+            }
+        }
+    });
+
+    if( Object.keys(columnas).length != 0)
+    {
+        $.ajax({
+            url:"../Controller/CatalogoProcesosController.php?Op=Actualizar",
+            type:"POST",
+            data:'TABLA=catalogo_reporte'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado)+"&REGION="+region_fiscalTemp,
+            success:function(data)
+            {
+                if(data == 1)
+                {
+                    swalSuccess("Actualizacion Exitosa!");
+                    refresh();
+                }
+                else
+                    swalError("No se puedo actualizar");
+                // setTimeout(function(){swal.close();},1000);
+            },
+            error:function()
+            {
+                // swal("","Error en el servidor","error");
+                // setTimeout(function(){swal.close();},1500);
+            }
+        });
+    }
 }
 
 var RegionesFiscalesComboDhtml;

@@ -128,5 +128,61 @@ class CatalogoProcesosModel{
             return -1;
         }
     }
+
+    public function actualizar($TABLA,$COLUMNAS_VALOR,$ID_CONTEXTO,$REGION)
+    {
+        try
+        {
+            $dao=new CatalogoProcesosDAO();
+            $query="";
+            $query2= "";
+            $index=0;
+            $index2=0;
+            $update=-1;
+            $update2=-1;
+            foreach($COLUMNAS_VALOR as $key=>$value)
+            {
+                if($key != "clave_contrato" && $key != "region_fiscal")
+                {
+                    if($index!=0)
+                    {
+                        $query .= " , ";
+                    }
+                        $query .= $key ."= '".utf8_decode( $value )."'";
+                    $index++;
+                }
+                else
+                {
+                    if($index2!=0)
+                        $query2 .= " , ";
+                    $query2 .= "$key = '".utf8_decode( $value )."'";
+                    $index2=1;
+                }
+            }
+            if($query!="")
+            {
+                $query = "UPDATE $TABLA SET ".$query;
+                foreach($ID_CONTEXTO as $key=>$value)
+                {
+                    $query .= " WHERE $key = '".utf8_decode( $value )."'";
+                }
+                $update = $dao->actualizar($query);
+                $update != 0 ? 1 : 0;
+            }
+            if($query2!="")
+            {
+                $query2 = "UPDATE $TABLA SET ".$query2;
+                $query2 .= " WHERE region_fiscal = '".utf8_decode( $REGION )."'";
+                // $update ? $dao->listarQuery(" SELECT * FROM  ");// listar todos lo que tengan la region fiscal
+                $update2 = $dao->actualizar($query2);
+                // if($update2!=0)?$dao->
+            }
+            return $update==-1 ? $update2!=0 ? 2 : -2 : $update==0 ? $update2!=0 ? 3 : -3 : $update2!=0 ? 4 : -4;//2 se hizo el segundo, 3 no se hizo el primero solo el segundo, 4 se hizo todo
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }    
+    }
 }
 ?>

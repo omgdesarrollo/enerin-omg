@@ -61,12 +61,6 @@ $Usuario=  Session::getSesion("user");
                 color: white;
                 font-weight: normal;
             }
-            
-                        .display-none
-            {
-                display:none;
-            }
-            
             div.combo_info
             {
                 color: gray;
@@ -75,23 +69,14 @@ $Usuario=  Session::getSesion("user");
                 padding-left: 2px;
                 font-family: Tahoma;
             }
-            /* div.dhxcombolist_material
-            {
-                z-index: 2000;
-            } */
-            /* .dhxcombo_material
-            {
-                width:600px;
-            } */
             .dhxcombo_select
             {
                 z-index:9999;
             }
-            /* div.dhxcombo_material.dhxcombo_actv
+            .jsgrid-cancel-edit-button
             {
-                position:absolute;
-            } */
-            
+
+            }
             .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                    
             .modal-lg{width: 100%;}
             .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
@@ -220,7 +205,7 @@ $Usuario=  Session::getSesion("user");
         construirGrid();
         inicializarFiltros();
         construirFiltros();
-        console.log(dataListado);
+        // console.log(dataListado);
     });
     
     region_fiscal="";
