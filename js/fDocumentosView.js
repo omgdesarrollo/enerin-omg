@@ -152,6 +152,12 @@ function construirGrid()
         {
             id_afectado= args['item']['id_principal'][0];
     
+<<<<<<< HEAD
+        onItemDeleting: function(args) {
+//            console.log(args);
+//args.cancel=true;
+            eliminarDocumento(args);
+=======
             $.ajax({
                 url:"../Controller/DocumentosController.php?Op=Eliminar",
                 type:"POST",
@@ -178,6 +184,7 @@ function construirGrid()
                     setTimeout(function(){swal.close();},1500);
                 }
             });
+>>>>>>> a567b2421112591fc69649001fea4003c1135a8c
 
         }
         

@@ -20,7 +20,6 @@ switch ($Op) {
             header('Content-type: application/json; charset=utf-8'); 
             echo json_encode($Lista);
             return $Lista;
-
          break;
 	
 	case 'ListarHijos':
@@ -30,21 +29,10 @@ switch ($Op) {
             echo json_encode($Lista);
             return $Lista;
             
-		break;
-            
-        case'ListarDetalles':
-            
-            $Lista= $model->listarDetallesSeleccionados($_REQUEST['ID_TEMA']);
-            header('Content-type: application/json; charset=utf-8'); 
-            echo json_encode($Lista);
-            return $Lista;
-            
-            break;
-        
-
+	break;
 	case 'GuardarNodo':
 		# code...
-         
+//                $json = json_decode($_POST['json']);//linea donde convierte el json string a objeto  proxima mejora
                 $Lista= $model->insertarNodo($_REQUEST['NO'],$_REQUEST['NOMBRE'],$_REQUEST['DESCRIPCION'],$_REQUEST['PLAZO'],$_REQUEST['NODO'],$_REQUEST['ID_EMPLEADOMODAL'],"catalogo", Session::getSesion("s_cont"));
                 header('Content-type: application/json; charset=utf-8'); 
                 echo json_encode($Lista);

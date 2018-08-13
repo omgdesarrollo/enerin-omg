@@ -212,7 +212,7 @@ $Usuario=  Session::getSesion("user");
         construirFiltros();
         // console.log(dataListado);
     });
-    
+ 
     region_fiscal="";
     ubicacion="";
     clave_contrato="";

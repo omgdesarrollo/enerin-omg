@@ -98,8 +98,24 @@ class DocumentoModel{
     }
     
     
-    
-    public function eliminarDocumento($ID_DOCUMENTO){
+    public function eliminarDocumento($ID_DOCUMENTO)
+    {
+        try
+        {
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+        
+    }
+
+
+
+
+    public function eliminarDocumento2($ID_DOCUMENTO)
+    {
         try{
             $dao= new DocumentoDAO();
             $registros= $dao->verificarExistenciadeDocumentoEnRegistros($ID_DOCUMENTO);

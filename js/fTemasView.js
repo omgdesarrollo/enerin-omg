@@ -6,14 +6,13 @@ id_seleccionado="";
      $("#btn_guardar").click(function(e){
          e.preventDefault();
          $("#btn_guardar").attr("disabled", "disabled");
-//         $("#temaform").css("disabled",true);
          var formData = {"NO":$('#NO').val(),"NOMBRE":$('#NOMBRE').val(),"DESCRIPCION":$('#DESCRIPCION').val(),
                          "PLAZO":$('#PLAZO').val(),"NODO":0,"ID_EMPLEADOMODAL":$('#ID_EMPLEADOMODAL').val()};            
          
          $.ajax({
              url:'../Controller/TemasController.php?Op=GuardarNodo',
              type:'POST',
-             data:formData,
+             data:JSON.stringify(formData),
              success:function(r)
              {
                
@@ -40,7 +39,7 @@ id_seleccionado="";
          e.preventDefault();
          $("#btn_guardarSub").attr("disabled", "disabled");
          var formData = {"NO":$('#NO_SUBTEMA').val(),"NOMBRE":$('#NOMBRE_SUBTEMA').val(),"DESCRIPCION":$('#DESCRIPCION_SUBTEMA').val(),
-                         "PLAZO":$('#PLAZO_SUBTEMA').val(),"NODO":id_seleccionado,"ID_EMPLEADOMODAL":""};            
+                         "PLAZO":$('#PLAZO_SUBTEMA').val(),"NODO":id_seleccionado,"ID_EMPLEADOMODAL":"0"};            
          
          $.ajax({
              url:'../Controller/TemasController.php?Op=GuardarNodo',
@@ -48,7 +47,6 @@ id_seleccionado="";
              data:formData,
              success:function(r)
              {
-              
                     if(r==false){
                      swal("","Error en el servidor","error");
                         $("#btn_guardarSub").removeAttr("disabled");
@@ -61,11 +59,7 @@ id_seleccionado="";
                           obtenerHijos(id_seleccionado);
                        $("#btn_guardarSub").removeAttr("disabled");
                      }
-                 }
-                 
-//                 myTree.addItem(formData["NO"],formData['NOMBRE_SUBTEMA'], id_seleccionado);
-//                myTree.openItem(formData.);
-                
+                 }  
              }
          });
                 
@@ -116,8 +110,6 @@ var myToolbar = myLayout.cells("a").attachToolbar({
 		});
 
 myToolbar.attachEvent("onClick", function(id){
-    //your code here
-//    alert("hola"+id);
     evaluarToolbarSeccionA(id);
 
 });
@@ -126,14 +118,10 @@ function evaluarToolbarSeccionA(id)
 {
     if(id=="agregar")
     {
-//        alert("entro en agregar");
         $('#create-itemTema').modal('show');
     } 
     if(id=="eliminar")
     {
-//        var level = myTree.getLevel(id_seleccionado);
-//        if(level==1)
-//        {
         if(id_seleccionado==""){
             swal("","Seleccione un Tema","error");
             setTimeout(function(){swal.close();},1500);
@@ -145,16 +133,10 @@ function evaluarToolbarSeccionA(id)
                 setTimeout(function(){swal.close();},1500);
                 eliminarNodo();
             }else{
-//                alert("no se puede eliminar tiene descendencia");
                 swal("","El Tema tiene Sub-Temas","error");
                 setTimeout(function(){swal.close();},1500);
             }
         }    
-//        } 
-//        if(level==2)
-//        {
-//            eliminarNodo();
-//        }
     }   
 }
 
@@ -189,12 +171,8 @@ function obtenerDatosArbol()
             url:'../Controller/TemasController.php?Op=Listar',
             success:function(data)
             { 
-//                alert("tiene algo el arbol");
-             contruirArbol(data);   
-//             load(2);
-             
+             contruirArbol(data);      
             },error:function (){
-//                alert("entro en el erro");
             }
         });
     }
@@ -207,17 +185,7 @@ function contruirArbol(dataArbol)
         }
     }
 
-                
-
-//            myTree.enableHighlighting(true);
-
-//dataArbol=[["1","0","de"],["2","1","fes"],["3","1","el texto es de la siguiente manera que se puede trabajar "],["5","0","de"]];
-
-
 myTree.attachEvent("onClick", function(id){
-//    var id2 = myTree.getSelectedId();
-//    alert("f  "+id2);
-    // your code here
     obtenerHijos(id);
     
     id_seleccionado=id;
@@ -235,24 +203,18 @@ var myToolbar = myLayout.cells("b").attachToolbar({
 		});
                 
 myToolbar.attachEvent("onClick", function(id){
-    //your code here
-    //alert("hola"+id);
     evaluarToolbarSeccionB(id);
-
 });
 
 function evaluarToolbarSeccionB(id)
 {
-//    alert("Este es el ID:"+id)
     if(id_seleccionado=="")
     {
-//        alert("No hay tema seleccionado");
         swal("","Seleccione un Tema","error");
         setTimeout(function(){swal.close();},1000);
     } else {
     if(id=="agregar")
     {
-//        alert("entro en agregar");
         $('#create-itemSubTema').modal('show');
     } 
     if(id=="eliminar")
@@ -261,12 +223,8 @@ function evaluarToolbarSeccionB(id)
     }
     }
 }
-
-
-    
     function obtenerHijos(id)
     {
-//        alert("Este es el ID Hijo:"+id);
        $("#contenido").html("<div style='font-size:30px' class='fa fa-refresh fa-spin'></div>"); 
         $.ajax({
             url:'../Controller/TemasController.php?Op=ListarHijos',
@@ -274,17 +232,13 @@ function evaluarToolbarSeccionB(id)
             data:'ID='+id,
             success:function(data)
             {
-                construirSubDirectorio(data.datosHijos);
-//                construirDetalleSeleccionado(data.detalles,id);
-                listarEmpleados(data.detalles,id);
+                construirSubDirectorio(data.datosHijos);//esta seccion construye la seccion de enmedio
+                construirDetalleSeleccionado(data,id);//esta seccion construye la seccion ultima derecha
             }
         });
     }
-        
-    
     function construirSubDirectorio(data)
-    {
-        
+    {   
         tempData1="<div  style='overflow-y:auto;' class='table-responsive altotablascrollbar'><table class='table table-bordered'><thead><tr class='info' id='registro_' name='registro_'>\n\
                     <th>No</th>\n\
                     <th>Subtema</th>\n\
@@ -301,58 +255,37 @@ function evaluarToolbarSeccionB(id)
             tempData1+="</table></div>";    
                 $("#contenido").html(tempData1);
     }
-        
-     
    myLayout.cells("c").attachObject("contenidoDetalles");
    
-   
-   function listarEmpleados(data,id)
-   {
-       $.ajax({
-           url:"../Controller/EmpleadosController.php?Op=mostrarcombo",
-           type:"GET",
-           success:function(datosEmp)
-           {
-               construirDetalleSeleccionado(data,id,datosEmp);
-           }
-       });
-   }
-   
-   
-    function construirDetalleSeleccionado(data,id,datosEmp)
+    function construirDetalleSeleccionado(data,id)
     {
         var level = myTree.getLevel(id);
-//        alert("este es el nivel:"+level);
         tempData2="<div class='table-responsive altotablascrollbar'><table class='table table-bordered'><thead><tr class='danger'><th>Datos</th><th>Detalles</th></tr></thead><tbody></tbody>";
-                    $.each(data, function(index,value){
+                    $.each(data.detalles, function(index,value){
                        tempData2+="<tr><td class='info'>No</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'no',"+value.id_tema+")\">"+value.no+"</td></tr>";
                        tempData2+="<tr><td class='info'>Tema</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'nombre',"+value.id_tema+")\">"+value.nombre+"</td></tr>";
                        tempData2+="<tr><td class='info'>Descripcion</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabase(this,'descripcion',"+value.id_tema+")\">"+value.descripcion+"</td></tr>";
                        if(level==1)
 //                       tempData2+="<tr><td class='info'>Responsable</td><td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";
                        tempData2+='<tr><td class="info">Responsable</td><td><select class="select" onchange="saveComboToDatabase(\'id_empleado\',this,'+value.id_tema+')">';
-                        $.each(datosEmp, function(index2,value2)
-                        {
-//                            alert("Entro al foreach");
-                               tempData2 += "<option value='"+value2.id_empleado+"'";
-                            if(value.id_empleado==value2.id_empleado)
-                               tempData2+="selected";
-                               tempData2+=">"+value2.nombre_empleado+" "+value2.apellido_paterno+" "+value2.apellido_materno+"</option>";                            
-                        });
+
+                        if(level==1){
+                            $.each(data.comboEmpleados, function(index2,value2)
+                            {
+                                   tempData2 += "<option value='"+value2.id_empleado+"'";
+                                if(value.id_empleado==value2.id_empleado)
+                                   tempData2+="selected";
+                                   tempData2+=">"+value2.nombre_empleado+" "+value2.apellido_paterno+" "+value2.apellido_materno+"</option>";                            
+                            });
                        tempData2+='</select></td></tr>';
-                       
+                      }  
                     });
-        tempData2+="</table></div>";
-   
-        $("#contenidoDetalles").html(tempData2);
-        
+        tempData2+="</table></div>";  
+        $("#contenidoDetalles").html(tempData2);    
     }
     
-    
 function saveToDatabase(ObjetoThis,columna,id) 
-{
-//        alert("entro al save");            
-        
+{   
             $(ObjetoThis).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
             $.ajax({
                     url: "../Controller/GeneralController.php?Op=ModificarColumna",
@@ -368,25 +301,20 @@ function saveToDatabase(ObjetoThis,columna,id)
 
 function saveComboToDatabase(column,val,idTema)
 {
-//    alert("entro al save");
-
     valorobjeto= val[val.selectedIndex].value;
     console.log(valorobjeto);
     
     $.ajax({
         url: "../Controller/GeneralController.php?Op=ModificarColumna",
         type: "POST",
-//        data:'column='+column+'&editval='+valorobjeto+'&id='+idTema,
         data:'TABLA=temas &COLUMNA='+column+' &VALOR='+valorobjeto+' &ID='+idTema+' &ID_CONTEXTO=id_tema',
-        success: function(data){
-//        alert("Estos son los datos"+data);    
+        success: function(data){   
                 swal("","Actualizacion Exitosa!", "success");
                 setTimeout(function(){swal.close();},1000);
         }   
    });
 
 }
-
 function load(carga){
     
     if(carga==1){
