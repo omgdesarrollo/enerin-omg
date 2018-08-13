@@ -10,6 +10,7 @@ $(function()
         tareaDatos.fecha_alarma = $("#FECHA_ALARMA").val();
         tareaDatos.fecha_cumplimiento = $("#FECHA_CUMPLIMIENTO").val();
         tareaDatos.observaciones = $("#OBSERVACIONES").val();
+        tareaDatos.archivo_adjunto = $('#fileupload').fileupload('option', 'url');
         
         listo=
             (
@@ -36,12 +37,21 @@ $(function()
         $("#FECHA_CUMPLIMIENTO").val("");
         $("#OBSERVACIONES").val("");        
     });
+    
+    
+    $("#subirArchivos").click(function()
+    {
+        agregarArchivosUrl();
+    });
 
 }); //CIERRA $(function())
+
+var thisEmpleados=[];
 
 function inicializarFiltros()
 {    
     filtros =[
+            {id:"noneUno",type:"none"},
             {id:"contrato",type:"text"},
             {id:"tarea",type:"text"},
             {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
@@ -59,11 +69,15 @@ function inicializarFiltros()
 
 function construirGrid()
 {
-//    jsGrid.fields.customControl = MyCControlField;
+    jsGrid.fields.customControl = MyCControlField;
     db={
             loadData: function()
             {
                 return DataGrid;
+            },
+            insertItem: function(item)
+            {
+                return item;
             },
         };
     
@@ -79,7 +93,9 @@ function construirGrid()
         },
         onDataLoaded:function(args)
         {
-            $('.jsgrid-filter-row').removeAttr("style",'display:none');
+//            $('.jsgrid-filter-row').removeAttr("style",'display:none');
+        },
+        onRefreshing: function(args) {
         },
         
         width: "100%",
@@ -101,58 +117,122 @@ function construirGrid()
         fields: 
         [
             { name: "id_principal",visible:false},
-            { name: "contrato",title:"Contrato", type: "text", width: 80, validate: "required" },
-            { name: "tarea",title:"Tarea", type: "text", width: 150, validate: "required" },
-            { name: "id_empleado",title:"Responsable del Plan", type: "text", width: 150, validate: "required" },
-            { name: "fecha_creacion",title:"Fecha de Creacion", type: "text", width: 150, validate: "required" },
-            { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", width: 150, validate: "required" },
-            { name: "fecha_cumplimiento",title:"Fecha de Cumplimiento", type: "text", width: 150, validate: "required",editing: false},
-            { name: "observaciones",title:"Observaciones", type: "text", width: 150, validate: "required" },
-            { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", width: 150, validate: "required",editing:false },
-            { name: "registrar_programa",title:"Registrar Programa", type: "text", width: 150, validate: "required",editing:false },
-            { name: "avance_programa",title:"Avance Programa", type: "text", width: 150, validate: "required" },
-            {name:"cancel", type:"control", }
+            { name:"no",title:"No",width:60},
+            { name: "contrato",title:"Contrato", type: "text", validate: "required" },
+            { name: "tarea",title:"Tarea", type: "text", validate: "required" },
+//            { name: "id_empleado",title:"Responsable del Plan", type: "text", validate: "required" },
+            { name: "id_empleado",title:"Responsable del Plan", type: "select",
+                items:EmpleadosCombobox,
+                valueField:"id_empleado",
+                textField:"nombre_completo"
+            },
+            { name: "fecha_creacion",title:"Fecha de Creacion", type: "text", validate: "required",editing: false },
+            { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required" },
+            { name: "fecha_cumplimiento",title:"Fecha de Cumplimiento", type: "text", validate: "required",editing: false},
+            { name: "observaciones",title:"Observaciones", type: "text", validate: "required" },
+            { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:110,editing:false },
+            { name: "registrar_programa",title:"Registrar Programa", type: "text", validate: "required",width:140, editing:false },
+            { name: "avance_programa",title:"Avance Programa", type: "text", validate: "required" },
+            { name:"delete", title:"Opción", type:"customControl",sorting:""}
         ],
         onItemUpdated: function(args)
         {
-                console.log(args);
-                columnas={};
-                id_afectado=args["item"]["id_principal"][0];
-                $.each(args["item"],function(index,value)
-                {
-                        if(args["previousItem"][index] != value && value!="")
-                        {
-                                if(index!="id_principal" && !value.includes("<button"))
-                                {
-                                        columnas[index]=value;
-                                }
-                        }
-                });
-                if(Object.keys(columnas).length!=0)
-                {
-                        $.ajax({
-                                url: '../Controller/GeneralController.php?Op=Actualizar',
-                                type:'GET',
-                                data:'TABLA=tareas'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
-                                success:function(exito)
-                                {
-                                    $("#jsGrid").jsGrid("render").done(function()
-                                    {
-                                //                swalSuccess("Datos Cargados Exitosamente");
-                                    });
-                                    swal("","Actualizacion Exitosa!","success");
-                                    setTimeout(function(){swal.close();},1000);
-                                },
-                                error:function()
-                                {
-                                    swal("","Error en el servidor","error");
-                                    setTimeout(function(){swal.close();},1500);
-                                }
-                        });
-                }
+//                console.log(args);
+            columnas={};
+            id_afectado=args["item"]["id_principal"][0];
+            $.each(args["item"],function(index,value)
+            {
+                    if(args["previousItem"][index] != value && value!="")
+                    {
+                            if(index!="id_principal" && !value.includes("<button") && index!="delete")
+                            {
+                                    columnas[index]=value;
+                            }
+                    }
+            });
+            if(Object.keys(columnas).length!=0)
+            {
+                    $.ajax({
+                            url: '../Controller/GeneralController.php?Op=Actualizar',
+                            type:'GET',
+                            data:'TABLA=tareas'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
+                            success:function(exito)
+                            {
+//                                actualizarDespuesdeEditaryEliminar();
+                                refresh();
+                                swal("","Actualizacion Exitosa!","success");
+                                setTimeout(function(){swal.close();},1000);
+                            },
+                            error:function()
+                            {
+                                swal("","Error en el servidor","error");
+                                setTimeout(function(){swal.close();},1500);
+                            }
+                    });
+            }
+        },
+        
+        onItemDeleting: function(args) 
+        {
+
         }
+        
     });
     
+}
+
+
+var MyCControlField = function(config)
+{
+    jsGrid.Field.call(this, config);
+};
+
+
+MyCControlField.prototype = new jsGrid.Field
+({
+        css: "date-field",
+        align: "center",
+        sorter: function(date1, date2)
+        {
+            console.log("haber cuando entra aqui");
+            console.log(date1);
+            console.log(date2);
+            // return 1;
+        },
+        itemTemplate: function(value,todo)
+        {
+            console.log(value,todo);
+            if(value[0]['existe_programa']!="0" || value[0]['existe_archivo']!=0)
+                return "";
+            else
+                return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button ',title:"Eliminar", type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
+        },
+        insertTemplate: function(value)
+        {
+        },
+        editTemplate: function(value)
+        {
+            val = "<input class='jsgrid-button jsgrid-update-button' type='button' title='Actualizar' onClick='aceptarEdicion()'>";
+            val += "<input class='jsgrid-button jsgrid-cancel-edit-button' type='button' title='Cancelar Edición' onClick='cancelarEdicion()'>";
+            return val;
+        },
+        insertValue: function()
+        {
+        },
+        editValue: function()
+        {
+        }
+});
+
+
+function cancelarEdicion()
+{
+    $("#jsGrid").jsGrid("cancelEdit");
+}
+
+function aceptarEdicion()
+{
+    gridInstance.updateItem();
 }
 
 
@@ -160,7 +240,7 @@ function listarDatos()
 {
     __datos=[];
     datosParamAjaxValues={};
-    datosParamAjaxValues["url"]="../Controller/TareasController.php?Op=Listar";
+    datosParamAjaxValues["url"]="../Controller/TareasController.php?Op=Listar&URL=Tareas/";
     datosParamAjaxValues["type"]="GET";
     datosParamAjaxValues["async"]=false;
     
@@ -169,7 +249,7 @@ function listarDatos()
         dataListado = data;
         $.each(data,function(index,value)
         {
-            __datos.push(reconstruir(value,index++));
+            __datos.push(reconstruir(value,index+1));
         });
     }
     var listfunciones=[variablefunciondatos];
@@ -177,13 +257,14 @@ function listarDatos()
     DataGrid = __datos;
 }
 
-
+//PARA FILTROS
 function reconstruirTable(_datos)
 {
     __datos=[];
     $.each(_datos,function(index,value)
     {
         __datos.push(reconstruir(value,index++));
+        
     });
     construirGrid(__datos);
 }
@@ -192,26 +273,31 @@ function reconstruirTable(_datos)
 function reconstruir(value,index)
 {
     tempData=new Object();
+    ultimoNumeroGrid = index;
     tempData["id_principal"]= [{'id_tarea':value.id_tarea}];
+    tempData["no"]= index;  
     tempData["contrato"]=value.contrato;
     tempData["tarea"]=value.tarea;
-    tempData["id_empleado"]=value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
+    tempData["id_empleado"]=value.id_empleado;
     tempData["fecha_creacion"]=value.fecha_creacion;
     tempData["fecha_alarma"]=value.fecha_alarma;
     tempData["fecha_cumplimiento"]=value.fecha_cumplimiento;
     tempData["observaciones"]=value.observaciones;
     tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_tarea+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
     tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i>Mostrar</button>";
-//    tempData["archivo_adjunto"]=value.archivo_adjunto;
     tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info' onClick='cargarprogram("+value.id_tarea+")'>Cargar Programa</button>";    
     tempData["avance_programa"]=value.avance_programa;
+    tempData["delete"]= [{"existe_programa":value.existe_programa,"existe_archivo":value.archivosUpload[0].length}];
     return tempData;
 }
 
 
 function archivoyComboboxparaModal()
 {
-    
+  $('#DocumentolistadoUrl').html(" ");
+  $('#DocumentolistadoUrlModal').html(" ");
+  $('#DocumentoEntradaAgregarModal').html(ModalCargaArchivo);
+  
   $.ajax({
       url:"../Controller/EmpleadosController.php?Op=mostrarcombo",
       type:"GET",
@@ -220,17 +306,38 @@ function archivoyComboboxparaModal()
           tempData="";
           $.each(empleados,function(index,value)
           {
-              tempData+="<option value='"+value.id_empleado+"'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</option>"
+              tempData+="<option value='"+value.id_empleado+"'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</option>";
           }); 
           
           $("#ID_EMPLEADOMODAL").html(tempData);
       }
-  });   
+  });
+  
+  $('#fileupload').fileupload({
+                url: '../View/'
+        });
+  
+}
+
+
+function listarEmpleados()
+{
+    $.ajax({
+        url:"../Controller/EmpleadosController.php?Op=nombresCompletos",
+        type:"GET",
+        async:false,
+        success:function(empleadosComb)
+        {
+            EmpleadosCombobox=empleadosComb;
+        }
+    });
+    return EmpleadosCombobox;
 }
 
 
 function insertarTareas(tareaDatos)
 {
+//    console.log("Datos: "+tareaDatos);
     $.ajax({
         url:"../Controller/TareasController.php?Op=Guardar",
         type:"POST",
@@ -238,16 +345,18 @@ function insertarTareas(tareaDatos)
         async:false,
         success:function(datos)
         {
-//            alert(datos);
-//            console.log(datos);
-            if(datos==true)
+//              alert(datos);
+            console.log(datos);
+            if(typeof(datos) == "object")
             {
                 tempData;
-                swalSuccess("Tarea Creada");
+                swalSuccess("Tarea Creada");                
                 $.each(datos,function(index,value)
                 {
-                   tempData= reconstruir(value,index);  
+                   console.log("entro"); 
+                   tempData= reconstruir(value,ultimoNumeroGrid+1);  
                 });
+                console.log(tempData);
                 
                 $("#jsGrid").jsGrid("insertItem",tempData).done(function()
                 {
@@ -255,7 +364,7 @@ function insertarTareas(tareaDatos)
                 });
                 
             } else{
-                if(datos==false)
+                if(datos==0)
                 {
                     swalError("Error, No se pudo crear la Tarea");                    
                 } else{
@@ -272,23 +381,6 @@ function insertarTareas(tareaDatos)
 }
 
 
-
-function listarEmpleados()
-{
-    $.ajax({
-        url:"../Controller/EmpleadosController.php?Op=nombresCompletos",
-        type:"GET",
-        async:false,
-        success:function(empleadosComb)
-        {
-            console.log(empleadosComb);
-            EmpleadosCombobox=empleadosComb;
-        }
-    });
-    return EmpleadosCombobox;
-}
-
-
 function mostrar_urls(id_tarea)
 {
         var tempDocumentolistadoUrl = "";
@@ -296,7 +388,8 @@ function mostrar_urls(id_tarea)
         $.ajax({
                 url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
                 type: 'GET',
-                data: 'URL='+URL,
+                data: 'URL='+URL+'&SIN_CONTRATO=',
+                async:false,
                 success: function(todo)
                 {
                         if(todo[0].length!=0)
@@ -320,7 +413,7 @@ function mostrar_urls(id_tarea)
                         {
                                 tempDocumentolistadoUrl = " No hay archivos agregados ";
                         }
-                        tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdDocumento' type='text' style='display:none;' value='"+id_documento_entrada+"'>";
+                        tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdDocumento' type='text' style='display:none;' value='"+id_tarea+"'>";
                         // alert(tempDocumentolistadoUrl);
                         $('#DocumentoEntradaAgregarModal').html(" ");
                         $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
@@ -332,6 +425,146 @@ function mostrar_urls(id_tarea)
                 }
         });
 }
+
+var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/form-data'>";
+                ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
+                ModalCargaArchivo += "<div class='fileupload-buttons'>";
+                ModalCargaArchivo += "<span class='fileinput-button'>";
+                ModalCargaArchivo += "<span><a >Agregar Archivos(Click o Arrastrar)...</a></span>";
+                ModalCargaArchivo += "<input type='file' name='files[]' multiple></span>";
+                ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
+                ModalCargaArchivo += "<div class='fileupload-progress' >";
+                ModalCargaArchivo += "</div></div>";
+                ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
+                
+
+months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+
+
+function agregarArchivosUrl()
+{
+        var ID_TAREA = $('#tempInputIdDocumento').val();
+        url = 'Tareas/'+ID_TAREA,
+        $.ajax({
+                url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
+                type: 'GET',
+                data: 'URL='+url+'&SIN_CONTRATO=',
+                success:function(creado)
+                {
+                    if(creado==true)
+                        $('.start').click();
+                },
+                error:function()
+                {
+                        swalError("Error del servidor");
+                }
+        });
+}
+
+
+function borrarArchivo(url)
+{
+
+        swal({
+                title: "ELIMINAR",
+                text: "Confirme para eliminar el Archivo",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true
+                }, function()
+                {
+                        var ID_TAREA = $('#tempInputIdDocumento').val();
+                        $.ajax({
+                                url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
+                                type: 'GET',
+                                data: 'URL='+url+'&SIN_CONTRATO=',
+                                success: function(eliminado)
+                                {
+                                        // eliminar = eliminado;
+                                        if(eliminado)
+                                        {
+                                                mostrar_urls(ID_TAREA);
+                                                refresh();
+                                                swal("","Archivo eliminado");
+                                                setTimeout(function(){swal.close();},1000);
+                                        }
+                                        else
+                                                swal("","Ocurrio un error al eliminar el archivo", "error");
+                                },
+                                error:function()
+                                {
+                                        swal("","Ocurrio un error al elimiar el archivo", "error");
+                                }
+                        });
+                });
+}
+
+
+function preguntarEliminar(data)
+{
+    // valor = true;
+    swal({
+        title: "",
+        text: "¿Eliminar Registro?",
+        type: "info",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        showLoaderOnConfirm: true,
+        confirmButtonText: "Eliminar",
+        cancelButtonText: "Cancelar",
+        },
+        function(confirmacion)
+        {
+            if(confirmacion)
+            {
+                eliminarRegistro(data);
+            }
+            else
+            {
+            }
+        });
+        // return eliminarRegistro(data.id_principal[0].id_contrato);
+}
+
+function eliminarRegistro(item)
+{
+//    console.log(item);
+    id_afectado= item['id_principal'][0];
+
+    $.ajax({
+        url:"../Controller/TareasController.php?Op=Eliminar",
+        type:"POST",
+        data:"ID_TAREA="+JSON.stringify(id_afectado),
+        success:function(data)
+        {
+            alert("Entro al success "+data);
+            if(data==false)
+            {
+//                swal("","La Tarea tiene cargado un Programa","error");
+//                setTimeout(function(){swal.close();},1500);
+                swalError("La Tarea tiene cargado un Programa");
+                
+            }else{
+                if(data==true)
+                {
+//                    actualizarDespuesdeEditaryEliminar();
+                    refresh();
+//                    swal("","Se elimino correctamente La Tarea","success");
+//                    setTimeout(function(){swal.close();},1500);
+                    swalSuccess("Se elimino correctamente La Tarea");
+                }
+            }
+        },
+        error:function()        
+        {
+//            swal("","Error en el servidor","error");
+//            setTimeout(function(){swal.close();},1500);
+              swalSuccess("Error en el servidor");
+        }
+    });
+}
+
 
 function refresh()
 {
@@ -346,6 +579,15 @@ function loadSpinner()
 {
     myFunction();
 }
+
+
+function actualizarDespuesdeEditaryEliminar()
+{
+   listarEmpleados();
+   listarDatos();
+   gridInstance.loadData();
+}
+
 
 function loadBlockUi()
 {
@@ -363,10 +605,21 @@ function loadBlockUi()
 }
 
 //area de gantt
-
 function cargarprogram(value){
     alert("d  "+value);
 }
-
-
 //finaliza area de gantt
+
+
+
+
+
+
+
+
+
+
+
+
+
+

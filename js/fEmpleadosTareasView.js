@@ -8,7 +8,16 @@ $(function()
         empleadoDatos.apellido_materno = $("#APELLIDO_MATERNO").val();
         empleadoDatos.categoria = $("#CATEGORIA").val();
         empleadoDatos.email = $("#CORREO").val();
-        (checarVacio(empleadoDatos)) ? insertarEmpleado(empleadoDatos) : swalError("Completar campos");
+//        (checarVacio(empleadoDatos)) ? insertarEmpleado(empleadoDatos) : swalError("Completar campos");
+        listo=
+            (
+                empleadoDatos.nombre_empleado!=""?
+                empleadoDatos.apellido_paterno!=""?
+                empleadoDatos.apellido_materno!=""?
+                empleadoDatos.categoria!=""?        
+                true: false: false: false: false                      
+            );   
+                listo ? insertarEmpleado(empleadoDatos) : swalError("Completar campos");
         
     });
 
@@ -65,94 +74,63 @@ $(function()
 }); //CIERRA EL $(FUNCTION())
 
 
-
-filtros = 
-[
-    {'name':'Nombre','id':'nombre_empleado',type:'text'},
-    {'name':'Apellido Paterno','id':'apellido_paterno',type:'text'},
-    {'name':'Apellido Materno','id':'apellido_materno',type:'text'},
-    {'name':'Categoria','id':'categoria',type:'text'},
-    {'name':'Correo','id':'correo',type:'text'},
-    {'name':'Fecha Creación','id':'fecha_creacion',type:'date'},
-    // {'name':'Autoridad','id':'id_autoridad',type:'combobox',data: consultarAutoridades() },
-];
-
-var dataListado=[];
-correoEmail=false;
+var correoEmail=false;
 
 
-
-
-
-function listarDatos(datosF)
+function inicializarFiltros()
 {
-//    console.log(datosF);
-    if(datosF==undefined)
-    {
-    $.ajax({
-        url: '../Controller/EmpleadosTareasController.php?Op=Listar',
-            type: 'GET',
-            async:false,
-            beforeSend:function()
-            {},
-            success:function(datos)
-            {
-                dataListado = datos;
-                d=reconstruirTab(datos);
-            },
-            error:function(error)
-            {}
-    });
-    
-    } else{
-        d = reconstruirTab(datosF);
-    }
-    return d;
-   
+    filtros =[
+        {'name':'Nombre','id':'nombre_empleado',type:'text'},
+        {'name':'Apellido Paterno','id':'apellido_paterno',type:'text'},
+        {'name':'Apellido Materno','id':'apellido_materno',type:'text'},
+        {'name':'Categoria','id':'categoria',type:'text'},
+        {'name':'Correo','id':'correo',type:'text'},
+        {'name':'Fecha Creación','id':'fecha_creacion',type:'date'},
+        {name:"opcion",id:"opcion",type:"opcion"}
+    ];
 }
 
 
-function reconstruirTab(datos)
-{
-    __datos=[];
-    $.each(datos,function(index,value){
-        __datos.push(reconstruir(value,index++));
-    });
-    return __datos;
-}
+//function reconstruirTab(datos)
+//{
+//    __datos=[];
+//    $.each(datos,function(index,value){
+//        __datos.push(reconstruir(value,index++));
+//    });
+//    return __datos;
+//}
 
 
 //function listarjsGrid(__datos)
-function construirGrid(datosF)
+function construirGrid()
 {
     db={
-        loadData: function(filter)
+        loadData: function()
         {
-            return listarDatos(datosF);
+            return DataGrid;
         },
         insertItem: function(item)
         {
             return item;
         }
     };
-    
-    window.db = db;
+
 //    $("#jsGrid").html("");
     $("#jsGrid").jsGrid({
         onInit: function(args)
         {
-             gridInstance=args;
-            jsGrid.ControlField.prototype.editButton=true;
-             jsGrid.ControlField.prototype.deleteButton=false;
-            jsGrid.Grid.prototype.autoload=true;
+             gridInstance=args.grid;//linea gridinstance requerida no cambiar pasar el args.grid de esta forma si no , no funcionara
+//            jsGrid.ControlField.prototype.editButton=true;
+//             jsGrid.ControlField.prototype.deleteButton=false;
+            jsGrid.Grid.prototype.autoload=true;//linea requerida no cambiar o quitar
         },
         onDataLoading: function(args)
         {
-            $("#loader").show();
+            loadBlockUi();
         },
         onDataLoaded:function(args)
         {
-            $("#loader").hide();
+//            $('.jsgrid-filter-row').removeAttr("style",'display:none');
         },
         onRefreshing: function(args) {
         },
@@ -160,15 +138,18 @@ function construirGrid(datosF)
         width: "100%",
         height: "300px",
         autoload:true,
-        editing: true,
         heading: true,
         sorting: true,
+        editing: true,
         paging: true,
+        controller:db,
+        pageLoading:false,
         pageSize: 5,
         pageButtonCount: 5,
-        controller:db,
-        filtering:false,
-//        data: __datos,
+        updateOnResize: true,
+        confirmDeleting: true,
+        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+        
         fields: 
         [
             { name: "id_principal",visible:false},
@@ -219,22 +200,39 @@ function construirGrid(datosF)
                 }
         }
     });
-    $("#loader").hide();
+}
+
+function listarDatos()
+{
+    __datos=[];
+    datosParamAjaxValues={};
+    datosParamAjaxValues["url"]="../Controller/EmpleadosTareasController.php?Op=Listar";
+    datosParamAjaxValues["type"]="GET";
+    datosParamAjaxValues["async"]=false;
+    
+    var variablefunciondatos=function obtenerDatosServer(data)
+    {
+        dataListado = data;
+        $.each(data,function(index,value)
+        {
+            __datos.push(reconstruir(value,index++));
+        });
+    }
+    var listfunciones=[variablefunciondatos];
+    ajaxHibrido(datosParamAjaxValues,listfunciones);
+    DataGrid = __datos;
 }
 
 
-
-//Para construir los Filtros
+//PARA FILTROS
 function reconstruirTable(_datos)
 {
     __datos=[];
     $.each(_datos,function(index,value)
     {
-        __datos.push(reconstruir(value,index));
+        __datos.push(reconstruir(value,index++));
     });
-    // $("#jsGrid").jsGrid("loadData");
     construirGrid(__datos);
-    $("#loader").hide();
 }
 
 function reconstruir(value,index)
@@ -251,20 +249,20 @@ function reconstruir(value,index)
     return tempData;
 }
 
-function componerDataListado(value)// id de la vista documento
-{
-    dataListado;
-    id_vista = value.id_documento_entrada;
-    id_string = "id_documento_entrada"
-    $.each(dataListado,function(indexList,valueList)
-    {
-        $.each(valueList,function(ind,val)
-        {
-            if(ind == id_string)
-                    ( val.indexOf(id_vista) != -1 ) ? ( dataListado[indexList]=value ):  console.log();
-        });
-    });
-}
+//function componerDataListado(value)// id de la vista documento
+//{
+//    dataListado;
+//    id_vista = value.id_documento_entrada;
+//    id_string = "id_documento_entrada"
+//    $.each(dataListado,function(indexList,valueList)
+//    {
+//        $.each(valueList,function(ind,val)
+//        {
+//            if(ind == id_string)
+//                    ( val.indexOf(id_vista) != -1 ) ? ( dataListado[indexList]=value ):  console.log();
+//        });
+//    });
+//}
 
 function insertarEmpleado(empleadoDatos)
 {
@@ -280,11 +278,13 @@ function insertarEmpleado(empleadoDatos)
                 if( typeof(datos) == "object")
                 {
                     tempData;
-                    swalSuccess("Creado");
+                    swalSuccess("Empleado Creado");
                     $.each(datos,function(index,value)
                     {
                         tempData = reconstruir(value,index);
                     });
+                    console.log(tempData);
+                    
                     $("#jsGrid").jsGrid("insertItem",tempData).done(function()
                     {
                         $("#crea_empleado .close ").click();
@@ -312,6 +312,7 @@ function insertarEmpleado(empleadoDatos)
     }
 }
 
+
 function loadSpinner()
 {
     myFunction();
@@ -319,14 +320,10 @@ function loadSpinner()
 
 function refresh()
 {
-//    alert("refresh");
-    loadBlockUi();
-//    construirFiltros();
-//    listarDatos();
-    $("#jsGrid").jsGrid("render").done(function()
-    {
-//                swalSuccess("Datos Cargados Exitosamente");
-    });
+    listarDatos();
+    inicializarFiltros();
+    construirFiltros();
+    gridInstance.loadData();
 }
 
 function loadBlockUi()
@@ -345,13 +342,13 @@ function loadBlockUi()
 }
 
 
-function checarVacio(datos)
-{
-    vacio=true;
-    $.each(datos,function(index,value)
-    {
-        if(value=="")
-            vacio=false;
-    });
-    return vacio;
-}
+//function checarVacio(datos)
+//{
+//    vacio=true;
+//    $.each(datos,function(index,value)
+//    {
+//        if(value=="")
+//            vacio=false;
+//    });
+//    return vacio;
+//}

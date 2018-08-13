@@ -7,7 +7,24 @@ require_once '../Model/EmpleadoModel.php';
 class DocumentoModel{
     //valida los datos del usuario.
     //retorna el registro del usuario como un arreglo asociativo
-    public function  listarDocumentos($contrato){
+    
+    public function  listarDocumentos($contrato)
+    {
+        try{
+            $dao=new DocumentoDAO();
+//            $model=new EmpleadoModel();            
+            $rec= $dao->mostrarDocumentos($contrato);
+//            $rec['empl']=$model->listarEmpleadosComboBox();
+            return $rec;
+        }  catch (Exception $e)
+        {
+            throw  $e;
+            return -1;
+        }
+    }
+    
+    public function  listarDocumentos2($contrato)
+    {
         try{
             $dao=new DocumentoDAO();
             $model=new EmpleadoModel();
@@ -16,9 +33,11 @@ class DocumentoModel{
             $rec['empl']=$model->listarEmpleadosComboBox();
             
             return $rec;
-    }  catch (Exception $e){
+        }  catch (Exception $e)
+        {
         throw  $e;
-    }
+        return -1;
+        }
     }
     
     

@@ -101,7 +101,7 @@ function construirGrid()
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields: [
                 { name:"id_principal", visible:false},
-                {name:"no", title:"No",width:60,type:"text"},
+                {name:"no", title:"No",width:60},
                 { name:"clave_contrato", title: "ID del Contrato o Asignación", type: "text", width: 150, validate: "required"},
                 { name:"region_fiscal", title: "Region Fiscal", type: "text", width: 150, validate: "required" },
                 { name:"ubicacion", title: "Ubicación del Punto de Medición", type: "text", width: 150, validate: "required" },

@@ -231,7 +231,7 @@ class AsignacionTemaRequisitoModel {
         }catch (Exception $ex)
         {
             throw $ex;
-            return false;
+            return -1;
         }
     }
     
@@ -241,11 +241,12 @@ class AsignacionTemaRequisitoModel {
         {    
             $exito=0;
             $dao=new AsignacionTemaRequisitoDAO();
+            
             $evidencia= $dao->obtenerRegistrodeEvidencia($ID_REGISTRO);
+            
             if($evidencia==0)
             {
                 $exito= $dao->eliminarNodoRegistro($ID_REGISTRO);
-
             }
             
             return $exito;

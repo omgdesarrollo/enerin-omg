@@ -7,24 +7,25 @@ $("#CLAVE_DOCUMENTO").keyup(function(){
     verificarExiste(valueclavedocumento,"clave_documento");
 
 });
-$("#btn_guardar").click(function(){
 
-            var CLAVE_DOCUMENTO=$("#CLAVE_DOCUMENTO").val();
-            var DOCUMENTO=$("#DOCUMENTO").val();
-            var ID_EMPLEADOMODAL=$("#ID_EMPLEADOMODAL").val();
-//            var REGISTROS=$("#REGISTROS").val();
+$("#btn_guardar").click(function()
+{
+    documentoDatos=new Object();
+    documentoDatos.clave_documento = $("#CLAVE_DOCUMENTO").val();
+    documentoDatos.documento = $("#DOCUMENTO").val();
+    documentoDatos.id_empleado = $("#ID_EMPLEADOMODAL").val();
+    
+    listo=
+        (
+           documentoDatos.clave_documento!=""?
+           documentoDatos.documento!=""?
+           documentoDatos.id_empleado!=""?
+           true: false: false: false
+        );
 
-//           alert("CLAVE_DOCUMENTO :"+CLAVE_DOCUMENTO + "DOCUMENTO :"+DOCUMENTO + "ID_EMPLEADOMODAL :"+ID_EMPLEADOMODAL);
-
-            datos=[];
-            datos.push(CLAVE_DOCUMENTO);
-            datos.push(DOCUMENTO);
-            datos.push(ID_EMPLEADOMODAL);
-//            datos.push(REGISTROS);
-
-            saveToDatabaseDatosFormulario(datos);
-
+           listo ?  insertarDocumento(documentoDatos):swalError("Completar campos");
 });
+
 
 $("#btn_limpiar").click(function(){
 
@@ -38,80 +39,156 @@ $("#btn_limpiar").click(function(){
 }); //LLAVE CIERRE FUNCTION
 
 
-filtros = 
-[
-    {'name':'Clave','id':'clave_documento',type:'text'},
-    {'name':'Documento','id':'documento',type:'text'},
-//    {'name':'Responsable','id':'id_empleado',type:'combobox',data:consultarEmpleados()}
-];
 
-
-//function construirFiltros()
-//{
-//    tempData = "";
-//    $.each(filtros,function(index,value)
-//    {
-//        if(value.type == "date")
-//        {
-//            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' style='width: auto;display:none;'>";
-//            tempData += "<input type='date' onChange='construirFiltroSelect(this,\""+value.id+"\")' placeholder='"+value.name+"' style='width:auto;margin:2px;'>";
-//        }
-//        if(value.type == "text")
-//        {
-//            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' placeholder='"+value.name+"' style='width:auto;margin:2px;'>";
-//        }
-//        if(value.type == "combobox")
-//        {
-//            tempData += "<input id='"+value.id+"' type='text' onkeyup='filtroSupremo()' style='width:auto;display:none'>";
-//            tempData += construirFiltrosCombobox(value.data,value.id);
-//        }
-//    });
-//    $("#headerFiltros").append(tempData);
-//}
-//
-//function construirFiltrosCombobox(datos,id)
-//{
-//    tempData="";
-//    tempData = "<select onChange='construirFiltrosComboboxSelect(this,\""+id+"\")' margin:2px;>";
-//    tempData += "<option value='-1'>Responsable del Documento</option>";
-//    $.each(datos,function(index,value)
-//    {
-//            tempData += "<option value='"+value.id+"'>"+value.descripcion+"</option>";
-//    });
-//    tempData += "</select>";
-//    return tempData;
-//}
-//
-//function construirFiltroSelect(Obj,id)
-//{
-//    val = $(Obj).val();
-//    if(val=="-1")
-//            $("#"+id).val("");
-//    else
-//            $("#"+id).val(val);
-//    filtroSupremo();
-//}
-
-
-
-
-
-var ____listaDeTodoTipoDeVariantes={"todoloquetienequeverconfiltros":{filtroAlPrincipioDeTodosLosCampos:false}};
-
-//simbologia
-//                _=funcion
-//                __=variables
-//                ___=objetos
-//                ____=listas de objetos
-
-
-
-function listarDatos(queRetornar)
+function inicializarFiltros()
 {
-//    alert("Entro a listar datos");
-    __datos=[];
-    // __datosCBE=[];
+    filtros =[
+            {id:"clave_documento",type:"text"},
+            {id:"documento",type:"text"},
+            {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
+            {name:"opcion",id:"opcion",type:"opcion"}
+            ];
+}
+
+
+
+function construirGrid()
+{
+//    jsGrid.fields.customControl = MyCControlField;
+    db={
+            loadData: function()
+            {
+                return DataGrid;
+            },
+            insertItem: function(item)
+            {
+                return item;
+            },
+        };
     
+    $("#jsGrid").jsGrid({
+        onInit: function(args)
+        {
+            gridInstance=args.grid;
+            jsGrid.Grid.prototype.autoload=true;
+        },
+        onDataLoading: function(args)
+        {
+            loadBlockUi();
+        },
+        onDataLoaded:function(args)
+        {
+            $('.jsgrid-filter-row').removeAttr("style",'display:none');
+        },
+        onRefreshing: function(args) {
+        },
+        
+        width: "100%",
+        height: "300px",
+        autoload:true,
+        heading: true,
+        sorting: true,
+        editing: true,
+        paging: true,
+        controller:db,
+        pageLoading:false,
+        pageSize: 5,
+        pageButtonCount: 5,
+        updateOnResize: true,
+        confirmDeleting: true,
+        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+//        filtering:false,
+//        data: __datos,
+        fields: 
+        [
+            { name: "id_principal",visible:false},
+            { name: "clave_documento",title:"Clave del Documento", type: "text", validate: "required" },
+            { name: "documento",title:"Documento", type: "text", validate: "required" },
+            { name: "id_empleado",title:"Responsable del Documento", type: "select",
+                items:EmpleadosCombobox,
+                valueField:"id_empleado",
+                textField:"nombre_completo"
+            },
+            {name:"cancel", type:"control", }
+        ],
+        onItemUpdated: function(args)
+        {
+//                console.log(args);
+            columnas={};
+            entro=0;
+            id_afectado=args["item"]["id_principal"][0];
+            $.each(args["item"],function(index,value)
+            {
+                if(args["previousItem"][index] != value && value!="")
+                {
+                        if(index!="id_principal" && !value.includes("<button"))
+                        {
+                                columnas[index]=value;
+                        }
+                }
+            });
+            if(Object.keys(columnas).length!=0)
+            {
+                    $.ajax({
+                            url: '../Controller/GeneralController.php?Op=Actualizar',
+                            type:'GET',
+                            data:'TABLA=documentos'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
+                            success:function(exito)
+                            {
+                                actualizarDespuesdeEditaryEliminar();
+                                swal("","Actualizacion Exitosa!","success");
+                                setTimeout(function(){swal.close();},1000);
+                            },
+                            error:function()
+                            {
+                                swal("","Error en el servidor","error");
+                                setTimeout(function(){swal.close();},1500);
+                            }
+                    });
+            }
+        },
+        
+        onItemDeleting: function(args) 
+        {
+            id_afectado= args['item']['id_principal'][0];
+    
+            $.ajax({
+                url:"../Controller/DocumentosController.php?Op=Eliminar",
+                type:"POST",
+                data:"ID_DOCUMENTO="+JSON.stringify(id_afectado),
+                success:function(data)
+                {
+                    alert("Entro al success "+data);
+                    if(data==false)
+                    {
+                        swal("","El Documento esta validado o asignado a un Registro","error");
+                        setTimeout(function(){swal.close();},1500);
+                    }else{
+                        if(data==true)
+                        {
+                            actualizarDespuesdeEditaryEliminar();
+                            swal("","Se elimino correctamente el Documento","success");
+                            setTimeout(function(){swal.close();},1500);
+                        }
+                    }
+                },
+                error:function()        
+                {
+                    swal("","Error en el servidor","error");
+                    setTimeout(function(){swal.close();},1500);
+                }
+            });
+
+        }
+        
+    });
+    
+}
+
+
+function listarDatos()
+{
+    __datos=[];    
     datosParamAjaxValues={};
     datosParamAjaxValues["url"]="../Controller/DocumentosController.php?Op=Listar";
     datosParamAjaxValues["type"]="POST";
@@ -119,297 +196,117 @@ function listarDatos(queRetornar)
     
     var variablefunciondatos=function obtenerDatosServer (data)
     {
-        tamanoData = data.lengt;
-        console.log(data);
-        $.each(data.empl,function(index,value){
-//            alert(data.empl);
-              __datosCBE.push({
-                "Name":value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno,
-                "id_empleado":value.id_empleado           
-              });
-//              alert(__datosCBE);
-                
+        dataListado = data;
+        $.each(data,function(index,value)
+        {
+            __datos.push(reconstruir(value,index++));
         });
-//        console.log(__datosCBE);
-        
-        $.each(data.doc,function(index,value){
-//          alert("Valores each: "+value);
 
-            __datos.push({
-                "id_principal":[{'id_documento':value.id_documento}],
-                "clave_documento":value.clave_documento,
-                "documento":value.documento,
-//                "Responsable del Documento":value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno           
-                "id_empleado":value.id_documento,
-            })
-        });
     }
     
     var listfunciones=[variablefunciondatos];
     ajaxHibrido(datosParamAjaxValues,listfunciones);
-    
-   if(queRetornar==1)
-   {
-//       console.log(__datos);
-      return __datos; 
-   }else{
-        // console.log("V",__datosCBE);
-      return __datosCBE;
-//      console.log(__datosCBE);
-   }
-//   
-//   console.log(__datos);
-
-//    return __datos;
+    DataGrid = __datos;
 }
-__datosCBE=[];
-primera = 0;
-tamanoData=0;
-function listarjsGrid()
-{  
-    jsGrid.fields.fselect = MySelectField;
-    db={
-                loadData: function(filter) {
-//                    console.log("Entro al loadData");
-//                    console.log(listarDatos(1));
-//                    alert("e");
-//                        console.log(filter);
-//                        return listarDatos(1);
-                        
-//                          var __filter = $("#jsGrid").jsGrid("getFilter");
-//            console.log(__filter);
-//             return $.grep(this.clients, function(client) {
-//                return (!filter.Name || client.Name.indexOf(filter.Name) > -1)
-//                    && (!filter.Age || client.Age === filter.Age)
-//                    && (!filter.Address || client.Address.indexOf(filter.Address) > -1)
-//                    && (filter.Married === undefined || client.Married === filter.Married);
-//            });
-            // console.log(filter);
-            return $.grep(listarDatos(1),function (data)
-            {
-                console.log(tamanoData);
-                // if(primera==1)
-                // {
-                    var objetoSinFiltroDeCombo={"comparacionesFiltros":(!filter.clave_documento || data.clave_documento.indexOf(filter.clave_documento) > -1)
-                        &&(!filter.documento || data.documento.indexOf(filter.documento)> -1)};
-                    var objetoConTodosLosFiltros={"comparacionesFiltros":(!filter.clave_documento || data.clave_documento.indexOf(filter.clave_documento) > -1)
-                        &&(!filter.documento || data.documento.indexOf(filter.documento)> -1)
-                        &&(!filter.id_empleado || data.id_empleado.indexOf(filter.id_empleado)> -1)};
 
-                    if(primera != tamanoData)
-                    {
-                        // ____listaDeTodoTipoDeVariantes["todoloquetienequeverconfiltros"]["filtroAlPrincipioDeTodosLosCampos"]=true;
-                        // return objetoSinFiltroDeCombo["comparacionesFiltros"];
-                        primera++;
-                        return data;
-                    }
-                    else
-                    {
-                        return objetoConTodosLosFiltros["comparacionesFiltros"];
-                    }
-                // }
-                // else
-                // {
-                //     return data;
-                // }
-                // primera=1;
-//                       &&(!filter.id_empleado || data.id_empleado(filter.id_empleado)> -1) ;
-            });
-              },
-                  insertItem: function(item) {
-                      return item;
-              },
-           } 
-           
-    window.db = db; 
-    $("#jsGrid").jsGrid({
-        
-        onInit: function(args){
-            // console.log(jsGrid);
-            gridInstance=args;
-              jsGrid.ControlField.prototype.editButton=true;
-              jsGrid.Grid.prototype.autoload=true;
-//              jsGrid.Field.prototype.filtering=false;
-//                jsGrid.Field.prototype.filtering=true;
-//                jsGrid.Field.prototype.visible=false;
-        }, 
-        onDataLoading: function(args) {
-            $("#loader").show();
-        },
-        onDataLoaded:function(args){
-            $("#loader").hide();
-//              jsGrid.Field.prototype.filtering=true;
-        },
-        onRefreshing: function(args)
-        {},
-        filterTemplate: function(data){alert("data");},
-        
-        width: "100%",
-        height: "300px",
-        autoload:true,
-        editing: true,
-        heading: true,
-        sorting: true,
-        paging: true,
-        controller:db,
-        filtering:true,
-//        data: __datos,
-        fields: [
-                { name: "id_principal",visible:false },
-                { name: "clave_documento",title:"Clave del Documento", type: "textarea", validate: "required"},
-                { name: "documento",title:"Nombre del Documento", type: "textarea",  validate: "required" },
-                // { name: "id_empleado",title:"Responsable del Documento", type:"fselect"},
-                { name: "id_empleado",title:"Responsable del Documento", type: "select", items:listarDatos(0),valueField: "id_empleado", textField: "Name", validate: "required",autosearch: false,filterValue: function() { 
-                      console.log("dentro del name");
-                       console.log(this.items[this.filterControl.val()][this.valueField]);
-                       console.log("termina dentro del name");
-                return this.items[this.filterControl.val()][this.valueField];
-                }},
-                
-                {type:"control"}
-        ],
-        
-        onItemUpdated: function(args) {
-//            console.log(args);
-            saveUpdateToDatabase(args);
-        },
 
-            
-    
-        onItemDeleting: function(args) {
-//            console.log(args);
-            eliminarDocumento(args);
-
-        }
-        
+function reconstruirTable(_datos)
+{
+    __datos=[];
+    $.each(_datos,function(index,value)
+    {
+        __datos.push(reconstruir(value,index++));
     });
-//    $("#jsGrid").jsGrid("clearFilter");
-console.log("empezara con grid instance");
-   console.log(gridInstance);
-   console.log("termina grid instance");
+    construirGrid(__datos);
 }
 
-var MySelectField = function(config)
+
+function reconstruir(value,index)
 {
-    jsGrid.Field.call(this, config);
-};
- 
-MySelectField.prototype = new jsGrid.Field
-({        
-        css: "date-field",
-        align: "center",
-        sorter: function(date1, date2)
-        {
-                console.log("haber cuando entra aqui");
-                console.log(date1);
-                console.log(date2);
-        },
-        itemTemplate: function(value,todo)
-        {
-            // console.log(todo);
-            // console.log(value);
-            tempData = "<select><option value='1'>NADA</option></select>";
-            return tempData;
-            // if(todo.delete=="no")
-                // return "";
-            // else
-                // return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button', type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
-        },
-        insertTemplate: function(value)
-        {
-            tempData = "<select><option value='1'>NADA</option></select>";
-            return tempData;
-        },
-        editTemplate: function(value)
-        {
-            tempData = "<select><option value='1'>NADA</option></select>";
-            return tempData;
-        },
-        insertValue: function()
-        {
-            tempData = "<select><option value='1'>NADA</option></select>";
-            return tempData;
-        },
-        editValue: function()
-        {
-            tempData = "<select><option value='1'>NADA</option></select>";
-            return tempData;
-        }
-});
+    tempData=new Object();
+    tempData["id_principal"]= [{'id_documento':value.id_documento}];
+    tempData["clave_documento"]=value.clave_documento;
+    tempData["documento"]=value.documento;
+    tempData["id_empleado"]=value.id_empleado;
+    return tempData;
+}
 
-function saveUpdateToDatabase(args) 
-{ 
-//      console.log("Valor del args en el save: "+args['item']['id_principal'][0]);
 
-      console.log(args);
-//      columnas=new Object();
-      columnas={};
-       entro=0;
-      id_afectado=args['item']['id_principal'][0];
-//      console.log(args['item']['id_principal'][0]);
-//      columnas['nombre']="nom";
-      $.each(args['item'],function(index,value){
-          if(args['previousItem'][index]!=value && value!="")
-          {
-              if(index!='id_principal' && !value.includes("<button")){
-//              console.log("Entro aqui");
-                    columnas[index]=value;
-                }
-          }            
-//          console.log(args['previousItem'][index]);
-      });
-      if(Object.keys(columnas).length!=0)
+function empleadosComboboxparaModal()
+{
+  
+  $.ajax({
+      url:"../Controller/EmpleadosController.php?Op=mostrarcombo",
+      type:"GET",
+      success:function(empleados)
       {
-          console.log("Valor columnas: "+columnas);
-        $.ajax({
-            url:"../Controller/GeneralController.php?Op=Actualizar",
-            type:"POST",
-            data:'TABLA=documentos'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),          
-            success:function(data)
-            {
-//                alert("Entro al success");
-                swal("","Actualizacion Exitosa!", "success");
-                setTimeout(function(){swal.close();},1000);
-            },
-            error:function()
-            {
-                swal("","Error en el servidor","error");
-                setTimeout(function(){swal.close();},1500);
-            }            
-        });
-      }     
+          tempData="";
+          $.each(empleados,function(index,value)
+          {
+              tempData+="<option value='"+value.id_empleado+"'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</option>";
+          }); 
+          
+          $("#ID_EMPLEADOMODAL").html(tempData);
+      }
+  });   
 }
 
-function eliminarDocumento(args)
+
+function listarEmpleados()
 {
-//    console.log(args);
-    id_afectado= args['item']['id_principal'][0];
-//    console.log(args['item']['id_principal'][0]);
-//alert("Entro a la funcion eliminar");
     $.ajax({
-        url:"../Controller/DocumentosController.php?Op=Eliminar",
-        type:"POST",
-        data:"ID="+JSON.stringify(id_afectado),
-        success:function(data)
+        url:"../Controller/EmpleadosController.php?Op=nombresCompletos",
+        type:"GET",
+        async:false,
+        success:function(empleadosComb)
         {
-//            alert("Entro al success "+data);
-            if(data==false)
-            {
-                swal("","El Documento esta validado o asignado a un Registro","error");
-                setTimeout(function(){swal.close();},1500);
-            }else{
-                if(data==true)
-                {
-                    swal("","Se elimino correctamente el Documento","success");
-                    setTimeout(function(){swal.close();},1500);
-                }
-            }
-        },
-        error:function()        
-        {
-            swal("","Error en el servidor","error");
-            setTimeout(function(){swal.close();},1500);
+            EmpleadosCombobox=empleadosComb;
         }
+    });
+    return EmpleadosCombobox;
+}
+
+function insertarDocumento(documentoDatos)
+{
+        $.ajax({
+        url:"../Controller/DocumentosController.php?Op=Guardar",
+        type:"POST",
+        data:"documentoDatos="+JSON.stringify(tareaDatos),
+        async:false,
+        success:function(datos)
+        {
+//              alert(datos);
+            console.log(datos);
+            if(typeof(datos) == "object")
+            {
+                tempData;
+                swalSuccess("Documento Creado");                
+                $.each(datos,function(index,value)
+                {
+                   console.log("entro"); 
+                   tempData= reconstruir(value,index);  
+                });
+                console.log(tempData);
+                
+                $("#jsGrid").jsGrid("insertItem",tempData).done(function()
+                {
+                    $("#crea_tarea .close ").click();
+                });
+                
+            } else{
+                if(datos==0)
+                {
+                    swalError("Error, No se pudo crear el Documento");                    
+                } else{
+                    swalInfo("Creado, Pero no listado, Actualice");
+                }                
+            }
+            
+        },
+        error:function()
+            {
+                swalError("Error en el servidor");
+            }
     });
     
 }
@@ -445,50 +342,41 @@ $.ajax({
 }
 
 
-function saveToDatabaseDatosFormulario(datos)
-{
-    $.ajax({
-        
-        url:"../Controller/DocumentosController.php?Op=Guardar",
-        type:"POST",
-        data:"CLAVE_DOCUMENTO="+datos[0]+"&DOCUMENTO="+datos[1]+"&ID_EMPLEADO="+datos[2],
-        success:function(data)
-        {
-//            swal("Guardado Exitoso!", "", "success");
-//            setTimeout(function(){swal.close();$("#create-item .close").click();},1000);
-            refresh('agregarDocumento');
 
-        }
-        
-    });
-}
-
-function refresh(evaluar)
+function refresh()
 {
-    switch(evaluar)
-    {
-        case 'agregarDocumento':
-            ____listaDeTodoTipoDeVariantes["todoloquetienequeverconfiltros"]["filtroAlPrincipioDeTodosLosCampos"]=false;
-           $("#jsGrid").jsGrid("render").done(function() {
-            swal("Guardado Exitoso!", "", "success");
-            setTimeout(function(){swal.close();$("#create-item .close").click();},1000);
-        });
-        
-        break;
-        
-        case 'refrescarTable':
-            ____listaDeTodoTipoDeVariantes["todoloquetienequeverconfiltros"]["filtroAlPrincipioDeTodosLosCampos"]=false;
-            
-            $("#jsGrid").jsGrid("render").done(function() {
-            swal("Se cargaron correctamente los Datos", "", "success");
-            setTimeout(function(){swal.close();$("#create-item .close").click();},1000);
-        });    
-            
-            break;
-    }    
+   listarEmpleados();
+   listarDatos();
+   inicializarFiltros();
+   construirFiltros();
+   gridInstance.loadData();
 }
 
 function loadSpinner()
 {
-        myFunction();
+    myFunction();
+}
+
+
+function actualizarDespuesdeEditaryEliminar()
+{
+   listarEmpleados();
+   listarDatos();
+   gridInstance.loadData();
+}
+
+
+function loadBlockUi()
+{
+    $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF"> Espere Por Favor</span>', css:
+    { 
+        border: 'none', 
+        padding: '15px', 
+        backgroundColor: '#000', 
+        '-webkit-border-radius': '10px', 
+        '-moz-border-radius': '10px', 
+        opacity: .5, 
+        color: '#fff' 
+    },overlayCSS: { backgroundColor: '#000000',opacity:0.1,cursor:'wait'} }); 
+    setTimeout($.unblockUI, 2000);
 }

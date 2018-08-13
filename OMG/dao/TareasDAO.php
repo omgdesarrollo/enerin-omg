@@ -9,7 +9,7 @@ class TareasDAO{
         try
         {
             $query="SELECT tbtareas.id_tarea, tbtareas.contrato, tbtareas.tarea, tbtareas.fecha_creacion, tbtareas.fecha_alarma,
-                    tbtareas.fecha_cumplimiento, tbtareas.observaciones, tbtareas.archivo_adjunto, tbtareas.avance_programa,		 
+                    tbtareas.fecha_cumplimiento, tbtareas.observaciones, tbtareas.existe_programa, tbtareas.avance_programa,		 
                     tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno
                     FROM tareas tbtareas
                     JOIN empleados tbempleados ON tbempleados.id_empleado=tbtareas.id_empleado";
@@ -25,8 +25,31 @@ class TareasDAO{
             return -1;
         }
     }
+    
+    public function listarTarea($ID_TAREA)
+    {
+        try
+        {
+            $query="SELECT tbtareas.id_tarea, tbtareas.contrato, tbtareas.tarea, tbtareas.fecha_creacion, tbtareas.fecha_alarma,
+                    tbtareas.fecha_cumplimiento, tbtareas.observaciones, tbtareas.existe_programa, tbtareas.avance_programa,		 
+                    tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno
+                    FROM tareas tbtareas
+                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbtareas.id_empleado
+                    WHERE tbtareas.id_tarea=$ID_TAREA";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
 
-    public function insertarTarea($contrato,$tarea,$fecha_creacion,$fecha_alarma,$fecha_cumplimiento,$observaciones,$archivo_adjunto,$id_empleado)
+            return $lista;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+    public function insertarTarea($contrato,$tarea,$fecha_creacion,$fecha_alarma,$fecha_cumplimiento,$observaciones,$id_empleado)
     {
         try
         {
@@ -42,14 +65,12 @@ class TareasDAO{
                 $id_nuevo=0;
             }
             
-            $query="INSERT INTO tareas(id_tarea,contrato,tarea,fecha_creacion,fecha_alarma,fecha_cumplimiento,observaciones,archivo_adjunto,id_empleado)
-				values($id_nuevo,'$contrato','$tarea','$fecha_creacion','$fecha_alarma','$fecha_cumplimiento','$observaciones','$archivo_adjunto',$id_empleado)";
+            $query="INSERT INTO tareas(id_tarea,contrato,tarea,fecha_creacion,fecha_alarma,fecha_cumplimiento,observaciones,id_empleado)
+				values($id_nuevo,'$contrato','$tarea','$fecha_creacion','$fecha_alarma','$fecha_cumplimiento','$observaciones',$id_empleado)";
             
             $db=  AccesoDB::getInstancia();
-            $lista= $db->executeQueryUpdate($query);
-            
-//            echo json_encode($query);
-            return $lista;
+            $exito = $db->executeUpdateRowsAfected($query);
+            return ($exito != 0)?[0=>1,"id_nuevo"=>$id_nuevo]:[0=>0,"id_nuevo"=>$id_nuevo ];
         } catch (Exception $ex)
         {
             throw $ex;
@@ -57,6 +78,24 @@ class TareasDAO{
         }
     }
     
+    
+    public function eliminarTarea($ID_TAREA)
+    {
+        try
+        {
+            $query="DELETE FROM tareas
+                    WHERE tareas.existe_programa=0 AND tareas.id_tarea=$ID_TAREA";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista= $db->executeQueryUpdate($query);
+            
+            return $lista;            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return-1;
+        }
+    }
     
 }
 

@@ -96,8 +96,8 @@ $Usuario=  Session::getSesion("user");
 						</div>    
                                                                                                                                 
 						<div class="form-group">
-                                                    <button type="submit" id="btn_guardar_req"  class="btn crud-submit btn-info">Guardar</button>
-                                                    <button type="submit" id="btn_limpiar_req"  class="btn crud-submit btn-info">Limpiar</button>
+                                                    <button type="submit" style="width:49%" id="btn_guardar_req"  class="btn crud-submit btn-info">Guardar</button>
+                                                    <button type="submit" style="width:49%" id="btn_limpiar_req"  class="btn crud-submit btn-info">Limpiar</button>
 						</div>
                           <!--</form>-->
 
@@ -160,8 +160,8 @@ $Usuario=  Session::getSesion("user");
                         </div>
                         
                         <div class="form-group">
-                            <button type="submit" id="btn_guardar_reg"  class="btn crud-submit btn-info">Guardar</button>
-                            <button type="submit" id="btn_limpiar_reg"  class="btn crud-submit btn-info">Limpiar</button>
+                            <button type="submit" style="width:49%" id="btn_guardar_reg"  class="btn crud-submit btn-info">Guardar</button>
+                            <button type="submit" style="width:49%" id="btn_limpiar_reg"  class="btn crud-submit btn-info">Limpiar</button>
                         </div>
 
                     <!--</form>-->

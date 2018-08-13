@@ -41,7 +41,6 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
                              
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-                <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>
 
                 <!-- cargar archivo -->
                 <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
@@ -1556,126 +1555,6 @@ function borrarArchivo(url)
                 });
 }
 
-// function filterTableFolioEntrada()
-// {
-// // Declare variables 
-//         var input, filter, table, tr, td, i;
-//         input = document.getElementById("idInputFolioEntrada");
-//         filter = input.value.toUpperCase();
-//         table = document.getElementById("idTable");
-//         tr = table.getElementsByTagName("tr");
-
-//         // Loop through all table rows, and hide those who don't match the search query
-//         for (i = 0; i < tr.length; i++) {
-//         td = tr[i].getElementsByTagName("td")[2];
-//         if (td) {
-//         if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-//                 tr[i].style.display = "";
-//         } else {
-//                 tr[i].style.display = "none";
-//         }
-//         } 
-//         }
-// }
-
-// function filterTableAsunto()
-// {
-// // Declare variables 
-//         var input, filter, table, tr, td, i;
-//         input = document.getElementById("idInputAsunto");
-//         filter = input.value.toUpperCase();
-//         table = document.getElementById("idTable");
-//         tr = table.getElementsByTagName("tr");
-
-//         // Loop through all table rows, and hide those who don't match the search query
-//         for (i = 0; i < tr.length; i++) {
-//         td = tr[i].getElementsByTagName("td")[4];
-//         if (td) {
-//         if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-//                 tr[i].style.display = "";
-//         } else {
-//                 tr[i].style.display = "none";
-//         }
-//         } 
-//         }
-// }
-
-
-// function filterTableRemitente()
-// {
-// // Declare variables 
-//         var input, filter, table, tr, td, i;
-//         input = document.getElementById("idInputRemitente");
-//         filter = input.value.toUpperCase();
-//         table = document.getElementById("idTable");
-//         tr = table.getElementsByTagName("tr");
-
-//         // Loop through all table rows, and hide those who don't match the search query
-//         for (i = 0; i < tr.length; i++) {
-//         td = tr[i].getElementsByTagName("td")[5];
-//         if (td) {
-//         if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-//                 tr[i].style.display = "";
-//         } else {
-//                 tr[i].style.display = "none";
-//         }
-//         } 
-//         }
-// }
-                
-// function filterTableAutoridadRemitente()
-// {
-//         var input, filter, table, tr, td, i;
-//         input = document.getElementById("idInputAutoridadRemitente");
-//         filter = input.value.toUpperCase();
-//         table = document.getElementById("idTable");
-//         tr = table.getElementsByTagName("tr");
-
-//         for (i = 0; i < tr.length; i++)
-//         {
-//                 td = tr[i].getElementsByTagName("td")[6];
-//                 if (td)
-//                 {
-//                         select=td.getElementsByTagName("select");
-//                         $.each(select,function(index,value)
-//                         {
-//                                 var indexRes = value.selectedIndex;
-//                                 var responsable=value[indexRes].innerHTML;
-//                                 console.log(responsable);
-//                                 if (responsable.toUpperCase().indexOf(filter) > -1)
-//                                 {
-//                                         tr[i].style.display = "";
-//                                 }
-//                                 else
-//                                 {
-//                                         tr[i].style.display = "none";
-//                                 }
-//                           });
-//                 }
-//         }
-// }
-                                
-// function filterTableResponsableTema()
-// {
-// // Declare variables 
-//         var input, filter, table, tr, td, i;
-//         input = document.getElementById("idInputResponsableTema");
-//         filter = input.value.toUpperCase();
-//         table = document.getElementById("idTable");
-//         tr = table.getElementsByTagName("tr");
-
-//         // Loop through all table rows, and hide those who don't match the search query
-//         for (i = 0; i < tr.length; i++) {
-//         td = tr[i].getElementsByTagName("td")[9];
-//         if (td) {
-//         if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-//                 tr[i].style.display = "";
-//         } else {
-//                 tr[i].style.display = "none";
-//         }
-//         } 
-//         }
-// }
                 
 function CambioStatusDocumentoEntrada()
 {
@@ -1781,8 +1660,8 @@ listarDatos(-1);
           
 
                 <!-- js cargar archivo -->
-                <!-- <script src="../../assets/FileUpload/js/jquery.min.js"></script>
-                <script src="../../assets/FileUpload/js/jquery-ui.min.js"></script> -->
+                 <!--<script src="../../assets/FileUpload/js/jquery.min.js"></script>-->
+                <!--<script src="../../assets/FileUpload/js/jquery-ui.min.js"></script>--> 
                 <script src="../../assets/FileUpload/js/tmpl.min.js"></script>
                 <script src="../../assets/FileUpload/js/load-image.all.min.js"></script>
                 <script src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>
