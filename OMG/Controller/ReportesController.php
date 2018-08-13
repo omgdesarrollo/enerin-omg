@@ -9,7 +9,7 @@ $Op=$_REQUEST["Op"];
 $model=new CatalogoProcesosModel();
 $modelReporte= new ReporteModel();
 
-switch ($Op)
+switch($Op)
 {
     case 'listar':
         $CONTRATO = Session::getSesion("s_cont");
