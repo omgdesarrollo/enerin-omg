@@ -98,8 +98,8 @@ class ArchivoUploadModel{
 				// $contrato = Session::getSesion("s_cont");
 //				$url = $URL;
 				$urls = Session::getSesion("URLS");
-				$urlIR = $urls["fisica"].$CONTRATO."/".$url;
-                                $urlLogica = $urls["logica"].$CONTRATO."/".$url;
+				$urlIR = $urls["fisica"].$url;
+                $urlLogica = $urls["logica"].$url;
 				$files = scandir($urlIR);//Se forma la url fisica
 			}
 			$archivosNames = array();
