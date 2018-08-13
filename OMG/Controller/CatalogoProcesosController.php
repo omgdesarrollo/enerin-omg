@@ -90,6 +90,18 @@ switch ($Op)
         echo $exito;
     break;
 
+    case 'Actualizar':
+        header('Content-type: application/json; charset=utf-8'); 
+        $COLUMNAS = json_decode($_REQUEST["COLUMNAS_VALOR"],true);
+        $ID = json_decode($_REQUEST["ID_CONTEXTO"],true);
+        $REGION = utf8_decode($_REQUEST["REGION"]);
+        $resultado = $model->actualizar($_REQUEST["TABLA"],$COLUMNAS,$ID,$REGION);
+
+        // $resultado==1?$model->()
+
+        echo json_encode($resultado);
+    break;
+
     default:
         echo -1;
     break;

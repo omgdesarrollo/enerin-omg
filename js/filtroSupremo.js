@@ -2,8 +2,8 @@ primero = true;
 function construirFiltros()
 {
     tempData = "";
-    $('.jsgrid-filter-row').removeAttr("style",'display:none');
-    $('.jsgrid-filter-row').addClass("display-none");
+    // $('.jsgrid-filter-row').removeAttr("style",'display:none');
+    // $('.jsgrid-filter-row').addClass("display-none");
     $(".jsgrid-filter-row").html("");
     if(primero)
     {
@@ -127,15 +127,14 @@ function aplicarFiltro(DataFinal)
 
 function mostrarFiltros()
 {
-    if($('.jsgrid-filter-row').hasClass("display-none"))
+    val = $('.jsgrid-filter-row').css("display");
+    if(val == "none")
     {
-        $('.jsgrid-filter-row').removeClass("display-none");
-        $('.jsgrid-filter-row').addClass("display-view");
+        $('.jsgrid-filter-row').css("display","");
     }
     else
     {
-        $('.jsgrid-filter-row').removeClass("display-view");
-        $('.jsgrid-filter-row').addClass("display-none");
+        $('.jsgrid-filter-row').css("display","none");
     }
 }
 
