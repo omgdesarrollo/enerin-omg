@@ -51,6 +51,7 @@ var thisEmpleados=[];
 function inicializarFiltros()
 {    
     filtros =[
+            {id:"noneUno",type:"none"},
             {id:"contrato",type:"text"},
             {id:"tarea",type:"text"},
             {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
@@ -68,7 +69,7 @@ function inicializarFiltros()
 
 function construirGrid()
 {
-//    jsGrid.fields.customControl = MyCControlField;
+    jsGrid.fields.customControl = MyCControlField;
     db={
             loadData: function()
             {
@@ -92,7 +93,7 @@ function construirGrid()
         },
         onDataLoaded:function(args)
         {
-            $('.jsgrid-filter-row').removeAttr("style",'display:none');
+//            $('.jsgrid-filter-row').removeAttr("style",'display:none');
         },
         onRefreshing: function(args) {
         },
@@ -116,6 +117,7 @@ function construirGrid()
         fields: 
         [
             { name: "id_principal",visible:false},
+            { name:"no",title:"No",width:60},
             { name: "contrato",title:"Contrato", type: "text", validate: "required" },
             { name: "tarea",title:"Tarea", type: "text", validate: "required" },
 //            { name: "id_empleado",title:"Responsable del Plan", type: "text", validate: "required" },
@@ -128,10 +130,10 @@ function construirGrid()
             { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required" },
             { name: "fecha_cumplimiento",title:"Fecha de Cumplimiento", type: "text", validate: "required",editing: false},
             { name: "observaciones",title:"Observaciones", type: "text", validate: "required" },
-            { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",editing:false },
-            { name: "registrar_programa",title:"Registrar Programa", type: "text", validate: "required",width:130, editing:false },
+            { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:110,editing:false },
+            { name: "registrar_programa",title:"Registrar Programa", type: "text", validate: "required",width:140, editing:false },
             { name: "avance_programa",title:"Avance Programa", type: "text", validate: "required" },
-            {name:"cancel", type:"control", }
+            { name:"delete", title:"Opción", type:"customControl",sorting:""}
         ],
         onItemUpdated: function(args)
         {
@@ -142,7 +144,7 @@ function construirGrid()
             {
                     if(args["previousItem"][index] != value && value!="")
                     {
-                            if(index!="id_principal" && !value.includes("<button"))
+                            if(index!="id_principal" && !value.includes("<button") && index!="delete")
                             {
                                     columnas[index]=value;
                             }
@@ -156,7 +158,8 @@ function construirGrid()
                             data:'TABLA=tareas'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
                             success:function(exito)
                             {
-                                actualizarDespuesdeEditaryEliminar();
+//                                actualizarDespuesdeEditaryEliminar();
+                                refresh();
                                 swal("","Actualizacion Exitosa!","success");
                                 setTimeout(function(){swal.close();},1000);
                             },
@@ -171,34 +174,6 @@ function construirGrid()
         
         onItemDeleting: function(args) 
         {
-            id_afectado= args['item']['id_principal'][0];
-    
-            $.ajax({
-                url:"../Controller/TareasController.php?Op=Eliminar",
-                type:"POST",
-                data:"ID_TAREA="+JSON.stringify(id_afectado),
-                success:function(data)
-                {
-                    alert("Entro al success "+data);
-                    if(data==false)
-                    {
-                        swal("","La Tarea tiene cargado un Programa","error");
-                        setTimeout(function(){swal.close();},1500);
-                    }else{
-                        if(data==true)
-                        {
-                            actualizarDespuesdeEditaryEliminar();
-                            swal("","Se elimino correctamente La Tarea","success");
-                            setTimeout(function(){swal.close();},1500);
-                        }
-                    }
-                },
-                error:function()        
-                {
-                    swal("","Error en el servidor","error");
-                    setTimeout(function(){swal.close();},1500);
-                }
-            });
 
         }
         
@@ -207,6 +182,58 @@ function construirGrid()
 }
 
 
+var MyCControlField = function(config)
+{
+    jsGrid.Field.call(this, config);
+};
+
+
+MyCControlField.prototype = new jsGrid.Field
+({
+        css: "date-field",
+        align: "center",
+        sorter: function(date1, date2)
+        {
+            console.log("haber cuando entra aqui");
+            console.log(date1);
+            console.log(date2);
+            // return 1;
+        },
+        itemTemplate: function(value,todo)
+        {
+            console.log(value,todo);
+            if(value[0]['existe_programa']!="0" || value[0]['existe_archivo']!=0)
+                return "";
+            else
+                return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button ',title:"Eliminar", type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
+        },
+        insertTemplate: function(value)
+        {
+        },
+        editTemplate: function(value)
+        {
+            val = "<input class='jsgrid-button jsgrid-update-button' type='button' title='Actualizar' onClick='aceptarEdicion()'>";
+            val += "<input class='jsgrid-button jsgrid-cancel-edit-button' type='button' title='Cancelar Edición' onClick='cancelarEdicion()'>";
+            return val;
+        },
+        insertValue: function()
+        {
+        },
+        editValue: function()
+        {
+        }
+});
+
+
+function cancelarEdicion()
+{
+    $("#jsGrid").jsGrid("cancelEdit");
+}
+
+function aceptarEdicion()
+{
+    gridInstance.updateItem();
+}
 
 
 function listarDatos()
@@ -222,7 +249,7 @@ function listarDatos()
         dataListado = data;
         $.each(data,function(index,value)
         {
-            __datos.push(reconstruir(value,index++));
+            __datos.push(reconstruir(value,index+1));
         });
     }
     var listfunciones=[variablefunciondatos];
@@ -237,6 +264,7 @@ function reconstruirTable(_datos)
     $.each(_datos,function(index,value)
     {
         __datos.push(reconstruir(value,index++));
+        
     });
     construirGrid(__datos);
 }
@@ -245,10 +273,11 @@ function reconstruirTable(_datos)
 function reconstruir(value,index)
 {
     tempData=new Object();
+    ultimoNumeroGrid = index;
     tempData["id_principal"]= [{'id_tarea':value.id_tarea}];
+    tempData["no"]= index;  
     tempData["contrato"]=value.contrato;
     tempData["tarea"]=value.tarea;
-//    tempData["id_empleado"]=value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
     tempData["id_empleado"]=value.id_empleado;
     tempData["fecha_creacion"]=value.fecha_creacion;
     tempData["fecha_alarma"]=value.fecha_alarma;
@@ -256,10 +285,9 @@ function reconstruir(value,index)
     tempData["observaciones"]=value.observaciones;
     tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_tarea+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
     tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i>Mostrar</button>";
-//    tempData["archivo_adjunto"]=value.archivo_adjunto;
     tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info' onClick='cargarprogram("+value.id_tarea+")'>Cargar Programa</button>";    
     tempData["avance_programa"]=value.avance_programa;
-
+    tempData["delete"]= [{"existe_programa":value.existe_programa,"existe_archivo":value.archivosUpload[0].length}];
     return tempData;
 }
 
@@ -326,7 +354,7 @@ function insertarTareas(tareaDatos)
                 $.each(datos,function(index,value)
                 {
                    console.log("entro"); 
-                   tempData= reconstruir(value,index);  
+                   tempData= reconstruir(value,ultimoNumeroGrid+1);  
                 });
                 console.log(tempData);
                 
@@ -412,6 +440,7 @@ var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/
 
 months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 
+
 function agregarArchivosUrl()
 {
         var ID_TAREA = $('#tempInputIdDocumento').val();
@@ -422,8 +451,8 @@ function agregarArchivosUrl()
                 data: 'URL='+url+'&SIN_CONTRATO=',
                 success:function(creado)
                 {
-                        if(creado==true)
-                                $('.start').click();
+                    if(creado==true)
+                        $('.start').click();
                 },
                 error:function()
                 {
@@ -456,6 +485,7 @@ function borrarArchivo(url)
                                         if(eliminado)
                                         {
                                                 mostrar_urls(ID_TAREA);
+                                                refresh();
                                                 swal("","Archivo eliminado");
                                                 setTimeout(function(){swal.close();},1000);
                                         }
@@ -468,6 +498,71 @@ function borrarArchivo(url)
                                 }
                         });
                 });
+}
+
+
+function preguntarEliminar(data)
+{
+    // valor = true;
+    swal({
+        title: "",
+        text: "¿Eliminar Registro?",
+        type: "info",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        showLoaderOnConfirm: true,
+        confirmButtonText: "Eliminar",
+        cancelButtonText: "Cancelar",
+        },
+        function(confirmacion)
+        {
+            if(confirmacion)
+            {
+                eliminarRegistro(data);
+            }
+            else
+            {
+            }
+        });
+        // return eliminarRegistro(data.id_principal[0].id_contrato);
+}
+
+function eliminarRegistro(item)
+{
+//    console.log(item);
+    id_afectado= item['id_principal'][0];
+
+    $.ajax({
+        url:"../Controller/TareasController.php?Op=Eliminar",
+        type:"POST",
+        data:"ID_TAREA="+JSON.stringify(id_afectado),
+        success:function(data)
+        {
+            alert("Entro al success "+data);
+            if(data==false)
+            {
+//                swal("","La Tarea tiene cargado un Programa","error");
+//                setTimeout(function(){swal.close();},1500);
+                swalError("La Tarea tiene cargado un Programa");
+                
+            }else{
+                if(data==true)
+                {
+//                    actualizarDespuesdeEditaryEliminar();
+                    refresh();
+//                    swal("","Se elimino correctamente La Tarea","success");
+//                    setTimeout(function(){swal.close();},1500);
+                    swalSuccess("Se elimino correctamente La Tarea");
+                }
+            }
+        },
+        error:function()        
+        {
+//            swal("","Error en el servidor","error");
+//            setTimeout(function(){swal.close();},1500);
+              swalSuccess("Error en el servidor");
+        }
+    });
 }
 
 

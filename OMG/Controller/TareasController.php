@@ -27,6 +27,12 @@ switch ($Op) {
         $data= json_decode($_REQUEST['tareaDatos'],true);
         $Lista= $model->insertarTarea($data['contrato'],$data['tarea'],$data['fecha_creacion'],$data['fecha_alarma'],
                                       $data['fecha_cumplimiento'],$data['observaciones'],$data['id_empleado']);
+        
+        foreach ($Lista as $key => $value) {
+            $url= "Tareas/".$value['id_tarea'];
+            $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls(-1,$url);
+        }
+        
         echo json_encode($Lista);
         break;
     

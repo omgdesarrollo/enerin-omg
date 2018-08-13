@@ -214,6 +214,7 @@ DataGrid = [];
 dataListado = [];
 EmpleadosCombobox=[];
 filtros=[];
+ultimoNumeroGrid=0;
 
 listarDatos();
 inicializarFiltros();
@@ -274,7 +275,7 @@ construirFiltros();
                 <!-- </td> -->
         </tr>
         {% } %}
-        {% if(t == 1){ if( $('#tempInputIdDocumento').length > 0 ) { var ID_TAREA = $('#tempInputIdDocumento').val(); mostrar_urls(ID_TAREA);}else{ $('#btnAgregarDocumentoEntradaRefrescar').click(); } } %}
+        {% if(t == 1){ if( $('#tempInputIdDocumento').length > 0 ) { var ID_TAREA = $('#tempInputIdDocumento').val(); mostrar_urls(ID_TAREA);refresh();}else{ $('#btnAgregarDocumentoEntradaRefrescar').click(); } } %}
 </script>
 <!-- FINALIZA SECCION PARA CARGAR ARCHIVOS-->
 

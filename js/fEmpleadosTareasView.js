@@ -130,7 +130,7 @@ function construirGrid()
         },
         onDataLoaded:function(args)
         {
-            $('.jsgrid-filter-row').removeAttr("style",'display:none');
+//            $('.jsgrid-filter-row').removeAttr("style",'display:none');
         },
         onRefreshing: function(args) {
         },
