@@ -1,7 +1,7 @@
 <?php
 
 require_once '../dao/TemaDAO.php';
-
+require_once '../dao/EmpleadoDAO.php';
 class TemaModel{
     
     
@@ -56,9 +56,10 @@ class TemaModel{
         try
         {
             $dao= new TemaDAO();
+            $daoEmpleado=new EmpleadoDAO();
             $rec['datosHijos']= $dao->listarHijos($CADENA,$CONTRATO,$ID);
             $rec['detalles']= $dao->listarDetallesSeleccionados($ID);
-            
+            $rec['comboEmpleados']=$daoEmpleado->mostrarEmpleadosComboBox();
             return $rec;
             
         } catch (Exception $ex)
@@ -67,8 +68,6 @@ class TemaModel{
             return false;
         }
     }
-    
-   
     public function insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO,$IDENTIFICADOR,$CONTRATO)
     {
         try

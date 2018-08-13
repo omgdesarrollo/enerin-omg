@@ -206,7 +206,7 @@ function listarDatos()
     datosParamAjaxValues={};
     datosParamAjaxValues["url"]="../Controller/CatalogoProcesosController.php?Op=listar";
     datosParamAjaxValues["type"]="POST";
-    datosParamAjaxValues["async"]=false;
+    datosParamAjaxValues["async"]=true;
     var variablefunciondatos=function obtenerDatosServer(data)
     {
         dataListado = data;
@@ -214,10 +214,12 @@ function listarDatos()
         {
             __datos.push( reconstruir(value,index+1) );
         });
+        DataGrid = __datos;
+        gridInstance.loadData();
     }
     var listfunciones=[variablefunciondatos];
     ajaxHibrido(datosParamAjaxValues,listfunciones);
-    DataGrid = __datos;
+    
     return 1;
 }
 

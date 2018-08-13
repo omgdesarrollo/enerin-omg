@@ -34,42 +34,58 @@
                   
     <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
     <link async href="../../css/modal.css" rel="stylesheet" type="text/css"/>
-<!--    <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>-->
+    <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>
     <!--jquery-->
         <script src="../../js/jquery.js" type="text/javascript"></script>
     <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-<!--    <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
-    <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>-->
-    <!--<script src="../../js/jqueryblockUI.js" type="text/javascript"></script>-->
-    <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
-    <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
-    <!--<script src="../../js/filtroSupremo.js" type="text/javascript"></script>-->
-
-    <!--<script src="../../js/dhtmlxFunctions.js" type="text/javascript"></script>-->
-    <!--<script src="../../js/formulario.js" type="text/javascript"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <!--LIBRERIA DE dhtmlx-->
     <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
     <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
     <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
     <!--TERMINA LIBRERIA DE dhtmlx-->
-    <script src="../../js/tools.js" type="text/javascript"></script>
+    <!--EMPIEZA LIBRERIA DE SWEETALERT-->
+     <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
+    <!--TERMINA LIBRERIA DE SWEETALERT-->
+    <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+<!--    LIBRERIA JSGRID-->
+    <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
+    <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
+    <!--END JSGRID-->
+    
+    
+    
+    <!--INICIA LIBRERIA DE JBOSS-->
+    <!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+    <!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+<!--    <script src="https://cdn.jsdelivr.net/gh/StephanWagner/jBox@v0.4.9/Source/jBox.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/gh/StephanWagner/jBox@v0.4.9/Source/jBox.css" rel="stylesheet">-->
+    <!--TERMINA LIBRERIA DE JBOSS-->
+
+    
+     <!--LIBRERIA PARA FORMULARIOS REPORTES-->
+   
+    <!--TERMINA LIBRERIA PARA FORMULARIO REPORTES-->
+    
+    <!--<script src="../../js/tools.js" type="text/javascript"></script>-->
     <script src="../../js/fReportesView.js" type="text/javascript"></script>
     <style>
-        .jsgrid-header-row>.jsgrid-header-cell
-        {
+/*        .dhxcombo_select_img{
+            background-image: "../../images/base/loader.gif";
+        }*/
+            .jsgrid-header-row>.jsgrid-header-cell 
+            {
                 background-color:#307ECC ;      /* orange */
                 font-family: "Roboto Slab";
                 font-size: 1.2em;
                 color: white;
                 font-weight: normal;
-        }
-/*        .dhxcombo_select_img{
-            background-image: "../../images/base/loader.gif";
-        }*/
+            }
         .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                    
         .modal-lg{width: 100%;}
-        .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
+        .modal {z-index: 1050 !important;}/*En caso de que quieras modificar el modal*/
         body{overflow:hidden;}
          div#myventana{
 /*                  position: relative;*/
@@ -81,68 +97,54 @@
 		.inputhdr{font-weight: bold;padding-left: 5px;}
 
         </style>
+        
+<script>
+    DataGrid=[],dataListado=[];
+    
+    
+
+//var jBoxReportes = {
+//  jBox: null, 
+//  // EL HTML DE LOS DATOS
+//  html: {
+//    form:'',
+//    llenadoAutomaticamente:'',
+//    llenadoManualmente:''
+//  }, 
+//  title: {
+//    login: 'Login',
+//    register: 'Create new account',
+//    // TODO passwordRecovery: 'Recover password',
+//    // TODO passwordReset: 'Reset password'
+//  },
+//  textfieldTooltips: {
+//    loginUsername: '',
+//    loginPassword: '',
+//    registerUsername: '',
+//    registerEmail: '',
+//    registerPassword: ''
+//  } 
+//};
+  
+</script>
 </head>
 <!-- <body> -->
 <body class="no-skin" >
     <!--<div id="loader"></div>-->
     
     <?php
-        require_once 'EncabezadoUsuarioView.php';
-        if(isset($_REQUEST["accion"]))
-            $accion = $_REQUEST["accion"];
-        else
-            $accion = -1;
-
-        // $titulosTable = 
-            // array("No.","Requisito","Registro","Frecuencia","Clave Documento",
-            //     "Adjuntar Evidencia","Fecha de Registro","Usuario","Acción Correctiva","Plan de Acción","Desviación","Validación","Opcion");
+//        require_once 'EncabezadoUsuarioView.php';
     ?>
     
     <div id="headerFiltros" style="position: fixed;">
-
-        <button  type="button" onclick="ventanaWindowsEmergente()"
-        class="btn btn-success">
-            Agregar Nuevo Reporte Diario
+        <!--<div id="DemoLogin" class="btn btn-success target-click">  Agregar Nuevo Reporte Diario</div>-->
+        <button onClick="" type="button" class="btn btn-success" data-toggle="modal" data-target="#nuevaReporteModal">
+		 Agregar  Reporte Diario
         </button>
-          <!--class="btn btn-success" data-toggle="modal" data-target="#nuevaReporteModal">-->
-<!--<button type="button" onclick="seleccionReporte()">Generar Reporte
-    <img src="../../images/base/_excel.png" width="30px" height="30px">
-</button>-->
-<!--        <button id="btnAgregarEvidenciasRefrescar" type="button" 
-        class="btn btn-info " onclick="refresh();" >
-            <i class="glyphicon glyphicon-repeat"></i> 
-        </button>-->
-
-        <!--<i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>-->
-
     </div>
-    
-
-<div class="modal draggable fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="closeLetra">X</span>
-                </button>
-		        <h4 class="modal-title" id="myModalLabelNuevaEvidencia">Crear Nuevo Reporte</h4>
-            </div>
-
-            <div class="modal-body">
-     
-                <div id="contenidoFormulario">
-                    
-                    
-                </div>
-                
-            </div>
-            
-        </div>
-    </div>
-</div>
-
-
-
+<!--    <div class="row"></div>-->
+<br><br><br><!--esta linea no deberia ir hacerlo con boostrap-->
+    <div id="jsGrid"></div>
 <!-- Inicio de Seccion Modal Crear nueva Evidencia-->
 <div class="modal draggable fade" id="nuevaReporteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-lg" role="document">
@@ -159,16 +161,16 @@
 	<fieldset>
 	<table>
 		<tr>
-			<td>Cumplimiento</td>
-			<td><input type="text" id="contrato" name ="contrato" value="" readonly class="inputhdr"> </td>
+		
+			 <td>Cumplimiento<label style="cursor: pointer;padding-left: 6px;"><div id="contrato"></div></label></td>
 		</tr>
 <!--		<tr>
 			<td>Orden</td>
 			<td><input type="text" id ="orden" value="" readonly class="inputhdr"> </td>
 		</tr>-->
 		<tr>
-			<td>Fecha</td>
-			<td><input type="date" name ="fecha"  id="fecha"  class="inputhdr" > </td>
+			<!--<td></td>-->
+                    <td>Fecha<label style="cursor: pointer;padding-left: 6px;"><input type="date" name ="fecha"  id="fecha"  class="inputhdr" ></label> </td>
 		</tr>
 		</table>
 	</fieldset>
@@ -242,72 +244,6 @@
     </div>
 </div>
 <!--Final de Seccion Modal-->
-
-
-
-
-
-
-
-<!--cierre del modal Mensaje-->
-<script>
-
-
-    function loadData(){
-         $.ajax({
-			url 		: '../Controller/CumplimientosController.php?Op=contratoselec&obt=true',
-			data		: {contrato:"<?php  echo Session::getSesion ("s_cont")?>"},
-			success 	: function(r) {
-//				console.log(r);
-                                    $("#contrato").val(r["clave_cumplimiento"]);
-                                    precargados();
-				}
-	});
-    }
-    
- 
- 
-    function precargados()
-    {
-        region_fiscal="<select>";
-        pm="<select>";
-        tpm="<select>";
-        tm="<select>";
-        clasificacionsistemamedicion="<select>";
-        th="<select>";
-        
-        $.ajax({
-            url 		: '../Controller/CatalogoProcesosController.php?Op=listar',
-            success 	: function(r)
-            {
-                console.log(r);
-//                                    $("#contrato").val(r["clave_cumplimiento"]);
-                $.each(r,function (index,value)
-                {
-                    region_fiscal+="<option>"+value["region_fiscal"]+"</option>";
-                    pm+="<option>"+value["ubicacion"]+"</option>";
-                    tpm+="<option>"+value["tag_patin"]+"</option>";
-                    tm+="<option>"+value["tipo_medidor"]+"</option>";
-                    clasificacionsistemamedicion+="<option>"+value["clasificacion"]+"</option>";
-                    th+="<option>"+value["hidrocarburo"]+"</option>";
-                });
-                $("#region_fiscal").html(region_fiscal);
-                $("#pm").html(pm);
-                $("#tpm").html(tpm);
-                $("#tm").html(region_fiscal);
-                $("#clasificacionsistemamedicion").html(clasificacionsistemamedicion);
-                $("#th").html(th);
-            }
-        });
-    }
-
-    
-</script>
-<div id="myventana"></div>
-
-
-
-
     <!--Inicia para el spiner cargando-->
     <script src="../../js/loaderanimation.js" type="text/javascript"></script>
     <!--Termina para el spiner cargando-->
@@ -320,10 +256,6 @@
     <!--Para abrir alertas del encabezado-->
     <script src="../../assets/probando/js/ace-elements.min.js"></script>
     <script src="../../assets/probando/js/ace.min.js"></script>
-
-    <!-- js cargar archivo -->
-<!--    <script src="../../assets/FileUpload/js/jquery.min.js"></script>
-    <script src="../../assets/FileUpload/js/jquery-ui.min.js"></script>-->
  
 </body>
 </html>
