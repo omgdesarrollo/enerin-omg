@@ -208,7 +208,7 @@ require_once 'EncabezadoUsuarioView.php';
         inicializarFiltros();
         construirFiltros();
     });
-    
+ 
     region_fiscal="";
     ubicacion="";
     clave_contrato="";

@@ -41,7 +41,7 @@ class EmpleadoDAO{
 
     public function mostrarEmpleadosComboBox(){
         try{
-            $query="SELECT id_empleado, nombre_empleado, apellido_paterno, apellido_materno FROM empleados";
+            $query="SELECT id_empleado, nombre_empleado, apellido_paterno, apellido_materno,CONCAT(empleados.nombre_empleado,' ',empleados.apellido_paterno,' ',empleados.apellido_materno) AS nombre_completo FROM empleados";
 
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);

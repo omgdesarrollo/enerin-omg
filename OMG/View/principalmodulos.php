@@ -639,9 +639,7 @@ cambiarCont();
 function cambiarCont()
     { 
 
-var jsonObj = {
-    
-        }
+var jsonObj = {};
 
   $contador=1;
            $.ajax({  

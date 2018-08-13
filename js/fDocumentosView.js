@@ -278,6 +278,7 @@ function listarjsGrid()
     
         onItemDeleting: function(args) {
 //            console.log(args);
+//args.cancel=true;
             eliminarDocumento(args);
 
         }
