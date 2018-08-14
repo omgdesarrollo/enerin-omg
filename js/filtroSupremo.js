@@ -7,7 +7,9 @@ function construirFiltros()
     $(".jsgrid-filter-row").html("");
     if(primero)
     {
-        $("#headerOpciones").append("<button type='button' class='btn btn-info' onClick='mostrarFiltros()'><i class='ace-icon fa fa-search'></i></button>");
+        $("#headerOpciones").append("<button type='button' title='Abrir Filtro' class='btn btn-info' onClick='mostrarFiltros()' style='margin-right:5px'><i class='ace-icon fa fa-sort'></i></button>");
+        $("#headerOpciones").append("<button type='button' title='Buscar Filtro ' class='btn btn-info' onClick='filtroSupremo()' style='margin-right:5px' ><i class='ace-icon fa fa-search'></i></button>");
+        $("#headerOpciones").append("<button type='button' title='Limpiar Filtro' class='btn btn-info' onClick='limpiarFiltros()'><i class='ace-icon fa fa-filter'></i></button>");
         primero=false;
     }
     $.each(filtros,function(index,value)
