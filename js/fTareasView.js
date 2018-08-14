@@ -137,7 +137,7 @@ function construirGrid()
         ],
         onItemUpdated: function(args)
         {
-//                console.log(args);
+            console.log(args);
             columnas={};
             id_afectado=args["item"]["id_principal"][0];
             $.each(args["item"],function(index,value)
@@ -345,15 +345,15 @@ function insertarTareas(tareaDatos)
         async:false,
         success:function(datos)
         {
-//              alert(datos);
-            console.log(datos);
+//            alert("valor datos: "+datos);
+//            console.log(datos);
             if(typeof(datos) == "object")
             {
                 tempData;
                 swalSuccess("Tarea Creada");                
                 $.each(datos,function(index,value)
                 {
-                   console.log("entro"); 
+//                   console.log("entro"); 
                    tempData= reconstruir(value,ultimoNumeroGrid+1);  
                 });
                 console.log(tempData);
@@ -529,7 +529,7 @@ function preguntarEliminar(data)
 
 function eliminarRegistro(item)
 {
-//    console.log(item);
+    alert("Entro a la funcion eliminar: "+item);
     id_afectado= item['id_principal'][0];
 
     $.ajax({
@@ -538,7 +538,7 @@ function eliminarRegistro(item)
         data:"ID_TAREA="+JSON.stringify(id_afectado),
         success:function(data)
         {
-//            alert("Entro al success "+data);
+            alert("Entro al success "+data);
             if(data==false)
             {
 //                swal("","La Tarea tiene cargado un Programa","error");
@@ -548,6 +548,7 @@ function eliminarRegistro(item)
             }else{
                 if(data==true)
                 {
+//                    alert("Entro al success "+data);
 //                    actualizarDespuesdeEditaryEliminar();
                     refresh();
 //                    swal("","Se elimino correctamente La Tarea","success");

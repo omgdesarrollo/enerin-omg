@@ -43,6 +43,7 @@ $("#btn_limpiar").click(function(){
 function inicializarFiltros()
 {
     filtros =[
+            {id:"noneUno",type:"none"},
             {id:"clave_documento",type:"text"},
             {id:"documento",type:"text"},
             {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
@@ -102,6 +103,7 @@ function construirGrid()
         fields: 
         [
             { name: "id_principal",visible:false},
+            { name:"no",title:"No",width:60},
             { name: "clave_documento",title:"Clave del Documento", type: "text", validate: "required" },
             { name: "documento",title:"Documento", type: "text", validate: "required" },
             { name: "id_empleado",title:"Responsable del Documento", type: "select",
@@ -113,15 +115,14 @@ function construirGrid()
         ],
         onItemUpdated: function(args)
         {
-//                console.log(args);
+            console.log(args);
             columnas={};
-            entro=0;
             id_afectado=args["item"]["id_principal"][0];
             $.each(args["item"],function(index,value)
             {
                 if(args["previousItem"][index] != value && value!="")
                 {
-                        if(index!="id_principal" && !value.includes("<button"))
+                        if(index!="id_principal" && !value.includes("<button") && index!="delete")
                         {
                                 columnas[index]=value;
                         }
@@ -248,9 +249,10 @@ function reconstruirTable(_datos)
 
 function reconstruir(value,index)
 {
-    console.log(value);
     tempData=new Object();
+    ultimoNumeroGrid = index;
     tempData["id_principal"]= [{'id_documento':value.id_documento}];
+    tempData["no"]= index;
     tempData["clave_documento"]=value.clave_documento;
     tempData["documento"]=value.documento;
     tempData["id_empleado"]=value.id_empleado;
@@ -295,29 +297,30 @@ function listarEmpleados()
 
 function insertarDocumento(documentoDatos)
 {
+//    alert("Entro a la funcion guardar");
         $.ajax({
         url:"../Controller/DocumentosController.php?Op=Guardar",
         type:"POST",
-        data:"documentoDatos="+JSON.stringify(tareaDatos),
+        data:"documentoDatos="+JSON.stringify(documentoDatos),
         async:false,
         success:function(datos)
         {
-//              alert(datos);
-            console.log(datos);
+//            alert("valor datos: "+datos);
+//            console.log(datos);
             if(typeof(datos) == "object")
             {
                 tempData;
                 swalSuccess("Documento Creado");                
                 $.each(datos,function(index,value)
                 {
-                   console.log("entro"); 
-                   tempData= reconstruir(value,index);  
+                   console.log("Este es el value: "+value); 
+                   tempData= reconstruir(value,ultimoNumeroGrid+1);  
                 });
-                console.log(tempData);
+//                console.log(tempData);
                 
                 $("#jsGrid").jsGrid("insertItem",tempData).done(function()
                 {
-                    $("#crea_tarea .close ").click();
+                    $("#crea_documento .close ").click();
                 });
                 
             } else{
@@ -398,15 +401,17 @@ function preguntarEliminar(data)
 
 function eliminarRegistro(item)
 {
+//    alert("Entro a la funcion eliminar: "+item);
                 id_afectado=item['id_principal'][0];
     
             $.ajax({
+
                 url:"../Controller/DocumentosController.php?Op=Eliminar",
                 type:"POST",
                 data:"ID_DOCUMENTO="+JSON.stringify(id_afectado),
                 success:function(data)
                 {
-                    alert("Entro al success "+data);
+//                    alert("Entro al success "+data);
                     if(data==false)
                     {
 //                        swal("","El Documento esta validado o asignado a un Registro","error");

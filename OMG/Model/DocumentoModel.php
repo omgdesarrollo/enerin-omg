@@ -97,11 +97,40 @@ class DocumentoModel{
     public function insertar($pojo,$CONTRATO){
         try{
             $dao=new DocumentoDAO();
-//            $pojo=new EmpleadoPojo();
-//            echo "lo traje aun en el model  ".$CONTRATO;
-           $dao->insertarDocumentos($pojo->getClave_documento(),$pojo->getDocumento(),$pojo->getId_empleado(),$CONTRATO);
+            $lista=array();
+            $contador=0;
+            
+            $exito= $dao->insertarDocumentos($pojo->getClave_documento(),$pojo->getDocumento(),$pojo->getId_empleado(),$CONTRATO);
+            
+            if($exito[0] = 1)
+            {
+                $rec= $dao->mostrarDocumento($exito['id_nuevo'],$CONTRATO);
+//                echo "valor rec: ".json_encode($rec);              
+                foreach($rec as $value)
+            {
+                $lista[$contador]= array(
+                    "id_documento"=>$value["id_documento"],
+                    "clave_documento"=>$value["clave_documento"],
+                    "documento"=>$value["documento"],
+                    "id_empleado"=>$value["id_empleado"],
+                    "nombre_empleado"=>$value["nombre_empleado"],
+                    "apellido_paterno"=>$value["apellido_paterno"],
+                    "apellido_materno"=>$value["apellido_materno"],
+                    "reg"=>$dao->verificarExistenciadeDocumentoEnRegistros($value['id_documento']),
+                    "validado"=>$dao->verificarSiDocumentoEstaValidado($value['id_documento'])                                       
+                );
+//                $cont++;
+                $contador++;
+            }
+            return $lista;
+            } 
+            else
+//                return $exito[0];
+            return $lista;
+            
         } catch (Exception $ex) {
                 throw $ex;
+                return -1;
         }
     }
     
@@ -132,8 +161,9 @@ class DocumentoModel{
                     $exito= $dao->eliminarDocumento($ID_DOCUMENTO);                     
                 }
             } 
-            echo "Registros: ".json_encode($registros);
-            echo "validacion: ".json_encode($validacion);
+//            echo "Registros: ".json_encode($registros);
+//            echo "validacion: ".json_encode($validacion);
+//            echo "valor exito: ".json_encode($exito);
             return $exito;            
         } catch (Exception $ex) {
             throw $ex;
