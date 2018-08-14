@@ -117,7 +117,7 @@ class DocumentoDAO{
             $db=  AccesoDB::getInstancia();
             $lista= $db->executeQueryUpdate($query);
             
-//           echo "Este es el query en eliminar: ".json_encode($query);
+//            echo "Este es el query en eliminar: ".json_encode($query);
             return $lista;
         } catch (Exception $ex) {
                 throw $ex;
@@ -129,14 +129,14 @@ class DocumentoDAO{
     {
         try
         {
-            $query="SELECT COUNT(*) AS resultado
+            $query="SELECT COUNT(*) AS reg
                     FROM registros tbregistros
                     WHERE tbregistros.id_documento=$ID_DOCUMENTO";
             
             $db= AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
 
-            return $lista[0]['resultado'];
+            return $lista[0]['reg'];
 //            echo "Este es el query registros: ".json_encode($query);                        
         } catch (Exception $ex)
         {
@@ -150,7 +150,7 @@ class DocumentoDAO{
     {
         try
         {
-            $query="SELECT COUNT(*) AS resultado
+            $query="SELECT COUNT(*) AS validado
                     FROM validacion_documento tbvalidacion_documento
                     WHERE tbvalidacion_documento.validacion_documento_responsable='true' OR tbvalidacion_documento.validacion_tema_responsable='true' 
                     AND tbvalidacion_documento.id_documento=$ID_DOCUMENTO";
@@ -159,7 +159,7 @@ class DocumentoDAO{
             
 //            echo "Este es el query validado: ".json_encode($query);                        
 
-            return $lista[0]['resultado'];
+            return $lista[0]['validado'];
                     
         } catch (Exception $ex)
         {

@@ -11,11 +11,31 @@ class DocumentoModel{
     public function  listarDocumentos($contrato)
     {
         try{
-            $dao=new DocumentoDAO();
-//            $model=new EmpleadoModel();            
-            $rec= $dao->mostrarDocumentos($contrato);
-//            $rec['empl']=$model->listarEmpleadosComboBox();
-            return $rec;
+            $dao=new DocumentoDAO();            
+            $rec['doc']= $dao->mostrarDocumentos($contrato);
+            
+            $lista=array();
+            $contador=0;
+//            $cont=0;
+            foreach($rec['doc']as $value)
+            {
+                $lista['doc'][$contador]= array(
+                    "id_documento"=>$value["id_documento"],
+                    "clave_documento"=>$value["clave_documento"],
+                    "documento"=>$value["documento"],
+                    "id_empleado"=>$value["id_empleado"],
+                    "nombre_empleado"=>$value["nombre_empleado"],
+                    "apellido_paterno"=>$value["apellido_paterno"],
+                    "apellido_materno"=>$value["apellido_materno"],
+                    "reg"=>$dao->verificarExistenciadeDocumentoEnRegistros($value['id_documento']),
+                    "validado"=>$dao->verificarSiDocumentoEstaValidado($value['id_documento'])                                       
+                );
+//                $cont++;
+                $contador++;
+            }
+            
+//            return $lista;
+            return $lista;
         }  catch (Exception $e)
         {
             throw  $e;
@@ -98,24 +118,8 @@ class DocumentoModel{
     }
     
     
-    public function eliminarDocumento($ID_DOCUMENTO)
-    {
-        try
-        {
-            
-        } catch (Exception $ex)
-        {
-            throw $ex;
-            return -1;
-        }
-        
-    }
-
-
-
-
-    public function eliminarDocumento2($ID_DOCUMENTO)
-    {
+    
+    public function eliminarDocumento($ID_DOCUMENTO){
         try{
             $dao= new DocumentoDAO();
             $registros= $dao->verificarExistenciadeDocumentoEnRegistros($ID_DOCUMENTO);
@@ -128,8 +132,8 @@ class DocumentoModel{
                     $exito= $dao->eliminarDocumento($ID_DOCUMENTO);                     
                 }
             } 
-//            echo "Registros: ".json_encode($registros);
-//            echo "validacion: ".json_encode($validacion);
+            echo "Registros: ".json_encode($registros);
+            echo "validacion: ".json_encode($validacion);
             return $exito;            
         } catch (Exception $ex) {
             throw $ex;
