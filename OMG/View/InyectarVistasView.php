@@ -118,3 +118,8 @@
     <iframe src="ReportesView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
 
+
+<!--<div id="seleccionConceptosReportes"> 
+     <iframe src="ReportesView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
+</div>-->
+

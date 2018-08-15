@@ -17,6 +17,7 @@ class AccesoDB {
 
     // Método privado que retorna la conexión con el servidor
     private function getConnection() {
+       
         // Datos de conexión
         $parametros = parse_ini_file("../conf/conexion.ini");
         $server = $parametros["01"];
@@ -26,7 +27,7 @@ class AccesoDB {
         if($this->cn == null) {
             try {
                 $this->cn = mysqli_connect($server,$user,$pass,$db);
-                
+                mysqli_set_charset($this->cn, 'utf8');
                 if($this->cn) {
 //                    echo 'ok';
                 }
@@ -44,21 +45,25 @@ class AccesoDB {
     public function executeQuery($query ) {
         try {
             $cn = $this->getConnection();
-            // mysql_query("SET NAMES 'utf8'");
-            $rs = mysqli_query($cn,$query);
             
+            $rs = mysqli_query($cn,$query);
+         
             if(mysqli_errno($cn)) {
                 throw new Exception(mysqli_error($cn));
             }
+        
             $lista = array();
+//            $contador=0;
             while ($row = mysqli_fetch_assoc($rs)) {
                     $lista[] = $row;
+//                    echo "<br>".$contador++;
             }
            
             mysqli_free_result($rs); 
             //agrego esta linea para que pueda realizar 
             //dos consultas a la vez en la BD
-            mysqli_next_result($this->cn);
+//            mysqli_next_result($this->cn);
+         
              //viendo si debo comentarla
 //            mysqli_close();
              //termina el de viendo si debo comentarla

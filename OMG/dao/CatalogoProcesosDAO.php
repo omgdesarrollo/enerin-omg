@@ -127,6 +127,37 @@ class CatalogoProcesosDAO{
             return -1;
         }
     }
+    
+    public function obtenerConceptos(){
+        try{
+            $query="SELECT tbconceptos_reportes.id_concepto_reportes,"
+                  ."tbconceptos_reportes.concepto,tbconceptos_reportes.vista FROM concepto_reportes tbconceptos_reportes;";
+            $db = AccesoDB::getInstancia();
+            $lista= $db->executeQuery($query);
+//            echo utf8_encode($lista);
+//            SELECT convert(cast(convert(content using latin1) as binary) using utf8) AS content
+            return $lista;
+        } catch (Exception $ex) {
+            throw $ex;
+//            return -1;
+        }
+    }
+      public function obtenerVista_Concepto_Seleccionado($value){
+        try{
+            $query="SELECT tbconceptos_reportes.id_concepto_reportes,"
+                  ."tbconceptos_reportes.concepto,tbconceptos_reportes.vista FROM concepto_reportes tbconceptos_reportes WHERE tbconceptos_reportes.id_concepto_reportes=$value";
+            $db = AccesoDB::getInstancia();
+            $lista= $db->executeQuery($query);
+            return $lista[0];
+        } catch (Exception $ex) {
+            throw $ex;
+//            return -1;
+        }
+    }
+    
+    
+    
+    
 
     public function eliminarRegistro($ID_CONTRATO)
     {
