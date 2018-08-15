@@ -66,8 +66,16 @@ class AutoridadRemitenteModel{
             
             $dao=new AutoridadRemitenteDAO();
             
-            $dao->insertarAutoridadRemitente($pojo->getClave_autoridad(),$pojo->getDescripcion(),$pojo->getDireccion(),$pojo->getTelefono(),
+            $exito= $dao->insertarAutoridadRemitente($pojo->getClave_autoridad(),$pojo->getDescripcion(),$pojo->getDireccion(),$pojo->getTelefono(),
                                                $pojo->getExtension(),$pojo->getEmail(),$pojo->getDireccion_web());
+            
+            if($exito[0] = 1)
+            {
+                $lista = $dao->listarAutoridadRemitente($exito['id_nuevo']);
+            }            
+            else
+                return $exito[0];
+            return $lista;
         } catch (Exception $ex) 
         {
             throw $ex;

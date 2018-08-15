@@ -49,19 +49,22 @@ switch ($Op) {
 		break;	
 
 	case 'Guardar':
-                  
 		# code...
+                header('Content-type: application/json; charset=utf-8');
+                $data= json_decode($_REQUEST['autoridadDatos'],true);
             
-                  $pojo->setClave_autoridad($_REQUEST['CLAVE_AUTORIDAD']);
-                  $pojo->setDescripcion($_REQUEST['DESCRIPCION']);
-                  $pojo->setDireccion($_REQUEST['DIRECCION']);
-                  $pojo->setTelefono($_REQUEST['TELEFONO']);
-                  $pojo->setExtension($_REQUEST['EXTENSION']);
-                  $pojo->setEmail($_REQUEST['EMAIL']);
-                  $pojo->setDireccion_web($_REQUEST['DIRECCION_WEB']);
+                $pojo->setClave_autoridad($data['clave_autoridad']);
+                $pojo->setDescripcion($data['descripcion']);
+                $pojo->setDireccion($data['direccion']);
+                $pojo->setTelefono($data['telefono']);
+                $pojo->setExtension($data['extension']);
+                $pojo->setEmail($data['email']);
+                $pojo->setDireccion_web($data['direccion_web']);
                   
-                  $model->insertar($pojo);
-                        
+                $Lista= $model->insertar($pojo);
+                echo json_encode($Lista);
+                return $Lista;
+                
 		break;
 
 	case 'Modificar':

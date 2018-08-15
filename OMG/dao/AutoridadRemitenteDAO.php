@@ -88,7 +88,8 @@ class AutoridadRemitenteDAO{
                     . "VALUES($id_nuevo,'$clave_autoridad','$descripcion','$direccion','$telefono','$extension','$email','$direccion_web')";
             
             $db=  AccesoDB::getInstancia();
-            $db->executeQueryUpdate($query);
+            $exito = $db->executeUpdateRowsAfected($query);
+            return ($exito != 0)?[0=>1,"id_nuevo"=>$id_nuevo]:[0=>0,"id_nuevo"=>$id_nuevo ];
         } catch (Exception $ex) 
         {
             throw $ex;
