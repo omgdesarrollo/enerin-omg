@@ -94,7 +94,6 @@ switch ($Op) {
             header('Content-type: application/json; charset=utf-8'); 
             $data = json_decode($_REQUEST['ID_DOCUMENTO'],true);
             $Lista= $model->eliminarDocumento($data['id_documento']);
-
             echo json_encode($Lista);
             return $Lista;
 		break;	

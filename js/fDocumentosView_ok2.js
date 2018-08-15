@@ -43,7 +43,6 @@ $("#btn_limpiar").click(function(){
 function inicializarFiltros()
 {
     filtros =[
-            {id:"noneUno",type:"none"},
             {id:"clave_documento",type:"text"},
             {id:"documento",type:"text"},
             {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
@@ -55,7 +54,7 @@ function inicializarFiltros()
 
 function construirGrid()
 {
-    jsGrid.fields.customControl = MyCControlField;
+//    jsGrid.fields.customControl = MyCControlField;
     db={
             loadData: function()
             {
@@ -103,7 +102,6 @@ function construirGrid()
         fields: 
         [
             { name: "id_principal",visible:false},
-            { name:"no",title:"No",width:60},
             { name: "clave_documento",title:"Clave del Documento", type: "text", validate: "required" },
             { name: "documento",title:"Documento", type: "text", validate: "required" },
             { name: "id_empleado",title:"Responsable del Documento", type: "select",
@@ -111,18 +109,19 @@ function construirGrid()
                 valueField:"id_empleado",
                 textField:"nombre_completo"
             },
-            { name:"delete", title:"Opción", type:"customControl",sorting:""}
+            {name:"cancel", type:"control", }
         ],
         onItemUpdated: function(args)
         {
-            console.log(args);
+//                console.log(args);
             columnas={};
+            entro=0;
             id_afectado=args["item"]["id_principal"][0];
             $.each(args["item"],function(index,value)
             {
                 if(args["previousItem"][index] != value && value!="")
                 {
-                        if(index!="id_principal" && !value.includes("<button") && index!="delete")
+                        if(index!="id_principal" && !value.includes("<button"))
                         {
                                 columnas[index]=value;
                         }
@@ -151,6 +150,34 @@ function construirGrid()
         
         onItemDeleting: function(args) 
         {
+            id_afectado= args['item']['id_principal'][0];
+    
+            $.ajax({
+                url:"../Controller/DocumentosController.php?Op=Eliminar",
+                type:"POST",
+                data:"ID_DOCUMENTO="+JSON.stringify(id_afectado),
+                success:function(data)
+                {
+                    alert("Entro al success "+data);
+                    if(data==false)
+                    {
+                        swal("","El Documento esta validado o asignado a un Registro","error");
+                        setTimeout(function(){swal.close();},1500);
+                    }else{
+                        if(data==true)
+                        {
+                            actualizarDespuesdeEditaryEliminar();
+                            swal("","Se elimino correctamente el Documento","success");
+                            setTimeout(function(){swal.close();},1500);
+                        }
+                    }
+                },
+                error:function()        
+                {
+                    swal("","Error en el servidor","error");
+                    setTimeout(function(){swal.close();},1500);
+                }
+            });
 
         }
         
@@ -158,58 +185,6 @@ function construirGrid()
     
 }
 
-var MyCControlField = function(config)
-{
-    jsGrid.Field.call(this, config);
-};
-
-
-MyCControlField.prototype = new jsGrid.Field
-({
-        css: "date-field",
-        align: "center",
-        sorter: function(date1, date2)
-        {
-            console.log("haber cuando entra aqui");
-            console.log(date1);
-            console.log(date2);
-            // return 1;
-        },
-        itemTemplate: function(value,todo)
-        {
-//            alert(value,todo);
-            if(value[0]['reg']!="0" || value[0]['validado']!=0)
-                return "";
-            else
-                return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button ',title:"Eliminar", type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
-        },
-        insertTemplate: function(value)
-        {
-        },
-        editTemplate: function(value)
-        {
-            val = "<input class='jsgrid-button jsgrid-update-button' type='button' title='Actualizar' onClick='aceptarEdicion()'>";
-            val += "<input class='jsgrid-button jsgrid-cancel-edit-button' type='button' title='Cancelar Edición' onClick='cancelarEdicion()'>";
-            return val;
-        },
-        insertValue: function()
-        {
-        },
-        editValue: function()
-        {
-        }
-});
-
-
-function cancelarEdicion()
-{
-    $("#jsGrid").jsGrid("cancelEdit");
-}
-
-function aceptarEdicion()
-{
-    gridInstance.updateItem();
-}
 
 function listarDatos()
 {
@@ -222,13 +197,12 @@ function listarDatos()
     var variablefunciondatos=function obtenerDatosServer (data)
     {
         dataListado = data;
-        $.each(data.doc,function(index,value)
+        $.each(data,function(index,value)
         {
             __datos.push(reconstruir(value,index++));
         });
 
     }
-    
     
     var listfunciones=[variablefunciondatos];
     ajaxHibrido(datosParamAjaxValues,listfunciones);
@@ -250,13 +224,10 @@ function reconstruirTable(_datos)
 function reconstruir(value,index)
 {
     tempData=new Object();
-    ultimoNumeroGrid = index;
     tempData["id_principal"]= [{'id_documento':value.id_documento}];
-    tempData["no"]= index;
     tempData["clave_documento"]=value.clave_documento;
     tempData["documento"]=value.documento;
     tempData["id_empleado"]=value.id_empleado;
-    tempData["delete"]= [{"reg":value.reg,"validado":value.validado}];
     return tempData;
 }
 
@@ -297,30 +268,29 @@ function listarEmpleados()
 
 function insertarDocumento(documentoDatos)
 {
-//    alert("Entro a la funcion guardar");
         $.ajax({
         url:"../Controller/DocumentosController.php?Op=Guardar",
         type:"POST",
-        data:"documentoDatos="+JSON.stringify(documentoDatos),
+        data:"documentoDatos="+JSON.stringify(tareaDatos),
         async:false,
         success:function(datos)
         {
-//            alert("valor datos: "+datos);
-//            console.log(datos);
+//              alert(datos);
+            console.log(datos);
             if(typeof(datos) == "object")
             {
                 tempData;
                 swalSuccess("Documento Creado");                
                 $.each(datos,function(index,value)
                 {
-                   console.log("Este es el value: "+value); 
-                   tempData= reconstruir(value,ultimoNumeroGrid+1);  
+                   console.log("entro"); 
+                   tempData= reconstruir(value,index);  
                 });
-//                console.log(tempData);
+                console.log(tempData);
                 
                 $("#jsGrid").jsGrid("insertItem",tempData).done(function()
                 {
-                    $("#crea_documento .close ").click();
+                    $("#crea_tarea .close ").click();
                 });
                 
             } else{
@@ -371,70 +341,6 @@ $.ajax({
     })
 }
 
-
-function preguntarEliminar(data)
-{
-    // valor = true;
-    swal({
-        title: "",
-        text: "¿Eliminar Registro?",
-        type: "info",
-        showCancelButton: true,
-        closeOnConfirm: false,
-        showLoaderOnConfirm: true,
-        confirmButtonText: "Eliminar",
-        cancelButtonText: "Cancelar",
-        },
-        function(confirmacion)
-        {
-            if(confirmacion)
-            {
-                eliminarRegistro(data);
-            }
-            else
-            {
-            }
-        });
-        // return eliminarRegistro(data.id_principal[0].id_contrato);
-}
-
-
-function eliminarRegistro(item)
-{
-//    alert("Entro a la funcion eliminar: "+item);
-                id_afectado=item['id_principal'][0];
-    
-            $.ajax({
-
-                url:"../Controller/DocumentosController.php?Op=Eliminar",
-                type:"POST",
-                data:"ID_DOCUMENTO="+JSON.stringify(id_afectado),
-                success:function(data)
-                {
-//                    alert("Entro al success "+data);
-                    if(data==false)
-                    {
-//                        swal("","El Documento esta validado o asignado a un Registro","error");
-//                        setTimeout(function(){swal.close();},1500);
-                        swalError("La Tarea tiene cargado un Programa");
-                    }else{
-                        if(data==true)
-                        {
-                            refresh();
-//                            actualizarDespuesdeEditaryEliminar();
-//                            swal("","Se elimino correctamente el Documento","success");
-//                            setTimeout(function(){swal.close();},1500);
-                            swalSuccess("Se elimino correctamente La Tarea");
-                        }
-                    }
-                },
-                error:function()        
-                {
-                    swal("","Error en el servidor","error");
-                    setTimeout(function(){swal.close();},1500);
-                }
-            });
-}
 
 
 function refresh()
