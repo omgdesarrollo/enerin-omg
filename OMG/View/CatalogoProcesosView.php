@@ -46,7 +46,10 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
                 <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
                 <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
-
+                <!--LIBRERIA SWEET ALERT 2-->
+                <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
+                <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
+                <!--END LIBRERIA SWEET ALERT 2-->
                 <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
                 <script src="../../js/tools.js" type="text/javascript"></script>
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
@@ -202,7 +205,7 @@ $Usuario=  Session::getSesion("user");
     var dataListado=[];
     var filtros=[];
     ultimoNumeroGrid=0;
-
+    seleccionConcepto();
     $.when(
         listarDatos()
     ).done(function(dataListarDatos, dataConstruirGrid)
@@ -286,6 +289,82 @@ $Usuario=  Session::getSesion("user");
             }
         });
     });
+    function seleccionConcepto()
+    { 
+
+var jsonObj = {};
+
+  $contador=1;
+           $.ajax({  
+                     url: "../Controller/CumplimientosController.php?Op=obtenerContrato",  
+                     async:false,
+                     success: function(r) {
+        $.each(r,function(index,value){
+             jsonObj[value.id_cumplimiento] = value.clave_cumplimiento ;
+                                })
+                       
+                        }    
+        });
+                swal({
+  title: 'Selecciona un cumplimiento',
+  input: 'select',
+//  html:s,
+//  html:'<input type=\'text\' disabled>',
+  inputOptions:jsonObj,
+  inputPlaceholder: 'selecciona un cumplimiento ',
+  showCancelButton: false,
+  showLoaderOnConfirm: true,
+   allowEscapeKey:false,
+   allowOutsideClick: false,
+   showConfirmButton: true,
+   confirmButtonText:"Seleccionar",
+  inputValidator: function (value) {
+    return new Promise(function (resolve, reject) {
+      if (value !== '') {
+        resolve();
+      } else {
+        reject('requieres seleccionar un contrato ');
+      }
+    });
+  },
+  preConfirm: function() {
+    return new Promise(function(resolve) {
+      setTimeout(function() {
+        resolve()
+      }, 1000)
+    })
+  }
+}).then(function (result) {
+//  swal({
+//    type: 'success',
+//    html: 'tu has seleccionado el contrato ' + result
+//  });
+
+//alert("d");
+    $.ajax({  
+                        url: "../Controller/CumplimientosController.php?Op=contratoselec&c="+result+"&obt=false",  
+                        async:true,
+                        success: function(r) {
+                              swal({
+                                type: 'success',
+                                html: 'tu has seleccionado el contrato ' + r.clave_cumplimiento,    
+                                timer: 2000,
+                              });
+                                window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
+                                window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
+                                
+                                
+                                
+    }    
+           });
+  });
+   
+ }
+    
+    
+    
+    
+    
 </script>
     
             <script src="../../js/fCatalogoProcesosView.js" type="text/javascript"></script>

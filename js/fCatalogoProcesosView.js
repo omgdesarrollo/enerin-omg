@@ -550,6 +550,8 @@ function refresh()
     gridInstance.loadData();
 }
 
+
+
 function loadBlockUi()
 {
     $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF"> Espere Por Favor</span>', css:
