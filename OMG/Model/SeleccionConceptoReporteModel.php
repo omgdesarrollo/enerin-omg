@@ -1,11 +1,11 @@
 <?php
-require_once '../Model/CatalogoProcesosModel.php';
+require_once '../Model/CatalogoProduccionModel.php';
 class SeleccionConceptoReporteModel {
     //put your code here
     
     
         public function  evaluarVista($value,$tipo_catalogo_o_reporte){       
-        $modelCatalogoProcesosModel= new CatalogoProcesosModel();
+        $modelCatalogoProcesosModel= new CatalogoProduccionModel();
         $vista=$modelCatalogoProcesosModel->obtenerVista_Concepto_Seleccionado($value) ;
         $vista["vistaHtml"]="";
             switch ($tipo_catalogo_o_reporte){
