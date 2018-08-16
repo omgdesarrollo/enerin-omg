@@ -209,7 +209,7 @@ function getInstancejGrowl()
 				// console.log("1");
 			},
 			beforeOpen: 	function(e,m,o) {
-				// $(e).animate({width:"toggle",opacity:"toggle"},"fast",animacionTerminada);
+				$("#jGrowl").animate({width:"toggle",opacity:"toggle"},"fast",animacionTerminada);
 				// console.log("2");
 			},
 			afterOpen: 		function(e,m,o) {

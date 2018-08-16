@@ -57,7 +57,7 @@ function listarDatos()
         async:true,
         beforeSend:function()
         {
-            configuracionJgrowl.header = "Solicitud!";
+            configuracionJgrowl.header = "Solicitando Datos de Producción";
             configuracionJgrowl.theme = "themeG-wait";
             $.jGrowl("Solicitando Registros ......", configuracionJgrowl);
             // $("#jGrowl").attr("style","top:40px");
@@ -78,7 +78,7 @@ function listarDatos()
         {
             // jGrowl-message
             // $(".jGrowl-message").html("Ahora hay un error");
-            configuracionJgrowl.header = "Convirtiendo!";
+            configuracionJgrowl.header = "Solicitud!";
             configuracionJgrowl.theme = "themeG-success";
             $.jGrowl("Datos obtenidos ......", configuracionJgrowl);
             // clearInterval(intervalFunc);
