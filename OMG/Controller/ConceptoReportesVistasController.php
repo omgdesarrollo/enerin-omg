@@ -21,7 +21,7 @@ switch ($Op)
       
     break;
     default:
-        echo "D:";
+        echo -1;
     break;
 }
 

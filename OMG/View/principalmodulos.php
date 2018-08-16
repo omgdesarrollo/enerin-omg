@@ -599,7 +599,7 @@ function loadDataNotificaciones(){
     <div id="sidebarObjV">
   
     </div>
-    <input id="gom" type="text" value="<?php echo Session::getSesion("token")?>"/>
+    <input id="gom" type="hidden" value="<?php echo Session::getSesion("token")?>"/>
     
 <!--    <div id="infousuario">
       

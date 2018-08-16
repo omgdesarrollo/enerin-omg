@@ -61,7 +61,7 @@ swal({
                                }
                            }else{
                                if(r["mensajenotsesion"]!==""){//diferentes tanto en tipo de variable y contenido para mayor seguridad 
-                                     $.jGrowl(r["mensajenotsesion"], { header: 'Como Te quedo El Ojo',sticky: true });
+                                     $.jGrowl(r["mensajenotsesion"], {header: 'Como Te quedo El Ojo',sticky: true});
                                }
                            }
                         }    
