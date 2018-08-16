@@ -1,9 +1,7 @@
 <?php
 require_once '../Model/CatalogoProduccionModel.php';
 class SeleccionConceptoReporteModel {
-    //put your code here
-    
-    
+
         public function  evaluarVista($value,$tipo_catalogo_o_reporte){       
         $modelCatalogoProcesosModel= new CatalogoProduccionModel();
         $vista=$modelCatalogoProcesosModel->obtenerVista_Concepto_Seleccionado($value) ;
@@ -15,7 +13,6 @@ class SeleccionConceptoReporteModel {
                        $vista["vistaHtml"]="#catalogoProcesos";
                        return $vista;
                     break;
-
                     default :
                         return "D:";
                 }    
@@ -32,8 +29,6 @@ class SeleccionConceptoReporteModel {
                     }  
             default:
             break;
-        }
-       
-        
+        }     
     }
 }
