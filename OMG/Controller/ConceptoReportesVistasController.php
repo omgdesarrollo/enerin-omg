@@ -12,9 +12,8 @@ switch ($Op)
        header('Content-type: application/json; charset=utf-8');
        echo json_encode($lista);
     break;
-
     default:
-        echo -1;
+        echo "D:";
     break;
 }
 

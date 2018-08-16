@@ -1,5 +1,5 @@
 $(function (){
-//   precargados();
+   precargados();
     listarDatosReportes();
      construirGrid();
 
