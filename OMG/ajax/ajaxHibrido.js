@@ -8,6 +8,7 @@ function ajaxHibrido(paramAjaxValues,funciones){
         async:paramAjaxValues["async"],
         beforeSend:function()
         {
+            
 //            $('#loader').show();
         },
         success:function(response)

@@ -16,9 +16,7 @@ switch ($Op) {
 	case 'Listar':
 
 		$Lista=$model->listarAutoridadesRemitentes();
-//    	Session::setSesion("listarAutoridadesRemitentes",$Lista);
-                header('Content-type: application/json; charset=utf-8');
-//                echo json_encode(array("data"=>$Lista));        
+                header('Content-type: application/json; charset=utf-8');       
                 echo json_encode($Lista);        
 
 		return $Lista;
@@ -49,19 +47,22 @@ switch ($Op) {
 		break;	
 
 	case 'Guardar':
-                  
 		# code...
+                header('Content-type: application/json; charset=utf-8');
+                $data= json_decode($_REQUEST['autoridadDatos'],true);
             
-                  $pojo->setClave_autoridad($_REQUEST['CLAVE_AUTORIDAD']);
-                  $pojo->setDescripcion($_REQUEST['DESCRIPCION']);
-                  $pojo->setDireccion($_REQUEST['DIRECCION']);
-                  $pojo->setTelefono($_REQUEST['TELEFONO']);
-                  $pojo->setExtension($_REQUEST['EXTENSION']);
-                  $pojo->setEmail($_REQUEST['EMAIL']);
-                  $pojo->setDireccion_web($_REQUEST['DIRECCION_WEB']);
+                $pojo->setClave_autoridad($data['clave_autoridad']);
+                $pojo->setDescripcion($data['descripcion']);
+                $pojo->setDireccion($data['direccion']);
+                $pojo->setTelefono($data['telefono']);
+                $pojo->setExtension($data['extension']);
+                $pojo->setEmail($data['email']);
+                $pojo->setDireccion_web($data['direccion_web']);
                   
-                  $model->insertar($pojo);
-                        
+                $Lista= $model->insertar($pojo);
+                echo json_encode($Lista);
+                return $Lista;
+                
 		break;
 
 	case 'Modificar':
@@ -73,8 +74,12 @@ switch ($Op) {
 
 	case 'Eliminar':
 		# code...
-                $Lista= $model->eliminar($_REQUEST['ID_AUTORIDAD']);
-                header('Content-type: application/json; charset=utf-8'); 
+                header('Content-type: application/json; charset=utf-8');
+                $data= json_decode($_REQUEST['ID_AUTORIDAD'],true);
+                        
+                $pojo->setId_autoridad($data['id_autoridad']);
+                $Lista= $model->eliminar($pojo);
+                                 
                 echo json_encode($Lista);
                 return $Lista;
             

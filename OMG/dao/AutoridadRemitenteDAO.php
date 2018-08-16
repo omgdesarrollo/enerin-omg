@@ -11,13 +11,12 @@ class AutoridadRemitenteDAO{
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-            
 
             return $lista;
     }  catch (Exception $ex)
     {
         throw $ex;
-        return false;
+        return -1;
     }
     }
     
@@ -40,7 +39,7 @@ class AutoridadRemitenteDAO{
         } catch (Exception $ex)
         {
             throw $ex;
-            return false;
+            return -1;
         }
     }
 
@@ -61,7 +60,7 @@ class AutoridadRemitenteDAO{
     }  catch (Exception $ex)
     {
         throw $ex;
-        return false;
+        return -1;
     }
     }
     
@@ -88,11 +87,12 @@ class AutoridadRemitenteDAO{
                     . "VALUES($id_nuevo,'$clave_autoridad','$descripcion','$direccion','$telefono','$extension','$email','$direccion_web')";
             
             $db=  AccesoDB::getInstancia();
-            $db->executeQueryUpdate($query);
+            $exito = $db->executeUpdateRowsAfected($query);
+            return ($exito != 0)?[0=>1,"id_nuevo"=>$id_nuevo]:[0=>0,"id_nuevo"=>$id_nuevo ];
         } catch (Exception $ex) 
         {
             throw $ex;
-            return false;
+            return -1;
         }   
     }
     
@@ -108,22 +108,44 @@ class AutoridadRemitenteDAO{
         } catch (Exception $ex) 
         {
            throw $ex;
-           return false;
+           return -1;
         }
     }
     
-    public function eliminarAutoridadRemitente($id_autoridad)
+    public function eliminarAutoridadRemitente($ID_AUTORIDAD)
     {
         try{
-            $query="DELETE FROM autoridad_remitente WHERE id_autoridad=$id_autoridad";
+            $query="DELETE FROM autoridad_remitente WHERE id_autoridad=$ID_AUTORIDAD";
             
             $db=  AccesoDB::getInstancia();
-            $db->executeQueryUpdate($query);
+            $lista= $db->executeQueryUpdate($query);
             
+//            echo "este es el query: ".json_encode($query);
+            return $lista;
         } catch (Exception $ex) 
         {
             throw $ex;
-            return false;
+            return -1;
+        }
+    }
+    
+    public function verificarExistenciadeAutoridadenDocumentoEntrada($ID_AUTORIDAD)
+    {
+        try
+        {
+            $query="SELECT COUNT(*) AS resultado
+                    FROM documento_entrada tbdocumento_entrada
+                    JOIN autoridad_remitente tbautoridad_remitente ON tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad
+                    WHERE tbautoridad_remitente.id_autoridad=$ID_AUTORIDAD";
+            
+            $db= AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista[0]['resultado'];
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
         }
     }
 }

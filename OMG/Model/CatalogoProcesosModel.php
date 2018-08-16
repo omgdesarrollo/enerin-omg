@@ -105,6 +105,29 @@ class CatalogoProcesosModel{
             return -1;
         }
     }
+    
+    public function obtenerConceptos(){
+        try{
+            $dao= new CatalogoProcesosDAO();
+            $lista=$dao->obtenerConceptos();
+//            echo json_encode($lista);
+            return $lista;
+        } catch (Exception $ex) {
+            throw  $ex;
+            return -1;
+        }
+    }
+    
+    public function obtenerVista_Concepto_Seleccionado($value){
+          try{
+            $dao= new CatalogoProcesosDAO();
+            $lista=$dao->obtenerVista_Concepto_Seleccionado($value);
+            return $lista;
+        } catch (Exception $ex) {
+            throw  $ex;
+            return -1;
+        }
+    }
 
     public function eliminarRegistro($ID_CONTRATO)
     {

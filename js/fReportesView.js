@@ -394,7 +394,7 @@ function listarDatosReportes()//listarDatos
 {
     __datos=[];
     datosParamAjaxValues={};
-    datosParamAjaxValues["url"]="../Controller/ReportesController.php?Op=listar";
+    datosParamAjaxValues["url"]="../Controller/ReportesController.php?Op=listar&data=2";
     datosParamAjaxValues["type"]="POST";
     datosParamAjaxValues["async"]=false;
     var variablefunciondatos=function obtenerDatosServer(data)
@@ -500,7 +500,8 @@ function precargados()
         th="<select>";
         
         $.ajax({
-            url : '../Controller/ReportesController.php?Op=listar',
+            url : '../Controller/ReportesController.php?Op=listar&data=2',
+            async:false,
             success 	: function(r)
             {
 //                console.log(r);

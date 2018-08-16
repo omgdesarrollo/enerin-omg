@@ -51,7 +51,10 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
                 <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
                 <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
-
+                <!--LIBRERIA SWEET ALERT 2-->
+                <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
+                <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
+                <!--END LIBRERIA SWEET ALERT 2-->
                 <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
                 <script src="../../js/tools.js" type="text/javascript"></script>
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
@@ -260,7 +263,6 @@ $Usuario=  Session::getSesion("user");
         // {type:"control",editButton: true}
     ];
     ultimoNumeroGrid=0;
-
     // $.when(
         var abrir=false;
         var intervalFunc;
@@ -390,6 +392,12 @@ $Usuario=  Session::getSesion("user");
             }
         });
     });
+
+    
+    
+    
+    
+    
 </script>
         <script src="../../js/socket.js" type="text/javascript"></script>
             <script src="../../js/fCatalogoProcesosView.js" type="text/javascript"></script>

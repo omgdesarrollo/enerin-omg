@@ -3,7 +3,7 @@ require_once '../ds/AccesoDB.php';
 
 class ReporteDao{
 
-       public function listarReportes($CONTRATO)
+    public function listarReportes($CONTRATO)
     {
         try
         {
@@ -15,23 +15,44 @@ class ReporteDao{
             ,tbomg_reporte.omgc12,tbomg_reporte.omgc13,tbomg_reporte.omgc14,tbomg_reporte.omgc15,tbomg_reporte.omgc16
             ,tbomg_reporte.omgc17,tbomg_reporte.omgc18
             FROM catalogo_reporte tbcatalogo_reporte
-            JOIN omg_reporte tbomg_reporte ON tbomg_reporte.ID_CONTRATO=tbcatalogo_reporte.ID_CONTRATO
+            JOIN omg_reporte_produccion tbomg_reporte ON tbomg_reporte.ID_CONTRATO=tbcatalogo_reporte.ID_CONTRATO
            WHERE tbcatalogo_reporte.contrato = $CONTRATO";
             $db=  AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
             return $lista;
+          
+            } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+        
+    }
+    
+    public function listarReportesporFecha($FECHA_INICIO,$FECHA_FINAL,$CONTRATO)
+    {
+        try
+        {
+            $query="SELECT tbomg_reporte_produccion.id_reporte, tbomg_reporte_produccion.id_contrato, tbomg_reporte_produccion.omgc1,
+		 tbomg_reporte_produccion.omgc2, tbomg_reporte_produccion.omgc3, tbomg_reporte_produccion.omgc4, tbomg_reporte_produccion.omgc5,
+		 tbomg_reporte_produccion.omgc6, tbomg_reporte_produccion.omgc7, tbomg_reporte_produccion.omgc8, tbomg_reporte_produccion.omgc9,
+		 tbomg_reporte_produccion.omgc10, tbomg_reporte_produccion.omgc11, tbomg_reporte_produccion.omgc12, tbomg_reporte_produccion.omgc13,
+		 tbomg_reporte_produccion.omgc14, tbomg_reporte_produccion.omgc15, tbomg_reporte_produccion.omgc16, tbomg_reporte_produccion.omgc17,
+		 tbomg_reporte_produccion.omgc18		 
+                 FROM omg_reporte_produccion tbomg_reporte_produccion
+                 WHERE tbomg_reporte_produccion.omgc1 BETWEEN '$FECHA_INICIO' AND '$FECHA_FINAL' AND tbomg_reporte_produccion.id_contrato=$CONTRATO";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista = $db->executeQuery($query);
+            return $lista;
+            
         } catch (Exception $ex)
         {
             throw $ex;
             return -1;
         }
     }
-    
-    
-    
-    
-    
-    
+
     
     
     

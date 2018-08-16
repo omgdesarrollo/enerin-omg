@@ -183,6 +183,7 @@ $Usuario=  Session::getSesion("user");
 <div id="seccionIzquierda">
     <div id="contenido" ></div>
 </div>
+<div id="contenidoDetalles"></div>
 
 <!--<div id="comboclave_descripcion"></div>-->
 <!--<div id="gridbox"></div>-->
@@ -569,7 +570,7 @@ function evaluarToolbarSeccionB(id)
             }
         });
      }
-     
+     myLayout.cells("c").attachObject("contenidoDetalles");
     // obtenerDatosArbol(1);
     function obtenerDatosArbol(id_asignacion)
     {
@@ -628,7 +629,7 @@ function evaluarToolbarSeccionB(id)
         });
     }
     
-myLayout.cells("c").attachObject("contenidoDetalles");
+
     
     function construirDetalleSeleccionado(data,id)
     {
@@ -683,12 +684,14 @@ myLayout.cells("c").attachObject("contenidoDetalles");
        data:{"id":id,"tipo":tipo},
        success:function(d){
 //       alert("se hizo ");
+//alert("d");
             construirDetalles(d);
     }
         });
     
     }
-    function construirDetalles(d){    
+    function construirDetalles(d){
+//        alert();
         $("#contenidoDetalles").html(d);
     }
     

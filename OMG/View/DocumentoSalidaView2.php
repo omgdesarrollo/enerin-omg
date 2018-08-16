@@ -46,7 +46,7 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/tools.js" type="text/javascript"></script>
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <script src="../../js/filtroSupremo.js" type="text/javascript"></script>                
-                <script src="../../js/fAutoridadesRemitentesView.js" type="text/javascript"></script>
+                
                 
                 
         <style>
@@ -74,7 +74,6 @@ $Usuario=  Session::getSesion("user");
 <body class="no-skin">
 
        
-
 <?php
 
 require_once 'EncabezadoUsuarioView.php';
@@ -85,7 +84,7 @@ require_once 'EncabezadoUsuarioView.php';
 <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;"> 
 
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#crea_autoridad">
-        Agregar Autoridad
+        Agregar Documento de Salida
     </button>
 
     <button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
@@ -111,68 +110,61 @@ require_once 'EncabezadoUsuarioView.php';
 <div id="jsGrid"></div>
 
 <!-- Inicio de Seccion Modal -->
-<div class="modal draggable fade" id="crea_autoridad" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal draggable fade" id="crea_documentoSalida" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog " role="document">
         <div class="modal-content">
-          <div class="modal-header">
+            <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">x</span></button>
-            <h4 class="modal-title" id="myModalLabel">Crear Nueva Autoridad Remitente</h4>
-          </div>
-
-          <div id="validacion_empleado" class="modal-body">
-                    <!--<form data-toggle="validator" action="api/create.php" method="POST">-->
-                        <!--<form data-toggle="validator"  >-->
-                        <div id="ok"></div>
-                            <div class="form-group">
-                                            <label class="control-label" for="title">Clave Autoridad Remitente:</label>
-                                            <input type="text"  id="CLAVE_AUTORIDAD" class="form-control" data-error="Ingrese Autoridad" required />
-                                            <div id="mensaje1" class="help-block with-errors" ></div>
-                                    </div>
-
-                                    <div class="form-group">
-                                            <label class="control-label" for="title">Descripcion:</label>
-                                            <textarea  id="DESCRIPCION" class="form-control" data-error="Ingrese Descripcion" required></textarea>
-                                            <div id="mensaje2"class="help-block with-errors"></div>
-                                    </div>
-
-                                    <div class="form-group">
-                                            <label class="control-label" for="title">Direccion:</label>
-                                            <textarea  id="DIRECCION" class="form-control" data-error="Ingrese Direccion" required></textarea>
-                                            <div id="mensaje3" class="help-block with-errors"></div>
-                                    </div>
-
-                                    <div class="form-group">
-                                            <label class="control-label" for="title">Telefono:</label>
-                                            <textarea  id="TELEFONO" class="form-control" data-error="Ingrese Telefono" required></textarea>
-                                            <div id="mensaje4" class="help-block with-errors"></div>
-                                    </div>
-
-                                    <div class="form-group">
-                                            <label class="control-label" for="title">Extension:</label>
-                                            <textarea  id="EXTENSION" class="form-control" data-error="Ingrese Extension" required></textarea>
-                                            <div id="mensaje5"class="help-block with-errors"></div>
-                                    </div>
+              <h4 class="modal-title" id="myModalLabel">Crear Nuevo Documento de Salida</h4>
+            </div>
+                <div class="modal-body">
+                    
+                    <div class="form-group">
+                        <label class="control-label" for="title">Folio de Entrada:</label>
+                        <select id="ID_DOCUMENTO_ENTRADA" class="select">
+                        </select>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                            <label class="control-label" for="title">Folio de Salida:</label>
+                            <input type="text"  id="FOLIO_SALIDA" class="form-control" data-error="Ingrese el Folio de Salida" required />
+                            <div id="mensaje1" class="help-block with-errors" ></div>
+                    </div>
                         
-                                    <div class="form-group">
-                                            <label class="control-label" for="title">Email:</label>
-                                            <textarea  id="EMAIL" class="form-control" data-error="Ingrese Email" required></textarea>
-                                            <div id="mensaje6"class="help-block with-errors"></div>
-                                    </div>
-                        
-                                    <div class="form-group">
-                                            <label class="control-label" for="title">Direccion Web:</label>
-                                            <textarea  id="DIRECCION_WEB" class="form-control" data-error="Ingrese Direccion Web" required></textarea>
-                                            <div id="mensaje7"class="help-block with-errors"></div>
-                                    </div>
+                    <div class="form-group">
+                            <label class="control-label" for="title">Fecha de Envio:</label>
+                            <input type="date" id="FECHA_ENVIO" class="form-control" data-error="Ingrese la Fecha de Envio" required>
+                            <div id="mensaje2"class="help-block with-errors"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                            <label class="control-label" for="title">Asunto:</label>
+                            <textarea  id="ASUNTO" class="form-control" data-error="Ingrese el Asunto" required></textarea>
+                            <div id="mensaje3" class="help-block with-errors"></div>
+                    </div>
 
-                                    <div class="form-group">
-                                        <button type="submit" style="width:49%" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
-                                        <button type="submit" style="width:49%" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
-                                    </div>
+                    <div class="form-group">
+                            <label class="control-label" for="title">Destinatario:</label>
+                            <textarea  id="DESTINATARIO" class="form-control" data-error="Ingrese el Destinatario" required></textarea>
+                            <div id="mensaje4" class="help-block with-errors"></div>
+                    </div>
+                    
+                    <div id="DocumentoEntradaAgregarModal"></div>
 
-                    <!--</form>-->
+                    <div class="form-group">
+                            <label class="control-label" for="title">Observaciones:</label>
+                            <textarea  id="OBSERVACIONES" class="form-control" data-error="Ingrese la Observacion" required></textarea>
+                            <div id="mensaje5"class="help-block with-errors"></div>
+                    </div>
 
-          </div>
+
+                    <div class="form-group">
+                        <button type="submit" style="width:49%" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
+                        <button type="submit" style="width:49%" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
+                    </div>
+                    
+                </div>
         </div>
 
     </div>

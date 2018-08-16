@@ -114,8 +114,9 @@ switch ($Op)
         echo json_encode($resultado);
     break;
 
-    case 'newSocket':
-        
+    case 'ListarConceptos':
+        header('Content-type: application/json; charset=utf-8'); 
+        echo json_encode($model->obtenerConceptos());
     break;
 
     default:

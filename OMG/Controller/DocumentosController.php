@@ -58,9 +58,8 @@ switch ($Op) {
             $pojo->setDocumento($data['documento']);
             $pojo->setId_empleado($data['id_empleado']);
             $contrato= Session::getSesion("s_cont");
-//            echo "el contra:   ".$contrato."     |";
+
             $Lista= $model->insertar($pojo,$contrato);
-//            echo Session::getSesion("s_cont");
             echo json_encode($Lista);
             return $Lista;
 		break;
@@ -94,7 +93,6 @@ switch ($Op) {
             header('Content-type: application/json; charset=utf-8'); 
             $data = json_decode($_REQUEST['ID_DOCUMENTO'],true);
             $Lista= $model->eliminarDocumento($data['id_documento']);
-
             echo json_encode($Lista);
             return $Lista;
 		break;	

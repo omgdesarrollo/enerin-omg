@@ -9,21 +9,24 @@ $Op=$_REQUEST["Op"];
 $model=new CatalogoProcesosModel();
 $modelReporte= new ReporteModel();
 
+
 switch($Op)
 {
-    case 'listar':
+    case 'listar':   
         $CONTRATO = Session::getSesion("s_cont");
         $Lista = $modelReporte->listarReportes($CONTRATO);
-        foreach($Lista as $key => $value)
-        {
-            foreach($value as $k=>$val)
-            {
-                $Lista[$key][$k] = utf8_encode($val);
-            }
-        }
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
+    break;   
+    case 'listarDatos':       
     break;
+
+    case 'listarReportesporFecha':
+        $Lista= $model->listarReportesporFecha($_REQUEST['FECHA_INICIO'],$_REQUEST['FECHA_FINAL'],Session::getSesion("s_cont"));
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+        return $Lista;
+        break;
     
     case 'listarDatos':
         
@@ -33,6 +36,9 @@ switch($Op)
         echo -1;
     break;
 }
+
+ 
+
 
 
 ?>

@@ -85,7 +85,7 @@ require_once 'EncabezadoUsuarioView.php';
              
 <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
     
-<button onclick="empleadosComboboxparaModal()" type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
+<button onclick="empleadosComboboxparaModal()" type="button" class="btn btn-success" data-toggle="modal" data-target="#crea_documento">
     Agregar Documento
 </button>    
     
@@ -113,7 +113,7 @@ require_once 'EncabezadoUsuarioView.php';
 
 
 <!-- Inicio de Seccion Modal Nuevo Documento-->
-<div class="modal draggable fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal draggable fade" id="crea_documento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -167,6 +167,7 @@ DataGrid = [];
 dataListado = [];
 EmpleadosCombobox=[];
 filtros=[];
+ultimoNumeroGrid=0;
 
 listarDatos();
 inicializarFiltros();
