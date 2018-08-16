@@ -1,7 +1,6 @@
 <?php
 require_once '../Model/CatalogoProduccionModel.php';
 class SeleccionConceptoReporteModel {
-
         public function  evaluarVista($value,$tipo_catalogo_o_reporte){       
         $modelCatalogoProcesosModel= new CatalogoProduccionModel();
         $vista=$modelCatalogoProcesosModel->obtenerVista_Concepto_Seleccionado($value) ;
