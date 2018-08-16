@@ -1,13 +1,13 @@
 <?php
-require_once '../dao/CatalogoProcesosDAO.php';
+require_once '../dao/CatalogoProduccionDAO.php';
 
-class CatalogoProcesosModel{
+class CatalogoProduccionModel{
 
     public function listarCatalogo($CONTRATO)
     {
         try
         {
-            $dao=new CatalogoProcesosDAO();
+            $dao=new CatalogoProduccionDAO();
             $lista= $dao->listarCatalogo($CONTRATO);
             return $lista;
         }catch (Exception $ex)
@@ -21,7 +21,7 @@ class CatalogoProcesosModel{
     {
         try
         {
-            $dao=new CatalogoProcesosDAO();
+            $dao=new CatalogoProduccionDAO();
             $lista= $dao->listarUno($ID_CONTRATO);
             return $lista;
         }catch (Exception $ex)
@@ -35,7 +35,7 @@ class CatalogoProcesosModel{
     {
         try
         {
-            $dao=new CatalogoProcesosDAO();
+            $dao=new CatalogoProduccionDAO();
             // INSERT INTO asignacion_tema_requisito(id_asignacion_tema_requisito,id_clausula,requisito,id_documento)"
             // . "VALUES($id_nuevo,$id_clausula,'$requisito',$id_documento)";
             $bandera=0;
@@ -68,7 +68,7 @@ class CatalogoProcesosModel{
     {
         try
         {
-            $dao = new CatalogoProcesosDAO();
+            $dao = new CatalogoProduccionDAO();
             $lista = $dao->buscarID($CADENA,$CONTRATO);
             return $lista;
         }catch (Exception $ex)
@@ -82,7 +82,7 @@ class CatalogoProcesosModel{
     {
         try
         {
-            $dao = new CatalogoProcesosDAO();
+            $dao = new CatalogoProduccionDAO();
             $lista = $dao->buscarRegionesFiscales($CONTRATO);
             return $lista;
         }catch (Exception $ex)
@@ -96,7 +96,7 @@ class CatalogoProcesosModel{
     {
         try
         {
-            $dao = new CatalogoProcesosDAO();
+            $dao = new CatalogoProduccionDAO();
             $exito = $dao->buscarTagMedidor($CONTRATO,$TAG_MEDIDOR);
             return $exito;
         }catch (Exception $ex)
@@ -108,7 +108,7 @@ class CatalogoProcesosModel{
     
     public function obtenerConceptos(){
         try{
-            $dao= new CatalogoProcesosDAO();
+            $dao= new CatalogoProduccionDAO();
             $lista=$dao->obtenerConceptos();
 //            echo json_encode($lista);
             return $lista;
@@ -120,7 +120,7 @@ class CatalogoProcesosModel{
     
     public function obtenerVista_Concepto_Seleccionado($value){
           try{
-            $dao= new CatalogoProcesosDAO();
+            $dao= new CatalogoProduccionDAO();
             $lista=$dao->obtenerVista_Concepto_Seleccionado($value);
             return $lista;
         } catch (Exception $ex) {
@@ -133,7 +133,7 @@ class CatalogoProcesosModel{
     {
         try
         {
-            $dao = new CatalogoProcesosDAO();
+            $dao = new CatalogoProduccionDAO();
             $permiso = $dao->permisoDeEliminar($ID_CONTRATO);
             $exito = 0;
             if($permiso == 0)
@@ -156,7 +156,7 @@ class CatalogoProcesosModel{
     {
         try
         {
-            $dao=new CatalogoProcesosDAO();
+            $dao=new CatalogoProduccionDAO();
             $query="";
             $query2= "";
             $index=0;
