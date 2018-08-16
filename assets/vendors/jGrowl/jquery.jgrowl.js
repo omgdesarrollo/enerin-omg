@@ -118,7 +118,7 @@
 var contadorInstancia=1;
 var newInstanceJGrowl;
 var banderaParaAnimacion=false;
-
+var cerrarSucesos=0;
 function animacionTerminada()
 {
     if(banderaParaAnimacion)
@@ -209,7 +209,11 @@ function getInstancejGrowl()
 				// console.log("1");
 			},
 			beforeOpen: 	function(e,m,o) {
-				$("#jGrowl").animate({width:"toggle",opacity:"toggle"},"fast",animacionTerminada);
+				$("#jGrowl").animate({width:"show",opacity:"show"},"fast",animacionTerminada);
+				clearTimeout(cerrarSucesos);
+				cerrarSucesos = setTimeout(function(){
+					$("#jGrowl").animate({width:"toggle",opacity:"toggle"},"slow",animacionTerminada);
+				},5000);
 				// console.log("2");
 			},
 			afterOpen: 		function(e,m,o) {
