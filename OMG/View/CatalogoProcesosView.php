@@ -56,6 +56,8 @@ $Usuario=  Session::getSesion("user");
                 <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
                 <!--END LIBRERIA SWEET ALERT 2-->
                 <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
+                <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
+                <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/tools.js" type="text/javascript"></script>
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <script src="../../js/fCatalogoProcesosView.js" type="text/javascript"></script>
@@ -81,51 +83,21 @@ $Usuario=  Session::getSesion("user");
                 padding-left: 2px;
                 font-family: Tahoma;
             }
-            .dhxcombo_select
+/*            .dhxcombo_select
             {
                 z-index:9999;
-            }
-            .jsgrid-cancel-edit-button
+            }*/
+            
+/*            .jsgrid-cancel-edit-button
             {
 
             }
-            .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                    
-            .modal-lg{width: 100%;}
-            .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
             
             .jsgrid-grid-body
             {
-                /* height:450px; */
-            }
+                 height:450px; 
+            }*/
 
-            ::-webkit-scrollbar
-            {
-                width: 8px;
-            }
-
-            ::-webkit-scrollbar-track
-            {
-                /* background-color: blue; */
-            }
-            ::-webkit-scrollbar-thumb
-            {
-                background-color: #438eb9;
-                border-radius:20px;
-
-                /* background-color: #e4e6e9;
-                border-radius:20px;
-                border: 1px solid;
-                border-color:#438eb9; */
-            }
-            /* ::-webkit-scrollbar-button
-            {
-                background-color: #3399cc;
-            } */
-            ::-webkit-scrollbar-corner
-            {
-                background-color: #e4e6e9;
-            }
-            body{overflow:hidden;}
         </style>              
                 
  			 
@@ -143,11 +115,11 @@ $Usuario=  Session::getSesion("user");
 
 <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
     
-<button onClick="" type="button" class="btn btn-success" data-toggle="modal" data-target="#nuevoRegistro" style='border-radius:3px;border:3px #49986d solid;height:44px'>
+<button onClick="" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#nuevoRegistro">
     Agregar Nuevo Registro
 </button>
 
-<button type="button" title="Recargar Datos" class="btn btn-info " style='border-radius:5px;border:3px #3399cc solid;width:47px;height:44px;padding-left:12px' id="btnrefrescar" onclick="refresh();">
+<button type="button" title="Recargar Datos" class="btn btn-info btn_refrescar" id="btnrefrescar" onclick="refresh();">
     <i class="glyphicon glyphicon-repeat"></i>
 </button>
 

@@ -7,10 +7,10 @@ function construirFiltros()
     $(".jsgrid-filter-row").html("");
     if(primero)
     {
-        $("#headerOpciones").append("<button type='button' title='Abrir Filtro' class='btn btn-info style-filter' onClick='mostrarFiltros()'><i class='ace-icon fa fa-sort'></i></button>");
-        $("#headerOpciones").append("<button type='button' title='Buscar Filtro ' class='btn btn-info style-filter' onClick='filtroSupremo()'><i class='ace-icon fa fa-search'></i></button>");
-        $("#headerOpciones").append("<button type='button' title='Limpiar Filtro' class='btn btn-info style-filter' onClick='limpiarFiltros()'><i class='ace-icon fa fa-filter'></i></button>");
-        $("#headerOpciones").append("<button type='button' title='Registro de Sucesos' class='btn btn-info style-filter' onClick='mostrarOcultarGrowl()'><i class='ace-icon fa fa-exchange'></i></button>");
+        $("#headerOpciones").append("<button type='button' title='Abrir Filtro' class='btn btn-info' onClick='mostrarFiltros()' style='margin-right:5px;border-radius:5px;border:3px #3399cc solid;width:47px;height:44px;padding-left:14px' ><i class='ace-icon fa fa-sort'></i></button>");
+        $("#headerOpciones").append("<button type='button' title='Buscar Filtro ' class='btn btn-info' onClick='filtroSupremo()' style='margin-right:5px;border-radius:5px;border:3px #3399cc solid;width:47px;height:44px;padding-left:14px' ><i class='ace-icon fa fa-search'></i></button>");
+        $("#headerOpciones").append("<button type='button' title='Limpiar Filtro' class='btn btn-info' onClick='limpiarFiltros()' style='margin-right:5px;border-radius:5px;border:3px #3399cc solid;width:47px;height:44px;padding-left:14px' ><i class='ace-icon fa fa-filter'></i></button>");
+        $("#headerOpciones").append("<button type='button' title='Registro de Sucesos' class='btn btn-info' onClick='mostrarOcultarGrowl()' style='margin-right:5px;border-radius:5px;border:3px #3399cc solid;width:47px;height:44px;padding-left:14px'><i class='ace-icon fa fa-exchange'></i></button>");
         primero=false;
     }
     $.each(filtros,function(index,value)
