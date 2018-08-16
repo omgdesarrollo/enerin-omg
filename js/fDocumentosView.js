@@ -313,7 +313,7 @@ function insertarDocumento(documentoDatos)
                 swalSuccess("Documento Creado");                
                 $.each(datos,function(index,value)
                 {
-                   console.log("Este es el value: "+value); 
+//                   console.log("Este es el value: "+value); 
                    tempData= reconstruir(value,ultimoNumeroGrid+1);  
                 });
 //                console.log(tempData);

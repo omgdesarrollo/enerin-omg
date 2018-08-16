@@ -16,9 +16,7 @@ switch ($Op) {
 	case 'Listar':
 
 		$Lista=$model->listarAutoridadesRemitentes();
-//    	Session::setSesion("listarAutoridadesRemitentes",$Lista);
-                header('Content-type: application/json; charset=utf-8');
-//                echo json_encode(array("data"=>$Lista));        
+                header('Content-type: application/json; charset=utf-8');       
                 echo json_encode($Lista);        
 
 		return $Lista;
@@ -76,10 +74,12 @@ switch ($Op) {
 
 	case 'Eliminar':
 		# code...
-                $pojo->setId_autoridad($_REQUEST['ID_AUTORIDAD']);
+                header('Content-type: application/json; charset=utf-8');
+                $data= json_decode($_REQUEST['ID_AUTORIDAD'],true);
+                        
+                $pojo->setId_autoridad($data['id_autoridad']);
                 $Lista= $model->eliminar($pojo);
-                
-                header('Content-type: application/json; charset=utf-8'); 
+                                 
                 echo json_encode($Lista);
                 return $Lista;
             

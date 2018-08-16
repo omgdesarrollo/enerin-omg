@@ -11,13 +11,12 @@ class AutoridadRemitenteDAO{
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-            
 
             return $lista;
     }  catch (Exception $ex)
     {
         throw $ex;
-        return false;
+        return -1;
     }
     }
     
@@ -40,7 +39,7 @@ class AutoridadRemitenteDAO{
         } catch (Exception $ex)
         {
             throw $ex;
-            return false;
+            return -1;
         }
     }
 
@@ -61,7 +60,7 @@ class AutoridadRemitenteDAO{
     }  catch (Exception $ex)
     {
         throw $ex;
-        return false;
+        return -1;
     }
     }
     
@@ -93,7 +92,7 @@ class AutoridadRemitenteDAO{
         } catch (Exception $ex) 
         {
             throw $ex;
-            return false;
+            return -1;
         }   
     }
     
@@ -109,7 +108,7 @@ class AutoridadRemitenteDAO{
         } catch (Exception $ex) 
         {
            throw $ex;
-           return false;
+           return -1;
         }
     }
     
@@ -121,11 +120,12 @@ class AutoridadRemitenteDAO{
             $db=  AccesoDB::getInstancia();
             $lista= $db->executeQueryUpdate($query);
             
+//            echo "este es el query: ".json_encode($query);
             return $lista;
         } catch (Exception $ex) 
         {
             throw $ex;
-            return false;
+            return -1;
         }
     }
     
@@ -138,9 +138,9 @@ class AutoridadRemitenteDAO{
                     JOIN autoridad_remitente tbautoridad_remitente ON tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad
                     WHERE tbautoridad_remitente.id_autoridad=$ID_AUTORIDAD";
             
-            $db=  AccesoDB::getInstancia();
-            $lista= $db->executeQueryUpdate($query);
-            
+            $db= AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
             return $lista[0]['resultado'];
         } catch (Exception $ex)
         {

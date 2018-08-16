@@ -181,10 +181,10 @@ MyCControlField.prototype = new jsGrid.Field
         },
         itemTemplate: function(value,todo)
         {
-//            console.log(value,todo);
-//            if(value[0]['existe_programa']!="0" || value[0]['existe_archivo']!=0)
-//                return "";
-//            else
+            console.log(value,todo);
+            if(value[0]['resultado']!=0)
+                return "";
+            else
                 return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button ',title:"Eliminar", type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
         },
         insertTemplate: function(value)
@@ -222,13 +222,13 @@ function listarDatos()
     __datos=[];
     datosParamAjaxValues={};
     datosParamAjaxValues["url"]="../Controller/AutoridadesRemitentesController.php?Op=Listar";
-    datosParamAjaxValues["type"]="GET";
+    datosParamAjaxValues["type"]="POST";
     datosParamAjaxValues["async"]=false;
     
     var variablefunciondatos=function obtenerDatosServer(data)
     {
         dataListado = data;
-        $.each(data,function(index,value)
+        $.each(data.autoridades,function(index,value)
         {
             __datos.push(reconstruir(value,index+1));
         });
@@ -252,6 +252,7 @@ function reconstruirTable(_datos)
 
 function reconstruir(value,index)
 {
+//    console.log("este es el value: "+value);
     tempData=new Object();
     ultimoNumeroGrid = index;
     tempData["id_principal"]= [{'id_autoridad':value.id_autoridad}];
@@ -263,7 +264,7 @@ function reconstruir(value,index)
     tempData["extension"]=value.extension;
     tempData["email"]=value.email;
     tempData["direccion_web"]=value.direccion_web;
-    tempData["delete"]= [{"existe_programa":value.existe_programa,"existe_archivo":value.archivo}];
+    tempData["delete"]= [{"resultado":value.resultado}];
     return tempData;
 }
 
@@ -284,16 +285,16 @@ function insertarAutoridad(autoridadesDatos)
             {
                 tempData;
                 swalSuccess("Autoridad Creada");                
-                $.each(datos,function(index,value)
+                $.each(datos.autoridades,function(index,value)
                 {
-                   console.log("Este es el value: "+value); 
+//                console.log("Este es el value: "+value); 
                    tempData= reconstruir(value,ultimoNumeroGrid+1);  
                 });
-//                console.log(tempData);
+//                console.log("este es el tempData: "+tempData);
                 
                 $("#jsGrid").jsGrid("insertItem",tempData).done(function()
                 {
-                    $("#crea_documento .close ").click();
+                    $("#crea_autoridad .close ").click();
                 });
                 
             } else{
@@ -348,9 +349,9 @@ function eliminarRegistro(item)
     
             $.ajax({
 
-                url:"../Controller/DocumentosController.php?Op=Eliminar",
+                url:"../Controller/AutoridadesRemitentesController.php?Op=Eliminar",
                 type:"POST",
-                data:"ID_DOCUMENTO="+JSON.stringify(id_afectado),
+                data:"ID_AUTORIDAD="+JSON.stringify(id_afectado),
                 success:function(data)
                 {
 //                    alert("Entro al success "+data);
@@ -358,7 +359,7 @@ function eliminarRegistro(item)
                     {
 //                        swal("","El Documento esta validado o asignado a un Registro","error");
 //                        setTimeout(function(){swal.close();},1500);
-                        swalError("La Tarea tiene cargado un Programa");
+                        swalError("La Autoridad esta cargada en Documento de Entrada");
                     }else{
                         if(data==true)
                         {
@@ -366,7 +367,7 @@ function eliminarRegistro(item)
 //                            actualizarDespuesdeEditaryEliminar();
 //                            swal("","Se elimino correctamente el Documento","success");
 //                            setTimeout(function(){swal.close();},1500);
-                            swalSuccess("Se elimino correctamente La Tarea");
+                            swalSuccess("Se elimino correctamente la Autoridad");
                         }
                     }
                 },
@@ -381,6 +382,9 @@ function eliminarRegistro(item)
 
 function refresh(){
     listarDatos();
+    inicializarFiltros();
+    construirFiltros();
+    gridInstance.loadData();
 }
 
 

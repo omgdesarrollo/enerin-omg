@@ -13,10 +13,9 @@ class DocumentoModel{
         try{
             $dao=new DocumentoDAO();            
             $rec['doc']= $dao->mostrarDocumentos($contrato);
-            
             $lista=array();
             $contador=0;
-//            $cont=0;
+            
             foreach($rec['doc']as $value)
             {
                 $lista['doc'][$contador]= array(
@@ -107,21 +106,21 @@ class DocumentoModel{
                 $rec= $dao->mostrarDocumento($exito['id_nuevo'],$CONTRATO);
 //                echo "valor rec: ".json_encode($rec);              
                 foreach($rec as $value)
-            {
-                $lista[$contador]= array(
-                    "id_documento"=>$value["id_documento"],
-                    "clave_documento"=>$value["clave_documento"],
-                    "documento"=>$value["documento"],
-                    "id_empleado"=>$value["id_empleado"],
-                    "nombre_empleado"=>$value["nombre_empleado"],
-                    "apellido_paterno"=>$value["apellido_paterno"],
-                    "apellido_materno"=>$value["apellido_materno"],
-                    "reg"=>$dao->verificarExistenciadeDocumentoEnRegistros($value['id_documento']),
-                    "validado"=>$dao->verificarSiDocumentoEstaValidado($value['id_documento'])                                       
-                );
-//                $cont++;
-                $contador++;
-            }
+                {
+                    $lista[$contador]= array(
+                        "id_documento"=>$value["id_documento"],
+                        "clave_documento"=>$value["clave_documento"],
+                        "documento"=>$value["documento"],
+                        "id_empleado"=>$value["id_empleado"],
+                        "nombre_empleado"=>$value["nombre_empleado"],
+                        "apellido_paterno"=>$value["apellido_paterno"],
+                        "apellido_materno"=>$value["apellido_materno"],
+                        "reg"=>$dao->verificarExistenciadeDocumentoEnRegistros($value['id_documento']),
+                        "validado"=>$dao->verificarSiDocumentoEstaValidado($value['id_documento'])                                       
+                    );
+    //                $cont++;
+                    $contador++;
+                }
             return $lista;
             } 
             else

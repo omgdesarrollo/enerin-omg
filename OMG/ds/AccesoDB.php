@@ -62,7 +62,7 @@ class AccesoDB {
             mysqli_free_result($rs); 
             //agrego esta linea para que pueda realizar 
             //dos consultas a la vez en la BD
-//            mysqli_next_result($this->cn);
+            mysqli_next_result($this->cn);
          
              //viendo si debo comentarla
 //            mysqli_close();
