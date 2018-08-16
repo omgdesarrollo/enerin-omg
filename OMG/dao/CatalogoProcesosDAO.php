@@ -117,7 +117,7 @@ class CatalogoProcesosDAO{
     {
         try
         {
-            $query="SELECT COUNT(*) AS resultado FROM omg_reporte tbomg_reporte WHERE tbomg_reporte.id_contrato = $ID_CONTRATO";
+            $query="SELECT COUNT(*) AS resultado FROM omg_reporte_produccion tbomg_reporte WHERE tbomg_reporte.id_contrato = $ID_CONTRATO";
             $db = AccesoDB::getInstancia();
             $exito = $db->executeQuery($query);
             return $exito[0]["resultado"];

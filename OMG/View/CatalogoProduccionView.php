@@ -19,6 +19,7 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
                 <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
                 <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+                <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" ></script> -->
 
 		<!-- ace styles -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
@@ -34,6 +35,10 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/jquery.js" type="text/javascript"></script>
                 <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+
+                <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
+                <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
+
                 <!--  -->
                 <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
                 <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
@@ -55,6 +60,9 @@ $Usuario=  Session::getSesion("user");
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <script src="../../js/fCatalogoProcesosView.js" type="text/javascript"></script>
                 <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
+                <script src="../../js/fGridComponent.js" type="text/javascript"></script>
+                <!-- <script src="../../js/socket.js" type="text/javascript"></script> -->
+                <!-- <script src="../../js/fancywebsocket.js" type="text/javascript"></script> -->
                 
         <style>
             .jsgrid-header-row>.jsgrid-header-cell 
@@ -89,6 +97,34 @@ $Usuario=  Session::getSesion("user");
             {
                 /* height:450px; */
             }
+
+            ::-webkit-scrollbar
+            {
+                width: 8px;
+            }
+
+            ::-webkit-scrollbar-track
+            {
+                /* background-color: blue; */
+            }
+            ::-webkit-scrollbar-thumb
+            {
+                background-color: #438eb9;
+                border-radius:20px;
+
+                /* background-color: #e4e6e9;
+                border-radius:20px;
+                border: 1px solid;
+                border-color:#438eb9; */
+            }
+            /* ::-webkit-scrollbar-button
+            {
+                background-color: #3399cc;
+            } */
+            ::-webkit-scrollbar-corner
+            {
+                background-color: #e4e6e9;
+            }
             body{overflow:hidden;}
         </style>              
                 
@@ -100,15 +136,18 @@ $Usuario=  Session::getSesion("user");
 <!-- <div id="loader"></div>  -->
        
 
-<?php require_once 'EncabezadoUsuarioView.php'; ?>
+<?php
+    require_once 'EncabezadoUsuarioView.php';
+    // require_once '../Model/socketModel.php';
+?>
 
 <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
     
-<button onClick="" type="button" class="btn btn-success" data-toggle="modal" data-target="#nuevoRegistro">
+<button onClick="" type="button" class="btn btn-success" data-toggle="modal" data-target="#nuevoRegistro" style='border-radius:3px;border:3px #49986d solid;height:44px'>
     Agregar Nuevo Registro
 </button>
 
-<button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();">
+<button type="button" title="Recargar Datos" class="btn btn-info " style='border-radius:5px;border:3px #3399cc solid;width:47px;height:44px;padding-left:12px' id="btnrefrescar" onclick="refresh();">
     <i class="glyphicon glyphicon-repeat"></i>
 </button>
 
@@ -204,24 +243,88 @@ $Usuario=  Session::getSesion("user");
     var DataGrid=[];
     var dataListado=[];
     var filtros=[];
+    var db={};
+    var gridInstance;
+    var ws;
+    var thisjGrowl;
+    // var estructuraGrid=[];
+    estructuraGrid = [
+        { name:"id_principal", visible:false},
+        { name:"no", title:"No",width:60},
+        { name:"clave_contrato", title: "ID del Contrato o Asignación", type: "text", width: 150, validate: "required"},
+        { name:"region_fiscal", title: "Region Fiscal", type: "text", width: 150, validate: "required" },
+        { name:"ubicacion", title: "Ubicación del Punto de Medición", type: "text", width: 150, validate: "required" },
+        { name:"tag_patin", title: "Tag del Patin de Medición", type: "text", width: 130, validate: "required" },
+        { name:"tipo_medidor", title: "Tipo de Medidor", type: "text", width: 150, validate: "required" },    
+        { name:"tag_medidor", title: "Tag del Medidor", type: "text", width: 130, validate: "required" },
+        { name:"clasificacion", title: "Clasificación del Sistema de Medición", type: "text", width: 150, validate: "required" },
+        { name:"hidrocarburo", title: "Tipo de Hidrocarburo", type: "text", width: 150, validate: "required"},
+        { name:"delete", title:"Opción", type:"customControl",sorting:""},
+        // {type:"control",editButton: true}
+    ];
     ultimoNumeroGrid=0;
-    seleccionConcepto();
-    $.when(
-        listarDatos()
-    ).done(function(dataListarDatos, dataConstruirGrid)
-    {//IMPORTANTE NO BORRAR NO PREGUNTEN SOLO NO BORRAR 'FVAZCONCELOS' :D
-        construirGrid();
-        inicializarFiltros();
-        construirFiltros();
+    // $.when(
+        var abrir=false;
+        var intervalFunc;
+        // function abrirSocket()
+        // {
+        //     // setTimeout( function(){abrir.abort();}, 1500);
+        //     $.ajax({
+        //         url:"../Controller/SocketController.php?Op=socket",
+        //         typ
+        //         beforeSend:function()
+        //         {
+        //             // abrir = setInterval(function(){camino();},100);
+        //             camino();
+        //         },
+        //         success:function(val)
+        //         {
+        //             clearInterval(abrir);
+        //         }
+        //     });
+        //     // ;
+        // };
+        // abrirSocket();
+        // function conexionClienteSocket()
+        // {
+        //     while(conexionSocketC()){console.log("no conectado no")};
+            // $.ajax({
+            //         url:"../Controller/SocketController.php?Op=conect",
+            //         success:function(val)
+            //         {
+            //             console.log(val);
+            //         }
+            //     });
+        // }
+
+        construirGridPromise = new Promise((resolve,reject)=>
+        {
+            construirGrid();
+            resolve();
+        });
+    // ).done(function(dataListarDatos, dataConstruirGrid)
+    // {//IMPORTANTE NO BORRAR NO PREGUNTEN SOLO NO BORRAR 'FVAZCONCELOS' :D
+        construirGridPromise.then ((result)=>{
+            listarDatos();
+            iniciar = new Promise( (resolve,reject)=>
+            {
+                inicializarFiltros();
+                resolve();
+            });
+            iniciar.then( (result)=>
+            {
+                construirFiltros();
+            });
+        });
+        buscarRegionesFiscales();
+        // construirFiltros();
         // console.log(dataListado);
-    });
+    // });
  
     region_fiscal="";
     ubicacion="";
     clave_contrato="";
     tag_medidor="";
-    
-    buscarRegionesFiscales();
 
     $("#BTN_CREAR_NUEVOREGISTROMODAL").click(function()
     {
@@ -296,7 +399,7 @@ $Usuario=  Session::getSesion("user");
     
     
 </script>
-    
+        <script src="../../js/socket.js" type="text/javascript"></script>
             <script src="../../js/fCatalogoProcesosView.js" type="text/javascript"></script>
 
             <!--Inicia para el spiner cargando-->

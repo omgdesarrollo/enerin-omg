@@ -149,15 +149,27 @@ function construirGrid()
             }
         },
         
+<<<<<<< HEAD
+        // onItemDeleting: function(args) 
+        // {
+        //     id_afectado= args['item']['id_principal'][0];
+    
+        onItemDeleting: function(args) {
+//            console.log(args);
+//args.cancel=true;
+            eliminarDocumento(args);
+=======
         onItemDeleting: function(args) 
         {
+>>>>>>> 118f0be73de29fcafcfd661a8633ddd9ae14bef7
 
         }
         
     });
-    
 }
 
+<<<<<<< HEAD
+=======
 var MyCControlField = function(config)
 {
     jsGrid.Field.call(this, config);
@@ -211,6 +223,7 @@ function aceptarEdicion()
     gridInstance.updateItem();
 }
 
+>>>>>>> 118f0be73de29fcafcfd661a8633ddd9ae14bef7
 function listarDatos()
 {
     __datos=[];    
@@ -313,7 +326,7 @@ function insertarDocumento(documentoDatos)
                 swalSuccess("Documento Creado");                
                 $.each(datos,function(index,value)
                 {
-                   console.log("Este es el value: "+value); 
+//                   console.log("Este es el value: "+value); 
                    tempData= reconstruir(value,ultimoNumeroGrid+1);  
                 });
 //                console.log(tempData);

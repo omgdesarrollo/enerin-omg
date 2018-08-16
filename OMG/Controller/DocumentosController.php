@@ -58,9 +58,8 @@ switch ($Op) {
             $pojo->setDocumento($data['documento']);
             $pojo->setId_empleado($data['id_empleado']);
             $contrato= Session::getSesion("s_cont");
-//            echo "el contra:   ".$contrato."     |";
+
             $Lista= $model->insertar($pojo,$contrato);
-//            echo Session::getSesion("s_cont");
             echo json_encode($Lista);
             return $Lista;
 		break;
