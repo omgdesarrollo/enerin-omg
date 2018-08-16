@@ -14,24 +14,6 @@ require_once '../dao/ReporteDao.php';
                 return -1;
             }
         }
-    }
-<<<<<<< HEAD
-=======
-    
-    
-    
-   public static function checar($v1){
-    
-//       if($v1==1){
-////           self::$v=0;      
-//       }
-//       else{
-//           return  self::$v+=1;
-//       }
-              
-              return  self::$v+=2;
-
-    }
     
     public function listarReportesporFecha($FECHA_INICIO, $FECHA_FINAL, $CONTRATO)
     {
@@ -49,5 +31,4 @@ require_once '../dao/ReporteDao.php';
         }
     }
 }
->>>>>>> 8a4b53adb18f60018450ea9d75b3040e8d658773
 ?>

@@ -7,7 +7,7 @@ $Op=$_REQUEST["Op"];
 $modelConceptoReporteVistas= new SeleccionConceptoReporteModel();
 switch ($Op)
 {
-    case "detectarVista":
+    case "detectarVistaCatalogo":
        $lista=$modelConceptoReporteVistas->evaluarVista($_REQUEST["idConcepto"]); 
        header('Content-type: application/json; charset=utf-8');
        echo json_encode($lista);

@@ -20,8 +20,6 @@ switch($Op)
     break;   
     case 'listarDatos':       
     break;
-<<<<<<< HEAD
-=======
 
     case 'listarReportesporFecha':
         $Lista= $model->listarReportesporFecha($_REQUEST['FECHA_INICIO'],$_REQUEST['FECHA_FINAL'],Session::getSesion("s_cont"));
@@ -34,7 +32,6 @@ switch($Op)
         
     break;
 
->>>>>>> 8a4b53adb18f60018450ea9d75b3040e8d658773
     default:
         echo -1;
     break;
