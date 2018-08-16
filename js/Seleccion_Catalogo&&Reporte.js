@@ -45,18 +45,25 @@ swal({
   }
 }).then(function (result) {
     $.ajax({  
-                        url: "../Controller/ConceptoReportesVistasController.php?Op="+catalogo_reporte,  
-                        data:"idConcepto="+result,
+                        url: "../Controller/ConceptoReportesVistasController.php?Op="+catalogo_reporte, 
+                        type:"POST",
+                        data:"idConcepto="+result+"&gom="+window.top.$("#gom").val(),
                         success: function(r) {
-                            if(r!=="D:"){//!== significa si no son identicos tanto en tipo de variable como valor por seguridad y hacer mas resisten la validacion
-                              $.jGrowl("Cargando  Porfavor Espere......", { sticky: true });
-                              $.jGrowl("Concepto  "+r.concepto+"  Cargado Exitoso", { header: 'Acceso Exitoso' });
-                                  var delay = 1000;
-                                  setTimeout(function(){window.top.$("#sidebarObjV").load("InyectarVistasView.php  "+r.vistaHtml);}, delay);                      
-                            }
-                            else{
-                                  $.jGrowl("Error la Vista No Existe", { header: 'Error' });
-                            }
+                            if(r["mensajenotsesion"]===undefined){
+                               if(r!=="D:"){//!== significa si no son identicos tanto en tipo de variable como valor por seguridad y hacer mas resisten la validacion
+                                 $.jGrowl("Cargando  Porfavor Espere......", { sticky: true });
+                                 $.jGrowl("Concepto  "+r.concepto+"  Cargado Exitoso", { header: 'Acceso Exitoso' });
+                                     var delay = 1000;
+                                     setTimeout(function(){window.top.$("#sidebarObjV").load("InyectarVistasView.php  "+r.vistaHtml);}, delay);                      
+                               }
+                               else{
+                                     $.jGrowl("Error la Vista No Existe", { header: 'Error' });
+                               }
+                           }else{
+                               if(r["mensajenotsesion"]!==""){//diferentes tanto en tipo de variable y contenido para mayor seguridad 
+                                     $.jGrowl(r["mensajenotsesion"], { header: 'Como Te quedo El Ojo',sticky: true });
+                               }
+                           }
                         }    
     });
 });
