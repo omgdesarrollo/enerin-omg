@@ -52,12 +52,12 @@ function listarDatos()
     // var intervalFunc;
     // intervalFunc = setInterval(function(){console.log("jjajasd");conexionSocketC();},100);
     $.ajax({
-        url:"../Controller/CatalogoProcesosController.php?Op=listar",
+        url:"../Controller/CatalogoProduccionController.php?Op=listar",
         type:"GET",
         async:true,
         beforeSend:function()
         {
-            configuracionJgrowl.header = "Solicitud!";
+            configuracionJgrowl.header = "Solicitando Datos de Producción";
             configuracionJgrowl.theme = "themeG-wait";
             $.jGrowl("Solicitando Registros ......", configuracionJgrowl);
             // $("#jGrowl").attr("style","top:40px");
@@ -78,7 +78,7 @@ function listarDatos()
         {
             // jGrowl-message
             // $(".jGrowl-message").html("Ahora hay un error");
-            configuracionJgrowl.header = "Convirtiendo!";
+            configuracionJgrowl.header = "Solicitud!";
             configuracionJgrowl.theme = "themeG-success";
             $.jGrowl("Datos obtenidos ......", configuracionJgrowl);
             // clearInterval(intervalFunc);
@@ -120,7 +120,7 @@ function listarDatos()
 function listarUno(ID_insertado)
 {
     $.ajax({
-        url:'../Controller/CatalogoProcesosController.php?Op=listarUno',
+        url:'../Controller/CatalogoProduccionController.php?Op=listarUno',
         type:'GET',
         data:'ID_CONTRATO='+ID_insertado,
         success:function(datos)
@@ -170,7 +170,7 @@ function eliminarRegistro(id)
 {
     // val = true;
     $.ajax({
-        url:'../Controller/CatalogoProcesosController.php?Op=EliminarRegistro',
+        url:'../Controller/CatalogoProduccionController.php?Op=EliminarRegistro',
         type:'GET',
         data:'ID_CONTRATO='+id,
         async:false,
@@ -250,7 +250,7 @@ function eliminarRegistro(id)
 function insertarRegistro(datos)
 {
     $.ajax({
-        url:'../Controller/CatalogoProcesosController.php?Op=Guardar',
+        url:'../Controller/CatalogoProduccionController.php?Op=Guardar',
         type:'POST',
         data:'DATOS='+JSON.stringify(datos),
         success:function(exito)
@@ -293,7 +293,7 @@ function saveUpdateToDatabase(args)
     if( Object.keys(columnas).length != 0)
     {
         $.ajax({
-            url:"../Controller/CatalogoProcesosController.php?Op=Actualizar",
+            url:"../Controller/CatalogoProduccionController.php?Op=Actualizar",
             type:"POST",
             data:'TABLA=catalogo_reporte'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado)+"&REGION="+region_fiscalTemp,
             success:function(data)
@@ -359,7 +359,7 @@ function buscarPorRegionFiscal(cadena)
     datosDhtmlContrato=[];
     datosDhtmlUbicacion=[];
     $.ajax({
-        url:'../Controller/CatalogoProcesosController.php?Op=BuscarID',
+        url:'../Controller/CatalogoProduccionController.php?Op=BuscarID',
         type:'GET',
         data:'CADENA='+cadena,
         async:false,
@@ -390,7 +390,7 @@ function buscarRegionesFiscales()
 {
     datosDhtml=[];
     $.ajax({
-        url:'../Controller/CatalogoProcesosController.php?Op=BuscarRegionesFiscales',
+        url:'../Controller/CatalogoProduccionController.php?Op=BuscarRegionesFiscales',
         type:'GET',
         // async:false,
         success:function(datos)

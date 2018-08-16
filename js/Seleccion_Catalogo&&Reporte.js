@@ -2,12 +2,10 @@
 function seleccionConcepto()
 { 
 var jsonObj = {};
-var catalogo_reporte="";
- $.getJSON("../../js/Seleccion_Catalogo&&Reporte.json", function(json) {
-       catalogo_reporte=json.dataCatalogoReportes[0].detectarVistaCatalogo;
- });
+
+
            $.ajax({  
-                     url: "../Controller/CatalogoProcesosController.php?Op=ListarConceptos",  
+                     url: "../Controller/CatalogoProduccionController.php?Op=ListarConceptos",  
                      async:false,
                      success: function(r) {
                             $.each(r,function(index,value){
@@ -61,7 +59,7 @@ swal({
                                }
                            }else{
                                if(r["mensajenotsesion"]!==""){//diferentes tanto en tipo de variable y contenido para mayor seguridad 
-                                     $.jGrowl(r["mensajenotsesion"], {header: 'Como Te quedo El Ojo',sticky: true});
+                                     $.jGrowl(r["mensajenotsesion"], {header: 'Como Te quedo El Ojo',sticky: true });
                                }
                            }
                         }    

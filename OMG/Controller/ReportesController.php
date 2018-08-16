@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-require_once '../Model/CatalogoProcesosModel.php';
+require_once '../Model/CatalogoProduccionModel.php';
 require_once '../Model/ReporteModel.php';
 require_once '../util/Session.php';
 
 $Op=$_REQUEST["Op"];
-$model=new CatalogoProcesosModel();
+$model=new CatalogoProduccionModel();
 $modelReporte= new ReporteModel();
 
 

@@ -1,7 +1,7 @@
 <?php
 require_once '../ds/AccesoDB.php';
 
-class CatalogoProcesosDAO{
+class CatalogoProduccionDAO{
     
     
     public function listarCatalogo($CONTRATO)

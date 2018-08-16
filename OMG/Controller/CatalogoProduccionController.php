@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-require_once '../Model/CatalogoProcesosModel.php';
+require_once '../Model/CatalogoProduccionModel.php';
 // require_once '../Model/socketModel.php';
 require_once '../util/Session.php';
 
 $Op=$_REQUEST["Op"];
-$model = new CatalogoProcesosModel();
+$model = new CatalogoProduccionModel();
 // $modelSocket = new socketModel();
 
 // error_reporting(E_ALL);

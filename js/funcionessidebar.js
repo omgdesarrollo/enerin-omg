@@ -210,14 +210,17 @@ function loadDataSideBarOficiosDocumentacion()
                   switch(id){
                       case "catalogoProcesos":
                             if(window.top.$("#gom").val()!="")
-                                $("#sidebarObjV").load('InyectarVistasView.php #seleccionConceptosReportes'); 
+                                $("#sidebarObjV").load('InyectarVistasView.php #SeleccionCatalogoView'); 
                             else
                                $.jGrowl("Error", { header: 'Error' });
                       break;  
 
 
                       case "reportesProcesos":
-                          
+                           if(window.top.$("#gom").val()!="")
+                                $("#sidebarObjV").load('InyectarVistasView.php #SeleccionReporteView'); 
+                            else
+                               $.jGrowl("Error", { header: 'Error' });
 //                        $("#sidebarObjV").load('InyectarVistasView.php #reportes'); 
                       break;
 

@@ -84,7 +84,7 @@
 </div>
 
 <div id="catalogoProcesos">
-    <iframe src="CatalogoProcesosView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
+    <iframe src="CatalogoProduccionView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
 
 <div id="tareas">
@@ -114,11 +114,14 @@
 <div id="cambiarcontrato">
     <iframe src="SeleccionContratoModalView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
-<div id="reportes">
-    <iframe src="ReportesView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
+<div id="reporteProduccion">
+    <iframe src="ReportesProduccionView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
 
-<div id="seleccionConceptosReportes"> 
-     <iframe src="SeleccionConceptoReporteView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
+<div id="SeleccionCatalogoView"> 
+     <iframe src="SeleccionCatalogoView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
+</div>
+<div id="SeleccionReporteView"> 
+     <iframe src="SeleccionReporteView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
 
