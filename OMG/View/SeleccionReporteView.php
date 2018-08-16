@@ -28,6 +28,10 @@ $Usuario=  Session::getSesion("user");
 <body class="no-skin" onload="">
 <script>
 //var urls={detectarVistaCatalogo:"detectarVistaCatalogo",detectarVistaReportes:"detectarVistaReporte"};    
+var catalogo_reporte="";
+ $.getJSON("../../js/Seleccion_Catalogo&&Reporte.json", function(json) {
+       catalogo_reporte=json.dataCatalogoReportes[0].detectarVistaReporte;
+ });
 seleccionConcepto();
 
  
