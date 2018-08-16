@@ -66,8 +66,16 @@ class AutoridadRemitenteModel{
             
             $dao=new AutoridadRemitenteDAO();
             
-            $dao->insertarAutoridadRemitente($pojo->getClave_autoridad(),$pojo->getDescripcion(),$pojo->getDireccion(),$pojo->getTelefono(),
+            $exito= $dao->insertarAutoridadRemitente($pojo->getClave_autoridad(),$pojo->getDescripcion(),$pojo->getDireccion(),$pojo->getTelefono(),
                                                $pojo->getExtension(),$pojo->getEmail(),$pojo->getDireccion_web());
+            
+            if($exito[0] = 1)
+            {
+                $lista = $dao->listarAutoridadRemitente($exito['id_nuevo']);
+            }            
+            else
+                return $exito[0];
+            return $lista;
         } catch (Exception $ex) 
         {
             throw $ex;
@@ -94,13 +102,18 @@ class AutoridadRemitenteModel{
 
     
     
-    public function eliminar()
+    public function eliminar($pojo)
     {
         try{
-            $dao= new AutoridadRemitenteDAO();
-            $pojo= new AutoridadRemitentePojo();
-            $dao->eliminarAutoridadRemitente($pojo->getId_autoridad());
-        
+            $dao= new AutoridadRemitenteDAO();            
+            $validacion= $dao->verificarExistenciadeAutoridadenDocumentoEntrada($pojo->getId_autoridad());
+            
+            if($validacion==0)
+            {
+                $exito= $dao->eliminarAutoridadRemitente($pojo->getId_autoridad());
+            }
+            
+            return $exito;
             
         } catch (Exception $ex) 
         {

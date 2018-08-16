@@ -136,7 +136,7 @@ function construirGrid()
                             data:'TABLA=documentos'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
                             success:function(exito)
                             {
-                                actualizarDespuesdeEditaryEliminar();
+                                refresh();
                                 swal("","Actualizacion Exitosa!","success");
                                 setTimeout(function(){swal.close();},1000);
                             },

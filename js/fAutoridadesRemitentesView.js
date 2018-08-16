@@ -1,288 +1,382 @@
 
-
 $(function(){
     
-    $("#btn_guardar").click(function(){
-        
-        var CLAVE_AUTORIDAD=$("#CLAVE_AUTORIDAD").val();
-        var DESCRIPCION=$("#DESCRIPCION").val();
-        var DIRECCION=$ ("#DIRECCION").val();
-        var TELEFONO=$ ("#TELEFONO").val();
-        var EXTENSION=$ ("#EXTENSION").val();
-        var EMAIL=$ ("#EMAIL").val();
-        var DIRECCION_WEB=$ ("#DIRECCION_WEB").val();
-        
-        datos=[];
-        datos.push(CLAVE_AUTORIDAD);
-        datos.push(DESCRIPCION);
-        datos.push(DIRECCION);
-        datos.push(TELEFONO);
-        datos.push(EXTENSION);
-        datos.push(EMAIL);
-        datos.push(DIRECCION_WEB);
-        
-        correcto=validarCamposVacios(datos);
-        
-        if(correcto!==false)
-        {
-            saveToDatabaseDatosFormulario(datos);
-        } else {
-            
-        }
-        
+    $("#btn_guardar").click(function()
+    {
+       autoridadesDatos=new Object();
+       autoridadesDatos.clave_autoridad = $("#CLAVE_AUTORIDAD").val();
+       autoridadesDatos.descripcion = $("#DESCRIPCION").val();
+       autoridadesDatos.direccion = $("#DIRECCION").val();
+       autoridadesDatos.telefono = $("#TELEFONO").val();
+       autoridadesDatos.extension = $("#EXTENSION").val();
+       autoridadesDatos.email = $("#EMAIL").val();
+       autoridadesDatos.direccion_web = $("#DIRECCION_WEB").val();
+       
+       listo=
+            (
+            autoridadesDatos.clave_autoridad!=""?
+            autoridadesDatos.descripcion!=""?
+            autoridadesDatos.direccion!=""?
+            autoridadesDatos.telefono!=""?
+            autoridadesDatos.extension!=""?
+            autoridadesDatos.email!=""?
+            autoridadesDatos.direccion_web!=""?
+            true: false: false: false: false: false: false: false 
+            );          
+            listo ? insertarAutoridad(autoridadesDatos) : swalError("Completar campos");
+    });
+    
+    
+    $("#btn_limpiar").click(function()
+    {
+        $("#CLAVE_AUTORIDAD").val("");
+        $("#DESCRIPCION").val();
+        $("#DIRECCION").val();
+        $("#TELEFONO").val();
+        $("#EXTENSION").val();
+        $("#EMAIL").val();
+        $("#DIRECCION_WEB").val();
     });
     
 }); //CIERRA EL FUNCTION
 
 
-function validarCamposVacios(datos)
+function inicializarFiltros()
 {
-    correcto=false;
-    var expr = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
-    
-    if(datos[0] == ""){
-        $("#mensaje1").fadeIn();
-        $("#mensaje1").append("Ingrese la Autoridad Remitente");
-        $("#mensaje1").css("background-color","red");
-        $("#mensaje1").css("width", "35%");
-
-        correcto=false;
-    } else{
-        $("#mensaje1").fadeOut();
-        correcto=true;
-            if(datos[1] == ""){
-                $("#mensaje2").fadeIn();
-                $("#mensaje2").append("Ingrese la Descripcion");
-                $("#mensaje2").css("background-color","red");
-                $("#mensaje2").css("width", "35%");
-                correcto=false;
-            } else {
-                $("#mensaje2").fadeOut();
-                correcto=true;
-                    if(datos[2] == ""){
-                         $("#mensaje3").fadeIn();
-                         $("#mensaje3").append("Ingrese la Direccion");
-                         $("#mensaje3").css("background-color","red");
-                         $("#mensaje3").css("width", "35%");
-                         correcto=false;
-                    } else {
-                        $("#mensaje3").fadeOut();
-                        correcto=true;
-                            if(datos[3] == ""){
-                                $("#mensaje4").fadeIn();
-                                $("#mensaje4").append("Ingrese el Telefono");
-                                $("#mensaje4").css("background-color","red");
-                                $("#mensaje4").css("width", "35%");
-                                correcto=false;
-                            } else {
-                                $("#mensaje4").fadeOut();
-                                correcto=true;
-                                    if(datos[4] == ""){
-                                    $("#mensaje5").fadeIn();
-                                    $("#mensaje5").html("Ingrese la Extension");
-                                    $("#mensaje5").css("background-color","red");
-                                    $("#mensaje5").css("width", "35%");
-                                    correcto=false;
-                                    } else {
-                                        $("#mensaje5").fadeOut();
-                                        correcto=true;
-                                            if(datos[5] == "" || !expr.test(datos[5])){
-                                            $("#mensaje6").fadeIn();
-                                            $("#mensaje6").html("Ingrese el Email");
-                                            $("#mensaje6").css("background-color","red");
-                                            $("#mensaje6").css("width", "35%");
-                                            correcto=false;
-                                            } else {
-                                                $("#mensaje6").fadeOut();
-                                                correcto=true;
-                                                    if(datos[6] == ""){
-                                                    $("#mensaje7").fadeIn();
-                                                    $("#mensaje7").html("Ingrese la Direccion Web");
-                                                    $("#mensaje7").css("background-color","red");
-                                                    $("#mensaje7").css("width", "35%");
-                                                    correcto=false;
-                                                    } else {
-                                                        $("#mensaje7").fadeOut();
-                                                        correcto=true;
-                                                        
-                                                    }//septimo else
-                                                
-                                            }//sexto else
-                                        
-                                    } //quinto else
-                                    
-                            }//cuarto else
-                        
-                    }//tercer else
-                    
-                    
-            }//segundo else
-        
-    }//primer else
-    
-    return correcto;       
+    filtros =[
+            {id:"noneUno",type:"none"},
+            {id:"clave_autoridad",type:"text"},
+            {id:"descripcion",type:"text"},
+            {id:"direccion",type:"text"},
+            {id:"telefono",type:"text"},
+            {id:"extension",type:"text"},
+            {id:"email",type:"text"},
+            {id:"direccion_web",type:"text"},          
+            {name:"opcion",id:"opcion",type:"opcion"}
+            ];
 }
 
-function saveToDatabaseDatosFormulario(datos)
+
+function construirGrid()
 {
-    $.ajax({
-        url:'../Controller/AutoridadesRemitentesController.php?Op=Guardar',
-        type:'POST',
-        data:'CLAVE_AUTORIDAD='+datos[0]+'&DESCRIPCION='+datos[1]+'&DIRECCION='+datos[2]+'&TELEFONO='+datos[3]+'&EXTENSION='+datos[4]+'&EMAIL='+datos[5]+'&DIRECCION_WEB='+datos[6],
-        success:function(data)
+    jsGrid.fields.customControl = MyCControlField;
+    db={
+            loadData: function()
+            {
+                return DataGrid;
+            },
+            insertItem: function(item)
+            {
+                return item;
+            },
+        };
+    
+    $("#jsGrid").jsGrid({
+        onInit: function(args)
         {
-            swal("Guardado Exitoso!", "", "success");
-                 setTimeout(function()
-                 {
-                    swal.close();
-                    $("#create-item .close").click();
-                 },1000);
+            gridInstance=args.grid;
+            jsGrid.Grid.prototype.autoload=true;
+        },
+        onDataLoading: function(args)
+        {
+            loadBlockUi();
+        },
+        onDataLoaded:function(args)
+        {
+            $('.jsgrid-filter-row').removeAttr("style",'display:none');
+        },
+        onRefreshing: function(args) {
+        },
+        
+        width: "100%",
+        height: "300px",
+        autoload:true,
+        heading: true,
+        sorting: true,
+        editing: true,
+        paging: true,
+        controller:db,
+        pageLoading:false,
+        pageSize: 5,
+        pageButtonCount: 5,
+        updateOnResize: true,
+        confirmDeleting: true,
+        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+//        filtering:false,
+//        data: __datos,
+        fields: 
+        [
+            { name: "id_principal",visible:false},
+            { name:"no",title:"No",width:60},
+            { name: "clave_autoridad",title:"Clave de la Autoridad", type: "text", validate: "required" },
+            { name: "descripcion",title:"Descripcion", type: "text", validate: "required" },
+            { name: "direccion",title:"Direccion", type: "text", validate: "required" },
+            { name: "telefono",title:"Telefono", type: "text", validate: "required" },
+            { name: "extension",title:"Extension", type: "text", validate: "required" },
+            { name: "email",title:"Email", type: "text", validate: "required" },
+            { name: "direccion_web",title:"Direccion Web", type: "text", validate: "required" },
+            { name:"delete", title:"Opción", type:"customControl",sorting:""}
+        ],
+        onItemUpdated: function(args)
+        {
+            console.log(args);
+            columnas={};
+            id_afectado=args["item"]["id_principal"][0];
+            $.each(args["item"],function(index,value)
+            {
+                if(args["previousItem"][index] != value && value!="")
+                {
+                        if(index!="id_principal" && !value.includes("<button") && index!="delete")
+                        {
+                                columnas[index]=value;
+                        }
+                }
+            });
+            if(Object.keys(columnas).length!=0)
+            {
+                    $.ajax({
+                            url: '../Controller/GeneralController.php?Op=Actualizar',
+                            type:'GET',
+                            data:'TABLA=autoridad_remitente'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
+                            success:function(exito)
+                            {
+                                refresh();
+                                swal("","Actualizacion Exitosa!","success");
+                                setTimeout(function(){swal.close();},1000);
+                            },
+                            error:function()
+                            {
+                                swal("","Error en el servidor","error");
+                                setTimeout(function(){swal.close();},1500);
+                            }
+                    });
+            }
+        },
+        
+        onItemDeleting: function(args) 
+        {
+
         }
-    });
+        
+    });   
+}
+
+
+var MyCControlField = function(config)
+{
+    jsGrid.Field.call(this, config);
+};
+
+
+MyCControlField.prototype = new jsGrid.Field
+({
+        css: "date-field",
+        align: "center",
+        sorter: function(date1, date2)
+        {
+            console.log("haber cuando entra aqui");
+            console.log(date1);
+            console.log(date2);
+            // return 1;
+        },
+        itemTemplate: function(value,todo)
+        {
+//            console.log(value,todo);
+//            if(value[0]['existe_programa']!="0" || value[0]['existe_archivo']!=0)
+//                return "";
+//            else
+                return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button ',title:"Eliminar", type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
+        },
+        insertTemplate: function(value)
+        {
+        },
+        editTemplate: function(value)
+        {
+            val = "<input class='jsgrid-button jsgrid-update-button' type='button' title='Actualizar' onClick='aceptarEdicion()'>";
+            val += "<input class='jsgrid-button jsgrid-cancel-edit-button' type='button' title='Cancelar Edición' onClick='cancelarEdicion()'>";
+            return val;
+        },
+        insertValue: function()
+        {
+        },
+        editValue: function()
+        {
+        }
+});
+
+
+function cancelarEdicion()
+{
+    $("#jsGrid").jsGrid("cancelEdit");
+}
+
+function aceptarEdicion()
+{
+    gridInstance.updateItem();
 }
 
 
 function listarDatos()
 {
-    $.ajax
-    ({
-        url:'../Controller/AutoridadesRemitentesController.php?Op=Listar',
-        type:'GET',
-        beforeSend:function()
+//    alert("Entra a listarDatos");
+    __datos=[];
+    datosParamAjaxValues={};
+    datosParamAjaxValues["url"]="../Controller/AutoridadesRemitentesController.php?Op=Listar";
+    datosParamAjaxValues["type"]="GET";
+    datosParamAjaxValues["async"]=false;
+    
+    var variablefunciondatos=function obtenerDatosServer(data)
+    {
+        dataListado = data;
+        $.each(data,function(index,value)
         {
-            $('#loader').show();
-        },
-        success:function(datos)
-        {
-            construirTable(datos)
-        },
-        error:function(error)
-        {
-            $('#loader').hide();
-        }        
-        
-    });
+            __datos.push(reconstruir(value,index+1));
+        });
+    }
+    var listfunciones=[variablefunciondatos];
+    ajaxHibrido(datosParamAjaxValues,listfunciones);
+    DataGrid = __datos;
 }
 
-function construirTable(datos)
+
+function reconstruirTable(_datos)
 {
-    cargaTodo=0;
-    tempData="";
-    
-    $.each(datos,function(index,value){
+    __datos=[];
+    $.each(_datos,function(index,value)
+    {
+        __datos.push(reconstruir(value,index++));
         
-        tempData += construir(value,cargaTodo);
     });
-    
-    $("#datosGenerales").html(tempData);
-    $("#loader").hide();
+    construirGrid(__datos);
 }
 
-function construir(value,cargaTodo)
+function reconstruir(value,index)
 {
-    tempData="";
-    
-        if(cargaTodo==0)
-            tempData += "<tr id='registro_"+value.id_autoridad+"'>";
-            tempData += "<td class='celda' width='12%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'autoridad_remitente','clave_autoridad',"+value.id_autoridad+",'id_autoridad')\" \n\
-                                      onkeyup=\"detectarsihaycambio()\" >"+value.clave_autoridad+"</td>";
-            tempData += "<td class='celda' width='20%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'autoridad_remitente','descripcion',"+value.id_autoridad+",'id_autoridad')\" \n\
-                                      onkeyup=\"detectarsihaycambio()\" >"+value.descripcion+"</td>";
-            tempData += "<td class='celda' width='20%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'autoridad_remitente','direccion',"+value.id_autoridad+",'id_autoridad')\" \n\
-                                      onkeyup=\"detectarsihaycambio()\" >"+value.direccion+"</td>";
-            tempData += "<td class='celda' width='12%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'autoridad_remitente','telefono',"+value.id_autoridad+",'id_autoridad')\" \n\
-                                      onkeyup=\"detectarsihaycambio()\" >"+value.telefono+"</td>";
-            tempData += "<td class='celda' width='12%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'autoridad_remitente','extension',"+value.id_autoridad+",'id_autoridad')\" \n\
-                                      onkeyup=\"detectarsihaycambio()\" >"+value.extension+"</td>";
-            tempData += "<td class='celda' width='12%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'autoridad_remitente','email',"+value.id_autoridad+",'id_autoridad')\" \n\
-                                      onkeyup=\"detectarsihaycambio()\" >"+value.email+"</td>";
-            tempData += "<td class='celda' width='12%' contenteditable='true' onBlur=\"saveSingleToDatabase(this,'autoridad_remitente','direccion_web',"+value.id_autoridad+",'id_autoridad')\" \n\
-                                      onkeyup=\"detectarsihaycambio()\" >"+value.direccion_web+"</td>";
-        if(cargaTodo==0)
-            tempData += "</tr>"
-    
+    tempData=new Object();
+    ultimoNumeroGrid = index;
+    tempData["id_principal"]= [{'id_autoridad':value.id_autoridad}];
+    tempData["no"]= index;  
+    tempData["clave_autoridad"]=value.clave_autoridad;
+    tempData["descripcion"]=value.descripcion;
+    tempData["direccion"]=value.direccion;
+    tempData["telefono"]=value.telefono;
+    tempData["extension"]=value.extension;
+    tempData["email"]=value.email;
+    tempData["direccion_web"]=value.direccion_web;
+    tempData["delete"]= [{"existe_programa":value.existe_programa,"existe_archivo":value.archivo}];
     return tempData;
 }
 
 
-function detectarsihaycambio() {
-                    
-    si_hay_cambio=true;
-}
-
-function saveSingleToDatabase(Objeto,tabla,columna,id,contexto)
+function insertarAutoridad(autoridadesDatos)
 {
-    if(si_hay_cambio==true)
-    {
-        $("#btnrefrescar").prop("disabled",true);
-        $(Objeto).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
-        
-        saveOneToDatabase(Objeto.innerHTML,columna,tabla,id,contexto);
-        
-        si_hay_cambio=false;
-    }
-    
-}
-
-function saveOneToDatabase(valor,columna,tabla,id,contexto)
-{
-//    alert("Entro al save one");
-    $.ajax({
-        url:'../Controller/GeneralController.php?Op=ModificarColumna',
-        type:'POST',
-        data:'TABLA='+tabla+'&COLUMNA='+columna+'&VALOR='+valor+'&ID='+id+'&ID_CONTEXTO='+contexto,
-        success:function(modificado)
-        {
-            if(modificado==true)
-            {
-                reconstruirFila(id)
-            } else {
-                $('#loader').hide();
-                swal("","Ocurrio un error al modificar", "error");
-            }
-        },
-        error:function()
-        {
-            $('#loader').hide();
-            swal("","Ocurrio un error al modificar", "error");
-            $("#btnrefrescar").prop("disabled",false);
-        }
-        
-    });
-}
-
-function reconstruirFila(id)
-{
-    cargaUno=1;
-    tempData="";
-    
-    $.ajax({
-        url:'../Controller/AutoridadesRemitentesController.php?Op=listarAutoridad',
-        type:'POST',
-        data:'ID_AUTORIDAD='+id,
+//    alert("Entro a la funcion guardar");
+        $.ajax({
+        url:"../Controller/AutoridadesRemitentesController.php?Op=Guardar",
+        type:"POST",
+        data:"autoridadDatos="+JSON.stringify(autoridadesDatos),
+        async:false,
         success:function(datos)
         {
-            $.each(datos,function(index,value){
+//            alert("valor datos: "+datos);
+//            console.log(datos);
+            if(typeof(datos) == "object")
+            {
+                tempData;
+                swalSuccess("Autoridad Creada");                
+                $.each(datos,function(index,value)
+                {
+                   console.log("Este es el value: "+value); 
+                   tempData= reconstruir(value,ultimoNumeroGrid+1);  
+                });
+//                console.log(tempData);
                 
-                tempData = construir(value,cargaUno);
-                $('#registro_'+id).html(tempData);
-                $('#loader').hide();
-                swal("","Modificado","success");
-               setTimeout(function(){swal.close();},1000);
-               $("#btnrefrescar").prop("disabled",false);
+                $("#jsGrid").jsGrid("insertItem",tempData).done(function()
+                {
+                    $("#crea_documento .close ").click();
+                });
                 
-            });
+            } else{
+                if(datos==0)
+                {
+                    swalError("Error, No se pudo crear el Documento");                    
+                } else{
+                    swalInfo("Creado, Pero no listado, Actualice");
+                }                
+            }
             
         },
         error:function()
-        {
-            swal("","Error del servidor","error");
-            setTimeout(function(){swal.close();},1000);
-        }
-        
-    });
+            {
+                swalError("Error en el servidor");
+            }
+    }); 
 }
 
+
+function preguntarEliminar(data)
+{
+    // valor = true;
+    swal({
+        title: "",
+        text: "¿Eliminar Registro?",
+        type: "info",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        showLoaderOnConfirm: true,
+        confirmButtonText: "Eliminar",
+        cancelButtonText: "Cancelar",
+        },
+        function(confirmacion)
+        {
+            if(confirmacion)
+            {
+                eliminarRegistro(data);
+            }
+            else
+            {
+            }
+        });
+        // return eliminarRegistro(data.id_principal[0].id_contrato);
+}
+
+
+function eliminarRegistro(item)
+{
+//    alert("Entro a la funcion eliminar: "+item);
+                id_afectado=item['id_principal'][0];
+    
+            $.ajax({
+
+                url:"../Controller/DocumentosController.php?Op=Eliminar",
+                type:"POST",
+                data:"ID_DOCUMENTO="+JSON.stringify(id_afectado),
+                success:function(data)
+                {
+//                    alert("Entro al success "+data);
+                    if(data==false)
+                    {
+//                        swal("","El Documento esta validado o asignado a un Registro","error");
+//                        setTimeout(function(){swal.close();},1500);
+                        swalError("La Tarea tiene cargado un Programa");
+                    }else{
+                        if(data==true)
+                        {
+                            refresh();
+//                            actualizarDespuesdeEditaryEliminar();
+//                            swal("","Se elimino correctamente el Documento","success");
+//                            setTimeout(function(){swal.close();},1500);
+                            swalSuccess("Se elimino correctamente La Tarea");
+                        }
+                    }
+                },
+                error:function()        
+                {
+                    swal("","Error en el servidor","error");
+                    setTimeout(function(){swal.close();},1500);
+                }
+            });
+}
 
 
 function refresh(){
@@ -294,6 +388,21 @@ function refresh(){
 
 function loadSpinner(){
         myFunction();
+}
+
+function loadBlockUi()
+{
+    $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF"> Espere Por Favor</span>', css:
+    { 
+        border: 'none', 
+        padding: '15px', 
+        backgroundColor: '#000', 
+        '-webkit-border-radius': '10px', 
+        '-moz-border-radius': '10px', 
+        opacity: .5, 
+        color: '#fff' 
+    },overlayCSS: { backgroundColor: '#000000',opacity:0.1,cursor:'wait'} }); 
+    setTimeout($.unblockUI, 2000);
 }
 
 
