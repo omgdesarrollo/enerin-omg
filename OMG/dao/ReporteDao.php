@@ -20,28 +20,6 @@ class ReporteDao{
             $db=  AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
             return $lista;
-//            $hoy = new Datetime();
-//            $fsuma = new Datetime("0000-00-01");
-//            $al = strftime("%Y-%m-%d");
-//            $hoy = new Datetime($al)+1;
-//            echo json_encode($hoy);
-//            $nuevafecha = date('Y-m-j');
-            
-        
-//        echo json_encode($nuevafecha);
-              
-//            for($v=1;$v<500000;$v++){
-              
-//            $nuevafecha = strtotime ( '+1 day' , strtotime ( $nuevafecha ) ) ;
-//            $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
-            
-//        echo json_encode($nuevafecha);
-//            $al = strftime("%Y-%m-%d"); 
-//            $query="INSERT INTO `databaseomg`.`omg_reporte_produccion` (`ID_CONTRATO`, `OMGC1`, `OMGC2`, `OMGC3`, `OMGC4`, `OMGC5`, `OMGC6`, `OMGC7`, `OMGC8`, `OMGC9`, `OMGC10`, `OMGC11`, `OMGC12`, `OMGC13`, `OMGC14`, `OMGC15`, `OMGC16`, `OMGC17`, `OMGC18`) VALUES ('1','$nuevafecha', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2018-08-15 12:03:45')";
-//         $db=  AccesoDB::getInstancia();
-//            $db->executeQueryUpdate($query);
-//            
-//            }
           
             } catch (Exception $ex)
         {

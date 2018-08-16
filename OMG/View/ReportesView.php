@@ -1,10 +1,8 @@
 <?php
     session_start();
-    require_once '../util/Session.php';
-    
+    require_once '../util/Session.php';    
     $Usuario=  Session::getSesion("user");
 ?>
-
 <!doctype html>
 <html>
 <head>
@@ -53,10 +51,7 @@
     <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
     <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
-    <!--END JSGRID-->
-    
-    
-    
+    <!--END JSGRID--> 
     <!--INICIA LIBRERIA DE JBOSS-->
     <!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
     <!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
@@ -199,8 +194,7 @@
 	<div style="position: relative;width: 100%;height: 8px;"></div>
 	<fieldset><legend><b>Datos Ingresados Manualmente</b></legend>
 		<table>
-		<tr>
-			
+		<tr>	
 			<td><label style="cursor: pointer;padding-left: 3px;">Presion<pre><input name=""  type="text"   ></label></td>
                         <td><label style="cursor: pointer;padding-left: 3px;">Temperatura<pre><input name=""  type="text"  ></label></td>
 			<td><label style="cursor: pointer;padding-left: 3px;">Producción de Petróleo Medido Neto [bbl/día]<pre><input name=""  type="text"  ></label></td>
@@ -210,9 +204,7 @@
 		<tr>
 			
 		</tr>
-		<tr>
-			
-			
+		<tr>	
                         <td><label style="cursor: pointer;padding-left: 3px;">% H₂O <pre>  <input name=""  type="text"  ></label></td>
                         <td><label style="cursor: pointer;padding-left: 3px;">Producción de Gas Medido<pre><input name="pgmedido" type="text" ></label></td>
                         <td><label style="cursor: pointer;padding-left: 3px;">Poder Calorífico de Gas<pre><input name="podercalorifico"   type="text" ></label></td>
@@ -246,17 +238,14 @@
 <!--Final de Seccion Modal-->
     <!--Inicia para el spiner cargando-->
     <script src="../../js/loaderanimation.js" type="text/javascript"></script>
-    <!--Termina para el spiner cargando-->
-    
+    <!--Termina para el spiner cargando-->   
     <!--Bootstrap-->
     <script src="../../assets/probando/js/bootstrap.min.js"></script>
     <!--Para abrir alertas de aviso, success,warning, error-->
     <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
-
     <!--Para abrir alertas del encabezado-->
     <script src="../../assets/probando/js/ace-elements.min.js"></script>
     <script src="../../assets/probando/js/ace.min.js"></script>
- 
 </body>
 </html>
 

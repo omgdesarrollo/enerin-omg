@@ -7,13 +7,14 @@ class SeleccionConceptoReporteModel {
         public function  evaluarVista($value){       
         $modelCatalogoProcesosModel= new CatalogoProcesosModel();
         $vista=$modelCatalogoProcesosModel->obtenerVista_Concepto_Seleccionado($value) ;
-        
-////        echo "d".$vista;
-//        echo "d".json_encode($vista);
+        $vista["vistaHtml"]="";
         switch($vista["vista"]){
-            case "Catalogo_Produccion":
-                echo "e";
+            case "Catalogo_Produccion": 
+               $vista["vistaHtml"]="#catalogoProcesos";
+               return $vista;
             break;
+            default :
+                return "D:";
         }
         
     }

@@ -209,13 +209,16 @@ function loadDataSideBarOficiosDocumentacion()
         mySidebar.attachEvent("onSelect", function(id, value){
                   switch(id){
                       case "catalogoProcesos":
-                            $("#sidebarObjV").load('SeleccionConceptoReporteView.php'); 
+                            if(window.top.$("#gom").val()!="")
+                                $("#sidebarObjV").load('InyectarVistasView.php #seleccionConceptosReportes'); 
+                            else
+                               $.jGrowl("Error", { header: 'Error' });
                       break;  
 
 
                       case "reportesProcesos":
                           
-                        $("#sidebarObjV").load('InyectarVistasView.php #reportes'); 
+//                        $("#sidebarObjV").load('InyectarVistasView.php #reportes'); 
                       break;
 
                   }

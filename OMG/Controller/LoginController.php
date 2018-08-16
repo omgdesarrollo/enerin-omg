@@ -28,7 +28,8 @@ try {
 //    echo json_encode($recUser);
 //    echo "dato";
     Session::setSesion("user",$recUser["usuario"]);
-    Session::setSesion("userAcceso",$recUser["accesos"]);
+//    Session::setSesion("userAcceso",$recUser["accesos"]);
+    Session::setSesion("token",$recUser["tokenseguridad"]);
 //    Session::setSesion("contratoAcceso",$recUser["contrato"]);
     
 //  $jsonToken["tokenseguridad"]=$token;
