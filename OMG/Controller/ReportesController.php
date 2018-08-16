@@ -30,6 +30,13 @@ switch($Op)
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
     break;
+
+    case 'listarReportesporFecha':
+        $Lista= $model->listarReportesporFecha($_REQUEST['FECHA_INICIO'],$_REQUEST['FECHA_FINAL'],Session::getSesion("s_cont"));
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+        return $Lista;
+        break;
     
     case 'listarDatos':
         

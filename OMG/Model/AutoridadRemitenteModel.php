@@ -102,13 +102,18 @@ class AutoridadRemitenteModel{
 
     
     
-    public function eliminar()
+    public function eliminar($pojo)
     {
         try{
-            $dao= new AutoridadRemitenteDAO();
-            $pojo= new AutoridadRemitentePojo();
-            $dao->eliminarAutoridadRemitente($pojo->getId_autoridad());
-        
+            $dao= new AutoridadRemitenteDAO();            
+            $validacion= $dao->verificarExistenciadeAutoridadenDocumentoEntrada($pojo->getId_autoridad());
+            
+            if($validacion==0)
+            {
+                $exito= $dao->eliminarAutoridadRemitente($pojo->getId_autoridad());
+            }
+            
+            return $exito;
             
         } catch (Exception $ex) 
         {

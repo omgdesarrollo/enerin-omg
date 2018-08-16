@@ -43,5 +43,21 @@ require_once '../dao/ReporteDao.php';
               return  self::$v+=2;
 
     }
+    
+    public function listarReportesporFecha($FECHA_INICIO, $FECHA_FINAL, $CONTRATO)
+    {
+        try
+        {
+            $dao=new ReporteDao();
+            $rec= $dao->listarReportesporFecha($FECHA_INICIO, $FECHA_FINAL, $CONTRATO);
+            
+            return $rec;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 }
 ?>

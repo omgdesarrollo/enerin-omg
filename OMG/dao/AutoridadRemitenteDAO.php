@@ -113,18 +113,39 @@ class AutoridadRemitenteDAO{
         }
     }
     
-    public function eliminarAutoridadRemitente($id_autoridad)
+    public function eliminarAutoridadRemitente($ID_AUTORIDAD)
     {
         try{
-            $query="DELETE FROM autoridad_remitente WHERE id_autoridad=$id_autoridad";
+            $query="DELETE FROM autoridad_remitente WHERE id_autoridad=$ID_AUTORIDAD";
             
             $db=  AccesoDB::getInstancia();
-            $db->executeQueryUpdate($query);
+            $lista= $db->executeQueryUpdate($query);
             
+            return $lista;
         } catch (Exception $ex) 
         {
             throw $ex;
             return false;
+        }
+    }
+    
+    public function verificarExistenciadeAutoridadenDocumentoEntrada($ID_AUTORIDAD)
+    {
+        try
+        {
+            $query="SELECT COUNT(*) AS resultado
+                    FROM documento_entrada tbdocumento_entrada
+                    JOIN autoridad_remitente tbautoridad_remitente ON tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad
+                    WHERE tbautoridad_remitente.id_autoridad=$ID_AUTORIDAD";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista= $db->executeQueryUpdate($query);
+            
+            return $lista[0]['resultado'];
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
         }
     }
 }

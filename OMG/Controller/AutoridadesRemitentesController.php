@@ -76,7 +76,9 @@ switch ($Op) {
 
 	case 'Eliminar':
 		# code...
-                $Lista= $model->eliminar($_REQUEST['ID_AUTORIDAD']);
+                $pojo->setId_autoridad($_REQUEST['ID_AUTORIDAD']);
+                $Lista= $model->eliminar($pojo);
+                
                 header('Content-type: application/json; charset=utf-8'); 
                 echo json_encode($Lista);
                 return $Lista;
