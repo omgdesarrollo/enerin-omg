@@ -23,7 +23,12 @@ $Usuario=  Session::getSesion("user");
                  <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
                  <!--END LIBRERIA JGROWL-->
                  <script src="../../js/Seleccion_Catalogo&&Reporte.js" type="text/javascript"></script>
-                <!--<script src="../../js/tools.js" type="text/javascript"></script>-->                        		 
+                <!--<script src="../../js/tools.js" type="text/javascript"></script>-->           
+                 <style>
+                    .swal2-modal .swal2-validationerror{
+                        background-color:#d5e1ee;
+                    }
+                 </style>
         </head>
 <body class="no-skin" onload="">
 <script>
