@@ -26,6 +26,7 @@ class AccesoDB {
         if($this->cn == null) {
             try {
                 $this->cn = mysqli_connect($server,$user,$pass,$db);
+                mysqli_set_charset($this->cn,"utf8");
                 
                 if($this->cn) {
 //                    echo 'ok';

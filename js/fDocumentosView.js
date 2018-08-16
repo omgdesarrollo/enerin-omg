@@ -148,50 +148,19 @@ function construirGrid()
             }
         },
         
-        onItemDeleting: function(args) 
-        {
-            id_afectado= args['item']['id_principal'][0];
+        // onItemDeleting: function(args) 
+        // {
+        //     id_afectado= args['item']['id_principal'][0];
     
-<<<<<<< HEAD
         onItemDeleting: function(args) {
 //            console.log(args);
 //args.cancel=true;
             eliminarDocumento(args);
-=======
-            $.ajax({
-                url:"../Controller/DocumentosController.php?Op=Eliminar",
-                type:"POST",
-                data:"ID_DOCUMENTO="+JSON.stringify(id_afectado),
-                success:function(data)
-                {
-                    alert("Entro al success "+data);
-                    if(data==false)
-                    {
-                        swal("","El Documento esta validado o asignado a un Registro","error");
-                        setTimeout(function(){swal.close();},1500);
-                    }else{
-                        if(data==true)
-                        {
-                            actualizarDespuesdeEditaryEliminar();
-                            swal("","Se elimino correctamente el Documento","success");
-                            setTimeout(function(){swal.close();},1500);
-                        }
-                    }
-                },
-                error:function()        
-                {
-                    swal("","Error en el servidor","error");
-                    setTimeout(function(){swal.close();},1500);
-                }
-            });
->>>>>>> a567b2421112591fc69649001fea4003c1135a8c
 
         }
         
     });
-    
 }
-
 
 function listarDatos()
 {

@@ -1,3 +1,6 @@
+// var instanciaG;
+configuracionJgrowl = { pool:1, position:" bottom-right", sticky:true, corner:"0px",openDuration:"fast", closeDuration:"slow",theme:"",header:"",themeState:"", glue:"before"};
+// openDuration,closeDuration : slow, normal, fast
 
 function inicializarFiltros()
 {
@@ -43,184 +46,75 @@ function reconstruir(value,index)
 //    construirGrid(__datos);
 //}
 
-var db={};
-function construirGrid()
-{
-    jsGrid.fields.customControl = MyCControlField;
-        db=
-        {
-            loadData: function()
-            {
-                return DataGrid;
-            },
-            updateItem:function()
-            {
-                // console.log(a);
-            }
-        };
-    
-    $("#jsGrid").jsGrid({
-        onInit: function(args)
-        {
-            gridInstance=args.grid;
-            jsGrid.Grid.prototype.editButton=true;
-            jsGrid.Grid.prototype.autoload=true;
-        },
-        onDataLoading: function(args)
-        {
-            loadBlockUi();
-        },
-        onDataLoaded:function(args)
-        {
-            $('.jsgrid-filter-row').removeAttr("style",'display:none');
-        },
-        // rowClick:function(args)
-        // {
-            // console.log(args);
-            // argsGlobal=args;
-        // },
-        // sortStrategies:function(a)
-        // {
-        //     console.log("A",a);
-        // },
-        width: "100%",
-        height: "300px",
-        autoload:true,
-        heading: true,
-        sorting: true,
-        editing: true,
-        // selecting: false,
-    //    sorter:true,
-        paging: true,
-        controller:db,
-        pageLoading:false,
-        pageSize: 10,
-        pageButtonCount: 5,
-        updateOnResize: true,
-        confirmDeleting: false,
-        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
-        fields: [
-                { name:"id_principal", visible:false},
-                {name:"no", title:"No",width:60},
-                { name:"clave_contrato", title: "ID del Contrato o Asignación", type: "text", width: 150, validate: "required"},
-                { name:"region_fiscal", title: "Region Fiscal", type: "text", width: 150, validate: "required" },
-                { name:"ubicacion", title: "Ubicación del Punto de Medición", type: "text", width: 150, validate: "required" },
-                { name:"tag_patin", title: "Tag del Patin de Medición", type: "text", width: 130, validate: "required" },
-                { name:"tipo_medidor", title: "Tipo de Medidor", type: "text", width: 150, validate: "required" },    
-                { name:"tag_medidor", title: "Tag del Medidor", type: "text", width: 130, validate: "required" },
-                { name:"clasificacion", title: "Clasificación del Sistema de Medición", type: "text", width: 150, validate: "required" },
-                { name:"hidrocarburo", title: "Tipo de Hidrocarburo", type: "text", width: 150, validate: "required"},
-                { name:"delete", title:"Opción", type:"customControl",sorting:""},
-                // {type:"control",editButton: true}
-        ],
-        onItemDeleted:function(args)
-        {
-            // console.log("deleted");
-            // console.log(args);
-            // console.log(argsGlobal);
-            // // if(preguntarEliminar(args.item))
-            //     // args.cancel = true;
-        },
-        onItemDeleting:function(args)
-        {
-            // console.log("deleting");
-            // console.log(args);
-            // argsGlobal = args;
-            // preguntarEliminar(args.item);
-            // if(ifeliminar==0)
-            // {
-            //     args.cancel = true;
-            //     ifeliminar=1;
-            // }
-            // else
-            //     gridInstance.onItemDeleted(args);
-            // args.cancel = preguntarEliminar(args.item);
-                //  = true;
-            // console.log("jajaja");
-        }
-        ,
-        onItemUpdated:function(args)
-        {
-            console.log("aqui entro");
-            saveUpdateToDatabase(args);
-        },
-    });
-}
-
-var MyCControlField = function(config)
-{
-    jsGrid.Field.call(this, config);
-};
- 
-MyCControlField.prototype = new jsGrid.Field
-({
-        css: "date-field",
-        align: "center",
-        sorter: function(date1, date2)
-        {
-            console.log("haber cuando entra aqui");
-            console.log(date1);
-            console.log(date2);
-            // return 1;
-        },
-        itemTemplate: function(value,todo)
-        {
-            if(todo.delete=="no")
-                return "";
-            else
-                return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button ',title:"Eliminar", type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
-        },
-        insertTemplate: function(value)
-        {
-        },
-        editTemplate: function(value)
-        {
-            // return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button', type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
-            // return this._inputEditUpdate = $("<input>").attr( {class:'jsgrid-button jsgrid-update-button', type:'button',onClick:"alert();"});
-            // return this._inputEditUpdate = $("<input>").attr( {class:'jsgrid-button jsgrid-cancel-edit-button', type:'button',onClick:"alert();"});
-            val = "<input class='jsgrid-button jsgrid-update-button' type='button' title='Actualizar' onClick='aceptarEdicion()'>";
-            val += "<input class='jsgrid-button jsgrid-cancel-edit-button' type='button' title='Cancelar Edición' onClick='cancelarEdicion()'>";
-            return val;
-        },
-        insertValue: function()
-        {
-        },
-        editValue: function()
-        {
-        }
-});
-
-function cancelarEdicion()
-{
-    $("#jsGrid").jsGrid("cancelEdit");
-}
-
-function aceptarEdicion()
-{
-    gridInstance.updateItem();
-}
-
 function listarDatos()
 {
     __datos=[];
-    datosParamAjaxValues={};
-    datosParamAjaxValues["url"]="../Controller/CatalogoProcesosController.php?Op=listar";
-    datosParamAjaxValues["type"]="POST";
-    datosParamAjaxValues["async"]=true;
-    var variablefunciondatos=function obtenerDatosServer(data)
-    {
-        dataListado = data;
-        $.each(data,function (index,value)
+    // var intervalFunc;
+    // intervalFunc = setInterval(function(){console.log("jjajasd");conexionSocketC();},100);
+    $.ajax({
+        url:"../Controller/CatalogoProcesosController.php?Op=listar",
+        type:"GET",
+        async:true,
+        beforeSend:function()
         {
-            __datos.push( reconstruir(value,index+1) );
-        });
-        DataGrid = __datos;
-        gridInstance.loadData();
-    }
-    var listfunciones=[variablefunciondatos];
-    ajaxHibrido(datosParamAjaxValues,listfunciones);
-    
-    return 1;
+            configuracionJgrowl.header = "Solicitud!";
+            configuracionJgrowl.theme = "themeG-wait";
+            $.jGrowl("Solicitando Registros ......", configuracionJgrowl);
+            // $("#jGrowl").attr("style","top:40px");
+            // console.log(configuracionJgrowl.open);
+            // console.log(instanciaG);
+            // tempjGrowl = getInstancejGrowl();
+            // tempjGrowl.close();
+            // console.log(thisjGrowl.element[0]);
+            // var iterar = thisjGrowl.element[0].children[0];
+            // console.log(thisjGrowl.element.context.children);
+            // $.each(thisjGrowl.element[0].childNodes,function(index,value)
+            // {
+            //     console.log(index,value);
+            // });
+                                // $.jGrowl("Bienvenido", { header: 'Acceso Permitido' });
+        },
+        success:function(data)
+        {
+            // jGrowl-message
+            // $(".jGrowl-message").html("Ahora hay un error");
+            configuracionJgrowl.header = "Convirtiendo!";
+            configuracionJgrowl.theme = "themeG-success";
+            $.jGrowl("Datos obtenidos ......", configuracionJgrowl);
+            // clearInterval(intervalFunc);
+            dataListado = data;
+            $.each(data,function (index,value)
+            {
+                __datos.push( reconstruir(value,index+1) );
+            });
+            DataGrid = __datos;
+            gridInstance.loadData();
+        },
+        error:function(e)
+        {
+            configuracionJgrowl.header = "Error!";
+            configuracionJgrowl.theme = "themeG-error";
+            console.log(e);
+            $.jGrowl("Error en el servidor......", configuracionJgrowl);
+        }
+    });
+    // __datos=[];
+    // datosParamAjaxValues={};
+    // datosParamAjaxValues["url"]="../Controller/CatalogoProcesosController.php?Op=listar";
+    // datosParamAjaxValues["type"]="GET";
+    // datosParamAjaxValues["async"]=true;
+    // var variablefunciondatos=function obtenerDatosServer(data)
+    // {
+    //     dataListado = data;
+    //     $.each(data,function (index,value)
+    //     {
+    //         __datos.push( reconstruir(value,index+1) );
+    //     });
+    //     DataGrid = __datos;
+    //     gridInstance.loadData();
+    // }
+    // var listfunciones=[variablefunciondatos];
+    // ajaxHibrido(datosParamAjaxValues,listfunciones);
 }
 
 function listarUno(ID_insertado)
@@ -444,16 +338,16 @@ $(function(){
     });
 });
 
-function mostrarComboDHTML()
-{
-    index = new Object();
-    index["z-index"] = 2000;
-    index.visibility = $(".dhxcombolist_material").css("visibility");
-    index.width = $(".dhxcombolist_material").css("width");
-    index.top = $(".dhxcombolist_material").css("top");
-    index.left = $(".dhxcombolist_material").css("left");
-    $(".dhxcombolist_material").css(index);
-}
+// function mostrarComboDHTML()
+// {
+//     index = new Object();
+//     index["z-index"] = 2000;
+//     index.visibility = $(".dhxcombolist_material").css("visibility");
+//     index.width = $(".dhxcombolist_material").css("width");
+//     index.top = $(".dhxcombolist_material").css("top");
+//     index.left = $(".dhxcombolist_material").css("left");
+//     $(".dhxcombolist_material").css(index);
+// }
 
 function selectItemCombo(value,text)
 {
@@ -498,7 +392,7 @@ function buscarRegionesFiscales()
     $.ajax({
         url:'../Controller/CatalogoProcesosController.php?Op=BuscarRegionesFiscales',
         type:'GET',
-        async:false,
+        // async:false,
         success:function(datos)
         {
             $.each(datos,function(index,value)
@@ -548,20 +442,26 @@ function refresh()
 {
     listarDatos();
     gridInstance.loadData();
+    // enviarWB();
 }
 
-function loadBlockUi()
-{
-    $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF"> Espere Por Favor</span>', css:
-    { 
-        border: 'none', 
-        padding: '15px', 
-        backgroundColor: '#000', 
-        '-webkit-border-radius': '10px', 
-        '-moz-border-radius': '10px', 
-        opacity: .5, 
-        color: '#fff' 
-    },overlayCSS: { backgroundColor: '#000000',opacity:0.1,cursor:'wait'} }); 
-    setTimeout($.unblockUI, 2000);
-}
+// function loadBlockUi()
+// {
+//     $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF"> Espere Por Favor</span>', css:
+//     { 
+//         border: 'none', 
+//         padding: '15px', 
+//         backgroundColor: '#000', 
+//         '-webkit-border-radius': '10px', 
+//         '-moz-border-radius': '10px', 
+//         opacity: .5, 
+//         color: '#fff' 
+//     },overlayCSS: { backgroundColor: '#000000',opacity:0.1,cursor:'wait'} }); 
+//     setTimeout($.unblockUI, 2000);
+// }
 
+// function enviarWB()
+// {
+//     ws.send(JSON.stringify([{nombre:"jose"}]));
+//     ws.close();
+// }
