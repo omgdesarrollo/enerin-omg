@@ -17,12 +17,12 @@ jQuery(document).ready(function(){
                         var delay = 1000;
                         if(r.contrato=="si"){
 //                                                                 $.jGrowl("Tiene contrato Asginado", { sticky: true });
-                                $.jGrowl("Cargando  Porfavor Espere......", { sticky: true });
-                                $.jGrowl("Bienvenido", { header: 'Acceso Permitido' });
+                                $.jGrowl("Cargando  Porfavor Espere......", { sticky: true,theme:"themeG-wait" });
+                                $.jGrowl("Bienvenido", { header: 'Acceso Permitido',theme:"themeG-success" });
                                 var delay = 1000;
                                 setTimeout(function(){ window.location = 'principalmodulos.php'  }, delay);  
                         }else{
-                                $.jGrowl("Error no  tiene contrato asignado", { header: 'Error acceso contratos' });
+                                $.jGrowl("Error no  tiene contrato asignado", { header: 'Error acceso contratos',theme:"themeG-error" });
                                 var delay = 1000;
                         }
                     }else
@@ -34,7 +34,7 @@ jQuery(document).ready(function(){
                 else
                 {
                     if(r.success==false){
-                            $.jGrowl("Porfavor checa tu Usuario y Password", { header: 'Error de inicio de sesion' });
+                            $.jGrowl("Porfavor checa tu Usuario y Password", { header: 'Error de inicio de sesion',theme:"themeG-error" });
                             var delay = 1000;
                     }
                 }
