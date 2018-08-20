@@ -276,7 +276,8 @@ region_fiscal="";
 ubicacion="";
 clave_contrato="";
 tag_medidor="";
-    
+
+listarDatosReportes();
 buscarRegionesFiscales();    
   
 </script>
