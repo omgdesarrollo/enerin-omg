@@ -80,6 +80,16 @@
                 color: white;
                 font-weight: normal;
             }
+            
+            div.combo_info
+            {
+                color: gray;
+                font-size: 11px;
+                padding-bottom: 5px;
+                padding-left: 2px;
+                font-family: Tahoma;
+            }
+            
         .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                    
         .modal-lg{width: 100%;}
         .modal {z-index: 1050 !important;}/*En caso de que quieras modificar el modal*/
@@ -94,36 +104,7 @@
 		.inputhdr{font-weight: bold;padding-left: 5px;}
 
         </style>
-        
-<script>
-    DataGrid=[],dataListado=[];
-    
-    
 
-//var jBoxReportes = {
-//  jBox: null, 
-//  // EL HTML DE LOS DATOS
-//  html: {
-//    form:'',
-//    llenadoAutomaticamente:'',
-//    llenadoManualmente:''
-//  }, 
-//  title: {
-//    login: 'Login',
-//    register: 'Create new account',
-//    // TODO passwordRecovery: 'Recover password',
-//    // TODO passwordReset: 'Reset password'
-//  },
-//  textfieldTooltips: {
-//    loginUsername: '',
-//    loginPassword: '',
-//    registerUsername: '',
-//    registerEmail: '',
-//    registerPassword: ''
-//  } 
-//};
-  
-</script>
 </head>
 <!-- <body> -->
 <body class="no-skin" >
@@ -154,89 +135,152 @@
             </div>
 
             <div class="modal-body">
-	<form id="forma" name="forma" method="post" class="frmcss" style="width:100%; overflow: hidden;"  >
-	<fieldset>
-	<table>
-		<tr>
-		
-			 <td>Cumplimiento<label style="cursor: pointer;padding-left: 6px;"><div id="contrato"></div></label></td>
-		</tr>
-<!--		<tr>
-			<td>Orden</td>
-			<td><input type="text" id ="orden" value="" readonly class="inputhdr"> </td>
-		</tr>-->
-		<tr>
-			<!--<td></td>-->
-                    <td>Fecha<label style="cursor: pointer;padding-left: 6px;"><input type="date" name ="fecha"  id="fecha"  class="inputhdr" ></label> </td>
-		</tr>
-		</table>
-	</fieldset>
-	<div style="position: relative;width: 100%;height: 4px;"></div>	
-	
-<!--	<fieldset>
-		<table>
-			<tr><td><button id="deshabilitar" type="button" onclick="">Deshabilitar</button></td>
-			<td><button id="reporte" type="button" onclick="descargarReporte();">Generar reporte</button></td></tr>
-		</table>
-	</fieldset>-->
-	
-	<div style="position: relative;width: 100%;height: 10px;"></div>	
-	<fieldset><legend><b>Precargado a seleccionar</b></legend>
-		<table>
-		<tr>
-                    <td><label style="cursor: pointer;padding-left: 3px;">Region fiscal<div id="region_fiscal"></div></label></td>
-			<td><label style="cursor: pointer;padding-left: 3px;">Punto de medicion<div id="pm"></div></label></td>
-                        <td><label style="cursor: pointer;padding-left: 3px;">Tag del patin de medicion<div id="tpm"></div></label></td>
-                        <td><label style="cursor: pointer;padding-left: 3px;">Tipo de medidor<div id="tm"></div></label></td>
-                        <td><label style="cursor: pointer;padding-left: 3px;">Clasificacion de sistema de medicion<div id="clasificacionsistemamedicion"></div></label></td>
-                        <td><label style="cursor: pointer;padding-left: 3px;">Tipo de Hidrocarburo<div id="th"></div></label></td>
-		</tr>
-		</table>
-	</fieldset>
-	<div style="position: relative;width: 100%;height: 8px;"></div>
-	<fieldset><legend><b>Datos Ingresados Manualmente</b></legend>
-		<table>
-		<tr>	
-			<td><label style="cursor: pointer;padding-left: 3px;">Presion<pre><input name=""  type="text"   ></label></td>
-                        <td><label style="cursor: pointer;padding-left: 3px;">Temperatura<pre><input name=""  type="text"  ></label></td>
-			<td><label style="cursor: pointer;padding-left: 3px;">Producción de Petróleo Medido Neto [bbl/día]<pre><input name=""  type="text"  ></label></td>
-                        <td><label style="cursor: pointer;padding-left: 3px;">°API<pre>   <input name="" type="text" checked ></label></td>
-                        <td><label style="cursor: pointer;padding-left: 3px;">% S<pre>    <input name=""  type="text"  ></label></td>
-                </tr>
-		<tr>
-			
-		</tr>
-		<tr>	
-                        <td><label style="cursor: pointer;padding-left: 3px;">% H₂O <pre>  <input name=""  type="text"  ></label></td>
-                        <td><label style="cursor: pointer;padding-left: 3px;">Producción de Gas Medido<pre><input name="pgmedido" type="text" ></label></td>
-                        <td><label style="cursor: pointer;padding-left: 3px;">Poder Calorífico de Gas<pre><input name="podercalorifico"   type="text" ></label></td>
-                        <td><label style="cursor: pointer;padding-left: 3px;">Peso Molecular de Gas<pre><input name="pesomolecular"  type="text"  ></label></td>
-                        <td><label style="cursor: pointer;padding-left: 3px;">Energía de Gas<pre> <input name="egas"  type="text"  ></label></td>
-		</tr>
-		<tr>
-			
-			
-			
-                         
-                         <td><label style="cursor: pointer;padding-left: 3px;">Eventos<pre><input name="eventos"  type="text" ></label></td>
-                </tr>
-		
-                <tr>
-                 
-                    
-                </tr>
-		</table>
-	</fieldset>
-	<div style="position: relative;width: 100%;height: 5px;"></div>
-	</form>
+                <fieldset><legend><b>Seleccionar Datos</b></legend></fieldset>
                 
-                <div class="form-group" method="post">
-                    <button type="submit" id="btn_guardar_reportediario" class="btn crud-submit btn-info">Crear Reporte</button>
+                <div class='form-group'>
+                    <label class='control-label'>Fecha: </label>
+                    <!--<div id='INPUT_FECHA_NUEVOREGISTRO' style='witdth:100%'></div>-->
+                    <input type="date" id="INPUT_FECHA_NUEVOREGISTRO" class="form-control" style='width:21%'>
                 </div>
+                
+                <div class='form-group'>
+                    <label class='control-label'>Región Fiscal: </label>
+                    <div id='INPUT_REGIONFISCAL_NUEVOREGISTRO' style='witdth:100%'></div>                            
+                </div>
+                
+                <div class="form-group">
+                    <label class="control-label">ID de Contrato o Asignación: </label>
+                    <div id="INPUT_CONTRATO_NUEVOREGISTRO" style='width:43%'></div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="control-label">Ubicacion: </label>
+                    <div id="INPUT_UBICACION_NUEVOREGISTRO" style="witdth:100%;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Tag del Patín: </label>
+                    <div id="INPUT_TAGPATIN_NUEVOREGISTRO" style="witdth:100%;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Tag del Medidor: </label>
+                    <div id="INPUT_TAGMEDIDOR_NUEVOREGISTRO" style="witdth:100%;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Tipo de Medidor: </label>
+                    <div id="INPUT_TIPOMEDIDOR_NUEVOREGISTRO" style='width:43%'></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Clasificacion: </label>
+                    <div id="INPUT_CLASIFICACION_NUEVOREGISTRO" style='width:43%'></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Tipo de Hidrocarburo: </label>
+                    <div id="INPUT_HIDROCARBURO_NUEVOREGISTRO" style='width:43%'></div>
+                </div>
+                
+                    <!--<form id="forma" name="forma" method="post" class="frmcss" style="width:100%; overflow: hidden;"  >-->
+                    <fieldset>
+                        <table>
+<!--                        <tr>
+
+                                     <td>Cumplimiento<label style="cursor: pointer;padding-left: 6px;"><div id="contrato"></div></label></td>
+                            </tr>-->
+            <!--		<tr>
+                                    <td>Orden</td>
+                                    <td><input type="text" id ="orden" value="" readonly class="inputhdr"> </td>
+                            </tr>-->
+<!--                            <tr>
+                                    <td></td>
+                                <td>Fecha<label style="cursor: pointer;padding-left: 6px;"><input type="date" name ="fecha"  id="fecha"  class="inputhdr" ></label> </td>
+                            </tr>-->
+                        </table>
+                    </fieldset>
+                        
+                    <!--<div style="position: relative;width: 100%;height: 4px;"></div>-->	
+
+            <!--	<fieldset>
+                            <table>
+                                    <tr><td><button id="deshabilitar" type="button" onclick="">Deshabilitar</button></td>
+                                    <td><button id="reporte" type="button" onclick="descargarReporte();">Generar reporte</button></td></tr>
+                            </table>
+                    </fieldset>-->
+
+<!--                    <div style="position: relative;width: 100%;height: 10px;"></div>	
+                    <fieldset><legend><b>Precargado a seleccionar</b></legend>
+                            <table>
+                            <tr>
+                                <td><label style="cursor: pointer;padding-left: 3px;">Region fiscal<div id="region_fiscal"></div></label></td>
+                                    <td><label style="cursor: pointer;padding-left: 3px;">Punto de medicion<div id="pm"></div></label></td>
+                                    <td><label style="cursor: pointer;padding-left: 3px;">Tag del patin de medicion<div id="tpm"></div></label></td>
+                                    <td><label style="cursor: pointer;padding-left: 3px;">Tipo de medidor<div id="tm"></div></label></td>
+                                    <td><label style="cursor: pointer;padding-left: 3px;">Clasificacion de sistema de medicion<div id="clasificacionsistemamedicion"></div></label></td>
+                                    <td><label style="cursor: pointer;padding-left: 3px;">Tipo de Hidrocarburo<div id="th"></div></label></td>
+                            </tr>
+                            </table>
+                    </fieldset>-->
+                    <div style="position: relative;width: 100%;height: 8px;"></div>
+                    <fieldset><legend><b>Ingresar Datos</b></legend>
+                            <table>
+                            <tr>	
+                                <td><label style="cursor: pointer;padding-left: 3px;">Presion<pre><input id="DATO_MANUAL_1" name=""  type="text"   ></label></td>
+                                    <td><label style="cursor: pointer;padding-left: 3px;">Temperatura<pre><input id="DATO_MANUAL_2" name=""  type="text"  ></label></td>
+                                    <td><label style="cursor: pointer;padding-left: 3px;">Producción de Petróleo Medido Neto [bbl/día]<pre><input id="DATO_MANUAL_3" name=""  type="text"  ></label></td>
+                                    <td><label style="cursor: pointer;padding-left: 3px;">°API<pre>   <input id="DATO_MANUAL_4" name="" type="text" checked ></label></td>
+                                    <td><label style="cursor: pointer;padding-left: 3px;">% S<pre>    <input id="DATO_MANUAL_5" name=""  type="text"  ></label></td>
+                            </tr>
+                            <tr>
+
+                            </tr>
+                            <tr>	
+                                    <td><label style="cursor: pointer;padding-left: 3px;">% H₂O <pre>  <input id="DATO_MANUAL_6" name=""  type="text"  ></label></td>
+                                    <td><label style="cursor: pointer;padding-left: 3px;">Producción de Gas Medido<pre><input id="DATO_MANUAL_7" name="pgmedido" type="text" ></label></td>
+                                    <td><label style="cursor: pointer;padding-left: 3px;">Poder Calorífico de Gas<pre><input id="DATO_MANUAL_8" name="podercalorifico"   type="text" ></label></td>
+                                    <td><label style="cursor: pointer;padding-left: 3px;">Peso Molecular de Gas<pre><input id="DATO_MANUAL_9" name="pesomolecular"  type="text"  ></label></td>
+                                    <td><label style="cursor: pointer;padding-left: 3px;">Energía de Gas<pre> <input id="DATO_MANUAL_10" name="egas"  type="text"  ></label></td>
+                            </tr>
+                            <tr>
+
+
+
+
+                                     <td><label style="cursor: pointer;padding-left: 3px;">Eventos<pre><input id="DATO_MANUAL_11" name="eventos"  type="text" ></label></td>
+                            </tr>
+
+                            <tr>
+
+
+                            </tr>
+                            </table>
+                    </fieldset>
+                    <div style="position: relative;width: 100%;height: 5px;"></div>
+                    <!--</form>-->
+                
+                    <div class="form-group" method="post">
+                        <button type="submit" id="btn_guardar_reportediario" class="btn crud-submit btn-info">Crear Reporte</button>
+                    </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+DataGrid=[];
+dataListado=[];
+
+region_fiscal="";
+ubicacion="";
+clave_contrato="";
+tag_medidor="";
+    
+buscarRegionesFiscales();    
+  
+</script>
+
 <!--Final de Seccion Modal-->
     <!--Inicia para el spiner cargando-->
     <script src="../../js/loaderanimation.js" type="text/javascript"></script>

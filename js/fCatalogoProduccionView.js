@@ -4,18 +4,22 @@ configuracionJgrowl = { pool:1, position:" bottom-right", sticky:true, corner:"0
 
 function inicializarFiltros()
 {
-    filtros = [
-        {id:"noneUno", type:"none"},
-        {name:"ID del Contrato o Asignación",id:"clave_contrato",type:"text"},
-        {name:"Region Fiscal",id:"region_fiscal",type:"text"},
-        {name:"Ubicación del Punto de Medición",id:"ubicacion",type:"text"},
-        {name:"Tag del Patin de Medición",id:"tag_patin",type:"text"},
-        {name:"Tipo de Medidor",id:"tipo_medidor",type:"text"},
-        {name:"Tag del Medidor",id:"tag_medidor",type:"text"},
-        {name:"Clasificación del Sistema de Medición",id:"clasificacion",type:"text"},
-        {name:"Tipo de Hidrocarburo",id:"hidrocarburo",type:"text"},
-        {name:"opcion",id:"opcion",type:"opcion"}
-    ];
+    return new Promise((resolve,reject)=>
+    {
+        filtros = [
+            {id:"noneUno", type:"none"},
+            {name:"ID del Contrato o Asignación",id:"clave_contrato",type:"text"},
+            {name:"Region Fiscal",id:"region_fiscal",type:"text"},
+            {name:"Ubicación del Punto de Medición",id:"ubicacion",type:"text"},
+            {name:"Tag del Patin de Medición",id:"tag_patin",type:"text"},
+            {name:"Tipo de Medidor",id:"tipo_medidor",type:"text"},
+            {name:"Tag del Medidor",id:"tag_medidor",type:"text"},
+            {name:"Clasificación del Sistema de Medición",id:"clasificacion",type:"text"},
+            {name:"Tipo de Hidrocarburo",id:"hidrocarburo",type:"text"},
+            {name:"opcion",id:"opcion",type:"opcion"}
+        ];
+        resolve();
+    })
 }
 
 function reconstruir(value,index)
@@ -48,39 +52,47 @@ function reconstruir(value,index)
 
 function listarDatos()
 {
-    __datos=[];
-    // var intervalFunc;
-    // intervalFunc = setInterval(function(){console.log("jjajasd");conexionSocketC();},100);
-    $.ajax({
-        url:"../Controller/CatalogoProduccionController.php?Op=listar",
-        type:"GET",
-        async:true,
-        beforeSend:function()
-        {
-            growlWait("Solicitud","Solicitando Datos de Catalogo");
-        },
-        success:function(data)
-        {
-            if(typeof(data)=="object")
+    return new Promise((resolve,reject)=>{
+        __datos=[];
+        // var intervalFunc;
+        // intervalFunc = setInterval(function(){console.log("jjajasd");conexionSocketC();},100);
+        $.ajax({
+            url:"../Controller/CatalogoProduccionController.php?Op=listar",
+            type:"GET",
+            async:true,
+            beforeSend:function()
             {
-                growlSuccess("Solicitud","Registros obtenidos");
-                dataListado = data;
-                $.each(data,function (index,value)
+                growlWait("Solicitud","Solicitando Datos de Catalogo");
+            },
+            success:function(data)
+            {
+                if(typeof(data)=="object")
                 {
-                    __datos.push( reconstruir(value,index+1) );
-                });
-                DataGrid = __datos;
-                gridInstance.loadData();
+                    growlSuccess("Solicitud","Registros obtenidos");
+                    dataListado = data;
+                    $.each(data,function (index,value)
+                    {
+                        __datos.push( reconstruir(value,index+1) );
+                    });
+                    DataGrid = __datos;
+                    gridInstance.loadData();
+                    resolve("si");
+                }
+                else
+                {
+                    growlSuccess("Solicitud","No Existen Registros");
+                    reject("no");
+                }
+            },
+            error:function(e)
+            {
+                console.log(e);
+                growlError("Error","Error en el servidor");
+                reject("no");
             }
-            else
-                growlSuccess("Solicitud","No Existen Registros");
-        },
-        error:function(e)
-        {
-            console.log(e);
-            growlError("Error","Error en el servidor");
-        }
+        });
     });
+    
     // __datos=[];
     // datosParamAjaxValues={};
     // datosParamAjaxValues["url"]="../Controller/CatalogoProcesosController.php?Op=listar";
@@ -345,29 +357,25 @@ function componerDataGrid()//listo
 var RegionesFiscalesComboDhtml;
 var contratoComboDhtml;
 var ubicacionComboDhtml;
+
 $(function(){
     primera = true;
     RegionesFiscalesComboDhtml.attachEvent("onChange", function(value, text)
     {
+        if(primera)
+        {
             region_fiscal=text;
             selectItemCombo(value,text);
-    });
-
-    contratoComboDhtml.attachEvent("onChange", function(value, text)
-    {
-        clave_contrato=text;
+            primera = false;
+        }
+        else
+            primera = true;
     });
     
-    ubicacionComboDhtml.attachEvent("onChange", function(value, text)
-    {
-        ubicacion=text;
-    });
-
     RegionesFiscalesComboDhtml.attachEvent("onOpen", function()
     {
         this.DOMlist.style.zIndex = 2000;
     });
-
 });
 
 // function mostrarComboDHTML()
@@ -425,62 +433,50 @@ function buscarPorRegionFiscal(cadena)
 
 function buscarRegionesFiscales()
 {
-    datosDhtml=[];
-    $.ajax({
-        url:'../Controller/CatalogoProduccionController.php?Op=BuscarRegionesFiscales',
-        type:'GET',
-        // async:false,
-        success:function(datos)
-        {
-            $.each(datos,function(index,value)
+    return new Promise((resolve,reject)=>{
+        datosDhtmlRegiones=[];
+        $.ajax({
+            url:'../Controller/CatalogoProduccionController.php?Op=BuscarRegionesFiscales',
+            type:'GET',
+            // async:false,
+            success:function(datos)
             {
-                datosDhtml.push({value:index,text:value.region_fiscal});
-            });
-        },
-        error:function()
-        {
-            swalError("Error en el servidor");
-        }
-    });
-    RegionesFiscalesComboDhtml = new dhtmlXCombo({
-        parent: "INPUT_REGIONFISCAL_NUEVOREGISTRO",
-        width: 540,
-        filter: true,
-        name: "combo",
-        index:"2000",
-        items:datosDhtml,
-    });
-    contratoComboDhtml = new dhtmlXCombo({
-        parent: "INPUT_CONTRATO_NUEVOREGISTRO",
-        width: 540,
-        filter: true,
-        name: "combo",
-        items:[],
-    });
-    contratoComboDhtml.attachEvent("onOpen",function()
-    {
-        this.DOMlist.style.zIndex = 2000;
-    });
-    
-    ubicacionComboDhtml = new dhtmlXCombo({
-        parent: "INPUT_UBICACION_NUEVOREGISTRO",
-        width: 540,
-        filter: true,
-        name: "combo",
-        items:[],
-    });
-    ubicacionComboDhtml.attachEvent("onOpen",function()
-    {
-        this.DOMlist.style.zIndex = 2000;
+                $.each(datos,function(index,value)
+                {
+                    datosDhtmlRegiones.push({value:index,text:value.region_fiscal});
+                });
+                RegionesFiscalesComboDhtml.clearAll();
+                RegionesFiscalesComboDhtml.addOption(datosDhtmlRegiones);
+                resolve();
+            },
+            error:function()
+            {
+                swalError("Error en el servidor");
+                reject();
+            }
+        });
     });
 }
 
 function refresh()
 {
-    $("#tnrefrescar").attr("style","disable:true");
-    listarDatos();
-    gridInstance.loadData();
-    $("#tnrefrescar").attr("style","disable:false");
+    $("#btnrefrescar").attr("disabled",true);
+    promesaBuscarRegionesFiscales = buscarRegionesFiscales();
+    promesaBuscarRegionesFiscales.then((resolve)=>{
+        inicializarFiltros();
+        listarDatosPromesa = listarDatos();
+        listarDatosPromesa.then((result)=>
+        {
+            $("#btnrefrescar").removeAttr("disabled");
+        },(error)=>{
+            growlError("ERROR!","Error al intentar refrescar datos");
+            $("#btnrefrescar").removeAttr("disabled");
+        });
+    },(error)=>{
+        growlError("ERROR!","Error al intentar refrescar datos");
+        $("#btnrefrescar").removeAttr("disabled");
+    });
+
     // enviarWB();
 }
 

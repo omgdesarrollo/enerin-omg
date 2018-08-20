@@ -110,6 +110,7 @@ var myToolbar = myLayout.cells("a").attachToolbar({
 		});
 
 myToolbar.attachEvent("onClick", function(id){
+//    alert("este es el id: "+id);
     evaluarToolbarSeccionA(id);
 
 });
