@@ -9,6 +9,8 @@ class CatalogoProduccionModel{
         {
             $dao=new CatalogoProduccionDAO();
             $lista= $dao->listarCatalogo($CONTRATO);
+            if(sizeof($lista)==0)
+                $lista=0;
             return $lista;
         }catch (Exception $ex)
         {
@@ -38,23 +40,56 @@ class CatalogoProduccionModel{
             $dao=new CatalogoProduccionDAO();
             // INSERT INTO asignacion_tema_requisito(id_asignacion_tema_requisito,id_clausula,requisito,id_documento)"
             // . "VALUES($id_nuevo,$id_clausula,'$requisito',$id_documento)";
-            $bandera=0;
-            $query = "INSERT INTO catalogo_reporte(";
+            // $queryAsignaciones = ""
+            // $resultado = $dao->buscarID($DATOS["region_fiscal"],$CONTRATO);
+            // echo $resultado;
+            $bandera = 0;
+            // $bandera2 = 0;
+            $query = "INSERT INTO catalogo_produccion(";
             $queryC = "";
+            $clave_contrato = "";
+            $region_fiscal = "";
             $queryV = "VALUES(";
+            $ID_asignaciones = "";
+            $listado = $dao->buscarID($DATOS["region_fiscal"],$CONTRATO);
+            if( sizeof($listado)!=0 )
+            {
+                $query.= "id_asignacion,";
+                $queryV .= $listado[0]["id_asignacion"].",";
+            }
             foreach($DATOS as $key=>$value)
             {
-                if($bandera!=0)
+                if($key!="clave_contrato" && $key!="region_fiscal")
                 {
-                    $queryC.=",";
-                    $queryV.=",";
+                    if($bandera!=0)
+                    {
+                        $queryC.=",";
+                        $queryV.=",";
+                    }
+                    $queryC.=$key;
+                    $queryV.= "'$value'";
+                    $bandera=1;
                 }
-                $queryC.=$key;
-                $queryV.= "'$value'";
-                $bandera=1;
+                else
+                {
+                    if($key=="clave_contrato")
+                        $clave_contrato = $value;
+                    else
+                        $region_fiscal = $value;
+                }
             }
-
-            $query .= $queryC.",contrato) ".$queryV.",$CONTRATO)";
+            if( sizeof($listado)==0 )
+            {
+                // echo "INSERT INTO asignaciones_contrato(clave_contrato,region_fiscal,contrato) VALUES($clave_contrato,$region_fiscal,$CONTRATO)";
+                $ID_asignaciones = $dao->guardarCatalogo("INSERT INTO asignaciones_contrato(clave_contrato,region_fiscal,contrato) VALUES('$clave_contrato','$region_fiscal',$CONTRATO)");
+            }
+            if($ID_asignaciones!="")
+            {
+                $query .= $queryC.",id_asignacion) ".$queryV.",$ID_asignaciones)";
+            }
+            else
+                $query .= $queryC.") ".$queryV.")";
+            // echo $query;
             $exito = $dao->guardarCatalogo($query);
             return $exito;
         }catch (Exception $ex)
@@ -70,6 +105,8 @@ class CatalogoProduccionModel{
         {
             $dao = new CatalogoProduccionDAO();
             $lista = $dao->buscarID($CADENA,$CONTRATO);
+            if(sizeof($lista)==0)
+                $lista = 0;
             return $lista;
         }catch (Exception $ex)
         {
@@ -106,10 +143,10 @@ class CatalogoProduccionModel{
         }
     }
     
-    public function obtenerConceptos(){
+    public function obtenerConceptos($CUMPIMIENTO){
         try{
             $dao= new CatalogoProduccionDAO();
-            $lista=$dao->obtenerConceptos();
+            $lista=$dao->obtenerConceptos($CUMPIMIENTO);
 //            echo json_encode($lista);
             return $lista;
         } catch (Exception $ex) {
@@ -152,57 +189,76 @@ class CatalogoProduccionModel{
         }
     }
 
-    public function actualizar($TABLA,$COLUMNAS_VALOR,$ID_CONTEXTO,$REGION)
+    public function actualizar($COLUMNAS_VALOR,$ID_CONTEXTO)
     {
         try
         {
             $dao=new CatalogoProduccionDAO();
             $query="";
-            $query2= "";
             $index=0;
-            $index2=0;
             $update=-1;
-            $update2=-1;
+            $banderaTA = 0;
+            $id_catalogop = 0;
             foreach($COLUMNAS_VALOR as $key=>$value)
             {
-                if($key != "clave_contrato" && $key != "region_fiscal")
-                {
+                // if($key != "clave_contrato" && $key != "region_fiscal")
+                // {
                     if($index!=0)
                     {
                         $query .= " , ";
                     }
-                        $query .= $key ."= '".utf8_decode( $value )."'";
+                        // $query .= $key ."= '".utf8_decode( $value )."'";
+                        $query .= $key ."= '$value'";
                     $index++;
-                }
-                else
-                {
-                    if($index2!=0)
-                        $query2 .= " , ";
-                    $query2 .= "$key = '".utf8_decode( $value )."'";
-                    $index2=1;
-                }
+                    if($key == "clave_Contrato" || $key == "region_fiscal")
+                        $banderaTA++;
+                // }
+                // else
+                // {
+                //     if($index2!=0)
+                //         $query2 .= " , ";
+                //     $query2 .= "$key = '".utf8_decode( $value )."'";
+                //     $index2=1;
+                // }
             }
             if($query!="")
             {
-                $query = "UPDATE $TABLA SET ".$query;
+                $query = "UPDATE catalogo_produccion JOIN asignaciones_contrato ON catalogo_produccion.id_asignacion = asignaciones_contrato.id_asignacion  SET ".$query;
                 foreach($ID_CONTEXTO as $key=>$value)
                 {
-                    $query .= " WHERE $key = '".utf8_decode( $value )."'";
+                    // $query .= " WHERE $key = '".utf8_decode( $value )."'";
+                    $id_catalogop=$value;
+                    $query .= " WHERE $key = '$value'";
                 }
+                // echo $query."FIN";
                 $update = $dao->actualizar($query);
-                $update != 0 ? 1 : 0;
+                if($update != 0)
+                {
+                    if($banderaTA !=0)
+                    {
+                        $id_asignacion = $dao->buscarID_asignacionPorID_Catalogo($id_catalogop);
+                        $update = $dao->listarPorAsignacion($id_asignacion);
+                    }
+                    else
+                    $update = $dao->listarUno($id_catalogop);
+                }
+                else
+                    $update = -2 ;
+                // $update != 0 ? $banderaTA !=0 ? ($id_asignacion = $dao->buscarID_asignacionPorID_Catalogo($id_catalogop) , $update = $dao->listarPorAsignacion($id_asignacion) ) : ($update = $dao->listarUno($id_catalogop)) : $update = -2 ;
+                // $update = $id_asignacion != -2 ? $dao->listarPorAsignacion() : -2; //no pude obtener los actualizados ya que no se en que momento se ejecuta uno y en que el otro
             }
-            if($query2!="")
-            {
-                $query2 = "UPDATE $TABLA SET ".$query2;
-                $query2 .= " WHERE region_fiscal = '".utf8_decode( $REGION )."'";
-                // $update ? $dao->listarQuery(" SELECT * FROM  ");// listar todos lo que tengan la region fiscal
-                $update2 = $dao->actualizar($query2);
-                // if($update2!=0)?$dao->
-            }
+            // if($query2!="")
+            // {
+            //     $query2 = "UPDATE $TABLA SET ".$query2;
+            //     $query2 .= " WHERE region_fiscal = '".utf8_decode( $REGION )."'";
+            //     // $update ? $dao->listarQuery(" SELECT * FROM  ");// listar todos lo que tengan la region fiscal
+            //     $update2 = $dao->actualizar($query2);
+            //     // if($update2!=0)?$dao->
+            // }
             // echo $query;
             // echo $query2;
-            return $update==-1 ? $update2!=0 ? 2 : -2 : $update==0 ? $update2!=0 ? 3 : -3 : $update2!=0 ? 4 : -4;//2 se hizo el segundo, 3 no se hizo el primero solo el segundo, 4 se hizo todo
+            // return $update==-1 ? $update2!=0 ? 2 : -2 : $update==0 ? $update2!=0 ? 3 : -3 : $update2!=0 ? 4 : -4;//2 se hizo el segundo, 3 no se hizo el primero solo el segundo, 4 se hizo todo
+            return $update;
         }catch (Exception $ex)
         {
             throw $ex;

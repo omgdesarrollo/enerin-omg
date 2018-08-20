@@ -22,7 +22,7 @@ switch ($Op)
         // $val = 0/0;
         // var $a;
         // socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-        sleep(4);
+        sleep(2);
         // foreach($Lista as $key => $value)
         // {
         //     foreach($value as $k=>$val)
@@ -106,8 +106,8 @@ switch ($Op)
         header('Content-type: application/json; charset=utf-8'); 
         $COLUMNAS = json_decode($_REQUEST["COLUMNAS_VALOR"],true);
         $ID = json_decode($_REQUEST["ID_CONTEXTO"],true);
-        $REGION = $_REQUEST["REGION"];
-        $resultado = $model->actualizar($_REQUEST["TABLA"],$COLUMNAS,$ID,$REGION);
+        // $REGION = $_REQUEST["REGION"];
+        $resultado = $model->actualizar($COLUMNAS,$ID);
 
         // $resultado==1?$model->()
 
@@ -116,7 +116,7 @@ switch ($Op)
 
     case 'ListarConceptos':
         header('Content-type: application/json; charset=utf-8'); 
-        echo json_encode($model->obtenerConceptos());
+        echo json_encode($model->obtenerConceptos(Session::getSesion("s_cont")));
     break;
 
     default:

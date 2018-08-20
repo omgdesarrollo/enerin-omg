@@ -29,7 +29,7 @@ class ReporteDao{
         
     }
     
-    public function listarReportesporFecha($FECHA_INICIO,$FECHA_FINAL,$CONTRATO)
+    public function listarReportesporFecha2($FECHA_INICIO,$FECHA_FINAL,$CONTRATO)
     {
         try
         {

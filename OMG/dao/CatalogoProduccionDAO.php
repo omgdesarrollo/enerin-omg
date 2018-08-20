@@ -4,16 +4,18 @@ require_once '../ds/AccesoDB.php';
 class CatalogoProduccionDAO{
     
     
-    public function listarCatalogo($CONTRATO)
+    public function listarCatalogo($CONTRATO)//listo
     {
         try
         {
-            $query="SELECT tbcatalogo_reporte.id_contrato, tbcatalogo_reporte.clave_contrato, tbcatalogo_reporte.region_fiscal,
-            tbcatalogo_reporte.ubicacion, tbcatalogo_reporte.tag_patin, tbcatalogo_reporte.tipo_medidor,
-            tbcatalogo_reporte.tag_medidor, tbcatalogo_reporte.clasificacion,
-            tbcatalogo_reporte.hidrocarburo
-            FROM catalogo_reporte tbcatalogo_reporte
-            WHERE tbcatalogo_reporte.contrato = $CONTRATO";
+            $query="SELECT tbcatalogo_produccion.id_catalogoP, tbasignaciones_contrato.clave_contrato, tbasignaciones_contrato.region_fiscal,
+            tbcatalogo_produccion.ubicacion, tbcatalogo_produccion.tag_patin, tbcatalogo_produccion.tipo_medidor,
+            tbcatalogo_produccion.tag_medidor, tbcatalogo_produccion.clasificacion,
+            tbcatalogo_produccion.hidrocarburo
+            FROM catalogo_produccion tbcatalogo_produccion
+            JOIN asignaciones_contrato tbasignaciones_contrato
+            ON tbasignaciones_contrato.id_asignacion = tbcatalogo_produccion.id_asignacion
+            WHERE tbasignaciones_contrato.contrato = $CONTRATO";
             $db=  AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
             return $lista;
@@ -24,16 +26,42 @@ class CatalogoProduccionDAO{
         }
     }
 
+    
+
     public function listarUno($ID_CONTRATO)
     {
         try
         {
-            $query="SELECT tbcatalogo_reporte.id_contrato, tbcatalogo_reporte.clave_contrato, tbcatalogo_reporte.region_fiscal,
-            tbcatalogo_reporte.ubicacion, tbcatalogo_reporte.tag_patin, tbcatalogo_reporte.tipo_medidor,
-            tbcatalogo_reporte.tag_medidor, tbcatalogo_reporte.clasificacion,
-            tbcatalogo_reporte.hidrocarburo
-            FROM catalogo_reporte tbcatalogo_reporte
-            WHERE tbcatalogo_reporte.id_contrato = $ID_CONTRATO";
+            $query="SELECT tbcatalogo_produccion.id_catalogoP, tbasignaciones_contrato.clave_contrato, tbasignaciones_contrato.region_fiscal,
+            tbcatalogo_produccion.ubicacion, tbcatalogo_produccion.tag_patin, tbcatalogo_produccion.tipo_medidor,
+            tbcatalogo_produccion.tag_medidor, tbcatalogo_produccion.clasificacion,
+            tbcatalogo_produccion.hidrocarburo
+            FROM catalogo_produccion tbcatalogo_produccion
+            JOIN asignaciones_contrato tbasignaciones_contrato
+            ON tbasignaciones_contrato.id_asignacion = tbcatalogo_produccion.id_asignacion
+            WHERE tbcatalogo_produccion.id_catalogop = $ID_CONTRATO";
+            $db=  AccesoDB::getInstancia();
+            $lista = $db->executeQuery($query);
+            return $lista;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+    public function listarPorAsignacion($ID_ASIGNACION)
+    {
+        try
+        {
+            $query="SELECT tbcatalogo_produccion.id_catalogoP, tbasignaciones_contrato.clave_contrato, tbasignaciones_contrato.region_fiscal,
+            tbcatalogo_produccion.ubicacion, tbcatalogo_produccion.tag_patin, tbcatalogo_produccion.tipo_medidor,
+            tbcatalogo_produccion.tag_medidor, tbcatalogo_produccion.clasificacion,
+            tbcatalogo_produccion.hidrocarburo
+            FROM catalogo_produccion tbcatalogo_produccion
+            JOIN asignaciones_contrato tbasignaciones_contrato
+            ON tbasignaciones_contrato.id_asignacion = tbcatalogo_produccion.id_asignacion
+            WHERE tbcatalogo_produccion.id_asginacion = 1";
             $db=  AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
             return $lista;
@@ -62,16 +90,17 @@ class CatalogoProduccionDAO{
         }
     }
 
-    public function buscarID($CADENA,$CONTRATO)
+    public function buscarID($CADENA,$CONTRATO)//listo ahora si
     {
         try
         {
-            $query="SELECT DISTINCT tbcatalogo_reporte.clave_contrato, tbcatalogo_reporte.region_fiscal, tbcatalogo_reporte.ubicacion
-                    FROM catalogo_reporte tbcatalogo_reporte
-                    WHERE tbcatalogo_reporte.contrato = $CONTRATO AND tbcatalogo_reporte.region_fiscal LIKE '%$CADENA%'";
+            $query="SELECT DISTINCT tbasignaciones_contrato.id_asignacion, tbasignaciones_contrato.clave_contrato, tbasignaciones_contrato.region_fiscal, tbcatalogo_produccion.ubicacion
+            FROM asignaciones_contrato tbasignaciones_contrato
+            -- JOIN asignaciones_contrato tbasignaciones_contrato ON tbasignaciones_contrato.id_asignacion = tbcatalogo_produccion.id_asignacion
+            WHERE tbasignaciones_contrato.contrato = $CONTRATO AND lower(tbasignaciones_contrato.region_fiscal) = lower('$CADENA')";
             $db = AccesoDB::getInstancia();
-            $exito = $db->executeQuery($query);
-            return $exito;
+            $Lista = $db->executeQuery($query);
+            return $Lista;
         } catch (Exception $ex)
         {
             throw $ex;
@@ -79,13 +108,32 @@ class CatalogoProduccionDAO{
         }
     }
 
-    public function buscarRegionesFiscales($CONTRATO)
+    public function buscarID_asignacionPorID_Catalogo($ID_CATALOGOP)//listo
     {
         try
         {
-            $query="SELECT DISTINCT tbcatalogo_reporte.region_fiscal
-                    FROM catalogo_reporte tbcatalogo_reporte
-                    WHERE tbcatalogo_reporte.contrato = $CONTRATO";
+            $query="SELECT tbcatalogo_produccion.id_asignacion
+            FROM catalogo_produccion tbcatalogo_produccion
+            JOIN asignaciones_contrato tbasignaciones_contrato 
+            ON tbasignaciones_contrato.id_asignacion = tbcatalogo_produccion.id_asignacion
+            WHERE tbcatalogo_produccion.id_catalogop = $ID_CATALOGOP";
+            $db = AccesoDB::getInstancia();
+            $Lista = $db->executeQuery($query);
+            return $Lista;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+    public function buscarRegionesFiscales($CONTRATO)//listo
+    {
+        try
+        {
+            $query="SELECT tbasignaciones_contrato.region_fiscal
+                    FROM asignaciones_contrato tbasignaciones_contrato
+                    WHERE tbasignaciones_contrato.contrato = $CONTRATO";
             $db = AccesoDB::getInstancia();
             $exito = $db->executeQuery($query);
             return $exito;
@@ -101,8 +149,10 @@ class CatalogoProduccionDAO{
         try
         {
             $query="SELECT COUNT(*) AS resultado
-                    FROM catalogo_reporte tbcatalogo_reporte
-                    WHERE tbcatalogo_reporte.tag_medidor = '$TAG_MEDIDOR' AND tbcatalogo_reporte.contrato = $CONTRATO";
+                    FROM catalogo_produccion tbcatalogo_produccion
+                    JOIN asignaciones_contrato tbasignaciones_contrato ON
+                    tbasignaciones_contrato.id_asignacion = tbcatalogo_produccion.id_asignacion
+                    WHERE lower(tbcatalogo_produccion.tag_medidor) = lower('$TAG_MEDIDOR') AND tbasignaciones_contrato.contrato = $CONTRATO";
             $db = AccesoDB::getInstancia();
             $exito = $db->executeQuery($query);
             return $exito[0]["resultado"];
@@ -117,7 +167,7 @@ class CatalogoProduccionDAO{
     {
         try
         {
-            $query="SELECT COUNT(*) AS resultado FROM omg_reporte_produccion tbomg_reporte WHERE tbomg_reporte.id_contrato = $ID_CONTRATO";
+            $query="SELECT COUNT(*) AS resultado FROM omg_reporte_produccion tbomg_reporte WHERE tbomg_reporte.id_catalogop = $ID_CONTRATO";
             $db = AccesoDB::getInstancia();
             $exito = $db->executeQuery($query);
             return $exito[0]["resultado"];
@@ -128,10 +178,10 @@ class CatalogoProduccionDAO{
         }
     }
     
-    public function obtenerConceptos(){
+    public function obtenerConceptos($CUMPLIMIENTO){
         try{
             $query="SELECT tbconceptos_reportes.id_concepto_reportes,"
-                  ."tbconceptos_reportes.concepto,tbconceptos_reportes.vista FROM concepto_reportes tbconceptos_reportes;";
+                  ."tbconceptos_reportes.concepto,tbconceptos_reportes.vista FROM concepto_reportes tbconceptos_reportes WHERE tbconceptos_reportes.cumplimientos=$CUMPLIMIENTO";
             $db = AccesoDB::getInstancia();
             $lista= $db->executeQuery($query);
 //            echo utf8_encode($lista);
@@ -154,16 +204,12 @@ class CatalogoProduccionDAO{
 //            return -1;
         }
     }
-    
-    
-    
-    
 
     public function eliminarRegistro($ID_CONTRATO)
     {
         try
         {
-            $query="DELETE FROM catalogo_reporte WHERE id_contrato = $ID_CONTRATO";
+            $query="DELETE FROM catalogo_produccion WHERE id_catalogop = $ID_CONTRATO";
             $db = AccesoDB::getInstancia();
             $exito = $db->executeUpdateRowsAfected($query);
             return $exito;
@@ -187,6 +233,8 @@ class CatalogoProduccionDAO{
             return -1;
         }
     }
+
+    
 
 }
 

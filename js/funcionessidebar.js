@@ -199,13 +199,12 @@ function loadDataSideBarOficiosDocumentacion()
         width: 350,
         items: [
           {id: "catalogoProcesos", text: "Catalogo", icon: "catalogoProcesos.png"},
-          {id: "reportesProcesos", text: "Reportes", icon: "reportesProcesos.png"}
+          {id: "reportesProcesos", text: "Reportes", icon: "reportesProcesos.png"},
+            {id: "generadorReporte", text: "Generador de Reporte", icon: "reportesProcesos.png"}
           
             
         ]
-      });
-
-                                 
+      });                         
         mySidebar.attachEvent("onSelect", function(id, value){
                   switch(id){
                       case "catalogoProcesos":
@@ -214,8 +213,6 @@ function loadDataSideBarOficiosDocumentacion()
                             else
                                $.jGrowl("Error", { header: 'Error' });
                       break;  
-
-
                       case "reportesProcesos":
                            if(window.top.$("#gom").val()!="")
                                 $("#sidebarObjV").load('InyectarVistasView.php #SeleccionReporteView'); 
@@ -223,7 +220,13 @@ function loadDataSideBarOficiosDocumentacion()
                                $.jGrowl("Error", { header: 'Error' });
 //                        $("#sidebarObjV").load('InyectarVistasView.php #reportes'); 
                       break;
-
+                       case "generadorReporte":
+                           if(window.top.$("#gom").val()!="")
+                                $("#sidebarObjV").load('InyectarVistasView.php #generadorReporte'); 
+                            else
+                               $.jGrowl("Error", { header: 'Error' });
+//                        $("#sidebarObjV").load('InyectarVistasView.php #reportes'); 
+                      break;
                   }
       });
     }
