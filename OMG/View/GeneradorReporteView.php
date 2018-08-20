@@ -155,7 +155,7 @@ $Usuario=  Session::getSesion("user");
 $(function()
 {    
     construirGridGenerador();
-    
+
     $.datepicker.setDefaults($.datepicker.regional["es"]);
         $("#fechaInicio").datepicker({
             dateFormat: 'yy/mm/dd',
