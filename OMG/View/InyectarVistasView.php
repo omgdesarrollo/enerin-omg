@@ -118,10 +118,18 @@
     <iframe src="ReportesProduccionView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
 
+<div id="generadorReporte">
+    <iframe src="GeneradorReporteView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
+</div>
+
 <div id="SeleccionCatalogoView"> 
      <iframe src="SeleccionCatalogoView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
 <div id="SeleccionReporteView"> 
      <iframe src="SeleccionReporteView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
+<div id="SeleccionGeneradorReporteView"> 
+     <iframe src="GeneradorReporteView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
+</div>
+
 

@@ -116,7 +116,7 @@ switch ($Op)
 
     case 'ListarConceptos':
         header('Content-type: application/json; charset=utf-8'); 
-        echo json_encode($model->obtenerConceptos());
+        echo json_encode($model->obtenerConceptos(Session::getSesion("s_cont")));
     break;
 
     default:

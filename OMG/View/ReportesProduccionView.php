@@ -52,6 +52,8 @@
     <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
     <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
     <!--END JSGRID--> 
+    
+    
     <!--INICIA LIBRERIA DE JBOSS-->
     <!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
     <!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
