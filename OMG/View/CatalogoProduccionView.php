@@ -272,12 +272,72 @@ $Usuario=  Session::getSesion("user");
         construirGridPromise = new Promise((resolve,reject)=>
         {
             construirGrid();
+            RegionesFiscalesComboDhtml = new dhtmlXCombo({
+                parent: "INPUT_REGIONFISCAL_NUEVOREGISTRO",
+                width: 540,
+                filter: true,
+                name: "combo",
+                index:"2000",
+                items:[],
+            });
+
+            contratoComboDhtml = new dhtmlXCombo({
+                parent: "INPUT_CONTRATO_NUEVOREGISTRO",
+                width: 540,
+                filter: true,
+                name: "combo",
+                items:[],
+            });
+
+            ubicacionComboDhtml = new dhtmlXCombo({
+                parent: "INPUT_UBICACION_NUEVOREGISTRO",
+                width: 540,
+                filter: true,
+                name: "combo",
+                items:[],
+            });
+
+            RegionesFiscalesComboDhtml.attachEvent("onChange", function(value, text)
+            {
+                    region_fiscal=text;
+                    selectItemCombo(value,text);
+            });
+            
+            contratoComboDhtml.attachEvent("onChange", function(value, text)
+            {
+                clave_contrato=text;
+            });
+            
+            ubicacionComboDhtml.attachEvent("onChange", function(value, text)
+            {
+                ubicacion=text;
+            });
+
+            contratoComboDhtml.attachEvent("onOpen",function()
+            {
+                this.DOMlist.style.zIndex = 2000;
+            });
+
+            ubicacionComboDhtml.attachEvent("onOpen",function()
+            {
+                this.DOMlist.style.zIndex = 2000;
+            });
+
+            RegionesFiscalesComboDhtml.attachEvent("onOpen", function()
+            {
+                this.DOMlist.style.zIndex = 2000;
+            });
+            buscarRegionesFiscales();
             resolve();
         });
     // ).done(function(dataListarDatos, dataConstruirGrid)
     // {//IMPORTANTE NO BORRAR NO PREGUNTEN SOLO NO BORRAR 'FVAZCONCELOS' :D
+
         construirGridPromise.then ((result)=>{
-            listarDatos();
+            proms = listarDatos();
+            proms.then((result2)=>{
+                console.log(result2);
+            });
             iniciar = new Promise( (resolve,reject)=>
             {
                 inicializarFiltros();
@@ -287,8 +347,9 @@ $Usuario=  Session::getSesion("user");
             {
                 construirFiltros();
             });
+        },(error)=>{
+            growlError("Error!","Error al construir la vista, recargue la página");
         });
-        buscarRegionesFiscales();
         // construirFiltros();
         // console.log(dataListado);
     // });
@@ -356,9 +417,10 @@ $Usuario=  Session::getSesion("user");
             {
                 if(existe==0)
                 {
-                    configuracionJgrowl.header = "Verificación";
-                    configuracionJgrowl.theme = "themeG-success";
-                    $.jGrowl("Tag del Medidor correcto", configuracionJgrowl);
+                    // configuracionJgrowl.header = "Verificación";
+                    // configuracionJgrowl.theme = "themeG-success";
+                    // $.jGrowl("Tag del Medidor correcto", configuracionJgrowl);
+                    growlSuccess("Verificación","Tag del Medidor correcto");
                     tag_medidor = val;
                 }
                 else
@@ -370,9 +432,10 @@ $Usuario=  Session::getSesion("user");
             },
             error:function()
             {
-                configuracionJgrowl.header = "Error en el servidor";
-                configuracionJgrowl.theme = "themeG-error";
-                $.jGrowl("No se pudo verificar el Tag del Medidor", configuracionJgrowl);
+                // configuracionJgrowl.header = "Error en el servidor";
+                // configuracionJgrowl.theme = "themeG-error";
+                // $.jGrowl("No se pudo verificar el Tag del Medidor", configuracionJgrowl);
+                growlError("Error en el servidor","No se pudo verificar el Tag del Medidor");
                 tag_medidor = "";
             }
         });
