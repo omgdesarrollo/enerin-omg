@@ -181,7 +181,7 @@ class CatalogoProduccionDAO{
     public function obtenerConceptos($CUMPLIMIENTO){
         try{
             $query="SELECT tbconceptos_reportes.id_concepto_reportes,"
-                  ."tbconceptos_reportes.concepto,tbconceptos_reportes.vista FROM concepto_reportes tbconceptos_reportes WHERE tbconceptos_reportes.catalogo=$CUMPLIMIENTO";
+                  ."tbconceptos_reportes.concepto,tbconceptos_reportes.vista FROM concepto_reportes tbconceptos_reportes WHERE tbconceptos_reportes.cumplimientos=$CUMPLIMIENTO";
             $db = AccesoDB::getInstancia();
             $lista= $db->executeQuery($query);
 //            echo utf8_encode($lista);
