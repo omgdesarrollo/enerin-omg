@@ -19,10 +19,8 @@ switch ($Op){
     break;
 
     case 'GenerarArbol':
-        
         $Lista=$model->generarDatosArbol($_REQUEST['ID_ASIGNACION']);
         // Session::setSesion("generarDatosArbol",$Lista);
-        
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
         

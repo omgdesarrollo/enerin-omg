@@ -143,10 +143,10 @@ class CatalogoProduccionModel{
         }
     }
     
-    public function obtenerConceptos(){
+    public function obtenerConceptos($CUMPIMIENTO){
         try{
             $dao= new CatalogoProduccionDAO();
-            $lista=$dao->obtenerConceptos();
+            $lista=$dao->obtenerConceptos($CUMPIMIENTO);
 //            echo json_encode($lista);
             return $lista;
         } catch (Exception $ex) {

@@ -11,7 +11,7 @@ switch ($Op)
    
     case "detectarVistaCatalogo":
         $lista;
-        if(Session::getSesion("token")==$_REQUEST["gom"]){
+        if(Session::getSesion("token")===$_REQUEST["gom"]){
             $lista=$modelConceptoReporteVistas->evaluarVista($_REQUEST["idConcepto"],"catalogo");
              
         } else {

@@ -28,7 +28,9 @@ if (Session:: existeSesion("user")){
         <script src="../../js/tooltip.js" type="text/javascript"></script>
         <script src="../../angular/angular.min.js" type="text/javascript"></script>
        
-        
+        <style>
+            
+        </style>
         
         
     </head>
