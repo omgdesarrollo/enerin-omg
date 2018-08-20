@@ -281,25 +281,45 @@ function saveUpdateToDatabase(args)
             url:"../Controller/CatalogoProduccionController.php?Op=Actualizar",
             type:"POST",
             data:'TABLA=catalogo_reporte'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado)+"&REGION="+region_fiscalTemp,
+            beforeSend:function()
+            {
+                growlWait("Actualización","Espere...");
+            },
             success:function(data)
             {
                 console.log("resultado actualizacion: ",data);
-                if(data > 0 )
+                if(typeof(data)=="object")
                 {
-                    swalSuccess("Actualizacion Exitosa!");
-                    refresh();
+                    growlSuccess("Actulización","Se actualizaron los campos");
+                    $.each(data,function(index,value){
+                        componerDataListado(value);
+                    });
                 }
                 else
-                    swalError("No se puedo actualizar");
-                // setTimeout(function(){swal.close();},1000);
+                    growlError("Actualización","No se pudo actualizar");
             },
             error:function()
             {
-                // swal("","Error en el servidor","error");
-                // setTimeout(function(){swal.close();},1500);
+                growlError("Error","Error del servidor");
             }
         });
     }
+}
+
+function componerDataListado(value)// id de la vista documento
+{
+        dataListado;
+        id_vista = value.id_documento_entrada;
+        id_string = "id_documento_entrada"
+        $.each(dataListado,function(indexList,valueList)
+        {
+            $.each(valueList,function(ind,val)
+            {
+                if(ind == id_string)
+                        ( val.indexOf(id_vista) != -1 ) ? ( dataListado[indexList]=value ):  console.log();
+            });
+        });
+        // console.log(dataListado);
 }
 
 var RegionesFiscalesComboDhtml;
