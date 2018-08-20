@@ -130,12 +130,15 @@ div.jGrowl div.jGrowl-closer {
 
 /** Hide jGrowl when printing **/
 @media print {
-	div.jGrowl {
-		display: 			none;
+	
+	div.jGrowl
+	{
+		display:	none;
+		/* overflow:	-webkit-paged-y; */
 	}
 }
 
-div.jGrowl
+			div.jGrowl
             {
                 font-family: 			"Helvetica Neue", "Helvetica";
 				font-size: 				13px;
@@ -171,6 +174,6 @@ div.jGrowl
             }
             #jGrowl
             {
-                top:40px;
-
+				/* top:40px; */
+				/* overflow: -webkit-paged-y; */
             }

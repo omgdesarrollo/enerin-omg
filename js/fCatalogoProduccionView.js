@@ -1,5 +1,5 @@
 // var instanciaG;
-configuracionJgrowl = { pool:1, position:" bottom-right", sticky:true, corner:"0px",openDuration:"fast", closeDuration:"slow",theme:"",header:"",themeState:"", glue:"before"};
+configuracionJgrowl = { pool:0, position:" bottom-right", sticky:true, corner:"0px",openDuration:"fast", closeDuration:"slow",theme:"",header:"",themeState:"", glue:"before"};
 // openDuration,closeDuration : slow, normal, fast
 
 function inicializarFiltros()
