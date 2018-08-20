@@ -195,7 +195,7 @@ function eliminarRegistro(id)
                             // DataGrid.push(tempData);
                             $.each(dataListado,function(index,value)
                             {
-                                value.id_contrato != id ? dataListadoTemp.push(value) : (dataItem.push(value), numeroEliminar=index+1);
+                                value.id_catalogoP != id ? dataListadoTemp.push(value) : (dataItem.push(value), numeroEliminar=index+1);
                                 // JSON.stringify(value).indexOf( JSON.stringify(datos[0]) ) != -1 ? console.log() : dataListadoTemp.push(value);
                             });
                             // console.log(dataListado);
@@ -217,7 +217,7 @@ function eliminarRegistro(id)
                             // swalSuccess("Registro Eliminado");
                             gridInstance.loadData();
                             growlSuccess("Eliminación","Registro Eliminado");
-                            
+                            swal.close();
                             // $("#jsGrid").jsGrid("insertItem",tempData);
                         // },
                         // error:function()
@@ -227,12 +227,16 @@ function eliminarRegistro(id)
                     // });
                 }
                 else
+                {
                     growlError("Error","No se pudo eliminar el registro");
+                    swal.close();
+                }
             }
         },
         error:function()
         {
             growlError("Error","Error en el servidor al eliminar");
+            swal.close();
         }
     });
     // return false;
