@@ -477,8 +477,10 @@ function buscarRegionesFiscales()
 
 function refresh()
 {
+    $("#tnrefrescar").attr("style","disable:true");
     listarDatos();
     gridInstance.loadData();
+    $("#tnrefrescar").attr("style","disable:false");
     // enviarWB();
 }
 

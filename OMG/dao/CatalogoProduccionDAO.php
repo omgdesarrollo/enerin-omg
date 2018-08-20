@@ -90,13 +90,13 @@ class CatalogoProduccionDAO{
         }
     }
 
-    public function buscarID($CADENA,$CONTRATO)//listo
+    public function buscarID($CADENA,$CONTRATO)//listo ahora si
     {
         try
         {
             $query="SELECT DISTINCT tbasignaciones_contrato.id_asignacion, tbasignaciones_contrato.clave_contrato, tbasignaciones_contrato.region_fiscal, tbcatalogo_produccion.ubicacion
-            FROM catalogo_produccion tbcatalogo_produccion
-            JOIN asignaciones_contrato tbasignaciones_contrato ON tbasignaciones_contrato.id_asignacion = tbcatalogo_produccion.id_asignacion
+            FROM asignaciones_contrato tbasignaciones_contrato
+            -- JOIN asignaciones_contrato tbasignaciones_contrato ON tbasignaciones_contrato.id_asignacion = tbcatalogo_produccion.id_asignacion
             WHERE tbasignaciones_contrato.contrato = $CONTRATO AND lower(tbasignaciones_contrato.region_fiscal) = lower('$CADENA')";
             $db = AccesoDB::getInstancia();
             $Lista = $db->executeQuery($query);
