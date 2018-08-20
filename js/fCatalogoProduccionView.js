@@ -294,7 +294,8 @@ function saveUpdateToDatabase(args)
                     $.each(data,function(index,value){
                         componerDataListado(value);
                     });
-                    DataGrid = reconstruir()
+                    componerDataGrid();
+                    gridInstance.loadData();
                 }
                 else
                     growlError("Actualización","No se pudo actualizar");
@@ -321,6 +322,14 @@ function componerDataListado(value)// id de la vista documento
             });
         });
         // console.log(dataListado);
+}
+function componerDataGrid()
+{
+    __datos = [];
+    $.each(dataListado,function(index,value){
+        __datos.push(reconstruir(value,index+1));
+    });
+    DataGrid = __datos;
 }
 
 var RegionesFiscalesComboDhtml;
