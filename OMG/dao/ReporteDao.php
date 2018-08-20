@@ -7,16 +7,18 @@ class ReporteDao{
     {
         try
         {
-            $query="SELECT tbcatalogo_reporte.id_contrato, tbcatalogo_reporte.clave_contrato, tbcatalogo_reporte.region_fiscal,
-            tbcatalogo_reporte.ubicacion, tbcatalogo_reporte.tag_patin, tbcatalogo_reporte.tipo_medidor,
-            tbcatalogo_reporte.tag_medidor, tbcatalogo_reporte.clasificacion,
-            tbcatalogo_reporte.hidrocarburo,tbomg_reporte.omgc1,tbomg_reporte.omgc2,tbomg_reporte.omgc3,tbomg_reporte.omgc4
-            ,tbomg_reporte.omgc5,tbomg_reporte.omgc6,tbomg_reporte.omgc7,tbomg_reporte.omgc8,tbomg_reporte.omgc9,tbomg_reporte.omgc10,tbomg_reporte.omgc11
-            ,tbomg_reporte.omgc12,tbomg_reporte.omgc13,tbomg_reporte.omgc14,tbomg_reporte.omgc15,tbomg_reporte.omgc16
-            ,tbomg_reporte.omgc17,tbomg_reporte.omgc18
-            FROM catalogo_reporte tbcatalogo_reporte
-            JOIN omg_reporte_produccion tbomg_reporte ON tbomg_reporte.ID_CONTRATO=tbcatalogo_reporte.ID_CONTRATO
-           WHERE tbcatalogo_reporte.contrato = $CONTRATO";
+            $query="SELECT tbasignaciones_contrato.id_asignacion, tbasignaciones_contrato.clave_contrato, tbasignaciones_contrato.region_fiscal,
+                    tbasignaciones_contrato.contrato,
+                    tbcatalogo_produccion.ubicacion, tbcatalogo_produccion.tag_patin, tbcatalogo_produccion.tipo_medidor,
+                    tbcatalogo_produccion.tag_medidor, tbcatalogo_produccion.clasificacion,
+                    tbcatalogo_produccion.hidrocarburo,tbomg_reporte.omgc1,tbomg_reporte.omgc2,tbomg_reporte.omgc3,
+                    tbomg_reporte.omgc4,tbomg_reporte.omgc5,tbomg_reporte.omgc6,tbomg_reporte.omgc7,tbomg_reporte.omgc8,tbomg_reporte.omgc9,
+                    tbomg_reporte.omgc10,tbomg_reporte.omgc11,tbomg_reporte.omgc12,tbomg_reporte.omgc13,tbomg_reporte.omgc14,tbomg_reporte.omgc15,
+                    tbomg_reporte.omgc16,tbomg_reporte.omgc17,tbomg_reporte.omgc18
+                    FROM catalogo_produccion tbcatalogo_produccion
+                    JOIN omg_reporte_produccion tbomg_reporte ON tbomg_reporte.id_catalogop=tbcatalogo_produccion.id_catalogop
+                    JOIN asignaciones_contrato tbasignaciones_contrato ON tbasignaciones_contrato.id_asignacion=tbcatalogo_produccion.id_asignacion
+                    WHERE tbasignaciones_contrato.contrato = $CONTRATO";
             $db=  AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
             return $lista;
