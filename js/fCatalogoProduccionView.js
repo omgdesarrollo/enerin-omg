@@ -409,7 +409,10 @@ function buscarPorRegionFiscal(cadena)
                 {
                     if(index==0)
                     datosDhtmlContrato.push({value:index,text:value.clave_contrato});
-                    datosDhtmlUbicacion.push({value:index,text:value.ubicacion});
+                    if(value.ubicacion != null)
+                    {
+                        datosDhtmlUbicacion.push({value:index,text:value.ubicacion});
+                    }
                 });
             }
             // else
