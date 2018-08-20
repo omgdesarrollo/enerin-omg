@@ -231,11 +231,11 @@ $Usuario=  Session::getSesion("user");
         { name:"ubicacion", title: "Ubicación del Punto de Medición", type: "text", width: 150, validate: "required" },
         { name:"tag_patin", title: "Tag del Patin de Medición", type: "text", width: 130, validate: "required" },
         { name:"tipo_medidor", title: "Tipo de Medidor", type: "text", width: 150, validate: "required" },    
-        { name:"tag_medidor", title: "Tag del Medidor", type: "text", width: 130, validate: "required" },
+        { name:"tag_medidor", title: "Tag del Medidor", type: "text", width: 130, validate: "required",editing:false },
         { name:"clasificacion", title: "Clasificación del Sistema de Medición", type: "text", width: 150, validate: "required" },
         { name:"hidrocarburo", title: "Tipo de Hidrocarburo", type: "text", width: 150, validate: "required"},
-        { name:"delete", title:"Opción", type:"customControl",sorting:""},
-        // {type:"control",editButton: true}
+        // { name:"delete", title:"Opción", type:"customControl",sorting:""},
+        {type:"control",editButton: true}
     ];
     ultimoNumeroGrid=0;
     // $.when(
