@@ -1,110 +1,25 @@
-
-var RegionesFiscalesComboDhtml;
-var contratoComboDhtml;
-var ubicacionComboDhtml;
-var tagPatinComboDhtml;
-var tagMedidorComboDhtml;
-var id_catalogop;
+var contratosComboDhtml;
+var regionesFiscalesComboDhtml;
 
 $(function (){
-    
-    $("#btn_guardar_reportediario").click(function()
-    {
-        var FECHA_CREACION= $("#INPUT_FECHA_NUEVOREGISTRO").val();
-        var ID_CATALOGOP=id_catalogop;
-        
-        alert("FECHA_CREACION: "+FECHA_CREACION+ "ID_CATALOGOP: "+ID_CATALOGOP);
-        datos=[];
-        datos.push(FECHA_CREACION);
-        datos.push(ID_CATALOGOP);
-        
-        listo=
-            (
-               FECHA_CREACION!=""?
-               ID_CATALOGOP!=""?
-               true: false: false
-            );
-            
-            alert("valor listo: "+listo);
-           listo ?  insertarReporte(datos):swalError("Completar campos");
-   
-    });
-    
+//   precargados();
+//    listarDatosReportes();
+//     construirGrid();
 
-    primera = true;
-    RegionesFiscalesComboDhtml.attachEvent("onChange", function(value, text)
+primera = true;
+    contratosComboDhtml.attachEvent("onChange", function(value, text)
     {
-//            alert("entro a RegionesFiscales: "+text);
         if(primera)
         {
-            region_fiscal=text;
+            clave_contrato=text;
             selectItemCombo(value,text);
             primera = false;
         }
         else
             primera = true;
     });
-    
-    RegionesFiscalesComboDhtml.attachEvent("onOpen", function()
-    {
-        this.DOMlist.style.zIndex = 2000;
-    });
-    
-    
-    segunda = true;
-    ubicacionComboDhtml.attachEvent("onChange", function(value, text)
-    {
-//            alert("entro a ubicacion: "+text);
-        if(segunda)
-        {
-            ubicacion=text;
-            selectItemComboUbicacion(value,text);
-            segunda = false;
-        }
-        else
-            segunda = true;
-    });
-    
-    ubicacionComboDhtml.attachEvent("onOpen", function()
-    {
-        this.DOMlist.style.zIndex = 2000;
-    });
-    
-    
-    tercera = true;
-    tagPatinComboDhtml.attachEvent("onChange", function(value, text)
-    {
-//            alert("entro al TagPatin: "+text);
-        if(tercera)
-        {
-            tag_patin=text;
-            selectItemComboTagPatin(value,text);
-            tercera = false;
-        }
-        else
-            tercera = true;
-    });
-    
-    tagPatinComboDhtml.attachEvent("onOpen", function()
-    {
-        this.DOMlist.style.zIndex = 2000;
-    });
-    
-    cuarta = true;
-    tagMedidorComboDhtml.attachEvent("onChange", function(value, text)
-    {
-//            alert("entro al TagMedidor: "+text);
-        if(cuarta)
-        {
-            tag_medidor=text;
-            selectItemComboTagMedidor(value,text);
-            cuarta = false;
-        }
-        else
-            cuarta = true;
-    });
-    
-    tagMedidorComboDhtml.attachEvent("onOpen", function()
+
+    contratosComboDhtml.attachEvent("onOpen", function()
     {
         this.DOMlist.style.zIndex = 2000;
     });
@@ -114,15 +29,12 @@ $(function (){
 
 function selectItemCombo(value,text)
 {
-    buscarPorRegionFiscal(text);
+    buscarPorContrato(text);
 }
 
-
-function buscarPorRegionFiscal(cadena)
+function buscarPorContrato(cadena)
 {
-    datosDhtmlContrato=[];
-    datosDhtmlUbicacion=[];
-//    datosDhtmlTagPatig=[];
+    datosDhtmlRegionFiscal=[];
     $.ajax({
         url:'../Controller/ReportesController.php?Op=buscarID',
         type:'GET',
@@ -133,9 +45,7 @@ function buscarPorRegionFiscal(cadena)
             $.each(datos,function(index,value)
             {
                 if(index==0)
-                $("#INPUT_CONTRATO_NUEVOREGISTRO").html(value.clave_contrato).css("background","#ddd");
-//                datosDhtmlContrato.push({value:index,text:value.clave_contrato});
-                datosDhtmlUbicacion.push({value:index,text:value.ubicacion});
+                datosDhtmlRegionFiscal.push({value:index,text:value.region_fiscal});
             });
         },
         error:function()
@@ -143,32 +53,26 @@ function buscarPorRegionFiscal(cadena)
             swalError("Error en el servidor");
         }
     });
-    
-     
+    regionesFiscalesComboDhtml.clearAll();
+    regionesFiscalesComboDhtml.addOption(datosDhtmlRegionFiscal);
 
-//    contratoComboDhtml.clearAll();
-//    contratoComboDhtml.addOption(datosDhtmlContrato);
-    ubicacionComboDhtml.clearAll();
-    ubicacionComboDhtml.addOption(datosDhtmlUbicacion);
-
-//    contratoComboDhtml.getOptionsCount()!=0 ?
-//    ( contratoComboDhtml.selectOption(0),contratoComboDhtml.disable(),clave_contrato = contratoComboDhtml.getSelectedText()) : (clave_contrato="",contratoComboDhtml.enable());
+    regionesFiscalesComboDhtml.getOptionsCount()!=0 ?
+    ( regionesFiscalesComboDhtml.selectOption(0),regionesFiscalesComboDhtml.disable(),region_fiscal = regionesFiscalesComboDhtml.getSelectedText()) : (region_fiscal="",regionesFiscalesComboDhtml.enable());
 }
 
 
-//PRIMERA VISTA EN EL MODAL
-function buscarRegionesFiscales()
+function buscarContratosPorReporte()
 {
     datosDhtml=[];
     $.ajax({
-        url:'../Controller/ReportesController.php?Op=buscarRegionFiscal',
+        url:'../Controller/ReportesController.php?Op=buscarContrato',
         type:'GET',
-        async:false,
+        // async:false,
         success:function(datos)
         {
             $.each(datos,function(index,value)
             {
-                datosDhtml.push({value:index,text:value.region_fiscal});
+                datosDhtml.push({value:index,text:value.clave_contrato});
             });
         },
         error:function()
@@ -176,173 +80,40 @@ function buscarRegionesFiscales()
             swalError("Error en el servidor");
         }
     });
-    RegionesFiscalesComboDhtml = new dhtmlXCombo({
-        parent: "INPUT_REGIONFISCAL_NUEVOREGISTRO",
+    contratosComboDhtml = new dhtmlXCombo({
+        parent: "INPUT_CONTRATO_NUEVOREGISTRO",
         width: 540,
         filter: true,
         name: "combo",
         index:"2000",
         items:datosDhtml,
     });
-    
-//    contratoComboDhtml = new dhtmlXCombo({
-//        parent: "INPUT_CONTRATO_NUEVOREGISTRO",
-//        width: 540,
-//        filter: true,
-//        name: "combo",
-//        items:[],
-//    });
-//    contratoComboDhtml.attachEvent("onOpen",function()
-//    {
-//        this.DOMlist.style.zIndex = 2000;
-//    });
-    
-    ubicacionComboDhtml = new dhtmlXCombo({
-        parent: "INPUT_UBICACION_NUEVOREGISTRO",
+    regionesFiscalesComboDhtml = new dhtmlXCombo({
+        parent: "INPUT_REGIONFISCAL_NUEVOREGISTRO",
         width: 540,
         filter: true,
         name: "combo",
         items:[],
     });
-    ubicacionComboDhtml.attachEvent("onOpen",function()
+    regionesFiscalesComboDhtml.attachEvent("onOpen",function()
     {
         this.DOMlist.style.zIndex = 2000;
     });
     
-    tagPatinComboDhtml = new dhtmlXCombo({
-    parent: "INPUT_TAGPATIN_NUEVOREGISTRO",
-    width: 540,
-    filter: true,
-    name: "combo",
-    items:[],
-    });
-    tagPatinComboDhtml.attachEvent("onOpen",function()
-    {
-        this.DOMlist.style.zIndex = 2000;
-    });
-    
-    tagMedidorComboDhtml = new dhtmlXCombo({
-    parent: "INPUT_TAGMEDIDOR_NUEVOREGISTRO",
-    width: 540,
-    filter: true,
-    name: "combo",
-    items:[],
-    });
-    tagMedidorComboDhtml.attachEvent("onOpen",function()
-    {
-        this.DOMlist.style.zIndex = 2000;
-    });
-    
+//    ubicacionComboDhtml = new dhtmlXCombo({
+//        parent: "INPUT_UBICACION_NUEVOREGISTRO",
+//        width: 540,
+//        filter: true,
+//        name: "combo",
+//        items:[],
+//    });
+//    ubicacionComboDhtml.attachEvent("onOpen",function()
+//    {
+//        this.DOMlist.style.zIndex = 2000;
+//    });
+
 }
 
-function selectItemComboUbicacion(value,text)
-{
-    buscarTagPatinPorUbicacion(text);
-}
-
-
-function buscarTagPatinPorUbicacion(ubicacion)
-{
-//    alert("hasta aqui");
-    datosDhtmlTagPatin=[];
-        $.ajax({
-        url:'../Controller/ReportesController.php?Op=obtenerTagPatin',
-        type:'GET',
-        data:'UBICACION='+ubicacion,
-        async:false,
-        success:function(datosTagPatin)
-        {
-            $.each(datosTagPatin,function(index,value){
-//                alert(value.tag_patin);
-//                if(index==0)
-                datosDhtmlTagPatin.push({value:index,text:value.tag_patin});                
-            });
-            
-        },
-        error:function()
-        {
-            swalError("Error en el servidor");
-        }
-    });
-    
-    tagPatinComboDhtml.clearAll();
-    tagPatinComboDhtml.addOption(datosDhtmlTagPatin);
-}
-
-
-function selectItemComboTagPatin(value,text)
-{
-//    alert("entro al selectItemComboTagPatin");
-    buscarTagMedidorPorTagPatin(text);
-}
-
-
-function buscarTagMedidorPorTagPatin(tagPatin)
-{
-//    alert(tagPatin);
-    datosDhtmlTagMedidor=[];
-    $.ajax({
-        url:'../Controller/ReportesController.php?Op=obtenerTagMedidor',
-        type:'GET',
-        data:'TAG_PATIN='+tagPatin,
-        async:false,
-        success:function(datosTagMedidor)
-        {
-            $.each(datosTagMedidor,function(index,value){
-//                alert(value.tag_medidor);
-//                if(index==0)
-                datosDhtmlTagMedidor.push({value:index,text:value.tag_medidor});                
-            });
-            
-        },
-        error:function()
-        
-        {
-            swalError("Error en el servidor");
-        }
-    });
-    
-    tagMedidorComboDhtml.clearAll();
-    tagMedidorComboDhtml.addOption(datosDhtmlTagMedidor);
-}
-
-
-function selectItemComboTagMedidor(value,text)
-{
-//    alert("entro al selectItemComboTagPatin");
-    buscarTipoMedidorYOtrosDatosPorTagMedidor(text);
-}
-
-
-function buscarTipoMedidorYOtrosDatosPorTagMedidor(tagMedidor)
-{
-    datosDhtmlTipoMedidor=[];
-    datosDhtmlClasificacion=[];
-    datosDhtmlHidrocarburo=[];
-    $.ajax({
-        url:'../Controller/ReportesController.php?Op=obtenerTipoMedidor',
-        type:'GET',
-        data:'TAG_MEDIDOR='+tagMedidor,
-        async:false,
-        success:function(datosTipoMedidor)
-        {
-            $.each(datosTipoMedidor,function(index,value){
-//                alert(value.tipo_medidor);
-                id_catalogop=value.id_catalogop;
-//                alert(id_catalogop);
-                if(index==0)
-                    $("#INPUT_TIPOMEDIDOR_NUEVOREGISTRO").html(value.tipo_medidor).css("background","#ddd");
-                    $("#INPUT_CLASIFICACION_NUEVOREGISTRO").html(value.clasificacion).css("background","#ddd");
-                    $("#INPUT_HIDROCARBURO_NUEVOREGISTRO").html(value.hidrocarburo).css("background","#ddd");                            
-            });
-            
-        },
-        error:function()
-        {
-            swalError("Error en el servidor");
-        }
-    });
-}
 
 
 

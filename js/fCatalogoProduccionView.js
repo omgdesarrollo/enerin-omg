@@ -358,7 +358,22 @@ var ubicacionComboDhtml;
 
 $(function(){
     primera = true;
-
+    RegionesFiscalesComboDhtml.attachEvent("onChange", function(value, text)
+    {
+        if(primera)
+        {
+            region_fiscal=text;
+            selectItemCombo(value,text);
+            primera = false;
+        }
+        else
+            primera = true;
+    });
+    
+    RegionesFiscalesComboDhtml.attachEvent("onOpen", function()
+    {
+        this.DOMlist.style.zIndex = 2000;
+    });
 });
 
 // function mostrarComboDHTML()
