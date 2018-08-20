@@ -332,6 +332,7 @@ $(function(){
         else
             primera = true;
     });
+    
     RegionesFiscalesComboDhtml.attachEvent("onOpen", function()
     {
         this.DOMlist.style.zIndex = 2000;

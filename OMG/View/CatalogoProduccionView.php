@@ -160,7 +160,10 @@ $Usuario=  Session::getSesion("user");
                     <div id="INPUT_REGIONFISCAL_NUEVOREGISTRO" style="witdth:100%;"></div>
                 </div>
 
-                <div class='form-group'><label class='control-label'>ID de Contrato o Asignación: </label><div id='INPUT_CONTRATO_NUEVOREGISTRO' style='witdth:100%'></div></div>
+                <div class='form-group'>
+                    <label class='control-label'>ID de Contrato o Asignación: </label>
+                    <div id='INPUT_CONTRATO_NUEVOREGISTRO' style='witdth:100%'></div>                        
+                </div>
                 <!-- <div class="form-group">
                     <label class="control-label">ID de Contrato o Asignación: </label>
                     <textarea class="form-control" type="text" id="INPUT_CONTRATO_NUEVOREGISTRO" style="min-width: -webkit-fill-available;max-width: -webkit-fill-available;" disabled></textarea>
