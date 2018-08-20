@@ -119,6 +119,30 @@ var contadorInstancia=1;
 var newInstanceJGrowl;
 var banderaParaAnimacion=false;
 var cerrarSucesos=0;
+
+function growlSuccess(head,msj)
+{
+	$.jGrowl(msj, {header:head, theme:"themeG-success"});
+}
+
+function growlError(head,msj)
+{
+	$.jGrowl(msj, {header:head, theme:"themeG-error"});
+}
+
+function growlWait(head,msj)
+{
+	$.jGrowl(msj, {header:head, theme:"themeG-wait"});
+}
+
+function hora()
+{
+	var hTemp = new Date();
+	var a = hTemp.getMinutes()<10 ? "0"+hTemp.getMinutes() : hTemp.getMinutes();
+	var b = hTemp.getSeconds()<10 ? "0"+hTemp.getSeconds() : hTemp.getSeconds();
+	var hActual = "<h5 style='font-size:small'>("+hTemp.getHours()+":"+ a +":"+ b + ")</h5>";
+	return hActual;
+}
 function animacionTerminada()
 {
     if(banderaParaAnimacion)
@@ -187,20 +211,21 @@ function getInstancejGrowl()
 	$.extend( $.fn.jGrowl.prototype , {
 
 		/** Default JGrowl Settings **/
+		// configuracionJgrowl = { pool:1, position:" bottom-right", sticky:true, corner:"0px",openDuration:"fast", closeDuration:"slow",theme:"",header:"",themeState:"", glue:"before"};
 		defaults: {
 			pool: 			0,
 			header: 		'',
 			group: 			'',
-			sticky: 		false,
+			sticky: 		true,
 			position: 		'bottom-right',
-			glue: 			'after',
+			glue: 			'before',
 			theme: 			'default',
 			themeState: 	'highlight',
-			corners: 		'10px',
+			corners: 		'0px',
 			check: 			150,
 			life: 			3000,
-			closeDuration:  'normal',
-			openDuration:   'normal',
+			closeDuration:  'slow',
+			openDuration:   'fast',
 			easing: 		'swing',
 			closer: 		true,
 			closeTemplate: '&times;',
@@ -213,14 +238,13 @@ function getInstancejGrowl()
 				clearTimeout(cerrarSucesos);
 				cerrarSucesos = setTimeout(function(){
 					$("#jGrowl").animate({width:"toggle",opacity:"toggle"},"slow",animacionTerminada);
-				},5000);
-				// console.log("2");
+				},6000);
 			},
 			afterOpen: 		function(e,m,o) {
 				// console.log("3");
 			},
 			open: 			function(e,m,o) {
-				console.log("A");
+				// console.log("A");
 				// $(e).animate({width:"toggle",opacity:"toggle"},"fast",animacionTerminada);
 				// o.close;
 			},
@@ -281,7 +305,7 @@ function getInstancejGrowl()
 		        .addClass('jGrowl-notification ' + o.themeState + ' ui-corner-all' + ((o.group != undefined && o.group != '') ? ' ' + o.group : ''))
 		        .append($('<div/>').addClass('jGrowl-close').html(o.closeTemplate))
 		        .append($('<div/>').addClass('jGrowl-header').html(o.header))
-		        .append($('<div/>').addClass('jGrowl-message').html(message))
+		        .append($('<div/>').addClass('jGrowl-message').html(message+hora()))
 		        .data("jGrowl", o).addClass(o.theme).children('div.jGrowl-close').bind("click.jGrowl", function() {
 		        	$(this).parent().trigger('jGrowl.beforeClose');
 		        })

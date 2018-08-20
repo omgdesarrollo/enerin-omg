@@ -1,5 +1,5 @@
 // var instanciaG;
-configuracionJgrowl = { pool:1, position:" bottom-right", sticky:true, corner:"0px",openDuration:"fast", closeDuration:"slow",theme:"",header:"",themeState:"", glue:"before"};
+// configuracionJgrowl = { pool:1, position:" bottom-right", sticky:true, corner:"0px",openDuration:"fast", closeDuration:"slow",theme:"",header:"",themeState:"", glue:"before"};
 // openDuration,closeDuration : slow, normal, fast
 
 function inicializarFiltros()
@@ -23,7 +23,7 @@ function reconstruir(value,index)
     tempData = new Object();
     ultimoNumeroGrid = index;
     tempData["no"] = index;
-    tempData["id_principal"] = [{"id_contrato":value.id_contrato}];
+    tempData["id_principal"] = [{"id_catalogoP":value.id_catalogoP}];
     tempData["region_fiscal"] = value.region_fiscal;
     tempData["clave_contrato"] = value.clave_contrato;
     tempData["ubicacion"] = value.ubicacion;
@@ -57,45 +57,28 @@ function listarDatos()
         async:true,
         beforeSend:function()
         {
-            configuracionJgrowl.header = "Solicitando Datos de Producción";
-            configuracionJgrowl.theme = "themeG-wait";
-            $.jGrowl("Solicitando Registros ......", configuracionJgrowl);
-            // $("#jGrowl").attr("style","top:40px");
-            // console.log(configuracionJgrowl.open);
-            // console.log(instanciaG);
-            // tempjGrowl = getInstancejGrowl();
-            // tempjGrowl.close();
-            // console.log(thisjGrowl.element[0]);
-            // var iterar = thisjGrowl.element[0].children[0];
-            // console.log(thisjGrowl.element.context.children);
-            // $.each(thisjGrowl.element[0].childNodes,function(index,value)
-            // {
-            //     console.log(index,value);
-            // });
-                                // $.jGrowl("Bienvenido", { header: 'Acceso Permitido' });
+            growlWait("Solicitud","Solicitando Datos de Catalogo");
         },
         success:function(data)
         {
-            // jGrowl-message
-            // $(".jGrowl-message").html("Ahora hay un error");
-            configuracionJgrowl.header = "Solicitud!";
-            configuracionJgrowl.theme = "themeG-success";
-            $.jGrowl("Datos obtenidos ......", configuracionJgrowl);
-            // clearInterval(intervalFunc);
-            dataListado = data;
-            $.each(data,function (index,value)
+            if(typeof(data)=="object")
             {
-                __datos.push( reconstruir(value,index+1) );
-            });
-            DataGrid = __datos;
-            gridInstance.loadData();
+                growlSuccess("Solicitud","Registros obtenidos");
+                dataListado = data;
+                $.each(data,function (index,value)
+                {
+                    __datos.push( reconstruir(value,index+1) );
+                });
+                DataGrid = __datos;
+                gridInstance.loadData();
+            }
+            else
+                growlSuccess("Solicitud","No Existen Registros");
         },
         error:function(e)
         {
-            configuracionJgrowl.header = "Error!";
-            configuracionJgrowl.theme = "themeG-error";
             console.log(e);
-            $.jGrowl("Error en el servidor......", configuracionJgrowl);
+            growlError("Error","Error en el servidor");
         }
     });
     // __datos=[];
@@ -132,10 +115,12 @@ function listarUno(ID_insertado)
             $("#jsGrid").jsGrid("insertItem",tempData).done(function(){});
             dataListado.push(datos[0]);
             DataGrid.push(tempData);
+            growlSuccess("Construir","Registro agregado a la vista");
         },
         error:function()
         {
-            swalError("Error en el servidor al intentar agregar el registro a la vista");
+            growlError("Error","Error en el servidor al intentar agregar el registro a la vista");
+            // swalError("Error en el servidor al intentar agregar el registro a la vista");
         }
     });
 }
@@ -157,7 +142,7 @@ function preguntarEliminar(data)
         {
             if(confirmacion)
             {
-                eliminarRegistro(data.id_principal[0].id_contrato);
+                eliminarRegistro(data.id_principal[0].id_catalogoP);
             }
             else
             {
@@ -298,6 +283,7 @@ function saveUpdateToDatabase(args)
             data:'TABLA=catalogo_reporte'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado)+"&REGION="+region_fiscalTemp,
             success:function(data)
             {
+                console.log("resultado actualizacion: ",data);
                 if(data > 0 )
                 {
                     swalSuccess("Actualizacion Exitosa!");
@@ -323,19 +309,25 @@ $(function(){
     primera = true;
     RegionesFiscalesComboDhtml.attachEvent("onChange", function(value, text)
     {
-        if(primera)
-        {
             region_fiscal=text;
             selectItemCombo(value,text);
-            primera = false;
-        }
-        else
-            primera = true;
     });
+
+    contratoComboDhtml.attachEvent("onChange", function(value, text)
+    {
+        clave_contrato=text;
+    });
+    
+    ubicacionComboDhtml.attachEvent("onChange", function(value, text)
+    {
+        ubicacion=text;
+    });
+
     RegionesFiscalesComboDhtml.attachEvent("onOpen", function()
     {
         this.DOMlist.style.zIndex = 2000;
     });
+
 });
 
 // function mostrarComboDHTML()
@@ -365,12 +357,17 @@ function buscarPorRegionFiscal(cadena)
         async:false,
         success:function(datos)
         {
-            $.each(datos,function(index,value)
+            if(typeof(datos)=="object")
             {
-                if(index==0)
-                datosDhtmlContrato.push({value:index,text:value.clave_contrato});
-                datosDhtmlUbicacion.push({value:index,text:value.ubicacion});
-            });
+                $.each(datos,function(index,value)
+                {
+                    if(index==0)
+                    datosDhtmlContrato.push({value:index,text:value.clave_contrato});
+                    datosDhtmlUbicacion.push({value:index,text:value.ubicacion});
+                });
+            }
+            // else
+
         },
         error:function()
         {

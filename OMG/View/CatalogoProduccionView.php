@@ -58,7 +58,7 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
                 <script src="../../js/tools.js" type="text/javascript"></script>
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
-                <script src="../../js/fCatalogoProcesosView.js" type="text/javascript"></script>
+                <script src="../../js/fCatalogoProduccionView.js" type="text/javascript"></script>
                 <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
                 <script src="../../js/fGridComponent.js" type="text/javascript"></script>
                 <!-- <script src="../../js/socket.js" type="text/javascript"></script> -->
@@ -320,24 +320,32 @@ $Usuario=  Session::getSesion("user");
         // construirFiltros();
         // console.log(dataListado);
     // });
- 
-    region_fiscal="";
-    ubicacion="";
-    clave_contrato="";
-    tag_medidor="";
+    function inicializarVariablesModal()
+    {
+        region_fiscal="";
+        ubicacion="";
+        clave_contrato="";
+        tag_medidor="";
+    }
 
     $("#BTN_CREAR_NUEVOREGISTROMODAL").click(function()
     {
         //NO SE PUEDEN CAMBIAR LOS NOMBRES DE LOS KEY DEL OBJECTO DATOS YA QUE ESTAN LIGADOS A LA BASE DE DATOS
         datos=new Object();
-        datos.clave_contrato = clave_contrato=="" ? contratoComboDhtml.getSelectedText() : clave_contrato;
-        datos.region_fiscal = RegionesFiscalesComboDhtml.getSelectedText();
-        datos.ubicacion = ubicacionComboDhtml.getSelectedText();
+        datos.clave_contrato = clave_contrato;
+        datos.region_fiscal = region_fiscal;
+        datos.ubicacion = ubicacion;
+        // datos.clave_contrato = clave_contrato=="" ? contratoComboDhtml.getSelectedText() : clave_contrato;
+        // datos.region_fiscal = region_fiscal=="" region_fiscal;
+
+        // datos.ubicacion = ubicacionComboDhtml.getComboText();
         datos.tag_patin = $("#INPUT_TAGPATIN_NUEVOREGISTRO").val();
         datos.tipo_medidor = tag_medidor;
         datos.tag_medidor = $("#INPUT_TAGMEDIDOR_NUEVOREGISTRO").val();
         datos.clasificacion = $("#INPUT_CLASIFICACION_NUEVOREGISTRO").val();
         datos.hidrocarburo = $("#INPUT_HIDROCARBURO_NUEVOREGISTRO ").val();
+
+        console.log(datos);
 
         listo = ( datos.clave_contrato!=""?
         datos.region_fiscal!=""?
@@ -369,25 +377,30 @@ $Usuario=  Session::getSesion("user");
         val = $(this).val();
         tag_medidor = "";
         $.ajax({
-            url:'../Controller/CatalogoProcesosController.php?Op=BuscarTagMedidor',
+            url:'../Controller/CatalogoProduccionController.php?Op=BuscarTagMedidor',
             type:'GET',
             data:'CADENA='+val,
             success:function(existe)
             {
                 if(existe==0)
                 {
+                    configuracionJgrowl.header = "Verificación";
+                    configuracionJgrowl.theme = "themeG-success";
+                    $.jGrowl("Tag del Medidor correcto", configuracionJgrowl);
                     tag_medidor = val;
                 }
                 else
                 {
-                    // tag_medidor = "";
+                    tag_medidor = "";
                     swalInfo("El Tag del Medidor ya ha sido cargado, verifique");
                     $("#INPUT_TAGMEDIDOR_NUEVOREGISTRO").val(val.slice(0,-1));
                 }
             },
             error:function()
             {
-                swalError("Error en el servidor");
+                configuracionJgrowl.header = "Error en el servidor";
+                configuracionJgrowl.theme = "themeG-error";
+                $.jGrowl("No se pudo verificar el Tag del Medidor", configuracionJgrowl);
                 tag_medidor = "";
             }
         });
@@ -400,7 +413,7 @@ $Usuario=  Session::getSesion("user");
     
 </script>
         <script src="../../js/socket.js" type="text/javascript"></script>
-            <script src="../../js/fCatalogoProcesosView.js" type="text/javascript"></script>
+            <!-- <script src="../../js/fCatalogoPrduccionView.js" type="text/javascript"></script> -->
 
             <!--Inicia para el spiner cargando-->
             <script src="../../js/loaderanimation.js" type="text/javascript"></script>

@@ -106,8 +106,8 @@ switch ($Op)
         header('Content-type: application/json; charset=utf-8'); 
         $COLUMNAS = json_decode($_REQUEST["COLUMNAS_VALOR"],true);
         $ID = json_decode($_REQUEST["ID_CONTEXTO"],true);
-        $REGION = $_REQUEST["REGION"];
-        $resultado = $model->actualizar($_REQUEST["TABLA"],$COLUMNAS,$ID,$REGION);
+        // $REGION = $_REQUEST["REGION"];
+        $resultado = $model->actualizar($COLUMNAS,$ID);
 
         // $resultado==1?$model->()
 
