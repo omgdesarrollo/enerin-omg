@@ -312,8 +312,8 @@ $Usuario=  Session::getSesion("user");
 
         // datos.ubicacion = ubicacionComboDhtml.getComboText();
         datos.tag_patin = $("#INPUT_TAGPATIN_NUEVOREGISTRO").val();
-        datos.tipo_medidor = tag_medidor;
-        datos.tag_medidor = $("#INPUT_TAGMEDIDOR_NUEVOREGISTRO").val();
+        datos.tipo_medidor = $("#INPUT_TIPOMEDIDOR_NUEVOREGISTRO").val();
+        datos.tag_medidor = tag_medidor;
         datos.clasificacion = $("#INPUT_CLASIFICACION_NUEVOREGISTRO").val();
         datos.hidrocarburo = $("#INPUT_HIDROCARBURO_NUEVOREGISTRO ").val();
 
