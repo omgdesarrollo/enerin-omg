@@ -309,8 +309,8 @@ function saveUpdateToDatabase(args)
 function componerDataListado(value)// id de la vista documento
 {
         dataListado;
-        id_vista = value.id_documento_entrada;
-        id_string = "id_documento_entrada"
+        id_vista = value.id_catalogoP;
+        id_string = "id_catalogoP"
         $.each(dataListado,function(indexList,valueList)
         {
             $.each(valueList,function(ind,val)
