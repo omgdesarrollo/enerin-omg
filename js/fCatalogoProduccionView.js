@@ -159,6 +159,10 @@ function eliminarRegistro(id)
         type:'GET',
         data:'ID_CONTRATO='+id,
         async:false,
+        beforeSend:function()
+        {
+            growlWait("Eliminación","Eliminando registro espere...");
+        },
         success:function(respuesta)
         {
             if(respuesta==-2)
@@ -210,8 +214,10 @@ function eliminarRegistro(id)
                             // val = false;
                             // argsGlobal.cancel = false;
                             // console.log(gridInstance.onItemDeleting());
-                            swalSuccess("Registro Eliminado");
+                            // swalSuccess("Registro Eliminado");
                             gridInstance.loadData();
+                            growlSuccess("Eliminación","Registro Eliminado");
+                            
                             // $("#jsGrid").jsGrid("insertItem",tempData);
                         // },
                         // error:function()
@@ -221,12 +227,12 @@ function eliminarRegistro(id)
                     // });
                 }
                 else
-                    swalError("No se pudo eliminar");
+                    growlError("Error","No se pudo eliminar el registro");
             }
         },
         error:function()
         {
-            swalError("Error en el servidor");
+            growlError("Error","Error en el servidor al eliminar");
         }
     });
     // return false;
@@ -257,7 +263,7 @@ function insertarRegistro(datos)
     });
 }
 
-function saveUpdateToDatabase(args)
+function saveUpdateToDatabase(args)//listo
 {
     console.log(args);
     columnas=new Object();
@@ -308,7 +314,7 @@ function saveUpdateToDatabase(args)
     }
 }
 
-function componerDataListado(value)// id de la vista documento
+function componerDataListado(value)// id de la vista documento, listo
 {
         dataListado;
         id_vista = value.id_catalogoP;
@@ -323,7 +329,7 @@ function componerDataListado(value)// id de la vista documento
         });
         // console.log(dataListado);
 }
-function componerDataGrid()
+function componerDataGrid()//listo
 {
     __datos = [];
     $.each(dataListado,function(index,value){
