@@ -61,7 +61,7 @@ class CatalogoProduccionDAO{
             FROM catalogo_produccion tbcatalogo_produccion
             JOIN asignaciones_contrato tbasignaciones_contrato
             ON tbasignaciones_contrato.id_asignacion = tbcatalogo_produccion.id_asignacion
-            WHERE tbcatalogo_produccion.id_asginacion = 1";
+            WHERE tbcatalogo_produccion.id_asignacion = $ID_ASIGNACION";
             $db=  AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
             return $lista;

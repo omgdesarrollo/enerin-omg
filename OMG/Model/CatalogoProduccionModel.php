@@ -237,7 +237,7 @@ class CatalogoProduccionModel{
                     if($banderaTA !=0)
                     {
                         $id_asignacion = $dao->buscarID_asignacionPorID_Catalogo($id_catalogop);
-                        $update = $dao->listarPorAsignacion($id_asignacion);
+                        $update = $dao->listarPorAsignacion($id_asignacion[0]["id_asignacion"]);
                     }
                     else
                     $update = $dao->listarUno($id_catalogop);

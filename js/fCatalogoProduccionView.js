@@ -332,18 +332,16 @@ function saveUpdateToDatabase(args)//listo
 
 function componerDataListado(value)// id de la vista documento, listo
 {
-        dataListado;
-        id_vista = value.id_catalogoP;
-        id_string = "id_catalogoP"
-        $.each(dataListado,function(indexList,valueList)
+    id_vista = value.id_catalogoP;
+    id_string = "id_catalogoP";
+    $.each(dataListado,function(indexList,valueList)
+    {
+        $.each(valueList,function(ind,val)
         {
-            $.each(valueList,function(ind,val)
-            {
-                if(ind == id_string)
-                        ( val.indexOf(id_vista) != -1 ) ? ( dataListado[indexList]=value ):  console.log();
-            });
+            if(ind == id_string)
+                    ( val==id_vista) ? dataListado[indexList]=value : console.log();
         });
-        // console.log(dataListado);
+    });
 }
 function componerDataGrid()//listo
 {
