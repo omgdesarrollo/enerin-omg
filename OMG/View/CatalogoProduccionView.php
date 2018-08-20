@@ -269,8 +269,8 @@ $Usuario=  Session::getSesion("user");
             //     });
         // }
 
-        construirGridPromise = new Promise((resolve,reject)=>
-        {
+        // construirGridPromise = new Promise((resolve,reject)=>
+        // {
             construirGrid();
             RegionesFiscalesComboDhtml = new dhtmlXCombo({
                 parent: "INPUT_REGIONFISCAL_NUEVOREGISTRO",
@@ -327,32 +327,26 @@ $Usuario=  Session::getSesion("user");
             {
                 this.DOMlist.style.zIndex = 2000;
             });
-            buscarRegionesFiscales();
-            resolve();
-        });
-    // ).done(function(dataListarDatos, dataConstruirGrid)
-    // {//IMPORTANTE NO BORRAR NO PREGUNTEN SOLO NO BORRAR 'FVAZCONCELOS' :D
 
-        construirGridPromise.then ((result)=>{
-            proms = listarDatos();
-            proms.then((result2)=>{
-                console.log(result2);
-            });
-            iniciar = new Promise( (resolve,reject)=>
+            promesaBuscarRegionesFiscales = buscarRegionesFiscales();
+            promesaBuscarRegionesFiscales.then((resolve)=>
             {
-                inicializarFiltros();
-                resolve();
-            });
-            iniciar.then( (result)=>
+                promesaInicializarFiltros = inicializarFiltros();
+                promesaInicializarFiltros.then((resolve2)=>
+                {
+                    construirFiltros();
+                });
+                listarDatos();
+            },(error)=>
             {
-                construirFiltros();
+                growlError("Error!","Error al construir la vista, recargue la página");
             });
-        },(error)=>{
-            growlError("Error!","Error al construir la vista, recargue la página");
-        });
-        // construirFiltros();
-        // console.log(dataListado);
-    // });
+                // resolve();
+            // },(error)=>{
+            //     // reject();
+            //     growlError("Error!","Error al construir la vista, recargue la página");
+            // });
+
     function inicializarVariablesModal()
     {
         region_fiscal="";

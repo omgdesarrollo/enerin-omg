@@ -4,18 +4,22 @@ configuracionJgrowl = { pool:1, position:" bottom-right", sticky:true, corner:"0
 
 function inicializarFiltros()
 {
-    filtros = [
-        {id:"noneUno", type:"none"},
-        {name:"ID del Contrato o Asignación",id:"clave_contrato",type:"text"},
-        {name:"Region Fiscal",id:"region_fiscal",type:"text"},
-        {name:"Ubicación del Punto de Medición",id:"ubicacion",type:"text"},
-        {name:"Tag del Patin de Medición",id:"tag_patin",type:"text"},
-        {name:"Tipo de Medidor",id:"tipo_medidor",type:"text"},
-        {name:"Tag del Medidor",id:"tag_medidor",type:"text"},
-        {name:"Clasificación del Sistema de Medición",id:"clasificacion",type:"text"},
-        {name:"Tipo de Hidrocarburo",id:"hidrocarburo",type:"text"},
-        {name:"opcion",id:"opcion",type:"opcion"}
-    ];
+    return new Promise((resolve,reject)=>
+    {
+        filtros = [
+            {id:"noneUno", type:"none"},
+            {name:"ID del Contrato o Asignación",id:"clave_contrato",type:"text"},
+            {name:"Region Fiscal",id:"region_fiscal",type:"text"},
+            {name:"Ubicación del Punto de Medición",id:"ubicacion",type:"text"},
+            {name:"Tag del Patin de Medición",id:"tag_patin",type:"text"},
+            {name:"Tipo de Medidor",id:"tipo_medidor",type:"text"},
+            {name:"Tag del Medidor",id:"tag_medidor",type:"text"},
+            {name:"Clasificación del Sistema de Medición",id:"clasificacion",type:"text"},
+            {name:"Tipo de Hidrocarburo",id:"hidrocarburo",type:"text"},
+            {name:"opcion",id:"opcion",type:"opcion"}
+        ];
+        resolve();
+    })
 }
 
 function reconstruir(value,index)
@@ -414,37 +418,45 @@ function buscarPorRegionFiscal(cadena)
 
 function buscarRegionesFiscales()
 {
-    datosDhtmlRegiones=[];
-    $.ajax({
-        url:'../Controller/CatalogoProduccionController.php?Op=BuscarRegionesFiscales',
-        type:'GET',
-        // async:false,
-        success:function(datos)
-        {
-            $.each(datos,function(index,value)
+    return new Promise((resolve,reject)=>{
+        datosDhtmlRegiones=[];
+        $.ajax({
+            url:'../Controller/CatalogoProduccionController.php?Op=BuscarRegionesFiscales',
+            type:'GET',
+            // async:false,
+            success:function(datos)
             {
-                datosDhtmlRegiones.push({value:index,text:value.region_fiscal});
-            });
-            RegionesFiscalesComboDhtml.clearAll();
-            RegionesFiscalesComboDhtml.addOption(datosDhtmlRegiones);
-        },
-        error:function()
-        {
-            swalError("Error en el servidor");
-        }
+                $.each(datos,function(index,value)
+                {
+                    datosDhtmlRegiones.push({value:index,text:value.region_fiscal});
+                });
+                RegionesFiscalesComboDhtml.clearAll();
+                RegionesFiscalesComboDhtml.addOption(datosDhtmlRegiones);
+                resolve();
+            },
+            error:function()
+            {
+                swalError("Error en el servidor");
+                reject();
+            }
+        });
     });
-    
 }
 
 function refresh()
 {
     $("#btnrefrescar").attr("disabled",true);
-    buscarRegionesFiscales();
-    inicializarFiltros();
-    listarDatosPromesa = listarDatos();
-    listarDatosPromesa.then((result)=>
-    {
-        $("#btnrefrescar").removeAttr("disabled");
+    promesaBuscarRegionesFiscales = buscarRegionesFiscales();
+    promesaBuscarRegionesFiscales.then((resolve)=>{
+        inicializarFiltros();
+        listarDatosPromesa = listarDatos();
+        listarDatosPromesa.then((result)=>
+        {
+            $("#btnrefrescar").removeAttr("disabled");
+        },(error)=>{
+            growlError("ERROR!","Error al intentar refrescar datos");
+            $("#btnrefrescar").removeAttr("disabled");
+        });
     },(error)=>{
         growlError("ERROR!","Error al intentar refrescar datos");
         $("#btnrefrescar").removeAttr("disabled");
