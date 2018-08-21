@@ -224,44 +224,39 @@
                             </table>
                     </fieldset>-->
                     <div style="position: relative;width: 100%;height: 8px;"></div>
-                    <fieldset><legend><b>Ingresar Datos</b></legend>
+                    <fieldset><legend><b>Ingresar Datos Opcionales</b></legend>
+                            
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span style="border:none;background-color:transparent;" class="input-group-addon">Porcentajes</span>
+                                    <input type="checkbox" style="width: 40px; height: 40px" class="checkbox" id="checkBoxPorcentaje">
+                                </div>							
+                            </div>
+                        
                             <table>
                             <tr>	
-                                <td><label style="cursor: pointer;padding-left: 3px;">Presion<pre><input id="DATO_MANUAL_1" name=""  type="text"   ></label></td>
-                                    <td><label style="cursor: pointer;padding-left: 3px;">Temperatura<pre><input id="DATO_MANUAL_2" name=""  type="text"  ></label></td>
-                                    <td><label style="cursor: pointer;padding-left: 3px;">Producción de Petróleo Medido Neto [bbl/día]<pre><input id="DATO_MANUAL_3" name=""  type="text"  ></label></td>
-                                    <td><label style="cursor: pointer;padding-left: 3px;">°API<pre>   <input id="DATO_MANUAL_4" name="" type="text" checked ></label></td>
-                                    <td><label style="cursor: pointer;padding-left: 3px;">% S<pre>    <input id="DATO_MANUAL_5" name=""  type="text"  ></label></td>
+                                <td><label style="cursor: pointer;padding-left: 3px;">C1<pre><input id="DATO_MANUAL_1" name=""  type="text"   ></label></td>
+                                    <td><label style="cursor: pointer;padding-left: 3px;">C2<pre><input id="DATO_MANUAL_2" name=""  type="text"  ></label></td>
+                                    <td><label style="cursor: pointer;padding-left: 3px;">C3<pre><input id="DATO_MANUAL_3" name=""  type="text"  ></label></td>
+                                    <td><label style="cursor: pointer;padding-left: 3px;">C4<pre>   <input id="DATO_MANUAL_4" name="" type="text" checked ></label></td>
+                                    <td><label style="cursor: pointer;padding-left: 3px;">IC4<pre>    <input id="DATO_MANUAL_5" name=""  type="text"  ></label></td>
+                                    <td><label style="cursor: pointer;padding-left: 3px;">C5<pre>  <input id="DATO_MANUAL_6" name=""  type="text"  ></label></td>
                             </tr>
                             <tr>
-
-                            </tr>
-                            <tr>	
-                                    <td><label style="cursor: pointer;padding-left: 3px;">% H₂O <pre>  <input id="DATO_MANUAL_6" name=""  type="text"  ></label></td>
-                                    <td><label style="cursor: pointer;padding-left: 3px;">Producción de Gas Medido<pre><input id="DATO_MANUAL_7" name="pgmedido" type="text" ></label></td>
-                                    <td><label style="cursor: pointer;padding-left: 3px;">Poder Calorífico de Gas<pre><input id="DATO_MANUAL_8" name="podercalorifico"   type="text" ></label></td>
-                                    <td><label style="cursor: pointer;padding-left: 3px;">Peso Molecular de Gas<pre><input id="DATO_MANUAL_9" name="pesomolecular"  type="text"  ></label></td>
-                                    <td><label style="cursor: pointer;padding-left: 3px;">Energía de Gas<pre> <input id="DATO_MANUAL_10" name="egas"  type="text"  ></label></td>
-                            </tr>
-                            <tr>
-
-
-
-
-                                     <td><label style="cursor: pointer;padding-left: 3px;">Eventos<pre><input id="DATO_MANUAL_11" name="eventos"  type="text" ></label></td>
+                                    <td><label style="cursor: pointer;padding-left: 3px;">IC5<pre><input id="DATO_MANUAL_7" name="pgmedido" type="text" ></label></td>
+                                    <td><label style="cursor: pointer;padding-left: 3px;">C6+<pre><input id="DATO_MANUAL_8" name="podercalorifico"   type="text" ></label></td>
+                                    <td><label style="cursor: pointer;padding-left: 3px;">CO2<pre><input id="DATO_MANUAL_9" name="pesomolecular"  type="text"  ></label></td>
+                                    <td><label style="cursor: pointer;padding-left: 3px;">H2S<pre> <input id="DATO_MANUAL_10" name="egas"  type="text"  ></label></td>
+                                    <td><label style="cursor: pointer;padding-left: 3px;">N2<pre><input id="DATO_MANUAL_11" name="eventos"  type="text" ></label></td>
                             </tr>
 
-                            <tr>
-
-
-                            </tr>
                             </table>
                     </fieldset>
                     <div style="position: relative;width: 100%;height: 5px;"></div>
                     <!--</form>-->
                 
                     <div class="form-group" method="post">
-                        <button type="submit" id="btn_guardar_reportediario" class="btn crud-submit btn-info">Crear Reporte</button>
+                        <button type="submit" id="btn_guardar_reportediario" style="width:31%" class="btn crud-submit btn-info">Crear Reporte</button>
                     </div>
             </div>
         </div>

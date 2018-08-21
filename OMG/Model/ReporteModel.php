@@ -106,5 +106,20 @@ require_once '../dao/ReporteDao.php';
         } 
     }
     
+    public function insertarReporte($FECHA_CREACION, $VALOR_CHECKBOX, $ID_CATALOGOP, $USUARIO)
+    {
+        try
+        {
+            $dao=new ReporteDao();
+            $lista= $dao->insertarReporte($FECHA_CREACION, $VALOR_CHECKBOX, $ID_CATALOGOP, $USUARIO);
+            
+            return $lista;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
 }
 ?>

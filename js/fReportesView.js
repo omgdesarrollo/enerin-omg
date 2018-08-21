@@ -5,18 +5,27 @@ var ubicacionComboDhtml;
 var tagPatinComboDhtml;
 var tagMedidorComboDhtml;
 var id_catalogop;
+var valorCheckBox;
 
 $(function (){
+    
+    $('#checkBoxPorcentaje').click(function() {
+        valorCheckBox=$(this).is(':checked');
+//        alert(valorCheckBox);
+    });
     
     $("#btn_guardar_reportediario").click(function()
     {
         var FECHA_CREACION= $("#INPUT_FECHA_NUEVOREGISTRO").val();
         var ID_CATALOGOP=id_catalogop;
+        var VALOR_CHECKBOX=valorCheckBox;
         
-        alert("FECHA_CREACION: "+FECHA_CREACION+ "ID_CATALOGOP: "+ID_CATALOGOP);
+        alert("FECHA_CREACION: "+FECHA_CREACION+ "ID_CATALOGOP: "+ID_CATALOGOP+ "VALOR_CHECKBOX: "+VALOR_CHECKBOX);
+        
         datos=[];
         datos.push(FECHA_CREACION);
         datos.push(ID_CATALOGOP);
+        datos.push(VALOR_CHECKBOX);
         
         listo=
             (
@@ -344,6 +353,26 @@ function buscarTipoMedidorYOtrosDatosPorTagMedidor(tagMedidor)
     });
 }
 
+
+function insertarReporte(datos)
+{
+    $.ajax({
+        url:"../Controller/ReportesController.php?Op=Guardar",
+        type:"POST",
+        data:"FECHA_CREACION="+datos[0]+"&ID_CATALOGOP="+datos[1]+"&VALOR_CHECKBOX="+datos[2],
+        async:false,
+        success:function()
+        {
+            alert("Entro al success");
+            
+        },
+        error:function()
+        {
+            
+        }
+    });
+    
+}
 
 
 function reconstruir(value,index)

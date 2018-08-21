@@ -68,6 +68,13 @@ switch($Op)
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
         break;
+    
+    case 'Guardar':
+        $USUARIO=Session::getSesion("user");;
+        $Lista= $modelReporte->insertarReporte($_REQUEST['FECHA_CREACION'],$_REQUEST['VALOR_CHECKBOX'],$_REQUEST['ID_CATALOGOP'],$USUARIO["ID_USUARIO"]);
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+        break;
 
     default:
         echo -1;
