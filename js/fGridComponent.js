@@ -98,7 +98,10 @@ MyCControlField.prototype = new jsGrid.Field
         itemTemplate: function(value,todo)
         {
             var returnTemp;
-            value == 0 ? returnTemp = "" : returnTemp = this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button ',title:"Eliminar", type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
+            
+            // value == 0 ? returnTemp = "" : returnTemp = this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button ',title:"Eliminar", type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
+            returnTemp = "<input class='jsgrid-button jsgrid-edit-button' type='button' title='Editar' onClick='modoEditar()'>";
+            returnTemp += "<input class='jsgrid-button jsgrid-delete-button' type='button' title='Eliminar' onClick='preguntarEliminar("+JSON.stringify(todo)+")'>";
             // console.log(returnTemp);
             return returnTemp;
         },
@@ -127,6 +130,11 @@ function aceptarEdicion()
 function cancelarEdicion()
 {
     $("#jsGrid").jsGrid("cancelEdit");
+}
+
+function modoEditar()
+{
+    $("#grid").jsGrid("updateItem");
 }
 
 function loadBlockUi()
