@@ -155,6 +155,27 @@ class ReporteDao{
         }
     }
     
+    public function insertarReporte($FECHA_CREACION,$VALOR_CHECKBOX,$ID_CATALOGOP,$USUARIO)
+    {
+        try
+        {
+           $query="INSERT INTO omg_reporte_produccion (omgc1,omgc2,omgc3,omgc4,omgc5,omgc6,omgc7,omgc8,omgc9,omgc10,omgc11,omgc12,omgc13,omgc14,omgc15,												
+                   omgc16,omgc17,omgc18,checkbox,omgc19,omgc20,omgc21,omgc22,omgc23,omgc24,omgc25,omgc26,omgc27,omgc28,omgc29,id_catalogop,usuario)
+                   VALUES('$FECHA_CREACION',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,$VALOR_CHECKBOX,null,null,null,null,null,
+                   null,null,null,null,null,null,$ID_CATALOGOP,$USUARIO)";
+           
+           $db = AccesoDB::getInstancia();
+           $lista = $db->executeQueryUpdate($query);
+           return $lista;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+        
+        
+    }
+    
     
 }
 
