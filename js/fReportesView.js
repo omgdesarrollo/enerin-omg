@@ -5,27 +5,27 @@ var ubicacionComboDhtml;
 var tagPatinComboDhtml;
 var tagMedidorComboDhtml;
 var id_catalogop;
-var valorCheckBox;
+//var valorCheckBox;
 
 $(function (){
     
-    $('#checkBoxPorcentaje').click(function() {
-        valorCheckBox=$(this).is(':checked');
-//        alert(valorCheckBox);
-    });
+//    $('#checkBoxPorcentaje').click(function() {
+//        valorCheckBox=$(this).is(':checked');
+////        alert(valorCheckBox);
+//    });
     
     $("#btn_guardar_reportediario").click(function()
     {
         var FECHA_CREACION= $("#INPUT_FECHA_NUEVOREGISTRO").val();
         var ID_CATALOGOP=id_catalogop;
-        var VALOR_CHECKBOX=valorCheckBox;
+//        var VALOR_CHECKBOX=valorCheckBox;
         
-        alert("FECHA_CREACION: "+FECHA_CREACION+ "ID_CATALOGOP: "+ID_CATALOGOP+ "VALOR_CHECKBOX: "+VALOR_CHECKBOX);
+//        alert("FECHA_CREACION: "+FECHA_CREACION+ "ID_CATALOGOP: "+ID_CATALOGOP);
         
         datos=[];
         datos.push(FECHA_CREACION);
         datos.push(ID_CATALOGOP);
-        datos.push(VALOR_CHECKBOX);
+//        datos.push(VALOR_CHECKBOX);
         
         listo=
             (
@@ -34,9 +34,19 @@ $(function (){
                true: false: false
             );
             
-            alert("valor listo: "+listo);
+//            alert("valor listo: "+listo);
            listo ?  insertarReporte(datos):swalError("Completar campos");
    
+    });
+    
+    $("#btn_limpiar").click(function(){
+
+          $("#INPUT_FECHA_NUEVOREGISTRO").val("");
+          $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").val("");
+          $("#INPUT_CONTRATO_NUEVOREGISTRO").val("");
+          $("#INPUT_UBICACION_NUEVOREGISTRO").val("");
+          $("#INPUT_TAGPATIN_NUEVOREGISTRO").val("");
+          $("#INPUT_TAGMEDIDOR_NUEVOREGISTRO").val("");
     });
     
 
@@ -359,12 +369,36 @@ function insertarReporte(datos)
     $.ajax({
         url:"../Controller/ReportesController.php?Op=Guardar",
         type:"POST",
-        data:"FECHA_CREACION="+datos[0]+"&ID_CATALOGOP="+datos[1]+"&VALOR_CHECKBOX="+datos[2],
+        data:"FECHA_CREACION="+datos[0]+"&ID_CATALOGOP="+datos[1],
         async:false,
-        success:function()
+        success:function(datos)
         {
-            alert("Entro al success");
-            
+//            alert("Entro al success: "+datos);
+            if(typeof(datos) == "object")
+            {
+//                alert("Entro aqui");
+                tempData;
+                swalSuccess("Reporte Creado");                
+                $.each(datos,function(index,value)
+                {
+//                   console.log("Este es el value: "+value); 
+                   tempData= reconstruir(value,ultimoNumeroGrid+1);  
+                });
+//                console.log(tempData);
+                
+                $("#jsGrid").jsGrid("insertItem",tempData).done(function()
+                {
+                    $("#nuevoReporteModal .close ").click();
+                });
+                
+            } else{
+                if(datos==0)
+                {
+                    swalError("Error, No se pudo crear el Documento");                    
+                } else{
+                    swalInfo("Creado, Pero no listado, Actualice");
+                }                
+            }
         },
         error:function()
         {
@@ -375,13 +409,225 @@ function insertarReporte(datos)
 }
 
 
+function construirGrid()
+{
+    jsGrid.fields.customControl = MyCControlField;
+        db=
+        {
+            loadData: function()
+            {
+                return DataGrid;
+            },
+            insertItem: function(item)
+            {
+                return item;
+            },
+        };
+    
+    $("#jsGrid").jsGrid({
+         onInit: function(args)
+         {
+             gridInstance=args.grid;
+             jsGrid.Grid.prototype.autoload=true;
+             jsGrid.ControlField.prototype.deleteButton=false;
+         },
+        onDataLoading: function(args)
+        {
+            loadBlockUi();
+        },
+        onDataLoaded:function(args)
+        {
+            $('.jsgrid-filter-row').removeAttr("style",'display:none');
+        },
+        onRefreshing: function(args) {
+        },
+        
+        width: "100%",
+        height: "300px",
+        autoload:true,
+        heading: true,
+        sorting: true,
+        editing: true,
+//        sorter:true,
+        paging: true,
+        controller:db,
+        pageLoading:false,
+        pageSize: 10,
+        pageButtonCount: 5,
+        updateOnResize: true,
+        confirmDeleting: true,
+        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+        fields: [
+                { name:"id_principal", visible:false},
+                { name:"no",title:"No",width:60},
+                { name:"clave_contrato", title: "ID del Contrato o Asignación", type: "text", width: 150, validate: "required", "editing": false},
+                { name:"region_fiscal", title: "Region Fiscal", type: "text", width: 150, validate: "required", "editing": false},
+                { name:"ubicacion", title: "Ubicación del Punto de Medición", type: "text", width: 150, validate: "required", "editing": false},
+                { name:"tag_patin", title: "Tag del Patin de Medición", type: "text", width: 130, validate: "required","editing": false },
+                { name:"tipo_medidor", title: "Tipo de Medidor", type: "text", width: 150, validate: "required", "editing": false},    
+                { name:"tag_medidor", title: "Tag del Medidor", type: "text", width: 130, validate: "required", "editing": false},
+                { name:"clasificacion", title: "Clasificación del Sistema de Medición", type: "text", width: 150, validate: "required", "editing": false},
+                { name:"hidrocarburo", title: "Tipo de Hidrocarburo", type: "text", width: 150, validate: "required", "editing": false},
+                { name:"omgc1", title: "Fecha Produccion", type: "text", width: 150, validate: "required", "editing": false},
+                { name:"omgc2", title: "Presion", type: "text", width: 150},
+                { name:"omgc3", title: "Temperatura", type: "text", width: 150},
+                { name:"omgc4", title: "Produccion de Petroleo", type: "text", width: 150},
+                { name:"omgc5", title: "°AP(PETROLEO)I", type: "text", width: 150},
+                { name:"omgc6", title: "%S(PETROLEO)", type: "text", width: 150},
+                { name:"omgc7", title: "Sal", type: "text", width: 150},
+                { name:"omgc8", title: "%H20(PETROLEO)", type: "text", width: 150},
+                { name:"omgc9", title: "Produccion de condensado Medido Neto", type: "text", width: 190},
+                { name:"omgc10", title: "°API(CONDENSADO)", type: "text", width: 170},
+                { name:"omgc11", title: "%S(CONDENSADO)", type: "text", width: 170},
+                { name:"omgc12", title: "%H20(CONDENSADO)", type: "text", width: 180},
+                { name:"omgc13", title: "Produccion de gas medido", type: "text", width: 180},
+                { name:"omgc14", title: "Poder Calorifico de gas", type: "text", width: 180},
+                { name:"omgc15", title: "Peso Molecular de gas", type: "text", width: 150},
+                { name:"omgc16", title: "Energia de gas", type: "text", width: 150},
+                { name:"omgc17", title: "Eventos", type: "text", width: 150},
+//                { name:"omgc18", title: "Fecha Real Reporte", type: "text", width: 190},
+                
+                { name:"delete", title:"Opción", type:"customControl",sorting:"" }
+        ],
+        
+        onItemUpdated: function(args)
+        {
+            console.log(args);
+            columnas={};
+            id_afectado=args["item"]["id_principal"][0];
+//            alert("ID afectado");
+            $.each(args["item"],function(index,value)
+            {
+                if(args["previousItem"][index] != value && value!="")
+                {
+                        if(index!="id_principal" && !value.includes("<button") && index!="delete")
+                        {
+                                columnas[index]=value;
+                        }
+                }
+            });
+            if(Object.keys(columnas).length!=0)
+            {
+                    $.ajax({
+                            url: '../Controller/GeneralController.php?Op=Actualizar',
+                            type:'GET',
+                            data:'TABLA=omg_reporte_produccion'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
+                            success:function(exito)
+                            {
+                                refresh();
+                                swal("","Actualizacion Exitosa!","success");
+                                setTimeout(function(){swal.close();},1000);
+                            },
+                            error:function()
+                            {
+                                swal("","Error en el servidor","error");
+                                setTimeout(function(){swal.close();},1500);
+                            }
+                    });
+            }
+        },
+        
+        
+    });
+}
+
+
+var MyCControlField = function(config)
+{
+    jsGrid.Field.call(this, config);
+};
+
+
+MyCControlField.prototype = new jsGrid.Field
+({
+        css: "date-field",
+        align: "center",
+        sorter: function(date1, date2)
+        {
+            console.log("haber cuando entra aqui");
+            console.log(date1);
+            console.log(date2);
+            // return 1;
+        },
+        itemTemplate: function(value,todo)
+        {
+//            alert(value,todo);
+//            if(value[0]['reg']!="0" || value[0]['validado']!=0)
+//                return "";
+//            else
+//            return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button ',title:"Eliminar", type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
+            return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-edit-button ',title:"Editar", type:'button'});
+        },
+        insertTemplate: function(value)
+        {
+        },
+        editTemplate: function(value)
+        {
+            val = "<input class='jsgrid-button jsgrid-update-button' type='button' title='Actualizar' onClick='aceptarEdicion()'>";
+            val += "<input class='jsgrid-button jsgrid-cancel-edit-button' type='button' title='Cancelar Edición' onClick='cancelarEdicion()'>";
+            return val;
+        },
+        insertValue: function()
+        {
+        },
+        editValue: function()
+        {
+        }
+});
+
+
+function cancelarEdicion()
+{
+    $("#jsGrid").jsGrid("cancelEdit");
+}
+
+function aceptarEdicion()
+{
+    gridInstance.updateItem();
+}
+
+
+function listarDatos()//listarDatos
+{
+    __datos=[];
+    datosParamAjaxValues={};
+    datosParamAjaxValues["url"]="../Controller/ReportesController.php?Op=listar&data=2";
+    datosParamAjaxValues["type"]="POST";
+    datosParamAjaxValues["async"]=false;
+    var variablefunciondatos=function obtenerDatosServer(data)
+    {
+        dataListado = data;
+        $.each(data,function (index,value)
+        {
+            __datos.push( reconstruir(value,index++) );
+        });
+    }
+    var listfunciones=[variablefunciondatos];
+    ajaxHibrido(datosParamAjaxValues,listfunciones);
+    DataGrid = __datos;
+//    return 1;
+}
+
+
+function reconstruirTable(_datos)
+{
+    __datos=[];
+    $.each(_datos,function(index,value)
+    {
+        __datos.push(reconstruir(value,index++));
+    });
+    construirGrid(__datos);
+}
+
+
 function reconstruir(value,index)
 {
     tempData = new Object();
+    ultimoNumeroGrid = index;
+    tempData["id_principal"] = [{"id_reporte":value.id_reporte}];
     tempData["no"] = index;
-    tempData["id_principal"] = [{"id_contrato":value.id_contrato}];
-    tempData["region_fiscal"] = value.region_fiscal;
     tempData["clave_contrato"] = value.clave_contrato;
+    tempData["region_fiscal"] = value.region_fiscal;
     tempData["ubicacion"] = value.ubicacion;
     tempData["tag_patin"] = value.tag_patin;
     tempData["tipo_medidor"] = value.tipo_medidor;
@@ -405,105 +651,24 @@ function reconstruir(value,index)
     tempData["omgc15"] = value.omgc15;
     tempData["omgc16"] = value.omgc16;
     tempData["omgc17"] = value.omgc17;
-    tempData["omgc18"] = value.omgc18;
+//    tempData["omgc18"] = value.omgc18;
     tempData["delete"] = "1";
     return tempData;
 }
-function listarDatosReportes()//listarDatos
-{
-    __datos=[];
-    datosParamAjaxValues={};
-    datosParamAjaxValues["url"]="../Controller/ReportesController.php?Op=listar&data=2";
-    datosParamAjaxValues["type"]="POST";
-    datosParamAjaxValues["async"]=false;
-    var variablefunciondatos=function obtenerDatosServer(data)
-    {
-        dataListado = data;
-        $.each(data,function (index,value)
-        {
-            __datos.push( reconstruir(value,index++) );
-        });
-    }
-    var listfunciones=[variablefunciondatos];
-    ajaxHibrido(datosParamAjaxValues,listfunciones);
-    DataGrid = __datos;
-//    return 1;
-}
 
-function construirGrid()
-{
-//    jsGrid.fields.customControl = MyCControlField;
-        db=
-        {
-            loadData: function()
-            {
-                return DataGrid;
-            },
-        };
-    
-    $("#jsGrid").jsGrid({
-         onInit: function(args)
-         {
-             gridInstance=args.grid;
-             jsGrid.Grid.prototype.autoload=true;
-         },
-        onDataLoading: function(args)
-        {
-//            loadBlockUi();
-        },
-        onDataLoaded:function(args)
-        {
-//            $('.jsgrid-filter-row').removeAttr("style",'display:none');
-        },
-        width: "100%",
-        height: "300px",
-        autoload:true,
-        heading: true,
-        sorting: true,
-//        sorter:true,
-        paging: true,
-        controller:db,
-        pageLoading:false,
-        pageSize: 10,
-        pageButtonCount: 5,
-        updateOnResize: true,
-        confirmDeleting: true,
-        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
-        fields: [
-                { name:"id_principal", visible:false},
-                { name:"clave_contrato", title: "ID del Contrato o Asignación", type: "text", width: 150, validate: "required" },
-                { name:"region_fiscal", title: "Region Fiscal", type: "text", width: 150, validate: "required" },
-                { name:"ubicacion", title: "Ubicación del Punto de Medición", type: "text", width: 150, validate: "required" },
-                { name:"tag_patin", title: "Tag del Patin de Medición", type: "text", width: 130, validate: "required" },
-                { name:"tipo_medidor", title: "Tipo de Medidor", type: "text", width: 150, validate: "required" },    
-                { name:"tag_medidor", title: "Tag del Medidor", type: "text", width: 130, validate: "required" },
-                { name:"clasificacion", title: "Clasificación del Sistema de Medición", type: "text", width: 150, validate: "required" },
-                { name:"hidrocarburo", title: "Tipo de Hidrocarburo", type: "text", width: 150, validate: "required" },
-                { name:"omgc1", title: "Fecha Produccion", type: "text", width: 150, validate: "required" },
-                { name:"omgc2", title: "Presion", type: "text", width: 150, validate: "required" },
-                { name:"omgc3", title: "Temperatura", type: "text", width: 150, validate: "required" },
-                { name:"omgc4", title: "Produccion de Petroleo", type: "text", width: 150, validate: "required" },
-                { name:"omgc5", title: "°AP(PETROLEO)I", type: "text", width: 150, validate: "required" },
-                { name:"omgc6", title: "%S(PETROLEO)", type: "text", width: 150, validate: "required" },
-                { name:"omgc7", title: "Sal", type: "text", width: 150, validate: "required" },
-                { name:"omgc8", title: "%H20(PETROLEO)", type: "text", width: 150, validate: "required" },
-                { name:"omgc9", title: "Produccion de condensado Medido Neto", type: "text", width: 190, validate: "required" },
-                { name:"omgc10", title: "°API(CONDENSADO)", type: "text", width: 170, validate: "required" },
-                { name:"omgc11", title: "%S(CONDENSADO)", type: "text", width: 170, validate: "required" },
-                { name:"omgc12", title: "%H20(CONDENSADO)", type: "text", width: 180, validate: "required" },
-                { name:"omgc13", title: "Produccion de gas medido", type: "text", width: 180, validate: "required" },
-                { name:"omgc14", title: "Poder Calorifico de gas", type: "text", width: 180, validate: "required" },
-                { name:"omgc15", title: "Peso Molecular de gas", type: "text", width: 150, validate: "required" },
-                { name:"omgc16", title: "Energia de gas", type: "text", width: 150, validate: "required" },
-                { name:"omgc17", title: "Eventos", type: "text", width: 150, validate: "required" },
-                { name:"omgc18", title: "Fecha Real Reporte", type: "text", width: 190, validate: "required" }
-                
-//                { name:"delete", title:"Opción", type:"customControl" }
-        ]
-        
-        
-    });
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function precargados()
     {
@@ -551,7 +716,30 @@ function precargados()
             }
         });
     }
-    
 
+
+function refresh()
+{
+   listarDatos();
+//   inicializarFiltros();
+//   construirFiltros();
+   gridInstance.loadData();
+}
+
+
+function loadBlockUi()
+{
+    $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF"> Espere Por Favor</span>', css:
+    { 
+        border: 'none', 
+        padding: '15px', 
+        backgroundColor: '#000', 
+        '-webkit-border-radius': '10px', 
+        '-moz-border-radius': '10px', 
+        opacity: .5, 
+        color: '#fff' 
+    },overlayCSS: { backgroundColor: '#000000',opacity:0.1,cursor:'wait'} }); 
+    setTimeout($.unblockUI, 2000);
+}
 
 
