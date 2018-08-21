@@ -382,6 +382,7 @@ function reconstruir(value,index)
 }
 function listarDatosReportes()//listarDatos
 {
+    
     __datos=[];
     datosParamAjaxValues={};
     datosParamAjaxValues["url"]="../Controller/ReportesController.php?Op=listar&data=2";

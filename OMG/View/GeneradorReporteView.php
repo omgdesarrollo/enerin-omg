@@ -177,7 +177,10 @@ $(function()
      $btntoExcel.on("click",function()
     {
         bandera=true;
+        growlWait("Reporte","Generando Reporte")
+                                
         obtenerDatosReporte();
+        growlSuccess("Reporte","Reporte Generado Exitoso");
     });
 
      fechas_inicio_final["fecha_inicio"]=$("#fechaInicio").val();

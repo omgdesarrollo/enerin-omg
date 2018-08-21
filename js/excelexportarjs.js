@@ -50,6 +50,7 @@
                 case 'table':
                     break;
                 case 'json':
+//                    alert();
                     gridData = $settings.dataset;
                     break;
                 case 'xml':
@@ -86,7 +87,7 @@
         }
 
         function ConvertDataStructureToTable() {
-            alert("d");
+//            alert("d");
             var result = "<table id='tabledata'";
 
             result += "<thead><tr>";
