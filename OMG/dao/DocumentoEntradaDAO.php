@@ -273,7 +273,7 @@ class DocumentoEntradaDAO{
             $dato = $db->executeQuery($query);
             
             return $dato[0];
-        } catch(Except $ex)
+        } catch(Exception $ex)
         {
             throw $ex;
         }
