@@ -84,7 +84,7 @@ function construirGridGenerador()
                 { name:"omgc2", title: "Presion", type: "text", width: 150, validate: "required" },
                 { name:"omgc3", title: "Temperatura", type: "text", width: 150, validate: "required" },
                 { name:"omgc4", title: "Produccion de Petroleo", type: "text", width: 150, validate: "required" },
-                { name:"omgc5", title: "°AP(PETROLEO)I", type: "text", width: 150, validate: "required" },
+                { name:"omgc5", title: "°AP(PETROLEO)I", type: "text", width: 150, validate: "required"},
                 { name:"omgc6", title: "%S(PETROLEO)", type: "text", width: 150, validate: "required"},
                 { name:"omgc7", title: "Sal", type: "text", width: 150, validate: "required" },
                 { name:"omgc8", title: "%H20(PETROLEO)", type: "text", width: 150, validate: "required" },
