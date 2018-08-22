@@ -103,7 +103,7 @@ function construirGrid()
         fields: 
         [
             { name: "id_principal",visible:false},
-            { name:"no",title:"No",width:60},
+            { name:"no",title:"No",width:20},
             { name: "clave_documento",title:"Clave del Documento", type: "text", validate: "required" },
             { name: "documento",title:"Documento", type: "text", validate: "required" },
             { name: "id_empleado",title:"Responsable del Documento", type: "select",

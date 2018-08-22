@@ -66,7 +66,30 @@ class ReporteDao{
         try
         {
             $query="SELECT DISTINCT tbasignaciones_contrato.clave_contrato, tbasignaciones_contrato.region_fiscal, tbcatalogo_produccion.ubicacion,
+                    tbcatalogo_produccion.tag_patin, tbcatalogo_produccion.tipo_medidor                 
+                    FROM catalogo_produccion tbcatalogo_produccion
+                    LEFT JOIN asignaciones_contrato tbasignaciones_contrato ON tbasignaciones_contrato.id_asignacion=tbcatalogo_produccion.id_asignacion
+                    WHERE tbasignaciones_contrato.contrato = $CONTRATO AND lower(tbasignaciones_contrato.region_fiscal) = lower('$CADENA') 
+                    GROUP BY tbcatalogo_produccion.ubicacion";
+            
+            $db = AccesoDB::getInstancia();
+            $exito = $db->executeQuery($query);
+            return $exito;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    
+    public function buscarID2($CONTRATO,$CADENA)
+    {
+        try
+        {
+            $query="SELECT DISTINCT tbasignaciones_contrato.clave_contrato, tbasignaciones_contrato.region_fiscal, tbcatalogo_produccion.ubicacion,
                     tbcatalogo_produccion.tag_patin, tbcatalogo_produccion.tipo_medidor
+                    
                     FROM catalogo_produccion tbcatalogo_produccion
                     JOIN asignaciones_contrato tbasignaciones_contrato ON tbasignaciones_contrato.id_asignacion=tbcatalogo_produccion.id_asignacion
                     WHERE tbasignaciones_contrato.contrato = $CONTRATO AND tbasignaciones_contrato.region_fiscal LIKE '%$CADENA%' GROUP BY tbcatalogo_produccion.ubicacion";
@@ -191,9 +214,47 @@ class ReporteDao{
         {
             throw $ex;
             return -1;
+        }               
+    }
+    
+    
+    public function verificarTagMedidor($ID_CATALOGOP)
+    {
+        try
+        {
+            $query="SELECT tbcatalogo_produccion.tag_medidor
+                    FROM catalogo_produccion tbcatalogo_produccion
+                    WHERE tbcatalogo_produccion.id_catalogop=$ID_CATALOGOP";
+            
+            $db= AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            return $lista[0]['tag_medidor'];           
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
         }
-        
-        
+    }
+    
+    
+    public function verificarSiExisteElTagMedidorPorFecha($TAG_MEDIDOR,$FECHA_CREACION)
+    {
+        try
+        {
+            $query="SELECT COUNT(*) AS resultado
+                    FROM omg_reporte_produccion tbomg_reporte_produccion
+                    JOIN catalogo_produccion tbcatalogo_produccion ON tbcatalogo_produccion.id_catalogop=tbomg_reporte_produccion.id_catalogop 
+                    WHERE tbcatalogo_produccion.tag_medidor='$TAG_MEDIDOR' AND tbomg_reporte_produccion.omgc1='$FECHA_CREACION'";
+            
+            $db= AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            return $lista[0]['resultado'];
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
     }
     
     
