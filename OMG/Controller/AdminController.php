@@ -8,7 +8,7 @@ require_once '../Model/EmpleadoModel.php';
 // require_once '../Pojo/SeguimientoEntradaPojo.php';
 require_once '../util/Session.php';
 
-
+ 
 
 $Op=$_REQUEST["Op"];
 $model = new AdminModel();

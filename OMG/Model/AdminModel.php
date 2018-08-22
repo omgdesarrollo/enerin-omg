@@ -168,7 +168,7 @@ class AdminModel{
             }
             
         }
-        catch(Excepction $ex)
+        catch(Exception $ex)
         {
             throw $ex;
             return false;
@@ -190,7 +190,7 @@ class AdminModel{
                 return 0;
             }
         }
-        catch(Excepction $ex)
+        catch(Exception $ex)
         {
             throw $ex;
             return false;
@@ -205,7 +205,7 @@ class AdminModel{
             $rec = $dao->cambiarPass($USUARIO,$CONTRASENA,$VALOR);
             return $rec;
         }
-        catch(Excepction $ex)
+        catch(Exception $ex)
         {
             throw $ex;
             return false;
@@ -219,7 +219,7 @@ class AdminModel{
             $rec = $dao->cambiarPermisoCumplimiento($ID_USUARIO,$ID_CUMPLIMIENTO,$VALOR);
             return $rec;
         }
-        catch(Excepction $ex)
+        catch(Exception $ex)
         {
             throw $ex;
             return false;

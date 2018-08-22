@@ -122,7 +122,7 @@ class EvidenciasDAO
             $db = AccesoDB::getInstancia();
             $res = $db->executeQueryUpdate($query);
             return $res;
-        }catch(Exection $ex)
+        }catch(Exception $ex)
         {
             throw $ex;
             return false;
