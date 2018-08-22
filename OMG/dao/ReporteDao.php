@@ -11,7 +11,7 @@ class ReporteDao{
                     tbasignaciones_contrato.contrato,
                     tbcatalogo_produccion.ubicacion, tbcatalogo_produccion.tag_patin, tbcatalogo_produccion.tipo_medidor,
                     tbcatalogo_produccion.tag_medidor, tbcatalogo_produccion.clasificacion,
-                    tbcatalogo_produccion.hidrocarburo,tbomg_reporte.omgc1,tbomg_reporte.omgc2,tbomg_reporte.omgc3,
+                    tbcatalogo_produccion.hidrocarburo,tbomg_reporte.id_reporte,tbomg_reporte.omgc1,tbomg_reporte.omgc2,tbomg_reporte.omgc3,
                     tbomg_reporte.omgc4,tbomg_reporte.omgc5,tbomg_reporte.omgc6,tbomg_reporte.omgc7,tbomg_reporte.omgc8,tbomg_reporte.omgc9,
                     tbomg_reporte.omgc10,tbomg_reporte.omgc11,tbomg_reporte.omgc12,tbomg_reporte.omgc13,tbomg_reporte.omgc14,tbomg_reporte.omgc15,
                     tbomg_reporte.omgc16,tbomg_reporte.omgc17,tbomg_reporte.omgc18
@@ -31,32 +31,37 @@ class ReporteDao{
         
     }
     
-    public function listarReportesporFecha2($FECHA_INICIO,$FECHA_FINAL,$CONTRATO)
+    
+    public function listarReporte($ID_REPORTE,$CONTRATO)
     {
         try
         {
-            $query="SELECT tbomg_reporte_produccion.id_reporte, tbomg_reporte_produccion.id_contrato, tbomg_reporte_produccion.omgc1,
-		 tbomg_reporte_produccion.omgc2, tbomg_reporte_produccion.omgc3, tbomg_reporte_produccion.omgc4, tbomg_reporte_produccion.omgc5,
-		 tbomg_reporte_produccion.omgc6, tbomg_reporte_produccion.omgc7, tbomg_reporte_produccion.omgc8, tbomg_reporte_produccion.omgc9,
-		 tbomg_reporte_produccion.omgc10, tbomg_reporte_produccion.omgc11, tbomg_reporte_produccion.omgc12, tbomg_reporte_produccion.omgc13,
-		 tbomg_reporte_produccion.omgc14, tbomg_reporte_produccion.omgc15, tbomg_reporte_produccion.omgc16, tbomg_reporte_produccion.omgc17,
-		 tbomg_reporte_produccion.omgc18		 
-                 FROM omg_reporte_produccion tbomg_reporte_produccion
-                 WHERE tbomg_reporte_produccion.omgc1 BETWEEN '$FECHA_INICIO' AND '$FECHA_FINAL' AND tbomg_reporte_produccion.id_contrato=$CONTRATO";
-            
+            $query="SELECT tbasignaciones_contrato.id_asignacion, tbasignaciones_contrato.clave_contrato, tbasignaciones_contrato.region_fiscal,
+                    tbasignaciones_contrato.contrato,
+                    tbcatalogo_produccion.ubicacion, tbcatalogo_produccion.tag_patin, tbcatalogo_produccion.tipo_medidor,
+                    tbcatalogo_produccion.tag_medidor, tbcatalogo_produccion.clasificacion,
+                    tbcatalogo_produccion.hidrocarburo,tbomg_reporte.id_reporte,tbomg_reporte.omgc1,tbomg_reporte.omgc2,tbomg_reporte.omgc3,
+                    tbomg_reporte.omgc4,tbomg_reporte.omgc5,tbomg_reporte.omgc6,tbomg_reporte.omgc7,tbomg_reporte.omgc8,tbomg_reporte.omgc9,
+                    tbomg_reporte.omgc10,tbomg_reporte.omgc11,tbomg_reporte.omgc12,tbomg_reporte.omgc13,tbomg_reporte.omgc14,tbomg_reporte.omgc15,
+                    tbomg_reporte.omgc16,tbomg_reporte.omgc17,tbomg_reporte.omgc18
+                    FROM catalogo_produccion tbcatalogo_produccion
+                    JOIN omg_reporte_produccion tbomg_reporte ON tbomg_reporte.id_catalogop=tbcatalogo_produccion.id_catalogop
+                    JOIN asignaciones_contrato tbasignaciones_contrato ON tbasignaciones_contrato.id_asignacion=tbcatalogo_produccion.id_asignacion
+                    WHERE tbomg_reporte.id_reporte=$ID_REPORTE AND tbasignaciones_contrato.contrato = $CONTRATO";
             $db=  AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
             return $lista;
-            
-        } catch (Exception $ex)
+          
+            } catch (Exception $ex)
         {
             throw $ex;
             return -1;
         }
+        
     }
     
     
-        public function buscarID($CONTRATO,$CADENA)
+    public function buscarID($CONTRATO,$CADENA)
     {
         try
         {
@@ -155,18 +160,33 @@ class ReporteDao{
         }
     }
     
-    public function insertarReporte($FECHA_CREACION,$VALOR_CHECKBOX,$ID_CATALOGOP,$USUARIO)
+    public function insertarReporte($FECHA_CREACION,$ID_CATALOGOP,$USUARIO)
     {
         try
         {
+            $query_obtenerMaximo_mas_uno="SELECT max(id_reporte)+1 as id_reporte FROM omg_reporte_produccion";
+            $db_obtenerMaximo_mas_uno=AccesoDB::getInstancia();
+            $lista_id_nuevo_autoincrementado=$db_obtenerMaximo_mas_uno->executeQuery($query_obtenerMaximo_mas_uno);
+            $id_nuevo=0;
+            
+            foreach ($lista_id_nuevo_autoincrementado as $value) {
+               $id_nuevo= $value["id_reporte"];
+            }
+             if($id_nuevo==NULL){
+                $id_nuevo=0;
+            }
+            
            $query="INSERT INTO omg_reporte_produccion (omgc1,omgc2,omgc3,omgc4,omgc5,omgc6,omgc7,omgc8,omgc9,omgc10,omgc11,omgc12,omgc13,omgc14,omgc15,												
-                   omgc16,omgc17,omgc18,checkbox,omgc19,omgc20,omgc21,omgc22,omgc23,omgc24,omgc25,omgc26,omgc27,omgc28,omgc29,id_catalogop,usuario)
-                   VALUES('$FECHA_CREACION',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,$VALOR_CHECKBOX,null,null,null,null,null,
-                   null,null,null,null,null,null,$ID_CATALOGOP,$USUARIO)";
+                   omgc16,omgc17,omgc18,id_catalogop,usuario)
+                   VALUES('$FECHA_CREACION',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,$ID_CATALOGOP,$USUARIO)";
            
-           $db = AccesoDB::getInstancia();
-           $lista = $db->executeQueryUpdate($query);
-           return $lista;
+           $db=  AccesoDB::getInstancia();
+           $exito = $db->executeUpdateRowsAfected($query);
+           return ($exito != 0)?[0=>1,"id_nuevo"=>$id_nuevo]:[0=>0,"id_nuevo"=>$id_nuevo ];
+           
+//           $db = AccesoDB::getInstancia();
+//           $lista = $db->executeQueryUpdate($query);
+//           return $lista;
         } catch (Exception $ex)
         {
             throw $ex;

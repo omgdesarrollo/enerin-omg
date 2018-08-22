@@ -57,7 +57,7 @@ class Exportar {
 
     public static function toXml()
     {
-        $array = Export::data();
+        $array = Exportar::data();
 
         if (count($array) == 0) {
             throw new Exception("Array cannot be empty");
