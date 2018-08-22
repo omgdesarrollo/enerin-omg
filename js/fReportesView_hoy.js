@@ -4,24 +4,28 @@ var contratoComboDhtml;
 var ubicacionComboDhtml;
 var tagPatinComboDhtml;
 var tagMedidorComboDhtml;
-var tipoMedidorComboDhtml;
-var clasificacionComboDhtml;
-var hidrocarburoComboDhtml;
 var id_catalogop;
-var tag_medidor;
+//var valorCheckBox;
 
 $(function (){
-        
+    
+//    $('#checkBoxPorcentaje').click(function() {
+//        valorCheckBox=$(this).is(':checked');
+////        alert(valorCheckBox);
+//    });
+    
     $("#btn_guardar_reportediario").click(function()
     {
         var FECHA_CREACION= $("#INPUT_FECHA_NUEVOREGISTRO").val();
         var ID_CATALOGOP=id_catalogop;
+//        var VALOR_CHECKBOX=valorCheckBox;
         
 //        alert("FECHA_CREACION: "+FECHA_CREACION+ "ID_CATALOGOP: "+ID_CATALOGOP);
         
         datos=[];
         datos.push(FECHA_CREACION);
         datos.push(ID_CATALOGOP);
+//        datos.push(VALOR_CHECKBOX);
         
         listo=
             (
@@ -36,96 +40,96 @@ $(function (){
     });
     
     $("#btn_limpiar").click(function(){
-                   
+
           $("#INPUT_FECHA_NUEVOREGISTRO").val("");
-          RegionesFiscalesComboDhtml.setComboText("");
-          contratoComboDhtml.setComboText("");
-          ubicacionComboDhtml.setComboText("");
-          tagPatinComboDhtml.setComboText("");
-          tagMedidorComboDhtml.setComboText("");
-          tipoMedidorComboDhtml.setComboText("");
-          clasificacionComboDhtml.setComboText("");
-          hidrocarburoComboDhtml.setComboText("");
+          $("#INPUT_REGIONFISCAL_NUEVOREGISTRO").val("");
+          $("#INPUT_CONTRATO_NUEVOREGISTRO").val("");
+          $("#INPUT_UBICACION_NUEVOREGISTRO").val("");
+          $("#INPUT_TAGPATIN_NUEVOREGISTRO").val("");
+          $("#INPUT_TAGMEDIDOR_NUEVOREGISTRO").val("");
     });
     
 
+    primera = true;
     RegionesFiscalesComboDhtml.attachEvent("onChange", function(value, text)
     {
+//            alert("entro a RegionesFiscales: "+text);
+        if(primera)
+        {
             region_fiscal=text;
             selectItemCombo(value,text);
-    }); 
+            primera = false;
+        }
+        else
+            primera = true;
+    });
+    
     RegionesFiscalesComboDhtml.attachEvent("onOpen", function()
     {
         this.DOMlist.style.zIndex = 2000;
     });
     
-    ubicacionComboDhtml.attachEvent("onChange", function(value, text)
-    {
-        ubicacion=text;
-        selectItemComboUbicacion(value,text);
-    });
-    ubicacionComboDhtml.attachEvent("onOpen", function()
-    {
-        this.DOMlist.style.zIndex = 2000;
-    });
     
-    tagPatinComboDhtml.attachEvent("onChange", function(value, text)
-    {
-        tag_patin=text;
-        selectItemComboTagPatin(value,text);
-    });
-    
-    tagPatinComboDhtml.attachEvent("onOpen", function()
-    {
-        this.DOMlist.style.zIndex = 2000;
-    });
-    
-    tagMedidorComboDhtml.attachEvent("onChange", function(value, text)
-    {
-        tag_medidor=text;
-        selectItemComboTagMedidor(value,text);
-    });  
-    tagMedidorComboDhtml.attachEvent("onOpen", function()
-    {
-        this.DOMlist.style.zIndex = 2000;
-    });
+//    segunda = true;
+//    ubicacionComboDhtml.attachEvent("onChange", function(value, text)
+//    {
+////            alert("entro a ubicacion: "+text);
+//        if(segunda)
+//        {
+//            ubicacion=text;
+//            selectItemComboUbicacion(value,text);
+//            segunda = false;
+//        }
+//        else
+//            segunda = true;
+//    });
+//    
+//    ubicacionComboDhtml.attachEvent("onOpen", function()
+//    {
+//        this.DOMlist.style.zIndex = 2000;
+//    });
+//    
+//    
+//    tercera = true;
+//    tagPatinComboDhtml.attachEvent("onChange", function(value, text)
+//    {
+////            alert("entro al TagPatin: "+text);
+//        if(tercera)
+//        {
+//            tag_patin=text;
+//            selectItemComboTagPatin(value,text);
+//            tercera = false;
+//        }
+//        else
+//            tercera = true;
+//    });
+//    
+//    tagPatinComboDhtml.attachEvent("onOpen", function()
+//    {
+//        this.DOMlist.style.zIndex = 2000;
+//    });
+//    
+//    cuarta = true;
+//    tagMedidorComboDhtml.attachEvent("onChange", function(value, text)
+//    {
+////            alert("entro al TagMedidor: "+text);
+//        if(cuarta)
+//        {
+//            tag_medidor=text;
+//            selectItemComboTagMedidor(value,text);
+//            cuarta = false;
+//        }
+//        else
+//            cuarta = true;
+//    });
+//    
+//    tagMedidorComboDhtml.attachEvent("onOpen", function()
+//    {
+//        this.DOMlist.style.zIndex = 2000;
+//    });
     
 }); //CIERRA $(FUNCTION())
 
-
-function inicializarFiltros()
-{
-    filtros =[
-            {id:"noneUno",type:"none"},
-            {id:"clave_contrato",type:"text"},
-            {id:"region_fiscal",type:"text"},
-            {id:"ubicacion",type:"text"},
-            {id:"tag_patin",type:"text"},
-            {id:"tipo_medidor",type:"text"},
-            {id:"tag_medidor",type:"text"},
-            {id:"clasificacion",type:"text"},
-            {id:"hidrocarburo",type:"text"},
-            {id:"omgc1",type:"date"},
-            {id:"omgc2",type:"text"},
-            {id:"omgc3",type:"text"},
-            {id:"omgc4",type:"text"},
-            {id:"omgc5",type:"text"},
-            {id:"omgc6",type:"text"},
-            {id:"omgc7",type:"text"},
-            {id:"omgc8",type:"text"},
-            {id:"omgc9",type:"text"},
-            {id:"omgc10",type:"text"},
-            {id:"omgc11",type:"text"},
-            {id:"omgc12",type:"text"},
-            {id:"omgc13",type:"text"},
-            {id:"omgc14",type:"text"},
-            {id:"omgc15",type:"text"},
-            {id:"omgc16",type:"text"},
-            {id:"omgc17",type:"text"},
-            {name:"opcion",id:"opcion",type:"opcion"}
-            ];
-}
-              
 
 function selectItemCombo(value,text)
 {
@@ -148,9 +152,12 @@ function buscarPorRegionFiscal(cadena)
             $.each(datos,function(index,value)
             {
                 if(index==0)
-                datosDhtmlContrato.push({value:index,text:value.clave_contrato});
-//                $("#INPUT_CONTRATO_NUEVOREGISTRO").html(value.clave_contrato).css("background","#ddd");
-                datosDhtmlUbicacion.push({value:index,text:value.ubicacion});
+                $("#INPUT_CONTRATO_NUEVOREGISTRO").html(value.clave_contrato).css("background","#ddd");
+//                datosDhtmlContrato.push({value:index,text:value.clave_contrato});
+                if(value.ubicacion != null)
+                {    
+                    datosDhtmlUbicacion.push({value:index,text:value.ubicacion});
+                }    
             });
         },
         error:function()
@@ -161,20 +168,21 @@ function buscarPorRegionFiscal(cadena)
     
      
 
-    contratoComboDhtml.clearAll();
-    contratoComboDhtml.addOption(datosDhtmlContrato);
+//    contratoComboDhtml.clearAll();
+//    contratoComboDhtml.addOption(datosDhtmlContrato);
     ubicacionComboDhtml.clearAll();
     ubicacionComboDhtml.addOption(datosDhtmlUbicacion);
 
-    contratoComboDhtml.getOptionsCount()!=0 ?
-    ( contratoComboDhtml.selectOption(0),contratoComboDhtml.disable(),clave_contrato = contratoComboDhtml.getSelectedText()) : (clave_contrato="",contratoComboDhtml.enable());
+//    contratoComboDhtml.getOptionsCount()!=0 ?
+//    ( contratoComboDhtml.selectOption(0),contratoComboDhtml.disable(),clave_contrato = contratoComboDhtml.getSelectedText()) : (clave_contrato="",contratoComboDhtml.enable());
 }
 
 
 //PRIMERA VISTA EN EL MODAL
 function buscarRegionesFiscales()
 {
-    datosDhtml=[];
+    return new Promise((resolve,reject)=>{
+    datosDhtmlRegiones=[];
     $.ajax({
         url:'../Controller/ReportesController.php?Op=buscarRegionFiscal',
         type:'GET',
@@ -183,106 +191,75 @@ function buscarRegionesFiscales()
         {
             $.each(datos,function(index,value)
             {
-                datosDhtml.push({value:index,text:value.region_fiscal});
+                datosDhtmlRegiones.push({value:index,text:value.region_fiscal});
             });
+            RegionesFiscalesComboDhtml.clearAll();
+            RegionesFiscalesComboDhtml.addOption(datosDhtmlRegiones);
+            resolve();
         },
         error:function()
         {
             swalError("Error en el servidor");
+            reject();
         }
     });
-    RegionesFiscalesComboDhtml = new dhtmlXCombo({
-        parent: "INPUT_REGIONFISCAL_NUEVOREGISTRO",
-        width: 540,
-        filter: true,
-        name: "combo",
-        index:"2000",
-        items:datosDhtml,
-    });
+//    RegionesFiscalesComboDhtml = new dhtmlXCombo({
+//        parent: "INPUT_REGIONFISCAL_NUEVOREGISTRO",
+//        width: 540,
+//        filter: true,
+//        name: "combo",
+//        index:"2000",
+//        items:datosDhtml,
+//    });
     
-    contratoComboDhtml = new dhtmlXCombo({
-        parent: "INPUT_CONTRATO_NUEVOREGISTRO",
-        width: 540,
-        filter: true,
-        name: "combo",
-        items:[],
-    });
-    contratoComboDhtml.attachEvent("onOpen",function()
-    {
-        this.DOMlist.style.zIndex = 2000;
-    });
+//    contratoComboDhtml = new dhtmlXCombo({
+//        parent: "INPUT_CONTRATO_NUEVOREGISTRO",
+//        width: 540,
+//        filter: true,
+//        name: "combo",
+//        items:[],
+//    });
+//    contratoComboDhtml.attachEvent("onOpen",function()
+//    {
+//        this.DOMlist.style.zIndex = 2000;
+//    });
     
-    ubicacionComboDhtml = new dhtmlXCombo({
-        parent: "INPUT_UBICACION_NUEVOREGISTRO",
-        width: 540,
-        filter: true,
-        name: "combo",
-        items:[],
-    });
-    ubicacionComboDhtml.attachEvent("onOpen",function()
-    {
-        this.DOMlist.style.zIndex = 2000;
-    });
-    
-    tagPatinComboDhtml = new dhtmlXCombo({
-    parent: "INPUT_TAGPATIN_NUEVOREGISTRO",
-    width: 540,
-    filter: true,
-    name: "combo",
-    items:[],
-    });
-    tagPatinComboDhtml.attachEvent("onOpen",function()
-    {
-        this.DOMlist.style.zIndex = 2000;
-    });
-    
-    tagMedidorComboDhtml = new dhtmlXCombo({
-    parent: "INPUT_TAGMEDIDOR_NUEVOREGISTRO",
-    width: 540,
-    filter: true,
-    name: "combo",
-    items:[],
-    });
-    tagMedidorComboDhtml.attachEvent("onOpen",function()
-    {
-        this.DOMlist.style.zIndex = 2000;
-    });
-    
-    tipoMedidorComboDhtml = new dhtmlXCombo({
-    parent: "INPUT_TIPOMEDIDOR_NUEVOREGISTRO",
-    width: 540,
-    filter: true,
-    name: "combo",
-    items:[],
-    });
-    tipoMedidorComboDhtml.attachEvent("onOpen",function()
-    {
-        this.DOMlist.style.zIndex = 2000;
-    });
-    
-    clasificacionComboDhtml = new dhtmlXCombo({
-    parent: "INPUT_CLASIFICACION_NUEVOREGISTRO",
-    width: 540,
-    filter: true,
-    name: "combo",
-    items:[],
-    });
-    clasificacionComboDhtml.attachEvent("onOpen",function()
-    {
-        this.DOMlist.style.zIndex = 2000;
-    });
-    
-    hidrocarburoComboDhtml = new dhtmlXCombo({
-    parent: "INPUT_HIDROCARBURO_NUEVOREGISTRO",
-    width: 540,
-    filter: true,
-    name: "combo",
-    items:[],
-    });
-    hidrocarburoComboDhtml.attachEvent("onOpen",function()
-    {
-        this.DOMlist.style.zIndex = 2000;
-    });
+//    ubicacionComboDhtml = new dhtmlXCombo({
+//        parent: "INPUT_UBICACION_NUEVOREGISTRO",
+//        width: 540,
+//        filter: true,
+//        name: "combo",
+//        items:[],
+//    });
+//    ubicacionComboDhtml.attachEvent("onOpen",function()
+//    {
+//        this.DOMlist.style.zIndex = 2000;
+//    });
+//    
+//    tagPatinComboDhtml = new dhtmlXCombo({
+//    parent: "INPUT_TAGPATIN_NUEVOREGISTRO",
+//    width: 540,
+//    filter: true,
+//    name: "combo",
+//    items:[],
+//    });
+//    tagPatinComboDhtml.attachEvent("onOpen",function()
+//    {
+//        this.DOMlist.style.zIndex = 2000;
+//    });
+//    
+//    tagMedidorComboDhtml = new dhtmlXCombo({
+//    parent: "INPUT_TAGMEDIDOR_NUEVOREGISTRO",
+//    width: 540,
+//    filter: true,
+//    name: "combo",
+//    items:[],
+//    });
+//    tagMedidorComboDhtml.attachEvent("onOpen",function()
+//    {
+//        this.DOMlist.style.zIndex = 2000;
+//    });
+   }); 
 }
 
 function selectItemComboUbicacion(value,text)
@@ -381,9 +358,9 @@ function buscarTipoMedidorYOtrosDatosPorTagMedidor(tagMedidor)
                 id_catalogop=value.id_catalogop;
 //                alert(id_catalogop);
                 if(index==0)
-                    datosDhtmlTipoMedidor.push({value:index,text:value.tipo_medidor});
-                    datosDhtmlClasificacion.push({value:index,text:value.clasificacion});
-                    datosDhtmlHidrocarburo.push({value:index,text:value.hidrocarburo});                            
+                    $("#INPUT_TIPOMEDIDOR_NUEVOREGISTRO").html(value.tipo_medidor).css("background","#ddd");
+                    $("#INPUT_CLASIFICACION_NUEVOREGISTRO").html(value.clasificacion).css("background","#ddd");
+                    $("#INPUT_HIDROCARBURO_NUEVOREGISTRO").html(value.hidrocarburo).css("background","#ddd");                            
             });
             
         },
@@ -392,20 +369,6 @@ function buscarTipoMedidorYOtrosDatosPorTagMedidor(tagMedidor)
             swalError("Error en el servidor");
         }
     });
-    
-    tipoMedidorComboDhtml.clearAll();
-    tipoMedidorComboDhtml.addOption(datosDhtmlTipoMedidor);
-    clasificacionComboDhtml.clearAll();
-    clasificacionComboDhtml.addOption(datosDhtmlClasificacion);
-    hidrocarburoComboDhtml.clearAll();
-    hidrocarburoComboDhtml.addOption(datosDhtmlHidrocarburo);
-    
-    tipoMedidorComboDhtml.getOptionsCount()!=0 ?
-    ( tipoMedidorComboDhtml.selectOption(0),tipoMedidorComboDhtml.disable(),tipo_medidor = tipoMedidorComboDhtml.getSelectedText()) : (tipo_medidor="",tipoMedidorComboDhtml.enable());
-    clasificacionComboDhtml.getOptionsCount()!=0 ?
-    ( clasificacionComboDhtml.selectOption(0),clasificacionComboDhtml.disable(),clasificacion = clasificacionComboDhtml.getSelectedText()) : (clasificacion="",clasificacionComboDhtml.enable());
-    hidrocarburoComboDhtml.getOptionsCount()!=0 ?
-    ( hidrocarburoComboDhtml.selectOption(0),hidrocarburoComboDhtml.disable(),hidrocarburo = hidrocarburoComboDhtml.getSelectedText()) : (hidrocarburo="",hidrocarburoComboDhtml.enable());
 }
 
 
@@ -418,15 +381,15 @@ function insertarReporte(datos)
         async:false,
         success:function(datos)
         {
-             tempData;
 //            alert("Entro al success: "+datos);
             if(typeof(datos) == "object")
             {
-//                alert("Entro aqui al IF");
+//                alert("Entro aqui");
+                tempData;
                 swalSuccess("Reporte Creado");                
                 $.each(datos,function(index,value)
                 {
-                   console.log(value); 
+//                   console.log("Este es el value: "+value); 
                    tempData= reconstruir(value,ultimoNumeroGrid+1);  
                 });
 //                console.log(tempData);
@@ -439,7 +402,7 @@ function insertarReporte(datos)
             } else{
                 if(datos==0)
                 {
-                    swalError("Ya existe un Reporte Creado en esta Fecha");                    
+                    swalError("Error, No se pudo crear el Documento");                    
                 } else{
                     swalInfo("Creado, Pero no listado, Actualice");
                 }                
@@ -454,65 +417,6 @@ function insertarReporte(datos)
 }
 
 
-<<<<<<< HEAD
-function reconstruir(value,index)
-{
-    tempData = new Object();
-    tempData["no"] = index;
-    tempData["id_principal"] = [{"id_contrato":value.id_contrato}];
-    tempData["region_fiscal"] = value.region_fiscal;
-    tempData["clave_contrato"] = value.clave_contrato;
-    tempData["ubicacion"] = value.ubicacion;
-    tempData["tag_patin"] = value.tag_patin;
-    tempData["tipo_medidor"] = value.tipo_medidor;
-    tempData["tag_medidor"] = value.tag_medidor;
-    tempData["clasificacion"] = value.clasificacion;
-    tempData["hidrocarburo"] = value.hidrocarburo;
-    tempData["omgc1"] = value.omgc1;
-    tempData["omgc2"] = value.omgc2;
-    tempData["omgc3"] = value.omgc3;
-    tempData["omgc4"] = value.omgc4;
-    tempData["omgc5"] = value.omgc5;
-    tempData["omgc6"] = value.omgc6;
-    tempData["omgc7"] = value.omgc7;
-    tempData["omgc8"] = value.omgc8;
-    tempData["omgc9"] = value.omgc9;
-    tempData["omgc10"] = value.omgc10;
-    tempData["omgc11"] = value.omgc11;
-    tempData["omgc12"] = value.omgc12;
-    tempData["omgc13"] = value.omgc13;
-    tempData["omgc14"] = value.omgc14;
-    tempData["omgc15"] = value.omgc15;
-    tempData["omgc16"] = value.omgc16;
-    tempData["omgc17"] = value.omgc17;
-    tempData["omgc18"] = value.omgc18;
-    tempData["delete"] = "1";
-    return tempData;
-}
-function listarDatosReportes()//listarDatos
-{
-    
-    __datos=[];
-    datosParamAjaxValues={};
-    datosParamAjaxValues["url"]="../Controller/ReportesController.php?Op=listar&data=2";
-    datosParamAjaxValues["type"]="POST";
-    datosParamAjaxValues["async"]=false;
-    var variablefunciondatos=function obtenerDatosServer(data)
-    {
-        dataListado = data;
-        $.each(data,function (index,value)
-        {
-            __datos.push( reconstruir(value,index++) );
-        });
-    }
-    var listfunciones=[variablefunciondatos];
-    ajaxHibrido(datosParamAjaxValues,listfunciones);
-    DataGrid = __datos;
-//    return 1;
-}
-
-=======
->>>>>>> 1f8ac0d4c73a5ae38372a0f4908b499645e53d90
 function construirGrid()
 {
     jsGrid.fields.customControl = MyCControlField;
@@ -825,8 +729,8 @@ function precargados()
 function refresh()
 {
    listarDatos();
-   inicializarFiltros();
-   construirFiltros();
+//   inicializarFiltros();
+//   construirFiltros();
    gridInstance.loadData();
 }
 

@@ -159,7 +159,7 @@
                 <div class='form-group'>
                     <label class='control-label'>Fecha: </label>
                     <!--<div id='INPUT_FECHA_NUEVOREGISTRO' style='witdth:100%'></div>-->
-                    <input type="date" id="INPUT_FECHA_NUEVOREGISTRO" class="form-control" style='width:21%'>
+                    <input type="date" id="INPUT_FECHA_NUEVOREGISTRO" class="form-control" style='width:22%'>
                 </div>
                 
                 <div class='form-group'>
@@ -203,8 +203,8 @@
                 </div>
                 
                 <div class="form-group" method="post">
-                        <button type="submit" style="width:85%" id="btn_guardar_reportediario" class="btn crud-submit btn-info">Crear Reporte</button>
-                        <!--<button type="submit" style="width:49%" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>-->
+                        <button type="submit" style="width:49%" id="btn_guardar_reportediario" class="btn crud-submit btn-info">Crear Reporte</button>
+                        <button type="submit" style="width:49%" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
 
                 </div>
                 
@@ -287,14 +287,50 @@
 <script>
 DataGrid=[];
 dataListado=[];
-
+filtros=[];
+ultimoNumeroGrid=0;
 //region_fiscal="";
 //ubicacion="";
 //clave_contrato="";
 //tag_medidor="";
 
 listarDatos();
+inicializarFiltros();
 construirGrid();
+construirFiltros();
+//RegionesFiscalesComboDhtml = new dhtmlXCombo({
+//    parent: "INPUT_REGIONFISCAL_NUEVOREGISTRO",
+//    width: 540,
+//    filter: true,
+//    name: "combo",
+//    index:"2000",
+//    items:datosDhtml,
+//});
+//RegionesFiscalesComboDhtml.attachEvent("onOpen", function()
+//            {
+//                this.DOMlist.style.zIndex = 2000;
+//            });
+//
+//            promesaBuscarRegionesFiscales = buscarRegionesFiscales();
+//            promesaBuscarRegionesFiscales.then((resolve)=>
+//            {
+//                promesaInicializarFiltros = inicializarFiltros();
+//                promesaInicializarFiltros.then((resolve2)=>
+//                {
+//                    construirFiltros();
+//                });
+//                listarDatos();
+//            },(error)=>
+//            {
+//                growlError("Error!","Error al construir la vista, recargue la página");
+//            });
+//
+//RegionesFiscalesComboDhtml.attachEvent("onChange", function(value, text)
+//{
+//        region_fiscal=text;
+//        selectItemCombo(value,text);
+//});
+
 buscarRegionesFiscales();    
   
 </script>
