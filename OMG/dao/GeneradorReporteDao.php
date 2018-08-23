@@ -140,6 +140,23 @@ class GeneradorReporteDao {
             return -1;
         }
     }
+    
+    public function insertarPorcentajesMolares($MONTH,$YEAR,$CONTRATO)
+    {
+        try
+        {
+            $query="INSERT INTO porcentajes_molares(mes,ano,omg2c1,omg2c2,omg2c3,omg2c4,omg2c5,omg2c6,omg2c7,omg2c8,omg2c9,omg2c10,omg2c11,contrato)
+                    VALUES($MONTH,$YEAR,0,0,0,0,0,0,0,0,0,0,0,$CONTRATO)";
+            
+            $db=  AccesoDB::getInstancia();
+            $exito = $db->executeQueryUpdate($query);
+            return $exito;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
             
     
 }

@@ -35,7 +35,14 @@ switch ($Op) {
             header('Content-type: application/json; charset=utf-8');
 	    echo json_encode($Lista);
             break;
-    
+        
+        case 'guardarPorcentajesMolares':
+            $Lista= $modelGenerador->insertarPorcentajesMolares($_REQUEST['MES'], $_REQUEST['ANO'],Session::getSesion("s_cont"));
+            header('Content-type: application/json; charset=utf-8');
+	    echo json_encode($Lista);
+            break;
+        
+        
         default:
             -1;
 }

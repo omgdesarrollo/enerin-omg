@@ -72,4 +72,19 @@ class GeneradorReporteModel {
             return -1;
         }
     }
+    
+    public function insertarPorcentajesMolares($MONTH, $YEAR, $CONTRATO)
+    {
+        try
+        {
+            $dao=new GeneradorReporteDao();
+            $rec= $dao->insertarPorcentajesMolares($MONTH, $YEAR, $CONTRATO);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 }
