@@ -149,7 +149,6 @@ function buscarPorRegionFiscal(cadena)
             {
 //                if(index==0)
                 datosDhtmlContrato.push({value:index,text:value.clave_contrato});
-//                $("#INPUT_CONTRATO_NUEVOREGISTRO").html(value.clave_contrato).css("background","#ddd");
                 datosDhtmlUbicacion.push({value:index,text:value.ubicacion});
             });
         },
@@ -304,7 +303,7 @@ function buscarTagPatinPorUbicacion(ubicacion)
         {
             $.each(datosTagPatin,function(index,value){
 //                alert(value.tag_patin);
-//                if(index==0)
+                if(index==0)
                 datosDhtmlTagPatin.push({value:index,text:value.tag_patin});                
             });
             
@@ -340,7 +339,7 @@ function buscarTagMedidorPorTagPatin(tagPatin)
         {
             $.each(datosTagMedidor,function(index,value){
 //                alert(value.tag_medidor);
-//                if(index==0)
+                if(index==0)
                 datosDhtmlTagMedidor.push({value:index,text:value.tag_medidor});                
             });
             
@@ -380,7 +379,7 @@ function buscarTipoMedidorYOtrosDatosPorTagMedidor(tagMedidor)
 //                alert(value.tipo_medidor);
                 id_catalogop=value.id_catalogop;
 //                alert(id_catalogop);
-//                if(index==0)
+                if(index==0)
                     datosDhtmlTipoMedidor.push({value:index,text:value.tipo_medidor});
                     datosDhtmlClasificacion.push({value:index,text:value.clasificacion});
                     datosDhtmlHidrocarburo.push({value:index,text:value.hidrocarburo});                            

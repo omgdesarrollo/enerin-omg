@@ -64,11 +64,19 @@ class GeneradorReporteDao {
     {
         try
         {
-            $query="SELECT * FROM omg_reporte_produccion tbomg_reporte_produccion
-                    JOIN catalogo_produccion tbcatalogo_produccion ON tbcatalogo_produccion.id_catalogop=tbomg_reporte_produccion.id_catalogop
-                    JOIN asignaciones_contrato tbasignaciones_contrato ON tbasignaciones_contrato.id_asignacion=tbcatalogo_produccion.id_asignacion
-                    WHERE MONTH(tbomg_reporte_produccion.omgc1) = $MONTH AND YEAR(tbomg_reporte_produccion.omgc1) = $YEAR 
-                    AND tbasignaciones_contrato.contrato =$CONTRATO";
+            $query="SELECT tbasignaciones_contrato.region_fiscal,tbasignaciones_contrato.clave_contrato,tbcatalogo_produccion.ubicacion,
+                           tbcatalogo_produccion.tag_patin,tbcatalogo_produccion.tipo_medidor,tbcatalogo_produccion.tag_medidor,
+                           tbcatalogo_produccion.clasificacion,tbcatalogo_produccion.hidrocarburo,tbomg_reporte_produccion.omgc1,
+                           tbomg_reporte_produccion.omgc2,tbomg_reporte_produccion.omgc3 , tbomg_reporte_produccion.omgc4,
+                           tbomg_reporte_produccion.omgc5,tbomg_reporte_produccion.omgc6,tbomg_reporte_produccion.omgc7, tbomg_reporte_produccion.omgc8, 
+                           tbomg_reporte_produccion.omgc9,tbomg_reporte_produccion.omgc10,tbomg_reporte_produccion.omgc11, tbomg_reporte_produccion.omgc12,
+                           tbomg_reporte_produccion.omgc13,tbomg_reporte_produccion.omgc14,tbomg_reporte_produccion.omgc15,tbomg_reporte_produccion.omgc16,
+                           tbomg_reporte_produccion.omgc17,tbomg_reporte_produccion.omgc18
+                           FROM omg_reporte_produccion tbomg_reporte_produccion
+                           JOIN catalogo_produccion tbcatalogo_produccion ON tbcatalogo_produccion.id_catalogop=tbomg_reporte_produccion.id_catalogop
+                           JOIN asignaciones_contrato tbasignaciones_contrato ON tbasignaciones_contrato.id_asignacion=tbcatalogo_produccion.id_asignacion
+                           WHERE MONTH(tbomg_reporte_produccion.omgc1) = $MONTH AND YEAR(tbomg_reporte_produccion.omgc1) = $YEAR 
+                           AND tbasignaciones_contrato.contrato =$CONTRATO";
             
             $db=  AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
