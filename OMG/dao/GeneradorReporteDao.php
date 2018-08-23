@@ -33,7 +33,8 @@ class GeneradorReporteDao {
             return -1;
         }
     }
-    public function listarReportesDiariosFechaInicioaFechaFinal($FECHA_INICIO,$FECHA_FINAL,$CUMPLIMIENTO){
+    public function listarReportesDiariosFechaInicioaFechaFinal($FECHA_INICIO,$FECHA_FINAL,$CUMPLIMIENTO)
+    {
          
         try {
             $query="SELECT tbasignaciones_contrato.region_fiscal,tbasignaciones_contrato.clave_contrato,tbcatalogoproduccion.ubicacion,
@@ -57,5 +58,26 @@ class GeneradorReporteDao {
             throw $ex;
             return -1;
         }   
+    }
+    
+    public function listarReportePorMonthAndYear($MONTH,$YEAR,$CONTRATO)
+    {
+        try
+        {
+            $query="SELECT * FROM omg_reporte_produccion tbomg_reporte_produccion
+                    JOIN catalogo_produccion tbcatalogo_produccion ON tbcatalogo_produccion.id_catalogop=tbomg_reporte_produccion.id_catalogop
+                    JOIN asignaciones_contrato tbasignaciones_contrato ON tbasignaciones_contrato.id_asignacion=tbcatalogo_produccion.id_asignacion
+                    WHERE MONTH(tbomg_reporte_produccion.omgc1) = $MONTH AND YEAR(tbomg_reporte_produccion.omgc1) = $YEAR 
+                    AND tbasignaciones_contrato.contrato =$CONTRATO";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista = $db->executeQuery($query);
+            
+            return $lista;            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
     }
 }
