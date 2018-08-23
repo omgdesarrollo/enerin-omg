@@ -9,11 +9,17 @@ $modelGenerador=new GeneradorReporteModel();
 
 switch ($Op) {
        
-	case 'GenerarReporte':
+	case 'GenerarReporteCalculoDeTodosLosDiariosRangoFechas':
 	$Lista= $modelGenerador->listarReportesporFecha($_REQUEST['FECHA_INICIO'],$_REQUEST['FECHA_FINAL'],Session::getSesion("s_cont"));
       header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
         
+	break;
+	
+	case  'GenerarReporteTodosLosDiarios':
+	    $Lista= $modelGenerador->listarReportesDiariosFechaInicioaFechaFinal($_REQUEST['FECHA_INICIO'],$_REQUEST['FECHA_FINAL'],Session::getSesion("s_cont"));
+	    header('Content-type: application/json; charset=utf-8');
+	    echo json_encode($Lista);
 	break;
         default:
             -1;

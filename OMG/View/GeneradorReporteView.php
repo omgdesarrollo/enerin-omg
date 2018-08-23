@@ -111,25 +111,28 @@ $Usuario=  Session::getSesion("user");
     require_once 'EncabezadoUsuarioView.php';
     // require_once '../Model/socketModel.php';
 ?>
+<label>Seleccione El Mes:</label>
+<select id="mySelect" style="width:230px;">
+		<option value="Enero">Enero</option>
+		<option value="Febrero">Febrero</option>
+		<option value="Marzo">Marzo</option>
+		<option value="Abril">Abril</option>
+		<option value="Mayo">Mayo</option>
+		<option value="Junio">Junio</option>
+		<option value="Julio">Julio</option>
+		<option value="Agosto">Agosto</option>
+		<option value="Septiembre">Septiembre</option>
+		<option value="Octubre">Octubre</option>
+		<option value="Noviembre">Noviembre</option>	
+		<option value="Diciembre">Diciembre</option>	
+</select>
 
-<div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
-    
-<!-- <button type="button" class="btn btn-info " id="btnreporte">
-    <i class='ace-icon fa fa-search'></i>
-</button> 
-<div class="pull-right">
-<button style="width:51px;height:42px" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
-    <img src="../../images/base/_excel.png" width="35px" height="auto
-    ">
-</button>
-<button style="width:51px;height:42pxwi" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
-    <img src="../../images/base/word.png" width="35px" height="auto">
-</button>
-<button style="width:51px;height:42px" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
-    <img src="../../images/base/pdf.png" width="35px" height="auto">
-</button> 
-</div>
-</div>-->
+<label> Seleccione El Periodo Anual:</label>
+<select id="mySelect2" style="width:230px;">
+		<option value="2017">2017</option>
+		<option value="2018">2018</option>
+		
+</select>
 
 <button id='reporte' class="btn btn-info">Generar Reporte</button>
 <button id='toExcel' >
@@ -147,13 +150,17 @@ $Usuario=  Session::getSesion("user");
 
 <div id="listjson"></div>
 <script>
-    var data1=[],DataGrid=[];
-  
-    
+    var data1=[],DataGrid=[],mycombo;
     var fechas_inicio_final={"fecha_inicio":"","fecha_final":""};
     bandera=0;   
+	
+
+    
 $(function()
 {    
+	myCombo = dhtmlXComboFromSelect("mySelect");
+	myCombo2 = dhtmlXComboFromSelect("mySelect2");
+	
     construirGridGenerador();
 
     $.datepicker.setDefaults($.datepicker.regional["es"]);
@@ -186,9 +193,10 @@ $(function()
      fechas_inicio_final["fecha_final"]=$("#fechaFinal").val();
 })  
 function obtenerDatosReporte(){
+	alert();
     var lista=[],__datos=[];
         $.ajax({
-            url:'../Controller/GeneradorReporteController.php?Op=GenerarReporte',
+            url:'../Controller/GeneradorReporteController.php?Op=GenerarReporteTodosLosDiarios',
             type:'POST',
             data:'FECHA_INICIO='+fechas_inicio_final["fecha_inicio"]+"&FECHA_FINAL="+fechas_inicio_final["fecha_final"],
             success:function(r)
