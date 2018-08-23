@@ -139,14 +139,30 @@ $Usuario=  Session::getSesion("user");
 
 <div id="listjson"></div>
 <script>
-    var data1=[],DataGrid=[],mycombo;
+    var data1=[],DataGrid=[],myCombo,myCombo2;
     var fechas_inicio_final={"fecha_inicio":"","fecha_final":""};
     bandera=0;   
+    var mes=0,year=0;
+
+//    
+
+    
 $(function()
 {    
 	myCombo = dhtmlXComboFromSelect("mySelect");
 	myCombo2 = dhtmlXComboFromSelect("mySelect2");
-	
+	 myCombo.attachEvent("onChange", function(value, text)
+	     	    {
+	     	            mes=value;
+	    	            
+	     	    }); 
+	 myCombo2.attachEvent("onChange", function(value, text)
+	     	    {
+	     	            year=value;
+	    	            
+	     	    }); 
+
+	    
     construirGridGenerador();
 
     $.datepicker.setDefaults($.datepicker.regional["es"]);
@@ -201,9 +217,43 @@ $(function()
                }
            }); 
 
+
      });
 
+     var $btnReporteMensualAnual=  $('#reporteMensualanual'); 
 
+     $btnReporteMensualAnual.on('click', function () {
+    alert("d");
+     var lista=[],__datos=[];
+             $.ajax({
+                 url:'../Controller/GeneradorReporteController.php?Op=ListByMonthAndYear',
+                 type:'POST',
+                 data:'MONTH='+month+"&YEAR="+year,
+                 success:function(r)
+                 {
+                   data1=r;
+                   
+                   $.each(r,function (index,value)
+                     {
+                         __datos.push( reconstruir(value,index++) );
+                     });
+                   DataGrid=__datos;
+                   
+                    gridInstance.loadData();
+                 },
+                 error:function()
+                 {
+                 }
+             }); 
+
+      
+     }
+     );
+
+     
+
+
+     
 
      
 
