@@ -27,4 +27,19 @@ class GeneradorReporteModel {
         }
     }
     
+    
+    public function listarReportePorMonthAndYear($MONTH, $YEAR,$CONTRATO)
+    {
+        try
+        {
+            $dao=new GeneradorReporteDao();
+            $rec= $dao->listarReportePorMonthAndYear($MONTH, $YEAR,$CONTRATO);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 }
