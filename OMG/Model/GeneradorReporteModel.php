@@ -42,4 +42,19 @@ class GeneradorReporteModel {
             return -1;
         }
     }
+    
+    public function sumaByMonthAndYear($MONTH, $YEAR, $CONTRATO)
+    {
+        try
+        {
+            $dao=new GeneradorReporteDao();
+            $rec= $dao->sumaByMonthAndYear($MONTH, $YEAR, $CONTRATO);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 }

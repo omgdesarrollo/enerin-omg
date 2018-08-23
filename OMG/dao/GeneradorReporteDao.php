@@ -88,4 +88,39 @@ class GeneradorReporteDao {
             return -1;
         }
     }
+    
+    public function sumaByMonthAndYear($MONTH,$YEAR,$CONTRATO)
+    {
+        try
+        {
+            $query="SELECT tbasignaciones_contrato.region_fiscal,tbasignaciones_contrato.clave_contrato,tbcatalogo_produccion.ubicacion,
+                    tbcatalogo_produccion.tag_patin,tbcatalogo_produccion.tipo_medidor,tbcatalogo_produccion.tag_medidor,tbcatalogo_produccion.clasificacion,
+                    tbcatalogo_produccion.hidrocarburo,
+                    tbomg_reporte_produccion.omgc1,
+                    SUM(tbomg_reporte_produccion.omgc2)/COUNT(*) AS omgc2, SUM(tbomg_reporte_produccion.omgc3)/COUNT(*) AS omgc3,
+                    SUM(tbomg_reporte_produccion.omgc4)/COUNT(*) AS omgc4, SUM(tbomg_reporte_produccion.omgc5)/COUNT(*) AS omgc5,
+                    SUM(tbomg_reporte_produccion.omgc6)/COUNT(*) AS omgc6, SUM(tbomg_reporte_produccion.omgc7)/COUNT(*) AS omgc7,
+                    SUM(tbomg_reporte_produccion.omgc8)/COUNT(*) AS omgc8, SUM(tbomg_reporte_produccion.omgc9)/COUNT(*) AS omgc9,
+                    SUM(tbomg_reporte_produccion.omgc10)/COUNT(*) AS omgc10, SUM(tbomg_reporte_produccion.omgc11)/COUNT(*) omgc11,
+                    SUM(tbomg_reporte_produccion.omgc12)/COUNT(*) AS omgc12, SUM(tbomg_reporte_produccion.omgc13)/COUNT(*) AS omgc13,
+                    SUM(tbomg_reporte_produccion.omgc14)/COUNT(*) AS omgc14, SUM(tbomg_reporte_produccion.omgc15)/COUNT(*) AS omgc15,
+                    SUM(tbomg_reporte_produccion.omgc16)/COUNT(*) AS omgc16, SUM(tbomg_reporte_produccion.omgc17)/COUNT(*) AS omgc17,
+                    tbomg_reporte_produccion.omgc18
+                    FROM omg_reporte_produccion tbomg_reporte_produccion
+                    JOIN catalogo_produccion tbcatalogo_produccion ON tbcatalogo_produccion.id_catalogop=tbomg_reporte_produccion.id_catalogop
+                    JOIN asignaciones_contrato tbasignaciones_contrato ON tbasignaciones_contrato.id_asignacion=tbcatalogo_produccion.id_asignacion
+                    WHERE MONTH(tbomg_reporte_produccion.omgc1) = $MONTH AND YEAR(tbomg_reporte_produccion.omgc1) = $YEAR 
+                    AND tbasignaciones_contrato.contrato =$CONTRATO";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista = $db->executeQuery($query);
+            
+            return $lista;            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
 }

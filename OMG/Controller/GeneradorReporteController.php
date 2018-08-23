@@ -23,6 +23,12 @@ switch ($Op) {
             header('Content-type: application/json; charset=utf-8');
 	    echo json_encode($Lista);
             break;
+        
+        case '':
+            $Lista= $modelGenerador->sumaByMonthAndYear($_REQUEST['MONTH'], $_REQUEST['YEAR'],Session::getSesion("s_cont")); 
+            header('Content-type: application/json; charset=utf-8');
+	    echo json_encode($Lista);
+            break;
     
         default:
             -1;
