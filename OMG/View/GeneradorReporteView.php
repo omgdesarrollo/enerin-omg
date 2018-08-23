@@ -38,12 +38,10 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/jquery-ui.css" rel="stylesheet" type="text/css"/>
                 <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
                 <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
-
                 <!--  -->
                 <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
                 <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
                 <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
-                
                 <!-- <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
                 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script> -->
@@ -64,7 +62,6 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
                 <!-- <script src="../../js/socket.js" type="text/javascript"></script> -->
                 <!-- <script src="../../js/fancywebsocket.js" type="text/javascript"></script> -->
-                
         <style>
             .jsgrid-header-row>.jsgrid-header-cell 
             {
@@ -75,26 +72,76 @@ $Usuario=  Session::getSesion("user");
                 font-weight: normal;
             }
             body{
-/*             overflow: scroll; /* Scrollbar are always visible */ */
+/*            overflow: scroll;  */
             }
-
-        </style>              
-                
- 			 
+            
+            
+            #seccionIzquierda {
+			position: relative;
+			/*margin-left: 10px;*/
+			/*margin-top: 50px;*/
+			width: 100%    ;
+                        overflow:auto ;
+			height: 260px;
+			/*box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);*/
+                        box-shadow: 0 1px 3px rgba(0,0,0,90.05), 0 1px 3px rgba(0,0,0,0.09);
+		      }
+		      
+		        #seccionDerecha {
+			position: relative;
+			/*margin-left: 10px;*/
+			/*margin-top: 50px;*/
+			width: 100%    ;
+                        overflow:auto ;
+			height: 260px;
+			/*box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);*/
+                        box-shadow: 0 1px 3px rgba(0,0,0,90.05), 0 1px 3px rgba(0,0,0,0.09);
+		      }
+		      
+		      
+		     #seccionAbajo{
+			position: relative;
+			/*margin-left: 10px;*/
+			/*margin-top: 50px;*/
+			/*width: 100%    ;*/
+                        overflow:auto ;
+			height: 150px;
+			/*box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);*/
+                        box-shadow: 0 1px 3px rgba(0,0,0,90.05), 0 1px 3px rgba(0,0,0,0.09);
+		      }
+		      #layoutObjGenerador{
+		      position: relative;
+		      	height: 310px;
+		      	  width: 100%;
+                   
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
+		      }
+		        div#layout_here {
+                    position: relative;
+                    width: 100%;
+                    height: 392px;
+                    /*overflow: auto;*/
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
+                    /*margin: 0 auto;*/
+                    }
+		      
+		      
+		      
+        </style>              	 
 </head>
-
 <body class="no-skin" onload="">
-
 <!-- <div id="loader"></div>  -->
-       
-
 <?php
     require_once 'EncabezadoUsuarioView.php';
     // require_once '../Model/socketModel.php';
 ?>
 
+<div id="layoutObjGenerador">
+
 <div class="col-md-12 ">
 <div class="col-md-6 ">
+<!-- <div class="col-md-6 "> -->
+<div id="seccionIzquierda">
 <label>Seleccione El Mes:</label>
 <select id="mySelect" style="width:130px;">
 		<option value="01" selected="selected">Enero</option>
@@ -117,14 +164,19 @@ $Usuario=  Session::getSesion("user");
 		<option value="2018">2018</option>
 		
 </select>
-
+<!-- </div> -->
+<!-- <div class="col-md-3"> -->
 <button id='reporteMensualanual' class="btn btn-info">Generar Reporte</button>
 <button id='reporteDiariosdelMensualAnualCalculo' class="btn btn-info">Calculo de todos los diarios  </button>
+<!-- </div> -->
 </div>
+</div>
+
 <div class="col-md-6 ">
 
 <!-- <button id='toExcel' > -->
 <!--      <img src="../../images/base/_excel.png" width="35px" height="auto"></button> -->
+<div id="seccionDerecha">
 <label>Fecha Inicio</label>
 <input type="text" id="fechaInicio"/>
 <br>
@@ -135,21 +187,30 @@ $Usuario=  Session::getSesion("user");
 <button id='reporteCalculoDiarios' class="btn btn-info">Calcular todos los diarios</button>
 <!--<div class="row">-->
 </div>
-<div id="jsGrid" style="width: 90%"></div>
+</div>
+
+</div>
+<!-- <div id="seccionAbajo"> -->
+<!-- <div id="jsGrid" ></div> -->
+<!-- </div> -->
 
 <div id="listjson"></div>
+<div id="layoutObjGenerador" class="layoutObj"></div>
+
+
 <script>
     var data1=[],DataGrid=[],myCombo,myCombo2;
     var fechas_inicio_final={"fecha_inicio":"","fecha_final":""};
     bandera=0;   
-    var month=0,year=0,presionadomes=false,presionadoyear=false;
-//    
-
 $(function()
 {    
 	myCombo = dhtmlXComboFromSelect("mySelect");
 	myCombo2 = dhtmlXComboFromSelect("mySelect2");
-	    
+	  myLayout = new dhtmlXLayoutObject({parent: "layoutObjGenerador",pattern: "3U",cells: [{id: "a", text: "Mensual", header:true,height:50},{id: "b", text: "Rango de Fechas",header:true}]});
+
+	myLayout.cells("a").attachObject("seccionIzquierda");
+	myLayout.cells("b").attachObject("seccionDerecha");
+// 	myLayout.cells("c").attachObject("jsGrid");
     construirGridGenerador();
 
     $.datepicker.setDefaults($.datepicker.regional["es"]);
@@ -177,7 +238,6 @@ $(function()
         growlSuccess("Reporte","Reporte Generado Exitoso");
     });
 
-
      var $btnCalculoDiariosRangoFechasInicioFin = $('#reporteCalculoDiarios'); 
      $btnCalculoDiariosRangoFechasInicioFin.on('click', function () {
 //                     alert("dfds");
@@ -203,11 +263,8 @@ $(function()
                {
                }
            }); 
-
      });
-
      var $btnReporteMensualAnual=  $('#reporteMensualanual'); 
-
      $btnReporteMensualAnual.on('click', function () {
      var lista=[],__datos=[];
              $.ajax({
@@ -229,16 +286,15 @@ $(function()
                  {
                  }
              }); 
-//     }
-      
+//     } 
      }
      );
      var $btnreporteDiariosdelMensualAnualCalculo=  $('#reporteDiariosdelMensualAnualCalculo'); 
      $btnreporteDiariosdelMensualAnualCalculo.on('click', function () {
-alert("le has picado ");
+// alert("le has picado ");
        var lista=[],__datos=[];
                $.ajax({
-                   url:'../Controller/GeneradorReporteController.php?Op=ListByMonthAndYear',
+                   url:'../Controller/GeneradorReporteController.php?Op=ListByMonthAndYearCalculo',
                    type:'POST',
                    data:'MONTH='+myCombo.getSelectedValue()+"&YEAR="+myCombo2.getSelectedValue(),
                    success:function(r)
@@ -260,10 +316,6 @@ alert("le has picado ");
         
        }
        );
-     
-
-     
-
      fechas_inicio_final["fecha_inicio"]=$("#fechaInicio").val();
      fechas_inicio_final["fecha_final"]=$("#fechaFinal").val();
 })  
@@ -276,15 +328,13 @@ function obtenerDatosReporte(){
             data:'FECHA_INICIO='+fechas_inicio_final["fecha_inicio"]+"&FECHA_FINAL="+fechas_inicio_final["fecha_final"],
             success:function(r)
             {
-              data1=r;
-              
+              data1=r; 
               $.each(r,function (index,value)
                 {
                     __datos.push( reconstruir(value,index++) );
                 });
               DataGrid=__datos;
-              
-               gridInstance.loadData();
+              gridInstance.loadData();
             },
             error:function()
             {
