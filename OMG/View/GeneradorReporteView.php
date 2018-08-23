@@ -74,28 +74,6 @@ $Usuario=  Session::getSesion("user");
                 color: white;
                 font-weight: normal;
             }
-            div.combo_info
-            {
-                color: gray;
-                font-size: 11px;
-                padding-bottom: 5px;
-                padding-left: 2px;
-                font-family: Tahoma;
-            }
-/*            .dhxcombo_select
-            {
-                z-index:9999;
-            }*/
-            
-/*            .jsgrid-cancel-edit-button
-            {
-
-            }
-            
-            .jsgrid-grid-body
-            {
-                 height:450px; 
-            }*/
 
         </style>              
                 
@@ -111,9 +89,12 @@ $Usuario=  Session::getSesion("user");
     require_once 'EncabezadoUsuarioView.php';
     // require_once '../Model/socketModel.php';
 ?>
+
+<div class="col-md-12 ">
+<div class="col-md-6 ">
 <label>Seleccione El Mes:</label>
 <select id="mySelect" style="width:230px;">
-		<option value="Enero">Enero</option>
+		<option value="Enero" selected="selected">Enero</option>
 		<option value="Febrero">Febrero</option>
 		<option value="Marzo">Marzo</option>
 		<option value="Abril">Abril</option>
@@ -134,28 +115,28 @@ $Usuario=  Session::getSesion("user");
 		
 </select>
 
-<button id='reporte' class="btn btn-info">Generar Reporte</button>
-<button id='toExcel' >
-     <img src="../../images/base/_excel.png" width="35px" height="auto"></button>
+<button id='reporteMensualanual' class="btn btn-info">Generar Reporte</button>
+</div>
+<div class="col-md-6 ">
+
+<!-- <button id='toExcel' > -->
+<!--      <img src="../../images/base/_excel.png" width="35px" height="auto"></button> -->
 <label>Fecha Inicio</label>
 <input type="text" id="fechaInicio"/>
 <label>Fecha Final</label>
 <input type="text" id="fechaFinal"/>
+<button id='reporte' class="btn btn-info">Obtener todos los diarios</button>
 <!--<div class="row">-->
-<br>
 
-    <div id="jsGrid"></div>
-<!--</div>-->
-
+    
+</div>
+<div id="jsGrid"></div>
 
 <div id="listjson"></div>
 <script>
     var data1=[],DataGrid=[],mycombo;
     var fechas_inicio_final={"fecha_inicio":"","fecha_final":""};
     bandera=0;   
-	
-
-    
 $(function()
 {    
 	myCombo = dhtmlXComboFromSelect("mySelect");
@@ -193,7 +174,7 @@ $(function()
      fechas_inicio_final["fecha_final"]=$("#fechaFinal").val();
 })  
 function obtenerDatosReporte(){
-	alert();
+// 	alert();
     var lista=[],__datos=[];
         $.ajax({
             url:'../Controller/GeneradorReporteController.php?Op=GenerarReporteTodosLosDiarios',
