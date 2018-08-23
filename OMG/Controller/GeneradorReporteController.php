@@ -6,16 +6,12 @@ require_once '../util/Session.php';
 require_once '../Model/GeneradorReporteModel.php';
 $Op=$_REQUEST["Op"];
 $modelGenerador=new GeneradorReporteModel();
-
 switch ($Op) {
-       
 	case 'GenerarReporteCalculoDeTodosLosDiariosRangoFechas':
 	$Lista= $modelGenerador->listarReportesporFecha($_REQUEST['FECHA_INICIO'],$_REQUEST['FECHA_FINAL'],Session::getSesion("s_cont"));
       header('Content-type: application/json; charset=utf-8');
-        echo json_encode($Lista);
-        
-	break;
-	
+        echo json_encode($Lista);     
+	break;	
 	case  'GenerarReporteTodosLosDiarios':
 	    $Lista= $modelGenerador->listarReportesDiariosFechaInicioaFechaFinal($_REQUEST['FECHA_INICIO'],$_REQUEST['FECHA_FINAL'],Session::getSesion("s_cont"));
 	    header('Content-type: application/json; charset=utf-8');

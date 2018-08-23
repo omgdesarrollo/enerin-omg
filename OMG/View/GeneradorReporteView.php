@@ -74,28 +74,9 @@ $Usuario=  Session::getSesion("user");
                 color: white;
                 font-weight: normal;
             }
-            div.combo_info
-            {
-                color: gray;
-                font-size: 11px;
-                padding-bottom: 5px;
-                padding-left: 2px;
-                font-family: Tahoma;
+            body{
+/*             overflow: scroll; /* Scrollbar are always visible */ */
             }
-/*            .dhxcombo_select
-            {
-                z-index:9999;
-            }*/
-            
-/*            .jsgrid-cancel-edit-button
-            {
-
-            }
-            
-            .jsgrid-grid-body
-            {
-                 height:450px; 
-            }*/
 
         </style>              
                 
@@ -111,51 +92,56 @@ $Usuario=  Session::getSesion("user");
     require_once 'EncabezadoUsuarioView.php';
     // require_once '../Model/socketModel.php';
 ?>
+
+<div class="col-md-12 ">
+<div class="col-md-6 ">
 <label>Seleccione El Mes:</label>
-<select id="mySelect" style="width:230px;">
-		<option value="Enero">Enero</option>
-		<option value="Febrero">Febrero</option>
-		<option value="Marzo">Marzo</option>
-		<option value="Abril">Abril</option>
-		<option value="Mayo">Mayo</option>
-		<option value="Junio">Junio</option>
-		<option value="Julio">Julio</option>
-		<option value="Agosto">Agosto</option>
-		<option value="Septiembre">Septiembre</option>
-		<option value="Octubre">Octubre</option>
-		<option value="Noviembre">Noviembre</option>	
-		<option value="Diciembre">Diciembre</option>	
+<select id="mySelect" style="width:130px;">
+		<option value="01" selected="selected">Enero</option>
+		<option value="02">Febrero</option>
+		<option value="03">Marzo</option>
+		<option value="04">Abril</option>
+		<option value="05">Mayo</option>
+		<option value="06">Junio</option>
+		<option value="07">Julio</option>
+		<option value="08">Agosto</option>
+		<option value="09">Septiembre</option>
+		<option value="10">Octubre</option>
+		<option value="11">Noviembre</option>	
+		<option value="12">Diciembre</option>	
 </select>
 
 <label> Seleccione El Periodo Anual:</label>
-<select id="mySelect2" style="width:230px;">
+<select id="mySelect2" style="width:130px;">
 		<option value="2017">2017</option>
 		<option value="2018">2018</option>
 		
 </select>
 
-<button id='reporte' class="btn btn-info">Generar Reporte</button>
-<button id='toExcel' >
-     <img src="../../images/base/_excel.png" width="35px" height="auto"></button>
+<button id='reporteMensualanual' class="btn btn-info">Generar Reporte</button>
+<button id='reporteDiariosdelMensualAnual' class="btn btn-info">Calculo de todos los diarios  </button>
+</div>
+<div class="col-md-6 ">
+
+<!-- <button id='toExcel' > -->
+<!--      <img src="../../images/base/_excel.png" width="35px" height="auto"></button> -->
 <label>Fecha Inicio</label>
 <input type="text" id="fechaInicio"/>
+<br>
 <label>Fecha Final</label>
 <input type="text" id="fechaFinal"/>
+<br><br><br>
+<button id='reporte' class="btn btn-info">Obtener todos los diarios</button>
+<button id='reporteCalculoDiarios' class="btn btn-info">Calcular todos los diarios</button>
 <!--<div class="row">-->
-<br>
-
-    <div id="jsGrid"></div>
-<!--</div>-->
-
+</div>
+<div id="jsGrid" style="width: 90%"></div>
 
 <div id="listjson"></div>
 <script>
     var data1=[],DataGrid=[],mycombo;
     var fechas_inicio_final={"fecha_inicio":"","fecha_final":""};
     bandera=0;   
-	
-
-    
 $(function()
 {    
 	myCombo = dhtmlXComboFromSelect("mySelect");
@@ -168,8 +154,7 @@ $(function()
             dateFormat: 'yy/mm/dd',
             firstDay: 1,
             onSelect: function() {
-               fechas_inicio_final["fecha_inicio"]=$("#fechaInicio").val();
-               
+               fechas_inicio_final["fecha_inicio"]=$("#fechaInicio").val();             
             }
         }).datepicker("setDate", new Date());   
          $("#fechaFinal").datepicker({
@@ -189,11 +174,44 @@ $(function()
         growlSuccess("Reporte","Reporte Generado Exitoso");
     });
 
+
+     var $btnCalculoDiariosRangoFechasInicioFin = $('#reporteCalculoDiarios'); 
+     $btnCalculoDiariosRangoFechasInicioFin.on('click', function () {
+//                     alert("d");
+
+    	   var lista=[],__datos=[];
+           $.ajax({
+               url:'../Controller/GeneradorReporteController.php?Op=GenerarReporteCalculoDeTodosLosDiariosRangoFechas',
+               type:'POST',
+               data:'FECHA_INICIO='+fechas_inicio_final["fecha_inicio"]+"&FECHA_FINAL="+fechas_inicio_final["fecha_final"],
+               success:function(r)
+               {
+                 data1=r;
+                 
+                 $.each(r,function (index,value)
+                   {
+                       __datos.push( reconstruir(value,index++) );
+                   });
+                 DataGrid=__datos;
+                 
+                  gridInstance.loadData();
+               },
+               error:function()
+               {
+               }
+           }); 
+
+     });
+
+
+
+     
+
      fechas_inicio_final["fecha_inicio"]=$("#fechaInicio").val();
      fechas_inicio_final["fecha_final"]=$("#fechaFinal").val();
 })  
 function obtenerDatosReporte(){
-	alert();
+// 	alert();
     var lista=[],__datos=[];
         $.ajax({
             url:'../Controller/GeneradorReporteController.php?Op=GenerarReporteTodosLosDiarios',
@@ -230,6 +248,12 @@ function obtenerDatosReporte(){
                                 });
                     }
     });    
+
+
+
+
+
+                
 </script>
 <!--<script type="text/javascript">
 
