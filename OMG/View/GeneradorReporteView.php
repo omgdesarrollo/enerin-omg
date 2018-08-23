@@ -142,7 +142,7 @@ $Usuario=  Session::getSesion("user");
     var data1=[],DataGrid=[],myCombo,myCombo2;
     var fechas_inicio_final={"fecha_inicio":"","fecha_final":""};
     bandera=0;   
-    var mes=0,year=0;
+    var month=0,year=0,presionadomes=false,presionadoyear=false;
 
 //    
 
@@ -153,11 +153,13 @@ $(function()
 	myCombo2 = dhtmlXComboFromSelect("mySelect2");
 	 myCombo.attachEvent("onChange", function(value, text)
 	     	    {
-	     	            mes=value;
+		 				presionadomes=true;
+		 				month=value;
 	    	            
 	     	    }); 
 	 myCombo2.attachEvent("onChange", function(value, text)
 	     	    {
+					 presionadoyear=true;
 	     	            year=value;
 	    	            
 	     	    }); 
@@ -193,7 +195,7 @@ $(function()
 
      var $btnCalculoDiariosRangoFechasInicioFin = $('#reporteCalculoDiarios'); 
      $btnCalculoDiariosRangoFechasInicioFin.on('click', function () {
-//                     alert("d");
+                    alert("dfds");
 
     	   var lista=[],__datos=[];
            $.ajax({
@@ -217,14 +219,17 @@ $(function()
                }
            }); 
 
-
      });
 
      var $btnReporteMensualAnual=  $('#reporteMensualanual'); 
 
      $btnReporteMensualAnual.on('click', function () {
     alert("d");
+    if(presionadomes==false || presionadoyear==false){
+    	alert("debe seleccionar un mes y año");
+    }else{
      var lista=[],__datos=[];
+//      alert("esd");
              $.ajax({
                  url:'../Controller/GeneradorReporteController.php?Op=ListByMonthAndYear',
                  type:'POST',
@@ -232,7 +237,6 @@ $(function()
                  success:function(r)
                  {
                    data1=r;
-                   
                    $.each(r,function (index,value)
                      {
                          __datos.push( reconstruir(value,index++) );
@@ -245,7 +249,7 @@ $(function()
                  {
                  }
              }); 
-
+    }
       
      }
      );
