@@ -454,6 +454,65 @@ function insertarReporte(datos)
 }
 
 
+<<<<<<< HEAD
+function reconstruir(value,index)
+{
+    tempData = new Object();
+    tempData["no"] = index;
+    tempData["id_principal"] = [{"id_contrato":value.id_contrato}];
+    tempData["region_fiscal"] = value.region_fiscal;
+    tempData["clave_contrato"] = value.clave_contrato;
+    tempData["ubicacion"] = value.ubicacion;
+    tempData["tag_patin"] = value.tag_patin;
+    tempData["tipo_medidor"] = value.tipo_medidor;
+    tempData["tag_medidor"] = value.tag_medidor;
+    tempData["clasificacion"] = value.clasificacion;
+    tempData["hidrocarburo"] = value.hidrocarburo;
+    tempData["omgc1"] = value.omgc1;
+    tempData["omgc2"] = value.omgc2;
+    tempData["omgc3"] = value.omgc3;
+    tempData["omgc4"] = value.omgc4;
+    tempData["omgc5"] = value.omgc5;
+    tempData["omgc6"] = value.omgc6;
+    tempData["omgc7"] = value.omgc7;
+    tempData["omgc8"] = value.omgc8;
+    tempData["omgc9"] = value.omgc9;
+    tempData["omgc10"] = value.omgc10;
+    tempData["omgc11"] = value.omgc11;
+    tempData["omgc12"] = value.omgc12;
+    tempData["omgc13"] = value.omgc13;
+    tempData["omgc14"] = value.omgc14;
+    tempData["omgc15"] = value.omgc15;
+    tempData["omgc16"] = value.omgc16;
+    tempData["omgc17"] = value.omgc17;
+    tempData["omgc18"] = value.omgc18;
+    tempData["delete"] = "1";
+    return tempData;
+}
+function listarDatosReportes()//listarDatos
+{
+    
+    __datos=[];
+    datosParamAjaxValues={};
+    datosParamAjaxValues["url"]="../Controller/ReportesController.php?Op=listar&data=2";
+    datosParamAjaxValues["type"]="POST";
+    datosParamAjaxValues["async"]=false;
+    var variablefunciondatos=function obtenerDatosServer(data)
+    {
+        dataListado = data;
+        $.each(data,function (index,value)
+        {
+            __datos.push( reconstruir(value,index++) );
+        });
+    }
+    var listfunciones=[variablefunciondatos];
+    ajaxHibrido(datosParamAjaxValues,listfunciones);
+    DataGrid = __datos;
+//    return 1;
+}
+
+=======
+>>>>>>> 1f8ac0d4c73a5ae38372a0f4908b499645e53d90
 function construirGrid()
 {
     jsGrid.fields.customControl = MyCControlField;

@@ -173,18 +173,19 @@ $(function()
             }
         }).datepicker("setDate", new Date());      
      var $btntoExcel = $('#reporte');
-     
      $btntoExcel.on("click",function()
     {
         bandera=true;
+        growlWait("Reporte","Generando Reporte");
+                                
         obtenerDatosReporte();
+        growlSuccess("Reporte","Reporte Generado Exitoso");
     });
 
      fechas_inicio_final["fecha_inicio"]=$("#fechaInicio").val();
      fechas_inicio_final["fecha_final"]=$("#fechaFinal").val();
 })  
 function obtenerDatosReporte(){
-    
     var lista=[],__datos=[];
         $.ajax({
             url:'../Controller/GeneradorReporteController.php?Op=GenerarReporte',
@@ -208,7 +209,8 @@ function obtenerDatosReporte(){
         }); 
 }
  </script>   
-<script>   					  
+<script>   	
+    
 	var $btnDLtoExcel = $('#toExcel'); 
                 $btnDLtoExcel.on('click', function () {
                     if(bandera==true){
@@ -218,7 +220,6 @@ function obtenerDatosReporte(){
                                        , dataset: data1
                                        , columns: getColumns(data1)     
                                 });
-                            
                     }
     });    
 </script>

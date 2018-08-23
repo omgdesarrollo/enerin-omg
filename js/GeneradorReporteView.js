@@ -50,6 +50,7 @@ function construirGridGenerador()
         onDataLoading: function(args)
         {
 //            loadBlockUi();
+               
         },
         onDataLoaded:function(args)
         {
@@ -83,8 +84,8 @@ function construirGridGenerador()
                 { name:"omgc2", title: "Presion", type: "text", width: 150, validate: "required" },
                 { name:"omgc3", title: "Temperatura", type: "text", width: 150, validate: "required" },
                 { name:"omgc4", title: "Produccion de Petroleo", type: "text", width: 150, validate: "required" },
-                { name:"omgc5", title: "°AP(PETROLEO)I", type: "text", width: 150, validate: "required" },
-                { name:"omgc6", title: "%S(PETROLEO)", type: "text", width: 150, validate: "required" },
+                { name:"omgc5", title: "°AP(PETROLEO)I", type: "text", width: 150, validate: "required"},
+                { name:"omgc6", title: "%S(PETROLEO)", type: "text", width: 150, validate: "required"},
                 { name:"omgc7", title: "Sal", type: "text", width: 150, validate: "required" },
                 { name:"omgc8", title: "%H20(PETROLEO)", type: "text", width: 150, validate: "required" },
                 { name:"omgc9", title: "Produccion de condensado Medido Neto", type: "text", width: 190, validate: "required" },
@@ -95,9 +96,8 @@ function construirGridGenerador()
                 { name:"omgc14", title: "Poder Calorifico de gas", type: "text", width: 180, validate: "required" },
                 { name:"omgc15", title: "Peso Molecular de gas", type: "text", width: 150, validate: "required" },
                 { name:"omgc16", title: "Energia de gas", type: "text", width: 150, validate: "required" },
-                { name:"omgc17", title: "Eventos", type: "text", width: 150, validate: "required" },
-                { name:"omgc18", title: "Fecha Real Reporte", type: "text", width: 190, validate: "required" }
-                
+                { name:"omgc17", title: "Eventos", type: "text", width: 150, validate: "required" }
+//                { name:"omgc18", title: "Fecha Real Reporte", type: "text", width: 190, validate: "required" }               
 //                { name:"delete", title:"Opción", type:"customControl" }
         ]
         
@@ -135,7 +135,7 @@ function reconstruir(value,index)
     tempData["omgc15"] = value.omgc15;
     tempData["omgc16"] = value.omgc16;
     tempData["omgc17"] = value.omgc17;
-    tempData["omgc18"] = value.omgc18;
+//    tempData["omgc18"] = value.omgc18;
     tempData["delete"] = "1";
     return tempData;
 }
