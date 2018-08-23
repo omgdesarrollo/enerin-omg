@@ -33,7 +33,7 @@ class GeneradorReporteDao {
         }
     }
     public function listarReportesDiariosFechaInicioaFechaFinal(){
-        
+         
         try {
             $query="SELECT
                  tbasignaciones_contrato.region_fiscal,tbasignaciones_contrato.clave_contrato,tbcatalogoproduccion.ubicacion,
@@ -56,8 +56,6 @@ class GeneradorReporteDao {
         } catch (Exception $e) {
             throw $ex;
             return -1;
-        }
-        
+        }   
     }
-    
 }
