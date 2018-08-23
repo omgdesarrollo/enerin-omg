@@ -119,7 +119,7 @@ $Usuario=  Session::getSesion("user");
 </select>
 
 <button id='reporteMensualanual' class="btn btn-info">Generar Reporte</button>
-<button id='reporteDiariosdelMensualAnual' class="btn btn-info">Calculo de todos los diarios  </button>
+<button id='reporteDiariosdelMensualAnualCalculo' class="btn btn-info">Calculo de todos los diarios  </button>
 </div>
 <div class="col-md-6 ">
 
@@ -143,27 +143,12 @@ $Usuario=  Session::getSesion("user");
     var fechas_inicio_final={"fecha_inicio":"","fecha_final":""};
     bandera=0;   
     var month=0,year=0,presionadomes=false,presionadoyear=false;
-
 //    
 
-    
 $(function()
 {    
 	myCombo = dhtmlXComboFromSelect("mySelect");
 	myCombo2 = dhtmlXComboFromSelect("mySelect2");
-	 myCombo.attachEvent("onChange", function(value, text)
-	     	    {
-		 				presionadomes=true;
-		 				month=value;
-	    	            
-	     	    }); 
-	 myCombo2.attachEvent("onChange", function(value, text)
-	     	    {
-					 presionadoyear=true;
-	     	            year=value;
-	    	            
-	     	    }); 
-
 	    
     construirGridGenerador();
 
@@ -195,7 +180,7 @@ $(function()
 
      var $btnCalculoDiariosRangoFechasInicioFin = $('#reporteCalculoDiarios'); 
      $btnCalculoDiariosRangoFechasInicioFin.on('click', function () {
-                    alert("dfds");
+//                     alert("dfds");
 
     	   var lista=[],__datos=[];
            $.ajax({
@@ -224,16 +209,11 @@ $(function()
      var $btnReporteMensualAnual=  $('#reporteMensualanual'); 
 
      $btnReporteMensualAnual.on('click', function () {
-    alert("d");
-    if(presionadomes==false || presionadoyear==false){
-    	alert("debe seleccionar un mes y año");
-    }else{
      var lista=[],__datos=[];
-//      alert("esd");
              $.ajax({
                  url:'../Controller/GeneradorReporteController.php?Op=ListByMonthAndYear',
                  type:'POST',
-                 data:'MONTH='+month+"&YEAR="+year,
+                 data:'MONTH='+myCombo.getSelectedValue()+"&YEAR="+myCombo2.getSelectedValue(),
                  success:function(r)
                  {
                    data1=r;
@@ -249,14 +229,37 @@ $(function()
                  {
                  }
              }); 
-    }
+//     }
       
      }
      );
-
-     
-
-
+     var $btnreporteDiariosdelMensualAnualCalculo=  $('#reporteDiariosdelMensualAnualCalculo'); 
+     $btnreporteDiariosdelMensualAnualCalculo.on('click', function () {
+alert("le has picado ");
+       var lista=[],__datos=[];
+               $.ajax({
+                   url:'../Controller/GeneradorReporteController.php?Op=ListByMonthAndYear',
+                   type:'POST',
+                   data:'MONTH='+myCombo.getSelectedValue()+"&YEAR="+myCombo2.getSelectedValue(),
+                   success:function(r)
+                   {
+                     data1=r;
+                     $.each(r,function (index,value)
+                       {
+                           __datos.push( reconstruir(value,index++) );
+                       });
+                     DataGrid=__datos;
+                     
+                      gridInstance.loadData();
+                   },
+                   error:function()
+                   {
+                   }
+               }); 
+//       }
+        
+       }
+       );
      
 
      
