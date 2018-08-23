@@ -74,6 +74,9 @@ $Usuario=  Session::getSesion("user");
                 color: white;
                 font-weight: normal;
             }
+            body{
+/*             overflow: scroll; /* Scrollbar are always visible */ */
+            }
 
         </style>              
                 
@@ -116,6 +119,7 @@ $Usuario=  Session::getSesion("user");
 </select>
 
 <button id='reporteMensualanual' class="btn btn-info">Generar Reporte</button>
+<button id='reporteDiariosdelMensualAnual' class="btn btn-info">Calculo de todos los diarios  </button>
 </div>
 <div class="col-md-6 ">
 
@@ -128,12 +132,10 @@ $Usuario=  Session::getSesion("user");
 <input type="text" id="fechaFinal"/>
 <br><br><br>
 <button id='reporte' class="btn btn-info">Obtener todos los diarios</button>
-<button id='reporte' class="btn btn-info">Calcular todos los diarios</button>
+<button id='reporteCalculoDiarios' class="btn btn-info">Calcular todos los diarios</button>
 <!--<div class="row">-->
-
-    
 </div>
-<div id="jsGrid"></div>
+<div id="jsGrid" style="width: 90%"></div>
 
 <div id="listjson"></div>
 <script>
@@ -152,8 +154,7 @@ $(function()
             dateFormat: 'yy/mm/dd',
             firstDay: 1,
             onSelect: function() {
-               fechas_inicio_final["fecha_inicio"]=$("#fechaInicio").val();
-               
+               fechas_inicio_final["fecha_inicio"]=$("#fechaInicio").val();             
             }
         }).datepicker("setDate", new Date());   
          $("#fechaFinal").datepicker({
@@ -172,6 +173,39 @@ $(function()
         obtenerDatosReporte();
         growlSuccess("Reporte","Reporte Generado Exitoso");
     });
+
+
+     var $btnCalculoDiariosRangoFechasInicioFin = $('#reporteCalculoDiarios'); 
+     $btnCalculoDiariosRangoFechasInicioFin.on('click', function () {
+//                     alert("d");
+
+    	   var lista=[],__datos=[];
+           $.ajax({
+               url:'../Controller/GeneradorReporteController.php?Op=GenerarReporteCalculoDeTodosLosDiariosRangoFechas',
+               type:'POST',
+               data:'FECHA_INICIO='+fechas_inicio_final["fecha_inicio"]+"&FECHA_FINAL="+fechas_inicio_final["fecha_final"],
+               success:function(r)
+               {
+                 data1=r;
+                 
+                 $.each(r,function (index,value)
+                   {
+                       __datos.push( reconstruir(value,index++) );
+                   });
+                 DataGrid=__datos;
+                 
+                  gridInstance.loadData();
+               },
+               error:function()
+               {
+               }
+           }); 
+
+     });
+
+
+
+     
 
      fechas_inicio_final["fecha_inicio"]=$("#fechaInicio").val();
      fechas_inicio_final["fecha_final"]=$("#fechaFinal").val();
@@ -214,6 +248,12 @@ function obtenerDatosReporte(){
                                 });
                     }
     });    
+
+
+
+
+
+                
 </script>
 <!--<script type="text/javascript">
 
