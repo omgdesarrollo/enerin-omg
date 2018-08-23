@@ -32,7 +32,7 @@ class GeneradorReporteDao {
             return -1;
         }
     }
-    public function listarReportesDiariosPorFecha(){
+    public function listarReportesDiariosFechaInicioaFechaFinal(){
         
         try {
             $query="SELECT
@@ -59,8 +59,5 @@ class GeneradorReporteDao {
         }
         
     }
-    
-    
-    
     
 }
