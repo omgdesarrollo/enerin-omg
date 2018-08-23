@@ -93,23 +93,23 @@ $Usuario=  Session::getSesion("user");
 <div class="col-md-12 ">
 <div class="col-md-6 ">
 <label>Seleccione El Mes:</label>
-<select id="mySelect" style="width:230px;">
-		<option value="Enero" selected="selected">Enero</option>
-		<option value="Febrero">Febrero</option>
-		<option value="Marzo">Marzo</option>
-		<option value="Abril">Abril</option>
-		<option value="Mayo">Mayo</option>
-		<option value="Junio">Junio</option>
-		<option value="Julio">Julio</option>
-		<option value="Agosto">Agosto</option>
-		<option value="Septiembre">Septiembre</option>
-		<option value="Octubre">Octubre</option>
-		<option value="Noviembre">Noviembre</option>	
-		<option value="Diciembre">Diciembre</option>	
+<select id="mySelect" style="width:130px;">
+		<option value="01" selected="selected">Enero</option>
+		<option value="02">Febrero</option>
+		<option value="03">Marzo</option>
+		<option value="04">Abril</option>
+		<option value="05">Mayo</option>
+		<option value="06">Junio</option>
+		<option value="07">Julio</option>
+		<option value="08">Agosto</option>
+		<option value="09">Septiembre</option>
+		<option value="10">Octubre</option>
+		<option value="11">Noviembre</option>	
+		<option value="12">Diciembre</option>	
 </select>
 
 <label> Seleccione El Periodo Anual:</label>
-<select id="mySelect2" style="width:230px;">
+<select id="mySelect2" style="width:130px;">
 		<option value="2017">2017</option>
 		<option value="2018">2018</option>
 		
@@ -123,9 +123,12 @@ $Usuario=  Session::getSesion("user");
 <!--      <img src="../../images/base/_excel.png" width="35px" height="auto"></button> -->
 <label>Fecha Inicio</label>
 <input type="text" id="fechaInicio"/>
+<br>
 <label>Fecha Final</label>
 <input type="text" id="fechaFinal"/>
+<br><br><br>
 <button id='reporte' class="btn btn-info">Obtener todos los diarios</button>
+<button id='reporte' class="btn btn-info">Calcular todos los diarios</button>
 <!--<div class="row">-->
 
     
