@@ -70,7 +70,6 @@ class GeneradorReporteModel {
 //                            $text_presion+="omcg2";
                         }
                     }
-                    
                     //presion es omgc2
                     //temperatura es omgc3
                $lista1[$contador]=array("tag_medidor"=>$value1["tag_medidor"],

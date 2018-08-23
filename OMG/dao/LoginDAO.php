@@ -15,7 +15,7 @@ class LoginDAO{
             }
             return $rec;
             } catch (Exception $e){
-                throw $rec;
+                throw $e;
             }
     }
     
