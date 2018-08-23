@@ -82,7 +82,7 @@ $Usuario=  Session::getSesion("user");
 			/*margin-top: 50px;*/
 			width: 100%    ;
                         overflow:auto ;
-			height: 260px;
+			height: 180px;
 			/*box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);*/
                         box-shadow: 0 1px 3px rgba(0,0,0,90.05), 0 1px 3px rgba(0,0,0,0.09);
 		      }
@@ -93,7 +93,7 @@ $Usuario=  Session::getSesion("user");
 			/*margin-top: 50px;*/
 			width: 100%    ;
                         overflow:auto ;
-			height: 260px;
+			height: 180px;
 			/*box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);*/
                         box-shadow: 0 1px 3px rgba(0,0,0,90.05), 0 1px 3px rgba(0,0,0,0.09);
 		      }
@@ -191,7 +191,7 @@ $Usuario=  Session::getSesion("user");
 
 </div>
 <!-- <div id="seccionAbajo"> -->
-<!-- <div id="jsGrid" ></div> -->
+<div id="jsGrid" ></div>
 <!-- </div> -->
 
 <div id="listjson"></div>
@@ -206,11 +206,11 @@ $(function()
 {    
 	myCombo = dhtmlXComboFromSelect("mySelect");
 	myCombo2 = dhtmlXComboFromSelect("mySelect2");
-	  myLayout = new dhtmlXLayoutObject({parent: "layoutObjGenerador",pattern: "3U",cells: [{id: "a", text: "Mensual", header:true,height:50},{id: "b", text: "Rango de Fechas",header:true}]});
+	  myLayout = new dhtmlXLayoutObject({parent: "layoutObjGenerador",pattern: "3U",cells: [{id: "a", text: "Mensual", header:true,height: 210},{id: "b", text: "Rango de Fechas",header:true},{id: "c", text: "Tabla de Datos",header:true}]});
 
 	myLayout.cells("a").attachObject("seccionIzquierda");
 	myLayout.cells("b").attachObject("seccionDerecha");
-// 	myLayout.cells("c").attachObject("jsGrid");
+	myLayout.cells("c").attachObject("jsGrid");
     construirGridGenerador();
 
     $.datepicker.setDefaults($.datepicker.regional["es"]);
