@@ -125,9 +125,9 @@ require_once '../dao/ReporteDao.php';
             {
                 $exito= $dao->insertarReporte($FECHA_CREACION, $ID_CATALOGOP, $USUARIO);
                 
-                if($exito[0] == 1)
+                if($exito >= 0)
                 {
-                    $rec= $dao->listarReporte($exito['id_nuevo'],$CONTRATO);
+                    $rec= $dao->listarReporte($exito,$CONTRATO);
                 foreach ($rec as $value)
                 {
                 $lista[$contador]= array(

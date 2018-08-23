@@ -187,29 +187,19 @@ class ReporteDao{
     {
         try
         {
-            $query_obtenerMaximo_mas_uno="SELECT max(id_reporte)+1 as id_reporte FROM omg_reporte_produccion";
-            $db_obtenerMaximo_mas_uno=AccesoDB::getInstancia();
-            $lista_id_nuevo_autoincrementado=$db_obtenerMaximo_mas_uno->executeQuery($query_obtenerMaximo_mas_uno);
-            $id_nuevo=0;
             
-            foreach ($lista_id_nuevo_autoincrementado as $value) {
-               $id_nuevo= $value["id_reporte"];
-            }
-             if($id_nuevo==NULL){
-                $id_nuevo=0;
-            }
+            $query="INSERT INTO omg_reporte_produccion (omgc1,omgc2,omgc3,omgc4,omgc5,omgc6,omgc7,omgc8,omgc9,omgc10,omgc11,omgc12,omgc13,omgc14,omgc15,												
+                    omgc16,omgc17,omgc18,id_catalogop,usuario)
+                    VALUES('$FECHA_CREACION',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,null,$ID_CATALOGOP,$USUARIO)";
+           
+            $db=  AccesoDB::getInstancia();
+            $exito = $db->executeQueryUpdate($query);
+            if($exito==1)
+                $exito = $db->executeQuery("SELECT LAST_INSERT_ID()")[0]["LAST_INSERT_ID()"];
+            else
+                $exito = -2;
             
-           $query="INSERT INTO omg_reporte_produccion (omgc1,omgc2,omgc3,omgc4,omgc5,omgc6,omgc7,omgc8,omgc9,omgc10,omgc11,omgc12,omgc13,omgc14,omgc15,												
-                   omgc16,omgc17,omgc18,id_catalogop,usuario)
-                   VALUES('$FECHA_CREACION',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,$ID_CATALOGOP,$USUARIO)";
-           
-           $db=  AccesoDB::getInstancia();
-           $exito = $db->executeUpdateRowsAfected($query);
-           return ($exito != 0)?[0=>1,"id_nuevo"=>$id_nuevo]:[0=>0,"id_nuevo"=>$id_nuevo ];
-           
-//           $db = AccesoDB::getInstancia();
-//           $lista = $db->executeQueryUpdate($query);
-//           return $lista;
+           return $exito;
         } catch (Exception $ex)
         {
             throw $ex;
