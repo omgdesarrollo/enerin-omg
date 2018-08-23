@@ -30,7 +30,7 @@ switch ($Op) {
 	    echo json_encode($Lista);
             break;
         
-        case '':
+        case 'ListSumaReportesDiarios':
             $Lista= $modelGenerador->sumaDereportesDiariosByMonthAndYear($_REQUEST['MONTH'], $_REQUEST['YEAR'],Session::getSesion("s_cont"));
             header('Content-type: application/json; charset=utf-8');
 	    echo json_encode($Lista);

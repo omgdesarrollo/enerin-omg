@@ -133,7 +133,7 @@ class GeneradorReporteDao {
                     AND tbasignaciones_contrato.CONTRATO = $CONTRATO";  
             $db=  AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
-            return $lista;
+            return $lista[0]['resultado'];
         } catch (Exception $ex)
         {
             throw $ex;
