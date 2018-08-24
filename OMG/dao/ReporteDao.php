@@ -189,7 +189,7 @@ class ReporteDao{
             
             $query="INSERT INTO omg_reporte_produccion (omgc1,omgc2,omgc3,omgc4,omgc5,omgc6,omgc7,omgc8,omgc9,omgc10,omgc11,omgc12,omgc13,omgc14,omgc15,												
                     omgc16,omgc17,omgc18,id_catalogop,usuario)
-                    VALUES('$FECHA_CREACION',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,null,$ID_CATALOGOP,$USUARIO)";
+                    VALUES('$FECHA_CREACION',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,'',null,$ID_CATALOGOP,$USUARIO)";
            
             $db=  AccesoDB::getInstancia();
             $exito = $db->executeQueryUpdate($query);

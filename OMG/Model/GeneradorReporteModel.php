@@ -87,4 +87,19 @@ class GeneradorReporteModel {
             return -1;
         }
     }
+    
+    public function porcentajesMolaresByMonthAndYear($MONTH, $YEAR, $CONTRATO)
+    {
+        try
+        {
+            $dao=new GeneradorReporteDao();
+            $rec= $dao->porcentajesMolaresByMonthAndYear($MONTH, $YEAR, $CONTRATO);
+            
+            return $rec;
+        } catch (Exception$ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 }

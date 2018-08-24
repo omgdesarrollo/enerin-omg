@@ -157,6 +157,29 @@ class GeneradorReporteDao {
             return -1;
         }
     }
+    
+    
+    public function porcentajesMolaresByMonthAndYear($MONTH,$YEAR,$CONTRATO)
+    {
+        try
+        {
+            $query="SELECT tbporcentajes_molares.id_porcentaje, tbporcentajes_molares.mes, tbporcentajes_molares.ano,
+                    tbporcentajes_molares.omg2c1,tbporcentajes_molares.omg2c2,tbporcentajes_molares.omg2c3,tbporcentajes_molares.omg2c4,
+                    tbporcentajes_molares.omg2c5,tbporcentajes_molares.omg2c6,tbporcentajes_molares.omg2c7,tbporcentajes_molares.omg2c8,
+                    tbporcentajes_molares.omg2c9,tbporcentajes_molares.omg2c10,tbporcentajes_molares.omg2c11,contrato	
+                    FROM porcentajes_molares tbporcentajes_molares
+                    WHERE tbporcentajes_molares.mes = $MONTH AND tbporcentajes_molares.ano = $YEAR 
+                    AND tbporcentajes_molares.contrato = $CONTRATO";
+            $db=  AccesoDB::getInstancia();
+            $lista = $db->executeQuery($query);
+            
+            return $lista;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
             
     
 }
