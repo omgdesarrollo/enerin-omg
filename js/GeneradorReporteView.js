@@ -174,6 +174,7 @@ function construirGridGeneradorMolares()
         autoload:true,
         heading: true,
         sorting: true,
+        edititng:true,
 //        sorter:true,
         paging: true,
         controller:db,
@@ -197,9 +198,48 @@ function construirGridGeneradorMolares()
                 { name:"omg2c9", title: "MOLAR 9", type: "text", width: 190},
                 { name:"omg2c10", title: "MOLAR 10", type: "text", width: 170},
                 { name:"omg2c11", title: "MOLAR 11", type: "text", width: 170}
+//                {name:""}
+                
 //                { name:"omgc18", title: "Fecha Real Reporte", type: "text", width: 190, validate: "required" }               
 //                { name:"delete", title:"Opción", type:"customControl" }
-        ]
+        ],
+        onItemUpdated: function(args)
+        {
+            console.log(args);
+            columnas={};
+            id_afectado=args["item"]["id_porcentaje"][0];
+            $.each(args["item"],function(index,value)
+            {
+                if(args["previousItem"][index] != value && value!="")
+                {
+                        if(index!="id_porcentaje" && !value.includes("<button") && index!="delete")
+                        {
+                                columnas[index]=value;
+                        }
+                }
+            });
+            if(Object.keys(columnas).length!=0)
+            {
+            	
+            	
+//                    $.ajax({
+//                            url: '../Controller/GeneralController.php?Op=Actualizar',
+//                            type:'GET',
+//                            data:'TABLA=documentos'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
+//                            success:function(exito)
+//                            {
+//                                refresh();
+//                                swal("","Actualizacion Exitosa!","success");
+//                                setTimeout(function(){swal.close();},1000);
+//                            },
+//                            error:function()
+//                            {
+//                                swal("","Error en el servidor","error");
+//                                setTimeout(function(){swal.close();},1500);
+//                            }
+//                    });
+            }
+        }
         
         
     });
