@@ -153,4 +153,21 @@ class GeneradorReporteModel {
             return -1;
         }
     }
+    
+    
+    public function reportesFaltantesByMonthAndYear($MONTH, $YEAR, $CONTRATO)
+    {
+        try
+        {
+            $dao=new GeneradorReporteDao();
+            $rec= $dao->reportesFaltantesByMonthAndYear($MONTH, $YEAR, $CONTRATO);
+            
+            return $rec;        
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
 }
