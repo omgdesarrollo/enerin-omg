@@ -144,14 +144,13 @@ function construirGridGeneradorMolares()
                 return DataGridMolares;
             },
         };
-    
     $("#jsGridMolares").jsGrid({
          onInit: function(args)
          {
              gridInstanceMolares=args.grid;
              jsGrid.Grid.prototype.autoload=true;
              jsGrid.ControlField.prototype.deleteButton=false;
-             jsGrid.ControlField.prototype.editButton=true;
+             jsGrid.ControlField.prototype.editButton=false;
          },
         onDataLoading: function(args)
         {
@@ -195,6 +194,12 @@ function construirGridGeneradorMolares()
 //                { name:"omgc18", title: "Fecha Real Reporte", type: "text", width: 190, validate: "required" }               
 //                { name:"delete", title:"Opción", type:"customControl" }
         ],
+        rowClick: function(args) {
+//            showDetailsDialog("Edit", args.item);
+        	console.log(args.item);
+//        	alert("d");
+        	showDetallesDialogo("Editar Molar",args);
+        },
         onItemUpdated: function(args)
         {
 //            console.log(args);
@@ -232,9 +237,23 @@ function construirGridGeneradorMolares()
         }
         
         
-    });
+    });    
 }
 
+var showDetallesDialogo = function(dialogType, client) {
+//    $("#name").val(client.Name);
+//    $("#age").val(client.Age);
+//    $("#address").val(client.Address);
+//    $("#country").val(client.Country);
+//    $("#married").prop("checked", client.Married);
+
+//    formSubmitHandler = function() {
+//        saveClient(client, dialogType === "Add");
+//    };
+
+    $("#detailsDialog").dialog("option", "title", dialogType )
+            .dialog("open");
+};
 
 
 //var MyCControlField = function(config)

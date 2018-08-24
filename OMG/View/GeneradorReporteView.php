@@ -205,6 +205,8 @@ $Usuario=  Session::getSesion("user");
 <div id="layoutObjGenerador" class="layoutObj"></div>
 
 
+<div id="detailsDialog"></div>
+
 <script>
     var data1=[],DataGrid=[],DataGridMolares=[],myCombo,myCombo2;
     var fechas_inicio_final={"fecha_inicio":"","fecha_final":""};  
@@ -300,8 +302,6 @@ $(function()
                  {
                  }
              }); 
-
-
              $.ajax({
                  url:'../Controller/GeneradorReporteController.php?Op=ListPorcentajesMolaresMes',
                  type:'POST',
