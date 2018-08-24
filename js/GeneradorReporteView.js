@@ -17,8 +17,7 @@ function listarDatos()//listarDatos
         $.each(data,function (index,value)
         {
             __datos.push( reconstruir(value,index++) );
-        });
-        
+        });   
     }
     
     var listfunciones=[variablefunciondatos];

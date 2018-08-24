@@ -173,7 +173,7 @@ $Usuario=  Session::getSesion("user");
 </select>
 <!-- </div> -->
 <!-- <div class="col-md-3"> -->
-<button id='reporteMensualanual' class="btn btn-info">Generar Reporte</button>
+<button id='reporteMensualanual' class="btn btn-info">Obtener Diarios</button>
 <button id='reporteDiariosdelMensualAnualCalculo' class="btn btn-info">Calculo de todos los diarios  </button>
 <!-- </div> -->
 <button id='btnAgregarMolarAlMes' class="btn btn-info" data-toggle="modal" data-target="#createitemMolares">Agregar % Molares</button>
@@ -325,12 +325,12 @@ $(function()
         
        }
        );
-     var $btn_guardarMolares=  $('#btn_guardarMolares'); 
+     var $btn_guardarMolares= $('#btn_guardarMolares'); 
      $btn_guardarMolares.on('click', function () {
    var datosMolares={"MES":myCombo.getSelectedValue(),"ANO":myCombo2.getSelectedValue(),"omg2c1":$("#omg2c1").val(),"omg2c2":$("#omg2c2").val(),"omg2c2":$("#omg2c2").val(),"omg2c3":$("#omg2c3").val(),"omg2c4":$("#omg2c4").val(),"omg2c5":$("#omg2c5").val(),"omg2c6":$("#omg2c6").val(),"omg2c7":$("#omg2c7").val(),"omg2c8":$("#omg2c8").val(),"omg2c9":$("#omg2c9").val(),"omg2c10":$("#omg2c10").val(),"omg2c11":$("#omg2c11").val()};
    
     	 $.ajax({
-             url:'../Controller/GeneradorReporteController.php?Op=ListByMonthAndYearCalculo',
+             url:'../Controller/GeneradorReporteController.php?Op=guardarPorcentajesMolaresMes',
              type:'POST',
              data:datosMolares,
              success:function(r)
