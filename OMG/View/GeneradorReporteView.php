@@ -378,9 +378,9 @@ $(function()
 //                  });
 //                DataGrid=__datos;
 //                 gridInstance.loadData();
-            	 growlWait("Reporte","Generando Reporte");
-            	 growlSuccess("Reporte","Reporte Generado Exitoso");
-            	 growlError("Reporte","Reporte Generado Exitoso");
+//             	 growlWait("Reporte","Generando Reporte");
+//             	 growlSuccess("Reporte","Reporte Generado Exitoso");
+//             	 growlError("Reporte","Reporte Generado Exitoso");
              },
              error:function()
              {
