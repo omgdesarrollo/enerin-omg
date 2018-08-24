@@ -77,9 +77,19 @@ class GeneradorReporteModel {
     {
         try
         {
-            $dao=new GeneradorReporteDao();          
-            $rec= $dao->insertarPorcentajesMolares($MONTH,$YEAR, $OMG2C1,$OMG2C2,$OMG2C3,$OMG2C4,$OMG2C5,$OMG2C6,$OMG2C7,$OMG2C8,$OMG2C9,$OMG2C10,$OMG2C11,$CONTRATO);
-            
+            $dao=new GeneradorReporteDao(); 
+            $modelGenerador= new GeneradorReporteModel();
+            $rec["molarCargadoMesConAno"]=$modelGenerador->verificarSiExisteReporteMolarByMonthAndYear($MONTH,$YEAR,$CONTRATO);
+            if($rec["molarCargadoMesConAno"]==0){
+                $rec["exito"]= $dao->insertarPorcentajesMolares($MONTH,$YEAR, $OMG2C1,$OMG2C2,$OMG2C3,$OMG2C4,$OMG2C5,$OMG2C6,$OMG2C7,$OMG2C8,$OMG2C9,$OMG2C10,$OMG2C11,$CONTRATO);
+                $rec["molares"]=$modelGenerador->porcentajesMolaresByMonthAndYear($MONTH, $YEAR, $CONTRATO);
+
+            }else{
+                if($rec["molarCargadoMesConAno"]==1){        
+                        $rec["molarCargadoMesConAno"]=1;
+//                         $rec[""]
+                }
+            }
             return $rec;
         } catch (Exception $ex)
         {
@@ -109,7 +119,6 @@ class GeneradorReporteModel {
         {
             $dao=new GeneradorReporteDao();
             $query= "UPDATE porcentajes_molares SET";
-            
             $index=0;
             foreach ($COLUMNAS as $key => $value) 
             {
@@ -121,7 +130,6 @@ class GeneradorReporteModel {
                 $index++;
             }
             $query .= " WHERE id_porcentaje = $ID ";
-            
             $update = $dao->actualilzarPorcentajeMolar($query);
             return ($update!=0)?1:0;
         } catch (Exception $ex)

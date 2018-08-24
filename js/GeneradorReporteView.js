@@ -1,8 +1,6 @@
   var gridInstance,gridInstanceMolares;
 $(function (){
-    
-    
-    
+	
 });
 function listarDatos()//listarDatos
 {
@@ -25,9 +23,6 @@ function listarDatos()//listarDatos
     DataGrid = __datos;
 //    return 1;
 }
-
-
-
 
 function construirGridGenerador()
 {
@@ -139,13 +134,9 @@ function reconstruir(value,index)
     return tempData;
 }
 
-
-
-
-
 function construirGridGeneradorMolares()
 {
-//    jsGrid.fields.customControl = MyCControlField;
+//	jsGrid.fields.customControl = MyCControlField;
         db=
         {
             loadData: function()
@@ -153,17 +144,17 @@ function construirGridGeneradorMolares()
                 return DataGridMolares;
             },
         };
-    
     $("#jsGridMolares").jsGrid({
          onInit: function(args)
          {
              gridInstanceMolares=args.grid;
              jsGrid.Grid.prototype.autoload=true;
+             jsGrid.ControlField.prototype.deleteButton=false;
+             jsGrid.ControlField.prototype.editButton=false;
          },
         onDataLoading: function(args)
         {
-//            loadBlockUi();
-               
+//            loadBlockUi();              
         },
         onDataLoaded:function(args)
         {
@@ -174,7 +165,7 @@ function construirGridGeneradorMolares()
         autoload:true,
         heading: true,
         sorting: true,
-        edititng:true,
+        editing: true,
 //        sorter:true,
         paging: true,
         controller:db,
@@ -185,8 +176,7 @@ function construirGridGeneradorMolares()
         confirmDeleting: true,
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
         fields: [
-                { name:"id_principal", visible:false},
-              
+                { name:"id_principal", visible:false}, 
                 { name:"omg2c1", title: "MOLAR 1", type: "text", width: 150 },
                 { name:"omg2c2", title: "MOLAR 2", type: "text", width: 150},
                 { name:"omg2c3", title: "MOLAR 3", type: "text", width: 150},
@@ -197,31 +187,33 @@ function construirGridGeneradorMolares()
                 { name:"omg2c8", title: "MOLAR 8", type: "text", width: 150 },
                 { name:"omg2c9", title: "MOLAR 9", type: "text", width: 190},
                 { name:"omg2c10", title: "MOLAR 10", type: "text", width: 170},
-                { name:"omg2c11", title: "MOLAR 11", type: "text", width: 170}
-//                {name:""}
+                { name:"omg2c11", title: "MOLAR 11", type: "text", width: 170},
+                {type:"control"}
+//                { name:"opciones", title:"Opción", type:"customControl",sorting:""}
                 
 //                { name:"omgc18", title: "Fecha Real Reporte", type: "text", width: 190, validate: "required" }               
 //                { name:"delete", title:"Opción", type:"customControl" }
         ],
+        rowClick: function(args) {
+        	showDetallesDialogo("Editar Molar",args.item);
+        },
         onItemUpdated: function(args)
         {
-            console.log(args);
-            columnas={};
-            id_afectado=args["item"]["id_porcentaje"][0];
-            $.each(args["item"],function(index,value)
-            {
-                if(args["previousItem"][index] != value && value!="")
-                {
-                        if(index!="id_porcentaje" && !value.includes("<button") && index!="delete")
-                        {
-                                columnas[index]=value;
-                        }
-                }
-            });
-            if(Object.keys(columnas).length!=0)
-            {
-            	
-            	
+//            console.log(args);
+//            columnas={};
+//            id_afectado=args["item"]["id_porcentaje"][0];
+//            $.each(args["item"],function(index,value)
+//            {
+//                if(args["previousItem"][index] != value && value!="")
+//                {
+//                        if(index!="id_porcentaje" && !value.includes("<button") && index!="delete")
+//                        {
+//                                columnas[index]=value;
+//                        }
+//                }
+//            });
+//            if(Object.keys(columnas).length!=0)
+//            {
 //                    $.ajax({
 //                            url: '../Controller/GeneralController.php?Op=Actualizar',
 //                            type:'GET',
@@ -238,12 +230,91 @@ function construirGridGeneradorMolares()
 //                                setTimeout(function(){swal.close();},1500);
 //                            }
 //                    });
-            }
+//            }
         }
-        
-        
-    });
+    });    
 }
+var showDetallesDialogo = function(dialogType, molares) {
+//    $("#name").val(client.Name);
+//    $("#age").val(client.Age);
+//    $("#address").val(client.Address);
+//    $("#country").val(client.Country);
+//    $("#married").prop("checked", client.Married);
+
+//    formSubmitHandler = function() {
+//        saveClient(client, dialogType === "Add");
+//    };
+	console.log(molares);
+	
+//	$('#dialogoEdicionMolares').on('click', (e) => {
+//	    e.preventDefault();
+//		alert("f");
+//		$('#dialogoEdicionMolares').trigger("click");
+	    $("#dialogoEdicionMolares").dialog("open");
+
+	    
+//	});
+	
+//	$("#omg2c1").val("f");
+//	$("#dialogoEdicionMolares").dialog();
+////	$("#dialogoEdicionMolares").dialog("option", "width", 600);
+////	$("#dialogoEdicionMolares").dialog("option", "height", 300);
+//	$("#dialogoEdicionMolares").dialog("open");
+	
+};
+
+
+//var MyCControlField = function(config)
+//{
+//    jsGrid.Field.call(this, config);
+//};
+
+
+//MyCControlField.prototype = new jsGrid.Field
+//({
+//        css: "date-field",
+//        align: "center",
+//        sorter: function(date1, date2)
+//        {
+//            console.log("haber cuando entra aqui");
+//            console.log(date1);
+//            console.log(date2);
+//            // return 1;
+//        },
+//        itemTemplate: function(value,todo)
+//        {
+//            return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-edit-button ',title:"Editar", type:'button'});
+//
+//        },
+//        insertTemplate: function(value)
+//        {
+//        },
+//        editTemplate: function(value)
+//        {
+//            val = "<input class='jsgrid-button jsgrid-update-button' type='button' title='Actualizar' onClick='aceptarEdicion()'>";
+//            val += "<input class='jsgrid-button jsgrid-cancel-edit-button' type='button' title='Cancelar Edición' onClick='cancelarEdicion()'>";
+//            return val;
+//        },
+//        insertValue: function()
+//        {
+//        },
+//        editValue: function()
+//        {
+//        }
+//});
+
+
+//function cancelarEdicion()
+//{
+//    $("#jsGridMolares").jsGrid("cancelEdit");
+//}
+//
+//function aceptarEdicion()
+//{
+//	gridInstanceMolares.updateItem();
+//}
+
+
 
 
 
@@ -264,7 +335,14 @@ function reconstruirMolares(value,index)
     tempData["omg2c9"] = value.omg2c9;
     tempData["omg2c10"] = value.omg2c10;
     tempData["omg2c11"] = value.omg2c11;
+    tempData["opciones"] = value.omg2c11;
     return tempData;
 }
+
+
+
+
+
+
 
 

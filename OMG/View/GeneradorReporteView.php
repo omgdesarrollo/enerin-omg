@@ -126,14 +126,16 @@ $Usuario=  Session::getSesion("user");
                     /*margin: 0 auto;*/
                     }
 		      
-		      
+		      .dhxlayout_base_material div.dhx_cell_layout div.dhx_cell_hdr{
+		              background-color:#337ab7;
+		      }
 		      
         </style>              	 
 </head>
 <body class="no-skin" onload="">
 <!-- <div id="loader"></div>  -->
 <?php
-    require_once 'EncabezadoUsuarioView.php';
+//     require_once 'EncabezadoUsuarioView.php';
     // require_once '../Model/socketModel.php';
 ?>
 
@@ -170,16 +172,14 @@ $Usuario=  Session::getSesion("user");
 </select>
 <!-- </div> -->
 <!-- <div class="col-md-3"> -->
-<button id='reporteMensualanual' class="btn btn-info">Obtener Diarios</button>
-<button id='reporteDiariosdelMensualAnualCalculo' class="btn btn-info">Calculo de todos los diarios  </button>
+<button id='reporteMensualanual' class="btn btn-info btn-xs">Obtener Diarios</button>
+<button id='reporteDiariosdelMensualAnualCalculo' class="btn btn-info btn-xs">Calcular todos los diarios</button>
 <!-- </div> -->
-<button id='btnAgregarMolarAlMes' class="btn btn-info" data-toggle="modal" data-target="#createitemMolares">% Molares</button>
-
+<button id='btnAgregarMolarAlMes' class="btn btn-info btn-xs" data-toggle="modal" data-target="#createitemMolares">% Molares</button>
 </div>
 </div>
 
 <div class="col-md-6 ">
-
 <!-- <button id='toExcel' > -->
 <!--      <img src="../../images/base/_excel.png" width="35px" height="auto"></button> -->
 <div id="seccionDerecha">
@@ -189,8 +189,8 @@ $Usuario=  Session::getSesion("user");
 <label>Fecha Final</label>
 <input type="text" id="fechaFinal"/>
 <br><br><br>
-<button id='reporte' class="btn btn-info">Obtener todos los diarios</button>
-<button id='reporteCalculoDiarios' class="btn btn-info">Calcular todos los diarios</button>
+<button id='reporte' class="btn btn-info btn-xs">Obtener todos los diarios</button>
+<button id='reporteCalculoDiarios' class="btn btn-info btn-xs">Calcular todos los diarios</button>
 <!--<div class="row">-->
 </div>
 </div>
@@ -203,8 +203,19 @@ $Usuario=  Session::getSesion("user");
 
 <div id="listjson"></div>
 <div id="layoutObjGenerador" class="layoutObj"></div>
-
-
+<div id="dialogoEdicionMolares" title="Edicion Molares" style="display: none">
+<input type="text" value="" placeholder="Molar 1" id="omg2c1">
+<input type="text" value="" placeholder="Molar 2" id="omg2c2">
+<input type="text" value="" placeholder="Molar 3" id=" omg2c3" >
+<input type="text" value="" placeholder="Molar 4" id="omg2c4">
+<input type="text" value="" placeholder="Molar 5" id="omg2c5">
+<input type="text" value="" placeholder="Molar 6" id="omg2c6">
+<input type="text" value="" placeholder="Molar 7" id="omg2c7">
+<input type="text" value="" placeholder="Molar 8" id="omg2c8">
+<input type="text" value="" placeholder="Molar 9" id="omg2c9">
+<input type="text" value="" placeholder="Molar 10" id="omg2c10">
+<input type="text" value="" placeholder="Molar 11" id="omg2c11">
+</div>
 <script>
     var data1=[],DataGrid=[],DataGridMolares=[],myCombo,myCombo2;
     var fechas_inicio_final={"fecha_inicio":"","fecha_final":""};  
@@ -222,7 +233,22 @@ $(function()
     construirGridGenerador();
     construirGridGeneradorMolares();
 //     gridInstanceMolares.loadData(); 
-    
+				 $("#dialogoEdicionMolares").dialog({autoOpen:false,modal:true});
+//construccion de la ventanita para edicion de molares
+//             $("#dialogoEdicionMolares").dialog({
+//                 autoOpen: false,
+//                 modal: true
+//                 buttons: {
+//                 "Aceptar": function () {
+//                 nombre.value = el_nombre.value;
+//                 $(this).dialog("close");
+//                 },
+//                 "Cerrar": function () {
+//                 $(this).dialog("close");
+//                 }
+//                 }
+//             });
+//    fin de la construccion de la ventanita para edicion de molares
     $.datepicker.setDefaults($.datepicker.regional["es"]);
         $("#fechaInicio").datepicker({
             dateFormat: 'yy/mm/dd',
@@ -300,8 +326,6 @@ $(function()
                  {
                  }
              }); 
-
-
              $.ajax({
                  url:'../Controller/GeneradorReporteController.php?Op=ListPorcentajesMolaresMes',
                  type:'POST',
@@ -358,19 +382,37 @@ $(function()
                    }
                }); 
 //       }
-        
        }
        );
      var $btn_guardarMolares= $('#btn_guardarMolares'); 
      $btn_guardarMolares.on('click', function () {
-   var datosMolares={"MES":myCombo.getSelectedValue(),"ANO":myCombo2.getSelectedValue(),"omg2c1":$("#omg2c1").val(),"omg2c2":$("#omg2c2").val(),"omg2c2":$("#omg2c2").val(),"omg2c3":$("#omg2c3").val(),"omg2c4":$("#omg2c4").val(),"omg2c5":$("#omg2c5").val(),"omg2c6":$("#omg2c6").val(),"omg2c7":$("#omg2c7").val(),"omg2c8":$("#omg2c8").val(),"omg2c9":$("#omg2c9").val(),"omg2c10":$("#omg2c10").val(),"omg2c11":$("#omg2c11").val()};
-   
+    var datosMolares={"MES":myCombo.getSelectedValue(),"ANO":myCombo2.getSelectedValue(),"omg2c1":$("#omg2c1").val(),"omg2c2":$("#omg2c2").val(),"omg2c2":$("#omg2c2").val(),"omg2c3":$("#omg2c3").val(),"omg2c4":$("#omg2c4").val(),"omg2c5":$("#omg2c5").val(),"omg2c6":$("#omg2c6").val(),"omg2c7":$("#omg2c7").val(),"omg2c8":$("#omg2c8").val(),"omg2c9":$("#omg2c9").val(),"omg2c10":$("#omg2c10").val(),"omg2c11":$("#omg2c11").val()};
+    __datosMolares=[];
     	 $.ajax({
              url:'../Controller/GeneradorReporteController.php?Op=guardarPorcentajesMolaresMes',
              type:'POST',
              data:datosMolares,
+             beforesend:function (){
+            	 growlWait("Molares","Guardando Molares");
+             },
              success:function(r)
-             {
+             {   
+              if(r["molarCargadoMesConAno"]==0){                  
+				if(r["exito"]==true){
+					 DataGridMolares=r.molares;
+					 gridInstanceMolares.loadData();
+					 growlSuccess("Molares","Guardado Exitoso");
+				}else{
+					if(r["exito"]==false){
+						 growlError("Error","Molares No Se Guardaron ");
+					}
+				}
+              }else{
+            	  if(r["molarCargadoMesConAno"]==1){
+            		  growlError("Error","El Molar Ya Fue Cargado En Este Mes ");      	  
+            	  }
+              }
+              
 //                data1=r;
 //                $.each(r,function (index,value)
 //                  {
@@ -378,9 +420,11 @@ $(function()
 //                  });
 //                DataGrid=__datos;
 //                 gridInstance.loadData();
-            	 growlWait("Reporte","Generando Reporte");
-            	 growlSuccess("Reporte","Reporte Generado Exitoso");
-            	 growlError("Reporte","Reporte Generado Exitoso");
+//             	 growlWait("Reporte","Generando Reporte");
+//             	 growlSuccess("Reporte","Reporte Generado Exitoso");
+//             	 growlError("Reporte","Reporte Generado Exitoso");
+//  				growlSuccess("Reporte","Guardado Exitoso");
+//             	 gridInstanceMolares.loadData();
              },
              error:function()
              {
