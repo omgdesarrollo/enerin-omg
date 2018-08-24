@@ -8,7 +8,6 @@ class GeneradorReporteModel {
         {
             $dao=new GeneradorReporteDao();
             $rec= $dao->listarReportesporFecha($FECHA_INICIO, $FECHA_FINAL, $CUMPLIMIENTO); 
-//            return self::calcular($rec);
             return $rec;
             
         } catch (Exception $ex)
@@ -17,102 +16,158 @@ class GeneradorReporteModel {
             return -1;
         }
     }
-    public static function calcular($array){
-        try{
-            $lista1;
-            $listados;
-            $arrayData=$array;
-            $contador=0;
-            $fecha_produccion;
-            $suma_presion=0;
-            $temperatura=0;
-            $produccion_petroleo_medido_neto=0;
-            $densidad_petroleo_en_grados_api=0;
-            $contenido_azufre_porcentaje_asociado_al_petroleo=0;
-             $sal_asociado_al_petroleo=0;
-            $agua_asociado_al_petroleo=0;
-            $produccion_condensado_medido_neto=0;
-            $densidad_condensado_grados_api=0;
-            $contenido_azufre_asociado_condensado=0;
-            $agua_asociado_condensado=0;
-              $produccion_de_gas=0;
-              $poder_calorifico_gas=0;
-              $peso_molecular_gas=0;
-              $energia_gas=0;
-            
-           
-            foreach ($array as $key1 => $value1) {
-//                if($value["tag_medidor"]){
-                $suma_presion=0;
-                $temperatura=0;
-                $produccion_petroleo_medido_neto=0;
-                $densidad_petroleo_en_grados_api=0;
-                
-                    foreach ($arrayData as $key2 => $value2) {
-                        if($value1["tag_medidor"]==$value2["tag_medidor"]){
-                            $suma_presion+=$value2["omgc2"];
-                            $temperatura+=$value2["omgc3"];
-                            $produccion_petroleo_medido_neto+=$value2["omgc4"];
-                            $densidad_petroleo_en_grados_api+=$value2["omgc5"];
-//                            $contenido_azufre_porcentaje_asociado_al_petroleo+=$value2["omgc6"];
-//                            $sal_asociado_al_petroleo+=$value2["omgc7"];
-//                            $agua_asociado_al_petroleo+=$value2["omgc8"];
-//                            $produccion_condensado_medido_neto+=$value2["omgc9"];
-//                            $densidad_condensado_grados_api+=$value2["omgc10"];
-//                            $contenido_azufre_asociado_condensado+=$value2["omgc11"];
-//                            $agua_asociado_condensado+=$value2["omgc12"];
-//                            $produccion_de_gas+=$value2["omgc13"];
-//                            $poder_calorifico_gas+=$value2["omgc14"];
-//                            $peso_molecular_gas+=$value2["omgc15"];
-//                            $energia_gas+=$value2["omgc16"];
-//                            $eventos+=$value2["omgc17"];
-                            
-//                            $text_presion+="omcg2";
-                        }
-                    }
-                    
-                    //presion es omgc2
-                    //temperatura es omgc3
-               $lista1[$contador]=array("tag_medidor"=>$value1["tag_medidor"],
-                   "omgc1"=>"-----",
-                   "omgc2"=>$suma_presion,
-                   "omgc3"=>$temperatura,
-                   "omgc4"=>$produccion_petroleo_medido_neto,
-                   "omgc5"=>$densidad_petroleo_en_grados_api
-                   );
-               
-               
-                $contador++;
-            }
-            
-//            $lista2[]
-//            foreach($lista as $key3=>$value3){
-//                echo json_encode($value3["tag_medidor"]);
-//            }
-//             Sarray_not_unique($raw_array);
-            
-//            return array_unique($lista1, SORT_REGULAR);
-            return $array;
-        }catch (Exception $ex) {
+    
+    public function listarReportesDiariosFechaInicioaFechaFinal($FECHA_INICIO, $FECHA_FINAL, $CUMPLIMIENTO)
+    {
+        try {
+            $dao=new GeneradorReporteDao();
+            $rec= $dao->listarReportesDiariosFechaInicioaFechaFinal($FECHA_INICIO, $FECHA_FINAL, $CUMPLIMIENTO);
+            return $rec;
+        } catch (Exception $e) {
         }
     }
-public static function  array_not_unique($raw_array) {
-    $dupes = array();
-    natcasesort($raw_array);
-    reset ($raw_array);
+    
+    
+    public function listarReportePorMonthAndYear($MONTH, $YEAR,$CONTRATO)
+    {
+        try
+        {
+            $dao=new GeneradorReporteDao();
+            $rec= $dao->listarReportePorMonthAndYear($MONTH, $YEAR,$CONTRATO);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    public function sumaByMonthAndYear($MONTH, $YEAR, $CONTRATO)
+    {
+        try
+        {
+            $dao=new GeneradorReporteDao();
+            $rec= $dao->sumaByMonthAndYear($MONTH, $YEAR, $CONTRATO);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    public function sumaDereportesDiariosByMonthAndYear($MONTH, $YEAR, $CONTRATO)
+    {
+        try
+        {
+            $dao=new GeneradorReporteDao();
+            $rec= $dao->sumaDereportesDiariosByMonthAndYear($MONTH, $YEAR, $CONTRATO);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    public function insertarPorcentajesMolares($MONTH,$YEAR, $OMG2C1,$OMG2C2,$OMG2C3,$OMG2C4,$OMG2C5,$OMG2C6,$OMG2C7,$OMG2C8,$OMG2C9,$OMG2C10,$OMG2C11,$CONTRATO)
+    {
+        try
+        {
+            $dao=new GeneradorReporteDao(); 
+            $modelGenerador= new GeneradorReporteModel();
+            $rec["molarCargadoMesConAno"]=$modelGenerador->verificarSiExisteReporteMolarByMonthAndYear($MONTH,$YEAR,$CONTRATO);
+            if($rec["molarCargadoMesConAno"]==0){
+                $rec["exito"]= $dao->insertarPorcentajesMolares($MONTH,$YEAR, $OMG2C1,$OMG2C2,$OMG2C3,$OMG2C4,$OMG2C5,$OMG2C6,$OMG2C7,$OMG2C8,$OMG2C9,$OMG2C10,$OMG2C11,$CONTRATO);
+                $rec["molares"]=$modelGenerador->porcentajesMolaresByMonthAndYear($MONTH, $YEAR, $CONTRATO);
 
-    $old_key    = NULL;
-    $old_value    = NULL;
-    foreach ($raw_array as $key => $value) {
-        if ($value === NULL) { continue; }
-        if ($old_value == $value) {
-            $dupes[$old_key]    = $old_value;
-            $dupes[$key]        = $value;
+            }else{
+                if($rec["molarCargadoMesConAno"]==1){        
+                        $rec["molarCargadoMesConAno"]=1;
+//                         $rec[""]
+                }
+            }
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
         }
-        $old_value    = $value;
-        $old_key    = $key;
     }
-return $dupes;
-}
+    
+    public function porcentajesMolaresByMonthAndYear($MONTH, $YEAR, $CONTRATO)
+    {
+        try
+        {
+            $dao=new GeneradorReporteDao();
+            $rec= $dao->porcentajesMolaresByMonthAndYear($MONTH, $YEAR, $CONTRATO);
+            
+            return $rec;
+        } catch (Exception$ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    public function actualilzarPorcentajeMolar($COLUMNAS,$ID)
+    {
+        try
+        {
+            $dao=new GeneradorReporteDao();
+            $query= "UPDATE porcentajes_molares SET";
+            $index=0;
+            foreach ($COLUMNAS as $key => $value) 
+            {
+                if($index!=0)
+                {
+                    $query .= " , ";
+                }
+                    $query .= " $key = '$value'";
+                $index++;
+            }
+            $query .= " WHERE id_porcentaje = $ID ";
+            $update = $dao->actualilzarPorcentajeMolar($query);
+            return ($update!=0)?1:0;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    public function verificarSiExisteReporteMolarByMonthAndYear($MONTH,$YEAR,$CONTRATO)
+    {
+        try
+        {
+            $dao=new GeneradorReporteDao();
+            $rec= $dao->verificarSiExisteReporteMolarByMonthAndYear($MONTH, $YEAR, $CONTRATO);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    
+    public function reportesFaltantesByMonthAndYear($MONTH, $YEAR, $CONTRATO)
+    {
+        try
+        {
+            $dao=new GeneradorReporteDao();
+            $rec= $dao->reportesFaltantesByMonthAndYear($MONTH, $YEAR, $CONTRATO);
+            
+            return $rec;        
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
     
 }

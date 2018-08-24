@@ -201,7 +201,7 @@ MyCControlField.prototype = new jsGrid.Field
         },
         itemTemplate: function(value,todo)
         {
-//            console.log(value,todo);
+//            console.log(value,todo);            
             if(value[0]['existe_programa']!="0" || value[0]['existe_archivo']!=0)
                 return "";
             else

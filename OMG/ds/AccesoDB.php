@@ -2,9 +2,9 @@
 require_once '../util/Util.php';
 class AccesoDB {
 
-    // Variable que representa la conexión con el servidor
+    // Variable que representa la conexion  con el servidor
     private $cn = null;    
-    // Implementación del patrón Singleton
+    // Implementacion del patrón Singleton
     private static  $instancia = null;
     
     public static function getInstancia() {
@@ -15,9 +15,9 @@ class AccesoDB {
         return self::$instancia;
     }
 
-    // Método privado que retorna la conexión con el servidor
+    // Metodo privado que retorna la conexion con el servidor
     private function getConnection() {
-        // Datos de conexión
+        // Datos de conexion
         $parametros = parse_ini_file("../conf/conexion.ini");
         $server = $parametros["01"];
         $user = $parametros["02"];

@@ -38,12 +38,10 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/jquery-ui.css" rel="stylesheet" type="text/css"/>
                 <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
                 <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
-
                 <!--  -->
                 <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
                 <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
                 <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
-                
                 <!-- <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
                 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script> -->
@@ -64,7 +62,6 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
                 <!-- <script src="../../js/socket.js" type="text/javascript"></script> -->
                 <!-- <script src="../../js/fancywebsocket.js" type="text/javascript"></script> -->
-                
         <style>
             .jsgrid-header-row>.jsgrid-header-cell 
             {
@@ -74,95 +71,186 @@ $Usuario=  Session::getSesion("user");
                 color: white;
                 font-weight: normal;
             }
-            div.combo_info
-            {
-                color: gray;
-                font-size: 11px;
-                padding-bottom: 5px;
-                padding-left: 2px;
-                font-family: Tahoma;
+            body{
+/*            overflow: scroll;  */
             }
-/*            .dhxcombo_select
-            {
-                z-index:9999;
-            }*/
-            
-/*            .jsgrid-cancel-edit-button
-            {
-
-            }
-            
-            .jsgrid-grid-body
-            {
-                 height:450px; 
-            }*/
-
-        </style>              
-                
- 			 
+/*             inicia estilos de seccion  modal  */
+              .modal-lg{width: 100%;}
+/*               termina seccion de modal  */
+            #seccionIzquierda {
+			position: relative;
+			/*margin-left: 10px;*/
+			/*margin-top: 50px;*/
+			width: 100%    ;
+                        overflow:auto ;
+			height: 180px;
+			/*box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);*/
+                        box-shadow: 0 1px 3px rgba(0,0,0,90.05), 0 1px 3px rgba(0,0,0,0.09);
+		      }
+		      
+		        #seccionDerecha {
+			position: relative;
+			/*margin-left: 10px;*/
+			/*margin-top: 50px;*/
+			width: 100%    ;
+                        overflow:auto ;
+			height: 180px;
+			/*box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);*/
+                        box-shadow: 0 1px 3px rgba(0,0,0,90.05), 0 1px 3px rgba(0,0,0,0.09);
+		      }
+		     #seccionAbajo{
+			position: relative;
+			/*margin-left: 10px;*/
+			/*margin-top: 50px;*/
+			/*width: 100%    ;*/
+                        overflow:auto ;
+			height: 150px;
+			/*box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);*/
+                        box-shadow: 0 1px 3px rgba(0,0,0,90.05), 0 1px 3px rgba(0,0,0,0.09);
+		      }
+		      #layoutObjGenerador{
+		      position: relative;
+		      	height: 310px;
+		      	  width: 100%;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
+		      }
+		        div#layout_here {
+                    position: relative;
+                    width: 100%;
+                    height: 392px;
+                    /*overflow: auto;*/
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
+                    /*margin: 0 auto;*/
+                    }
+		      .dhxlayout_base_material div.dhx_cell_layout div.dhx_cell_hdr{
+		              background-color:#337ab7;
+		      }
+		      
+        </style>              	 
 </head>
-
 <body class="no-skin" onload="">
-
 <!-- <div id="loader"></div>  -->
-       
-
 <?php
     require_once 'EncabezadoUsuarioView.php';
     // require_once '../Model/socketModel.php';
 ?>
 
-<div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
-    
-<!-- <button type="button" class="btn btn-info " id="btnreporte">
-    <i class='ace-icon fa fa-search'></i>
-</button> 
-<div class="pull-right">
-<button style="width:51px;height:42px" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
-    <img src="../../images/base/_excel.png" width="35px" height="auto
-    ">
-</button>
-<button style="width:51px;height:42pxwi" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
-    <img src="../../images/base/word.png" width="35px" height="auto">
-</button>
-<button style="width:51px;height:42px" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
-    <img src="../../images/base/pdf.png" width="35px" height="auto">
-</button> 
-</div>
-</div>-->
 
-<button id='reporte' class="btn btn-info">Generar Reporte</button>
-<button id='toExcel' >
-     <img src="../../images/base/_excel.png" width="35px" height="auto"></button>
+
+
+<div id="layoutObjGenerador">
+
+<div class="col-md-12 ">
+<div class="col-md-6 ">
+<!-- <div class="col-md-6 "> -->
+<div id="seccionIzquierda">
+<label>Seleccione El Mes:</label>
+<select id="mySelect" style="width:130px;">
+		<option value="01" selected="selected">Enero</option>
+		<option value="02">Febrero</option>
+		<option value="03">Marzo</option>
+		<option value="04">Abril</option>
+		<option value="05">Mayo</option>
+		<option value="06">Junio</option>
+		<option value="07">Julio</option>
+		<option value="08">Agosto</option>
+		<option value="09">Septiembre</option>
+		<option value="10">Octubre</option>
+		<option value="11">Noviembre</option>	
+		<option value="12">Diciembre</option>	
+</select>
+
+<label> Seleccione El Periodo Anual:</label>
+<select id="mySelect2" style="width:130px;">
+		<option value="2017">2017</option>
+		<option value="2018">2018</option>
+		
+</select>
+<!-- </div> -->
+<!-- <div class="col-md-3"> -->
+<button id='reporteMensualanual' class="btn btn-info btn-xs">Obtener Diarios</button>
+<button id='reporteDiariosdelMensualAnualCalculo' class="btn btn-info btn-xs">Calcular todos los diarios</button>
+<!-- </div> -->
+<button id='btnAgregarMolarAlMes' class="btn btn-info btn-xs" data-toggle="modal" data-target="#createitemMolares">% Molares</button>
+</div>
+</div>
+
+<div class="col-md-6 ">
+<!-- <button id='toExcel' > -->
+<!--      <img src="../../images/base/_excel.png" width="35px" height="auto"></button> -->
+<div id="seccionDerecha">
 <label>Fecha Inicio</label>
 <input type="text" id="fechaInicio"/>
+<br>
 <label>Fecha Final</label>
 <input type="text" id="fechaFinal"/>
+<br><br><br>
+<button id='reporte' class="btn btn-info btn-xs">Obtener todos los diarios</button>
+<button id='reporteCalculoDiarios' class="btn btn-info btn-xs">Calcular todos los diarios</button>
 <!--<div class="row">-->
-<br>
+</div>
+</div>
 
-    <div id="jsGrid"></div>
-<!--</div>-->
+</div>
+<!-- <div id="seccionAbajo"> -->
+<div id="jsGrid" ></div>
 
+<!-- </div> -->
 
 <div id="listjson"></div>
+<div id="layoutObjGenerador" class="layoutObj"></div>
+<div id="dialogoEdicionMolares" title="Edicion Molares" style="display: none">
+<input type="text" value="" placeholder="Molar 1" id="omg2c1">
+<input type="text" value="" placeholder="Molar 2" id="omg2c2">
+<input type="text" value="" placeholder="Molar 3" id=" omg2c3" >
+<input type="text" value="" placeholder="Molar 4" id="omg2c4">
+<input type="text" value="" placeholder="Molar 5" id="omg2c5">
+<input type="text" value="" placeholder="Molar 6" id="omg2c6">
+<input type="text" value="" placeholder="Molar 7" id="omg2c7">
+<input type="text" value="" placeholder="Molar 8" id="omg2c8">
+<input type="text" value="" placeholder="Molar 9" id="omg2c9">
+<input type="text" value="" placeholder="Molar 10" id="omg2c10">
+<input type="text" value="" placeholder="Molar 11" id="omg2c11">
+</div>
 <script>
-    var data1=[],DataGrid=[];
-  
-    
-    var fechas_inicio_final={"fecha_inicio":"","fecha_final":""};
-    bandera=0;   
+    var data1=[],DataGrid=[],DataGridMolares=[],myCombo,myCombo2;
+    var fechas_inicio_final={"fecha_inicio":"","fecha_final":""};  
+    bandera=0;  
+     
 $(function()
 {    
-    construirGridGenerador();
+	myCombo = dhtmlXComboFromSelect("mySelect");
+	myCombo2 = dhtmlXComboFromSelect("mySelect2");
+	  myLayout = new dhtmlXLayoutObject({parent: "layoutObjGenerador",pattern: "3U",cells: [{id: "a", text: "Mensual", header:true,height: 210},{id: "b", text: "Rango de Fechas",header:true},{id: "c", text: "Tabla de Datos",header:true}]});
 
+	myLayout.cells("a").attachObject("seccionIzquierda");
+	myLayout.cells("b").attachObject("seccionDerecha");
+	myLayout.cells("c").attachObject("jsGrid");
+    construirGridGenerador();
+    construirGridGeneradorMolares();
+//     gridInstanceMolares.loadData(); 
+				 $("#dialogoEdicionMolares").dialog({autoOpen:false,modal:true});
+//construccion de la ventanita para edicion de molares
+//             $("#dialogoEdicionMolares").dialog({
+//                 autoOpen: false,
+//                 modal: true
+//                 buttons: {
+//                 "Aceptar": function () {
+//                 nombre.value = el_nombre.value;
+//                 $(this).dialog("close");
+//                 },
+//                 "Cerrar": function () {
+//                 $(this).dialog("close");
+//                 }
+//                 }
+//             });
+//    fin de la construccion de la ventanita para edicion de molares
     $.datepicker.setDefaults($.datepicker.regional["es"]);
         $("#fechaInicio").datepicker({
             dateFormat: 'yy/mm/dd',
             firstDay: 1,
             onSelect: function() {
-               fechas_inicio_final["fecha_inicio"]=$("#fechaInicio").val();
-               
+               fechas_inicio_final["fecha_inicio"]=$("#fechaInicio").val();             
             }
         }).datepicker("setDate", new Date());   
          $("#fechaFinal").datepicker({
@@ -173,34 +261,206 @@ $(function()
             }
         }).datepicker("setDate", new Date());      
      var $btntoExcel = $('#reporte');
-     
      $btntoExcel.on("click",function()
     {
         bandera=true;
+        growlWait("Reporte","Generando Reporte");
+                                
         obtenerDatosReporte();
+        growlSuccess("Reporte","Reporte Generado Exitoso");
     });
 
+     var $btnCalculoDiariosRangoFechasInicioFin = $('#reporteCalculoDiarios'); 
+
+     
+     $btnCalculoDiariosRangoFechasInicioFin.on('click', function () {
+//                     alert("dfds");
+
+    	   var lista=[],__datos=[];
+           $.ajax({
+               url:'../Controller/GeneradorReporteController.php?Op=GenerarReporteCalculoDeTodosLosDiariosRangoFechas',
+               type:'POST',
+               data:'FECHA_INICIO='+fechas_inicio_final["fecha_inicio"]+"&FECHA_FINAL="+fechas_inicio_final["fecha_final"],
+               success:function(r)
+               {
+                 data1=r;
+                 
+                 $.each(r,function (index,value)
+                   {
+                       __datos.push( reconstruir(value,index++) );
+                   });
+                 DataGrid=__datos;
+                 
+                  gridInstance.loadData();
+               },
+               error:function()
+               {
+               }
+           }); 
+     });
+     var $btnReporteMensualAnual=  $('#reporteMensualanual'); 
+     $btnReporteMensualAnual.on('click', function () {
+     var lista=[],__datos=[],__datosMolares=[];
+             $.ajax({
+                 url:'../Controller/GeneradorReporteController.php?Op=ListByMonthAndYear',
+                 type:'POST',
+                 data:'MONTH='+myCombo.getSelectedValue()+"&YEAR="+myCombo2.getSelectedValue(),
+                 success:function(r)
+                 {
+//                    data1=r;
+                   $.each(r,function (index,value)
+                     {
+                         __datos.push( reconstruir(value,index++) );
+                     });
+                   DataGrid=__datos;
+                   
+                    gridInstance.loadData();
+                	
+                    
+                 },
+                 error:function()
+                 {
+                 }
+             }); 
+             $.ajax({
+                 url:'../Controller/GeneradorReporteController.php?Op=ListPorcentajesMolaresMes',
+                 type:'POST',
+                 data:'MES='+myCombo.getSelectedValue()+"&ANO="+myCombo2.getSelectedValue(),
+                 success:function(r)
+                 {
+//                    data1=r;
+                   $.each(r,function (index,value)
+                     {
+                       
+                	   __datosMolares.push( reconstruirMolares(value,index++) );
+                     });
+                   DataGridMolares=__datosMolares;
+                   
+                   gridInstanceMolares.loadData();
+                	
+                    
+                 },
+                 error:function()
+                 {
+                 }
+             });
+
+
+
+
+
+
+             
+//     } 
+     }
+     );
+     var $btnreporteDiariosdelMensualAnualCalculo=  $('#reporteDiariosdelMensualAnualCalculo'); 
+     $btnreporteDiariosdelMensualAnualCalculo.on('click', function () {
+// alert("le has picado ");
+       var lista=[],__datos=[], DataGrid=[];;
+               $.ajax({
+                   url:'../Controller/GeneradorReporteController.php?Op=ListByMonthAndYearCalculo',
+                   type:'POST',
+                   data:'MONTH='+myCombo.getSelectedValue()+"&YEAR="+myCombo2.getSelectedValue(),
+                   success:function(r)
+                   {
+//                      data1=r;
+                     $.each(r,function (index,value)
+                       {
+                           __datos.push( reconstruir(value,index++) );
+                       });
+                    
+                     DataGrid=__datos;
+                     
+                      gridInstance.loadData();
+                   },
+                   error:function()
+                   {
+                   }
+               }); 
+//       }
+       }
+       );
+     var $btn_guardarMolares= $('#btn_guardarMolares'); 
+     $btn_guardarMolares.on('click', function () {
+    var datosMolares={"MES":myCombo.getSelectedValue(),"ANO":myCombo2.getSelectedValue(),"omg2c1":$("#omg2c1").val(),"omg2c2":$("#omg2c2").val(),"omg2c2":$("#omg2c2").val(),"omg2c3":$("#omg2c3").val(),"omg2c4":$("#omg2c4").val(),"omg2c5":$("#omg2c5").val(),"omg2c6":$("#omg2c6").val(),"omg2c7":$("#omg2c7").val(),"omg2c8":$("#omg2c8").val(),"omg2c9":$("#omg2c9").val(),"omg2c10":$("#omg2c10").val(),"omg2c11":$("#omg2c11").val()};
+    __datosMolares=[];
+    	 $.ajax({
+             url:'../Controller/GeneradorReporteController.php?Op=guardarPorcentajesMolaresMes',
+             type:'POST',
+             data:datosMolares,
+             beforesend:function (){
+            	 growlWait("Molares","Guardando Molares");
+             },
+             success:function(r)
+             {   
+              if(r["molarCargadoMesConAno"]==0){                  
+				if(r["exito"]==true){
+					 DataGridMolares=r.molares;
+					 gridInstanceMolares.loadData();
+					 growlSuccess("Molares","Guardado Exitoso");
+				}else{
+					if(r["exito"]==false){
+						 growlError("Error","Molares No Se Guardaron ");
+					}
+				}
+              }else{
+            	  if(r["molarCargadoMesConAno"]==1){
+            		  growlError("Error","El Molar Ya Fue Cargado En Este Mes ");      	  
+            	  }
+              }
+              
+//                data1=r;
+//                $.each(r,function (index,value)
+//                  {
+//                      __datos.push( reconstruir(value,index++) );
+//                  });
+//                DataGrid=__datos;
+//                 gridInstance.loadData();
+//             	 growlWait("Reporte","Generando Reporte");
+//             	 growlSuccess("Reporte","Reporte Generado Exitoso");
+//             	 growlError("Reporte","Reporte Generado Exitoso");
+//  				growlSuccess("Reporte","Guardado Exitoso");
+//             	 gridInstanceMolares.loadData();
+             },
+             error:function()
+             {
+             }
+         }); 
+
+
+    	 
+     });
+$("#ocultarFormulario").click(function (){
+   
+	if($("#formularioMolar").css("display")=="none"){
+		$("#formularioMolar").css("display","");
+		$("#ocultarFormulario").html("Ocultar Formulario");
+	}else{
+		$("#formularioMolar").css("display","none");
+		$("#ocultarFormulario").html("Desocultar Formulario");
+		}
+	}
+	)
      fechas_inicio_final["fecha_inicio"]=$("#fechaInicio").val();
      fechas_inicio_final["fecha_final"]=$("#fechaFinal").val();
 })  
 function obtenerDatosReporte(){
-    
+// 	alert();
     var lista=[],__datos=[];
         $.ajax({
-            url:'../Controller/GeneradorReporteController.php?Op=GenerarReporte',
+            url:'../Controller/GeneradorReporteController.php?Op=GenerarReporteTodosLosDiarios',
             type:'POST',
             data:'FECHA_INICIO='+fechas_inicio_final["fecha_inicio"]+"&FECHA_FINAL="+fechas_inicio_final["fecha_final"],
             success:function(r)
             {
-              data1=r;
-              
+              data1=r; 
               $.each(r,function (index,value)
                 {
                     __datos.push( reconstruir(value,index++) );
                 });
               DataGrid=__datos;
-              
-               gridInstance.loadData();
+              gridInstance.loadData();
             },
             error:function()
             {
@@ -208,7 +468,8 @@ function obtenerDatosReporte(){
         }); 
 }
  </script>   
-<script>   					  
+<script>   	
+    
 	var $btnDLtoExcel = $('#toExcel'); 
                 $btnDLtoExcel.on('click', function () {
                     if(bandera==true){
@@ -218,9 +479,14 @@ function obtenerDatosReporte(){
                                        , dataset: data1
                                        , columns: getColumns(data1)     
                                 });
-                            
                     }
     });    
+
+
+
+
+
+                
 </script>
 <!--<script type="text/javascript">
 
@@ -255,5 +521,121 @@ function obtenerDatosReporte(){
             <script src="../../assets/probando/js/ace.min.js"></script>
     
 	</body>
+	
+	    <div class="modal draggable fade" id="createitemMolares" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog modal-lg" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Crear % Molares</h4>
+		      </div>
+                        
+		      <div class="modal-body">
+		      <div id="ocultarFormulario" class="btn btn-info btn-xs" >Ocultar Formulario</div>
+                           <div class="row" >
+                          <div class="col-md-12">
+                          <div id="formularioMolar" >
+                          <div class="col-md-6">
+                                                <div class="form-group">
+							<label class="control-label" for="title">C1:</label>
+                                                        <input type="text"  id="omg2c1" class="form-control"  />
+                                                        
+                                                    
+						<div class="help-block with-errors"></div>
+                                                      <div id="sugerenciasclausulas"></div>  
+                                                        
+						</div>
+                                                
+                                                <div class="form-group">
+							<label class="control-label" for="title">C2:</label>
+                                                        <input type="text"  id="omg2c2" class="form-control" data-error="Ingrese la Descripcion del Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>                                    
+                                    
+                                    
+						<div class="form-group">
+							<label class="control-label" for="title">C3:</label>
+                                                        <input type="text"  id="omg2c3" class="form-control" data-error="Ingrese el Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+                                                                                                                       
+                                                                        
+                                                <div class="form-group">
+							<label class="control-label" for="title">C4:</label>
+                                                        <input type="text"  id="omg2c4" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+
+   <div class="form-group">
+							<label class="control-label" for="title">IC4:</label>
+                                                        <input type="text"  id="omg2c5" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+						</div>
+						<div class="col-md-6">
+						   <div class="form-group">
+							<label class="control-label" for="title">C5:</label>
+                                                        <input type="text"  id="omg2c6" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+						   <div class="form-group">
+							<label class="control-label" for="title">IC5:</label>
+                                                        <input type="text"  id="omg2c7" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+						   <div class="form-group">
+							<label class="control-label" for="title">C6+:</label>
+                                                        <input type="text"  id="omg2c8" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+						   <div class="form-group">
+							<label class="control-label" for="title">CO2:</label>
+                                                        <input type="text"  id="omg2c9" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+						   <div class="form-group">
+							<label class="control-label" for="title">H2S:</label>
+                                                        <input type="text"  id="omg2c10" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+						   <div class="form-group">
+							<label class="control-label" for="title">N2:</label>
+                                                        <input type="text"  id="omg2c11" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+                           </div>
+                           
+                           
+                           
+                           
+                               <div class="row">                       
+                                <div class="col-md-12">                                                                              
+            						<div class="form-group">
+            						  <div class="col-md-6">      
+                                         	<button type="submit"  id="btn_guardarMolares"  class="btn crud-submit btn-info btn-block">Guardar</button>
+                                      </div>
+                                       <div class="col-md-6">     
+                                         	<button type="submit"  id="btn_limpiar_Molares"  class="btn crud-submit btn-info btn-block">Limpiar</button>
+                                       </div>
+            						</div>
+        						</div>
+						</div>    
+						
+						</div>
+                           <div class="row">
+                           <div class="col-md-12" style=" overflow: scroll; ">
+                           	<div id="jsGridMolares" >f</div>
+                           </div>
+                           
+                           </div>                  
+                       
+
+		      </div>
+		    </div>
+			</div>
+		    </div>
+		  </div>
+		    </div>
+       </div>
      
 </html>
