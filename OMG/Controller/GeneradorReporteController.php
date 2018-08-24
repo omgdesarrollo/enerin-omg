@@ -39,13 +39,15 @@ switch ($Op) {
         case 'guardarPorcentajesMolaresMes':
             $Lista= $modelGenerador->insertarPorcentajesMolares
             (
-                $_REQUEST['MES'],$_REQUEST['ANO'],$_REQUEST['OMG2C1'],$_REQUEST['OMG2C2'],$_REQUEST['OMG2C3'],
-                $_REQUEST['OMG2C4'],$_REQUEST['OMG2C5'],$_REQUEST['OMG2C6'],$_REQUEST['OMG2C7'],$_REQUEST['OMG2C8'],
-                $_REQUEST['OMG2C9'],$_REQUEST['OMG2C10'],$_REQUEST['OMG2C11'],Session::getSesion("s_cont"));
+                $_REQUEST['MES'],$_REQUEST['ANO'],$_REQUEST['omg2c1'],$_REQUEST['omg2c2'],$_REQUEST['omg2c3'],
+                $_REQUEST['omg2c4'],$_REQUEST['omg2c5'],$_REQUEST['omg2c6'],$_REQUEST['omg2c7'],$_REQUEST['omg2c8'],
+                $_REQUEST['omg2c9'],$_REQUEST['omg2c10'],$_REQUEST['omg2c11'],Session::getSesion("s_cont"));
             header('Content-type: application/json; charset=utf-8');
 	    echo json_encode($Lista);
             break;
-        
+        case 'traerMolares':
+            
+        break;
         
         default:
             -1;

@@ -74,8 +74,9 @@ $Usuario=  Session::getSesion("user");
             body{
 /*            overflow: scroll;  */
             }
-            
-            
+/*             inicia estilos de seccion  modal  */
+              .modal-lg{width: 100%;}
+/*               termina seccion de modal  */
             #seccionIzquierda {
 			position: relative;
 			/*margin-left: 10px;*/
@@ -139,10 +140,6 @@ $Usuario=  Session::getSesion("user");
 
 
 
-
-
-
-
 <div id="layoutObjGenerador">
 
 <div class="col-md-12 ">
@@ -176,7 +173,7 @@ $Usuario=  Session::getSesion("user");
 <button id='reporteMensualanual' class="btn btn-info">Obtener Diarios</button>
 <button id='reporteDiariosdelMensualAnualCalculo' class="btn btn-info">Calculo de todos los diarios  </button>
 <!-- </div> -->
-<button id='btnAgregarMolarAlMes' class="btn btn-info" data-toggle="modal" data-target="#createitemMolares">Agregar % Molares</button>
+<button id='btnAgregarMolarAlMes' class="btn btn-info" data-toggle="modal" data-target="#createitemMolares">% Molares</button>
 
 </div>
 </div>
@@ -201,6 +198,7 @@ $Usuario=  Session::getSesion("user");
 </div>
 <!-- <div id="seccionAbajo"> -->
 <div id="jsGrid" ></div>
+
 <!-- </div> -->
 
 <div id="listjson"></div>
@@ -208,11 +206,14 @@ $Usuario=  Session::getSesion("user");
 
 
 <script>
-    var data1=[],DataGrid=[],myCombo,myCombo2;
+    var data1=[],DataGrid=[],DataGridMolares=[],myCombo,myCombo2;
     var fechas_inicio_final={"fecha_inicio":"","fecha_final":""};
+    
     bandera=0;   
 $(function()
 {    
+
+
 	myCombo = dhtmlXComboFromSelect("mySelect");
 	myCombo2 = dhtmlXComboFromSelect("mySelect2");
 	  myLayout = new dhtmlXLayoutObject({parent: "layoutObjGenerador",pattern: "3U",cells: [{id: "a", text: "Mensual", header:true,height: 210},{id: "b", text: "Rango de Fechas",header:true},{id: "c", text: "Tabla de Datos",header:true}]});
@@ -221,7 +222,12 @@ $(function()
 	myLayout.cells("b").attachObject("seccionDerecha");
 	myLayout.cells("c").attachObject("jsGrid");
     construirGridGenerador();
+    construirGridGeneradorMolares();
 
+	DataGridMolares=[{}];
+    gridInstanceMolares.loadData();
+
+    
     $.datepicker.setDefaults($.datepicker.regional["es"]);
         $("#fechaInicio").datepicker({
             dateFormat: 'yy/mm/dd',
@@ -275,6 +281,7 @@ $(function()
      });
      var $btnReporteMensualAnual=  $('#reporteMensualanual'); 
      $btnReporteMensualAnual.on('click', function () {
+         alert("s");
      var lista=[],__datos=[];
              $.ajax({
                  url:'../Controller/GeneradorReporteController.php?Op=ListByMonthAndYear',
@@ -290,6 +297,8 @@ $(function()
                    DataGrid=__datos;
                    
                     gridInstance.loadData();
+                	
+                    
                  },
                  error:function()
                  {
@@ -355,14 +364,6 @@ $(function()
 
 
 
-
-
-
-
-
-
-
-     
      fechas_inicio_final["fecha_inicio"]=$("#fechaInicio").val();
      fechas_inicio_final["fecha_final"]=$("#fechaFinal").val();
 })  
@@ -444,7 +445,7 @@ function obtenerDatosReporte(){
 	</body>
 	
 	    <div class="modal draggable fade" id="createitemMolares" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  <div class="modal-dialog" role="document">
+		  <div class="modal-dialog modal-lg" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
@@ -452,85 +453,105 @@ function obtenerDatosReporte(){
 		      </div>
                         
 		      <div class="modal-body">
-                         
-                          
-                                                <div class="form-group">
-							<label class="control-label" for="title">C1:</label>
-                                                        <input type="text"  id="omg2c1" class="form-control"  />
+                           <div class="row">
+                          <div class="col-md-12">
+<!--                           <div class="col-md-6"> -->
+<!--                                                 <div class="form-group"> -->
+<!-- 							<label class="control-label" for="title">C1:</label> -->
+<!--                                                         <input type="text"  id="omg2c1" class="form-control"  /> -->
                                                         
                                                     
-<!-- 							<div class="help-block with-errors"></div> -->
-<!--                                                         <div id="sugerenciasclausulas"></div> -->
+<!-- <!-- 							<div class="help-block with-errors"></div> -->
+<!-- <!--                                                         <div id="sugerenciasclausulas"></div> --> 
                                                         
-						</div>
+<!-- 						</div> -->
                                                 
-                                                <div class="form-group">
-							<label class="control-label" for="title">C2:</label>
-                                                        <textarea  id="omg2c2" class="form-control" data-error="Ingrese la Descripcion del Tema" required></textarea>
-							<div class="help-block with-errors"></div>
-						</div>                                    
+<!--                                                 <div class="form-group"> -->
+<!-- 							<label class="control-label" for="title">C2:</label> -->
+<!--                                                         <nput type="text"  id="omg2c2" class="form-control" data-error="Ingrese la Descripcion del Tema" required></textarea> -->
+<!-- 							<div class="help-block with-errors"></div> -->
+<!-- 						</div>                                     -->
                                     
                                     
-						<div class="form-group">
-							<label class="control-label" for="title">C3:</label>
-                                                        <textarea  id="omg2c3" class="form-control" data-error="Ingrese el Sub-Tema" required></textarea>
-							<div class="help-block with-errors"></div>
-						</div>
+<!-- 						<div class="form-group"> -->
+<!-- 							<label class="control-label" for="title">C3:</label> -->
+<!--                                                         <nput type="text"  id="omg2c3" class="form-control" data-error="Ingrese el Sub-Tema" required></textarea> -->
+<!-- 							<div class="help-block with-errors"></div> -->
+<!-- 						</div> -->
                                                                                                                        
                                                                         
-                                                <div class="form-group">
-							<label class="control-label" for="title">C4:</label>
-                                                        <textarea  id="omg2c4" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
-							<div class="help-block with-errors"></div>
-						</div>
+<!--                                                 <div class="form-group"> -->
+<!-- 							<label class="control-label" for="title">C4:</label> -->
+<!--                                                         <nput type="text"  id="omg2c4" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea> -->
+<!-- 							<div class="help-block with-errors"></div> -->
+<!-- 						</div> -->
 
-   <div class="form-group">
-							<label class="control-label" for="title">IC4:</label>
-                                                        <textarea  id="omg2c5" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
-							<div class="help-block with-errors"></div>
-						</div>
-						   <div class="form-group">
-							<label class="control-label" for="title">C5:</label>
-                                                        <textarea  id="omg2c6" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
-							<div class="help-block with-errors"></div>
-						</div>
-						   <div class="form-group">
-							<label class="control-label" for="title">IC5:</label>
-                                                        <textarea  id="omg2c7" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
-							<div class="help-block with-errors"></div>
-						</div>
-						   <div class="form-group">
-							<label class="control-label" for="title">C6+:</label>
-                                                        <textarea  id="omg2c8" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
-							<div class="help-block with-errors"></div>
-						</div>
-						   <div class="form-group">
-							<label class="control-label" for="title">CO2:</label>
-                                                        <textarea  id="omg2c9" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
-							<div class="help-block with-errors"></div>
-						</div>
-						   <div class="form-group">
-							<label class="control-label" for="title">H2S:</label>
-                                                        <textarea  id="omg2c10" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
-							<div class="help-block with-errors"></div>
-						</div>
-						   <div class="form-group">
-							<label class="control-label" for="title">N2:</label>
-                                                        <textarea  id="omg2c11" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
-							<div class="help-block with-errors"></div>
-						</div>
-                                                                        
-                                                                                                                                
-						<div class="form-group">
-                                                    <button type="submit" style="width:49%" id="btn_guardarMolares"  class="btn crud-submit btn-info">Guardar</button>
-                                                    <button type="submit" style="width:49%" id="btn_limpiar_Molares"  class="btn crud-submit btn-info">Limpiar</button>
-						</div>
-                        
+<!--    <div class="form-group"> -->
+<!-- 							<label class="control-label" for="title">IC4:</label> -->
+<!--                                                         <nput type="text"  id="omg2c5" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea> -->
+<!-- 							<div class="help-block with-errors"></div> -->
+<!-- 						</div> -->
+<!-- 						</div> -->
+<!-- 						<div class="col-md-6"> -->
+<!-- 						   <div class="form-group"> -->
+<!-- 							<label class="control-label" for="title">C5:</label> -->
+<!--                                                         <input type="text"  id="omg2c6" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea> -->
+<!-- 							<div class="help-block with-errors"></div> -->
+<!-- 						</div> -->
+<!-- 						   <div class="form-group"> -->
+<!-- 							<label class="control-label" for="title">IC5:</label> -->
+<!--                                                         <input type="text"  id="omg2c7" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea> -->
+<!-- 							<div class="help-block with-errors"></div> -->
+<!-- 						</div> -->
+<!-- 						   <div class="form-group"> -->
+<!-- 							<label class="control-label" for="title">C6+:</label> -->
+<!--                                                         <input type="text"  id="omg2c8" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea> -->
+<!-- 							<div class="help-block with-errors"></div> -->
+<!-- 						</div> -->
+<!-- 						   <div class="form-group"> -->
+<!-- 							<label class="control-label" for="title">CO2:</label> -->
+<!--                                                         <input type="text"  id="omg2c9" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea> -->
+<!-- 							<div class="help-block with-errors"></div> -->
+<!-- 						</div> -->
+<!-- 						   <div class="form-group"> -->
+<!-- 							<label class="control-label" for="title">H2S:</label> -->
+<!--                                                         <input type="text"  id="omg2c10" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea> -->
+<!-- 							<div class="help-block with-errors"></div> -->
+<!-- 						</div> -->
+<!-- 						   <div class="form-group"> -->
+<!-- 							<label class="control-label" for="title">N2:</label> -->
+<!--                                                         <input type="text"  id="omg2c11" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea> -->
+<!-- 							<div class="help-block with-errors"></div> -->
+<!-- 						</div> -->
+<!--                            </div> -->
+                           
+                           
+<!--                                <div class="row">                        -->
+<!--                                 <div class="col-md-12">                                                                               -->
+<!--             						<div class="form-group"> -->
+<!--             						  <div class="col-md-6">       -->
+<!--                                          	<button type="submit"  id="btn_guardarMolares"  class="btn crud-submit btn-info btn-block">Guardar</button> -->
+<!--                                       </div> -->
+<!--                                        <div class="col-md-6">      -->
+<!--                                          	<button type="submit"  id="btn_limpiar_Molares"  class="btn crud-submit btn-info btn-block">Limpiar</button> -->
+<!--                                        </div> -->
+<!--             						</div> -->
+<!--         						</div> -->
+<!-- 						</div>     -->
+                           <div class="row">
+                           <div class="col-md-12" style=" overflow: scroll; ">
+                           	<div id="jsGridMolares" >f</div>
+                           </div>
+                           
+                           </div>                  
+                       
 
 		      </div>
 		    </div>
-
+			</div>
+		    </div>
 		  </div>
+		    </div>
        </div>
      
 </html>

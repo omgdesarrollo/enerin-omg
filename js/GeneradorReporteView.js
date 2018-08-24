@@ -1,4 +1,4 @@
-  var gridInstance;
+  var gridInstance,gridInstanceMolares;
 $(function (){
     
     
@@ -137,6 +137,72 @@ function reconstruir(value,index)
 //    tempData["omgc18"] = value.omgc18;
     tempData["delete"] = "1";
     return tempData;
+}
+
+
+
+
+
+function construirGridGeneradorMolares()
+{
+//    jsGrid.fields.customControl = MyCControlField;
+        db=
+        {
+            loadData: function()
+            {
+                return DataGridMolares;
+            },
+        };
+    
+    $("#jsGridMolares").jsGrid({
+         onInit: function(args)
+         {
+             gridInstanceMolares=args.grid;
+             jsGrid.Grid.prototype.autoload=true;
+         },
+        onDataLoading: function(args)
+        {
+//            loadBlockUi();
+               
+        },
+        onDataLoaded:function(args)
+        {
+//            $('.jsgrid-filter-row').removeAttr("style",'display:none');
+        },
+        width: "100%",
+        height: "300px",
+        autoload:true,
+        heading: true,
+        sorting: true,
+//        sorter:true,
+        paging: true,
+        controller:db,
+        pageLoading:false,
+        pageSize: 10,
+        pageButtonCount: 5,
+        updateOnResize: true,
+        confirmDeleting: true,
+        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+        fields: [
+                { name:"id_principal", visible:false},
+              
+                { name:"omg2c1", title: "MOLAR 1", type: "text", width: 150 },
+                { name:"omg2c2", title: "MOLAR 2", type: "text", width: 150},
+                { name:"omg2c3", title: "MOLAR 3", type: "text", width: 150},
+                { name:"omg2c4", title: "MOLAR 4", type: "text", width: 150},
+                { name:"omg2c5", title: "MOLAR 5", type: "text", width: 150},
+                { name:"omg2c6", title: "MOLAR 6", type: "text", width: 150},
+                { name:"omg2c7", title: "MOLAR 7", type: "text", width: 150},
+                { name:"omg2c8", title: "MOLAR 8", type: "text", width: 150 },
+                { name:"omg2c9", title: "MOLAR 9", type: "text", width: 190},
+                { name:"omg2c10", title: "MOLAR 10", type: "text", width: 170},
+                { name:"omg2c11", title: "MOLAR 11", type: "text", width: 170}
+//                { name:"omgc18", title: "Fecha Real Reporte", type: "text", width: 190, validate: "required" }               
+//                { name:"delete", title:"Opción", type:"customControl" }
+        ]
+        
+        
+    });
 }
 
 
