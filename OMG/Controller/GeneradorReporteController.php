@@ -52,10 +52,15 @@ switch ($Op) {
 	    echo json_encode($Lista);    
             break;
         
+        case 'actualizarPorcentajesMolares':
+            $Lista= $modelGenerador->actualilzarPorcentajeMolar($_REQUEST['COLUMNAS'], $_REQUEST['ID']);
+            header('Content-type: application/json; charset=utf-8');
+	    echo json_encode($Lista);
+            break;
+        
         default:
             -1;
 }
-
 
 ?>
 
