@@ -60,7 +60,7 @@ switch ($Op) {
 	    echo json_encode($Lista);
             break;
         
-        case '':
+        case 'verificarExistenciaMolaresConMesYAno':
             $Lista= $modelGenerador->verificarSiExisteReporteMolarByMonthAndYear($_REQUEST['MES'], $_REQUEST['ANO'], Session::getSesion("s_cont"));
             header('Content-type: application/json; charset=utf-8');
 	    echo json_encode($Lista);
