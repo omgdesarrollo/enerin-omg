@@ -64,6 +64,12 @@ switch ($Op) {
             $Lista= $modelGenerador->verificarSiExisteReporteMolarByMonthAndYear($_REQUEST['MES'], $_REQUEST['ANO'], Session::getSesion("s_cont"));
             header('Content-type: application/json; charset=utf-8');
 	    echo json_encode($Lista);
+           
+        case 'faltantesPorMes':
+            $Lista= $modelGenerador->reportesFaltantesByMonthAndYear($_REQUEST['MES'], $_REQUEST['ANO'], Session::getSesion("s_cont"));
+            header('Content-type: application/json; charset=utf-8');
+	    echo json_encode($Lista);
+            
         default:
             -1;
 }
