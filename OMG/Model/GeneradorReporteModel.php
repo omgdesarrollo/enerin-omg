@@ -120,14 +120,25 @@ class GeneradorReporteModel {
                     $query .= " $key = '$value'";
                 $index++;
             }
-            
-            foreach ($ID as $key => $value) 
-            {
-                $query .= " WHERE $key = $value ";
-            }
+            $query .= " WHERE id_porcentaje = $ID ";
             
             $update = $dao->actualilzarPorcentajeMolar($query);
             return ($update!=0)?1:0;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    public function verificarSiExisteReporteMolarByMonthAndYear($MONTH,$YEAR,$CONTRATO)
+    {
+        try
+        {
+            $dao=new GeneradorReporteDao();
+            $rec= $dao->verificarSiExisteReporteMolarByMonthAndYear($MONTH, $YEAR, $CONTRATO);
+            
+            return $rec;
         } catch (Exception $ex)
         {
             throw $ex;
