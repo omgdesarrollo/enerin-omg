@@ -36,8 +36,12 @@ switch ($Op) {
 	    echo json_encode($Lista);
             break;
         
-        case 'guardarPorcentajesMolares':
-            $Lista= $modelGenerador->insertarPorcentajesMolares($_REQUEST['MES'], $_REQUEST['ANO'],Session::getSesion("s_cont"));
+        case 'guardarPorcentajesMolaresMes':
+            $Lista= $modelGenerador->insertarPorcentajesMolares
+            (
+                $_REQUEST['MES'],$_REQUEST['ANO'],$_REQUEST['OMG2C1'],$_REQUEST['OMG2C2'],$_REQUEST['OMG2C3'],
+                $_REQUEST['OMG2C4'],$_REQUEST['OMG2C5'],$_REQUEST['OMG2C6'],$_REQUEST['OMG2C7'],$_REQUEST['OMG2C8'],
+                $_REQUEST['OMG2C9'],$_REQUEST['OMG2C10'],$_REQUEST['OMG2C11'],Session::getSesion("s_cont"));
             header('Content-type: application/json; charset=utf-8');
 	    echo json_encode($Lista);
             break;
