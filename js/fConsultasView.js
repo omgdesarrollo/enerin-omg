@@ -190,7 +190,8 @@ function graficar()
     var requisitos_proceso_cp = 0;
     var requisitos_atrasados_cp = 0;
     var requisitos_atrasados_sp = 0;
-    $.each(dataListado,function(index,value){
+    $.each(dataListado,function(index,value)
+    {
         requisitos++;
         registros+=value.detalles.length;
         $.each(value.detalles,function(ind,val){
