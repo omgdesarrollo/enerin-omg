@@ -179,6 +179,20 @@ class GeneradorReporteDao {
             return -1;
         }
     }
+     
+    public function actualilzarPorcentajeMolar($QUERY)
+    {
+        try
+        {
+           $db=  AccesoDB::getInstancia();
+            $update = $db->executeUpdateRowsAfected($QUERY); 
             
+            return $update;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }        
+    }
     
 }

@@ -102,4 +102,36 @@ class GeneradorReporteModel {
             return -1;
         }
     }
+    
+    public function actualilzarPorcentajeMolar($COLUMNAS,$ID)
+    {
+        try
+        {
+            $dao=new GeneradorReporteDao();
+            $query= "UPDATE porcentajes_molares SET";
+            
+            $index=0;
+            foreach ($COLUMNAS as $key => $value) 
+            {
+                if($index!=0)
+                {
+                    $query .= " , ";
+                }
+                    $query .= " $key = '$value'";
+                $index++;
+            }
+            
+            foreach ($ID as $key => $value) 
+            {
+                $query .= " WHERE $key = $value ";
+            }
+            
+            $update = $dao->actualilzarPorcentajeMolar($query);
+            return ($update!=0)?1:0;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 }
