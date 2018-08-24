@@ -207,39 +207,11 @@ $Usuario=  Session::getSesion("user");
 
 <script>
     var data1=[],DataGrid=[],DataGridMolares=[],myCombo,myCombo2;
-    var fechas_inicio_final={"fecha_inicio":"","fecha_final":""};
-    
+    var fechas_inicio_final={"fecha_inicio":"","fecha_final":""};  
     bandera=0;  
-
-
-    estructuraGrid = [
-        { name:"id_principal", visible:false},
-        { name:"no", title:"No",width:60},
-        { name:"clave_contrato", title: "ID del Contrato o Asignación", type: "text", width: 150, validate: "required"},
-        { name:"region_fiscal", title: "Region Fiscal", type: "text", width: 150, validate: "required" },
-        { name:"ubicacion", title: "Ubicación del Punto de Medición", type: "text", width: 150, validate: "required" },
-        { name:"tag_patin", title: "Tag del Patin de Medición", type: "text", width: 130, validate: "required" },
-        { name:"tipo_medidor", title: "Tipo de Medidor", type: "text", width: 150, validate: "required" },    
-        { name:"tag_medidor", title: "Tag del Medidor", type: "text", width: 130, validate: "required",editing:false },
-        { name:"clasificacion", title: "Clasificación del Sistema de Medición", type: "text", width: 150, validate: "required" },
-        { name:"hidrocarburo", title: "Tipo de Hidrocarburo", type: "text", width: 150, validate: "required"},
-        { name:"delete", title:"Opción", type:"customControl",sorting:""},
-        // {type:"control",editButton: true}
-    ];
-
-    construirGrid();
-
-
-
-
-
-
-
      
 $(function()
 {    
-
-
 	myCombo = dhtmlXComboFromSelect("mySelect");
 	myCombo2 = dhtmlXComboFromSelect("mySelect2");
 	  myLayout = new dhtmlXLayoutObject({parent: "layoutObjGenerador",pattern: "3U",cells: [{id: "a", text: "Mensual", header:true,height: 210},{id: "b", text: "Rango de Fechas",header:true},{id: "c", text: "Tabla de Datos",header:true}]});
@@ -405,8 +377,10 @@ $(function()
 //                      __datos.push( reconstruir(value,index++) );
 //                  });
 //                DataGrid=__datos;
-               
 //                 gridInstance.loadData();
+            	 growlWait("Reporte","Generando Reporte");
+            	 growlSuccess("Reporte","Reporte Generado Exitoso");
+            	 growlError("Reporte","Reporte Generado Exitoso");
              },
              error:function()
              {
