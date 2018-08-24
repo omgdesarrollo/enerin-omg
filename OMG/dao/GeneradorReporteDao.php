@@ -185,8 +185,8 @@ class GeneradorReporteDao {
         try
         {
            $db=  AccesoDB::getInstancia();
-            $update = $db->executeUpdateRowsAfected($QUERY); 
-            
+            $update = $db->executeUpdateRowsAfected($QUERY);       
+
             return $update;
         } catch (Exception $ex)
         {
@@ -195,4 +195,22 @@ class GeneradorReporteDao {
         }        
     }
     
+    public function verificarSiExisteReporteMolarByMonthAndYear($MONTH,$YEAR,$CONTRATO)
+    {
+        try
+        {
+            $query="SELECT COUNT(*) AS resultado
+                    FROM porcentajes_molares tbporcentajes_molares
+                    WHERE tbporcentajes_molares.mes = $MONTH AND tbporcentajes_molares.ano = $YEAR AND tbporcentajes_molares.contrato = $CONTRATO";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista = $db->executeQuery($query);
+            
+            return $lista[0]['resultado'];            
+        } catch(Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 }

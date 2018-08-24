@@ -53,11 +53,17 @@ switch ($Op) {
             break;
         
         case 'actualizarPorcentajesMolares':
-            $Lista= $modelGenerador->actualilzarPorcentajeMolar(array("omg2c1"=>3,"omg2c2"=>3),1);
+            //Para verificar si funciona el controller
+            //$Lista= $modelGenerador->actualilzarPorcentajeMolar(array("omg2c1"=>3,"omg2c2"=>5), 1);
+            $Lista= $modelGenerador->actualilzarPorcentajeMolar($_REQUEST['COLUMNAS'],$_REQUEST['ID']);
             header('Content-type: application/json; charset=utf-8');
 	    echo json_encode($Lista);
             break;
         
+        case '':
+            $Lista= $modelGenerador->verificarSiExisteReporteMolarByMonthAndYear($_REQUEST['MES'], $_REQUEST['ANO'], Session::getSesion("s_cont"));
+            header('Content-type: application/json; charset=utf-8');
+	    echo json_encode($Lista);
         default:
             -1;
 }
