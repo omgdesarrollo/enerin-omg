@@ -206,3 +206,25 @@ function construirGridGeneradorMolares()
 }
 
 
+
+
+function reconstruirMolares(value,index)
+{
+    tempData ={};
+    tempData["no"] = index;
+    tempData["id_porcentaje"] = [{"id_porcentaje":value.id_porcentaje}];
+    tempData["omg2c1"] = value.omg2c1;
+    tempData["omg2c2"] = value.omg2c2;
+    tempData["omg2c3"] = value.omg2c3;
+    tempData["omg2c4"] = value.omg2c4;
+    tempData["omg2c5"] = value.omg2c5;
+    tempData["omg2c6"] = value.omg2c6;
+    tempData["omg2c7"] = value.omg2c7;
+    tempData["omg2c8"] = value.omg2c8;
+    tempData["omg2c9"] = value.omg2c9;
+    tempData["omg2c10"] = value.omg2c10;
+    tempData["omg2c11"] = value.omg2c11;
+    return tempData;
+}
+
+
