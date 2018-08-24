@@ -195,10 +195,7 @@ function construirGridGeneradorMolares()
 //                { name:"delete", title:"Opción", type:"customControl" }
         ],
         rowClick: function(args) {
-//            showDetailsDialog("Edit", args.item);
-        	console.log(args.item);
-//        	alert("d");
-        	showDetallesDialogo("Editar Molar",args);
+        	showDetallesDialogo("Editar Molar",args.item);
         },
         onItemUpdated: function(args)
         {
@@ -235,12 +232,9 @@ function construirGridGeneradorMolares()
 //                    });
 //            }
         }
-        
-        
     });    
 }
-
-var showDetallesDialogo = function(dialogType, client) {
+var showDetallesDialogo = function(dialogType, molares) {
 //    $("#name").val(client.Name);
 //    $("#age").val(client.Age);
 //    $("#address").val(client.Address);
@@ -250,9 +244,23 @@ var showDetallesDialogo = function(dialogType, client) {
 //    formSubmitHandler = function() {
 //        saveClient(client, dialogType === "Add");
 //    };
+	console.log(molares);
+	
+//	$('#dialogoEdicionMolares').on('click', (e) => {
+//	    e.preventDefault();
+//		alert("f");
+//		$('#dialogoEdicionMolares').trigger("click");
+	    $("#dialogoEdicionMolares").dialog("open");
 
-    $("#detailsDialog").dialog("option", "title", dialogType )
-            .dialog("open");
+	    
+//	});
+	
+//	$("#omg2c1").val("f");
+//	$("#dialogoEdicionMolares").dialog();
+////	$("#dialogoEdicionMolares").dialog("option", "width", 600);
+////	$("#dialogoEdicionMolares").dialog("option", "height", 300);
+//	$("#dialogoEdicionMolares").dialog("open");
+	
 };
 
 
