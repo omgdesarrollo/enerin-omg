@@ -364,6 +364,24 @@ $(function()
 
 
 
+
+$("#ocultarFormulario").click(function (){
+
+	if($("#formularioMolar").css("display")=="none"){
+		$("#formularioMolar").css("display","");
+		$("#ocultarFormulario").html("Ocultar Formulario");
+	}else{
+		$("#formularioMolar").css("display","none");
+		$("#ocultarFormulario").html("Desocultar Formulario");
+		}
+	}
+	)
+
+
+
+     
+
+
      fechas_inicio_final["fecha_inicio"]=$("#fechaInicio").val();
      fechas_inicio_final["fecha_final"]=$("#fechaFinal").val();
 })  
@@ -453,91 +471,97 @@ function obtenerDatosReporte(){
 		      </div>
                         
 		      <div class="modal-body">
-                           <div class="row">
+		      <div id="ocultarFormulario" class="btn btn-info btn-xs" >Ocultar Formulario</div>
+                           <div class="row" >
                           <div class="col-md-12">
-<!--                           <div class="col-md-6"> -->
-<!--                                                 <div class="form-group"> -->
-<!-- 							<label class="control-label" for="title">C1:</label> -->
-<!--                                                         <input type="text"  id="omg2c1" class="form-control"  /> -->
+                          <div id="formularioMolar" >
+                          <div class="col-md-6">
+                                                <div class="form-group">
+							<label class="control-label" for="title">C1:</label>
+                                                        <input type="text"  id="omg2c1" class="form-control"  />
                                                         
                                                     
-<!-- <!-- 							<div class="help-block with-errors"></div> -->
-<!-- <!--                                                         <div id="sugerenciasclausulas"></div> --> 
+						<div class="help-block with-errors"></div>
+                                                      <div id="sugerenciasclausulas"></div>  
                                                         
-<!-- 						</div> -->
+						</div>
                                                 
-<!--                                                 <div class="form-group"> -->
-<!-- 							<label class="control-label" for="title">C2:</label> -->
-<!--                                                         <nput type="text"  id="omg2c2" class="form-control" data-error="Ingrese la Descripcion del Tema" required></textarea> -->
-<!-- 							<div class="help-block with-errors"></div> -->
-<!-- 						</div>                                     -->
+                                                <div class="form-group">
+							<label class="control-label" for="title">C2:</label>
+                                                        <input type="text"  id="omg2c2" class="form-control" data-error="Ingrese la Descripcion del Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>                                    
                                     
                                     
-<!-- 						<div class="form-group"> -->
-<!-- 							<label class="control-label" for="title">C3:</label> -->
-<!--                                                         <nput type="text"  id="omg2c3" class="form-control" data-error="Ingrese el Sub-Tema" required></textarea> -->
-<!-- 							<div class="help-block with-errors"></div> -->
-<!-- 						</div> -->
+						<div class="form-group">
+							<label class="control-label" for="title">C3:</label>
+                                                        <input type="text"  id="omg2c3" class="form-control" data-error="Ingrese el Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
                                                                                                                        
                                                                         
-<!--                                                 <div class="form-group"> -->
-<!-- 							<label class="control-label" for="title">C4:</label> -->
-<!--                                                         <nput type="text"  id="omg2c4" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea> -->
-<!-- 							<div class="help-block with-errors"></div> -->
-<!-- 						</div> -->
+                                                <div class="form-group">
+							<label class="control-label" for="title">C4:</label>
+                                                        <input type="text"  id="omg2c4" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
 
-<!--    <div class="form-group"> -->
-<!-- 							<label class="control-label" for="title">IC4:</label> -->
-<!--                                                         <nput type="text"  id="omg2c5" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea> -->
-<!-- 							<div class="help-block with-errors"></div> -->
-<!-- 						</div> -->
-<!-- 						</div> -->
-<!-- 						<div class="col-md-6"> -->
-<!-- 						   <div class="form-group"> -->
-<!-- 							<label class="control-label" for="title">C5:</label> -->
-<!--                                                         <input type="text"  id="omg2c6" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea> -->
-<!-- 							<div class="help-block with-errors"></div> -->
-<!-- 						</div> -->
-<!-- 						   <div class="form-group"> -->
-<!-- 							<label class="control-label" for="title">IC5:</label> -->
-<!--                                                         <input type="text"  id="omg2c7" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea> -->
-<!-- 							<div class="help-block with-errors"></div> -->
-<!-- 						</div> -->
-<!-- 						   <div class="form-group"> -->
-<!-- 							<label class="control-label" for="title">C6+:</label> -->
-<!--                                                         <input type="text"  id="omg2c8" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea> -->
-<!-- 							<div class="help-block with-errors"></div> -->
-<!-- 						</div> -->
-<!-- 						   <div class="form-group"> -->
-<!-- 							<label class="control-label" for="title">CO2:</label> -->
-<!--                                                         <input type="text"  id="omg2c9" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea> -->
-<!-- 							<div class="help-block with-errors"></div> -->
-<!-- 						</div> -->
-<!-- 						   <div class="form-group"> -->
-<!-- 							<label class="control-label" for="title">H2S:</label> -->
-<!--                                                         <input type="text"  id="omg2c10" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea> -->
-<!-- 							<div class="help-block with-errors"></div> -->
-<!-- 						</div> -->
-<!-- 						   <div class="form-group"> -->
-<!-- 							<label class="control-label" for="title">N2:</label> -->
-<!--                                                         <input type="text"  id="omg2c11" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea> -->
-<!-- 							<div class="help-block with-errors"></div> -->
-<!-- 						</div> -->
-<!--                            </div> -->
+   <div class="form-group">
+							<label class="control-label" for="title">IC4:</label>
+                                                        <input type="text"  id="omg2c5" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+						</div>
+						<div class="col-md-6">
+						   <div class="form-group">
+							<label class="control-label" for="title">C5:</label>
+                                                        <input type="text"  id="omg2c6" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+						   <div class="form-group">
+							<label class="control-label" for="title">IC5:</label>
+                                                        <input type="text"  id="omg2c7" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+						   <div class="form-group">
+							<label class="control-label" for="title">C6+:</label>
+                                                        <input type="text"  id="omg2c8" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+						   <div class="form-group">
+							<label class="control-label" for="title">CO2:</label>
+                                                        <input type="text"  id="omg2c9" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+						   <div class="form-group">
+							<label class="control-label" for="title">H2S:</label>
+                                                        <input type="text"  id="omg2c10" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+						   <div class="form-group">
+							<label class="control-label" for="title">N2:</label>
+                                                        <input type="text"  id="omg2c11" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+                           </div>
                            
                            
-<!--                                <div class="row">                        -->
-<!--                                 <div class="col-md-12">                                                                               -->
-<!--             						<div class="form-group"> -->
-<!--             						  <div class="col-md-6">       -->
-<!--                                          	<button type="submit"  id="btn_guardarMolares"  class="btn crud-submit btn-info btn-block">Guardar</button> -->
-<!--                                       </div> -->
-<!--                                        <div class="col-md-6">      -->
-<!--                                          	<button type="submit"  id="btn_limpiar_Molares"  class="btn crud-submit btn-info btn-block">Limpiar</button> -->
-<!--                                        </div> -->
-<!--             						</div> -->
-<!--         						</div> -->
-<!-- 						</div>     -->
+                           
+                           
+                               <div class="row">                       
+                                <div class="col-md-12">                                                                              
+            						<div class="form-group">
+            						  <div class="col-md-6">      
+                                         	<button type="submit"  id="btn_guardarMolares"  class="btn crud-submit btn-info btn-block">Guardar</button>
+                                      </div>
+                                       <div class="col-md-6">     
+                                         	<button type="submit"  id="btn_limpiar_Molares"  class="btn crud-submit btn-info btn-block">Limpiar</button>
+                                       </div>
+            						</div>
+        						</div>
+						</div>    
+						
+						</div>
                            <div class="row">
                            <div class="col-md-12" style=" overflow: scroll; ">
                            	<div id="jsGridMolares" >f</div>
