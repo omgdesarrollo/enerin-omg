@@ -122,7 +122,6 @@ $Usuario=  Session::getSesion("user");
                     box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
                     /*margin: 0 auto;*/
                     }
-		      
 		      .dhxlayout_base_material div.dhx_cell_layout div.dhx_cell_hdr{
 		              background-color:#337ab7;
 		      }
@@ -132,7 +131,7 @@ $Usuario=  Session::getSesion("user");
 <body class="no-skin" onload="">
 <!-- <div id="loader"></div>  -->
 <?php
-//     require_once 'EncabezadoUsuarioView.php';
+    require_once 'EncabezadoUsuarioView.php';
     // require_once '../Model/socketModel.php';
 ?>
 
@@ -358,18 +357,19 @@ $(function()
      var $btnreporteDiariosdelMensualAnualCalculo=  $('#reporteDiariosdelMensualAnualCalculo'); 
      $btnreporteDiariosdelMensualAnualCalculo.on('click', function () {
 // alert("le has picado ");
-       var lista=[],__datos=[];
+       var lista=[],__datos=[], DataGrid=[];;
                $.ajax({
                    url:'../Controller/GeneradorReporteController.php?Op=ListByMonthAndYearCalculo',
                    type:'POST',
                    data:'MONTH='+myCombo.getSelectedValue()+"&YEAR="+myCombo2.getSelectedValue(),
                    success:function(r)
                    {
-                     data1=r;
+//                      data1=r;
                      $.each(r,function (index,value)
                        {
                            __datos.push( reconstruir(value,index++) );
                        });
+                    
                      DataGrid=__datos;
                      
                       gridInstance.loadData();
