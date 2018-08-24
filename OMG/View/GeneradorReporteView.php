@@ -209,7 +209,33 @@ $Usuario=  Session::getSesion("user");
     var data1=[],DataGrid=[],DataGridMolares=[],myCombo,myCombo2;
     var fechas_inicio_final={"fecha_inicio":"","fecha_final":""};
     
-    bandera=0;   
+    bandera=0;  
+
+
+    estructuraGrid = [
+        { name:"id_principal", visible:false},
+        { name:"no", title:"No",width:60},
+        { name:"clave_contrato", title: "ID del Contrato o Asignación", type: "text", width: 150, validate: "required"},
+        { name:"region_fiscal", title: "Region Fiscal", type: "text", width: 150, validate: "required" },
+        { name:"ubicacion", title: "Ubicación del Punto de Medición", type: "text", width: 150, validate: "required" },
+        { name:"tag_patin", title: "Tag del Patin de Medición", type: "text", width: 130, validate: "required" },
+        { name:"tipo_medidor", title: "Tipo de Medidor", type: "text", width: 150, validate: "required" },    
+        { name:"tag_medidor", title: "Tag del Medidor", type: "text", width: 130, validate: "required",editing:false },
+        { name:"clasificacion", title: "Clasificación del Sistema de Medición", type: "text", width: 150, validate: "required" },
+        { name:"hidrocarburo", title: "Tipo de Hidrocarburo", type: "text", width: 150, validate: "required"},
+        { name:"delete", title:"Opción", type:"customControl",sorting:""},
+        // {type:"control",editButton: true}
+    ];
+
+    construirGrid();
+
+
+
+
+
+
+
+     
 $(function()
 {    
 
@@ -223,10 +249,7 @@ $(function()
 	myLayout.cells("c").attachObject("jsGrid");
     construirGridGenerador();
     construirGridGeneradorMolares();
-
-	DataGridMolares=[{}];
-    gridInstanceMolares.loadData();
-
+//     gridInstanceMolares.loadData(); 
     
     $.datepicker.setDefaults($.datepicker.regional["es"]);
         $("#fechaInicio").datepicker({
@@ -254,6 +277,8 @@ $(function()
     });
 
      var $btnCalculoDiariosRangoFechasInicioFin = $('#reporteCalculoDiarios'); 
+
+     
      $btnCalculoDiariosRangoFechasInicioFin.on('click', function () {
 //                     alert("dfds");
 
@@ -281,15 +306,14 @@ $(function()
      });
      var $btnReporteMensualAnual=  $('#reporteMensualanual'); 
      $btnReporteMensualAnual.on('click', function () {
-         alert("s");
-     var lista=[],__datos=[];
+     var lista=[],__datos=[],__datosMolares=[];
              $.ajax({
                  url:'../Controller/GeneradorReporteController.php?Op=ListByMonthAndYear',
                  type:'POST',
                  data:'MONTH='+myCombo.getSelectedValue()+"&YEAR="+myCombo2.getSelectedValue(),
                  success:function(r)
                  {
-                   data1=r;
+//                    data1=r;
                    $.each(r,function (index,value)
                      {
                          __datos.push( reconstruir(value,index++) );
@@ -304,6 +328,37 @@ $(function()
                  {
                  }
              }); 
+
+
+             $.ajax({
+                 url:'../Controller/GeneradorReporteController.php?Op=ListPorcentajesMolaresMes',
+                 type:'POST',
+                 data:'MES='+myCombo.getSelectedValue()+"&ANO="+myCombo2.getSelectedValue(),
+                 success:function(r)
+                 {
+//                    data1=r;
+                   $.each(r,function (index,value)
+                     {
+                       
+                	   __datosMolares.push( reconstruirMolares(value,index++) );
+                     });
+                   DataGridMolares=__datosMolares;
+                   
+                   gridInstanceMolares.loadData();
+                	
+                    
+                 },
+                 error:function()
+                 {
+                 }
+             });
+
+
+
+
+
+
+             
 //     } 
      }
      );
@@ -361,12 +416,8 @@ $(function()
 
     	 
      });
-
-
-
-
 $("#ocultarFormulario").click(function (){
-
+   
 	if($("#formularioMolar").css("display")=="none"){
 		$("#formularioMolar").css("display","");
 		$("#ocultarFormulario").html("Ocultar Formulario");
@@ -376,12 +427,6 @@ $("#ocultarFormulario").click(function (){
 		}
 	}
 	)
-
-
-
-     
-
-
      fechas_inicio_final["fecha_inicio"]=$("#fechaInicio").val();
      fechas_inicio_final["fecha_final"]=$("#fechaFinal").val();
 })  

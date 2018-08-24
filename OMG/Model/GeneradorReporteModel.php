@@ -77,7 +77,7 @@ class GeneradorReporteModel {
     {
         try
         {
-            $dao=new GeneradorReporteDao();
+            $dao=new GeneradorReporteDao();          
             $rec= $dao->insertarPorcentajesMolares($MONTH,$YEAR, $OMG2C1,$OMG2C2,$OMG2C3,$OMG2C4,$OMG2C5,$OMG2C6,$OMG2C7,$OMG2C8,$OMG2C9,$OMG2C10,$OMG2C11,$CONTRATO);
             
             return $rec;
