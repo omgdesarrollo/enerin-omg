@@ -136,6 +136,13 @@ $Usuario=  Session::getSesion("user");
     // require_once '../Model/socketModel.php';
 ?>
 
+
+
+
+
+
+
+
 <div id="layoutObjGenerador">
 
 <div class="col-md-12 ">
@@ -166,9 +173,11 @@ $Usuario=  Session::getSesion("user");
 </select>
 <!-- </div> -->
 <!-- <div class="col-md-3"> -->
-<button id='reporteMensualanual' class="btn btn-info">Generar Reporte</button>
+<button id='reporteMensualanual' class="btn btn-info">Obtener Diarios</button>
 <button id='reporteDiariosdelMensualAnualCalculo' class="btn btn-info">Calculo de todos los diarios  </button>
 <!-- </div> -->
+<button id='btnAgregarMolarAlMes' class="btn btn-info" data-toggle="modal" data-target="#createitemMolares">Agregar % Molares</button>
+
 </div>
 </div>
 
@@ -316,6 +325,44 @@ $(function()
         
        }
        );
+     var $btn_guardarMolares= $('#btn_guardarMolares'); 
+     $btn_guardarMolares.on('click', function () {
+   var datosMolares={"MES":myCombo.getSelectedValue(),"ANO":myCombo2.getSelectedValue(),"omg2c1":$("#omg2c1").val(),"omg2c2":$("#omg2c2").val(),"omg2c2":$("#omg2c2").val(),"omg2c3":$("#omg2c3").val(),"omg2c4":$("#omg2c4").val(),"omg2c5":$("#omg2c5").val(),"omg2c6":$("#omg2c6").val(),"omg2c7":$("#omg2c7").val(),"omg2c8":$("#omg2c8").val(),"omg2c9":$("#omg2c9").val(),"omg2c10":$("#omg2c10").val(),"omg2c11":$("#omg2c11").val()};
+   
+    	 $.ajax({
+             url:'../Controller/GeneradorReporteController.php?Op=guardarPorcentajesMolaresMes',
+             type:'POST',
+             data:datosMolares,
+             success:function(r)
+             {
+//                data1=r;
+//                $.each(r,function (index,value)
+//                  {
+//                      __datos.push( reconstruir(value,index++) );
+//                  });
+//                DataGrid=__datos;
+               
+//                 gridInstance.loadData();
+             },
+             error:function()
+             {
+             }
+         }); 
+
+
+    	 
+     });
+
+
+
+
+
+
+
+
+
+
+     
      fechas_inicio_final["fecha_inicio"]=$("#fechaInicio").val();
      fechas_inicio_final["fecha_final"]=$("#fechaFinal").val();
 })  
@@ -395,5 +442,95 @@ function obtenerDatosReporte(){
             <script src="../../assets/probando/js/ace.min.js"></script>
     
 	</body>
+	
+	    <div class="modal draggable fade" id="createitemMolares" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Crear % Molares</h4>
+		      </div>
+                        
+		      <div class="modal-body">
+                         
+                          
+                                                <div class="form-group">
+							<label class="control-label" for="title">C1:</label>
+                                                        <input type="text"  id="omg2c1" class="form-control"  />
+                                                        
+                                                    
+<!-- 							<div class="help-block with-errors"></div> -->
+<!--                                                         <div id="sugerenciasclausulas"></div> -->
+                                                        
+						</div>
+                                                
+                                                <div class="form-group">
+							<label class="control-label" for="title">C2:</label>
+                                                        <textarea  id="omg2c2" class="form-control" data-error="Ingrese la Descripcion del Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>                                    
+                                    
+                                    
+						<div class="form-group">
+							<label class="control-label" for="title">C3:</label>
+                                                        <textarea  id="omg2c3" class="form-control" data-error="Ingrese el Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+                                                                                                                       
+                                                                        
+                                                <div class="form-group">
+							<label class="control-label" for="title">C4:</label>
+                                                        <textarea  id="omg2c4" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+
+   <div class="form-group">
+							<label class="control-label" for="title">IC4:</label>
+                                                        <textarea  id="omg2c5" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+						   <div class="form-group">
+							<label class="control-label" for="title">C5:</label>
+                                                        <textarea  id="omg2c6" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+						   <div class="form-group">
+							<label class="control-label" for="title">IC5:</label>
+                                                        <textarea  id="omg2c7" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+						   <div class="form-group">
+							<label class="control-label" for="title">C6+:</label>
+                                                        <textarea  id="omg2c8" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+						   <div class="form-group">
+							<label class="control-label" for="title">CO2:</label>
+                                                        <textarea  id="omg2c9" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+						   <div class="form-group">
+							<label class="control-label" for="title">H2S:</label>
+                                                        <textarea  id="omg2c10" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+						   <div class="form-group">
+							<label class="control-label" for="title">N2:</label>
+                                                        <textarea  id="omg2c11" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+							<div class="help-block with-errors"></div>
+						</div>
+                                                                        
+                                                                                                                                
+						<div class="form-group">
+                                                    <button type="submit" style="width:49%" id="btn_guardarMolares"  class="btn crud-submit btn-info">Guardar</button>
+                                                    <button type="submit" style="width:49%" id="btn_limpiar_Molares"  class="btn crud-submit btn-info">Limpiar</button>
+						</div>
+                        
+
+		      </div>
+		    </div>
+
+		  </div>
+       </div>
      
 </html>
