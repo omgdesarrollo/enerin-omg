@@ -147,7 +147,7 @@ class GeneradorReporteDao {
         {
             $query="INSERT INTO porcentajes_molares(mes,ano,omg2c1,omg2c2,omg2c3,omg2c4,omg2c5,omg2c6,omg2c7,omg2c8,omg2c9,omg2c10,omg2c11,contrato)
                     VALUES($MONTH,$YEAR,$OMG2C1,$OMG2C2,$OMG2C3,$OMG2C4,$OMG2C5,$OMG2C6,$OMG2C7,$OMG2C8,$OMG2C9,$OMG2C10,$OMG2C11,$CONTRATO)";
-            
+            echo $query;
             $db=  AccesoDB::getInstancia();
             $exito = $db->executeQueryUpdate($query);
             return $exito;
