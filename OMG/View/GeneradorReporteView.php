@@ -98,8 +98,6 @@ $Usuario=  Session::getSesion("user");
 			/*box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);*/
                         box-shadow: 0 1px 3px rgba(0,0,0,90.05), 0 1px 3px rgba(0,0,0,0.09);
 		      }
-		      
-		      
 		     #seccionAbajo{
 			position: relative;
 			/*margin-left: 10px;*/
@@ -114,7 +112,6 @@ $Usuario=  Session::getSesion("user");
 		      position: relative;
 		      	height: 310px;
 		      	  width: 100%;
-                   
                     box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
 		      }
 		        div#layout_here {
