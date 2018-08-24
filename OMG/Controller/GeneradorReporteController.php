@@ -53,7 +53,7 @@ switch ($Op) {
             break;
         
         case 'actualizarPorcentajesMolares':
-            $Lista= $modelGenerador->actualilzarPorcentajeMolar($_REQUEST['COLUMNAS'], $_REQUEST['ID']);
+            $Lista= $modelGenerador->actualilzarPorcentajeMolar(array("omg2c1"=>3,"omg2c2"=>3),1);
             header('Content-type: application/json; charset=utf-8');
 	    echo json_encode($Lista);
             break;
