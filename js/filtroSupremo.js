@@ -98,7 +98,10 @@ function filtroSupremo()
             {
                 if(ind==value.id)
                 {
-                    ( val.toLowerCase().indexOf( $("#"+value.id).val().toLowerCase() ) != -1 ) ? DataTemp.push(valueList) :  console.log();
+                    if(typeof(val)!="number")
+                        ( val.toLowerCase().indexOf( $("#"+value.id).val().toLowerCase() ) != -1 ) ? DataTemp.push(valueList) :  console.log();
+                    else
+                        ( val == ( $("#"+value.id).val() ) ) ? DataTemp.push(valueList) :  console.log();
                 }
             });
         });

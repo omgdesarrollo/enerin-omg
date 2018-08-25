@@ -61,7 +61,7 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/tools.js" type="text/javascript"></script>
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <script src="../../js/fCatalogoProduccionView.js" type="text/javascript"></script>
-                <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
+                <!-- <script src="../../js/jqueryblockUI.js" type="text/javascript"></script> -->
                 <script src="../../js/fGridComponent.js" type="text/javascript"></script>
                 <!-- <script src="../../js/socket.js" type="text/javascript"></script> -->
                 <!-- <script src="../../js/fancywebsocket.js" type="text/javascript"></script> -->
@@ -115,7 +115,7 @@ $Usuario=  Session::getSesion("user");
 
 <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
     
-<button onClick="" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#nuevoRegistro">
+<button title="Agregar Registro" onClick="" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#nuevoRegistro">
     Agregar Nuevo Registro
 </button>
 
@@ -127,16 +127,17 @@ $Usuario=  Session::getSesion("user");
     <i class='ace-icon fa fa-search'></i>
 </button> -->
 <div class="pull-right">
-<button style="width:51px;height:42px" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
-    <img src="../../images/base/_excel.png" width="35px" height="auto
-    ">
-</button>
-<button style="width:51px;height:42pxwi" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
-    <img src="../../images/base/word.png" width="35px" height="auto">
-</button>
-<button style="width:51px;height:42px" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
-    <img src="../../images/base/pdf.png" width="35px" height="auto">
-</button> 
+    <button style="width:51px;height:42px" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
+        <img src="../../images/base/_excel.png" width="35px" height="auto">
+    </button>
+
+    <button style="width:51px;height:42px" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
+        <img src="../../images/base/word.png" width="35px" height="auto">
+    </button>
+
+    <button style="width:51px;height:42px" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
+        <img src="../../images/base/pdf.png" width="35px" height="auto">
+    </button>
 </div>
 </div>
 <br><br><br>

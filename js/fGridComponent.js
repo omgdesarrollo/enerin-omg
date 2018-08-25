@@ -1,18 +1,26 @@
 
+function customsFieldsGrid()
+{
+    $.each(customsFieldsGridData,function(index,value)
+    {
+        jsGrid.fields[value.field] = value.my_field;
+    });
+}
+
 function construirGrid()
 {
-    jsGrid.fields.customControl = MyCControlField;
-        db=
+    customsFieldsGrid();
+    db=
+    {
+        loadData: function()
         {
-            loadData: function()
-            {
-                return DataGrid;
-            },
-            updateItem:function()
-            {
-                // console.log(a);
-            }
-        };
+            return DataGrid;
+        },
+        updateItem:function()
+        {
+            // console.log(a);
+        }
+    };
     
     $("#jsGrid").jsGrid({
         onInit: function(args)
@@ -98,7 +106,7 @@ MyCControlField.prototype = new jsGrid.Field
         itemTemplate: function(value,todo)
         {
             var returnTemp;
-            
+            console.log(value);
             // value == 0 ? returnTemp = "" : returnTemp = this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button ',title:"Eliminar", type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
             returnTemp = "<input class='jsgrid-button jsgrid-edit-button' type='button' title='Editar' onClick='modoEditar()'>";
             returnTemp += "<input class='jsgrid-button jsgrid-delete-button' type='button' title='Eliminar' onClick='preguntarEliminar("+JSON.stringify(todo)+")'>";
@@ -137,17 +145,17 @@ function modoEditar()
     $("#grid").jsGrid("updateItem");
 }
 
-function loadBlockUi()
-{
-    $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF"> Espere Por Favor</span>', css:
-    { 
-        border: 'none', 
-        padding: '15px', 
-        backgroundColor: '#000', 
-        '-webkit-border-radius': '10px', 
-        '-moz-border-radius': '10px', 
-        opacity: .5, 
-        color: '#fff' 
-    },overlayCSS: { backgroundColor: '#000000',opacity:0.1,cursor:'wait'} }); 
-    setTimeout($.unblockUI, 2000);
-}
+// function loadBlockUi()
+// {
+//     $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF"> Espere Por Favor</span>', css:
+//     { 
+//         border: 'none', 
+//         padding: '15px', 
+//         backgroundColor: '#000', 
+//         '-webkit-border-radius': '10px', 
+//         '-moz-border-radius': '10px', 
+//         opacity: .5, 
+//         color: '#fff' 
+//     },overlayCSS: { backgroundColor: '#000000',opacity:0.1,cursor:'wait'} }); 
+//     setTimeout($.unblockUI, 2000);
+// }
