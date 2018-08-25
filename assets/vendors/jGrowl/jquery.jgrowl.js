@@ -155,7 +155,8 @@ function animacionTerminada()
 
 function mostrarOcultarGrowl()
 {
-        $("#jGrowl").animate({width:"toggle",opacity:"toggle"},"fast",animacionTerminada);// la llamade da la funcion animacionTerminada no tiene () y asi ejecuta a lo ultimo de la animacion, si agrega () se ejecuta antes de empezar
+	clearTimeout(cerrarSucesos);
+	$("#jGrowl").animate({width:"toggle",opacity:"toggle"},"fast",animacionTerminada);// la llamade da la funcion animacionTerminada no tiene () y asi ejecuta a lo ultimo de la animacion, si agrega () se ejecuta antes de empezar
 }
 
 function getInstancejGrowl()

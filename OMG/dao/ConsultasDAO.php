@@ -3,40 +3,37 @@ require_once '../ds/AccesoDB.php';
 
 class ConsultasDAO{
 
-    public function ListarConsultas($CONTRATO)
+    public function listarConsultas($CONTRATO)
     {
         try
         {
-          $query="SELECT tbtemas.id_tema,tbtemas.no, tbtemas.nombre, tbasignacion_tema_requisito.id_asignacion_tema_requisito,
-                    tbempleados.id_empleado,tbempleados.nombre_empleado,tbempleados.apellido_paterno,tbempleados.apellido_materno,
-                    (SELECT COUNT(*) FROM asignacion_tema_requisito_requisitos tbasignacion_tema_requisito_requisitos WHERE tbasignacion_tema_requisito_requisitos.id_asignacion_tema_requisito=tbasignacion_tema_requisito.id_asignacion_tema_requisito) 
-                    AS total_requisitos,
-                    (SELECT COUNT(*) FROM requisitos_registros tbrequisitos_registros WHERE tbrequisitos_registros.id_requisito=tbasignacion_tema_requisito_requisitos.id_requisito) 
-                    AS total_registros,
-                    tbrequisitos.id_requisito,                    
-                    (SELECT IF(COUNT(*)=0,'sin penalizacion','con penalizacion')
-                    FROM requisitos tbrequisitos WHERE tbrequisitos.id_requisito=tbasignacion_tema_requisito_requisitos.id_requisito AND tbrequisitos.penalizacion='true')
-                    AS resultado                     
-                    FROM temas tbtemas
-                    LEFT JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado 
-                    LEFT JOIN asignacion_tema_requisito tbasignacion_tema_requisito ON tbasignacion_tema_requisito.id_tema=tbtemas.id_tema
-                    LEFT JOIN asignacion_tema_requisito_requisitos tbasignacion_tema_requisito_requisitos ON
-                    tbasignacion_tema_requisito_requisitos.id_asignacion_tema_requisito=tbasignacion_tema_requisito.id_asignacion_tema_requisito
-                    LEFT JOIN requisitos tbrequisitos ON tbrequisitos.id_requisito=tbasignacion_tema_requisito_requisitos.id_requisito
-                    LEFT JOIN requisitos_registros tbrequisitos_registros ON tbrequisitos_registros.id_requisito=tbasignacion_tema_requisito_requisitos.id_requisito
-                    WHERE tbtemas.padre=0 AND tbtemas.CONTRATO=$CONTRATO GROUP BY tbtemas.no";
-          
+          $query="SELECT distinct tbtemas.id_tema, tbtemas.no, tbtemas.nombre, tbtemas.fecha_inicio,tbtemas.id_empleado,
+                concat (tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) as responsable, 
+                tbrequisitos.id_requisito, tbrequisitos.requisito,tbrequisitos.penalizacion,
+                tbregistros.id_registro,tbregistros.registro, tbregistros.frecuencia, tbtemas.padre cumplimiento_requisito,
+                (select count(*) as evidencias_validadas from evidencias tbevidencias where tbevidencias.validacion_supervisor ='true' and tbevidencias.id_registro = tbregistros.id_registro ) evidencias_validadas,
+                (select count(*) as evidencias_validadas from evidencias tbevidencias where tbevidencias.id_registro = tbregistros.id_registro ) evidencias_totales
+                from temas tbtemas
+                join empleados tbempleados on tbempleados.id_empleado = tbtemas.id_empleado
+                join asignacion_tema_requisito tbasignacion_tema_requisito
+                on tbasignacion_tema_requisito.id_tema = tbtemas.id_tema
+                join asignacion_tema_requisito_requisitos tbasignacion_tema_requisito_requisitos
+                on tbasignacion_tema_requisito_requisitos.id_asignacion_tema_requisito = tbasignacion_tema_requisito.id_asignacion_tema_requisito
+                join requisitos tbrequisitos on tbrequisitos.id_requisito = tbasignacion_tema_requisito_requisitos.id_requisito
+                left join requisitos_registros tbrequisitos_registros on tbrequisitos_registros.id_requisito = tbrequisitos.id_requisito
+                left join registros tbregistros on tbregistros.id_registro = tbrequisitos_registros.id_registro
+                left join evidencias tbevidencias on tbevidencias.id_registro = tbregistros.id_registro
+                where tbtemas.padre = 0";
           $db=  AccesoDB::getInstancia();
           $lista=$db->executeQuery($query);
-          
-          return $lista;          
+          return $lista;
         } catch (Exception $ex)
         {
             throw $ex;
             return -1;
         }
     }
-    
+
     public function listarRequisitosConPenalizacion($ID_ASIGNACION_TEMA)
     {
         try

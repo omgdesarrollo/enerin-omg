@@ -98,8 +98,6 @@ $Usuario=  Session::getSesion("user");
 			/*box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);*/
                         box-shadow: 0 1px 3px rgba(0,0,0,90.05), 0 1px 3px rgba(0,0,0,0.09);
 		      }
-		      
-		      
 		     #seccionAbajo{
 			position: relative;
 			/*margin-left: 10px;*/
@@ -114,7 +112,6 @@ $Usuario=  Session::getSesion("user");
 		      position: relative;
 		      	height: 310px;
 		      	  width: 100%;
-                   
                     box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
 		      }
 		        div#layout_here {
@@ -125,7 +122,6 @@ $Usuario=  Session::getSesion("user");
                     box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
                     /*margin: 0 auto;*/
                     }
-		      
 		      .dhxlayout_base_material div.dhx_cell_layout div.dhx_cell_hdr{
 		              background-color:#337ab7;
 		      }
@@ -135,15 +131,10 @@ $Usuario=  Session::getSesion("user");
 <body class="no-skin" onload="">
 <!-- <div id="loader"></div>  -->
 <?php
-//     require_once 'EncabezadoUsuarioView.php';
+    require_once 'EncabezadoUsuarioView.php';
     // require_once '../Model/socketModel.php';
 ?>
-
-
-
-
 <div id="layoutObjGenerador">
-
 <div class="col-md-12 ">
 <div class="col-md-6 ">
 <!-- <div class="col-md-6 "> -->
@@ -178,7 +169,6 @@ $Usuario=  Session::getSesion("user");
 <button id='btnAgregarMolarAlMes' class="btn btn-info btn-xs" data-toggle="modal" data-target="#createitemMolares">% Molares</button>
 </div>
 </div>
-
 <div class="col-md-6 ">
 <!-- <button id='toExcel' > -->
 <!--      <img src="../../images/base/_excel.png" width="35px" height="auto"></button> -->
@@ -194,13 +184,10 @@ $Usuario=  Session::getSesion("user");
 <!--<div class="row">-->
 </div>
 </div>
-
 </div>
 <!-- <div id="seccionAbajo"> -->
 <div id="jsGrid" ></div>
-
 <!-- </div> -->
-
 <div id="listjson"></div>
 <div id="layoutObjGenerador" class="layoutObj"></div>
 <div id="dialogoEdicionMolares" title="Edicion Molares" style="display: none">
@@ -220,7 +207,6 @@ $Usuario=  Session::getSesion("user");
     var data1=[],DataGrid=[],DataGridMolares=[],myCombo,myCombo2;
     var fechas_inicio_final={"fecha_inicio":"","fecha_final":""};  
     bandera=0;  
-     
 $(function()
 {    
 	myCombo = dhtmlXComboFromSelect("mySelect");
@@ -273,7 +259,6 @@ $(function()
         obtenerDatosReporte();
         growlSuccess("Reporte","Reporte Generado Exitoso");
     });
-
      var $btnCalculoDiariosRangoFechasInicioFin = $('#reporteCalculoDiarios'); 
 
      
@@ -316,6 +301,7 @@ $(function()
                      {
                          __datos.push( reconstruir(value,index++) );
                      });
+//                    DataGrid=[];
                    DataGrid=__datos;
                    
                     gridInstance.loadData();
@@ -347,20 +333,11 @@ $(function()
                  error:function()
                  {
                  }
-             });
-
-
-
-
-
-
-             
-//     } 
+             });   
      }
      );
      var $btnreporteDiariosdelMensualAnualCalculo=  $('#reporteDiariosdelMensualAnualCalculo'); 
      $btnreporteDiariosdelMensualAnualCalculo.on('click', function () {
-// alert("le has picado ");
        var lista=[],__datos=[];
                $.ajax({
                    url:'../Controller/GeneradorReporteController.php?Op=ListByMonthAndYearCalculo',
@@ -368,14 +345,14 @@ $(function()
                    data:'MONTH='+myCombo.getSelectedValue()+"&YEAR="+myCombo2.getSelectedValue(),
                    success:function(r)
                    {
-                     data1=r;
+//                      data1=r;
                      $.each(r,function (index,value)
                        {
                            __datos.push( reconstruir(value,index++) );
                        });
+                     DataGrid=[];
                      DataGrid=__datos;
-                     
-                      gridInstance.loadData();
+                     gridInstance.loadData();
                    },
                    error:function()
                    {

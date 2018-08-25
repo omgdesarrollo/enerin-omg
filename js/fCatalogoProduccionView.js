@@ -19,7 +19,7 @@ function inicializarFiltros()
             {name:"opcion",id:"opcion",type:"opcion"}
         ];
         resolve();
-    })
+    });
 }
 
 function reconstruir(value,index)

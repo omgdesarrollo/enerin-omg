@@ -9,8 +9,8 @@ $model=new ConsultasModel();
 
 switch ($Op) {
     case 'Listar':
-        $Lista= $model->ListarConsultas(Session::getSesion("s_cont"));
-        
+        $Lista = $model->listarConsultas(Session::getSesion("s_cont"));
+        $Lista = $model->calcular($Lista);
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
         return $Lista;
