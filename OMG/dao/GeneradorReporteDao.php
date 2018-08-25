@@ -235,4 +235,28 @@ class GeneradorReporteDao {
             return -1;
         }
     }
+    
+    
+    public function reportesFaltantesPorRangos($FECHA_INICIAL,$FECHA_FINAL,$CONTRATO)
+    {
+        try
+        {
+            $query="SELECT (SELECT TIMESTAMPDIFF(DAY,'$FECHA_INICIAL', '$FECHA_FINAL'))-COUNT(*) AS resultado
+                    FROM omg_reporte_produccion tbomg_reporte_produccion
+                    JOIN catalogo_produccion tbcatalogo_produccion ON tbcatalogo_produccion.id_catalogop=tbomg_reporte_produccion.id_catalogop
+                    JOIN asignaciones_contrato tbasignaciones_contrato ON tbasignaciones_contrato.id_asignacion=tbcatalogo_produccion.id_asignacion
+                    WHERE tbomg_reporte_produccion.omgc1 BETWEEN '$FECHA_INICIAL' AND '$FECHA_FINAL' AND tbasignaciones_contrato.CONTRATO = $CONTRATO";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista = $db->executeQuery($query);
+            
+            return $lista[0]['resultado'];
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+        
+    }
+    
 }
