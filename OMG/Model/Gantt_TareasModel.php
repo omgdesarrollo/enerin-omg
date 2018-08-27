@@ -5,7 +5,6 @@ require_once '../dao/Gantt_TareaDao.php';
 class Gantt_TareasModel {
     //put your code here
     
-    
     public function obtenerTareasCompletasPorFolioEntrada($folio_entrada){
         try{
             $dao= new Gantt_TareaDao();

@@ -1,6 +1,5 @@
 <?php
-//este controlador solo atiende un requerimiento
-//el requerimiento que atiende es el de inicio de sesion
+
 session_start();
 require_once '../Model/EmpleadoModel.php';
 require_once '../Pojo/EmpleadoPojo.php';
@@ -23,9 +22,7 @@ switch ($Op) {
 //    	$tarjet="../view/principalmodulos.php";
     	header('Content-type: application/json; charset=utf-8');
 	echo json_encode($Lista);
-        
-                
-                
+         
 		break;
             
             
@@ -41,10 +38,7 @@ switch ($Op) {
             header('Content-type: application/json; charset=utf-8');
             echo json_encode(array("data"=>$Lista));
 //        Session::setSesion("", $value)
-            
                 break;
-    
-    
 	case 'Nuevo':
 		# code...
 		break;	
