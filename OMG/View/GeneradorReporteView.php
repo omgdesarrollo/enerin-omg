@@ -205,7 +205,7 @@ $Usuario=  Session::getSesion("user");
 <input type="text" value="" placeholder="Molar 11" id="omg2c11">
 </div>
 <script>
-    var data1=[],DataGrid=[],DataGridMolares=[],myCombo,myCombo2;
+    var data1=[],DataGrid=[],DataGridMolares=[],DataGridExcel=[],myCombo,myCombo2;
     var fechas_inicio_final={"fecha_inicio":"","fecha_final":""};  
     bandera=0;  
 $(function()
