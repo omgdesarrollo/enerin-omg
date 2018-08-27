@@ -65,7 +65,7 @@ class Gantt_TareaDao {
     {
         try
         {
-            $query="UPDATE tareas SET existe_programa=".$VALUES["existe"]."  WHERE id_tarea=".$VALUES["id"]."";
+            $query="UPDATE tareas SET existe_programa=".$VALUES["existeprograma"]."  WHERE id_tarea=".$VALUES["id_tarea"]."";
             
             $db=  AccesoDB::getInstancia();
             $update = $db->executeUpdateRowsAfected($query);
