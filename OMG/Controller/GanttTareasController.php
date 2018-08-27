@@ -13,10 +13,12 @@ $modelGantt=new Gantt_TareasModel();
 
 switch ($Op) {
     
-        case 'Listar':
+        case 'ListarTodasLasTareasPorId':
             
             $Lista= $modelGantt->listarRegistrosGanttTareas(Session::getSesion("dataGantt_id_tarea"));
-            header('Content-type: application/json; charset=utf-8');
+            
+            
+               header('Content-type: application/json; charset=utf-8');
             echo json_encode(array("data"=>$Lista));
             break;
     

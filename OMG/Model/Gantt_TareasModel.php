@@ -21,20 +21,20 @@ class Gantt_TareasModel{
     }
 
 
-    public function insertarGanttTareas($VALUES)
-    {
-        try
-        {
-            $dao=new Gantt_TareaDao();
-            $rec= $dao->insertarGanttTareas($VALUES);
-            
-            return $rec;
-        } catch (Exception $ex)
-        {
-            throw $ex;
-            return -1;
-        }
-    }
+//    public function insertarGanttTareas($VALUES)
+//    {
+//        try
+//        {
+//            $dao=new Gantt_TareaDao();
+//            $rec= $dao->insertarGanttTareas($VALUES);
+//            
+//            return $rec;
+//        } catch (Exception $ex)
+//        {
+//            throw $ex;
+//            return -1;
+//        }
+//    }
 
 //    public function obtenerTareasCompletasPorFolioEntrada($folio_entrada){
 //        try{
@@ -49,58 +49,57 @@ class Gantt_TareasModel{
 //        }
 //    }
     
-//    public function insertarTareasGantt($data,$id_seguimiento_que_lleva_al_folio_de_entrada){
-//       
-//        try{
-//            $inserccion;
-//            $lista_tareas_verificadas;
-//            $dao= new GanttDao();
-//            $modelGantt= new GanttModel();
-//            $lista_tareas_verificadas=self::verificarTareasExiste($data);
-//            foreach ($data as $value) {
-//                if (isset($value["id"])) {
-//                   foreach ($lista_tareas_verificadas as $value2) {
-//                        if($value["id"]==$value2["id"]){
-//                            
-//                                if($value2["cantidad"]==0){
-//                                    if($value["parent"]!=""){
-//                                         $value["progress"]=0;
-//                                         $value["id_empleado"]=$value["user"];
-//                                         $value["id_seguimiento_entrada"]=$id_seguimiento_que_lleva_al_folio_de_entrada;
-//                                         $dao->insertarTareasGantt($value);
-//                                         $dao->insertarTareasConFolioEntrada_de_seguimiento_entrada($value);
-//                                    }
-//                                }
-//                                else{
-//                                    
-//                                     if($value["!nativeeditor_status"]=='deleted'){
-//                                         echo "entro a eliminar la tarea";
-//                                         $dao->deleteTareas($value);
-//                                         $dao->deleteTareasDe_Gantt_Seguimiento_Entrada($value);
-//                                            
-//                                    }else{
-//                                         $dao->updateTareas($value); 
-//                                         $dao->updateTareasId_EmpleadoXIdGantt_En_Tabla_Seguimiento_entrada($value);
-//                                    }
-//                                }
-//                        }
-//                    }
-//                }
-//            }
-//         
-//         
-//          $modelGantt->calculoAvanceProgramaGeneral($id_seguimiento_que_lleva_al_folio_de_entrada);
-//            
-//        } catch (Exception $ex) {
-//            throw $ex;
-//        }
-//        
-//    }
+    public function insertarTareasGantt($data,$id_tarea){
+       
+        try{
+            $inserccion;
+            $lista_tareas_verificadas;
+            $dao= new Gantt_TareaDao();
+            $modelGantt= new Gantt_TareasModel();
+            $lista_tareas_verificadas=self::verificarTareasExiste($data);
+            foreach ($data as $value) {
+                if (isset($value["id"])) {
+                   foreach ($lista_tareas_verificadas as $value2) {
+                        if($value["id"]==$value2["id"]){
+                            
+                                if($value2["cantidad"]==0){
+                                    if($value["parent"]!=""){
+                                         $value["progress"]=0;
+                                         $value["id_empleado"]=$value["user"];
+                                         $value["id_seguimiento_entrada"]=$id_seguimiento_que_lleva_al_folio_de_entrada;
+                                         $dao->insertarGanttTareas($value);
+                                    }
+                                }
+                                else{
+                                    
+                                     if($value["!nativeeditor_status"]=='deleted'){
+                                         echo "entro a eliminar la tarea";
+                                         $dao->deleteTareas($value);
+                                         $dao->deleteTareasDe_Gantt_Seguimiento_Entrada($value);
+                                            
+                                    }else{
+                                         $dao->updateTareas($value); 
+                                         $dao->updateTareasId_EmpleadoXIdGantt_En_Tabla_Seguimiento_entrada($value);
+                                    }
+                                }
+                        }
+                    }
+                }
+            }
+         
+         
+          $modelGantt->calculoAvanceProgramaGeneral($id_seguimiento_que_lleva_al_folio_de_entrada);
+            
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+        
+    }
     
     
     public static function verificarTareasExiste($array){
         try{
-            $dao= new GanttDao();
+            $dao= new Gantt_TareaDao();
             $numeroenlistaposicion=0;
             $lista_tarea_verificada_si_existe;
             foreach ($array as $value) {
