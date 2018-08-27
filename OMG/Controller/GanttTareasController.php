@@ -15,7 +15,7 @@ switch ($Op) {
     
         case 'Listar':
             
-            $Lista= $modelGantt->listarRegistrosGanttTareas(Session::getSesion("id_tarea"));
+            $Lista= $modelGantt->listarRegistrosGanttTareas(Session::getSesion("dataGantt_id_tarea"));
             header('Content-type: application/json; charset=utf-8');
             echo json_encode($Lista);
             break;
