@@ -15,6 +15,15 @@ $modelGantt=new Gantt_TareasModel();
 // $pojo=new GanttPojo();
 
 switch ($Op) {
+    
+        case 'Listar':
+            $Lista= $modelGantt->listarRegistrosGanttTareas($_REQUEST['ID_TAREA']);
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($Lista);
+            break;
+    
+    
+    
        
 	case 'ListarEmpleados':
 
@@ -23,8 +32,6 @@ switch ($Op) {
 //    	$tarjet="../view/principalmodulos.php";
     	header('Content-type: application/json; charset=utf-8');
 	echo json_encode($Lista);
-        
-                
                 
 		break;
             
