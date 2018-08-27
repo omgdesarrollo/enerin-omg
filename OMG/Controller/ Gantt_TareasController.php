@@ -4,17 +4,15 @@
 session_start();
 require_once '../Model/EmpleadoModel.php';
 require_once '../Pojo/EmpleadoPojo.php';
-require_once '../Model/GanttModel.php';
+require_once '../Model/Gantt_TareasModel.php';
 require_once '../util/Session.php';
 
 $Op=$_REQUEST["Op"];
-$model=new EmpleadoModel();
-$pojo= new EmpleadoPojo();
+// $model=new EmpleadoModel();
+// $pojo= new EmpleadoPojo();
 
-$modelGantt=new GanttModel();
-$pojo=new GanttPojo();
-
-$modelGantt= new GanttModel();
+$modelGantt=new Gantt_TareasModel();
+// $pojo=new GanttPojo();
 
 switch ($Op) {
        
@@ -31,12 +29,12 @@ switch ($Op) {
 		break;
             
             
-        case'obtenerFolioEntradaSeguimiento':
+//         case'obtenerFolioEntradaSeguimiento':
             
-            $Lista=$modelGantt->obtenerFolioEntradaSeguimiento($_REQUEST['ID_SEGUIMIENTO']);
-            header('Content-type: application/json; charset=utf-8');
-            echo json_encode($Lista);
-            break;
+//             $Lista=$modelGantt->obtenerFolioEntradaSeguimiento($_REQUEST['ID_SEGUIMIENTO']);
+//             header('Content-type: application/json; charset=utf-8');
+//             echo json_encode($Lista);
+//             break;
     	
         case 'MostrarTareasCompletasPorFolioDeEntrada':   
             $Lista=$modelGantt->obtenerTareasCompletasPorFolioEntrada(Session::getSesion("dataGantt"));
@@ -45,17 +43,7 @@ switch ($Op) {
 //        Session::setSesion("", $value)
             
                 break;
-        case 'MostrarTareasTodas':
-            $Lista=$modelGantt->obtenerTareasCompletasPorFolioEntrada(Session::getSesion("dataGantt"));
-            header('Content-type: application/json; charset=utf-8');
-            echo json_encode(array("data"=>$Lista));
-            //        Session::setSesion("", $value)
-            
-            break;
-                
-                
-                
-                
+    
     
 	case 'Nuevo':
 		# code...
