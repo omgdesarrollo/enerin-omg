@@ -31,11 +31,7 @@ switch ($Op) {
 //    	$tarjet="../view/principalmodulos.php";
     	header('Content-type: application/json; charset=utf-8');
 	echo json_encode($Lista);
-<<<<<<< HEAD
                 
-=======
-         
->>>>>>> 8e7861e854bb2d565cd0b17f525b756c5ab1aa7b
 		break;
             
             
