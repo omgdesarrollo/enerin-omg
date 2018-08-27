@@ -99,7 +99,25 @@ class Gantt_TareaDao {
         }
     }
 
-
+    
+    public function verificarParentHijoEnTarea($VALUES)
+    {
+        try
+        {
+            $query="SELECT COUNT(*) as cantidad 
+                    FROM gantt_tareas tbgantt_tareas  
+                    WHERE tbgantt_tareas.parent='".$VALUES['id']."'";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista = $db->executeQuery($query);
+            
+            return $lista;
+        } catch (Exception$ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
     
 }
 
