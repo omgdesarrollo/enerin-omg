@@ -59,6 +59,23 @@ class Gantt_TareaDao {
             return -1;
         }
     }
+    
+    
+    public function actualizarExisteProgramaTareas($VALUES)
+    {
+        try
+        {
+            $query="UPDATE tareas SET existe_programa=".$VALUES["existe"]."  WHERE id_tarea=".$VALUES["id"]."";
+            
+            $db=  AccesoDB::getInstancia();
+            $update = $db->executeUpdateRowsAfected($query);
+            return $update;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 
 
 

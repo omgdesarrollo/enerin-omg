@@ -134,6 +134,43 @@ function reconstruir(value,index)
     return tempData;
 }
 
+
+function reconstruirExcel(value,index)
+{
+    tempData = new Object();
+//    tempData["no"] = index;
+//    tempData["id_principal"] = [{"id_contrato":value.id_contrato}];
+    tempData["ID del Contrato o Asignacion"] = value.clave_contrato;
+    tempData["Region Fiscal"] = value.region_fiscal;
+    tempData["Ubicacion del Punto de Medicion"] = value.ubicacion;
+    tempData["Tag del Patin  de Medicion"] = value.tag_patin;
+    tempData["Tipo de Medidor"] = value.tipo_medidor;
+    tempData["Tag del Medidor"] = value.tag_medidor;
+    tempData["Clasificacion del Sistema de Medicion"] = value.clasificacion;
+    tempData["Tipo de Hidrocarburo"] = value.hidrocarburo;
+    tempData["Fecha [dd/mm/aaaa]"] = value.omgc1;
+    tempData["Presion[kg/cm2]"] = value.omgc2;
+    tempData["Temperatura[°C]"] = value.omgc3;
+    tempData["Produccion de Petroleo Medido Neto[bls]"] = value.omgc4;
+    tempData["°API"] = value.omgc5;
+    tempData["%S"] = value.omgc6;
+    tempData["Sal[Lb/Mbls]"] = value.omgc7;
+    tempData["%H2O"] = value.omgc8;
+    tempData["Produccion de Condensado Medido Neto[bls]"] = value.omgc9;
+    tempData["°API"] = value.omgc10;
+    tempData["%S"] = value.omgc11;
+    tempData["%H2O"] = value.omgc12;
+    tempData["Produccion de Gas Medido[MMPC]"] = value.omgc13;
+    tempData["Poder Calorifico de Gas[BTU/PC]"] = value.omgc14;
+    tempData["Peso Molecular de Gas[Lb/mol]"] = value.omgc15;
+    tempData["Energia de Gas[MMBTU]"] = value.omgc16;
+    tempData["Eventos"] = value.omgc17;
+//    tempData["omgc18"] = value.omgc18;
+//    tempData["delete"] = "1";
+    return tempData;
+}
+
+
 function construirGridGeneradorMolares()
 {
 //	jsGrid.fields.customControl = MyCControlField;

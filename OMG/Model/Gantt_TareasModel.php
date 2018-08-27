@@ -65,8 +65,26 @@ class Gantt_TareasModel{
             return -1;
         }
     }
+    
+    
+    public static function actualizarExisteProgramaTareas($VALUES)
+    {
+        try
+        {            
+            $dao=new Gantt_TareaDao();
+            $rec= $dao->actualizarExisteProgramaTareas($VALUES);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $xe; 
+            return -1;
+        }
 
+    }
 
+    
+    
     public function eliminarGanttTareas($VALUES)
     {
         try

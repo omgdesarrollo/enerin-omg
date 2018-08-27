@@ -440,6 +440,7 @@ function obtenerDatosReporte(){
               $.each(r,function (index,value)
                 {
                     __datos.push( reconstruir(value,index++) );
+                    __datosExcel.push(reconstruirExcel(value,index++));
                 });
               DataGrid=__datos;
               gridInstance.loadData();
