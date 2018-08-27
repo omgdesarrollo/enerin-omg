@@ -123,7 +123,6 @@ class Gantt_TareasModel{
                 if (isset($value["id"])) {
                    foreach ($lista_tareas_verificadas as $value2) {
                         if($value["id"]==$value2["id"]){
-                            
                                 if($value2["cantidad"]==0){
                                     if($value["parent"]!=""){
                                          $value["progress"]=0;
@@ -134,12 +133,10 @@ class Gantt_TareasModel{
                                     }
                                 }
                                 else{
-                                    
                                      if($value["!nativeeditor_status"]=='deleted'){
                                          echo "entro a eliminar la tarea";
                                          $dao->eliminarGanttTareas($value["id"]);
-//                                         $dao->deleteTareasDe_Gantt_Seguimiento_Entrada($value);
-                                            
+//                                         $dao->deleteTareasDe_Gantt_Seguimiento_Entrada($value);    
                                     }else{
                                         echo "entro en actualizar";
 //                                         $dao->updateTareas($value); 
