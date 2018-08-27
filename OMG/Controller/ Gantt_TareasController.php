@@ -32,6 +32,7 @@ switch ($Op) {
     	header('Content-type: application/json; charset=utf-8');
 	echo json_encode($Lista);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 =======
 <<<<<<< HEAD
@@ -40,6 +41,9 @@ switch ($Op) {
          
 >>>>>>> 8e7861e854bb2d565cd0b17f525b756c5ab1aa7b
 >>>>>>> 153197d5dbf055b860500c9f76996b9f953119b0
+=======
+                
+>>>>>>> 12cff3a560509458c2cdeb65c07d94459327ff87
 		break;
 //         case'obtenerFolioEntradaSeguimiento':
             
