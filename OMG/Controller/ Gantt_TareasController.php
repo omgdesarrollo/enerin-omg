@@ -14,6 +14,15 @@ $modelGantt=new Gantt_TareasModel();
 // $pojo=new GanttPojo();
 
 switch ($Op) {
+    
+        case 'Listar':
+            $Lista= $modelGantt->listarRegistrosGanttTareas($_REQUEST['ID_TAREA']);
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($Lista);
+            break;
+    
+    
+    
        
 	case 'ListarEmpleados'://este caso no borrarlo es para traer los difrentes empleados
 
@@ -22,7 +31,15 @@ switch ($Op) {
 //    	$tarjet="../view/principalmodulos.php";
     	header('Content-type: application/json; charset=utf-8');
 	echo json_encode($Lista);
+<<<<<<< HEAD
 	
+=======
+<<<<<<< HEAD
+                
+=======
+         
+>>>>>>> 8e7861e854bb2d565cd0b17f525b756c5ab1aa7b
+>>>>>>> 153197d5dbf055b860500c9f76996b9f953119b0
 		break;
 //         case'obtenerFolioEntradaSeguimiento':
             

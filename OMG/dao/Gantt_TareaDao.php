@@ -1,10 +1,43 @@
 <?php
 require_once '../ds/AccesoDB.php';
 class Gantt_TareaDao {
+
+    public function listarRegistrosGanttTareas($VALUE) 
+    {
+        try
+        {
+            $query="SELECT tbgantt_tareas.text, tbgantt_tareas.start_date, tbgantt_tareas.duration, tbgantt_tareas.progress, tbgantt_tareas.parent,
+		    tbgantt_tareas.user, tbgantt_tareas.id_tarea
+                    FROM gantt_tareas tbgantt_tareas
+                    WHERE tbgantt_tareas.id_tarea= $VALUE";
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }        
+    }
+
+
+
+
+
+    
+   
     
     
     
     
+    
+    
+    
+    
+    
+
+=======
+    
+    
+>>>>>>> 8e7861e854bb2d565cd0b17f525b756c5ab1aa7b
     public function obtenerTareasCompletasPorFolioEntrada($folio_entrada){
         try
         { 

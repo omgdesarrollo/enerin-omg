@@ -5,18 +5,36 @@ require_once '../dao/Gantt_TareaDao.php';
 class Gantt_TareasModel {
     //put your code here
     
-    public function obtenerTareasCompletasPorFolioEntrada($folio_entrada){
-        try{
-            $dao= new Gantt_TareaDao();
-            $rec=$dao->obtenerTareasCompletasPorFolioEntrada($folio_entrada);
+    public function listarRegistrosGanttTareas($VALUE)
+    {
+        try
+        {
+            $dao=new Gantt_TareaDao();
+            $rec= $dao->listarRegistrosGanttTareas($VALUE);
             
             return $rec;
-            
-        } catch (Exception $ex) {
+        } catch (Exception $ex)
+        {
             throw $ex;
-            return false;
+            return -1;
         }
     }
+
+
+
+
+//    public function obtenerTareasCompletasPorFolioEntrada($folio_entrada){
+//        try{
+//            $dao= new Gantt_TareaDao();
+//            $rec=$dao->obtenerTareasCompletasPorFolioEntrada($folio_entrada);
+//            
+//            return $rec;
+//            
+//        } catch (Exception $ex) {
+//            throw $ex;
+//            return false;
+//        }
+//    }
     
     public function insertarTareasGantt($data,$id_seguimiento_que_lleva_al_folio_de_entrada){
        
