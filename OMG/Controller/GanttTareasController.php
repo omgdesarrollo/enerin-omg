@@ -120,11 +120,11 @@ switch ($Op) {
 //                        Session::setSesion("", $value);
                         //la variable de sesion del dataGant se refiere al id de seguimiento entrada que hace 
                         //referencia al folio de entrada de documento de entrada
-                        $modelGantt->insertarTareasGantt($arrayTransformado,Session::getSesion("dataGantt"));
+                        $modelGantt->insertarTareasGantt($arrayTransformado,Session::getSesion("dataGantt_id_tarea"));
                         
                         
 			header('Content-type: application/json; charset=utf-8');
-                        echo json_encode($arrayTransformado);
+//                        echo json_encode($arrayTransformado);
          
             
 	break;

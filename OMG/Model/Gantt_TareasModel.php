@@ -58,7 +58,6 @@ class Gantt_TareasModel{
             
             $query.= "WHERE id = $ID";
             $update= $dao->actualizarGanttTareas($query);
-            
             return ($update!=0)?1:0;            
         } catch (Exception $ex)
         {
@@ -113,7 +112,7 @@ class Gantt_TareasModel{
                                     if($value["parent"]!=""){
                                          $value["progress"]=0;
                                          $value["user"]=$value["user"];
-                                         $value["id"]=$id_tarea;
+                                         $value["id_tarea"]=$id_tarea;
                                          $dao->insertarGanttTareas($value);
                                     }
                                 }
@@ -121,11 +120,12 @@ class Gantt_TareasModel{
                                     
                                      if($value["!nativeeditor_status"]=='deleted'){
                                          echo "entro a eliminar la tarea";
-                                         $dao->deleteTareas($value);
+//                                         $dao->deleteTareas($value);
 //                                         $dao->deleteTareasDe_Gantt_Seguimiento_Entrada($value);
                                             
                                     }else{
-                                         $dao->updateTareas($value); 
+                                        echo "entro en actualizar";
+//                                         $dao->updateTareas($value); 
 //                                         $dao->updateTareasId_EmpleadoXIdGantt_En_Tabla_Seguimiento_entrada($value);
                                     }
                                 }
