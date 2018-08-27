@@ -167,11 +167,12 @@ $Usuario=  Session::getSesion("user");
 <button id='reporteDiariosdelMensualAnualCalculo' class="btn btn-info btn-xs">Calcular todos los diarios</button>
 <!-- </div> -->
 <button id='btnAgregarMolarAlMes' class="btn btn-info btn-xs" data-toggle="modal" data-target="#createitemMolares">% Molares</button>
+<button id='toExcel' >
+     <img src="../../images/base/_excel.png" width="35px" height="auto"></button>
 </div>
 </div>
 <div class="col-md-6 ">
-<!-- <button id='toExcel' > -->
-<!--      <img src="../../images/base/_excel.png" width="35px" height="auto"></button> -->
+
 <div id="seccionDerecha">
 <label>Fecha Inicio</label>
 <input type="text" id="fechaInicio"/>
@@ -300,6 +301,7 @@ $(function()
                    $.each(r,function (index,value)
                      {
                          __datos.push( reconstruir(value,index++) );
+                         
                      });
 //                    DataGrid=[];
                    DataGrid=__datos;
@@ -452,14 +454,15 @@ function obtenerDatosReporte(){
     
 	var $btnDLtoExcel = $('#toExcel'); 
                 $btnDLtoExcel.on('click', function () {
-                    if(bandera==true){
+                    alert("le ");
+//                     if(bandera==true){
                         $("#listjson").excelexportHibrido({
                                     containerid: "listjson"
                                        , datatype: 'json'
-                                       , dataset: data1
-                                       , columns: getColumns(data1)     
+                                       , dataset: DataGrid
+                                       , columns: getColumns(DataGrid)     
                                 });
-                    }
+//                     }
     });    
 
 
