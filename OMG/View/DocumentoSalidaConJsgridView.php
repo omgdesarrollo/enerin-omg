@@ -82,7 +82,7 @@ require_once 'EncabezadoUsuarioView.php';
              
 <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;"> 
 
-    <button type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#crea_autoridad">
+    <button type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#crea_documentoSalida">
         Agregar Documento de Salida
     </button>
 

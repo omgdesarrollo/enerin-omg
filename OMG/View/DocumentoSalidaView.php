@@ -65,9 +65,6 @@ $Usuario=  Session::getSesion("user");
             .modal-lg{width: 100%;}
             .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
             body{overflow:hidden;}
-  
-                    
-             
                     
                     
   </style>
@@ -125,7 +122,7 @@ require_once 'EncabezadoUsuarioView.php';
             <tbody>
                 <tr class="jsgrid-header-row">
 				
-                                <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 100px;">Folio de Entrada</th>
+                                <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 170px;">Folio de Entrada</th>
                                 <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 100px;">Folio de Salida</th>
                                 <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 100px;">Responsable del Tema</th>
                                 <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 100px;">Fecha de Envio</th>
@@ -165,7 +162,7 @@ require_once 'EncabezadoUsuarioView.php';
 
                                 <!--<td><?php //echo $numeracion++;   ?></td -->
                                 
-                              <td class="jsgrid-cell" style="width: 100px;"> 
+                              <td class="jsgrid-cell" style="width: 170px;"> 
                                     <select id="id_documento_entrada" class="select" onchange="saveComboToDatabase('id_documento_entrada', <?php echo $filas["id_documento_salida"]; ?> )">
                                     <?php
                                     $s="";

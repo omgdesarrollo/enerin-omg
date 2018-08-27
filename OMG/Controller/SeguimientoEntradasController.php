@@ -23,7 +23,7 @@ switch ($Op) {
 //                $_REQUEST[""];
                 $Lista=$model->listarSeguimientoEntradas();
 //                $Lista["avanceprograma"]=$model->calculoSumaParents($value);
-//                Session::setSesion("listarSeguimientoEntradas",$Lista);
+               Session::setSesion("listarSeguimientoEntradas",$Lista);
                 
         //    	$tarjet="../view/principalmodulos.php";
                 header('Content-type: application/json; charset=utf-8');
