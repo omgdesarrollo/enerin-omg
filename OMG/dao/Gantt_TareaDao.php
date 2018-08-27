@@ -12,6 +12,10 @@ class Gantt_TareaDao {
                     FROM gantt_tareas tbgantt_tareas
                     WHERE tbgantt_tareas.id_tarea= $VALUE";
             
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            
+            return $lista;
         } catch (Exception $ex)
         {
             throw $ex;
@@ -29,9 +33,9 @@ class Gantt_TareaDao {
                     '".$VALUES["parent"]."','".$VALUES["user"]."','".$VALUES["id_tarea"]."')";
             
             $db=  AccesoDB::getInstancia();
-            $exito = $db->executeQueryUpdate($query);
+            $lista = $db->executeQueryUpdate($query);
             
-            return $exito;
+            return $lista;
         } catch (Exception $ex)
         {
             throw $ex;
