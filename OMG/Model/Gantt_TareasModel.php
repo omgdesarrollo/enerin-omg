@@ -81,6 +81,22 @@ class Gantt_TareasModel{
             return -1;
         }
     }
+    
+    
+    public  function verificarParentHijoEnTarea($VALUES)
+    {
+        try
+        {
+            $dao=new Gantt_TareaDao();
+            $rec= $dao->verificarParentHijoEnTarea($VALUES);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 
 //    public function obtenerTareasCompletasPorFolioEntrada($folio_entrada){
 //        try{
