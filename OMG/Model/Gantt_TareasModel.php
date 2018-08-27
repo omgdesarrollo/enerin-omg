@@ -83,7 +83,7 @@ class Gantt_TareasModel{
     }
     
     
-    public  function verificarParentHijoEnTarea($VALUES)
+    public  static function verificarParentHijoEnTarea($VALUES)
     {
         try
         {
@@ -144,8 +144,9 @@ class Gantt_TareasModel{
                                         echo "entro en actualizar";
 //                                         $dao->updateTareas($value); 
                                         
-                                        
-                                        
+                                         if (!isset($value["progress"])) {
+                                             $value["progress"]=0;
+                                         }
                                          self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"]), $value["id"]);
                                          
 //                                         $model->actualizarGanttTareas
@@ -199,18 +200,6 @@ class Gantt_TareasModel{
         {
             throw $ex;
             return false;
-        }
-    }
-    
-    
-    public function deleteTareaajax($value)
-    {
-        try{
-            $dao= new GanttDao();
-            $dao->deleteTareasAjax($value);
-            
-        } catch (Exception $ex) {
-
         }
     }
     

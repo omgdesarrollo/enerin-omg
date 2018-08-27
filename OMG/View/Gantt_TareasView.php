@@ -233,9 +233,9 @@ and open the template in the editor.
 		gantt.attachEvent("onAfterTaskDelete", function onAfterTaskDelete(id, task) {
 //			alert("s");
 //alert("des");
-//                    alert("tarea eliminada es "+id);
+                    alert("tarea eliminada es "+id);
                              $.ajax({
-                                url:"../Controller/GanttController.php?Op=EliminarTarea&deleteidtarea="+id,
+                                url:"../Controller/GanttTareasController.php?Op=EliminarTarea&deleteidtarea="+id,
                                 success:function (res){
 
                                 }
