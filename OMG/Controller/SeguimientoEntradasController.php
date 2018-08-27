@@ -22,8 +22,8 @@ switch ($Op) {
 	case 'Listar':
 //                $_REQUEST[""];
                 $Lista=$model->listarSeguimientoEntradas();
-//                $Lista["avanceprograma"]=$model->calculoSumaParents($value);            
-                Session::setSesion("listarSeguimientoEntradas",$Lista);//Se esta ocupando para el modulo de informe gerencial
+//                $Lista["avanceprograma"]=$model->calculoSumaParents($value);
+               Session::setSesion("listarSeguimientoEntradas",$Lista);//Se esta ocupando para el modulo de informe gerencial
                 
         //    	$tarjet="../view/principalmodulos.php";
                 header('Content-type: application/json; charset=utf-8');

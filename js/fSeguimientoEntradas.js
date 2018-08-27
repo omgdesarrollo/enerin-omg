@@ -19,11 +19,11 @@ function listarDatosSeguimientoEntrada()
 //           alert("f"+value.asunto);
        if(value.status_doc=="1"){
            status="En Proceso";
-           alert("en");
+//           alert("en");
        }
        if(value.status_doc=="2"){
            status="Suspendido";
-           alert("suspendidp")
+//           alert("suspendidp")
        }
        if(value.status_doc=="3"){
            status="Terminado";
