@@ -21,6 +21,7 @@ switch ($Op) {
             break;
     
         case 'Guardar':
+            $VALUES["id_gantt_tareas"]= $_REQUEST['TEXT'];
             $VALUES["text"]= $_REQUEST['TEXT'];
             $VALUES["start_date"]= $_REQUEST['START_DATE'];
             $VALUES["duration"]= $_REQUEST['DURATION'];

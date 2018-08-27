@@ -7,8 +7,8 @@ class Gantt_TareaDao {
     {
         try
         {
-            $query="SELECT tbgantt_tareas.text, tbgantt_tareas.start_date, tbgantt_tareas.duration, tbgantt_tareas.progress, tbgantt_tareas.parent,
-		    tbgantt_tareas.user, tbgantt_tareas.id_tarea
+            $query="SELECT tbgantt_tareas.id_gantt_tareas, tbgantt_tareas.text, tbgantt_tareas.start_date, tbgantt_tareas.duration, tbgantt_tareas.progress, tbgantt_tareas.parent,
+                    tbgantt_tareas.user, tbgantt_tareas.id_tarea
                     FROM gantt_tareas tbgantt_tareas
                     WHERE tbgantt_tareas.id_tarea= $VALUE";
             
@@ -28,9 +28,9 @@ class Gantt_TareaDao {
     {
         try
         {
-            $query="INSERT INTO gantt_tareas (text,start_date,duration,progress,parent,user,id_tarea)
-                    VALUES('".$VALUES["text"]."','".$VALUES["start_date"]."','".$VALUES["duration"]."','".$VALUES["progress"]."',
-                    '".$VALUES["parent"]."','".$VALUES["user"]."','".$VALUES["id_tarea"]."')";
+            $query="INSERT INTO gantt_tareas (id_gantt_tareas,text,start_date,duration,progress,parent,user,id_tarea)
+                    VALUES('".$VALUES["id_gantt_tareas"]."','".$VALUES["text"]."','".$VALUES["start_date"]."','".$VALUES["duration"]."',
+                    '".$VALUES["progress"]."','".$VALUES["parent"]."','".$VALUES["user"]."','".$VALUES["id_tarea"]."')";
             
             $db=  AccesoDB::getInstancia();
             $lista = $db->executeQueryUpdate($query);
