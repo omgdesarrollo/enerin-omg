@@ -111,9 +111,8 @@ class Gantt_TareasModel{
             return -1;
         }
     }
-    
-    
-    public static function AvanceProgramaTareas($VALUES)
+
+    public static function avanceProgramaTareas($VALUES)
     {
         try
         {
@@ -162,6 +161,7 @@ class Gantt_TareasModel{
                                          $value["existeprograma"]=1;
                                          $dao->insertarGanttTareas($value);
                                          self:: actualizarExisteProgramaTareas($value);
+                                         
                                     }
                                 }
                                 else{
@@ -187,7 +187,7 @@ class Gantt_TareasModel{
                 }
             }
          
-         
+            self::avanceProgramaTareas(array("id_tarea"=>$id_tarea));
 //          $modelGantt->calculoAvanceProgramaGeneral($id_seguimiento_que_lleva_al_folio_de_entrada);
             
         } catch (Exception $ex) {
