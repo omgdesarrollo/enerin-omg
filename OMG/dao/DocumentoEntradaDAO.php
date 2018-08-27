@@ -255,15 +255,55 @@ class DocumentoEntradaDAO{
     }
     
     
-    public function eliminarClausula($id_clausula){
+//    public function eliminarClausula($id_clausula)
+//    {
+//        try{
+//            $query="DELETE FROM documento_entrada WHERE id_documento_entrada=$id_clausula";
+//            $db=  AccesoDB::getInstancia();
+//            $db->executeQueryUpdate($query);
+//        } catch (Exception $ex) {
+//                throw $ex;
+//        }
+//    }
+    
+    
+    public function eliminarDocumentoEntrada($ID_DOCUMENTO_ENTRADA){
         try{
-            $query="DELETE FROM documento_entrada WHERE id_documento_entrada=$id_clausula";
+            $query="DELETE FROM documento_entrada WHERE id_documento_entrada=$ID_DOCUMENTO_ENTRADA";
             $db=  AccesoDB::getInstancia();
-            $db->executeQueryUpdate($query);
+            $lista= $db->executeQueryUpdate($query);
+
+            return $lista;
         } catch (Exception $ex) {
                 throw $ex;
+                return -1;
         }
     }
+    
+    
+    public function verificarExistenciadeDocumentoEntradaEnDocumentoSalida($ID_DOCUMENTO_ENTRADA)
+    {
+        try
+        {
+            $query="SELECT COUNT(*) AS resultado
+                    FROM documento_salida tbdocumento_salida
+                    WHERE tbdocumento_salida.id_documento_entrada=$ID_DOCUMENTO_ENTRADA";
+            
+            $db= AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista[0]['resultado'];
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+        
+    }
+    
+    
+    
     public function getIdCumplimiento($ID_DOCUMENTO_ENTRADA)
     {
         try
