@@ -580,9 +580,6 @@ dp.init(gantt);
       
         
     }
-
-
-    
     gantt.templates.progress_text = function (start, end, task) {
 		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
 	};
