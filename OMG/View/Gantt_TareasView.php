@@ -185,9 +185,7 @@ and open the template in the editor.
     
     <div id="gantt_here" style='width:100%; height:100%;'></div>
     </body>
-  
-    
-    
+
   <script type="text/javascript">      
 	(function dynamicTaskType() {
 		var delTaskParent;
@@ -233,6 +231,7 @@ and open the template in the editor.
                                 {
                                  
                                     if(res==true){
+                                        growlError("Descendencia","Error Tiene Tareas En Descendencia");
 //                                        alert("tiene descendencia ");
 //                                         swalError("No se puede eliminar la actividad, tiene descendencia ");
                                         
@@ -252,7 +251,7 @@ and open the template in the editor.
                       
                       
                       
-			return true;
+			return desc;
 		});
 
 		gantt.attachEvent("onAfterTaskDelete", function onAfterTaskDelete(id, task) {
