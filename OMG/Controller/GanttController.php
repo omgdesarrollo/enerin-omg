@@ -45,17 +45,7 @@ switch ($Op) {
 //        Session::setSesion("", $value)
             
                 break;
-        case 'MostrarTareasTodas':
-            $Lista=$modelGantt->obtenerTareasCompletasPorFolioEntrada(Session::getSesion("dataGantt"));
-            header('Content-type: application/json; charset=utf-8');
-            echo json_encode(array("data"=>$Lista));
-            //        Session::setSesion("", $value)
-            
-            break;
-                
-                
-                
-                
+    
     
 	case 'Nuevo':
 		# code...
