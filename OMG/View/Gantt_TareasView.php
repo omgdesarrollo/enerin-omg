@@ -421,9 +421,8 @@ gantt.config.sort = true;
 gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
     gantt.init("gantt_here");
     gantt.load("../Controller/Gantt_TareasController.php?Op=MostrarTarerasTodas");
-
-
-var dp = new gantt.dataProcessor("../Controller/GanttController.php?Op=Modificar");
+    
+var dp = new gantt.dataProcessor("../Controller/Gantt_TareasController.php?Op=Modificar");
 
 dp.init(gantt);
 
@@ -567,7 +566,7 @@ dp.init(gantt);
     function obtenerEmpleados(){
         
         $.ajax({
-           url:"../Controller/GanttController.php?Op=ListarEmpleados",
+           url:"../Controller/Gantt_TareasController.php?Op=ListarEmpleados",
            data:"",
            async:false,
            success:function (res){

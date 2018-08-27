@@ -3,6 +3,7 @@ require_once '../ds/AccesoDB.php';
 class Gantt_TareaDao {
     
     
+<<<<<<< HEAD
     public function listarRegistrosGanttTareas($VALUE) 
     {
         try
@@ -35,6 +36,10 @@ class Gantt_TareaDao {
     
     
 
+=======
+    
+    
+>>>>>>> 8e7861e854bb2d565cd0b17f525b756c5ab1aa7b
     public function obtenerTareasCompletasPorFolioEntrada($folio_entrada){
         try
         { 
@@ -172,8 +177,6 @@ class Gantt_TareaDao {
             throw $ex;
         }
     }
-    
-    
     
     public function calculoAvanceProgramaGeneral($id_seguimiento_que_lleva_al_folio_de_entrada)
     {

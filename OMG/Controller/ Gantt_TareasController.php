@@ -1,6 +1,5 @@
 <?php
-//este controlador solo atiende un requerimiento
-//el requerimiento que atiende es el de inicio de sesion
+
 session_start();
 require_once '../Model/EmpleadoModel.php';
 require_once '../Pojo/EmpleadoPojo.php';
@@ -25,14 +24,18 @@ switch ($Op) {
     
     
        
-	case 'ListarEmpleados':
+	case 'ListarEmpleados'://este caso no borrarlo es para traer los difrentes empleados
 
 	$Lista=$model->listarEmpleados("");
     	Session::setSesion("listarEmpleados",$Lista);
 //    	$tarjet="../view/principalmodulos.php";
     	header('Content-type: application/json; charset=utf-8');
 	echo json_encode($Lista);
+<<<<<<< HEAD
                 
+=======
+         
+>>>>>>> 8e7861e854bb2d565cd0b17f525b756c5ab1aa7b
 		break;
             
             
@@ -48,10 +51,7 @@ switch ($Op) {
             header('Content-type: application/json; charset=utf-8');
             echo json_encode(array("data"=>$Lista));
 //        Session::setSesion("", $value)
-            
                 break;
-    
-    
 	case 'Nuevo':
 		# code...
 		break;	
