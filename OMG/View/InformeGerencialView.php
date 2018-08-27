@@ -264,7 +264,7 @@ require_once 'EncabezadoUsuarioView.php';
                                 <!--<td><?php //echo $numeracion++;   ?></td -->
                         
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'folio_entrada','<?php echo $filas["id_informe_gerencial"]; ?>')" onClick="showEdit(this);"><?php echo $filas["folio_entrada"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'clave_entidad','<?php echo $filas["id_informe_gerencial"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_entidad"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'clave_autoridad','<?php echo $filas["id_informe_gerencial"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_autoridad"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'asunto','<?php echo $filas["id_informe_gerencial"]; ?>')" onClick="showEdit(this);"><?php echo $filas["asunto"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleadotema','<?php echo $filas["id_informe_gerencial"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleadotema"]." ".$filas["apellido_paternotema"]." ".$filas["apellido_maternotema"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'fecha_asignacion','<?php echo $filas["id_informe_gerencial"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_asignacion"]; ?></td>

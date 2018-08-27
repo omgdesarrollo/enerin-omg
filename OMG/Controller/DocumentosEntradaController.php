@@ -22,6 +22,7 @@ $pojoSeguimientoEntrada= new SeguimientoEntradaPojo();
 switch ($Op) {
 	case 'Listar':
 			$Lista=$model->listarDocumentosEntrada(Session::getSesion("s_cont"));
+                        Session::setSesion("listarDocumentosEntrada",$Lista); //Se esta ocupando para las graficas de informe gerencial
 			header('Content-type: application/json; charset=utf-8');
 			echo json_encode( $Lista);
 		break;
@@ -156,7 +157,13 @@ switch ($Op) {
                             
 	case 'Eliminar':
 		# code...
+                header('Content-type: application/json; charset=utf-8'); 
+                $data= json_decode($_REQUEST['ID_DOCUMENTO_ENTRADA'],true);
+                $Lista= $model->eliminarDocumentoEntrada($data['id_documento_entrada']);
+                echo json_encode($Lista);
+                return $Lista;
 		break;
+            
 	case 'getIdCumplimiento':
 		$Id_cumplimiento="";
 		$ID_DOCUMENTO = $_REQUEST['ID_DOCUMENTO'];

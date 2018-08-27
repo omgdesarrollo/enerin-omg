@@ -21,9 +21,9 @@ switch ($Op) {
 	case 'Listar':
 
 		$Lista=$model->listarInformeGerencial();
-    	Session::setSesion("listarInformeGerencial",$Lista);
+                Session::setSesion("listarInformeGerencial",$Lista);
 //    	$tarjet="../view/principalmodulos.php";
-    	header('Content-type: application/json; charset=utf-8');
+                header('Content-type: application/json; charset=utf-8');
 		echo json_encode( $Lista);
 		//header("location: login.php");
 //echo $json = json_encode(array("n" => "".$Lista.NOMBRE_EMPLEADO, "a" => "apellido",  "c" => "test"));

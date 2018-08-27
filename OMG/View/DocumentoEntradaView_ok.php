@@ -109,7 +109,52 @@ require_once 'EncabezadoUsuarioView.php';
 <!-- <div style="height: 50px"></div> -->
 
 <div id="jsGrid"></div>
+<!--<div class="contenedortable" style="position: fixed;">   
+    <input type="text" id="idInput" onkeyup="filterTable()" placeholder="Buscar Por Folio de Entrada" style="width: 200px;">
+</div >
+
+
+<div style="height: 36px"></div>-->
              
+
+ <!-- <div class="table-fixed-header" style="display:block;" id="myDiv" class="animate-bottom"> 
+		
+    <div class="table-container">
+        
+        <table id="idTable" class="tbl-qa">
+		  <thead>
+			  <tr>
+				
+                                <th class="table-header">Contrato</th>
+                                <! <th class="table-header">Referencia</th>
+                                <th class="table-header">Folio de Entrada</th>
+                                <th class="table-header">Fecha Recepcion</th>
+                                <th class="table-header">Asunto</th>
+                                <th class="table-header">Remitente</th>
+                                <th class="table-header">Autoridad Remitente</th>
+                                <th class="table-header">No.Tema</th>
+                                <th class="table-header">Tema</th>
+                                <th class="table-header">Responsable del Tema</th>              
+                                <th class="table-header">Clasificacion</th>
+                                <th class="table-header">Status</th>
+                                <th class="table-header">Fecha Asignacion</th>
+                                <th class="table-header">Fecha Limite</th>
+                                <th class="table-header">Fecha Alarma</th>
+                                <th class="table-header">Archivo Adjunto</th>
+                                <th class="table-header">Observaciones</th> -->
+                                
+			  <!-- </tr> -->
+		  <!--</thead>-->
+		  <!-- <tbody id="tbodyDatos"> -->
+		  <!-- </tbody> -->
+		<!-- </table> -->
+
+
+    <!-- </div> -->
+
+<!-- </div> -->
+
+
 
 <!-- Inicio de Seccion Modal Archivos-->
 <div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -196,15 +241,15 @@ require_once 'EncabezadoUsuarioView.php';
                                 
                                 <div class="form-group">
                                         <label class="control-label" for="title">Autoridad Remitente:</label>
-                                        <select id="ID_AUTORIDADMODAL" class="select">
+                                        <select id="ID_AUTORIDADMODAL" class="select2">
                                         </select>
-                                        <!--<div class="help-block with-errors"></div>-->
+                                        <div class="help-block with-errors"></div>
                                 </div>
                 
                                 <div class="form-group">
                                         <label class="control-label" for="title">Tema:</label>
                                         
-                                        <select   id="ID_TEMAMODAL" class="select">
+                                        <select   id="ID_TEMAMODAL" class="select3">
                                         </select>
                                         
                                 </div>
@@ -286,9 +331,7 @@ filtros = [
                 {name:'Responsable Tema',id:'nombre_empleado',type:"text"},
                 {name:'No Tema',id:'id_tema',type:"combobox",data:listarTemas(),descripcion:"no"}
         ];
-        
 construirFiltros();
-//listarAutoridades();
 
 var id_documento_entrada;
 var cualmodificar;
@@ -303,7 +346,7 @@ function listarAutoridades()
 {
         tempData=[];
         $.ajax({
-                url:'../Controller/AutoridadesRemitentesController.php?Op=mostrarCombo',
+                url:'../Controller/AutoridadesRemitentesController.php?Op=Listar',
                 type: 'GET',
                 async:false,
                 success:function(autoridades)
@@ -339,7 +382,7 @@ function DocumentoArchivoAgregarModalF()
         $('#DocumentoEntradaAgregarModal').html(ModalCargaArchivo);
         
         $.ajax({
-                url:'../Controller/AutoridadesRemitentesController.php?Op=mostrarCombo',
+                url:'../Controller/AutoridadesRemitentesController.php?Op=Listar',
                 type: 'GET',
                 success:function(autoridades)
                 {
@@ -684,14 +727,7 @@ function construirGrid(datosF)//listooo 12
                                 }
                         });
                 }
-        },
-        
-        onItemDeleting: function(args) {
-//            console.log(args);
-            eliminarDocumentoEntrada(args);
-
         }
-        
         });
         // $("#loader").hide();
 }
@@ -847,96 +883,96 @@ function reconstruir(value)//listoooo
         return tempData;
 }
 
-//function reconstruir2(value)//borrar
-//{
-//        tempData = "";
-//        // tempData += "<td contenteditable='false' onBlur='saveToDatabase(this,\"clave_cumplimiento\","+value.id_documento_entrada+")'";
-//        // tempData += "onClick='showEdit(this);'>"+value.clave_cumplimiento+"</td>";
-//
-//        tempData += "<td contenteditable='true' onBlur='saveToDatabase(this,\"folio_referencia\","+value.id_documento_entrada+")'";
-//        tempData += "onClick='showEdit(this);'>"+value.folio_referencia+"</td>";
-//
-//        tempData += "<td onBlur='saveToDatabase(this,\"folio_entrada\","+value.id_documento_entrada+")'";
-//        tempData += "onClick='showEdit(this);'>"+value.folio_entrada+"</td>";
-//                                
-//        tempData += "<td><input style='' value='"+value.fecha_recepcion+"' onBlur='saveToDatabaseDates(this,\"fecha_recepcion\","+value.id_documento_entrada+",";
-//        tempData += value.fecha_asignacion+","+value.fecha_limite_atencion+","+value.fecha_alarma+")' type='date'/></td>";
-//
-//        tempData += "<td contenteditable='true' onBlur='saveToDatabase(this,\"asunto\","+value.id_documento_entrada+")' onClick='showEdit(this);'>"+value.asunto+"</td>";
-//        tempData += "<td contenteditable='true' onBlur='saveToDatabase(this,\"remitente\","+value.id_documento_entrada+")' onClick='showEdit(this);'>"+value.remitente+"</td>";
-//
-//        tempData += "<td><select id='id_autoridad' class='select' onchange='saveComboToDatabase(this,\"id_autoridad\","+value.id_documento_entrada+")'>";
-//        $.each(thisAutoridad,function(index,val)
-//        {
-//                if(val.id_autoridad == value.id_autoridad)
-//                        tempData += "<option value='"+val.id_autoridad+"' selected >"+val.clave_autoridad+"</option>";
-//                else
-//                        tempData += "<option value='"+val.id_autoridad+"' >"+val.clave_autoridad+"</option>";
-//        });
-//        tempData += "</select></td>";
-//        
-//        tempData += "<td style='background-color: #ccccff'>";
-//        tempData += "<select id='id_clausula' class='select' onchange='saveComboToDatabase(this,\"id_clausula\","+value.id_documento_entrada+")'>";
-//        $.each(thisTemas,function(index,val)
-//        {
-//                if(val.id_tema == value.id_tema)
-//                        tempData += "<option value='"+val.id_tema+"'  selected >"+val.no+"</option>";
-//                else
-//                        tempData += "<option value='"+val.id_tema+"' >"+val.no+"</option>";
-//        });
-//        tempData += "</select></td>";
-//                                
-//        tempData += "<td style='background-color: #ccccff' contenteditable='false' onBlur='saveToDatabase(this,\"nombre\","+value.id_documento_entrada+")'";
-//        tempData += " onClick='showEdit(this);'>"+value.nombre+"</td>";
-//        
-//        tempData += "<td style='background-color: #ccccff' contenteditable='false' onBlur='saveToDatabase(this,\"nombre_empleado\","+value.id_documento_entrada+")'";
-//        tempData += " onClick='showEdit(this);'>"+value.nombre_empleado+"</td>";
-//                                
-//        tempData += "<td contenteditable='false' onBlur='saveToDatabase(this,\"clasificacion\","+value.id_documento_entrada+")'>";
-//        if(value.clasificacion == 1)
-//                tempData += "Con Limite de Tiempo";   
-//        if (value.clasificacion == 2)
-//                tempData += "Sin Limite de Tiempo";
-//        if (value.clasificacion == 3)
-//                tempData += "Informativo";
-//        tempData += "</td>";
-//                                                                
-//        tempData += "<td><select id='id_status' class='select' onchange='saveComboToDatabase(this,\"status_doc\","+value.id_documento_entrada+")'>";
-//        if(value.status_doc == 1)
-//        {
-//                tempData += "<option value='1' selected>En proceso</option>";
-//                tempData += "<option value='2'>Suspendido</option>";
-//                tempData += "<option value='3'>Terminado</option>";
-//        }
-//        if(value.status_doc == 2)
-//        {
-//                tempData += "<option value='2' selected>Suspendido</option>";
-//                tempData += "<option value='1'>En proceso</option>";
-//                tempData += "<option value='3'>Terminado</option>";
-//        }
-//        if(value.status_doc == 3)
-//        {
-//                tempData += "<option value='3' selected>Terminado</option>";
-//                tempData += "<option value='1'>En proceso</option>";
-//                tempData += "<option value='2'>Suspendido</option>";
-//        }
-//        tempData += "</select></td>";
-//
-//        tempData += "<td><input style='' value='"+value.fecha_asignacion+"' onBlur='saveToDatabaseDates(this,\"fecha_asignacion\","+value.id_documento_entrada;
-//        tempData += ",\""+value.fecha_asignacion+"\",\""+value.fecha_limite_atencion+"\",\""+value.fecha_alarma+"\")' type='date'/></td>";
-//
-//        tempData += "<td><input style='' value='"+value.fecha_limite_atencion+"' onBlur='saveToDatabaseDates(this,\"fecha_limite_atencion\","+value.id_documento_entrada;
-//        tempData += ",\""+value.fecha_asignacion+"\",\""+value.fecha_limite_atencion+"\",\""+value.fecha_alarma+"\")' type='date'/></td>";
-//
-//        tempData += "<td><input style='' value='"+value.fecha_alarma+"' onBlur='saveToDatabaseDates(this,\"fecha_alarma\","+value.id_documento_entrada;
-//        tempData += ",\""+value.fecha_asignacion+"\",\""+value.fecha_limite_atencion+"\",\""+value.fecha_alarma+"\")' type='date'/></td>";
-//
-//        tempData += "<td><button onClick='mostrar_urls("+value.id_documento_entrada+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
-//        tempData += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i>Mostrar</button></td>";
-//                                
-//        tempData += "<td contenteditable='true' onBlur='saveToDatabase(this,\"observaciones\","+value.id_documento_entrada+")' onClick='showEdit(this);'>"+value.observaciones+"</td>";
-//        return tempData;
-//}
+function reconstruir2(value)//borrar
+{
+        tempData = "";
+        // tempData += "<td contenteditable='false' onBlur='saveToDatabase(this,\"clave_cumplimiento\","+value.id_documento_entrada+")'";
+        // tempData += "onClick='showEdit(this);'>"+value.clave_cumplimiento+"</td>";
+
+        tempData += "<td contenteditable='true' onBlur='saveToDatabase(this,\"folio_referencia\","+value.id_documento_entrada+")'";
+        tempData += "onClick='showEdit(this);'>"+value.folio_referencia+"</td>";
+
+        tempData += "<td onBlur='saveToDatabase(this,\"folio_entrada\","+value.id_documento_entrada+")'";
+        tempData += "onClick='showEdit(this);'>"+value.folio_entrada+"</td>";
+                                
+        tempData += "<td><input style='' value='"+value.fecha_recepcion+"' onBlur='saveToDatabaseDates(this,\"fecha_recepcion\","+value.id_documento_entrada+",";
+        tempData += value.fecha_asignacion+","+value.fecha_limite_atencion+","+value.fecha_alarma+")' type='date'/></td>";
+
+        tempData += "<td contenteditable='true' onBlur='saveToDatabase(this,\"asunto\","+value.id_documento_entrada+")' onClick='showEdit(this);'>"+value.asunto+"</td>";
+        tempData += "<td contenteditable='true' onBlur='saveToDatabase(this,\"remitente\","+value.id_documento_entrada+")' onClick='showEdit(this);'>"+value.remitente+"</td>";
+
+        tempData += "<td><select id='id_autoridad' class='select' onchange='saveComboToDatabase(this,\"id_autoridad\","+value.id_documento_entrada+")'>";
+        $.each(thisAutoridad,function(index,val)
+        {
+                if(val.id_autoridad==value.id_autoridad)
+                        tempData += "<option value='"+val.id_autoridad+"' selected >"+val.clave_autoridad+"</option>";
+                else
+                        tempData += "<option value='"+val.id_autoridad+"' >"+val.clave_autoridad+"</option>";
+        });
+        tempData += "</select></td>";
+        
+        tempData += "<td style='background-color: #ccccff'>";
+        tempData += "<select id='id_clausula' class='select' onchange='saveComboToDatabase(this,\"id_clausula\","+value.id_documento_entrada+")'>";
+        $.each(thisTemas,function(index,val)
+        {
+                if(val.id_tema == value.id_tema)
+                        tempData += "<option value='"+val.id_tema+"'  selected >"+val.no+"</option>";
+                else
+                        tempData += "<option value='"+val.id_tema+"' >"+val.no+"</option>";
+        });
+        tempData += "</select></td>";
+                                
+        tempData += "<td style='background-color: #ccccff' contenteditable='false' onBlur='saveToDatabase(this,\"nombre\","+value.id_documento_entrada+")'";
+        tempData += " onClick='showEdit(this);'>"+value.nombre+"</td>";
+        
+        tempData += "<td style='background-color: #ccccff' contenteditable='false' onBlur='saveToDatabase(this,\"nombre_empleado\","+value.id_documento_entrada+")'";
+        tempData += " onClick='showEdit(this);'>"+value.nombre_empleado+"</td>";
+                                
+        tempData += "<td contenteditable='false' onBlur='saveToDatabase(this,\"clasificacion\","+value.id_documento_entrada+")'>";
+        if(value.clasificacion == 1)
+                tempData += "Con Limite de Tiempo";   
+        if (value.clasificacion == 2)
+                tempData += "Sin Limite de Tiempo";
+        if (value.clasificacion == 3)
+                tempData += "Informativo";
+        tempData += "</td>";
+                                                                
+        tempData += "<td><select id='id_status' class='select' onchange='saveComboToDatabase(this,\"status_doc\","+value.id_documento_entrada+")'>";
+        if(value.status_doc == 1)
+        {
+                tempData += "<option value='1' selected>En proceso</option>";
+                tempData += "<option value='2'>Suspendido</option>";
+                tempData += "<option value='3'>Terminado</option>";
+        }
+        if(value.status_doc == 2)
+        {
+                tempData += "<option value='2' selected>Suspendido</option>";
+                tempData += "<option value='1'>En proceso</option>";
+                tempData += "<option value='3'>Terminado</option>";
+        }
+        if(value.status_doc == 3)
+        {
+                tempData += "<option value='3' selected>Terminado</option>";
+                tempData += "<option value='1'>En proceso</option>";
+                tempData += "<option value='2'>Suspendido</option>";
+        }
+        tempData += "</select></td>";
+
+        tempData += "<td><input style='' value='"+value.fecha_asignacion+"' onBlur='saveToDatabaseDates(this,\"fecha_asignacion\","+value.id_documento_entrada;
+        tempData += ",\""+value.fecha_asignacion+"\",\""+value.fecha_limite_atencion+"\",\""+value.fecha_alarma+"\")' type='date'/></td>";
+
+        tempData += "<td><input style='' value='"+value.fecha_limite_atencion+"' onBlur='saveToDatabaseDates(this,\"fecha_limite_atencion\","+value.id_documento_entrada;
+        tempData += ",\""+value.fecha_asignacion+"\",\""+value.fecha_limite_atencion+"\",\""+value.fecha_alarma+"\")' type='date'/></td>";
+
+        tempData += "<td><input style='' value='"+value.fecha_alarma+"' onBlur='saveToDatabaseDates(this,\"fecha_alarma\","+value.id_documento_entrada;
+        tempData += ",\""+value.fecha_asignacion+"\",\""+value.fecha_limite_atencion+"\",\""+value.fecha_alarma+"\")' type='date'/></td>";
+
+        tempData += "<td><button onClick='mostrar_urls("+value.id_documento_entrada+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
+        tempData += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i>Mostrar</button></td>";
+                                
+        tempData += "<td contenteditable='true' onBlur='saveToDatabase(this,\"observaciones\","+value.id_documento_entrada+")' onClick='showEdit(this);'>"+value.observaciones+"</td>";
+        return tempData;
+}
 
 // jaja();
 // function jaja()
@@ -1271,39 +1307,6 @@ function saveComboToDatabase(Obj,column,id_documento_entrada)
         });
 
 }
-
-function eliminarDocumentoEntrada(args)
-{
-//    console.log(args);
-    id_afectado= args['item']['id_principal'][0];
-
-    $.ajax({
-        url:"../Controller/DocumentosEntradaController.php?Op=Eliminar",
-        type:"POST",
-        data:"ID_DOCUMENTO_ENTRADA="+JSON.stringify(id_afectado),
-        success:function(data)
-        {
-//            alert("Entro al success "+data);
-            if(data==false)
-            {
-                swal("","El Documento esta cargado en una Documento de Salida","error");
-                setTimeout(function(){swal.close();},1500);
-            }else{
-                if(data==true)
-                {
-                    swal("","Se elimino correctamente el Documento de Entrada","success");
-                    setTimeout(function(){swal.close();},1500);
-                }
-            }
-        },
-        error:function()        
-        {
-            swal("","Error en el servidor","error");
-            setTimeout(function(){swal.close();},1500);
-        }
-    });
-    
-}
         
         
 function refresh()
@@ -1413,7 +1416,6 @@ function saveToDatabaseDatosFormulario(datos)
                                                         $('.start').click();
                                                         swalSuccess("Creado con exito");
                                                         $('#create-item .close').click();
-                                                        refresh();
                                                 }
                                         },
                                         error:function()
@@ -1580,7 +1582,6 @@ function Habilitar_DesabilitarFechas(accion)
         $("#FECHA_ALARMA").prop("disabled",accion);
         $("#MENSAJE_ALERTA").prop("disabled",accion);
 }
-
 listarDatos(-1);
 
 </script>

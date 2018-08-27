@@ -161,15 +161,16 @@ class DocumentoEntradaModel{
     
     
     
-    public function eliminar(){
-        try{
-            $dao= new ClausulaDAO();
-            $pojo= new ClausulaPojo();
-            $dao->eliminarClausula($pojo->getIdClausula());
-        } catch (Exception $ex) {
-            throw $ex;
-        }
-    }
+//    public function eliminar(){
+//        try{
+//            $dao= new ClausulaDAO();
+//            $pojo= new ClausulaPojo();
+//            $dao->eliminarClausula($pojo->getIdClausula());
+//        } catch (Exception $ex) {
+//            throw $ex;
+//        }
+//    }
+    
     public function getIdCumplimiento($ID_DOCUMENTO_ENTRADA)
     {
         try
@@ -181,6 +182,31 @@ class DocumentoEntradaModel{
             throw $ex;
         }
     }
+    
+    
+    public function eliminarDocumentoEntrada($ID_DOCUMENTO_ENTRADA){
+        try{
+            $dao= new DocumentoEntradaDAO();
+            $documentoSalida= $dao->verificarExistenciadeDocumentoEntradaEnDocumentoSalida($ID_DOCUMENTO_ENTRADA);
+//            $validacion= $dao->verificarSiDocumentoEstaValidado($ID_DOCUMENTO);
+            $exito=false;
+            if($documentoSalida==0)
+            {
+//                if($validacion==0)
+//                {
+                    $exito= $dao->eliminarDocumentoEntrada($ID_DOCUMENTO_ENTRADA);                     
+//                }
+            } 
+            
+            return $exito;            
+        } catch (Exception $ex) {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    
+    
 }
 
 ?>
