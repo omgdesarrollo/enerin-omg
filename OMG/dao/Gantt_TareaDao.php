@@ -1,12 +1,8 @@
 <?php
 require_once '../ds/AccesoDB.php';
 class Gantt_TareaDao {
-<<<<<<< HEAD
-
-=======
     
     
->>>>>>> 12cff3a560509458c2cdeb65c07d94459327ff87
     public function listarRegistrosGanttTareas($VALUE) 
     {
         try

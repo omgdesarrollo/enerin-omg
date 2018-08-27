@@ -2,13 +2,11 @@
 
 session_start();
 require_once '../Model/EmpleadoModel.php';
-require_once '../Pojo/EmpleadoPojo.php';
 require_once '../Model/Gantt_TareasModel.php';
 require_once '../util/Session.php';
 
 $Op=$_REQUEST["Op"];
 $model=new EmpleadoModel();
-// $pojo= new EmpleadoPojo();
 
 $modelGantt=new Gantt_TareasModel();
 // $pojo=new GanttPojo();
@@ -16,7 +14,8 @@ $modelGantt=new Gantt_TareasModel();
 switch ($Op) {
     
         case 'Listar':
-            $Lista= $modelGantt->listarRegistrosGanttTareas($_REQUEST['ID_TAREA']);
+            
+            $Lista= $modelGantt->listarRegistrosGanttTareas(Session::getSesion("id_tarea"));
             header('Content-type: application/json; charset=utf-8');
             echo json_encode($Lista);
             break;
@@ -31,19 +30,7 @@ switch ($Op) {
 //    	$tarjet="../view/principalmodulos.php";
     	header('Content-type: application/json; charset=utf-8');
 	echo json_encode($Lista);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	
-=======
-<<<<<<< HEAD
-                
-=======
-         
->>>>>>> 8e7861e854bb2d565cd0b17f525b756c5ab1aa7b
->>>>>>> 153197d5dbf055b860500c9f76996b9f953119b0
-=======
-                
->>>>>>> 12cff3a560509458c2cdeb65c07d94459327ff87
+
 		break;
 //         case'obtenerFolioEntradaSeguimiento':
             
