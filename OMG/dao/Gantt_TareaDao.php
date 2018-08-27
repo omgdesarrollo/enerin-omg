@@ -140,7 +140,7 @@ class Gantt_TareaDao {
         {
             $query="SELECT SUM(tbgantt_tareas.progress)/COUNT(tbgantt_tareas.progress) AS total_avance
                     FROM gantt_tareas tbgantt_tareas
-                    WHERE tbgantt_tareas.id_tarea= ".$VALUES['id']."";
+                    WHERE tbgantt_tareas.id_tarea= ".$VALUES['id_tarea']."";
             
             $db=  AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
