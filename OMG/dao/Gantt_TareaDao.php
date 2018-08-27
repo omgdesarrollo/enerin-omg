@@ -114,6 +114,7 @@ class Gantt_TareaDao {
             return -1;
         }
     }
+    
     public function verificarParentHijoEnTarea($VALUES)
     {
         try
@@ -132,6 +133,26 @@ class Gantt_TareaDao {
             return -1;
         }
     }
+    
+    public function AvanceProgramaTareas($VALUES)
+    {
+        try
+        {
+            $query="SELECT SUM(tbgantt_tareas.progress)/COUNT(tbgantt_tareas.progress) AS total_avance
+                    FROM gantt_tareas tbgantt_tareas
+                    WHERE tbgantt_tareas.id_tarea= ".$VALUES['id']."";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista = $db->executeQuery($query);
+            
+            return $lista[0]["total_avance"];
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+            
     
 }
 
