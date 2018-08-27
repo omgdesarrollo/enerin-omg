@@ -127,6 +127,22 @@ class Gantt_TareasModel{
             return -1;
         }
     }
+    
+    
+    public static function verificarSiExisteIDTareaEnGanttTareas()
+    {
+        try
+        {
+            $dao=new Gantt_TareaDao();
+            $rec= $dao->verificarSiExisteIDTareaEnGanttTareas($VALUES);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 
 //    public function obtenerTareasCompletasPorFolioEntrada($folio_entrada){
 //        try{

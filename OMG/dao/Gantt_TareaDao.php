@@ -152,7 +152,25 @@ class Gantt_TareaDao {
             return -1;
         }
     }
+     
+    public function verificarSiExisteIDTareaEnGanttTareas($VALUES)
+    {
+        try
+        {
+            $query="SELECT IF(COUNT(*)=0,'false','true') AS existe_tarea
+                    FROM gantt_tareas tbgantt_tareas
+                    WHERE tbgantt_tareas.id_tarea= ".$VALUES['id']."";
             
+            $db=  AccesoDB::getInstancia();
+            $lista = $db->executeQuery($query);
+            
+            return $lista[0]["existe_tarea"];
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
     
 }
 
