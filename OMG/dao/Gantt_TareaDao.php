@@ -20,20 +20,42 @@ class Gantt_TareaDao {
     }
 
 
+    public function insertarGanttTareas($VALUES)
+    {
+        try
+        {
+            $query="INSERT INTO gantt_tareas (text,start_date,duration,progress,parent,user,id_tarea)
+                    VALUES('".$VALUES["text"]."','".$VALUES["start_date"]."','".$VALUES["duration"]."','".$VALUES["progress"]."',
+                    '".$VALUES["parent"]."','".$VALUES["user"]."','".$VALUES["id_tarea"]."')";
+            
+            $db=  AccesoDB::getInstancia();
+            $exito = $db->executeQueryUpdate($query);
+            
+            return $exito;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+        
+    }
 
 
 
-    
-   
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function obtenerTareasCompletasPorFolioEntrada($folio_entrada){
         try
@@ -53,19 +75,19 @@ class Gantt_TareaDao {
               return false;
         } 
     }
-    public function insertarTareasGantt($value){
-        try{
-           $query="INSERT INTO gantt_tasks(gantt_tasks.id,gantt_tasks.text,gantt_tasks.start_date,duration,progress,parent) "
-                    . "VALUES('".$value["id"]."','".$value["text"]."','".$value["start_date"]."','".$value["duration"]."','".$value["progress"]."','".$value["parent"]."');";
-            echo "d  ".$query;
-            $db= AccesoDB::getInstancia();
-            $exito=$db->executeQueryUpdate($query);
-            
-            
-        } catch (Exception $ex) {
-            throw $ex;
-        }
-    }
+//    public function insertarTareasGantt($value){
+//        try{
+//           $query="INSERT INTO gantt_tasks(gantt_tasks.id,gantt_tasks.text,gantt_tasks.start_date,duration,progress,parent) "
+//                    . "VALUES('".$value["id"]."','".$value["text"]."','".$value["start_date"]."','".$value["duration"]."','".$value["progress"]."','".$value["parent"]."');";
+//            echo "d  ".$query;
+//            $db= AccesoDB::getInstancia();
+//            $exito=$db->executeQueryUpdate($query);
+//            
+//            
+//        } catch (Exception $ex) {
+//            throw $ex;
+//        }
+//    }
     public function insertarTareasConFolioEntrada_de_seguimiento_entrada($value){
         try{
             $query="INSERT INTO gantt_seguimiento_entrada(gantt_seguimiento_entrada.ID_GANTT,gantt_seguimiento_entrada.id_seguimiento_entrada,gantt_seguimiento_entrada.id_empleado) "

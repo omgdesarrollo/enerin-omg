@@ -21,7 +21,20 @@ switch ($Op) {
             echo json_encode($Lista);
             break;
     
-    
+        case 'Guardar':
+            $VALUES["text"]= $_REQUEST['TEXT'];
+            $VALUES["start_date"]= $_REQUEST['START_DATE'];
+            $VALUES["duration"]= $_REQUEST['DURATION'];
+            $VALUES["progress"]= $_REQUEST['PROGRESS'];
+            $VALUES["parent"]= $_REQUEST['PARENT'];
+            $VALUES["user"]= $_REQUEST['USER'];
+            $VALUES["id_tarea"]= $_REQUEST['ID_TAREA'];
+            
+            $Lista= $modelGantt->listarRegistrosGanttTareas($VALUES);
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($Lista);
+            
+        break;
     
        
 	case 'ListarEmpleados'://este caso no borrarlo es para traer los difrentes empleados
@@ -52,8 +65,6 @@ switch ($Op) {
 		# code...
 		break;	
 
-	case 'Guardar':
-		break;
         case 'EliminarTarea':
              if(isset($_REQUEST["deleteidtarea"])){
 //                echo "entro ";
