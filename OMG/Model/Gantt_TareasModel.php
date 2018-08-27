@@ -38,7 +38,7 @@ class Gantt_TareasModel{
     
     
     
-    public function actualizarGanttTareas($COLUMNAS,$ID)
+    public static function actualizarGanttTareas($COLUMNAS,$ID)
     {
         try
         {
@@ -111,7 +111,8 @@ class Gantt_TareasModel{
                                 if($value2["cantidad"]==0){
                                     if($value["parent"]!=""){
                                          $value["progress"]=0;
-                                         $value["user"]=$value["user"];
+//                                          $value["user"];
+                                         echo "entro en insertas;";
                                          $value["id_tarea"]=$id_tarea;
                                          $dao->insertarGanttTareas($value);
                                     }
@@ -120,12 +121,18 @@ class Gantt_TareasModel{
                                     
                                      if($value["!nativeeditor_status"]=='deleted'){
                                          echo "entro a eliminar la tarea";
-//                                         $dao->deleteTareas($value);
+                                         $dao->eliminarGanttTareas($value["id"]);
 //                                         $dao->deleteTareasDe_Gantt_Seguimiento_Entrada($value);
                                             
                                     }else{
                                         echo "entro en actualizar";
 //                                         $dao->updateTareas($value); 
+                                        
+                                        
+                                        
+                                         self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"]), $value["id"]);
+                                         
+//                                         $model->actualizarGanttTareas
 //                                         $dao->updateTareasId_EmpleadoXIdGantt_En_Tabla_Seguimiento_entrada($value);
                                     }
                                 }

@@ -4,10 +4,10 @@ require_once '../util/Session.php';
 if(isset($_REQUEST["id_tarea"])){
     Session::setSesion("dataGantt_id_tarea",$_REQUEST["id_tarea"]);
     //    echo "el seguimiento de entrada linkeado al de doc de entrada y al folio de entrada   ".$dataGantt=Session::getSesion("dataGantt");;
-    echo "<h2><center>El folio de entrada es = ".Session::getSesion("dataGantt_id_tarea")."</center><h2>";
+    echo "<h2><center></center><h2>";
 }else{
     $dataGantt=Session::getSesion("dataGantt_id_tarea");
-    echo "<h2><center>El folio de entrada es = ".$dataGantt."</center><h2>";
+    echo "<h2><center></center><h2>";
 }
 //Session::setSesion("dataGantt",$_REQUEST["id_documento_entrada"]);
 //  Session::setSesion("dataGantt",":(");
