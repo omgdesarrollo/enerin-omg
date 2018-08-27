@@ -2,7 +2,7 @@
 session_start();
 require_once '../util/Session.php';
 if(isset($_REQUEST["id_tarea"]) ){
-//     Session::setSesion("dataGantt",$_REQUEST["id_documento_entrada"]);
+    //Session::setSesion("dataGantt",$_REQUEST["id_documento_entrada"]);
     Session::setSesion("dataGantt_id_tarea",$_REQUEST["id_tarea"]);
     //    echo "el seguimiento de entrada linkeado al de doc de entrada y al folio de entrada   ".$dataGantt=Session::getSesion("dataGantt");;
     echo "<h2><center>El  = ".Session::getSesion("dataGantt_id_tarea")."</center><h2>";
@@ -420,12 +420,9 @@ gantt.config.sort = true;
 
 gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
     gantt.init("gantt_here");
-    gantt.load("../Controller/Gantt_TareasController.php?Op=MostrarTarerasTodas");
-    
-var dp = new gantt.dataProcessor("../Controller/Gantt_TareasController.php?Op=Modificar");
-
+    gantt.load("../Controller/GanttTareasController.php?Op=Listar");   
+var dp = new gantt.dataProcessor("../Controller/GanttTareasController.php?Op=Modificar");
 dp.init(gantt);
-
 //dp.setTransactionMode("REST");
 
     console.log(dp);
@@ -566,7 +563,7 @@ dp.init(gantt);
     function obtenerEmpleados(){
         
         $.ajax({
-           url:"../Controller/Gantt_TareasController.php?Op=ListarEmpleados",
+           url:"../Controller/GanttTareasController.php?Op=ListarEmpleados",
            data:"",
            async:false,
            success:function (res){

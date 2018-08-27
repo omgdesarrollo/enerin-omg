@@ -2,13 +2,11 @@
 
 session_start();
 require_once '../Model/EmpleadoModel.php';
-require_once '../Pojo/EmpleadoPojo.php';
 require_once '../Model/Gantt_TareasModel.php';
 require_once '../util/Session.php';
 
 $Op=$_REQUEST["Op"];
-// $model=new EmpleadoModel();
-// $pojo= new EmpleadoPojo();
+$model=new EmpleadoModel();
 
 $modelGantt=new Gantt_TareasModel();
 // $pojo=new GanttPojo();
@@ -16,7 +14,8 @@ $modelGantt=new Gantt_TareasModel();
 switch ($Op) {
     
         case 'Listar':
-            $Lista= $modelGantt->listarRegistrosGanttTareas($_REQUEST['ID_TAREA']);
+            
+            $Lista= $modelGantt->listarRegistrosGanttTareas(Session::getSesion("dataGantt_id_tarea"));
             header('Content-type: application/json; charset=utf-8');
             echo json_encode($Lista);
             break;
@@ -40,14 +39,12 @@ switch ($Op) {
 	case 'ListarEmpleados'://este caso no borrarlo es para traer los difrentes empleados
 
 	$Lista=$model->listarEmpleados("");
-    	Session::setSesion("listarEmpleados",$Lista);
+//     	Session::setSesion("listarEmpleados",$Lista);
 //    	$tarjet="../view/principalmodulos.php";
     	header('Content-type: application/json; charset=utf-8');
 	echo json_encode($Lista);
-                
+
 		break;
-            
-            
 //         case'obtenerFolioEntradaSeguimiento':
             
 //             $Lista=$modelGantt->obtenerFolioEntradaSeguimiento($_REQUEST['ID_SEGUIMIENTO']);

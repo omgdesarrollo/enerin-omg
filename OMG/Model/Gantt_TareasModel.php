@@ -2,7 +2,7 @@
 
 require_once '../dao/Gantt_TareaDao.php';
 // require_once '../Pojo/GanttPojo.php';
-class Gantt_TareasModel {
+class Gantt_TareasModel{
     //put your code here
     
     public function listarRegistrosGanttTareas($VALUE)
