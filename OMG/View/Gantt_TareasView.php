@@ -2,7 +2,7 @@
 session_start();
 require_once '../util/Session.php';
 if(isset($_REQUEST["id_tarea"]) ){
-//     Session::setSesion("dataGantt",$_REQUEST["id_documento_entrada"]);
+    //Session::setSesion("dataGantt",$_REQUEST["id_documento_entrada"]);
     Session::setSesion("dataGantt_id_tarea",$_REQUEST["id_tarea"]);
     //    echo "el seguimiento de entrada linkeado al de doc de entrada y al folio de entrada   ".$dataGantt=Session::getSesion("dataGantt");;
     echo "<h2><center>El  = ".Session::getSesion("dataGantt_id_tarea")."</center><h2>";
