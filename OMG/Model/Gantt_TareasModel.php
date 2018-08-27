@@ -65,8 +65,8 @@ class Gantt_TareasModel{
                                 if($value2["cantidad"]==0){
                                     if($value["parent"]!=""){
                                          $value["progress"]=0;
-                                         $value["id_empleado"]=$value["user"];
-                                         $value["id_seguimiento_entrada"]=$id_seguimiento_que_lleva_al_folio_de_entrada;
+                                         $value["user"]=$value["user"];
+                                         $value["id"]=$id_tarea;
                                          $dao->insertarGanttTareas($value);
                                     }
                                 }
@@ -75,11 +75,11 @@ class Gantt_TareasModel{
                                      if($value["!nativeeditor_status"]=='deleted'){
                                          echo "entro a eliminar la tarea";
                                          $dao->deleteTareas($value);
-                                         $dao->deleteTareasDe_Gantt_Seguimiento_Entrada($value);
+//                                         $dao->deleteTareasDe_Gantt_Seguimiento_Entrada($value);
                                             
                                     }else{
                                          $dao->updateTareas($value); 
-                                         $dao->updateTareasId_EmpleadoXIdGantt_En_Tabla_Seguimiento_entrada($value);
+//                                         $dao->updateTareasId_EmpleadoXIdGantt_En_Tabla_Seguimiento_entrada($value);
                                     }
                                 }
                         }
@@ -88,7 +88,7 @@ class Gantt_TareasModel{
             }
          
          
-          $modelGantt->calculoAvanceProgramaGeneral($id_seguimiento_que_lleva_al_folio_de_entrada);
+//          $modelGantt->calculoAvanceProgramaGeneral($id_seguimiento_que_lleva_al_folio_de_entrada);
             
         } catch (Exception $ex) {
             throw $ex;
