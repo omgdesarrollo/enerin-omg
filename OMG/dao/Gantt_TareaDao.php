@@ -43,19 +43,57 @@ class Gantt_TareaDao {
         }
         
     }
+    
+    
+    public function actualizarGanttTareas($QUERY)
+    {
+        try
+        {
+            $db=  AccesoDB::getInstancia();
+            $update = $db->executeUpdateRowsAfected($QUERY);       
+
+            return $update;            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 
 
 
+    public function eliminarGanttTareas($VALUES)
+    {
+        try
+        {
+            $query="DELETE FROM gantt_tareas WHERE gantt_tareas.id_gantt_tareas=$VALUES";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista = $db->executeQueryUpdate($query);
+            
+            return $lista;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 
-
-
-
-
-
-
-
-
-
+    
+    public function verificarTareaExiste($value)
+    {
+        try
+        {
+            $query="SELECT COUNT(*) as cantidad 
+                    FROM gantt_tareas tbgantt_tareas  
+                    WHERE tbgantt_tareas.id= '".$value["id"]."'";
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 
 
 
@@ -115,18 +153,18 @@ class Gantt_TareaDao {
             throw $ex;
         }
     }
-    public function verificarTareaExiste($value){
-        try{
-            $query="select count(*) as cantidad from gantt_tasks tble_gantt_task  where tble_gantt_task.id='".$value["id"]."'";
-            $db= AccesoDB::getInstancia();
-            $list=$db->executeQuery($query);
-//            echo ($list[0]["cantidad"]);
-//            echo json_encode($list[0]["cantidad"]);
-            return $list;
-        } catch (Exception $ex) {
-            throw $ex;
-        }
-    }
+//    public function verificarTareaExiste($value){
+//        try{
+//            $query="select count(*) as cantidad from gantt_tasks tble_gantt_task  where tble_gantt_task.id='".$value["id"]."'";
+//            $db= AccesoDB::getInstancia();
+//            $list=$db->executeQuery($query);
+////            echo ($list[0]["cantidad"]);
+////            echo json_encode($list[0]["cantidad"]);
+//            return $list;
+//        } catch (Exception $ex) {
+//            throw $ex;
+//        }
+//    }
     
     public function updateTareas($value){
         try{

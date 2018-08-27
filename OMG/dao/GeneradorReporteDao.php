@@ -184,7 +184,7 @@ class GeneradorReporteDao {
     {
         try
         {
-           $db=  AccesoDB::getInstancia();
+            $db=  AccesoDB::getInstancia();
             $update = $db->executeUpdateRowsAfected($QUERY);       
 
             return $update;

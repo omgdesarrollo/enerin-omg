@@ -33,9 +33,18 @@ switch ($Op) {
             $Lista= $modelGantt->listarRegistrosGanttTareas($VALUES);
             header('Content-type: application/json; charset=utf-8');
             echo json_encode($Lista);
-            
         break;
     
+        case 'Eliminar':
+            $Lista= $modelGantt->eliminarGanttTareas($_REQUEST['ID_GANTT_TAREAS']);
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($Lista);
+            break;
+        
+        
+        case 'Actualizar':
+            break;
+        
        
 	case 'ListarEmpleados'://este caso no borrarlo es para traer los difrentes empleados
 
