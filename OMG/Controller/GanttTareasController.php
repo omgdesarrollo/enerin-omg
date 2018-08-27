@@ -13,26 +13,29 @@ $modelGantt=new Gantt_TareasModel();
 
 switch ($Op) {
     
-        case 'Listar':
+        case 'ListarTodasLasTareasPorId':
             
             $Lista= $modelGantt->listarRegistrosGanttTareas(Session::getSesion("dataGantt_id_tarea"));
-            header('Content-type: application/json; charset=utf-8');
-            echo json_encode($Lista);
+            
+            
+               header('Content-type: application/json; charset=utf-8');
+            echo json_encode(array("data"=>$Lista));
             break;
     
         case 'Guardar':
-            $VALUES["id_gantt_tareas"]= $_REQUEST['TEXT'];
-            $VALUES["text"]= $_REQUEST['TEXT'];
-            $VALUES["start_date"]= $_REQUEST['START_DATE'];
-            $VALUES["duration"]= $_REQUEST['DURATION'];
-            $VALUES["progress"]= $_REQUEST['PROGRESS'];
-            $VALUES["parent"]= $_REQUEST['PARENT'];
-            $VALUES["user"]= $_REQUEST['USER'];
-            $VALUES["id_tarea"]= $_REQUEST['ID_TAREA'];
+//            $VALUES["id"]= Session::getSesion("dataGantt_id_tarea");
+//            $VALUES["text"]= $_REQUEST['TEXT'];
+//            $VALUES["start_date"]= $_REQUEST['START_DATE'];
+//            $VALUES["duration"]= $_REQUEST['DURATION'];
+//            $VALUES["progress"]= $_REQUEST['PROGRESS'];
+//            $VALUES["parent"]= $_REQUEST['PARENT'];
+//            $VALUES["user"]= $_REQUEST['USER'];
+//            $VALUES["id_tarea"]= $_REQUEST['ID_TAREA'];
+//            
+//            $Lista= $modelGantt->listarRegistrosGanttTareas($VALUES);
+//            header('Content-type: application/json; charset=utf-8');
+//            echo json_encode($Lista);
             
-            $Lista= $modelGantt->listarRegistrosGanttTareas($VALUES);
-            header('Content-type: application/json; charset=utf-8');
-            echo json_encode($Lista);
         break;
     
         case 'Eliminar':
