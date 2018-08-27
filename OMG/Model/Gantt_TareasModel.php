@@ -65,22 +65,18 @@ class Gantt_TareasModel{
             return -1;
         }
     }
-    
-    
     public static function actualizarExisteProgramaTareas($VALUES)
     {
         try
         {            
             $dao=new Gantt_TareaDao();
-            $rec= $dao->actualizarExisteProgramaTareas($VALUES);
-            
+            $rec= $dao->actualizarExisteProgramaTareas($VALUES);        
             return $rec;
         } catch (Exception $ex)
         {
             throw $xe; 
             return -1;
         }
-
     }
 
     
@@ -147,7 +143,9 @@ class Gantt_TareasModel{
 //                                          $value["user"];
                                          echo "entro en insertas;";
                                          $value["id_tarea"]=$id_tarea;
+                                         $value["existeprograma"]=1;
                                          $dao->insertarGanttTareas($value);
+                                         self:: actualizarExisteProgramaTareas($value);
                                     }
                                 }
                                 else{
