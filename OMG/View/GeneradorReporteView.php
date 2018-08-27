@@ -454,7 +454,7 @@ function obtenerDatosReporte(){
     
 	var $btnDLtoExcel = $('#toExcel'); 
                 $btnDLtoExcel.on('click', function () {
-                    alert("le ");
+//                     alert("le ");
 //                     if(bandera==true){
                         $("#listjson").excelexportHibrido({
                                     containerid: "listjson"
