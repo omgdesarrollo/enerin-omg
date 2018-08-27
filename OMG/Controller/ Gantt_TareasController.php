@@ -15,7 +15,7 @@ $modelGantt=new Gantt_TareasModel();
 
 switch ($Op) {
        
-	case 'ListarEmpleados':
+	case 'ListarEmpleados'://este caso no borrarlo es para traer los difrentes empleados
 
 	$Lista=$model->listarEmpleados("");
     	Session::setSesion("listarEmpleados",$Lista);
