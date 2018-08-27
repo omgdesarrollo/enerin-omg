@@ -136,6 +136,15 @@ switch ($Op) {
                 echo ":(";
             }
         break;
+        case "descendencia":
+            $v["id"]=$_REQUEST["deleteidtarea"];
+            header('Content-type: application/json; charset=utf-8');
+            echo $modelGantt->verificarParentHijoEnTarea($v);
+//            echo "\'true\'";
+        break;
+        
+        
+        
 
 	case 'Eliminar':
 		# code...
