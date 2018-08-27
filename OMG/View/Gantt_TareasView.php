@@ -421,8 +421,8 @@ gantt.config.sort = true;
 gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
     gantt.init("gantt_here");
     gantt.load("../Controller/GanttTareasController.php?Op=Listar");   
-var dp = new gantt.dataProcessor("../Controller/GanttTareasController.php?Op=Modificar");
-dp.init(gantt);
+// var dp = new gantt.dataProcessor("../Controller/GanttTareasController.php?Op=Modificar");
+// dp.init(gantt);
 //dp.setTransactionMode("REST");
 
     console.log(dp);

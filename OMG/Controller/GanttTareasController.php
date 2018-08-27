@@ -17,7 +17,7 @@ switch ($Op) {
             
             $Lista= $modelGantt->listarRegistrosGanttTareas(Session::getSesion("dataGantt_id_tarea"));
             header('Content-type: application/json; charset=utf-8');
-            echo json_encode($Lista);
+            echo json_encode(array("data"=>$Lista));
             break;
     
         case 'Guardar':
