@@ -128,6 +128,14 @@ switch ($Op) {
          
             
 	break;
+        
+        case 'EliminarTarea':
+             if(isset($_REQUEST["deleteidtarea"])){
+                $modelGantt->eliminarGanttTareas($_REQUEST["deleteidtarea"]);
+            }else{
+                echo ":(";
+            }
+        break;
 
 	case 'Eliminar':
 		# code...

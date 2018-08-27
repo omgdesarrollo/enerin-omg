@@ -66,7 +66,7 @@ class Gantt_TareaDao {
     {
         try
         {
-            $query="DELETE FROM gantt_tareas WHERE gantt_tareas.id_gantt_tareas=$VALUES";
+            $query="DELETE FROM gantt_tareas WHERE gantt_tareas.id=$VALUES";
             
             $db=  AccesoDB::getInstancia();
             $lista = $db->executeQueryUpdate($query);
@@ -78,7 +78,9 @@ class Gantt_TareaDao {
             return -1;
         }
     }
-
+ 
+    
+    
     
     public function verificarTareaExiste($VALUES)
     {
