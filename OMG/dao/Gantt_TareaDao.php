@@ -95,9 +95,6 @@ class Gantt_TareaDao {
             return -1;
         }
     }
- 
-    
-    
     
     public function verificarTareaExiste($VALUES)
     {
@@ -117,20 +114,18 @@ class Gantt_TareaDao {
             return -1;
         }
     }
-
-    
     public function verificarParentHijoEnTarea($VALUES)
     {
         try
         {
-            $query="SELECT COUNT(*) as cantidad 
+            $query="SELECT if(count(*)=0,'false','true') as t 
                     FROM gantt_tareas tbgantt_tareas  
                     WHERE tbgantt_tareas.parent='".$VALUES['id']."'";
             
             $db=  AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
             
-            return $lista;
+            return $lista[0]["t"];
         } catch (Exception$ex)
         {
             throw $ex;

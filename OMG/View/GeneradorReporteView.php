@@ -220,7 +220,7 @@ $(function()
     construirGridGenerador();
     construirGridGeneradorMolares();
 //     gridInstanceMolares.loadData(); 
-				 $("#dialogoEdicionMolares").dialog({autoOpen:false,modal:true});
+	$("#dialogoEdicionMolares").dialog({autoOpen:false,modal:true,width:350,height:'auto'});
 //construccion de la ventanita para edicion de molares
 //             $("#dialogoEdicionMolares").dialog({
 //                 autoOpen: false,

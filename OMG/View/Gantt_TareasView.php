@@ -73,7 +73,8 @@ and open the template in the editor.
    
     
      <link href="../../assets/gantt_5.1.2_com/samples/common/third-party/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    
+    <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
+   <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
     
     
   <style type="text/css">
@@ -184,9 +185,7 @@ and open the template in the editor.
     
     <div id="gantt_here" style='width:100%; height:100%;'></div>
     </body>
-  
-    
-    
+
   <script type="text/javascript">      
 	(function dynamicTaskType() {
 		var delTaskParent;
@@ -223,17 +222,42 @@ and open the template in the editor.
 //			alert("antes");
 //                       gantt.refreshData();
                         delTaskParent = gantt.getParent(id);
-                         
-//                        var taskId = gantt.getSelectedId();
-//                        gantt.deleteTask(delTaskParent);
-//                        gantt.deleteTask(delTaskParent);
-			return true;
+                      
+                       var desc=false;
+                        $.ajax({
+                                url:"../Controller/GanttTareasController.php?Op=descendencia&deleteidtarea="+id,
+                                async:false,
+                                success:function (res)
+                                {
+                                 
+                                    if(res==true){
+                                        growlError("Descendencia","Error Tiene Tareas En Descendencia");
+//                                        alert("tiene descendencia ");
+//                                         swalError("No se puede eliminar la actividad, tiene descendencia ");
+                                        
+                                         desc=false;
+                                    }else{
+                                        if(res==false){
+//                                                    alert("no tiene descendencia");
+//                                                    $.jGrowl("Eliminacion Exitosa", { header: '' });
+                                             desc=true;
+                                    }
+                                    }
+                                }
+           
+                              });
+                      
+                      
+                      
+                      
+                      
+			return desc;
 		});
 
 		gantt.attachEvent("onAfterTaskDelete", function onAfterTaskDelete(id, task) {
 //			alert("s");
 //alert("des");
-                    alert("tarea eliminada es "+id);
+//                    alert("tarea eliminada es "+id);
                              $.ajax({
                                 url:"../Controller/GanttTareasController.php?Op=EliminarTarea&deleteidtarea="+id,
                                 success:function (res){

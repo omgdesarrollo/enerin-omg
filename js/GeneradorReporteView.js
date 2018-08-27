@@ -289,7 +289,6 @@ var showDetallesDialogo = function(dialogType, molares) {
 //		$('#dialogoEdicionMolares').trigger("click");
 	    $("#dialogoEdicionMolares").dialog("open");
 
-	    
 //	});
 	
 //	$("#omg2c1").val("f");
