@@ -16,9 +16,8 @@ switch ($Op) {
         case 'ListarTodasLasTareasPorId':
             
             $Lista= $modelGantt->listarRegistrosGanttTareas(Session::getSesion("dataGantt_id_tarea"));
-            
-            
-               header('Content-type: application/json; charset=utf-8');
+            Gantt_TareasModel::verificarSiExisteIDTareaEnGanttTareas(Session::getSesion("dataGantt_id_tarea"));
+            header('Content-type: application/json; charset=utf-8');
             echo json_encode(array("data"=>$Lista));
             break;
     

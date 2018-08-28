@@ -133,8 +133,7 @@ class Gantt_TareasModel{
         try
         {
             $dao=new Gantt_TareaDao();
-            $rec= $dao->verificarSiExisteIDTareaEnGanttTareas($VALUES);
-            
+            $rec= $dao->verificarSiExisteIDTareaEnGanttTareas($VALUES);        
             return $rec;
         } catch (Exception $ex)
         {

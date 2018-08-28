@@ -159,7 +159,7 @@ class Gantt_TareaDao {
         {
             $query="SELECT IF(COUNT(*)=0,'false','true') AS existe_tarea
                     FROM gantt_tareas tbgantt_tareas
-                    WHERE tbgantt_tareas.id_tarea= ".$VALUES['id']."";
+                    WHERE tbgantt_tareas.id_tarea= ".$VALUES['id_tarea']."";
             
             $db=  AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
