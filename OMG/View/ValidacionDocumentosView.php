@@ -634,6 +634,7 @@ if(isset($_REQUEST["accion"]))
     }
     function enviarObservacion(idValidacionDocumento)
     {
+        alert();
         msj = $("#textarea_msj").val();
         $.ajax({
             url:'../Controller/ValidacionDocumentosController.php?Op=EnviarObservacion',
