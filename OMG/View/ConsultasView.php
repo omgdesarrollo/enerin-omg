@@ -134,7 +134,7 @@ $Usuario=  Session::getSesion("user");
 
             </div>
             <div class="form-group" method="post" style="text-align:center" id="BTNS_GRAFICAMODAL">
-                <button type="submit" id="BTN_ANTERIOR_GRAFICAMODAL" class="btn crud-submit btn-info" style="width:90%" >Anterior</button>
+                <button type="submit" id="BTN_ANTERIOR_GRAFICAMODAL" class="btn crud-submit btn-info" style="width:90%" >Recargar</button>
                 <!-- <button type="submit" id="BTN_LIMPIAR_NUEVOREGISTROMODAL" class="btn crud-submit btn-info" style="width:49%">Limpiar</button> -->
             </div>
         </div>
