@@ -49,8 +49,6 @@ switch ($Op) {
         
         case 'Actualizar':
             break;
-        
-       
 	case 'ListarEmpleados'://este caso no borrarlo es para traer los difrentes empleados
 
 	$Lista=$model->listarEmpleados("");
