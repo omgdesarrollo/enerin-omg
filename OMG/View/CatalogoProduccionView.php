@@ -223,6 +223,11 @@ $Usuario=  Session::getSesion("user");
     var gridInstance;
     var ws;
     var thisjGrowl;
+
+    var customsFieldsGridData=[
+        {field:"customControl",my_field:MyCControlField},
+        // {field:"porcentaje",my_field:porcentajesFields},
+    ];
     // var estructuraGrid=[];
     estructuraGrid = [
         { name:"id_principal", visible:false},
