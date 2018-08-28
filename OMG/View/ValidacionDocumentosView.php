@@ -832,11 +832,11 @@ if(isset($_REQUEST["accion"]))
                     ValoresRequisitos+="<li>"+value.requisito+"</li>";                                       
 
                    });
-               ValoresRequisitos += "</ul>";     
+    ValoresRequisitos += "</ul>";     
                    $('#RequisitosListado').html(ValoresRequisitos);
                 }
             });
-    }
+        }
     
     function mostrarRegistros(id_documento)//listo
     {
