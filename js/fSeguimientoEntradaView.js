@@ -69,7 +69,7 @@ function construirGrid()
         fields: 
         [
             { name: "id_principal",visible:false},
-            { name:"no",title:"No",width:20},
+            { name:"no",title:"No",width:40},
             { name: "folio_entrada",title:"Folio de Entrada", type: "text", validate: "required" },
             { name: "clave_autoridad",title:"Autoridad Remitente", type: "text", validate: "required" },
             { name: "asunto",title:"Asunto", type: "text", validate: "required" },
@@ -86,7 +86,7 @@ function construirGrid()
             },
             { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:120, editing:false },            
             { name: "registrar_programa",title:"Registrar programa", type: "text", validate: "required",width:150, editing:false },            
-            { name: "avance_programa",title:"Avance del Programa", type: "text", validate: "required" },           
+            { name: "avance_programa",title:"Avance del Programa", type: "text", validate: "required", editing:false },           
             { name:"delete", title:"Opción", type:"customControl",sorting:""}
         ],
         onItemUpdated: function(args)
@@ -252,8 +252,8 @@ function reconstruir(value,index)
     tempData["id_empleado"]=value.id_empleado;
     tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_documento_entrada+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
     tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
-    tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info' onClick='cargarprogram("+value.id_seguimiento_entrada+")'>Cargar Programa</button>";
-    tempData["avance_programa"]=value.avance_programa;
+    tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info' onClick=\'cargadePrograma("+value.id_documento_entrada,value.folio_entrada+")\'>Cargar Programa</button>";
+    tempData["avance_programa"]=parseInt(value.avance_programa*100)+"%";
     
 //    tempData["delete"]= [{"reg":value.reg,"validado":value.validado}];
     return tempData;
@@ -339,6 +339,15 @@ function mostrar_urls(id_documento_entrada)
                 }
         });
 }
+
+
+function cargadePrograma(id_documento_entrada,folio_entrada){
+//        alert("le has picado al folio de entrada  "+foliodeentrada);
+console.log(id_documento_entrada,folio_entrada);
+    window.location.href=" GanttView.php?id_documento_entrada="+id_documento_entrada+"&folio_entrada="+folio_entrada;
+//   window.location.replace("http://sitioweb.com");        
+}
+
 
 function refresh()
 {
