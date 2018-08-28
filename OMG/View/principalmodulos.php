@@ -58,27 +58,50 @@ $Usuario=  Session::getSesion("user");
 			/*width: 100%    ;*/
                         overflow:auto ;
 			height: 450px;
+                        height: 100%;
+                        /*background-color: #ffff33;*/
 			/*box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);*/
                         box-shadow: 0 1px 3px rgba(0,0,0,90.05), 0 1px 3px rgba(0,0,0,0.09);
 		}
-                
-                
                 div#sidebarObjV {
 			position: relative;
 			/*margin-left: 10px;*/
                         /*margin-top: 50px;*/
 			/*width: 900px    ;*/
                         /*overflow: auto;*/
-                        height: 450px;
+                        
+                        /*esta linea es la original ver si la reemplazo por la abajo de esta*/ 
+                        /*height: 450px;*/  
+                        height: 100%;
 /*			box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
                         box-shadow: 0 1px 3px rgba(0,0,0,90.05), 0 1px 3px rgba(0,0,0,0.09);*/
                         box-shadow: 0 1px 3px rgba(0,0,0,90.05), 0 1px 3px rgba(0,0,0,0.09);
 		}
-                
                 div#arbolprincipal{
 /*                  position: relative;*/
                     height:500px; 
                 }
+                .dhtmlxribbon_material .dhxrb_block_base{
+                        border: 1px solid #b5bebf;
+                        /*background-color: #0f76e057;*/
+                }
+                .dhtmlxribbon_material .dhxrb_g_area{
+                    overflow-y: auto;
+                } 
+                .dhtmlxribbon_material .dhxrb_big_button {
+                    padding: 1px;
+                }
+                
+/*                body{
+                    height: 100%;
+                    background-color: #6666ff;
+                }*/
+/*                .layoutObj{
+                    background-color: #cc66ff;
+                    height: 100%;
+                    position: re;
+                }*/
+                
 	</style>
 	<script>
                 
@@ -174,6 +197,7 @@ var gantt=[
         myLayout = new dhtmlXLayoutObject({parent: "layoutObj",pattern: "2U",cells: [{id: "a", text: "Navegacion", header:true},{id: "b", text: "Visualizacion",header:true}]});
 
         myLayout.cells("a").setWidth(310);
+         myLayout.cells("a").setHeight(710);
         myLayout.cells("a").attachObject("sidebarObj");
         myLayout.cells("b").attachObject("sidebarObjV");
         
@@ -295,6 +319,16 @@ ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: 
   
 //    var dhxWins = new dhtmlXWindows();
 //var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
+//var myRibbon = new dhtmlXRibbon("ribbonObj");
+ 
+// if you change parent's size
+//document.getElementById("ribbonObj").style.width = "100%";
+//document.getElementById("ribbonObj").style.height = "150px";
+ 
+// tabbar needs to be adjusted
+//myRibbon.setSizes();
+
+
 
     }
 
@@ -484,6 +518,12 @@ function loadDataNotificaciones(){
                        loadDataMenuArriba(seccionMenuDinamic);
                      }
             });
+            
+            
+            
+            
+            
+            
     }
     
     
@@ -563,9 +603,6 @@ function loadDataNotificaciones(){
  layoutWin.attachURL("login.php", null, true);
  
 }
-
-                
-
         </script>
         
 
@@ -582,7 +619,7 @@ function loadDataNotificaciones(){
 <div id="ribbonObj" style="position: relative;width: 100%;"></div>
    
     
-<div id="layoutObj" class="layoutObj"> 
+<div id="layoutObj" class="layoutObj" > 
     <div id="arbolprincipal"> </div>
     <!--<div id="combo_zone2" style="width:200px; height:30px;"></div>-->
 </div>
@@ -711,11 +748,13 @@ var jsonObj = {};
  function detallescontratosiahyseleccionado(){
       $.ajax({  
                         url: "../Controller/CumplimientosController.php?Op=contratoselec&obt=true",  
-                        async:true,
+                        async:false,
                         success: function(r) {
 
                                 window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
                                 window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
+
+    
     }    
            });
  }

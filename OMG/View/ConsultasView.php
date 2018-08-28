@@ -15,6 +15,8 @@ $Usuario=  Session::getSesion("user");
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
+        <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
+        <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
 		<!-- bootstrap & fontawesome -->
                 <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
                 <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
@@ -113,22 +115,28 @@ $Usuario=  Session::getSesion("user");
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="closeLetra">X</span>
                 </button>
-		        <h4 class="modal-title" id="myModalLabelNuevaEvidencia">Cumplimiento Requisitos</h4>
+		        <h4 class="modal-title" id="myModalLabelNuevaEvidencia">Grafico</h4>
             </div>
 
             <div class="modal-body">
                 
-                <!-- <div class="form-group">
-                    <label class="control-label">Región Fiscal: </label>
-                    <div id="INPUT_REGIONFISCAL_NUEVOREGISTRO" style="witdth:100%;"></div>
+                <!-- <div class="form-group"> -->
+                    <!-- <label class="control-label">Grafico: </label> -->
+                    <!-- <select id="OPCION_GRAFICAMODAL"> -->
+                        <!-- <option value="1"> Por requisito </option> -->
+                        <!-- <option value="2"> Por evidencia </option> -->
+                    <!-- </select> -->
+                    <!-- <div id="INPUT_REGIONFISCAL_NUEVOREGISTRO" style="witdth:100%;"></div> -->
+                <!-- </div> -->
+                <!-- <div> div para la seleccion de los temas a graficar
                 </div> -->
                 <div id="graficaPie" ></div>
 
             </div>
-            <!-- <div class="form-group" method="post" style="text-align:center"> -->
-                <!-- <button type="submit" id="BTN_CREAR_NUEVOREGISTROMODAL" class="btn crud-submit btn-info" style="width:49%" >Crear Registro</button>
-                <button type="submit" id="BTN_LIMPIAR_NUEVOREGISTROMODAL" class="btn crud-submit btn-info" style="width:49%">Limpiar</button> -->
-            <!-- </div> -->
+            <div class="form-group" method="post" style="text-align:center" id="BTNS_GRAFICAMODAL">
+                <button type="submit" id="BTN_ANTERIOR_GRAFICAMODAL" class="btn crud-submit btn-info" style="width:90%" >Recargar</button>
+                <!-- <button type="submit" id="BTN_LIMPIAR_NUEVOREGISTROMODAL" class="btn crud-submit btn-info" style="width:49%">Limpiar</button> -->
+            </div>
         </div>
     </div>
 </div>
@@ -141,9 +149,13 @@ $Usuario=  Session::getSesion("user");
     var gridInstance;
     var thisjGrowl;
     var ultimoNumeroGrid=0;
-
+    var opcion_vista_grafica = 1;
+    // var grafica1;
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChart);
+
+    var activeChart = -1;
+    var chartsCreados = [];
 
     var porcentajesFields = function(config)
     {

@@ -411,7 +411,7 @@ gantt.config.order_branch = true;
 gantt.config.order_branch_free = true;
 gantt.config.branch_loading = true;
 gantt.config.fit_tasks = true; 
-gantt.config.work_time = true;
+gantt.config.work_time = false;
 gantt.config.auto_scheduling = true;
 gantt.config.sort = true;
 

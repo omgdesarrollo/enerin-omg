@@ -1,8 +1,6 @@
 <?php
 require_once '../ds/AccesoDB.php';
 class Gantt_TareaDao {
-    
-    
     public function listarRegistrosGanttTareas($VALUE) 
     {
         try
@@ -11,10 +9,8 @@ class Gantt_TareaDao {
                     
                     FROM gantt_tareas tbgantt_tareas
                     WHERE tbgantt_tareas.id_tarea= $VALUE";
-            
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-            
             return $lista;
         } catch (Exception $ex)
         {
@@ -82,7 +78,7 @@ class Gantt_TareaDao {
     {
         try
         {
-            $query="UPDATE tareas SET avance_programa= ".$VALUES["avance"]."  WHERE id_tarea= ".$VALUES["id"]."";
+            $query="UPDATE tareas SET avance_programa= ".$VALUES["avance"]."  WHERE id_tarea= ".$VALUES["id_tarea"]."";
             
             $db=  AccesoDB::getInstancia();
             $update = $db->executeUpdateRowsAfected($query);
@@ -157,6 +153,7 @@ class Gantt_TareaDao {
             $query="SELECT SUM(tbgantt_tareas.progress)/COUNT(tbgantt_tareas.progress) AS total_avance
                     FROM gantt_tareas tbgantt_tareas
                     WHERE tbgantt_tareas.id_tarea= ".$VALUES['id_tarea']."";
+//            AND tbgantt_tareas.parent=0
             
             $db=  AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
@@ -175,7 +172,7 @@ class Gantt_TareaDao {
         {
             $query="SELECT IF(COUNT(*)=0,'false','true') AS existe_tarea
                     FROM gantt_tareas tbgantt_tareas
-                    WHERE tbgantt_tareas.id_tarea= ".$VALUES['id']."";
+                    WHERE tbgantt_tareas.id_tarea= '".$VALUES['id_tarea']."'";
             
             $db=  AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
