@@ -70,7 +70,8 @@ class Gantt_TareasModel{
         try
         {            
             $dao=new Gantt_TareaDao();
-            $rec= $dao->actualizarExisteProgramaTareas($VALUES);        
+            $rec= $dao->actualizarExisteProgramaTareas($VALUES);
+            
             return $rec;
         } catch (Exception $ex)
         {
@@ -78,9 +79,25 @@ class Gantt_TareasModel{
             return -1;
         }
     }
+    
+    
+    public static function actualizarAvanceProgramaTareas($VALUES)
+    {
+        try
+        {
+            $dao=new Gantt_TareaDao();
+            $rec= $dao->actualizarAvanceProgramaTareas($VALUES);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 
     
-    
+
     public function eliminarGanttTareas($VALUES)
     {
         try
