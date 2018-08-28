@@ -9,7 +9,7 @@ class TareasDAO{
         try
         {
             $query="SELECT tbtareas.id_tarea, tbtareas.contrato, tbtareas.tarea, tbtareas.fecha_creacion, tbtareas.fecha_alarma,
-                    tbtareas.fecha_cumplimiento, tbtareas.observaciones, tbtareas.existe_programa, tbtareas.avance_programa,		 
+                    tbtareas.fecha_cumplimiento, tbtareas.observaciones, tbtareas.existe_programa,tbtareas.avance_programa,		 
                     tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno
                     FROM tareas tbtareas
                     JOIN empleados tbempleados ON tbempleados.id_empleado=tbtareas.id_empleado";

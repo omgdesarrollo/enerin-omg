@@ -244,13 +244,7 @@ and open the template in the editor.
                                     }
                                     }
                                 }
-           
                               });
-                      
-                      
-                      
-                      
-                      
 			return desc;
 		});
 
@@ -434,7 +428,7 @@ gantt.config.order_branch = true;
 gantt.config.order_branch_free = true;
 gantt.config.branch_loading = true;
 gantt.config.fit_tasks = true; 
-gantt.config.work_time = true;
+gantt.config.work_time = false;
 gantt.config.auto_scheduling = true;
 gantt.config.sort = true;
 
@@ -442,12 +436,14 @@ gantt.config.sort = true;
 
 
 gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
+
+
+
     gantt.init("gantt_here");
     gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId");
 
 
 var dp = new gantt.dataProcessor("../Controller/GanttTareasController.php?Op=Modificar");
-
 dp.init(gantt);
 
 //dp.setTransactionMode("REST");
