@@ -1,4 +1,4 @@
-<?php
+    <?php
 session_start();
 require_once '../util/Session.php';
 $Usuario=  Session::getSesion("user");
