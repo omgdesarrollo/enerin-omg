@@ -607,7 +607,8 @@ function loadBlockUi()
 
 //area de gantt
 function cargarprogram(value){
-    alert("d  "+value);
+//    alert("d  "+value);
+    window.location.href="Gantt_TareasView.php?id_tarea="+value;
 }
 //finaliza area de gantt
 

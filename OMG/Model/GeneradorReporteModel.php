@@ -170,4 +170,20 @@ class GeneradorReporteModel {
         }
     }
     
+    
+    public function reportesFaltantesPorRangos($FECHA_INICIAL, $FECHA_FINAL, $CONTRATO)
+    {
+        try
+        {
+            $dao=new GeneradorReporteDao();
+            $rec= $dao->reportesFaltantesPorRangos($FECHA_INICIAL, $FECHA_FINAL, $CONTRATO);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
 }

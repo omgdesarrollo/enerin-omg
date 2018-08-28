@@ -79,7 +79,7 @@ require_once 'EncabezadoUsuarioView.php';
 
 
 <div style="height: 47px"></div>
-<div id="jsGrid"> </div>
+<!-- <div id="jsGrid"> </div> -->
 
 
 <!--<div class="contenedortable" style="position: fixed;">   
@@ -95,7 +95,7 @@ require_once 'EncabezadoUsuarioView.php';
              
 
              
-<!--<div class="table-fixed-header"  id="" class="animate-bottom"> 
+<div class="table-fixed-header"  id="" class="animate-bottom"> 
     <div class="table-container">
         
         <table class="tbl-qa" id="idTable">
@@ -122,24 +122,19 @@ require_once 'EncabezadoUsuarioView.php';
                   
                     
                   
-//		  foreach($faq as $k=>$v) {
-//                      $Lista = Session::getSesion("listarSeguimientoEntradas");
-//                      $cbxEmp= Session::getSesion("listarEmpleadosComboBox");
-//                      $cbxEmpleadoPlan= Session::getSesion("listarEmpleadosComboBox");
-//                      $cbxEmpleadoPlan1= Session::getSesion("listarEmpleadosComboBox");
-//                      $numeracion = 1;
+// 		  foreach($Lista as $k=>$v) {
+                     $Lista = Session::getSesion("listarSeguimientoEntradas");
+                     $cbxEmp= Session::getSesion("listarEmpleadosComboBox");
+                     $cbxEmpleadoPlan= Session::getSesion("listarEmpleadosComboBox");
+                     $cbxEmpleadoPlan1= Session::getSesion("listarEmpleadosComboBox");
+                     $numeracion = 1;
                       foreach ($Lista as $filas) { 
                         ?>
 			 
                         <tr class="table-row">
 
-                                <td><?php //echo $numeracion++;   ?></td 
-                                
-                                
-                                
-                                
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'folio_entrada','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["folio_entrada"]; ?></td>
-                                <td contenteditable="false" onBlur="saveToDatabase(this,'clave_entidad','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_entidad"]; ?></td>
+                                <td contenteditable="false" onBlur="saveToDatabase(this,'clave_autoridad','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["clave_autoridad"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'asunto','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["asunto"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'nombre_empleadotema','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["nombre_empleadotema"]." ".$filas["apellido_paternotema"]." ".$filas["apellido_maternotema"]; ?></td>
                                 <td contenteditable="false" onBlur="saveToDatabase(this,'fecha_asignacion','<?php echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php echo $filas["fecha_asignacion"]; ?></td>
@@ -166,55 +161,55 @@ require_once 'EncabezadoUsuarioView.php';
                                    <?php
                                    
                                     //Inicia Status Logico
-//                                    $alarm = new Datetime($filas['fecha_alarma']);
-//                                    $alarm = strftime("%d-%B-%y",$alarm -> getTimestamp());
-//                                    $alarm = new Datetime($alarm);
-//                                    
-//                                    $flimite = new Datetime($filas['fecha_limite_atencion']);// Guarda en una variable la fecha de la base de datos
-//                                    $flimite = strftime("%d-%B-%y",$flimite -> getTimestamp());// Esta da el formato: dia. mes y año, sin guardar las horas 
-//                                    $flimite = new Datetime($flimite);//Se guarda en este formato y se reinicializan las horas a 00.
-//                                    
-//                                    $hoy = new Datetime();
-//                                    $hoy = strftime("%d - %B - %y");
-//                                    $hoy = new Datetime($hoy);
+                                   $alarm = new Datetime($filas['fecha_alarma']);
+                                   $alarm = strftime("%d-%B-%y",$alarm -> getTimestamp());
+                                   $alarm = new Datetime($alarm);
+                                   
+                                   $flimite = new Datetime($filas['fecha_limite_atencion']);// Guarda en una variable la fecha de la base de datos
+                                   $flimite = strftime("%d-%B-%y",$flimite -> getTimestamp());// Esta da el formato: dia. mes y año, sin guardar las horas 
+                                   $flimite = new Datetime($flimite);//Se guarda en este formato y se reinicializan las horas a 00.
+                                   
+                                   $hoy = new Datetime();
+                                   $hoy = strftime("%d - %B - %y");
+                                   $hoy = new Datetime($hoy);
                                
 
                                     
-//                                    if($filas["status_doc"]== 1){
-//
-//                                        if ($flimite <= $hoy){
-//
-//                                            if($flimite == $hoy){
-//                                                
-//                                                echo "Tiempo Limite";
-//                                                
-//                                            } else {
-//                                                
-//                                                echo "Tiempo Vencido";  
-//                                            }
-//                                                  
-//                                        } else{
-//                                            
-//                                          if ($alarm <= $hoy){
-//                                              
-//                                              echo "Alerta Vencida";
-//                                                                                           
-//                                          } else {
-//                                                  echo "En Tiempo";
-//                                              }                                           
-//                                        }
-//                                       
-//                                     
-//                                    } //Primer If 
+                                   if($filas["status_doc"]== 1){
+
+                                       if ($flimite <= $hoy){
+
+                                           if($flimite == $hoy){
+                                               
+                                               echo "Tiempo Limite";
+                                               
+                                           } else {
+                                               
+                                               echo "Tiempo Vencido";  
+                                           }
+                                                 
+                                       } else{
+                                           
+                                         if ($alarm <= $hoy){
+                                             
+                                             echo "Alerta Vencida";
+                                                                                          
+                                         } else {
+                                                 echo "En Tiempo";
+                                             }                                           
+                                       }
+                                      
+                                    
+                                   } //Primer If 
                                     
                                   
-//                                    if($filas["status_doc"]== 2){
-//                                        echo "Suspendido";
-//                                        
-//                                    } if($filas["status_doc"]== 3){
-//                                        echo "Terminado";
-//                                        
-//                                    } 
+                                   if($filas["status_doc"]== 2){
+                                       echo "Suspendido";
+                                       
+                                   } if($filas["status_doc"]== 3){
+                                       echo "Terminado";
+                                       
+                                   } 
                                    
                                     //Termina Status Logico
                                    
@@ -269,16 +264,17 @@ require_once 'EncabezadoUsuarioView.php';
                                             <i class='fa fa-cloud-upload' style='font-size: 20px'></i>
                                             Mostrar
                                         </button>
-                                         <?php echo $filas['id_documento_entrada']; ?> 
+                                         <?php //echo $filas['id_documento_entrada']; ?> 
                                 </td>
                                 
-                                <td contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php // echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php // echo $filas["documento"]; ?></td>
+                               <!--   <td contenteditable="true" onBlur="saveToDatabase(this,'documento','<?php // echo $filas["id_seguimiento_entrada"]; ?>')" onClick="showEdit(this);"><?php // echo $filas["documento"]; ?></td>-->
                                 <td ><button class="btn btn-success" onClick="cargadePrograma('<?php echo $filas["id_documento_entrada"]; ?>','<?php echo $filas["folio_entrada"] ?>')">Registrar</button></td>
                                 <td><?php echo $filas["avance_programa"]; ?></td>
 			  </tr>
                           
 		<?php
 		}
+// }
                 
 		?>
 		  </tbody>
@@ -423,6 +419,28 @@ require_once 'EncabezadoUsuarioView.php';
             <!--en esta seccion es para poder abrir el modal--> 
                 <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
             <!--aqui termina la seccion para poder abrir el modal-->    
+            
+            
+    <script  src="../../assets/FileUpload/js/tmpl.min.js"></script>
+    <script  src="../../assets/FileUpload/js/load-image.all.min.js"></script>
+    <script  src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>
+    <script  src="../../assets/FileUpload/js/jquery.blueimp-gallery.min.js"></script>
+    <script  src="../../assets/FileUpload/js/jquery.iframe-transport.js"></script>
+    <script  src="../../assets/FileUpload/js/jquery.fileupload.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-process.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-image.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-audio.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-video.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
+    <script src="../../assets/FileUpload/js/main.js"></script>
+    <noscript><link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
+    <noscript><link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
+    <link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
+    <link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
+            
+            
                 
                 
 	</body>

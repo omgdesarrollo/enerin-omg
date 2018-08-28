@@ -134,12 +134,7 @@ $Usuario=  Session::getSesion("user");
     require_once 'EncabezadoUsuarioView.php';
     // require_once '../Model/socketModel.php';
 ?>
-
-
-
-
 <div id="layoutObjGenerador">
-
 <div class="col-md-12 ">
 <div class="col-md-6 ">
 <!-- <div class="col-md-6 "> -->
@@ -172,12 +167,12 @@ $Usuario=  Session::getSesion("user");
 <button id='reporteDiariosdelMensualAnualCalculo' class="btn btn-info btn-xs">Calcular todos los diarios</button>
 <!-- </div> -->
 <button id='btnAgregarMolarAlMes' class="btn btn-info btn-xs" data-toggle="modal" data-target="#createitemMolares">% Molares</button>
+<button id='toExcel' >
+     <img src="../../images/base/_excel.png" width="35px" height="auto"></button>
 </div>
 </div>
-
 <div class="col-md-6 ">
-<!-- <button id='toExcel' > -->
-<!--      <img src="../../images/base/_excel.png" width="35px" height="auto"></button> -->
+
 <div id="seccionDerecha">
 <label>Fecha Inicio</label>
 <input type="text" id="fechaInicio"/>
@@ -190,13 +185,10 @@ $Usuario=  Session::getSesion("user");
 <!--<div class="row">-->
 </div>
 </div>
-
 </div>
 <!-- <div id="seccionAbajo"> -->
 <div id="jsGrid" ></div>
-
 <!-- </div> -->
-
 <div id="listjson"></div>
 <div id="layoutObjGenerador" class="layoutObj"></div>
 <div id="dialogoEdicionMolares" title="Edicion Molares" style="display: none">
@@ -213,10 +205,9 @@ $Usuario=  Session::getSesion("user");
 <input type="text" value="" placeholder="Molar 11" id="omg2c11">
 </div>
 <script>
-    var data1=[],DataGrid=[],DataGridMolares=[],myCombo,myCombo2;
+    var data1=[],DataGrid=[],DataGridMolares=[],DataGridExcel=[],myCombo,myCombo2;
     var fechas_inicio_final={"fecha_inicio":"","fecha_final":""};  
     bandera=0;  
-     
 $(function()
 {    
 	myCombo = dhtmlXComboFromSelect("mySelect");
@@ -229,7 +220,7 @@ $(function()
     construirGridGenerador();
     construirGridGeneradorMolares();
 //     gridInstanceMolares.loadData(); 
-				 $("#dialogoEdicionMolares").dialog({autoOpen:false,modal:true});
+	$("#dialogoEdicionMolares").dialog({autoOpen:false,modal:true,width:350,height:'auto'});
 //construccion de la ventanita para edicion de molares
 //             $("#dialogoEdicionMolares").dialog({
 //                 autoOpen: false,
@@ -269,7 +260,6 @@ $(function()
         obtenerDatosReporte();
         growlSuccess("Reporte","Reporte Generado Exitoso");
     });
-
      var $btnCalculoDiariosRangoFechasInicioFin = $('#reporteCalculoDiarios'); 
 
      
@@ -311,7 +301,9 @@ $(function()
                    $.each(r,function (index,value)
                      {
                          __datos.push( reconstruir(value,index++) );
+                         
                      });
+//                    DataGrid=[];
                    DataGrid=__datos;
                    
                     gridInstance.loadData();
@@ -343,21 +335,12 @@ $(function()
                  error:function()
                  {
                  }
-             });
-
-
-
-
-
-
-             
-//     } 
+             });   
      }
      );
      var $btnreporteDiariosdelMensualAnualCalculo=  $('#reporteDiariosdelMensualAnualCalculo'); 
      $btnreporteDiariosdelMensualAnualCalculo.on('click', function () {
-// alert("le has picado ");
-       var lista=[],__datos=[], DataGrid=[];;
+       var lista=[],__datos=[];
                $.ajax({
                    url:'../Controller/GeneradorReporteController.php?Op=ListByMonthAndYearCalculo',
                    type:'POST',
@@ -369,10 +352,9 @@ $(function()
                        {
                            __datos.push( reconstruir(value,index++) );
                        });
-                    
+                     DataGrid=[];
                      DataGrid=__datos;
-                     
-                      gridInstance.loadData();
+                     gridInstance.loadData();
                    },
                    error:function()
                    {
@@ -458,6 +440,7 @@ function obtenerDatosReporte(){
               $.each(r,function (index,value)
                 {
                     __datos.push( reconstruir(value,index++) );
+                    __datosExcel.push(reconstruirExcel(value,index++));
                 });
               DataGrid=__datos;
               gridInstance.loadData();
@@ -472,14 +455,15 @@ function obtenerDatosReporte(){
     
 	var $btnDLtoExcel = $('#toExcel'); 
                 $btnDLtoExcel.on('click', function () {
-                    if(bandera==true){
+//                     alert("le ");
+//                     if(bandera==true){
                         $("#listjson").excelexportHibrido({
                                     containerid: "listjson"
                                        , datatype: 'json'
-                                       , dataset: data1
-                                       , columns: getColumns(data1)     
+                                       , dataset: DataGrid
+                                       , columns: getColumns(DataGrid)     
                                 });
-                    }
+//                     }
     });    
 
 

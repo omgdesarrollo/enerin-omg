@@ -66,10 +66,19 @@ switch ($Op) {
 	    echo json_encode($Lista);
            
         case 'faltantesPorMes':
-            $Lista= $modelGenerador->reportesFaltantesByMonthAndYear($_REQUEST['MES'], $_REQUEST['ANO'], Session::getSesion("s_cont"));
+            $Lista= $modelGenerador->reportesFaltantesByMonthAndYear($_REQUEST['MES'], $_REQUEST['YEAR'], Session::getSesion("s_cont"));
             header('Content-type: application/json; charset=utf-8');
 	    echo json_encode($Lista);
+            break;
             
+        case 'faltantesPorRangos':
+            $Lista= $modelGenerador->reportesFaltantesPorRangos($_REQUEST['FECHA_INICIAL'], $_REQUEST['FECHA_FINAL'], Session::getSesion("s_cont"));
+            header('Content-type: application/json; charset=utf-8');
+	    echo json_encode($Lista);
+            break;
+        
+        
+        
         default:
             -1;
 }
