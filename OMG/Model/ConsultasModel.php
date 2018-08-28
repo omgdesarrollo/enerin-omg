@@ -413,7 +413,8 @@ class ConsultasModel{
                         }
                         else
                         {
-                            if( ($value["evidencias_validadas"] + $value["evidencias_proceso"]) != $value["evidencias_realizar"] )
+                            // if( ( ($value["evidencias_validadas"] + $value["evidencias_proceso"]) - $value["evidencias_realizar"] ) - )
+                            if( ($value["evidencias_realizar"] - $value["evidencias_validadas"] ) >= 2)
                                 $lista[$key]["estado_requisito"]="ATRASADO";
                             else
                                 $lista[$key]["estado_requisito"]="EN PROCESO";
