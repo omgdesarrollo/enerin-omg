@@ -7,12 +7,9 @@ require_once '../util/Session.php';
 
 $Op=$_REQUEST["Op"];
 $model=new EmpleadoModel();
-
 $modelGantt=new Gantt_TareasModel();
 // $pojo=new GanttPojo();
-
 switch ($Op) {
-    
         case 'ListarTodasLasTareasPorId':
             $Lista= $modelGantt->listarRegistrosGanttTareas(Session::getSesion("dataGantt_id_tarea"));
           if(Gantt_TareasModel::verificarSiExisteIDTareaEnGanttTareas(array("id_tarea"=>Session::getSesion("dataGantt_id_tarea")))=="true"){

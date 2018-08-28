@@ -146,8 +146,6 @@ and open the template in the editor.
         
 //        echo"e  ".Session::getSesion("dataGantt");
         ?>
-        
-        
         <input value="Exportar a PDF"  class="btn btn-info" type="button" onclick="gantt.exportToPDF()" style="margin:20px;">
     <input value="Exportar a PNG" class="btn btn-info" type="button" onclick="gantt.exportToPNG()">
 <input value="Exportar a MS Proyect" class="btn btn-success" type="button" onclick='gantt.exportToMSProject({skip_circular_links: false})'
@@ -266,9 +264,7 @@ and open the template in the editor.
                          }
 //                         window.location.href="GanttView.php";
 		});
-
-	})();      
-      
+	})();            
       	(function dynamicProgress() {
 
 		function calculateSummaryProgress(task) {
@@ -369,14 +365,6 @@ gantt.templates.task_class = function (start, end, task) {
 			return "hide_project_progress_drag";
 	};
 
-
-
-
-
-
-
-
-
 //        	gantt.config.open_tree_initially = true;
 //        	para cerrar las carpetas por default desde el principio
 
@@ -418,12 +406,6 @@ gantt.config.lightbox.sections = [
 //		{name: "description", height: 70, map_to: "text", type: "textarea", focus: true},
 //		{name: "time", type: "duration", map_to: "auto", readonly: true}
 //	];
-
-  
-
-
-
-
 gantt.config.order_branch = true;
 gantt.config.order_branch_free = true;
 gantt.config.branch_loading = true;
@@ -431,10 +413,7 @@ gantt.config.fit_tasks = true;
 gantt.config.work_time = false;
 gantt.config.auto_scheduling = true;
 gantt.config.sort = true;
-
 //gantt.config.readonly = true;
-
-
 gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
 
 

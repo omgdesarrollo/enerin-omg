@@ -1,8 +1,6 @@
 <?php
 require_once '../ds/AccesoDB.php';
 class Gantt_TareaDao {
-    
-    
     public function listarRegistrosGanttTareas($VALUE) 
     {
         try
@@ -11,10 +9,8 @@ class Gantt_TareaDao {
                     
                     FROM gantt_tareas tbgantt_tareas
                     WHERE tbgantt_tareas.id_tarea= $VALUE";
-            
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-            
             return $lista;
         } catch (Exception $ex)
         {
