@@ -132,7 +132,7 @@ function construirGrid()
             { name: "observaciones",title:"Observaciones", type: "text", validate: "required" },
             { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:110,editing:false },
             { name: "registrar_programa",title:"Registrar Programa", type: "text", validate: "required",width:140, editing:false },
-            { name: "avance_programa",title:"Avance Programa", type: "text", validate: "required" },
+            { name: "avance_programa",title:"Avance Programa", type: "text", validate: "required", editing:false },
             { name:"delete", title:"Opción", type:"customControl",sorting:""}
         ],
         onItemUpdated: function(args)
