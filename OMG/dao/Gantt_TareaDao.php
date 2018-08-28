@@ -77,9 +77,25 @@ class Gantt_TareaDao {
         }
     }
 
+    
+    public function actualizarAvanceProgramaTareas($VALUES)
+    {
+        try
+        {
+            $query="UPDATE tareas SET avance_programa= ".$VALUES["avance"]."  WHERE id_tarea= ".$VALUES["id"]."";
+            
+            $db=  AccesoDB::getInstancia();
+            $update = $db->executeUpdateRowsAfected($query);
+            
+            return $update;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 
-
-    public function eliminarGanttTareas($VALUES)
+        public function eliminarGanttTareas($VALUES)
     {
         try
         {
