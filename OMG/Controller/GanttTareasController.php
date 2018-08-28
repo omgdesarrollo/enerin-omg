@@ -14,9 +14,12 @@ $modelGantt=new Gantt_TareasModel();
 switch ($Op) {
     
         case 'ListarTodasLasTareasPorId':
-            
             $Lista= $modelGantt->listarRegistrosGanttTareas(Session::getSesion("dataGantt_id_tarea"));
-            Gantt_TareasModel::verificarSiExisteIDTareaEnGanttTareas(Session::getSesion("dataGantt_id_tarea"));
+          if(Gantt_TareasModel::verificarSiExisteIDTareaEnGanttTareas(array("id_tarea"=>Session::getSesion("dataGantt_id_tarea")))=="true"){
+              Gantt_TareasModel::actualizarExisteProgramaTareas(array("existeprograma"=>1,"id_tarea"=>Session::getSesion("dataGantt_id_tarea")));
+          }else{
+               Gantt_TareasModel::actualizarExisteProgramaTareas(array("existeprograma"=>0,"id_tarea"=>Session::getSesion("dataGantt_id_tarea")));
+          }      
             header('Content-type: application/json; charset=utf-8');
             echo json_encode(array("data"=>$Lista));
             break;
@@ -51,34 +54,27 @@ switch ($Op) {
 	case 'ListarEmpleados'://este caso no borrarlo es para traer los difrentes empleados
 
 	$Lista=$model->listarEmpleados("");
-//     	Session::setSesion("listarEmpleados",$Lista);
-//    	$tarjet="../view/principalmodulos.php";
     	header('Content-type: application/json; charset=utf-8');
 	echo json_encode($Lista);
 
 		break;
-//         case'obtenerFolioEntradaSeguimiento':
-            
-//             $Lista=$modelGantt->obtenerFolioEntradaSeguimiento($_REQUEST['ID_SEGUIMIENTO']);
-//             header('Content-type: application/json; charset=utf-8');
-//             echo json_encode($Lista);
-//             break;
+
     	
-        case 'MostrarTareasCompletasPorFolioDeEntrada':   
-            $Lista=$modelGantt->obtenerTareasCompletasPorFolioEntrada(Session::getSesion("dataGantt"));
-            header('Content-type: application/json; charset=utf-8');
-            echo json_encode(array("data"=>$Lista));
-//        Session::setSesion("", $value)
-                break;
-	case 'Nuevo':
-		# code...
-		break;	
+
 
         case 'EliminarTarea':
              if(isset($_REQUEST["deleteidtarea"])){
 //                echo "entro ";
-                 $value["id"]=$_REQUEST["deleteidtarea"];
-                $modelGantt->deleteTareaajax ($value);
+//                 $value["id"]=$_REQUEST["deleteidtarea"];
+                $modelGantt->eliminarGanttTareas($_REQUEST["deleteidtarea"]);
+                  if(Gantt_TareasModel::verificarSiExisteIDTareaEnGanttTareas(array("id_tarea"=>Session::getSesion("dataGantt_id_tarea")))=="true"){
+                    Gantt_TareasModel::actualizarExisteProgramaTareas(array("existeprograma"=>1,"id_tarea"=>Session::getSesion("dataGantt_id_tarea")));
+                  }else{
+                    Gantt_TareasModel::actualizarExisteProgramaTareas(array("existeprograma"=>0,"id_tarea"=>Session::getSesion("dataGantt_id_tarea")));
+                }    
+                
+                 self::actualizarAvanceProgramaTareas(array("avance"=>self::avanceProgramaTareas(array("id_tarea"=>Session::getSesion("dataGantt_id_tarea"))),"id_tarea"=>Session::getSesion("dataGantt_id_tarea")));
+                
             }else{
                 echo ":(";
             }
