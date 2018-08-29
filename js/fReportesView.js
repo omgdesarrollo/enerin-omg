@@ -446,7 +446,7 @@ function insertarReporte(datos)
         },
         error:function()
         {
-            
+//            alert("Entro al error");
         }
     });
     

@@ -182,14 +182,14 @@ class ReporteDao{
         }
     }
     
-    public function insertarReporte($FECHA_CREACION,$ID_CATALOGOP,$USUARIO)
+    public function insertarReporte($FECHA_CREACION,$ID_CATALOGOP,$USUARIO,$datosDiaAnterior)
     {
         try
         {
             
             $query="INSERT INTO omg_reporte_produccion (omgc1,omgc2,omgc3,omgc4,omgc5,omgc6,omgc7,omgc8,omgc9,omgc10,omgc11,omgc12,omgc13,omgc14,omgc15,												
                     omgc16,omgc17,omgc18,id_catalogop,usuario)
-                    VALUES('$FECHA_CREACION',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,'',null,$ID_CATALOGOP,$USUARIO)";
+                    VALUES('$FECHA_CREACION',0,0,0,'".$datosDiaAnterior["omgc5"]."','".$datosDiaAnterior["omgc6"]."','".$datosDiaAnterior["omgc7"]."','".$datosDiaAnterior["omgc8"]."',0,'".$datosDiaAnterior["omgc10"]."','".$datosDiaAnterior["omgc11"]."','".$datosDiaAnterior["omgc12"]."',0,0,0,0,'',null,$ID_CATALOGOP,$USUARIO)";
            
             $db=  AccesoDB::getInstancia();
             $exito = $db->executeQueryUpdate($query);
@@ -197,7 +197,7 @@ class ReporteDao{
                 $exito = $db->executeQuery("SELECT LAST_INSERT_ID()")[0]["LAST_INSERT_ID()"];
             else
                 $exito = -2;
-            
+//           echo "Datos Dia: ".json_encode($datosDiaAnterior); 
            return $exito;
         } catch (Exception $ex)
         {
@@ -246,6 +246,27 @@ class ReporteDao{
         }
     }
     
+    
+    public function datosDiaAnterior()
+    {
+        try
+        {
+            $query="SELECT tbomg_reporte_produccion.omgc5,tbomg_reporte_produccion.omgc6, tbomg_reporte_produccion.omgc7, tbomg_reporte_produccion.omgc8,
+                    tbomg_reporte_produccion.omgc10, tbomg_reporte_produccion.omgc11, tbomg_reporte_produccion.omgc12
+                    FROM omg_reporte_produccion tbomg_reporte_produccion
+                    WHERE tbomg_reporte_produccion.omgc1=CURDATE()-1";
+            
+            $db= AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            
+//            echo "datos del dia anterior: ".json_encode($lista); 
+            return $lista;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
     
 }
 
