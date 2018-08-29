@@ -339,7 +339,7 @@ function buscarTagMedidorPorTagPatin(tagPatin)
         {
             $.each(datosTagMedidor,function(index,value){
 //                alert(value.tag_medidor);
-                if(index==0)
+//                if(index==0)
                 datosDhtmlTagMedidor.push({value:index,text:value.tag_medidor});                
             });
             
