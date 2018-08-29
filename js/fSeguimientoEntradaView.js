@@ -248,15 +248,30 @@ function reconstruir(value,index)
         {
             tempData["status_doc"]="Terminado";
         };
+//        valGantt.push({"id_documento_entrada":value.id_documento_entrada,"folio_entrada":value.folio_entrada});
     tempData["condicion"]=value.condicion;    
     tempData["id_empleado"]=value.id_empleado;
     tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_documento_entrada+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
     tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
-    tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info' onClick='cargadePrograma("+value.id_documento_entrada,value.folio_entrada+")'>Cargar Programa</button>";
-    tempData["avance_programa"]=parseInt(value.avance_programa*100)+"%";    
+    tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info' onClick='cargadePrograma("+JSON.stringify({"id_documento_entrada":value.id_documento_entrada,"folio_entrada":value.folio_entrada})+")'>Cargar Programa</button>";
+    tempData["avance_programa"]=(value.avance_programa*100).toFixed(2)+"%";    
 //    tempData["delete"]= [{"reg":value.reg,"validado":value.validado}];
+
+//este lo voy a checar no borrar
+//var n2 = 12.398491;
+//n2 = parseFloat(n2);
+//alert('Con redondeo: ' + parseFloat(n2).toFixed(2));
+//var a2 = Math.floor(n2 * 100) / 100;
+//alert('Sin redondeo: ' + a2.toFixed(2));
+ //aqui termina lo que voy a a checar
+// var a2 = Math.floor(n2 * 100) / 100;
+//alert('Sin redondeo: ' + a2.toFixed(2));
+// aqui termina lo que voy a a checar
+ 
+ 
     return tempData;
 }
+
 
 
 //function empleadosComboboxparaModal()
@@ -340,10 +355,13 @@ function mostrar_urls(id_documento_entrada)
 }
 
 
-function cargadePrograma(id_documento_entrada,folio_entrada){
+function cargadePrograma(val){
+    for(var property in val) {
+    alert(property + "=" + val[property]);
+}
 //        alert("le has picado al folio de entrada  "+foliodeentrada);
-console.log(id_documento_entrada,folio_entrada);
-    window.location.href=" GanttView.php?id_documento_entrada="+id_documento_entrada+"&folio_entrada="+folio_entrada;
+console.log(val);
+    window.location.href=" GanttView.php?id_documento_entrada="+val.id_documento_entrada+"&folio_entrada="+val.folio_entrada;
 //   window.location.replace("http://sitioweb.com");        
 }
 
