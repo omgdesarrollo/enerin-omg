@@ -100,12 +100,13 @@ class DocumentoEntradaDAO{
     
     
     
-    public function mostrarDocumentosEntradaComboBox(){
+    public function mostrarDocumentosEntradaComboBox($CONTRATO)
+    {
         try{
            
             $query="SELECT tbdocumento_entrada.id_documento_entrada, tbdocumento_entrada.folio_entrada
-
-                    FROM documento_entrada tbdocumento_entrada";
+                    FROM documento_entrada tbdocumento_entrada
+                    WHERE tbdocumento_entrada.id_cumplimiento=$CONTRATO OR tbdocumento_entrada.id_documento_entrada=-1";
             
             
             $db=  AccesoDB::getInstancia();
