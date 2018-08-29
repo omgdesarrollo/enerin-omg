@@ -135,11 +135,12 @@ $Usuario=  Session::getSesion("user");
     // require_once '../Model/socketModel.php';
 ?>
 <div id="layoutObjGenerador">
-<div class="col-md-12 ">
-<div class="col-md-6 ">
-<!-- <div class="col-md-6 "> -->
+<!--<div class="col-md-12 ">-->
+<!--<div class="col-md-12 ">-->
+ 
 <div id="seccionIzquierda">
-<label>Seleccione El Mes:</label>
+    <div class="col-md-4 "> 
+<label>Seleccione Mes:</label>
 <select id="mySelect" style="width:130px;">
 		<option value="01" selected="selected">Enero</option>
 		<option value="02">Febrero</option>
@@ -154,38 +155,50 @@ $Usuario=  Session::getSesion("user");
 		<option value="11">Noviembre</option>	
 		<option value="12">Diciembre</option>	
 </select>
-
-<label> Seleccione El Periodo Anual:</label>
+    </div>
+    <div class="col-md-4 "> 
+<label> Seleccione Año:</label>
 <select id="mySelect2" style="width:130px;">
 		<option value="2017">2017</option>
 		<option value="2018">2018</option>
 		
 </select>
+    </div>
+    <div class="col-md-4 "> 
+<label> Region Fiscal :</label>
+<!--<select id="mySelect3" style="width:130px;">-->
+    <div id="mySelect3" style="width:130px;"></div>	
+		
+<!--</select>-->
+    </div>
 <!-- </div> -->
 <!-- <div class="col-md-3"> -->
 <button id='reporteMensualanual' class="btn btn-info btn-xs">Obtener Diarios</button>
 <button id='reporteDiariosdelMensualAnualCalculo' class="btn btn-info btn-xs">Calcular todos los diarios</button>
 <!-- </div> -->
 <button id='btnAgregarMolarAlMes' class="btn btn-info btn-xs" data-toggle="modal" data-target="#createitemMolares">% Molares</button>
+<button id='btnRegionFiscal' class="btn btn-info btn-xs" data-toggle="modal" data-target="#buq">% Molares</button>
 <button id='toExcel' >
      <img src="../../images/base/_excel.png" width="35px" height="auto"></button>
 </div>
-</div>
-<div class="col-md-6 ">
+<!--</div>-->
+<!--<div class="col-md-12 ">-->
 
 <div id="seccionDerecha">
-<label>Fecha Inicio</label>
-<input type="text" id="fechaInicio"/>
-<br>
-<label>Fecha Final</label>
-<input type="text" id="fechaFinal"/>
-<br><br><br>
+    <div class="col-md-4 ">
+        <label>Fecha Inicio</label>
+        <input type="text" id="fechaInicio"/>
+    </div>
+     <div class="col-md-6 ">
+        <label>Fecha Final</label>
+        <input type="text" id="fechaFinal"/>
+     </div>
 <button id='reporte' class="btn btn-info btn-xs">Obtener todos los diarios</button>
 <button id='reporteCalculoDiarios' class="btn btn-info btn-xs">Calcular todos los diarios</button>
 <!--<div class="row">-->
+<!--</div>-->
 </div>
-</div>
-</div>
+<!--</div>-->
 <!-- <div id="seccionAbajo"> -->
 <div id="jsGrid" ></div>
 <!-- </div> -->
@@ -212,12 +225,14 @@ $(function()
 {    
 	myCombo = dhtmlXComboFromSelect("mySelect");
 	myCombo2 = dhtmlXComboFromSelect("mySelect2");
+        myCombo3 = dhtmlXComboFromSelect("mySelect3");
 	  myLayout = new dhtmlXLayoutObject({parent: "layoutObjGenerador",pattern: "3U",cells: [{id: "a", text: "Mensual", header:true,height: 210},{id: "b", text: "Rango de Fechas",header:true},{id: "c", text: "Tabla de Datos",header:true}]});
 
 	myLayout.cells("a").attachObject("seccionIzquierda");
 	myLayout.cells("b").attachObject("seccionDerecha");
 	myLayout.cells("c").attachObject("jsGrid");
     construirGridGenerador();
+    obtenerRegionesFiscales();
     construirGridGeneradorMolares();
 //     gridInstanceMolares.loadData(); 
 	$("#dialogoEdicionMolares").dialog({autoOpen:false,modal:true,width:350,height:'auto'});
@@ -450,6 +465,32 @@ function obtenerDatosReporte(){
             }
         }); 
 }
+function obtenerRegionesFiscales(){
+   datosRegionesFiscales=[];
+          $.ajax({
+        url:'../Controller/ReportesController.php?Op=buscarRegionFiscal',
+        type:'GET',
+        async:false,
+        success:function(datos)
+        {
+            $.each(datos,function(index,value)
+            {
+                datosRegionesFiscales.push({value:index,text:value.region_fiscal});
+//                    htmlSelectRegionesFiscales+="<option value='"+value.region_fiscal+"'>"+value.region_fiscal+"</option>";
+            });
+             myCombo3.addOption(datosRegionesFiscales);
+//            $("#mySelect3").html(htmlSelectRegionesFiscales);
+        },
+        error:function()
+        {
+            swalError("Error en el servidor");
+        }
+    });
+
+}
+
+
+
  </script>   
 <script>   	
     
