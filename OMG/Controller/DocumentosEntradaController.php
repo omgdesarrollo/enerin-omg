@@ -34,7 +34,7 @@ switch ($Op) {
 	break;
 
         case 'mostrarcombo':
-		$Lista=$model->listarDocumentosEntradaComboBox();
+		$Lista=$model->listarDocumentosEntradaComboBox(Session::getSesion("s_cont"));
     	Session::setSesion("listarDocumentosEntradaComboBox",$Lista);
 //    	$tarjet="../view/principalmodulos.php";
     	header('Content-type: application/json; charset=utf-8');
