@@ -252,9 +252,8 @@ function reconstruir(value,index)
     tempData["id_empleado"]=value.id_empleado;
     tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_documento_entrada+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
     tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
-    tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info' onClick=\'cargadePrograma("+value.id_documento_entrada,value.folio_entrada+")\'>Cargar Programa</button>";
-    tempData["avance_programa"]=parseInt(value.avance_programa*100)+"%";
-    
+    tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info' onClick='cargadePrograma("+value.id_documento_entrada,value.folio_entrada+")'>Cargar Programa</button>";
+    tempData["avance_programa"]=parseInt(value.avance_programa*100)+"%";    
 //    tempData["delete"]= [{"reg":value.reg,"validado":value.validado}];
     return tempData;
 }
