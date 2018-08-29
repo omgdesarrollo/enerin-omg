@@ -120,10 +120,22 @@ require_once '../dao/ReporteDao.php';
 //            echo "Este es el tagMedidor: ".json_encode($TAG_MEDIDOR);
             $VERIFICAR= $dao->verificarSiExisteElTagMedidorPorFecha($TAG_MEDIDOR, $FECHA_CREACION);
 //            echo "Este es el resultado: ".json_encode($VERIFICAR);
+            $datosDiaAnterior= $dao->datosDiaAnterior();
+            
+            if($datosDiaAnterior==null)
+            {
+               $datosDiaAnterior[0]["omgc5"]=0;
+               $datosDiaAnterior[0]["omgc6"]=0;
+               $datosDiaAnterior[0]["omgc7"]=0;
+               $datosDiaAnterior[0]["omgc8"]=0;
+               $datosDiaAnterior[0]["omgc10"]=0;
+               $datosDiaAnterior[0]["omgc11"]=0;
+               $datosDiaAnterior[0]["omgc12"]=0;
+            }
             
             if($VERIFICAR == "0")
             {
-                $exito= $dao->insertarReporte($FECHA_CREACION, $ID_CATALOGOP, $USUARIO);
+                $exito= $dao->insertarReporte($FECHA_CREACION, $ID_CATALOGOP, $USUARIO, $datosDiaAnterior[0]);
                 
                 if($exito >= 0)
                 {
@@ -146,6 +158,7 @@ require_once '../dao/ReporteDao.php';
                     "omgc4"=>$value["omgc4"],
                     "omgc5"=>$value["omgc5"],
                     "omgc6"=>$value["omgc6"],
+                    "omgc7"=>$value["omgc7"],
                     "omgc8"=>$value["omgc8"],
                     "omgc9"=>$value["omgc9"],
                     "omgc10"=>$value["omgc10"],
