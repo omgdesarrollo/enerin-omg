@@ -125,12 +125,7 @@ and open the template in the editor.
     -ms-user-select: none;
     user-select: auto;
 }  */
-  </style>
-
- 
-      
-        
-        	
+  </style> 	
 		
   </head>
     <body>
@@ -175,11 +170,6 @@ and open the template in the editor.
 			   accept=".mpp,.xml, text/xml, application/xml, application/vnd.ms-project, application/msproj, application/msproject, application/x-msproject, application/x-ms-project, application/x-dos_ms_project, application/mpp, zz-application/zz-winassoc-mpp"/>
 		<button id="mspImportBtn" type="submit">Seleccion el MS Proyect</button>
 	</form>-->
-
-
-        
-
-
     
     <div id="gantt_here" style='width:100%; height:100%;'></div>
     </body>

@@ -634,6 +634,7 @@ if(isset($_REQUEST["accion"]))
     }
     function enviarObservacion(idValidacionDocumento)
     {
+        alert();
         msj = $("#textarea_msj").val();
         $.ajax({
             url:'../Controller/ValidacionDocumentosController.php?Op=EnviarObservacion',
@@ -832,11 +833,11 @@ if(isset($_REQUEST["accion"]))
                     ValoresRequisitos+="<li>"+value.requisito+"</li>";                                       
 
                    });
-               ValoresRequisitos += "</ul>";     
+    ValoresRequisitos += "</ul>";     
                    $('#RequisitosListado').html(ValoresRequisitos);
                 }
             });
-    }
+        }
     
     function mostrarRegistros(id_documento)//listo
     {

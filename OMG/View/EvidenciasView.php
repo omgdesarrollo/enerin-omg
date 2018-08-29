@@ -36,6 +36,9 @@
     <link async href="../../css/modal.css" rel="stylesheet" type="text/css"/>
 <!--    <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>-->
 
+    <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
+    <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
+
     <!--jquery-->
     <script src="../../js/jquery.js" type="text/javascript"></script>
     <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
@@ -49,9 +52,15 @@
     <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
     <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
+
     <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
+    <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
+    <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
+    <!-- <script src="../../js/tools.js" type="text/javascript"></script> marca un error al agregarse -->
+    <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+
     <script src="../../js/fEvidenciasView.js" type="text/javascript"></script>
-    <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
+    <script src="../../js/fGridComponent.js" type="text/javascript"></script>
     
    
     <style>
@@ -101,57 +110,19 @@
             // array("No.","Requisito","Registro","Frecuencia","Clave Documento",
             //     "Adjuntar Evidencia","Fecha de Registro","Usuario","Acción Correctiva","Plan de Acción","Desviación","Validación","Opcion");
     ?>
-    <div style="position: fixed;">
-        <button onClick="" type="button" 
-        class="btn btn-success" data-toggle="modal" data-target="#nuevaEvidenciaModal">
-            Agregar Nuevo Registro
-        </button>
+    <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
+        <!-- <div style="position: fixed;"> -->
+            <button onClick="" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#nuevaEvidenciaModal">
+                Agregar Nuevo Registro
+            </button>
 
-        <button id="btnAgregarEvidenciasRefrescar" type="button" 
-        class="btn btn-info " onclick="refresh();" >
-            <i class="glyphicon glyphicon-repeat"></i> 
-        </button>
-
-        <!-- <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i> -->
-
+            <button id="btnAgregarEvidenciasRefrescar" type="button" class="btn btn-info btn_refrescar" onclick="refresh();" >
+                <i class="glyphicon glyphicon-repeat"></i> 
+            </button>
     </div>
 
-    <br><br>
-    <div style="float:left" id="headerFiltros">
-    </div>
-
-    <!-- <div style="height: 50px"></div> -->
-
-<!--            <table class="table table-bordered table-striped header_fijo" id="idTable">
-                <tr>
-                    <th class="table-headert" with="35%" colspan="5" style="background:#9aca40"></td>
-                    <th class="table-headert" with="35%" colspan="5" style="background:#6FB3E0">Responsable de Evidencia</td>
-                    <th class="table-headert" with="30%" colspan="3" style="background:#DCDCDC">Supervisión</td>
-                </tr>
-                <tr>
-                <?php foreach($titulosTable as $index=>$value)
-                { if($index<5){ ?>
-                <th class="table-headert backgroundTdTable" width="35%"><?php echo $value ?></th>
-                <?php }
-                
-                  if($index>4 && $index<10){?>  
-                <th class="table-headert backgroundTdTable2" width="35%"><?php echo $value ?></th>
-                <?php }
-                
-                if($index>9){ ?>
-                    <th class="table-headert backgroundTdTable3" width="30%"><?php echo $value ?></th>
-                <?php }                
-                }
-                 ?>
-                    
-                </tr>
-                
-                <tbody class="hideScrollBar" id="bodyTable" style="position: absolute"> 
-                    
-                </tbody>
-            </table>-->
-    
-    <div id="grid"></div>
+    <br><br><br>
+    <div id="jsGrid"></div>
 
 </body>
 
@@ -301,8 +272,11 @@
 
 <!--cierre del modal Mensaje-->
 <script>
-        construirFiltros();
-        construir();
+        // construirFiltros();
+        // construir();
+        
+
+
 </script>
 
 <script id="template-upload" type="text/x-tmpl">
