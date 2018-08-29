@@ -164,7 +164,7 @@ $Usuario=  Session::getSesion("user");
 		
 </select>
     </div>
-    <div class="col-md-4 "> 
+    <div class="col-md-4 ">   
 <label> Region Fiscal :</label>
 <!--<select id="mySelect3" style="width:130px;">-->
     <div id="mySelect3" style="width:130px;"></div>	
@@ -173,11 +173,18 @@ $Usuario=  Session::getSesion("user");
     </div>
 <!-- </div> -->
 <!-- <div class="col-md-3"> -->
-<button id='reporteMensualanual' class="btn btn-info btn-xs">Obtener Diarios</button>
+<label> Seleccione:</label>
+<select id="mySelect4" style="width:140px;">
+		<option value="diarios">Obtener Diarios</option>
+		<option value="calculodiarios">Calcular todos los diarios</option>
+		<option value="molares">Molares</option>
+</select>
+<button id='btnOpcionesIzquierdaMensual' class="btn btn-info btn-xs" >Aceptar</button>
+<!--<button id='reporteMensualanual' class="btn btn-info btn-xs">Obtener Diarios</button>
 <button id='reporteDiariosdelMensualAnualCalculo' class="btn btn-info btn-xs">Calcular todos los diarios</button>
-<!-- </div> -->
+ </div> 
 <button id='btnAgregarMolarAlMes' class="btn btn-info btn-xs" data-toggle="modal" data-target="#createitemMolares">% Molares</button>
-<button id='btnRegionFiscal' class="btn btn-info btn-xs" data-toggle="modal" data-target="#buq">% Molares</button>
+<button id='btnRegionFiscal' class="btn btn-info btn-xs" data-toggle="modal" data-target="#buq">% Molares</button>-->
 <button id='toExcel' >
      <img src="../../images/base/_excel.png" width="35px" height="auto"></button>
 </div>
@@ -226,7 +233,8 @@ $(function()
 	myCombo = dhtmlXComboFromSelect("mySelect");
 	myCombo2 = dhtmlXComboFromSelect("mySelect2");
         myCombo3 = dhtmlXComboFromSelect("mySelect3");
-	  myLayout = new dhtmlXLayoutObject({parent: "layoutObjGenerador",pattern: "3U",cells: [{id: "a", text: "Mensual", header:true,height: 210},{id: "b", text: "Rango de Fechas",header:true},{id: "c", text: "Tabla de Datos",header:true}]});
+        myCombo4 = dhtmlXComboFromSelect("mySelect4");
+	myLayout = new dhtmlXLayoutObject({parent: "layoutObjGenerador",pattern: "3U",cells: [{id: "a", text: "Mensual", header:true,height: 210},{id: "b", text: "Rango de Fechas",header:true},{id: "c", text: "Tabla de Datos",header:true}]});
 
 	myLayout.cells("a").attachObject("seccionIzquierda");
 	myLayout.cells("b").attachObject("seccionDerecha");
@@ -234,7 +242,44 @@ $(function()
     construirGridGenerador();
     obtenerRegionesFiscales();
     construirGridGeneradorMolares();
-//     gridInstanceMolares.loadData(); 
+//     gridInstanceMolares.loadData();
+$("#btnOpcionesIzquierdaMensual").click(function (){
+   
+//   alert(myCombo4.getSelectedValue());
+   
+//   if(myCombo4.getSelectedValue()=="calculodiarios"){
+//       alert("");
+//   }
+   
+   switch (myCombo4.getSelectedValue()) {
+    case "diarios":
+        listaDeTodosLosDiarios();
+    break;
+    case "calculodiarios":
+        calculoDeTodosLosDiarioMensualConAnual();
+    break;
+    
+    case "molares":
+        mostrarMolaresMensual();
+    break;
+    default:
+        
+    break;
+}
+//   switch(myCombo4.getSelectedValue()){
+//       
+//            case 1:
+//                
+//       alert("s");
+//            break;
+//   }
+   
+   
+   
+});
+        
+        
+myCombo.getSelectedValue();
 	$("#dialogoEdicionMolares").dialog({autoOpen:false,modal:true,width:350,height:'auto'});
 //construccion de la ventanita para edicion de molares
 //             $("#dialogoEdicionMolares").dialog({
@@ -305,79 +350,79 @@ $(function()
      });
      var $btnReporteMensualAnual=  $('#reporteMensualanual'); 
      $btnReporteMensualAnual.on('click', function () {
-     var lista=[],__datos=[],__datosMolares=[];
-             $.ajax({
-                 url:'../Controller/GeneradorReporteController.php?Op=ListByMonthAndYear',
-                 type:'POST',
-                 data:'MONTH='+myCombo.getSelectedValue()+"&YEAR="+myCombo2.getSelectedValue(),
-                 success:function(r)
-                 {
-//                    data1=r;
-                   $.each(r,function (index,value)
-                     {
-                         __datos.push( reconstruir(value,index++) );
-                         
-                     });
-//                    DataGrid=[];
-                   DataGrid=__datos;
-                   
-                    gridInstance.loadData();
-                	
-                    
-                 },
-                 error:function()
-                 {
-                 }
-             }); 
-             $.ajax({
-                 url:'../Controller/GeneradorReporteController.php?Op=ListPorcentajesMolaresMes',
-                 type:'POST',
-                 data:'MES='+myCombo.getSelectedValue()+"&ANO="+myCombo2.getSelectedValue(),
-                 success:function(r)
-                 {
-//                    data1=r;
-                   $.each(r,function (index,value)
-                     {
-                       
-                	   __datosMolares.push( reconstruirMolares(value,index++) );
-                     });
-                   DataGridMolares=__datosMolares;
-                   
-                   gridInstanceMolares.loadData();
-                	
-                    
-                 },
-                 error:function()
-                 {
-                 }
-             });   
+//     var lista=[],__datos=[],__datosMolares=[];
+//             $.ajax({
+//                 url:'../Controller/GeneradorReporteController.php?Op=ListByMonthAndYear',
+//                 type:'POST',
+//                 data:'MONTH='+myCombo.getSelectedValue()+"&YEAR="+myCombo2.getSelectedValue(),
+//                 success:function(r)
+//                 {
+////                    data1=r;
+//                   $.each(r,function (index,value)
+//                     {
+//                         __datos.push( reconstruir(value,index++) );
+//                         
+//                     });
+////                    DataGrid=[];
+//                   DataGrid=__datos;
+//                   
+//                    gridInstance.loadData();
+//                	
+//                    
+//                 },
+//                 error:function()
+//                 {
+//                 }
+//             }); 
+//             $.ajax({
+//                 url:'../Controller/GeneradorReporteController.php?Op=ListPorcentajesMolaresMes',
+//                 type:'POST',
+//                 data:'MES='+myCombo.getSelectedValue()+"&ANO="+myCombo2.getSelectedValue(),
+//                 success:function(r)
+//                 {
+////                    data1=r;
+//                   $.each(r,function (index,value)
+//                     {
+//                       
+//                	   __datosMolares.push( reconstruirMolares(value,index++) );
+//                     });
+//                   DataGridMolares=__datosMolares;
+//                   
+//                   gridInstanceMolares.loadData();
+//                	
+//                    
+//                 },
+//                 error:function()
+//                 {
+//                 }
+//             });   
      }
      );
-     var $btnreporteDiariosdelMensualAnualCalculo=  $('#reporteDiariosdelMensualAnualCalculo'); 
-     $btnreporteDiariosdelMensualAnualCalculo.on('click', function () {
-       var lista=[],__datos=[];
-               $.ajax({
-                   url:'../Controller/GeneradorReporteController.php?Op=ListByMonthAndYearCalculo',
-                   type:'POST',
-                   data:'MONTH='+myCombo.getSelectedValue()+"&YEAR="+myCombo2.getSelectedValue(),
-                   success:function(r)
-                   {
-//                      data1=r;
-                     $.each(r,function (index,value)
-                       {
-                           __datos.push( reconstruir(value,index++) );
-                       });
-                     DataGrid=[];
-                     DataGrid=__datos;
-                     gridInstance.loadData();
-                   },
-                   error:function()
-                   {
-                   }
-               }); 
+//     var $btnreporteDiariosdelMensualAnualCalculo=  $('#reporteDiariosdelMensualAnualCalculo'); 
+//     $btnreporteDiariosdelMensualAnualCalculo.on('click', function () {
+//       var lista=[],__datos=[];
+//               $.ajax({
+//                   url:'../Controller/GeneradorReporteController.php?Op=ListByMonthAndYearCalculo',
+//                   type:'POST',
+//                   data:'MONTH='+myCombo.getSelectedValue()+"&YEAR="+myCombo2.getSelectedValue(),
+//                   success:function(r)
+//                   {
+////                      data1=r;
+//                     $.each(r,function (index,value)
+//                       {
+//                           __datos.push( reconstruir(value,index++) );
+//                       });
+//                     DataGrid=[];
+//                     DataGrid=__datos;
+//                     gridInstance.loadData();
+//                   },
+//                   error:function()
+//                   {
+//                   }
+//               }); 
+////       }
 //       }
-       }
-       );
+//       );
      var $btn_guardarMolares= $('#btn_guardarMolares'); 
      $btn_guardarMolares.on('click', function () {
     var datosMolares={"MES":myCombo.getSelectedValue(),"ANO":myCombo2.getSelectedValue(),"omg2c1":$("#omg2c1").val(),"omg2c2":$("#omg2c2").val(),"omg2c2":$("#omg2c2").val(),"omg2c3":$("#omg2c3").val(),"omg2c4":$("#omg2c4").val(),"omg2c5":$("#omg2c5").val(),"omg2c6":$("#omg2c6").val(),"omg2c7":$("#omg2c7").val(),"omg2c8":$("#omg2c8").val(),"omg2c9":$("#omg2c9").val(),"omg2c10":$("#omg2c10").val(),"omg2c11":$("#omg2c11").val()};
@@ -467,7 +512,7 @@ function obtenerDatosReporte(){
 }
 function obtenerRegionesFiscales(){
    datosRegionesFiscales=[];
-          $.ajax({
+     $.ajax({
         url:'../Controller/ReportesController.php?Op=buscarRegionFiscal',
         type:'GET',
         async:false,
@@ -486,9 +531,110 @@ function obtenerRegionesFiscales(){
             swalError("Error en el servidor");
         }
     });
-
 }
 
+
+function listaDeTodosLosDiarios(){
+    var lista=[],__datos=[],__datosMolares=[];
+             $.ajax({
+                 url:'../Controller/GeneradorReporteController.php?Op=ListByMonthAndYear',
+                 type:'POST',
+                 data:'MONTH='+myCombo.getSelectedValue()+"&YEAR="+myCombo2.getSelectedValue(),
+                 success:function(r)
+                 {
+//                    data1=r;
+                   $.each(r,function (index,value)
+                     {
+                         __datos.push( reconstruir(value,index++) );
+                         
+                     });
+//                    DataGrid=[];
+                   DataGrid=__datos;
+                   
+                    gridInstance.loadData();
+                	
+                    
+                 },
+                 error:function()
+                 {
+                 }
+             }); 
+//             $.ajax({
+//                 url:'../Controller/GeneradorReporteController.php?Op=ListPorcentajesMolaresMes',
+//                 type:'POST',
+//                 data:'MES='+myCombo.getSelectedValue()+"&ANO="+myCombo2.getSelectedValue(),
+//                 success:function(r)
+//                 {
+////                    data1=r;
+//                   $.each(r,function (index,value)
+//                     {
+//                       
+//                	   __datosMolares.push( reconstruirMolares(value,index++) );
+//                     });
+//                   DataGridMolares=__datosMolares;
+//                   
+//                   gridInstanceMolares.loadData();
+//                	
+//                    
+//                 },
+//                 error:function()
+//                 {
+//                 }
+//             }); 
+}
+function calculoDeTodosLosDiarioMensualConAnual(){
+       var lista=[],__datos=[];
+               $.ajax({
+                   url:'../Controller/GeneradorReporteController.php?Op=ListByMonthAndYearCalculo',
+                   type:'POST',
+                   data:'MONTH='+myCombo.getSelectedValue()+"&YEAR="+myCombo2.getSelectedValue(),
+                   success:function(r)
+                   {
+//                      data1=r;
+                     $.each(r,function (index,value)
+                       {
+                           __datos.push( reconstruir(value,index++) );
+                       });
+                     DataGrid=[];
+                     DataGrid=__datos;
+                     gridInstance.loadData();
+                   },
+                   error:function()
+                   {
+                   }
+               }); 
+}
+
+
+function mostrarMolaresMensual(){
+    var __datosMolares=[]
+        $.ajax({
+                 url:'../Controller/GeneradorReporteController.php?Op=ListPorcentajesMolaresMes',
+                 type:'POST',
+                 data:'MES='+myCombo.getSelectedValue()+"&ANO="+myCombo2.getSelectedValue(),
+                 async:false,
+                 success:function(r)
+                 {
+//                    data1=r;
+                   $.each(r,function (index,value)
+                     {
+                       
+                	   __datosMolares.push( reconstruirMolares(value,index++) );
+                     });
+                   DataGridMolares=__datosMolares;
+                   
+                   gridInstanceMolares.loadData();
+                	 $('#createitemMolares').modal({
+                             show: 'true'
+                         }); 
+                        
+                    
+                 },
+                 error:function()
+                 {
+                 }
+             });
+}
 
 
  </script>   
