@@ -69,7 +69,7 @@ class ReporteDao{
                     tbcatalogo_produccion.ubicacion, tbcatalogo_produccion.tag_patin, tbcatalogo_produccion.tipo_medidor
                     FROM asignaciones_contrato tbasignaciones_contrato
                     LEFT JOIN catalogo_produccion tbcatalogo_produccion ON tbasignaciones_contrato.id_asignacion = tbcatalogo_produccion.id_asignacion
-                    WHERE tbasignaciones_contrato.contrato = $CONTRATO AND lower(tbasignaciones_contrato.region_fiscal) = lower('$CADENA')";
+                    WHERE tbasignaciones_contrato.contrato = $CONTRATO AND lower(tbasignaciones_contrato.region_fiscal) = lower('$CADENA') GROUP BY tbcatalogo_produccion.ubicacion";
             
             $db = AccesoDB::getInstancia();
             $exito = $db->executeQuery($query);
