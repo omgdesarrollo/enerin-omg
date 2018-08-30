@@ -587,7 +587,7 @@ function calculoDeTodosLosDiarioMensualConAnual(){
                $.ajax({
                    url:'../Controller/GeneradorReporteController.php?Op=ListByMonthAndYearCalculo',
                    type:'POST',
-                   data:'MONTH='+myCombo.getSelectedValue()+"&YEAR="+myCombo2.getSelectedValue(),
+                   data:'MONTH='+myCombo.getSelectedValue()+"&YEAR="+myCombo2.getSelectedValue()+"&REGION_FISCAL="+myCombo3.getSelectedValue(),
                    success:function(r)
                    {
 //                      data1=r;
