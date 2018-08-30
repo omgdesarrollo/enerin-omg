@@ -14,6 +14,11 @@ function construirGrid()
     {
         loadData: function()
         {
+            // $(".jsgrid-grid-body").attr("style","height:50%");
+            if(DataGrid.length == 0)
+                $(".jsgrid-grid-header").css("overflow-x","auto");
+            else
+                $(".jsgrid-grid-header").css("overflow-x","hidden");
             return DataGrid;
         },
         updateItem:function()
@@ -29,6 +34,7 @@ function construirGrid()
             gridInstance=args.grid;
             jsGrid.Grid.prototype.editButton=true;
             jsGrid.Grid.prototype.autoload=true;
+            // $(".jsgrid-grid-body").attr("style","height:50%");
         },
         onDataLoading: function(args)
         {
@@ -37,9 +43,11 @@ function construirGrid()
         onDataLoaded:function(args)
         {
             $('.jsgrid-filter-row').removeAttr("style",'display:none');
+            $(".jsgrid-grid-body").attr("style","height:53.44228935%");
+            // $(".jsgrid-grid-header").attr("style","overflow-x:auto");
         },
         width: "100%",
-        height: "300px",
+        height: "335px",
         autoload:true,
         heading: true,
         sorting: true,
@@ -51,7 +59,8 @@ function construirGrid()
         pageButtonCount: 5,
         updateOnResize: true,
         confirmDeleting: false,
-        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+        noDataContent:"No Existen Registros",
+        pagerFormat: "Paginas: {first} {prev} {pages} {next} {last}   {pageIndex} de {pageCount}",
         fields: estructuraGrid,
         onItemDeleted:function(args)
         {
