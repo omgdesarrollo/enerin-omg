@@ -183,11 +183,13 @@ function listarDatos()
     function limpiarNuevaEvidenciaModal()
     {
         $("#NOMBRETEMA_NUEVAEVIDENCIA").val("");
+        $("#NOMBRETEMA_NUEVAEVIDENCIA").removeAttr("disabled");
         $("#NOMBREREGISTRO_NUEVAEVIDENCIA").val("");
         $("#FECHA_NUEVAEVIDENCIAMODAL").val("");
         $("#FRECUENCIA_NUEVAEVIDENCIAMODAL").html("");
         $("#DOCUMENTO_NUEVAEVIDENCIAMODAL").html("");
         $("#NOMBRE_NUEVAEVIDENCIAMODAL").html("");
+
     }
     
     // function saveSingleToDatabase(Obj,tabla,columna,id,contexto)
