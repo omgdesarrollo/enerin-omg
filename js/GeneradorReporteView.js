@@ -86,16 +86,15 @@ function construirGridGenerador()
                 { name:"omgc10", title: "°API", type: "text", width: 170, validate: "required" },
                 { name:"omgc11", title: "%S", type: "text", width: 170, validate: "required" },
                 { name:"omgc12", title: "%H2O", type: "text", width: 180, validate: "required" },
-                { name:"omgc13", title: "Producción de gas medido[MMPC]", type: "text", width: 180, validate: "required" },
-                { name:"omgc14", title: "Poder Calorifico de gas", type: "text", width: 180, validate: "required" },
-                { name:"omgc15", title: "Peso Molecular de gas", type: "text", width: 150, validate: "required" },
-                { name:"omgc16", title: "Energia de gas", type: "text", width: 150, validate: "required" },
+                { name:"omgc13", title: "Producción de gas medido [MMPC]", type: "text", width: 180, validate: "required" },
+                { name:"omgc14", title: "Poder Calorífico de Gas [BTU/PC]", type: "text", width: 180, validate: "required" },
+                { name:"omgc15", title: "Peso Molecular de Gas [Lb/mol]", type: "text", width: 150, validate: "required" },
+                { name:"omgc16", title: "Energía de Gas [MMBTU]", type: "text", width: 150, validate: "required" },
                 { name:"omgc17", title: "Eventos", type: "text", width: 150, validate: "required" }
 //                { name:"omgc18", title: "Fecha Real Reporte", type: "text", width: 190, validate: "required" }               
 //                { name:"delete", title:"Opción", type:"customControl" }
         ]
-        
-        
+    
     });
 }
 
