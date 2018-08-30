@@ -1,5 +1,6 @@
 <?php
 require_once '../dao/TareasDAO.php';
+require_once '../Model/NotificacionesModel.php';
 
 class TareasModel{
     
@@ -18,12 +19,18 @@ class TareasModel{
         }
     }
     
-    public function insertarTarea($contrato,$tarea,$fecha_creacion,$fecha_alarma,$fecha_cumplimiento,$observaciones,$id_empleado)
+    public function insertarTarea($contrato,$tarea,$fecha_creacion,$fecha_alarma,$fecha_cumplimiento,$observaciones,$id_empleado,$mensaje,
+                                  $responsable_plan,$tipo_mensaje,$atendido)
     {
         try
         {
+            $contrato= Session::getSesion("s_cont");
+            $id_usuario=Session::getSesion("user");
+            $asunto="";
             $dao=new TareasDAO();
+            $model=new NotificacionesModel();
             $exito= $dao->insertarTarea($contrato, $tarea, $fecha_creacion, $fecha_alarma, $fecha_cumplimiento,$observaciones,$id_empleado);
+            $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $responsable_plan, $mensaje, $tipo_mensaje, $atendido,$asunto, $contrato);
             
             if($exito[0] = 1)
             {

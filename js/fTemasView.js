@@ -12,7 +12,7 @@ id_seleccionado="";
          $.ajax({
              url:'../Controller/TemasController.php?Op=GuardarNodo',
              type:'POST',
-             data:JSON.stringify(formData),
+             data:formData,
              success:function(r)
              {
                

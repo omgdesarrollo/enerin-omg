@@ -11,7 +11,10 @@ $(function()
         tareaDatos.fecha_cumplimiento = $("#FECHA_CUMPLIMIENTO").val();
         tareaDatos.observaciones = $("#OBSERVACIONES").val();
         tareaDatos.archivo_adjunto = $('#fileupload').fileupload('option', 'url');
-        
+        tareaDatos.mensaje="Se le asigno una tarea";
+        tareaDatos.reponsable_plan= $("#ID_EMPLEADOMODAL").val();
+        tareaDatos.tipo_mensaje= 0;
+        tareaDatos.atendido= false;
         listo=
             (
                 tareaDatos.contrato!=""?
@@ -337,7 +340,7 @@ function listarEmpleados()
 
 function insertarTareas(tareaDatos)
 {
-//    console.log("Datos: "+tareaDatos);
+    console.log(tareaDatos);
     $.ajax({
         url:"../Controller/TareasController.php?Op=Guardar",
         type:"POST",
@@ -349,12 +352,13 @@ function insertarTareas(tareaDatos)
 //            console.log(datos);
             if(typeof(datos) == "object")
             {
+                
                 tempData;
                 swalSuccess("Tarea Creada");                
                 $.each(datos,function(index,value)
                 {
-//                   console.log("entro"); 
                    tempData= reconstruir(value,ultimoNumeroGrid+1);  
+                   console.log(value.id_empleado); 
                 });
                 console.log(tempData);
                 
