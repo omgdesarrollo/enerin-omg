@@ -14,11 +14,9 @@ public function mostrarTemas($cadena,$contrato)
                 FROM temas tbtemas
                 JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
                 WHERE tbtemas.identificador LIKE '%$cadena%'    and  tbtemas.contrato=$contrato";
-
         $db=  AccesoDB::getInstancia();
         $lista=$db->executeQuery($query);
         return $lista;
-
     }catch (Exception $ex)
     {       
         throw $ex;
