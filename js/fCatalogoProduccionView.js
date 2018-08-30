@@ -27,7 +27,8 @@ function reconstruir(value,index)
     tempData = new Object();
     ultimoNumeroGrid = index;
     tempData["no"] = index;
-    tempData["id_principal"] = [{"id_catalogoP":value.id_catalogoP}];
+    tempData["id_principal"] = [];
+    tempData["id_principal"].push({"id_catalogoP":value.id_catalogoP});
     tempData["region_fiscal"] = value.region_fiscal;
     tempData["clave_contrato"] = value.clave_contrato;
     tempData["ubicacion"] = value.ubicacion;
@@ -36,7 +37,11 @@ function reconstruir(value,index)
     tempData["tag_medidor"] = value.tag_medidor;
     tempData["clasificacion"] = value.clasificacion;
     tempData["hidrocarburo"] = value.hidrocarburo;
-    tempData["delete"] = "1";
+
+    tempData["id_principal"].push({eliminar:1});
+    tempData["id_principal"].push({editar:1});//si quieres que edite 1, si no 0
+
+    tempData["delete"]=tempData["id_principal"];
     return tempData;
 }
 
@@ -139,7 +144,7 @@ function listarUno(ID_insertado)
 
 function preguntarEliminar(data)
 {
-    // valor = true;
+    console.log(data);
     swal({
         title: "",
         text: "¿Eliminar Registro?",
@@ -154,7 +159,7 @@ function preguntarEliminar(data)
         {
             if(confirmacion)
             {
-                eliminarRegistro(data.id_principal[0].id_catalogoP);
+                eliminarRegistro(data.id_catalogoP);
             }
             else
             {
@@ -260,12 +265,14 @@ function saveUpdateToDatabase(args)//listo
     {
         if(args['previousItem'][index]!=value && value!="")
         {
-            if(index!='id_principal' && !value.includes("<button"))
+            if(index!='id_principal' && !value.includes("<button") && index!="delete")
             {
                 columnas[index]=value;
             }
         }
     });
+
+    console.log(columnas);
 
     if( Object.keys(columnas).length != 0)
     {

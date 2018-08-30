@@ -47,6 +47,39 @@ switch ($Op) {
         echo json_encode($Lista);
 //        return $Lista;
         break;
+        
+    case 'enviarNotificacionWhenUpdate':
+        $Lista= $model->enviarNotificacionWhenUpdate($_REQUEST['ID_EMPLEADO'],$_REQUEST['TAREA']);
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+        return $Lista;
+        
+        break;
+    
+    case 'enviarNotificacionWhenRemoveTarea':
+        $Lista= $model->enviarNotificacionWhenRemoveTarea($_REQUEST['ID_EMPLEADO'],$_REQUEST['TAREA']);
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+        return $Lista;
+        
+        break;
+    
+    case 'enviarNotificacionWhenRemoveTareaAlNuevoUsuario':
+        $Lista= $model->enviarNotificacionWhenRemoveTareaAlNuevoUsuario($_REQUEST['ID_EMPLEADO'],$_REQUEST['TAREA']);
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+        return $Lista;
+        
+        break;
+    
+    case 'enviarNotificacionWhenDeleteTarea':
+        $Lista= $model->enviarNotificacionWhenDeleteTarea($_REQUEST['ID_EMPLEADO'],$_REQUEST['TAREA']);
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+        return $Lista;
+        
+        break;
+        
     
     case 'Eliminar':
         header('Content-type: application/json; charset=utf-8');

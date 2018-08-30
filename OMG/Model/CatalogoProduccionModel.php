@@ -210,7 +210,7 @@ class CatalogoProduccionModel{
                         // $query .= $key ."= '".utf8_decode( $value )."'";
                         $query .= $key ."= '$value'";
                     $index++;
-                    if($key == "clave_Contrato" || $key == "region_fiscal")
+                    if($key == "clave_contrato" || $key == "region_fiscal")
                         $banderaTA++;
                 // }
                 // else

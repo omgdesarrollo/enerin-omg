@@ -11,7 +11,7 @@ $(function()
         tareaDatos.fecha_cumplimiento = $("#FECHA_CUMPLIMIENTO").val();
         tareaDatos.observaciones = $("#OBSERVACIONES").val();
         tareaDatos.archivo_adjunto = $('#fileupload').fileupload('option', 'url');
-        tareaDatos.mensaje="Se le asigno la tarea: "+$("#TAREA").val()+" por el usuario: ";
+        tareaDatos.mensaje="Se le asigno la tarea: "+$("#TAREA").val()+" por el Usuario: ";
         tareaDatos.reponsable_plan= $("#ID_EMPLEADOMODAL").val();
         tareaDatos.tipo_mensaje= 0;
         tareaDatos.atendido= 'false';
@@ -143,6 +143,14 @@ function construirGrid()
             console.log(args);
             columnas={};
             id_afectado=args["item"]["id_principal"][0];
+            id_empleadoActual=args["item"]["id_empleado"];
+            id_empleadoAnterior=args["previousItem"]["id_empleado"];
+            tarea=args["item"]["tarea"];
+            
+            console.log("el nuevo: "+id_empleadoActual);
+            console.log("el que estaba: "+id_empleadoAnterior);
+//            console.log("La: "+tarea);
+            
             $.each(args["item"],function(index,value)
             {
                     if(args["previousItem"][index] != value && value!="")
@@ -159,9 +167,21 @@ function construirGrid()
                             url: '../Controller/GeneralController.php?Op=Actualizar',
                             type:'GET',
                             data:'TABLA=tareas'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
-                            success:function(exito)
+//                            data:'COLUMNAS='+JSON.stringify(columnas)+"&ID="+JSON.stringify(id_afectado),
+                            success:function(datos)
                             {
-//                                actualizarDespuesdeEditaryEliminar();
+//                                console.log(datos);
+                                if(id_empleadoActual==id_empleadoAnterior)
+                                {
+                                    enviarNotificacionWhenUpdate(id_empleadoActual,tarea);
+                                } else{
+                                    if(id_empleadoActual!=id_empleadoAnterior)
+                                    {
+                                        enviarNotificacionWhenRemoveTarea(id_empleadoAnterior,tarea);
+                                        enviarNotificacionWhenRemoveTareaAlNuevoUsuario(id_empleadoActual,tarea);
+                                    }
+                                }
+                                
                                 refresh();
                                 swal("","Actualizacion Exitosa!","success");
                                 setTimeout(function(){swal.close();},1000);
@@ -533,31 +553,30 @@ function preguntarEliminar(data)
 
 function eliminarRegistro(item)
 {
-    alert("Entro a la funcion eliminar: "+item);
+//    alert("Entro a la funcion eliminar: "+item);
     id_afectado= item['id_principal'][0];
-
+    id_empleadoActual=item["id_empleado"];
+    tarea=item["tarea"];
+//    console.log("ID Eliminado: "+id_empleadoActual);
+//    console.log("TArea Eliminada: "+tarea);  
+    
     $.ajax({
         url:"../Controller/TareasController.php?Op=Eliminar",
         type:"POST",
         data:"ID_TAREA="+JSON.stringify(id_afectado),
         success:function(data)
         {
-            alert("Entro al success "+data);
+//            alert("Entro al success "+data);
             if(data==false)
             {
-//                swal("","La Tarea tiene cargado un Programa","error");
-//                setTimeout(function(){swal.close();},1500);
                 swalError("La Tarea tiene cargado un Programa");
                 
             }else{
                 if(data==true)
                 {
-//                    alert("Entro al success "+data);
-//                    actualizarDespuesdeEditaryEliminar();
                     refresh();
-//                    swal("","Se elimino correctamente La Tarea","success");
-//                    setTimeout(function(){swal.close();},1500);
                     swalSuccess("Se elimino correctamente La Tarea");
+                    enviarNotificacionWhenDeleteTarea(id_empleadoActual,tarea);
                 }
             }
         },
@@ -586,13 +605,82 @@ function loadSpinner()
 }
 
 
-function actualizarDespuesdeEditaryEliminar()
+function enviarNotificacionWhenUpdate(id_empleado,tarea)
+
 {
-   listarEmpleados();
-   listarDatos();
-   gridInstance.loadData();
+        $.ajax({
+            url:"../Controller/TareasController.php?Op=enviarNotificacionWhenUpdate",
+            data: "ID_EMPLEADO="+id_empleado+"&TAREA="+tarea,
+            success:function(response)
+            {
+//            (response==true)?(
+//                growlSuccess("Notificación","Se notifico del cambio")
+//                // swalSuccess("Se notifico del cambio "),
+//                //  refresh()
+//                )
+//            :growlError("Error Notificación","No se pudo notificar el cambio");
+            
+            },
+            error:function()
+            {
+//            growlError("Error Notificación","Error en el servidor");
+            // swalError("Error en el servidor");
+            }
+        });
 }
 
+
+function enviarNotificacionWhenRemoveTarea(id_empleadoAnterior,tarea)
+
+{
+        $.ajax({
+            url:"../Controller/TareasController.php?Op=enviarNotificacionWhenRemoveTarea",
+            data: "ID_EMPLEADO="+id_empleadoAnterior+"&TAREA="+tarea,
+            success:function(response)
+            {
+            
+            },
+            error:function()
+            {
+
+            }
+        });
+}
+
+
+function enviarNotificacionWhenRemoveTareaAlNuevoUsuario(id_empleadoActual,tarea)
+
+{
+        $.ajax({
+            url:"../Controller/TareasController.php?Op=enviarNotificacionWhenRemoveTareaAlNuevoUsuario",
+            data: "ID_EMPLEADO="+id_empleadoActual+"&TAREA="+tarea,
+            success:function(response)
+            {
+            
+            },
+            error:function()
+            {
+                
+            }
+        });
+}
+
+
+function enviarNotificacionWhenDeleteTarea(id_empleadoActual,tarea)
+{
+    $.ajax({
+            url:"../Controller/TareasController.php?Op=enviarNotificacionWhenDeleteTarea",
+            data: "ID_EMPLEADO="+id_empleadoActual+"&TAREA="+tarea,
+            success:function(response)
+            {
+            
+            },
+            error:function()
+            {
+                
+            }
+        });   
+}
 
 function loadBlockUi()
 {

@@ -131,10 +131,11 @@ MyCControlField.prototype = new jsGrid.Field
         editTemplate: function(value)
         {
             var val = "";
-            if(value[2]["editar"==1])
+            console.log(value);
+            if(value[2]["editar"]==1)
             {
-            val = "<input class='jsgrid-button jsgrid-update-button' type='button' title='Actualizar' onClick='aceptarEdicion()'>";
-            val += "<input class='jsgrid-button jsgrid-cancel-edit-button' type='button' title='Cancelar Edición' onClick='cancelarEdicion()'>";
+                val = "<input class='jsgrid-button jsgrid-update-button' type='button' title='Actualizar' onClick='aceptarEdicion()'>";
+                val += "<input class='jsgrid-button jsgrid-cancel-edit-button' type='button' title='Cancelar Edición' onClick='cancelarEdicion()'>";
             }
             else
             {
