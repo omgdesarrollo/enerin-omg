@@ -46,12 +46,12 @@ class EvidenciasModel
             throw $e;
         }
     }
-    public function crearEvidencia($ID_USUARIO,$ID_REGISTRO)
+    public function crearEvidencia($ID_USUARIO,$ID_REGISTRO,$FECHA_CREACION)
     {
         try
         {
             $dao = new EvidenciasDAO();
-            $rec = $dao->crearEvidencia($ID_USUARIO,$ID_REGISTRO);
+            $rec = $dao->crearEvidencia($ID_USUARIO,$ID_REGISTRO,$FECHA_CREACION);
             return $rec;
         }catch(Exception $e)
         {
@@ -145,6 +145,20 @@ class EvidenciasModel
         {
             $dao=new EvidenciasDAO();
             $rec = $dao->mandarAccionCorrectiva($ID_EVIDENCIA,$MENSAJE,$COLUMNA);
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
+    public function checarDisponiblidad($ID_REGISTRO,$FECHA)
+    {
+        try
+        {
+            $dao=new EvidenciasDAO();
+            $rec = $dao->checarDisponiblidad($ID_REGISTRO,$FECHA);
             return $rec;
         } catch (Exception $ex)
         {

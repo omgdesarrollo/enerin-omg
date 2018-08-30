@@ -23,20 +23,35 @@ switch ($Op) {
 		return $Lista;
 		break;	
 
-	case 'Guardar':
-           
-                  $pojo->setId_documento_entrada($_REQUEST['ID_DOCUMENTO_ENTRADA']);
-                  $pojo->setFolio_salida($_REQUEST['FOLIO_SALIDA']);
-                  $pojo->setFecha_envio($_REQUEST['FECHA_ENVIO']);
-                  $pojo->setAsunto($_REQUEST['ASUNTO']);
-                  $pojo->setDestinatario($_REQUEST['DESTINATARIO']);
-                  $pojo->setObservaciones($_REQUEST['OBSERVACIONES']);
-                  
-                           
-                  $model->insertar($pojo);            
+//	case 'Guardar':
+//           
+//                  $pojo->setId_documento_entrada($_REQUEST['ID_DOCUMENTO_ENTRADA']);
+//                  $pojo->setFolio_salida($_REQUEST['FOLIO_SALIDA']);
+//                  $pojo->setFecha_envio($_REQUEST['FECHA_ENVIO']);
+//                  $pojo->setAsunto($_REQUEST['ASUNTO']);
+//                  $pojo->setDestinatario($_REQUEST['DESTINATARIO']);
+//                  $pojo->setObservaciones($_REQUEST['OBSERVACIONES']);
+//                  
+//                           
+//                  $model->insertar($pojo);            
+//		break;
             
+        case 'Guardar':
+            header('Content-type: application/json; charset=utf-8');
+            $data= json_decode($_REQUEST['documentoSalidaDatos'],true);
             
-		break;
+            $pojo->setId_documento_entrada($data['id_documento_entrada']);
+            $pojo->setFolio_salida($data['folio_salida']);
+            $pojo->setFecha_envio($data['fecha_envio']);
+            $pojo->setAsunto($data['asunto']);
+            $pojo->setDestinatario($data['destinatario']);
+            $pojo->setObservaciones($data['observaciones']);
+            
+            $Lista= $model->insertar($pojo);
+            echo json_encode($Lista);
+            return $Lista;
+            break;
+            
 
 	case 'Modificar':
    					

@@ -1,25 +1,22 @@
 <?php
 require_once '../ds/AccesoDB.php';
 class DocumentoSalidaDAO{
+    
     public function mostrarDocumentosSalida(){
         try{
             $query="SELECT tbdocumento_salida.id_documento_salida,tbdocumento_entrada.id_documento_entrada,
                     tbdocumento_entrada.folio_entrada,tbdocumento_salida.folio_salida,
                     tbdocumento_salida.fecha_envio, tbdocumento_salida.asunto,
-                    tbautoridad_remitente.clave_autoridad clave_entidad,tbdocumento_salida.destinatario,
+                    tbautoridad_remitente.clave_autoridad,tbdocumento_salida.destinatario,
                     tbempleados.nombre_empleado,tbempleados.apellido_paterno, 
                     tbempleados.apellido_materno, tbdocumento_salida.documento,
                     tbdocumento_salida.observaciones FROM documento_salida tbdocumento_salida
-
                     JOIN documento_entrada tbdocumento_entrada ON
                     tbdocumento_entrada.id_documento_entrada=tbdocumento_salida.id_documento_entrada
-
                     JOIN autoridad_remitente tbautoridad_remitente ON
                     tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad
-
                     JOIN temas tbtemas ON
                     tbtemas.id_tema=tbdocumento_entrada.id_tema
-
                     JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado";
 
 
@@ -31,6 +28,37 @@ class DocumentoSalidaDAO{
     }  catch (Exception $ex){
         //throw $rec;
         throw $ex;
+    }
+    }
+    
+        public function mostrarDocumentoSalida($ID_DOCUMENTO){
+        try{
+            $query="SELECT tbdocumento_salida.id_documento_salida,tbdocumento_entrada.id_documento_entrada,
+                    tbdocumento_entrada.folio_entrada,tbdocumento_salida.folio_salida,
+                    tbdocumento_salida.fecha_envio, tbdocumento_salida.asunto,
+                    tbautoridad_remitente.clave_autoridad,tbdocumento_salida.destinatario,
+                    tbempleados.nombre_empleado,tbempleados.apellido_paterno, 
+                    tbempleados.apellido_materno, tbdocumento_salida.documento,
+                    tbdocumento_salida.observaciones 
+                    
+                    FROM documento_salida tbdocumento_salida
+                    JOIN documento_entrada tbdocumento_entrada ON
+                    tbdocumento_entrada.id_documento_entrada=tbdocumento_salida.id_documento_entrada
+                    JOIN autoridad_remitente tbautoridad_remitente ON
+                    tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad
+                    JOIN temas tbtemas ON
+                    tbtemas.id_tema=tbdocumento_entrada.id_tema
+                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
+                    WHERE tbdocumento_salida.id_documento_salida=$ID_DOCUMENTO";
+
+
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista;
+    }  catch (Exception $ex){
+        throw $ex;
+        return -1;
     }
     }
     
@@ -61,8 +89,12 @@ class DocumentoSalidaDAO{
                                                     
                                           VALUES ($id_nuevo,$id_documento_entrada,'$folio_salida','$fecha_envio','$asunto','$destinatario','$observaciones');";
             
+//            $db=  AccesoDB::getInstancia();
+//            $db->executeQueryUpdate($query);
             $db=  AccesoDB::getInstancia();
-            $db->executeQueryUpdate($query);
+            $exito = $db->executeUpdateRowsAfected($query);
+            return ($exito != 0)?[0=>1,"id_nuevo"=>$id_nuevo]:[0=>0,"id_nuevo"=>$id_nuevo ];
+             
         } catch (Exception $ex) {
                 throw $ex;
         }   

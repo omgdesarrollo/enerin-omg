@@ -23,6 +23,8 @@ class NotificacionesModel {
       try{
             $dao=new NotificacionesDAO();
             $rec=$dao->guardarNotificacionHibry($id_usuario,$id_para,$mensaje,$tipo,$atendido,$asunto,$CONTRATO);
+            
+//            echo "valores rec: ".json_encode($rec);
             return $rec;
         }catch (Exception $ex)
         {

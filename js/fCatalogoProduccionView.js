@@ -185,26 +185,11 @@ function eliminarRegistro(id)
             {
                 if(respuesta==1)
                 {
-                    
-                    // listarDatos();
-                    // $.ajax({
-                    //     url:'../Controller/CatalogoProcesosController.php?Op=listarUno',
-                    //     type:'GET',
-                    //     data:'ID_CONTRATO='+id,
-                    //     success:function(datos)
-                        // {
-                            // console.log("aqui");
                             dataListadoTemp=[];
                             dataItem = [];
                             numeroEliminar=0;
                             itemEliminar={};
-                    //         tempData = new Object();
-                    //         $.each(datos,function(index,value){
-                    //             tempData = reconstruir(value,ultimoNumeroGrid+1);
-                    //         });
-
-                            // dataListado.push(datos);
-                            // DataGrid.push(tempData);
+                    
                             $.each(dataListado,function(index,value)
                             {
                                 value.id_catalogoP != id ? dataListadoTemp.push(value) : (dataItem.push(value), numeroEliminar=index+1);
@@ -219,24 +204,9 @@ function eliminarRegistro(id)
                             {
                                 DataGrid.push( reconstruir(value,index+1) );
                             });
-                            // console.log(DataGrid);
-                            // $("#jsGrid").jsGrid("deleteItem",$(".jsgrid-row jsgrid-selected-row"));
-
-                            // console.log("final");
-                            // val = false;
-                            // argsGlobal.cancel = false;
-                            // console.log(gridInstance.onItemDeleting());
-                            // swalSuccess("Registro Eliminado");
                             gridInstance.loadData();
                             growlSuccess("Eliminación","Registro Eliminado");
                             swal.close();
-                            // $("#jsGrid").jsGrid("insertItem",tempData);
-                        // },
-                        // error:function()
-                        // {
-                        //     swalError("Error en el servidor al intentar eliminar el registro de la vista");
-                        // }
-                    // });
                 }
                 else
                 {

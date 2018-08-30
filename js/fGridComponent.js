@@ -105,11 +105,14 @@ MyCControlField.prototype = new jsGrid.Field
         },
         itemTemplate: function(value,todo)
         {
-            var returnTemp;
-            console.log(value);
+            var returnTemp="";
+            // console.log(value);
             // value == 0 ? returnTemp = "" : returnTemp = this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button ',title:"Eliminar", type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
-            returnTemp = "<input class='jsgrid-button jsgrid-edit-button' type='button' title='Editar' onClick='modoEditar()'>";
-            returnTemp += "<input class='jsgrid-button jsgrid-delete-button' type='button' title='Eliminar' onClick='preguntarEliminar("+JSON.stringify(todo)+")'>";
+            if(value[2]["editar"==1])
+                returnTemp = "<input class='jsgrid-button jsgrid-edit-button' type='button' title='Editar' onClick='modoEditar()'>";
+            if(value[1]["eliminar"]==1)
+                returnTemp += "<input class='jsgrid-button jsgrid-delete-button' type='button' title='Eliminar' onClick='preguntarEliminar("+JSON.stringify(value[0])+")'>";
+            // returnTemp += "<input type='label' value='"+JSON.stringify(todo)+"' style='display:false'>";
             // console.log(returnTemp);
             return returnTemp;
         },
@@ -118,8 +121,17 @@ MyCControlField.prototype = new jsGrid.Field
         },
         editTemplate: function(value)
         {
+            var val = "";
+            if(value[2]["editar"==1])
+            {
             val = "<input class='jsgrid-button jsgrid-update-button' type='button' title='Actualizar' onClick='aceptarEdicion()'>";
             val += "<input class='jsgrid-button jsgrid-cancel-edit-button' type='button' title='Cancelar Edición' onClick='cancelarEdicion()'>";
+            }
+            else
+            {
+                if(value[1]["eliminar"]==1)
+                    val += "<input class='jsgrid-button jsgrid-delete-button' type='button' title='Eliminar' onClick='preguntarEliminar("+JSON.stringify(value[0])+")'>";
+            }
             return val;
         },
         insertValue: function()
