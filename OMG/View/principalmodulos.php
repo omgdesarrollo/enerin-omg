@@ -304,30 +304,37 @@ ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: 
     
      function loadDataMenuRibbonSeccionArriba(){	
 
+         var datosSeccionesRibbon=[];
+                
+        //aqui empieza este siempre va por que es el que permite cerrar sesion 
+        datosSeccionesRibbon.push({id:'0x2',mode:'cols',text:'Principal',type:'block', 
+		list:[
+		    {id:'logout',text:'Cerrar',img:'cerrarsesion.png', type:'button',isbig:true}
+		   
+		      ]	});
+        //aqui termina e que permite cerrar sesion
+//        seccionTareas[];
         $.ajax({  
                      url: "../Controller/LoadEstructuraPantallaGeneralController.php?Op=VistasPorUsuarioLaCualTienePermisos",  
                      async:false,
                     success: function(r) {    
-                   
+                                $.each(r,function (index,value){
+                                        if(value["nombre"]=="EmpleadosTareasView.php"){
+                                            if(value["EDIT"]=="true" || value["consult"]=="true" || value["delete"]=="true" || value["new"]=="true"){
+                                               datosSeccionesRibbon.push( {id:'0x35',mode:'cols',text:'Tareas',type:'block',
+                                                     list:seccionTareas}   );   
+                                            }
+                                        }   
+                                })
                      },
                      beforeSend:function(r){
 
                      }
                  
-        });  
-
-
-
-     
-	var inicio=[
-        {id:'00',text:'<div id=\'desc\'>contrato(NO SELECCIONADO)</div>' ,items:[
+        });    
+       
         
-                    {id:'0x1',mode:'cols',text:'Contratos',type:'block',
-          list:datacontratos
-        }
-        ]},
-    
-	{id:'0',text:'OMG', active:true, items:[
+        datosSeccionesRibbonArriba=[
 	{id:'0x2',mode:'cols',text:'Principal',type:'block', 
 		list:[
 		    {id:'logout',text:'Cerrar',img:'cerrarsesion.png', type:'button',isbig:true}
@@ -350,7 +357,18 @@ ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: 
                              
                              {id:'0x37',mode:'cols',text:'Usuario',type:'block',
           list:infosesionusuario}
-	] }
+	];
+        
+
+        
+	var inicio=[
+        {id:'00',text:'<div id=\'desc\'>contrato(NO SELECCIONADO)</div>' ,items:[
+        
+                    {id:'0x1',mode:'cols',text:'Contratos',type:'block',
+          list:datacontratos
+        }
+        ]},
+	{id:'0',text:'OMG', active:true, items:datosSeccionesRibbon }
         ];
     
     

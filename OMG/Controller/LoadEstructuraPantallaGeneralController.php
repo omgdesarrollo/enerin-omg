@@ -9,8 +9,7 @@ $Op=$_REQUEST["Op"];
 $modelAdmin= new AdminModel();
 
 switch ($Op) {
-    case "VistasPorUsuarioLaCualTienePermisos":
-        
+    case "VistasPorUsuarioLaCualTienePermisos":       
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($modelAdmin->listarUsuarioVistasAsignadasPorLoMenosUnTipoDePermisoParaMostrarVista(array("id_usuario"=> Session::getSesion("user")["ID_USUARIO"])));
     break;  
