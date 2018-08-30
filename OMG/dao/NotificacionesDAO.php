@@ -7,14 +7,18 @@ class NotificacionesDAO {
     
     public function guardarNotificacionHibry($id_usuario,$id_para,$mensaje,$tipo,$atendido,$asunto,$CONTRATO){
         try{
-            $query="INSERT INTO notificaciones  (id_de,id_para,tipo_mensaje,mensaje,atendido,asunto,id_contrato)
-            VALUES($id_usuario,$id_para,$tipo,'$mensaje','$atendido','$asunto',$CONTRATO)";
+//            $query="INSERT INTO notificaciones  (id_de,id_para,tipo_mensaje,mensaje,atendido,asunto,id_contrato)
+//            VALUES($id_usuario,$id_para,$tipo,'$mensaje','$atendido','$asunto',$CONTRATO)";
+            
+            $query="INSERT INTO notificaciones  (id_de,id_para,id_contrato,tipo_mensaje,mensaje,atendido,asunto)
+            VALUES($id_usuario,$id_para,$CONTRATO,$tipo,'$mensaje','$atendido','$asunto')";
 
             // echo $query;
             $db= AccesoDB::getInstancia($query);
             $lista=$db->executeQueryUpdate($query);
-            return $lista;
             
+//            echo "este es el query: ".json_encode($query);
+            return $lista;
         } catch (Exception $ex) {
             throw $ex;
             return false;

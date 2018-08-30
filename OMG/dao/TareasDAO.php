@@ -97,6 +97,27 @@ class TareasDAO{
         }
     }
     
+    public function obtenerUsuarioPorIdEmpleado($ID_EMPLEADO)
+    {
+        try
+        {
+            $query="SELECT tbusuarios.id_usuario
+                    FROM usuarios tbusuarios
+                    WHERE tbusuarios.id_empleado=$ID_EMPLEADO";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            
+//            echo "este es el query id_usuario: ".json_encode($query);
+            return $lista[0]['id_usuario'];
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+        
+    }
+    
 }
 
 ?>
