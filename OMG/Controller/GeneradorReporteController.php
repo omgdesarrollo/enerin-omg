@@ -19,7 +19,7 @@ switch ($Op) {
 	break;
     
         case 'ListByMonthAndYear':
-            $Lista= $modelGenerador->listarReportePorMonthAndYear($_REQUEST['MONTH'], $_REQUEST['YEAR'],Session::getSesion("s_cont"));
+            $Lista= $modelGenerador->listarReportePorMonthAndYear($_REQUEST['MONTH'], $_REQUEST['YEAR'],Session::getSesion("s_cont"),$_REQUEST["REGION_FISCAL"]);
             header('Content-type: application/json; charset=utf-8');
 	    echo json_encode($Lista);
             break;

@@ -520,7 +520,7 @@ function obtenerRegionesFiscales(){
         {
             $.each(datos,function(index,value)
             {
-                datosRegionesFiscales.push({value:index,text:value.region_fiscal});
+                datosRegionesFiscales.push({value:value.region_fiscal,text:value.region_fiscal});
 //                    htmlSelectRegionesFiscales+="<option value='"+value.region_fiscal+"'>"+value.region_fiscal+"</option>";
             });
              myCombo3.addOption(datosRegionesFiscales);
@@ -539,7 +539,7 @@ function listaDeTodosLosDiarios(){
              $.ajax({
                  url:'../Controller/GeneradorReporteController.php?Op=ListByMonthAndYear',
                  type:'POST',
-                 data:'MONTH='+myCombo.getSelectedValue()+"&YEAR="+myCombo2.getSelectedValue(),
+                 data:'MONTH='+myCombo.getSelectedValue()+"&YEAR="+myCombo2.getSelectedValue()+"&REGION_FISCAL="+(myCombo3.getSelectedValue()),
                  success:function(r)
                  {
 //                    data1=r;
