@@ -42,7 +42,7 @@ class DocumentoEntradaDAO{
                     JOIN autoridad_remitente tbautoridad_remitente ON tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad
                     JOIN temas tbtemas ON tbtemas.id_tema=tbdocumento_entrada.id_tema
                     JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
-                    WHERE tbcumplimientos.id_cumplimiento=$CONTRATO"; 
+                    WHERE tbcumplimientos.id_cumplimiento=$CONTRATO AND tbdocumento_entrada.id_documento_entrada!=-1"; 
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             return $lista;
@@ -100,12 +100,13 @@ class DocumentoEntradaDAO{
     
     
     
-    public function mostrarDocumentosEntradaComboBox(){
+    public function mostrarDocumentosEntradaComboBox($CONTRATO)
+    {
         try{
            
             $query="SELECT tbdocumento_entrada.id_documento_entrada, tbdocumento_entrada.folio_entrada
-
-                    FROM documento_entrada tbdocumento_entrada";
+                    FROM documento_entrada tbdocumento_entrada
+                    WHERE tbdocumento_entrada.id_cumplimiento=$CONTRATO OR tbdocumento_entrada.id_documento_entrada=-1";
             
             
             $db=  AccesoDB::getInstancia();

@@ -25,8 +25,19 @@ switch ($Op) {
     case 'Guardar':
         header('Content-type: application/json; charset=utf-8');
         $data= json_decode($_REQUEST['tareaDatos'],true);
-        $Lista= $model->insertarTarea($data['contrato'],$data['tarea'],$data['fecha_creacion'],$data['fecha_alarma'],
-                                      $data['fecha_cumplimiento'],$data['observaciones'],$data['id_empleado']);
+        $Lista= $model->insertarTarea(
+                $data['contrato'],
+                $data['tarea'],
+                $data['fecha_creacion'],
+                $data['fecha_alarma'],
+                $data['fecha_cumplimiento'],
+                $data['observaciones'],
+                $data['id_empleado'],
+                $data['mensaje'],
+                $data['reponsable_plan'],
+                $data['tipo_mensaje'],
+                $data['atendido']
+                );
         
         foreach ($Lista as $key => $value) {
             $url= "Tareas/".$value['id_tarea'];

@@ -303,7 +303,7 @@ function buscarTagPatinPorUbicacion(ubicacion)
         {
             $.each(datosTagPatin,function(index,value){
 //                alert(value.tag_patin);
-                if(index==0)
+//                if(index==0)
                 datosDhtmlTagPatin.push({value:index,text:value.tag_patin});                
             });
             
@@ -339,7 +339,7 @@ function buscarTagMedidorPorTagPatin(tagPatin)
         {
             $.each(datosTagMedidor,function(index,value){
 //                alert(value.tag_medidor);
-                if(index==0)
+//                if(index==0)
                 datosDhtmlTagMedidor.push({value:index,text:value.tag_medidor});                
             });
             
@@ -446,7 +446,7 @@ function insertarReporte(datos)
         },
         error:function()
         {
-            
+//            alert("Entro al error");
         }
     });
     
@@ -487,7 +487,7 @@ function construirGrid()
         },
         
         width: "100%",
-        height: "300px",
+        height: "350px",
         autoload:true,
         heading: true,
         sorting: true,
@@ -763,11 +763,13 @@ function precargados()
 
 
 function refresh()
-{
-   listarDatos();
+{  
+    alert("Entro al refresh");
+    listarDatos();
    inicializarFiltros();
    construirFiltros();
    gridInstance.loadData();
+   $(".jsgrid-grid-body").css({"height":"171px"});
 }
 
 

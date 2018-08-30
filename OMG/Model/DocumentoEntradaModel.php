@@ -58,10 +58,10 @@ class DocumentoEntradaModel{
     }
     
     
-    public function  listarDocumentosEntradaComboBox(){
+    public function  listarDocumentosEntradaComboBox($CONTRATO){
         try{
             $dao=new DocumentoEntradaDAO();
-            $rec=$dao->mostrarDocumentosEntradaComboBox();
+            $rec=$dao->mostrarDocumentosEntradaComboBox($CONTRATO);
             
             /*if($rec==NULL){
             throw new Exception("Usuario no existe !!!!!");

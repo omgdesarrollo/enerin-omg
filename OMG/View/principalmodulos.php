@@ -146,7 +146,7 @@ var seccionHerramientas=[
   var seccionOficios=[
      {id:'catalogooficios',text:'Catalogos',img:'catalogos.png',type:'button',isbig:true},  
      {id:'documentacion',text:'Documentacion',img:'oficios.png',type:'button',isbig:true},  
-     {id:'cargaprograma',text:'Seguimiento Entradas',img:'663.png',type:'button',isbig:true},
+     {id:'cargaprograma',text:'Seguimiento',img:'663.png',type:'button',isbig:true},
      {id:'informegerencial',text:'Informe Gerencial',img:'seguimiento.png',type:'button',isbig:true}
  ];
   var cambiodeidioma=[

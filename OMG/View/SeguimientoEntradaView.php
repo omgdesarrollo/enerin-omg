@@ -47,7 +47,7 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
                 <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
-                <script src="../../js/tools.js" type="text/javascript"></script>
+                <!--<script src="../../js/tools.js" type="text/javascript"></script>-->
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <script src="../../js/fSeguimientoEntradaView.js" type="text/javascript"></script>
                 

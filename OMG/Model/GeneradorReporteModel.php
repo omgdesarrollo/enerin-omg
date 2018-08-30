@@ -28,12 +28,12 @@ class GeneradorReporteModel {
     }
     
     
-    public function listarReportePorMonthAndYear($MONTH, $YEAR,$CONTRATO)
+    public function listarReportePorMonthAndYear($MONTH, $YEAR,$CONTRATO,$REGION_FISCAL)
     {
         try
         {
             $dao=new GeneradorReporteDao();
-            $rec= $dao->listarReportePorMonthAndYear($MONTH, $YEAR,$CONTRATO);
+            $rec= $dao->listarReportePorMonthAndYear($MONTH, $YEAR,$CONTRATO,$REGION_FISCAL);
             
             return $rec;
         } catch (Exception $ex)
