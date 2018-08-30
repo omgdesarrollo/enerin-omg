@@ -113,26 +113,28 @@ function reconstruir(value,index)
     tempData["clasificacion"] = value.clasificacion;
     tempData["hidrocarburo"] = value.hidrocarburo;
     tempData["omgc1"] = value.omgc1;
-    tempData["omgc2"] = value.omgc2;
-    tempData["omgc3"] = value.omgc3;
-    tempData["omgc4"] = value.omgc4;
-    tempData["omgc5"] = value.omgc5;
-    tempData["omgc6"] = value.omgc6;
-    tempData["omgc7"] = value.omgc7;
-    tempData["omgc8"] = value.omgc8;
-    tempData["omgc9"] = value.omgc9;
-    tempData["omgc10"] = value.omgc10;
-    tempData["omgc11"] = value.omgc11;
-    tempData["omgc12"] = value.omgc12;
-    tempData["omgc13"] = value.omgc13;
-    tempData["omgc14"] = value.omgc14;
-    tempData["omgc15"] = value.omgc15;
-    tempData["omgc16"] = value.omgc16;
+    tempData["omgc2"] = truncarDecimales(value.omgc2,4); 
+    tempData["omgc3"] = truncarDecimales(value.omgc3,4);
+    tempData["omgc4"] = truncarDecimales(value.omgc4,4);
+    tempData["omgc5"] = truncarDecimales(value.omgc5,4);
+    tempData["omgc6"] = truncarDecimales(value.omgc6,4);
+    tempData["omgc7"] = truncarDecimales(value.omgc7,4);
+    tempData["omgc8"] = truncarDecimales(value.omgc8,4);
+    tempData["omgc9"] = truncarDecimales(value.omgc9,4);
+    tempData["omgc10"] =truncarDecimales(value.omgc10,4);
+    tempData["omgc11"] =truncarDecimales(value.omgc11,4);
+    tempData["omgc12"] =truncarDecimales(value.omgc12,4);
+    tempData["omgc13"] =truncarDecimales(value.omgc13,4);
+    tempData["omgc14"] =truncarDecimales(value.omgc14,4);
+    tempData["omgc15"] =truncarDecimales(value.omgc15,4);
+    tempData["omgc16"] =truncarDecimales(value.omgc16,4);
     tempData["omgc17"] = value.omgc17;
 //    tempData["omgc18"] = value.omgc18;
     tempData["delete"] = "1";
     return tempData;
 }
+
+
 
 
 function reconstruirExcel(value,index)
@@ -374,6 +376,15 @@ function reconstruirMolares(value,index)
     tempData["opciones"] = value.omg2c11;
     return tempData;
 }
+
+
+  function truncarDecimales (x, posiciones = 0) {
+        var s = x.toString()
+        var l = s.length
+        var decimalLength = s.indexOf('.') + 1
+        var numStr = s.substr(0, decimalLength + posiciones)
+        return Number(numStr)
+    }
 
 
 
