@@ -10,7 +10,7 @@ class EvidenciasDAO
             $query = "SELECT tbusuarios.id_empleado,tbrequisitos.id_requisito,tbrequisitos.requisito,
             tbregistros.id_registro,tbregistros.registro,tbregistros.frecuencia,
             tbdocumentos.clave_documento,tbevidencias.desviacion,
-            tbevidencias.id_evidencias,tbevidencias.id_usuario,tbevidencias.accion_correctiva,tbevidencias.validacion_supervisor,
+            tbevidencias.id_evidencias,tbevidencias.id_usuario,tbevidencias.accion_correctiva,tbevidencias.validacion_supervisor,tbevidencias.fecha_creacion,
             tbempleados.id_empleado,(SELECT tbusuario2.id_usuario FROM usuarios tbusuario2 WHERE tbusuario2.id_empleado=tbempleados.id_empleado)AS id_responsable , (
                 SELECT CONCAT(tbempleados.nombre_empleado,' ',
                     tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)
@@ -55,7 +55,7 @@ class EvidenciasDAO
             $query = "SELECT tbusuarios.id_empleado,tbrequisitos.id_requisito,tbrequisitos.requisito,
             tbregistros.id_registro,tbregistros.registro,tbregistros.frecuencia,
             tbdocumentos.clave_documento,tbevidencias.desviacion,
-            tbevidencias.id_evidencias,tbevidencias.id_usuario,tbevidencias.accion_correctiva,tbevidencias.validacion_supervisor,
+            tbevidencias.id_evidencias,tbevidencias.id_usuario,tbevidencias.accion_correctiva,tbevidencias.validacion_supervisor,tbevidencias.fecha_creacion,
             tbempleados.id_empleado,(SELECT tbusuario2.id_usuario FROM usuarios tbusuario2 WHERE tbusuario2.id_empleado=tbempleados.id_empleado)AS id_responsable,
             (
                 SELECT CONCAT(tbempleados.nombre_empleado,' ',
@@ -113,15 +113,19 @@ class EvidenciasDAO
             throw $ex;
         }
     }
-    public function crearEvidencia($ID_USUARIO,$ID_REGISTRO)
+    public function crearEvidencia($ID_USUARIO,$ID_REGISTRO,$FECHA_CREACION)
     {
         try
         {
-            $query = "INSERT INTO evidencias (id_registro,id_usuario)
-                     VALUES ($ID_REGISTRO,$ID_USUARIO)";
+            $query = "INSERT INTO evidencias (id_registro,id_usuario,fecha_creacion)
+                     VALUES ($ID_REGISTRO,$ID_USUARIO,'$FECHA_CREACION')";
             $db = AccesoDB::getInstancia();
-            $res = $db->executeQueryUpdate($query);
-            return $res;
+            $exito = $db->executeQueryUpdate($query);
+            if($exito==1)
+                $exito = $db->executeQuery("SELECT LAST_INSERT_ID()")[0]["LAST_INSERT_ID()"];
+            else
+                $exito = -2;
+            return $exito;
         }catch(Exception $ex)
         {
             throw $ex;
@@ -159,7 +163,7 @@ class EvidenciasDAO
         {
             $query="UPDATE evidencias SET $COLUMNA='".$VALOR."' WHERE $CONTEXTO=$ID_EVIDENCIAS";
             $db= AccesoDB::getInstancia();
-            $result= $db->executeQueryUpdate($query);            
+            $result= $db->executeUpdateRowsAfected($query);
             return $result;
         }catch (Exception $ex)
         {
@@ -260,6 +264,25 @@ class EvidenciasDAO
            $db= AccesoDB::getInstancia();
            $result= $db->executeQueryUpdate($query);
            return $result;
+           
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
+    public function checarDisponiblidad($ID_REGISTRO,$FECHA)
+    {
+        try
+        {
+            $query="SELECT count(*) as disponibilidad
+            FROM evidencias tbevidencias
+            where tbevidencias.ID_REGISTRO = $ID_REGISTRO and tbevidencias.FECHA_CREACION = '$FECHA'";
+
+           $db= AccesoDB::getInstancia();
+           $result= $db->executeQuery($query);
+           return $result[0]["disponibilidad"];
            
         } catch (Exception $ex)
         {

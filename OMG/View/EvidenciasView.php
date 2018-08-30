@@ -36,8 +36,7 @@
     <link async href="../../css/modal.css" rel="stylesheet" type="text/css"/>
 <!--    <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>-->
 
-    <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
-    <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
+    
 
     <!--jquery-->
     <script src="../../js/jquery.js" type="text/javascript"></script>
@@ -45,6 +44,9 @@
     <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
     <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
+
+    <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
+    <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
     <!-- <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script> -->
@@ -112,7 +114,7 @@
     ?>
     <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
         <!-- <div style="position: fixed;"> -->
-            <button onClick="" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#nuevaEvidenciaModal">
+            <button onClick="limpiarNuevaEvidenciaModal()" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#nuevaEvidenciaModal">
                 Agregar Nuevo Registro
             </button>
 
@@ -165,6 +167,14 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="control-label">Fecha de la evidencia: </label>
+                    <div class="dropdown">
+                        <input type="date" id="FECHA_NUEVAEVIDENCIAMODAL" />
+                    </div>
+                    <!-- <input type="date" id="FECHA_ALARMA" class="form-control" data-error="Ingrese la Fecha de Alarma" required/> -->
+                </div>
+
+                <div class="form-group">
                     <strong>Frecuencia: </strong><label id="FRECUENCIA_NUEVAEVIDENCIAMODAL" class="control-label" for="title"></label>
                 </div>
                 <div class="form-group">
@@ -179,8 +189,8 @@
                     <input id="IDREGISTRO_NUEVAEVIDENCIAMODAL" type="text" value="" style="display: none"/>
                 </div>
                 
-                <div class="form-group" method="post">
-                    <button type="submit" id="BTN_CREAR_NUEVAEVIDENCIAMODAL" class="btn crud-submit btn-info">Crear Evidencia</button>
+                <div class="form-group" style="text-align:center" method="post">
+                    <button style="width:100%" type="submit" id="BTN_CREAR_NUEVAEVIDENCIAMODAL" class="btn crud-submit btn-info">Crear Evidencia</button>
                 </div>
             </div>
         </div>
@@ -272,10 +282,80 @@
 
 <!--cierre del modal Mensaje-->
 <script>
-        // construirFiltros();
-        // construir();
-        
+    // construirFiltros();
+    // construir();
+    var DataGrid=[];
+    var dataListado=[];
+    var filtros=[];
+    var db={};
+    var gridInstance;
+    var ws;
+    var thisjGrowl;
 
+    var months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+
+    var frecuenciaData = [
+                {frecuencia:"DIARIO"},
+                {frecuencia:"SEMANAL"},
+                {frecuencia:"MENSUAL"},
+                {frecuencia:"BIMESTRAL"},
+                {frecuencia:"ANUAL"},
+                {frecuencia:"TIEMPO INDEFINIDO"}
+            ];
+
+    // var filtros = [
+    //         {name:'Requisito', id:"requisito", type:"text"},
+    //         {name:'Registro', id:"registro", type:"text"},
+    //         {name:'Frecuencia', id:"frecuencia", type:"combobox",data:frecuenciaData,descripcion:"frecuencia"}
+    //     ];
+
+    var estructuraGrid = [
+        { name: "id_principal", type: "text",visible:false },
+        { name: "validador", type: "text",visible:false },
+        { name: "no", title:"No",type: "text", width: 70, editing:false },
+        { name: "requisito",title:"Requisito", type: "text", width: 150, editing:false },
+        { name: "registro",title:"Registro", type: "text", width: 150, editing:false  },
+        { name: "frecuencia",title:"Frecuencia", type: "text", width: 120, editing:false  },
+        { name: "clave_documento",title:"Clave Documento", type: "text",  width: 128, editing:false },
+        { name: "fecha_creacion",title:"Fecha Creación", type: "text",  width: 155, editing:false },
+        { name: "adjuntar_evidencia",title:"Adjuntar Evidencia", type: "text",  width: 140, editing:false },
+        { name: "fecha_registro",title:"Fecha Registro", type: "text", width: 155, editing:false },
+        { name: "usuario",title:"Usuario", type: "text", width:150, editing:false },
+        { name: "accion_correctiva",title:"Accion Correctiva", type: "text", width: 130, editing:false},
+        { name: "plan_accion",title:"Plan Accion", type: "text", width: 170, editing:false },
+        { name: "desviacion",title:"Desviacion", type: "text", width: 120, editing:false},
+        {name: "validacion",title:"Validacion", type: "text", width: 200, editing:false },
+        { name:"delete", title:"Opción", type:"customControl",sorting:""},
+        // {name:"delete", title:"Opcion", type: "customControl" },
+        // {name:"eliminar",title:"Opcion",visible:false}
+
+        // { name:"id_principal", visible:false},
+        // { name:"no", title:"No",width:60},
+        // { name:"clave_contrato", title: "ID del Contrato o Asignación", type: "text", width: 150, validate: "required"},
+        // { name:"region_fiscal", title: "Region Fiscal", type: "text", width: 150, validate: "required" },
+        // { name:"ubicacion", title: "Ubicación del Punto de Medición", type: "text", width: 150, validate: "required" },
+        // { name:"tag_patin", title: "Tag del Patin de Medición", type: "text", width: 130, validate: "required" },
+        // { name:"tipo_medidor", title: "Tipo de Medidor", type: "text", width: 150, validate: "required" },    
+        // { name:"tag_medidor", title: "Tag del Medidor", type: "text", width: 130, validate: "required",editing:false },
+        // { name:"clasificacion", title: "Clasificación del Sistema de Medición", type: "text", width: 150, validate: "required" },
+        // { name:"hidrocarburo", title: "Tipo de Hidrocarburo", type: "text", width: 150, validate: "required"},
+        // { name:"delete", title:"Opción", type:"customControl",sorting:""},
+        // {type:"control",editButton: true}
+    ];
+
+    var customsFieldsGridData=[
+            {field:"customControl",my_field:MyCControlField},
+            // {field:"porcentaje",my_field:porcentajesFields},
+        ];
+
+    ultimoNumeroGrid=0;
+    construirGrid();
+    promesaInicializarFiltros = inicializarFiltros();
+    promesaInicializarFiltros.then((resolve2)=>
+    {
+        construirFiltros();
+        listarDatos();
+    });
 
 </script>
 
@@ -331,7 +411,7 @@
             <!-- </td> -->
         </tr>
     {% } %}
-    {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();var ID_PARA_DOCUMENTO = $('#tempInputIdParaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO,'1',false,ID_PARA_DOCUMENTO); refresh(); noArchivo=0; } } %}
+    {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();var ID_PARA_DOCUMENTO = $('#tempInputIdParaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO,'1',false,ID_PARA_DOCUMENTO); growlSuccess("Subir Archivo","Archivo Cargado"); actualizarEvidencia(ID_EVIDENCIA_DOCUMENTO); noArchivo=0; } } %}
 </script>
 
     <!--Inicia para el spiner cargando-->
