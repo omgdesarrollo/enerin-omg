@@ -314,18 +314,94 @@ ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: 
 		      ]	});
         //aqui termina e que permite cerrar sesion
 //        seccionTareas[];
+var entro_seccion_Registro_Tareas=false;
+var entro_seccion_Catalogo=false;
+var entro_seccion_Documentos=false;
         $.ajax({  
                      url: "../Controller/LoadEstructuraPantallaGeneralController.php?Op=VistasPorUsuarioLaCualTienePermisos",  
                      async:false,
                     success: function(r) {    
                                 $.each(r,function (index,value){
+                                    
+                                    
+                                       if(value["nombre_submodulo"]=="Catalogo"){
+                                           if(value["nombre"]=="EmpleadosView.php"){
+                                            if(value["EDIT"]=="true" || value["consult"]=="true" || value["delete"]=="true" || value["new"]=="true"){
+                                               datosSeccionesRibbon.push( {id:'0x35',mode:'cols',text:'Tareas',type:'block',
+                                                     list:seccionCatalogo}   );
+                                                 entro_seccion_Catalogo=true;
+                                            }
+                                            }
+                                          if(value["nombre"]=="TemasView.php"){
+                                            if(value["EDIT"]=="true" || value["consult"]=="true" || value["delete"]=="true" || value["new"]=="true"){
+                                                
+                                                 if(entro_seccion_Catalogo!=true){
+                                               datosSeccionesRibbon.push( {id:'0x35',mode:'cols',text:'Tareas',type:'block',
+                                                     list:seccionCatalogo}   );
+                                                   entro_seccion_Catalogo=true;
+                                                }
+                                          }
+                                            }
+                                               if(value["nombre"]=="TemasView.php"){
+                                            if(value["EDIT"]=="true" || value["consult"]=="true" || value["delete"]=="true" || value["new"]=="true"){
+                                                
+                                                 if(entro_seccion_Catalogo!=true){
+                                               datosSeccionesRibbon.push( {id:'0x35',mode:'cols',text:'Tareas',type:'block',
+                                                     list:seccionCatalogo}   );
+                                                   entro_seccion_Catalogo=true;
+                                                }
+                                          }
+                                            }
+                                            
+                                               if(value["nombre"]=="DocumentosView.php"){
+                                            if(value["EDIT"]=="true" || value["consult"]=="true" || value["delete"]=="true" || value["new"]=="true"){
+                                                
+                                                 if(entro_seccion_Catalogo!=true){
+                                               datosSeccionesRibbon.push( {id:'0x35',mode:'cols',text:'Tareas',type:'block',
+                                                     list:seccionCatalogo}   );
+                                                   entro_seccion_Catalogo=true;
+                                                }
+                                          }
+                                            }
+                                            
+                                            
+                                            
+                                            
+                                        }  
+                                        
+                                        
+                                        
+                                    
+                                    if(value["nombre_submodulo"]=="Tareas"){
                                         if(value["nombre"]=="EmpleadosTareasView.php"){
                                             if(value["EDIT"]=="true" || value["consult"]=="true" || value["delete"]=="true" || value["new"]=="true"){
                                                datosSeccionesRibbon.push( {id:'0x35',mode:'cols',text:'Tareas',type:'block',
-                                                     list:seccionTareas}   );   
+                                                     list:seccionTareas}   );
+                                                 entro_seccion_Registro_Tareas=true;
                                             }
-                                        }   
+                                        }  
+                                          if(value["nombre"]=="TareasView.php"){
+                                            if(value["EDIT"]=="true" || value["consult"]=="true" || value["delete"]=="true" || value["new"]=="true"){
+                                              if(entro_seccion_Registro_Tareas!=true){
+                                                    datosSeccionesRibbon.push( {id:'0x35',mode:'cols',text:'Tareas',type:'block',
+                                                     list:seccionTareas}   );   
+                                             }
+                                            }
+                                        }
+                                    }
+                                       
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
                                 })
+                                
+                                
+                                
+                               datosSeccionesRibbon.push({id:'0x37',mode:'cols',text:'Usuario',type:'block',
+          list:infosesionusuario});
                      },
                      beforeSend:function(r){
 
