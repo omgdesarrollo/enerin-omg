@@ -288,6 +288,35 @@ class AdminDAO{
             return false;
         }
     }
+    
+    
+    
+    //lo de aqui para abajo es para mostrar estructura principal tomand en cuenta permisos no borrar
+    
+       public function listarUsuarioVistasAsignadasPorLoMenosUnTipoDePermisoParaMostrarVista($param)
+    {
+        try
+        {
+            $query="SELECT tbestructura.id_estructura, tbestructura.id_submodulos,tdsubmodulos.nombre nombre_submodulo ,tbestructura.descripcion, tbestructura.id_vistas,tbvistas.nombre,tbestructura.vista_nombre_logico,tbestructura.nombre_contenido_dentro_submodulos nombre_contenido_sub,tbestructura.imagen_seccion_up,tbestructura.imagen_seccion_izquierda, tbusuarios_vistas.EDIT,
+            tbusuarios_vistas.delete, tbusuarios_vistas.new,tbusuarios_vistas.consult 
+            FROM usuarios_vistas tbusuarios_vistas
+            JOIN estructura tbestructura ON tbusuarios_vistas.id_estructura = tbestructura.id_estructura
+            JOIN vistas tbvistas ON tbvistas.id_vistas = tbestructura.id_vistas
+            JOIN submodulos tdsubmodulos ON tdsubmodulos.id_submodulos = tbestructura.id_submodulos
+            WHERE tbusuarios_vistas.id_usuario='".$param['id_usuario']."'";
+
+            $db= AccesoDB::getInstancia();
+            $lista = $db->executeQuery($query);
+            
+            return $lista;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
+    //aqui termina para mostrar estructura principal tomand en cuenta permisos
 }
 
 
