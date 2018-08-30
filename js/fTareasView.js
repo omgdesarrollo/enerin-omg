@@ -11,10 +11,10 @@ $(function()
         tareaDatos.fecha_cumplimiento = $("#FECHA_CUMPLIMIENTO").val();
         tareaDatos.observaciones = $("#OBSERVACIONES").val();
         tareaDatos.archivo_adjunto = $('#fileupload').fileupload('option', 'url');
-        tareaDatos.mensaje="Se le asigno una tarea";
+        tareaDatos.mensaje="Se le asigno la tarea: "+$("#TAREA").val()+" por el usuario: ";
         tareaDatos.reponsable_plan= $("#ID_EMPLEADOMODAL").val();
         tareaDatos.tipo_mensaje= 0;
-        tareaDatos.atendido= false;
+        tareaDatos.atendido= 'false';
         listo=
             (
                 tareaDatos.contrato!=""?

@@ -28,10 +28,12 @@ class TareasModel{
             $id_usuario=Session::getSesion("user");
             $asunto="";
             $dao=new TareasDAO();
+            $ID= $dao->obtenerUsuarioPorIdEmpleado($responsable_plan);
             $model=new NotificacionesModel();
             $exito= $dao->insertarTarea($contrato, $tarea, $fecha_creacion, $fecha_alarma, $fecha_cumplimiento,$observaciones,$id_empleado);
-            $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $responsable_plan, $mensaje, $tipo_mensaje, $atendido,$asunto, $contrato);
+            $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $ID, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
             
+//            echo "este es model: ".json_encode($model);
             if($exito[0] = 1)
             {
                 $lista = $dao->listarTarea($exito['id_nuevo']);

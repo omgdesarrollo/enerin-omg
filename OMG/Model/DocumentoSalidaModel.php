@@ -31,11 +31,46 @@ class DocumentoSalidaModel {
     public function insertar($pojo){
         try{
             $dao=new DocumentoSalidaDAO();
+            $lista=array();
+            $contador=0;
             
-           $dao->insertarDocumentosSalida($pojo->getId_documento_entrada(),$pojo->getFolio_salida(),$pojo->getFecha_envio(),
+           $exito= $dao->insertarDocumentosSalida($pojo->getId_documento_entrada(),$pojo->getFolio_salida(),$pojo->getFecha_envio(),
                                           $pojo->getAsunto(),$pojo->getDestinatario(),$pojo->getObservaciones());
+           
+            if($exito[0] = 1)
+            {
+                $rec= $dao->mostrarDocumentoSalida($exito['id_nuevo']);
+//                echo "valor rec: ".json_encode($rec);              
+                foreach($rec as $value)
+                {
+                    $lista[$contador]= array(
+                        "id_documento_salida"=>$value["id_documento_salida"],
+                        "id_documento_entrada"=>$value["id_documento_entrada"],
+                        "documento"=>$value["documento"],
+                        "folio_entrada"=>$value["folio_entrada"],
+                        "folio_salida"=>$value["folio_salida"],
+                        "fecha_envio"=>$value["fecha_envio"],
+                        "asunto"=>$value["asunto"],
+                        "clave_autoridad"=>$value["clave_autoridad"],
+                        "destinatario"=>$value["destinatario"],
+                        "nombre_empleado"=>$value["nombre_empleado"],
+                        "apellido_paterno"=>$value["apellido_paterno"],
+                        "apellido_materno"=>$value["apellido_materno"],
+                        "documento"=>$value["documento"],
+                        "observaciones"=>$value["observaciones"]    
+                    );
+    //                $cont++;
+                    $contador++;
+                }
+            return $lista;
+            } 
+            else
+//                return $exito[0];
+            return $lista;
+           
         } catch (Exception $ex) {
                 throw $ex;
+                return -1;
         }
     }
     
