@@ -229,22 +229,22 @@ require_once 'EncabezadoUsuarioView.php';
                                 </div>
                 
                                 <div class="form-group-">
-                                        <label class="control-label" for="title">Fecha Asignacion:</label>                                                       
-                                        <input type="date" id="FECHA_ASIGNACION" class="form-control" data-error="Ingrese la Fecha de Asignacion" required/>							   
+                                        <label class="control-label" for="title">Fecha Asignacion:</label>
+                                        <input type="date" id="FECHA_ASIGNACION" class="form-control" data-error="Ingrese la Fecha de Asignacion" required/>
                                         <div class="help-block with-errors"></div>
                                         <div id="ValidarFechaAsignacionModal" ></div>
                                 </div>
                                 
                                 <div class="form-group-">
-                                        <label class="control-label" for="title">Fecha Limite de Atencion:</label>                                                       
-                                        <input type="date" id="FECHA_LIMITE_ATENCION" class="form-control" data-error="Ingrese la Fecha Limite de Atencion" required/>							   
+                                        <label class="control-label" for="title">Fecha Limite de Atencion:</label>
+                                        <input type="date" id="FECHA_LIMITE_ATENCION" class="form-control" data-error="Ingrese la Fecha Limite de Atencion" required/>
                                         <div class="help-block with-errors"></div>
                                         <div id="ValidarFechaLimiteAtencionModal" ></div>
                                 </div>
 
                                 <div class="form-group-">
-                                        <label class="control-label" for="title">Fecha Alarma:</label>                                                       
-                                        <input type="date" id="FECHA_ALARMA" class="form-control" data-error="Ingrese la Fecha de Alarma" required/>							   
+                                        <label class="control-label" for="title">Fecha Alarma:</label>
+                                        <input type="date" id="FECHA_ALARMA" class="form-control" data-error="Ingrese la Fecha de Alarma" required/>
                                         <div class="help-block with-errors"></div>
                                         <div id="ValidarFechaAlarmaModal" ></div>
                                 </div>

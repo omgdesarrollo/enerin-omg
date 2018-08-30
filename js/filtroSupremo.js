@@ -19,7 +19,7 @@ function construirFiltros()
         if(value.type == "date")
         {
             tempData += "<input id='"+value.id+"' type='text' onkeyup='pressEnter()' style='width: 100%;display:none;'>";
-            tempData += "<input type='date' onChange='construirFiltroSelect(this,\""+value.id+"\")' style='width:100%;margin:2px;'>";
+            tempData += "<input id='"+value.id+"_date' type='date' onChange='construirFiltroSelect(this,\""+value.id+"\")' style='width:100%;margin:2px;'>";
         }
         if(value.type == "text")
         {
@@ -49,8 +49,8 @@ function construirFiltrosCombobox(datos,name,id,descripcion)
 {
     // console.log(datos);
     tempData="";
-    tempData = "<select onChange='construirFiltroSelect(this,\""+id+"\")' style='margin:2px;'>";
-    tempData += "<option value='-1'> -> Todos <- </option>";
+    tempData = "<select id='"+id+"_combobox' onChange='construirFiltroSelect(this,\""+id+"\")' style='margin:2px;'>";
+    tempData += "<option value='-1'> --   Todos   -- </option>";
     $.each(datos,function(index,value)
     {
             tempData += "<option value='"+value[id]+"'>"+value[descripcion]+"</option>";
@@ -153,6 +153,14 @@ function limpiarFiltros()
     $.each(filtros,function(index,value)
     {
         $("#"+value.id).val("");
+        if(value.type="date")
+        {
+            $("#"+value.id+"_date").val("");
+        }
+        if(value.type="combobox")
+        {
+            $("#"+value.id+"_combobox").val("");
+        }
     });
     filtroSupremo();
 }
