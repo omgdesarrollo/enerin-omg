@@ -227,22 +227,22 @@ var gantt=[
                         if(itemIdSeleccion=="Informacion") 
                            loadDataSideBarCatalogoInformacion();
                        
-                        if(itemIdSeleccion=="documentos")
+                        if(itemIdSeleccion=="Validacion")
                            loadDataSideBarCumplimientosDocumentos();
                        
-                        if(itemIdSeleccion=="evidencias")
+                        if(itemIdSeleccion=="Evidencias")
                             loadDataSideBarCumplimientosEvidencias();
                         
                         if(itemIdSeleccion=="procesos")
                             loadDataSideBarProcesos();
 
-                        if(itemIdSeleccion=="tareas")
+                        if(itemIdSeleccion=="Registro de Tareas")
                             loadDataSideBarTareas();
                         
-                        if(itemIdSeleccion=="informecumplimientos")
+                        if(itemIdSeleccion=="Informe")
                             loadDataSideBarInformeCumplimientos();
                         
-                        if(itemIdSeleccion=="catalogooficios")
+                        if(itemIdSeleccion=="Catalogos")
                             loadDataSideBarOficiosCatalogos();
                        
                         if(itemIdSeleccion=="documentacion")
@@ -327,13 +327,20 @@ var contadorSecciones=1;
 var seccionCatalogo=[
      {id:'Informacion', text:'Informacion',img:'catalogo.png',type:'button',isbig:true}  
  ];
- seccionCatalogo=[];
+// seccionCatalogo=[];
  
  submodulos=[];
  dentrodesubmodulos=[]
  
 //seccionCatalogo no borrar lo estoy tomando de muestra para las visa del lado izquierdo
 //id:'0x35'  no borrar por mientras es el identificador que estoy tomando de muestra
+
+var bandera=false;
+var bandera2=false;
+var nombre_submodulo="";
+//var conta
+var contador2=0;
+//var contador2
         $.ajax({  
                      url: "../Controller/LoadEstructuraPantallaGeneralController.php?Op=VistasPorUsuarioLaCualTienePermisos",  
                      async:false,
@@ -341,11 +348,43 @@ var seccionCatalogo=[
                         datosTemp=r;
                         datosTemp2=r;
                                 $.each(r,function (index,value){
-                                    $.each(datosTemp,function (indexTemp,valueTemp){
-                                    if(value["nombre_submodulo"]==valueTemp["nombre_submodulo"]){
-                                        
-                                        if(value["nombre"]==valueTemp["nombre"]){
-                                            if(value["EDIT"]=="true" || value["consult"]=="true" || value["delete"]=="true" || value["new"]=="true"){
+//                                    bandera=false;
+                                    if(bandera2==false)
+                                        nombre_submodulo=value["nombre_submodulo"];
+                                    bandera2=true;
+//                                    $.each(datosTemp,function (indexTemp,valueTemp){
+                                    if(value["nombre_submodulo"]==nombre_submodulo){
+//                                        if(value["nombre"]==valueTemp["nombre"]){
+//                                            
+                                            if(value["EDIT"]=="true" || value["consult"]=="true" || value["delete"]=="true" || value["new"]=="true" ){
+                                                if(bandera==false)
+                                                {
+                                                     datosSeccionesRibbon.push( {id:'0x'+contadorSecciones,mode:'cols',text:''+value["nombre_submodulo"],type:'block',
+                                                     list:[] } );
+                                                    contadorSecciones++;
+                                                    contador2++;
+                                                    submodulos=[];
+                                                }
+                                                
+                                                  bandera=true;
+//                                                  submodulos=[];
+                                                console.log(value["imagen_seccion_up"]);
+                                                  submodulos.push({id:''+value["nombre_contenido_sub"], text:''+value["nombre_contenido_sub"],img:value["imagen_seccion_up"],type:'button',isbig:true  });
+                                                   datosSeccionesRibbon[contador2]["list"]=submodulos;
+                                                 
+                                            }
+                                    }else{
+                                         nombre_submodulo=value["nombre_submodulo"];
+                                         bandera=false;
+                                                  if(value["EDIT"]=="true" || value["consult"]=="true" || value["delete"]=="true" || value["new"]=="true"){
+//                                                if(bandera==false)
+//                                                {
+                                                     datosSeccionesRibbon.push( {id:'0x'+contadorSecciones,mode:'cols',text:''+value["nombre_submodulo"],type:'block',
+                                                     list:[] } );
+                                                    contadorSecciones++;
+                                                    contador2++;
+                                                    submodulos=[];
+//                                                }
                                                 
 ////                                                if(valueTemp2["text"]==value["nombre_submodulo"]){
 //                                                           dentrodesubmodulos.push( {id:''+value["nombre_contenido_sub"], text:''+value["nombre_contenido_sub"],img:''+value["imagen_seccion_up"],type:'button',isbig:true}  );
@@ -353,27 +392,26 @@ var seccionCatalogo=[
 //                                                         list:dentrodesubmodulos});
 ////                                                        }
 ////                                                    seccionesRibbonArriba.push({});
-//                                                  
-                                                    datosSeccionesRibbon.push( {id:'0x'+contadorSecciones,mode:'cols',text:''+value["nombre_submodulo"],type:'block',
-                                                     list:seccionCatalogo}   );
-                                                    contadorSecciones++;
+
+                                                  bandera=true;
+//                                                  submodulos=[];
+//                                                       console.log(value["imagen_seccion_up"]);
+                                                  submodulos.push({id:''+value["nombre_contenido_sub"], text:''+value["nombre_contenido_sub"],img:value["imagen_seccion_up"],type:'button',isbig:true  });
+                                                   datosSeccionesRibbon[contador2]["list"]=submodulos;
                                                  
                                             }
-                                            
-                                            
-                                            
-                                        }
+                                        
                                     }
     
     
-                                        })
+//                                        })
                                           
                                         
                                 })
 //                                ;
 
-                                console.log(dentrodesubmodulos);
-                                console.log(submodulos);
+                                console.log(datosSeccionesRibbon);
+//                                console.log(submodulos);
                                 
                                 
                                datosSeccionesRibbon.push({id:'0x37',mode:'cols',text:'Usuario',type:'block',
