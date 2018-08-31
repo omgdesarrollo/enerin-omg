@@ -327,7 +327,7 @@ var entro_seccion_Documentos=false;
                                        if(value["nombre_submodulo"]=="Catalogo"){
                                            if(value["nombre"]=="EmpleadosView.php"){
                                             if(value["EDIT"]=="true" || value["consult"]=="true" || value["delete"]=="true" || value["new"]=="true"){
-                                               datosSeccionesRibbon.push( {id:'0x35',mode:'cols',text:'Tareas',type:'block',
+                                               datosSeccionesRibbon.push( {id:'0x35',mode:'cols',text:'Catalogo',type:'block',
                                                      list:seccionCatalogo}   );
                                                  entro_seccion_Catalogo=true;
                                             }
@@ -336,22 +336,22 @@ var entro_seccion_Documentos=false;
                                             if(value["EDIT"]=="true" || value["consult"]=="true" || value["delete"]=="true" || value["new"]=="true"){
                                                 
                                                  if(entro_seccion_Catalogo!=true){
-                                               datosSeccionesRibbon.push( {id:'0x35',mode:'cols',text:'Tareas',type:'block',
+                                               datosSeccionesRibbon.push( {id:'0x35',mode:'cols',text:'Catalogo',type:'block',
                                                      list:seccionCatalogo}   );
                                                    entro_seccion_Catalogo=true;
                                                 }
                                           }
                                             }
-                                               if(value["nombre"]=="TemasView.php"){
-                                            if(value["EDIT"]=="true" || value["consult"]=="true" || value["delete"]=="true" || value["new"]=="true"){
-                                                
-                                                 if(entro_seccion_Catalogo!=true){
-                                               datosSeccionesRibbon.push( {id:'0x35',mode:'cols',text:'Tareas',type:'block',
-                                                     list:seccionCatalogo}   );
-                                                   entro_seccion_Catalogo=true;
-                                                }
-                                          }
-                                            }
+//                                               if(value["nombre"]=="TemasView.php"){
+//                                            if(value["EDIT"]=="true" || value["consult"]=="true" || value["delete"]=="true" || value["new"]=="true"){
+//                                                
+//                                                 if(entro_seccion_Catalogo!=true){
+//                                               datosSeccionesRibbon.push( {id:'0x35',mode:'cols',text:'Tareas',type:'block',
+//                                                     list:seccionCatalogo}   );
+//                                                   entro_seccion_Catalogo=true;
+//                                                }
+//                                          }
+//                                            }
                                             
                                                if(value["nombre"]=="DocumentosView.php"){
                                             if(value["EDIT"]=="true" || value["consult"]=="true" || value["delete"]=="true" || value["new"]=="true"){
