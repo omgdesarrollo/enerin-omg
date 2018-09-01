@@ -29,6 +29,7 @@ class AdminDAO{
     
     public function listarUsuarioVistas($ID_USUARIO)
     {
+//        echo "s";
         try
         {
             $query="SELECT tbestructura.id_estructura, tbestructura.id_submodulos,tdsubmodulos.nombre nombre_submodulo ,tbestructura.descripcion, tbestructura.id_vistas,tbvistas.nombre,tbestructura.vista_nombre_logico,tbestructura.nombre_contenido_dentro_submodulos nombre_contenido_sub,tbestructura.imagen_seccion_up,tbestructura.imagen_seccion_izquierda, tbusuarios_vistas.EDIT,
@@ -37,7 +38,7 @@ class AdminDAO{
             JOIN estructura tbestructura ON tbusuarios_vistas.id_estructura = tbestructura.id_estructura
             JOIN vistas tbvistas ON tbvistas.id_vistas = tbestructura.id_vistas
             JOIN submodulos tdsubmodulos ON tdsubmodulos.id_submodulos = tbestructura.id_submodulos
-            WHERE tbusuarios_vistas.id_usuario=$ID_USUARIO";
+            WHERE tbusuarios_vistas.id_usuario=$ID_USUARIO ";
 
             $db= AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
@@ -303,7 +304,7 @@ class AdminDAO{
             JOIN estructura tbestructura ON tbusuarios_vistas.id_estructura = tbestructura.id_estructura
             JOIN vistas tbvistas ON tbvistas.id_vistas = tbestructura.id_vistas
             JOIN submodulos tdsubmodulos ON tdsubmodulos.id_submodulos = tbestructura.id_submodulos
-            WHERE tbusuarios_vistas.id_usuario='".$param['id_usuario']."'";
+            WHERE tbusuarios_vistas.id_usuario='".$param['id_usuario']."'     order by tbestructura.ordenar asc";
 
             $db= AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
