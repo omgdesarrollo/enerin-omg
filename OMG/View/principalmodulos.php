@@ -312,22 +312,7 @@ ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: 
 		    {id:'logout',text:'Cerrar',img:'cerrarsesion.png', type:'button',isbig:true}
 		   
 		      ]	});
-                  
-                  
-                  
-                  
-//                   datosSeccionesRibbon.push({id:'0x1',mode:'cols',text:'',type:'block', 
-//		list:[
-//		    
-//		   
-//		      ]	});
-                  
-                  
-                  
-                  
-                  
-        //aqui termina e que permite cerrar sesion
-//        seccionTareas[];
+
 var entro_seccion_Registro_Tareas=false;
 var entro_seccion_Catalogo=false;
 var entro_seccion_Documentos=false;
@@ -341,14 +326,10 @@ var contadorSecciones=1;
 var seccionCatalogo=[
      {id:'Informacion', text:'Informacion',img:'catalogo.png',type:'button',isbig:true}  
  ];
-// seccionCatalogo=[];
+
  
  submodulos=[];
  dentrodesubmodulos=[]
- 
-//seccionCatalogo no borrar lo estoy tomando de muestra para las visa del lado izquierdo
-//id:'0x35'  no borrar por mientras es el identificador que estoy tomando de muestra
-
 var bandera=false;
 var bandera2=false;
 var bandera3=false;
@@ -590,7 +571,6 @@ var listasubmodulos=[]=listaModulos;
 ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: "../../images/base/",tabs:inicio});
 
     }
-
     function consultarInformacion(url){
                $.ajax({  
                      url: ""+url,  
