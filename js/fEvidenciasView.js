@@ -86,8 +86,7 @@ function listarDatos()
         });
     });
 }
-    
-    
+
    var gridInstance,db={};
     // var data="";
     // var dataTemp="";

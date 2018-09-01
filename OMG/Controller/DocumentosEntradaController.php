@@ -22,7 +22,7 @@ $pojoSeguimientoEntrada= new SeguimientoEntradaPojo();
 switch ($Op) {
 	case 'Listar':
 			$Lista=$model->listarDocumentosEntrada(Session::getSesion("s_cont"));
-                        Session::setSesion("listarDocumentosEntrada",$Lista); //Se esta ocupando para las graficas de informe gerencial
+                        // Session::setSesion("listarDocumentosEntrada",$Lista); //Se esta ocupando para las graficas de informe gerencial
 			header('Content-type: application/json; charset=utf-8');
 			echo json_encode( $Lista);
 		break;

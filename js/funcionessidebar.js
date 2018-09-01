@@ -146,11 +146,11 @@ function loadDataSideBarOficiosDocumentacion()
                          mySidebar.attachEvent("onSelect", function(id, value){
                                    switch(id){
                                        case "documentosEntrada":
-                                            consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
-                                            consultarInformacion("../Controller/CumplimientosController.php?Op=mostrarcombo");
-                                            consultarInformacion("../Controller/AutoridadesRemitentesController.php?Op=mostrarCombo");
-                                            consultarInformacion("../Controller/TemasOficiosController.php?Op=mostrarCombo");
-                                            consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Alarmas");
+                                            // consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
+                                            // consultarInformacion("../Controller/CumplimientosController.php?Op=mostrarcombo");
+                                            // consultarInformacion("../Controller/AutoridadesRemitentesController.php?Op=mostrarCombo");
+                                            // consultarInformacion("../Controller/TemasOficiosController.php?Op=mostrarCombo");
+                                            // consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Alarmas");
                                             $("#sidebarObjV").load('InyectarVistasView.php #documentosEntrada');
                                        break;  
                                        
