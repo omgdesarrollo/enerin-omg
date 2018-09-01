@@ -49,6 +49,102 @@ class TareasModel{
         }        
     }
     
+    
+    public function enviarNotificacionWhenUpdate($ID_EMPLEADO,$TAREA)
+    {
+        try
+        {
+            $contrato= Session::getSesion("s_cont");
+            $id_usuario=Session::getSesion("user");
+            $mensaje= "Se ha actualizado la tarea: ".$TAREA." por el Usuario: ";
+            $tipo_mensaje=0;
+            $atendido= 'false';
+            $asunto="";
+            $dao=new TareasDAO();
+            $ID= $dao->obtenerUsuarioPorIdEmpleado($ID_EMPLEADO);
+            $model=new NotificacionesModel();
+            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $ID, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }        
+    }
+    
+    public function enviarNotificacionWhenRemoveTarea($ID_EMPLEADO,$TAREA)
+    {
+        try
+        {
+            $contrato= Session::getSesion("s_cont");
+            $id_usuario=Session::getSesion("user");
+            $mensaje= "Se asigno a otro usuario la tarea: ".$TAREA." por el Usuario: ";
+            $tipo_mensaje=0;
+            $atendido= 'false';
+            $asunto="";
+            $dao=new TareasDAO();
+            $ID= $dao->obtenerUsuarioPorIdEmpleado($ID_EMPLEADO);
+            $model=new NotificacionesModel();
+            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $ID, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }        
+    }
+
+
+    public function enviarNotificacionWhenRemoveTareaAlNuevoUsuario($ID_EMPLEADO,$TAREA)
+    {
+        try
+        {
+            $contrato= Session::getSesion("s_cont");
+            $id_usuario=Session::getSesion("user");
+            $mensaje= "Se le asigno la tarea: ".$TAREA." por el Usuario: ";
+            $tipo_mensaje=0;
+            $atendido= 'false';
+            $asunto="";
+            $dao=new TareasDAO();
+            $ID= $dao->obtenerUsuarioPorIdEmpleado($ID_EMPLEADO);
+            $model=new NotificacionesModel();
+            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $ID, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }        
+    }
+    
+    
+    public function enviarNotificacionWhenDeleteTarea($ID_EMPLEADO,$TAREA)
+    {
+        try
+        {
+            $contrato= Session::getSesion("s_cont");
+            $id_usuario=Session::getSesion("user");
+            $mensaje= "La Tarea: ".$TAREA." ha sido Eliminada por el Usuario: ";
+            $tipo_mensaje=0;
+            $atendido= 'false';
+            $asunto="";
+            $dao=new TareasDAO();
+            $ID= $dao->obtenerUsuarioPorIdEmpleado($ID_EMPLEADO);
+            $model=new NotificacionesModel();
+            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $ID, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }        
+    }
+
+
     public function eliminarTarea($ID_TAREA)
     {
         try
