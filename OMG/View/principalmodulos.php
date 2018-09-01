@@ -307,11 +307,25 @@ ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: 
          var datosSeccionesRibbon=[];
                 
         //aqui empieza este siempre va por que es el que permite cerrar sesion 
-        datosSeccionesRibbon.push({id:'0x2',mode:'cols',text:'Principal',type:'block', 
+        datosSeccionesRibbon.push({id:'0x0',mode:'cols',text:'Principal',type:'block', 
 		list:[
 		    {id:'logout',text:'Cerrar',img:'cerrarsesion.png', type:'button',isbig:true}
 		   
 		      ]	});
+                  
+                  
+                  
+                  
+//                   datosSeccionesRibbon.push({id:'0x1',mode:'cols',text:'',type:'block', 
+//		list:[
+//		    
+//		   
+//		      ]	});
+                  
+                  
+                  
+                  
+                  
         //aqui termina e que permite cerrar sesion
 //        seccionTareas[];
 var entro_seccion_Registro_Tareas=false;
@@ -345,6 +359,7 @@ var listaModulos=[];
 var nombre_contenido_sub="";
 var listado_contenido_sub=[];
 var vistas = [];
+
         $.ajax({  
                      url: "../Controller/LoadEstructuraPantallaGeneralController.php?Op=VistasPorUsuarioLaCualTienePermisos",  
                      async:false,
@@ -470,127 +485,149 @@ var vistas = [];
                                 listaModulos[contador]["contenido_sub"]=listado_contenido_sub;
                             }
                         });
+ 
+                        
+                        
 //                        console.log(listaModulos);
 //                        datosTemp=r;
 //                        datosTemp2=r;
- var contadorSecciones =0;
+ var contadorSecciones =1;
  var datosSeccionesSubmodulos=[];
  var lista2=[];
  lista2=datosSeccionesSubmodulos;
  var seccionesSubmodulos=[];
  var banderaultima=false;
-// lista3=datosSeccionesSubmodulos
-              $.each(listaModulos,function (index,value){
-//                  console.log(value);
-//                  console.log(value1);
-                    banderaultima=false;
+ 
+ 
+ var banderasSeccionesArriba=false;
+ var banderaSeccionesArribaAdentro=false;
+ var banderaSeccionesVistasAdentro=false;
+ 
+ var contadoresSeccionesArriba=1    ;
+var nombre_contenido_sub_adentro="";
+var banderaSeccionDentrodeSubmodulo=false;
+
+
+
+var nombre_submodulo="";
+var listasubmodulos=[]=listaModulos;
+//var listasubmodulos=[]=seccionesSubmodulos;
+
+              $.each(listasubmodulos,function (index,value){
+                  nombre_submodulo=value["nombre_submodulo"];
+//                  contadoresSeccionesArriba++;
+//                  if(banderasSeccionesArriba==false){
+//                      contadoresSeccionesArriba--;
+                 banderasSeccionesArriba=false;
+//             }
+//                 contadoresSeccionesArriba=0;
+//                contadoresSeccionesArriba++;
+                       console.log("-->");
+                        console.log("empieza submodulos");
+                   console.log(value);
+                    console.log("termina submodulos");
+                     
                   $.each(value["contenido_sub"],function(index1,value1)
                   {
-                        if(value1["hijos"]>0)
-                        {
-                            $.each(value1["contenido_vista"],function (index2,value2)
-                            {
-                                if(banderaultima==false)
-                                {
-                                    if(value2["edit"]=="true" || value2["consult"]=="true" || value2["delete"]=="true" || value2["new"]=="true")
-                                    {
-                                        banderaultima=true;
-                                        contadorSecciones++;
-                                        datosSeccionesRibbon.push( {id:'0x'+contadorSecciones,mode:'cols',text:''+value["nombre_submodulo"],type:'block',list:[]} );
-                                    }
-                                }
-                            });
-                            if(banderaultima==true)
-                            {
-                                datosSeccionesRibbon[contadorSecciones]["list"].push({id:value1["nombre_contenido_sub"], text:value1["nombre_contenido_sub"],img:value1["imagen"],type:'button',isbig:true});
-                            }
-                        }
-                        else
-                        {
-                            if(banderaultima==false)
-                            {
-                                if(value1["edit"]=="true" || value1["consult"]=="true" || value1["delete"]=="true" || value1["new"]=="true")
-                                {
-                                    bandera=true;
-                                    contadorSecciones++;
-                                    datosSeccionesRibbon.push( {id:'0x'+contadorSecciones,mode:'cols',text:''+value["nombre_submodulo"],type:'block',list:[]} );
-                                }
-                            }
-                            if(banderaultima==true)
-                            {
-                                datosSeccionesRibbon[contadorSecciones]["list"].push({id:value1["nombre_contenido_sub"], text:value1["nombre_contenido_sub"],img:value1["imagen"],type:'button',isbig:true});
-                            }
-                        }
-                  });
-              });
-              
-              
-              
+ console.log("empieza secciones de submodulo");
+                      console.log(value1);
+
+                       console.log("termina secciones submodulo");
                          
-//                                                     list:[] } );
-//                                $.each(r,function (index,value){
-////                                    bandera=false;
-//                                    if(bandera2==false)
-//                                        nombre_submodulo=value["nombre_submodulo"];
-//                                    bandera2=true;
-////                                    $.each(datosTemp,function (indexTemp,valueTemp){
-//                                    if(value["nombre_submodulo"]==nombre_submodulo){
-////                                        if(value["nombre"]==valueTemp["nombre"]){
-////                                            
-//                                            if(value["EDIT"]=="true" || value["consult"]=="true" || value["delete"]=="true" || value["new"]=="true" ){
-//                                                if(bandera==false)
-//                                                {
-//                                                     datosSeccionesRibbon.push( {id:'0x'+contadorSecciones,mode:'cols',text:''+value["nombre_submodulo"],type:'block',
-//                                                     list:[] } );
-//                                                    contadorSecciones++;
-//                                                    contador2++;
-//                                                    submodulos=[];
-//                                                }
-//                                                
-////                                                  bandera=true;
-////                                                  submodulos=[];
-//                                                console.log(value["imagen_seccion_up"]);
-//                                                if(value["nombre_contenido_sub"]==value["vista_nombre_logico"])
-////                                                        || bandera==false)
-//                                                {
-//                                                  submodulos.push({id:''+value["nombre_contenido_sub"], text:''+value["nombre_contenido_sub"],img:value["imagen_seccion_up"],type:'button',isbig:true  });
-//                                                   datosSeccionesRibbon[contador2]["list"]=submodulos;
-//                                               }
-//                                               bandera=true;
-//                                            }
-//                                    }else{
-//                                         nombre_submodulo=value["nombre_submodulo"];
-//                                         bandera=false;
-//                                                  if(value["EDIT"]=="true" || value["consult"]=="true" || value["delete"]=="true" || value["new"]=="true"){
-////                                                if(bandera==false)
-////                                                {
-//                                                     datosSeccionesRibbon.push( {id:'0x'+contadorSecciones,mode:'cols',text:''+value["nombre_submodulo"],type:'block',
-//                                                     list:[] } );
-//                                                    contadorSecciones++;
-//                                                    contador2++;
-//                                                    submodulos=[];
-////                                                  submodulos=[];
-////                                                       console.log(value["imagen_seccion_up"]);
-//                                                if(value["nombre_contenido_sub"]==value["vista_nombre_logico"])
-////                                                        || bandera==false)
-//                                                {
-//                                                  submodulos.push({id:''+value["nombre_contenido_sub"], text:''+value["nombre_contenido_sub"],img:value["imagen_seccion_up"],type:'button',isbig:true  });
-//                                                   datosSeccionesRibbon[contador2]["list"]=submodulos;
-//                                                 
-//                                                }
-//                                                else
-//                                                    if(bandera==false)
-//                                                 bandera=true;
-//                                            }
-//                                       
+                        console.log("vistas");
+                      if(value1["hijos"]>0){
+                          $.each(value1["contenido_vista"],function(indexContenidoVistas,valueContenidoVistas){
+                              
+                              console.log(valueContenidoVistas);
+                             
+                              if(banderasSeccionesArriba==false){
+//                                if(banderasSeccionesArriba==false){
+//                                    console.log(valueContenidoVistas["edit"]);
+                                     if(valueContenidoVistas["edit"]=="true" || valueContenidoVistas["consult"]=="true" || valueContenidoVistas["delete"]=="true" || valueContenidoVistas["new"]=="true")
+                                    {
+//                                        contadoresSeccionesArriba=1;
+                                           banderasSeccionesArriba=true;
+//                                       contadoresSeccionesArriba++;
+                                        datosSeccionesRibbon.push( {id:'0x'+contadoresSeccionesArriba,mode:'cols',text:value["nombre_submodulo"],type:'block',list:[]} );
+
+                                    }
+                        }
+  
+                          }) 
+                           if(banderasSeccionesArriba==true)
+                            {
+                                console.log(datosSeccionesRibbon);
+                                datosSeccionesRibbon[contadoresSeccionesArriba]["list"].push({id:value1["nombre_contenido_sub"], text:value1["nombre_contenido_sub"],img:value1["imagen"],type:'button',isbig:true});
+//                                contadoresSeccionesArriba++;
+                            }
+                              
+   
+                      }
+                      else{
+                                   if(banderasSeccionesArriba==false){
+//                                if(banderasSeccionesArriba==false){
+//                                    console.log(valueContenidoVistas["edit"]);
+                                        if(value1["edit"]=="true" || value1["consult"]=="true" || value1["delete"]=="true" || value1["new"]=="true")
+                                       {
+   //                                        contadoresSeccionesArriba=1;
+//                                              banderasSeccionesArriba=true;
+   //                                       contadoresSeccionesArriba++;
+//                                           datosSeccionesRibbon.push( {id:'0x'+contadoresSeccionesArriba,mode:'cols',text:value1["nombre_contenido_sub"],type:'block',list:[]} );
+//                                                 banderasSeccionesArriba=true;
+//                                            contadoresSeccionesArriba++;
+                                       }
+                                    }
+                        }
+                      console.log("termina vistas");
+                       console.log("<----");
+//                          if(banderasSeccionesArriba==true)
+//                      contadoresSeccionesArriba++;
+                  
+//                        if(value1["hijos"]>0)
+//                        {
+//                            $.each(value1["contenido_vista"],function (index2,value2)
+//                            {
+//                                if(banderaultima==false)
+//                                {
+//                                    if(value2["edit"]=="true" || value2["consult"]=="true" || value2["delete"]=="true" || value2["new"]=="true")
+//                                    {
+//                                        banderaultima=true;
+//                                        contadorSecciones++;
+//                                        datosSeccionesRibbon.push( {id:'0x'+contadorSecciones,mode:'cols',text:''+value["nombre_submodulo"],type:'block',list:[]} );
 //                                    }
-//    
-//    
-////                                        })
-//                                          
-//                                        
-//                                })
-//                                ;
+//                                }
+//                            });
+//                            if(banderaultima==true)
+//                            {
+//                                datosSeccionesRibbon[contadorSecciones]["list"].push({id:value1["nombre_contenido_sub"], text:value1["nombre_contenido_sub"],img:value1["imagen"],type:'button',isbig:true});
+//                            }
+//                        }
+//                        else
+//                        {
+//                            if(banderaultima==false)
+//                            {
+//                                if(value1["edit"]=="true" || value1["consult"]=="true" || value1["delete"]=="true" || value1["new"]=="true")
+//                                {
+//                                    bandera=true;
+//                                    contadorSecciones++;
+//                                    datosSeccionesRibbon.push( {id:'0x'+contadorSecciones,mode:'cols',text:''+value["nombre_submodulo"],type:'block',list:[]} );
+//                                }
+//                            }
+//                            if(banderaultima==true)
+//                            {
+//                                datosSeccionesRibbon[contadorSecciones]["list"].push({id:value1["nombre_contenido_sub"], text:value1["nombre_contenido_sub"],img:value1["imagen"],type:'button',isbig:true});
+//                            }
+//                        }
+                       
+                  });
+                  
+                if(banderasSeccionesArriba==true)
+                        contadoresSeccionesArriba++;
+              });
+
+
+
+
 
                                 console.log(datosSeccionesRibbon);
 //                                console.log(submodulos);

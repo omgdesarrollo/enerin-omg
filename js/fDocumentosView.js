@@ -104,8 +104,8 @@ function construirGrid()
         [
             { name: "id_principal",visible:false},
             { name:"no",title:"No",width:20},
-            { name: "clave_documento",title:"Clave del Documento", type: "text", validate: "required" },
-            { name: "documento",title:"Documento", type: "text", validate: "required" },
+            { name: "clave_documento",title:"Clave del Documento",type: "textarea", validate: "required" },
+            { name: "documento",title:"Documento",type: "textarea", validate: "required" },
             { name: "id_empleado",title:"Responsable del Documento", type: "select",
                 items:EmpleadosCombobox,
                 valueField:"id_empleado",
