@@ -233,7 +233,7 @@ var gantt=[
                         if(itemIdSeleccion=="Evidencias")
                             loadDataSideBarCumplimientosEvidencias();
                         
-                        if(itemIdSeleccion=="Procesos")
+                        if(itemIdSeleccion=="Reportes")
                             loadDataSideBarProcesos();
 
                         if(itemIdSeleccion=="Registro de Tareas")
@@ -245,11 +245,11 @@ var gantt=[
                         if(itemIdSeleccion=="Catalogos")
                             loadDataSideBarOficiosCatalogos();
                        
-                        if(itemIdSeleccion=="documentacion")
+                        if(itemIdSeleccion=="Documentacion")
                             loadDataSideBarOficiosDocumentacion();
-                        if(itemIdSeleccion=="informegerencial")
+                        if(itemIdSeleccion=="Informe Gerencial")
                             loadDataInformeGerencial();
-                        if(itemIdSeleccion=="cargaprograma")
+                        if(itemIdSeleccion=="Seguimiento")
                             loadDataCargaProgramaGantt();
                        
                     });      
@@ -307,13 +307,12 @@ ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: 
          var datosSeccionesRibbon=[];
                 
         //aqui empieza este siempre va por que es el que permite cerrar sesion 
-        datosSeccionesRibbon.push({id:'0x2',mode:'cols',text:'Principal',type:'block', 
+        datosSeccionesRibbon.push({id:'0x0',mode:'cols',text:'Principal',type:'block', 
 		list:[
 		    {id:'logout',text:'Cerrar',img:'cerrarsesion.png', type:'button',isbig:true}
 		   
 		      ]	});
-        //aqui termina e que permite cerrar sesion
-//        seccionTareas[];
+
 var entro_seccion_Registro_Tareas=false;
 var entro_seccion_Catalogo=false;
 var entro_seccion_Documentos=false;
@@ -327,14 +326,8 @@ var contadorSecciones=1;
 var seccionCatalogo=[
      {id:'Informacion', text:'Informacion',img:'catalogo.png',type:'button',isbig:true}  
  ];
-// seccionCatalogo=[];
- 
  submodulos=[];
  dentrodesubmodulos=[]
- 
-//seccionCatalogo no borrar lo estoy tomando de muestra para las visa del lado izquierdo
-//id:'0x35'  no borrar por mientras es el identificador que estoy tomando de muestra
-
 var bandera=false;
 var bandera2=false;
 var bandera3=false;
@@ -345,6 +338,7 @@ var listaModulos=[];
 var nombre_contenido_sub="";
 var listado_contenido_sub=[];
 var vistas = [];
+
         $.ajax({  
                      url: "../Controller/LoadEstructuraPantallaGeneralController.php?Op=VistasPorUsuarioLaCualTienePermisos",  
                      async:false,
@@ -470,133 +464,55 @@ var vistas = [];
                                 listaModulos[contador]["contenido_sub"]=listado_contenido_sub;
                             }
                         });
-//                        console.log(listaModulos);
-//                        datosTemp=r;
-//                        datosTemp2=r;
- var contadorSecciones =0;
- var datosSeccionesSubmodulos=[];
- var lista2=[];
- lista2=datosSeccionesSubmodulos;
- var seccionesSubmodulos=[];
- var banderaultima=false;
-// lista3=datosSeccionesSubmodulos
-              $.each(listaModulos,function (index,value){
-//                  console.log(value);
-//                  console.log(value1);
-                    banderaultima=false;
+                        
+ var banderasSeccionesArriba=false;
+ var contadoresSeccionesArriba=1    ;
+var listasubmodulos=[]=listaModulos;
+              $.each(listasubmodulos,function (index,value){
+                  nombre_submodulo=value["nombre_submodulo"];
+
+                 banderasSeccionesArriba=false;
+             
                   $.each(value["contenido_sub"],function(index1,value1)
                   {
-                        if(value1["hijos"]>0)
-                        {
-                            $.each(value1["contenido_vista"],function (index2,value2)
-                            {
-                                if(banderaultima==false)
-                                {
-                                    if(value2["edit"]=="true" || value2["consult"]=="true" || value2["delete"]=="true" || value2["new"]=="true")
+
+                      if(value1["hijos"]>0){
+                          $.each(value1["contenido_vista"],function(indexContenidoVistas,valueContenidoVistas){                             
+                              console.log(valueContenidoVistas);                          
+                              if(banderasSeccionesArriba==false){
+                                     if(valueContenidoVistas["edit"]=="true" || valueContenidoVistas["consult"]=="true" || valueContenidoVistas["delete"]=="true" || valueContenidoVistas["new"]=="true")
                                     {
-                                        banderaultima=true;
-                                        contadorSecciones++;
-                                        datosSeccionesRibbon.push( {id:'0x'+contadorSecciones,mode:'cols',text:''+value["nombre_submodulo"],type:'block',list:[]} );
+                                           banderasSeccionesArriba=true;
+                                            datosSeccionesRibbon.push( {id:'0x'+contadoresSeccionesArriba,mode:'cols',text:value["nombre_submodulo"],type:'block',list:[]} );
                                     }
-                                }
-                            });
-                            if(banderaultima==true)
+                        } 
+                          }) 
+                           if(banderasSeccionesArriba==true)
                             {
-                                datosSeccionesRibbon[contadorSecciones]["list"].push({id:value1["nombre_contenido_sub"], text:value1["nombre_contenido_sub"],img:value1["imagen"],type:'button',isbig:true});
+                                datosSeccionesRibbon[contadoresSeccionesArriba]["list"].push({id:value1["nombre_contenido_sub"], text:value1["nombre_contenido_sub"],img:value1["imagen"],type:'button',isbig:true});
                             }
-                        }
-                        else
-                        {
-                            if(banderaultima==false)
+                      }
+                      else{                                   
+                          if(banderasSeccionesArriba==false)
                             {
                                 if(value1["edit"]=="true" || value1["consult"]=="true" || value1["delete"]=="true" || value1["new"]=="true")
                                 {
-                                    bandera=true;
-                                    contadorSecciones++;
-                                    datosSeccionesRibbon.push( {id:'0x'+contadorSecciones,mode:'cols',text:''+value["nombre_submodulo"],type:'block',list:[]} );
+                                    banderasSeccionesArriba=true;
+                                    datosSeccionesRibbon.push( {id:'0x'+contadoresSeccionesArriba,mode:'cols',text:''+value["nombre_submodulo"],type:'block',list:[]} );
                                 }
                             }
-                            if(banderaultima==true)
+                            if(banderasSeccionesArriba==true)
                             {
-                                datosSeccionesRibbon[contadorSecciones]["list"].push({id:value1["nombre_contenido_sub"], text:value1["nombre_contenido_sub"],img:value1["imagen"],type:'button',isbig:true});
-                            }
+                                datosSeccionesRibbon[contadoresSeccionesArriba]["list"].push({id:value1["nombre_contenido_sub"], text:value1["nombre_contenido_sub"],img:value1["imagen"],type:'button',isbig:true});
+                            }       
                         }
                   });
-              });
-              
-              
-              
-                         
-//                                                     list:[] } );
-//                                $.each(r,function (index,value){
-////                                    bandera=false;
-//                                    if(bandera2==false)
-//                                        nombre_submodulo=value["nombre_submodulo"];
-//                                    bandera2=true;
-////                                    $.each(datosTemp,function (indexTemp,valueTemp){
-//                                    if(value["nombre_submodulo"]==nombre_submodulo){
-////                                        if(value["nombre"]==valueTemp["nombre"]){
-////                                            
-//                                            if(value["EDIT"]=="true" || value["consult"]=="true" || value["delete"]=="true" || value["new"]=="true" ){
-//                                                if(bandera==false)
-//                                                {
-//                                                     datosSeccionesRibbon.push( {id:'0x'+contadorSecciones,mode:'cols',text:''+value["nombre_submodulo"],type:'block',
-//                                                     list:[] } );
-//                                                    contadorSecciones++;
-//                                                    contador2++;
-//                                                    submodulos=[];
-//                                                }
-//                                                
-////                                                  bandera=true;
-////                                                  submodulos=[];
-//                                                console.log(value["imagen_seccion_up"]);
-//                                                if(value["nombre_contenido_sub"]==value["vista_nombre_logico"])
-////                                                        || bandera==false)
-//                                                {
-//                                                  submodulos.push({id:''+value["nombre_contenido_sub"], text:''+value["nombre_contenido_sub"],img:value["imagen_seccion_up"],type:'button',isbig:true  });
-//                                                   datosSeccionesRibbon[contador2]["list"]=submodulos;
-//                                               }
-//                                               bandera=true;
-//                                            }
-//                                    }else{
-//                                         nombre_submodulo=value["nombre_submodulo"];
-//                                         bandera=false;
-//                                                  if(value["EDIT"]=="true" || value["consult"]=="true" || value["delete"]=="true" || value["new"]=="true"){
-////                                                if(bandera==false)
-////                                                {
-//                                                     datosSeccionesRibbon.push( {id:'0x'+contadorSecciones,mode:'cols',text:''+value["nombre_submodulo"],type:'block',
-//                                                     list:[] } );
-//                                                    contadorSecciones++;
-//                                                    contador2++;
-//                                                    submodulos=[];
-////                                                  submodulos=[];
-////                                                       console.log(value["imagen_seccion_up"]);
-//                                                if(value["nombre_contenido_sub"]==value["vista_nombre_logico"])
-////                                                        || bandera==false)
-//                                                {
-//                                                  submodulos.push({id:''+value["nombre_contenido_sub"], text:''+value["nombre_contenido_sub"],img:value["imagen_seccion_up"],type:'button',isbig:true  });
-//                                                   datosSeccionesRibbon[contador2]["list"]=submodulos;
-//                                                 
-//                                                }
-//                                                else
-//                                                    if(bandera==false)
-//                                                 bandera=true;
-//                                            }
-//                                       
-//                                    }
-//    
-//    
-////                                        })
-//                                          
-//                                        
-//                                })
-//                                ;
-
-                                console.log(datosSeccionesRibbon);
-//                                console.log(submodulos);
+                  
+                if(banderasSeccionesArriba==true)
+                        contadoresSeccionesArriba++;
+              });            
                                 
-                                
-                               datosSeccionesRibbon.push({id:'0x37',mode:'cols',text:'Usuario',type:'block',
+                datosSeccionesRibbon.push({id:'0x37',mode:'cols',text:'Usuario',type:'block',
           list:infosesionusuario});
                      },
                      beforeSend:function(r){
@@ -647,7 +563,6 @@ var vistas = [];
 ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: "../../images/base/",tabs:inicio});
 
     }
-
     function consultarInformacion(url){
                $.ajax({  
                      url: ""+url,  
