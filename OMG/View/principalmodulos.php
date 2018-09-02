@@ -326,8 +326,6 @@ var contadorSecciones=1;
 var seccionCatalogo=[
      {id:'Informacion', text:'Informacion',img:'catalogo.png',type:'button',isbig:true}  
  ];
-
- 
  submodulos=[];
  dentrodesubmodulos=[]
 var bandera=false;
@@ -466,16 +464,10 @@ var vistas = [];
                                 listaModulos[contador]["contenido_sub"]=listado_contenido_sub;
                             }
                         });
- 
                         
-
- 
  var banderasSeccionesArriba=false;
  var contadoresSeccionesArriba=1    ;
-
-
 var listasubmodulos=[]=listaModulos;
-
               $.each(listasubmodulos,function (index,value){
                   nombre_submodulo=value["nombre_submodulo"];
 
@@ -491,7 +483,7 @@ var listasubmodulos=[]=listaModulos;
                                      if(valueContenidoVistas["edit"]=="true" || valueContenidoVistas["consult"]=="true" || valueContenidoVistas["delete"]=="true" || valueContenidoVistas["new"]=="true")
                                     {
                                            banderasSeccionesArriba=true;
-                                        datosSeccionesRibbon.push( {id:'0x'+contadoresSeccionesArriba,mode:'cols',text:value["nombre_submodulo"],type:'block',list:[]} );
+                                            datosSeccionesRibbon.push( {id:'0x'+contadoresSeccionesArriba,mode:'cols',text:value["nombre_submodulo"],type:'block',list:[]} );
                                     }
                         } 
                           }) 
