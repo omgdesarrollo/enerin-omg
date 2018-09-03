@@ -58,9 +58,9 @@ and open the template in the editor.
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_quick_info.js.map"></a>-->
     <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_smart_rendering.js" type="text/javascript"></script>-->
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_smart_rendering.js.map"></a>-->
-    <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_tooltip.js" type="text/javascript"></script>-->
-    <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_tooltip.js.map"></a>-->
-    <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_undo.js" type="text/javascript"></script>-->
+    <script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_tooltip.js" type="text/javascript"></script>
+<!--    <a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_tooltip.js.map"></a>-->
+    <script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_undo.js" type="text/javascript"></script>
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_undo.js.map"></a>-->
     <script src="../../assets/gantt_5.1.2_com/codebase/locale/locale_es.js" type="text/javascript"></script>
     <script src="https://export.dhtmlx.com/gantt/api.js?v=20180322"></script>
@@ -162,10 +162,10 @@ and open the template in the editor.
       <input type="submit" class="btn btn-info" value="Recargar">      
       
   </form>
-<input type="radio" id="scale1" name="scale" value="1" checked/><label for="scale1">Dia</label><br>
-<input type="radio" id="scale2" name="scale" value="2"/><label for="scale2">Semana</label><br>
-<input type="radio" id="scale3" name="scale" value="3"/><label for="scale3">Mes</label><br>
-<input type="radio" id="scale4" name="scale" value="4"/><label for="scale4">Año</label><br>
+        <input type="radio" id="scale1" name="scale" value="1" checked/><label for=""><h5>Dia</h5></label>
+<input type="radio" id="scale2" name="scale" value="2"/><label for=""><h5>Semana</h5></label>
+<input type="radio" id="scale3" name="scale" value="3"/><label for=""><h5>Mes</h5></label>
+<input type="radio" id="scale4" name="scale" value="4"/><label for=""><h5>Año</h5></label>
         <?php  
         
 //        echo"e  ".Session::getSesion("dataGantt");
