@@ -572,7 +572,7 @@ dp.init(gantt);
 	for (var i = 0; i < els.length; i++) {
 		els[i].onclick = func;
 	} 
- //empieza en cuanto a el modo de mostrar las tareas por dia,seman,mes,año  
+ //termina en cuanto a el modo de mostrar las tareas por dia,seman,mes,año  
         
 //dp.setTransactionMode("REST");
 
