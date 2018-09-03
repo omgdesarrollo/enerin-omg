@@ -238,9 +238,16 @@ and open the template in the editor.
 			case "3":
 				gantt.config.scale_unit = "month";
 				gantt.config.date_scale = "%F, %Y";
-				gantt.config.subscales = [
-					{unit: "day", step: 1, date: "%j, %D"}
+//				gantt.config.subscales = [
+//					{unit: "day", step: 1, date: "%j, %D"}
+//				];
+                                
+                                
+                                gantt.config.subscales = [
+					{unit: "month", step: 1, date: "%M"}
 				];
+                                
+                                
 				gantt.config.scale_height = 50;
 				gantt.templates.date_scale = null;
 				break;

@@ -196,6 +196,21 @@ class TareasModel{
         }
     }
     
+    
+    public function verificarSiYaExisteLaTarea($cualverificar, $cadena)
+    {
+        try
+        {
+            $dao=new TareasDAO();
+            $rec= $dao->verificarSiYaExisteLaTarea($cualverificar, $cadena);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
             
 }
 

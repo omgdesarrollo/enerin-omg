@@ -7,14 +7,14 @@ class NotificacionesTareasDAO{
     {
         try
         {
-            $query="SELECT tbtareas.tarea
+            $query="SELECT tbtareas.tarea, tbtareas.id_empleado
                     FROM tareas tbtareas
-                    WHERE tbtareas.fecha_alarma=CURDATE() AND tbtareas.status_tarea=1 AND tbtareas.contrato=$CONTRATO";
+                    WHERE tbtareas.fecha_alarma<=CURDATE() AND tbtareas.status_tarea=1 AND tbtareas.contrato=$CONTRATO";
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
 
-            return $lista;            
+            return $lista;    
         } catch (Exception $ex)
         {
             throw $ex;
@@ -84,6 +84,27 @@ class NotificacionesTareasDAO{
             return -1;
         }
         
+    }
+    
+    
+    public function veriricarSiYaExisteLaNotificacion($MENSAJE)
+    {
+        try
+        {
+            $query="SELECT COUNT(*) AS resultado
+                    FROM notificaciones tbnotificaciones
+                    WHERE tbnotificaciones.mensaje = '$MENSAJE'";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            
+//            echo "este es el query resultado: ".json_encode($query);
+            return $lista[0]['resultado'];
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
     }
     
 }

@@ -1,7 +1,7 @@
 $(function(){
    $("#subirArchivos").click(function()
     {
-        alert("es");
+//        alert("es");
         agregarArchivosUrl();
     });
     $("#btn_guardar").click(function()
@@ -467,7 +467,7 @@ var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/
                 ModalCargaArchivo += "<span><a >Agregar Archivos(Click o Arrastrar)...</a></span>";
                 ModalCargaArchivo += "<input type='file' name='files[]' multiple></span>";
                 ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
-                ModalCargaArchivo += "<div class='fileupload-progress' >";
+//                ModalCargaArchivo += "<div class='fileupload-progress' >";
                 ModalCargaArchivo += "</div></div>";
                 ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
                 
@@ -478,7 +478,7 @@ months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Sep
   
   function agregarArchivosUrl()
 {
-    alert("Entra a cargar archivos");
+  
         var ID_DOCUMENTO_SALIDA = $('#tempInputIdDocumentoSalida').val();
         url = 'filesDocumento/Salida/'+ID_DOCUMENTO_SALIDA,
         $.ajax({

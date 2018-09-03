@@ -1,9 +1,10 @@
 <?php
 require_once '../dao/NotificacionesTareasDAO.php';
+require_once '../Model/NotificacionesModel.php';
 
 class NotificacionesTareasModel {
     //put your code here
-    public function tareasEnAlarma($CONTRATO)
+    public function tareasEnAlarma()
     {
         try
         {
@@ -12,20 +13,26 @@ class NotificacionesTareasModel {
             $tipo_mensaje=0;
             $atendido= 'false';
             $asunto="";
-            
+//            echo "este es el contrato: ".$CONTRATO;       
             $dao=new NotificacionesTareasDAO();
-            $rec= $dao->tareasEnAlarma($CONTRATO);
+            $model=new NotificacionesModel();
             
-            foreach ($rec as $key => $value) 
+            $rec= $dao->tareasEnAlarma($CONTRATO);
+//            echo "Este es el rec: ".json_encode($rec);
+            
+            foreach ($rec as $value) 
             {                
-                $ID_EMPLEADO= $value['id_empleado'];
                 $TAREA= $value['tarea'];
-
-                $ID= $dao->obtenerUsuarioPorIdEmpleado($ID_EMPLEADO);
-                $mensaje= "La siguiente tarea entro en Alarma: ".$TAREA;
+                $ID_EMPLEADO= $value['id_empleado'];
                 
-                $model=new NotificacionesModel();
-                $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $ID, $mensaje, $tipo_mensaje, $atendido,$asunto,$CONTRATO);
+                $ID= $dao->obtenerUsuarioPorIdEmpleado($ID_EMPLEADO);
+                $mensaje= "La Tarea: ".$TAREA." esta en Alarma";
+                $resultado= $dao->veriricarSiYaExisteLaNotificacion($mensaje);
+//                echo "este es el resultado: ".$resultado;
+                if($resultado==0)
+                {
+                    $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $ID, $mensaje, $tipo_mensaje, $atendido,$asunto,$CONTRATO);
+                }    
             }
 
             return $rec;

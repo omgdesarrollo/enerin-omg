@@ -118,6 +118,24 @@ class TareasDAO{
         
     }
     
+    public function verificarSiYaExisteLaTarea($cualverificar,$cadena)
+    {
+      try
+      {
+          $query="SELECT tbtareas.tarea
+                  FROM tareas tbtareas
+                  WHERE tbtareas.$cualverificar = '$cadena'";
+          $db=  AccesoDB::getInstancia();
+          $lista=$db->executeQuery($query);
+            
+        return $lista;          
+      } catch (Exception $ex)
+      {
+          throw $ex;
+          return -1;
+      }
+    }
+    
 }
 
 ?>

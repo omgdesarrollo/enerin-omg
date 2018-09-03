@@ -1,5 +1,10 @@
 $(function()
 {
+    $("#TAREA").keyup(function()
+    {
+        var valueTarea=$(this).val();
+        verificarExiste(valueTarea,"tarea");
+    });
     $("#btn_crearTarea").click(function()
     {
         tareaDatos=new Object();
@@ -100,6 +105,7 @@ function construirGrid()
         onDataLoaded:function(args)
         {
             $('.jsgrid-filter-row').removeAttr("style",'display:none');
+            
         },
         onRefreshing: function(args) {
         },
@@ -124,8 +130,8 @@ function construirGrid()
         [
             { name: "id_principal",visible:false},
             { name:"no",title:"No",width:60},
-            { name: "contrato",title:"Contrato", type: "textarea", validate: "required" },
-            { name: "tarea",title:"Tarea", type: "textarea", validate: "required" },
+            { name: "contrato",title:"Contrato", type: "textarea", validate: "required",width:200},
+            { name: "tarea",title:"Tarea", type: "textarea", validate: "required",width:200 },
 //            { name: "id_empleado",title:"Responsable del Plan", type: "text", validate: "required" },
             { name: "id_empleado",title:"Responsable del Plan", type: "select", width:200,
                 items:EmpleadosCombobox,
@@ -410,6 +416,33 @@ function insertarTareas(tareaDatos)
                 swalError("Error en el servidor");
             }
     });
+}
+
+function verificarExiste(dataString,cualverificar)
+{
+
+$.ajax({
+    url: "../Controller/TareasController.php?Op=verificarTarea&cualverificar="+cualverificar,
+    type: "POST",
+    data: "cadena="+dataString,
+    success: function(data) 
+    {    
+        mensajeerror="";
+
+        $.each(data, function (index,value) {
+            mensajeerror=" La Tarea "+value.tarea+" Ya Existe";
+        });
+        $("#msgerrorTarea").html(mensajeerror);
+        if(mensajeerror!=""){
+            $("#msgerrorTarea").css("background","orange");
+            $("#msgerrorTarea").css("width","190px");
+            $("#msgerrorTarea").css("color","white");
+            $("#btn_crearTarea").prop("disabled",true);
+        }else{
+            $("#btn_crearTarea").prop("disabled",false);
+        }
+    }
+    })
 }
 
 

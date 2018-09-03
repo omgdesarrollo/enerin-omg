@@ -892,7 +892,7 @@ var jsonObj = {};
                               });
                                 window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
                                 window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
-                                
+                                mostrarTareasEnAlarma();
                                 
                                 
     }    
@@ -904,16 +904,28 @@ var jsonObj = {};
  function detallescontratosiahyseleccionado()
  {
     $.ajax({  
-        url: "../Controller/CumplimientosController.php?Op=contratoselec&obt=true",  
-        async:false,
-        success: function(r) {
-
+            url: "../Controller/CumplimientosController.php?Op=contratoselec&obt=true",  
+            async:false,
+            success: function(r) 
+            {
                 window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
                 window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
-
-    
-    }    
-           });
+            }    
+        });
+ }
+ 
+ 
+ 
+ function mostrarTareasEnAlarma()
+ {
+     $.ajax({
+         url:"../Controller/NotificacionesTareasController.php?Op=tareasEnAlarma",
+         type:"GET",
+         success:function()
+         {
+             
+         }
+     });
  }
 
 </script>
