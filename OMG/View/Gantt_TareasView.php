@@ -118,8 +118,11 @@ and open the template in the editor.
 			color: white;
 			font-weight: bold;
 		}   
-                
-                
+                /*estilos para ocultar el texto de la barra*/ 
+                .gantt_task_content {
+                    display: none;
+                }
+                /*termina estilos para ocultar el texto de la barra*/
                 /* para la pantalla completa*/ 
 /*                	.gantt-fullscreen {
 			position: absolute;
@@ -569,7 +572,7 @@ dp.init(gantt);
 	for (var i = 0; i < els.length; i++) {
 		els[i].onclick = func;
 	} 
- //empieza en cuanto a el modo de mostrar las tareas por dia,seman,mes,año  
+ //termina en cuanto a el modo de mostrar las tareas por dia,seman,mes,año  
         
 //dp.setTransactionMode("REST");
 
