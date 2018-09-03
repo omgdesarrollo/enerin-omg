@@ -36,16 +36,23 @@ $Usuario=  Session::getSesion("user");
 
         <script src="../../js/jquery.js" type="text/javascript"></script>
         <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-<!--        <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
-        <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
-        <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>-->
-        <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
-        <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
 
-        <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
-        <script src="../../js/fValidacionDocumentosView.js" type="text/javascript"></script>
+        <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
+        <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
+
+        <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
+        <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
+
         <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
+        <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
+        <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
+        <script src="../../js/tools.js" type="text/javascript"></script>
+        <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+        
+        <script src="../../js/fValidacionDocumentosView.js" type="text/javascript"></script>
+
+        <script src="../../js/fGridComponent.js" type="text/javascript"></script>
                
                 
                 
@@ -119,10 +126,8 @@ $Usuario=  Session::getSesion("user");
 	</head>
 
         
-        <body class="no-skin" onload="loadSpinner()">
-             <div id="loader"></div>
+<body class="no-skin">
        
-
 <?php
 require_once 'EncabezadoUsuarioView.php';
 
@@ -133,20 +138,23 @@ if(isset($_REQUEST["accion"]))
 ?>
 
              
-<div style="position: fixed;">    
-<button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
-    <i class="glyphicon glyphicon-repeat"></i>   
-</button>
+<div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
 
-<button style="width:51;height:42" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
-    <img src="../../images/base/_excel.png" width="30px" height="30px">
-</button>
-<button style="width:51;height:42" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
-    <img src="../../images/base/word.png" width="30px" height="30px"> 
-</button>
-<button style="width:51;height:42" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
-    <img src="../../images/base/pdf.png" width="30px" height="30px"> 
-</button>    
+    <button type="button" class="btn btn-info btn_refrescar" id="btnrefrescar" onclick="refresh();" >
+        <i class="glyphicon glyphicon-repeat"></i>
+    </button>
+
+    <div class="pull-right">
+        <button style="width:51;height:42" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
+            <img src="../../images/base/_excel.png" width="30px" height="30px">
+        </button>
+        <button style="width:51;height:42" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
+            <img src="../../images/base/word.png" width="30px" height="30px"> 
+        </button>
+        <button style="width:51;height:42" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
+            <img src="../../images/base/pdf.png" width="30px" height="30px"> 
+        </button>
+    </div>
 
         <!-- <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave Documento" style="width: 180px;">
         <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre Documento" style="width: 180px;">
@@ -154,11 +162,7 @@ if(isset($_REQUEST["accion"]))
 
         <!-- <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i> -->
 </div>
-
-
 <br><br><br>
-<div style="float:left" id="headerFiltros">
-</div>
 
 <div id="jsGrid"></div>
 
@@ -280,20 +284,49 @@ if(isset($_REQUEST["accion"]))
 </div><!-- cierre del modal-->
 
                 
-		<script>
+<script>
                     
-    var id_validacion_documento,columna,objetocheckbox,si_hay_cambio=false;
-    filtros = 
-    [
-        {'name':'Clave Documento','id':'clave_documento',type:'text'},
-        {'name':'Documento','id':'documento',type:'text'},
-        {'name':'Responsable Documento','id':'responsable_documento',type:'text'},
-        {'name':'Validacion Documento Responsable','id':'validacion_documento_responsable',type:'combobox',data:construirValidacionDCombo(),descripcion:"descripcion"},
-        {'name':'Validacion Tema Responsable','id':'validacion_tema_responsable',type:'combobox',data:construirValidacionTCombo(),descripcion:"descripcion"},
+    var id_validacion_documento, columna, objetocheckbox, si_hay_cambio=false;
+
+    var DataGrid=[], dataListado=[], filtros=[], dataListado=[];;
+    var db={};
+    var gridInstance, ultimoNumeroGrid=0;
+
+    var customsFieldsGridData=[
+        {field:"customControl",my_field:MyCControlField},
+        // {field:"porcentaje",my_field:porcentajesFields},
     ];
-    dataListado=[];
-    construirFiltros();
-    listarDatos();
+
+    estructuraGrid = [
+        { name:"id_principal", visible:false},
+        { name:"no", title:"No",width:60},
+
+        { name: "clave_documento", title:"Clave Documento", type: "text", width: 100},
+        { name: "documento", title:"Documento", type: "text", width: 130},
+        { name: "responsable_documento", title:"Responsable Documento", type: "text", width: 130},
+        { name: "tema_responsableBTN", title:"Temas y Resposables", type: "text", width: 100},
+        { name: "mostrar_urlsBTN", title:"Archivo Adjunto", type: "text", width: 127},
+        { name: "requisitosBTN", title:"Requisitos", type: "text", width: 92,},
+        { name: "registrosBTN", title:"Registros", type: "text", width: 92,},
+        { name: "validacion_documento_responsable", title:"Validación Resposable Documento", type: "FValidacionDocumento", width: 100},
+        { name: "validacion_tema_responsable", title:"Validación Resposable Tema", type: "FValidacionTema", width: 100},
+        { name: "observaciones", title:"Observaciones", type: "text", width: 112},
+        { name: "desviacion_mayor", title:"Desviación Mayor", type: "text", width: 90},
+
+        { name:"delete", title:"Opción", type:"customControl",sorting:""},
+    ];
+
+    // filtros = 
+    // [
+    //     {'name':'Clave Documento','id':'clave_documento',type:'text'},
+    //     {'name':'Documento','id':'documento',type:'text'},
+    //     {'name':'Responsable Documento','id':'responsable_documento',type:'text'},
+    //     {'name':'Validacion Documento Responsable','id':'validacion_documento_responsable',type:'combobox',data:construirValidacionDCombo(),descripcion:"descripcion"},
+    //     {'name':'Validacion Tema Responsable','id':'validacion_tema_responsable',type:'combobox',data:construirValidacionTCombo(),descripcion:"descripcion"},
+    // ];
+
+    // construirFiltros();
+    // listarDatos();
 
     function construirValidacionDCombo()
     {
@@ -398,76 +431,76 @@ if(isset($_REQUEST["accion"]))
         });
     }
 
-    function construirValidacionDocumento(documento,numero)//listo
-    {
-        no = "fa-times-circle-o";
-        yes = "fa-check-circle-o";
-        tempData="<td>"+numero+"</td>";
-        tempData+="<td>"+documento.clave_documento+"</td>";
-        tempData+="<td>"+documento.documento+"</td>";
-        tempData+="<td>"+documento.responsable_documento+"</td>";
+    // function construirValidacionDocumento(documento,numero)//listo
+    // {
+    //     no = "fa-times-circle-o";
+    //     yes = "fa-check-circle-o";
+    //     tempData="<td>"+numero+"</td>";
+    //     tempData+="<td>"+documento.clave_documento+"</td>";
+    //     tempData+="<td>"+documento.documento+"</td>";
+    //     tempData+="<td>"+documento.responsable_documento+"</td>";
 
-        tempData+="<td><button onClick='mostrarTemaResponsable("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'>";
-        tempData+="<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
+    //     tempData+="<td><button onClick='mostrarTemaResponsable("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'>";
+    //     tempData+="<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
         
-        if(documento.permiso_total == 0)
-        {
-            if(documento.soy_responsable==1)
-                tempData+="<td><button onClick='mostrar_urls("+documento.id_validacion_documento+",\"true\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
-            else
-                tempData+="<td><button onClick='mostrar_urls("+documento.id_validacion_documento+",\""+documento.validacion_documento_responsable+"\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
-        }
-        else
-            tempData+="<td><button onClick='mostrar_urls("+documento.id_validacion_documento+",\"false\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
+    //     if(documento.permiso_total == 0)
+    //     {
+    //         if(documento.soy_responsable==1)
+    //             tempData+="<td><button onClick='mostrar_urls("+documento.id_validacion_documento+",\"true\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
+    //         else
+    //             tempData+="<td><button onClick='mostrar_urls("+documento.id_validacion_documento+",\""+documento.validacion_documento_responsable+"\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
+    //     }
+    //     else
+    //         tempData+="<td><button onClick='mostrar_urls("+documento.id_validacion_documento+",\"false\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
 
-        tempData+="<i class='fa fa-cloud-upload' style='font-size: 20px'></i>Adjuntar</button></td>";
-        tempData+="<td><button onClick='mostrarRequisitos("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'>";
-        tempData+="<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
-        tempData+="<td><button onClick='mostrarRegistros("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'>";
-        tempData+="<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
+    //     tempData+="<i class='fa fa-cloud-upload' style='font-size: 20px'></i>Adjuntar</button></td>";
+    //     tempData+="<td><button onClick='mostrarRequisitos("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'>";
+    //     tempData+="<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
+    //     tempData+="<td><button onClick='mostrarRegistros("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'>";
+    //     tempData+="<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
 
-        tempData+="<td>";
-        if(documento.validacion_documento_responsable=="true")
-        {
-            tempData+="<i class='fa "+yes+"' style='color:#02ff00;";
-        }
-        else
-        {
-            tempData+="<i class='fa "+no+"' style='color:red;";
-        }
-        tempData+="font-size: xx-large;cursor:pointer' aria-hidden='true'";
-        if(documento.permiso_total==1)
-            tempData+="onClick='validarDocumentoR(this,\"validacion_documento_responsable\","+documento.id_validacion_documento+","+documento.id_documento+")'";
-        else
-        {
-            if(documento.soy_responsable==0)
-                tempData+="onClick='validarDocumentoR(this,\"validacion_documento_responsable\","+documento.id_validacion_documento+","+documento.id_documento+")'";
-            else
-                tempData+="onClick='noAcceso(this)'";
-        }
-        tempData+="></i></td>";
+    //     tempData+="<td>";
+    //     if(documento.validacion_documento_responsable=="true")
+    //     {
+    //         tempData+="<i class='fa "+yes+"' style='color:#02ff00;";
+    //     }
+    //     else
+    //     {
+    //         tempData+="<i class='fa "+no+"' style='color:red;";
+    //     }
+    //     tempData+="font-size: xx-large;cursor:pointer' aria-hidden='true'";
+    //     if(documento.permiso_total==1)
+    //         tempData+="onClick='validarDocumentoR(this,\"validacion_documento_responsable\","+documento.id_validacion_documento+","+documento.id_documento+")'";
+    //     else
+    //     {
+    //         if(documento.soy_responsable==0)
+    //             tempData+="onClick='validarDocumentoR(this,\"validacion_documento_responsable\","+documento.id_validacion_documento+","+documento.id_documento+")'";
+    //         else
+    //             tempData+="onClick='noAcceso(this)'";
+    //     }
+    //     tempData+="></i></td>";
 
-        tempData+="<td>";
-        if(documento.validacion_tema_responsable=="true")
-        {
-            tempData+="<i class='fa "+yes+"' style='color:#02ff00;";
-        }
-        else
-        {
-            tempData+="<i class='fa "+no+"' style='color:red;";
-        }
-        tempData+="font-size: xx-large;cursor:pointer' aria-hidden='true'";
-        if(documento.soy_responsable==1)
-            tempData+="onClick='validarTemaR(this,\"validacion_tema_responsable\","+documento.id_validacion_documento+","+documento.id_documento+","+documento.id_usuarioD+")'";
-        else
-            tempData+="onClick='noAcceso(this)'";
-        tempData+="></i></td>";
+    //     tempData+="<td>";
+    //     if(documento.validacion_tema_responsable=="true")
+    //     {
+    //         tempData+="<i class='fa "+yes+"' style='color:#02ff00;";
+    //     }
+    //     else
+    //     {
+    //         tempData+="<i class='fa "+no+"' style='color:red;";
+    //     }
+    //     tempData+="font-size: xx-large;cursor:pointer' aria-hidden='true'";
+    //     if(documento.soy_responsable==1)
+    //         tempData+="onClick='validarTemaR(this,\"validacion_tema_responsable\","+documento.id_validacion_documento+","+documento.id_documento+","+documento.id_usuarioD+")'";
+    //     else
+    //         tempData+="onClick='noAcceso(this)'";
+    //     tempData+="></i></td>";
 
-        tempData+="<td>";
-        tempData+="<i data-toggle='modal' data-target='#mostrar-observaciones' onClick='mostrarObservacionesInicio("+documento.id_validacion_documento+")' class='ace-icon fa fa-comments' style='font-size:20px;cursor:pointer'></i></td>";
-        tempData+="<td>X</td>";
-        return tempData;
-    }
+    //     tempData+="<td>";
+    //     tempData+="<i data-toggle='modal' data-target='#mostrar-observaciones' onClick='mostrarObservacionesInicio("+documento.id_validacion_documento+")' class='ace-icon fa fa-comments' style='font-size:20px;cursor:pointer'></i></td>";
+    //     tempData+="<td>X</td>";
+    //     return tempData;
+    // }
 
     function construir(documento,numero)
     {

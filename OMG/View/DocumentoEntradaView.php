@@ -347,9 +347,13 @@ MyDateField.prototype = new jsGrid.Field
         },
         insertValue: function()
         {},
-        editValue: function()
+        editValue: function(val)
         {
-                return $(this._inputDate).val();
+                value = this._inputDate[0].value;
+                if(value=="")
+                        return "0000-00-00";
+                else
+                        return $(this._inputDate).val();
         }
 });
 

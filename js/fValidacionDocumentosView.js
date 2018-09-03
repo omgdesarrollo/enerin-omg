@@ -1,4 +1,29 @@
 
+function inicializarFiltros()
+{
+    return new Promise((resolve,reject)=>
+    {
+        filtros = [
+            {id:"noneUno", type:"none"},
+            
+            { id: "id_principal",visible:false},
+            { id: "no", name:"No.", type: "text", width: 40},
+            { id: "clave_documento", name:"Clave Documento", type: "text", width: 100},
+            { id: "documento", name:"Documento", type: "text", width: 130},
+            { id: "responsable_documento", name:"Responsable Documento", type: "text", width: 130},
+            { id: "tema_responsableBTN",namename:"Temas y Resposables", type: "text", width: 100},
+            { id: "mostrar_urlsBTN", name:"Archivo Adjunto", type: "text", width: 127},
+            { id: "requisitosBTN", name:"Requisitos", type: "text", width: 92,},
+            { id: "registrosBTN", name:"Registros", type: "text", width: 92,},
+            { id: "validacion_documento_responsable", name:"Validación Resposable Documento", type: "FValidacionDocumento", width: 100},
+            { id: "validacion_tema_responsable", name:"Validación Resposable Tema", type: "FValidacionTema", width: 100},
+            { id: "observaciones", name:"Observaciones", type: "text", width: 112},
+            { id: "desviacion_mayor", name:"Desviación Mayor", type: "text", width:}
+        ];
+        resolve();
+    });
+}
+
 function construirGrid(__datos)
 {
     // $("#jsGrid").html("");
