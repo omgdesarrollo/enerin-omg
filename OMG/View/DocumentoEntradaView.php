@@ -1388,12 +1388,12 @@ function compararFechaAlarma(val,fasignacion,flimite)//listo
 
 function saveUpdateToDatabase(args)//listo
 {
-        // console.log(args);
+        console.log(args);
         columnas=new Object();
         entro=0;
         id_afectado = args['item']['id_principal'][0];
         region_fiscalTemp = args['previousItem']['region_fiscal'];
-
+        verificar = 0;
         $.each(args['item'],(index,value)=>
         {
                 if(args['previousItem'][index]!=value && value!="")
@@ -1410,18 +1410,11 @@ function saveUpdateToDatabase(args)//listo
                         if(index=="fecha_alarma")
                                 columnas[index]="0000-00-00";
                 }
+                if(index=="folio_entrada")
+                       verificar = verificarExiste(value,"folio_entrada");
         });
-        //     console.log("1");
-        //     if(args["itemIndex"]!=-1)
-                // $("#jsGrid").jsGrid("updateItem", DataGrid[args["itemIndex"]]);
-        //     console.log("2");
-        // console.log(columnas);
-        //     $("#jsGrid").jsGrid("cancelEdit");
-        //     $("#jsGrid").jsGrid("updateItem");
 
-        //     console.log(columnas);
-
-        if( Object.keys(columnas).length != 0)
+        if( Object.keys(columnas).length != 0 && verificar==0)
         {
                 fechas = true;
                 $.each(columnas,(index,value)=>
@@ -1445,14 +1438,14 @@ function saveUpdateToDatabase(args)//listo
                         url:"../Controller/GeneralController.php?Op=Actualizar",
                         type:"POST",
                         data:'TABLA=documento_entrada'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
-                        beforeSend:function()
+                        beforeSend:()=>
                         {
                                 growlWait("Actualización","Espere...");
                         },
-                        success:function(data)
+                        success:(data)=>
                         {
                                 // console.log("resultado actualizacion: ",data);
-                                if(data!=1)
+                                if(data==1)
                                 {
                                         growlSuccess("Actulización","Se actualizaron los campos");
                                         actualizarDocumentoEntrada(id_afectado.id_documento_entrada);
@@ -1472,11 +1465,11 @@ function saveUpdateToDatabase(args)//listo
                         }
                         });
                 }
-                // else
-                // {
-                //         componerDataGrid();
-                //         gridInstance.loadData();
-                // }
+                else
+                {
+                        componerDataGrid();
+                        gridInstance.loadData();
+                }
         }
         else
         {
@@ -1684,30 +1677,43 @@ function refresh()
     
 function verificarExiste(dataString,cualverificar)
 {
-       $.ajax({
-                type: "POST",
-                url: "../Controller/DocumentosEntradaController.php?Op=verificacionexisteregistro&cualverificar="+cualverificar,
-                data: "registro="+dataString,
-                success: function(data)
-                {
-                        mensajeerror="";
-                        $.each(data, function (index,value)
+        // return new Promise((resolve,reject)=>
+        // {
+                contador=0;
+                $.ajax({
+                        type: "POST",
+                        url: "../Controller/DocumentosEntradaController.php?Op=verificacionexisteregistro&cualverificar="+cualverificar,
+                        data: "registro="+dataString,
+                        async:false,
+                        success:(data)=>
                         {
-                                mensajeerror="El Folio de Entrada "+value.folio_entrada+" Ya Existe";
-                        });
-                        $("#ValidarFolioEntradaModal").html(mensajeerror);
-                        if(mensajeerror!="")
-                        {
-                                $("#ValidarFolioEntradaModal").addClass("validar_formulario");
-                                $("#ValidarFolioEntradaModal").css("background","orange");
-                                $("#btn_guardar").prop("disabled",true);
+                                mensajeerror="";
+                                $.each(data,(index,value)=>
+                                {
+                                        mensajeerror="El Folio de Entrada "+value.folio_entrada+" Ya Existe";
+                                        growlError("Actualizacion","El folio de entrada ya existe");
+                                        contador++;
+                                });
+                                // if(contador==0)
+                                //         resolve();
+                                // else
+                                //         reject();
+
+                                $("#ValidarFolioEntradaModal").html(mensajeerror);
+                                if(mensajeerror!="")
+                                {
+                                        $("#ValidarFolioEntradaModal").addClass("validar_formulario");
+                                        $("#ValidarFolioEntradaModal").css("background","orange");
+                                        $("#btn_guardar").prop("disabled",true);
+                                }
+                                else
+                                {
+                                        $("#btn_guardar").prop("disabled",false);
+                                }
                         }
-                        else
-                        {
-                                $("#btn_guardar").prop("disabled",false);
-                        }
-                }
-         })
+                });
+                return contador;
+        // });
 }
 
 // function loadSpinner()
