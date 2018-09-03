@@ -62,10 +62,32 @@ class DocumentoSalidaDAO{
     }
     }
     
-  
     
- 
-    
+    public function listarFoliosDeEntrada()
+    {
+        try{
+            $query="SELECT tbdocumento_entrada.id_documento_entrada, tbdocumento_entrada.folio_entrada
+                    FROM documento_entrada tbdocumento_entrada";
+
+
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista;
+    }  catch (Exception $ex){
+        throw $ex;
+        return -1;
+    }
+        
+    }
+            
+
+
+
+
+
+
+
     public function insertarDocumentosSalida($id_documento_entrada,$folio_salida,$fecha_envio,$asunto,$destinatario,$observaciones){
         
         try{

@@ -34,6 +34,11 @@ $(function(){
         $("#OBSERVACIONES").val("");              
     });
     
+        $("#subirArchivos").click(function()
+    {
+        agregarArchivosUrl();
+    });
+    
 });//LLAVE CIERRE FUNCTION
 
 
@@ -41,7 +46,8 @@ function inicializarFiltros()
 {
     filtros =[
             {id:"noneUno",type:"none"},
-            {id:"folio_entrada",type:"text"},
+//            {id:"folio_entrada",type:"text"},
+            {id:"id_documento_entrada",type:"combobox",data:listarFoliosDeEntrada(),descripcion:"folio_entrada"},
             {id:"folio_salida",type:"text"},
             {id:"id_empleado",type:"text"},
 //            {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
@@ -107,7 +113,15 @@ function construirGrid()
         [
             { name: "id_principal",visible:false},
             { name:"no",title:"No",width:20},
-            { name: "folio_entrada",title:"Folio de Entrada", type: "text", validate: "required" },
+//            { name: "folio_entrada",title:"Folio de Entrada", type: "text", validate: "required" },
+
+            { name: "id_documento_entrada",title:"Folio de Entrada", type: "select",
+                items:DocumentoEntradasComboBox,
+                valueField:"id_documento_entrada",
+                textField:"folio_entrada"
+            },
+
+
             { name: "folio_salida",title:"Folio de Salida", type: "text", validate: "required" },
             { name: "id_empleado",title:"Responsable del Tema", type: "text", validate: "required",width:150,editing: false},
 //            { name: "id_empleado",title:"Responsable del Tema", type: "select",
@@ -188,9 +202,9 @@ MyCControlField.prototype = new jsGrid.Field
         itemTemplate: function(value,todo)
         {
 //            alert(value,todo);
-//            if(value[0]['reg']!="0" || value[0]['validado']!=0)
-//                return "";
-//            else
+            if(value[0]['existe_archivo']!=0)
+                return "";
+            else
                 return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button ',title:"Eliminar", type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
         },
         insertTemplate: function(value)
@@ -226,7 +240,7 @@ function listarDatos()
 {
     __datos=[];    
     datosParamAjaxValues={};
-    datosParamAjaxValues["url"]="../Controller/DocumentosSalidaController.php?Op=Listar";
+    datosParamAjaxValues["url"]="../Controller/DocumentosSalidaController.php?Op=Listar&URL=filesDocumento/Salida/";
     datosParamAjaxValues["type"]="POST";
     datosParamAjaxValues["async"]=false;
     
@@ -264,7 +278,7 @@ function reconstruir(value,index)
     ultimoNumeroGrid = index;
     tempData["id_principal"]= [{'id_documento_salida':value.id_documento_salida}];
     tempData["no"]= index;
-    tempData["folio_entrada"]=value.folio_entrada;
+    tempData["id_documento_entrada"]=value.id_documento_entrada;
     tempData["folio_salida"]=value.folio_salida;
     tempData["id_empleado"]= value.nombre_empleado;
     tempData["fecha_envio"]=value.fecha_envio;
@@ -274,7 +288,8 @@ function reconstruir(value,index)
     tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_documento_salida+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
     tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
     tempData["observaciones"]=value.observaciones;
-    tempData["delete"]= "1";
+    tempData["delete"]="1";
+    tempData["delete"]= [{"existe_archivo":value.archivosUpload[0].length}];
     return tempData;
 }
 
@@ -290,11 +305,30 @@ function documentosEntradaComboboxparaModal()
           $.each(documentosEntrada,function(index,value)
           {
               tempData+="<option value='"+value.id_documento_entrada+"'>"+value.folio_entrada+"</option>";
+
           }); 
           
           $("#ID_DOCUMENTO_ENTRADA").html(tempData);
       }
-  });   
+  });
+  
+}
+
+
+
+function listarFoliosDeEntrada()
+{
+//    alert("listarFoliosDeEntrada");
+    $.ajax({
+        url:"../Controller/DocumentosSalidaController.php?Op=listarFoliosEntrada",
+        type:"GET",
+        async:false,
+        success:function(foliosEntrada)
+        {
+            DocumentoEntradasComboBox=foliosEntrada;
+        }
+    });
+    return DocumentoEntradasComboBox;
 }
 
 
@@ -372,4 +406,126 @@ function loadBlockUi()
     },overlayCSS: { backgroundColor: '#000000',opacity:0.1,cursor:'wait'} }); 
     setTimeout($.unblockUI, 2000);
 }
+
+
+  
+  
+  function mostrar_urls(id_documento_salida)
+{
+        var tempDocumentolistadoUrl = "";
+        URL = 'filesDocumento/Salida/'+id_documento_salida;
+        $.ajax({
+                url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
+                type: 'GET',
+                data: 'URL='+URL,
+                async:false,
+                success: function(todo)
+                {
+                        if(todo[0].length!=0)
+                        {
+                                tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
+                                $.each(todo[0], function (index,value)
+                                {
+                                        nametmp = value.split("^-O-^-M-^-G-^");
+                                        fecha = new Date(nametmp[0]*1000);
+                                        fecha = fecha.getDate() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+                                        
+                                        tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
+                                        tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\" download='"+nametmp[1]+"'>"+nametmp[1]+"</a></td>";
+                                        tempDocumentolistadoUrl += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
+                                        tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
+                                        tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";
+                                });
+                                tempDocumentolistadoUrl += "</tbody></table>";
+                        }
+                        if(tempDocumentolistadoUrl == " ")
+                        {
+                                tempDocumentolistadoUrl = " No hay archivos agregados ";
+                        }
+                        tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdDocumentoSalida' type='text' style='display:none;' value='"+id_documento_salida+"'>";
+                        // alert(tempDocumentolistadoUrl);
+                        $('#DocumentoEntradaAgregarModal').html(" ");
+                        $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
+                        $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
+                        // $('#fileupload').fileupload();
+                        $('#fileupload').fileupload({
+                        url: '../View/',
+                        });
+                }
+        });
+}
+
+var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/form-data'>";
+                ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
+                ModalCargaArchivo += "<div class='fileupload-buttons'>";
+                ModalCargaArchivo += "<span class='fileinput-button'>";
+                ModalCargaArchivo += "<span><a >Agregar Archivos(Click o Arrastrar)...</a></span>";
+                ModalCargaArchivo += "<input type='file' name='files[]' multiple></span>";
+                ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
+                ModalCargaArchivo += "<div class='fileupload-progress' >";
+                ModalCargaArchivo += "</div></div>";
+                ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
+                
+
+months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+  
+  
+  
+  function agregarArchivosUrl()
+{
+    alert("Entra a cargar archivos");
+        var ID_DOCUMENTO_SALIDA = $('#tempInputIdDocumentoSalida').val();
+        url = 'filesDocumento/Salida/'+ID_DOCUMENTO_SALIDA,
+        $.ajax({
+                url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
+                type: 'GET',
+                data: 'URL='+url,
+                success:function(creado)
+                {
+                    if(creado==true)
+                        $('.start').click();
+                },
+                error:function()
+                {
+                        swalError("Error del servidor");
+                }
+        });
+}
+  
+  
+  
+    function borrarArchivo(url)
+    {
+      swal({
+          title: "ELIMINAR",
+          text: "Confirme para eliminar el documento",
+          type: "warning",
+          showCancelButton: true,
+          closeOnConfirm: false,
+          showLoaderOnConfirm: true
+        },function()
+        {
+          var ID_DOCUMENTO_SALIDA = $('#tempInputIdDocumentoSalida').val();
+          $.ajax({
+            url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
+            type: 'POST',
+            data: 'URL='+url,
+            success: function(eliminado)
+            {
+              if(eliminado)
+              {
+                mostrar_urls(ID_DOCUMENTO_SALIDA);
+                swal("","Archivo eliminado");
+                setTimeout(function(){swal.close();},1000);
+              }
+              else
+                swal("","Ocurrio un error al elimiar el documento", "error");
+            },
+            error:function()
+            {
+              swal("","Ocurrio un error al elimiar el documento", "error");
+            }
+          });
+        });
+    }
 

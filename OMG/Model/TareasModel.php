@@ -10,6 +10,24 @@ class TareasModel{
         {
             $dao=new TareasDAO();
             $rec= $dao->listarTareas();
+            
+//            foreach ($rec as $key => $value)
+//            {
+//                if($value["status_tarea"]== 1)
+//                {
+//                    $rec[$key]["status_tarea"]="En proceso";
+//                }
+//                
+//                if($value["status_tarea"]== 2)
+//                {
+//                    $rec[$key]["status_tarea"]="Suspendido";
+//                }
+//                
+//                if($value["status_tarea"]== 3)
+//                {
+//                    $rec[$key]["status_tarea"]="Terminado";
+//                }
+//            }
 
             return $rec;            
         } catch (Exception $ex)
@@ -19,7 +37,7 @@ class TareasModel{
         }
     }
     
-    public function insertarTarea($contrato,$tarea,$fecha_creacion,$fecha_alarma,$fecha_cumplimiento,$observaciones,$id_empleado,$mensaje,
+    public function insertarTarea($contrato,$tarea,$fecha_creacion,$fecha_alarma,$fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado,$mensaje,
                                   $responsable_plan,$tipo_mensaje,$atendido)
     {
         try
@@ -30,13 +48,31 @@ class TareasModel{
             $dao=new TareasDAO();
             $ID= $dao->obtenerUsuarioPorIdEmpleado($responsable_plan);
             $model=new NotificacionesModel();
-            $exito= $dao->insertarTarea($contrato, $tarea, $fecha_creacion, $fecha_alarma, $fecha_cumplimiento,$observaciones,$id_empleado);
+            $exito= $dao->insertarTarea($contrato, $tarea, $fecha_creacion, $fecha_alarma, $fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado);
             $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $ID, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
             
 //            echo "este es model: ".json_encode($model);
             if($exito[0] = 1)
             {
                 $lista = $dao->listarTarea($exito['id_nuevo']);
+                
+                foreach ($lista as $key => $value)
+            {
+                if($value["status_tarea"]== 1)
+                {
+                    $lista[$key]["status_tarea"]="En proceso";
+                }
+                
+                if($value["status_tarea"]== 2)
+                {
+                    $lista[$key]["status_tarea"]="Suspendido";
+                }
+                
+                if($value["status_tarea"]== 3)
+                {
+                    $lista[$key]["status_tarea"]="Terminado";
+                }
+            }
             }
             else
                 return $exito[0];

@@ -356,9 +356,9 @@ function mostrar_urls(id_documento_entrada)
 
 
 function cargadePrograma(val){
-    for(var property in val) {
-    alert(property + "=" + val[property]);
-}
+//    for(var property in val) {
+//    alert(property + "=" + val[property]);
+//}
 //        alert("le has picado al folio de entrada  "+foliodeentrada);
 console.log(val);
     window.location.href=" GanttView.php?id_documento_entrada="+val.id_documento_entrada+"&folio_entrada="+val.folio_entrada;

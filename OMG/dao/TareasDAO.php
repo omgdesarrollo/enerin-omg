@@ -9,7 +9,7 @@ class TareasDAO{
         try
         {
             $query="SELECT tbtareas.id_tarea, tbtareas.contrato, tbtareas.tarea, tbtareas.fecha_creacion, tbtareas.fecha_alarma,
-                    tbtareas.fecha_cumplimiento, tbtareas.observaciones, tbtareas.existe_programa,tbtareas.avance_programa,		 
+                    tbtareas.fecha_cumplimiento, tbtareas.status_tarea, tbtareas.observaciones, tbtareas.existe_programa,tbtareas.avance_programa,		 
                     tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno
                     FROM tareas tbtareas
                     JOIN empleados tbempleados ON tbempleados.id_empleado=tbtareas.id_empleado";
@@ -31,7 +31,7 @@ class TareasDAO{
         try
         {
             $query="SELECT tbtareas.id_tarea, tbtareas.contrato, tbtareas.tarea, tbtareas.fecha_creacion, tbtareas.fecha_alarma,
-                    tbtareas.fecha_cumplimiento, tbtareas.observaciones, tbtareas.existe_programa, tbtareas.avance_programa,		 
+                    tbtareas.fecha_cumplimiento, tbtareas.status_tarea, tbtareas.observaciones, tbtareas.existe_programa, tbtareas.avance_programa,		 
                     tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno
                     FROM tareas tbtareas
                     JOIN empleados tbempleados ON tbempleados.id_empleado=tbtareas.id_empleado
@@ -49,7 +49,7 @@ class TareasDAO{
         }
     }
 
-    public function insertarTarea($contrato,$tarea,$fecha_creacion,$fecha_alarma,$fecha_cumplimiento,$observaciones,$id_empleado)
+    public function insertarTarea($contrato,$tarea,$fecha_creacion,$fecha_alarma,$fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado)
     {
         try
         {
@@ -65,8 +65,8 @@ class TareasDAO{
                 $id_nuevo=0;
             }
             
-            $query="INSERT INTO tareas(id_tarea,contrato,tarea,fecha_creacion,fecha_alarma,fecha_cumplimiento,observaciones,id_empleado)
-				values($id_nuevo,'$contrato','$tarea','$fecha_creacion','$fecha_alarma','$fecha_cumplimiento','$observaciones',$id_empleado)";
+            $query="INSERT INTO tareas(id_tarea,contrato,tarea,fecha_creacion,fecha_alarma,fecha_cumplimiento,status_tarea,observaciones,id_empleado)
+				values($id_nuevo,'$contrato','$tarea','$fecha_creacion','$fecha_alarma','$fecha_cumplimiento',$status_tarea,'$observaciones',$id_empleado)";
             
             $db=  AccesoDB::getInstancia();
             $exito = $db->executeUpdateRowsAfected($query);

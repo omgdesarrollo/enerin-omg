@@ -31,6 +31,7 @@ switch ($Op) {
                 $data['fecha_creacion'],
                 $data['fecha_alarma'],
                 $data['fecha_cumplimiento'],
+                $data['status_tarea'],
                 $data['observaciones'],
                 $data['id_empleado'],
                 $data['mensaje'],

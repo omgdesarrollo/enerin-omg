@@ -614,13 +614,15 @@ dp.init(gantt);
     function obtenerEmpleados(){
         
         $.ajax({
-           url:"../Controller/GanttEvidenciasController.php?Op=ListarEmpleados",
+//           url:"../Controller/GanttEvidenciasController.php?Op=ListarEmpleados",
+           url:"../Controller/GanttEvidenciasController.php?Op=empleadosNombreCompleto",
            data:"",
            async:false,
            success:function (res){
                
                $.each(res,function(index,value){
-                   dataEmpleados.push({key:value.id_empleado,label:value.nombre_empleado});
+//                   dataEmpleados.push({key:value.id_empleado,label:value.nombre_empleado});
+                   dataEmpleados.push({key:value.id_empleado,label:value.nombre_completo});
              });
            }
            

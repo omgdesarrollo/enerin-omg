@@ -230,6 +230,24 @@ class GanttEvidenciasDao {
            return false;
        }
    }
+   
+   
+   public function listarEmpleadosNombreCompleto()
+    {
+        try
+       {
+            $query="SELECT empleados.id_empleado, CONCAT(empleados.nombre_empleado,' ',empleados.apellido_paterno,' ',empleados.apellido_materno) 
+                    AS nombre_completo FROM empleados";
+
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista;
+        }  catch (Exception $ex){
+            throw $ex;
+            return false;
+        }
+    }
     
 }
 

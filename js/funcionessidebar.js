@@ -1,24 +1,52 @@
 
 
-function loadDataSideBarCatalogoInformacion(){
+function loadDataSideBarCatalogoInformacion(lista){
 //         mySidebar = myLayout.cells("a").attachSidebar();
+//   console.log(lista);
    
+   list=[];
+   
+   $.each(lista,function(index,value){
+       
+       
+       if(value["nombre"]=="EmpleadosView.php"){
+//       console.log("entro ");
+        if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
+            list.push({id: "empleados", text: "Empleados", icon: "empleados.jpg"});
+        }
+   }
+       if(value["nombre"]=="TemasView.php"){
+//       console.log("entro ");
+        if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
+            list.push( {id: "temas", text: "Temas", icon: "temas.jpg"});
+        }
+   }
+       if(value["nombre"]=="DocumentosView.php"){
+//       console.log("entro ");
+        if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
+            list.push({id: "documentos", text: "Documentos", icon: "documentosn.jpg"});
+        }
+   }
+       if(value["nombre"]=="AsignacionTemasRequisitosView.php"){
+//       console.log("entro ");
+        if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
+            list.push({id: "asignaciontemasrequisitos", text: "Asignacion de Tema - Requisito - Documento", icon: "asignacionrequisitos.png"});
+        }
+   }
+       
+   }) ;
+   
+
+  
     mySidebar = new dhtmlXSideBar({
         parent: "sidebarObj",
         icons_path: "../../images/base/",    
                                 template:'tiles',
         width: 350,
-        items: [
-          {id: "empleados", text: "Empleados", icon: "empleados.jpg"},
-          {id: "temas", text: "Temas", icon: "temas.jpg"},          
-          {id: "documentos", text: "Documentos", icon: "documentosn.jpg"},
-          //{id: "cumplimientos", text: "Cumplimientos", icon: "cumplimientos.png"},
-          {type: "separator"},
-          {id: "asignaciontemasrequisitos", text: "Asignacion de Tema - Requisito - Documento", icon: "asignacionrequisitos.png"}
-          //{id: "asignaciondocumentostemas", text: "Asignacion de Documento - Tema", icon: "asignaciondocumento.png"}  
+        items:list
+      });       
 
-        ]
-      });                        
+        
                      var evid=    mySidebar.attachEvent("onSelect", function(id, value){
                              
                                    switch(id){
@@ -74,20 +102,38 @@ function loadDataSideBarCatalogoInformacion(){
 
 
 
-function loadDataSideBarOficiosCatalogos(){
+function loadDataSideBarOficiosCatalogos(lista){
+    var listOficiosCatalogos=[];
+       $.each(lista,function(index,value){
+       
+       
+       if(value["nombre"]=="EmpleadosView.php"){
+//       console.log("entro ");
+        if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
+            listOficiosCatalogos.push({id: "empleadosoficios", text: "Empleados", icon: "empleados.jpg"});
+        }
+   }
+       if(value["nombre"]=="EntidadesReguladorasView.php"){
+//       console.log("entro ");
+        if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
+            listOficiosCatalogos.push( {id: "autoridadesRemitentes", text: "Autoridad Remitente", icon: "entidadreguladora.png"});
+        }
+   }
+       if(value["nombre"]=="TemasView.php"){
+//       console.log("entro ");
+        if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
+            listOficiosCatalogos.push({id: "temasoficios", text: "Temas", icon: "temas.jpg"});
+        }
+   }
+       
+   }) ;
    
     mySidebar = new dhtmlXSideBar({
         parent: "sidebarObj",
         icons_path: "../../images/base/",    
                                 template:'tiles',
         width: 350,
-        items: [
-          {id: "empleadosoficios", text: "Empleados", icon: "empleados.jpg"},
-          {id: "autoridadesRemitentes", text: "Autoridad Remitente", icon: "entidadreguladora.png"},
-          {id: "temasoficios", text: "Temas", icon: "temas.jpg"}
-          /*{type: "separator"},*/
-  
-        ]
+        items: listOficiosCatalogos
       });
 
                                  
@@ -125,8 +171,29 @@ function loadDataSideBarOficiosCatalogos(){
 
 
 
-function loadDataSideBarOficiosDocumentacion()
+function loadDataSideBarOficiosDocumentacion(lista)
 {
+//    console.log(lista);
+ var listDocumentacion=[];
+       $.each(lista,function(index,value){
+       
+       
+       if(value["nombre"]=="DocumentoEntradaView.php"){
+//       console.log("entro ");
+        if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
+            listDocumentacion.push({id: "documentosEntrada", text: "Documento entrada", icon: "documentoentrada.png"});
+        }
+   }
+       if(value["nombre"]=="DocumentoSalidaView.php"){
+//       console.log("entro ");
+        if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
+            listDocumentacion.push( {id: "documentosSalida", text: "Documento salida", icon: "documentosalida.png"});
+        }
+   }
+
+       
+   }) ;
+    
     
    
     mySidebar = new dhtmlXSideBar({
@@ -134,12 +201,7 @@ function loadDataSideBarOficiosDocumentacion()
         icons_path: "../../images/base/",    
                                 template:'tiles',
         width: 350,
-        items: [
-          {id: "documentosEntrada", text: "Documento entrada", icon: "documentoentrada.png"},
-          {id: "documentosSalida", text: "Documento salida", icon: "documentosalida.png"}
-          
-            
-        ]
+        items: listDocumentacion
       });
 
                                  
@@ -189,21 +251,43 @@ function loadDataSideBarOficiosDocumentacion()
         $("#sidebarObjV").load('InyectarVistasView.php #seguimientoevidencias');
     }
     
-    function loadDataSideBarProcesos()
+    function loadDataSideBarProcesos(lista)
     {
+        console.log(lista);
+        var listReportes=[];
+        
+           $.each(lista,function(index,value){
+       
+       
+       if(value["nombre"]=="CatalogoProduccionView.php"){
+//       console.log("entro ");
+        if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
+            listReportes.push({id: "catalogoProcesos", text: "Catalogo", icon: "catalogoProcesos.png"});
+        }
+   }
+       if(value["nombre"]=="ReportesProduccionView.php"){
+//       console.log("entro ");
+        if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
+            listReportes.push( {id: "reportesProcesos", text: "Reportes", icon: "reportesProcesos.png"});
+        }
+   }
+       if(value["nombre"]=="GeneradorReporteView.php"){
+//       console.log("entro ");
+        if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
+            listReportes.push({id: "generadorReporte", text: "Generador de Reporte", icon: "reportesProcesos.png"});
+        }
+   }
+       
+   }) ;
+        
+        
         
         mySidebar = new dhtmlXSideBar({
         parent: "sidebarObj",
         icons_path: "../../images/base/",    
                                 template:'tiles',
         width: 350,
-        items: [
-          {id: "catalogoProcesos", text: "Catalogo", icon: "catalogoProcesos.png"},
-          {id: "reportesProcesos", text: "Reportes", icon: "reportesProcesos.png"},
-            {id: "generadorReporte", text: "Generador de Reporte", icon: "reportesProcesos.png"}
-          
-            
-        ]
+        items:listReportes
       });                         
         mySidebar.attachEvent("onSelect", function(id, value){
                   switch(id){
@@ -232,20 +316,41 @@ function loadDataSideBarOficiosDocumentacion()
     }
     
     
-    function loadDataSideBarTareas()
+    function loadDataSideBarTareas(list)
     {
-        
+        var listTareas=[];
+         $.each(list,function(index,value){
+             
+                if(value["nombre"]=="EmpleadosTareasView.php"){
+                    if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
+                        listTareas.push({id: "empleadosTareas", text: "Empleados", icon: "empleados.jpg"});
+                    }
+                }
+                
+                 if(value["nombre"]=="TareasView.php"){
+                    if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
+                        listTareas.push({id: "tareas", text: "Registrar Tareas", icon: "registrarTareas.png"});
+                    }
+                }
+                
+                
+//               listTareas.push({id: "empleadosTareas", text: "Empleados", icon: "empleados.jpg"});
+             
+             
+         });
+//         [
+//          {id: "empleadosTareas", text: "Empleados", icon: "empleados.jpg"},
+//          {id: "tareas", text: "Registrar Tareas", icon: "registrarTareas.png"}
+//          
+//            
+//        ]
+        console.log(list);
         mySidebar = new dhtmlXSideBar({
         parent: "sidebarObj",
         icons_path: "../../images/base/",    
                                 template:'tiles',
         width: 350,
-        items: [
-          {id: "empleadosTareas", text: "Empleados", icon: "empleados.jpg"},
-          {id: "tareas", text: "Registrar Tareas", icon: "registrarTareas.png"}
-          
-            
-        ]
+        items: listTareas
       });
 
                                  
@@ -272,20 +377,38 @@ function loadDataSideBarOficiosDocumentacion()
     }
     
     
-    function loadDataSideBarInformeCumplimientos()
+    function loadDataSideBarInformeCumplimientos(list)
     {
+        var listInformes=[];
+        console.log(list);
+                $.each(list,function(index,value){
+             
+                if(value["nombre"]=="InformeValidacionDocumentosView.php"){
+                    if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
+                        listInformes.push({id: "informesValidacionDocumentos", text: "Informe Validacion de Documentos", icon: "documentos.png"});
+                    }
+                }
+                
+                 if(value["nombre"]=="InformeEvidenciasView.php"){
+                    if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
+                        listInformes.push({id: "informesEvidencias", text: "Informe de Evidencias", icon: "operaciones.png"});
+                    }
+                }
+                 if(value["nombre"]=="ConsultasView.php"){
+                    if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
+                        listInformes.push( {id: "consultas", text: "Consultas", icon: "consultas.png"});
+                    }
+                }
+
+             
+             
+         }); 
         mySidebar = new dhtmlXSideBar({
         parent: "sidebarObj",
         icons_path: "../../images/base/",    
         template:'tiles',
         width: 350,
-        items: [
-          {id: "informesValidacionDocumentos", text: "Informe Validacion de Documentos", icon: "documentos.png"},
-          {id: "informesEvidencias", text: "Informe de Evidencias", icon: "operaciones.png"},
-          {id: "consultas", text: "Consultas", icon: "consultas.png"}
-          
-            
-        ]
+        items:listInformes
       });
 
 //             $("#informesValidacionDocumentos").click(function (){
@@ -314,20 +437,34 @@ function loadDataSideBarOficiosDocumentacion()
     {
         $("#sidebarObjV").load('InyectarVistasView.php #administrarUsuario');
     }
-    function loadDataSideBarAjustesUsuario(){
+    function loadDataSideBarAjustesUsuario(lista){
 //         mySidebar = myLayout.cells("a").attachSidebar();
-   
+
+var listAjusteUsuarios=[];
+               $.each(lista,function(index,value){
+             
+                if(value["nombre"]=="AdminView.php"){
+                    if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
+                        listAjusteUsuarios.push( {id: "permisos", text: "Permisos", icon: "cumplimientos.png"});
+                    }
+                }
+                
+                 if(value["nombre"]=="UsuarioAjustesView"){
+                    if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
+                        listAjusteUsuarios.push( {id: "ajustes", text: "Cambiar Contraseña", icon: "ajustes.png"});
+                    }
+                }
+             
+         }); 
+
+
+   console.log(lista);
     mySidebar = new dhtmlXSideBar({
         parent: "sidebarObj",
         icons_path: "../../images/base/",    
                                 template:'tiles',
         width: 350,
-        items: [
-          {id: "permisos", text: "Permisos", icon: "cumplimientos.png"},
-          {id: "ajustes", text: "Cambiar Contraseña", icon: "ajustes.png"}
-          
-            
-        ]
+        items: listAjusteUsuarios
       });
 
                                  

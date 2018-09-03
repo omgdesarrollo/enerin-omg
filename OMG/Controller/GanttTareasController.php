@@ -20,6 +20,16 @@ switch ($Op) {
             header('Content-type: application/json; charset=utf-8');
             echo json_encode(array("data"=>$Lista));
             break;
+            
+        case 'empleadosNombreCompleto':
+            
+	$Lista=$modelGantt->listarEmpleadosNombreCompleto("");
+    	Session::setSesion("listarEmpleadosNombreCompleto",$Lista);
+//    	$tarjet="../view/principalmodulos.php";
+    	header('Content-type: application/json; charset=utf-8');
+	echo json_encode($Lista);
+                
+		break;    
     
         case 'Guardar':
 //            $VALUES["id"]= Session::getSesion("dataGantt_id_tarea");
@@ -110,7 +120,15 @@ switch ($Op) {
 //                        Session::setSesion("", $value);
                         //la variable de sesion del dataGant se refiere al id de seguimiento entrada que hace 
                         //referencia al folio de entrada de documento de entrada
-                        $modelGantt->insertarTareasGantt($arrayTransformado,Session::getSesion("dataGantt_id_tarea"));
+                        $dataNotificarAlResponsableAsignado["id_usuario"];
+                        $dataNotificarAlResponsableAsignado["id_para"];
+                        $dataNotificarAlResponsableAsignado["mensaje"];
+                        $dataNotificarAlResponsableAsignado["tipo"];
+                        $dataNotificarAlResponsableAsignado["atendido"];
+                        $dataNotificarAlResponsableAsignado["asunto"];
+                        $dataNotificarAlResponsableAsignado["CONTRATO"];
+                                                                   
+                        $modelGantt->insertarTareasGantt($arrayTransformado,Session::getSesion("dataGantt_id_tarea"),$dataNotificacion);
                         
                         
 			header('Content-type: application/json; charset=utf-8');

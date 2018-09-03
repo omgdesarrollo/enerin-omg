@@ -176,6 +176,8 @@ var gantt=[
          {id:'cambiarcontrato',text:'<div id=\'infocontrato\'>Contrato Seleccionado:</div>',img:'contratos.png',type:'button',isbig:true}
   ];
   dataSeccionRibbon=[];
+   var listasubmodulos=[];
+  
    loadDataNotificaciones();
 
   
@@ -196,13 +198,26 @@ var gantt=[
 
                     detallescontratosiahyseleccionado();
 //                  loadDataMenuArriba("","NO SELECCIONADO");
+                   
                     loadDataMenuRibbonSeccionArriba();
                   
                     ribbon.setSizes();
                     ribbon.attachEvent("onClick", function(itemIdSeleccion, bId){
-                        if(itemIdSeleccion=="sesionusuario")
-                            loadDataSideBarAjustesUsuario();
-                        
+                        if(itemIdSeleccion=="Bienvenido"){
+                               $.each(listasubmodulos,function (index,value){
+
+                                $.each(value["contenido_sub"],function(index1,value1)
+                                {
+//                                    console.log(value1);
+                                    
+                                    if(value1["nombre_contenido_sub"]=="Bienvenido"){
+//                                        console.log(value1["contenido_vista"]);
+                                             loadDataSideBarAjustesUsuario(value1["contenido_vista"]);
+                                    }
+                                });
+                  
+                             })
+                        }
                         if(itemIdSeleccion=="cambiaresc")
                             alert("le has picado a cam biar act");
                         
@@ -224,29 +239,116 @@ var gantt=[
                             loadDataSideBarContratos();  
                         
                 
-                        if(itemIdSeleccion=="Informacion") 
-                           loadDataSideBarCatalogoInformacion();
-                       
+                        if(itemIdSeleccion=="Informacion") {
+//                            console.log(listasubmodulos);
+//                            console.log(listasubmodulos["0"]["contenido_sub"]["0"]["contenido_vista"]);
+                           loadDataSideBarCatalogoInformacion(listasubmodulos["0"]["contenido_sub"]["0"]["contenido_vista"]);
+                       }   
                         if(itemIdSeleccion=="Validacion")
                            loadDataSideBarCumplimientosDocumentos();
                        
                         if(itemIdSeleccion=="Evidencias")
                             loadDataSideBarCumplimientosEvidencias();
                         
-                        if(itemIdSeleccion=="Reportes")
-                            loadDataSideBarProcesos();
+                        if(itemIdSeleccion=="Reportes"){
+                            
+                            
+                              $.each(listasubmodulos,function (index,value){
 
-                        if(itemIdSeleccion=="Registro de Tareas")
-                            loadDataSideBarTareas();
+                                $.each(value["contenido_sub"],function(index1,value1)
+                                {
+//                                    console.log(value1);
+                                    
+                                    if(value1["nombre_contenido_sub"]=="Reportes"){
+//                                        console.log(value1["contenido_vista"]);
+                                             loadDataSideBarProcesos(value1["contenido_vista"]);
+                                    }
+                                });
+                  
+                             })
+                            
+//                            loadDataSideBarProcesos();
+                        }
+
+                        if(itemIdSeleccion=="Registro de Tareas"){
+                            var listRegistroTareas=[];
+                            $.each(listasubmodulos,function (index,value){
+
+                                $.each(value["contenido_sub"],function(index1,value1)
+                                {
+//                                    console.log(value1);
+                                    
+                                    if(value1["nombre_contenido_sub"]=="Registro de Tareas"){
+//                                        console.log(value1["contenido_vista"]);
+                                             loadDataSideBarTareas(value1["contenido_vista"]);
+                                    }
+                                });
+                  
+                             })
+                            
+
+                        }
                         
-                        if(itemIdSeleccion=="Informe")
-                            loadDataSideBarInformeCumplimientos();
+                        if(itemIdSeleccion=="Informe"){
+                            
+                            
+                            
+                                 $.each(listasubmodulos,function (index,value){
+
+                                $.each(value["contenido_sub"],function(index1,value1)
+                                {
+//                                    console.log(value1);
+                                    
+                                    if(value1["nombre_contenido_sub"]=="Informe"){
+//                                        console.log(value1["contenido_vista"]);
+
+                                            loadDataSideBarInformeCumplimientos(value1["contenido_vista"]);
+                                    }
+                                });
+                  
+                             })
+                             
+                             
+                            
+                        }
                         
-                        if(itemIdSeleccion=="Catalogos")
-                            loadDataSideBarOficiosCatalogos();
+                        if(itemIdSeleccion=="Catalogos"){
+                            
+                             $.each(listasubmodulos,function (index,value){
+
+                                $.each(value["contenido_sub"],function(index1,value1)
+                                {
+//                                    console.log(value1);
+                                    
+                                    if(value1["nombre_contenido_sub"]=="Catalogos"){
+//                                        console.log(value1["contenido_vista"]);
+                                             loadDataSideBarOficiosCatalogos(value1["contenido_vista"]);
+                                    }
+                                });
+                  
+                             })
+                           
+                        }
                        
-                        if(itemIdSeleccion=="Documentacion")
-                            loadDataSideBarOficiosDocumentacion();
+                        if(itemIdSeleccion=="Documentacion"){
+                            
+                            
+                            
+                              $.each(listasubmodulos,function (index,value){
+
+                                $.each(value["contenido_sub"],function(index1,value1)
+                                {
+//                                    console.log(value1);
+                                    
+                                    if(value1["nombre_contenido_sub"]=="Documentacion"){
+//                                        console.log(value1["contenido_vista"]);
+                                             loadDataSideBarOficiosDocumentacion(value1["contenido_vista"]);
+                                    }
+                                });
+                  
+                             })
+                           
+                        }
                         if(itemIdSeleccion=="Informe Gerencial")
                             loadDataInformeGerencial();
                         if(itemIdSeleccion=="Seguimiento")
@@ -467,7 +569,7 @@ var vistas = [];
                         
  var banderasSeccionesArriba=false;
  var contadoresSeccionesArriba=1    ;
-var listasubmodulos=[]=listaModulos;
+ listasubmodulos=[]=listaModulos;
               $.each(listasubmodulos,function (index,value){
                   nombre_submodulo=value["nombre_submodulo"];
 
@@ -475,10 +577,10 @@ var listasubmodulos=[]=listaModulos;
              
                   $.each(value["contenido_sub"],function(index1,value1)
                   {
-
+//                        console.log(value["contenido_sub"]);
                       if(value1["hijos"]>0){
                           $.each(value1["contenido_vista"],function(indexContenidoVistas,valueContenidoVistas){                             
-                              console.log(valueContenidoVistas);                          
+//                              console.log(valueContenidoVistas);                          
                               if(banderasSeccionesArriba==false){
                                      if(valueContenidoVistas["edit"]=="true" || valueContenidoVistas["consult"]=="true" || valueContenidoVistas["delete"]=="true" || valueContenidoVistas["new"]=="true")
                                     {
@@ -489,7 +591,13 @@ var listasubmodulos=[]=listaModulos;
                           }) 
                            if(banderasSeccionesArriba==true)
                             {
-                                datosSeccionesRibbon[contadoresSeccionesArriba]["list"].push({id:value1["nombre_contenido_sub"], text:value1["nombre_contenido_sub"],img:value1["imagen"],type:'button',isbig:true});
+                                var quieniniciosesion="";
+                                if(value1["nombre_contenido_sub"]=="Bienvenido"){
+                                     datosSeccionesRibbon[contadoresSeccionesArriba]["list"].push({id:value1["nombre_contenido_sub"], text:'<div id="infousuario">'+value1["nombre_contenido_sub"]+"<br><?php echo  $Usuario["NOMBRE_USUARIO"]; ?>",img:value1["imagen"],type:'button',isbig:true});
+                                }else{
+                                      datosSeccionesRibbon[contadoresSeccionesArriba]["list"].push({id:value1["nombre_contenido_sub"], text:value1["nombre_contenido_sub"],img:value1["imagen"],type:'button',isbig:true});
+                                }
+                              
                             }
                       }
                       else{                                   
@@ -512,8 +620,8 @@ var listasubmodulos=[]=listaModulos;
                         contadoresSeccionesArriba++;
               });            
                                 
-                datosSeccionesRibbon.push({id:'0x37',mode:'cols',text:'Usuario',type:'block',
-          list:infosesionusuario});
+//                datosSeccionesRibbon.push({id:'0x37',mode:'cols',text:'Usuario',type:'block',
+//          list:infosesionusuario});
                      },
                      beforeSend:function(r){
 

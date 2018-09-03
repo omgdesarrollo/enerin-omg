@@ -4,6 +4,7 @@ session_start();
 require_once '../Model/DocumentoSalidaModel.php';
 require_once '../Model/DocumentoEntradaModel.php';
 require_once '../util/Session.php';
+require_once '../Model/ArchivoUploadModel.php';
 
 
 
@@ -11,17 +12,30 @@ $Op=$_REQUEST["Op"];
 $model=new DocumentoSalidaModel();
 $modelEntrada=new DocumentoEntradaModel();
 $pojo= new DocumentoSalidaPojo();
+$modelArchivo=new ArchivoUploadModel();
 
 switch ($Op) {
 	case 'Listar':
 
-		$Lista=$model->listarDocumentosSalida();
-    	Session::setSesion("listarDocumentosSalida",$Lista);
-    	header('Content-type: application/json; charset=utf-8');
-		echo json_encode( $Lista);
-
-		return $Lista;
+            $Lista=$model->listarDocumentosSalida();
+            foreach ($Lista as $key => $value) {
+            $url= $_REQUEST['URL'].$value['id_documento_salida'];
+            $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls(-1,$url);
+            }
+            Session::setSesion("listarDocumentosSalida",$Lista);
+            
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode( $Lista);
+            return $Lista;
 		break;	
+                
+        case 'listarFoliosEntrada':
+            $Lista= $model->listarFoliosDeEntrada();
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode( $Lista);
+            return $Lista;
+            break;
+                
 
 //	case 'Guardar':
 //           
