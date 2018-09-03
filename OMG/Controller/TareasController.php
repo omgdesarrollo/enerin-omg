@@ -26,7 +26,7 @@ switch ($Op) {
         header('Content-type: application/json; charset=utf-8');
         $data= json_decode($_REQUEST['tareaDatos'],true);
         $Lista= $model->insertarTarea(
-                $data['contrato'],
+                $data['referencia'],
                 $data['tarea'],
                 $data['fecha_creacion'],
                 $data['fecha_alarma'],
