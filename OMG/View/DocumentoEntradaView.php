@@ -916,7 +916,7 @@ function reconstruir(value,index)//listoooo
         tempData["id_principal"] = [];
         tempData["id_principal"].push({"id_documento_entrada" : value.id_documento_entrada});
 
-        if(value.salida !=0 && value.gantt!=0)
+        if(value.salida !=0 || value.gantt!=0)
                 tempData["id_principal"].push({eliminar : 0});
         else
                 tempData["id_principal"].push({eliminar : 1});
