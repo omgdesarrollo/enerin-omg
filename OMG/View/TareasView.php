@@ -136,6 +136,7 @@ require_once 'EncabezadoUsuarioView.php';
                         <label class="control-label" for="title"> Tarea:</label>
                         <textarea  id="TAREA" class="form-control" data-error="Ingrese la Tarea" required></textarea>
                         <div id="mensaje2"class="help-block with-errors"></div>
+                        <div id="msgerrorTarea" ></div>
                     </div>
                 
                     <div class="form-group">
