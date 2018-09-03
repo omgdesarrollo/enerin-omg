@@ -1,5 +1,10 @@
 $(function()
 {
+    $("#TAREA").keyup(function()
+    {
+        var valueTarea=$(this).val();
+        verificarExiste(valueTarea,"tarea");
+    });
     $("#btn_crearTarea").click(function()
     {
         tareaDatos=new Object();
@@ -411,6 +416,33 @@ function insertarTareas(tareaDatos)
                 swalError("Error en el servidor");
             }
     });
+}
+
+function verificarExiste(dataString,cualverificar)
+{
+
+$.ajax({
+    url: "../Controller/TareasController.php?Op=verificarTarea&cualverificar="+cualverificar,
+    type: "POST",
+    data: "cadena="+dataString,
+    success: function(data) 
+    {    
+        mensajeerror="";
+
+        $.each(data, function (index,value) {
+            mensajeerror=" La Tarea "+value.tarea+" Ya Existe";
+        });
+        $("#msgerrorTarea").html(mensajeerror);
+        if(mensajeerror!=""){
+            $("#msgerrorTarea").css("background","orange");
+            $("#msgerrorTarea").css("width","190px");
+            $("#msgerrorTarea").css("color","white");
+            $("#btn_crearTarea").prop("disabled",true);
+        }else{
+            $("#btn_crearTarea").prop("disabled",false);
+        }
+    }
+    })
 }
 
 

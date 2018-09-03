@@ -81,6 +81,16 @@ switch ($Op) {
         
         break;
         
+    case'verificarTarea':
+        
+        $cualverificar= $_REQUEST['cualverificar'];
+        $cadena= $_REQUEST['cadena'];
+        $Lista= $model->verificarSiYaExisteLaTarea($cualverificar, $cadena);
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+        return $Lista;
+        break;
+    
     
     case 'Eliminar':
         header('Content-type: application/json; charset=utf-8');
