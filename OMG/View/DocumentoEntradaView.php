@@ -1410,7 +1410,7 @@ function saveUpdateToDatabase(args)//listo
                         if(index=="fecha_alarma")
                                 columnas[index]="0000-00-00";
                 }
-                if(index=="folio_entrada")
+                if(index=="folio_entrada" && args['previousItem']["folio_entrada"]!=value)
                        verificar = verificarExiste(value,"folio_entrada");
         });
 
