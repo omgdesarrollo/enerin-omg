@@ -30,7 +30,7 @@ $Usuario=  Session::getSesion("user");
                 <!--Termina para el spiner cargando-->
                 
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
-                <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
+                <!--<link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>-->
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/jquery.js" type="text/javascript"></script>
                 <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
@@ -49,7 +49,7 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/tools.js" type="text/javascript"></script>
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
-                <!--<link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>-->
+                <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/fTareasView.js" type="text/javascript"></script>
 
 

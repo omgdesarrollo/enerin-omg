@@ -36,7 +36,18 @@ class DocumentoEntradaDAO{
                     tbdocumento_entrada.clasificacion, tbdocumento_entrada.status_doc,
                     tbdocumento_entrada.fecha_asignacion, tbdocumento_entrada.fecha_limite_atencion,
                     tbdocumento_entrada.fecha_alarma, tbdocumento_entrada.documento,
-                    tbdocumento_entrada.observaciones
+                    tbdocumento_entrada.observaciones,
+                    ( SELECT COUNT(*) AS resultado FROM documento_salida tbdocumento_salida
+                        WHERE tbdocumento_salida.id_documento_entrada = tbdocumento_entrada.id_documento_entrada
+                    ) AS salida,
+                    
+                    IF( ( SELECT COUNT(*)
+                            FROM seguimiento_entrada tbseguimiento_entrada
+                            JOIN gantt_seguimiento_entrada tbgantt_seguimiento_entrada ON
+                            tbgantt_seguimiento_entrada.id_seguimiento_entrada = tbseguimiento_entrada.id_seguimiento_entrada
+                            WHERE tbseguimiento_entrada.id_documento_entrada = tbdocumento_entrada.id_documento_entrada) > 0,1,0
+                    ) AS gantt
+
                     FROM documento_entrada tbdocumento_entrada
                     JOIN cumplimientos tbcumplimientos ON tbcumplimientos.id_cumplimiento=tbdocumento_entrada.id_cumplimiento
                     JOIN autoridad_remitente tbautoridad_remitente ON tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad
@@ -64,7 +75,17 @@ class DocumentoEntradaDAO{
             tbdocumento_entrada.clasificacion, tbdocumento_entrada.status_doc,
             tbdocumento_entrada.fecha_asignacion, tbdocumento_entrada.fecha_limite_atencion,
             tbdocumento_entrada.fecha_alarma, tbdocumento_entrada.documento,
-            tbdocumento_entrada.observaciones
+            tbdocumento_entrada.observaciones,
+            ( SELECT COUNT(*) AS resultado FROM documento_salida tbdocumento_salida
+                        WHERE tbdocumento_salida.id_documento_entrada = tbdocumento_entrada.id_documento_entrada
+                    ) AS salida,
+                    
+            IF( ( SELECT COUNT(*)
+                    FROM seguimiento_entrada tbseguimiento_entrada
+                    JOIN gantt_seguimiento_entrada tbgantt_seguimiento_entrada ON
+                    tbgantt_seguimiento_entrada.id_seguimiento_entrada = tbseguimiento_entrada.id_seguimiento_entrada
+                    WHERE tbseguimiento_entrada.id_documento_entrada = tbdocumento_entrada.id_documento_entrada) > 0,1,0
+            ) AS gantt
             FROM documento_entrada tbdocumento_entrada
             JOIN autoridad_remitente tbautoridad_remitente ON tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad
             JOIN temas tbtemas ON tbtemas.id_tema=tbdocumento_entrada.id_tema

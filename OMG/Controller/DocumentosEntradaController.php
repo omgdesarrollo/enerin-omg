@@ -7,7 +7,7 @@ require_once '../Pojo/DocumentoEntradaPojo.php';
 require_once '../Model/SeguimientoEntradaModel.php';
 require_once '../Pojo/SeguimientoEntradaPojo.php';
 require_once '../util/Session.php';
-
+require_once '../Model/ArchivoUploadModel.php';
 
 
 $Op=$_REQUEST["Op"];
@@ -16,19 +16,33 @@ $pojo= new DocumentoEntradaPojo();
 
 $modelSeguimientoEntrada=new SeguimientoEntradaModel();
 $pojoSeguimientoEntrada= new SeguimientoEntradaPojo();
-
-
+$modelArchivo = new ArchivoUploadModel();
 
 switch ($Op) {
 	case 'Listar':
-			$Lista=$model->listarDocumentosEntrada(Session::getSesion("s_cont"));
-                        // Session::setSesion("listarDocumentosEntrada",$Lista); //Se esta ocupando para las graficas de informe gerencial
+			$CONTRATO = Session::getSesion("s_cont");
+			$Lista=$model->listarDocumentosEntrada($CONTRATO);
+			
+						// Session::setSesion("listarDocumentosEntrada",$Lista); //Se esta ocupando para las graficas de informe gerencial
+			foreach($Lista as $key => $value)
+			{
+				$url = $_REQUEST["URL"].$value["id_documento_entrada"];
+				$Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
+			}
+							
 			header('Content-type: application/json; charset=utf-8');
 			echo json_encode( $Lista);
 		break;
 
 	case 'ListarUno':
+		$CONTRATO = Session::getSesion("s_cont");
 		$Lista=$model->listarDocumentoEntrada($_REQUEST["ID_DOCUMENTO"]);
+		foreach($Lista as $key => $value)
+		{
+			$url = $_REQUEST["URL"].$value["id_documento_entrada"];
+			$Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
+		}
+
 		header('Content-type: application/json; charset=utf-8');
 		echo json_encode( $Lista);
 	break;

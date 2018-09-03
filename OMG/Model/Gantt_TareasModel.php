@@ -171,8 +171,8 @@ class Gantt_TareasModel{
             $lista_tareas_verificadas;
             $dao= new Gantt_TareaDao();
             $modelGantt= new Gantt_TareasModel();
-            $modelGanttTareasModel= new Gantt_TareasModel();
-//            $modelGanttTareasModel->guardarNotificacionResponsable($dataNotificacion["id_usuario"],$dataNotificacion["id_para"],$dataNotificacion["mensaje"],
+//            $modelGanttTareasModel= new Gantt_TareasModel();
+//            $modelGantt->guardarNotificacionResponsable($dataNotificacion["id_usuario"],$dataNotificacion["id_para"],$dataNotificacion["mensaje"],
 //                                                                   $dataNotificacion["tipo"],$dataNotificacion["atendido"],$dataNotificacion["asunto"],$dataNotificacion["CONTRATO"]
 //                                                                   );
             $lista_tareas_verificadas=self::verificarTareasExiste($data);

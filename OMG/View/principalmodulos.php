@@ -599,10 +599,17 @@ var vistas = [];
                                 }else{
 //                                    alert(value1["nombre_contenido_sub");
                                         console.log(value1);
-                                         $.each(value1["contenido_vista"],function(indexContenidoVistas,valueContenidoVistas){
+                                        var tienalmenosunavista=false;
+                                         $.each(value1["contenido_vista"],function(indexContenidoVistas1,valueContenidoVistas1){
 //                                             console.log()
+                                             if(valueContenidoVistas1["edit"]=="true" || valueContenidoVistas1["consult"]=="true" || valueContenidoVistas1["delete"]=="true" || valueContenidoVistas1["new"]=="true")
+                                             {
+                                                 tienalmenosunavista=true;
+                                                 console.log("entro ");
+                                             }
                                              
                                          });
+                                         if(tienalmenosunavista==true)
                                       datosSeccionesRibbon[contadoresSeccionesArriba]["list"].push({id:value1["nombre_contenido_sub"], text:value1["nombre_contenido_sub"],img:value1["imagen"],type:'button',isbig:true});
                                 }
                             }
@@ -621,6 +628,7 @@ var vistas = [];
                             if(banderasSeccionesArriba==true)
                             {
 //                            alert("entro en true");
+//console.log(value1);
                              if(value1["edit"]=="true" || value1["consult"]=="true" || value1["delete"]=="true" || value1["new"]=="true")
                                 {
                                     datosSeccionesRibbon[contadoresSeccionesArriba]["list"].push({id:value1["nombre_contenido_sub"], text:value1["nombre_contenido_sub"],img:value1["imagen"],type:'button',isbig:true});
@@ -632,7 +640,7 @@ var vistas = [];
                 if(banderasSeccionesArriba==true)
                         contadoresSeccionesArriba++;
               });            
-                                
+                     datosSeccionesRibbon;           
 //                datosSeccionesRibbon.push({id:'0x37',mode:'cols',text:'Usuario',type:'block',
 //          list:infosesionusuario});
                      },
