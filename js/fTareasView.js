@@ -140,8 +140,8 @@ function construirGrid()
                 items:[{"status_tarea":"1","descripcion":"En Proceso"},{"status_tarea":"2","descripcion":"Suspendido"},{"status_tarea":"3","descripcion":"Terminado"}]
             },
             { name: "observaciones",title:"Observaciones", type: "text", validate: "required", width:150,},
-            { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:110,editing:false },
-            { name: "registrar_programa",title:"Registrar Programa", type: "text", validate: "required",width:140, editing:false },
+            { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:120,editing:false },
+            { name: "registrar_programa",title:"Registrar Programa", type: "text", validate: "required",width:160, editing:false },
             { name: "avance_programa",title:"Avance Programa", type: "text", validate: "required", editing:false },
             { name:"delete", title:"Opción", type:"customControl",sorting:""}
         ],

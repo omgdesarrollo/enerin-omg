@@ -132,6 +132,7 @@ function aplicarFiltro(DataFinal)
     });
     DataGrid=__datos;
     gridInstance.loadData();
+    $(".jsgrid-grid-body").css({"height":"171px"});
 }
 
 function mostrarFiltros()

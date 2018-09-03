@@ -260,24 +260,24 @@ function reconstruir(value,index)
 }
 
 
-function empleadosComboboxparaModal()
-{
-  
-  $.ajax({
-      url:"../Controller/EmpleadosController.php?Op=mostrarcombo",
-      type:"GET",
-      success:function(empleados)
-      {
-          tempData="";
-          $.each(empleados,function(index,value)
-          {
-              tempData+="<option value='"+value.id_empleado+"'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</option>";
-          }); 
-          
-          $("#ID_EMPLEADOMODAL").html(tempData);
-      }
-  });   
-}
+//function empleadosComboboxparaModal()
+//{
+//  
+//  $.ajax({
+//      url:"../Controller/EmpleadosController.php?Op=mostrarcombo",
+//      type:"GET",
+//      success:function(empleados)
+//      {
+//          tempData="";
+//          $.each(empleados,function(index,value)
+//          {
+//              tempData+="<option value='"+value.id_empleado+"'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</option>";
+//          }); 
+//          
+//          $("#ID_EMPLEADOMODAL").html(tempData);
+//      }
+//  });   
+//}
 
 
 function listarEmpleados()

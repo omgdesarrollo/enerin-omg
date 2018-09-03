@@ -197,11 +197,8 @@ class Gantt_TareaDao {
 
             return $lista;
         }  catch (Exception $ex){
-<<<<<<< HEAD
-=======
-        }
-    }
->>>>>>> be3acd9ee59699917b9e6e567ee17f6331cdf3f7
+        }   
+    }   
     
     public function guardarNotificacionResponsable($id_usuario,$id_para,$mensaje,$tipo,$atendido,$asunto,$CONTRATO){
         try{
