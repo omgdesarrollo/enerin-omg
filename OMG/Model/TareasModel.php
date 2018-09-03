@@ -11,23 +11,23 @@ class TareasModel{
             $dao=new TareasDAO();
             $rec= $dao->listarTareas();
             
-            foreach ($rec as $key => $value)
-            {
-                if($value["status_tarea"]== 1)
-                {
-                    $rec[$key]["status_tarea"]="En proceso";
-                }
-                
-                if($value["status_tarea"]== 2)
-                {
-                    $rec[$key]["status_tarea"]="Suspendido";
-                }
-                
-                if($value["status_tarea"]== 3)
-                {
-                    $rec[$key]["status_tarea"]="Terminado";
-                }
-            }
+//            foreach ($rec as $key => $value)
+//            {
+//                if($value["status_tarea"]== 1)
+//                {
+//                    $rec[$key]["status_tarea"]="En proceso";
+//                }
+//                
+//                if($value["status_tarea"]== 2)
+//                {
+//                    $rec[$key]["status_tarea"]="Suspendido";
+//                }
+//                
+//                if($value["status_tarea"]== 3)
+//                {
+//                    $rec[$key]["status_tarea"]="Terminado";
+//                }
+//            }
 
             return $rec;            
         } catch (Exception $ex)

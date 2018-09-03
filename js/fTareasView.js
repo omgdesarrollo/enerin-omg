@@ -132,11 +132,14 @@ function construirGrid()
                 valueField:"id_empleado",
                 textField:"nombre_completo"
             },
-            { name: "fecha_creacion",title:"Fecha de Creacion", type: "text", validate: "required",editing: false },
-            { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required" },
-            { name: "fecha_cumplimiento",title:"Fecha de Cumplimiento", type: "text", validate: "required",editing: false},
-            { name: "status_tarea",title:"status_tarea", type: "text", validate: "required"},
-            { name: "observaciones",title:"Observaciones", type: "text", validate: "required" },
+            { name: "fecha_creacion",title:"Fecha de Creacion", type: "text", validate: "required", width:150,editing: false},
+            { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required", width:150,},
+            { name: "fecha_cumplimiento",title:"Fecha de Cumplimiento", type: "text", validate: "required", width:150,editing: false},
+//            { name: "status_tarea",title:"status_tarea", type: "text", validate: "required"},
+            { name: "status_tarea", title:"Estatus", type: "select", width:150,valueField:"status_tarea",textField:"descripcion",
+                items:[{"status_tarea":"1","descripcion":"En Proceso"},{"status_tarea":"2","descripcion":"Suspendido"},{"status_tarea":"3","descripcion":"Terminado"}]
+            },
+            { name: "observaciones",title:"Observaciones", type: "text", validate: "required", width:150,},
             { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:110,editing:false },
             { name: "registrar_programa",title:"Registrar Programa", type: "text", validate: "required",width:140, editing:false },
             { name: "avance_programa",title:"Avance Programa", type: "text", validate: "required", editing:false },
@@ -602,6 +605,7 @@ function refresh()
    inicializarFiltros();
    construirFiltros();
    gridInstance.loadData();
+   $(".jsgrid-grid-body").css({"height":"171px"});
 }
 
 function loadSpinner()
