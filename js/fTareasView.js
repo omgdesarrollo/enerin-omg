@@ -193,7 +193,7 @@ function construirGrid()
                                         enviarNotificacionWhenRemoveTareaAlNuevoUsuario(id_empleadoActual,tarea);
                                     }
                                 }
-                                
+                                mostrarTareasEnAlarma();
                                 refresh();
                                 swal("","Actualizacion Exitosa!","success");
                                 setTimeout(function(){swal.close();},1000);
@@ -387,6 +387,7 @@ function insertarTareas(tareaDatos)
             {
                 
                 tempData;
+                mostrarTareasEnAlarma();
                 swalSuccess("Tarea Creada");                
                 $.each(datos,function(index,value)
                 {
@@ -722,6 +723,18 @@ function enviarNotificacionWhenDeleteTarea(id_empleadoActual,tarea)
             }
         });   
 }
+
+ function mostrarTareasEnAlarma()
+ {
+     $.ajax({
+         url:"../Controller/NotificacionesTareasController.php?Op=tareasEnAlarma",
+         type:"GET",
+         success:function()
+         {
+             
+         }
+     });
+ }
 
 function loadBlockUi()
 {

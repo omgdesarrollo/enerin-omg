@@ -17,7 +17,7 @@ class NotificacionesTareasModel {
             $dao=new NotificacionesTareasDAO();
             $model=new NotificacionesModel();
             
-            $rec= $dao->tareasEnAlarma($CONTRATO);
+            $rec= $dao->tareasEnAlarma();
 //            echo "Este es el rec: ".json_encode($rec);
             
             foreach ($rec as $value) 

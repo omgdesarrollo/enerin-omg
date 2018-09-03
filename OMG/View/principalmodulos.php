@@ -834,6 +834,7 @@ function loadDataNotificaciones(){
 
 <script>
 cambiarCont();
+mostrarTareasEnAlarma();
 
 function cambiarCont()
     { 
@@ -892,7 +893,7 @@ var jsonObj = {};
                               });
                                 window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
                                 window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
-                                mostrarTareasEnAlarma();
+//                                mostrarTareasEnAlarma();
                                 
                                 
     }    
