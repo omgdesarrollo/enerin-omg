@@ -24,8 +24,8 @@ $Usuario = Session::getSesion("user");
                 <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
                 
                 <!--Para abrir alertas de aviso, success,warning, error-->
-                <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
-                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+                <!-- <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/> -->
 
 		<!-- ace styles -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
@@ -404,6 +404,7 @@ function inicializarEstructuraGrid()
                 resolve();
         });
 }
+
 ultimoNumeroGrid=0;
 
 listarTemas().then((res)=>{
@@ -1506,27 +1507,27 @@ function componerDataGrid()//listo
     DataGrid = __datos;
 }
 
-function actualizarEvidencia(id)
-{
-    URL = 'filesEvidenciaDocumento/';
-    $.ajax({
-        url: "../Controller/EvidenciasController.php?Op=ListarEvidencia",
-        type: 'GET',
-        data: 'ID_EVIDENCIA='+id+"&URL="+URL,
-        success:function(datos)
-        {
-            $.each(datos,function(index,value){
-                componerDataListado(value);
-            });
-            componerDataGrid();
-            gridInstance.loadData();
-        },
-        error:function()
-        {
-            growlError("Error al refrescar la vista","Error en el servidor, actualize la vista");
-        }
-    });
-}
+// function actualizarEvidencia(id)
+// {
+//     URL = 'filesEvidenciaDocumento/';
+//     $.ajax({
+//         url: "../Controller/EvidenciasController.php?Op=ListarEvidencia",
+//         type: 'GET',
+//         data: 'ID_EVIDENCIA='+id+"&URL="+URL,
+//         success:function(datos)
+//         {
+//             $.each(datos,function(index,value){
+//                 componerDataListado(value);
+//             });
+//             componerDataGrid();
+//             gridInstance.loadData();
+//         },
+//         error:function()
+//         {
+//             growlError("Error al refrescar la vista","Error en el servidor, actualize la vista");
+//         }
+//     });
+// }
 
 function eliminarDocumentoEntrada(args)
 {
@@ -1792,32 +1793,41 @@ function borrarArchivo(url)
                 text: "Confirme para eliminar el documento",
                 type: "warning",
                 showCancelButton: true,
-                closeOnConfirm: false,
-                showLoaderOnConfirm: true
-                }, function()
+                // closeOnConfirm: false,
+                // showLoaderOnConfirm: true
+                confirmButtonText:'SI'
+                }).then((res)=>
                 {
-                        var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
-                        $.ajax({
-                                url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
-                                type: 'GET',
-                                data: 'URL='+url,
-                                success: function(eliminado)
-                                {
-                                        // eliminar = eliminado;
-                                        if(eliminado)
+                        if(res)
+                        {
+                                var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
+                                $.ajax({
+                                        url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
+                                        type: 'GET',
+                                        data: 'URL='+url,
+                                        beforeSend:()=>
                                         {
-                                                mostrar_urls(ID_DOCUMENTO);
-                                                swal("","Archivo eliminado");
-                                                setTimeout(function(){swal.close();},1000);
+                                                growlWait("Eliminar Archivo","Eliminando Archivo...");
+                                        },
+                                        success: function(eliminado)
+                                        {
+                                                // eliminar = eliminado;
+                                                if(eliminado)
+                                                {
+                                                        growSuccess("Eliminar Archivo","Archivo Eliminado");
+                                                        mostrar_urls(ID_DOCUMENTO);
+                                                        swal("","Archivo eliminado");
+                                                        setTimeout(function(){swal.close();},1000);
+                                                }
+                                                else
+                                                        growlError("Error Eliminar","Ocurrio un error al eliminar el archivo");
+                                        },
+                                        error:function()
+                                        {
+                                                growlError("Error","Error en el servidor");
                                         }
-                                        else
-                                                swal("","Ocurrio un error al eliminar el archivo", "error");
-                                },
-                                error:function()
-                                {
-                                        swal("","Ocurrio un error al elimiar el archivo", "error");
-                                }
-                        });
+                                });
+                        }
                 });
 }
 
