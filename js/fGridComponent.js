@@ -117,7 +117,7 @@ MyCControlField.prototype = new jsGrid.Field
             var returnTemp="";
             // console.log(value);
             // value == 0 ? returnTemp = "" : returnTemp = this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button ',title:"Eliminar", type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
-            if(value[2]["editar"==1])
+            if(value[2]["editar"]==1)
                 returnTemp = "<input class='jsgrid-button jsgrid-edit-button' type='button' title='Editar' onClick='modoEditar()'>";
             if(value[1]["eliminar"]==1)
                 returnTemp += "<input class='jsgrid-button jsgrid-delete-button' type='button' title='Eliminar' onClick='preguntarEliminar("+JSON.stringify(value[0])+")'>";

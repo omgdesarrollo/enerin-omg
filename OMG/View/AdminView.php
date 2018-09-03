@@ -839,7 +839,7 @@ $Usuario=  Session::getSesion("user");
         yes = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00' aria-hidden='true'></i>";
         $.each(permisos,function(index,value)
         {
-            if(value.edit=='true')
+            if(value.EDIT=='true')//FVAZCONCELOS =>ESTABA EN value.edit 
                 $('#edit_'+value.id_estructura).html(yes);
             else
                 $('#edit_'+value.id_estructura).html(no);

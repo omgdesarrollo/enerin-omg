@@ -225,6 +225,22 @@ class AdminModel{
             return false;
         }
     }
+    
+    public function listarUsuarioVistasAsignadasPorLoMenosUnTipoDePermisoParaMostrarVista($param) {
+        try{
+            $dao = new AdminDAO();
+            $rec = $dao->listarUsuarioVistasAsignadasPorLoMenosUnTipoDePermisoParaMostrarVista($param);
+            return $rec;
+        } catch (Exception $ex) {
+                 throw $ex;
+                return false;
+        }
+    }
+    
+    
+    
+    
+    
 }
 
 ?>

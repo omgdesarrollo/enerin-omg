@@ -61,10 +61,8 @@ class GeneradorReporteDao {
     }
     
     public function listarReportePorMonthAndYear($MONTH,$YEAR,$CONTRATO,$REGION_FISCAL)
-    {
-        
-        $query_concat="";
-        
+    { 
+        $query_concat="";      
         if($REGION_FISCAL!="null"){
               $query_concat.="AND tbasignaciones_contrato.region_fiscal='$REGION_FISCAL'";
         }

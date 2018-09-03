@@ -16,10 +16,14 @@ $Usuario=  Session::getSesion("user");
 
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+            <!-- bootstrap & fontawesome -->
+                            <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+                            <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+                            <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
 
 		<!-- bootstrap & fontawesome -->
-                <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-                <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<!--                <link href="../../assets/probando/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/probando/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>-->
 		<!--<link rel="stylesheet" href="assets/css/bootstrap.min.css" />-->
                 <!--<link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>-->
 		<!--<link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" />-->

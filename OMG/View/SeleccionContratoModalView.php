@@ -38,6 +38,11 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>
 
+                 <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
+                <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
+                
+                
                  <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
                  <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
                 
@@ -45,7 +50,13 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/jquery.js" type="text/javascript"></script>
                 
 <style>
-        
+        .jsgrid-header-row>.jsgrid-header-cell {
+                background-color:#307ECC ;      /* orange */
+                font-family: "Roboto Slab";
+                font-size: 1.2em;
+                color: white;
+                font-weight: normal;
+            } 
 .modal-body{
 color:#888;
 max-height: calc(100vh - 110px);
@@ -59,15 +70,6 @@ overflow: auto;
 }  
 body{
 overflow:hidden;     
-}
-
-.hideScrollBar{
-width: 100%;
-height: 100%;
-overflow: auto;
-margin-right: 14px;
-padding-right: 28px; /*This would hide the scroll bar of the right. To be sure we hide the scrollbar on every browser, increase this value*/
-padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is one*/
 }
   
 
@@ -88,17 +90,20 @@ padding-bottom: 15px; /*This would hide the scroll bar of the bottom if there is
 </button>
 
 
-<table class="table table-bordered table-striped header_fijo"  style="width: 25%;">
-    <thead >
-    <tr class="">
-     <!--<th class="table-headert" width="8%">No.</th>-->
-     <th class="table-headert" width="">Clave del contrato</th>
-     <th class="table-headert" width="">Contrato</th>
+  <div class="jsgrid" id="jsGrid" style="position: relative; height: 300px; width: 100%;">
+        <div class="jsgrid-grid-header jsgrid-header-scrollbar">
+        <table  class="jsgrid-table">
+            <tbody>
+                <tr class="jsgrid-header-row"> 
+				
+                                <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 170px;">Clave del contrato</th>
+                                  <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 170px;">Contrato</th>
     </tr>
-   </thead>
+ 
 
-   <tbody class="hideScrollBar"  id="contenido" style="position: absolute">
-   </tbody>
+            <tbody class="hideScrollBar"  id="contenido" >
+                </tbody>
+   <!--<div></div>-->
 
 </table>
   
