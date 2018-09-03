@@ -599,13 +599,11 @@ var vistas = [];
                                 }else{
 //                                    alert(value1["nombre_contenido_sub");
                                         console.log(value1);
-                                         $.each(value1["contenido_vista"],function(indexContenidoVistas1,valueContenidoVistas1){
-                                             console.log(valueContenidoVistas1);
-                                              if(valueContenidoVistas1["edit"]=="true" || valueContenidoVistas1["consult"]=="true" || valueContenidoVistas1["delete"]=="true" || valueContenidoVistas1["new"]=="true")
-                                             {
-                                                      datosSeccionesRibbon[contadoresSeccionesArriba]["list"].push({id:value1["nombre_contenido_sub"], text:value1["nombre_contenido_sub"],img:value1["imagen"],type:'button',isbig:true});
-                                             };
-                                         })
+                                         $.each(value1["contenido_vista"],function(indexContenidoVistas,valueContenidoVistas){
+//                                             console.log()
+                                             
+                                         });
+                                      datosSeccionesRibbon[contadoresSeccionesArriba]["list"].push({id:value1["nombre_contenido_sub"], text:value1["nombre_contenido_sub"],img:value1["imagen"],type:'button',isbig:true});
                                 }
                             }
                       }
