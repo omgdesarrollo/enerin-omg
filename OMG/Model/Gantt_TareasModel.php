@@ -2,6 +2,7 @@
 <?php
 
 require_once '../dao/Gantt_TareaDao.php';
+require_once '../Model/NotificacionesModel.php';
 // require_once '../Pojo/GanttPojo.php';
 class Gantt_TareasModel{
     //put your code here
@@ -162,13 +163,18 @@ class Gantt_TareasModel{
 
 
     
-    public function insertarTareasGantt($data,$id_tarea){
+    public function insertarTareasGantt($data,$id_tarea,$dataNotificacion){
        
+        
         try{
             $inserccion;
             $lista_tareas_verificadas;
             $dao= new Gantt_TareaDao();
             $modelGantt= new Gantt_TareasModel();
+            $modelGanttTareasModel= new Gantt_TareasModel();
+//            $modelGanttTareasModel->guardarNotificacionResponsable($dataNotificacion["id_usuario"],$dataNotificacion["id_para"],$dataNotificacion["mensaje"],
+//                                                                   $dataNotificacion["tipo"],$dataNotificacion["atendido"],$dataNotificacion["asunto"],$dataNotificacion["CONTRATO"]
+//                                                                   );
             $lista_tareas_verificadas=self::verificarTareasExiste($data);
             foreach ($data as $value) {
                 if (isset($value["id"])) {
@@ -214,6 +220,8 @@ class Gantt_TareasModel{
                 }
             }
             self::actualizarAvanceProgramaTareas(array("avance"=>self::avanceProgramaTareas(array("id_tarea"=>$id_tarea)),"id_tarea"=>$id_tarea));
+            
+            
              if(Gantt_TareasModel::verificarSiExisteIDTareaEnGanttTareas(array("id_tarea"=>Session::getSesion("dataGantt_id_tarea")))=="true"){
               Gantt_TareasModel::actualizarExisteProgramaTareas(array("existeprograma"=>1,"id_tarea"=>Session::getSesion("dataGantt_id_tarea")));
           }else{
@@ -279,6 +287,24 @@ class Gantt_TareasModel{
             return false;
         }
     }
+    
+
+      public function guardarNotificacionResponsable($id_usuario,$id_para,$mensaje,$tipo,$atendido,$asunto,$CONTRATO){
+      try{
+            $dao=new NotificacionesDAO();
+            $rec=$dao->guardarNotificacionHibry($id_usuario,$id_para,$mensaje,$tipo,$atendido,$asunto,$CONTRATO);
+            
+//            echo "valores rec: ".json_encode($rec);
+            return $rec;
+        }catch (Exception $ex)
+        {
+            return false;
+        }
+    
+    
+    }
+    
+    
     
     
 

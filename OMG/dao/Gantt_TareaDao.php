@@ -185,6 +185,25 @@ class Gantt_TareaDao {
         }
     }
     
+    
+          public function guardarNotificacionResponsable($id_usuario,$id_para,$mensaje,$tipo,$atendido,$asunto,$CONTRATO){
+        try{
+
+            $query="INSERT INTO notificaciones  (id_de,id_para,id_contrato,tipo_mensaje,mensaje,atendido,asunto)
+            VALUES($id_usuario,$id_para,$CONTRATO,$tipo,'$mensaje','$atendido','$asunto')";
+
+            $db= AccesoDB::getInstancia($query);
+            $lista=$db->executeQueryUpdate($query);
+
+            return $lista;
+        } catch (Exception $ex) {
+            throw $ex;
+            return false;
+        }
+    }
+    
+    
+    
 }
 
 ?>
