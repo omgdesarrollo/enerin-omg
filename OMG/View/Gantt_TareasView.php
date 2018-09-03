@@ -166,6 +166,10 @@ and open the template in the editor.
 <input type="radio" id="scale2" name="scale" value="2"/><label for=""><h5>Semana</h5></label>
 <input type="radio" id="scale3" name="scale" value="3"/><label for=""><h5>Mes</h5></label>
 <input type="radio" id="scale4" name="scale" value="4"/><label for=""><h5>Año</h5></label>
+<!--<div style="text-align:center;">-->
+	<input value="deshacer" type="button" onclick='gantt.undo()' style='font-size: 10px'>
+	<input value="Rehacer" type="button" onclick='gantt.redo()' style='font-size: 10px'>
+<!--</div>-->
         <?php  
         
 //        echo"e  ".Session::getSesion("dataGantt");
@@ -524,6 +528,9 @@ gantt.config.branch_loading = true;
 gantt.config.fit_tasks = true; 
 gantt.config.work_time = false;
 gantt.config.auto_scheduling = true;
+
+	gantt.config.auto_scheduling_strict = true;
+
 gantt.config.sort = true;
 //gantt.config.readonly = true;
 gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
@@ -536,6 +543,9 @@ gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
 
 var dp = new gantt.dataProcessor("../Controller/GanttTareasController.php?Op=Modificar");
 dp.init(gantt);
+
+//gantt.config.branch_loading = true;
+
 
 //empieza en cuanto a el modo de mostrar las tareas por dia,seman,mes,año
 	var func = function (e) {
