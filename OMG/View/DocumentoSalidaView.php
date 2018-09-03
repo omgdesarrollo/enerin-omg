@@ -49,6 +49,10 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/tools.js" type="text/javascript"></script>
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <script src="../../js/fDocumentoSalidaView.js" type="text/javascript"></script>
+                 <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
+                <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
+                <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
+                <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
                 
                 
         <style>
@@ -198,6 +202,11 @@ require_once 'EncabezadoUsuarioView.php';
 </div><!-- cierre del modal --> 
 
 <script>
+    
+     $(function(){
+         
+  
+     })
 DataGrid = [];
 dataListado=[];
 filtros=[];
@@ -211,59 +220,60 @@ construirFiltros();
 </script>
 
 
+
 <!-- INICIA SECCION PARA CARGAR ARCHIVOS--> 
-<script id="template-upload" type="text/x-tmpl">
-        {% for (var i=0, file; file=o.files[i]; i++) { %}
-        <tr class="template-upload" style="width:100%">
-                <td>
-                <span class="preview"></span>
-                </td>
-                <td>
-                <p class="name">{%=file.name%}</p>
-                <strong class="error"></strong>
-                </td>
-                <td>
-                <p class="size">Processing...</p>
-                <!-- <div class="progress"></div> -->
-                </td>
-                <td>
-                {% if (!i && !o.options.autoUpload) { %}
-                        <button class="start" style="display:none;padding: 0px 4px 0px 4px;" disabled>Start</button>
-                {% } %}
-                {% if (!i) { %}
-                        <button class="cancel" style="padding: 0px 4px 0px 4px;color:white">Cancel</button>
-                {% } %}
-                </td>
-        </tr>
-        {% } %} 
+ <script id="template-upload" type="text/x-tmpl">
+      {% for (var i=0, file; file=o.files[i]; i++) { %}
+      <tr class="template-upload" style="width:100%">
+              <td>
+              <span class="preview"></span>
+              </td>
+              <td>
+              <p class="name">{%=file.name%}</p>
+              <strong class="error"></strong>
+              </td>
+              <td>
+              <p class="size">Processing...</p>
+              <!-- <div class="progress"></div> -->
+              </td>
+              <td>
+              {% if (!i && !o.options.autoUpload) { %}
+                      <button class="start" style="display:none;padding: 0px 4px 0px 4px;" disabled>Start</button>
+              {% } %}
+              {% if (!i) { %}
+                      <button class="cancel" style="padding: 0px 4px 0px 4px;color:white">Cancel</button>
+              {% } %}
+              </td>
+      </tr>
+      {% } %} 
 </script>
 
 <script id="template-download" type="text/x-tmpl">
 {% var t = $('#fileupload').fileupload('active'); var i,file; %}
-        {% for (i=0,file; file=o.files[i]; i++) { %}
-        <tr class="template-download">
-                <td>
-                <span class="preview">
-                        {% if (file.thumbnailUrl) { %}
-                        <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
-                        {% } %}
-                </span>
-                </td>
-                <td>
-                <p class="name">
-                        <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
-                </p>
-                </td>
-                <td>
-                <span class="size">{%=o.formatFileSize(file.size)%}</span>
-                </td>
-                <!-- <td> -->
-                <!-- <button class="delete" style="padding: 0px 4px 0px 4px;" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>Delete</button> -->
-                <!-- <input type="checkbox" name="delete" value="1" class="toggle"> -->
-                <!-- </td> -->
-        </tr>
-        {% } %}
-        {% if(t == 1){ if( $('#tempInputIdDocumentoSalida').length > 0 ) { var ID_DOCUMENTO_SALIDA = $('#tempInputIdDocumentoSalida').val(); mostrar_urls(ID_DOCUMENTO_SALIDA);refresh();}else{ $('#btnAgregarDocumentoSalidaRefrescar').click(); } } %}
+      {% for (i=0,file; file=o.files[i]; i++) { %}
+      <tr class="template-download">
+              <td>
+              <span class="preview">
+                      {% if (file.thumbnailUrl) { %}
+                      <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                      {% } %}
+              </span>
+              </td>
+              <td>
+              <p class="name">
+                      <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+              </p>
+              </td>
+              <td>
+              <span class="size">{%=o.formatFileSize(file.size)%}</span>
+              </td>
+              <!-- <td> -->
+              <!-- <button class="delete" style="padding: 0px 4px 0px 4px;" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>Delete</button> -->
+              <!-- <input type="checkbox" name="delete" value="1" class="toggle"> -->
+              <!-- </td> -->
+      </tr>
+      {% } %}
+      {% if(t == 1){ if( $('#tempInputIdDocumentoSalida').length > 0 ) { var ID_DOCUMENTO = $('#tempInputIdDocumentoSalida').val(); mostrar_urls(ID_DOCUMENTO);}else{ $('#btnAgregarDocumentoSalidaRefrescar').click(); } } %}
 </script>
 <!-- FINALIZA SECCION PARA CARGAR ARCHIVOS-->
 
@@ -300,10 +310,10 @@ construirFiltros();
         <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
         <!--<script src="../../assets/FileUpload/js/main.js"></script>-->
         
-        <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
+<!--        <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
         <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
         <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
-        <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
+        <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">-->
 
 
 
