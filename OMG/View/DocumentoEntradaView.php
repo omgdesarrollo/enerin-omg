@@ -306,7 +306,7 @@ var MyDateField = function(config)
 {
         // data = {};
     jsGrid.Field.call(this, config);
-    console.log(this);
+//     console.log(this);
 };
  
 MyDateField.prototype = new jsGrid.Field
@@ -390,6 +390,10 @@ function inicializarEstructuraGrid()
                                 items:[{"clasificacion":"1","descripcion":"Con limite de tiempo"},{"clasificacion":"2","descripcion":"Sin limite de tiempo"},{"clasificacion":"3","descripcion":"Informativo"}]
                         },
 
+                        { name: "status_doc", title:"Estatus", type: "select", width:150,valueField:"status_doc",textField:"descripcion",
+                                items:[{"status_doc":"1","descripcion":"PROCESO"},{"status_doc":"2","descripcion":"SUSPENDIDO"},{"status_doc":"3","descripcion":"TERMINADO"}]
+                        },
+
                         { name: "fecha_asignacion", title: "Fecha Asignación", type: "date", width:160},
                         { name: "fecha_limite_atencion", title: "Fecha Limite Atención", type: "date", width:160},
                         { name: "fecha_alarma", title: "Fecha Alarma", type: "date", width:160},
@@ -440,6 +444,10 @@ function inicializarFiltros()
 
                 { id: "clasificacion", name: "Clasificación", type: "combobox",descripcion:"descripcion",
                         data:[{"clasificacion":1,"descripcion":"Con limite de tiempo"},{"clasificacion":2,"descripcion":"Sin limite de tiempo"},{"clasificacion":3,"descripcion":"Informativo"}]},
+
+                { id: "status_doc",name:"Estatus", type: "combobox", descripcion:"descripcion",
+                        data:[{status_doc:"1",descripcion:"PROCESO"},{status_doc:"2",descripcion:"SUSPENDIDO"},{status_doc:"3",descripcion:"TERMINADO"}]
+                },
 
                 { id: "fecha_asignacion", name: "Fecha Asignación", type: "date"},
                 { id: "fecha_limite_atencion", name: "Fecha Limite Atención", type: "date"},
@@ -934,6 +942,8 @@ function reconstruir(value,index)//listoooo
 
         tempData["fecha_alarma"] = value.fecha_alarma;
 
+        tempData["status_doc"] = value.status_doc;
+
         tempData["adjuntar_archivo"] = "<button onClick='mostrar_urls("+value.id_documento_entrada+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
         tempData["adjuntar_archivo"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
                                 
@@ -1370,56 +1380,109 @@ function saveComboToDatabase(Obj,column,id_documento_entrada)
 
 function saveUpdateToDatabase(args)//listo
 {
-    console.log(args);
-    columnas=new Object();
-    entro=0;
-    id_afectado = args['item']['id_principal'][0];
-    region_fiscalTemp = args['previousItem']['region_fiscal'];
+        console.log(args);
+        columnas=new Object();
+        entro=0;
+        id_afectado = args['item']['id_principal'][0];
+        region_fiscalTemp = args['previousItem']['region_fiscal'];
 
-//     $.each(args['item'],function(index,value)
-//     {
-//         if(args['previousItem'][index]!=value && value!="")
-//         {
-//             if(index!='id_principal' && !value.includes("<button") && index!="delete")
-//             {
-//                 columnas[index]=value;
-//             }
-//         }
-//     });
+        $.each(args['item'],(index,value)=>
+        {
+                if(args['previousItem'][index]!=value && value!="")
+                {
+                if(index!='id_principal' && !value.includes("<button") && index!="delete")
+                {
+                        columnas[index]=value;
+                }
+                }
+        });
+        //     console.log("1");
+        //     if(args["itemIndex"]!=-1)
+                // $("#jsGrid").jsGrid("updateItem", DataGrid[args["itemIndex"]]);
+        //     console.log("2");
+        console.log(columnas);
+        //     $("#jsGrid").jsGrid("cancelEdit");
+        //     $("#jsGrid").jsGrid("updateItem");
 
-//     console.log(columnas);
+        //     console.log(columnas);
 
-//     if( Object.keys(columnas).length != 0)
-//     {
-//         $.ajax({
-//             url:"../Controller/CatalogoProduccionController.php?Op=Actualizar",
-//             type:"POST",
-//             data:'TABLA=catalogo_reporte'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado)+"&REGION="+region_fiscalTemp,
-//             beforeSend:function()
-//             {
-//                 growlWait("Actualización","Espere...");
-//             },
-//             success:function(data)
-//             {
-//                 console.log("resultado actualizacion: ",data);
-//                 if(typeof(data)=="object")
-//                 {
-//                     growlSuccess("Actulización","Se actualizaron los campos");
-//                     $.each(data,function(index,value){
-//                         componerDataListado(value);
-//                     });
-//                     componerDataGrid();
-//                     gridInstance.loadData();
-//                 }
-//                 else
-//                     growlError("Actualización","No se pudo actualizar");
-//             },
-//             error:function()
-//             {
-//                 growlError("Error","Error del servidor");
-//             }
-//         });
-//     }
+        if( Object.keys(columnas).length != 0)
+        {
+                fechas = true;
+                $.each(columnas,(index,value)=>
+                {
+                        if(index == "fecha_asignacion")
+                        {
+                                fechas = compararFechaAsignacion(value,args["previousItem"]["fecha_limite_atencion"],args["previousItem"]["fecha_alarma"]);
+                        }
+                        if(index == "fecha_limite_atencion")
+                        {
+                                fechas = compararFechaLimite(value,args["previousItem"]["fecha_asignacion"],args["previousItem"]["fecha_alarma"]);
+                        }
+                        if(index == "fecha_alarma")
+                        {
+                                fechas = compararFechaAlarma(value,args["previousItem"]["fecha_asignacion"],args["previousItem"]["fecha_limite_atencion"]);
+                        }
+                });
+                if(fechas)
+                {
+                        $.ajax({
+                        url:"../Controller/GeneralController.php?Op=Actualizar",
+                        type:"POST",
+                        data:'TABLA=documento_entrada'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
+                        beforeSend:function()
+                        {
+                                growlWait("Actualización","Espere...");
+                        },
+                        success:function(data)
+                        {
+                                // console.log("resultado actualizacion: ",data);
+                                $.ajax({
+                                        url:'../Controller/DocumentosEntradaController.php?Op=ListarUno',
+                                        type: 'GET',
+                                        data:'ID_DOCUMENTO='+id_afectado["id_documento_entrada"],
+                                        success:function(datos)
+                                        {
+
+                                                if(typeof(datos)=="object")
+                                                {
+                                                        growlSuccess("Actulización","Se actualizaron los campos");
+                                                        $.each(datos,function(index,value){
+                                                                componerDataListado(value);
+                                                        });
+                                                        componerDataGrid();
+                                                        gridInstance.loadData();
+                                                }
+                                                else
+                                                {
+                                                        growlError("Actualización","No se pudo actualizar");
+                                                        componerDataGrid();
+                                                        gridInstance.loadData();
+                                                }
+                                        },
+                                        error:function()
+                                        {
+                                                componerDataGrid();
+                                                gridInstance.loadData();
+                                                growlError("Error","Error del servidor");
+                                        }
+                                });
+                        },
+                        error:function()
+                        {
+                                componerDataGrid();
+                                gridInstance.loadData();
+                                growlError("Error","Error del servidor");
+                        }
+                        });
+                }
+                else
+                {
+                        componerDataGrid();
+                        gridInstance.loadData();
+                }
+        }
+//     else investigar que hacer cuando no hay que actualizar
 }
 
 function componerDataListado(value)// id de la vista documento, listo
