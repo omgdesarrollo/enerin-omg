@@ -215,9 +215,7 @@ class Gantt_TareaDao {
             return false;
         }
     }
-    
-    
-    
+
 }
 
 ?>
