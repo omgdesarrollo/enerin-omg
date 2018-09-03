@@ -119,7 +119,9 @@ and open the template in the editor.
 			font-weight: bold;
 		}   
                 
-                
+                .gantt_task_content {
+                    display: none;
+                }
                 /* para la pantalla completa*/ 
 /*                	.gantt-fullscreen {
 			position: absolute;
