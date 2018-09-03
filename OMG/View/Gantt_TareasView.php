@@ -65,6 +65,9 @@ and open the template in the editor.
     <script src="../../assets/gantt_5.1.2_com/codebase/locale/locale_es.js" type="text/javascript"></script>
     <script src="https://export.dhtmlx.com/gantt/api.js?v=20180322"></script>
     
+    <script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_fullscreen.js" type="text/javascript"></script>
+    
+    
    <!--<script src="../../codebase/ext/dhtmlxgantt_smart_rendering.js"></script>-->
    <script src="../../js/jquery.min.js" type="text/javascript"></script>
    <script src="../../assets/gantt_5.1.2_com/codebase/sources/ext/dhtmlxgantt_keyboard_navigation.js" type="text/javascript"></script>
@@ -114,7 +117,30 @@ and open the template in the editor.
 			box-sizing: border-box;
 			color: white;
 			font-weight: bold;
-		}         
+		}   
+                
+                
+                /* para la pantalla completa*/ 
+/*                	.gantt-fullscreen {
+			position: absolute;
+			bottom: 20px;
+			right: 20px;
+			width: 30px;
+			height: 30px;
+			padding: 2px;
+			font-size: 32px;
+			background: transparent;
+			cursor: pointer;
+			opacity: 0.5;
+			text-align: center;
+			-webkit-transition: background-color 0.5s, opacity 0.5s;
+			transition: background-color 0.5s, opacity 0.5s;
+		}
+                .gantt-fullscreen:hover {
+			background: rgba(150, 150, 150, 0.5);
+			opacity: 1;
+		}*/
+                /*termina para la pantalla completa*/ 
                 
 /*     .gantt_data_area {
     position: relative;
@@ -136,7 +162,10 @@ and open the template in the editor.
       <input type="submit" class="btn btn-info" value="Recargar">      
       
   </form>
-        
+<input type="radio" id="scale1" name="scale" value="1" checked/><label for="scale1">Dia</label><br>
+<input type="radio" id="scale2" name="scale" value="2"/><label for="scale2">Semana</label><br>
+<input type="radio" id="scale3" name="scale" value="3"/><label for="scale3">Mes</label><br>
+<input type="radio" id="scale4" name="scale" value="4"/><label for="scale4">Año</label><br>
         <?php  
         
 //        echo"e  ".Session::getSesion("dataGantt");
@@ -174,7 +203,71 @@ and open the template in the editor.
     <div id="gantt_here" style='width:100%; height:100%;'></div>
     </body>
 
-  <script type="text/javascript">      
+  <script type="text/javascript">  
+//empieza para definir como mostrar las tareas si por dia,semana,mes,año
+	function setScaleConfig(value) {
+		switch (value) {
+			case "1":
+				gantt.config.scale_unit = "day";
+				gantt.config.step = 1;
+				gantt.config.date_scale = "%d %M";
+				gantt.config.subscales = [];
+				gantt.config.scale_height = 27;
+				gantt.templates.date_scale = null;
+				break;
+			case "2":
+				var weekScaleTemplate = function (date) {
+					var dateToStr = gantt.date.date_to_str("%d %M");
+					var startDate = gantt.date.week_start(new Date(date));
+					var endDate = gantt.date.add(gantt.date.add(startDate, 1, "week"), -1, "day");
+					return dateToStr(startDate) + " - " + dateToStr(endDate);
+				};
+
+				gantt.config.scale_unit = "week";
+				gantt.config.step = 1;
+				gantt.templates.date_scale = weekScaleTemplate;
+				gantt.config.subscales = [
+					{unit: "day", step: 1, date: "%D"}
+				];
+				gantt.config.scale_height = 50;
+				break;
+			case "3":
+				gantt.config.scale_unit = "month";
+				gantt.config.date_scale = "%F, %Y";
+				gantt.config.subscales = [
+					{unit: "day", step: 1, date: "%j, %D"}
+				];
+				gantt.config.scale_height = 50;
+				gantt.templates.date_scale = null;
+				break;
+			case "4":
+				gantt.config.scale_unit = "year";
+				gantt.config.step = 1;
+				gantt.config.date_scale = "%Y";
+				gantt.config.min_column_width = 50;
+
+				gantt.config.scale_height = 90;
+				gantt.templates.date_scale = null;
+
+
+				gantt.config.subscales = [
+					{unit: "month", step: 1, date: "%M"}
+				];
+				break;
+		}
+	}
+setScaleConfig('4');
+//termina de definir si sera por dia,semana,mes ,año que se mostrara las tareas
+
+
+
+
+
+
+
+
+
+
 	(function dynamicTaskType() {
 		var delTaskParent;
 
@@ -392,10 +485,39 @@ gantt.config.lightbox.sections = [
 	];
 
 
+
+
+	var weekScaleTemplate = function (date) {
+		var dateToStr = gantt.date.date_to_str("%d %M");
+		var endDate = gantt.date.add(gantt.date.add(date, 1, "week"), -1, "day");
+		return dateToStr(date) + " - " + dateToStr(endDate);
+	};
+gantt.config.subscales = [
+//		{unit: "week", step: 1, template: weekScaleTemplate},
+		{unit: "day", step: 1, date: "%j, %D"}
+	];
+
 //gantt.config.lightbox.project_sections = [
 //		{name: "description", height: 70, map_to: "text", type: "textarea", focus: true},
 //		{name: "time", type: "duration", map_to: "auto", readonly: true}
 //	];
+
+
+
+//inicia para expandir o colapsar
+
+        
+//        termina para expandir o colapsar
+
+        gantt.config.scale_unit = "month";
+	gantt.config.step = 1;
+	gantt.config.date_scale = "%F, %Y";
+	gantt.config.min_column_width = 50;
+//        gantt.config.scale_height = 90;
+
+
+
+
 gantt.config.order_branch = true;
 gantt.config.order_branch_free = true;
 gantt.config.branch_loading = true;
@@ -415,6 +537,20 @@ gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
 var dp = new gantt.dataProcessor("../Controller/GanttTareasController.php?Op=Modificar");
 dp.init(gantt);
 
+//empieza en cuanto a el modo de mostrar las tareas por dia,seman,mes,año
+	var func = function (e) {
+		e = e || window.event;
+		var el = e.target || e.srcElement;
+		var value = el.value;
+		setScaleConfig(value);
+		gantt.render();
+	};
+       	var els = document.getElementsByName("scale");
+	for (var i = 0; i < els.length; i++) {
+		els[i].onclick = func;
+	} 
+ //empieza en cuanto a el modo de mostrar las tareas por dia,seman,mes,año  
+        
 //dp.setTransactionMode("REST");
 
     console.log(dp);
