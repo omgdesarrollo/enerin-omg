@@ -1567,6 +1567,18 @@ function refresh()
 {
         // consultarDatos("../Controller/DocumentosEntradaController.php?Op=Listar");
         // listarDatos(-1);
+        listarTemas().then((res)=>{
+                listarAutoridades().then((res1)=>{
+                        inicializarEstructuraGrid().then((res2)=>{
+                                construirGrid();
+                                inicializarFiltros().then((res3)=>
+                                {
+                                        construirFiltros();
+                                        listarDatos();
+                                });
+                        });
+                });
+        });
 }
 
 // function consultarDatos(url)
