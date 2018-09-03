@@ -230,8 +230,11 @@ and open the template in the editor.
 				gantt.config.scale_unit = "week";
 				gantt.config.step = 1;
 				gantt.templates.date_scale = weekScaleTemplate;
-				gantt.config.subscales = [
-					{unit: "day", step: 1, date: "%D"}
+//				gantt.config.subscales = [
+//					{unit: "day", step: 1, date: "%D"}
+//				];
+                                gantt.config.subscales = [
+					{unit: "week", step: 1, date: "%j"}
 				];
 				gantt.config.scale_height = 50;
 				break;
