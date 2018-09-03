@@ -225,7 +225,6 @@ require_once 'EncabezadoUsuarioView.php';
                                         <option value="2">Suspendido</option>
                                         <option value="3">Terminado</option>
                                         </select>
-
                                 </div>
                 
                                 <div class="form-group-">

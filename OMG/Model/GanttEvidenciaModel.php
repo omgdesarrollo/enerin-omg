@@ -173,4 +173,19 @@ class GanttEvidenciaModel {
             return false;
         }
     }
+    
+    public function listarEmpleadosNombreCompleto()
+    {
+       try
+       {
+           $dao=new GanttEvidenciasDao();
+           $rec= $dao->listarEmpleadosNombreCompleto();
+           
+           return $rec;
+       } catch (Exception $ex)
+       {
+           throw $ex;
+           return -1;
+       }
+    }
 }

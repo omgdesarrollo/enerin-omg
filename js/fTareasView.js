@@ -9,6 +9,7 @@ $(function()
         tareaDatos.fecha_creacion = $("#FECHA_CREACION").val();
         tareaDatos.fecha_alarma = $("#FECHA_ALARMA").val();
         tareaDatos.fecha_cumplimiento = $("#FECHA_CUMPLIMIENTO").val();
+        tareaDatos.status_tarea = $("#STATUS_TAREA").val();
         tareaDatos.observaciones = $("#OBSERVACIONES").val();
         tareaDatos.archivo_adjunto = $('#fileupload').fileupload('option', 'url');
         tareaDatos.mensaje="Se le asigno la tarea: "+$("#TAREA").val()+" por el Usuario: ";
@@ -23,8 +24,9 @@ $(function()
                 tareaDatos.fecha_creacion!=""?
                 tareaDatos.fecha_alarma!=""?
                 tareaDatos.fecha_cumplimiento!=""?
+                tareaDatos.status_tarea!=""?
                 tareaDatos.observaciones!=""?
-                true: false: false: false: false: false: false: false                                                               
+                true: false: false: false: false: false: false: false: false                                                               
             );
         
             listo ? insertarTareas(tareaDatos):swalError("Completar campos");
@@ -61,6 +63,7 @@ function inicializarFiltros()
             {id:"fecha_creacion",type:"date"},
             {id:"fecha_alarma",type:"date"},
             {id:"fecha_cumplimiento",type:"date"},
+            {id:"status_tarea",type:"text"},
             {id:"observaciones",type:"text"},
             {id:"archivo_adjunto",type:"text"},
             {id:"registrar_programa",type:"text"},
@@ -132,6 +135,7 @@ function construirGrid()
             { name: "fecha_creacion",title:"Fecha de Creacion", type: "text", validate: "required",editing: false },
             { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required" },
             { name: "fecha_cumplimiento",title:"Fecha de Cumplimiento", type: "text", validate: "required",editing: false},
+            { name: "status_tarea",title:"status_tarea", type: "text", validate: "required"},
             { name: "observaciones",title:"Observaciones", type: "text", validate: "required" },
             { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:110,editing:false },
             { name: "registrar_programa",title:"Registrar Programa", type: "text", validate: "required",width:140, editing:false },
@@ -147,8 +151,8 @@ function construirGrid()
             id_empleadoAnterior=args["previousItem"]["id_empleado"];
             tarea=args["item"]["tarea"];
             
-            console.log("el nuevo: "+id_empleadoActual);
-            console.log("el que estaba: "+id_empleadoAnterior);
+//            console.log("el nuevo: "+id_empleadoActual);
+//            console.log("el que estaba: "+id_empleadoAnterior);
 //            console.log("La: "+tarea);
             
             $.each(args["item"],function(index,value)
@@ -305,6 +309,7 @@ function reconstruir(value,index)
     tempData["fecha_creacion"]=value.fecha_creacion;
     tempData["fecha_alarma"]=value.fecha_alarma;
     tempData["fecha_cumplimiento"]=value.fecha_cumplimiento;
+    tempData["status_tarea"]=value.status_tarea;
     tempData["observaciones"]=value.observaciones;
     tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_tarea+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
     tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
@@ -378,7 +383,7 @@ function insertarTareas(tareaDatos)
                 $.each(datos,function(index,value)
                 {
                    tempData= reconstruir(value,ultimoNumeroGrid+1);  
-                   console.log(value.id_empleado); 
+//                   console.log(value.id_empleado); 
                 });
                 console.log(tempData);
                 

@@ -281,5 +281,19 @@ class Gantt_TareasModel{
     }
     
     
+    public function listarEmpleadosNombreCompleto()
+    {
+       try
+       {
+           $dao=new Gantt_TareaDao();
+           $rec= $dao->listarEmpleadosNombreCompleto();
+           
+           return $rec;
+       } catch (Exception $ex)
+       {
+           throw $ex;
+           return -1;
+       }
+    }
 
 }

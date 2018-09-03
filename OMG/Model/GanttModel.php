@@ -145,4 +145,20 @@ class GanttModel {
             throw  $ex;
         }
     }
+    
+    
+    public function listarEmpleadosNombreCompleto()
+    {
+       try
+       {
+           $dao=new GanttDao();
+           $rec= $dao->listarEmpleadosNombreCompleto();
+           
+           return $rec;
+       } catch (Exception $ex)
+       {
+           throw $ex;
+           return -1;
+       }
+    }
 }

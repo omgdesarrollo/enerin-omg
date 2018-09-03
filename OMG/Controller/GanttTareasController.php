@@ -20,6 +20,16 @@ switch ($Op) {
             header('Content-type: application/json; charset=utf-8');
             echo json_encode(array("data"=>$Lista));
             break;
+            
+        case 'empleadosNombreCompleto':
+            
+	$Lista=$modelGantt->listarEmpleadosNombreCompleto("");
+    	Session::setSesion("listarEmpleadosNombreCompleto",$Lista);
+//    	$tarjet="../view/principalmodulos.php";
+    	header('Content-type: application/json; charset=utf-8');
+	echo json_encode($Lista);
+                
+		break;    
     
         case 'Guardar':
 //            $VALUES["id"]= Session::getSesion("dataGantt_id_tarea");

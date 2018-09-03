@@ -555,13 +555,16 @@ dp.init(gantt);
     function obtenerEmpleados(){
         
         $.ajax({
-           url:"../Controller/GanttController.php?Op=ListarEmpleados",
+//           url:"../Controller/GanttController.php?Op=ListarEmpleados",
+            url:"../Controller/GanttTareasController.php?Op=empleadosNombreCompleto",
+//           url:"../Controller/EmpleadosController.php?Op=nombresCompletos",
            data:"",
            async:false,
            success:function (res){
                
                $.each(res,function(index,value){
-                   dataEmpleados.push({key:value.id_empleado,label:value.nombre_empleado});
+//                   dataEmpleados.push({key:value.id_empleado,label:value.nombre_empleado});
+                   dataEmpleados.push({key:value.id_empleado,label:value.nombre_completo});
              });
            }
            

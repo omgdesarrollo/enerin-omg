@@ -25,8 +25,16 @@ switch ($Op) {
 //    	$tarjet="../view/principalmodulos.php";
     	header('Content-type: application/json; charset=utf-8');
 	echo json_encode($Lista);
+                break;
         
-                
+        
+        case 'empleadosNombreCompleto':
+            
+	$Lista=$modelGantt->listarEmpleadosNombreCompleto("");
+    	Session::setSesion("listarEmpleadosNombreCompleto",$Lista);
+//    	$tarjet="../view/principalmodulos.php";
+    	header('Content-type: application/json; charset=utf-8');
+	echo json_encode($Lista);
                 
 		break;
             

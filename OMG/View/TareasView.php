@@ -44,10 +44,12 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
                 <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
                 
-                
-                <!--<script src="../../js/tools.js" type="text/javascript"></script>-->
-                <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
+                <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
+                <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
+                <script src="../../js/tools.js" type="text/javascript"></script>
+                <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+                <!--<link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>-->
                 <script src="../../js/fTareasView.js" type="text/javascript"></script>
 
 
@@ -87,11 +89,11 @@ require_once 'EncabezadoUsuarioView.php';
 
 <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">             
 
-<button onClick="archivoyComboboxparaModal();" type="button" class="btn btn-success" data-toggle="modal" data-target="#crea_tarea">
+<button onClick="archivoyComboboxparaModal();" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#crea_tarea">
     Agregar Tarea
 </button>
 
-<button type="button" id="btnAgregarDocumentoEntradaRefrescar" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
+<button type="button" id="btnAgregarDocumentoEntradaRefrescar" class="btn btn-info btn_refrescar" id="btnrefrescar" onclick="refresh();" >
     <i class="glyphicon glyphicon-repeat"></i>   
 </button>
 
@@ -159,6 +161,15 @@ require_once 'EncabezadoUsuarioView.php';
                         <label class="control-label" for="title">Fecha de Cumplimiento:</label>
                         <input type="date" id="FECHA_CUMPLIMIENTO" class="form-control" data-error="Ingrese la Fecha de Cumplimiento" required></textarea>
                         <div id="mensaje5"class="help-block with-errors"></div>
+                    </div>
+                
+                    <div class="form-group">
+                            <label class="control-label" for="title">Status:</label>
+                            <select id="STATUS_TAREA">
+                            <option value="1">En proceso</option>
+                            <option value="2">Suspendido</option>
+                            <option value="3">Terminado</option>
+                            </select>
                     </div>
                 
                     <div class="form-group">
@@ -293,7 +304,7 @@ construirFiltros();
     <script src="../../assets/probando/js/ace-elements.min.js"></script>
     <script src="../../assets/probando/js/ace.min.js"></script>
 
-    <script src="../../assets/FileUpload/js/tmpl.min.js"></script>
+    <!--<script src="../../assets/FileUpload/js/tmpl.min.js"></script>-->
     
     <!-- js cargar archivo -->
 <!--        <script src="../../assets/FileUpload/js/jquery.min.js"></script>

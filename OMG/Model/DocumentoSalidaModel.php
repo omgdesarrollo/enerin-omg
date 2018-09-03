@@ -28,6 +28,22 @@ class DocumentoSalidaModel {
     }
     }
     
+    public function listarFoliosDeEntrada()
+    {
+        try{
+            $dao=new DocumentoSalidaDAO();
+            $rec=$dao->listarFoliosDeEntrada();
+            
+            
+            return $rec;
+        }  catch (Exception $ex){
+            throw  $ex;
+            return -1;
+        }
+        
+    }
+
+
     public function insertar($pojo){
         try{
             $dao=new DocumentoSalidaDAO();
