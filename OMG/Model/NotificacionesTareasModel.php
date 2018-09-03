@@ -16,15 +16,18 @@ class NotificacionesTareasModel {
             $dao=new NotificacionesTareasDAO();
             $rec= $dao->tareasEnAlarma($CONTRATO);
             
-            $ID_EMPLEADO= $rec['id_empleado'];
-            $TAREA= $rec['tarea'];
-            
-            $ID= $dao->obtenerUsuarioPorIdEmpleado($ID_EMPLEADO);
-            $mensaje= "La siguiente tarea entro en Alarma: ".$TAREA;
-            
-            $model=new NotificacionesModel();
-            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $ID, $mensaje, $tipo_mensaje, $atendido,$asunto,$CONTRATO);
-            
+            foreach ($rec as $key => $value) 
+            {                
+                $ID_EMPLEADO= $value['id_empleado'];
+                $TAREA= $value['tarea'];
+
+                $ID= $dao->obtenerUsuarioPorIdEmpleado($ID_EMPLEADO);
+                $mensaje= "La siguiente tarea entro en Alarma: ".$TAREA;
+                
+                $model=new NotificacionesModel();
+                $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $ID, $mensaje, $tipo_mensaje, $atendido,$asunto,$CONTRATO);
+            }
+
             return $rec;
         } catch (Exception $ex)
         {

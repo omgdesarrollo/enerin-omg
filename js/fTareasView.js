@@ -124,10 +124,10 @@ function construirGrid()
         [
             { name: "id_principal",visible:false},
             { name:"no",title:"No",width:60},
-            { name: "contrato",title:"Contrato", type: "text", validate: "required" },
-            { name: "tarea",title:"Tarea", type: "text", validate: "required" },
+            { name: "contrato",title:"Contrato", type: "textarea", validate: "required" },
+            { name: "tarea",title:"Tarea", type: "textarea", validate: "required" },
 //            { name: "id_empleado",title:"Responsable del Plan", type: "text", validate: "required" },
-            { name: "id_empleado",title:"Responsable del Plan", type: "select",
+            { name: "id_empleado",title:"Responsable del Plan", type: "select", width:200,
                 items:EmpleadosCombobox,
                 valueField:"id_empleado",
                 textField:"nombre_completo"
@@ -140,8 +140,8 @@ function construirGrid()
                 items:[{"status_tarea":"1","descripcion":"En Proceso"},{"status_tarea":"2","descripcion":"Suspendido"},{"status_tarea":"3","descripcion":"Terminado"}]
             },
             { name: "observaciones",title:"Observaciones", type: "text", validate: "required", width:150,},
-            { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:110,editing:false },
-            { name: "registrar_programa",title:"Registrar Programa", type: "text", validate: "required",width:140, editing:false },
+            { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:120,editing:false },
+            { name: "registrar_programa",title:"Registrar Programa", type: "text", validate: "required",width:160, editing:false },
             { name: "avance_programa",title:"Avance Programa", type: "text", validate: "required", editing:false },
             { name:"delete", title:"Opción", type:"customControl",sorting:""}
         ],
