@@ -221,8 +221,9 @@ $Usuario=  Session::getSesion("user");
     var filtros=[];
     var db={};
     var gridInstance;
-    var ws;
-    var thisjGrowl;
+    var ultimoNumeroGrid=0;
+    // var ws;
+    // var thisjGrowl;
 
     var customsFieldsGridData=[
         {field:"customControl",my_field:MyCControlField},
@@ -243,7 +244,7 @@ $Usuario=  Session::getSesion("user");
         { name:"delete", title:"Opción", type:"customControl",sorting:""},
         // {type:"control",editButton: true}
     ];
-    ultimoNumeroGrid=0;
+    
     // $.when(
         var abrir=false;
         var intervalFunc;
@@ -337,11 +338,9 @@ $Usuario=  Session::getSesion("user");
                 this.DOMlist.style.zIndex = 2000;
             });
 
-            promesaBuscarRegionesFiscales = buscarRegionesFiscales();
-            promesaBuscarRegionesFiscales.then((resolve)=>
+            buscarRegionesFiscales().then((resolve)=>
             {
-                promesaInicializarFiltros = inicializarFiltros();
-                promesaInicializarFiltros.then((resolve2)=>
+                inicializarFiltros().then((resolve2)=>
                 {
                     construirFiltros();
                 });

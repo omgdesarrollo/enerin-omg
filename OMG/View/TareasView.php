@@ -63,6 +63,14 @@ $Usuario=  Session::getSesion("user");
                 color: white;
                 font-weight: normal;
             }
+             .jsgrid-row:hover{
+                background-color: red;
+            }
+            /*.jsgrid-selected-row>*/
+/*            .jsgrid-cell:hover{
+                background-color: #ccccff;
+                 cursor: cell;
+            }*/
             
             .display-none
             {
