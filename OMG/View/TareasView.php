@@ -135,8 +135,8 @@ require_once 'EncabezadoUsuarioView.php';
             <div id="validacion_empleado" class="modal-body">
                 <!--<div id="ok"></div>-->
                     <div class="form-group">
-                        <label class="control-label" for="title">Contrato:</label>
-                        <input type="text"  id="CONTRATO" class="form-control" data-error="Ingrese el Contrato" required />
+                        <label class="control-label" for="title">Referencia:</label>
+                        <input type="text"  id="REFERENCIA" class="form-control" data-error="Ingrese el Contrato" required />
                         <div id="mensaje1" class="help-block with-errors" ></div>
                     </div>
 

@@ -37,7 +37,7 @@ class TareasModel{
         }
     }
     
-    public function insertarTarea($contrato,$tarea,$fecha_creacion,$fecha_alarma,$fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado,$mensaje,
+    public function insertarTarea($referencia,$tarea,$fecha_creacion,$fecha_alarma,$fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado,$mensaje,
                                   $responsable_plan,$tipo_mensaje,$atendido)
     {
         try
@@ -48,7 +48,7 @@ class TareasModel{
             $dao=new TareasDAO();
             $ID= $dao->obtenerUsuarioPorIdEmpleado($responsable_plan);
             $model=new NotificacionesModel();
-            $exito= $dao->insertarTarea($contrato, $tarea, $fecha_creacion, $fecha_alarma, $fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado);
+            $exito= $dao->insertarTarea($referencia, $tarea, $fecha_creacion, $fecha_alarma, $fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado);
             $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $ID, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
             
 //            echo "este es model: ".json_encode($model);
