@@ -28,7 +28,7 @@ $Usuario=  Session::getSesion("user");
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
         <!--Inicia para el spiner cargando-->
-                <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+                <!-- <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/> -->
                 <!--Termina para el spiner cargando-->
 
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
@@ -103,7 +103,7 @@ $Usuario=  Session::getSesion("user");
  			 
 </head>
 
-<body class="no-skin" onload="">
+<body class="no-skin">
 
 <!-- <div id="loader"></div>  -->
        

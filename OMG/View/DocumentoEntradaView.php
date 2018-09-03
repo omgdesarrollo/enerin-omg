@@ -1,9 +1,9 @@
 <?php
-session_start();
-require_once '../util/Session.php';
+        session_start();
+        require_once '../util/Session.php';
 
-$Usuario=  Session::getSesion("user"); 
-// $listadoUrls= Session::getSesion("getUrlsArchivos");
+$Usuario = Session::getSesion("user"); 
+        // $listadoUrls= Session::getSesion("getUrlsArchivos");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,29 +16,39 @@ $Usuario=  Session::getSesion("user");
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
 		<!-- bootstrap & fontawesome -->
+                <!-- <script src="../../assets/probando/js/bootstrap.min.js"></script> -->
                 <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
                 <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+
+                <script src="../../js/jquery.js" type="text/javascript"></script>
+                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
                 
-                <!--Para abrir alertas de aviso, success,warning, error-->       
+                <!--Para abrir alertas de aviso, success,warning, error-->
+                <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
                 <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
 
 		<!-- ace styles -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
 
-		<!--[if lte IE 9]>
+		<!-- [if lte IE 9]>
 			<link rel="stylesheet" href="assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
-		<![endif]-->
-		<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
+		<![endif] -->
+
+		<!-- <link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" /> -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
+                
+
+                <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
+                <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
+
                 <!--Inicia para el spiner cargando-->
-                <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+                <!-- <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/> -->
                 <!--Termina para el spiner cargando-->
                 
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
-                <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
-                <script src="../../js/jquery.js" type="text/javascript"></script>
-                <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
+                <!-- <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/> -->
+                <!-- <script src="../../js/jquery.js" type="text/javascript"></script> -->
                              
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
 
@@ -48,11 +58,22 @@ $Usuario=  Session::getSesion("user");
                 <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
                 <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
 
-                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+                <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
+                <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
+                <!--LIBRERIA SWEET ALERT 2-->
+                <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
+                <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
+                <!--END LIBRERIA SWEET ALERT 2-->
+                <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
+                <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
+                <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
+                <!-- <script src="../../js/tools.js" type="text/javascript"></script> -->
+                <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
 
-                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
-                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
-                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+                <!-- <script src="../../js/fCatalogoProduccionView.js" type="text/javascript"></script> -->
+
+                <script src="../../js/fGridComponent.js" type="text/javascript"></script>
 
             <style>
                 .jsgrid-header-row>.jsgrid-header-cell
@@ -80,36 +101,28 @@ $Usuario=  Session::getSesion("user");
                     
 	</head>
 
-        <body class="no-skin" onload="loadSpinner()">
-             <div id="loader"></div>
-       
+        <body class="no-skin" >
 <?php
 
 require_once 'EncabezadoUsuarioView.php';
 
 ?>
-<div id="idT"></div>
-<div style="height: 5px"></div>
+<div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
 
-             
-<div style="position: fixed;">
-<button onClick="DocumentoArchivoAgregarModalF();" type="button" class="btn btn-success" data-toggle="modal" data-target="#create-item">
+        <button onClick="DocumentoArchivoAgregarModalF();" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#create-item">
 		Agregar Documento de Entrada
-</button>
+        </button>
     
-<button id="btnAgregarDocumentoEntradaRefrescar" type="button" class="btn btn-info " onclick="refresh();" >
-    <i class="glyphicon glyphicon-repeat"></i> 
-</button>
-
-
-</div>  
-<br><br><br>
-<div style="float:left" id="headerFiltros">
+        <button id="btnAgregarDocumentoEntradaRefrescar" type="button" class="btn btn-info btn_refrescar" onclick="refresh();" >
+                <i class="glyphicon glyphicon-repeat"></i> 
+        </button>
 </div>
+
+<br><br><br>
 <!-- <div style="height: 50px"></div> -->
 
 <div id="jsGrid"></div>
-             
+
 
 <!-- Inicio de Seccion Modal Archivos-->
 <div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -137,10 +150,6 @@ require_once 'EncabezadoUsuarioView.php';
                 </div><!-- cierre div class modal-content -->
         </div><!-- cierre div class="modal-dialog" -->
 </div><!-- cierre del modal -->
-
-
-
-
 
 <!-- Inicio de Seccion Modal Crear nueva Entrada-->
 <div class="modal draggable fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -277,59 +286,260 @@ require_once 'EncabezadoUsuarioView.php';
              
 <script>
 
-
-filtros = [
-                {name:'Folio de Entrada',id:'folio_entrada',type:"text"},
-                {name:'Asunto',id:'asunto',type:"text"},
-                {name:'Remitente',id:'remitente',type:"text"},
-                {name:'Autoridad Remitente',id:'id_autoridad',type:"combobox",data:listarAutoridades(),descripcion:"clave_autoridad"},
-                {name:'Responsable Tema',id:'nombre_empleado',type:"text"},
-                {name:'No Tema',id:'id_tema',type:"combobox",data:listarTemas(),descripcion:"no"}
-        ];
-        
-construirFiltros();
-//listarAutoridades();
+var DataGrid=[];
+var dataListado=[];
+var filtros=[];
+var db={};
+var gridInstance;
+var ws;
+var thisjGrowl;
 
 var id_documento_entrada;
 var cualmodificar;
 var dataListado;
-var thisTemas;
-var thisAutoridad;
+var thisTemas=[];
+var thisAutoridad=[];
 $("#create-item").draggable();
 $("#create-itemUrls").draggable();
 
+var MyDateField = function(config)
+{
+        // data = {};
+    jsGrid.Field.call(this, config);
+//     console.log(this);
+};
+ 
+MyDateField.prototype = new jsGrid.Field
+({
+        css: "date-field",
+        align: "center",
+        sorter: function(date1, date2)
+        {
+                console.log("haber cuando entra aqui");
+                console.log(date1);
+                console.log(date2);
+        },
+        itemTemplate: function(value)
+        {
+                fecha="0000-00-00";
+                // console.log(this);
+                this[this.name] = value;
+                // console.log(data);
+                if(value!=fecha)
+                {
+                        date = new Date(value);
+                        fecha = date.getDate()+1 +" "+ months[date.getMonth()] +" "+ date.getFullYear();
+                        return fecha;
+                }
+                else
+                        return "Sin fecha";
+        },
+        insertTemplate: function(value)
+        {},
+        editTemplate: function(value)
+        {
+                // console.log(this);
+                fecha="0000-00-00";
+                if(value!=fecha)
+                {
+                        fecha=value;
+                }
+                return this._inputDate = $("<input>").attr({type:"date",value:fecha,style:"margin:-5px;width:145px"});
+        },
+        insertValue: function()
+        {},
+        editValue: function()
+        {
+                return $(this._inputDate).val();
+        }
+});
+
+var customsFieldsGridData=[
+        {field:"customControl",my_field:MyCControlField},
+        {field:"date",my_field:MyDateField},
+];
+// var estructuraGrid=[];
+function inicializarEstructuraGrid()
+{
+        return new Promise((resolve,reject)=>{
+                estructuraGrid = [
+                        { name: "id_principal", visible:false },
+                        { name: "folio_referencia", title: "Referencia", type: "text", width:150},
+                        { name: "folio_entrada", title: "Folio Entrada", type: "text", width:150},
+                        // { name: "fecha_recepcion", title: "Fecha Recepción", type: "text", width, validate: "required" },
+                        { name: "fecha_recepcion", title: "Fecha Recepción", type: "date", width:160},
+
+                        { name: "asunto", title: "Asunto", type: "text", width:130},
+                        { name: "remitente", title: "Remitente", type: "text", width:150},
+
+                        { name: "id_autoridad", title: "Autoridad Remitente", type: "select",
+                                items:thisAutoridad,
+                                valueField:"id_autoridad",
+                                textField:"clave_autoridad"
+                                },
+
+                        { name: "id_tema", title: "Numero Tema", type: "select",
+                                items:thisTemas,
+                                valueField:"id_tema",
+                                textField:"no"},
+
+                        { name: "nombre", title: "Nombre Tema", type: "text", width:150, editing:false },
+                        { name: "nombre_empleado", title: "Responsable Tema", type: "text", width:150, editing:false },
+
+                        { name: "clasificacion", title: "Clasificación", type: "select", width:150,valueField:"clasificacion",textField:"descripcion",
+                                items:[{"clasificacion":"1","descripcion":"Con limite de tiempo"},{"clasificacion":"2","descripcion":"Sin limite de tiempo"},{"clasificacion":"3","descripcion":"Informativo"}]
+                        },
+
+                        { name: "status_doc", title:"Estatus", type: "select", width:150,valueField:"status_doc",textField:"descripcion",
+                                items:[{"status_doc":"1","descripcion":"PROCESO"},{"status_doc":"2","descripcion":"SUSPENDIDO"},{"status_doc":"3","descripcion":"TERMINADO"}]
+                        },
+
+                        { name: "fecha_asignacion", title: "Fecha Asignación", type: "date", width:160},
+                        { name: "fecha_limite_atencion", title: "Fecha Limite Atención", type: "date", width:160},
+                        { name: "fecha_alarma", title: "Fecha Alarma", type: "date", width:160},
+                        { name: "adjuntar_archivo", title: "Adjuntar Archivos", type: "text", width:150, validate: "required", editing:false},
+                        { name: "observaciones", title: "Observaciones", type: "text", width:150},
+                        { name:"delete", title:"Opción", type:"customControl",sorting:""},
+                        // {type:"control",editButton: true}
+                ];
+                resolve();
+        });
+}
+ultimoNumeroGrid=0;
+
+listarTemas().then((res)=>{
+        listarAutoridades().then((res1)=>{
+                inicializarEstructuraGrid().then((res2)=>{
+                        construirGrid();
+                        inicializarFiltros().then((res3)=>
+                        {
+                                construirFiltros();
+                                listarDatos();
+                        });
+                });
+        });
+});
+
+function inicializarFiltros()
+{
+    return new Promise((resolve,reject)=>
+    {
+        filtros = [
+                // { id:"noneUno", type:"none"},
+                // { id: "id_principal", visible:false },
+                { id: "folio_referencia", name: "Referencia", type: "text"},
+                { id: "folio_entrada", name: "Folio Entrada", type: "text"},
+                // { name: "fecha_recepcion", title: "Fecha Recepción", type: "text", width, validate: "required" },
+                { id: "fecha_recepcion", name: "Fecha Recepción", type: "date"},
+
+                { id: "asunto", name: "Asunto", type: "text"},
+                { id: "remitente", name: "Remitente", type: "text"},
+
+                { id: "id_autoridad", name: "Autoridad Remitente", type: "combobox",data:thisAutoridad,descripcion:"clave_autoridad"},
+
+                { id: "id_tema", name: "Numero Tema", type: "combobox", data:thisTemas,descripcion:"no" },
+
+                { id: "nombre", name: "Nombre Tema", type: "text"},
+                { id: "nombre_empleado", name: "Responsable Tema", type: "text"},
+
+                { id: "clasificacion", name: "Clasificación", type: "combobox",descripcion:"descripcion",
+                        data:[{"clasificacion":1,"descripcion":"Con limite de tiempo"},{"clasificacion":2,"descripcion":"Sin limite de tiempo"},{"clasificacion":3,"descripcion":"Informativo"}]},
+
+                { id: "status_doc",name:"Estatus", type: "combobox", descripcion:"descripcion",
+                        data:[{status_doc:"1",descripcion:"PROCESO"},{status_doc:"2",descripcion:"SUSPENDIDO"},{status_doc:"3",descripcion:"TERMINADO"}]
+                },
+
+                { id: "fecha_asignacion", name: "Fecha Asignación", type: "date"},
+                { id: "fecha_limite_atencion", name: "Fecha Limite Atención", type: "date"},
+                { id: "fecha_alarma", name: "Fecha Alarma", type: "date"},
+                // { id: "adjuntar_archivo", name: "Adjuntar Archivos", type: "text"},
+                { id:"noneDos", type:"none"},
+                { id: "observaciones", name: "Observaciones", type: "text"},
+                // { id:"delete", name:"Opción", type:"option",sorting:""},
+                { id:"opcion",type:"opcion"}
+                // { id:"delete", name:"Opción", type:"customControl",sorting:""},
+        ];
+        resolve();
+    });
+}
+
+function listarDatos()
+{
+    return new Promise((resolve,reject)=>
+    {
+        URL = 'filesEvidenciaDocumento/';
+        __datos=[];
+        $.ajax({
+                url:'../Controller/DocumentosEntradaController.php?Op=Listar',
+                type: 'GET',
+                data:"URL="+URL,
+                beforeSend:function()
+                {
+                        growlWait("Solicitud","Solicitando Datos...");
+                },
+                success:function(data)
+                {
+                        if(typeof(data)=="object")
+                        {
+                                growlSuccess("Solicitud","Registros obtenidos");
+                                dataListado = data;
+                                $.each(data,function (index,value)
+                                {
+                                        __datos.push( reconstruir(value,index+1) );
+                                });
+                                console.log(__datos);
+                                DataGrid = __datos;
+                                gridInstance.loadData();
+                                resolve();
+                        }
+                        else
+                        {
+                                growlSuccess("Solicitud","No Existen Registros de Evidencias");
+                                reject();
+                        }
+                },
+                error:function(e)
+                {
+                        console.log(e);
+                        growlError("Error","Error en el servidor");
+                        reject();
+                }
+        });
+    });
+}
 
 function listarAutoridades()
 {
-        tempData=[];
-        $.ajax({
-                url:'../Controller/AutoridadesRemitentesController.php?Op=mostrarCombo',
-                type: 'GET',
-                async:false,
-                success:function(autoridades)
-                {
-                        tempData = autoridades;
-                        thisAutoridad = autoridades;
-                }
+        return new Promise((resolve,reject)=>
+        {
+                // tempData=[];
+                $.ajax({
+                        url:'../Controller/AutoridadesRemitentesController.php?Op=mostrarCombo',
+                        type: 'GET',
+                        success:function(autoridades)
+                        {
+                                // tempData = autoridades;
+                                thisAutoridad = autoridades;
+                                resolve("autoridades");
+                        }
+                });
         });
-        return tempData;
+        
 }
-
 
 function listarTemas()
 {
-        tempData=[];
-        $.ajax({
-                url:'../Controller/TemasOficiosController.php?Op=mostrarCombo',
-                type:'GET',
-                async:false,
-                success:function(temas)
-                {
-                        thisTemas = temas;
-                        tempData = temas;
-                }
+        return new Promise((resolve,reject)=>{
+                $.ajax({
+                        url:'../Controller/TemasOficiosController.php?Op=mostrarCombo',
+                        type:'GET',
+                        success:function(temas)
+                        {
+                                thisTemas = temas;
+                                resolve();
+                        }
+                });
         });
-        return tempData;
 }
 
 function DocumentoArchivoAgregarModalF()
@@ -602,7 +812,7 @@ $(function()
 //      construir(__datos);
 //}
 
-function construirGrid(datosF)//listooo 12
+function construirGarid(datosF)//listooo 12
 {
         widthNormal=120;
         widthDate=150;
@@ -696,154 +906,50 @@ function construirGrid(datosF)//listooo 12
         // $("#loader").hide();
 }
 
-var MyDateField = function(config)
-{
-        // data = {};
-    jsGrid.Field.call(this, config);
-    console.log(this);
-};
- 
-MyDateField.prototype = new jsGrid.Field
-({        
-        css: "date-field",
-        align: "center",
-        sorter: function(date1, date2)
-        {
-                console.log("haber cuando entra aqui");
-                console.log(date1);
-                console.log(date2);
-        },
-        itemTemplate: function(value)
-        {
-                fecha="0000-00-00";
-                // console.log(this);
-                this[this.name] = value;
-                // console.log(data);
-                if(value!=fecha)
-                {
-                        date = new Date(value);
-                        fecha = date.getDate()+1 +" "+ months[date.getMonth()] +" "+ date.getFullYear();
-                        return fecha;
-                }
-                else
-                        return "Sin fecha";
-        },
-        insertTemplate: function(value)
-        {},
-        editTemplate: function(value)
-        {
-                console.log(this);
-                fecha="0000-00-00";
-                if(value!=fecha)
-                {
-                        fecha=value;
-                }
-                return this._inputDate = $("<input>").attr({type:"date",value:fecha,style:"margin:-5px;width:145px"});
-        },
-        insertValue: function()
-        {},
-        editValue: function()
-        {
-                return $(this._inputDate).val();
-        }
-});
 
 
-function reconstruir(value)//listoooo
+
+function reconstruir(value,index)//listoooo
 {
         tempData = new Object();
 
-        tempData["id_principal"] = [{"id_documento_entrada" : value.id_documento_entrada}];
+        tempData["id_principal"] = [];
+        tempData["id_principal"].push({"id_documento_entrada" : value.id_documento_entrada});
+        tempData["id_principal"].push({eliminar : 1});
+        tempData["id_principal"].push({editar : 1});
+
         tempData["folio_referencia"] = value.folio_referencia;
 
         tempData["folio_entrada"] = value.folio_entrada;
 
         tempData["fecha_recepcion"] = value.fecha_recepcion;
-        // tempData.fecha_recepcion = "<input style='' value='"+value.fecha_recepcion+"' onBlur='saveToDatabaseDates(this,\"fecha_recepcion\","+value.id_documento_entrada+",";
-        // tempData.fecha_recepcion += value.fecha_asignacion+","+value.fecha_limite_atencion+","+value.fecha_alarma+")' type='date'/>";
-
-        // tempData.fecha_recepcion = "<input value='"+value.fecha_recepcion+"' type='date' />";
 
         tempData["asunto"] = value.asunto;
         tempData["remitente"] = value.remitente;
         
-        // tempData["autoridad_remitente"] = "<select id='id_autoridad' class='select' onchange='saveComboToDatabase(this,\"id_autoridad\","+value.id_documento_entrada+")'>";
-        // $.each(thisAutoridad,function(index,val)
-        // {
-        //         if(val.id_autoridad==value.id_autoridad)
-        //                 tempData.autoridad_remitente += "<option value='"+val.id_autoridad+"' selected >"+val.clave_autoridad+"</option>";
-        //         else
-        //                 tempData.autoridad_remitente += "<option value='"+val.id_autoridad+"' >"+val.clave_autoridad+"</option>";
-        // });
-        // tempData.autoridad_remitente += "</select>";
-        
         tempData["id_autoridad"] = value.id_autoridad;
-
-        // tempData += "<td style='background-color: #ccccff'>";
-        // tempData.no_tema = "<select id='id_clausula' class='select' onchange='saveComboToDatabase(this,\"id_clausula\","+value.id_documento_entrada+")'>";
-        // console.log(thisTemas);
-        // $.each(thisTemas,function(index,val)
-        // {
-                // if(val.id_tema == value.id_tema)
-                        // tempData.no_tema += "<option value='"+val.id_tema+"'  selected >"+val.no+"</option>";
-                // else
-                        // tempData.no_tema += "<option value='"+val.id_tema+"' >"+val.no+"</option>";
-        // });
-        // tempData.no_tema += "</select>";
 
         tempData["id_tema"] = value.id_tema;
                                 
-        // tempData += "<td style='background-color: #ccccff' contenteditable='false' onBlur='saveToDatabase(this,\"nombre\","+value.id_documento_entrada+")'";
         tempData["nombre"] = value.nombre;
         
-        // tempData += "<td style='background-color: #ccccff' contenteditable='false' onBlur='saveToDatabase(this,\"nombre_empleado\","+value.id_documento_entrada+")'";
         tempData["nombre_empleado"] = value.nombre_empleado;
                                 
-        // tempData.clasificacion = "<td contenteditable='false' onBlur='saveToDatabase(this,\"clasificacion\","+value.id_documento_entrada+")'>";
-        // tempData.clasificacion = value.clasificacion;
-        // if(value.clasificacion == 1)
-        //         tempData.clasificacion += "Con Limite de Tiempo";   
-        // if (value.clasificacion == 2)
-        //         tempData.clasificacion += "Sin Limite de Tiempo";
-        // if (value.clasificacion == 3)
-        //         tempData.clasificacion += "Informativo";
-        // tempData += "</td>";
-                                                                
-        // tempData.status = "<select id='id_status' class='select' onchange='saveComboToDatabase(this,\"status_doc\","+value.id_documento_entrada+")'>";
-        // tempData.status += "<option value='1'";
-        // if(value.status_doc == 1)
-        //         tempData.status += "selected";
-        // tempData.status += ">En proceso</option>";
-
-        // tempData.status += "<option value='2'";
-        // if(value.status_doc == 2)
-        //          tempData.status += "selected";
-        // tempData.status += ">Suspendido</option>";
-
-        // tempData.status += "<option value='3'";
-        // if(value.status_doc == 3)
-        //         tempData.status += "selected";
-        // tempData.status += ">Terminado</option>";
-
-        // tempData.status += "</select>";
         tempData["clasificacion"] = value.clasificacion;
-        // tempData.fecha_asignacion = "<input style='' value='"+value.fecha_asignacion+"' onBlur='saveToDatabaseDates(this,\"fecha_asignacion\","+value.id_documento_entrada;
-        // tempData.fecha_asignacion += ",\""+value.fecha_asignacion+"\",\""+value.fecha_limite_atencion+"\",\""+value.fecha_alarma+"\")' type='date'/>";
 
         tempData["fecha_asignacion"] = value.fecha_asignacion;
-
-        // tempData.fecha_limite_atencion = "<input style='' value='"+value.fecha_limite_atencion+"' onBlur='saveToDatabaseDates(this,\"fecha_limite_atencion\","+value.id_documento_entrada;
-        // tempData.fecha_limite_atencion += ",\""+value.fecha_asignacion+"\",\""+value.fecha_limite_atencion+"\",\""+value.fecha_alarma+"\")' type='date'/>";
         tempData["fecha_limite_atencion"] = value.fecha_limite_atencion;
 
-        // tempData.fecha_alarma = "<input style='' value='"+value.fecha_alarma+"' onBlur='saveToDatabaseDates(this,\"fecha_alarma\","+value.id_documento_entrada;
-        // tempData.fecha_alarma += ",\""+value.fecha_asignacion+"\",\""+value.fecha_limite_atencion+"\",\""+value.fecha_alarma+"\")' type='date'/>";
         tempData["fecha_alarma"] = value.fecha_alarma;
 
+        tempData["status_doc"] = value.status_doc;
+
         tempData["adjuntar_archivo"] = "<button onClick='mostrar_urls("+value.id_documento_entrada+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
-        tempData["adjuntar_archivo"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i>Mostrar</button>";
+        tempData["adjuntar_archivo"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
                                 
         tempData["observaciones"] = value.observaciones;
+        tempData["delete"] = tempData["id_principal"];
+        
         return tempData;
 }
 
@@ -946,165 +1052,165 @@ function reconstruir(value)//listoooo
 //         console.log(_datos);
 // }
 
-function reconstruirTable(datos)//listooo
-{
-        __datos=[];
-        $.each(datos,function(index,value)
-        {
-                // tempData += "<tr id='registro_"+value.id_documento_entrada+"' class='table-row'>"+reconstruir(value)+"</tr>";
-                __datos.push(reconstruir(value));
-        });
+// function reconstruirTable(datos)//listooo
+// {
+//         __datos=[];
+//         $.each(datos,function(index,value)
+//         {
+//                 // tempData += "<tr id='registro_"+value.id_documento_entrada+"' class='table-row'>"+reconstruir(value)+"</tr>";
+//                 __datos.push(reconstruir(value));
+//         });
 
-        // console.log(__datos);
+//         // console.log(__datos);
 
-        // $.each(__datos,function(index,value)
-        // {
-        //         _datos = new Object();
-        //         _datos["Referencia"] = value.referencia;
-        //         _datos["Folio Entrada"] = value.folio_entrada;
-        //         _datos["Fecha Recepción"] = value.fecha_recepcion;
-        //         _datos["Asunto"] = value.asunto;
-        //         _datos["Remitente"] = value.remitente;
-        //         _datos["Autoridad Remitente"] = value.autoridad_remitente;
-        //         _datos["Numero Tema"] = value.no_tema;
-        //         _datos["Nombre Tema"] = value.nombre_tema;
-        //         _datos["Responsable Tema"] = value.nombre_empleado;
-        //         _datos["Clasificación"] = value.clasificacion;
-        //         _datos["Fecha Asignación"] = value.fecha_asignacion;
-        //         _datos["Fecha Limite Atención"] = value.fecha_limite_atencion;
-        //         _datos["Fecha Alarma"] = value.fecha_alarma;
-        //         _datos["Adjuntar Archivos"] = value.adjuntar_archivo;
-        //         _datos["Observaciones"] = value.observaciones;
-        //         _datosF.push(_datos);
-        // });
+//         // $.each(__datos,function(index,value)
+//         // {
+//         //         _datos = new Object();
+//         //         _datos["Referencia"] = value.referencia;
+//         //         _datos["Folio Entrada"] = value.folio_entrada;
+//         //         _datos["Fecha Recepción"] = value.fecha_recepcion;
+//         //         _datos["Asunto"] = value.asunto;
+//         //         _datos["Remitente"] = value.remitente;
+//         //         _datos["Autoridad Remitente"] = value.autoridad_remitente;
+//         //         _datos["Numero Tema"] = value.no_tema;
+//         //         _datos["Nombre Tema"] = value.nombre_tema;
+//         //         _datos["Responsable Tema"] = value.nombre_empleado;
+//         //         _datos["Clasificación"] = value.clasificacion;
+//         //         _datos["Fecha Asignación"] = value.fecha_asignacion;
+//         //         _datos["Fecha Limite Atención"] = value.fecha_limite_atencion;
+//         //         _datos["Fecha Alarma"] = value.fecha_alarma;
+//         //         _datos["Adjuntar Archivos"] = value.adjuntar_archivo;
+//         //         _datos["Observaciones"] = value.observaciones;
+//         //         _datosF.push(_datos);
+//         // });
 
-        construirGrid(__datos);
+//         // construirGrid(__datos);
 
-}
+// }
 
 // listarDatos(-1);
 
-function listarDatos(id_documento)
-{
-        tempData="";
-        // ajaxTemas = ({
-        //         url:'../Controller/TemasOficiosController.php?Op=mostrarCombo',
-        //         type:'GET',
-        //         async:false,
-        // });
+// function listaraDatos(id_documento)
+// {
+//         tempData="";
+//         // ajaxTemas = ({
+//         //         url:'../Controller/TemasOficiosController.php?Op=mostrarCombo',
+//         //         type:'GET',
+//         //         async:false,
+//         // });
 
-        // ajaxAutoridades = $.ajax
-        // ({
-        //         url:'../Controller/AutoridadesRemitentesController.php?Op=Listar',
-        //         type: 'GET',
-        //         async:false,
-        //         beforeSend:function()
-        //         {
-        //                 $('#loader').show();
-        //         }
-        // });
+//         // ajaxAutoridades = $.ajax
+//         // ({
+//         //         url:'../Controller/AutoridadesRemitentesController.php?Op=Listar',
+//         //         type: 'GET',
+//         //         async:false,
+//         //         beforeSend:function()
+//         //         {
+//         //                 $('#loader').show();
+//         //         }
+//         // });
         
-        // ajaxAutoridades.done(function(autoridades)
-        // {
-                // thisAutoridad = autoridades;
-                // $.ajax(ajaxTemas).done(function(temas)
-                // {
-                //         thisTemas = temas;
-                //         var ajaxListado;
-                        if(id_documento==-1)
-                        {
-                                ajaxListado = ({
-                                url:'../Controller/DocumentosEntradaController.php?Op=Listar',
-                                type: 'GET',
-                                async:false,
-                                success:function(datos)
-                                {
-                                        dataListado = datos;                                        
-                                        reconstruirTable(datos);
-                                        $("td").dblclick(function()
-                                        {
-                                                $(this).prop("contenteditable",true);
-                                                // $(this).select();
-                                                // console.log($(this));
-                                        });
-                                },
-                                error:function(error)
-                                {
-                                        swalError("Error en el servidor");
-                                }
-                                });
-                        }
-                        else
-                                ajaxListado=({
-                                url:'../Controller/DocumentosEntradaController.php?Op=ListarUno',
-                                type: 'GET',
-                                data:'ID_DOCUMENTO='+id_documento,
-                                async:false,
-                                success:function(datos)
-                                {
-                                        $.each(datos,function(index,value)
-                                        {
-                                                tempData += reconstruir(value);
-                                                componerDataListado(value);
-                                        });
-                                        $("#registro_"+id_documento).html(tempData);
-                                        $('#loader').hide();
-                                        $("td").dblclick(function()
-                                        {
+//         // ajaxAutoridades.done(function(autoridades)
+//         // {
+//                 // thisAutoridad = autoridades;
+//                 // $.ajax(ajaxTemas).done(function(temas)
+//                 // {
+//                 //         thisTemas = temas;
+//                 //         var ajaxListado;
+//                         if(id_documento==-1)
+//                         {
+//                                 ajaxListado = ({
+//                                 url:'../Controller/DocumentosEntradaController.php?Op=Listar',
+//                                 type: 'GET',
+//                                 async:false,
+//                                 success:function(datos)
+//                                 {
+//                                         dataListado = datos;                                        
+//                                         reconstruirTable(datos);
+//                                         $("td").dblclick(function()
+//                                         {
+//                                                 $(this).prop("contenteditable",true);
+//                                                 // $(this).select();
+//                                                 // console.log($(this));
+//                                         });
+//                                 },
+//                                 error:function(error)
+//                                 {
+//                                         swalError("Error en el servidor");
+//                                 }
+//                                 });
+//                         }
+//                         else
+//                                 ajaxListado=({
+//                                 url:'../Controller/DocumentosEntradaController.php?Op=ListarUno',
+//                                 type: 'GET',
+//                                 data:'ID_DOCUMENTO='+id_documento,
+//                                 async:false,
+//                                 success:function(datos)
+//                                 {
+//                                         $.each(datos,function(index,value)
+//                                         {
+//                                                 tempData += reconstruir(value);
+//                                                 componerDataListado(value);
+//                                         });
+//                                         $("#registro_"+id_documento).html(tempData);
+//                                         $('#loader').hide();
+//                                         $("td").dblclick(function()
+//                                         {
                                                 
-                                                $(this).prop("contenteditable",true);
-                                        });
-                                },
-                                error:function(error)
-                                {
-                                        swalError("Error en el servidor");
-                                }
-                                });
-                        $.ajax(ajaxListado);
-                // }).fail(function(){swalError("Error en el servidor");});
-        // });
-        // ajaxAutoridades.fail(function(){swalError("Error en el servidor");});
-}
+//                                                 $(this).prop("contenteditable",true);
+//                                         });
+//                                 },
+//                                 error:function(error)
+//                                 {
+//                                         swalError("Error en el servidor");
+//                                 }
+//                                 });
+//                         $.ajax(ajaxListado);
+//                 // }).fail(function(){swalError("Error en el servidor");});
+//         // });
+//         // ajaxAutoridades.fail(function(){swalError("Error en el servidor");});
+// }
 
-function componerDataListado(value)// id de la vista documento
-{
-        dataListado;
-        id_vista = value.id_documento_entrada;
-        id_string = "id_documento_entrada"
-        $.each(dataListado,function(indexList,valueList)
-        {
-            $.each(valueList,function(ind,val)
-            {
-                if(ind == id_string)
-                        ( val.indexOf(id_vista) != -1 ) ? ( dataListado[indexList]=value ):  console.log();
-            });
-        });
-        // console.log(dataListado);
-}
+// function componerDataListado(value)// id de la vista documento
+// {
+//         dataListado;
+//         id_vista = value.id_documento_entrada;
+//         id_string = "id_documento_entrada"
+//         $.each(dataListado,function(indexList,valueList)
+//         {
+//             $.each(valueList,function(ind,val)
+//             {
+//                 if(ind == id_string)
+//                         ( val.indexOf(id_vista) != -1 ) ? ( dataListado[indexList]=value ):  console.log();
+//             });
+//         });
+//         // console.log(dataListado);
+// }
 
-function showEdit(editableObj)
-{
-        // $(editableObj).css("background","#FFF");
+// function showEdit(editableObj)
+// {
+//         // $(editableObj).css("background","#FFF");
 
-}
+// }
 		
-function saveToDatabase(editableObj,column,id)
-{
-        //alert("entraste aqui ");
-//			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
-        // alert("");
-        $.ajax({
-                url: "../Controller/DocumentosEntradaController.php?Op=Modificar",
-                type: "POST",
-                data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
-                success: function(data)
-                {
-//					$(editableObj).css("background","#FDFDFD");
-                                        // $("td").prop("contenteditable",false);
-                                        listarDatos(id);
-                }
-        });
-}
+// function saveToDatabase(editableObj,column,id)
+// {
+//         //alert("entraste aqui ");
+// //			$(editableObj).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
+//         // alert("");
+//         $.ajax({
+//                 url: "../Controller/DocumentosEntradaController.php?Op=Modificar",
+//                 type: "POST",
+//                 data:'column='+column+'&editval='+editableObj.innerHTML+'&id='+id,
+//                 success: function(data)
+//                 {
+// //					$(editableObj).css("background","#FDFDFD");
+//                                         // $("td").prop("contenteditable",false);
+//                                         listarDatos(id);
+//                 }
+//         });
+// }
 
 function saveToDatabaseDates(editableObj,column,id,fasignacion,flimite,falarma,frecepcion)
 {
@@ -1272,6 +1378,157 @@ function saveComboToDatabase(Obj,column,id_documento_entrada)
 
 }
 
+function saveUpdateToDatabase(args)//listo
+{
+        console.log(args);
+        columnas=new Object();
+        entro=0;
+        id_afectado = args['item']['id_principal'][0];
+        region_fiscalTemp = args['previousItem']['region_fiscal'];
+
+        $.each(args['item'],(index,value)=>
+        {
+                if(args['previousItem'][index]!=value && value!="")
+                {
+                if(index!='id_principal' && !value.includes("<button") && index!="delete")
+                {
+                        columnas[index]=value;
+                }
+                }
+        });
+        //     console.log("1");
+        //     if(args["itemIndex"]!=-1)
+                // $("#jsGrid").jsGrid("updateItem", DataGrid[args["itemIndex"]]);
+        //     console.log("2");
+        console.log(columnas);
+        //     $("#jsGrid").jsGrid("cancelEdit");
+        //     $("#jsGrid").jsGrid("updateItem");
+
+        //     console.log(columnas);
+
+        if( Object.keys(columnas).length != 0)
+        {
+                fechas = true;
+                $.each(columnas,(index,value)=>
+                {
+                        if(index == "fecha_asignacion")
+                        {
+                                fechas = compararFechaAsignacion(value,args["previousItem"]["fecha_limite_atencion"],args["previousItem"]["fecha_alarma"]);
+                        }
+                        if(index == "fecha_limite_atencion")
+                        {
+                                fechas = compararFechaLimite(value,args["previousItem"]["fecha_asignacion"],args["previousItem"]["fecha_alarma"]);
+                        }
+                        if(index == "fecha_alarma")
+                        {
+                                fechas = compararFechaAlarma(value,args["previousItem"]["fecha_asignacion"],args["previousItem"]["fecha_limite_atencion"]);
+                        }
+                });
+                if(fechas)
+                {
+                        $.ajax({
+                        url:"../Controller/GeneralController.php?Op=Actualizar",
+                        type:"POST",
+                        data:'TABLA=documento_entrada'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
+                        beforeSend:function()
+                        {
+                                growlWait("Actualización","Espere...");
+                        },
+                        success:function(data)
+                        {
+                                // console.log("resultado actualizacion: ",data);
+                                $.ajax({
+                                        url:'../Controller/DocumentosEntradaController.php?Op=ListarUno',
+                                        type: 'GET',
+                                        data:'ID_DOCUMENTO='+id_afectado["id_documento_entrada"],
+                                        success:function(datos)
+                                        {
+
+                                                if(typeof(datos)=="object")
+                                                {
+                                                        growlSuccess("Actulización","Se actualizaron los campos");
+                                                        $.each(datos,function(index,value){
+                                                                componerDataListado(value);
+                                                        });
+                                                        componerDataGrid();
+                                                        gridInstance.loadData();
+                                                }
+                                                else
+                                                {
+                                                        growlError("Actualización","No se pudo actualizar");
+                                                        componerDataGrid();
+                                                        gridInstance.loadData();
+                                                }
+                                        },
+                                        error:function()
+                                        {
+                                                componerDataGrid();
+                                                gridInstance.loadData();
+                                                growlError("Error","Error del servidor");
+                                        }
+                                });
+                        },
+                        error:function()
+                        {
+                                componerDataGrid();
+                                gridInstance.loadData();
+                                growlError("Error","Error del servidor");
+                        }
+                        });
+                }
+                else
+                {
+                        componerDataGrid();
+                        gridInstance.loadData();
+                }
+        }
+//     else investigar que hacer cuando no hay que actualizar
+}
+
+function componerDataListado(value)// id de la vista documento, listo
+{
+    id_vista = value.id_documento_entrada;
+    id_string = "id_documento_entrada";
+    $.each(dataListado,function(indexList,valueList)
+    {
+        $.each(valueList,function(ind,val)
+        {
+            if(ind == id_string)
+                    ( val==id_vista) ? dataListado[indexList]=value : console.log();
+        });
+    });
+}
+function componerDataGrid()//listo
+{
+    __datos = [];
+    $.each(dataListado,function(index,value){
+        __datos.push(reconstruir(value,index+1));
+    });
+    DataGrid = __datos;
+}
+
+function actualizarEvidencia(id)
+{
+    URL = 'filesEvidenciaDocumento/';
+    $.ajax({
+        url: "../Controller/EvidenciasController.php?Op=ListarEvidencia",
+        type: 'GET',
+        data: 'ID_EVIDENCIA='+id+"&URL="+URL,
+        success:function(datos)
+        {
+            $.each(datos,function(index,value){
+                componerDataListado(value);
+            });
+            componerDataGrid();
+            gridInstance.loadData();
+        },
+        error:function()
+        {
+            growlError("Error al refrescar la vista","Error en el servidor, actualize la vista");
+        }
+    });
+}
+
 function eliminarDocumentoEntrada(args)
 {
 //    console.log(args);
@@ -1309,7 +1566,19 @@ function eliminarDocumentoEntrada(args)
 function refresh()
 {
         // consultarDatos("../Controller/DocumentosEntradaController.php?Op=Listar");
-        listarDatos(-1);
+        // listarDatos(-1);
+        listarTemas().then((res)=>{
+                listarAutoridades().then((res1)=>{
+                        inicializarEstructuraGrid().then((res2)=>{
+                                construirGrid();
+                                inicializarFiltros().then((res3)=>
+                                {
+                                        construirFiltros();
+                                        listarDatos();
+                                });
+                        });
+                });
+        });
 }
 
 // function consultarDatos(url)
@@ -1382,10 +1651,10 @@ function verificarExiste(dataString,cualverificar)
          })
 }
 
-function loadSpinner()
-{
-        myFunction();
-}
+// function loadSpinner()
+// {
+//         myFunction();
+// }
 
 function saveToDatabaseDatosFormulario(datos)
 {
@@ -1581,7 +1850,7 @@ function Habilitar_DesabilitarFechas(accion)
         $("#MENSAJE_ALERTA").prop("disabled",accion);
 }
 
-listarDatos(-1);
+// listarDatos(-1);
 
 </script>
 <script id="template-upload" type="text/x-tmpl">
@@ -1640,22 +1909,22 @@ listarDatos(-1);
                 
                 
                 <!--Inicia para el spiner cargando-->
-                <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+                <!-- <script src="../../js/loaderanimation.js" type="text/javascript"></script> -->
                 <!--Termina para el spiner cargando-->
                 
                 <!--jquery-->
-                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+                <!-- <script src="../../js/jquery-ui.min.js" type="text/javascript"></script> -->
 
                 <!--Bootstrap-->
                 <!--Aqui abre el modal de insertar-->
                 <script src="../../assets/probando/js/bootstrap.min.js"></script>
                 <!--Aqui cierra para abrir el modal de insertar-->
-                <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+                <!-- <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script> -->
 
                 <!--Para abrir alertas del encabezado-->
-                <script src="../../assets/probando/js/ace-elements.min.js"></script>
-                <script src="../../assets/probando/js/ace.min.js"></script>
-		<script src="../../assets/probando/js/ace-extra.min.js"></script>     
+                <!-- <script src="../../assets/probando/js/ace-elements.min.js"></script> -->
+                <!-- <script src="../../assets/probando/js/ace.min.js"></script> -->
+		<!-- <script src="../../assets/probando/js/ace-extra.min.js"></script>      -->
           
 
                 <!-- js cargar archivo -->

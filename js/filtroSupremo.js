@@ -92,6 +92,7 @@ function filtroSupremo()
     $.each(newData,function(index,value)
     {
         DataTemp=[];
+        // console.log(newData);
         $.each(dataListado,function(indexList,valueList)
         {
             $.each(valueList,function(ind,val)
@@ -99,7 +100,9 @@ function filtroSupremo()
                 if(ind==value.id)
                 {
                     if(typeof(val)!="number")
+                    {
                         ( val.toLowerCase().indexOf( $("#"+value.id).val().toLowerCase() ) != -1 ) ? DataTemp.push(valueList) :  console.log();
+                    }
                     else
                         ( val == ( $("#"+value.id).val() ) ) ? DataTemp.push(valueList) :  console.log();
                 }
