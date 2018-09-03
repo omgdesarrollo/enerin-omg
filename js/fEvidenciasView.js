@@ -284,111 +284,111 @@ function listarDatos()
         // console.log(columna);
     // }
 
-    function loadSpinner()
-    {
-        // alert("se cargara otro ");
-        myFunction();
-    }
+    // function loadSpinner()
+    // {
+    //     // alert("se cargara otro ");
+    //     myFunction();
+    // }
 
-    function buscarTemas(data)
-    {
-        cadena = $(data).val().toLowerCase();        
-        tempData="";
-        if(cadena!="")
-        {
-            $.ajax({
-                url: '../Controller/EvidenciasController.php?Op=BuscarTema',
-                type: 'GET',
-                data: 'CADENA='+cadena,
-                async:false,
-                success:function(temas)
-                {
-                    // console.log(temas);
-                    $.each(temas,function(index,value)
-                    {
-                        // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
-                        // datos = value.id_tema+"^_^"+value.no+"^_^"+value.nombre+"^_^"+value.descripcion;
-                        tempData += "<li role='presentation'><a role='menuitem' tabindex='-1'";
-                        tempData += " onClick='seleccionarItemTemas("+JSON.stringify(value)+")'> ";
-                        tempData += value.no+" - "+value.nombre+"</a></li>";
-                    });
-                    $("#dropdownEventTemasEvidencia").html(tempData);
-                }
-            });
-        }
-        $("#FRECUENCIA_NUEVAEVIDENCIAMODAL").html("");
-        $("#DOCUMENTO_NUEVAEVIDENCIAMODAL").html("");
-        $("#NOMBRE_NUEVAEVIDENCIAMODAL").html("");
-        $('#NOMBREREGISTRO_NUEVAEVIDENCIA').val("");
-        $("#IDTEMA_NUEVAEVIDENCIAMODAL").val(-1);
-        $("#dropdownEventRegistroEvidencia").html("");
-    }
+    // function buscarTemas(data)
+    // {
+    //     cadena = $(data).val().toLowerCase();        
+    //     tempData="";
+    //     if(cadena!="")
+    //     {
+    //         $.ajax({
+    //             url: '../Controller/EvidenciasController.php?Op=BuscarTema',
+    //             type: 'GET',
+    //             data: 'CADENA='+cadena,
+    //             async:false,
+    //             success:function(temas)
+    //             {
+    //                 // console.log(temas);
+    //                 $.each(temas,function(index,value)
+    //                 {
+    //                     // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
+    //                     // datos = value.id_tema+"^_^"+value.no+"^_^"+value.nombre+"^_^"+value.descripcion;
+    //                     tempData += "<li role='presentation'><a role='menuitem' tabindex='-1'";
+    //                     tempData += " onClick='seleccionarItemTemas("+JSON.stringify(value)+")'> ";
+    //                     tempData += value.no+" - "+value.nombre+"</a></li>";
+    //                 });
+    //                 $("#dropdownEventTemasEvidencia").html(tempData);
+    //             }
+    //         });
+    //     }
+    //     $("#FRECUENCIA_NUEVAEVIDENCIAMODAL").html("");
+    //     $("#DOCUMENTO_NUEVAEVIDENCIAMODAL").html("");
+    //     $("#NOMBRE_NUEVAEVIDENCIAMODAL").html("");
+    //     $('#NOMBREREGISTRO_NUEVAEVIDENCIA').val("");
+    //     $("#IDTEMA_NUEVAEVIDENCIAMODAL").val(-1);
+    //     $("#dropdownEventRegistroEvidencia").html("");
+    // }
 
-    function seleccionarItemTemas(usuarioTemas)
-    {
-        $('#NOMBRETEMA_NUEVAEVIDENCIA').val(usuarioTemas.no+" - "+usuarioTemas.nombre);
-        $("#IDTEMA_NUEVAEVIDENCIAMODAL").val(usuarioTemas.id_tema);
-    }
+    // function seleccionarItemTemas(usuarioTemas)
+    // {
+    //     $('#NOMBRETEMA_NUEVAEVIDENCIA').val(usuarioTemas.no+" - "+usuarioTemas.nombre);
+    //     $("#IDTEMA_NUEVAEVIDENCIAMODAL").val(usuarioTemas.id_tema);
+    // }
 
-    function seleccionarItemRegistro(Registros)
-    {
-        $('#NOMBREREGISTRO_NUEVAEVIDENCIA').val(Registros.registro);
-        $('#NOMBRETEMA_NUEVAEVIDENCIA').attr("disabled","true");
-        $("#IDREGISTRO_NUEVAEVIDENCIAMODAL").val(Registros.id_registro);
-        $("#FRECUENCIA_NUEVAEVIDENCIAMODAL").html(Registros.frecuencia);
-        $("#DOCUMENTO_NUEVAEVIDENCIAMODAL").html(Registros.documento);
-        $("#NOMBRE_NUEVAEVIDENCIAMODAL").html(Registros.nombre);
-        dataRegistro=Registros;
-        console.log(dataRegistro);
-    }
+    // function seleccionarItemRegistro(Registros)
+    // {
+    //     $('#NOMBREREGISTRO_NUEVAEVIDENCIA').val(Registros.registro);
+    //     $('#NOMBRETEMA_NUEVAEVIDENCIA').attr("disabled","true");
+    //     $("#IDREGISTRO_NUEVAEVIDENCIAMODAL").val(Registros.id_registro);
+    //     $("#FRECUENCIA_NUEVAEVIDENCIAMODAL").html(Registros.frecuencia);
+    //     $("#DOCUMENTO_NUEVAEVIDENCIAMODAL").html(Registros.documento);
+    //     $("#NOMBRE_NUEVAEVIDENCIAMODAL").html(Registros.nombre);
+    //     dataRegistro=Registros;
+    //     console.log(dataRegistro);
+    // }
 
-    function buscarRegistros(Obj)
-    {
-        idTema = $("#IDTEMA_NUEVAEVIDENCIAMODAL").val();
-        cadena = $(Obj).val().toLowerCase();
-        // alert();
-        tempData="";
-        if(idTema!=-1)
-        {
-            if(cadena!="")
-            {
-                $.ajax({
-                    url: '../Controller/EvidenciasController.php?Op=BuscarRegistro',
-                    type: 'GET',
-                    data: 'ID_TEMA='+idTema+"&CADENA="+cadena,
-                    async:false,
-                    success:function(registros)
-                    {
-                        $.each(registros,function(index,value)
-                        {
-                            // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
-                            // datos = value.id_tema+"^_^"+value.no+"^_^"+value.nombre+"^_^"+value.descripcion;
-                            tempData += "<li role='presentation'><a role='menuitem' tabindex='-1'";
-                            tempData += "onClick='seleccionarItemRegistro("+JSON.stringify(value)+")'>";
-                            tempData += value.registro+"</a></li>";
-                        });
-                        $("#dropdownEventRegistroEvidencia").html(tempData);
-                    },
-                    error:function()
-                    {
-                        swalError("Error en el servidor");
-                    }
-                });
-            }
-            else
-            {
-                $("#FRECUENCIA_NUEVAEVIDENCIAMODAL").html("");
-                $("#DOCUMENTO_NUEVAEVIDENCIAMODAL").html("");
-                $("#NOMBRE_NUEVAEVIDENCIAMODAL").html("");
-                $('#NOMBRETEMA_NUEVAEVIDENCIA').removeAttr("disabled");
-                $("#IDREGISTRO_NUEVAEVIDENCIAMODAL").val(-1);
-            }
-        }
-        else
-        {
-            swal("","Debe seleccionar tema primero","info");
-        }
-    }
+    // function buscarRegistros(Obj)
+    // {
+    //     idTema = $("#IDTEMA_NUEVAEVIDENCIAMODAL").val();
+    //     cadena = $(Obj).val().toLowerCase();
+    //     // alert();
+    //     tempData="";
+    //     if(idTema!=-1)
+    //     {
+    //         if(cadena!="")
+    //         {
+    //             $.ajax({
+    //                 url: '../Controller/EvidenciasController.php?Op=BuscarRegistro',
+    //                 type: 'GET',
+    //                 data: 'ID_TEMA='+idTema+"&CADENA="+cadena,
+    //                 async:false,
+    //                 success:function(registros)
+    //                 {
+    //                     $.each(registros,function(index,value)
+    //                     {
+    //                         // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
+    //                         // datos = value.id_tema+"^_^"+value.no+"^_^"+value.nombre+"^_^"+value.descripcion;
+    //                         tempData += "<li role='presentation'><a role='menuitem' tabindex='-1'";
+    //                         tempData += "onClick='seleccionarItemRegistro("+JSON.stringify(value)+")'>";
+    //                         tempData += value.registro+"</a></li>";
+    //                     });
+    //                     $("#dropdownEventRegistroEvidencia").html(tempData);
+    //                 },
+    //                 error:function()
+    //                 {
+    //                     swalError("Error en el servidor");
+    //                 }
+    //             });
+    //         }
+    //         else
+    //         {
+    //             $("#FRECUENCIA_NUEVAEVIDENCIAMODAL").html("");
+    //             $("#DOCUMENTO_NUEVAEVIDENCIAMODAL").html("");
+    //             $("#NOMBRE_NUEVAEVIDENCIAMODAL").html("");
+    //             $('#NOMBRETEMA_NUEVAEVIDENCIA').removeAttr("disabled");
+    //             $("#IDREGISTRO_NUEVAEVIDENCIAMODAL").val(-1);
+    //         }
+    //     }
+    //     else
+    //     {
+    //         swal("","Debe seleccionar tema primero","info");
+    //     }
+    // }
 
     // function construir(usuarioTemas)
     // {
@@ -813,28 +813,28 @@ function refresh()
     // {
     // }
 
-function confirmarBorrarRegistroEvidencia()
-{
-    swal({
-        title: "ELIMINAR",
-        text: "Al eliminar este registro se eliminara toda la evidencia registrada. ¿Desea continuar?",
-        type: "warning",
-        showCancelButton: true,
-        closeOnConfirm: false,
-        showLoaderOnConfirm: true,
-        confirmButtonText: "Eliminar",
-        cancelButtonText: "Cancelar",
-        },
-        function(res)
-        {
-            if(res){
-                swal("","Eliminacion Exitosa","success");
-            }
-            else{
-                swal("","Error Al Eliminar","Error");
-            }
-        });
-}
+// function confirmarBorrarRegistroEvidencia()
+// {
+//     swal({
+//         title: "ELIMINAR",
+//         text: "Al eliminar este registro se eliminara toda la evidencia registrada. ¿Desea continuar?",
+//         type: "warning",
+//         showCancelButton: true,
+//         closeOnConfirm: false,
+//         showLoaderOnConfirm: true,
+//         confirmButtonText: "Eliminar",
+//         cancelButtonText: "Cancelar",
+//         },
+//         function(res)
+//         {
+//             if(res){
+//                 swal("","Eliminacion Exitosa","success");
+//             }
+//             else{
+//                 swal("","Error Al Eliminar","Error");
+//             }
+//         });
+// }
         
 
 
