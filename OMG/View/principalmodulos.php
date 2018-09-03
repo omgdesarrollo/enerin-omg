@@ -566,7 +566,7 @@ var vistas = [];
                                 listaModulos[contador]["contenido_sub"]=listado_contenido_sub;
                             }
                         });
-                        
+//                        console.log(listaModulos);
  var banderasSeccionesArriba=false;
  var contadoresSeccionesArriba=1    ;
  listasubmodulos=[]=listaModulos;
@@ -591,13 +591,22 @@ var vistas = [];
                           }) 
                            if(banderasSeccionesArriba==true)
                             {
+                                
                                 var quieniniciosesion="";
                                 if(value1["nombre_contenido_sub"]=="Bienvenido"){
+                                   
                                      datosSeccionesRibbon[contadoresSeccionesArriba]["list"].push({id:value1["nombre_contenido_sub"], text:'<div id="infousuario">'+value1["nombre_contenido_sub"]+"<br><?php echo  $Usuario["NOMBRE_USUARIO"]; ?>",img:value1["imagen"],type:'button',isbig:true});
                                 }else{
-                                      datosSeccionesRibbon[contadoresSeccionesArriba]["list"].push({id:value1["nombre_contenido_sub"], text:value1["nombre_contenido_sub"],img:value1["imagen"],type:'button',isbig:true});
+//                                    alert(value1["nombre_contenido_sub");
+                                        console.log(value1);
+                                         $.each(value1["contenido_vista"],function(indexContenidoVistas1,valueContenidoVistas1){
+                                             console.log(valueContenidoVistas1);
+                                              if(valueContenidoVistas1["edit"]=="true" || valueContenidoVistas1["consult"]=="true" || valueContenidoVistas1["delete"]=="true" || valueContenidoVistas1["new"]=="true")
+                                             {
+                                                      datosSeccionesRibbon[contadoresSeccionesArriba]["list"].push({id:value1["nombre_contenido_sub"], text:value1["nombre_contenido_sub"],img:value1["imagen"],type:'button',isbig:true});
+                                             };
+                                         })
                                 }
-                              
                             }
                       }
                       else{                                   
@@ -605,13 +614,19 @@ var vistas = [];
                             {
                                 if(value1["edit"]=="true" || value1["consult"]=="true" || value1["delete"]=="true" || value1["new"]=="true")
                                 {
+//                                    alert(value["nombre_submodulo"]);
+//                                    alert(value1["nombre_contenido_sub"]);
                                     banderasSeccionesArriba=true;
                                     datosSeccionesRibbon.push( {id:'0x'+contadoresSeccionesArriba,mode:'cols',text:''+value["nombre_submodulo"],type:'block',list:[]} );
                                 }
                             }
                             if(banderasSeccionesArriba==true)
                             {
-                                datosSeccionesRibbon[contadoresSeccionesArriba]["list"].push({id:value1["nombre_contenido_sub"], text:value1["nombre_contenido_sub"],img:value1["imagen"],type:'button',isbig:true});
+//                            alert("entro en true");
+                             if(value1["edit"]=="true" || value1["consult"]=="true" || value1["delete"]=="true" || value1["new"]=="true")
+                                {
+                                    datosSeccionesRibbon[contadoresSeccionesArriba]["list"].push({id:value1["nombre_contenido_sub"], text:value1["nombre_contenido_sub"],img:value1["imagen"],type:'button',isbig:true});
+                                }
                             }       
                         }
                   });

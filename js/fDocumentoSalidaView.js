@@ -1,5 +1,9 @@
 $(function(){
-    
+   $("#subirArchivos").click(function()
+    {
+        alert("es");
+        agregarArchivosUrl();
+    });
     $("#btn_guardar").click(function()
     {
         documentoSalidaDatos=new Object();
@@ -34,10 +38,11 @@ $(function(){
         $("#OBSERVACIONES").val("");              
     });
     
-        $("#subirArchivos").click(function()
-    {
-        agregarArchivosUrl();
-    });
+//        $("#subirArchivos").click(function()
+//    {
+//        alert("es");
+//        agregarArchivosUrl();
+//    });
     
 });//LLAVE CIERRE FUNCTION
 
@@ -469,7 +474,7 @@ var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/
 
 months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
   
-  
+
   
   function agregarArchivosUrl()
 {
