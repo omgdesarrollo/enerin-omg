@@ -81,10 +81,10 @@ class TareasModel{
                     $rec[$key]['status'] = "Suspendido";
                 }
                 
-                if($value['status_tarea']==3)
-                {
-                    $rec[$key]['status'] = "Terminado";
-                }
+//                if($value['status_tarea']==3)
+//                {
+//                    $rec[$key]['status'] = "Terminado";
+//                }
                 
             }
             

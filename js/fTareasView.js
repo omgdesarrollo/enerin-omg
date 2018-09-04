@@ -787,7 +787,7 @@ function cargarprogram(value){
 function loadChartView(bclose)
 {
 //    console.log("Entro al loadChartView");
-    a=0, b=0, c=0, d=0, e=0;
+    a=0, b=0, c=0, d=0;
     $.ajax({
         url:"../Controller/TareasController.php?Op=datosGrafica",
         type:"GET",
@@ -812,10 +812,10 @@ function loadChartView(bclose)
                 {
                   d++;   
                 }
-                if(value.status=="Terminado")
-                {
-                  e++;   
-                }
+//                if(value.status=="Terminado")
+//                {
+//                  e++;   
+//                }
             });
         }
     });
@@ -831,8 +831,8 @@ function loadChartView(bclose)
           ['En proceso(En Tiempo)', c],
           ['En proceso(Alarma Vencida)',b],
           ['En proceso(Tiempo Vencido)', a],
-          ['Suspendido', d],
-          ['Terminado', e]
+          ['Suspendido', d]
+//          ['Terminado', e]
         ]);
 
         var options = {
