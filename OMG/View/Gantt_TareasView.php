@@ -273,7 +273,7 @@ and open the template in the editor.
 				break;
 		}
 	}
-setScaleConfig('4');
+setScaleConfig('1');
 //termina de definir si sera por dia,semana,mes ,año que se mostrara las tareas
 
 
