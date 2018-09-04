@@ -8,7 +8,7 @@ $(function()
     $("#btn_crearTarea").click(function()
     {
         tareaDatos=new Object();
-        tareaDatos.contrato = $("#CONTRATO").val();
+        tareaDatos.referencia = $("#REFERENCIA").val();
         tareaDatos.tarea = $("#TAREA").val();
         tareaDatos.id_empleado = $("#ID_EMPLEADOMODAL").val();
         tareaDatos.fecha_creacion = $("#FECHA_CREACION").val();
@@ -23,7 +23,7 @@ $(function()
         tareaDatos.atendido= 'false';
         listo=
             (
-                tareaDatos.contrato!=""?
+                tareaDatos.referencia!=""?
                 tareaDatos.tarea!=""?
                 tareaDatos.id_empleado!=""?
                 tareaDatos.fecha_creacion!=""?
@@ -62,7 +62,7 @@ function inicializarFiltros()
 {    
     filtros =[
             {id:"noneUno",type:"none"},
-            {id:"contrato",type:"text"},
+            {id:"referencia",type:"text"},
             {id:"tarea",type:"text"},
             {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
             {id:"fecha_creacion",type:"date"},
@@ -130,7 +130,7 @@ function construirGrid()
         [
             { name: "id_principal",visible:false},
             { name:"no",title:"No",width:60},
-            { name: "contrato",title:"Contrato", type: "textarea", validate: "required",width:200},
+            { name: "referencia",title:"Referencia", type: "textarea", validate: "required",width:200},
             { name: "tarea",title:"Tarea", type: "textarea", validate: "required",width:200 },
 //            { name: "id_empleado",title:"Responsable del Plan", type: "text", validate: "required" },
             { name: "id_empleado",title:"Responsable del Plan", type: "select", width:200,
@@ -194,7 +194,8 @@ function construirGrid()
                                         enviarNotificacionWhenRemoveTareaAlNuevoUsuario(id_empleadoActual,tarea);
                                     }
                                 }
-                                
+                                mostrarTareasEnAlarma();
+                                mostrarTareasVencidas();
                                 refresh();
                                 swal("","Actualizacion Exitosa!","success");
                                 setTimeout(function(){swal.close();},1000);
@@ -312,7 +313,7 @@ function reconstruir(value,index)
     ultimoNumeroGrid = index;
     tempData["id_principal"]= [{'id_tarea':value.id_tarea}];
     tempData["no"]= index;  
-    tempData["contrato"]=value.contrato;
+    tempData["referencia"]=value.referencia;
     tempData["tarea"]=value.tarea;
     tempData["id_empleado"]=value.id_empleado;
     tempData["fecha_creacion"]=value.fecha_creacion;
@@ -388,6 +389,7 @@ function insertarTareas(tareaDatos)
             {
                 
                 tempData;
+                
                 swalSuccess("Tarea Creada");                
                 $.each(datos,function(index,value)
                 {
@@ -400,6 +402,8 @@ function insertarTareas(tareaDatos)
                 {
                     $("#crea_tarea .close ").click();
                 });
+                mostrarTareasEnAlarma();
+                mostrarTareasVencidas();
                 
             } else{
                 if(datos==0)
@@ -723,6 +727,31 @@ function enviarNotificacionWhenDeleteTarea(id_empleadoActual,tarea)
             }
         });   
 }
+
+ function mostrarTareasEnAlarma()
+ {
+     $.ajax({
+         url:"../Controller/NotificacionesTareasController.php?Op=tareasEnAlarma",
+         type:"GET",
+         success:function()
+         {
+             
+         }
+     });
+ }
+ 
+ 
+  function mostrarTareasVencidas()
+ {
+     $.ajax({
+         url:"../Controller/NotificacionesTareasController.php?Op=tareasVencidas",
+         type:"GET",
+         success:function()
+         {
+             
+         }
+     });
+ }
 
 function loadBlockUi()
 {

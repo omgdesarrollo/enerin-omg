@@ -118,8 +118,11 @@ and open the template in the editor.
 			color: white;
 			font-weight: bold;
 		}   
-                
-                
+                /*estilos para ocultar el texto de la barra*/ 
+                .gantt_task_content {
+                    display: none;
+                }
+                /*termina estilos para ocultar el texto de la barra*/
                 /* para la pantalla completa*/ 
 /*                	.gantt-fullscreen {
 			position: absolute;
@@ -230,8 +233,11 @@ and open the template in the editor.
 				gantt.config.scale_unit = "week";
 				gantt.config.step = 1;
 				gantt.templates.date_scale = weekScaleTemplate;
-				gantt.config.subscales = [
-					{unit: "day", step: 1, date: "%D"}
+//				gantt.config.subscales = [
+//					{unit: "day", step: 1, date: "%D"}
+//				];
+                                gantt.config.subscales = [
+					{unit: "week", step: 1, date: "%j"}
 				];
 				gantt.config.scale_height = 50;
 				break;
@@ -267,7 +273,7 @@ and open the template in the editor.
 				break;
 		}
 	}
-setScaleConfig('4');
+setScaleConfig('1');
 //termina de definir si sera por dia,semana,mes ,año que se mostrara las tareas
 
 
@@ -566,7 +572,7 @@ dp.init(gantt);
 	for (var i = 0; i < els.length; i++) {
 		els[i].onclick = func;
 	} 
- //empieza en cuanto a el modo de mostrar las tareas por dia,seman,mes,año  
+ //termina en cuanto a el modo de mostrar las tareas por dia,seman,mes,año  
         
 //dp.setTransactionMode("REST");
 

@@ -13,7 +13,7 @@ public function mostrarTemas($cadena,$contrato)
 		tbtemas.identificador
                 FROM temas tbtemas
                 JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
-                WHERE tbtemas.identificador LIKE '%$cadena%'    and  tbtemas.contrato=$contrato";
+                WHERE tbtemas.identificador LIKE '%$cadena%'    and  tbtemas.contrato=$contrato ORDER BY cast(NO as UNSIGNED) ";
         $db=  AccesoDB::getInstancia();
         $lista=$db->executeQuery($query);
         return $lista;

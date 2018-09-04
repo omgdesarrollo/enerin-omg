@@ -834,6 +834,8 @@ function loadDataNotificaciones(){
 
 <script>
 cambiarCont();
+mostrarTareasEnAlarma();
+mostrarTareasVencidas();
 
 function cambiarCont()
     { 
@@ -892,7 +894,7 @@ var jsonObj = {};
                               });
                                 window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
                                 window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
-                                mostrarTareasEnAlarma();
+//                                mostrarTareasEnAlarma();
                                 
                                 
     }    
@@ -920,6 +922,18 @@ var jsonObj = {};
  {
      $.ajax({
          url:"../Controller/NotificacionesTareasController.php?Op=tareasEnAlarma",
+         type:"GET",
+         success:function()
+         {
+             
+         }
+     });
+ }
+ 
+ function mostrarTareasVencidas()
+ {
+     $.ajax({
+         url:"../Controller/NotificacionesTareasController.php?Op=tareasVencidas",
          type:"GET",
          success:function()
          {
