@@ -22,8 +22,8 @@ switch ($Op) {
 	case 'Listar':
 			$CONTRATO = Session::getSesion("s_cont");
 			$Lista=$model->listarDocumentosEntrada($CONTRATO);
-			
-						// Session::setSesion("listarDocumentosEntrada",$Lista); //Se esta ocupando para las graficas de informe gerencial
+                        Session::setSesion("listarDocumentosEntrada",$Lista); //Atencion Jose: Se esta ocupando para las graficas de informe gerencial
+                        
 			foreach($Lista as $key => $value)
 			{
 				$url = $_REQUEST["URL"].$value["id_documento_entrada"];

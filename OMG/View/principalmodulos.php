@@ -835,6 +835,7 @@ function loadDataNotificaciones(){
 <script>
 cambiarCont();
 mostrarTareasEnAlarma();
+mostrarTareasVencidas();
 
 function cambiarCont()
     { 
@@ -921,6 +922,18 @@ var jsonObj = {};
  {
      $.ajax({
          url:"../Controller/NotificacionesTareasController.php?Op=tareasEnAlarma",
+         type:"GET",
+         success:function()
+         {
+             
+         }
+     });
+ }
+ 
+ function mostrarTareasVencidas()
+ {
+     $.ajax({
+         url:"../Controller/NotificacionesTareasController.php?Op=tareasVencidas",
          type:"GET",
          success:function()
          {
