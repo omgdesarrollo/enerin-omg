@@ -1580,10 +1580,10 @@ function preguntarEliminar(data)
         });
 }
 
- function eliminarDocumentoEntrada(id)
- {
-
- }
+// function eliminarDocumentoEntrada(id)
+// {
+//
+// }
 
 function actualizarDocumentoEntrada(id)
 {

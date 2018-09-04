@@ -60,7 +60,7 @@ function construirGrid()
         updateOnResize: true,
         confirmDeleting: false,
         noDataContent:"No Existen Registros",
-        pagerFormat: "Paginas: {first} {prev} {pages} {next} {last}   {pageIndex} de {pageCount}",
+        pagerFormat: "Paginas: {first}  {prev} {pages} {next} {last}   {pageIndex} de {pageCount}",
         fields: estructuraGrid,
         onItemDeleted:function(args)
         {
