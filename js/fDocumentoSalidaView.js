@@ -412,6 +412,20 @@ function loadBlockUi()
     setTimeout($.unblockUI, 2000);
 }
 
+var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/form-data'>";
+                ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
+                ModalCargaArchivo += "<div class='fileupload-buttons'>";
+                ModalCargaArchivo += "<span class='fileinput-button'>";
+                ModalCargaArchivo += "<span><a >Agregar Archivos(Click o Arrastrar)...</a></span>";
+                ModalCargaArchivo += "<input type='file' name='files[]' multiple></span>";
+                ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
+//                ModalCargaArchivo += "<div class='fileupload-progress' >";
+                ModalCargaArchivo += "</div></div>";
+                ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
+                
+
+months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+  
 
   
   
@@ -460,20 +474,6 @@ function loadBlockUi()
         });
 }
 
-var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/form-data'>";
-                ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
-                ModalCargaArchivo += "<div class='fileupload-buttons'>";
-                ModalCargaArchivo += "<span class='fileinput-button'>";
-                ModalCargaArchivo += "<span><a >Agregar Archivos(Click o Arrastrar)...</a></span>";
-                ModalCargaArchivo += "<input type='file' name='files[]' multiple></span>";
-                ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
-//                ModalCargaArchivo += "<div class='fileupload-progress' >";
-                ModalCargaArchivo += "</div></div>";
-                ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
-                
-
-months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
-  
 
   
   function agregarArchivosUrl()
