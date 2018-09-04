@@ -195,6 +195,7 @@ function construirGrid()
                                     }
                                 }
                                 mostrarTareasEnAlarma();
+                                mostrarTareasVencidas();
                                 refresh();
                                 swal("","Actualizacion Exitosa!","success");
                                 setTimeout(function(){swal.close();},1000);
@@ -388,7 +389,7 @@ function insertarTareas(tareaDatos)
             {
                 
                 tempData;
-                mostrarTareasEnAlarma();
+                
                 swalSuccess("Tarea Creada");                
                 $.each(datos,function(index,value)
                 {
@@ -401,6 +402,8 @@ function insertarTareas(tareaDatos)
                 {
                     $("#crea_tarea .close ").click();
                 });
+                mostrarTareasEnAlarma();
+                mostrarTareasVencidas();
                 
             } else{
                 if(datos==0)
@@ -729,6 +732,19 @@ function enviarNotificacionWhenDeleteTarea(id_empleadoActual,tarea)
  {
      $.ajax({
          url:"../Controller/NotificacionesTareasController.php?Op=tareasEnAlarma",
+         type:"GET",
+         success:function()
+         {
+             
+         }
+     });
+ }
+ 
+ 
+  function mostrarTareasVencidas()
+ {
+     $.ajax({
+         url:"../Controller/NotificacionesTareasController.php?Op=tareasVencidas",
          type:"GET",
          success:function()
          {

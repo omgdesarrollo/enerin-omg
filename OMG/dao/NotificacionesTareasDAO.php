@@ -24,34 +24,34 @@ class NotificacionesTareasDAO{
     
     
     
-    public function tareasConFechaCumplimientoProximoAVencer($CONTRATO)
+//    public function tareasConFechaCumplimientoProximoAVencer($CONTRATO)
+//    {
+//        try
+//        {
+//            $query="SELECT tbtareas.tarea
+//                    FROM tareas tbtareas
+//                    WHERE tbtareas.fecha_cumplimiento > CURDATE() AND tbtareas.fecha_cumplimiento <= DATE_ADD(CURDATE(), INTERVAL 3 DAY) 
+//                    AND tbtareas.status_tarea=1 AND tbtareas.contrato=$CONTRATO";
+//            
+//            $db=  AccesoDB::getInstancia();
+//            $lista=$db->executeQuery($query);
+//
+//            return $lista;            
+//        } catch (Exception $ex)
+//        {
+//            throw $ex;
+//            return -1;
+//        }
+//    }
+    
+    
+    public function tareasVencidas()
     {
         try
         {
-            $query="SELECT tbtareas.tarea
+            $query="SELECT tbtareas.id_tarea, tbtareas.tarea, tbtareas.id_empleado
                     FROM tareas tbtareas
-                    WHERE tbtareas.fecha_cumplimiento > CURDATE() AND tbtareas.fecha_cumplimiento <= DATE_ADD(CURDATE(), INTERVAL 3 DAY) 
-                    AND tbtareas.status_tarea=1 AND tbtareas.contrato=$CONTRATO";
-            
-            $db=  AccesoDB::getInstancia();
-            $lista=$db->executeQuery($query);
-
-            return $lista;            
-        } catch (Exception $ex)
-        {
-            throw $ex;
-            return -1;
-        }
-    }
-    
-    
-    public function tareasVencidas($CONTRATO)
-    {
-        try
-        {
-            $query="SELECT tbtareas.id_tarea,tbtareas.tarea
-                    FROM tareas tbtareas
-                    WHERE tbtareas.fecha_cumplimiento <= CURDATE() AND tbtareas.status_tarea = 1 AND tbtareas.contrato = $CONTRATO";
+                    WHERE tbtareas.fecha_cumplimiento <= CURDATE() AND tbtareas.status_tarea = 1";
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
