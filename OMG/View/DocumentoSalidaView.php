@@ -26,7 +26,7 @@ $Usuario=  Session::getSesion("user");
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
                 
                 <!--Inicia para el spiner cargando-->
-                <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+                <!--<link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>-->
                 <!--Termina para el spiner cargando-->
                 
                 
@@ -284,7 +284,7 @@ construirFiltros();
 
 
     <!--Inicia para el spiner cargando-->
-    <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+    <!--<script src="../../js/loaderanimation.js" type="text/javascript"></script>-->
     <!--Termina para el spiner cargando-->
     
     <!--Bootstrap-->
@@ -293,8 +293,8 @@ construirFiltros();
     <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
     
     <!--Para abrir alertas del encabezado-->
-    <script src="../../assets/probando/js/ace-elements.min.js"></script>
-    <script src="../../assets/probando/js/ace.min.js"></script>
+<!--    <script src="../../assets/probando/js/ace-elements.min.js"></script>
+    <script src="../../assets/probando/js/ace.min.js"></script>-->
     
         <!-- js cargar archivo -->
 <!--        <script src="../../assets/FileUpload/js/jquery.min.js"></script>

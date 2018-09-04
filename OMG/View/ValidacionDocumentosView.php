@@ -295,23 +295,26 @@ if(isset($_REQUEST["accion"]))
     var customsFieldsGridData=[
         {field:"customControl",my_field:MyCControlField},
         // {field:"porcentaje",my_field:porcentajesFields},
+        {field:"FValidacionDocumento",my_field:fieldValidacionDocumento},
+        {field:"FValidacionTema",my_field:fieldValidacionTema},
+        
+        
     ];
 
     estructuraGrid = [
         { name:"id_principal", visible:false},
         { name:"no", title:"No",width:60},
-
-        { name: "clave_documento", title:"Clave Documento", type: "text", width: 100},
-        { name: "documento", title:"Documento", type: "text", width: 130},
-        { name: "responsable_documento", title:"Responsable Documento", type: "text", width: 130},
-        { name: "tema_responsableBTN", title:"Temas y Resposables", type: "text", width: 100},
-        { name: "mostrar_urlsBTN", title:"Archivo Adjunto", type: "text", width: 127},
-        { name: "requisitosBTN", title:"Requisitos", type: "text", width: 92,},
-        { name: "registrosBTN", title:"Registros", type: "text", width: 92,},
-        { name: "validacion_documento_responsable", title:"Validación Resposable Documento", type: "FValidacionDocumento", width: 100},
-        { name: "validacion_tema_responsable", title:"Validación Resposable Tema", type: "FValidacionTema", width: 100},
-        { name: "observaciones", title:"Observaciones", type: "text", width: 112},
-        { name: "desviacion_mayor", title:"Desviación Mayor", type: "text", width: 90},
+        { name: "clave_documento", title:"Clave Documento", type: "text", width: 100,editing:false},
+        { name: "documento", title:"Documento", type: "text", width: 130,editing:false},
+        { name: "responsable_documento", title:"Responsable Documento", type: "text", width: 130,editing:false},
+        { name: "tema_responsableBTN", title:"Temas y Resposables", type: "text", width: 100, editing:false},
+        { name: "mostrar_urlsBTN", title:"Archivo Adjunto", type: "text", width: 127, editing:false},
+        { name: "requisitosBTN", title:"Requisitos", type: "text", width: 92, editing:false},
+        { name: "registrosBTN", title:"Registros", type: "text", width: 92, editing:false},
+        { name: "validacion_documento_responsable", title:"Validación Resposable Documento", type: "FValidacionDocumento", width: 100, editing:false},
+        { name: "validacion_tema_responsable", title:"Validación Resposable Tema", type: "FValidacionTema", width: 100, editing:false},
+        { name: "observaciones", title:"Observaciones", type: "text", width: 112, editing:false},
+        { name: "desviacion_mayor", title:"Desviación Mayor", type: "text", width: 90, editing:false},
 
         { name:"delete", title:"Opción", type:"customControl",sorting:""},
     ];
@@ -502,97 +505,97 @@ if(isset($_REQUEST["accion"]))
     //     return tempData;
     // }
 
-    function construir(documento,numero)
-    {
-        no = "fa-times-circle-o";
-        yes = "fa-check-circle-o";
-        tempData = new Object();
+    // function construir(documento,numero)
+    // {
+    //     no = "fa-times-circle-o";
+    //     yes = "fa-check-circle-o";
+    //     tempData = new Object();
 
-        tempData["no"] = numero;
-        tempData["id_principal"] = [{"id_documento":documento.id_documento}];
-        // tempData="<td>"+numero+"</td>";
-        tempData["clave_documento"] = documento.id_documento;
-        // tempData+="<td>"+documento.clave_documento+"</td>";
-        tempData["documento"] = documento.documento;
-        // tempData+="<td>"+documento.documento+"</td>";
-        tempData["responsable_documento"] = documento.responsable_documento;
-        // tempData+="<td>"+documento.responsable_documento+"</td>";
+    //     tempData["no"] = numero;
+    //     tempData["id_principal"] = [{"id_documento":documento.id_documento}];
+    //     // tempData="<td>"+numero+"</td>";
+    //     tempData["clave_documento"] = documento.id_documento;
+    //     // tempData+="<td>"+documento.clave_documento+"</td>";
+    //     tempData["documento"] = documento.documento;
+    //     // tempData+="<td>"+documento.documento+"</td>";
+    //     tempData["responsable_documento"] = documento.responsable_documento;
+    //     // tempData+="<td>"+documento.responsable_documento+"</td>";
 
-        tempData["tema_responsableBTN"] = "<button onClick='mostrarTemaResponsable("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'>";
-        tempData["tema_responsableBTN"] += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>";
+    //     tempData["tema_responsableBTN"] = "<button onClick='mostrarTemaResponsable("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'>";
+    //     tempData["tema_responsableBTN"] += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>";
 
-        // tempData+="<td><button onClick='mostrarTemaResponsable("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'>";
-        // tempData+="<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
+    //     // tempData+="<td><button onClick='mostrarTemaResponsable("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'>";
+    //     // tempData+="<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
         
-        if(documento.permiso_total == 0)
-        {
-            if(documento.soy_responsable==1)
-                // tempData+="<td><button onClick='mostrar_urls("+documento.id_validacion_documento+",\"true\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
-                tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\"true\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
-            else
-                tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\""+documento.validacion_documento_responsable+"\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
-            // tempData+="<td><button onClick='mostrar_urls("+documento.id_validacion_documento+",\""+documento.validacion_documento_responsable+"\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
-        }
-        else
-            tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\"false\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>"
-            // tempData+="<button onClick='mostrar_urls("+documento.id_validacion_documento+",\"false\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
+    //     if(documento.permiso_total == 0)
+    //     {
+    //         if(documento.soy_responsable==1)
+    //             // tempData+="<td><button onClick='mostrar_urls("+documento.id_validacion_documento+",\"true\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
+    //             tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\"true\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
+    //         else
+    //             tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\""+documento.validacion_documento_responsable+"\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
+    //         // tempData+="<td><button onClick='mostrar_urls("+documento.id_validacion_documento+",\""+documento.validacion_documento_responsable+"\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
+    //     }
+    //     else
+    //         tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\"false\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>"
+    //         // tempData+="<button onClick='mostrar_urls("+documento.id_validacion_documento+",\"false\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
 
-        tempData["mostrar_urlsBTN"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i>Adjuntar</button>";
-        // tempData+="<i class='fa fa-cloud-upload' style='font-size: 20px'></i>Adjuntar</button></td>";
+    //     tempData["mostrar_urlsBTN"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i>Adjuntar</button>";
+    //     // tempData+="<i class='fa fa-cloud-upload' style='font-size: 20px'></i>Adjuntar</button></td>";
 
-        tempData["requisitosBTN"] = "<button onClick='mostrarRequisitos("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'>";
-        tempData["requisitosBTN"] += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>";
-        // tempData+="<td><button onClick='mostrarRequisitos("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'>";
-        // tempData+="<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
+    //     tempData["requisitosBTN"] = "<button onClick='mostrarRequisitos("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'>";
+    //     tempData["requisitosBTN"] += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>";
+    //     // tempData+="<td><button onClick='mostrarRequisitos("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'>";
+    //     // tempData+="<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
 
-        tempData["registrosBTN"] = "<button onClick='mostrarRegistros("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'>";
-        // tempData+="<td><button onClick='mostrarRegistros("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'>";
-        tempData["registroBTN"] += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
-        // tempData+="<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
+    //     tempData["registrosBTN"] = "<button onClick='mostrarRegistros("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'>";
+    //     // tempData+="<td><button onClick='mostrarRegistros("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'>";
+    //     tempData["registroBTN"] += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
+    //     // tempData+="<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
 
-        // tempData+="<td>";
-        if(documento.validacion_documento_responsable=="true")
-        {
-            tempData["validacion_documento_responsable"] = "<i class='fa "+yes+"' style='color:#02ff00;";
-        }
-        else
-        {
-            tempData["validacion_documento_responsable"] = tempData+="<i class='fa "+no+"' style='color:red;";
-        }
-        tempData["validacion_documento_responsable"] += "font-size: xx-large;cursor:pointer' aria-hidden='true'";
-        if(documento.permiso_total==1)
-            tempData["validacion_documento_responsable"] += "onClick='validarDocumentoR(this,\"validacion_documento_responsable\","+documento.id_validacion_documento+","+documento.id_documento+")'";
-        else
-        {
-            if(documento.soy_responsable==0)
-            tempData["validacion_documento_responsable"] += "onClick='validarDocumentoR(this,\"validacion_documento_responsable\","+documento.id_validacion_documento+","+documento.id_documento+")'";
-            else
-            tempData["validacion_documento_responsable"] += "onClick='noAcceso(this)'";
-        }
-        tempData["validacion_documento_responsable"] += "></i>";
+    //     // tempData+="<td>";
+    //     if(documento.validacion_documento_responsable=="true")
+    //     {
+    //         tempData["validacion_documento_responsable"] = "<i class='fa "+yes+"' style='color:#02ff00;";
+    //     }
+    //     else
+    //     {
+    //         tempData["validacion_documento_responsable"] = tempData+="<i class='fa "+no+"' style='color:red;";
+    //     }
+    //     tempData["validacion_documento_responsable"] += "font-size: xx-large;cursor:pointer' aria-hidden='true'";
+    //     if(documento.permiso_total==1)
+    //         tempData["validacion_documento_responsable"] += "onClick='validarDocumentoR(this,\"validacion_documento_responsable\","+documento.id_validacion_documento+","+documento.id_documento+")'";
+    //     else
+    //     {
+    //         if(documento.soy_responsable==0)
+    //         tempData["validacion_documento_responsable"] += "onClick='validarDocumentoR(this,\"validacion_documento_responsable\","+documento.id_validacion_documento+","+documento.id_documento+")'";
+    //         else
+    //         tempData["validacion_documento_responsable"] += "onClick='noAcceso(this)'";
+    //     }
+    //     tempData["validacion_documento_responsable"] += "></i>";
 
-        // tempData+="<td>";
-        if(documento.validacion_tema_responsable=="true")
-        {
-            tempData["validacion_tema_responsable"] += "<i class='fa "+yes+"' style='color:#02ff00;";
-        }
-        else
-        {
-            tempData["validacion_tema_responsable"] += "<i class='fa "+no+"' style='color:red;";
-        }
-        tempData["validacion_tema_responsable"] += "font-size: xx-large;cursor:pointer' aria-hidden='true'";
+    //     // tempData+="<td>";
+    //     if(documento.validacion_tema_responsable=="true")
+    //     {
+    //         tempData["validacion_tema_responsable"] += "<i class='fa "+yes+"' style='color:#02ff00;";
+    //     }
+    //     else
+    //     {
+    //         tempData["validacion_tema_responsable"] += "<i class='fa "+no+"' style='color:red;";
+    //     }
+    //     tempData["validacion_tema_responsable"] += "font-size: xx-large;cursor:pointer' aria-hidden='true'";
         
-        if(documento.soy_responsable==1)
-            tempData["validacion_tema_responsable"] += "onClick='validarTemaR(this,\"validacion_tema_responsable\","+documento.id_validacion_documento+","+documento.id_documento+","+documento.id_usuarioD+")'";
-        else
-            tempData["validacion_tema_responsable"] += "onClick='noAcceso(this)'";
-        tempData+="></i>";
+    //     if(documento.soy_responsable==1)
+    //         tempData["validacion_tema_responsable"] += "onClick='validarTemaR(this,\"validacion_tema_responsable\","+documento.id_validacion_documento+","+documento.id_documento+","+documento.id_usuarioD+")'";
+    //     else
+    //         tempData["validacion_tema_responsable"] += "onClick='noAcceso(this)'";
+    //     tempData+="></i>";
 
-        // tempData+="<td>";
-        tempData["observaciones"] += "<i data-toggle='modal' data-target='#mostrar-observaciones' onClick='mostrarObservacionesInicio("+documento.id_validacion_documento+")' class='ace-icon fa fa-comments' style='font-size:20px;cursor:pointer'></i>";
-        tempData["desviacion_mayor"] += "X";
-        return tempData;
-    }
+    //     // tempData+="<td>";
+    //     tempData["observaciones"] += "<i data-toggle='modal' data-target='#mostrar-observaciones' onClick='mostrarObservacionesInicio("+documento.id_validacion_documento+")' class='ace-icon fa fa-comments' style='font-size:20px;cursor:pointer'></i>";
+    //     tempData["desviacion_mayor"] += "X";
+    //     return tempData;
+    // }
 
     intervalObservaciones = setInterval(0);
     // clearInterval(intervalObservaciones);
@@ -665,6 +668,7 @@ if(isset($_REQUEST["accion"]))
         // tempData += "<h1><br></h1>";
         return tempData;
     }
+
     function enviarObservacion(idValidacionDocumento)
     {
         alert();
@@ -812,19 +816,19 @@ if(isset($_REQUEST["accion"]))
     //   });  
     // }
  
-    function refresh()
-    {
-        ejecutarPrimeraVez=false;
-        ejecutando=false;
-        clearInterval(intervalA);
-        clearTimeout(timeOutA);
-        listarValidacionDocumentos();
-    }
+    // function refresh()
+    // {
+    //     ejecutarPrimeraVez=false;
+    //     ejecutando=false;
+    //     clearInterval(intervalA);
+    //     clearTimeout(timeOutA);
+    //     listarValidacionDocumentos();
+    // }
     
-    function loadSpinner()
-    {
-      myFunction();
-    }
+    // function loadSpinner()
+    // {
+    //   myFunction();
+    // }
     
     function cargadePrograma(foliodeentrada)
     {
@@ -861,16 +865,17 @@ if(isset($_REQUEST["accion"]))
                 data: 'ID_DOCUMENTO='+id_documento,
                 success:function(responserequisitos)
                 {
-                   $.each(responserequisitos,function(index,value){
+                   $.each(responserequisitos,function(index,value)
+                   {
                        //alert("Hast aqui"+value.requisito);
                     ValoresRequisitos+="<li>"+value.requisito+"</li>";                                       
 
                    });
-    ValoresRequisitos += "</ul>";     
+                    ValoresRequisitos += "</ul>";     
                    $('#RequisitosListado').html(ValoresRequisitos);
                 }
             });
-        }
+    }
     
     function mostrarRegistros(id_documento)//listo
     {
@@ -1173,6 +1178,14 @@ if(isset($_REQUEST["accion"]))
             }
         }
     }
+
+    construirGrid();
+    inicializarFiltros().then((resolve2)=>
+    {
+        construirFiltros();
+    });
+    listarDatos();
+
     </script>
     <script id="template-upload" type="text/x-tmpl">
       {% for (var i=0, file; file=o.files[i]; i++) { %}
