@@ -104,10 +104,12 @@ class SeguimientoEntradaModel{
             if($value["status_doc"]== 2){
 
                     $rec[$key]["condicion"]="Suspendido";
-            } if($value["status_doc"]== 3){
+            } //Segundo If
+            
+            if($value["status_doc"]== 3){
 
                 $rec[$key]["condicion"]="Terminado";
-            } //Termina Status Logico
+            } //Tercer If, Termina Status Logico
             
             }//FOREACH
               

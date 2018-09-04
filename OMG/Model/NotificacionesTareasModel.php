@@ -73,8 +73,7 @@ class NotificacionesTareasModel {
             
             $rec= $dao->tareasVencidas();
             
-            echo "este es el rec: ".json_encode($rec);
-            
+//            echo "este es el rec: ".json_encode($rec);
             foreach ($rec as $value)
             {
                 $TAREA= $value['tarea'];

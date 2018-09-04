@@ -37,7 +37,66 @@ class TareasModel{
         }
     }
     
-    public function insertarTarea($referencia,$tarea,$fecha_creacion,$fecha_alarma,$fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado,$mensaje,
+    
+    public function datosParaGraficaTareas()
+    {
+        try
+        {
+            $dao=new TareasDAO();
+            $rec= $dao->datosParaGraficaTareas();
+            
+            foreach ($rec as $key => $value) 
+            {
+                $alarm = new Datetime($value['fecha_alarma']);
+                $alarm = strftime("%d-%B-%y",$alarm -> getTimestamp());
+                $alarm = new Datetime($alarm);
+
+                $flimite = new Datetime($value['fecha_cumplimiento']);// Guarda en una variable la fecha de la base de datos
+                $flimite = strftime("%d-%B-%y",$flimite -> getTimestamp());// Esta da el formato: dia. mes y año, sin guardar las horas 
+                $flimite = new Datetime($flimite);//Se guarda en este formato y se reinicializan las horas a 00.
+
+                $hoy = new Datetime();
+                $hoy = strftime("%d - %B - %y");
+                $hoy = new Datetime($hoy);
+                
+                if($value['status_tarea']==1)
+                {
+                    if($flimite <= $hoy)
+                    {
+                        $rec[$key]['status'] = "Tarea vencida";
+                    } else{
+                        if($alarm <= $hoy)
+                        {
+                            $rec[$key]['status'] = "Alarma vencida";
+                        } else{
+                            $rec[$key]['status'] = "En tiempo";
+                        }
+                        
+                    }
+                    
+                }
+                
+                if($value['status_tarea']==2)
+                {
+                    $rec[$key]['status'] = "Suspendido";
+                }
+                
+                if($value['status_tarea']==3)
+                {
+                    $rec[$key]['status'] = "Terminado";
+                }
+                
+            }
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+        public function insertarTarea($referencia,$tarea,$fecha_creacion,$fecha_alarma,$fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado,$mensaje,
                                   $responsable_plan,$tipo_mensaje,$atendido)
     {
         try
