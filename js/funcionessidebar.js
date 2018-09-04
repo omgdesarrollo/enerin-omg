@@ -232,9 +232,9 @@ function loadDataSideBarOficiosDocumentacion(lista)
 //         mySidebar = myLayout.cells("a").attachSidebar();
    
    
-        consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
+//        consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
         consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
-        consultarInformacion("../Controller/InformeGerencialController.php?Op=Listar");
+//        consultarInformacion("../Controller/InformeGerencialController.php?Op=Listar");
         $("#sidebarObjV").load('InyectarVistasView.php #informegerencial');
                             
     }
