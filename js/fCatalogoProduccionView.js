@@ -91,7 +91,7 @@ function listarDatos()
             },
             error:function(e)
             {
-                console.log(e);
+                // console.log(e);
                 growlError("Error","Error en el servidor");
                 reject("no");
             }

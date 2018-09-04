@@ -46,6 +46,16 @@ function construirGrid()
             $(".jsgrid-grid-body").attr("style","height:53.44228935%");
             // $(".jsgrid-grid-header").attr("style","overflow-x:auto");
         },
+        // rowClick:function(args)
+        // {
+            // console.log(args);
+            // taget = args.event.currentTarget;
+            // console.log($(".jsgrid-selected-row")[0]);
+            // $("#jsGrid").jsGrid("editItem",$(".jsgrid-selected-row")[0]);
+            // var a = $("#jsGrid").jsGrid("rowByItem",$(".jsgrid-selected-row")[0]);
+            // console.log(a);
+            // $("#jsGrid").jsGrid("updateItem",args.item);
+        // },
         width: "100%",
         height: "335px",
         autoload:true,

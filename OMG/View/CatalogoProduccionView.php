@@ -349,7 +349,7 @@ $Usuario=  Session::getSesion("user");
             {
                 growlError("Error!","Error al construir la vista, recargue la página");
             });
-                // resolve();
+                // resolve();   
             // },(error)=>{
             //     // reject();
             //     growlError("Error!","Error al construir la vista, recargue la página");

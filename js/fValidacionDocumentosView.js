@@ -5,102 +5,103 @@ function inicializarFiltros()
     {
         filtros = [
             {id:"noneUno", type:"none"},
-            
-            { id: "id_principal",visible:false},
-            { id: "no", name:"No.", type: "text", width: 40},
-            { id: "clave_documento", name:"Clave Documento", type: "text", width: 100},
-            { id: "documento", name:"Documento", type: "text", width: 130},
-            { id: "responsable_documento", name:"Responsable Documento", type: "text", width: 130},
-            { id: "tema_responsableBTN",namename:"Temas y Resposables", type: "text", width: 100},
-            { id: "mostrar_urlsBTN", name:"Archivo Adjunto", type: "text", width: 127},
-            { id: "requisitosBTN", name:"Requisitos", type: "text", width: 92,},
-            { id: "registrosBTN", name:"Registros", type: "text", width: 92,},
-            { id: "validacion_documento_responsable", name:"Validación Resposable Documento", type: "FValidacionDocumento", width: 100},
-            { id: "validacion_tema_responsable", name:"Validación Resposable Tema", type: "FValidacionTema", width: 100},
-            { id: "observaciones", name:"Observaciones", type: "text", width: 112},
-            { id: "desviacion_mayor", name:"Desviación Mayor", type: "text", width:}
+            // { id: "no", name:"No.", type: "text"},
+            { id: "clave_documento", name:"Clave Documento", type: "text"},
+            { id: "documento", name:"Documento", type: "text"},
+            { id: "responsable_documento", name:"Responsable Documento", type: "text"},
+            { id: "tema_responsableBTN",namename:"Temas y Resposables", type: "none"},
+            { id: "mostrar_urlsBTN", name:"Archivo Adjunto", type: "none"},
+            { id: "requisitosBTN", name:"Requisitos", type: "none"},
+            { id: "registrosBTN", name:"Registros", type: "none"},
+            { id: "validacion_documento_responsable", name:"Validación Resposable Documento", type: "none"},
+            { id: "validacion_tema_responsable", name:"Validación Resposable Tema", type: "none"},
+            { id: "observaciones", name:"Observaciones", type: "none"},
+            { id: "desviacion_mayor", name:"Desviación Mayor", type: "none"},
+            {name:"opcion",id:"opcion",type:"opcion"}
+//             construirValidacionDCombo
+// construirValidacionTCombo
         ];
         resolve();
     });
 }
 
-function construirGrid(__datos)
-{
-    // $("#jsGrid").html("");
-    // $("#jsGrid").jsGrid("destroy");
-    jsGrid.fields.FValidacionDocumento = fieldValidacionDocumento;
-    jsGrid.fields.FValidacionTema = fieldValidacionTema;
-    $("#jsGrid").jsGrid({
-        // onInit: function(args)
-        // {
-            // jsGrid.ControlField.prototype.editButton=true;
-            //  jsGrid.ControlField.prototype.deleteButton=false;
-        //     jsGrid.Grid.prototype.autoload=true;
-        // },
-        // onDataLoading: function(args)
-        // {
-        //     $("#loader").show();
-        // },
-        // onDataLoaded:function(args)
-        // {
-        //     $("#loader").hide();
-        // },
-        width: "100%",
-        height: "300px",
-        editing: false,
-        heading: true,
-        sorting: true,
-        paging: true,
-        pageSize: 5,
-        pageButtonCount: 5,
-        data: __datos,
-        fields: 
-        [
-            { name: "id_principal",visible:false},
-            { name: "no", title:"No.", type: "text", width: 40},
-            { name: "clave_documento", title:"Clave Documento", type: "text", width: 100},
-            { name: "documento", title:"Documento", type: "text", width: 130},
-            { name: "responsable_documento", title:"Responsable Documento", type: "text", width: 130},
-            { name: "tema_responsableBTN", title:"Temas y Resposables", type: "text", width: 100},
-            { name: "mostrar_urlsBTN", title:"Archivo Adjunto", type: "text", width: 127},
-            { name: "requisitosBTN", title:"Requisitos", type: "text", width: 92,},
-            { name: "registrosBTN", title:"Registros", type: "text", width: 92,},
-            { name: "validacion_documento_responsable", title:"Validación Resposable Documento", type: "FValidacionDocumento", width: 100},
-            { name: "validacion_tema_responsable", title:"Validación Resposable Tema", type: "FValidacionTema", width: 100},
-            { name: "observaciones", title:"Observaciones", type: "text", width: 112},
-            { name: "desviacion_mayor", title:"Desviación Mayor", type: "text", width: 90},
-            // {name:"cancel", type:"control", }
-        ],
-        // onItemUpdated: function(args)
-        // {
-        //     console.log(args);
-        //     columnas={};
-        //     id_afectado=args["item"]["id_principal"][0];
-        //     $.each(args["item"],function(index,value)
-        //     {
-        //         if(args["previousItem"][index] != value && value!="")
-        //         {
-        //             if(index!="id_principal" && !value.includes("<button"))
-        //             {
-        //                     columnas[index]=value;
-        //             }
-        //         }
-        //     });
-        //     if(Object.keys(columnas).length!=0)
-        //     {
-        //         $.ajax({
-        //                 url: '../Controller/GeneralController.php?Op=Actualizar',
-        //                 type:'GET',
-        //                 data:'TABLA=empleados'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
-        //                 success:function(exito)
-        //                 {
-        //                     console.log(exito);
-        //                 }
-        //         });
-        //     }
-        // }
-    });
-}
+// function construirGrid(__datos)
+// {
+//     // $("#jsGrid").html("");
+//     // $("#jsGrid").jsGrid("destroy");
+//     jsGrid.fields.FValidacionDocumento = fieldValidacionDocumento;
+//     jsGrid.fields.FValidacionTema = fieldValidacionTema;
+//     $("#jsGrid").jsGrid({
+//         // onInit: function(args)
+//         // {
+//             // jsGrid.ControlField.prototype.editButton=true;
+//             //  jsGrid.ControlField.prototype.deleteButton=false;
+//         //     jsGrid.Grid.prototype.autoload=true;
+//         // },
+//         // onDataLoading: function(args)
+//         // {
+//         //     $("#loader").show();
+//         // },
+//         // onDataLoaded:function(args)
+//         // {
+//         //     $("#loader").hide();
+//         // },
+//         width: "100%",
+//         height: "300px",
+//         editing: false,
+//         heading: true,
+//         sorting: true,
+//         paging: true,
+//         pageSize: 5,
+//         pageButtonCount: 5,
+//         data: __datos,
+//         fields: 
+//         [
+//             { name: "id_principal",visible:false},
+//             { name: "no", title:"No.", type: "text", width: 40},
+//             { name: "clave_documento", title:"Clave Documento", type: "text", width: 100},
+//             { name: "documento", title:"Documento", type: "text", width: 130},
+//             { name: "responsable_documento", title:"Responsable Documento", type: "text", width: 130},
+//             { name: "tema_responsableBTN", title:"Temas y Resposables", type: "text", width: 100},
+//             { name: "mostrar_urlsBTN", title:"Archivo Adjunto", type: "text", width: 127},
+//             { name: "requisitosBTN", title:"Requisitos", type: "text", width: 92,},
+//             { name: "registrosBTN", title:"Registros", type: "text", width: 92,},
+//             { name: "validacion_documento_responsable", title:"Validación Resposable Documento", type: "FValidacionDocumento", width: 100},
+//             { name: "validacion_tema_responsable", title:"Validación Resposable Tema", type: "FValidacionTema", width: 100},
+//             { name: "observaciones", title:"Observaciones", type: "text", width: 112},
+//             { name: "desviacion_mayor", title:"Desviación Mayor", type: "text", width: 90},
+//             // {name:"cancel", type:"control", }
+//         ],
+//         // onItemUpdated: function(args)
+//         // {
+//         //     console.log(args);
+//         //     columnas={};
+//         //     id_afectado=args["item"]["id_principal"][0];
+//         //     $.each(args["item"],function(index,value)
+//         //     {
+//         //         if(args["previousItem"][index] != value && value!="")
+//         //         {
+//         //             if(index!="id_principal" && !value.includes("<button"))
+//         //             {
+//         //                     columnas[index]=value;
+//         //             }
+//         //         }
+//         //     });
+//         //     if(Object.keys(columnas).length!=0)
+//         //     {
+//         //         $.ajax({
+//         //                 url: '../Controller/GeneralController.php?Op=Actualizar',
+//         //                 type:'GET',
+//         //                 data:'TABLA=empleados'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
+//         //                 success:function(exito)
+//         //                 {
+//         //                     console.log(exito);
+//         //                 }
+//         //         });
+//         //     }
+//         // }
+//     });
+// }
 
 var fieldValidacionDocumento = function(config)
 {
@@ -124,7 +125,7 @@ fieldValidacionDocumento.prototype = new jsGrid.Field
         },
         itemTemplate: function(value,todo)
         {
-            console.log(value);
+            // console.log(value);
             noClass = "fa-times-circle-o";
             yesClass = "fa-check-circle-o";
             tempData = "";
@@ -156,9 +157,31 @@ fieldValidacionDocumento.prototype = new jsGrid.Field
             // console.log("insertTemplate");
             // return value;
         },
-        editTemplate: function(value)
+        editTemplate: function(value,todo)
         {
-            // console.log("editTemplate");
+            noClass = "fa-times-circle-o";
+            yesClass = "fa-check-circle-o";
+            tempData = "";
+            if(value=="true")
+            {
+                tempData = "<i class='fa "+yesClass+"' style='color:#02ff00;";
+            }
+            else
+            {
+                tempData = "<i class='fa "+noClass+"' style='color:red;";
+            }
+            tempData += "font-size: xx-large;cursor:pointer' aria-hidden='true'";
+            if(todo.permiso_total==1)
+                tempData += "onClick='validarDocumentoR(this,\"validacion_documento_responsable\","+todo.id_principal[0].id_validacion_documento+","+todo.id_documento+","+todo.no+")'";
+            else
+            {
+                if(todo.soy_responsable==0)
+                tempData += "onClick='validarDocumentoR(this,\"validacion_documento_responsable\","+todo.id_principal[0].id_validacion_documento+","+todo.id_documento+","+todo.no+")'";
+                else
+                tempData += "onClick='noAcceso(this)'";
+            }
+            tempData += "></i>";
+            return tempData;
         },
         insertValue: function()
         {
@@ -208,9 +231,27 @@ fieldValidacionTema.prototype = new jsGrid.Field
             // console.log("insertTemplate");
             // return value;
         },
-        editTemplate: function(value)
+        editTemplate: function(value,todo)
         {
-            // console.log("editTemplate");
+            no = "fa-times-circle-o";
+            yes = "fa-check-circle-o";
+            tempData = "";
+            if(todo.validacion_tema_responsable=="true")
+            {
+                tempData = "<i class='fa "+yes+"' style='color:#02ff00;";
+            }
+            else
+            {
+                tempData = "<i class='fa "+no+"' style='color:red;";
+            }
+            tempData += "font-size: xx-large;cursor:pointer' aria-hidden='true'";
+            
+            if(todo.soy_responsable==1)
+                tempData += "onClick='validarTemaR(this,\"validacion_tema_responsable\","+todo.id_validacion_documento+","+todo.id_documento+","+todo.id_usuarioD+")'";
+            else
+                tempData += "onClick='noAcceso(this)'";
+            tempData += "></i>";
+            return tempData;
         },
         insertValue: function()
         {
@@ -224,34 +265,56 @@ fieldValidacionTema.prototype = new jsGrid.Field
 
 function listarDatos()
 {
-     __datos=[];
-     datosParamAjaxValues={};
-     datosParamAjaxValues["url"]='../Controller/ValidacionDocumentosController.php?Op=ListarTodo',
-     datosParamAjaxValues["type"]="POST";
-     datosParamAjaxValues["async"]=false;
-     var variablefunciondatos=function obtenerDatosServer(data)
-    {
-        dataListado = data;
-        $.each(data,function(index,value)
-        {
-            __datos.push( reconstruir(value,index) );
+    return new Promise((resolve,reject)=>{
+        __datos=[];
+        $.ajax({
+            url:'../Controller/ValidacionDocumentosController.php?Op=ListarTodo',
+            type:"GET",
+            beforeSend:function()
+            {
+                growlWait("Solicitud","Solicitando Datos Validación Documentos");
+            },
+            success:function(data)
+            {
+                if(typeof(data)=="object")
+                {
+                    growlSuccess("Solicitud","Registros obtenidos");
+                    dataListado = data;
+                    $.each(data,function (index,value)
+                    {
+                        __datos.push( reconstruir(value,index+1) );
+                    });
+                    DataGrid = __datos;
+                    gridInstance.loadData();
+                    resolve();
+                }
+                else
+                {
+                    growlSuccess("Solicitud","No Existen Registros");
+                    reject();
+                }
+            },
+            error:function(e)
+            {
+                // console.log(e);
+                growlError("Error","Error en el servidor");
+                reject();
+            }
         });
-    }
-    
-    var listfunciones=[variablefunciondatos];
-    ajaxHibrido(datosParamAjaxValues,listfunciones);
-
-    construirGrid(__datos);
+    });
 }
 
-function reconstruir(documento,numero)
+function reconstruir(documento,index)
 {
     no = "fa-times-circle-o";
     yes = "fa-check-circle-o";
     tempData = new Object();
 
-    tempData["no"] = numero;
-    tempData["id_principal"] = [{"id_validacion_documento":documento.id_validacion_documento}];
+    ultimoNumeroGrid = index;
+    tempData["no"] = index;
+    tempData["id_principal"] = [];
+    tempData["id_principal"].push({"id_validacion_documento":documento.id_validacion_documento});
+    
     tempData["id_documento"] = documento.id_documento;
     tempData["id_usuarioD"] = documento.id_usuarioD;
     tempData["soy_responsable"] = documento.soy_responsable;
@@ -339,21 +402,24 @@ function reconstruir(documento,numero)
     // tempData+="<td>";
     tempData["observaciones"] = "<i data-toggle='modal' data-target='#mostrar-observaciones' onClick='mostrarObservacionesInicio("+documento.id_validacion_documento+")' class='ace-icon fa fa-comments' style='font-size:20px;cursor:pointer'></i>";
     tempData["desviacion_mayor"] = "X";
+    tempData["id_principal"].push({eliminar:0});
+    tempData["id_principal"].push({editar:0});//si quieres que edite 1, si no 0
+    tempData["delete"] = tempData["id_principal"];
     return tempData;
 }
 
-function reconstruirTable(_datos)
-{
-    __datos=[];
-    console.log(_datos);
-    $.each(_datos,function(index,value)
-    {
-        __datos.push(reconstruir(value,index));
-    });
-    // $("#jsGrid").jsGrid("loadData");
-    construirGrid(__datos);
-    $("#loader").hide();
-}
+// function reconstruirTable(_datos)
+// {
+//     __datos=[];
+//     console.log(_datos);
+//     $.each(_datos,function(index,value)
+//     {
+//         __datos.push(reconstruir(value,index));
+//     });
+//     // $("#jsGrid").jsGrid("loadData");
+//     construirGrid(__datos);
+//     $("#loader").hide();
+// }
 
 function mostrar_urls(id_validacion_documento,detenerCargas)
 {
@@ -403,4 +469,28 @@ function mostrar_urls(id_validacion_documento,detenerCargas)
         });
         }
     });
+}
+
+
+
+function refresh()
+{
+    // $("#btnrefrescar").attr("disabled",true);
+    // promesaBuscarRegionesFiscales = buscarRegionesFiscales();
+    // promesaBuscarRegionesFiscales.then((resolve)=>{
+    //     inicializarFiltros();
+    //     listarDatosPromesa = listarDatos();
+    //     listarDatosPromesa.then((result)=>
+    //     {
+    //         $("#btnrefrescar").removeAttr("disabled");
+    //     },(error)=>{
+    //         growlError("ERROR!","Error al intentar refrescar datos");
+    //         $("#btnrefrescar").removeAttr("disabled");
+    //     });
+    // },(error)=>{
+    //     growlError("ERROR!","Error al intentar refrescar datos");
+    //     $("#btnrefrescar").removeAttr("disabled");
+    // });
+
+    // enviarWB();
 }
