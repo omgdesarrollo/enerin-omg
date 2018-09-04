@@ -53,6 +53,11 @@ $(function()
     {
         agregarArchivosUrl();
     });
+    
+//    $("#btn_informe").click(function()
+//    {
+//        loadChartView(true);
+//    });
 
 }); //CIERRA $(function())
 
@@ -138,8 +143,8 @@ function construirGrid()
                 valueField:"id_empleado",
                 textField:"nombre_completo"
             },
-            { name: "fecha_creacion",title:"Fecha de Creacion", type: "text", validate: "required", width:150,editing: false},
-            { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required", width:150,},
+            { name: "fecha_creacion",title:"Fecha de Creacion", type: "text", validate: "required", width:120,editing: false},
+            { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required", width:120,},
             { name: "fecha_cumplimiento",title:"Fecha de Cumplimiento", type: "text", validate: "required", width:150,editing: false},
 //            { name: "status_tarea",title:"status_tarea", type: "text", validate: "required"},
             { name: "status_tarea", title:"Estatus", type: "select", width:150,valueField:"status_tarea",textField:"descripcion",
@@ -775,8 +780,72 @@ function cargarprogram(value){
     
     
     window.open("Gantt_TareasView.php?id_tarea="+value,'_blank');
-}
-//finaliza area de gantt
+}//finaliza area de gantt
+
+
+//IniciaGrafica Informes
+function loadChartView(bclose)
+{
+//    console.log("Entro al loadChartView");
+    a=0, b=0, c=0, d=0, e=0;
+    $.ajax({
+        url:"../Controller/TareasController.php?Op=datosGrafica",
+        type:"GET",
+        success:function(data)
+        {
+//            console.log(data);
+            $.each(data,function(index,value)
+            {
+                if(value.status=="Tarea vencida")
+                {
+                  a++;   
+                }
+                if(value.status=="Alarma vencida")
+                {
+                  b++;   
+                }
+                if(value.status=="En tiempo")
+                {
+                  c++;   
+                }
+                if(value.status=="Suspendido")
+                {
+                  d++;   
+                }
+                if(value.status=="Terminado")
+                {
+                  e++;   
+                }
+            });
+        }
+    });
+    
+    $("#graficaTareas").html("");
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
+    
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+
+          ['Status', 'Cantidad'],
+          ['En proceso(En Tiempo)', c],
+          ['En proceso(Alarma Vencida)',b],
+          ['En proceso(Tiempo Vencido)', a],
+          ['Suspendido', d],
+          ['Terminado', e]
+        ]);
+
+        var options = {
+          title: 'Tareas',
+          is3D: true,
+          "width":660,
+          "height":340
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('graficaTareas'));
+        chart.draw(data, options);
+    }  
+} //Finaliza Grafica Informes
 
 
 

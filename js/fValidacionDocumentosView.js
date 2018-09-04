@@ -125,7 +125,7 @@ fieldValidacionDocumento.prototype = new jsGrid.Field
         },
         itemTemplate: function(value,todo)
         {
-            console.log(value);
+            console.log(todo);
             noClass = "fa-times-circle-o";
             yesClass = "fa-check-circle-o";
             tempData = "";

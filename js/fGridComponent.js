@@ -36,26 +36,32 @@ function construirGrid()
             jsGrid.Grid.prototype.autoload=true;
             // $(".jsgrid-grid-body").attr("style","height:50%");
         },
-        onDataLoading: function(args)
+        onDataLoading: (args)=>
         {
             // loadBlockUi();
         },
-        onDataLoaded:function(args)
+        onDataLoaded:(args)=>
         {
             $('.jsgrid-filter-row').removeAttr("style",'display:none');
             $(".jsgrid-grid-body").attr("style","height:53.44228935%");
             // $(".jsgrid-grid-header").attr("style","overflow-x:auto");
         },
-        // rowClick:function(args)
-        // {
+        rowDoubleClick:(args)=>
+        {
+            // console.log("W");
+            $("#jsGrid").jsGrid("editItem",$(".jsgrid-selected-row")[0]);
+        },
+        rowClick:(args)=>
+        {
             // console.log(args);
             // taget = args.event.currentTarget;
             // console.log($(".jsgrid-selected-row")[0]);
             // $("#jsGrid").jsGrid("editItem",$(".jsgrid-selected-row")[0]);
             // var a = $("#jsGrid").jsGrid("rowByItem",$(".jsgrid-selected-row")[0]);
             // console.log(a);
-            // $("#jsGrid").jsGrid("updateItem",args.item);
-        // },
+            $("#jsGrid").jsGrid("cancelEdit");
+            // console.log("A");
+        },
         width: "100%",
         height: "335px",
         autoload:true,
@@ -170,11 +176,15 @@ function aceptarEdicion()
 function cancelarEdicion()
 {
     $("#jsGrid").jsGrid("cancelEdit");
+    
 }
 
 function modoEditar()
 {
-    $("#grid").jsGrid("updateItem");
+    // $("#jsGrid").jsGrid("updateItem");
+    // $("#grid").jsGrid("updateItem");
+    console.log("A");
+    $("#jsGrid").jsGrid("editItem",$(".jsgrid-selected-row")[0]);
 }
 
 // function loadBlockUi()

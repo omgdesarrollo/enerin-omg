@@ -48,6 +48,26 @@ class TareasDAO{
             return -1;
         }
     }
+    
+    
+    public function datosParaGraficaTareas()
+    {
+        try
+        {
+            $query="SELECT tbtareas.id_tarea, tbtareas.tarea, tbtareas.fecha_creacion, tbtareas.fecha_alarma, tbtareas.fecha_cumplimiento,
+                    tbtareas.status_tarea
+                    FROM tareas tbtareas";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 
     public function insertarTarea($referencia,$tarea,$fecha_creacion,$fecha_alarma,$fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado)
     {
