@@ -816,99 +816,99 @@ $(function()
 //      construir(__datos);
 //}
 
-function construirGarid(datosF)//listooo 12
-{
-        widthNormal=120;
-        widthDate=150;
-        jsGrid.fields.date = MyDateField;        
-        $("#jsGrid").html("");
-        $("#jsGrid").jsGrid({
-        width: "100%",
-        height: "300px",
-        editing:true,
-        heading: true,
-        sorting: true,
-        paging: true,
-        pageSize: 5,
-        pageButtonCount: 5,
-        data: datosF,
-        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
-        fields: [
-                { name: "id_principal", visible:false },
-                { name: "folio_referencia", title: "Referencia", type: "text", width:widthNormal, validate: "",editing:false},
-                { name: "folio_entrada", title: "Folio Entrada", type: "text", width:widthNormal, validate: "required",editing:false},
-                // { name: "fecha_recepcion", title: "Fecha Recepción", type: "text", width, validate: "required" },
-                { name: "fecha_recepcion", title: "Fecha Recepción", type: "date", width:widthDate},
+// function construirGarid(datosF)//listooo 12
+// {
+//         widthNormal=120;
+//         widthDate=150;
+//         jsGrid.fields.date = MyDateField;        
+//         $("#jsGrid").html("");
+//         $("#jsGrid").jsGrid({
+//         width: "100%",
+//         height: "300px",
+//         editing:true,
+//         heading: true,
+//         sorting: true,
+//         paging: true,
+//         pageSize: 5,
+//         pageButtonCount: 5,
+//         data: datosF,
+//         pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+//         fields: [
+//                 { name: "id_principal", visible:false },
+//                 { name: "folio_referencia", title: "Referencia", type: "text", width:widthNormal, validate: "",editing:false},
+//                 { name: "folio_entrada", title: "Folio Entrada", type: "text", width:widthNormal, validate: "required",editing:false},
+//                 // { name: "fecha_recepcion", title: "Fecha Recepción", type: "text", width, validate: "required" },
+//                 { name: "fecha_recepcion", title: "Fecha Recepción", type: "date", width:widthDate},
 
-                { name: "asunto", title: "Asunto", type: "text", width:widthNormal, validate: "required",editing:false},
-                { name: "remitente", title: "Remitente", type: "text", width:widthNormal, validate: "required",editing:false},
+//                 { name: "asunto", title: "Asunto", type: "text", width:widthNormal, validate: "required",editing:false},
+//                 { name: "remitente", title: "Remitente", type: "text", width:widthNormal, validate: "required",editing:false},
 
-                { name: "id_autoridad", title: "Autoridad Remitente", type: "select",
-                        items:thisAutoridad,
-                        valueField:"id_autoridad",
-                        textField:"clave_autoridad"
-                        },
+//                 { name: "id_autoridad", title: "Autoridad Remitente", type: "select",
+//                         items:thisAutoridad,
+//                         valueField:"id_autoridad",
+//                         textField:"clave_autoridad"
+//                         },
 
-                { name: "id_tema", title: "Numero Tema", type: "select",
-                        items:thisTemas,
-                        valueField:"id_tema",
-                        textField:"no"},
+//                 { name: "id_tema", title: "Numero Tema", type: "select",
+//                         items:thisTemas,
+//                         valueField:"id_tema",
+//                         textField:"no"},
 
-                { name: "nombre", title: "Nombre Tema", type: "text", width:widthNormal, validate: "required", editing:false },
-                { name: "nombre_empleado", title: "Responsable Tema", type: "text", width:widthNormal, validate: "required", editing:false },
+//                 { name: "nombre", title: "Nombre Tema", type: "text", width:widthNormal, validate: "required", editing:false },
+//                 { name: "nombre_empleado", title: "Responsable Tema", type: "text", width:widthNormal, validate: "required", editing:false },
 
-                { name: "clasificacion", title: "Clasificación", type: "select", width:widthNormal,valueField:"clasificacion",textField:"descripcion",
-                        items:[{"clasificacion":"1","descripcion":"Con limite de tiempo"},{"clasificacion":"2","descripcion":"Sin limite de tiempo"},{"clasificacion":"3","descripcion":"Informativo"}]
-                },
+//                 { name: "clasificacion", title: "Clasificación", type: "select", width:widthNormal,valueField:"clasificacion",textField:"descripcion",
+//                         items:[{"clasificacion":"1","descripcion":"Con limite de tiempo"},{"clasificacion":"2","descripcion":"Sin limite de tiempo"},{"clasificacion":"3","descripcion":"Informativo"}]
+//                 },
 
-                { name: "fecha_asignacion", title: "Fecha Asignación", type: "date", width:widthDate, validate: "required" },
-                { name: "fecha_limite_atencion", title: "Fecha Limite Atención", type: "date", width:widthDate, validate: "required" },
-                { name: "fecha_alarma", title: "Fecha Alarma", type: "date", width:widthDate, validate: "required" },
-                { name: "adjuntar_archivo", title: "Adjuntar Archivos", type: "text", width:widthNormal, validate: "required", editing:false },
-                { name: "observaciones", title: "Observaciones", type: "text", width:widthNormal },
-                {type:"control"}
-        ],
-        onItemEditing: function(args)
-        {
-        },
-        onItemUpdated: function(args)
-        {
-                console.log(args);
-                columnas={};
-                id_afectado=args["item"]["id_principal"][0];
-                $.each(args["item"],function(index,value)
-                {
-                        if(args["previousItem"][index] != value && value!="")
-                        {
-                                if(index!="id_principal" && !value.includes("<button"))
-                                {
-                                        columnas[index]=value;
-                                }
-                        }
-                });
-                if(columnas!="")
-                {
-                        $.ajax({
-                                url: '../Controller/GeneralController.php?Op=Actualizar',
-                                type:'GET',
-                                data:'TABLA=documento_entrada'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
-                                success:function(exito)
-                                {
-                                        console.log(exito);
-                                }
-                        });
-                }
-        },
+//                 { name: "fecha_asignacion", title: "Fecha Asignación", type: "date", width:widthDate, validate: "required" },
+//                 { name: "fecha_limite_atencion", title: "Fecha Limite Atención", type: "date", width:widthDate, validate: "required" },
+//                 { name: "fecha_alarma", title: "Fecha Alarma", type: "date", width:widthDate, validate: "required" },
+//                 { name: "adjuntar_archivo", title: "Adjuntar Archivos", type: "text", width:widthNormal, validate: "required", editing:false },
+//                 { name: "observaciones", title: "Observaciones", type: "text", width:widthNormal },
+//                 {type:"control"}
+//         ],
+//         onItemEditing: function(args)
+//         {
+//         },
+//         onItemUpdated: function(args)
+//         {
+//                 console.log(args);
+//                 columnas={};
+//                 id_afectado=args["item"]["id_principal"][0];
+//                 $.each(args["item"],function(index,value)
+//                 {
+//                         if(args["previousItem"][index] != value && value!="")
+//                         {
+//                                 if(index!="id_principal" && !value.includes("<button"))
+//                                 {
+//                                         columnas[index]=value;
+//                                 }
+//                         }
+//                 });
+//                 if(columnas!="")
+//                 {
+//                         $.ajax({
+//                                 url: '../Controller/GeneralController.php?Op=Actualizar',
+//                                 type:'GET',
+//                                 data:'TABLA=documento_entrada'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
+//                                 success:function(exito)
+//                                 {
+//                                         console.log(exito);
+//                                 }
+//                         });
+//                 }
+//         },
         
-        onItemDeleting: function(args) {
-//            console.log(args);
-            eliminarDocumentoEntrada(args);
+//         onItemDeleting: function(args) {
+// //            console.log(args);
+//             eliminarDocumentoEntrada(args);
 
-        }
+//         }
         
-        });
-        // $("#loader").hide();
-}
+//         });
+//         // $("#loader").hide();
+// }
 
 
 
@@ -1527,42 +1527,41 @@ function componerDataGrid()//listo
 //     });
 // }
 
-function eliminarDocumentoEntrada(args)
-{
-//    console.log(args);
-    id_afectado= args['item']['id_principal'][0];
+// function eliminarDocumentoEntrada(args)
+// {
+// //    console.log(args);
+//     id_afectado= args['item']['id_principal'][0];
 
-    $.ajax({
-        url:"../Controller/DocumentosEntradaController.php?Op=Eliminar",
-        type:"POST",
-        data:"ID_DOCUMENTO_ENTRADA="+JSON.stringify(id_afectado),
-        success:function(data)
-        {
-//            alert("Entro al success "+data);
-            if(data==false)
-            {
-                swal("","El Documento esta cargado en una Documento de Salida","error");
-                setTimeout(function(){swal.close();},1500);
-            }else{
-                if(data==true)
-                {
-                    swal("","Se elimino correctamente el Documento de Entrada","success");
-                    setTimeout(function(){swal.close();},1500);
-                }
-            }
-        },
-        error:function()        
-        {
-            swal("","Error en el servidor","error");
-            setTimeout(function(){swal.close();},1500);
-        }
-    });
-    
-}
+//     $.ajax({
+//         url:"../Controller/DocumentosEntradaController.php?Op=Eliminar",
+//         type:"POST",
+//         data:"ID_DOCUMENTO_ENTRADA="+JSON.stringify(id_afectado),
+//         success:function(data)
+//         {
+// //            alert("Entro al success "+data);
+//             if(data==false)
+//             {
+//                 swal("","El Documento esta cargado en una Documento de Salida","error");
+//                 setTimeout(function(){swal.close();},1500);
+//             }else{
+//                 if(data==true)
+//                 {
+//                     swal("","Se elimino correctamente el Documento de Entrada","success");
+//                     setTimeout(function(){swal.close();},1500);
+//                 }
+//             }
+//         },
+//         error:function()        
+//         {
+//             swal("","Error en el servidor","error");
+//             setTimeout(function(){swal.close();},1500);
+//         }
+//     });
+// }
 
 function preguntarEliminar(data)
 {
-    console.log(data);
+    console.log("jajaja",data);
     swal({
         title: "",
         text: "¿Eliminar Documento Entrada?",
@@ -1572,18 +1571,54 @@ function preguntarEliminar(data)
         showLoaderOnConfirm: true,
         confirmButtonText: "Eliminar",
         cancelButtonText: "Cancelar",
-        }).then((res)=>{
+        }).then((confirmacion)=>{
                 if(confirmacion)
                 {
-                        eliminarDocumentoEntrada(data.id_documento_entrada);
+                        eliminarDocumentoEntrada(data);
                 }
         });
 }
 
-// function eliminarDocumentoEntrada(id)
-// {
-//
-// }
+ function eliminarDocumentoEntrada(id_afectado)
+ {
+        $.ajax({
+                url:"../Controller/DocumentosEntradaController.php?Op=Eliminar",
+                type:"POST",
+                data:"ID_DOCUMENTO_ENTRADA="+JSON.stringify(id_afectado),
+                beforeSend
+                success:function(data)
+                {
+                        if(data)
+                        {
+                                dataListadoTemp=[];
+                                dataItem = [];
+                                numeroEliminar=0;
+                                itemEliminar={};
+                                id = id_afectado.id_documento_entrada;
+                                $.each(dataListado,function(index,value)
+                                {
+                                        value.id_documento_entrada != id ? dataListadoTemp.push(value) : (dataItem.push(value), numeroEliminar=index+1);
+                                });
+                                console.log(dataListadoTemp);
+                                itemEliminar = reconstruir(dataItem[0],numeroEliminar);
+                                DataGrid = [];
+                                dataListado = dataListadoTemp;
+                                $.each(dataListado,function(index,value)
+                                {
+                                        DataGrid.push( reconstruir(value,index+1) );
+                                });
+                                gridInstance.loadData();
+                                growlSuccess("Eliminación","Registro Eliminado");
+                        }
+                        else
+                                growlError("Error Eliminación","Error al Rliminar Registro");
+                },
+                error:function()        
+                {
+                        growlError("Error Eliminación","Error del servidor");
+                }
+        });
+ }
 
 function actualizarDocumentoEntrada(id)
 {
