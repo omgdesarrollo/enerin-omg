@@ -327,7 +327,7 @@ MyDateField.prototype = new jsGrid.Field
                 if(value!=fecha)
                 {
                         date = new Date(value);
-                        fecha = date.getDate()+1 +" "+ months[date.getMonth()] +" "+ date.getFullYear();
+                        fecha = date.getDate()+1 +" "+ months[date.getMonth()] +" "+ date.getFullYear().toString().slice(2,4);
                         return fecha;
                 }
                 else
@@ -375,13 +375,13 @@ function inicializarEstructuraGrid()
                         { name: "asunto", title: "Asunto", type: "text", width:130},
                         { name: "remitente", title: "Remitente", type: "text", width:150},
 
-                        { name: "id_autoridad", title: "Autoridad Remitente", type: "select",
+                        { name: "id_autoridad", title: "Autoridad Remitente", type: "select",width:120,
                                 items:thisAutoridad,
                                 valueField:"id_autoridad",
                                 textField:"clave_autoridad"
                                 },
 
-                        { name: "id_tema", title: "Numero Tema", type: "select",
+                        { name: "id_tema", title: "Numero Tema", type: "select",width:120,
                                 items:thisTemas,
                                 valueField:"id_tema",
                                 textField:"no"},
@@ -398,7 +398,7 @@ function inicializarEstructuraGrid()
                         },
 
                         { name: "fecha_asignacion", title: "Fecha Asignación", type: "date", width:160},
-                        { name: "fecha_limite_atencion", title: "Fecha Limite Atención", type: "date", width:160},
+                        { name: "fecha_limite_atencion", title: "Fecha Limite Atención", type: "date", width:190},
                         { name: "fecha_alarma", title: "Fecha Alarma", type: "date", width:160},
                         { name: "adjuntar_archivo", title: "Adjuntar Archivos", type: "text", width:150, validate: "required", editing:false},
                         { name: "observaciones", title: "Observaciones", type: "text", width:150},
@@ -1585,7 +1585,7 @@ function preguntarEliminar(data)
                 url:"../Controller/DocumentosEntradaController.php?Op=Eliminar",
                 type:"POST",
                 data:"ID_DOCUMENTO_ENTRADA="+JSON.stringify(id_afectado),
-                beforeSend
+                // beforeSend
                 success:function(data)
                 {
                         if(data)
@@ -1823,7 +1823,7 @@ $("#subirArchivos").click(function()
         agregarArchivosUrl();
 });
 
-months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+months = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 
 function mostrar_urls(id_documento_entrada)
 {

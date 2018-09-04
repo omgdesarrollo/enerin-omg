@@ -125,7 +125,7 @@ fieldValidacionDocumento.prototype = new jsGrid.Field
         },
         itemTemplate: function(value,todo)
         {
-            // console.log(value);
+            console.log(value);
             noClass = "fa-times-circle-o";
             yesClass = "fa-check-circle-o";
             tempData = "";
@@ -328,7 +328,7 @@ function reconstruir(documento,index)
     tempData["tema_responsableBTN"] += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>";
 
     if(documento.soy_reponsable == "0")
-        tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\""+documento.validacion_documento_responsable+"\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
+        tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\"true\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
     else
     {
         if(documento.permiso_total == 1)
@@ -337,7 +337,7 @@ function reconstruir(documento,index)
         }
         else
         {
-            tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\"true\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
+            tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\"false\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
         }
     }
 
