@@ -51,8 +51,7 @@ $Usuario=  Session::getSesion("user");
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/fTareasView.js" type="text/javascript"></script>
-
-
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
                 
                 
         <style>
@@ -78,7 +77,7 @@ $Usuario=  Session::getSesion("user");
             }
             
             .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                    
-            .modal-lg{width: 100%;}
+            .modal-lg{width: 50%;}
             .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
             body{overflow:hidden;}
         </style>              
@@ -101,6 +100,10 @@ require_once 'EncabezadoUsuarioView.php';
     Agregar Tarea
 </button>
 
+<button onClick="loadChartView(true);" type="button" id="btn_informe" class="btn btn-info btn_agregar" data-toggle="modal" data-target="#informe_tareas">
+    Informe
+</button>    
+    
 <button type="button" id="btnAgregarDocumentoEntradaRefrescar" class="btn btn-info btn_refrescar" id="btnrefrescar" onclick="refresh();" >
     <i class="glyphicon glyphicon-repeat"></i>   
 </button>
@@ -228,6 +231,28 @@ require_once 'EncabezadoUsuarioView.php';
 </div><!-- cierre del modal -->
 
 
+<!-- Inicio de Seccion Modal Informe-->
+<div class="modal draggable fade" id="informe_tareas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+        <div id="loaderModalMostrar"></div>
+		<div class="modal-content">
+                        
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="font-size:inherit" aria-hidden="true" class="closeLetra">×</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Informe Tareas</h4>
+		      </div>
+
+		      <div class="modal-body">
+                          
+                        <div id="graficaTareas"></div>
+
+                      </div><!-- cierre div class-body -->
+                </div><!-- cierre div class modal-content -->
+        </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal -->
+
+
+
 <script>
 
 DataGrid = [];
@@ -242,6 +267,8 @@ construirGrid();
 construirFiltros();
 
 </script>
+
+
 
 <!-- INICIA SECCION PARA CARGAR ARCHIVOS--> 
 <script id="template-upload" type="text/x-tmpl">

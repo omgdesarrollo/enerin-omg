@@ -1,11 +1,5 @@
 <?php
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 session_start();
 require_once '../Model/InformeGerencialModel.php';
 require_once '../Pojo/InformeGerencialPojo.php';
@@ -22,12 +16,10 @@ switch ($Op) {
 
 		$Lista=$model->listarInformeGerencial();
                 Session::setSesion("listarInformeGerencial",$Lista);
-//    	$tarjet="../view/principalmodulos.php";
                 header('Content-type: application/json; charset=utf-8');
 		echo json_encode( $Lista);
-		//header("location: login.php");
-//echo $json = json_encode(array("n" => "".$Lista.NOMBRE_EMPLEADO, "a" => "apellido",  "c" => "test"));
 		return $Lista;
+                
 		break;
             
 	case 'Nuevo':
