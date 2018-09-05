@@ -28,7 +28,7 @@ function construirGrid()
     };
     
     $("#jsGrid").jsGrid({
-        onInit: function(args)
+        onInit: (args)=>
         {
             // alert(args);
             gridInstance=args.grid;
@@ -48,7 +48,7 @@ function construirGrid()
         },
         rowDoubleClick:(args)=>
         {
-            // console.log("W");
+            console.log("W");
             $("#jsGrid").jsGrid("editItem",$(".jsgrid-selected-row")[0]);
         },
         rowClick:(args)=>
@@ -183,8 +183,10 @@ function modoEditar()
 {
     // $("#jsGrid").jsGrid("updateItem");
     // $("#grid").jsGrid("updateItem");
-    console.log("A");
+    // console.log(gridInstance);
+    // gridInstance.rowDoubleClick();
     $("#jsGrid").jsGrid("editItem",$(".jsgrid-selected-row")[0]);
+    // console.log($(".jsgrid-row")[0]);
 }
 
 // function loadBlockUi()
