@@ -297,7 +297,7 @@ return new Promise((resolve,reject)=>{
                         { name: "asunto", title: "Asunto", type: "text", width:150},
                         { name: "destinatario", title: "Destinatario", type: "text", width:150},
                         { name: "clave_autoridad", title: "Autoridad Remitente", type: "text", width:150},
-                        { name: "archivo_adjunto", title: "Arvhivo Adjunto", type: "text", width:150,editing:false},    
+                        { name: "archivo_adjunto", title: "Archivo Adjunto", type: "text", width:150,editing:false},    
                         { name: "observaciones", title: "Observacion", type: "text", width:150},
                         { name: "delete", title: "Opcion", type: "customControl", width:150}
                      ];
