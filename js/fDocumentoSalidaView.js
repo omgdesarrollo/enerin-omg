@@ -54,7 +54,7 @@ function inicializarFiltros()
 //            {id:"folio_entrada",type:"text"},
             {id:"id_documento_entrada",type:"combobox",data:listarFoliosDeEntrada(),descripcion:"folio_entrada"},
             {id:"folio_salida",type:"text"},
-            {id:"id_empleado",type:"text"},
+            {id:"nombre_empleado",type:"text"},
 //            {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
             {id:"fecha_envio",type:"date"},
             {id:"asunto",type:"text"},
@@ -207,6 +207,7 @@ MyCControlField.prototype = new jsGrid.Field
         itemTemplate: function(value,todo)
         {
 //            alert(value,todo);
+
             if(value[0]['existe_archivo']!=0)
                 return "";
             else

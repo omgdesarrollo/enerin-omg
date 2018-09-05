@@ -20,7 +20,7 @@ switch ($Op) {
             $Lista=$model->listarDocumentosSalida();
             foreach ($Lista as $key => $value) {
             $url= $_REQUEST['URL'].$value['id_documento_salida'];
-            $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls(-1,$url);
+            $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls(Session::getSesion("s_cont"),$url);
             }
             Session::setSesion("listarDocumentosSalida",$Lista);
             
