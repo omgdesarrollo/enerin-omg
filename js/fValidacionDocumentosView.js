@@ -567,7 +567,7 @@ function borrarArchivo(url)//listo
         text: "Confirme para eliminar el documento",
         type: "warning",
         showCancelButton: true,
-        closeOnConfirm: false,
+        closeOnConfirm: true,
         showLoaderOnConfirm: true
     },function()
     {

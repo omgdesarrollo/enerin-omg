@@ -850,8 +850,7 @@ if(isset($_REQUEST["accion"]))
     //       var ID_VALIDACION_DOCUMENTO = $('#tempInputIdValidacionDocumento').val();
     //       $.ajax({
     //         url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
-    //         type: 'POST',
-    //         data: 'URL='+url,
+    //         type: 'POST',    //         data: 'URL='+url,
     //         success: function(eliminado)
     //         {
     //           if(eliminado)
