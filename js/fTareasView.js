@@ -73,7 +73,10 @@ function inicializarFiltros()
             {id:"fecha_creacion",type:"date"},
             {id:"fecha_alarma",type:"date"},
             {id:"fecha_cumplimiento",type:"date"},
-            {id:"status_tarea",type:"text"},
+//            {id:"status_tarea",type:"text"},
+            {id:"status_tarea",type: "select",valueField:"status_tarea",textField:"descripcion",
+                items:[{"status_tarea":"1","descripcion":"En Proceso"},{"status_tarea":"2","descripcion":"Suspendido"},{"status_tarea":"3","descripcion":"Terminado"}]
+            },
             {id:"observaciones",type:"text"},
             {id:"archivo_adjunto",type:"text"},
             {id:"registrar_programa",type:"text"},
