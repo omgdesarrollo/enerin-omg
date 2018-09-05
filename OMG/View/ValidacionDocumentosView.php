@@ -23,7 +23,7 @@ $Usuario=  Session::getSesion("user");
 		<!-- ace styles -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
 
-		<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
+		<!-- <link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" /> -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
         <!--Inicia para el spiner cargando-->
@@ -34,7 +34,6 @@ $Usuario=  Session::getSesion("user");
         <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
         <script src="../../js/jquery.js" type="text/javascript"></script>
 
-        <script src="../../js/jquery.js" type="text/javascript"></script>
         <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
 
         <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
@@ -47,7 +46,7 @@ $Usuario=  Session::getSesion("user");
         <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
         <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
         <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
-        <script src="../../js/tools.js" type="text/javascript"></script>
+        <!-- <script src="../../js/tools.js" type="text/javascript"></script> -->
         <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
         
         <script src="../../js/fValidacionDocumentosView.js" type="text/javascript"></script>
@@ -185,7 +184,7 @@ if(isset($_REQUEST["accion"]))
                   <div id="DocumentolistadoUrlModal"></div>
           </div>
 
-          <div class="form-group" method="post" >
+          <div class="form-group" method="post">
                   <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Archivo</button>
           </div>
         </div><!-- cierre div class-body -->
@@ -301,6 +300,8 @@ if(isset($_REQUEST["accion"]))
         
     ];
 
+    idUsuario = <?php echo $Usuario["ID_USUARIO"] ?>
+
     estructuraGrid = [
         { name:"id_principal", visible:false},
         { name:"no", title:"No",width:60},
@@ -405,34 +406,7 @@ if(isset($_REQUEST["accion"]))
         moverA();
     }
 
-    function listarValidacionDocumento(idValidacionDocumento,no)
-    {
-        tempData="";
-        $.ajax({
-            url: '../Controller/ValidacionDocumentosController.php?Op=ListarUno',
-            type:'GET',
-            data:'ID_VALIDACION_DOCUMENTO='+idValidacionDocumento,
-            success:function(documentos)
-            {
-                tempData = new Object();
-                $.each(documentos,function(index,value)
-                {
-                    // tempData += construirValidacionDocumento(value,index++);
-                    tampData = reconstruir(value,no);
-                });
-                // $("#registroDocumento_"+idValidacionDocumento).html(tempData);
-                console.log(tempData);
-                $("#jsGrid").jsGrid("updateItem", tempData).done
-                (function(){
-                    alert();
-                });
-            },
-            error:function()
-            {
-                swalError("Error en el servidor");
-            }
-        });
-    }
+    
 
     // function construirValidacionDocumento(documento,numero)//listo
     // {
@@ -716,22 +690,7 @@ if(isset($_REQUEST["accion"]))
     //     });
     // }
 
-    function enviar_notificacion(mensaje,para,tipoMensaje,atendido,asunto)
-    {
-          $.ajax({
-             url:"../Controller/NotificacionesController.php?Op=EnviarNotificacionHibry",
-             data: "PARA="+para+"&MENSAJE="+mensaje+"&ATENDIDO="+atendido+"&TIPO_MENSAJE="+tipoMensaje+"&ASUNTO="+asunto,
-             success:function(response)
-             {
-                (response==true)?
-                swalSuccess("Se notifico del cambio "):swalError("No se pudo notificar");
-             },
-             error:function()
-             {
-                swalError("Error en el servidor");
-             }
-          });
-    }
+    
 
     function envioCorreo (para,asunto,mensaje)
     {
@@ -852,289 +811,220 @@ if(isset($_REQUEST["accion"]))
     {
       agregarArchivosUrl();
     });
-    months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+    months = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
     
     
-    function mostrarRequisitos(id_documento)//listo
-    {
-            ValoresRequisitos = "<ul>";
+    
+    
+    // function agregarArchivosUrl()//listo
+    // {
+    //   var ID_VALIDACION_DOCUMENTO = $('#tempInputIdValidacionDocumento').val();
+    //   url = 'filesValidacionDocumento/'+ID_VALIDACION_DOCUMENTO,
+    //   $.ajax({
+    //     url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
+    //     type: 'GET',
+    //     data: 'URL='+url,
+    //     success:function(creado)
+    //     {
+    //       if(creado)
+    //         $('.start').click();
+    //     },
+    //     error:function()
+    //     {
+    //       swal("","Error del servidor","error");
+    //     }
+    //   });
+    // }
 
-            $.ajax ({
-                url: "../Controller/ValidacionDocumentosController.php?Op=MostrarRequisitosPorDocumento",
-                type: 'POST',
-                data: 'ID_DOCUMENTO='+id_documento,
-                success:function(responserequisitos)
-                {
-                   $.each(responserequisitos,function(index,value)
-                   {
-                       //alert("Hast aqui"+value.requisito);
-                    ValoresRequisitos+="<li>"+value.requisito+"</li>";                                       
-
-                   });
-                    ValoresRequisitos += "</ul>";     
-                   $('#RequisitosListado').html(ValoresRequisitos);
-                }
-            });
-    }
-    
-    function mostrarRegistros(id_documento)//listo
-    {
-        ValoresRegistros = "<ul>";
-        $.ajax ({
-            url:"../Controller/ValidacionDocumentosController.php?Op=MostrarRegistrosPorDocumento",
-            type: 'POST',
-            data: 'ID_DOCUMENTO='+id_documento,
-            success:function(responseregistros)
-            {
-                $.each(responseregistros,function(index,value){
-                    ValoresRegistros+="<li>"+value.registro+"</li>"; 
-                });
-                ValoresRegistros += "</ul>";
-                $('#RegistrosListado').html(ValoresRegistros);
-            }
-        });
-    }
-    
-    function mostrarTemaResponsable(idDocumento)//listo
-    {
-        tempData = "";
-        $.ajax({
-            url:'../Controller/ValidacionDocumentosController.php?Op=ObtenerTemayResponsable',
-            type:'GET',
-            data:'ID_DOCUMENTO='+idDocumento,
-            success:function(responsables)
-            {
-                $.each(responsables,function(index,value)
-                {
-                    // if(value.nombre!=null)
-                    // {
-                        tempData += "<tr><td>"+value.nombre+"</td>";
-                        tempData += "<td>"+value.responsable_tema+"</td></tr>";
-                    // }
-                });
-                $("#tbodyValidacionDocumentosModal").html(tempData);
-            }
-        });
-    }
-    
-    function agregarArchivosUrl()
-    {
-      var ID_VALIDACION_DOCUMENTO = $('#tempInputIdValidacionDocumento').val();
-      url = 'filesValidacionDocumento/'+ID_VALIDACION_DOCUMENTO,
-      $.ajax({
-        url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
-        type: 'GET',
-        data: 'URL='+url,
-        success:function(creado)
-        {
-          if(creado)
-            $('.start').click();
-        },
-        error:function()
-        {
-          swal("","Error del servidor","error");
-        }
-      });
-    }
-
-    function borrarArchivo(url)
-    {
-      swal({
-          title: "ELIMINAR",
-          text: "Confirme para eliminar el documento",
-          type: "warning",
-          showCancelButton: true,
-          closeOnConfirm: false,
-          showLoaderOnConfirm: true
-        },function()
-        {
-          var ID_VALIDACION_DOCUMENTO = $('#tempInputIdValidacionDocumento').val();
-          $.ajax({
-            url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
-            type: 'POST',
-            data: 'URL='+url,
-            success: function(eliminado)
-            {
-              if(eliminado)
-              {
-                modificarArchivos(ID_VALIDACION_DOCUMENTO,-1);
-                mostrar_urls(ID_VALIDACION_DOCUMENTO);
-                swal("","Archivo eliminado");
-                setTimeout(function(){swal.close();},1000);
-              }
-              else
-                swal("","Ocurrio un error al elimiar el documento", "error");
-            },
-            error:function()
-            {
-              swal("","Ocurrio un error al elimiar el documento", "error");
-            }
-          });
-        });
-    }
+    // function borrarArchivo(url)
+    // {
+    //   swal({
+    //       title: "ELIMINAR",
+    //       text: "Confirme para eliminar el documento",
+    //       type: "warning",
+    //       showCancelButton: true,
+    //       closeOnConfirm: false,
+    //       showLoaderOnConfirm: true
+    //     },function()
+    //     {
+    //       var ID_VALIDACION_DOCUMENTO = $('#tempInputIdValidacionDocumento').val();
+    //       $.ajax({
+    //         url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
+    //         type: 'POST',    //         data: 'URL='+url,
+    //         success: function(eliminado)
+    //         {
+    //           if(eliminado)
+    //           {
+    //             modificarArchivos(ID_VALIDACION_DOCUMENTO,-1);
+    //             mostrar_urls(ID_VALIDACION_DOCUMENTO);
+    //             swal("","Archivo eliminado");
+    //             setTimeout(function(){swal.close();},1000);
+    //           }
+    //           else
+    //             swal("","Ocurrio un error al elimiar el documento", "error");
+    //         },
+    //         error:function()
+    //         {
+    //           swal("","Ocurrio un error al elimiar el documento", "error");
+    //         }
+    //       });
+    //     });
+    // }
 
     
-    function validarDocumentoR(Obj,columna,idValidacionDocumento,idDocumento,no)//listo
-    {
-        GetValidacionTema = ({
-            url:'../Controller/ValidacionDocumentosController.php?Op=GetValidacionTema',
-            type:'GET',
-            data:'ID_VALIDACION_DOCUMENTO='+idValidacionDocumento,
-        });
+    // function validarDocumentoR(Obj,columna,idValidacionDocumento,idDocumento,no)//listo
+    // {
+    //     GetValidacionTema = ({
+    //         url:'../Controller/ValidacionDocumentosController.php?Op=GetValidacionTema',
+    //         type:'GET',
+    //         data:'ID_VALIDACION_DOCUMENTO='+idValidacionDocumento,
+    //     });
 
-        GetExisteArchivo = ({
-            url:'../Controller/ValidacionDocumentosController.php?Op=GetExisteArchivo',
-            type:'GET',
-            data:'ID_VALIDACION_DOCUMENTO='+idValidacionDocumento,
-        });
+    //     GetExisteArchivo = ({
+    //         url:'../Controller/ValidacionDocumentosController.php?Op=GetExisteArchivo',
+    //         type:'GET',
+    //         data:'ID_VALIDACION_DOCUMENTO='+idValidacionDocumento,
+    //     });
         
-        $.ajax(GetValidacionTema).done(function(validado)
-        {
-            if(validado==false)
-            {
-                    $.ajax(GetExisteArchivo).done(function(existenArchivos)
-                    {
-                        if(existenArchivos==true)
-                        {
-                            validarR = validar(idValidacionDocumento,columna,Obj,no);
-                            $.ajax({
-                                url:'../Controller/ValidacionDocumentosController.php?Op=ObtenerTemayResponsable',
-                                type:'GET',
-                                data:'ID_DOCUMENTO='+idDocumento,
-                                success:function(responsables)
-                                {
-                                    $.each(responsables,function(index,value)
-                                    {
-                                        (validarR)?
-                                        enviar_notificacion("Ha sido validado un documento por el responsable del documento",value.id_usuario,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento)//msj,para,tipomsj,atendido,asunto
-                                        :
-                                        enviar_notificacion("Ha sido desvalidado un documento por el responsable del documento",value.id_usuario,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento);//msj,para,tipomsj,atendido,asunto
-                                    });
-                                }
-                            });
-                        }
-                        if(existenArchivos==false)
-                        {
-                            swal("","Debe de adjuntar un archivo antes de Validar","info");
-                        }
-                        if(validado==-1)
-                        {
-                            swalError("Error en el servidor");
-                        }
-                    });
-            }
-            if(validado==true)
-                swalError("Imposible desvalidar");
-            if(validado==-1)
-                alert("Error en el servidor");
-        })
-        .fail(function()
-        {
-            swalError("Error en el servidor");
-        });
-    }
+    //     $.ajax(GetValidacionTema).done(function(validado)
+    //     {
+    //         if(validado==false)
+    //         {
+    //                 $.ajax(GetExisteArchivo).done(function(existenArchivos)
+    //                 {
+    //                     if(existenArchivos==true)
+    //                     {
+    //                         validarR = validar(idValidacionDocumento,columna,Obj,no);
+    //                         $.ajax({
+    //                             url:'../Controller/ValidacionDocumentosController.php?Op=ObtenerTemayResponsable',
+    //                             type:'GET',
+    //                             data:'ID_DOCUMENTO='+idDocumento,
+    //                             success:function(responsables)
+    //                             {
+    //                                 $.each(responsables,function(index,value)
+    //                                 {
+    //                                     (validarR)?
+    //                                     enviar_notificacion("Ha sido validado un documento por el responsable del documento",value.id_usuario,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento)//msj,para,tipomsj,atendido,asunto
+    //                                     :
+    //                                     enviar_notificacion("Ha sido desvalidado un documento por el responsable del documento",value.id_usuario,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento);//msj,para,tipomsj,atendido,asunto
+    //                                 });
+    //                             }
+    //                         });
+    //                     }
+    //                     if(existenArchivos==false)
+    //                     {
+    //                         swal("","Debe de adjuntar un archivo antes de Validar","info");
+    //                     }
+    //                     if(validado==-1)
+    //                     {
+    //                         swalError("Error en el servidor");
+    //                     }
+    //                 });
+    //         }
+    //         if(validado==true)
+    //             swalError("Imposible desvalidar");
+    //         if(validado==-1)
+    //             alert("Error en el servidor");
+    //     })
+    //     .fail(function()
+    //     {
+    //         swalError("Error en el servidor");
+    //     });
+    // }
 
-    idUsuario = <?php echo $Usuario["ID_USUARIO"] ?>;
 
-    function validarTemaR(Obj,columna,idValidacionDocumento,idDocumento,idPara)//listo
-    {
-        GetValidacionTema = $.ajax({
-            url:'../Controller/ValidacionDocumentosController.php?Op=GetValidacionDocumento',
-            type:'GET',
-            data:'ID_VALIDACION_DOCUMENTO='+idValidacionDocumento,
-        });
+    // function validarTemaR(Obj,columna,idValidacionDocumento,idDocumento,idPara)//listo
+    // {
+    //     GetValidacionTema = $.ajax({
+    //         url:'../Controller/ValidacionDocumentosController.php?Op=GetValidacionDocumento',
+    //         type:'GET',
+    //         data:'ID_VALIDACION_DOCUMENTO='+idValidacionDocumento,
+    //     });
         
-        GetValidacionTema.done(function(validado)
-        {
-            if(validado==true)
-            {
-                validarR = validar(idValidacionDocumento,columna,Obj);
-                (validarR)?(
-                enviar_notificacion("Ha sido validado un documento por el responsable de Tema",idPara,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento)//msj,para,tipomsj,atendido,asunto
-                ):(
-                enviar_notificacion("Ha sido desvalidado un documento por el responsable de Tema",idPara,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento)
-                );//msj,para,tipomsj,atendido,asunto
+    //     GetValidacionTema.done(function(validado)
+    //     {
+    //         if(validado==true)
+    //         {
+    //             validarR = validar(idValidacionDocumento,columna,Obj);
+    //             (validarR)?(
+    //             enviar_notificacion("Ha sido validado un documento por el responsable de Tema",idPara,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento)//msj,para,tipomsj,atendido,asunto
+    //             ):(
+    //             enviar_notificacion("Ha sido desvalidado un documento por el responsable de Tema",idPara,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento)
+    //             );//msj,para,tipomsj,atendido,asunto
 
-                $.ajax({
-                    url:'../Controller/ValidacionDocumentosController.php?Op=ObtenerTemayResponsable',
-                    type:'GET',
-                    data:'ID_DOCUMENTO='+idDocumento,
-                    success:function(responsables)
-                    {
-                        $.each(responsables,function(index,value)
-                        {
-                            if(value.id_usuario!=idUsuario)
-                            {
-                                (validarR)?
-                                enviar_notificacion("Ha sido validado un documento por el responsable de Tema",value.id_usuario,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento)//msj,para,tipomsj,atendido,asunto
-                                :
-                                enviar_notificacion("Ha sido desvalidado un documento por el responsable de Tema",value.id_usuario,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento);//msj,para,tipomsj,atendido,asunto
-                            }                                
-                        });
-                    }
-                });
-            }
-            if(validado==false)
-                swalError("Esperando validacion Responsable del documento");
-            if(validado==-1)
-                alert("Error en el servidor");
-        })
-        .fail(function()
-        {
-            swalError("Error en el servidor");
-        });
-    }
+    //             $.ajax({
+    //                 url:'../Controller/ValidacionDocumentosController.php?Op=ObtenerTemayResponsable',
+    //                 type:'GET',
+    //                 data:'ID_DOCUMENTO='+idDocumento,
+    //                 success:function(responsables)
+    //                 {
+    //                     $.each(responsables,function(index,value)
+    //                     {
+    //                         if(value.id_usuario!=idUsuario)
+    //                         {
+    //                             (validarR)?
+    //                             enviar_notificacion("Ha sido validado un documento por el responsable de Tema",value.id_usuario,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento)//msj,para,tipomsj,atendido,asunto
+    //                             :
+    //                             enviar_notificacion("Ha sido desvalidado un documento por el responsable de Tema",value.id_usuario,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento);//msj,para,tipomsj,atendido,asunto
+    //                         }                                
+    //                     });
+    //                 }
+    //             });
+    //         }
+    //         if(validado==false)
+    //             swalError("Esperando validacion Responsable del documento");
+    //         if(validado==-1)
+    //             alert("Error en el servidor");
+    //     })
+    //     .fail(function()
+    //     {
+    //         swalError("Error en el servidor");
+    //     });
+    // }
 
-    function validar(idValidacionDocumento,columna,Obj,no)//listo
-    {
-        no = "fa-times-circle-o";
-        yes = "fa-check-circle-o";
-        valor=false;
-        ($(Obj).hasClass(no))?valor=true:valor=false;
-        exitoT=false;
-        $.ajax({
-                url: '../Controller/ValidacionDocumentosController.php?Op=ModificarColumna',
-                type: 'POST',
-                data: 'ID_VALIDACION_DOCUMENTO='+idValidacionDocumento+'&COLUMNA='+columna+'&VALOR='+valor,
-                async:false,
-                success:function(exito)
-                {
-                    exitoT = valor;
-                    if(exito)
-                    {
-                        $(Obj).removeClass( (valor)?no:yes );
-                        $(Obj).addClass( (valor)?yes:no );
-                        $(Obj).css("color", (valor)?"#02ff00":"red" );
-                        swalSuccess("Cambio aceptado");
-                        listarValidacionDocumento(idValidacionDocumento,no);
-                        //aqui mandar notificacion
-                    }
-                },
-                error:function()
-                {
-                    swalError("Error en el servidor");
-                }
-            });
-        return exitoT;
-    }
+    // function validar(idValidacionDocumento,columna,Obj,no)//listo
+    // {
+    //     no = "fa-times-circle-o";
+    //     yes = "fa-check-circle-o";
+    //     valor=false;
+    //     ($(Obj).hasClass(no))?valor=true:valor=false;
+    //     exitoT=false;
+    //     $.ajax({
+    //             url: '../Controller/ValidacionDocumentosController.php?Op=ModificarColumna',
+    //             type: 'POST',
+    //             data: 'ID_VALIDACION_DOCUMENTO='+idValidacionDocumento+'&COLUMNA='+columna+'&VALOR='+valor,
+    //             async:false,
+    //             success:function(exito)
+    //             {
+    //                 exitoT = valor;
+    //                 if(exito)
+    //                 {
+    //                     // $(Obj).removeClass( (valor)?no:yes );
+    //                     // $(Obj).addClass( (valor)?yes:no );
+    //                     // $(Obj).css("color", (valor)?"#02ff00":"red" );
+    //                     // swalSuccess("Cambio aceptado");
+    //                     // listarValidacionDocumento(idValidacionDocumento,no);
+    //                     //aqui mandar notificacion
+    //                 }
+    //             },
+    //             error:function()
+    //             {
+    //                 swalError("Error en el servidor");
+    //             }
+    //         });
+    //     return exitoT;
+    // }
 
-    function noAcceso(Obj)
-    {
-        no = "fa-times-circle-o";
-        yes = "fa-check-circle-o";
-        valor=false;
-        ($(Obj).hasClass(no))?valor=false:valor=true;
-        swalInfo( ((valor)?"Documento validado":"Esperando al Responsable") );
-    }
+    // function noAcceso(Obj)
+    // {
+    //     no = "fa-times-circle-o";
+    //     yes = "fa-check-circle-o";
+    //     valor=false;
+    //     ($(Obj).hasClass(no))?valor=false:valor=true;
+    //     swalInfo( ((valor)?"Validado por el responsable del documento":"Esperando la validación del responsable del documento") );
+    // }
 
-    function modificarArchivos(idValidacionDocumento,valor)
-    {
-        $.ajax({
-            url:'../Controller/ValidacionDocumentosController.php?Op=ModificarArchivos',
-            type:'GET',
-            data:'ID_VALIDACION_DOCUMENTO='+idValidacionDocumento+'&VALOR='+valor,
-        });
-    }
+    
 
     intervalA="";
     timeOutA="";
