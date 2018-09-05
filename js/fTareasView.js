@@ -820,7 +820,8 @@ function loadChartView(bclose)
         }
     });
     
-    $("#graficaTareas").html("");
+//    
+//    $("#graficaTareas").html("");
     google.charts.load("current", {packages:["corechart"]});
     google.charts.setOnLoadCallback(drawChart);
     

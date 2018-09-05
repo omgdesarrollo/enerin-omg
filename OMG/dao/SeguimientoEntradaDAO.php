@@ -29,7 +29,7 @@ class SeguimientoEntradaDAO{
 
                     JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
 							
-                    JOIN empleados tbempleadosplan ON tbempleadosplan.id_empleado=tbseguimiento_entrada.id_empleado  ";
+                    JOIN empleados tbempleadosplan ON tbempleadosplan.id_empleado=tbseguimiento_entrada.id_empleado";
             
 
             $db=  AccesoDB::getInstancia();

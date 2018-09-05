@@ -127,64 +127,14 @@ require_once 'EncabezadoUsuarioView.php';
                         <div class="form-group">
                                 <div id="DocumentolistadoUrlModal"></div>
 			</div>
+                        
+                        <!--No lleva el botton de agregar archivo porque en esta vista no se debe cargar archivos, solo mostrar-->
 
-<!--                        <div class="form-group" method="post" >
-                                <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Archivo</button>
-                        </div>-->
                       </div><!-- cierre div class-body -->
                 </div><!-- cierre div class modal-content -->
         </div><!-- cierre div class="modal-dialog" -->
 </div><!-- cierre del modal -->
 
-
-
-<!-- Inicio de Seccion Modal Nuevo Documento-->
-<!--<div class="modal draggable fade" id="crea_documento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
-                <h4 class="modal-title" id="myModalLabel">Crear Nuevo Documento</h4>
-              </div>
-
-              <div class="modal-body">
-
-
-
-                                        <div class="form-group">
-                                                <label class="control-label" for="title">Clave del Documento:</label>
-                                                <textarea  id="CLAVE_DOCUMENTO" class="form-control" data-error="Ingrese la Clave del Documento" required></textarea>
-                                                <div class="help-block with-errors"></div>
-                                                <div id="msgerrorclave" ></div>
-                                        </div>
-
-                                        <div class="form-group">
-
-                                                <label class="control-label" for="title">Documento:</label>
-                                                <textarea  id="DOCUMENTO" class="form-control " data-error="Ingrese el Documento" required></textarea>
-                                                <div class="help-block with-errors"></div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="control-label" for="title">Responsable del Documento:</label>
-                                            <select id="ID_EMPLEADOMODAL" class="select2">
-                                            </select>
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-
-
-                                        <div class="form-group">
-                                            <button type="submit" style="width:49%" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
-                                            <button type="submit" style="width:49%" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
-                                        </div>
-
-
-              </div>
-            </div>
-
-          </div>
-        </div>-->
-<!--Final de Seccion Modal-->
        
 
 <script>
