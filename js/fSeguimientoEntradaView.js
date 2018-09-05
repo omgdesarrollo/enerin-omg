@@ -6,16 +6,26 @@ $(function(){
 
 
 
-//function inicializarFiltros()
-//{
-//    filtros =[
-//            {id:"noneUno",type:"none"},
-//            {id:"clave_documento",type:"text"},
-//            {id:"documento",type:"text"},
-//            {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
-//            {name:"opcion",id:"opcion",type:"opcion"}
-//            ];
-//}
+function inicializarFiltros()
+{
+    filtros =[
+            {id:"noneUno",type:"none"},
+            {id:"folio_entrada",type:"text"},
+            {id:"clave_autoridad",type:"text"},
+            {id:"asunto",type:"text"},
+            {id:"id_empleadotema",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
+            {id:"fecha_asignacion",type:"date"},
+            {id:"fecha_limite_atencion",type:"date"},
+            {id:"fecha_alarma",type:"date"},
+            {id:"status_doc",type:"text"},
+            {id:"condicion",type:"text"},
+            {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
+            {id:"noneDos",type:"none"},
+            {id:"noneTres",type:"none"},
+            {id:"noneCuatro",type:"none"},
+            {name:"opcion",id:"opcion",type:"opcion"}
+            ];
+}
 
 
 
@@ -70,23 +80,23 @@ function construirGrid()
         [
             { name: "id_principal",visible:false},
             { name:"no",title:"No",width:40},
-            { name: "folio_entrada",title:"Folio de Entrada", type: "text", validate: "required" },
-            { name: "clave_autoridad",title:"Autoridad Remitente", type: "text", validate: "required" },
-            { name: "asunto",title:"Asunto", type: "text", validate: "required" },
-            { name: "id_empleadotema",title:"Responsable del Tema", type: "text", validate: "required" },
-            { name: "fecha_asignacion",title:"Fecha de Asignacion", type: "text", validate: "required" },            
-            { name: "fecha_limite_atencion",title:"Fecha Limite de Atencion", type: "text", validate: "required" },            
-            { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required" },            
-            { name: "status_doc",title:"Status", type: "text", validate: "required" },
-            { name: "condicion",title:"Condicion Logica", type: "text", validate: "required" },
-            { name: "id_empleado",title:"Responsable del Plan", type: "select",
+            { name: "folio_entrada",title:"Folio de Entrada", type: "text", validate: "required",width:180,editing:false},
+            { name: "clave_autoridad",title:"Autoridad Remitente", type: "text", validate: "required",width:180,editing:false},
+            { name: "asunto",title:"Asunto", type: "text", validate: "required",width:180,editing:false},
+            { name: "id_empleadotema",title:"Responsable del Tema", type: "text", validate: "required",width:250,editing:false},
+            { name: "fecha_asignacion",title:"Fecha de Asignacion", type: "text", validate: "required",width:180,editing:false},            
+            { name: "fecha_limite_atencion",title:"Fecha Limite de Atencion", type: "text", validate: "required",width:200,editing:false},            
+            { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required",width:140,editing:false},            
+            { name: "status_doc",title:"Status", type: "text", validate: "required",editing:false},
+            { name: "condicion",title:"Condicion Logica", type: "text", validate: "required",width:140,editing:false},
+            { name: "id_empleado",title:"Responsable del Plan", type: "select",width:250,
                 items:EmpleadosCombobox,
                 valueField:"id_empleado",
                 textField:"nombre_completo"
             },
-            { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:120, editing:false },            
-            { name: "registrar_programa",title:"Registrar programa", type: "text", validate: "required",width:150, editing:false },            
-            { name: "avance_programa",title:"Avance del Programa", type: "text", validate: "required", editing:false },           
+            { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:140, editing:false },            
+            { name: "registrar_programa",title:"Registrar programa", type: "text", validate: "required",width:170, editing:false },            
+            { name: "avance_programa",title:"Avance del Programa", type: "text", validate: "required",width:180,editing:false },           
             { name:"delete", title:"Opción", type:"customControl",sorting:""}
         ],
         onItemUpdated: function(args)
@@ -232,7 +242,7 @@ function reconstruir(value,index)
     tempData["folio_entrada"]=value.folio_entrada;
     tempData["clave_autoridad"]=value.clave_autoridad;
     tempData["asunto"]=value.asunto;
-    tempData["id_empleadotema"]=value.nombre_empleadotema;
+    tempData["id_empleadotema"]=value.nombre_completotema;
     tempData["fecha_asignacion"]=value.fecha_asignacion;
     tempData["fecha_limite_atencion"]=value.fecha_limite_atencion;
     tempData["fecha_alarma"]=value.fecha_alarma;
@@ -370,9 +380,10 @@ function refresh()
 {
    listarEmpleados();
    listarDatos();
-//   inicializarFiltros();
-//   construirFiltros();
+   inicializarFiltros();
+   construirFiltros();
    gridInstance.loadData();
+   $(".jsgrid-grid-body").css({"height":"171px"});
 }
 
 function loadSpinner()

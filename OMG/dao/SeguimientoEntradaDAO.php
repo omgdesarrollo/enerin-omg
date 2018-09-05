@@ -7,29 +7,21 @@ class SeguimientoEntradaDAO{
     {
         try{
                 $query="SELECT tbseguimiento_entrada.id_seguimiento_entrada, tbseguimiento_entrada.avance_programa, 
-                    tbdocumento_entrada.id_documento_entrada, tbdocumento_entrada.folio_entrada, tbautoridad_remitente.clave_autoridad,
-                    tbdocumento_entrada.asunto,
-       
-		 tbempleados.id_empleado id_empleadotema, tbempleados.nombre_empleado nombre_empleadotema, 
-		 tbempleados.apellido_paterno apellido_paternotema, tbempleados.apellido_materno apellido_maternotema,
-		 
-		 tbempleadosplan.id_empleado,
- 		 
-		 tbdocumento_entrada.fecha_asignacion, tbdocumento_entrada.fecha_limite_atencion, tbdocumento_entrada.fecha_alarma,
-                 tbdocumento_entrada.status_doc, tbdocumento_entrada.documento, tbdocumento_entrada.observaciones FROM
-                 seguimiento_entrada tbseguimiento_entrada
-		 
-                    JOIN   documento_entrada tbdocumento_entrada ON 
-                    tbdocumento_entrada.id_documento_entrada=tbseguimiento_entrada.id_documento_entrada
-                    
-                    JOIN temas tbtemas ON tbtemas.id_tema=tbdocumento_entrada.id_tema
-		 
-                    JOIN autoridad_remitente tbautoridad_remitente ON
-                    tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad
-
-                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
-							
-                    JOIN empleados tbempleadosplan ON tbempleadosplan.id_empleado=tbseguimiento_entrada.id_empleado";
+                        tbdocumento_entrada.id_documento_entrada, tbdocumento_entrada.folio_entrada, tbautoridad_remitente.clave_autoridad,
+                        tbdocumento_entrada.asunto,
+                        tbempleados.id_empleado id_empleadotema, CONCAT(tbempleados.nombre_empleado,' ', 
+                        tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) AS nombre_completotema,
+                        tbempleadosplan.id_empleado,
+                        tbdocumento_entrada.fecha_asignacion, tbdocumento_entrada.fecha_limite_atencion, tbdocumento_entrada.fecha_alarma,
+                        tbdocumento_entrada.status_doc, tbdocumento_entrada.documento, tbdocumento_entrada.observaciones FROM
+                        seguimiento_entrada tbseguimiento_entrada
+                        JOIN   documento_entrada tbdocumento_entrada ON 
+                        tbdocumento_entrada.id_documento_entrada=tbseguimiento_entrada.id_documento_entrada                    
+                        JOIN temas tbtemas ON tbtemas.id_tema=tbdocumento_entrada.id_tema		 
+                        JOIN autoridad_remitente tbautoridad_remitente ON
+                        tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad
+                        JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado							
+                        JOIN empleados tbempleadosplan ON tbempleadosplan.id_empleado=tbseguimiento_entrada.id_empleado";
             
 
             $db=  AccesoDB::getInstancia();
