@@ -8,52 +8,6 @@ date_default_timezone_set("America/Mexico_city");
 
 class SeguimientoEntradaModel{
     
-//    public function  listarSeguimientoEntradas(){
-//        try{
-//            $dao=new SeguimientoEntradaDAO();
-//            $rec=$dao->mostrarSeguimientoEntradas();
-//            
-//            return $rec;
-//    }  catch (Exception $e){
-//        throw  $e;
-//    }
-//    }
-    
-//    public function insert
-    public function insertar($id_documento_entrada){
-        try{
-                $dao=new SeguimientoEntradaDAO();
-                $dao->insertar($id_documento_entrada);
-        }catch (Exception $ex) {
-                 throw  $ex;
-        }
-    }
-
-    
-    
-    public function actualizarPorColumna($COLUMNA,$VALOR,$ID_SEGUIMIENTO_ENTRADA){
-        try{
-            $dao=new SeguimientoEntradaDAO();
-            $rec= $dao->actualizarSeguimientoEntradaPorColumna($COLUMNA, $VALOR, $ID_SEGUIMIENTO_ENTRADA);
-            
-        } catch (Exception $ex) {
-
-        }
-    }
-    
-    
-    
-    public function eliminar(){
-        try{
-            $dao= new SeguimientoEntradaDAO();
-            $pojo= new SeguimientoEntradaPojo();
-            $dao->eliminarSeguimientoEntrada($pojo->getIdSeguimientoEntrada());
-        } catch (Exception $ex) {
-            throw $ex;
-        }
-    }
-    
-    
     public function listarSeguimientoEntradas()
     {
         try
@@ -121,6 +75,52 @@ class SeguimientoEntradaModel{
             return -1;
         }
     }
+    
+//    public function  listarSeguimientoEntradas(){
+//        try{
+//            $dao=new SeguimientoEntradaDAO();
+//            $rec=$dao->mostrarSeguimientoEntradas();
+//            
+//            return $rec;
+//    }  catch (Exception $e){
+//        throw  $e;
+//    }
+//    }
+    
+//    public function insert
+    public function insertar($id_documento_entrada){
+        try{
+                $dao=new SeguimientoEntradaDAO();
+                $dao->insertar($id_documento_entrada);
+        }catch (Exception $ex) {
+                 throw  $ex;
+        }
+    }
+
+    
+    
+    public function actualizarPorColumna($COLUMNA,$VALOR,$ID_SEGUIMIENTO_ENTRADA){
+        try{
+            $dao=new SeguimientoEntradaDAO();
+            $rec= $dao->actualizarSeguimientoEntradaPorColumna($COLUMNA, $VALOR, $ID_SEGUIMIENTO_ENTRADA);
+            
+        } catch (Exception $ex) {
+
+        }
+    }
+    
+    
+    
+    public function eliminar(){
+        try{
+            $dao= new SeguimientoEntradaDAO();
+            $pojo= new SeguimientoEntradaPojo();
+            $dao->eliminarSeguimientoEntrada($pojo->getIdSeguimientoEntrada());
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+    
     
 }
 

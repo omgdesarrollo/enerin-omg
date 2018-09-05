@@ -33,6 +33,10 @@ $Usuario=  Session::getSesion("user");
                  <script src="../../js/jquery.js" type="text/javascript"></script>
                  <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
     
+                 
+                    <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
+                <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
+
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
@@ -56,9 +60,10 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
                 <!--<script src="../../js/tools.js" type="text/javascript"></script>-->
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
-                <script src="../../js/fDocumentoSalidaView.js" type="text/javascript"></script>
-   
-                
+                <!--<script src="../../js/fDocumentoSalidaView.js" type="text/javascript"></script>-->
+                <!-- Empieza libreria que contiene la estructura del jsGridCompleta en configuracion-->
+                <script src="../../js/fGridComponent.js" type="text/javascript"></script>
+                <!--termina libreria que contiene la estructura del jsGridCompleta--> 
         <style>
             .jsgrid-header-row>.jsgrid-header-cell {
                 background-color:#307ECC ;      /* orange */
@@ -206,21 +211,221 @@ require_once 'EncabezadoUsuarioView.php';
 </div><!-- cierre del modal --> 
 
 <script>
-    
-     $(function(){
-         
-  
-     })
-DataGrid = [];
-dataListado=[];
-filtros=[];
-ultimoNumeroGrid=0;
-DocumentoEntradasComboBox=[];
+var DataGrid=[];
+var dataListado=[];
+var filtros=[];
+var db={};
+var gridInstance;
+var mensajesjGrowl=[{header:"Solicitud",mensaje:"Solicitando Datos..."}];
 
-listarDatos();
-inicializarFiltros();
-construirGrid();
-construirFiltros();
+
+var MyField = function(config)
+{
+        // data = {};
+    jsGrid.Field.call(this, config);
+//     console.log(this);
+};
+
+
+MyField.prototype = new jsGrid.Field
+({
+        css: "date-field",
+        align: "center",
+        sorter: function(date1, date2)
+        {
+                console.log("haber cuando entra aqui");
+                console.log(date1);
+                console.log(date2);
+        },
+        itemTemplate: function(value)
+        {
+//                fecha="0000-00-00";
+//                // console.log(this);
+//                this[this.name] = value;
+//                // console.log(data);
+//                if(value!=fecha)
+//                {
+//                        date = new Date(value);
+//                        fecha = date.getDate()+1 +" "+ months[date.getMonth()] +" "+ date.getFullYear().toString().slice(2,4);
+//                        return fecha;
+//                }
+//                else
+//                        return "Sin fecha";
+return "";
+        },
+        insertTemplate: function(value)
+        {},
+        editTemplate: function(value)
+        {
+                // console.log(this);
+//                fecha="0000-00-00";
+//                if(value!=fecha)
+//                {
+//                        fecha=value;
+//                }
+//                return this._inputDate = $("<input>").attr({type:"date",value:fecha,style:"margin:-5px;width:145px"});
+       return "";
+       },
+        insertValue: function()
+        {},
+        editValue: function(val)
+        {
+//                value = this._inputDate[0].value;
+//                if(value=="")
+//                        return "0000-00-00";
+//                else
+//                        return $(this._inputDate).val();
+return "";
+        }
+});
+
+var customsFieldsGridData=[
+        {field:"customControl",my_field:MyField}
+//        {field:"date",my_field:MyField},
+];
+
+function inicializarEstructuraGrid(){
+
+return new Promise((resolve,reject)=>{
+      
+      estructuraGrid=[{ name: "id_principal", visible:false },
+                        { name: "no", title: "NO", type: "text", width:150},
+                        { name: "folio_entrada", title: "Folio de Entrada", type: "text", width:150},
+                        { name: "folio_salida", title: "Folio de Salida", type: "text", width:150},
+                        { name: "nombre_empleado", title: "Responsable Tema", type: "text", width:150},
+                        { name: "fecha_envio", title: "Fecha de Envio", type: "text", width:150},
+                        { name: "asunto", title: "Asunto", type: "text", width:150},
+                        { name: "destinatario", title: "Destinatario", type: "text", width:150},
+                        { name: "clave_autoridad", title: "Autoridad Remitente", type: "text", width:150},
+                        { name: "archivo_adjunto", title: "Arvhivo Adjunto", type: "text", width:150,editing:false},    
+                        { name: "observaciones", title: "Observacion", type: "text", width:150},
+                        { name: "delete", title: "Opcion", type: "customControl", width:150}
+                     ];
+       resolve();
+  })
+
+  
+    }
+ultimoNumeroGrid=0;
+//DataGrid = [];
+//dataListado=[];
+//filtros=[];
+//ultimoNumeroGrid=0;
+//DocumentoEntradasComboBox=[];
+
+//listarDatos();
+//inicializarFiltros();
+//construirGrid();
+//construirFiltros();
+
+function inicializarFiltros()
+{
+    return new Promise((resolve,reject)=>
+    {
+        filtros = [
+                // { id:"noneUno", type:"none"},
+                // { id: "id_principal", visible:false },
+                {id:"noneUno", type:"none"},
+                { id: "folio_entrada", name: "Folio Entrada", type: "text"},
+                { id: "folio_salida", name: "Folio Entrada", type: "text"},
+                // { name: "fecha_recepcion", title: "Fecha Recepción", type: "text", width, validate: "required" },   
+                {id:"nombre_empleado", name: "Referencia",type:"text"},
+    //            {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
+                {id:"fecha_envio",type:"date"},
+                {id:"asunto",type:"text"},
+                {id:"destinatario",type:"text"},
+                {id:"clave_autoridad",type:"text"},
+              { id:"noneDos", type:"none"},
+                {id:"observaciones",type:"text"},
+                {name:"opcion",id:"opcion",type:"opcion"}
+                // { id:"delete", name:"Opción", type:"customControl",sorting:""},
+        ];
+        resolve();
+    });
+}
+
+//()=>{  esto e igual a function(){
+inicializarEstructuraGrid().then(()=>{
+   
+    inicializarEstructuraGrid().then(()=>{
+        construirGrid();
+ 
+    
+        inicializarFiltros().then(()=>{
+                construirFiltros();
+                  listarDatos()
+            });
+    });   
+        
+ });
+ 
+ 
+ function listarDatos()
+{
+   
+        __datos=[];    
+        datosParamAjaxValues={};
+        datosParamAjaxValues["url"]="../Controller/DocumentosSalidaController.php?Op=Listar&URL=filesDocumento/Salida/";
+        datosParamAjaxValues["type"]="POST";
+        datosParamAjaxValues["async"]=true;
+//return new Promise((resolve,reject)=>{
+        var variablefunciondatos=function obtenerDatosServer (data)
+        {
+       
+           if(typeof(data)=="object")
+           {
+               
+                dataListado = data;
+                $.each(data,function(index,value)
+                {
+                    __datos.push(reconstruir(value,index++));
+                });
+                    DataGrid = __datos;
+                    gridInstance.loadData();
+                    
+//                    resolve();
+            }
+   
+            else
+            {
+                 growlSuccess("Solicitud","No Existen Registros de Documento de Salida");
+//                  reject();
+
+            }
+        
+        }
+//    })
+    
+    var listfunciones=[variablefunciondatos];
+    ajaxHibrido(datosParamAjaxValues,listfunciones);
+//    DataGrid = __datos;
+//    }
+}
+
+function reconstruir(value,index)
+{
+    tempData=new Object();
+    ultimoNumeroGrid = index;
+    tempData["id_principal"]= [{'id_documento_salida':value.id_documento_salida}];
+    tempData["no"]= index;
+    tempData["id_documento_entrada"]=value.id_documento_entrada;
+    tempData["folio_salida"]=value.folio_salida;
+    tempData["id_empleado"]= value.nombre_empleado;
+    tempData["fecha_envio"]=value.fecha_envio;
+    tempData["asunto"]=value.asunto;
+    tempData["destinatario"]=value.destinatario;
+    tempData["clave_autoridad"]=value.clave_autoridad;
+    tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_documento_salida+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
+    tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
+    tempData["observaciones"]=value.observaciones;
+    tempData["delete"]="1";
+    tempData["delete"]= [{"existe_archivo":value.archivosUpload[0].length}];
+    return tempData;
+}
+
+
+
+
 </script>
 
 

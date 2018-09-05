@@ -54,7 +54,7 @@ function inicializarFiltros()
 //            {id:"folio_entrada",type:"text"},
             {id:"id_documento_entrada",type:"combobox",data:listarFoliosDeEntrada(),descripcion:"folio_entrada"},
             {id:"folio_salida",type:"text"},
-            {id:"id_empleado",type:"text"},
+            {id:"nombre_empleado",type:"text"},
 //            {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
             {id:"fecha_envio",type:"date"},
             {id:"asunto",type:"text"},
@@ -207,6 +207,7 @@ MyCControlField.prototype = new jsGrid.Field
         itemTemplate: function(value,todo)
         {
 //            alert(value,todo);
+
             if(value[0]['existe_archivo']!=0)
                 return "";
             else
@@ -251,11 +252,20 @@ function listarDatos()
     
     var variablefunciondatos=function obtenerDatosServer (data)
     {
-        dataListado = data;
-        $.each(data,function(index,value)
+        if(typeof(data)=="object")
         {
-            __datos.push(reconstruir(value,index++));
-        });
+            growlSuccess("Solicitud","Registros obtenidos");
+            dataListado = data;
+            $.each(data,function(index,value)
+            {
+                __datos.push(reconstruir(value,index+1));
+                
+            });
+             DataGrid = __datos;
+            gridInstance.loadData();
+            resolve();
+        
+        }
 
     }
     
