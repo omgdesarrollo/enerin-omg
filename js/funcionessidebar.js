@@ -233,18 +233,18 @@ function loadDataSideBarOficiosDocumentacion(lista)
    
    
 //        consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
-        consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
+//        consultarInformacion("../Controller/SeguimientoEntradasController.php?Op=Listar");
 //        consultarInformacion("../Controller/InformeGerencialController.php?Op=Listar");
         $("#sidebarObjV").load('InyectarVistasView.php #informegerencial');
                             
     }
+    
     function loadDataSideBarCumplimientosDocumentos(){
         
         
         consultarInformacion("../Controller/ValidacionDocumentosController.php?Op=Listar");
         $("#sidebarObjV").load('InyectarVistasView.php #validaciondocumentos');                       
-    }
-                
+    }           
     
     function loadDataSideBarCumplimientosEvidencias()
     {

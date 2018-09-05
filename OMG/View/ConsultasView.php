@@ -147,7 +147,7 @@ $Usuario=  Session::getSesion("user");
     var filtros=[];
     var db={};
     var gridInstance;
-    var thisjGrowl;
+//    var thisjGrowl;
     var ultimoNumeroGrid=0;
     var opcion_vista_grafica = 1;
     // var grafica1;

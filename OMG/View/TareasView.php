@@ -29,6 +29,11 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
                 <!--Termina para el spiner cargando-->
                 
+                <!--Libreria local, para grafica-->
+                <script src="../../assets/chart/loader.js" type="text/javascript"></script>
+                <!--Libreria web, para grafica-->
+                <!--<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>-->
+                
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 <!--<link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>-->
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
@@ -50,9 +55,7 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/tools.js" type="text/javascript"></script>
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
-                <script src="../../js/fTareasView.js" type="text/javascript"></script>
-                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                
+                <script src="../../js/fTareasView.js" type="text/javascript"></script>                
                 
         <style>
             .jsgrid-header-row>.jsgrid-header-cell {
