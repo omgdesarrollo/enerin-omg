@@ -216,8 +216,8 @@ var dataListado=[];
 var filtros=[];
 var db={};
 var gridInstance;
-var mensajesjGrowl=[{header:"Solicitud",mensaje:"Solicitando Datos..."}];
-
+var encabezado="";
+var mensaje="";
 
 var MyField = function(config)
 {
@@ -307,16 +307,6 @@ return new Promise((resolve,reject)=>{
   
     }
 ultimoNumeroGrid=0;
-//DataGrid = [];
-//dataListado=[];
-//filtros=[];
-//ultimoNumeroGrid=0;
-//DocumentoEntradasComboBox=[];
-
-//listarDatos();
-//inicializarFiltros();
-//construirGrid();
-//construirFiltros();
 
 function inicializarFiltros()
 {
@@ -392,7 +382,6 @@ inicializarEstructuraGrid().then(()=>{
 //                  reject();
 
             }
-        
         }
 //    })
     
