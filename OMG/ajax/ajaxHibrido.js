@@ -10,19 +10,19 @@ function ajaxHibrido(paramAjaxValues,funciones){
         async:paramAjaxValues["async"],
         beforeSend:function()
         {
-            growlWait("Solicitud","Solicitando Datos...");
+//            growlWait(encabezado,mensaje);
 //            $('#loader').show();
         },
         success:function(response)
         {    
-           growlSuccess(mensajesjGrowl[0]["header"],mensajesjGrowl[0]["header"]);
+//           growlSuccess(encabezado,mensaje);
             funciones[0](response);
             resolve();
 //            $('#loader').hide();    
         },
         error:function(error)
         {
-             growlError("Error","Error en el servidor");
+//             growlError("Error","Error en el servidor");
             reject();
 //            $('#loader').hide();
         }
