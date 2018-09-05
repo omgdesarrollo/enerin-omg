@@ -252,11 +252,20 @@ function listarDatos()
     
     var variablefunciondatos=function obtenerDatosServer (data)
     {
-        dataListado = data;
-        $.each(data,function(index,value)
+        if(typeof(data)=="object")
         {
-            __datos.push(reconstruir(value,index++));
-        });
+            growlSuccess("Solicitud","Registros obtenidos");
+            dataListado = data;
+            $.each(data,function(index,value)
+            {
+                __datos.push(reconstruir(value,index+1));
+                
+            });
+             DataGrid = __datos;
+            gridInstance.loadData();
+            resolve();
+        
+        }
 
     }
     

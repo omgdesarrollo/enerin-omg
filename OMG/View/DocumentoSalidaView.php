@@ -216,6 +216,8 @@ var dataListado=[];
 var filtros=[];
 var db={};
 var gridInstance;
+var mensajesjGrowl=[{header:"Solicitud",mensaje:"Solicitando Datos..."}];
+
 
 var MyField = function(config)
 {
@@ -284,8 +286,8 @@ var customsFieldsGridData=[
 
 function inicializarEstructuraGrid(){
 
-
 return new Promise((resolve,reject)=>{
+      
       estructuraGrid=[{ name: "id_principal", visible:false },
                         { name: "no", title: "NO", type: "text", width:150},
                         { name: "folio_entrada", title: "Folio de Entrada", type: "text", width:150},
@@ -295,12 +297,13 @@ return new Promise((resolve,reject)=>{
                         { name: "asunto", title: "Asunto", type: "text", width:150},
                         { name: "destinatario", title: "Destinatario", type: "text", width:150},
                         { name: "clave_autoridad", title: "Autoridad Remitente", type: "text", width:150},
-                        { name: "archivo_adjunto", title: "Arvhivo Adjunto", type: "text", width:150},
+                        { name: "archivo_adjunto", title: "Arvhivo Adjunto", type: "text", width:150,editing:false},    
                         { name: "observaciones", title: "Observacion", type: "text", width:150},
                         { name: "delete", title: "Opcion", type: "customControl", width:150}
                      ];
-      resolve();
+       resolve();
   })
+
   
     }
 ultimoNumeroGrid=0;
@@ -332,7 +335,7 @@ function inicializarFiltros()
                 {id:"asunto",type:"text"},
                 {id:"destinatario",type:"text"},
                 {id:"clave_autoridad",type:"text"},
-                {id:"archivo_adjunto",type:"text"},
+              { id:"noneDos", type:"none"},
                 {id:"observaciones",type:"text"},
                 {name:"opcion",id:"opcion",type:"opcion"}
                 // { id:"delete", name:"Opción", type:"customControl",sorting:""},
@@ -345,9 +348,83 @@ function inicializarFiltros()
 inicializarEstructuraGrid().then(()=>{
    
     inicializarEstructuraGrid().then(()=>{
-        construirFiltros();
-    })
- })
+        construirGrid();
+ 
+    
+        inicializarFiltros().then(()=>{
+                construirFiltros();
+                  listarDatos()
+            });
+    });   
+        
+ });
+ 
+ 
+ function listarDatos()
+{
+   
+        __datos=[];    
+        datosParamAjaxValues={};
+        datosParamAjaxValues["url"]="../Controller/DocumentosSalidaController.php?Op=Listar&URL=filesDocumento/Salida/";
+        datosParamAjaxValues["type"]="POST";
+        datosParamAjaxValues["async"]=true;
+//return new Promise((resolve,reject)=>{
+        var variablefunciondatos=function obtenerDatosServer (data)
+        {
+       
+           if(typeof(data)=="object")
+           {
+               
+                dataListado = data;
+                $.each(data,function(index,value)
+                {
+                    __datos.push(reconstruir(value,index++));
+                });
+                    DataGrid = __datos;
+                    gridInstance.loadData();
+                    
+//                    resolve();
+            }
+   
+            else
+            {
+                 growlSuccess("Solicitud","No Existen Registros de Documento de Salida");
+//                  reject();
+
+            }
+        
+        }
+//    })
+    
+    var listfunciones=[variablefunciondatos];
+    ajaxHibrido(datosParamAjaxValues,listfunciones);
+//    DataGrid = __datos;
+//    }
+}
+
+function reconstruir(value,index)
+{
+    tempData=new Object();
+    ultimoNumeroGrid = index;
+    tempData["id_principal"]= [{'id_documento_salida':value.id_documento_salida}];
+    tempData["no"]= index;
+    tempData["id_documento_entrada"]=value.id_documento_entrada;
+    tempData["folio_salida"]=value.folio_salida;
+    tempData["id_empleado"]= value.nombre_empleado;
+    tempData["fecha_envio"]=value.fecha_envio;
+    tempData["asunto"]=value.asunto;
+    tempData["destinatario"]=value.destinatario;
+    tempData["clave_autoridad"]=value.clave_autoridad;
+    tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_documento_salida+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
+    tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
+    tempData["observaciones"]=value.observaciones;
+    tempData["delete"]="1";
+    tempData["delete"]= [{"existe_archivo":value.archivosUpload[0].length}];
+    return tempData;
+}
+
+
+
 
 </script>
 
