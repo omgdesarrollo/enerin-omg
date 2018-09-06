@@ -558,9 +558,97 @@ function preguntarEliminar(data)
         });
 }
 
-function saveToDatabaseDatosFormulario(datos)
+function saveUpdateToDatabase(args)//listo
 {
+        console.log(args);
+        columnas=new Object();
+        entro=0;
+        id_afectado = args['item']['id_principal'][0];
+        region_fiscalTemp = args['previousItem']['region_fiscal'];
+        verificar = 0;
+        $.each(args['item'],(index,value)=>
+        {
+                if(args['previousItem'][index]!=value && value!="")
+                {
+                        if(index!='id_principal' && !value.includes("<button") && index!="delete")
+                        {
+                                columnas[index]=value;
+                        }
+                }
+                if(args['previousItem'][index]!=value && value=="")
+                {
+                        if(index=="fecha_asignacion" || index=="fecha_limite_atencion")
+                                swal("D'oh!", "La fecha de asignacion y la fecha limite no pueden ser vacias, VERIFICA", "error");
+                        if(index=="fecha_alarma")
+                                columnas[index]="0000-00-00";
+                }
+                if(index=="folio_entrada" && args['previousItem']["folio_entrada"]!=value)
+                       verificar = verificarExiste(value,"folio_entrada");
+        });
 
+        if( Object.keys(columnas).length != 0 && verificar==0)
+        {
+                fechas = true;
+                $.each(columnas,(index,value)=>
+                {
+                        if(index == "fecha_asignacion")
+                        {
+                                fechas = compararFechaAsignacion(value,args["previousItem"]["fecha_limite_atencion"],args["previousItem"]["fecha_alarma"]);
+                        }
+                        if(index == "fecha_limite_atencion")
+                        {
+                                fechas = compararFechaLimite(value,args["previousItem"]["fecha_asignacion"],args["previousItem"]["fecha_alarma"]);
+                        }
+                        if(index == "fecha_alarma")
+                        {
+                                fechas = compararFechaAlarma(value,args["previousItem"]["fecha_asignacion"],args["previousItem"]["fecha_limite_atencion"]);
+                        }
+                });
+                if(fechas)
+                {
+                        $.ajax({
+                        url:"../Controller/GeneralController.php?Op=Actualizar",
+                        type:"POST",
+                        data:'TABLA=documento_salida'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
+                        beforeSend:()=>
+                        {
+                                growlWait("Actualización","Espere...");
+                        },
+                        success:(data)=>
+                        {
+                                // console.log("resultado actualizacion: ",data);
+                                if(data==1)
+                                {
+                                        growlSuccess("Actulización","Se actualizaron los campos");
+                                        actualizarDocumentoEntrada(id_afectado.id_documento_entrada);
+                                }
+                                else
+                                {
+                                        growlError("Actualización","No se pudo actualizar");
+                                        componerDataGrid();
+                                        gridInstance.loadData();
+                                }
+                        },
+                        error:function()
+                        {
+                                componerDataGrid();
+                                gridInstance.loadData();
+                                growlError("Error","Error del servidor");
+                        }
+                        });
+                }
+                else
+                {
+                        componerDataGrid();
+                        gridInstance.loadData();
+                }
+        }
+        else
+        {
+                componerDataGrid();
+                gridInstance.loadData();
+        }
+//     else investigar que hacer cuando no hay que actualizar
 }
 // $('.start').click();
 //                                                        swalSuccess("Creado con exito");
