@@ -224,17 +224,18 @@ var encabezado="";
 var mensaje="";
 var thisAutoridad=[];
 
-var MyDateField = function(config)
+var MyComboAutoridad = function(config)
 {
         // data = {};
     jsGrid.Field.call(this, config);
 //     console.log(this);
 };
  
-MyDateField.prototype = new jsGrid.Field
+MyComboAutoridad.prototype = new jsGrid.Field
 ({
-        css: "date-field",
+        // css: "date-field",
         align: "center",
+        // background:"red",
         sorter: function(date1, date2)
         {
                 console.log("haber cuando entra aqui");
@@ -243,45 +244,56 @@ MyDateField.prototype = new jsGrid.Field
         },
         itemTemplate: function(value)
         {
-                fecha="0000-00-00";
-                // console.log(this);
-                this[this.name] = value;
-                // console.log(data);
-                if(value!=fecha)
-                {
-                        date = new Date(value);
-                        fecha = date.getDate()+1 +" "+ months[date.getMonth()] +" "+ date.getFullYear().toString().slice(2,4);
-                        return fecha;
-                }
-                else
-                        return "Sin fecha";
+                var res ="";
+                value!=null ?
+                $.each(thisAutoridad,(index,val)=>{
+                        if(val.id_autoridad == value)
+                                res = val.clave_autoridad;
+                })
+                : console.log();
+                return res;
         },
         insertTemplate: function(value)
         {},
-        editTemplate: function(value)
+        editTemplate: function(value,todo)
         {
                 // console.log(this);
-                fecha="0000-00-00";
-                if(value!=fecha)
+                // fecha="0000-00-00";
+                // if(value!=fecha)
+                // {
+                //         fecha=value;
+                // }
+                var temp = "";
+                var temp2 = "";
+                $.each(thisAutoridad,(index,val)=>{
+                        temp += "<option value='"+val.id_autoridad+"'>"+val.clave_autoridad+"</option>";
+                        if(val.id_autoridad == value)
+                                temp2 = val.clave_autoridad;
+                })
+                this._inputDate = $("<select>").attr({style:"margin:-5px;width:145px"});
+                $(this._inputDate[0]).append(temp);
+
+                if(todo.id_documento_entrada!=-1)
                 {
-                        fecha=value;
+                        this._inputDate = temp2;
                 }
-                return this._inputDate = $("<input>").attr({type:"date",value:fecha,style:"margin:-5px;width:145px"});
+                // console.log(todo.id_documento_entrada);
+                // console.log(this._inputDate);
+                return this._inputDate;
+                
         },
         insertValue: function()
         {},
         editValue: function(val)
         {
-                value = this._inputDate[0].value;
-                if(value=="")
-                        return "0000-00-00";
-                else
-                        return $(this._inputDate).val();
+                // console.log("A");
+                return this._inputDate.val();
         }
 });
 
 var customsFieldsGridData=[
-        {field:"customControl",my_field:MyCControlField}
+        {field:"customControl",my_field:MyCControlField},
+        {field:"comboAutoridad",my_field:MyComboAutoridad},
 //        {field:"date",my_field:MyField},
 ];
 
@@ -289,7 +301,9 @@ function inicializarEstructuraGrid(){
 
 return new Promise((resolve,reject)=>{
       
-      estructuraGrid=[{ name: "id_principal", visible:false },
+      estructuraGrid=[
+              { name: "id_principal", visible:false },
+              { name: "id_documento_entrada", visible:false },
                         { name: "no", title: "No", type: "text", width:50,editing:false},
                         { name: "folio_entrada", title: "Folio de Entrada", type: "text", width:150,editing:false},
                         { name: "folio_salida", title: "Folio de Salida", type: "text", width:150,editing:false},
@@ -297,7 +311,7 @@ return new Promise((resolve,reject)=>{
                         { name: "fecha_envio", title: "Fecha de Envio", type: "text", width:150,editing:false},
                         { name: "asunto", title: "Asunto", type: "text", width:150},
                         { name: "destinatario", title: "Destinatario", type: "text", width:150},
-                        { name: "clave_autoridad", title: "Autoridad Remitente", type: "text", width:150},
+                        { name: "id_autoridad", title: "Autoridad Remitente", type: "comboAutoridad", width:150},
                         { name: "archivo_adjunto", title: "Archivo Adjunto", type: "text", width:150,editing:false},    
                         { name: "observaciones", title: "Observacion", type: "text", width:150},
                         { name: "delete", title: "Opcion", type: "customControl", width:150}
@@ -426,7 +440,7 @@ function reconstruir(value,index)
     ultimoNumeroGrid = index;
     tempData["id_principal"] = [];
     tempData["id_principal"].push({'id_documento_salida':value.id_documento_salida});
-    
+    tempData["id_documento_entrada"] = value.id_documento_entrada;
     tempData["no"]= index;
     tempData["folio_entrada"]=value.folio_entrada;
     tempData["folio_salida"]=value.folio_salida;
@@ -434,7 +448,7 @@ function reconstruir(value,index)
     tempData["fecha_envio"]=value.fecha_envio;
     tempData["asunto"]=value.asunto;
     tempData["destinatario"]=value.destinatario;
-    tempData["clave_autoridad"]=value.clave_autoridad;
+    tempData["id_autoridad"]=value.id_autoridad;
     tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_documento_salida+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
     tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
     tempData["observaciones"]=value.observaciones;
@@ -567,6 +581,102 @@ function preguntarEliminar(data)
         });
 }
 
+function saveUpdateToDatabase(args)//listo
+{
+        console.log(args);
+        columnas=new Object();
+        entro=0;
+        id_afectado = args['item']['id_principal'][0];
+//        region_fiscalTemp = args['previousItem']['region_fiscal'];
+        verificar = 0;
+        $.each(args['item'],(index,value)=>
+        {
+                if(args['previousItem'][index]!=value && value!="")
+                {
+                        if(index!='id_principal' && !value.includes("<button") && index!="delete")
+                        {
+                                columnas[index]=value;
+                        }
+                }
+//                if(args['previousItem'][index]!=value && value=="")
+//                {
+//                        if(index=="fecha_asignacion" || index=="fecha_limite_atencion")
+//                                swal("D'oh!", "La fecha de asignacion y la fecha limite no pueden ser vacias, VERIFICA", "error");
+//                        if(index=="fecha_alarma")
+//                                columnas[index]="0000-00-00";
+//                }
+//                if(index=="folio_entrada" && args['previousItem']["folio_entrada"]!=value)
+//                       verificar = verificarExiste(value,"folio_entrada");
+        });
+
+        if( Object.keys(columnas).length != 0 && verificar==0)
+        {
+                fechas = true;
+                $.each(columnas,(index,value)=>
+                {
+                        if(index == "fecha_asignacion")
+                        {
+                                fechas = compararFechaAsignacion(value,args["previousItem"]["fecha_limite_atencion"],args["previousItem"]["fecha_alarma"]);
+                        }
+                        if(index == "fecha_limite_atencion")
+                        {
+                                fechas = compararFechaLimite(value,args["previousItem"]["fecha_asignacion"],args["previousItem"]["fecha_alarma"]);
+                        }
+                        if(index == "fecha_alarma")
+                        {
+                                fechas = compararFechaAlarma(value,args["previousItem"]["fecha_asignacion"],args["previousItem"]["fecha_limite_atencion"]);
+                        }
+                });
+                if(fechas)
+                {
+                        $.ajax({
+                        url:"../Controller/GeneralController.php?Op=Actualizar",
+                        type:"POST",
+                        data:'TABLA=documento_salida'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
+                        beforeSend:()=>
+                        {
+                                growlWait("Actualización","Espere...");
+                        },
+                        success:(data)=>
+                        {
+                                // console.log("resultado actualizacion: ",data);
+                                if(data==1)
+                                {
+                                        growlSuccess("Actulización","Se actualizaron los campos");
+                                        actualizarDocumentoEntrada(id_afectado.id_documento_entrada);
+                                }
+                                else
+                                {
+                                        growlError("Actualización","No se pudo actualizar");
+                                        componerDataGrid();
+                                        gridInstance.loadData();
+                                }
+                        },
+                        error:function()
+                        {
+                                componerDataGrid();
+                                gridInstance.loadData();
+                                growlError("Error","Error del servidor");
+                        }
+                        });
+                }
+                else
+                {
+                        componerDataGrid();
+                        gridInstance.loadData();
+                }
+        }
+        else
+        {
+                componerDataGrid();
+                gridInstance.loadData();
+        }
+//     else investigar que hacer cuando no hay que actualizar
+}
+// $('.start').click();
+//                                                        swalSuccess("Creado con exito");
+//                                                        $('#create-item .close').click();
+//                                                        refresh();
  
  function refresh(){
      
