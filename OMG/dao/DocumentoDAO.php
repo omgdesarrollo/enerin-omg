@@ -8,8 +8,8 @@ class DocumentoDAO{
         try{
             
             $query="SELECT tbdocumentos.id_documento, tbdocumentos.clave_documento, tbdocumentos.documento,
-                    tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno,
-                    tbempleados.apellido_materno FROM documentos tbdocumentos
+                    tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno,tbempleados.apellido_materno 
+                    FROM documentos tbdocumentos
 
                     JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumentos.id_empleado
                     WHERE tbdocumentos.contrato=$CONTRATO

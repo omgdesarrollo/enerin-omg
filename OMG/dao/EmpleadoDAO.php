@@ -58,7 +58,7 @@ class EmpleadoDAO{
     {
         try
         {
-            $query="SELECT empleados.id_empleado, CONCAT(empleados.nombre_empleado,' ',empleados.apellido_paterno,' ',empleados.apellido_materno) AS nombre_completo 
+            $query="SELECT empleados.id_empleado, empleados.id_empleado id_empleadotema, CONCAT(empleados.nombre_empleado,' ',empleados.apellido_paterno,' ',empleados.apellido_materno) AS nombre_completo 
                     FROM empleados";
             
             $db=  AccesoDB::getInstancia();

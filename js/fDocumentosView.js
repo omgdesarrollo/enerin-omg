@@ -221,7 +221,7 @@ function listarDatos()
     var variablefunciondatos=function obtenerDatosServer (data)
     {
         dataListado = data;
-        $.each(data.doc,function(index,value)
+        $.each(data,function(index,value)
         {
             __datos.push(reconstruir(value,index++));
         });
