@@ -222,6 +222,7 @@ var db={};
 var gridInstance;
 var encabezado="";
 var mensaje="";
+var thisAutoridad=[];
 
 var MyDateField = function(config)
 {
@@ -324,7 +325,7 @@ function inicializarFiltros()
                 {id:"fecha_envio",type:"date"},
                 {id:"asunto",type:"text"},
                 {id:"destinatario",type:"text"},
-                {id:"clave_autoridad",type:"text"},
+                {id:"clave_autoridad",type:"combobox",data:thisAutoridad,descripcion:""},
               { id:"noneDos", type:"none"},
                 {id:"observaciones",type:"text"},
                 {name:"opcion",id:"opcion",type:"opcion"}
@@ -335,18 +336,19 @@ function inicializarFiltros()
 }
 
 //()=>{  esto e igual a function(){
+
+
 inicializarEstructuraGrid().then(()=>{
-   
-    inicializarEstructuraGrid().then(()=>{
-        construirGrid();
- 
-    
-        inicializarFiltros().then(()=>{
-                construirFiltros();
-                  listarDatos()
-            });
-    });   
-        
+        listarAutoridades().then(()=>
+        {
+                inicializarEstructuraGrid().then(()=>{
+                        construirGrid();
+                        inicializarFiltros().then(()=>{
+                                construirFiltros();
+                                listarDatos()
+                        });
+                });
+        });
  });
  
  function listarAutoridades()
