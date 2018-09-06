@@ -393,33 +393,6 @@ function insertarDocumentoSalida(documentoSalidaDatos)
 }
 
 
-//function refresh()
-//{
-//   listarDatos();
-//   inicializarFiltros();
-//   construirFiltros();
-//   gridInstance.loadData();
-//}
-//
-//function loadSpinner()
-//{
-//    myFunction();
-//}
-
-//function loadBlockUi()
-//{
-//    $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF"> Espere Por Favor</span>', css:
-//    { 
-//        border: 'none', 
-//        padding: '15px', 
-//        backgroundColor: '#000', 
-//        '-webkit-border-radius': '10px', 
-//        '-moz-border-radius': '10px', 
-//        opacity: .5, 
-//        color: '#fff' 
-//    },overlayCSS: { backgroundColor: '#000000',opacity:0.1,cursor:'wait'} }); 
-//    setTimeout($.unblockUI, 2000);
-//}
 
 var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/form-data'>";
                 ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
