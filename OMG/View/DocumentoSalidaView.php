@@ -265,10 +265,14 @@ MyComboAutoridad.prototype = new jsGrid.Field
                 // {
                 //         fecha=value;
                 // }
-                // return this._inputDate = $("<input>").attr({type:"date",value:fecha,style:"margin:-5px;width:145px"});
-                   
-//                   = $("<select>").attr("")
-            },
+                var temp = "";
+                $.each(thisAutoridad,(index,value)=>{
+                        temp += "<option value='"+value.id_autoridad+"'>"+value.clave_autoridad+"</option>";
+                })
+                this._inputDate = $("<select>").attr({style:"margin:-5px;width:145px"});
+                $(this._inputDate[0]).append(temp);
+                return this._inputDate;
+        },
         insertValue: function()
         {},
         editValue: function(val)
