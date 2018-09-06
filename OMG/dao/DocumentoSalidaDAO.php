@@ -255,8 +255,8 @@ class DocumentoSalidaDAO{
 		 tbautoridad_remitente.id_autoridad, tbautoridad_remitente.clave_autoridad,
 		 tbdocumento_salida_sinfolio_entrada.observaciones
        FROM documento_salida_sinfolio_entrada tbdocumento_salida_sinfolio_entrada
-       JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumento_salida_sinfolio_entrada.id_empleado
-       JOIN autoridad_remitente tbautoridad_remitente ON tbautoridad_remitente.id_autoridad=tbdocumento_salida_sinfolio_entrada.id_autoridad
+       LEFT JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumento_salida_sinfolio_entrada.id_empleado
+       LEFT JOIN autoridad_remitente tbautoridad_remitente ON tbautoridad_remitente.id_autoridad=tbdocumento_salida_sinfolio_entrada.id_autoridad
        WHERE tbdocumento_salida_sinfolio_entrada.id_cumplimiento = $CONTRATO";
             
             $db=  AccesoDB::getInstancia();

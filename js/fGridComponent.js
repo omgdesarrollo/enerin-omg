@@ -48,7 +48,7 @@ function construirGrid()
         },
         rowDoubleClick:(args)=>
         {
-            console.log("W");
+            // console.log("W");
             $("#jsGrid").jsGrid("editItem",$(".jsgrid-selected-row")[0]);
         },
         rowClick:(args)=>

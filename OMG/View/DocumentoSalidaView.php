@@ -224,14 +224,14 @@ var encabezado="";
 var mensaje="";
 var thisAutoridad=[];
 
-var MyCombo = function(config)
+var MyComboAutoridad = function(config)
 {
         // data = {};
     jsGrid.Field.call(this, config);
 //     console.log(this);
 };
  
-MyCombo.prototype = new jsGrid.Field
+MyComboAutoridad.prototype = new jsGrid.Field
 ({
         // css: "date-field",
         align: "center",
@@ -241,38 +241,45 @@ MyCombo.prototype = new jsGrid.Field
                 console.log(date1);
                 console.log(date2);
         },
-        itemTemplate: function(value,todo)
+        itemTemplate: function(value)
         {
-                console.log(value);
-                console.log(value);
+                var res ="";
+                value!=null ?
+                $.each(thisAutoridad,(index,val)=>{
+                        if(val.id_autoridad == value)
+                                res = val.clave_autoridad;
+                })
+                : console.log();
+                return res;
         },
         insertTemplate: function(value)
         {},
         editTemplate: function(value)
         {
                 // console.log(this);
-                fecha="0000-00-00";
-                if(value!=fecha)
-                {
-                        fecha=value;
-                }
-                return this._inputDate = $("<input>").attr({type:"date",value:fecha,style:"margin:-5px;width:145px"});
+                // fecha="0000-00-00";
+                // if(value!=fecha)
+                // {
+                //         fecha=value;
+                // }
+                // return this._inputDate = $("<input>").attr({type:"date",value:fecha,style:"margin:-5px;width:145px"});
         },
         insertValue: function()
         {},
         editValue: function(val)
         {
-                value = this._inputDate[0].value;
-                if(value=="")
-                        return "0000-00-00";
-                else
-                        return $(this._inputDate).val();
+                console.log("edicion de combo: "+val);
+                // value = this._inputDate[0].value;
+                // if(value=="")
+                //         return "0000-00-00";
+                // else
+                //         return $(this._inputDate).val();
         }
 });
 
 var customsFieldsGridData=[
         {field:"customControl",my_field:MyCControlField},
-        {field:"combo",my_field:MyCombo},
+        {field:"comboAutoridad",my_field:MyComboAutoridad},
 //        {field:"date",my_field:MyField},
 ];
 
@@ -288,7 +295,7 @@ return new Promise((resolve,reject)=>{
                         { name: "fecha_envio", title: "Fecha de Envio", type: "text", width:150,editing:false},
                         { name: "asunto", title: "Asunto", type: "text", width:150},
                         { name: "destinatario", title: "Destinatario", type: "text", width:150},
-                        { name: "id_autoridad", title: "Autoridad Remitente", type: "combo", width:150},
+                        { name: "id_autoridad", title: "Autoridad Remitente", type: "comboAutoridad", width:150},
                         { name: "archivo_adjunto", title: "Archivo Adjunto", type: "text", width:150,editing:false},    
                         { name: "observaciones", title: "Observacion", type: "text", width:150},
                         { name: "delete", title: "Opcion", type: "customControl", width:150}
