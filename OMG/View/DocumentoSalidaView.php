@@ -235,6 +235,7 @@ MyComboAutoridad.prototype = new jsGrid.Field
 ({
         // css: "date-field",
         align: "center",
+        // background:"red",
         sorter: function(date1, date2)
         {
                 console.log("haber cuando entra aqui");
@@ -256,9 +257,6 @@ MyComboAutoridad.prototype = new jsGrid.Field
         {},
         editTemplate: function(value,todo)
         {
-            this._inputDate=$("<select>").attr({value:"d",style:"margin:-5px;width:145px"});
-            console.log(  this._inputDate[0]);
-            return this._inputDate;
                 // console.log(this);
                 // fecha="0000-00-00";
                 // if(value!=fecha)
