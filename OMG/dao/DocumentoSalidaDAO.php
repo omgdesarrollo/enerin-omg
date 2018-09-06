@@ -154,13 +154,17 @@ class DocumentoSalidaDAO{
     
     
     
-    public function eliminarClausula($id_clausula){
+    public function eliminarDocumentoSalidaConFolio($ID_DOCUMENTO){
         try{
-            $query="DELETE FROM documento_salida WHERE id_documento_salida=$id_clausula";
+            $query="DELETE FROM documento_salida
+                    WHERE id_documento_salida = $ID_DOCUMENTO";
             $db=  AccesoDB::getInstancia();
-            $db->executeQueryUpdate($query);
+            $lista= $db->executeQueryUpdate($query);
+            
+            return $lista;
         } catch (Exception $ex) {
                 throw $ex;
+                return -1;
         }
     }
     
@@ -235,6 +239,22 @@ class DocumentoSalidaDAO{
         }
         
     }
+    
+    
+    public function eliminarDocumentoSalidaSinFolio($ID_DOCUMENTO){
+        try{
+            $query="DELETE FROM documento_salida_sinfolio_entrada
+                    WHERE id_documento_salida = $ID_DOCUMENTO";
+            $db=  AccesoDB::getInstancia();
+            $lista= $db->executeQueryUpdate($query);
+            
+            return $lista;
+        } catch (Exception $ex) {
+                throw $ex;
+                return -1;
+        }
+    }
+    
     
 }
 
