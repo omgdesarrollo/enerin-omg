@@ -248,11 +248,11 @@ class DocumentoSalidaDAO{
 
         $query="SELECT tbdocumento_salida_sinfolio_entrada.id_documento_salida, tbdocumento_salida_sinfolio_entrada.folio_entrada, 
         tbdocumento_salida_sinfolio_entrada.id_documento_entrada, tbdocumento_salida_sinfolio_entrada.folio_salida, 
-        tbempleados.id_empleado,
+        tbdocumento_salida_sinfolio_entrada.id_empleado,
         CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) AS nombre_empleado,
 		 tbdocumento_salida_sinfolio_entrada.fecha_envio, tbdocumento_salida_sinfolio_entrada.asunto,
 		 tbdocumento_salida_sinfolio_entrada.destinatario,
-		 tbautoridad_remitente.id_autoridad, tbautoridad_remitente.clave_autoridad,
+		 tbdocumento_salida_sinfolio_entrada.id_autoridad, tbautoridad_remitente.clave_autoridad,
 		 tbdocumento_salida_sinfolio_entrada.observaciones
        FROM documento_salida_sinfolio_entrada tbdocumento_salida_sinfolio_entrada
        LEFT JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumento_salida_sinfolio_entrada.id_empleado

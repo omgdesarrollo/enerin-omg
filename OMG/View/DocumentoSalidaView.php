@@ -226,16 +226,12 @@ var thisAutoridad=[];
 
 var MyComboAutoridad = function(config)
 {
-        // data = {};
     jsGrid.Field.call(this, config);
-//     console.log(this);
 };
  
 MyComboAutoridad.prototype = new jsGrid.Field
 ({
-        // css: "date-field",
         align: "center",
-        // background:"red",
         sorter: function(date1, date2)
         {
                 console.log("haber cuando entra aqui");
@@ -257,18 +253,17 @@ MyComboAutoridad.prototype = new jsGrid.Field
         {},
         editTemplate: function(value,todo)
         {
-                // console.log(this);
-                // fecha="0000-00-00";
-                // if(value!=fecha)
-                // {
-                //         fecha=value;
-                // }
                 var temp = "";
                 var temp2 = "";
-                $.each(thisAutoridad,(index,val)=>{
-                        temp += "<option value='"+val.id_autoridad+"'>"+val.clave_autoridad+"</option>";
+                $.each(thisAutoridad,(index,val)=>
+                {
                         if(val.id_autoridad == value)
+                        {
+                                temp += "<option value='"+val.id_autoridad+"' selected>"+val.clave_autoridad+"</option>";
                                 temp2 = val.clave_autoridad;
+                        }
+                        else
+                                temp += "<option value='"+val.id_autoridad+"'>"+val.clave_autoridad+"</option>";
                 })
                 this._inputDate = $("<select>").attr({style:"margin:-5px;width:145px"});
                 $(this._inputDate[0]).append(temp);
@@ -277,8 +272,6 @@ MyComboAutoridad.prototype = new jsGrid.Field
                 {
                         this._inputDate = temp2;
                 }
-                // console.log(todo.id_documento_entrada);
-                // console.log(this._inputDate);
                 return this._inputDate;
                 
         },
@@ -286,7 +279,6 @@ MyComboAutoridad.prototype = new jsGrid.Field
         {},
         editValue: function(val)
         {
-                // console.log("A");
                 return this._inputDate.val();
         }
 });
