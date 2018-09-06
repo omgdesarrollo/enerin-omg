@@ -54,7 +54,10 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
                 <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
                 <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
-                
+                  <!--LIBRERIA SWEET ALERT 2-->
+                <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
+                <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
+                <!--END LIBRERIA SWEET ALERT 2-->
                 <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
                 <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
@@ -219,7 +222,63 @@ var db={};
 var gridInstance;
 var encabezado="";
 var mensaje="";
+var thisAutoridad=[];
 
+var MyDateField = function(config)
+{
+        // data = {};
+    jsGrid.Field.call(this, config);
+//     console.log(this);
+};
+ 
+MyDateField.prototype = new jsGrid.Field
+({
+        css: "date-field",
+        align: "center",
+        sorter: function(date1, date2)
+        {
+                console.log("haber cuando entra aqui");
+                console.log(date1);
+                console.log(date2);
+        },
+        itemTemplate: function(value)
+        {
+                fecha="0000-00-00";
+                // console.log(this);
+                this[this.name] = value;
+                // console.log(data);
+                if(value!=fecha)
+                {
+                        date = new Date(value);
+                        fecha = date.getDate()+1 +" "+ months[date.getMonth()] +" "+ date.getFullYear().toString().slice(2,4);
+                        return fecha;
+                }
+                else
+                        return "Sin fecha";
+        },
+        insertTemplate: function(value)
+        {},
+        editTemplate: function(value)
+        {
+                // console.log(this);
+                fecha="0000-00-00";
+                if(value!=fecha)
+                {
+                        fecha=value;
+                }
+                return this._inputDate = $("<input>").attr({type:"date",value:fecha,style:"margin:-5px;width:145px"});
+        },
+        insertValue: function()
+        {},
+        editValue: function(val)
+        {
+                value = this._inputDate[0].value;
+                if(value=="")
+                        return "0000-00-00";
+                else
+                        return $(this._inputDate).val();
+        }
+});
 
 var customsFieldsGridData=[
         {field:"customControl",my_field:MyCControlField}
@@ -266,7 +325,7 @@ function inicializarFiltros()
                 {id:"fecha_envio",type:"date"},
                 {id:"asunto",type:"text"},
                 {id:"destinatario",type:"text"},
-                {id:"clave_autoridad",type:"text"},
+                {id:"id_autoridad",type:"combobox",data:thisAutoridad,descripcion:"clave_autoridad"},
               { id:"noneDos", type:"none"},
                 {id:"observaciones",type:"text"},
                 {name:"opcion",id:"opcion",type:"opcion"}
@@ -277,55 +336,43 @@ function inicializarFiltros()
 }
 
 //()=>{  esto e igual a function(){
+
+
 inicializarEstructuraGrid().then(()=>{
-   
-    inicializarEstructuraGrid().then(()=>{
-        construirGrid();
- 
-    
-        inicializarFiltros().then(()=>{
-                construirFiltros();
-                  listarDatos()
-            });
-    });   
-        
+        listarAutoridades().then(()=>
+        {
+                inicializarEstructuraGrid().then(()=>{
+                        construirGrid();
+                        inicializarFiltros().then(()=>{
+                                construirFiltros();
+                                listarDatos()
+                        });
+                });
+        });
  });
  
+ function listarAutoridades()
+{
+        return new Promise((resolve,reject)=>
+        {
+                // tempData=[];
+                $.ajax({
+                        url:'../Controller/AutoridadesRemitentesController.php?Op=mostrarCombo',
+                        type: 'GET',
+                        success:function(autoridades)
+                        {
+                                // tempData = autoridades;
+                                thisAutoridad = autoridades;
+                                resolve("autoridades");
+                        }
+                });
+        });
+        
+}
  
  function listarDatos()
 {
-   
-//        __datos=[];    
-//        datosParamAjaxValues={};
-//        datosParamAjaxValues["url"]="../Controller/DocumentosSalidaController.php?Op=Listar&URL=filesDocumento/Salida/";
-//        datosParamAjaxValues["type"]="POST";
-//        datosParamAjaxValues["async"]=true;
-////return new Promise((resolve,reject)=>{
-//        var variablefunciondatos=function obtenerDatosServer (data)
-//        {
-//       
-//           if(typeof(data)=="object")
-//           {
-//               
-//                dataListado = data;
-//                $.each(data,function(index,value)
-//                {
-//                    __datos.push(reconstruir(value,index++));
-//                });
-//                    DataGrid = __datos;
-//                    gridInstance.loadData();
-//                    
-////                    resolve();
-//            }
-//   
-//            else
-//            {
-//                 growlSuccess("Solicitud","No Existen Registros de Documento de Salida");
-////                  reject();
-//
-//            }
-//        }
-//    })
+
       return new Promise((resolve,reject)=>
     {
         URL = 'filesDocumento/Salida/';
@@ -608,7 +655,7 @@ function preguntarEliminar(data)
     <!--Bootstrap-->
     <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
     <!--Para abrir alertas de aviso, success,warning, error-->       
-    <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+    <!--<script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>-->
     
     <!--Para abrir alertas del encabezado-->
 <!--    <script src="../../assets/probando/js/ace-elements.min.js"></script>
@@ -630,7 +677,7 @@ function preguntarEliminar(data)
         <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
         <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
         <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
-        <!--<script src="../../assets/FileUpload/js/main.js"></script>-->
+        <script src="../../assets/FileUpload/js/main.js"></script>
         
 <!--        <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
         <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>

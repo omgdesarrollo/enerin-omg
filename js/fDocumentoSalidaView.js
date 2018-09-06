@@ -310,7 +310,7 @@ $(function(){
 
 function documentosEntradaComboboxparaModal()
 {
-  
+
   $.ajax({
       url:"../Controller/DocumentosEntradaController.php?Op=mostrarcombo",
       type:"GET",
@@ -511,36 +511,87 @@ months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Sep
   
     function borrarArchivo(url)
     {
-      swal({
-          title: "ELIMINAR",
-          text: "Confirme para eliminar el documento",
-          type: "warning",
-          showCancelButton: true,
-          closeOnConfirm: false,
-          showLoaderOnConfirm: true
-        },function()
-        {
-          var ID_DOCUMENTO_SALIDA = $('#tempInputIdDocumentoSalida').val();
-          $.ajax({
-            url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
-            type: 'POST',
-            data: 'URL='+url,
-            success: function(eliminado)
-            {
-              if(eliminado)
-              {
-                mostrar_urls(ID_DOCUMENTO_SALIDA);
-                swal("","Archivo eliminado");
-                setTimeout(function(){swal.close();},1000);
-              }
-              else
-                swal("","Ocurrio un error al elimiar el documento", "error");
-            },
-            error:function()
-            {
-              swal("","Ocurrio un error al elimiar el documento", "error");
-            }
-          });
-        });
+        
+            swal({
+                title: "ELIMINAR",
+                text: "Confirme para eliminar el documento de salida",
+                type: "warning",
+                showCancelButton: true,
+                // closeOnConfirm: false,
+                // showLoaderOnConfirm: true
+                confirmButtonText:'SI'
+                }).then((res)=>
+                {
+                        if(res)
+                        {
+                             var ID_DOCUMENTO= $('#tempInputIdDocumentoSalida').val();
+//                                var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
+                                $.ajax({
+                                        url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
+                                        type: 'GET',
+                                        data: 'URL='+url,
+                                        beforeSend:()=>
+                                        {
+                                                growlWait("Eliminar Archivo","Eliminando Archivo...");
+                                        },
+                                        success: function(eliminado)
+                                        {
+                                                // eliminar = eliminado;
+                                                if(eliminado)
+                                                {
+                                                        growlSuccess("Eliminar Archivo","Archivo Eliminado");
+                                                        mostrar_urls(ID_DOCUMENTO);
+                                                        actualizarDocumentoEntrada(ID_DOCUMENTO);
+                                                        // swal("","Archivo eliminado");
+                                                        setTimeout(function(){swal.close();},1000);
+                                                }
+                                                else
+                                                        growlError("Error Eliminar","Ocurrio un error al eliminar el archivo");
+                                        },
+                                        error:function()
+                                        {
+                                                growlError("Error","Error en el servidor");
+                                        }
+                                });
+                        }
+                });
+        
+        
+        
+        
+        
+        
+//        
+//      swal({
+//          title: "ELIMINAR",
+//          text: "Confirme para eliminar el documento",
+//          type: "warning",
+//          showCancelButton: true,
+//          closeOnConfirm: false,
+//          showLoaderOnConfirm: true
+//        },function()
+//        {
+//          var ID_DOCUMENTO_SALIDA = $('#tempInputIdDocumentoSalida').val();
+//          $.ajax({
+//            url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
+//            type: 'POST',
+//            data: 'URL='+url,
+//            success: function(eliminado)
+//            {
+//              if(eliminado)
+//              {
+//                mostrar_urls(ID_DOCUMENTO_SALIDA);
+//                swal("","Archivo eliminado");
+//                setTimeout(function(){swal.close();},1000);
+//              }
+//              else
+//                swal("","Ocurrio un error al elimiar el documento", "error");
+//            },
+//            error:function()
+//            {
+//              swal("","Ocurrio un error al elimiar el documento", "error");
+//            }
+//          });
+//        });
     }
 
