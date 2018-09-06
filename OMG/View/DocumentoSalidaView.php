@@ -256,6 +256,9 @@ MyComboAutoridad.prototype = new jsGrid.Field
         {},
         editTemplate: function(value)
         {
+            this._inputDate=$("<select>").attr({value:"d",style:"margin:-5px;width:145px"});
+            console.log(  this._inputDate[0]);
+            return this._inputDate;
                 // console.log(this);
                 // fecha="0000-00-00";
                 // if(value!=fecha)
@@ -263,7 +266,9 @@ MyComboAutoridad.prototype = new jsGrid.Field
                 //         fecha=value;
                 // }
                 // return this._inputDate = $("<input>").attr({type:"date",value:fecha,style:"margin:-5px;width:145px"});
-        },
+                   
+//                   = $("<select>").attr("")
+            },
         insertValue: function()
         {},
         editValue: function(val)
