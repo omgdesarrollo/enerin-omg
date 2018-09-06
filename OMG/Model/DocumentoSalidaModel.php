@@ -16,13 +16,24 @@ require_once '../Pojo/DocumentoSalidaPojo.php';
 
 class DocumentoSalidaModel {
     //put your code here
-    public function  listarDocumentosSalida(){
+    public function  listarDocumentosSalida($CONTRATO){
         try{
+            $lista=[];
             $dao=new DocumentoSalidaDAO();
-            $rec=$dao->mostrarDocumentosSalida();
-            
-            
-            return $rec;
+            $rec1=$dao->mostrarDocumentosSalida($CONTRATO);
+            $rec2=$dao->mostrarDocumentosSalidaSinFolio($CONTRATO);
+            $contador=0;
+            foreach($rec1 as $key => $value)
+            {
+                $lista[$contador]=$value;
+                $contador++;
+            }
+            foreach($rec2 as $key => $value)
+            {
+                $lista[$contador]=$value;
+                $contador++;
+            }
+            return $lista;
     }  catch (Exception $e){
         throw  $e;
     }
