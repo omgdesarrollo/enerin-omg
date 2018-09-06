@@ -204,6 +204,26 @@ class DocumentoSalidaDAO{
         }
         
     }
+    
+    
+    public function responsablesDelTemaCombobox()
+    {
+        try 
+        {
+            $query="SELECT tbempleados.id_empleado, CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)
+                    AS nombre_completo
+                    FROM empleados tbempleados";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 
 
 
