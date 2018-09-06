@@ -220,6 +220,61 @@ var gridInstance;
 var encabezado="";
 var mensaje="";
 
+var MyDateField = function(config)
+{
+        // data = {};
+    jsGrid.Field.call(this, config);
+//     console.log(this);
+};
+ 
+MyDateField.prototype = new jsGrid.Field
+({
+        css: "date-field",
+        align: "center",
+        sorter: function(date1, date2)
+        {
+                console.log("haber cuando entra aqui");
+                console.log(date1);
+                console.log(date2);
+        },
+        itemTemplate: function(value)
+        {
+                fecha="0000-00-00";
+                // console.log(this);
+                this[this.name] = value;
+                // console.log(data);
+                if(value!=fecha)
+                {
+                        date = new Date(value);
+                        fecha = date.getDate()+1 +" "+ months[date.getMonth()] +" "+ date.getFullYear().toString().slice(2,4);
+                        return fecha;
+                }
+                else
+                        return "Sin fecha";
+        },
+        insertTemplate: function(value)
+        {},
+        editTemplate: function(value)
+        {
+                // console.log(this);
+                fecha="0000-00-00";
+                if(value!=fecha)
+                {
+                        fecha=value;
+                }
+                return this._inputDate = $("<input>").attr({type:"date",value:fecha,style:"margin:-5px;width:145px"});
+        },
+        insertValue: function()
+        {},
+        editValue: function(val)
+        {
+                value = this._inputDate[0].value;
+                if(value=="")
+                        return "0000-00-00";
+                else
+                        return $(this._inputDate).val();
+        }
+});
 
 var customsFieldsGridData=[
         {field:"customControl",my_field:MyCControlField}
@@ -291,6 +346,24 @@ inicializarEstructuraGrid().then(()=>{
         
  });
  
+ function listarAutoridades()
+{
+        return new Promise((resolve,reject)=>
+        {
+                // tempData=[];
+                $.ajax({
+                        url:'../Controller/AutoridadesRemitentesController.php?Op=mostrarCombo',
+                        type: 'GET',
+                        success:function(autoridades)
+                        {
+                                // tempData = autoridades;
+                                thisAutoridad = autoridades;
+                                resolve("autoridades");
+                        }
+                });
+        });
+        
+}
  
  function listarDatos()
 {

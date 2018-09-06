@@ -310,7 +310,7 @@ $(function(){
 
 function documentosEntradaComboboxparaModal()
 {
-  
+
   $.ajax({
       url:"../Controller/DocumentosEntradaController.php?Op=mostrarcombo",
       type:"GET",
