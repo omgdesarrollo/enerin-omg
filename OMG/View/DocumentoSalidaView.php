@@ -235,6 +235,7 @@ MyComboAutoridad.prototype = new jsGrid.Field
 ({
         // css: "date-field",
         align: "center",
+        // background:"red",
         sorter: function(date1, date2)
         {
                 console.log("haber cuando entra aqui");
@@ -254,11 +255,8 @@ MyComboAutoridad.prototype = new jsGrid.Field
         },
         insertTemplate: function(value)
         {},
-        editTemplate: function(value)
+        editTemplate: function(value,todo)
         {
-            this._inputDate=$("<select>").attr({value:"d",style:"margin:-5px;width:145px"});
-            console.log(  this._inputDate[0]);
-            return this._inputDate;
                 // console.log(this);
                 // fecha="0000-00-00";
                 // if(value!=fecha)
@@ -266,23 +264,30 @@ MyComboAutoridad.prototype = new jsGrid.Field
                 //         fecha=value;
                 // }
                 var temp = "";
-                $.each(thisAutoridad,(index,value)=>{
-                        temp += "<option value='"+value.id_autoridad+"'>"+value.clave_autoridad+"</option>";
+                var temp2 = "";
+                $.each(thisAutoridad,(index,val)=>{
+                        temp += "<option value='"+val.id_autoridad+"'>"+val.clave_autoridad+"</option>";
+                        if(val.id_autoridad == value)
+                                temp2 = val.clave_autoridad;
                 })
                 this._inputDate = $("<select>").attr({style:"margin:-5px;width:145px"});
                 $(this._inputDate[0]).append(temp);
+
+                if(todo.id_documento_entrada!=-1)
+                {
+                        this._inputDate = temp2;
+                }
+                // console.log(todo.id_documento_entrada);
+                // console.log(this._inputDate);
                 return this._inputDate;
+                
         },
         insertValue: function()
         {},
         editValue: function(val)
         {
-                console.log("edicion de combo: "+val);
-                // value = this._inputDate[0].value;
-                // if(value=="")
-                //         return "0000-00-00";
-                // else
-                //         return $(this._inputDate).val();
+                // console.log("A");
+                return this._inputDate.val();
         }
 });
 
@@ -296,7 +301,9 @@ function inicializarEstructuraGrid(){
 
 return new Promise((resolve,reject)=>{
       
-      estructuraGrid=[{ name: "id_principal", visible:false },
+      estructuraGrid=[
+              { name: "id_principal", visible:false },
+              { name: "id_documento_entrada", visible:false },
                         { name: "no", title: "No", type: "text", width:50,editing:false},
                         { name: "folio_entrada", title: "Folio de Entrada", type: "text", width:150,editing:false},
                         { name: "folio_salida", title: "Folio de Salida", type: "text", width:150,editing:false},
@@ -433,7 +440,7 @@ function reconstruir(value,index)
     ultimoNumeroGrid = index;
     tempData["id_principal"] = [];
     tempData["id_principal"].push({'id_documento_salida':value.id_documento_salida});
-    
+    tempData["id_documento_entrada"] = value.id_documento_entrada;
     tempData["no"]= index;
     tempData["folio_entrada"]=value.folio_entrada;
     tempData["folio_salida"]=value.folio_salida;
