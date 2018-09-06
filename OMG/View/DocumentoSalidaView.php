@@ -321,7 +321,7 @@ return new Promise((resolve,reject)=>{
                         { name: "no", title: "No", type: "text", width:50,editing:false},
                         { name: "folio_entrada", title: "Folio de Entrada", type: "text", width:150,editing:false},
                         { name: "folio_salida", title: "Folio de Salida", type: "text", width:150,editing:false},
-                        { name: "nombre_empleado", title: "Responsable Tema", type: "text", width:150},
+                        { name: "id_empleado", title: "Responsable Tema", type: "text", width:150},
                         { name: "fecha_envio", title: "Fecha de Envio", type: "text", width:150,editing:false},
                         { name: "asunto", title: "Asunto", type: "text", width:150},
                         { name: "destinatario", title: "Destinatario", type: "text", width:150},
@@ -348,7 +348,7 @@ function inicializarFiltros()
                 { id: "folio_entrada", name: "Folio Entrada", type: "text"},
                 { id: "folio_salida", name: "Folio Entrada", type: "text"},
                 // { name: "fecha_recepcion", title: "Fecha Recepción", type: "text", width, validate: "required" },   
-                {id:"nombre_empleado", name: "Referencia",type:"text"},
+                {id:"id_empleado", name: "Referencia",type:"combobox",data:[],descripcion:""},
     //            {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
                 {id:"fecha_envio",type:"date"},
                 {id:"asunto",type:"text"},
@@ -365,19 +365,24 @@ function inicializarFiltros()
 
 //()=>{  esto e igual a function(){
 
+$.when(listarAutoridades(),listarThisEmpleado()).then((r1,r2)=>{
+        console.log("A");
+});
 
-inicializarEstructuraGrid().then(()=>{
-        listarAutoridades().then(()=>
-        {
-                inicializarEstructuraGrid().then(()=>{
-                        construirGrid();
-                        inicializarFiltros().then(()=>{
-                                construirFiltros();
-                                listarDatos()
-                        });
-                });
-        });
- });
+// inicializarEstructuraGrid().then(()=>
+// {
+        
+//         listarAutoridades().then(()=>
+//         {
+//                 inicializarEstructuraGrid().then(()=>{
+//                         construirGrid();
+//                         inicializarFiltros().then(()=>{
+//                                 construirFiltros();
+//                                 listarDatos()
+//                         });
+//                 });
+//         });
+//  });
  
  function listarAutoridades()
 {
@@ -387,17 +392,61 @@ inicializarEstructuraGrid().then(()=>{
                 $.ajax({
                         url:'../Controller/AutoridadesRemitentesController.php?Op=mostrarCombo',
                         type: 'GET',
-                        success:function(autoridades)
+                        success:(autoridades)=>
                         {
                                 // tempData = autoridades;
                                 thisAutoridad = autoridades;
                                 resolve("autoridades");
+                        },
+                        error:()=>
+                        {
+                                reject();
                         }
                 });
         });
-        
+}
+
+function listarThisEmpleados()
+{
+        return new Promise((resolve,reject)=>{
+                $.ajax({
+                        url:'../Controller/DocmentosSalidaController.php?Op=responsablesDelTema',
+                        type: 'GET',
+                        success:(empleados)=>
+                        {
+                                // tempData = autoridades;
+                                thisEmpleados = empleados;
+                                resolve("autoridades");
+                        },
+                        error:()=>
+                        {
+                                reject();
+                        }
+                });
+        });
 }
  
+function listarThisEmpleadosFiltro()
+{
+        return new Promise((resolve,reject)=>{
+                $.ajax({
+                        url:'../Controller/DocmentosSalidaController.php?Op=responsablesDelTemaFiltro',
+                        type: 'GET',
+                        success:(empleados)=>
+                        {
+                                // tempData = autoridades;
+                                thisEmpleadosFiltro = empleados;
+                                resolve("autoridades");
+                        },
+                        error:()=>
+                        {
+                                reject();
+                        }
+                });
+        });
+}
+
+
  function listarDatos()
 {
 
@@ -458,7 +507,7 @@ function reconstruir(value,index)
     tempData["no"]= index;
     tempData["folio_entrada"]=value.folio_entrada;
     tempData["folio_salida"]=value.folio_salida;
-    tempData["id_empleado"]= value.nombre_empleado;
+    tempData["id_empleado"]= value.id_empleado;
     tempData["fecha_envio"]=value.fecha_envio;
     tempData["asunto"]=value.asunto;
     tempData["destinatario"]=value.destinatario;

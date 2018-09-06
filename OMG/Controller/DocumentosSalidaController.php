@@ -115,6 +115,7 @@ switch ($Op) {
         case 'responsablesDelTemaFiltro':
             $CONTRATO = Session::getSesion("s_cont");
             $Lista= $model->responsableDelTemaParaFiltro($CONTRATO);
+            sleep(4);
             header('Content-type: application/json; charset=utf-8');
             echo json_encode( $Lista);
             return $Lista;
