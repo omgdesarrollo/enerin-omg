@@ -47,266 +47,266 @@ $(function(){
 });//LLAVE CIERRE FUNCTION
 
 
-function inicializarFiltros()
-{
-    filtros =[
-            {id:"noneUno",type:"none"},
-//            {id:"folio_entrada",type:"text"},
-            {id:"id_documento_entrada",type:"combobox",data:listarFoliosDeEntrada(),descripcion:"folio_entrada"},
-            {id:"folio_salida",type:"text"},
-            {id:"nombre_empleado",type:"text"},
-//            {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
-            {id:"fecha_envio",type:"date"},
-            {id:"asunto",type:"text"},
-            {id:"destinatario",type:"text"},
-            {id:"clave_autoridad",type:"text"},
-            {id:"archivo_adjunto",type:"text"},
-            {id:"observaciones",type:"text"},
-            {name:"opcion",id:"opcion",type:"opcion"}
-            ];
-}
+//function inicializarFiltros()
+//{
+//    filtros =[
+//            {id:"noneUno",type:"none"},
+////            {id:"folio_entrada",type:"text"},
+//            {id:"id_documento_entrada",type:"combobox",data:listarFoliosDeEntrada(),descripcion:"folio_entrada"},
+//            {id:"folio_salida",type:"text"},
+//            {id:"nombre_empleado",type:"text"},
+////            {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
+//            {id:"fecha_envio",type:"date"},
+//            {id:"asunto",type:"text"},
+//            {id:"destinatario",type:"text"},
+//            {id:"clave_autoridad",type:"text"},
+//            {id:"archivo_adjunto",type:"text"},
+//            {id:"observaciones",type:"text"},
+//            {name:"opcion",id:"opcion",type:"opcion"}
+//            ];
+//}
 
 
-function construirGrid()
-{
-    jsGrid.fields.customControl = MyCControlField;
-    db={
-            loadData: function()
-            {
-                return DataGrid;
-            },
-            insertItem: function(item)
-            {
-                return item;
-            },
-        };
-    
-    $("#jsGrid").jsGrid({
-        onInit: function(args)
-        {
-            gridInstance=args.grid;
-            jsGrid.Grid.prototype.autoload=true;
-        },
-        onDataLoading: function(args)
-        {
-            loadBlockUi();
-        },
-        onDataLoaded:function(args)
-        {
-            $('.jsgrid-filter-row').removeAttr("style",'display:none');
-        },
-        onRefreshing: function(args) {
-        },
-        
-        width: "100%",
-        height: "300px",
-        autoload:true,
-        heading: true,
-        sorting: true,
-        editing: true,
-        paging: true,
-        controller:db,
-        pageLoading:false,
-        pageSize: 5,
-        pageButtonCount: 5,
-        updateOnResize: true,
-        confirmDeleting: true,
-        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
-//        filtering:false,
-//        data: __datos,
-        fields: 
-        [
-            { name: "id_principal",visible:false},
-            { name:"no",title:"No",width:20},
-//            { name: "folio_entrada",title:"Folio de Entrada", type: "text", validate: "required" },
-
-            { name: "id_documento_entrada",title:"Folio de Entrada", type: "select",
-                items:DocumentoEntradasComboBox,
-                valueField:"id_documento_entrada",
-                textField:"folio_entrada"
-            },
-
-
-            { name: "folio_salida",title:"Folio de Salida", type: "text", validate: "required" },
-            { name: "id_empleado",title:"Responsable del Tema", type: "text", validate: "required",width:150,editing: false},
-//            { name: "id_empleado",title:"Responsable del Tema", type: "select",
-//                items:EmpleadosCombobox,
-//                valueField:"id_empleado",
-//                textField:"nombre_completo"
+//function construirGrid()
+//{
+//    jsGrid.fields.customControl = MyCControlField;
+//    db={
+//            loadData: function()
+//            {
+//                return DataGrid;
 //            },
-            { name: "fecha_envio",title:"Fecha de Envio", type: "date", validate: "required" },
-            { name: "asunto",title:"Asunto", type: "text", validate: "required" },
-            { name: "destinatario",title:"Destinatario", type: "text", validate: "required" },
-            { name: "clave_autoridad",title:"Autoridad Remitente", type: "text", validate: "required",editing: false},
-            { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:110,editing: false},
-            { name: "observaciones",title:"Observaciones", type: "text", validate: "required" },            
-            { name:"delete", title:"Opción", type:"customControl",sorting:""}
-        ],
-        onItemUpdated: function(args)
-        {
-            console.log(args);
-            columnas={};
-            id_afectado=args["item"]["id_principal"][0];
-            $.each(args["item"],function(index,value)
-            {
-                if(args["previousItem"][index] != value && value!="")
-                {
-                        if(index!="id_principal" && !value.includes("<button") && index!="delete")
-                        {
-                                columnas[index]=value;
-                        }
-                }
-            });
-            if(Object.keys(columnas).length!=0)
-            {
-                    $.ajax({
-                            url: '../Controller/GeneralController.php?Op=Actualizar',
-                            type:'GET',
-                            data:'TABLA=documento_salida'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
-                            success:function(exito)
-                            {
-                                refresh();
-                                swal("","Actualizacion Exitosa!","success");
-                                setTimeout(function(){swal.close();},1000);
-                            },
-                            error:function()
-                            {
-                                swal("","Error en el servidor","error");
-                                setTimeout(function(){swal.close();},1500);
-                            }
-                    });
-            }
-        },
-        
-        onItemDeleting: function(args) 
-        {
-
-        }
-        
-    });
-}
-
-
-var MyCControlField = function(config)
-{
-    jsGrid.Field.call(this, config);
-};
-
-
-MyCControlField.prototype = new jsGrid.Field
-({
-        css: "date-field",
-        align: "center",
-        sorter: function(date1, date2)
-        {
-            console.log("haber cuando entra aqui");
-            console.log(date1);
-            console.log(date2);
-            // return 1;
-        },
-        itemTemplate: function(value,todo)
-        {
-//            alert(value,todo);
-
-            if(value[0]['existe_archivo']!=0)
-                return "";
-            else
-                return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button ',title:"Eliminar", type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
-        },
-        insertTemplate: function(value)
-        {
-        },
-        editTemplate: function(value)
-        {
-            val = "<input class='jsgrid-button jsgrid-update-button' type='button' title='Actualizar' onClick='aceptarEdicion()'>";
-            val += "<input class='jsgrid-button jsgrid-cancel-edit-button' type='button' title='Cancelar Edición' onClick='cancelarEdicion()'>";
-            return val;
-        },
-        insertValue: function()
-        {
-        },
-        editValue: function()
-        {
-        }
-});
-
-
-function cancelarEdicion()
-{
-    $("#jsGrid").jsGrid("cancelEdit");
-}
-
-function aceptarEdicion()
-{
-    gridInstance.updateItem();
-}
-
-
-function listarDatos()
-{
-    __datos=[];    
-    datosParamAjaxValues={};
-    datosParamAjaxValues["url"]="../Controller/DocumentosSalidaController.php?Op=Listar&URL=filesDocumento/Salida/";
-    datosParamAjaxValues["type"]="POST";
-    datosParamAjaxValues["async"]=false;
-    
-    var variablefunciondatos=function obtenerDatosServer (data)
-    {
-        if(typeof(data)=="object")
-        {
-            growlSuccess("Solicitud","Registros obtenidos");
-            dataListado = data;
-            $.each(data,function(index,value)
-            {
-                __datos.push(reconstruir(value,index+1));
-                
-            });
-             DataGrid = __datos;
-            gridInstance.loadData();
-            resolve();
-        
-        }
-
-    }
-    
-    
-    var listfunciones=[variablefunciondatos];
-    ajaxHibrido(datosParamAjaxValues,listfunciones);
-    DataGrid = __datos;
-}
+//            insertItem: function(item)
+//            {
+//                return item;
+//            },
+//        };
+ 
+//    $("#jsGrid").jsGrid({
+//        onInit: function(args)
+//        {
+//            gridInstance=args.grid;
+//            jsGrid.Grid.prototype.autoload=true;
+//        },
+//        onDataLoading: function(args)
+//        {
+//            loadBlockUi();
+//        },
+//        onDataLoaded:function(args)
+//        {
+//            $('.jsgrid-filter-row').removeAttr("style",'display:none');
+//        },
+//        onRefreshing: function(args) {
+//        },
+//        
+//        width: "100%",
+//        height: "300px",
+//        autoload:true,
+//        heading: true,
+//        sorting: true,
+//        editing: true,
+//        paging: true,
+//        controller:db,
+//        pageLoading:false,
+//        pageSize: 5,
+//        pageButtonCount: 5,
+//        updateOnResize: true,
+//        confirmDeleting: true,
+//        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+////        filtering:false,
+////        data: __datos,
+//        fields: 
+//        [
+//            { name: "id_principal",visible:false},
+//            { name:"no",title:"No",width:20},
+////            { name: "folio_entrada",title:"Folio de Entrada", type: "text", validate: "required" },
+//
+//            { name: "id_documento_entrada",title:"Folio de Entrada", type: "select",
+//                items:DocumentoEntradasComboBox,
+//                valueField:"id_documento_entrada",
+//                textField:"folio_entrada"
+//            },
+//
+//
+//            { name: "folio_salida",title:"Folio de Salida", type: "text", validate: "required" },
+//            { name: "id_empleado",title:"Responsable del Tema", type: "text", validate: "required",width:150,editing: false},
+////            { name: "id_empleado",title:"Responsable del Tema", type: "select",
+////                items:EmpleadosCombobox,
+////                valueField:"id_empleado",
+////                textField:"nombre_completo"
+////            },
+//            { name: "fecha_envio",title:"Fecha de Envio", type: "date", validate: "required" },
+//            { name: "asunto",title:"Asunto", type: "text", validate: "required" },
+//            { name: "destinatario",title:"Destinatario", type: "text", validate: "required" },
+//            { name: "clave_autoridad",title:"Autoridad Remitente", type: "text", validate: "required",editing: false},
+//            { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:110,editing: false},
+//            { name: "observaciones",title:"Observaciones", type: "text", validate: "required" },            
+//            { name:"delete", title:"Opción", type:"customControl",sorting:""}
+//        ],
+//        onItemUpdated: function(args)
+//        {
+//            console.log(args);
+//            columnas={};
+//            id_afectado=args["item"]["id_principal"][0];
+//            $.each(args["item"],function(index,value)
+//            {
+//                if(args["previousItem"][index] != value && value!="")
+//                {
+//                        if(index!="id_principal" && !value.includes("<button") && index!="delete")
+//                        {
+//                                columnas[index]=value;
+//                        }
+//                }
+//            });
+//            if(Object.keys(columnas).length!=0)
+//            {
+//                    $.ajax({
+//                            url: '../Controller/GeneralController.php?Op=Actualizar',
+//                            type:'GET',
+//                            data:'TABLA=documento_salida'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
+//                            success:function(exito)
+//                            {
+//                                refresh();
+//                                swal("","Actualizacion Exitosa!","success");
+//                                setTimeout(function(){swal.close();},1000);
+//                            },
+//                            error:function()
+//                            {
+//                                swal("","Error en el servidor","error");
+//                                setTimeout(function(){swal.close();},1500);
+//                            }
+//                    });
+//            }
+//        },
+//        
+//        onItemDeleting: function(args) 
+//        {
+//
+//        }
+//        
+//    });
+//}
 
 
-function reconstruirTable(_datos)
-{
-    __datos=[];
-    $.each(_datos,function(index,value)
-    {
-        __datos.push(reconstruir(value,index++));
-    });
-    construirGrid(__datos);
-}
+//var MyCControlField = function(config)
+//{
+//    jsGrid.Field.call(this, config);
+//};
+//
+//
+//MyCControlField.prototype = new jsGrid.Field
+//({
+//        css: "date-field",
+//        align: "center",
+//        sorter: function(date1, date2)
+//        {
+//            console.log("haber cuando entra aqui");
+//            console.log(date1);
+//            console.log(date2);
+//            // return 1;
+//        },
+//        itemTemplate: function(value,todo)
+//        {
+////            alert(value,todo);
+//
+//            if(value[0]['existe_archivo']!=0)
+//                return "";
+//            else
+//                return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button ',title:"Eliminar", type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
+//        },
+//        insertTemplate: function(value)
+//        {
+//        },
+//        editTemplate: function(value)
+//        {
+//            val = "<input class='jsgrid-button jsgrid-update-button' type='button' title='Actualizar' onClick='aceptarEdicion()'>";
+//            val += "<input class='jsgrid-button jsgrid-cancel-edit-button' type='button' title='Cancelar Edición' onClick='cancelarEdicion()'>";
+//            return val;
+//        },
+//        insertValue: function()
+//        {
+//        },
+//        editValue: function()
+//        {
+//        }
+//});
 
 
-function reconstruir(value,index)
-{
-    tempData=new Object();
-    ultimoNumeroGrid = index;
-    tempData["id_principal"]= [{'id_documento_salida':value.id_documento_salida}];
-    tempData["no"]= index;
-    tempData["id_documento_entrada"]=value.id_documento_entrada;
-    tempData["folio_salida"]=value.folio_salida;
-    tempData["id_empleado"]= value.nombre_empleado;
-    tempData["fecha_envio"]=value.fecha_envio;
-    tempData["asunto"]=value.asunto;
-    tempData["destinatario"]=value.destinatario;
-    tempData["clave_autoridad"]=value.clave_autoridad;
-    tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_documento_salida+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
-    tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
-    tempData["observaciones"]=value.observaciones;
-    tempData["delete"]="1";
-    tempData["delete"]= [{"existe_archivo":value.archivosUpload[0].length}];
-    return tempData;
-}
+//function cancelarEdicion()
+//{
+//    $("#jsGrid").jsGrid("cancelEdit");
+//}
+//
+//function aceptarEdicion()
+//{
+//    gridInstance.updateItem();
+//}
+
+
+//function listarDatos()
+//{
+//    __datos=[];    
+//    datosParamAjaxValues={};
+//    datosParamAjaxValues["url"]="../Controller/DocumentosSalidaController.php?Op=Listar&URL=filesDocumento/Salida/";
+//    datosParamAjaxValues["type"]="POST";
+//    datosParamAjaxValues["async"]=false;
+//    
+//    var variablefunciondatos=function obtenerDatosServer (data)
+//    {
+//        if(typeof(data)=="object")
+//        {
+//            growlSuccess("Solicitud","Registros obtenidos");
+//            dataListado = data;
+//            $.each(data,function(index,value)
+//            {
+//                __datos.push(reconstruir(value,index+1));
+//                
+//            });
+//             DataGrid = __datos;
+//            gridInstance.loadData();
+//            resolve();
+//        
+//        }
+//
+//    }
+//    
+//    
+//    var listfunciones=[variablefunciondatos];
+//    ajaxHibrido(datosParamAjaxValues,listfunciones);
+//    DataGrid = __datos;
+//}
+
+//
+//function reconstruirTable(_datos)
+//{
+//    __datos=[];
+//    $.each(_datos,function(index,value)
+//    {
+//        __datos.push(reconstruir(value,index++));
+//    });
+//    construirGrid(__datos);
+//}
+
+
+//function reconstruir(value,index)
+//{
+//    tempData=new Object();
+//    ultimoNumeroGrid = index;
+//    tempData["id_principal"]= [{'id_documento_salida':value.id_documento_salida}];
+//    tempData["no"]= index;
+//    tempData["id_documento_entrada"]=value.id_documento_entrada;
+//    tempData["folio_salida"]=value.folio_salida;
+//    tempData["id_empleado"]= value.nombre_empleado;
+//    tempData["fecha_envio"]=value.fecha_envio;
+//    tempData["asunto"]=value.asunto;
+//    tempData["destinatario"]=value.destinatario;
+//    tempData["clave_autoridad"]=value.clave_autoridad;
+//    tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_documento_salida+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
+//    tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
+//    tempData["observaciones"]=value.observaciones;
+//    tempData["delete"]="1";
+//    tempData["delete"]= [{"existe_archivo":value.archivosUpload[0].length}];
+//    return tempData;
+//}
 
 function documentosEntradaComboboxparaModal()
 {
@@ -394,33 +394,33 @@ function insertarDocumentoSalida(documentoSalidaDatos)
 }
 
 
-function refresh()
-{
-   listarDatos();
-   inicializarFiltros();
-   construirFiltros();
-   gridInstance.loadData();
-}
+//function refresh()
+//{
+//   listarDatos();
+//   inicializarFiltros();
+//   construirFiltros();
+//   gridInstance.loadData();
+//}
+//
+//function loadSpinner()
+//{
+//    myFunction();
+//}
 
-function loadSpinner()
-{
-    myFunction();
-}
-
-function loadBlockUi()
-{
-    $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF"> Espere Por Favor</span>', css:
-    { 
-        border: 'none', 
-        padding: '15px', 
-        backgroundColor: '#000', 
-        '-webkit-border-radius': '10px', 
-        '-moz-border-radius': '10px', 
-        opacity: .5, 
-        color: '#fff' 
-    },overlayCSS: { backgroundColor: '#000000',opacity:0.1,cursor:'wait'} }); 
-    setTimeout($.unblockUI, 2000);
-}
+//function loadBlockUi()
+//{
+//    $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF"> Espere Por Favor</span>', css:
+//    { 
+//        border: 'none', 
+//        padding: '15px', 
+//        backgroundColor: '#000', 
+//        '-webkit-border-radius': '10px', 
+//        '-moz-border-radius': '10px', 
+//        opacity: .5, 
+//        color: '#fff' 
+//    },overlayCSS: { backgroundColor: '#000000',opacity:0.1,cursor:'wait'} }); 
+//    setTimeout($.unblockUI, 2000);
+//}
 
 var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/form-data'>";
                 ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
