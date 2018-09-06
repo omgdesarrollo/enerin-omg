@@ -72,7 +72,7 @@ $Usuario=  Session::getSesion("user");
                 
                 <!--empieza libreria para la comunicacion tiempo real y otras --> 
                 
-                <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<!--                <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 		<link href="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css" rel="stylesheet">
 		<link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 		<link href="//onesignal.github.io/emoji-picker/lib/css/emoji.css" rel="stylesheet">
@@ -82,17 +82,17 @@ $Usuario=  Session::getSesion("user");
                 <script src="//www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
 		<script src="//www.gstatic.com/firebasejs/3.9.0/firebase-app.js"></script>
 		<script src="//www.gstatic.com/firebasejs/3.9.0/firebase-database.js"></script>
-		<!-- jQuery -->
+		 jQuery 
 		<script src="js/jquery.min.js"></script>
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
-		<!-- emoji-picker -->
+		 emoji-picker 
 		<script type="text/javascript" src="//onesignal.github.io/emoji-picker/lib/js/config.js"></script>
 		<script type="text/javascript" src="//onesignal.github.io/emoji-picker/lib/js/util.js"></script>
 		<script type="text/javascript" src="//onesignal.github.io/emoji-picker/lib/js/jquery.emojiarea.js"></script>
 		<script type="text/javascript" src="//onesignal.github.io/emoji-picker/lib/js/emoji-picker.js"></script>
                 
-                
+                -->
                 <!--termina libreria de comunicacion tiempo real--> 
                 
                 
