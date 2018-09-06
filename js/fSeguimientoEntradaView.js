@@ -17,8 +17,24 @@ function inicializarFiltros()
             {id:"fecha_asignacion",type:"date"},
             {id:"fecha_limite_atencion",type:"date"},
             {id:"fecha_alarma",type:"date"},
-            {id:"status_doc",type:"text"},
-            {id:"condicion",type:"text"},
+            {id:"status_doc",type:"combobox",descripcion:"descripcion",
+                data:[
+                        {"status_doc":"1","descripcion":"En Proceso"},
+                        {"status_doc":"2","descripcion":"Suspendido"},
+                        {"status_doc":"3","descripcion":"Terminado"}
+                    ]
+            },
+//            {id:"condicion",type:"text"},
+            {id:"condicion",type:"combobox",descripcion:"descripcion",
+                data:[
+                        {"condicion":"Alerta Vencida","descripcion":"Alerta Vencida"},
+                        {"condicion":"En Tiempo","descripcion":"En Tiempo"},
+                        {"condicion":"Suspendido","descripcion":"Suspendido"},
+                        {"condicion":"Terminado","descripcion":"Terminado"},
+                        {"condicion":"Tiempo Limite","descripcion":"Tiempo Limite"},
+                        {"condicion":"Tiempo Vencido","descripcion":"Tiempo Vencido"}
+                    ]
+            },
             {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
             {id:"noneDos",type:"none"},
             {id:"noneTres",type:"none"},

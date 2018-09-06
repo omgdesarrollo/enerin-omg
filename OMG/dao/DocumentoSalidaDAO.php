@@ -171,19 +171,42 @@ class DocumentoSalidaDAO{
     
     
     
-    public function eliminarClausula($id_clausula){
+    public function eliminarDocumentoSalidaConFolio($ID_DOCUMENTO){
         try{
-            $query="DELETE FROM documento_salida WHERE id_documento_salida=$id_clausula";
+            $query="DELETE FROM documento_salida
+                    WHERE id_documento_salida = $ID_DOCUMENTO";
             $db=  AccesoDB::getInstancia();
-            $db->executeQueryUpdate($query);
+            $lista= $db->executeQueryUpdate($query);
+            
+            return $lista;
         } catch (Exception $ex) {
                 throw $ex;
+                return -1;
         }
     }
     
     
-    
-    
+    public function obtenermayorDocumentoSalidaConFolio()
+    { 
+        try 
+        {
+            $query="SELECT (SELECT IFNULL(MAX(tbdocumento_salida.id_documento_salida),-1)) AS resultado
+                    FROM documento_salida tbdocumento_salida";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista[0]['resultado'];
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;        
+        }
+        
+    }
+
+
+
 //    AREA DEL DOCUMENTO DE SALIA SIN FOLIO DE ENTRADA
     
     public function mostrarDocumentosSalidaSinFolio($CONTRATO)
@@ -227,6 +250,40 @@ class DocumentoSalidaDAO{
         }
     }
     
+    
+    public function obtenermayorDocumentoSalidasSinFolio()
+    { 
+        try 
+        {
+            $query="SELECT (SELECT IFNULL(MAX(tbdocumento_salida_sinfolio_entrada.id_documento_salida),-1)) AS resultado
+                    FROM documento_salida_sinfolio_entrada tbdocumento_salida_sinfolio_entrada";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista[0]['resultado'];
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;        
+        }
+        
+    }
+    
+    
+    public function eliminarDocumentoSalidaSinFolio($ID_DOCUMENTO){
+        try{
+            $query="DELETE FROM documento_salida_sinfolio_entrada
+                    WHERE id_documento_salida = $ID_DOCUMENTO";
+            $db=  AccesoDB::getInstancia();
+            $lista= $db->executeQueryUpdate($query);
+            
+            return $lista;
+        } catch (Exception $ex) {
+                throw $ex;
+                return -1;
+        }
+    }
     
     
 }

@@ -128,15 +128,42 @@ class DocumentoSalidaModel {
     
     
     
-    public function eliminar(){
-        try{
-            $dao= new ClausulaDAO();
-            $pojo= new ClausulaPojo();
-            $dao->eliminarClausula($pojo->getIdClausula());
-        } catch (Exception $ex) {
+    public function eliminarDocumentoSalidaConFolio($ID_DOCUMENTO)
+    {
+        try
+        {
+            $dao=new DocumentoSalidaDAO();
+            $rec= $dao->eliminarDocumentoSalidaConFolio($ID_DOCUMENTO);
+
+            return $rec;
+        } catch (Exception $ex) 
+        {
             throw $ex;
+            return -1;
         }
     }
+    
+    
+    //    AREA DEL DOCUMENTO DE SALIA SIN FOLIO DE ENTRADA
+    
+    
+    public function eliminarDocumentoSalidaSinFolio($ID_DOCUMENTO)
+    {
+        try
+        {
+            $dao=new DocumentoSalidaDAO();
+            $rec= $dao->eliminarDocumentoSalidaSinFolio($ID_DOCUMENTO);
+
+            return $rec;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    
+    
 }
 
 ?>

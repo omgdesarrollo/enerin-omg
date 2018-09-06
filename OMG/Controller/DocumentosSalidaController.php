@@ -88,9 +88,22 @@ switch ($Op) {
     
     
 
-	case 'Eliminar':
+	case 'EliminarConFolio':
 		# code...
-		break;	
+            $Lista= $model->eliminarDocumentoSalidaConFolio($_REQUEST['ID_DOCUMENTO']);
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode( $Lista);
+            return $Lista;
+		break;
+            
+        case 'EliminarSinFolio':
+            
+            $Lista= $model->eliminarDocumentoSalidaSinFolio($_REQUEST['ID_DOCUMENTO']);
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode( $Lista);
+            return $Lista;
+            break;
+            
 	default:
 		# code...
 		break;
