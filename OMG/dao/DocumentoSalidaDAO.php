@@ -165,8 +165,27 @@ class DocumentoSalidaDAO{
     }
     
     
-    
-    
+    public function obtenermayorDocumentoSalidaConFolio()
+    { 
+        try 
+        {
+            $query="SELECT (SELECT IFNULL(MAX(tbdocumento_salida.id_documento_salida),-1)) AS resultado
+                    FROM documento_salida tbdocumento_salida";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista[0]['resultado'];
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;        
+        }
+        
+    }
+
+
+
 //    AREA DEL DOCUMENTO DE SALIA SIN FOLIO DE ENTRADA
     
     public function listarDocumentosDeSalidaSinFolio($CONTRATO)
@@ -198,6 +217,24 @@ class DocumentoSalidaDAO{
     }
     
     
+    public function obtenermayorDocumentoSalidasSinFolio()
+    { 
+        try 
+        {
+            $query="SELECT (SELECT IFNULL(MAX(tbdocumento_salida_sinfolio_entrada.id_documento_salida),-1)) AS resultado
+                    FROM documento_salida_sinfolio_entrada tbdocumento_salida_sinfolio_entrada";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista[0]['resultado'];
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;        
+        }
+        
+    }
     
 }
 

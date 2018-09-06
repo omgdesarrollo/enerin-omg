@@ -65,9 +65,9 @@ function loadDataSideBarCatalogoInformacion(lista){
                                      
 
                                        case "documentos":             
-                                             consultarInformacion("../Controller/EmpleadosController.php?Op=mostrarcombo");
-                                             consultarInformacion("../Controller/DocumentosController.php?Op=Listar");
-                                             consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Alarmas");
+//                                             consultarInformacion("../Controller/EmpleadosController.php?Op=mostrarcombo");
+//                                             consultarInformacion("../Controller/DocumentosController.php?Op=Listar");
+//                                             consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Alarmas");
                                             $("#sidebarObjV").load('InyectarVistasView.php #documentos');
                                        break;
                                        

@@ -12,13 +12,13 @@ class DocumentoModel{
     {
         try{
             $dao=new DocumentoDAO();            
-            $rec['doc']= $dao->mostrarDocumentos($contrato);
+            $rec= $dao->mostrarDocumentos($contrato);
             $lista=array();
             $contador=0;
             
-            foreach($rec['doc']as $value)
+            foreach($rec as $value)
             {
-                $lista['doc'][$contador]= array(
+                $lista[$contador]= array(
                     "id_documento"=>$value["id_documento"],
                     "clave_documento"=>$value["clave_documento"],
                     "documento"=>$value["documento"],
