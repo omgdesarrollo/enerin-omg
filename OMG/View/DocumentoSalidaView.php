@@ -325,7 +325,7 @@ function inicializarFiltros()
                 {id:"fecha_envio",type:"date"},
                 {id:"asunto",type:"text"},
                 {id:"destinatario",type:"text"},
-                {id:"clave_autoridad",type:"combobox",data:thisAutoridad,descripcion:""},
+                {id:"id_autoridad",type:"combobox",data:thisAutoridad,descripcion:"clave_autoridad"},
               { id:"noneDos", type:"none"},
                 {id:"observaciones",type:"text"},
                 {name:"opcion",id:"opcion",type:"opcion"}
