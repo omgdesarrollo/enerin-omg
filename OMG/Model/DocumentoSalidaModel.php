@@ -148,9 +148,44 @@ class DocumentoSalidaModel {
         }
     }
 
+    
+    public function responsableDelTemaParaFiltro($CONTRATO)
+    {
+        try 
+        {
+            $dao=new DocumentoSalidaDAO();
+            $rec1= $dao->responsableDelTemaParaFiltroConFolio($CONTRATO);
+            $rec2= $dao->responsableDelTemaParaFiltroSinFolio($CONTRATO);
+            $lista=[];
+            $contador=0;
+            
+            foreach ($rec1 as $key => $value) 
+            {
+                $lista[$contador]= $value;
+                $contador++;        
+            }
+            
+            foreach ($rec2 as $key => $value) 
+            {
+                if($rec2[0]['id_empleado'] == $rec1[0]['id_empleado'])
+                {
+                    
+                } else{
+                    $lista[$contador]= $value;
+                $contador++;                     
+                }
+                    
+            }
+            
+            return $lista;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 
-
-
+    
     //    AREA DEL DOCUMENTO DE SALIA SIN FOLIO DE ENTRADA
     
     public function eliminarDocumentoSalidaSinFolio($ID_DOCUMENTO)

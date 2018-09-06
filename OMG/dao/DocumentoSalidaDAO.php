@@ -225,6 +225,31 @@ class DocumentoSalidaDAO{
         }
     }
 
+    
+    public function responsableDelTemaParaFiltroConFolio($CONTRATO)
+    {
+        try 
+        {
+            $query="SELECT tbempleados.id_empleado, CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)
+                    AS nombre_completo
+                    FROM documento_salida tbdocumento_salida
+                    JOIN documento_entrada tbdocumento_entrada ON tbdocumento_entrada.id_documento_entrada=tbdocumento_salida.id_documento_entrada
+                    JOIN temas tbtemas ON tbtemas.id_tema=tbdocumento_entrada.id_tema
+                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado 
+                    WHERE tbdocumento_salida.id_cumplimiento= $CONTRATO AND tbempleados.id_empleado!=0 GROUP BY tbempleados.id_empleado";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+
 
 
 //    AREA DEL DOCUMENTO DE SALIA SIN FOLIO DE ENTRADA
@@ -291,7 +316,8 @@ class DocumentoSalidaDAO{
     }
     
     
-    public function eliminarDocumentoSalidaSinFolio($ID_DOCUMENTO){
+    public function eliminarDocumentoSalidaSinFolio($ID_DOCUMENTO)
+    {
         try{
             $query="DELETE FROM documento_salida_sinfolio_entrada
                     WHERE id_documento_salida = $ID_DOCUMENTO";
@@ -305,6 +331,26 @@ class DocumentoSalidaDAO{
         }
     }
     
+    
+    public function responsableDelTemaParaFiltroSinFolio($CONTRATO)
+    {
+        try 
+        {
+            $query="SELECT tbempleados.id_empleado, CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)
+                    AS nombre_completo
+                    FROM documento_salida_sinfolio_entrada tbdocumento_salida_sinfolio_entrada
+                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumento_salida_sinfolio_entrada.id_empleado
+                    WHERE tbdocumento_salida_sinfolio_entrada.id_cumplimiento = $CONTRATO GROUP BY tbdocumento_salida_sinfolio_entrada.id_empleado";
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
     
 }
 
