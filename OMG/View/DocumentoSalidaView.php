@@ -575,15 +575,15 @@ function saveUpdateToDatabase(args)//listo
                                 columnas[index]=value;
                         }
                 }
-                if(args['previousItem'][index]!=value && value=="")
-                {
-                        if(index=="fecha_asignacion" || index=="fecha_limite_atencion")
-                                swal("D'oh!", "La fecha de asignacion y la fecha limite no pueden ser vacias, VERIFICA", "error");
-                        if(index=="fecha_alarma")
-                                columnas[index]="0000-00-00";
-                }
-                if(index=="folio_entrada" && args['previousItem']["folio_entrada"]!=value)
-                       verificar = verificarExiste(value,"folio_entrada");
+//                if(args['previousItem'][index]!=value && value=="")
+//                {
+//                        if(index=="fecha_asignacion" || index=="fecha_limite_atencion")
+//                                swal("D'oh!", "La fecha de asignacion y la fecha limite no pueden ser vacias, VERIFICA", "error");
+//                        if(index=="fecha_alarma")
+//                                columnas[index]="0000-00-00";
+//                }
+//                if(index=="folio_entrada" && args['previousItem']["folio_entrada"]!=value)
+//                       verificar = verificarExiste(value,"folio_entrada");
         });
 
         if( Object.keys(columnas).length != 0 && verificar==0)
