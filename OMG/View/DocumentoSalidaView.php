@@ -54,7 +54,10 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
                 <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
                 <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
-                
+                  <!--LIBRERIA SWEET ALERT 2-->
+                <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
+                <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
+                <!--END LIBRERIA SWEET ALERT 2-->
                 <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
                 <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
@@ -608,7 +611,7 @@ function preguntarEliminar(data)
     <!--Bootstrap-->
     <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
     <!--Para abrir alertas de aviso, success,warning, error-->       
-    <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+    <!--<script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>-->
     
     <!--Para abrir alertas del encabezado-->
 <!--    <script src="../../assets/probando/js/ace-elements.min.js"></script>
@@ -630,7 +633,7 @@ function preguntarEliminar(data)
         <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
         <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
         <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
-        <!--<script src="../../assets/FileUpload/js/main.js"></script>-->
+        <script src="../../assets/FileUpload/js/main.js"></script>
         
 <!--        <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
         <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
