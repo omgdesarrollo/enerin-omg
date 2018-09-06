@@ -567,6 +567,14 @@ function preguntarEliminar(data)
         });
 }
 
+function saveToDatabaseDatosFormulario(datos)
+{
+
+}
+// $('.start').click();
+//                                                        swalSuccess("Creado con exito");
+//                                                        $('#create-item .close').click();
+//                                                        refresh();
  
  function refresh(){
      
