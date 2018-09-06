@@ -205,8 +205,8 @@ function listarDatos()
 {
     __datos=[];
     datosParamAjaxValues={};
-//    datosParamAjaxValues["url"]="../Controller/EmpleadosController.php?Op=Listar";
-    datosParamAjaxValues["url"]="../Controller/DocumentosSalidaController.php?Op=responsablesDelTemaFiltro";
+    datosParamAjaxValues["url"]="../Controller/EmpleadosController.php?Op=Listar";
+//    datosParamAjaxValues["url"]="../Controller/DocumentosSalidaController.php?Op=responsablesDelTemaFiltro";
     
     datosParamAjaxValues["type"]="GET";
     datosParamAjaxValues["async"]=false;
