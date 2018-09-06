@@ -363,38 +363,7 @@ inicializarEstructuraGrid().then(()=>{
  
  function listarDatos()
 {
-   
-//        __datos=[];    
-//        datosParamAjaxValues={};
-//        datosParamAjaxValues["url"]="../Controller/DocumentosSalidaController.php?Op=Listar&URL=filesDocumento/Salida/";
-//        datosParamAjaxValues["type"]="POST";
-//        datosParamAjaxValues["async"]=true;
-////return new Promise((resolve,reject)=>{
-//        var variablefunciondatos=function obtenerDatosServer (data)
-//        {
-//       
-//           if(typeof(data)=="object")
-//           {
-//               
-//                dataListado = data;
-//                $.each(data,function(index,value)
-//                {
-//                    __datos.push(reconstruir(value,index++));
-//                });
-//                    DataGrid = __datos;
-//                    gridInstance.loadData();
-//                    
-////                    resolve();
-//            }
-//   
-//            else
-//            {
-//                 growlSuccess("Solicitud","No Existen Registros de Documento de Salida");
-////                  reject();
-//
-//            }
-//        }
-//    })
+
       return new Promise((resolve,reject)=>
     {
         URL = 'filesDocumento/Salida/';
