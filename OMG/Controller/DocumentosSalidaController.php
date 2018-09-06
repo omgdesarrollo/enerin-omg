@@ -15,14 +15,15 @@ $pojo= new DocumentoSalidaPojo();
 $modelArchivo=new ArchivoUploadModel();
 
 switch ($Op) {
-	case 'Listar':
-
-            $Lista=$model->listarDocumentosSalida();
-            foreach ($Lista as $key => $value) {
-            $url= $_REQUEST['URL'].$value['id_documento_salida'];
-            $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls(Session::getSesion("s_cont"),$url);
+        case 'Listar':
+                $CONTRATO = Session::getSesion("s_cont");
+            $Lista=$model->listarDocumentosSalida($CONTRATO);
+            foreach ($Lista as $key => $value)
+            {
+                $url= $_REQUEST['URL'].$value['id_documento_salida'];
+                $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
             }
-            Session::setSesion("listarDocumentosSalida",$Lista);
+        //     Session::setSesion("listarDocumentosSalida",$Lista);
             
             header('Content-type: application/json; charset=utf-8');
             echo json_encode( $Lista);
