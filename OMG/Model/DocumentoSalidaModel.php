@@ -1,16 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of DocumentoSalidaModel
- *
- * @author usuario
- */
 require_once '../dao/DocumentoSalidaDAO.php';
 require_once '../Pojo/DocumentoSalidaPojo.php';
 
@@ -144,8 +133,25 @@ class DocumentoSalidaModel {
     }
     
     
+    public function responsablesDelTemaCombobox()
+    {
+        try 
+        {
+            $dao=new DocumentoSalidaDAO();
+            $rec= $dao->responsablesDelTemaCombobox();
+            
+            return $rec;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+
+
+
     //    AREA DEL DOCUMENTO DE SALIA SIN FOLIO DE ENTRADA
-    
     
     public function eliminarDocumentoSalidaSinFolio($ID_DOCUMENTO)
     {

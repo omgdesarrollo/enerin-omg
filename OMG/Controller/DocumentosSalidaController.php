@@ -103,6 +103,14 @@ switch ($Op) {
             echo json_encode( $Lista);
             return $Lista;
             break;
+        
+        case'':
+            $Lista= $model->responsablesDelTemaCombobox();
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode( $Lista);
+            return $Lista;
+            
+            break;
             
 	default:
 		# code...
