@@ -1134,7 +1134,8 @@ function notificar(idPara,idEvidencia,columna)
     if(columna=='accion_correctiva')
         enviar_notificacion("Ha recibido una Acción Correctiva de ",idPara,0,false,"EvidenciasView.php?accion="+idEvidencia);//msj,para,tipomsj,atendido,asunto
     else
-        enviar_notificacion("Ha recibido una Desviación de ",idPara,0,false,"EvidenciasView.php?accion="+idEvidencia);//msj,para,tipomsj,atendido,asunto
+//        enviar_notificacion("Ha recibido una Desviación de ",idPara,0,false,"EvidenciasView.php?accion="+idEvidencia);//msj,para,tipomsj,atendido,asunto
+        enviar_notificacion("Tiene una Evidencia por Validar ",idPara,0,false,"EvidenciasView.php?accion="+idEvidencia);//msj,para,tipomsj,atendido,asunto
     $.ajax({
             url: '../Controller/EvidenciasController.php?Op=MandarAccionCorrectiva',
             type: 'GET',
