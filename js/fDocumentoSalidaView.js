@@ -310,13 +310,13 @@ $(function(){
 
 function documentosEntradaComboboxparaModal()
 {
-
   $.ajax({
       url:"../Controller/DocumentosEntradaController.php?Op=mostrarcombo",
       type:"GET",
       success:function(documentosEntrada)
       {
           tempData="";
+          tempData+="<option value='-1'>SIN FOLIO DE ENTRADA</option>";
           $.each(documentosEntrada,function(index,value)
           {
               tempData+="<option value='"+value.id_documento_entrada+"'>"+value.folio_entrada+"</option>";
@@ -325,8 +325,7 @@ function documentosEntradaComboboxparaModal()
           
           $("#ID_DOCUMENTO_ENTRADA").html(tempData);
       }
-  });
-  
+  });  
 }
 
 
