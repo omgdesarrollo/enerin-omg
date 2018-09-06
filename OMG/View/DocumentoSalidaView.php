@@ -564,7 +564,7 @@ function saveUpdateToDatabase(args)//listo
         columnas=new Object();
         entro=0;
         id_afectado = args['item']['id_principal'][0];
-        region_fiscalTemp = args['previousItem']['region_fiscal'];
+//        region_fiscalTemp = args['previousItem']['region_fiscal'];
         verificar = 0;
         $.each(args['item'],(index,value)=>
         {
