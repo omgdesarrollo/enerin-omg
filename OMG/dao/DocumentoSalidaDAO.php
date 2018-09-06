@@ -2,26 +2,43 @@
 require_once '../ds/AccesoDB.php';
 class DocumentoSalidaDAO{
     
-    public function mostrarDocumentosSalida(){
+    public function mostrarDocumentosSalida($CONTRATO){
         try{
-            $query="SELECT tbdocumento_salida.id_documento_salida,tbdocumento_entrada.id_documento_entrada,
-                    tbdocumento_entrada.folio_entrada,tbdocumento_salida.folio_salida,
-                    tbdocumento_salida.fecha_envio, tbdocumento_salida.asunto,
-                    tbautoridad_remitente.clave_autoridad,tbdocumento_salida.destinatario,
-                    tbempleados.nombre_empleado,tbempleados.apellido_paterno, 
-                    tbempleados.apellido_materno,tbdocumento_salida.observaciones 
-                    FROM documento_salida tbdocumento_salida
-                    JOIN documento_entrada tbdocumento_entrada ON
-                    tbdocumento_entrada.id_documento_entrada=tbdocumento_salida.id_documento_entrada
-                    JOIN autoridad_remitente tbautoridad_remitente ON
-                    tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad
-                    JOIN temas tbtemas ON
-                    tbtemas.id_tema=tbdocumento_entrada.id_tema
-                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado";
+        //     $query="SELECT tbdocumento_salida.id_documento_salida,tbdocumento_entrada.id_documento_entrada,
+        //             tbdocumento_entrada.folio_entrada,tbdocumento_salida.folio_salida,
+        //             tbdocumento_salida.fecha_envio, tbdocumento_salida.asunto,
+        //             tbautoridad_remitente.clave_autoridad,tbdocumento_salida.destinatario,
+        //             tbempleados.nombre_empleado,tbempleados.apellido_paterno, 
+        //             tbempleados.apellido_materno,tbdocumento_salida.observaciones 
+        //             FROM documento_salida tbdocumento_salida
+        //             JOIN documento_entrada tbdocumento_entrada ON
+        //             tbdocumento_entrada.id_documento_entrada=tbdocumento_salida.id_documento_entrada
+        //             JOIN autoridad_remitente tbautoridad_remitente ON
+        //             tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad
+        //             JOIN temas tbtemas ON
+        //             tbtemas.id_tema=tbdocumento_entrada.id_tema
+        //             JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado";
+        $query = "SELECT tbdocumento_salida.id_documento_salida, tbdocumento_entrada.id_documento_entrada,
+        tbdocumento_entrada.folio_entrada, tbdocumento_salida.folio_salida,
+        tbdocumento_salida.fecha_envio, tbdocumento_salida.asunto,
+        tbautoridad_remitente.id_autoridad, tbautoridad_remitente.clave_autoridad,
+        tbdocumento_salida.destinatario, tbempleados.id_empleado,
+        CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) AS nombre_empleado,
+        tbdocumento_salida.observaciones 
+        
+        FROM documento_salida tbdocumento_salida
+        
+        JOIN documento_entrada tbdocumento_entrada ON
+        tbdocumento_entrada.id_documento_entrada=tbdocumento_salida.id_documento_entrada
+        JOIN autoridad_remitente tbautoridad_remitente ON
+        tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad
+        JOIN temas tbtemas ON
+        tbtemas.id_tema=tbdocumento_entrada.id_tema
+        JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado 
+        WHERE tbdocumento_salida.id_cumplimiento = 1";
 
-
-            $db=  AccesoDB::getInstancia();
-            $lista=$db->executeQuery($query);
+        $db=  AccesoDB::getInstancia();
+        $lista=$db->executeQuery($query);
             
 
             return $lista;
@@ -192,22 +209,35 @@ class DocumentoSalidaDAO{
 
 //    AREA DEL DOCUMENTO DE SALIA SIN FOLIO DE ENTRADA
     
-    public function listarDocumentosDeSalidaSinFolio($CONTRATO)
+    public function mostrarDocumentosSalidaSinFolio($CONTRATO)
     {
         try 
         {
-            $query="SELECT tbdocumento_salida_sinfolio_entrada.id_documento_salida_sinfolio, tbdocumento_salida_sinfolio_entrada.id_documento_entrada,
-		 tbdocumento_salida_sinfolio_entrada.folio_salida, 
-		 tbempleados.id_empleado, CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)
-		 AS nombre_completo,
+        //     $query="SELECT tbdocumento_salida_sinfolio_entrada.id_documento_salida_sinfolio, tbdocumento_salida_sinfolio_entrada.id_documento_entrada,
+		//  tbdocumento_salida_sinfolio_entrada.folio_salida, 
+		//  tbempleados.id_empleado, CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)
+		//  AS nombre_completo,
+		//  tbdocumento_salida_sinfolio_entrada.fecha_envio, tbdocumento_salida_sinfolio_entrada.asunto,
+		//  tbdocumento_salida_sinfolio_entrada.destinatario,
+		//  tbautoridad_remitente.id_autoridad, tbautoridad_remitente.clave_autoridad,
+		//  tbdocumento_salida_sinfolio_entrada.observaciones		 
+        //          FROM documento_salida_sinfolio_entrada tbdocumento_salida_sinfolio_entrada
+        //          JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumento_salida_sinfolio_entrada.id_empleado
+        //          JOIN autoridad_remitente tbautoridad_remitente ON tbautoridad_remitente.id_autoridad=tbdocumento_salida_sinfolio_entrada.id_autoridad
+        //          WHERE tbdocumento_salida_sinfolio_entrada.ID_CUMPLIMIENTO= $CONTRATO";
+
+        $query="SELECT tbdocumento_salida_sinfolio_entrada.id_documento_salida, tbdocumento_salida_sinfolio_entrada.folio_entrada, 
+        tbdocumento_salida_sinfolio_entrada.id_documento_entrada, tbdocumento_salida_sinfolio_entrada.folio_salida, 
+        tbempleados.id_empleado,
+        CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) AS nombre_empleado,
 		 tbdocumento_salida_sinfolio_entrada.fecha_envio, tbdocumento_salida_sinfolio_entrada.asunto,
 		 tbdocumento_salida_sinfolio_entrada.destinatario,
 		 tbautoridad_remitente.id_autoridad, tbautoridad_remitente.clave_autoridad,
-		 tbdocumento_salida_sinfolio_entrada.observaciones		 
-                 FROM documento_salida_sinfolio_entrada tbdocumento_salida_sinfolio_entrada
-                 JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumento_salida_sinfolio_entrada.id_empleado
-                 JOIN autoridad_remitente tbautoridad_remitente ON tbautoridad_remitente.id_autoridad=tbdocumento_salida_sinfolio_entrada.id_autoridad
-                 WHERE tbdocumento_salida_sinfolio_entrada.ID_CUMPLIMIENTO= $CONTRATO";
+		 tbdocumento_salida_sinfolio_entrada.observaciones
+       FROM documento_salida_sinfolio_entrada tbdocumento_salida_sinfolio_entrada
+       JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumento_salida_sinfolio_entrada.id_empleado
+       JOIN autoridad_remitente tbautoridad_remitente ON tbautoridad_remitente.id_autoridad=tbdocumento_salida_sinfolio_entrada.id_autoridad
+       WHERE tbdocumento_salida_sinfolio_entrada.id_cumplimiento = $CONTRATO";
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);

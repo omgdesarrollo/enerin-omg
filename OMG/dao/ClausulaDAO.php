@@ -138,11 +138,11 @@ class ClausulaDAO{
     }
     
     
-    public function eliminarClausula($id_clausula){
+    public function eliminarClausula($id_documento){
         try{
-            $query="DELETE FROM clausulas WHERE id_clausula=$id_clausula";
+            $query="DELETE FROM documento_salida WHERE documento_salida.ID_DOCUMENTO_SALIDA=$id_clausula";
             $db=  AccesoDB::getInstancia();
-            $db->executeQueryUpdate($query);
+            return $db->executeQueryUpdate($query);
         } catch (Exception $ex) {
                 throw $ex;
         }
