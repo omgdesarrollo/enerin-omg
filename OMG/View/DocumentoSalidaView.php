@@ -224,16 +224,16 @@ var encabezado="";
 var mensaje="";
 var thisAutoridad=[];
 
-var MyDateField = function(config)
+var MyCombo = function(config)
 {
         // data = {};
     jsGrid.Field.call(this, config);
 //     console.log(this);
 };
  
-MyDateField.prototype = new jsGrid.Field
+MyCombo.prototype = new jsGrid.Field
 ({
-        css: "date-field",
+        // css: "date-field",
         align: "center",
         sorter: function(date1, date2)
         {
@@ -241,20 +241,10 @@ MyDateField.prototype = new jsGrid.Field
                 console.log(date1);
                 console.log(date2);
         },
-        itemTemplate: function(value)
+        itemTemplate: function(value,todo)
         {
-                fecha="0000-00-00";
-                // console.log(this);
-                this[this.name] = value;
-                // console.log(data);
-                if(value!=fecha)
-                {
-                        date = new Date(value);
-                        fecha = date.getDate()+1 +" "+ months[date.getMonth()] +" "+ date.getFullYear().toString().slice(2,4);
-                        return fecha;
-                }
-                else
-                        return "Sin fecha";
+                console.log(value);
+                console.log(value);
         },
         insertTemplate: function(value)
         {},
@@ -281,7 +271,8 @@ MyDateField.prototype = new jsGrid.Field
 });
 
 var customsFieldsGridData=[
-        {field:"customControl",my_field:MyCControlField}
+        {field:"customControl",my_field:MyCControlField},
+        {field:"combo",my_field:MyCombo},
 //        {field:"date",my_field:MyField},
 ];
 
@@ -297,7 +288,7 @@ return new Promise((resolve,reject)=>{
                         { name: "fecha_envio", title: "Fecha de Envio", type: "text", width:150,editing:false},
                         { name: "asunto", title: "Asunto", type: "text", width:150},
                         { name: "destinatario", title: "Destinatario", type: "text", width:150},
-                        { name: "clave_autoridad", title: "Autoridad Remitente", type: "text", width:150},
+                        { name: "id_autoridad", title: "Autoridad Remitente", type: "combo", width:150},
                         { name: "archivo_adjunto", title: "Archivo Adjunto", type: "text", width:150,editing:false},    
                         { name: "observaciones", title: "Observacion", type: "text", width:150},
                         { name: "delete", title: "Opcion", type: "customControl", width:150}
@@ -465,7 +456,7 @@ function reconstruir(value,index)
     tempData["fecha_envio"]=value.fecha_envio;
     tempData["asunto"]=value.asunto;
     tempData["destinatario"]=value.destinatario;
-    tempData["clave_autoridad"]=value.clave_autoridad;
+    tempData["id_autoridad"]=value.id_autoridad;
     tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_documento_salida+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
     tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
     tempData["observaciones"]=value.observaciones;
