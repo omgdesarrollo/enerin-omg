@@ -68,6 +68,28 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/fGridComponent.js" type="text/javascript"></script>
                 
                 <!--termina libreria que contiene la estructura del jsGridCompleta--> 
+                
+                
+                <!--empieza libreria para la comunicacion tiempo real y otras --> 
+               <!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">-->
+                
+               
+               
+               <!--termina libreria de comunicacion tiempo real--> 
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
         <style>
             .jsgrid-header-row>.jsgrid-header-cell {
                 background-color:#307ECC ;      /* orange */

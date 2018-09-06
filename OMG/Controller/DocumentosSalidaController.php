@@ -104,13 +104,22 @@ switch ($Op) {
             return $Lista;
             break;
         
-        case'':
+        case'responsablesDelTema':
             $Lista= $model->responsablesDelTemaCombobox();
             header('Content-type: application/json; charset=utf-8');
             echo json_encode( $Lista);
             return $Lista;
             
             break;
+        
+        case 'responsablesDelTemaFiltro':
+            $CONTRATO = Session::getSesion("s_cont");
+            $Lista= $model->responsableDelTemaParaFiltro($CONTRATO);
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode( $Lista);
+            return $Lista;
+            break;
+        
             
 	default:
 		# code...
