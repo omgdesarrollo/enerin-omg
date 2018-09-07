@@ -371,6 +371,7 @@ var customsFieldsGridData=[
         {field:"customControl",my_field:MyCControlField},
         {field:"comboAutoridad",my_field:MyComboAutoridad},
         {field:"comboEmpleados",my_field:MyComboEmpleados},
+        
 //        {field:"date",my_field:MyField},
 ];
 
