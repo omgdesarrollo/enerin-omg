@@ -22,7 +22,7 @@ switch ($Op)
         // $val = 0/0;
         // var $a;
         // socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-        sleep(2);
+        // sleep(2);
         // foreach($Lista as $key => $value)
         // {
         //     foreach($value as $k=>$val)
