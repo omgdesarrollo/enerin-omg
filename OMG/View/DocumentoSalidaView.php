@@ -246,6 +246,8 @@ var gridInstance;
 var encabezado="";
 var mensaje="";
 var thisAutoridad=[];
+var thisEmpleados=[];
+var thisEmpleadosFiltro=[];
 
 var MyComboAutoridad = function(config)
 {
@@ -306,12 +308,12 @@ MyComboAutoridad.prototype = new jsGrid.Field
         }
 });
 
-var MyComboAutoridad = function(config)
+var MyComboEmpleados = function(config)
 {
     jsGrid.Field.call(this, config);
 };
  
-MyComboAutoridad.prototype = new jsGrid.Field
+MyComboEmpleados.prototype = new jsGrid.Field
 ({
         align: "center",
         sorter: function(date1, date2)
@@ -324,9 +326,9 @@ MyComboAutoridad.prototype = new jsGrid.Field
         {
                 var res ="";
                 value!=null ?
-                $.each(thisAutoridad,(index,val)=>{
-                        if(val.id_autoridad == value)
-                                res = val.clave_autoridad;
+                $.each(thisEmpleados,(index,val)=>{
+                        if(val.id_empleado == value)
+                                res = val.nombre_completo;
                 })
                 : console.log();
                 return res;
@@ -337,15 +339,15 @@ MyComboAutoridad.prototype = new jsGrid.Field
         {
                 var temp = "";
                 var temp2 = "";
-                $.each(thisAutoridad,(index,val)=>
+                $.each(thisEmpleados,(index,val)=>
                 {
-                        if(val.id_autoridad == value)
+                        if(val.id_empleado == value)
                         {
-                                temp += "<option value='"+val.id_autoridad+"' selected>"+val.clave_autoridad+"</option>";
-                                temp2 = val.clave_autoridad;
+                                temp += "<option value='"+val.id_empleado+"' selected>"+val.nombre_completo+"</option>";
+                                temp2 = val.nombre_completo;
                         }
                         else
-                                temp += "<option value='"+val.id_autoridad+"'>"+val.clave_autoridad+"</option>";
+                                temp += "<option value='"+val.id_empleado+"'>"+val.nombre_completo+"</option>";
                 })
                 this._inputDate = $("<select>").attr({style:"margin:-5px;width:145px"});
                 $(this._inputDate[0]).append(temp);
@@ -368,6 +370,7 @@ MyComboAutoridad.prototype = new jsGrid.Field
 var customsFieldsGridData=[
         {field:"customControl",my_field:MyCControlField},
         {field:"comboAutoridad",my_field:MyComboAutoridad},
+        {field:"comboEmpleados",my_field:MyComboEmpleados},
 //        {field:"date",my_field:MyField},
 ];
 
@@ -381,7 +384,7 @@ return new Promise((resolve,reject)=>{
                         { name: "no", title: "No", type: "text", width:50,editing:false},
                         { name: "folio_entrada", title: "Folio de Entrada", type: "text", width:150,editing:false},
                         { name: "folio_salida", title: "Folio de Salida", type: "text", width:150,editing:false},
-                        { name: "id_empleado", title: "Responsable Tema", type: "text", width:150},
+                        { name: "id_empleado", title: "Responsable Tema", type: "comboEmpleados", width:150},
                         { name: "fecha_envio", title: "Fecha de Envio", type: "text", width:150,editing:false},
                         { name: "asunto", title: "Asunto", type: "text", width:150},
                         { name: "destinatario", title: "Destinatario", type: "text", width:150},
@@ -432,7 +435,7 @@ function inicializarFiltros()
 inicializarEstructuraGrid().then(()=>
 {
         // listarThisEmpleadosFiltro().then(()=>{
-        //         listarThisEmpleados().then(()=>{
+                listarThisEmpleados().then(()=>{
                         listarAutoridades().then(()=>
                         {
                                 inicializarEstructuraGrid().then(()=>{
@@ -443,7 +446,7 @@ inicializarEstructuraGrid().then(()=>
                                         });
                                 });
                         });
-        //         });
+                });
         // });
 });
  

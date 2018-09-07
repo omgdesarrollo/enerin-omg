@@ -399,7 +399,6 @@ function insertarDocumentoSalida(documentoSalidaDatos)
                     swalInfo("Creado, Pero no listado, Actualice");
                 }
             }
-            
         },
         error:function()
             {
