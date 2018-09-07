@@ -372,14 +372,17 @@ function inicializarFiltros()
 
 inicializarEstructuraGrid().then(()=>
 {
-        
-        listarAutoridades().then(()=>
-        {
-                inicializarEstructuraGrid().then(()=>{
-                        construirGrid();
-                        inicializarFiltros().then(()=>{
-                                construirFiltros();
-                                listarDatos()
+        listarThisEmpleadosFiltro().then(()=>{
+                listarThisEmpleados().then(()=>{
+                        listarAutoridades().then(()=>
+                        {
+                                inicializarEstructuraGrid().then(()=>{
+                                        construirGrid();
+                                        inicializarFiltros().then(()=>{
+                                                construirFiltros();
+                                                listarDatos()
+                                        });
+                                });
                         });
                 });
         });
@@ -411,7 +414,7 @@ function listarThisEmpleados()
 {
         return new Promise((resolve,reject)=>{
                 $.ajax({
-                        url:'../Controller/DocmentosSalidaController.php?Op=responsablesDelTema',
+                        url:'../Controller/DocumentosSalidaController.php?Op=responsablesDelTema',
                         type: 'GET',
                         success:(empleados)=>
                         {
@@ -431,7 +434,7 @@ function listarThisEmpleadosFiltro()
 {
         return new Promise((resolve,reject)=>{
                 $.ajax({
-                        url:'../Controller/DocmentosSalidaController.php?Op=responsablesDelTemaFiltro',
+                        url:'../Controller/DocumentosSalidaController.php?Op=responsablesDelTemaFiltro',
                         type: 'GET',
                         success:(empleados)=>
                         {
