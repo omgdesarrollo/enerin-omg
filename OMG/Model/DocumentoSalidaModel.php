@@ -174,7 +174,7 @@ class DocumentoSalidaModel {
             echo json_encode($rec2);
             foreach ($rec2 as $key => $value) 
             {
-                if($rec2[0]['id_empleado'] == $rec1[0]['id_empleado'])
+                if($rec2[0]['id_empleado']== $rec1[0]['id_empleado'])
                 {
                     
                 } else{
@@ -183,7 +183,8 @@ class DocumentoSalidaModel {
                 }
                     
             }
-            
+//            echo "valores rec1: ".json_encode($rec1);
+//            echo "valores rec2: ".json_encode($rec2);
             return $lista;
         } catch (Exception $ex) 
         {

@@ -115,26 +115,30 @@ class TareasModel{
             {
                 $lista = $dao->listarTarea($exito['id_nuevo']);
                 
-                foreach ($lista as $key => $value)
-            {
-                if($value["status_tarea"]== 1)
-                {
-                    $lista[$key]["status_tarea"]="En proceso";
-                }
-                
-                if($value["status_tarea"]== 2)
-                {
-                    $lista[$key]["status_tarea"]="Suspendido";
-                }
-                
-                if($value["status_tarea"]== 3)
-                {
-                    $lista[$key]["status_tarea"]="Terminado";
-                }
-            }
+//                foreach ($lista as $key => $value)
+//            {
+//                if($value["status_tarea"]== 1)
+//                {
+//                    $lista[$key]["status_tarea"]="En proceso";
+////                    echo "Esta es la lista: ".json_encode($lista);
+//                }
+//                
+//                if($value["status_tarea"]== 2)
+//                {
+//                    $lista[$key]["status_tarea"]="Suspendido";
+//                }
+//                
+//                if($value["status_tarea"]== 3)
+//                {
+//                    $lista[$key]["status_tarea"]="Terminado";
+//                }
+//                 
+//            }
+                       
             }
             else
                 return $exito[0];
+            
             return $lista;
 
         } catch (Exception $ex)

@@ -213,7 +213,7 @@ class DocumentoSalidaDAO{
                     JOIN documento_entrada tbdocumento_entrada ON tbdocumento_entrada.id_documento_entrada=tbdocumento_salida.id_documento_entrada
                     JOIN temas tbtemas ON tbtemas.id_tema=tbdocumento_entrada.id_tema
                     JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado 
-                    WHERE tbdocumento_salida.id_cumplimiento= $CONTRATO AND tbempleados.id_empleado!=0 GROUP BY tbempleados.id_empleado";
+                    WHERE tbdocumento_salida.id_cumplimiento= $CONTRATO GROUP BY tbempleados.id_empleado";
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
@@ -334,7 +334,7 @@ class DocumentoSalidaDAO{
                     AS nombre_completo
                     FROM documento_salida_sinfolio_entrada tbdocumento_salida_sinfolio_entrada
                     JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumento_salida_sinfolio_entrada.id_empleado
-                    WHERE tbdocumento_salida_sinfolio_entrada.id_cumplimiento = $CONTRATO GROUP BY tbdocumento_salida_sinfolio_entrada.id_empleado";
+                    WHERE tbdocumento_salida_sinfolio_entrada.id_cumplimiento = $CONTRATO GROUP BY tbempleados.id_empleado";
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
 
