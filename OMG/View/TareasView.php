@@ -56,7 +56,7 @@ $Usuario=  Session::getSesion("user");
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/fTareasView.js" type="text/javascript"></script>                
-                
+                <script src="../../js/fechas_formato.js" type="text/javascript"></script>
         <style>
             .jsgrid-header-row>.jsgrid-header-cell {
                 background-color:#307ECC ;      /* orange */
