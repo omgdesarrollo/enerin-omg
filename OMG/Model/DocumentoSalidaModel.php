@@ -171,7 +171,7 @@ class DocumentoSalidaModel {
                 $lista[$contador]= $value;
                 $contador++;        
             }
-            
+            echo json_encode($rec2);
             foreach ($rec2 as $key => $value) 
             {
                 if($rec2[0]['id_empleado'] == $rec1[0]['id_empleado'])

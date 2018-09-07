@@ -138,7 +138,7 @@ function construirGrid()
         fields: 
         [
             { name: "id_principal",visible:false},
-            { name:"no",title:"No",width:60},
+            { name:"no",title:"No",width:40},
             { name: "referencia",title:"Referencia", type: "textarea", validate: "required",width:200},
             { name: "tarea",title:"Tarea", type: "textarea", validate: "required",width:200 },
 //            { name: "id_empleado",title:"Responsable del Plan", type: "text", validate: "required" },
@@ -147,17 +147,17 @@ function construirGrid()
                 valueField:"id_empleado",
                 textField:"nombre_completo"
             },
-            { name: "fecha_creacion",title:"Fecha de Creacion", type: "text", validate: "required", width:120,editing: false},
-            { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required", width:120,},
-            { name: "fecha_cumplimiento",title:"Fecha de Cumplimiento", type: "text", validate: "required", width:150,editing: false},
+            { name: "fecha_creacion",title:"Fecha de Creacion", type: "text", validate: "required", width:150,editing: false},
+            { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required", width:150,},
+            { name: "fecha_cumplimiento",title:"Fecha de Cumplimiento", type: "text", validate: "required", width:190,editing: false},
 //            { name: "status_tarea",title:"status_tarea", type: "text", validate: "required"},
             { name: "status_tarea", title:"Estatus", type: "select", width:150,valueField:"status_tarea",textField:"descripcion",
                 items:[{"status_tarea":"1","descripcion":"En Proceso"},{"status_tarea":"2","descripcion":"Suspendido"},{"status_tarea":"3","descripcion":"Terminado"}]
             },
             { name: "observaciones",title:"Observaciones", type: "textarea", validate: "required", width:150,},
-            { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:120,editing:false },
+            { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:150,editing:false },
             { name: "registrar_programa",title:"Registrar Programa", type: "text", validate: "required",width:160, editing:false },
-            { name: "avance_programa",title:"Avance Programa", type: "text", validate: "required", editing:false },
+            { name: "avance_programa",title:"Avance Programa", type: "text", validate: "required",width:150, editing:false },
             { name:"delete", title:"Opción", type:"customControl",sorting:""}
         ],
         onItemUpdated: function(args)
@@ -325,11 +325,12 @@ function reconstruir(value,index)
     tempData["referencia"]=value.referencia;
     tempData["tarea"]=value.tarea;
     tempData["id_empleado"]=value.id_empleado;
-    tempData["fecha_creacion"]=value.fecha_creacion;
+    tempData["fecha_creacion"]= getSinFechaFormato(value.fecha_creacion);
     tempData["fecha_alarma"]=value.fecha_alarma;
     tempData["fecha_cumplimiento"]=value.fecha_cumplimiento;
     tempData["status_tarea"]=value.status_tarea;
     tempData["observaciones"]=value.observaciones;
+    
     tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_tarea+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
     tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
     tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info' onClick='cargarprogram("+value.id_tarea+")'>Cargar Programa</button>";    
