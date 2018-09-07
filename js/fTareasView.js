@@ -326,8 +326,8 @@ function reconstruir(value,index)
     tempData["tarea"]=value.tarea;
     tempData["id_empleado"]=value.id_empleado;
     tempData["fecha_creacion"]= getSinFechaFormato(value.fecha_creacion);
-    tempData["fecha_alarma"]=value.fecha_alarma;
-    tempData["fecha_cumplimiento"]=value.fecha_cumplimiento;
+    tempData["fecha_alarma"]= getSinFechaFormato(value.fecha_alarma);
+    tempData["fecha_cumplimiento"]= getSinFechaFormato(value.fecha_cumplimiento);
     tempData["status_tarea"]=value.status_tarea;
     tempData["observaciones"]=value.observaciones;
     tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_tarea+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
