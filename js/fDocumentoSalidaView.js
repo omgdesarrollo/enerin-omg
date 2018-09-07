@@ -441,12 +441,13 @@ months = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic
                 {
                         if(todo[0].length!=0)
                         {
-                                tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
+                                tempDocumentolistadoUrl = "<table class='tbl-qa' style='width:100%'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
                                 $.each(todo[0], function (index,value)
                                 {
                                         nametmp = value.split("^-O-^-M-^-G-^");
-                                        fecha = new Date(nametmp[0]*1000);
-                                        fecha = fecha.getDate() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+                                        // fecha = new Date(nametmp[0]*1000);
+                                        // fecha = fecha.getDate() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+                                        fecha = getFechaStamp(nametmp[0]);
                                         
                                         tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
                                         tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\" download='"+nametmp[1]+"'>"+nametmp[1]+"</a></td>";
