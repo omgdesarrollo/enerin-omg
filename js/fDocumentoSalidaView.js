@@ -353,40 +353,58 @@ function insertarDocumentoSalida(documentoSalidaDatos)
         url:"../Controller/DocumentosSalidaController.php?Op=Guardar",
         type:"POST",
         data:"documentoSalidaDatos="+JSON.stringify(documentoSalidaDatos),
-        async:false,
+        // async:false,
+        beforeSend:()=>
+        {
+            growlWait("Crear Documento Salida","Guardando Registro...");
+        },
         success:function(datos)
         {
 //            alert("valor datos: "+datos);
 //            console.log(datos);
             if(typeof(datos) == "object")
             {
-                tempData;
-                swalSuccess("Documento Creado");                
+                growlSuccess("Crear Documento Salida","Registro Creado");
+//                 tempData;
+//                 swalSuccess("Documento Creado");                
+//                 $.each(datos,function(index,value)
+//                 {
+// //                   console.log("Este es el value: "+value); 
+//                    tempData= reconstruir(value,ultimoNumeroGrid+1);  
+//                 });
+//                console.log(tempData);
+
                 $.each(datos,function(index,value)
                 {
-//                   console.log("Este es el value: "+value); 
-                   tempData= reconstruir(value,ultimoNumeroGrid+1);  
+                    componerDataListado(value);
                 });
-//                console.log(tempData);
+                componerDataGrid();
+                gridInstance.loadData();
                 
                 $("#jsGrid").jsGrid("insertItem",tempData).done(function()
                 {
                     $("#crea_documentoSalida .close ").click();
                 });
-                
-            } else{
+            }
+            else
+            {
                 if(datos==0)
+                // {
+                    growlError("Error Creando Documento Salida","No se pudo crear el documento de salida");
+                    // swalError("Error, No se pudo crear el Documento");
+                // }
+                else
                 {
-                    swalError("Error, No se pudo crear el Documento");                    
-                } else{
+                    growlSuccess("Crear Documento Salida","Registro Creado, pero no listado, Actualice");
                     swalInfo("Creado, Pero no listado, Actualice");
-                }                
+                }
             }
             
         },
         error:function()
             {
-                swalError("Error en el servidor");
+                // swalError("Error en el servidor");
+                growlError("Error Creando Documento Salida","Error en el servidor");
             }
     });
     

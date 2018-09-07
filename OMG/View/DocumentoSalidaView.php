@@ -306,6 +306,65 @@ MyComboAutoridad.prototype = new jsGrid.Field
         }
 });
 
+var MyComboAutoridad = function(config)
+{
+    jsGrid.Field.call(this, config);
+};
+ 
+MyComboAutoridad.prototype = new jsGrid.Field
+({
+        align: "center",
+        sorter: function(date1, date2)
+        {
+                console.log("haber cuando entra aqui");
+                console.log(date1);
+                console.log(date2);
+        },
+        itemTemplate: function(value)
+        {
+                var res ="";
+                value!=null ?
+                $.each(thisAutoridad,(index,val)=>{
+                        if(val.id_autoridad == value)
+                                res = val.clave_autoridad;
+                })
+                : console.log();
+                return res;
+        },
+        insertTemplate: function(value)
+        {},
+        editTemplate: function(value,todo)
+        {
+                var temp = "";
+                var temp2 = "";
+                $.each(thisAutoridad,(index,val)=>
+                {
+                        if(val.id_autoridad == value)
+                        {
+                                temp += "<option value='"+val.id_autoridad+"' selected>"+val.clave_autoridad+"</option>";
+                                temp2 = val.clave_autoridad;
+                        }
+                        else
+                                temp += "<option value='"+val.id_autoridad+"'>"+val.clave_autoridad+"</option>";
+                })
+                this._inputDate = $("<select>").attr({style:"margin:-5px;width:145px"});
+                $(this._inputDate[0]).append(temp);
+
+                if(todo.id_documento_entrada!=-1)
+                {
+                        this._inputDate = temp2;
+                }
+                return this._inputDate;
+                
+        },
+        insertValue: function()
+        {},
+        editValue: function(val)
+        {
+                return this._inputDate.val();
+        }
+});
+
 var customsFieldsGridData=[
         {field:"customControl",my_field:MyCControlField},
         {field:"comboAutoridad",my_field:MyComboAutoridad},
@@ -372,8 +431,8 @@ function inicializarFiltros()
 
 inicializarEstructuraGrid().then(()=>
 {
-        listarThisEmpleadosFiltro().then(()=>{
-                listarThisEmpleados().then(()=>{
+        // listarThisEmpleadosFiltro().then(()=>{
+        //         listarThisEmpleados().then(()=>{
                         listarAutoridades().then(()=>
                         {
                                 inicializarEstructuraGrid().then(()=>{
@@ -384,8 +443,8 @@ inicializarEstructuraGrid().then(()=>
                                         });
                                 });
                         });
-                });
-        });
+        //         });
+        // });
 });
  
  function listarAutoridades()
@@ -400,7 +459,7 @@ inicializarEstructuraGrid().then(()=>
                         {
                                 // tempData = autoridades;
                                 thisAutoridad = autoridades;
-                                resolve("autoridades");
+                                resolve();
                         },
                         error:()=>
                         {
@@ -420,7 +479,7 @@ function listarThisEmpleados()
                         {
                                 // tempData = autoridades;
                                 thisEmpleados = empleados;
-                                resolve("autoridades");
+                                resolve();
                         },
                         error:()=>
                         {
@@ -440,7 +499,7 @@ function listarThisEmpleadosFiltro()
                         {
                                 // tempData = autoridades;
                                 thisEmpleadosFiltro = empleados;
-                                resolve("autoridades");
+                                resolve();
                         },
                         error:()=>
                         {
@@ -509,7 +568,12 @@ function reconstruir(value,index)
     tempData["id_principal"].push({'id_documento_salida':value.id_documento_salida});
     tempData["id_documento_entrada"] = value.id_documento_entrada;
     tempData["no"]= index;
-    tempData["folio_entrada"]=value.folio_entrada;
+
+    if(value.id_documento_entrada!=-1)
+        tempData["folio_entrada"]=value.folio_entrada;
+    else
+        tempData["folio_entrada"] = "SIN FOLIO";
+
     tempData["folio_salida"]=value.folio_salida;
     tempData["id_empleado"]= value.id_empleado;
     tempData["fecha_envio"] = getSinFechaFormato(value.fecha_envio);
@@ -533,7 +597,7 @@ function reconstruir(value,index)
 }
 function componerDataListado(value)// id de la vista documento, listo
 {
-    id_vista = value.id_documento_entrada;
+    id_vista = value.id_documento_salida;
     id_string = "id_documento_salida";
     $.each(dataListado,function(indexList,valueList)
     {
@@ -544,6 +608,7 @@ function componerDataListado(value)// id de la vista documento, listo
         });
     });
 }
+
 function componerDataGrid()//listo
 {
     __datos = [];
