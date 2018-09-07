@@ -67,11 +67,11 @@ switch ($Op) {
             Session::setSesion("s_cont", $_REQUEST["c"]);
             $v["contrato"]=Session::getSesion ("s_cont");
             $Lista= $model->detallesContratoSeleccionado($v);
-        //     foreach($Lista as $key=>$value)
-		// {
-			
-        //             $Lista[$key] = utf8_encode($value);
-		// }
+//            foreach($Lista as $key=>$value)
+//		{
+//			
+//                    $Lista[$key] = utf8_encode($value);
+//		}
             
             header('Content-type: application/json; charset=utf-8');
             echo json_encode($Lista);
@@ -81,12 +81,15 @@ switch ($Op) {
                 $v["contrato"]=Session::getSesion ("s_cont");
                 $Lista= $model->detallesContratoSeleccionado($v);
                 
-                // foreach($Lista as $key=>$value)
-                //    {
-                //         $Lista[$key] = utf8_encode($value);
-                //    }
-
-                  header('Content-type: application/json; charset=utf-8');     
+//                foreach($Lista as $key=>$value)
+//                   {
+//                        $Lista[$key] = utf8_encode($value);
+//                   }
+                if($Lista==null)
+                {
+                    $Lista=[];
+                }
+                header('Content-type: application/json; charset=utf-8');     
                 echo json_encode($Lista);
             }
 //            }

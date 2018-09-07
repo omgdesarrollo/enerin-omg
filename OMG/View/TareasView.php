@@ -103,7 +103,7 @@ require_once 'EncabezadoUsuarioView.php';
     Agregar Tarea
 </button>
 
-<button onClick="loadChartView(true);" type="button" id="btn_informe" class="btn btn-info btn_agregar" data-toggle="modal" data-target="#informe_tareas">
+<button onClick="loadChartView(true);" type="button" id="btn_informe" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#informe_tareas">
     Informe
 </button>    
     
