@@ -406,8 +406,8 @@ var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/
                 ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
                 
 
-months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
-  
+// months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+months = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 
   
   

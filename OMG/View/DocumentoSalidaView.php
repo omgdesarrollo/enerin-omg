@@ -58,6 +58,7 @@ $Usuario=  Session::getSesion("user");
                 <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
                 <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
                 <!--END LIBRERIA SWEET ALERT 2-->
+                <script src="../../js/fechas_formato.js" type="text/javascript"></script>
                 <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
                 <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
@@ -365,24 +366,27 @@ function inicializarFiltros()
 
 //()=>{  esto e igual a function(){
 
-$.when(listarAutoridades(),listarThisEmpleado()).then((r1,r2)=>{
-        console.log("A");
-});
+// $.when(listarAutoridades(),listarThisEmpleado()).then((r1,r2)=>{
+//         console.log("A");
+// });
 
-// inicializarEstructuraGrid().then(()=>
-// {
-        
-//         listarAutoridades().then(()=>
-//         {
-//                 inicializarEstructuraGrid().then(()=>{
-//                         construirGrid();
-//                         inicializarFiltros().then(()=>{
-//                                 construirFiltros();
-//                                 listarDatos()
-//                         });
-//                 });
-//         });
-//  });
+inicializarEstructuraGrid().then(()=>
+{
+        listarThisEmpleadosFiltro().then(()=>{
+                listarThisEmpleados().then(()=>{
+                        listarAutoridades().then(()=>
+                        {
+                                inicializarEstructuraGrid().then(()=>{
+                                        construirGrid();
+                                        inicializarFiltros().then(()=>{
+                                                construirFiltros();
+                                                listarDatos()
+                                        });
+                                });
+                        });
+                });
+        });
+});
  
  function listarAutoridades()
 {
@@ -410,7 +414,7 @@ function listarThisEmpleados()
 {
         return new Promise((resolve,reject)=>{
                 $.ajax({
-                        url:'../Controller/DocmentosSalidaController.php?Op=responsablesDelTema',
+                        url:'../Controller/DocumentosSalidaController.php?Op=responsablesDelTema',
                         type: 'GET',
                         success:(empleados)=>
                         {
@@ -430,7 +434,7 @@ function listarThisEmpleadosFiltro()
 {
         return new Promise((resolve,reject)=>{
                 $.ajax({
-                        url:'../Controller/DocmentosSalidaController.php?Op=responsablesDelTemaFiltro',
+                        url:'../Controller/DocumentosSalidaController.php?Op=responsablesDelTemaFiltro',
                         type: 'GET',
                         success:(empleados)=>
                         {
@@ -508,7 +512,7 @@ function reconstruir(value,index)
     tempData["folio_entrada"]=value.folio_entrada;
     tempData["folio_salida"]=value.folio_salida;
     tempData["id_empleado"]= value.id_empleado;
-    tempData["fecha_envio"]=value.fecha_envio;
+    tempData["fecha_envio"] = getSinFechaFormato(value.fecha_envio);
     tempData["asunto"]=value.asunto;
     tempData["destinatario"]=value.destinatario;
     tempData["id_autoridad"]=value.id_autoridad;
