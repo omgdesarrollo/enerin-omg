@@ -109,7 +109,7 @@ function construirGrid()
         },
         onDataLoading: function(args)
         {
-            loadBlockUi();
+//            loadBlockUi();
         },
         onDataLoaded:function(args)
         {
@@ -330,7 +330,6 @@ function reconstruir(value,index)
     tempData["fecha_cumplimiento"]=value.fecha_cumplimiento;
     tempData["status_tarea"]=value.status_tarea;
     tempData["observaciones"]=value.observaciones;
-    
     tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_tarea+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
     tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
     tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info' onClick='cargarprogram("+value.id_tarea+")'>Cargar Programa</button>";    
