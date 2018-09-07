@@ -160,7 +160,7 @@ function loadDataSideBarOficiosCatalogos(lista){
 
                                        case "temasoficios":
 //                                            consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
-//                                            consultarInformacion("../Controller/EmpleadosController.php?Op=mostrarcombo");
+                                            consultarInformacion("../Controller/EmpleadosController.php?Op=mostrarcombo");
                                             $("#sidebarObjV").load('InyectarVistasView.php #temasoficios');                             
                                        break;
                                    }
