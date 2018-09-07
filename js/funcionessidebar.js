@@ -218,8 +218,8 @@ function loadDataSideBarOficiosDocumentacion(lista)
                                        
 
                                        case "documentosSalida":
-                                            consultarInformacion("../Controller/DocumentosSalidaController.php?Op=Listar");
-                                            consultarInformacion("../Controller/DocumentosEntradaController.php?Op=mostrarcombo");
+                                            // consultarInformacion("../Controller/DocumentosSalidaController.php?Op=Listar");
+                                            // consultarInformacion("../Controller/DocumentosEntradaController.php?Op=mostrarcombo");
                                             $("#sidebarObjV").load('InyectarVistasView.php #documentosSalida');
                                        break;
                                                                               

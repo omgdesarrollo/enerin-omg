@@ -1822,7 +1822,6 @@ $("#subirArchivos").click(function()
 {
         agregarArchivosUrl();
 });
-
 months = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 
 function mostrar_urls(id_documento_entrada)
