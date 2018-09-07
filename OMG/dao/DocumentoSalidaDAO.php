@@ -96,42 +96,36 @@ class DocumentoSalidaDAO{
     }
         
     }
-            
-
-
-
-
-
-
-
-    public function insertarDocumentosSalida($id_documento_entrada,$folio_salida,$fecha_envio,$asunto,$destinatario,$observaciones){
+    
+    public function insertarDocumentosSalida($tabla,$id,$id_documento_entrada,$folio_salida,$fecha_envio,$asunto,$destinatario,$observaciones,$CONTRATO){
         
         try{
             
-            $query_obtenerMaximo_mas_uno="SELECT max(id_documento_salida)+1 as id_documento_salida FROM documento_salida";
-            $db_obtenerMaximo_mas_uno=AccesoDB::getInstancia();
-            $lista_id_nuevo_autoincrementado=$db_obtenerMaximo_mas_uno->executeQuery($query_obtenerMaximo_mas_uno);
-            $id_nuevo=0;
+            // $query_obtenerMaximo_mas_uno="SELECT max(id_documento_salida)+1 as id_documento_salida FROM documento_salida";
+            // $db_obtenerMaximo_mas_uno=AccesoDB::getInstancia();
+            // $lista_id_nuevo_autoincrementado=$db_obtenerMaximo_mas_uno->executeQuery($query_obtenerMaximo_mas_uno);
+            // $id_nuevo=0;
             
-            foreach ($lista_id_nuevo_autoincrementado as $value) {
-               $id_nuevo= $value["id_documento_salida"];
-            }
+            // foreach ($lista_id_nuevo_autoincrementado as $value) {
+            //    $id_nuevo= $value["id_documento_salida"];
+            // }
             
-            if ($id_nuevo==NULL) {
-                $id_nuevo=0;
-            }
+            // if ($id_nuevo==NULL) {
+            //     $id_nuevo=0;
+            // }
                         
-            
-             $query="insert into documento_salida (id_documento_salida,id_documento_entrada,folio_salida,fecha_envio,asunto,destinatario,observaciones)
+            // echo $id;
+             $query="insert into $tabla (id_documento_salida,id_documento_entrada,folio_salida,fecha_envio,asunto,destinatario,observaciones,id_cumplimiento)
                                                   
                                                     
-                                          VALUES ($id_nuevo,$id_documento_entrada,'$folio_salida','$fecha_envio','$asunto','$destinatario','$observaciones');";
+                                          VALUES ($id,$id_documento_entrada,'$folio_salida','$fecha_envio','$asunto','$destinatario','$observaciones',$CONTRATO);";
             
 //            $db=  AccesoDB::getInstancia();
 //            $db->executeQueryUpdate($query);
             $db=  AccesoDB::getInstancia();
             $exito = $db->executeUpdateRowsAfected($query);
-            return ($exito != 0)?[0=>1,"id_nuevo"=>$id_nuevo]:[0=>0,"id_nuevo"=>$id_nuevo ];
+            // echo $exito;
+            return ($exito != -1)?[0=>1,"id_nuevo"=>$id]:[0=>0,"id_nuevo"=>$id];
              
         } catch (Exception $ex) {
                 throw $ex;
@@ -186,24 +180,7 @@ class DocumentoSalidaDAO{
     }
     
     
-    public function obtenermayorDocumentoSalidaConFolio()
-    { 
-        try 
-        {
-            $query="SELECT (SELECT IFNULL(MAX(tbdocumento_salida.id_documento_salida),-1)) AS resultado
-                    FROM documento_salida tbdocumento_salida";
-            
-            $db=  AccesoDB::getInstancia();
-            $lista=$db->executeQuery($query);
-
-            return $lista[0]['resultado'];
-        } catch (Exception $ex) 
-        {
-            throw $ex;
-            return -1;        
-        }
-        
-    }
+   
     
     
     public function responsablesDelTemaCombobox()
@@ -312,7 +289,24 @@ class DocumentoSalidaDAO{
             throw $ex;
             return -1;        
         }
-        
+    }
+
+    public function obtenermayorDocumentoSalidaConFolio()
+    { 
+        try 
+        {
+            $query="SELECT (SELECT IFNULL(MAX(tbdocumento_salida.id_documento_salida),-1)) AS resultado
+                    FROM documento_salida tbdocumento_salida";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista[0]['resultado'];
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;        
+        }   
     }
     
     

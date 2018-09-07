@@ -52,9 +52,12 @@ switch ($Op) {
 //		break;
             
         case 'Guardar':
+            $CONTRATO = Session::getSesion("s_cont");
             header('Content-type: application/json; charset=utf-8');
             $data= json_decode($_REQUEST['documentoSalidaDatos'],true);
             
+            // echo $data['id_documento_entrada'];
+
             $pojo->setId_documento_entrada($data['id_documento_entrada']);
             $pojo->setFolio_salida($data['folio_salida']);
             $pojo->setFecha_envio($data['fecha_envio']);
@@ -62,7 +65,7 @@ switch ($Op) {
             $pojo->setDestinatario($data['destinatario']);
             $pojo->setObservaciones($data['observaciones']);
             
-            $Lista= $model->insertar($pojo);
+            $Lista= $model->insertar($pojo,$CONTRATO);
             echo json_encode($Lista);
             return $Lista;
             break;
