@@ -376,13 +376,13 @@ function reconstruir(documento,index)//listo
     tempData["responsable_documento"] = documento.responsable_documento;
 
 
-    tempData["tema_responsableBTN"] = "<button onClick='mostrarTemaResponsable("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'>";
+    tempData["tema_responsableBTN"] = "<button onClick='mostrarTemaResponsable("+documento.id_documento+");' type='button' class='btn btn-success btn_agregar' data-toggle='modal' data-target='#mostrar-temaresponsable'>";
     tempData["tema_responsableBTN"] += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>";
 
     if(documento.permiso_total == 1 || documento.soy_responsable == 0)
-        tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\""+documento.validacion_documento_responsable+"\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
+        tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\""+documento.validacion_documento_responsable+"\");' type='button' class='btn btn-primary btn_refrescar' data-toggle='modal' data-target='#create-itemUrls' style='width:100%'>";
     else
-        tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\"true\");' type='button' class='btn btn-primary' data-toggle='modal' data-target='#create-itemUrls'>";
+        tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\"true\");' type='button' class='btn btn-primary btn_refrescar' data-toggle='modal' data-target='#create-itemUrls' style='width:100%'>";
     
     // console.log(tempData["mostrar_urlsBTN"]);
     // if(documento.soy_reponsable == "1")
@@ -411,10 +411,10 @@ function reconstruir(documento,index)//listo
 
     tempData["mostrar_urlsBTN"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar</button>";
 
-    tempData["requisitosBTN"] = "<button onClick='mostrarRequisitos("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'>";
+    tempData["requisitosBTN"] = "<button onClick='mostrarRequisitos("+documento.id_documento+");' type='button' class='btn btn-success btn_agregar' data-toggle='modal' data-target='#mostrar-requisitos'>";
     tempData["requisitosBTN"] += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>";
 
-    tempData["registrosBTN"] = "<button onClick='mostrarRegistros("+documento.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'>";
+    tempData["registrosBTN"] = "<button onClick='mostrarRegistros("+documento.id_documento+");' type='button' class='btn btn-success btn_agregar' data-toggle='modal' data-target='#mostrar-registros'>";
     tempData["registrosBTN"] += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>";
 
     tempData["validacion_documento_responsable"] = documento.validacion_documento_responsable;

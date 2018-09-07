@@ -78,21 +78,9 @@ $Usuario=  Session::getSesion("user");
                
                <!--termina libreria de comunicacion tiempo real--> 
                 
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
         <style>
-            .jsgrid-header-row>.jsgrid-header-cell {
+            .jsgrid-header-row>.jsgrid-header-cell
+            {
                 background-color:#307ECC ;      /* orange */
                 font-family: "Roboto Slab";
                 font-size: 1.2em;
@@ -103,10 +91,11 @@ $Usuario=  Session::getSesion("user");
             {
                 display:none;
             }
-
-        </style>              
-                
- 			 
+            input[type="combobox"]
+            {
+                    border:0px;
+            }
+        </style>	 
 </head>
 
         
@@ -199,8 +188,8 @@ require_once 'EncabezadoUsuarioView.php';
 
 
                     <div class="form-group">
-                        <button type="submit" style="width:49%" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
-                        <button type="submit" style="width:49%" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
+                        <button type="submit" style="width:49%" id="btn_guardar"  class="btn crud-submit btn-info btn_refrescar">Guardar</button>
+                        <button type="submit" style="width:49%" id="btn_limpiar"  class="btn crud-submit btn-info btn_refrescar">Limpiar</button>
                     </div>
                     
                 </div>
@@ -222,7 +211,7 @@ require_once 'EncabezadoUsuarioView.php';
 		        <h4 class="modal-title" id="myModalLabel">Archivos Adjuntos</h4>
       </div>
 
-      <div class="modal-body">
+      <div class="modal-body" style="text-align:center">
         <div id="DocumentolistadoUrl"></div>
         
         <div class="form-group">
@@ -230,7 +219,7 @@ require_once 'EncabezadoUsuarioView.php';
 			  </div>
 
         <div class="form-group" method="post" >
-          <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Archivo</button>
+          <button type="submit" id="subirArchivos" class="btn crud-submit btn-info btn_refrescar" style="width:98%">Adjuntar Archivo</button>
         </div>
       </div><!-- cierre div class-body -->
     </div><!-- cierre div class modal-content -->
@@ -375,13 +364,13 @@ var customsFieldsGridData=[
 //        {field:"date",my_field:MyField},
 ];
 
-function inicializarEstructuraGrid(){
-
-return new Promise((resolve,reject)=>{
-      
-      estructuraGrid=[
-              { name: "id_principal", visible:false },
-              { name: "id_documento_entrada", visible:false },
+function inicializarEstructuraGrid()
+{
+        return new Promise((resolve,reject)=>
+        {
+                estructuraGrid=[
+                        { name: "id_principal", visible:false },
+                        { name: "id_documento_entrada", visible:false },
                         { name: "no", title: "No", type: "text", width:50,editing:false},
                         { name: "folio_entrada", title: "Folio de Entrada", type: "text", width:150,editing:false},
                         { name: "folio_salida", title: "Folio de Salida", type: "text", width:150,editing:false},
@@ -393,12 +382,11 @@ return new Promise((resolve,reject)=>{
                         { name: "archivo_adjunto", title: "Archivo Adjunto", type: "text", width:150,editing:false},    
                         { name: "observaciones", title: "Observacion", type: "text", width:150},
                         { name: "delete", title: "Opcion", type: "customControl", width:150}
-                     ];
-       resolve();
-  })
+                ];
+                resolve();
+        });
+}
 
-  
-    }
 ultimoNumeroGrid=0;
 
 function inicializarFiltros()
@@ -598,7 +586,7 @@ function reconstruir(value,index)
     tempData["asunto"]=value.asunto;
     tempData["destinatario"]=value.destinatario;
     tempData["id_autoridad"]=value.id_autoridad;
-    tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_documento_salida+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
+    tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_documento_salida+")' type='button' class='btn btn-info btn_refrescar' data-toggle='modal' data-target='#create-itemUrls' style='width:100%'>";
     tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
     tempData["observaciones"]=value.observaciones;
     
