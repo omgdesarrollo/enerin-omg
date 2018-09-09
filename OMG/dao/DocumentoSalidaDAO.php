@@ -145,7 +145,7 @@ class DocumentoSalidaDAO{
         
     }
     
-    public function actualizarDocumentoSalidaPorColumna($COLUMNA,$VALOR,$ID_DOCUMENTO_SALIDA)
+    public function actualizarDocumentoSalidaPorColumna($COLUMNA,$VALOR,$ID_DOCUMENTO_SALIDA)//no sirve
     {
         try{
             $query="UPDATE documento_salida SET ".$COLUMNA."='".$VALOR."'  WHERE id_documento_salida=$ID_DOCUMENTO_SALIDA";
@@ -165,7 +165,23 @@ class DocumentoSalidaDAO{
             $query="DELETE FROM documento_salida
                     WHERE id_documento_salida = $ID_DOCUMENTO";
             $db=  AccesoDB::getInstancia();
-            $lista= $db->executeQueryUpdate($query);
+            $lista= $db->executeUpdateRowsAfected($query);
+            
+            return $lista;
+        }catch(Exception $ex)
+        {
+                throw $ex;
+                return -1;
+        }
+    }
+
+    public function eliminarDocumentoSalidaSinFolio($ID_DOCUMENTO)
+    {
+        try{
+            $query="DELETE FROM documento_salida_sinfolio_entrada
+                    WHERE id_documento_salida = $ID_DOCUMENTO";
+            $db=  AccesoDB::getInstancia();
+            $lista= $db->executeUpdateRowsAfected($query);
             
             return $lista;
         } catch (Exception $ex) {
@@ -293,21 +309,6 @@ class DocumentoSalidaDAO{
             throw $ex;
             return -1;        
         }   
-    }
-    
-    public function eliminarDocumentoSalidaSinFolio($ID_DOCUMENTO)
-    {
-        try{
-            $query="DELETE FROM documento_salida_sinfolio_entrada
-                    WHERE id_documento_salida = $ID_DOCUMENTO";
-            $db=  AccesoDB::getInstancia();
-            $lista= $db->executeQueryUpdate($query);
-            
-            return $lista;
-        } catch (Exception $ex) {
-                throw $ex;
-                return -1;
-        }
     }
 
     public function responsableDelTemaParaFiltroSinFolio($CONTRATO)

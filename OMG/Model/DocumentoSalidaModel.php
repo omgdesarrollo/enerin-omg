@@ -219,13 +219,14 @@ class DocumentoSalidaModel {
     
     //    AREA DEL DOCUMENTO DE SALIA SIN FOLIO DE ENTRADA
     
-    public function eliminarDocumentoSalidaSinFolio($ID_DOCUMENTO)
+    public function eliminarDocumento($ID_DOCUMENTO)
     {
         try
         {
             $dao=new DocumentoSalidaDAO();
-            $rec= $dao->eliminarDocumentoSalidaSinFolio($ID_DOCUMENTO);
-
+            $rec = $dao->eliminarDocumentoSalidaSinFolio($ID_DOCUMENTO);
+            if($rec <= 0)
+                $rec = $dao->eliminarDocumentoSalidaConFolio($ID_DOCUMENTO);
             return $rec;
         } catch (Exception $ex) 
         {

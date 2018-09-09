@@ -659,24 +659,28 @@ function preguntarEliminar(data)
  function eliminarDocumentoSalidaRegistro(id_afectado)
  {
         $.ajax({
-                url:"../Controller/DocumentosSalidaController.php?Op=Eliminar",
+                url:"../Controller/DocumentosSalidaController.php?Op=EliminarDocumentoSalida",
                 type:"POST",
-                data:"ID_DOCUMENTO_ENTRADA="+JSON.stringify(id_afectado),
-                // beforeSend
-                success:function(data)
+                data:"ID_DOCUMENTO_SALIDA="+id_afectado.id_documento_salida,
+                beforeSend:()=>
                 {
-                        if(data)
+                        growlWait("Eliminación Documento","Eliminando...");
+                },
+                success:(res)=>
+                {
+                        // console.log(data);
+                        if(res >= 0)
                         {
                                 dataListadoTemp=[];
                                 dataItem = [];
                                 numeroEliminar=0;
                                 itemEliminar={};
-                                id = id_afectado.id_documento_entrada;
+                                id = id_afectado.id_documento_salida;
                                 $.each(dataListado,function(index,value)
                                 {
-                                        value.id_documento_entrada != id ? dataListadoTemp.push(value) : (dataItem.push(value), numeroEliminar=index+1);
+                                        value.id_documento_salida != id ? dataListadoTemp.push(value) : (dataItem.push(value), numeroEliminar=index+1);
                                 });
-                                console.log(dataListadoTemp);
+                                // console.log(dataListadoTemp);
                                 itemEliminar = reconstruir(dataItem[0],numeroEliminar);
                                 DataGrid = [];
                                 dataListado = dataListadoTemp;
@@ -690,7 +694,7 @@ function preguntarEliminar(data)
                         else
                                 growlError("Error Eliminación","Error al Rliminar Registro");
                 },
-                error:function()        
+                error:()=>
                 {
                         growlError("Error Eliminación","Error del servidor");
                 }
@@ -699,7 +703,6 @@ function preguntarEliminar(data)
  
  function actualizarDocumentoSalida(id_salida,tabla)
 {
-        
         url = "filesDocumento/Salida/";
         $.ajax({
                 url:'../Controller/DocumentosSalidaController.php?Op=ListarUno',

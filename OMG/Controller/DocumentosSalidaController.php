@@ -103,21 +103,20 @@ switch ($Op) {
     
     
 
-	case 'EliminarConFolio':
+	case 'EliminarDocumentoSalida':
 		# code...
-            $Lista= $model->eliminarDocumentoSalidaConFolio($_REQUEST['ID_DOCUMENTO']);
-            header('Content-type: application/json; charset=utf-8');
-            echo json_encode( $Lista);
-            return $Lista;
-		break;
+        $Lista = $model->eliminarDocumento($_REQUEST['ID_DOCUMENTO_SALIDA']);
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode( $Lista);
+    break;
             
-        case 'EliminarSinFolio':
+        // case 'EliminarSinFolio':
             
-            $Lista= $model->eliminarDocumentoSalidaSinFolio($_REQUEST['ID_DOCUMENTO']);
-            header('Content-type: application/json; charset=utf-8');
-            echo json_encode( $Lista);
-            return $Lista;
-            break;
+        //     $Lista= $model->eliminarDocumentoSalidaSinFolio($_REQUEST['ID_DOCUMENTO']);
+        //     header('Content-type: application/json; charset=utf-8');
+        //     echo json_encode( $Lista);
+        //     return $Lista;
+        // break;
         
         case'responsablesDelTema':
             $Lista= $model->responsablesDelTemaCombobox();
