@@ -48,36 +48,35 @@ class DocumentoSalidaDAO{
     }
     }
     
-        public function mostrarDocumentoSalida($ID_DOCUMENTO){
+    public function mostrarDocumentoSalida($ID_DOCUMENTO)
+    {
         try{
             $query="SELECT tbdocumento_salida.id_documento_salida,tbdocumento_entrada.id_documento_entrada,
-                    tbdocumento_entrada.folio_entrada,tbdocumento_salida.folio_salida,
-                    tbdocumento_salida.fecha_envio,tbdocumento_salida.asunto,
-                    tbautoridad_remitente.clave_autoridad,tbdocumento_salida.destinatario,
-                    tbempleados.nombre_empleado,tbempleados.apellido_paterno, 
-                    tbempleados.apellido_materno,tbdocumento_salida.observaciones 
-                    
-                    FROM documento_salida tbdocumento_salida
-                    JOIN documento_entrada tbdocumento_entrada ON
-                    tbdocumento_entrada.id_documento_entrada=tbdocumento_salida.id_documento_entrada
-                    JOIN autoridad_remitente tbautoridad_remitente ON
-                    tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad
-                    JOIN temas tbtemas ON
-                    tbtemas.id_tema=tbdocumento_entrada.id_tema
-                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
-                    WHERE tbdocumento_salida.id_documento_salida=$ID_DOCUMENTO";
-
-
+                tbdocumento_entrada.folio_entrada,tbdocumento_salida.folio_salida,
+                tbdocumento_salida.fecha_envio,tbdocumento_salida.asunto,
+                tbautoridad_remitente.clave_autoridad,tbdocumento_salida.destinatario,
+                tbempleados.nombre_empleado,tbempleados.apellido_paterno, 
+                tbempleados.apellido_materno,tbdocumento_salida.observaciones 
+                
+                FROM documento_salida tbdocumento_salida
+                JOIN documento_entrada tbdocumento_entrada ON
+                tbdocumento_entrada.id_documento_entrada=tbdocumento_salida.id_documento_entrada
+                JOIN autoridad_remitente tbautoridad_remitente ON
+                tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad
+                JOIN temas tbtemas ON
+                tbtemas.id_tema=tbdocumento_entrada.id_tema
+                JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
+                WHERE tbdocumento_salida.id_documento_salida=$ID_DOCUMENTO";
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
 
             return $lista;
-    }  catch (Exception $ex){
-        throw $ex;
-        return -1;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
     }
-    }
-    
     
     public function listarFoliosDeEntrada()
     {
@@ -90,14 +89,15 @@ class DocumentoSalidaDAO{
             $lista=$db->executeQuery($query);
 
             return $lista;
-    }  catch (Exception $ex){
-        throw $ex;
-        return -1;
-    }
-        
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
     }
     
-    public function insertarDocumentosSalida($tabla,$id,$id_documento_entrada,$folio_salida,$fecha_envio,$asunto,$destinatario,$observaciones,$CONTRATO){
+    public function insertarDocumentosSalida($tabla,$id,$id_documento_entrada,$folio_salida,$fecha_envio,$asunto,$destinatario,$observaciones,$CONTRATO)
+    {
         
         try{
             
@@ -132,11 +132,8 @@ class DocumentoSalidaDAO{
         }   
     }
     
-    
-    
-    
-    
-    public function actualizarClausula($id_clausula,$clausula,$sub_clausula,$descripcion_clausula,$descripcion_sub_clausula,$texto_breve,$descripcion,$plazo){
+    public function actualizarClausula($id_clausula,$clausula,$sub_clausula,$descripcion_clausula,$descripcion_sub_clausula,$texto_breve,$descripcion,$plazo)
+    {
         try{
              $query="UPDATE CLAUSULAS SET CLAUSULA='$clausula', SUB_CLAUSULA='$sub_clausula', DESCRIPCION_CLAUSULA='$descripcion_clausula', DESCRIPCION_SUB_CLAUSULA='$descripcion_sub_clausula', TEXTO_BREVE='$texto_breve', DESCRIPCION='$descripcion',PLAZO='$plazo' WHERE ID_CLAUSULA=$id_clausula";
      
@@ -148,9 +145,8 @@ class DocumentoSalidaDAO{
         
     }
     
-    
-    public function actualizarDocumentoSalidaPorColumna($COLUMNA,$VALOR,$ID_DOCUMENTO_SALIDA){
-         
+    public function actualizarDocumentoSalidaPorColumna($COLUMNA,$VALOR,$ID_DOCUMENTO_SALIDA)
+    {
         try{
             $query="UPDATE documento_salida SET ".$COLUMNA."='".$VALOR."'  WHERE id_documento_salida=$ID_DOCUMENTO_SALIDA";
 
@@ -163,9 +159,8 @@ class DocumentoSalidaDAO{
         }
     }
     
-    
-    
-    public function eliminarDocumentoSalidaConFolio($ID_DOCUMENTO){
+    public function eliminarDocumentoSalidaConFolio($ID_DOCUMENTO)
+    {
         try{
             $query="DELETE FROM documento_salida
                     WHERE id_documento_salida = $ID_DOCUMENTO";
@@ -178,10 +173,6 @@ class DocumentoSalidaDAO{
                 return -1;
         }
     }
-    
-    
-   
-    
     
     public function responsablesDelTemaCombobox()
     {
@@ -202,7 +193,6 @@ class DocumentoSalidaDAO{
         }
     }
 
-    
     public function responsableDelTemaParaFiltroConFolio($CONTRATO)
     {
         try 
@@ -227,10 +217,7 @@ class DocumentoSalidaDAO{
     }
 
 
-
-
 //    AREA DEL DOCUMENTO DE SALIA SIN FOLIO DE ENTRADA
-    
     public function mostrarDocumentosSalidaSinFolio($CONTRATO)
     {
         try 
@@ -272,7 +259,6 @@ class DocumentoSalidaDAO{
         }
     }
     
-    
     public function obtenermayorDocumentoSalidasSinFolio()
     { 
         try 
@@ -309,7 +295,6 @@ class DocumentoSalidaDAO{
         }   
     }
     
-    
     public function eliminarDocumentoSalidaSinFolio($ID_DOCUMENTO)
     {
         try{
@@ -324,8 +309,7 @@ class DocumentoSalidaDAO{
                 return -1;
         }
     }
-    
-    
+
     public function responsableDelTemaParaFiltroSinFolio($CONTRATO)
     {
         try 
@@ -346,6 +330,32 @@ class DocumentoSalidaDAO{
         }
     }
     
+    public function listarDocumentoSalidaSinFolio($ID_DOCUMENTO_SALIDA)
+    {
+        try
+        {
+            $query = "SELECT tbdocumento_salida_sinfolio_entrada.id_documento_salida, tbdocumento_salida_sinfolio_entrada.folio_entrada, 
+            tbdocumento_salida_sinfolio_entrada.id_documento_entrada, tbdocumento_salida_sinfolio_entrada.folio_salida, 
+            tbdocumento_salida_sinfolio_entrada.id_empleado,
+            CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) AS nombre_empleado,
+             tbdocumento_salida_sinfolio_entrada.fecha_envio, tbdocumento_salida_sinfolio_entrada.asunto,
+             tbdocumento_salida_sinfolio_entrada.destinatario,
+             tbdocumento_salida_sinfolio_entrada.id_autoridad, tbautoridad_remitente.clave_autoridad,
+             tbdocumento_salida_sinfolio_entrada.observaciones
+           FROM documento_salida_sinfolio_entrada tbdocumento_salida_sinfolio_entrada
+           LEFT JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumento_salida_sinfolio_entrada.id_empleado
+           LEFT JOIN autoridad_remitente tbautoridad_remitente ON tbautoridad_remitente.id_autoridad=tbdocumento_salida_sinfolio_entrada.id_autoridad
+           WHERE tbdocumento_salida_sinfolio_entrada.id_documento_salida = $ID_DOCUMENTO_SALIDA";
+
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            return $lista;
+        }catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 }
 
 ?>

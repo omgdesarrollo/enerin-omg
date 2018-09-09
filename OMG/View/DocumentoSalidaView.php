@@ -269,12 +269,14 @@ MyComboAutoridad.prototype = new jsGrid.Field
         {
                 var temp = "";
                 var temp2 = "";
+                var temp3 = "";
                 $.each(thisAutoridad,(index,val)=>
                 {
                         if(val.id_autoridad == value)
                         {
                                 temp += "<option value='"+val.id_autoridad+"' selected>"+val.clave_autoridad+"</option>";
                                 temp2 = val.clave_autoridad;
+                                temp3 = val.id_autoridad;
                         }
                         else
                                 temp += "<option value='"+val.id_autoridad+"'>"+val.clave_autoridad+"</option>";
@@ -284,16 +286,20 @@ MyComboAutoridad.prototype = new jsGrid.Field
 
                 if(todo.id_documento_entrada!=-1)
                 {
-                        this._inputDate = temp2;
+                        this._inputDate[0] = temp2;
+                        this._inputDate[1] = temp3;
                 }
-                return this._inputDate;
+                return this._inputDate[0];
                 
         },
         insertValue: function()
         {},
-        editValue: function(val)
+        editValue: function()
         {
-                return this._inputDate.val();
+                if( this._inputDate[1] == undefined )
+                        return $(this._inputDate[0]).val();
+                else
+                        return this._inputDate[1];
         }
 });
 
@@ -328,12 +334,14 @@ MyComboEmpleados.prototype = new jsGrid.Field
         {
                 var temp = "";
                 var temp2 = "";
+                var temp3 = "";
                 $.each(thisEmpleados,(index,val)=>
                 {
                         if(val.id_empleado == value)
                         {
                                 temp += "<option value='"+val.id_empleado+"' selected>"+val.nombre_completo+"</option>";
                                 temp2 = val.nombre_completo;
+                                temp3 = val.id_empleado;
                         }
                         else
                                 temp += "<option value='"+val.id_empleado+"'>"+val.nombre_completo+"</option>";
@@ -343,16 +351,20 @@ MyComboEmpleados.prototype = new jsGrid.Field
 
                 if(todo.id_documento_entrada!=-1)
                 {
-                        this._inputDate = temp2;
+                        this._inputDate[0] = temp2;
+                        this._inputDate[1] = temp3;
                 }
-                return this._inputDate;
+                return this._inputDate[0];
                 
         },
         insertValue: function()
         {},
-        editValue: function(val)
+        editValue: function()
         {
-                return this._inputDate.val();
+                if( this._inputDate[1] == undefined )
+                        return $(this._inputDate[0]).val();
+                else
+                        return this._inputDate[1];
         }
 });
 
@@ -685,13 +697,14 @@ function preguntarEliminar(data)
         });
  }
  
- function actualizarDocumentoSalida(id)
+ function actualizarDocumentoSalida(id_salida,tabla)
 {
+        
         url = "filesDocumento/Salida/";
         $.ajax({
-                url:'../Controller/DocumentosEntradaController.php?Op=Listar',
+                url:'../Controller/DocumentosSalidaController.php?Op=ListarUno',
                 type: 'GET',
-                data:"URL="+url,
+                data:"URL="+url+"&TABLA="+tabla+"&ID_DOCUMENTO_SALIDA="+id_salida,
                 success:function(datos)
                 {
                         if(typeof(datos)=="object")
@@ -749,28 +762,33 @@ function saveUpdateToDatabase(args)//listo
 
         if( Object.keys(columnas).length != 0 && verificar==0)
         {
-                fechas = true;
-                $.each(columnas,(index,value)=>
-                {
-                        if(index == "fecha_asignacion")
-                        {
-                                fechas = compararFechaAsignacion(value,args["previousItem"]["fecha_limite_atencion"],args["previousItem"]["fecha_alarma"]);
-                        }
-                        if(index == "fecha_limite_atencion")
-                        {
-                                fechas = compararFechaLimite(value,args["previousItem"]["fecha_asignacion"],args["previousItem"]["fecha_alarma"]);
-                        }
-                        if(index == "fecha_alarma")
-                        {
-                                fechas = compararFechaAlarma(value,args["previousItem"]["fecha_asignacion"],args["previousItem"]["fecha_limite_atencion"]);
-                        }
-                });
-                if(fechas)
-                {
+                // fechas = true;
+                // $.each(columnas,(index,value)=>
+                // {
+                //         if(index == "fecha_asignacion")
+                //         {
+                //                 fechas = compararFechaAsignacion(value,args["previousItem"]["fecha_limite_atencion"],args["previousItem"]["fecha_alarma"]);
+                //         }
+                //         if(index == "fecha_limite_atencion")
+                //         {
+                //                 fechas = compararFechaLimite(value,args["previousItem"]["fecha_asignacion"],args["previousItem"]["fecha_alarma"]);
+                //         }
+                //         if(index == "fecha_alarma")
+                //         {
+                //                 fechas = compararFechaAlarma(value,args["previousItem"]["fecha_asignacion"],args["previousItem"]["fecha_limite_atencion"]);
+                //         }
+                // });
+                // if(fechas)
+                // {
+                        tabla = "";
+                        if(args['previousItem']["id_documento_entrada"]!=-1)
+                                tabla="documento_salida";
+                        else
+                                tabla="documento_salida_sinfolio_entrada";
                         $.ajax({
                         url:"../Controller/GeneralController.php?Op=Actualizar",
                         type:"POST",
-                        data:'TABLA=documento_salida'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
+                        data:'TABLA='+tabla+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
                         beforeSend:()=>
                         {
                                 growlWait("Actualización","Espere...");
@@ -781,7 +799,7 @@ function saveUpdateToDatabase(args)//listo
                                 if(data==1)
                                 {
                                         growlSuccess("Actulización","Se actualizaron los campos");
-                                        actualizarDocumentoEntrada(id_afectado.id_documento_entrada);
+                                        actualizarDocumentoSalida(id_afectado.id_documento_salida,tabla);
                                 }
                                 else
                                 {
@@ -797,12 +815,12 @@ function saveUpdateToDatabase(args)//listo
                                 growlError("Error","Error del servidor");
                         }
                         });
-                }
-                else
-                {
-                        componerDataGrid();
-                        gridInstance.loadData();
-                }
+                // }
+                // else
+                // {
+                //         componerDataGrid();
+                //         gridInstance.loadData();
+                // }
         }
         else
         {

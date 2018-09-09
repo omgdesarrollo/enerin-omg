@@ -23,9 +23,32 @@ class DocumentoSalidaModel {
                 $contador++;
             }
             return $lista;
-    }  catch (Exception $e){
-        throw  $e;
+        }  catch (Exception $e){
+            throw  $e;
+            return -1;
+        }
     }
+
+    public function listarDocumentoSalida($ID_DOCUMENTO_SALIDA,$TABLA)
+    {
+        try
+        {
+            $lista=[];
+            $dao=new DocumentoSalidaDAO();
+            if($TABLA == "documento_salida" )
+            {
+                $lista = $dao->mostrarDocumentoSalida($ID_DOCUMENTO_SALIDA);
+            }
+            else
+            {
+                $lista = $dao->listarDocumentoSalidaSinFolio($ID_DOCUMENTO_SALIDA);
+            }
+            return $lista;
+        }catch(Exception $e)
+        {
+            throw $e;
+            return -1;
+        }
     }
     
     public function listarFoliosDeEntrada()
