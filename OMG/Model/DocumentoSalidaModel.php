@@ -23,9 +23,32 @@ class DocumentoSalidaModel {
                 $contador++;
             }
             return $lista;
-    }  catch (Exception $e){
-        throw  $e;
+        }  catch (Exception $e){
+            throw  $e;
+            return -1;
+        }
     }
+
+    public function listarDocumentoSalida($ID_DOCUMENTO_SALIDA,$TABLA)
+    {
+        try
+        {
+            $lista=[];
+            $dao=new DocumentoSalidaDAO();
+            if($TABLA == "documento_salida" )
+            {
+                $lista = $dao->mostrarDocumentoSalida($ID_DOCUMENTO_SALIDA);
+            }
+            else
+            {
+                $lista = $dao->listarDocumentoSalidaSinFolio($ID_DOCUMENTO_SALIDA);
+            }
+            return $lista;
+        }catch(Exception $e)
+        {
+            throw $e;
+            return -1;
+        }
     }
     
     public function listarFoliosDeEntrada()
@@ -174,7 +197,7 @@ class DocumentoSalidaModel {
             echo json_encode($rec2);
             foreach ($rec2 as $key => $value) 
             {
-                if($rec2[0]['id_empleado'] == $rec1[0]['id_empleado'])
+                if($rec2[0]['id_empleado']== $rec1[0]['id_empleado'])
                 {
                     
                 } else{
@@ -183,7 +206,8 @@ class DocumentoSalidaModel {
                 }
                     
             }
-            
+//            echo "valores rec1: ".json_encode($rec1);
+//            echo "valores rec2: ".json_encode($rec2);
             return $lista;
         } catch (Exception $ex) 
         {
@@ -195,13 +219,14 @@ class DocumentoSalidaModel {
     
     //    AREA DEL DOCUMENTO DE SALIA SIN FOLIO DE ENTRADA
     
-    public function eliminarDocumentoSalidaSinFolio($ID_DOCUMENTO)
+    public function eliminarDocumento($ID_DOCUMENTO)
     {
         try
         {
             $dao=new DocumentoSalidaDAO();
-            $rec= $dao->eliminarDocumentoSalidaSinFolio($ID_DOCUMENTO);
-
+            $rec = $dao->eliminarDocumentoSalidaSinFolio($ID_DOCUMENTO);
+            if($rec <= 0)
+                $rec = $dao->eliminarDocumentoSalidaConFolio($ID_DOCUMENTO);
             return $rec;
         } catch (Exception $ex) 
         {

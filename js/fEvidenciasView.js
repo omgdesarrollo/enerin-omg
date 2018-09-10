@@ -905,7 +905,7 @@ function reconstruir(value,index)//listo jsgrid
         tempData["fecha_creacion"] = value.fecha_creacion;
         
         tempData["adjuntar_evidencia"] = "<button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
-        tempData["adjuntar_evidencia"] += " type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
+        tempData["adjuntar_evidencia"] += " type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
         tempData["adjuntar_evidencia"] += "<i class='fa fa-cloud-upload' style='font-size: 15px'></i> Adjuntar</button>";
         $.each(value.archivosUpload[0],function(index2,value2)
         {
@@ -927,7 +927,7 @@ function reconstruir(value,index)//listo jsgrid
                 tempData["accion_correctiva"] += noMsj+"</button>";
             }
             
-            tempData["plan_accion"] = "<button id='btn_cargaGantt' class='btn btn-info' onClick='cargarprogram("+value.id_evidencias+","+value.validacion_supervisor+");'>";
+            tempData["plan_accion"] = "<button id='btn_cargaGantt' class='btn btn-info botones_vista_tabla' onClick='cargarprogram("+value.id_evidencias+","+value.validacion_supervisor+");'>";
             if(value.validacion_supervisor=="true")
                 tempData["plan_accion"] += "Vizualizar Programa";
             else

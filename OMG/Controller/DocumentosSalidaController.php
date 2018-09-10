@@ -16,25 +16,37 @@ $modelArchivo=new ArchivoUploadModel();
 
 switch ($Op) {
         case 'Listar':
-                $CONTRATO = Session::getSesion("s_cont");
-            $Lista=$model->listarDocumentosSalida($CONTRATO);
+            $CONTRATO = Session::getSesion("s_cont");
+            $Lista = $model->listarDocumentosSalida($CONTRATO);
             foreach ($Lista as $key => $value)
             {
-                $url= $_REQUEST['URL'].$value['id_documento_salida'];
+                $url = $_REQUEST['URL'].$value['id_documento_salida'];
                 $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
             }
         //     Session::setSesion("listarDocumentosSalida",$Lista);
             
             header('Content-type: application/json; charset=utf-8');
             echo json_encode( $Lista);
-            return $Lista;
-		break;	
+        break;
+        
+        case 'ListarUno':
+            $CONTRATO = Session::getSesion("s_cont");
+            $ID_DOCUMENTO_SALIDA = $_REQUEST["ID_DOCUMENTO_SALIDA"];
+            $TABLA = $_REQUEST["TABLA"];
+            $Lista = $model->listarDocumentoSalida($ID_DOCUMENTO_SALIDA,$TABLA);
+            foreach ($Lista as $key => $value)
+            {
+                $url = $_REQUEST['URL'].$value['id_documento_salida'];
+                $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
+            }
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode( $Lista);
+        break;
                 
         case 'listarFoliosEntrada':
             $Lista= $model->listarFoliosDeEntrada();
             header('Content-type: application/json; charset=utf-8');
             echo json_encode( $Lista);
-            return $Lista;
             break;
                 
 
@@ -91,21 +103,20 @@ switch ($Op) {
     
     
 
-	case 'EliminarConFolio':
+	case 'EliminarDocumentoSalida':
 		# code...
-            $Lista= $model->eliminarDocumentoSalidaConFolio($_REQUEST['ID_DOCUMENTO']);
-            header('Content-type: application/json; charset=utf-8');
-            echo json_encode( $Lista);
-            return $Lista;
-		break;
+        $Lista = $model->eliminarDocumento($_REQUEST['ID_DOCUMENTO_SALIDA']);
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode( $Lista);
+    break;
             
-        case 'EliminarSinFolio':
+        // case 'EliminarSinFolio':
             
-            $Lista= $model->eliminarDocumentoSalidaSinFolio($_REQUEST['ID_DOCUMENTO']);
-            header('Content-type: application/json; charset=utf-8');
-            echo json_encode( $Lista);
-            return $Lista;
-            break;
+        //     $Lista= $model->eliminarDocumentoSalidaSinFolio($_REQUEST['ID_DOCUMENTO']);
+        //     header('Content-type: application/json; charset=utf-8');
+        //     echo json_encode( $Lista);
+        //     return $Lista;
+        // break;
         
         case'responsablesDelTema':
             $Lista= $model->responsablesDelTemaCombobox();

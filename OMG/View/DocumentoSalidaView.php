@@ -78,21 +78,9 @@ $Usuario=  Session::getSesion("user");
                
                <!--termina libreria de comunicacion tiempo real--> 
                 
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
         <style>
-            .jsgrid-header-row>.jsgrid-header-cell {
+            .jsgrid-header-row>.jsgrid-header-cell
+            {
                 background-color:#307ECC ;      /* orange */
                 font-family: "Roboto Slab";
                 font-size: 1.2em;
@@ -103,10 +91,11 @@ $Usuario=  Session::getSesion("user");
             {
                 display:none;
             }
-
-        </style>              
-                
- 			 
+            input[type="combobox"]
+            {
+                    border:0px;
+            }
+        </style>	 
 </head>
 
         
@@ -199,8 +188,8 @@ require_once 'EncabezadoUsuarioView.php';
 
 
                     <div class="form-group">
-                        <button type="submit" style="width:49%" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
-                        <button type="submit" style="width:49%" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
+                        <button type="submit" style="width:49%" id="btn_guardar"  class="btn crud-submit btn-info btn_refrescar">Guardar</button>
+                        <button type="submit" style="width:49%" id="btn_limpiar"  class="btn crud-submit btn-info btn_refrescar">Limpiar</button>
                     </div>
                     
                 </div>
@@ -222,7 +211,7 @@ require_once 'EncabezadoUsuarioView.php';
 		        <h4 class="modal-title" id="myModalLabel">Archivos Adjuntos</h4>
       </div>
 
-      <div class="modal-body">
+      <div class="modal-body" style="text-align:center">
         <div id="DocumentolistadoUrl"></div>
         
         <div class="form-group">
@@ -230,7 +219,7 @@ require_once 'EncabezadoUsuarioView.php';
 			  </div>
 
         <div class="form-group" method="post" >
-          <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Archivo</button>
+          <button type="submit" id="subirArchivos" class="btn crud-submit btn-info btn_refrescar" style="width:98%">Adjuntar Archivo</button>
         </div>
       </div><!-- cierre div class-body -->
     </div><!-- cierre div class modal-content -->
@@ -280,12 +269,14 @@ MyComboAutoridad.prototype = new jsGrid.Field
         {
                 var temp = "";
                 var temp2 = "";
+                var temp3 = "";
                 $.each(thisAutoridad,(index,val)=>
                 {
                         if(val.id_autoridad == value)
                         {
                                 temp += "<option value='"+val.id_autoridad+"' selected>"+val.clave_autoridad+"</option>";
                                 temp2 = val.clave_autoridad;
+                                temp3 = val.id_autoridad;
                         }
                         else
                                 temp += "<option value='"+val.id_autoridad+"'>"+val.clave_autoridad+"</option>";
@@ -295,16 +286,20 @@ MyComboAutoridad.prototype = new jsGrid.Field
 
                 if(todo.id_documento_entrada!=-1)
                 {
-                        this._inputDate = temp2;
+                        this._inputDate[0] = temp2;
+                        this._inputDate[1] = temp3;
                 }
-                return this._inputDate;
+                return this._inputDate[0];
                 
         },
         insertValue: function()
         {},
-        editValue: function(val)
+        editValue: function()
         {
-                return this._inputDate.val();
+                if( this._inputDate[1] == undefined )
+                        return $(this._inputDate[0]).val();
+                else
+                        return this._inputDate[1];
         }
 });
 
@@ -339,12 +334,14 @@ MyComboEmpleados.prototype = new jsGrid.Field
         {
                 var temp = "";
                 var temp2 = "";
+                var temp3 = "";
                 $.each(thisEmpleados,(index,val)=>
                 {
                         if(val.id_empleado == value)
                         {
                                 temp += "<option value='"+val.id_empleado+"' selected>"+val.nombre_completo+"</option>";
                                 temp2 = val.nombre_completo;
+                                temp3 = val.id_empleado;
                         }
                         else
                                 temp += "<option value='"+val.id_empleado+"'>"+val.nombre_completo+"</option>";
@@ -354,16 +351,20 @@ MyComboEmpleados.prototype = new jsGrid.Field
 
                 if(todo.id_documento_entrada!=-1)
                 {
-                        this._inputDate = temp2;
+                        this._inputDate[0] = temp2;
+                        this._inputDate[1] = temp3;
                 }
-                return this._inputDate;
+                return this._inputDate[0];
                 
         },
         insertValue: function()
         {},
-        editValue: function(val)
+        editValue: function()
         {
-                return this._inputDate.val();
+                if( this._inputDate[1] == undefined )
+                        return $(this._inputDate[0]).val();
+                else
+                        return this._inputDate[1];
         }
 });
 
@@ -371,17 +372,17 @@ var customsFieldsGridData=[
         {field:"customControl",my_field:MyCControlField},
         {field:"comboAutoridad",my_field:MyComboAutoridad},
         {field:"comboEmpleados",my_field:MyComboEmpleados},
-        
+
 //        {field:"date",my_field:MyField},
 ];
 
-function inicializarEstructuraGrid(){
-
-return new Promise((resolve,reject)=>{
-      
-      estructuraGrid=[
-              { name: "id_principal", visible:false },
-              { name: "id_documento_entrada", visible:false },
+function inicializarEstructuraGrid()
+{
+        return new Promise((resolve,reject)=>
+        {
+                estructuraGrid=[
+                        { name: "id_principal", visible:false },
+                        { name: "id_documento_entrada", visible:false },
                         { name: "no", title: "No", type: "text", width:50,editing:false},
                         { name: "folio_entrada", title: "Folio de Entrada", type: "text", width:150,editing:false},
                         { name: "folio_salida", title: "Folio de Salida", type: "text", width:150,editing:false},
@@ -393,12 +394,11 @@ return new Promise((resolve,reject)=>{
                         { name: "archivo_adjunto", title: "Archivo Adjunto", type: "text", width:150,editing:false},    
                         { name: "observaciones", title: "Observacion", type: "text", width:150},
                         { name: "delete", title: "Opcion", type: "customControl", width:150}
-                     ];
-       resolve();
-  })
+                ];
+                resolve();
+        });
+}
 
-  
-    }
 ultimoNumeroGrid=0;
 
 function inicializarFiltros()
@@ -433,23 +433,36 @@ function inicializarFiltros()
 //         console.log("A");
 // });
 
-inicializarEstructuraGrid().then(()=>
+
+async function reiniciar()
 {
-        // listarThisEmpleadosFiltro().then(()=>{
-                listarThisEmpleados().then(()=>{
-                        listarAutoridades().then(()=>
+        $("#btnrefrescar").attr("disabled",true);
+        try
+        {
+                let doble = await Promise.all([listarThisEmpleados(),listarAutoridades()]);
+                inicializarEstructuraGrid().then((res)=>
+                {;
+                        construirGrid();
+                        inicializarFiltros().then(()=>
                         {
-                                inicializarEstructuraGrid().then(()=>{
-                                        construirGrid();
-                                        inicializarFiltros().then(()=>{
-                                                construirFiltros();
-                                                listarDatos()
-                                        });
-                                });
+                                construirFiltros();
+                                listarDatos().then((listD)=>{ $("#btnrefrescar").removeAttr("disabled"); });
                         });
+                }
+                ,
+                (error)=>
+                {
+                        growlError("Error","Error en el servidor");
+                        $("#btnrefrescar").removeAttr("disabled");
                 });
-        // });
-});
+        }catch(error)
+        {
+                growlError("Error","Error "+error);
+                $("#btnrefrescar").removeAttr("disabled");
+        }
+}
+
+reiniciar();
  
  function listarAutoridades()
 {
@@ -464,10 +477,11 @@ inicializarEstructuraGrid().then(()=>
                                 // tempData = autoridades;
                                 thisAutoridad = autoridades;
                                 resolve();
+                                // reject("A");
                         },
-                        error:()=>
+                        error:(er)=>
                         {
-                                reject();
+                                reject(er);
                         }
                 });
         });
@@ -485,9 +499,9 @@ function listarThisEmpleados()
                                 thisEmpleados = empleados;
                                 resolve();
                         },
-                        error:()=>
+                        error:(er)=>
                         {
-                                reject();
+                                reject(er);
                         }
                 });
         });
@@ -505,9 +519,9 @@ function listarThisEmpleadosFiltro()
                                 thisEmpleadosFiltro = empleados;
                                 resolve();
                         },
-                        error:()=>
+                        error:(er)=>
                         {
-                                reject();
+                                reject(er);
                         }
                 });
         });
@@ -584,7 +598,7 @@ function reconstruir(value,index)
     tempData["asunto"]=value.asunto;
     tempData["destinatario"]=value.destinatario;
     tempData["id_autoridad"]=value.id_autoridad;
-    tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_documento_salida+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
+    tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_documento_salida+")' type='button' class='btn btn-info btn_refrescar' data-toggle='modal' data-target='#create-itemUrls' style='width:100%'>";
     tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
     tempData["observaciones"]=value.observaciones;
     
@@ -645,24 +659,28 @@ function preguntarEliminar(data)
  function eliminarDocumentoSalidaRegistro(id_afectado)
  {
         $.ajax({
-                url:"../Controller/DocumentosSalidaController.php?Op=Eliminar",
+                url:"../Controller/DocumentosSalidaController.php?Op=EliminarDocumentoSalida",
                 type:"POST",
-                data:"ID_DOCUMENTO_ENTRADA="+JSON.stringify(id_afectado),
-                // beforeSend
-                success:function(data)
+                data:"ID_DOCUMENTO_SALIDA="+id_afectado.id_documento_salida,
+                beforeSend:()=>
                 {
-                        if(data)
+                        growlWait("Eliminación Documento","Eliminando...");
+                },
+                success:(res)=>
+                {
+                        // console.log(data);
+                        if(res >= 0)
                         {
                                 dataListadoTemp=[];
                                 dataItem = [];
                                 numeroEliminar=0;
                                 itemEliminar={};
-                                id = id_afectado.id_documento_entrada;
+                                id = id_afectado.id_documento_salida;
                                 $.each(dataListado,function(index,value)
                                 {
-                                        value.id_documento_entrada != id ? dataListadoTemp.push(value) : (dataItem.push(value), numeroEliminar=index+1);
+                                        value.id_documento_salida != id ? dataListadoTemp.push(value) : (dataItem.push(value), numeroEliminar=index+1);
                                 });
-                                console.log(dataListadoTemp);
+                                // console.log(dataListadoTemp);
                                 itemEliminar = reconstruir(dataItem[0],numeroEliminar);
                                 DataGrid = [];
                                 dataListado = dataListadoTemp;
@@ -676,20 +694,20 @@ function preguntarEliminar(data)
                         else
                                 growlError("Error Eliminación","Error al Rliminar Registro");
                 },
-                error:function()        
+                error:()=>
                 {
                         growlError("Error Eliminación","Error del servidor");
                 }
         });
  }
  
- function actualizarDocumentoSalida(id)
+ function actualizarDocumentoSalida(id_salida,tabla)
 {
         url = "filesDocumento/Salida/";
         $.ajax({
-                url:'../Controller/DocumentosEntradaController.php?Op=Listar',
+                url:'../Controller/DocumentosSalidaController.php?Op=ListarUno',
                 type: 'GET',
-                data:"URL="+url,
+                data:"URL="+url+"&TABLA="+tabla+"&ID_DOCUMENTO_SALIDA="+id_salida,
                 success:function(datos)
                 {
                         if(typeof(datos)=="object")
@@ -747,28 +765,33 @@ function saveUpdateToDatabase(args)//listo
 
         if( Object.keys(columnas).length != 0 && verificar==0)
         {
-                fechas = true;
-                $.each(columnas,(index,value)=>
-                {
-                        if(index == "fecha_asignacion")
-                        {
-                                fechas = compararFechaAsignacion(value,args["previousItem"]["fecha_limite_atencion"],args["previousItem"]["fecha_alarma"]);
-                        }
-                        if(index == "fecha_limite_atencion")
-                        {
-                                fechas = compararFechaLimite(value,args["previousItem"]["fecha_asignacion"],args["previousItem"]["fecha_alarma"]);
-                        }
-                        if(index == "fecha_alarma")
-                        {
-                                fechas = compararFechaAlarma(value,args["previousItem"]["fecha_asignacion"],args["previousItem"]["fecha_limite_atencion"]);
-                        }
-                });
-                if(fechas)
-                {
+                // fechas = true;
+                // $.each(columnas,(index,value)=>
+                // {
+                //         if(index == "fecha_asignacion")
+                //         {
+                //                 fechas = compararFechaAsignacion(value,args["previousItem"]["fecha_limite_atencion"],args["previousItem"]["fecha_alarma"]);
+                //         }
+                //         if(index == "fecha_limite_atencion")
+                //         {
+                //                 fechas = compararFechaLimite(value,args["previousItem"]["fecha_asignacion"],args["previousItem"]["fecha_alarma"]);
+                //         }
+                //         if(index == "fecha_alarma")
+                //         {
+                //                 fechas = compararFechaAlarma(value,args["previousItem"]["fecha_asignacion"],args["previousItem"]["fecha_limite_atencion"]);
+                //         }
+                // });
+                // if(fechas)
+                // {
+                        tabla = "";
+                        if(args['previousItem']["id_documento_entrada"]!=-1)
+                                tabla="documento_salida";
+                        else
+                                tabla="documento_salida_sinfolio_entrada";
                         $.ajax({
                         url:"../Controller/GeneralController.php?Op=Actualizar",
                         type:"POST",
-                        data:'TABLA=documento_salida'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
+                        data:'TABLA='+tabla+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
                         beforeSend:()=>
                         {
                                 growlWait("Actualización","Espere...");
@@ -779,7 +802,7 @@ function saveUpdateToDatabase(args)//listo
                                 if(data==1)
                                 {
                                         growlSuccess("Actulización","Se actualizaron los campos");
-                                        actualizarDocumentoEntrada(id_afectado.id_documento_entrada);
+                                        actualizarDocumentoSalida(id_afectado.id_documento_salida,tabla);
                                 }
                                 else
                                 {
@@ -795,12 +818,12 @@ function saveUpdateToDatabase(args)//listo
                                 growlError("Error","Error del servidor");
                         }
                         });
-                }
-                else
-                {
-                        componerDataGrid();
-                        gridInstance.loadData();
-                }
+                // }
+                // else
+                // {
+                //         componerDataGrid();
+                //         gridInstance.loadData();
+                // }
         }
         else
         {
@@ -814,21 +837,18 @@ function saveUpdateToDatabase(args)//listo
 //                                                        $('#create-item .close').click();
 //                                                        refresh();
  
- function refresh(){
-     
-     inicializarEstructuraGrid().then(()=>{
-   
-    inicializarEstructuraGrid().then(()=>{
-        construirGrid();
- 
-    
-        inicializarFiltros().then(()=>{
-                construirFiltros();
-                  listarDatos()
-            });
-    });   
-        
- });
+ function refresh()
+ {
+        reiniciar();
+//      inicializarEstructuraGrid().then(()=>{
+//     inicializarEstructuraGrid().then(()=>{
+//         construirGrid();
+//         inicializarFiltros().then(()=>{
+//                 construirFiltros();
+//                   listarDatos()
+//             });
+//     }); 
+//  });
  }
 
 

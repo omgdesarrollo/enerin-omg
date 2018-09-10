@@ -52,7 +52,7 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
                 <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
-                <script src="../../js/tools.js" type="text/javascript"></script>
+                <!--<script src="../../js/tools.js" type="text/javascript"></script>-->
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/fTareasView.js" type="text/javascript"></script>                
@@ -103,7 +103,7 @@ require_once 'EncabezadoUsuarioView.php';
     Agregar Tarea
 </button>
 
-<button onClick="loadChartView(true);" type="button" id="btn_informe" class="btn btn-info btn_agregar" data-toggle="modal" data-target="#informe_tareas">
+<button onClick="loadChartView(true);" type="button" id="btn_informe" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#informe_tareas">
     Informe
 </button>    
     
