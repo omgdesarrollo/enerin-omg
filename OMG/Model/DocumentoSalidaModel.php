@@ -69,6 +69,7 @@ class DocumentoSalidaModel {
     public function insertar($pojo,$CONTRATO)
     {
         try{
+            $rec = [];
             $dao=new DocumentoSalidaDAO();
             $lista=array();
             $contador=0;
@@ -78,13 +79,14 @@ class DocumentoSalidaModel {
             $id2 = $dao->obtenermayorDocumentoSalidaConFolio();
             if($id1<$id2)
                 $id1=$id2;
-           
+            if($id1==-1)
+                $id1=0;
             $exito= $dao->insertarDocumentosSalida($tabla,$id1+1,$pojo->getId_documento_entrada(),$pojo->getFolio_salida(),$pojo->getFecha_envio(),
             $pojo->getAsunto(),$pojo->getDestinatario(),$pojo->getObservaciones(),$CONTRATO);
 
             if($exito[0] == 1)
             {
-                $rec = $tabla == "documento_salida" ? $dao->mostrarDocumentoSalida($id1) : $dao->listarDocumentoSalidaSinFolio($id1);
+                $rec = $tabla == "documento_salida" ? $dao->mostrarDocumentoSalida($id1+1) : $dao->listarDocumentoSalidaSinFolio($id1+1);
             //    echo "valor rec: ".json_encode($rec);
     //             foreach($rec as $value)
     //             {
@@ -111,7 +113,7 @@ class DocumentoSalidaModel {
             }
             else
                return $exito[0];
-
+            // echo $rec;
             return $rec;
            
         } catch (Exception $ex) {

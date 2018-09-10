@@ -602,8 +602,16 @@ function reconstruir(value,index)
     tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
     tempData["observaciones"]=value.observaciones;
     
-    
-    if(value.archivosUpload[0].length==0)
+//     if( value.archivosUpload[1].length != 0 )
+//     {
+//         console.log(value.archivosUpload[1]);
+//         leng = 0;
+//     }
+//     var leng = value.archivosUpload[0].length;
+//     leng
+
+        // $.each()
+    if( value.archivosUpload[0].length == 0 )
          tempData["id_principal"].push({eliminar : 1});
       else
            tempData["id_principal"].push({eliminar : 0});
@@ -684,7 +692,7 @@ function preguntarEliminar(data)
                                 itemEliminar = reconstruir(dataItem[0],numeroEliminar);
                                 DataGrid = [];
                                 dataListado = dataListadoTemp;
-                                if(dataListado.lenght == 0 )
+                                if(dataListado.length == 0 )
                                         ultimoNumeroGrid=0;
                                 $.each(dataListado,function(index,value)
                                 {

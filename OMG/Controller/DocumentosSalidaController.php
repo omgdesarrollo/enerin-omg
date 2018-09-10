@@ -78,8 +78,12 @@ switch ($Op) {
             $pojo->setObservaciones($data['observaciones']);
             
             $Lista= $model->insertar($pojo,$CONTRATO);
+            foreach ($Lista as $key => $value)
+            {
+                $url = $_REQUEST['URL'].$value['id_documento_salida'];
+                $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
+            }
             echo json_encode($Lista);
-            return $Lista;
             break;
             
 

@@ -349,10 +349,11 @@ function listarFoliosDeEntrada()
 function insertarDocumentoSalida(documentoSalidaDatos)
 {
 //    alert("Entro a la funcion guardar");
+        URL = "filesDocumento/Salida/";
         $.ajax({
         url:"../Controller/DocumentosSalidaController.php?Op=Guardar",
         type:"POST",
-        data:"documentoSalidaDatos="+JSON.stringify(documentoSalidaDatos),
+        data:"documentoSalidaDatos="+JSON.stringify(documentoSalidaDatos)+"&URL="+URL,
         // async:false,
         beforeSend:()=>
         {
@@ -366,10 +367,11 @@ function insertarDocumentoSalida(documentoSalidaDatos)
             {
                 growlSuccess("Crear Documento Salida","Registro Creado");
 //                 tempData;
-//                 swalSuccess("Documento Creado");                
+//                 swalSuccess("Documento Creado");
+                console.log(datos);
                 $.each(datos,function(index,value)
                 {
-// //                   console.log("Este es el value: "+value); 
+                  console.log(value.archivosUpload[0].length); 
                    tempData = reconstruir(value,ultimoNumeroGrid+1);
                 });
 //                console.log(tempData);
@@ -503,7 +505,6 @@ months = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic
   
     function borrarArchivo(url)
     {
-        
             swal({
                 title: "ELIMINAR",
                 text: "Confirme para eliminar el documento de salida",
