@@ -684,10 +684,13 @@ function preguntarEliminar(data)
                                 itemEliminar = reconstruir(dataItem[0],numeroEliminar);
                                 DataGrid = [];
                                 dataListado = dataListadoTemp;
+                                if(dataListado.lenght == 0 )
+                                        ultimoNumeroGrid=0;
                                 $.each(dataListado,function(index,value)
                                 {
                                         DataGrid.push( reconstruir(value,index+1) );
                                 });
+
                                 gridInstance.loadData();
                                 growlSuccess("Eliminación","Registro Eliminado");
                         }
@@ -919,13 +922,13 @@ function saveUpdateToDatabase(args)//listo
     <!--Termina para el spiner cargando-->
     
     <!--Bootstrap-->
-    <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
     <!--Para abrir alertas de aviso, success,warning, error-->       
     <!--<script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>-->
     
     <!--Para abrir alertas del encabezado-->
-<!--    <script src="../../assets/probando/js/ace-elements.min.js"></script>
-    <script src="../../assets/probando/js/ace.min.js"></script>-->
+        <script src="../../assets/probando/js/ace-elements.min.js"></script>
+        <script src="../../assets/probando/js/ace.min.js"></script>
     
         <!-- js cargar archivo -->
 <!--        <script src="../../assets/FileUpload/js/jquery.min.js"></script>

@@ -1158,25 +1158,25 @@ function notificar(idPara,idEvidencia,columna)
 
 function enviar_notificacion(mensaje,para,tipoMensaje,atendido,asunto)
 {
-        $.ajax({
-            url:"../Controller/NotificacionesController.php?Op=EnviarNotificacionHibry",
-            data: "PARA="+para+"&MENSAJE="+mensaje+"&ATENDIDO="+atendido+"&TIPO_MENSAJE="+tipoMensaje+"&ASUNTO="+asunto,
-            success:function(response)
-            {
-            (response==true)?(
-                growlSuccess("Notificación","Se notifico del cambio")
-                // swalSuccess("Se notifico del cambio "),
-                //  refresh()
-                )
-            :growlError("Error Notificación","No se pudo notificar el cambio");
-            
-            },
-            error:function()
-            {
-            growlError("Error Notificación","Error en el servidor");
-            // swalError("Error en el servidor");
-            }
-        });
+    $.ajax({
+        url:"../Controller/NotificacionesController.php?Op=EnviarNotificacionHibry",
+        data: "PARA="+para+"&MENSAJE="+mensaje+"&ATENDIDO="+atendido+"&TIPO_MENSAJE="+tipoMensaje+"&ASUNTO="+asunto,
+        success:function(response)
+        {
+        (response==true)?(
+            growlSuccess("Notificación","Se notifico del cambio")
+            // swalSuccess("Se notifico del cambio "),
+            //  refresh()
+            )
+        :growlError("Error Notificación","No se pudo notificar el cambio");
+        
+        },
+        error:function()
+        {
+        growlError("Error Notificación","Error en el servidor");
+        // swalError("Error en el servidor");
+        }
+    });
 }
 
     // function saveOneToDatabase(valor,columna,tabla,id,contexto)
@@ -1286,7 +1286,7 @@ function mostrar_urls(id_evidencia,validador,validado,id_para)
             }
             tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdEvidenciaDocumento' type='text' style='display:none;' value='"+id_evidencia+"'>"
             tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdParaDocumento' type='text' style='display:none;' value='"+id_para+"'>";
-            $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
+            $('#DocumentolilstadoUrl').html(tempDocumentolistadoUrl);
             $('#fileupload').fileupload
             ({
                 url: '../View/',
@@ -1315,52 +1315,52 @@ function mostrar_urls(id_evidencia,validador,validado,id_para)
     //     });
     // }
     // valor = 8;
-    function borrarArchivo(url,id_para)
+function borrarArchivo(url,id_para)
+{
+    // setInterval(aumentador(), 3000);
+    swal({
+        title: "ELIMINAR",
+        text: "Al eliminar este documento se eliminara toda la evidencia registrada. ¿Desea continuar?",
+        type: "warning",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        showLoaderOnConfirm: true,
+        confirmButtonText: "Eliminar",
+        cancelButtonText: "Cancelar",
+    },function()
     {
-        // setInterval(aumentador(), 3000);
-        swal({
-          title: "ELIMINAR",
-          text: "Al eliminar este documento se eliminara toda la evidencia registrada. ¿Desea continuar?",
-          type: "warning",
-          showCancelButton: true,
-          closeOnConfirm: false,
-          showLoaderOnConfirm: true,
-          confirmButtonText: "Eliminar",
-          cancelButtonText: "Cancelar",
-        },function()
-        {
-            var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();
-            $.ajax({
-                url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
-                type: 'POST',
-                data: 'URL='+url,
-                success: function(eliminado)
-                {
-                if(eliminado)
-                {
-                    growlSuccess("Eliminacion de Archivo","Archivo Eliminado");
-                    mostrar_urls(ID_EVIDENCIA_DOCUMENTO,"1",false,id_para);
-                    actualizarEvidencia(ID_EVIDENCIA_DOCUMENTO);
-                    // setTimeout(function(){
-                        swal.close();
-                    // },1000);
-                    //  refresh();
-                }
-                else
-                {
-                    growlError("Error Rliminar Archivo","No se pudo eliminar el archivo");
-                }
-                    //porner los growl
-                    // swal("","Ocurrio un error al elimiar el documento", "error");
-                },
-                error:function()
-                {
-                    growlError("Error Eliminar Archivo","Error en el servidor");
-                //   swal("","Ocurrio un error al elimiar el documento", "error");
-                }
-            });
+        var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();
+        $.ajax({
+            url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
+            type: 'POST',
+            data: 'URL='+url,
+            success: function(eliminado)
+            {
+            if(eliminado)
+            {
+                growlSuccess("Eliminacion de Archivo","Archivo Eliminado");
+                mostrar_urls(ID_EVIDENCIA_DOCUMENTO,"1",false,id_para);
+                actualizarEvidencia(ID_EVIDENCIA_DOCUMENTO);
+                // setTimeout(function(){
+                    swal.close();
+                // },1000);
+                //  refresh();
+            }
+            else
+            {
+                growlError("Error Rliminar Archivo","No se pudo eliminar el archivo");
+            }
+                //porner los growl
+                // swal("","Ocurrio un error al elimiar el documento", "error");
+            },
+            error:function()
+            {
+                growlError("Error Eliminar Archivo","Error en el servidor");
+            //   swal("","Ocurrio un error al elimiar el documento", "error");
+            }
         });
-    }
+    });
+}
 
 function agregarArchivosUrl()
 {
