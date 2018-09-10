@@ -144,7 +144,7 @@ $Usuario=  Session::getSesion("user");
         <div style="position: fixed;">
 
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#agregarUsuario">
-                Agregar Usuario
+                Asignar Credenciales
             </button>
         </div>
 
