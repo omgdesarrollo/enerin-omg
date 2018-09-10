@@ -374,12 +374,13 @@ function insertarDocumentoSalida(documentoSalidaDatos)
 //                 });
 //                console.log(tempData);
 
-                $.each(datos,function(index,value)
-                {
-                    componerDataListado(value);
-                });
+                // $.each(datos,function(index,value)
+                // {
+                //     componerDataListado(value);
+                // });
+                dataListado.push(datos);
                 componerDataGrid();
-                gridInstance.loadData();
+                // gridInstance.loadData();
                 
                 $("#jsGrid").jsGrid("insertItem",tempData).done(function()
                 {

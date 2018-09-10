@@ -17,7 +17,7 @@ function inicializarFiltros()
     {
         filtros = [
             { id:"noneUno", type:"none"},
-            { id: "requisito",name:"Requisito", type: "text"},
+            { id: "tema",name:"Tema", type: "text"},
             { id: "registro",name:"Registro", type: "text"},
             { id: "frecuencia",name:"Frecuencia", type: "combobox",data:frecuenciaData,descripcion:"frecuencia"},
             { id: "clave_documento",name:"Clave Documento", type: "text"},
@@ -898,21 +898,23 @@ function reconstruir(value,index)//listo jsgrid
         // tempData["delete"] = value.validador;
         tempData["validador"] = value.validador;
         tempData["no"] = index;
-        tempData["requisito"] = value.requisito;
+        tempData["tema"] = value.nombre;
+        // tempData["requisito"] = value.requisito;
         tempData["registro"] = value.registro;
         tempData["frecuencia"] = value.frecuencia;
         tempData["clave_documento"] = value.clave_documento;
-        tempData["fecha_creacion"] = value.fecha_creacion;
+        tempData["fecha_creacion"] = getSinFechaFormato(value.fecha_creacion);
         
         tempData["adjuntar_evidencia"] = "<button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
         tempData["adjuntar_evidencia"] += " type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
-        tempData["adjuntar_evidencia"] += "<i class='fa fa-cloud-upload' style='font-size: 15px'></i> Adjuntar</button>";
+        tempData["adjuntar_evidencia"] += "<i class='fa fa-cloud-upload' style='font-size: 22px'></i></button>";
         $.each(value.archivosUpload[0],function(index2,value2)
         {
             tempArchivo="a";
             nametmp = value2.split("^-O-^-M-^-G-^");
-            fecha = new Date(nametmp[0]*1000);
-            fecha = fecha.getDate() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+            fecha = getFechaStamp(nametmp[0]);
+            // fecha = new Date(nametmp[0]*1000);
+            // fecha = fecha.getDate() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
             tempData["fecha_registro"] = fecha;
 
             tempData["usuario"] = value.usuario;
@@ -992,48 +994,48 @@ function reconstruir(value,index)//listo jsgrid
     return tempData;
 }
 
-    function eliminarEvidencia(id_evidencias)
-    {
-        $.ajax({
-            url: '../Controller/EvidenciasController.php?Op=EliminarEvidencia',
-            type: 'POST',
-            data: 'ID_EVIDENCIA='+id_evidencias,
-            success:function(eliminado)
+function eliminarEvidencia(id_evidencias)
+{
+    $.ajax({
+        url: '../Controller/EvidenciasController.php?Op=EliminarEvidencia',
+        type: 'POST',
+        data: 'ID_EVIDENCIA='+id_evidencias,
+        success:function(eliminado)
+        {
+            if(eliminado==true)
             {
-                if(eliminado==true)
+                dataListadoTemp=[];
+                dataItem = [];
+                numeroEliminar=0;
+                itemEliminar={};
+                $.each(dataListado,function(index,value)
                 {
-                    dataListadoTemp=[];
-                    dataItem = [];
-                    numeroEliminar=0;
-                    itemEliminar={};
-                    $.each(dataListado,function(index,value)
-                    {
-                        value.id_evidencias != id_evidencias ? dataListadoTemp.push(value) : (dataItem.push(value), numeroEliminar=index+1);//en el primer value.id_xxxx es el id por el cual se elimino la evidencia, id_evidencias es el que se recibe por parametro entrada
-                    });
-                    itemEliminar = reconstruir(dataItem[0],numeroEliminar);
-                    DataGrid = [];
-                    dataListado = dataListadoTemp;
-                    $.each(dataListado,function(index,value)
-                    {
-                        DataGrid.push( reconstruir(value,index+1) );
-                    });
-                    gridInstance.loadData();
-                    growlSuccess("Eliminar","Se elimino la evidencia");
-                    swal.close();
-                }
-                else
+                    value.id_evidencias != id_evidencias ? dataListadoTemp.push(value) : (dataItem.push(value), numeroEliminar=index+1);//en el primer value.id_xxxx es el id por el cual se elimino la evidencia, id_evidencias es el que se recibe por parametro entrada
+                });
+                itemEliminar = reconstruir(dataItem[0],numeroEliminar);
+                DataGrid = [];
+                dataListado = dataListadoTemp;
+                $.each(dataListado,function(index,value)
                 {
-                    growlError("Error Eliminar","No se pudo eliminar la evidencia");
-                    swal.close();
-                }
-            },
-            error:function()
-            {
-                growlError("Error Eliminar","Error en el servidor");
+                    DataGrid.push( reconstruir(value,index+1) );
+                });
+                gridInstance.loadData();
+                growlSuccess("Eliminar","Se elimino la evidencia");
                 swal.close();
             }
-        });
-    }
+            else
+            {
+                growlError("Error Eliminar","No se pudo eliminar la evidencia");
+                swal.close();
+            }
+        },
+        error:function()
+        {
+            growlError("Error Eliminar","Error en el servidor");
+            swal.close();
+        }
+    });
+}
 
     // function validarEvidencia(checkbox,tabla,column,context,id,idPara)
     // {
@@ -1156,25 +1158,25 @@ function notificar(idPara,idEvidencia,columna)
 
 function enviar_notificacion(mensaje,para,tipoMensaje,atendido,asunto)
 {
-        $.ajax({
-            url:"../Controller/NotificacionesController.php?Op=EnviarNotificacionHibry",
-            data: "PARA="+para+"&MENSAJE="+mensaje+"&ATENDIDO="+atendido+"&TIPO_MENSAJE="+tipoMensaje+"&ASUNTO="+asunto,
-            success:function(response)
-            {
-            (response==true)?(
-                growlSuccess("Notificación","Se notifico del cambio")
-                // swalSuccess("Se notifico del cambio "),
-                //  refresh()
-                )
-            :growlError("Error Notificación","No se pudo notificar el cambio");
-            
-            },
-            error:function()
-            {
-            growlError("Error Notificación","Error en el servidor");
-            // swalError("Error en el servidor");
-            }
-        });
+    $.ajax({
+        url:"../Controller/NotificacionesController.php?Op=EnviarNotificacionHibry",
+        data: "PARA="+para+"&MENSAJE="+mensaje+"&ATENDIDO="+atendido+"&TIPO_MENSAJE="+tipoMensaje+"&ASUNTO="+asunto,
+        success:function(response)
+        {
+        (response==true)?(
+            growlSuccess("Notificación","Se notifico del cambio")
+            // swalSuccess("Se notifico del cambio "),
+            //  refresh()
+            )
+        :growlError("Error Notificación","No se pudo notificar el cambio");
+        
+        },
+        error:function()
+        {
+        growlError("Error Notificación","Error en el servidor");
+        // swalError("Error en el servidor");
+        }
+    });
 }
 
     // function saveOneToDatabase(valor,columna,tabla,id,contexto)
@@ -1244,8 +1246,9 @@ function mostrar_urls(id_evidencia,validador,validado,id_para)
                 {
                     nametmp = value.split("^-O-^-M-^-G-^");
                     name;
-                    fecha = new Date(nametmp[0]*1000);
-                    fecha = fecha.getDate()+" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+                    fecha = getFechaStamp(nametmp[0]);
+                    // fecha = new Date(nametmp[0]*1000);
+                    // fecha = fecha.getDate()+" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
                     $.each(nametmp, function(index,value)
                     {
                         if(index!=0)
@@ -1283,7 +1286,7 @@ function mostrar_urls(id_evidencia,validador,validado,id_para)
             }
             tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdEvidenciaDocumento' type='text' style='display:none;' value='"+id_evidencia+"'>"
             tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdParaDocumento' type='text' style='display:none;' value='"+id_para+"'>";
-            $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
+            $('#DocumentolilstadoUrl').html(tempDocumentolistadoUrl);
             $('#fileupload').fileupload
             ({
                 url: '../View/',
@@ -1312,52 +1315,52 @@ function mostrar_urls(id_evidencia,validador,validado,id_para)
     //     });
     // }
     // valor = 8;
-    function borrarArchivo(url,id_para)
+function borrarArchivo(url,id_para)
+{
+    // setInterval(aumentador(), 3000);
+    swal({
+        title: "ELIMINAR",
+        text: "Al eliminar este documento se eliminara toda la evidencia registrada. ¿Desea continuar?",
+        type: "warning",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        showLoaderOnConfirm: true,
+        confirmButtonText: "Eliminar",
+        cancelButtonText: "Cancelar",
+    },function()
     {
-        // setInterval(aumentador(), 3000);
-        swal({
-          title: "ELIMINAR",
-          text: "Al eliminar este documento se eliminara toda la evidencia registrada. ¿Desea continuar?",
-          type: "warning",
-          showCancelButton: true,
-          closeOnConfirm: false,
-          showLoaderOnConfirm: true,
-          confirmButtonText: "Eliminar",
-          cancelButtonText: "Cancelar",
-        },function()
-        {
-            var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();
-            $.ajax({
-                url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
-                type: 'POST',
-                data: 'URL='+url,
-                success: function(eliminado)
-                {
-                if(eliminado)
-                {
-                    growlSuccess("Eliminacion de Archivo","Archivo Eliminado");
-                    mostrar_urls(ID_EVIDENCIA_DOCUMENTO,"1",false,id_para);
-                    actualizarEvidencia(ID_EVIDENCIA_DOCUMENTO);
-                    // setTimeout(function(){
-                        swal.close();
-                    // },1000);
-                    //  refresh();
-                }
-                else
-                {
-                    growlError("Error Rliminar Archivo","No se pudo eliminar el archivo");
-                }
-                    //porner los growl
-                    // swal("","Ocurrio un error al elimiar el documento", "error");
-                },
-                error:function()
-                {
-                    growlError("Error Eliminar Archivo","Error en el servidor");
-                //   swal("","Ocurrio un error al elimiar el documento", "error");
-                }
-            });
+        var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();
+        $.ajax({
+            url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
+            type: 'POST',
+            data: 'URL='+url,
+            success: function(eliminado)
+            {
+            if(eliminado)
+            {
+                growlSuccess("Eliminacion de Archivo","Archivo Eliminado");
+                mostrar_urls(ID_EVIDENCIA_DOCUMENTO,"1",false,id_para);
+                actualizarEvidencia(ID_EVIDENCIA_DOCUMENTO);
+                // setTimeout(function(){
+                    swal.close();
+                // },1000);
+                //  refresh();
+            }
+            else
+            {
+                growlError("Error Rliminar Archivo","No se pudo eliminar el archivo");
+            }
+                //porner los growl
+                // swal("","Ocurrio un error al elimiar el documento", "error");
+            },
+            error:function()
+            {
+                growlError("Error Eliminar Archivo","Error en el servidor");
+            //   swal("","Ocurrio un error al elimiar el documento", "error");
+            }
         });
-    }
+    });
+}
 
 function agregarArchivosUrl()
 {

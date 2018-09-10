@@ -62,7 +62,7 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/fInformeGerencialView.js" type="text/javascript"></script>
                 <script src="../../js/fGridComponent.js" type="text/javascript"></script>
-                
+                <script src="../../js/fechas_formato.js" type="text/javascript"></script>
                 
         <style>
             .jsgrid-header-row>.jsgrid-header-cell {
@@ -106,7 +106,7 @@ require_once 'EncabezadoUsuarioView.php';
 
 <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">             
 
-<button onClick="loadChartView(true);" type="button" id="btn_informe" class="btn btn-info btn_agregar" data-toggle="modal" data-target="#informe_gerencial">
+<button onClick="loadChartView(true);" type="button" id="btn_informe" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#informe_gerencial">
     Informe
 </button>    
     

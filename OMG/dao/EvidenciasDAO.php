@@ -7,17 +7,17 @@ class EvidenciasDAO
     {
         try
         {
-            $query = "SELECT tbusuarios.id_empleado,tbrequisitos.id_requisito,tbrequisitos.requisito,
+            $query = "SELECT tbtemas.id_tema,tbtemas.nombre, tbusuarios.id_empleado,tbrequisitos.id_requisito,tbrequisitos.requisito,
             tbregistros.id_registro,tbregistros.registro,tbregistros.frecuencia,
             tbdocumentos.clave_documento,tbevidencias.desviacion,
             tbevidencias.id_evidencias,tbevidencias.id_usuario,tbevidencias.accion_correctiva,tbevidencias.validacion_supervisor,tbevidencias.fecha_creacion,
-            tbempleados.id_empleado,(SELECT tbusuario2.id_usuario FROM usuarios tbusuario2 WHERE tbusuario2.id_empleado=tbempleados.id_empleado)AS id_responsable , (
-                SELECT CONCAT(tbempleados.nombre_empleado,' ',
-                    tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)
+            tbempleados.id_empleado,(SELECT tbusuario2.id_usuario FROM usuarios tbusuario2 WHERE tbusuario2.id_empleado=tbempleados.id_empleado)AS id_responsable ,
+            (SELECT CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)
                     FROM empleados tbempleados
                     JOIN usuarios tbusuariosU ON tbusuariosU.id_empleado = tbempleados.id_empleado
-                    WHERE tbusuariosU.id_usuario = tbevidencias.id_usuario
-                ) AS usuario, (SELECT IF(tbevidencias.id_usuario=$ID_USUARIO,1,0) ) AS validador,
+                    WHERE tbusuariosU.id_usuario = tbevidencias.id_usuario) AS usuario,
+                    
+                    (SELECT IF(tbevidencias.id_usuario=$ID_USUARIO,1,0) ) AS validador,
                 ( SELECT IF( tbempleados.id_empleado = (SELECT tbempleado.id_empleado FROM usuarios tbusuario,empleados tbempleado 
 				    WHERE tbusuario.id_empleado = tbempleado.id_empleado AND tbusuario.id_usuario = $ID_USUARIO),1,0) ) AS responsable
             

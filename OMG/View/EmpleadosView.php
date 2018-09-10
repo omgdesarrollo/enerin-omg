@@ -49,7 +49,7 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/tools.js" type="text/javascript"></script>
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>                
                 <script src="../../js/fEmpleadosView.js" type="text/javascript"></script>
-                
+                <script src="../../js/fechas_formato.js" type="text/javascript"></script>
                 
         <style>
             .jsgrid-header-row>.jsgrid-header-cell {
@@ -83,7 +83,7 @@ require_once 'EncabezadoUsuarioView.php';
 <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;"> 
 
 <button type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#crea_empleado">
-    Agregar Empleado
+    Agregar Personal
 </button>
 
 <button type="button" class="btn btn-info btn_refrescar" id="btnrefrescar" onclick="refresh();" >
