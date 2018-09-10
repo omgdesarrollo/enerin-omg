@@ -367,17 +367,18 @@ function insertarDocumentoSalida(documentoSalidaDatos)
                 growlSuccess("Crear Documento Salida","Registro Creado");
 //                 tempData;
 //                 swalSuccess("Documento Creado");                
-//                 $.each(datos,function(index,value)
-//                 {
+                $.each(datos,function(index,value)
+                {
 // //                   console.log("Este es el value: "+value); 
-//                    tempData= reconstruir(value,ultimoNumeroGrid+1);  
-//                 });
+                   tempData = reconstruir(value,ultimoNumeroGrid+1);
+                });
 //                console.log(tempData);
 
                 // $.each(datos,function(index,value)
                 // {
                 //     componerDataListado(value);
                 // });
+                // ulti
                 dataListado.push(datos);
                 componerDataGrid();
                 // gridInstance.loadData();
