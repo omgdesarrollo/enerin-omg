@@ -17,7 +17,7 @@ function inicializarFiltros()
     {
         filtros = [
             { id:"noneUno", type:"none"},
-            { id: "requisito",name:"Requisito", type: "text"},
+            { id: "tema",name:"Tema", type: "text"},
             { id: "registro",name:"Registro", type: "text"},
             { id: "frecuencia",name:"Frecuencia", type: "combobox",data:frecuenciaData,descripcion:"frecuencia"},
             { id: "clave_documento",name:"Clave Documento", type: "text"},
@@ -898,7 +898,8 @@ function reconstruir(value,index)//listo jsgrid
         // tempData["delete"] = value.validador;
         tempData["validador"] = value.validador;
         tempData["no"] = index;
-        tempData["requisito"] = value.requisito;
+        tempData["tema"] = value.nombre;
+        // tempData["requisito"] = value.requisito;
         tempData["registro"] = value.registro;
         tempData["frecuencia"] = value.frecuencia;
         tempData["clave_documento"] = value.clave_documento;

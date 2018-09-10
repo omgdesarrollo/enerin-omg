@@ -313,7 +313,7 @@
         { name: "id_principal", type: "text",visible:false },
         { name: "validador", type: "text",visible:false },
         { name: "no", title:"No",type: "text", width: 70, editing:false },
-        { name: "requisito",title:"Requisito", type: "text", width: 150, editing:false },
+        { name: "tema",title:"Tema", type: "text", width: 150, editing:false },
         { name: "registro",title:"Registro", type: "text", width: 150, editing:false  },
         { name: "frecuencia",title:"Frecuencia", type: "text", width: 120, editing:false  },
         { name: "clave_documento",title:"Clave Documento", type: "text",  width: 128, editing:false },

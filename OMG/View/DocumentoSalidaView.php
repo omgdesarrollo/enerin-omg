@@ -254,13 +254,13 @@ MyComboAutoridad.prototype = new jsGrid.Field
         },
         itemTemplate: function(value)
         {
-                var res ="";
-                value!=null ?
+                var res = "";
+                value != "" ?
                 $.each(thisAutoridad,(index,val)=>{
                         if(val.id_autoridad == value)
                                 res = val.clave_autoridad;
                 })
-                : console.log();
+                : res = "SIN SELECCIÓN";
                 return res;
         },
         insertTemplate: function(value)
