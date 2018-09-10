@@ -36,6 +36,8 @@ $Usuario=  Session::getSesion("user");
 
         <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
 
+        <script src="../../js/fechas_formato.js" type="text/javascript"></script>
+
         <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
         <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
 
@@ -67,7 +69,7 @@ $Usuario=  Session::getSesion("user");
 .div-observacion-msjs
 {
     width: 100%;
-    height: 280px;
+    height: 250px;
     overflow: auto;
 }
 .div-observacion-btn
@@ -77,7 +79,6 @@ $Usuario=  Session::getSesion("user");
     min-height: 50px;
     border-top: 1px silver solid;
     width: 100%;
-    
     /* margin: -5px; */
 }
 .area-observaciones {
@@ -88,14 +89,29 @@ $Usuario=  Session::getSesion("user");
     text-decoration: none;
     border: none;
     float: left;
+    border-top:3px solid #49986d;
 }
+textarea:hover
+{
+    border-top:3px solid #49986d;
+    /* border-color:6px solid #49986d; */
+}
+
+textarea:focus
+{
+    border-top:3px solid #49986d;
+    /* border-color:6px solid #49986d; */
+}
+
 .btn-observaciones
 {
-    border: none;
-    background: yellow;
-    height: 100%;
     width: 13%;
+    height: 100%;
     float: left;
+    border-radius: 3px;
+    border: 3px #49986d solid;
+    background-color: #87B87F!important;
+    color:black;
 }
  /* 5 - setting height and scrolling */
 .table-container {
@@ -192,8 +208,6 @@ if(isset($_REQUEST["accion"]))
     </div><!-- cierre div class="modal-dialog" -->
 </div><!-- cierre del modal -->
 
-
-
                
 <!-- Inicio modal Requisitos -->
 <div class="modal draggable fade" id="mostrar-requisitos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -213,7 +227,6 @@ if(isset($_REQUEST["accion"]))
       </div><!-- cierre div class modal-content -->
     </div><!-- cierre div class="modal-dialog" -->
 </div><!-- cierre del modal Requisitos-->
-
 
 
 <!-- Inicio modal Registros -->
@@ -315,7 +328,7 @@ if(isset($_REQUEST["accion"]))
         { name: "validacion_documento_responsable", title:"Validación Resposable Documento", type: "FValidacionDocumento", width: 100, editing:false},
         { name: "validacion_tema_responsable", title:"Validación Resposable Tema", type: "FValidacionTema", width: 100, editing:false},
         { name: "observaciones", title:"Observaciones", type: "text", width: 112, editing:false},
-        { name: "desviacion_mayor", title:"Desviación Mayor", type: "text", width: 90, editing:false},
+        // { name: "desviacion_mayor", title:"Desviación Mayor", type: "text", width: 90, editing:false},
 
         { name:"delete", title:"Opción", type:"customControl",sorting:""},
     ];
@@ -627,16 +640,17 @@ if(isset($_REQUEST["accion"]))
         if(idUsuario == value.idU)//flotar a la derecha
         {
             tempData+="float:right;border-radius: 20px 0px 0px 20px;background: #6FB3E0;padding-left:15px'>";
-            tempData+= "<h4 style='color:black;float:right;margin:2px'>"+value.msj+"</h4><br>";
-            tempData+= "<h6 style='color:white;float:right;margin:2px'>"+value.fecha+"</h6>";
+            tempData+= "<h5 style='color:black;float:right;margin:2px'>"+value.msj+"</h5><br>";
+            tempData+= "<h6 style='color:white;float:right;margin:2px'>"+getFechaFormatoH(value.fecha)+"</h6>";
         }
         else//flotar izquierda
         {
             tempData+="float:left;border-radius: 0px 20px 20px 0px;background: #dfdfdf;padding-right:15px'>";
-            tempData+= "<h4 style='float:left;margin:2px'>"+value.nombre;
-            tempData+= " : "+value.msj+"</h4><br>";
-            tempData+= "<h6 style='color:white;margin:2px'>"+value.fecha+"</h6>";
+            tempData+= "<h5 style='float:left;margin:2px'>"+value.nombre;
+            tempData+= " : "+value.msj+"</h5><br>";
+            tempData+= "<h6 style='color:;margin:2px'>"+value.fecha+"</h6>";
         }
+        // console.log(new Date(value.fecha));
         // console.log(value);
         tempData += "</div></div>";
         // tempData += "<h1><br></h1>";
@@ -645,36 +659,39 @@ if(isset($_REQUEST["accion"]))
 
     function enviarObservacion(idValidacionDocumento)
     {
-        alert();
         msj = $("#textarea_msj").val();
-        $.ajax({
-            url:'../Controller/ValidacionDocumentosController.php?Op=EnviarObservacion',
-            type:'POST',
-            data:'ID_VALIDACION_DOCUMENTO='+idValidacionDocumento+'&MENSAJE='+msj,
-            success:function(exito)
-            {
-                if(exito.data!=false)
+        msj = msj.trim();
+        if(msj!="")
+        {
+            $.ajax({
+                url:'../Controller/ValidacionDocumentosController.php?Op=EnviarObservacion',
+                type:'POST',
+                data:'ID_VALIDACION_DOCUMENTO='+idValidacionDocumento+'&MENSAJE='+msj,
+                success:function(exito)
                 {
-                    tempData="";
-                    // console.log(JSON.parse(exito.data));
-                    $.each(JSON.parse(exito.data),function(index,value)
+                    if(exito.data!=false)
                     {
-                        tempData = construirObservacion(value,exito.idUsuario);
-                    });
-                    $("#observacion_msjs").append(tempData);
-                    $("#textarea_msj").val("");
-                    $("#observacion_msjs").scrollTop($("#observacion_msjs")[0].scrollHeight);
-                    // a=100;
-                    // $(".div-observacion-msjs").animate({ scrollTop: a+"px";a+=100;}, 1000);
+                        tempData="";
+                        // console.log(JSON.parse(exito.data));
+                        $.each(JSON.parse(exito.data),function(index,value)
+                        {
+                            tempData = construirObservacion(value,exito.idUsuario);
+                        });
+                        $("#observacion_msjs").append(tempData);
+                        $("#textarea_msj").val("");
+                        $("#observacion_msjs").scrollTop($("#observacion_msjs")[0].scrollHeight);
+                        // a=100;
+                        // $(".div-observacion-msjs").animate({ scrollTop: a+"px";a+=100;}, 1000);
+                    }
+                    else
+                    swalError("Error al enviar la observación");
+                },
+                error:function()
+                {
+                    swalError("Error en el servidor");
                 }
-                else
-                swalError("Error al enviar la observación");
-            },
-            error:function()
-            {
-                swalError("Error en el servidor");
-            }
-        });
+            });
+        }
     }
     // function enviar_notificacion(columna,chekeado,id_validacion_documento)
     // {
