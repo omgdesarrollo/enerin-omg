@@ -2,7 +2,8 @@
 require_once '../ds/AccesoDB.php';
 class DocumentoSalidaDAO{
     
-    public function mostrarDocumentosSalida($CONTRATO){
+    public function mostrarDocumentosSalida($CONTRATO)
+    {
         try{
         //     $query="SELECT tbdocumento_salida.id_documento_salida,tbdocumento_entrada.id_documento_entrada,
         //             tbdocumento_entrada.folio_entrada,tbdocumento_salida.folio_salida,
@@ -51,22 +52,25 @@ class DocumentoSalidaDAO{
     public function mostrarDocumentoSalida($ID_DOCUMENTO)
     {
         try{
-            $query="SELECT tbdocumento_salida.id_documento_salida,tbdocumento_entrada.id_documento_entrada,
-                tbdocumento_entrada.folio_entrada,tbdocumento_salida.folio_salida,
-                tbdocumento_salida.fecha_envio,tbdocumento_salida.asunto,
-                tbautoridad_remitente.clave_autoridad,tbdocumento_salida.destinatario,
-                tbempleados.nombre_empleado,tbempleados.apellido_paterno, 
-                tbempleados.apellido_materno,tbdocumento_salida.observaciones 
-                
-                FROM documento_salida tbdocumento_salida
-                JOIN documento_entrada tbdocumento_entrada ON
-                tbdocumento_entrada.id_documento_entrada=tbdocumento_salida.id_documento_entrada
-                JOIN autoridad_remitente tbautoridad_remitente ON
-                tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad
-                JOIN temas tbtemas ON
-                tbtemas.id_tema=tbdocumento_entrada.id_tema
-                JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
-                WHERE tbdocumento_salida.id_documento_salida=$ID_DOCUMENTO";
+            $query="SELECT tbdocumento_salida.id_documento_salida, tbdocumento_entrada.id_documento_entrada,
+            tbdocumento_entrada.folio_entrada, tbdocumento_salida.folio_salida,
+            tbdocumento_salida.fecha_envio, tbdocumento_salida.asunto,
+            tbautoridad_remitente.id_autoridad, tbautoridad_remitente.clave_autoridad,
+            tbdocumento_salida.destinatario, tbempleados.id_empleado,
+            CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) AS nombre_empleado,
+            tbdocumento_salida.observaciones 
+            
+            FROM documento_salida tbdocumento_salida
+            
+            JOIN documento_entrada tbdocumento_entrada ON
+            tbdocumento_entrada.id_documento_entrada=tbdocumento_salida.id_documento_entrada
+            JOIN autoridad_remitente tbautoridad_remitente ON
+            tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad
+            JOIN temas tbtemas ON
+            tbtemas.id_tema=tbdocumento_entrada.id_tema
+            JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
+            WHERE tbdocumento_salida.id_documento_salida=$ID_DOCUMENTO";
+            
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
 
@@ -263,6 +267,8 @@ class DocumentoSalidaDAO{
        LEFT JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumento_salida_sinfolio_entrada.id_empleado
        LEFT JOIN autoridad_remitente tbautoridad_remitente ON tbautoridad_remitente.id_autoridad=tbdocumento_salida_sinfolio_entrada.id_autoridad
        WHERE tbdocumento_salida_sinfolio_entrada.id_cumplimiento = $CONTRATO";
+
+    //    echo $query;
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
@@ -347,7 +353,7 @@ class DocumentoSalidaDAO{
            LEFT JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumento_salida_sinfolio_entrada.id_empleado
            LEFT JOIN autoridad_remitente tbautoridad_remitente ON tbautoridad_remitente.id_autoridad=tbdocumento_salida_sinfolio_entrada.id_autoridad
            WHERE tbdocumento_salida_sinfolio_entrada.id_documento_salida = $ID_DOCUMENTO_SALIDA";
-
+            // echo $query;
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             return $lista;
