@@ -903,7 +903,7 @@ function reconstruir(value,index)//listo jsgrid
         tempData["registro"] = value.registro;
         tempData["frecuencia"] = value.frecuencia;
         tempData["clave_documento"] = value.clave_documento;
-        tempData["fecha_creacion"] = value.fecha_creacion;
+        tempData["fecha_creacion"] = getSinFechaFormato(value.fecha_creacion);
         
         tempData["adjuntar_evidencia"] = "<button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
         tempData["adjuntar_evidencia"] += " type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
@@ -912,8 +912,9 @@ function reconstruir(value,index)//listo jsgrid
         {
             tempArchivo="a";
             nametmp = value2.split("^-O-^-M-^-G-^");
-            fecha = new Date(nametmp[0]*1000);
-            fecha = fecha.getDate() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+            fecha = getFechaStamp(nametmp[0]);
+            // fecha = new Date(nametmp[0]*1000);
+            // fecha = fecha.getDate() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
             tempData["fecha_registro"] = fecha;
 
             tempData["usuario"] = value.usuario;
@@ -993,48 +994,48 @@ function reconstruir(value,index)//listo jsgrid
     return tempData;
 }
 
-    function eliminarEvidencia(id_evidencias)
-    {
-        $.ajax({
-            url: '../Controller/EvidenciasController.php?Op=EliminarEvidencia',
-            type: 'POST',
-            data: 'ID_EVIDENCIA='+id_evidencias,
-            success:function(eliminado)
+function eliminarEvidencia(id_evidencias)
+{
+    $.ajax({
+        url: '../Controller/EvidenciasController.php?Op=EliminarEvidencia',
+        type: 'POST',
+        data: 'ID_EVIDENCIA='+id_evidencias,
+        success:function(eliminado)
+        {
+            if(eliminado==true)
             {
-                if(eliminado==true)
+                dataListadoTemp=[];
+                dataItem = [];
+                numeroEliminar=0;
+                itemEliminar={};
+                $.each(dataListado,function(index,value)
                 {
-                    dataListadoTemp=[];
-                    dataItem = [];
-                    numeroEliminar=0;
-                    itemEliminar={};
-                    $.each(dataListado,function(index,value)
-                    {
-                        value.id_evidencias != id_evidencias ? dataListadoTemp.push(value) : (dataItem.push(value), numeroEliminar=index+1);//en el primer value.id_xxxx es el id por el cual se elimino la evidencia, id_evidencias es el que se recibe por parametro entrada
-                    });
-                    itemEliminar = reconstruir(dataItem[0],numeroEliminar);
-                    DataGrid = [];
-                    dataListado = dataListadoTemp;
-                    $.each(dataListado,function(index,value)
-                    {
-                        DataGrid.push( reconstruir(value,index+1) );
-                    });
-                    gridInstance.loadData();
-                    growlSuccess("Eliminar","Se elimino la evidencia");
-                    swal.close();
-                }
-                else
+                    value.id_evidencias != id_evidencias ? dataListadoTemp.push(value) : (dataItem.push(value), numeroEliminar=index+1);//en el primer value.id_xxxx es el id por el cual se elimino la evidencia, id_evidencias es el que se recibe por parametro entrada
+                });
+                itemEliminar = reconstruir(dataItem[0],numeroEliminar);
+                DataGrid = [];
+                dataListado = dataListadoTemp;
+                $.each(dataListado,function(index,value)
                 {
-                    growlError("Error Eliminar","No se pudo eliminar la evidencia");
-                    swal.close();
-                }
-            },
-            error:function()
-            {
-                growlError("Error Eliminar","Error en el servidor");
+                    DataGrid.push( reconstruir(value,index+1) );
+                });
+                gridInstance.loadData();
+                growlSuccess("Eliminar","Se elimino la evidencia");
                 swal.close();
             }
-        });
-    }
+            else
+            {
+                growlError("Error Eliminar","No se pudo eliminar la evidencia");
+                swal.close();
+            }
+        },
+        error:function()
+        {
+            growlError("Error Eliminar","Error en el servidor");
+            swal.close();
+        }
+    });
+}
 
     // function validarEvidencia(checkbox,tabla,column,context,id,idPara)
     // {
@@ -1245,8 +1246,9 @@ function mostrar_urls(id_evidencia,validador,validado,id_para)
                 {
                     nametmp = value.split("^-O-^-M-^-G-^");
                     name;
-                    fecha = new Date(nametmp[0]*1000);
-                    fecha = fecha.getDate()+" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+                    fecha = getFechaStamp(nametmp[0]);
+                    // fecha = new Date(nametmp[0]*1000);
+                    // fecha = fecha.getDate()+" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
                     $.each(nametmp, function(index,value)
                     {
                         if(index!=0)
