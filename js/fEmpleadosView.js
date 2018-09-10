@@ -245,7 +245,7 @@ function reconstruir(value,index)
     tempData["apellido_paterno"] = value.apellido_paterno;
     tempData["categoria"] = value.categoria;
     tempData["correo"] = value.correo;
-    tempData["fecha_creacion"] = value.fecha_creacion;
+    tempData["fecha_creacion"] =getSinFechaFormato(value.fecha_creacion);
     tempData["cancel"]=false;
     return tempData;
 }

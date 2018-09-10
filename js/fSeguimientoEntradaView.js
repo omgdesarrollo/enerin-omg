@@ -259,9 +259,9 @@ function reconstruir(value,index)
     tempData["clave_autoridad"]=value.clave_autoridad;
     tempData["asunto"]=value.asunto;
     tempData["id_empleadotema"]=value.nombre_completotema;
-    tempData["fecha_asignacion"]=value.fecha_asignacion;
-    tempData["fecha_limite_atencion"]=value.fecha_limite_atencion;
-    tempData["fecha_alarma"]=value.fecha_alarma;
+    tempData["fecha_asignacion"]= getSinFechaFormato(value.fecha_asignacion);
+    tempData["fecha_limite_atencion"]= getSinFechaFormato(value.fecha_limite_atencion);
+    tempData["fecha_alarma"]= getSinFechaFormato(value.fecha_alarma);
         if(value.status_doc== "1")
         {
             tempData["status_doc"]="En Proceso";

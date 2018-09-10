@@ -41,3 +41,4 @@ function getFechaStamp(value)
     var fecha = new Date(value*1000);
     return (fecha.getDate() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear().toString().slice(2,4) +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds());
 }
+
