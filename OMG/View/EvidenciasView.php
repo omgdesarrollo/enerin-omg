@@ -55,6 +55,7 @@
     <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
 
+    <script src="../../js/fechas_formato.js" type="text/javascript"></script>
     <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
     <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
     <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
@@ -292,7 +293,7 @@
     var ws;
     var thisjGrowl;
 
-    var months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+    // var months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 
     var frecuenciaData = [
                 {frecuencia:"DIARIO"},
@@ -313,18 +314,18 @@
         { name: "id_principal", type: "text",visible:false },
         { name: "validador", type: "text",visible:false },
         { name: "no", title:"No",type: "text", width: 70, editing:false },
-        { name: "requisito",title:"Requisito", type: "text", width: 150, editing:false },
+        { name: "tema",title:"Tema", type: "text", width: 150, editing:false },
         { name: "registro",title:"Registro", type: "text", width: 150, editing:false  },
-        { name: "frecuencia",title:"Frecuencia", type: "text", width: 120, editing:false  },
+        { name: "frecuencia",title:"Frecuencia", type: "text", width: 130, editing:false  },
         { name: "clave_documento",title:"Clave Documento", type: "text",  width: 128, editing:false },
         { name: "fecha_creacion",title:"Fecha Creación", type: "text",  width: 155, editing:false },
-        { name: "adjuntar_evidencia",title:"Adjuntar Evidencia", type: "text",  width: 140, editing:false },
+        { name: "adjuntar_evidencia",title:"Adjuntar Evidencia", type: "text",  width: 110, editing:false },
         { name: "fecha_registro",title:"Fecha Registro", type: "text", width: 155, editing:false },
         { name: "usuario",title:"Usuario", type: "text", width:150, editing:false },
-        { name: "accion_correctiva",title:"Accion Correctiva", type: "text", width: 130, editing:false},
+        { name: "accion_correctiva",title:"Accion Correctiva", type: "text", width: 100, editing:false},
         { name: "plan_accion",title:"Plan Accion", type: "text", width: 170, editing:false },
-        { name: "desviacion",title:"Desviacion", type: "text", width: 120, editing:false},
-        {name: "validacion",title:"Validacion", type: "text", width: 200, editing:false },
+        { name: "desviacion",title:"Desviacion", type: "text", width: 100, editing:false},
+        {name: "validacion",title:"Validacion", type: "text", width: 100, editing:false },
         { name:"delete", title:"Opción", type:"customControl",sorting:""},
         // {name:"delete", title:"Opcion", type: "customControl" },
         // {name:"eliminar",title:"Opcion",visible:false}

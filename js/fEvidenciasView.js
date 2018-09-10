@@ -17,7 +17,7 @@ function inicializarFiltros()
     {
         filtros = [
             { id:"noneUno", type:"none"},
-            { id: "requisito",name:"Requisito", type: "text"},
+            { id: "tema",name:"Tema", type: "text"},
             { id: "registro",name:"Registro", type: "text"},
             { id: "frecuencia",name:"Frecuencia", type: "combobox",data:frecuenciaData,descripcion:"frecuencia"},
             { id: "clave_documento",name:"Clave Documento", type: "text"},
@@ -898,7 +898,8 @@ function reconstruir(value,index)//listo jsgrid
         // tempData["delete"] = value.validador;
         tempData["validador"] = value.validador;
         tempData["no"] = index;
-        tempData["requisito"] = value.requisito;
+        tempData["tema"] = value.nombre;
+        // tempData["requisito"] = value.requisito;
         tempData["registro"] = value.registro;
         tempData["frecuencia"] = value.frecuencia;
         tempData["clave_documento"] = value.clave_documento;
@@ -906,7 +907,7 @@ function reconstruir(value,index)//listo jsgrid
         
         tempData["adjuntar_evidencia"] = "<button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
         tempData["adjuntar_evidencia"] += " type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
-        tempData["adjuntar_evidencia"] += "<i class='fa fa-cloud-upload' style='font-size: 15px'></i> Adjuntar</button>";
+        tempData["adjuntar_evidencia"] += "<i class='fa fa-cloud-upload' style='font-size: 22px'></i></button>";
         $.each(value.archivosUpload[0],function(index2,value2)
         {
             tempArchivo="a";
