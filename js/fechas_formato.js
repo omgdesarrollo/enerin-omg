@@ -24,7 +24,7 @@ function getFechaFormatoH(value)
                 if(value!=fecha)
                 {
                         date = new Date(value);
-                        fecha = date.getDate()+1 +" "+ months[date.getMonth()] +" "+ date.getFullYear().toString().slice(2,4);
+                        fecha = date.getDate()+1 +" "+ months[date.getMonth()] +" "+ date.getFullYear().toString().slice(2,4) +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
                         return fecha;
                 }
                 else

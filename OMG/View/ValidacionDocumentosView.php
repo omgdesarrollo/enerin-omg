@@ -591,17 +591,17 @@ if(isset($_REQUEST["accion"]))
                 });
                 $("#observacion_msjs").html(tempData);
                 // $("#observacion_msjs").fadeOut(2000, function(){
-                setTimeout(function(){$("#observacion_msjs").scrollTop($("#observacion_msjs")[0].scrollHeight);},500);
-                // setTimeout(function(){mostrarObservaciones(idDocumento);},2000);
-                intervalObservaciones = setInterval(function()
-                {
-                    if($("#observacion_msjs")[0].scrollHeight == 0 )
-                    {
-                        clearInterval(intervalObservaciones);
-                    }
-                    else
-                        mostrarObservaciones(idDocumento);
-                },2000);
+                // setTimeout(function(){$("#observacion_msjs").scrollTop($("#observacion_msjs")[0].scrollHeight);},500);
+                // // setTimeout(function(){mostrarObservaciones(idDocumento);},2000);
+                // intervalObservaciones = setInterval(function()
+                // {
+                //     if($("#observacion_msjs")[0].scrollHeight == 0 )
+                //     {
+                //         clearInterval(intervalObservaciones);
+                //     }
+                //     else
+                //         mostrarObservaciones(idDocumento);
+                // },2000);
                     // $("#observacion_msjs").fadeIn(2000);
                 // });
             },
@@ -626,13 +626,13 @@ if(isset($_REQUEST["accion"]))
         tempData = "<div class='container' style='width:100%;padding-bottom:5px'><div style='";
         if(idUsuario == value.idU)//flotar a la derecha
         {
-            tempData+="float:right;border-radius: 20px 0px 0px 20px;background: springgreen;padding-left:15px'>";
-            tempData+= "<h4 style='float:right;margin:2px'>"+value.msj+"</h4><br>";
+            tempData+="float:right;border-radius: 20px 0px 0px 20px;background: #6FB3E0;padding-left:15px'>";
+            tempData+= "<h4 style='color:black;float:right;margin:2px'>"+value.msj+"</h4><br>";
             tempData+= "<h6 style='color:white;float:right;margin:2px'>"+value.fecha+"</h6>";
         }
         else//flotar izquierda
         {
-            tempData+="float:left;border-radius: 0px 20px 20px 0px;background: springgreen;padding-right:15px'>";
+            tempData+="float:left;border-radius: 0px 20px 20px 0px;background: #dfdfdf;padding-right:15px'>";
             tempData+= "<h4 style='float:left;margin:2px'>"+value.nombre;
             tempData+= " : "+value.msj+"</h4><br>";
             tempData+= "<h6 style='color:white;margin:2px'>"+value.fecha+"</h6>";
