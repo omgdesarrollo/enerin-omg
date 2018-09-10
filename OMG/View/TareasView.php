@@ -45,9 +45,10 @@ $Usuario=  Session::getSesion("user");
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
                 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>-->
                 
+
                 <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
                 <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
-                <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
+                <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>   
                 
                 <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
                 <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
@@ -57,6 +58,8 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/fTareasView.js" type="text/javascript"></script>                
                 <script src="../../js/fechas_formato.js" type="text/javascript"></script>
+              
+                
         <style>
             .jsgrid-header-row>.jsgrid-header-cell {
                 background-color:#307ECC ;      /* orange */
