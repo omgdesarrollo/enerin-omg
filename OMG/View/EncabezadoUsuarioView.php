@@ -222,7 +222,7 @@ foreach($Alarmas as $alarma)
 			tempData2 += "<img src='../../assets/probando/images/avatars/user.jpg' class='msg-photo' alt='admin' />";
 			tempData2 += "<span class='msg-body'><span class='msg-title'><span class='blue'>"+value.mensaje+" "+value.nombre;
 			tempData2 += "</span></span>";
-			tempData2 += "<span class='msg-time'><i class='ace-icon fa fa-clock-o'></i><span>"+value.fecha_envio+"(Enviado)</span>";
+			tempData2 += "<span class='msg-time'><i class='ace-icon fa fa-clock-o'></i><span>"+getFechaFormatoH(value.fecha_envio)+"(Enviado)</span>";
 			tempData2 += "</span></span></li></a>";
 			tempData2 += "<i style='color:red;background:transparent;border:none;cursor:pointer;float:left;font-size:x-large;padding:5px'";
 			tempData2 += "onClick=\"borrarNotificacion("+value.id_notificaciones+")\" class='ace-icon fa fa-times-circle'></i>";

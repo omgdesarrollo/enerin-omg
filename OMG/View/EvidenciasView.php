@@ -325,7 +325,7 @@
         { name: "registro",title:"Registro", type: "text", width: 150, editing:false  },
         { name: "frecuencia",title:"Frecuencia", type: "text", width: 130, editing:false  },
         { name: "clave_documento",title:"Clave Documento", type: "text",  width: 150, editing:false },
-        { name: "fecha_creacion",title:"Fecha Creación", type: "text",  width: 155, editing:false },
+        { name: "fecha_creacion",title:"Fecha Evidencia", type: "text",  width: 155, editing:false },
         { name: "adjuntar_evidencia",title:"Adjuntar Evidencia", type: "text",  width: 150, editing:false },
         { name: "fecha_registro",title:"Fecha Registro", type: "text", width: 155, editing:false },
         { name: "usuario",title:"Usuario", type: "text", width:250, editing:false },
