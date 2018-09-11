@@ -371,7 +371,7 @@ function insertarDocumentoSalida(documentoSalidaDatos)
                 console.log(datos);
                 $.each(datos,function(index,value)
                 {
-                  console.log(value.archivosUpload[0].length); 
+//                  console.log(value["archivosUpload"]["0"].length); 
                    tempData = reconstruir(value,ultimoNumeroGrid+1);
                 });
 //                console.log(tempData);

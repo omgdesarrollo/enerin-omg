@@ -580,6 +580,7 @@ function listarThisEmpleadosFiltro()
 
 function reconstruir(value,index)
 {
+//    alert("");
     tempData=new Object();
     ultimoNumeroGrid = index;
     tempData["id_principal"] = [];
@@ -610,7 +611,14 @@ function reconstruir(value,index)
 //     var leng = value.archivosUpload[0].length;
 //     leng
 
-        // $.each()
+         $.each(value.archivosUpload,function(index,value){
+             console.log("entro");
+             console.log(value)
+             console.log("salio");
+//             alert("entro");
+         })
+        
+        
     if( value.archivosUpload[0].length == 0 )
          tempData["id_principal"].push({eliminar : 1});
       else
