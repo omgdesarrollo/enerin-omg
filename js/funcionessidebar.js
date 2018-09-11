@@ -12,7 +12,7 @@ function loadDataSideBarCatalogoInformacion(lista){
        if(value["nombre"]=="EmpleadosView.php"){
 //       console.log("entro ");
         if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
-            list.push({id: "empleados", text: "Empleados", icon: "empleados.jpg"});
+            list.push({id: "empleados", text: "Registros de Personal", icon: "empleados.jpg"});
         }
    }
        if(value["nombre"]=="TemasView.php"){
@@ -110,7 +110,7 @@ function loadDataSideBarOficiosCatalogos(lista){
        if(value["nombre"]=="EmpleadosView.php"){
 //       console.log("entro ");
         if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
-            listOficiosCatalogos.push({id: "empleadosoficios", text: "Empleados", icon: "empleados.jpg"});
+            listOficiosCatalogos.push({id: "empleadosoficios", text: "Registros de Personal", icon: "empleados.jpg"});
         }
    }
        if(value["nombre"]=="EntidadesReguladorasView.php"){
@@ -323,7 +323,7 @@ function loadDataSideBarOficiosDocumentacion(lista)
              
                 if(value["nombre"]=="EmpleadosTareasView.php"){
                     if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
-                        listTareas.push({id: "empleadosTareas", text: "Empleados", icon: "empleados.jpg"});
+                        listTareas.push({id: "empleadosTareas", text: "Registros de Personal", icon: "empleados.jpg"});
                     }
                 }
                 

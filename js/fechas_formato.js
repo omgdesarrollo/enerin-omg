@@ -24,7 +24,12 @@ function getFechaFormatoH(value)
                 if(value!=fecha)
                 {
                         date = new Date(value);
-                        fecha = date.getDate()+1 +" "+ months[date.getMonth()] +" "+ date.getFullYear().toString().slice(2,4);
+                        min = date.getMinutes();
+                        min = min < 10 ? "0"+min : min;
+                        seg = date.getSeconds();
+                        date.setSeconds(86400+seg);//86400 segundos son un dia
+                        seg = seg < 10 ? "0"+seg : seg;
+                        fecha = date.getDate() +" "+ months[date.getMonth()] +" "+ date.getFullYear().toString().slice(2,4) +" "+date.getHours()+":"+min+":"+seg;
                         return fecha;
                 }
                 else
@@ -36,3 +41,4 @@ function getFechaStamp(value)
     var fecha = new Date(value*1000);
     return (fecha.getDate() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear().toString().slice(2,4) +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds());
 }
+

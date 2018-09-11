@@ -15,42 +15,29 @@ $Usuario = Session::getSesion("user");
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
-		<!-- bootstrap & fontawesome -->
-                <!-- <script src="../../assets/probando/js/bootstrap.min.js"></script> -->
+                <!-- bootstrap & fontawesome -->
                 <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
                 <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 
+                <!-- ace styles -->
+                <link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+
+                <link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
+
+                <!-- CHECAR SI FUNCIONA -->
+                <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+                
+                <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+                
                 <script src="../../js/jquery.js" type="text/javascript"></script>
                 <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-                
-                <!--Para abrir alertas de aviso, success,warning, error-->
-                <!-- <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
-                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/> -->
 
-		<!-- ace styles -->
-		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-
-		<!-- [if lte IE 9]>
-			<link rel="stylesheet" href="assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
-		<![endif] -->
-
-		<!-- <link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" /> -->
-		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
-                
-                
+                <!-- <script src="../../assets/probando/js/bootstrap.min.js"></script> -->
+                <script src="../../js/fechas_formato.js" type="text/javascript"></script>
 
                 <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
                 <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
-
-                <!--Inicia para el spiner cargando-->
-                <!-- <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/> -->
-                <!--Termina para el spiner cargando-->
-                
-                <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
-                <!-- <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/> -->
-                <!-- <script src="../../js/jquery.js" type="text/javascript"></script> -->
-                             
-                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
 
                 <!-- cargar archivo -->
                 <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
@@ -2021,21 +2008,24 @@ function Habilitar_DesabilitarFechas(accion)
                 
                 
                 <!--Inicia para el spiner cargando-->
-                <!-- <script src="../../js/loaderanimation.js" type="text/javascript"></script> -->
+                <script src="../../js/loaderanimation.js" type="text/javascript"></script>
                 <!--Termina para el spiner cargando-->
                 
+                <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
+
                 <!--jquery-->
                 <!-- <script src="../../js/jquery-ui.min.js" type="text/javascript"></script> -->
 
                 <!--Bootstrap-->
                 <!--Aqui abre el modal de insertar-->
-                <script src="../../assets/probando/js/bootstrap.min.js"></script>
                 <!--Aqui cierra para abrir el modal de insertar-->
                 <!-- <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script> -->
 
                 <!--Para abrir alertas del encabezado-->
-                <!-- <script src="../../assets/probando/js/ace-elements.min.js"></script> -->
-                <!-- <script src="../../assets/probando/js/ace.min.js"></script> -->
+                <script src="../../assets/probando/js/ace-elements.min.js"></script>
+                
+                <!-- si quitan esta libreria no se veran las notificaciones -->
+                <script src="../../assets/probando/js/ace.min.js"></script>
 		<!-- <script src="../../assets/probando/js/ace-extra.min.js"></script>      -->
           
 

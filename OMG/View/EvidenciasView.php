@@ -19,6 +19,9 @@
     <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome-animation.min.css" rel="stylesheet" type="text/css"/>
     
+    <script src="../../js/jquery.js" type="text/javascript"></script>
+    <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+
     <link async href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
     
     <!-- text fonts -->
@@ -36,11 +39,14 @@
     <link async href="../../css/modal.css" rel="stylesheet" type="text/css"/>
 <!--    <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>-->
 
+    <noscript><link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
+    <noscript><link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
+    <link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
+    <link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
     
 
     <!--jquery-->
-    <script src="../../js/jquery.js" type="text/javascript"></script>
-    <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+    
     <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
     <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
@@ -55,6 +61,7 @@
     <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
 
+    <script src="../../js/fechas_formato.js" type="text/javascript"></script>
     <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
     <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
     <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
@@ -292,7 +299,7 @@
     var ws;
     var thisjGrowl;
 
-    var months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+    // var months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 
     var frecuenciaData = [
                 {frecuencia:"DIARIO"},
@@ -315,16 +322,16 @@
         { name: "no", title:"No",type: "text", width: 70, editing:false },
         { name: "tema",title:"Tema", type: "text", width: 150, editing:false },
         { name: "registro",title:"Registro", type: "text", width: 150, editing:false  },
-        { name: "frecuencia",title:"Frecuencia", type: "text", width: 120, editing:false  },
+        { name: "frecuencia",title:"Frecuencia", type: "text", width: 130, editing:false  },
         { name: "clave_documento",title:"Clave Documento", type: "text",  width: 128, editing:false },
-        { name: "fecha_creacion",title:"Fecha Creación", type: "text",  width: 155, editing:false },
-        { name: "adjuntar_evidencia",title:"Adjuntar Evidencia", type: "text",  width: 140, editing:false },
+        { name: "fecha_creacion",title:"Fecha Evidencia", type: "text",  width: 155, editing:false },
+        { name: "adjuntar_evidencia",title:"Adjuntar Evidencia", type: "text",  width: 110, editing:false },
         { name: "fecha_registro",title:"Fecha Registro", type: "text", width: 155, editing:false },
         { name: "usuario",title:"Usuario", type: "text", width:150, editing:false },
-        { name: "accion_correctiva",title:"Accion Correctiva", type: "text", width: 130, editing:false},
+        { name: "accion_correctiva",title:"Accion Correctiva", type: "text", width: 100, editing:false},
         { name: "plan_accion",title:"Plan Accion", type: "text", width: 170, editing:false },
-        { name: "desviacion",title:"Desviacion", type: "text", width: 120, editing:false},
-        {name: "validacion",title:"Validacion", type: "text", width: 200, editing:false },
+        { name: "desviacion",title:"Desviacion", type: "text", width: 100, editing:false},
+        {name: "validacion",title:"Validacion", type: "text", width: 100, editing:false },
         { name:"delete", title:"Opción", type:"customControl",sorting:""},
         // {name:"delete", title:"Opcion", type: "customControl" },
         // {name:"eliminar",title:"Opcion",visible:false}
@@ -444,10 +451,6 @@
     <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
     <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
     <script src="../../assets/FileUpload/js/main.js"></script>
-    <noscript><link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
-    <noscript><link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
-    <link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
-    <link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
 </body>
 </html>
 

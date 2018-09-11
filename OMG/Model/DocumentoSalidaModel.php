@@ -41,7 +41,7 @@ class DocumentoSalidaModel {
             }
             else
             {
-                $lista = $dao->listarDocumentoSalidaSinFolio($ID_DOCUMENTO_SALIDA);
+                $lista = $dao->mostrarDocumentosSalidaSinFolio($ID_DOCUMENTO_SALIDA);
             }
             return $lista;
         }catch(Exception $e)
@@ -69,6 +69,7 @@ class DocumentoSalidaModel {
     public function insertar($pojo,$CONTRATO)
     {
         try{
+            $rec = [];
             $dao=new DocumentoSalidaDAO();
             $lista=array();
             $contador=0;
@@ -78,41 +79,42 @@ class DocumentoSalidaModel {
             $id2 = $dao->obtenermayorDocumentoSalidaConFolio();
             if($id1<$id2)
                 $id1=$id2;
-           
+            if($id1==-1)
+                $id1=0;
             $exito= $dao->insertarDocumentosSalida($tabla,$id1+1,$pojo->getId_documento_entrada(),$pojo->getFolio_salida(),$pojo->getFecha_envio(),
             $pojo->getAsunto(),$pojo->getDestinatario(),$pojo->getObservaciones(),$CONTRATO);
 
             if($exito[0] == 1)
             {
-                $rec = $tabla == "documento_salida" ? $dao->mostrarDocumentoSalida($id1) : $dao->mostrarDocumentosSalidaSinFolio($id1);
-//                echo "valor rec: ".json_encode($rec);
-                foreach($rec as $value)
-                {
-                    $lista[$contador] = array(
-                        "id_documento_salida"=>$value["id_documento_salida"],
-                        "id_documento_entrada"=>$value["id_documento_entrada"],
-                        "documento"=>$value["documento"],
-                        "folio_entrada"=>$value["folio_entrada"],
-                        "folio_salida"=>$value["folio_salida"],
-                        "fecha_envio"=>$value["fecha_envio"],
-                        "asunto"=>$value["asunto"],
-                        "clave_autoridad"=>$value["clave_autoridad"],
-                        "destinatario"=>$value["destinatario"],
-                        "nombre_empleado"=>$value["nombre_empleado"],
-                        "apellido_paterno"=>$value["apellido_paterno"],
-                        "apellido_materno"=>$value["apellido_materno"],
-                        "documento"=>$value["documento"],
-                        "observaciones"=>$value["observaciones"]    
-                    );
-    //                $cont++;
-                    $contador++;
-                }
-                return $lista;
+                $rec = $tabla == "documento_salida" ? $dao->mostrarDocumentoSalida($id1+1) : $dao->listarDocumentoSalidaSinFolio($id1+1);
+            //    echo "valor rec: ".json_encode($rec);
+    //             foreach($rec as $value)
+    //             {
+    //                 $lista[$contador] = array(
+    //                     "id_documento_salida"=>$value["id_documento_salida"],
+    //                     "id_documento_entrada"=>$value["id_documento_entrada"],
+    //                     "documento"=>$value["documento"],
+    //                     "folio_entrada"=>$value["folio_entrada"],
+    //                     "folio_salida"=>$value["folio_salida"],
+    //                     "fecha_envio"=>$value["fecha_envio"],
+    //                     "asunto"=>$value["asunto"],
+    //                     "clave_autoridad"=>$value["clave_autoridad"],
+    //                     "destinatario"=>$value["destinatario"],
+    //                     "nombre_empleado"=>$value["nombre_empleado"],
+    //                     "apellido_paterno"=>$value["apellido_paterno"],
+    //                     "apellido_materno"=>$value["apellido_materno"],
+    //                     "documento"=>$value["documento"],
+    //                     "observaciones"=>$value["observaciones"]    
+    //                 );
+    // //                $cont++;
+    //                 $contador++;
+                // }
+                // return $lista;
             }
             else
                return $exito[0];
-
-            return $lista;
+            // echo $rec;
+            return $rec;
            
         } catch (Exception $ex) {
                 throw $ex;
@@ -189,25 +191,56 @@ class DocumentoSalidaModel {
             $lista=[];
             $contador=0;
             
-            foreach ($rec1 as $key => $value) 
+//            foreach ($rec1 as $key => $value) 
+//            {
+//                $lista[$contador]= $value;
+//                $contador++;        
+//            }
+//            echo json_encode($rec1);
+//            echo json_encode($rec2);
+
+//            foreach ($rec2 as $key1 => $value1) 
+//            {
+////                $id_empleado= $value1['id_empleado'];
+//                
+//                foreach ($rec1 as $key2 => $value2) 
+//                {
+//                    
+//                    if($value1['id_empleado'] != $value2['id_empleado'])
+//                    {
+//                        $lista[$contador]= $value1;
+//                         $contador++;
+//                    } else{
+//                        
+//                    }
+//                   
+//                }                
+//                    
+//            }
+            
+            foreach ($rec1 as $key1 => $value1) 
             {
-                $lista[$contador]= $value;
-                $contador++;        
-            }
-            echo json_encode($rec2);
-            foreach ($rec2 as $key => $value) 
-            {
-                if($rec2[0]['id_empleado']== $rec1[0]['id_empleado'])
+                $lista[$contador]= $value1;
+                $contador++;    
+                
+                foreach ($rec2 as $key2 => $value2) 
                 {
                     
-                } else{
-                    $lista[$contador]= $value;
-                $contador++;                     
+                    if($value1['id_empleado'] != $value2['id_empleado'])
+                    {
+                        $lista[$contador]= $value2;
+                        
+                    } else{
+
+                    }
+                    $contador++;
+
                 }
-                    
             }
-//            echo "valores rec1: ".json_encode($rec1);
-//            echo "valores rec2: ".json_encode($rec2);
+            
+            
+            
+            
             return $lista;
         } catch (Exception $ex) 
         {

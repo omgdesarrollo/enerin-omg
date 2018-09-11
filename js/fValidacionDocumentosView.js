@@ -16,7 +16,7 @@ function inicializarFiltros()
             { id: "validacion_documento_responsable", name:"Validación Resposable Documento", type: "none"},
             { id: "validacion_tema_responsable", name:"Validación Resposable Tema", type: "none"},
             { id: "observaciones", name:"Observaciones", type: "none"},
-            { id: "desviacion_mayor", name:"Desviación Mayor", type: "none"},
+            // { id: "desviacion_mayor", name:"Desviación Mayor", type: "none"},
             {name:"opcion",id:"opcion",type:"opcion"}
 //             construirValidacionDCombo
 // construirValidacionTCombo
