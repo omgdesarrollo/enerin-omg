@@ -110,7 +110,7 @@ function construirGrid()
         ,
         onItemUpdated:function(args)
         {
-            console.log("aqui entro");
+            // console.log("aqui entro");
             saveUpdateToDatabase(args);
         },
         onItemInserted:(args)=>
@@ -132,9 +132,9 @@ MyCControlField.prototype = new jsGrid.Field
         align: "center",
         sorter: function(date1, date2)
         {
-            console.log("haber cuando entra aqui");
-            console.log(date1);
-            console.log(date2);
+            // console.log("haber cuando entra aqui");
+            // console.log(date1);
+            // console.log(date2);
             // return 1;
         },
         itemTemplate: function(value,todo)
@@ -156,7 +156,7 @@ MyCControlField.prototype = new jsGrid.Field
         editTemplate: function(value)
         {
             var val = "";
-            console.log(value);
+            // console.log(value);
             if(value[2]["editar"]==1)
             {
                 val = "<input class='jsgrid-button jsgrid-update-button' type='button' title='Actualizar' onClick='aceptarEdicion()'>";

@@ -368,7 +368,7 @@ function insertarDocumentoSalida(documentoSalidaDatos)
                 growlSuccess("Crear Documento Salida","Registro Creado");
                 tempData = new Object();
 //                 swalSuccess("Documento Creado");
-                console.log(datos);
+                // console.log(datos);
                 $.each(datos,function(index,val)
                 {
                 //   console.log(val.archivosUpload[0].length); 
@@ -383,12 +383,12 @@ function insertarDocumentoSalida(documentoSalidaDatos)
                 // ulti
                 // gridInstance.loadData();
                 
+                // DataGrid.push(tempData);
                 $("#jsGrid").jsGrid("insertItem",tempData).done(function()
                 {
+                    dataListado.push(datos[0]);
                     $("#crea_documentoSalida .close ").click();
                 });
-                dataListado.push(datos[0]);
-                DataGrid.push(tempData);
                 componerDataGrid();
             }
             else
