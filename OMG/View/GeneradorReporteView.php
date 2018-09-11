@@ -507,14 +507,7 @@ function obtenerDatosReporte()
                 });
               DataGrid=__datos;
               gridInstance.loadData();
-              
-              $.each(r,function (index,value)
-                {
-                    __datosExcel.push(reconstruirExcel(value,index++));
-                });
-                
-              DataGridExcel=__datosExcel;
-//              gridInstanceExcel.loadData();
+
             },
             error:function()
             {
@@ -545,8 +538,10 @@ function obtenerRegionesFiscales(){
 }
 
 
-function listaDeTodosLosDiarios(){
-    var lista=[],__datos=[],__datosMolares=[];
+function listaDeTodosLosDiarios()
+{   
+//    alert("Entro a listaDeTodosLosDiarios");
+    var lista=[],__datos=[],__datosMolares=[],__datosExcel=[];
              $.ajax({
                  url:'../Controller/GeneradorReporteController.php?Op=ListByMonthAndYear',
                  type:'POST',
@@ -554,17 +549,21 @@ function listaDeTodosLosDiarios(){
                  success:function(r)
                  {
 //                    data1=r;
-                   $.each(r,function (index,value)
-                     {
-                         __datos.push( reconstruir(value,index++) );
-                         
-                     });
-//                    DataGrid=[];
-                   DataGrid=__datos;
-                   
+                    $.each(r,function (index,value)
+                      {
+                          __datos.push( reconstruir(value,index++) );
+
+                      });
+ //                    DataGrid=[];
+                    DataGrid=__datos 
                     gridInstance.loadData();
-                	
-                    
+                                
+                    $.each(r,function (index,value)
+                      {
+                          __datosExcel.push(reconstruirExcel(value,index++));
+                      });
+
+                    DataGridExcel=__datosExcel;       	                    
                  },
                  error:function()
                  {
@@ -594,7 +593,7 @@ function listaDeTodosLosDiarios(){
 //             }); 
 }
 function calculoDeTodosLosDiarioMensualConAnual(){
-       var lista=[],__datos=[];
+       var lista=[],__datos=[],__datosExcel=[];
                $.ajax({
                    url:'../Controller/GeneradorReporteController.php?Op=ListByMonthAndYearCalculo',
                    type:'POST',
@@ -602,13 +601,19 @@ function calculoDeTodosLosDiarioMensualConAnual(){
                    success:function(r)
                    {
 //                      data1=r;
-                     $.each(r,function (index,value)
-                       {
-                           __datos.push( reconstruir(value,index++) );
-                       });
-                     DataGrid=[];
-                     DataGrid=__datos;
-                     gridInstance.loadData();
+                        $.each(r,function (index,value)
+                          {
+                              __datos.push( reconstruir(value,index++) );
+                          });
+//                        DataGrid=[];
+                        DataGrid=__datos;
+                        gridInstance.loadData();
+                        
+                        $.each(r,function (index,value)
+                        {
+                            __datosExcel.push(reconstruirExcel(value,index++));
+                        });
+                        DataGridExcel=__datosExcel;
                    },
                    error:function()
                    {
