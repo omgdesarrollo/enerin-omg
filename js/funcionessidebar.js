@@ -247,6 +247,7 @@ function loadDataSideBarOficiosDocumentacion(lista)
     }           
     
     function loadDataSideBarCumplimientosEvidencias()
+    
     {
         $("#sidebarObjV").load('InyectarVistasView.php #seguimientoevidencias');
     }

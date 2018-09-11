@@ -21,6 +21,19 @@ switch ($Op) {
             echo json_encode(array("data"=>$Lista));
             break;
             
+            
+         case 'ListarTodasLasTareasDetallesPorSuId':
+            $Lista= $modelGantt->listarRegistrosGanttTareas(Session::getSesion("dataGantt_id_tarea"));
+          if(Gantt_TareasModel::verificarSiExisteIDTareaEnGanttTareas(array("id_tarea"=>Session::getSesion("dataGantt_id_tarea")))=="true"){
+              Gantt_TareasModel::actualizarExisteProgramaTareas(array("existeprograma"=>1,"id_tarea"=>Session::getSesion("dataGantt_id_tarea")));
+          }else{
+               Gantt_TareasModel::actualizarExisteProgramaTareas(array("existeprograma"=>0,"id_tarea"=>Session::getSesion("dataGantt_id_tarea")));
+          }      
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode(array("data"=>$Lista));
+            break;
+            
+            
         case 'empleadosNombreCompleto':
             
 	$Lista=$modelGantt->listarEmpleadosNombreCompleto("");

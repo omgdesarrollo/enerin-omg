@@ -185,8 +185,9 @@ $Usuario=  Session::getSesion("user");
  </div> 
 <button id='btnAgregarMolarAlMes' class="btn btn-info btn-xs" data-toggle="modal" data-target="#createitemMolares">% Molares</button>
 <button id='btnRegionFiscal' class="btn btn-info btn-xs" data-toggle="modal" data-target="#buq">% Molares</button>-->
-<button id='toExcel' >
-     <img src="../../images/base/_excel.png" width="35px" height="auto"></button>
+<button id='toExcel'>
+     <img src="../../images/base/_excel.png" width="35px" height="auto">
+</button>
 </div>
 <!--</div>-->
 <!--<div class="col-md-12 ">-->
@@ -242,6 +243,7 @@ $(function()
     construirGridGenerador();
     obtenerRegionesFiscales();
     construirGridGeneradorMolares();
+//    construirGridGeneradorExcel();
 //     gridInstanceMolares.loadData();
 $("#btnOpcionesIzquierdaMensual").click(function (){
    
@@ -487,8 +489,9 @@ $("#ocultarFormulario").click(function (){
      fechas_inicio_final["fecha_inicio"]=$("#fechaInicio").val();
      fechas_inicio_final["fecha_final"]=$("#fechaFinal").val();
 })  
-function obtenerDatosReporte(){
-// 	alert();
+function obtenerDatosReporte()
+{
+    console.log("Entro a obtenerDatosReporte");
     var lista=[],__datos=[];
         $.ajax({
             url:'../Controller/GeneradorReporteController.php?Op=GenerarReporteTodosLosDiarios',
@@ -496,14 +499,22 @@ function obtenerDatosReporte(){
             data:'FECHA_INICIO='+fechas_inicio_final["fecha_inicio"]+"&FECHA_FINAL="+fechas_inicio_final["fecha_final"],
             success:function(r)
             {
+                console.log("Entro aqui");
               data1=r; 
               $.each(r,function (index,value)
                 {
                     __datos.push( reconstruir(value,index++) );
-//                    __datosExcel.push(reconstruirExcel(value,index++));
                 });
               DataGrid=__datos;
               gridInstance.loadData();
+              
+              $.each(r,function (index,value)
+                {
+                    __datosExcel.push(reconstruirExcel(value,index++));
+                });
+                
+              DataGridExcel=__datosExcel;
+//              gridInstanceExcel.loadData();
             },
             error:function()
             {
@@ -642,22 +653,19 @@ function mostrarMolaresMensual(){
     
 	var $btnDLtoExcel = $('#toExcel'); 
                 $btnDLtoExcel.on('click', function () {
-//                     alert("le ");
+                     console.log("Entro al excelexportHibrido");
 //                     if(bandera==true){
                         $("#listjson").excelexportHibrido({
                                     containerid: "listjson"
                                        , datatype: 'json'
-                                       , dataset: DataGrid
-                                       , columns: getColumns(DataGrid)     
+                                       , dataset: DataGridExcel
+                                       , columns: getColumns(DataGridExcel)
+//                                       , dataset: DataGrid
+//                                       , columns: getColumns(DataGrid)
                                 });
 //                     }
     });    
-
-
-
-
-
-                
+               
 </script>
 <!--<script type="text/javascript">
 

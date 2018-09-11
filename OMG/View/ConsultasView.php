@@ -205,17 +205,17 @@ $Usuario=  Session::getSesion("user");
     
     estructuraGrid = [
         { name: "id_principal",visible:false},
-        { name: "no_tema",title:"No. Tema", type: "text", width: 70,editing:false},
+        { name: "no_tema",title:"No. Tema", type: "text", width: 120,editing:false},
         { name: "nombre_tema",title:"Nombre Tema", type: "text", width: 150,editing:false},
         { name: "id_responsable", visible:false},
-        { name: "responsable_tema",title:"Responsable del Tema", type: "text", width: 150,editing:false},
-        { name: "cumplimiento_tema",title:"% Cumplimiento Tema", type: "porcentaje", width: 100,editing:false},
-        { name: "estado_tema",title:"Estado del Tema", type: "text", width: 100,editing:false},
+        { name: "responsable_tema",title:"Responsable del Tema", type: "text", width: 250,editing:false},
+        { name: "cumplimiento_tema",title:"% Cumplimiento Tema", type: "porcentaje", width: 200,editing:false},
+        { name: "estado_tema",title:"Estado del Tema", type: "text", width: 200,editing:false},
         { name: "id_requisito",visible:false},
         { name: "requisito",title:"Requisito", type: "text", width: 140,editing:false},
         { name: "penalizacion",title:"Penalizacion", type: "text", width: 110,editing:false},
-        { name: "cumplimiento_requisito",title:"% Cumplimiento Requisito", type: "porcentaje", width: 100,editing:false},
-        { name: "estado_requisito",title:"Estado Requisito", type: "text", width: 100,editing:false},
+        { name: "cumplimiento_requisito",title:"% Cumplimiento Requisito", type: "porcentaje", width: 220,editing:false},
+        { name: "estado_requisito",title:"Estado Requisito", type: "text", width: 150,editing:false},
         // { name:"delete", title:"Opción", type:"customControl",sorting:""},
         { title:"Opción", type:"",sorting:""},
         

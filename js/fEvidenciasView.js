@@ -910,8 +910,8 @@ function reconstruir(value,index)//listo jsgrid
         tempData["fecha_creacion"] = getSinFechaFormato(value.fecha_creacion);
         
         tempData["adjuntar_evidencia"] = "<button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
-        tempData["adjuntar_evidencia"] += " type='button' class='botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
-        tempData["adjuntar_evidencia"] += "<i class='fa fa-cloud-upload' style='font-size: 22px'></i></button>";
+        tempData["adjuntar_evidencia"] += " type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
+        tempData["adjuntar_evidencia"] += "<i class='fa fa-cloud-upload' style='font-size: 22px'></i> Adjuntar</button>";
         $.each(value.archivosUpload[0],function(index2,value2)
         {
             tempArchivo="a";
