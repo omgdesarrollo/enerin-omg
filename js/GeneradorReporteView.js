@@ -1,4 +1,4 @@
-  var gridInstance,gridInstanceMolares,gridInstanceExcel;
+  var gridInstance,gridInstanceMolares;
 $(function (){
 	
 });
@@ -15,14 +15,12 @@ function listarDatos()//listarDatos
         $.each(data,function (index,value)
         {
             __datos.push( reconstruir(value,index++) );
-//            __datos.push( reconstruirExcel(value,index++) );
         });   
     }
     
     var listfunciones=[variablefunciondatos];
     ajaxHibrido(datosParamAjaxValues,listfunciones);
     DataGrid = __datos;
-//    DataGridExcel = __datos;
 //    return 1;
 }
 
@@ -34,7 +32,6 @@ function construirGridGenerador()
             loadData: function()
             {
                 return DataGrid;
-//                return DataGridExcel;
             },
         };
     
@@ -134,81 +131,6 @@ function reconstruir(value,index)
 //    tempData["omgc18"] = value.omgc18;
     tempData["delete"] = "1";
     return tempData;
-}
-
-
-function construirGridGeneradorExcel()
-{
-//    jsGrid.fields.customControl = MyCControlField;
-        db=
-        {
-            loadData: function()
-            {
-                return DataGridExcel;
-            },
-        };
-    
-    $("#jsGrid").jsGrid({
-         onInit: function(args)
-         {
-             gridInstanceExcel=args.grid;
-             jsGrid.Grid.prototype.autoload=true;
-         },
-        onDataLoading: function(args)
-        {
-//            loadBlockUi();
-               
-        },
-        onDataLoaded:function(args)
-        {
-//            $('.jsgrid-filter-row').removeAttr("style",'display:none');
-        },
-        width: "100%",
-        height: "300px",
-        autoload:true,
-        heading: true,
-        sorting: true,
-//        sorter:true,
-        paging: true,
-        controller:db,
-        pageLoading:false,
-        pageSize: 10,
-        pageButtonCount: 5,
-        updateOnResize: true,
-        confirmDeleting: true,
-        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
-        fields: [
-                { name:"id_principal", visible:false},
-                { name:"clave_contrato", title: "ID del Contrato o Asignación", type: "text", width: 150, validate: "required" },
-                { name:"region_fiscal", title: "Región Fiscal", type: "text", width: 150, validate: "required" },
-                { name:"ubicacion", title: "Ubicación del Punto de Medición", type: "text", width: 150, validate: "required" },
-                { name:"tag_patin", title: "Tag del Patín de Medición", type: "text", width: 130, validate: "required" },
-                { name:"tipo_medidor", title: "Tipo de Medidor", type: "text", width: 150, validate: "required" },    
-                { name:"tag_medidor", title: "Tag del Medidor", type: "text", width: 130, validate: "required" },
-                { name:"clasificacion", title: "Clasificación del Sistema de Medición", type: "text", width: 150, validate: "required" },
-                { name:"hidrocarburo", title: "Tipo de Hidrocarburo", type: "text", width: 150, validate: "required" },
-                { name:"omgc1", title: "Fecha [dd/mm/aaaa]", type: "text", width: 150, validate: "required" },
-                { name:"omgc2", title: "Presion[kg/cm2]", type: "text", width: 150, validate: "required" },
-                { name:"omgc3", title: "Temperatura[°C]", type: "text", width: 150, validate: "required" },
-                { name:"omgc4", title: "Producción de petróleo medido neto [bls]", type: "text", width: 150, validate: "required" },
-                { name:"omgc5", title: "°API", type: "text", width: 150, validate: "required"},
-                { name:"omgc6", title: "%S", type: "text", width: 150, validate: "required"},
-                { name:"omgc7", title: "Sal[Lb/Mbls]", type: "text", width: 150, validate: "required" },
-                { name:"omgc8", title: "%H2O", type: "text", width: 150, validate: "required" },
-                { name:"omgc9", title: "Produccion de condensado Medido Neto", type: "text", width: 190, validate: "required" },
-                { name:"omgc10", title: "°API", type: "text", width: 170, validate: "required" },
-                { name:"omgc11", title: "%S", type: "text", width: 170, validate: "required" },
-                { name:"omgc12", title: "%H2O", type: "text", width: 180, validate: "required" },
-                { name:"omgc13", title: "Producción de gas medido [MMPC]", type: "text", width: 180, validate: "required" },
-                { name:"omgc14", title: "Poder Calorífico de Gas [BTU/PC]", type: "text", width: 180, validate: "required" },
-                { name:"omgc15", title: "Peso Molecular de Gas [Lb/mol]", type: "text", width: 150, validate: "required" },
-                { name:"omgc16", title: "Energía de Gas [MMBTU]", type: "text", width: 150, validate: "required" },
-                { name:"omgc17", title: "Eventos", type: "text", width: 150, validate: "required" }
-//                { name:"omgc18", title: "Fecha Real Reporte", type: "text", width: 190, validate: "required" }               
-//                { name:"delete", title:"Opción", type:"customControl" }
-        ]
-    
-    });
 }
 
 
