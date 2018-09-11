@@ -19,6 +19,9 @@
     <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome-animation.min.css" rel="stylesheet" type="text/css"/>
     
+    <script src="../../js/jquery.js" type="text/javascript"></script>
+    <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+
     <link async href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
     
     <!-- text fonts -->
@@ -36,11 +39,14 @@
     <link async href="../../css/modal.css" rel="stylesheet" type="text/css"/>
 <!--    <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>-->
 
+    <noscript><link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
+    <noscript><link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
+    <link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
+    <link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
     
 
     <!--jquery-->
-    <script src="../../js/jquery.js" type="text/javascript"></script>
-    <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+    
     <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
     <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
@@ -445,10 +451,6 @@
     <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
     <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
     <script src="../../assets/FileUpload/js/main.js"></script>
-    <noscript><link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
-    <noscript><link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
-    <link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
-    <link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
 </body>
 </html>
 

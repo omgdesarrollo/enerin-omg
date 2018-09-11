@@ -15,6 +15,7 @@ function construirGrid()
         loadData: function()
         {
             // $(".jsgrid-grid-body").attr("style","height:50%");
+            // alert("4");
             if(DataGrid.length == 0)
                 $(".jsgrid-grid-header").css("overflow-x","auto");
             else
@@ -23,6 +24,7 @@ function construirGrid()
         },
         updateItem:function()
         {
+            alert("5");
             // console.log(a);
         }
     };
@@ -30,7 +32,7 @@ function construirGrid()
     $("#jsGrid").jsGrid({
         onInit: (args)=>
         {
-            // alert(args);
+            // alert("1");
             gridInstance=args.grid;
             jsGrid.Grid.prototype.editButton=true;
             jsGrid.Grid.prototype.autoload=true;
@@ -38,10 +40,12 @@ function construirGrid()
         },
         onDataLoading: (args)=>
         {
+            // alert("2");
             // loadBlockUi();
         },
         onDataLoaded:(args)=>
         {
+            // alert("3");
             $('.jsgrid-filter-row').removeAttr("style",'display:none');
             $(".jsgrid-grid-body").attr("style","height:53.44228935%");
             // $(".jsgrid-grid-header").attr("style","overflow-x:auto");
@@ -109,6 +113,11 @@ function construirGrid()
             console.log("aqui entro");
             saveUpdateToDatabase(args);
         },
+        onItemInserted:(args)=>
+        {
+            $(".jsgrid-grid-header").css("overflow-x","hidden");
+            // console.log(args);
+        }
     });
 }
 

@@ -580,6 +580,8 @@ function listarThisEmpleadosFiltro()
 
 function reconstruir(value,index)
 {
+        if(typeof(value)!="object")
+                value = JSON.parse(value);
     tempData=new Object();
     ultimoNumeroGrid = index;
     tempData["id_principal"] = [];
@@ -609,12 +611,15 @@ function reconstruir(value,index)
 //     }
 //     var leng = value.archivosUpload[0].length;
 //     leng
-
-        // $.each()
-    if( value.archivosUpload[0].length == 0 )
-         tempData["id_principal"].push({eliminar : 1});
-      else
-           tempData["id_principal"].push({eliminar : 0});
+        console.log(value);
+        $.each(value.archivosUpload,(ind,value)=>{
+                console.log(value);
+        });
+        
+        if( value.archivosUpload[0].length == 0 )
+                tempData["id_principal"].push({eliminar : 1});
+        else
+                tempData["id_principal"].push({eliminar : 0});
 //    tempData["delete"]= [{"existe_archivo":value.archivosUpload[0].length}];
     tempData["id_principal"].push({editar : 1});
     tempData["delete"]= tempData["id_principal"] ;
@@ -689,7 +694,7 @@ function preguntarEliminar(data)
                                         value.id_documento_salida != id ? dataListadoTemp.push(value) : (dataItem.push(value), numeroEliminar=index+1);
                                 });
                                 // console.log(dataListadoTemp);
-                                itemEliminar = reconstruir(dataItem[0],numeroEliminar);
+                                // itemEliminar = reconstruir(dataItem[0],numeroEliminar);este esra para el eliminar directo en grid
                                 DataGrid = [];
                                 dataListado = dataListadoTemp;
                                 if(dataListado.length == 0 )
