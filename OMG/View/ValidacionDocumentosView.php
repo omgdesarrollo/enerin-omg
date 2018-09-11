@@ -327,7 +327,7 @@ if(isset($_REQUEST["accion"]))
         { name: "registrosBTN", title:"Registros", type: "text", width: 92, editing:false},
         { name: "validacion_documento_responsable", title:"Validación Resposable Documento", type: "FValidacionDocumento", width: 100, editing:false},
         { name: "validacion_tema_responsable", title:"Validación Resposable Tema", type: "FValidacionTema", width: 100, editing:false},
-        { name: "observaciones", title:"Observaciones", type: "text", width: 112, editing:false},
+        { name: "observaciones", title:"Observación", type: "text", width: 100, editing:false},
         // { name: "desviacion_mayor", title:"Desviación Mayor", type: "text", width: 90, editing:false},
 
         { name:"delete", title:"Opción", type:"customControl",sorting:""},
@@ -648,7 +648,7 @@ if(isset($_REQUEST["accion"]))
             tempData+="float:left;border-radius: 0px 20px 20px 0px;background: #dfdfdf;padding-right:15px'>";
             tempData+= "<h5 style='float:left;margin:2px'>"+value.nombre;
             tempData+= " : "+value.msj+"</h5><br>";
-            tempData+= "<h6 style='color:;margin:2px'>"+value.fecha+"</h6>";
+            tempData+= "<h6 style='color:;margin:2px'>"+getFechaFormatoH(value.fecha)+"</h6>";
         }
         // console.log(new Date(value.fecha));
         // console.log(value);

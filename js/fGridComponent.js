@@ -15,6 +15,7 @@ function construirGrid()
         loadData: function()
         {
             // $(".jsgrid-grid-body").attr("style","height:50%");
+            // alert("4");
             if(DataGrid.length == 0)
                 $(".jsgrid-grid-header").css("overflow-x","auto");
             else
@@ -23,6 +24,7 @@ function construirGrid()
         },
         updateItem:function()
         {
+            alert("5");
             // console.log(a);
         }
     };
@@ -30,7 +32,7 @@ function construirGrid()
     $("#jsGrid").jsGrid({
         onInit: (args)=>
         {
-            // alert(args);
+            // alert("1");
             gridInstance=args.grid;
             jsGrid.Grid.prototype.editButton=true;
             jsGrid.Grid.prototype.autoload=true;
@@ -38,10 +40,12 @@ function construirGrid()
         },
         onDataLoading: (args)=>
         {
+            // alert("2");
             // loadBlockUi();
         },
         onDataLoaded:(args)=>
         {
+            // alert("3");
             $('.jsgrid-filter-row').removeAttr("style",'display:none');
             $(".jsgrid-grid-body").attr("style","height:53.44228935%");
             // $(".jsgrid-grid-header").attr("style","overflow-x:auto");
@@ -106,9 +110,14 @@ function construirGrid()
         ,
         onItemUpdated:function(args)
         {
-            console.log("aqui entro");
+            // console.log("aqui entro");
             saveUpdateToDatabase(args);
         },
+        onItemInserted:(args)=>
+        {
+            $(".jsgrid-grid-header").css("overflow-x","hidden");
+            // console.log(args);
+        }
     });
 }
 
@@ -123,9 +132,9 @@ MyCControlField.prototype = new jsGrid.Field
         align: "center",
         sorter: function(date1, date2)
         {
-            console.log("haber cuando entra aqui");
-            console.log(date1);
-            console.log(date2);
+            // console.log("haber cuando entra aqui");
+            // console.log(date1);
+            // console.log(date2);
             // return 1;
         },
         itemTemplate: function(value,todo)
@@ -147,7 +156,7 @@ MyCControlField.prototype = new jsGrid.Field
         editTemplate: function(value)
         {
             var val = "";
-            console.log(value);
+            // console.log(value);
             if(value[2]["editar"]==1)
             {
                 val = "<input class='jsgrid-button jsgrid-update-button' type='button' title='Actualizar' onClick='aceptarEdicion()'>";

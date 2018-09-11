@@ -349,10 +349,11 @@ function listarFoliosDeEntrada()
 function insertarDocumentoSalida(documentoSalidaDatos)
 {
 //    alert("Entro a la funcion guardar");
+        URL = "filesDocumento/Salida/";
         $.ajax({
         url:"../Controller/DocumentosSalidaController.php?Op=Guardar",
         type:"POST",
-        data:"documentoSalidaDatos="+JSON.stringify(documentoSalidaDatos),
+        data:"documentoSalidaDatos="+JSON.stringify(documentoSalidaDatos)+"&URL="+URL,
         // async:false,
         beforeSend:()=>
         {
@@ -365,27 +366,21 @@ function insertarDocumentoSalida(documentoSalidaDatos)
             if(typeof(datos) == "object")
             {
                 growlSuccess("Crear Documento Salida","Registro Creado");
-//                 tempData;
-//                 swalSuccess("Documento Creado");                
-//                 $.each(datos,function(index,value)
-//                 {
-// //                   console.log("Este es el value: "+value); 
-//                    tempData= reconstruir(value,ultimoNumeroGrid+1);  
-//                 });
-//                console.log(tempData);
-
-                // $.each(datos,function(index,value)
-                // {
-                //     componerDataListado(value);
-                // });
-                dataListado.push(datos);
-                componerDataGrid();
-                // gridInstance.loadData();
+                tempData = new Object();
+//                 swalSuccess("Documento Creado");
+                // console.log(datos);
+                $.each(datos,function(index,val)
+                {
+                //   console.log(val.archivosUpload[0].length); 
+                   tempData = reconstruir(val,ultimoNumeroGrid+1);
+                });
                 
                 $("#jsGrid").jsGrid("insertItem",tempData).done(function()
                 {
+                    dataListado.push(datos[0]);
                     $("#crea_documentoSalida .close ").click();
                 });
+                componerDataGrid();
             }
             else
             {
@@ -502,7 +497,6 @@ months = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic
   
     function borrarArchivo(url)
     {
-        
             swal({
                 title: "ELIMINAR",
                 text: "Confirme para eliminar el documento de salida",

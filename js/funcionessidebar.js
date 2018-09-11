@@ -247,6 +247,7 @@ function loadDataSideBarOficiosDocumentacion(lista)
     }           
     
     function loadDataSideBarCumplimientosEvidencias()
+    
     {
         $("#sidebarObjV").load('InyectarVistasView.php #seguimientoevidencias');
     }
@@ -323,13 +324,13 @@ function loadDataSideBarOficiosDocumentacion(lista)
              
                 if(value["nombre"]=="EmpleadosTareasView.php"){
                     if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
-                        listTareas.push({id: "empleadosTareas", text: "Registro de Personal", icon: "empleados.jpg"});
+                        listTareas.push({id: "empleadosTareas", text: "Registros de Personal", icon: "empleados.jpg"});
                     }
                 }
                 
                  if(value["nombre"]=="TareasView.php"){
                     if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
-                        listTareas.push({id: "tareas", text: "Registro de Pendientes", icon: "registrarTareas.png"});
+                        listTareas.push({id: "tareas", text: "Registrar Tareas", icon: "registrarTareas.png"});
                     }
                 }
                 

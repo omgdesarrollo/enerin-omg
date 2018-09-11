@@ -82,6 +82,7 @@ function inicializarFiltros()
             {id:"archivo_adjunto",type:"text"},
             {id:"registrar_programa",type:"text"},
             {id:"avance_programa",type:"text"},
+            {id:"noneDos",type:"none"},
             {name:"opcion",id:"opcion",type:"opcion"}
          ];    
 }
@@ -157,7 +158,7 @@ function construirGrid()
             { name: "observaciones",title:"Observaciones", type: "textarea", validate: "required", width:150,},
             { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:150,editing:false },
             { name: "registrar_programa",title:"Registrar Programa", type: "text", validate: "required",width:160, editing:false },
-            { name: "avance_programa",title:"Avance Programa", type: "text", validate: "required",width:150, editing:false },
+            { name: "avance_programa",title:"Avance Programa", type: "text", validate: "required",width:150, editing:false },      
             { name:"delete", title:"Opción", type:"customControl",sorting:""}
         ],
         onItemUpdated: function(args)

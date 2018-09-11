@@ -248,9 +248,9 @@ MyComboAutoridad.prototype = new jsGrid.Field
         align: "center",
         sorter: function(date1, date2)
         {
-                console.log("haber cuando entra aqui");
-                console.log(date1);
-                console.log(date2);
+                // console.log("haber cuando entra aqui");
+                // console.log(date1);
+                // console.log(date2);
         },
         itemTemplate: function(value)
         {
@@ -313,9 +313,9 @@ MyComboEmpleados.prototype = new jsGrid.Field
         align: "center",
         sorter: function(date1, date2)
         {
-                console.log("haber cuando entra aqui");
-                console.log(date1);
-                console.log(date2);
+                // console.log("haber cuando entra aqui");
+                // console.log(date1);
+                // console.log(date2);
         },
         itemTemplate: function(value)
         {
@@ -553,7 +553,7 @@ function listarThisEmpleadosFiltro()
                                 {
                                         __datos.push( reconstruir(value,index+1) );
                                 });
-                                console.log(__datos);
+                                // console.log(__datos);
                                 DataGrid = __datos;
                                 gridInstance.loadData();
                                 resolve();
@@ -566,7 +566,7 @@ function listarThisEmpleadosFiltro()
                 },
                 error:function(e)
                 {
-                        console.log(e);
+                        // console.log(e);
                         growlError("Error","Error en el servidor");
                         reject();
                 }
@@ -580,6 +580,8 @@ function listarThisEmpleadosFiltro()
 
 function reconstruir(value,index)
 {
+        // if(typeof(value)!="object")
+        //         value = JSON.parse(value);
     tempData=new Object();
     ultimoNumeroGrid = index;
     tempData["id_principal"] = [];
@@ -602,11 +604,22 @@ function reconstruir(value,index)
     tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
     tempData["observaciones"]=value.observaciones;
     
-    
-    if(value.archivosUpload[0].length==0)
-         tempData["id_principal"].push({eliminar : 1});
-      else
-           tempData["id_principal"].push({eliminar : 0});
+//     if( value.archivosUpload[1].length != 0 )
+//     {
+//         console.log(value.archivosUpload[1]);
+//         leng = 0;
+//     }
+//     var leng = value.archivosUpload[0].length;
+//     leng
+        // console.log(value);
+        // $.each(value.archivosUpload,(ind,value)=>{
+        //         console.log(value);
+        // });
+        
+        if( value.archivosUpload[0].length == 0 )
+                tempData["id_principal"].push({eliminar : 1});
+        else
+                tempData["id_principal"].push({eliminar : 0});
 //    tempData["delete"]= [{"existe_archivo":value.archivosUpload[0].length}];
     tempData["id_principal"].push({editar : 1});
     tempData["delete"]= tempData["id_principal"] ;
@@ -638,7 +651,7 @@ function componerDataGrid()//listo
 
 function preguntarEliminar(data)
 {
-    console.log("jajaja",data);
+//     console.log("jajaja",data);
     swal({
         title: "",
         text: "¿Eliminar Documento Entrada?",
@@ -681,13 +694,16 @@ function preguntarEliminar(data)
                                         value.id_documento_salida != id ? dataListadoTemp.push(value) : (dataItem.push(value), numeroEliminar=index+1);
                                 });
                                 // console.log(dataListadoTemp);
-                                itemEliminar = reconstruir(dataItem[0],numeroEliminar);
+                                // itemEliminar = reconstruir(dataItem[0],numeroEliminar);este esra para el eliminar directo en grid
                                 DataGrid = [];
                                 dataListado = dataListadoTemp;
+                                if(dataListado.length == 0 )
+                                        ultimoNumeroGrid=0;
                                 $.each(dataListado,function(index,value)
                                 {
                                         DataGrid.push( reconstruir(value,index+1) );
                                 });
+
                                 gridInstance.loadData();
                                 growlSuccess("Eliminación","Registro Eliminado");
                         }
@@ -737,7 +753,7 @@ function preguntarEliminar(data)
 
 function saveUpdateToDatabase(args)//listo
 {
-        console.log(args);
+        // console.log(args);
         columnas=new Object();
         entro=0;
         id_afectado = args['item']['id_principal'][0];
@@ -919,13 +935,13 @@ function saveUpdateToDatabase(args)//listo
     <!--Termina para el spiner cargando-->
     
     <!--Bootstrap-->
-    <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
     <!--Para abrir alertas de aviso, success,warning, error-->       
     <!--<script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>-->
     
     <!--Para abrir alertas del encabezado-->
-<!--    <script src="../../assets/probando/js/ace-elements.min.js"></script>
-    <script src="../../assets/probando/js/ace.min.js"></script>-->
+        <script src="../../assets/probando/js/ace-elements.min.js"></script>
+        <script src="../../assets/probando/js/ace.min.js"></script>
     
         <!-- js cargar archivo -->
 <!--        <script src="../../assets/FileUpload/js/jquery.min.js"></script>

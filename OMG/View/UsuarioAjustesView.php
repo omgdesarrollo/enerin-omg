@@ -34,7 +34,7 @@ require_once '../util/Session.php';
 		<!-- <div class="ContentForm"> -->
         <div class="form-group">
 		 	<!-- <form id="loginform"  method="post" name="FormEntrar"> -->
-            <label class="control-label">Contraña Actual: </label>
+            <label class="control-label">Contraseña Actual: </label>
             <div class="input-group input-group-lg">
                 <span class="input-group-addon" id=""><i class="glyphicon glyphicon-lock"></i></span>
                 <input onBlur="verificarPass(this)" id="contraActual" type="password" class="form-control" placeholder="******" required>
