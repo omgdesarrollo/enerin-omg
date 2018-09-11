@@ -374,16 +374,7 @@ function insertarDocumentoSalida(documentoSalidaDatos)
                 //   console.log(val.archivosUpload[0].length); 
                    tempData = reconstruir(val,ultimoNumeroGrid+1);
                 });
-//                console.log(tempData);
-
-                // $.each(datos,function(index,value)
-                // {
-                //     componerDataListado(value);
-                // });
-                // ulti
-                // gridInstance.loadData();
                 
-                // DataGrid.push(tempData);
                 $("#jsGrid").jsGrid("insertItem",tempData).done(function()
                 {
                     dataListado.push(datos[0]);
