@@ -866,7 +866,7 @@ var datosTreeList=[];
             {
                 dataField: "text",
                 caption: "Nombre de la Actividad",
-                validationRules: [{ type: "required" }]
+                 allowEditing:false
             },
             
             { 
