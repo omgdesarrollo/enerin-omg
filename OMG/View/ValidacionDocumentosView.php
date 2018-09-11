@@ -317,17 +317,17 @@ if(isset($_REQUEST["accion"]))
 
     estructuraGrid = [
         { name:"id_principal", visible:false},
-        { name:"no", title:"No",width:60},
-        { name: "clave_documento", title:"Clave Documento", type: "text", width: 100,editing:false},
+        { name:"no", title:"No",width:40},
+        { name: "clave_documento", title:"Clave Documento", type: "text", width: 150,editing:false},
         { name: "documento", title:"Documento", type: "text", width: 130,editing:false},
-        { name: "responsable_documento", title:"Responsable Documento", type: "text", width: 130,editing:false},
+        { name: "responsable_documento", title:"Responsable Documento", type: "text", width: 250,editing:false},
         { name: "tema_responsableBTN", title:"Temas y Resposables", type: "text", width: 100, editing:false},
-        { name: "mostrar_urlsBTN", title:"Archivo Adjunto", type: "text", width: 127, editing:false},
+        { name: "mostrar_urlsBTN", title:"Archivo Adjunto", type: "text", width: 150, editing:false},
         { name: "requisitosBTN", title:"Requisitos", type: "text", width: 92, editing:false},
         { name: "registrosBTN", title:"Registros", type: "text", width: 92, editing:false},
         { name: "validacion_documento_responsable", title:"Validación Resposable Documento", type: "FValidacionDocumento", width: 100, editing:false},
         { name: "validacion_tema_responsable", title:"Validación Resposable Tema", type: "FValidacionTema", width: 100, editing:false},
-        { name: "observaciones", title:"Observaciones", type: "text", width: 112, editing:false},
+        { name: "observaciones", title:"Observación", type: "text", width: 100, editing:false},
         // { name: "desviacion_mayor", title:"Desviación Mayor", type: "text", width: 90, editing:false},
 
         { name:"delete", title:"Opción", type:"customControl",sorting:""},

@@ -19,6 +19,9 @@
     <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome-animation.min.css" rel="stylesheet" type="text/css"/>
     
+    <script src="../../js/jquery.js" type="text/javascript"></script>
+    <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+
     <link async href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
     
     <!-- text fonts -->
@@ -36,11 +39,14 @@
     <link async href="../../css/modal.css" rel="stylesheet" type="text/css"/>
 <!--    <link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>-->
 
+    <noscript><link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
+    <noscript><link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
+    <link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
+    <link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
     
 
     <!--jquery-->
-    <script src="../../js/jquery.js" type="text/javascript"></script>
-    <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+    
     <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
     <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
@@ -102,27 +108,28 @@
 <body class="no-skin" >
     <!--<div id="loader"></div>-->
     
-    <?php
-        require_once 'EncabezadoUsuarioView.php';
-        if(isset($_REQUEST["accion"]))
-            $accion = $_REQUEST["accion"];
-        else
-            $accion = -1;
+<?php
+    require_once 'EncabezadoUsuarioView.php';
+    if(isset($_REQUEST["accion"]))
+        $accion = $_REQUEST["accion"];
+    else
+        $accion = -1;
 
-        // $titulosTable = 
-            // array("No.","Requisito","Registro","Frecuencia","Clave Documento",
-            //     "Adjuntar Evidencia","Fecha de Registro","Usuario","Acción Correctiva","Plan de Acción","Desviación","Validación","Opcion");
-    ?>
-    <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
-        <!-- <div style="position: fixed;"> -->
-            <button onClick="limpiarNuevaEvidenciaModal()" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#nuevaEvidenciaModal">
-                Agregar Nuevo Registro
-            </button>
+    // $titulosTable = 
+        // array("No.","Requisito","Registro","Frecuencia","Clave Documento",
+        //     "Adjuntar Evidencia","Fecha de Registro","Usuario","Acción Correctiva","Plan de Acción","Desviación","Validación","Opcion");
+?>
+    
+<div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
+    <!-- <div style="position: fixed;"> -->
+        <button onClick="limpiarNuevaEvidenciaModal()" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#nuevaEvidenciaModal">
+            Agregar Nuevo Registro
+        </button>
 
-            <button id="btnAgregarEvidenciasRefrescar" type="button" class="btn btn-info btn_refrescar" onclick="refresh();" >
-                <i class="glyphicon glyphicon-repeat"></i> 
-            </button>
-    </div>
+        <button id="btnAgregarEvidenciasRefrescar" type="button" class="btn btn-info btn_refrescar" onclick="refresh();" >
+            <i class="glyphicon glyphicon-repeat"></i> 
+        </button>
+</div>
 
     <br><br><br>
     <div id="jsGrid"></div>
@@ -313,17 +320,17 @@
     var estructuraGrid = [
         { name: "id_principal", type: "text",visible:false },
         { name: "validador", type: "text",visible:false },
-        { name: "no", title:"No",type: "text", width: 70, editing:false },
+        { name: "no", title:"No",type: "text", width: 40, editing:false },
         { name: "tema",title:"Tema", type: "text", width: 150, editing:false },
         { name: "registro",title:"Registro", type: "text", width: 150, editing:false  },
         { name: "frecuencia",title:"Frecuencia", type: "text", width: 130, editing:false  },
-        { name: "clave_documento",title:"Clave Documento", type: "text",  width: 128, editing:false },
-        { name: "fecha_creacion",title:"Fecha Evidencia", type: "text",  width: 155, editing:false },
-        { name: "adjuntar_evidencia",title:"Adjuntar Evidencia", type: "text",  width: 110, editing:false },
+        { name: "clave_documento",title:"Clave Documento", type: "text",  width: 150, editing:false },
+        { name: "fecha_creacion",title:"Fecha Creación", type: "text",  width: 155, editing:false },
+        { name: "adjuntar_evidencia",title:"Adjuntar Evidencia", type: "text",  width: 150, editing:false },
         { name: "fecha_registro",title:"Fecha Registro", type: "text", width: 155, editing:false },
-        { name: "usuario",title:"Usuario", type: "text", width:150, editing:false },
-        { name: "accion_correctiva",title:"Accion Correctiva", type: "text", width: 100, editing:false},
-        { name: "plan_accion",title:"Plan Accion", type: "text", width: 170, editing:false },
+        { name: "usuario",title:"Usuario", type: "text", width:250, editing:false },
+        { name: "accion_correctiva",title:"Accion Correctiva", type: "text", width: 150, editing:false},
+        { name: "plan_accion",title:"Plan Accion", type: "text", width: 160, editing:false },
         { name: "desviacion",title:"Desviacion", type: "text", width: 100, editing:false},
         {name: "validacion",title:"Validacion", type: "text", width: 100, editing:false },
         { name:"delete", title:"Opción", type:"customControl",sorting:""},
@@ -445,10 +452,6 @@
     <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
     <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
     <script src="../../assets/FileUpload/js/main.js"></script>
-    <noscript><link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
-    <noscript><link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
-    <link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
-    <link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
 </body>
 </html>
 

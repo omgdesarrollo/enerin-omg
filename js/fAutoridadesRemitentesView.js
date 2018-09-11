@@ -107,8 +107,8 @@ function construirGrid()
         fields: 
         [
             { name: "id_principal",visible:false},
-            { name:"no",title:"No",width:60},
-            { name: "clave_autoridad",title:"Clave de la Autoridad", type: "text", validate: "required" },
+            { name:"no",title:"No",width:40},
+            { name: "clave_autoridad",title:"Clave de la Autoridad", type: "text", validate: "required", width:120},
             { name: "descripcion",title:"Descripcion", type: "text", validate: "required" },
             { name: "direccion",title:"Direccion", type: "text", validate: "required" },
             { name: "telefono",title:"Telefono", type: "text", validate: "required" },

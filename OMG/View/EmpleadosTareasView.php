@@ -49,7 +49,7 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/tools.js" type="text/javascript"></script>
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>                    
                 <script src="../../js/fEmpleadosView.js" type="text/javascript"></script>
-                
+                <script src="../../js/fechas_formato.js" type="text/javascript"></script>
                 
         <style>
             .jsgrid-header-row>.jsgrid-header-cell {

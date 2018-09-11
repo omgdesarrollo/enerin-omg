@@ -907,7 +907,7 @@ function reconstruir(value,index)//listo jsgrid
         
         tempData["adjuntar_evidencia"] = "<button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
         tempData["adjuntar_evidencia"] += " type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
-        tempData["adjuntar_evidencia"] += "<i class='fa fa-cloud-upload' style='font-size: 22px'></i></button>";
+        tempData["adjuntar_evidencia"] += "<i class='fa fa-cloud-upload' style='font-size: 22px'></i> Adjuntar</button>";
         $.each(value.archivosUpload[0],function(index2,value2)
         {
             tempArchivo="a";
@@ -1012,9 +1012,11 @@ function eliminarEvidencia(id_evidencias)
                 {
                     value.id_evidencias != id_evidencias ? dataListadoTemp.push(value) : (dataItem.push(value), numeroEliminar=index+1);//en el primer value.id_xxxx es el id por el cual se elimino la evidencia, id_evidencias es el que se recibe por parametro entrada
                 });
-                itemEliminar = reconstruir(dataItem[0],numeroEliminar);
+                // itemEliminar = reconstruir(dataItem[0],numeroEliminar);
                 DataGrid = [];
                 dataListado = dataListadoTemp;
+                if(dataListado.length == 0 )
+                    ultimoNumeroGrid=0;
                 $.each(dataListado,function(index,value)
                 {
                     DataGrid.push( reconstruir(value,index+1) );
@@ -1245,15 +1247,15 @@ function mostrar_urls(id_evidencia,validador,validado,id_para)
                 $.each(todo[0], function (index,value)
                 {
                     nametmp = value.split("^-O-^-M-^-G-^");
-                    name;
+                    name = nametmp[1];
                     fecha = getFechaStamp(nametmp[0]);
                     // fecha = new Date(nametmp[0]*1000);
                     // fecha = fecha.getDate()+" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-                    $.each(nametmp, function(index,value)
-                    {
-                        if(index!=0)
-                            (index==1)?name=value:name+="-"+value;
-                    });
+                    // $.each(nametmp, function(index,value)
+                    // {
+                    //     if(index!=0)
+                    //         (index==1)?name=value:name+="-"+value;
+                    // });
                     tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
                     tempDocumentolistadoUrl += "<a download='"+name+"' href=\""+todo[1]+"/"+value+"\" target='blank'>"+name+"</a></td><td>";
                     if(validador=="1")
@@ -1286,7 +1288,8 @@ function mostrar_urls(id_evidencia,validador,validado,id_para)
             }
             tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdEvidenciaDocumento' type='text' style='display:none;' value='"+id_evidencia+"'>"
             tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdParaDocumento' type='text' style='display:none;' value='"+id_para+"'>";
-            $('#DocumentolilstadoUrl').html(tempDocumentolistadoUrl);
+            console.log(tempDocumentolistadoUrl);
+            $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
             $('#fileupload').fileupload
             ({
                 url: '../View/',

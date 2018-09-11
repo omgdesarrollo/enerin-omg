@@ -83,6 +83,7 @@ switch ($Op) {
                 $url = $_REQUEST['URL'].$value['id_documento_salida'];
                 $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
             }
+            header('Content-type: application/json; charset=utf-8');
             echo json_encode($Lista);
             break;
             

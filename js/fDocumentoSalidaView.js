@@ -366,29 +366,26 @@ function insertarDocumentoSalida(documentoSalidaDatos)
             if(typeof(datos) == "object")
             {
                 growlSuccess("Crear Documento Salida","Registro Creado");
-//                 tempData;
+                tempData = new Object();
 //                 swalSuccess("Documento Creado");
-                console.log(datos);
-                $.each(datos,function(index,value)
+                // console.log(datos);
+                $.each(datos,function(index,val)
                 {
+<<<<<<< HEAD
 //                  console.log(value["archivosUpload"]["0"].length); 
                    tempData = reconstruir(value,ultimoNumeroGrid+1);
+=======
+                //   console.log(val.archivosUpload[0].length); 
+                   tempData = reconstruir(val,ultimoNumeroGrid+1);
+>>>>>>> 1c445473a4b30d178d6d1679eca5bd2b8e705674
                 });
-//                console.log(tempData);
-
-                // $.each(datos,function(index,value)
-                // {
-                //     componerDataListado(value);
-                // });
-                // ulti
-                dataListado.push(datos);
-                componerDataGrid();
-                // gridInstance.loadData();
                 
                 $("#jsGrid").jsGrid("insertItem",tempData).done(function()
                 {
+                    dataListado.push(datos[0]);
                     $("#crea_documentoSalida .close ").click();
                 });
+                componerDataGrid();
             }
             else
             {
