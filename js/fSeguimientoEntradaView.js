@@ -391,6 +391,17 @@ console.log(val);
 //   window.location.replace("http://sitioweb.com");        
 }
 
+var $btnDLtoExcel = $('#toExcel'); 
+$btnDLtoExcel.on('click', function () 
+{
+    console.log("Entro al excelexportHibrido");
+    $("#listjson").excelexportHibrido({
+        containerid: "listjson"
+        , datatype: 'json'
+        , dataset: DataGridExcel
+        , columns: getColumns(DataGridExcel)
+    });
+});
 
 function refresh()
 {
