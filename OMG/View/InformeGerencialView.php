@@ -63,7 +63,7 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/fInformeGerencialView.js" type="text/javascript"></script>
                 <script src="../../js/fGridComponent.js" type="text/javascript"></script>
                 <script src="../../js/fechas_formato.js" type="text/javascript"></script>
-                
+                <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
         <style>
             .jsgrid-header-row>.jsgrid-header-cell {
                 background-color:#307ECC ;      /* orange */
@@ -115,7 +115,7 @@ require_once 'EncabezadoUsuarioView.php';
 </button>
 
 <div class="pull-right">    
-<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
+<!--<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
     <img src="../../images/base/_excel.png" width="30px" height="30px">
 </button>
 <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
@@ -123,7 +123,10 @@ require_once 'EncabezadoUsuarioView.php';
 </button>
 <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
     <img src="../../images/base/pdf.png" width="30px" height="30px"> 
-</button>       
+</button>       -->
+<button id='toExcel'>
+    <img src="../../images/base/_excel.png" width="35px" height="auto">
+</button>
 </div>
     
 </div>
@@ -183,7 +186,7 @@ var filtros=[];
 var db={};
 var gridInstance;
 var ultimoNumeroGrid=0;
-
+var DataGridExcel=[];
 var customsFieldsGridData=[
         // {field:"customControl",my_field:MyCControlField},
 //        {field:"porcentaje",my_field:porcentajesFields},
@@ -192,15 +195,16 @@ var customsFieldsGridData=[
 
 estructuraGrid = [
 //        { name: "id_principal",visible:false},
+        { name:"no",title:"No",width:40},
         { name: "folio_entrada",title:"Folio de Entrada", type: "text",width:180,editing:false},
         { name: "clave_autoridad",title:"Autoridad Remitente", type: "text",width:160,editing:false},
         { name: "asunto",title:"Asunto", type: "text",editing:false},
         { name: "nombre_completo",title:"Responsable del Tema", type: "text",width:220,editing:false},
-        { name: "fecha_asignacion",title:"Fecha Asignacion", type: "text",width:140,editing:false},
-        { name: "fecha_limite_atencion",title:"Fecha Limite", type: "text",width:140,editing:false},
-        { name: "fecha_alarma",title:"Fecha Alarma", type: "text",width:140,editing:false},
+        { name: "fecha_asignacion",title:"Fecha de Asignacion", type: "text",width:180,editing:false},
+        { name: "fecha_limite_atencion",title:"Fecha Limite de Atencion", type: "text",width:200,editing:false},
+        { name: "fecha_alarma",title:"Fecha de Alarma", type: "text",width:140,editing:false},
         { name: "status_doc",title:"Status", type: "text",editing:false},
-        { name: "condicion",title:"Condicion", type: "text",width:140,editing:false},
+        { name: "condicion",title:"Condicion Logica", type: "text",width:140,editing:false},
         { title:"Opción", type:"",sorting:""},
         
     ];

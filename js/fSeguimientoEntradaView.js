@@ -1,6 +1,16 @@
 
 $(function(){
-                                                                             
+    var $btnDLtoExcel = $('#toExcel'); 
+    $btnDLtoExcel.on('click', function () 
+    {
+//        console.log("Entro al excelexportHibrido");
+        $("#listjson").excelexportHibrido({
+            containerid: "listjson"
+            , datatype: 'json'
+            , dataset: DataGridExcel
+            , columns: getColumns(DataGridExcel)
+        });
+    });                                                                             
 
 }); //LLAVE CIERRE FUNCTION
 
@@ -215,7 +225,7 @@ function aceptarEdicion()
 
 function listarDatos()
 {
-    __datos=[];    
+    var __datos=[],__datosExcel=[];    
     datosParamAjaxValues={};
     datosParamAjaxValues["url"]="../Controller/SeguimientoEntradasController.php?Op=Listar";
     datosParamAjaxValues["type"]="POST";
@@ -228,7 +238,13 @@ function listarDatos()
         {
             __datos.push(reconstruir(value,index++));
         });
-
+        
+        $.each(data,function(index,value)
+        {
+            __datosExcel.push(reconstruirExcel(value,index++));
+        });
+        
+        DataGridExcel=__datosExcel;
     }
     
     
@@ -300,24 +316,41 @@ function reconstruir(value,index)
 
 
 
-//function empleadosComboboxparaModal()
-//{
-//  
-//  $.ajax({
-//      url:"../Controller/EmpleadosController.php?Op=mostrarcombo",
-//      type:"GET",
-//      success:function(empleados)
-//      {
-//          tempData="";
-//          $.each(empleados,function(index,value)
-//          {
-//              tempData+="<option value='"+value.id_empleado+"'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</option>";
-//          }); 
-//          
-//          $("#ID_EMPLEADOMODAL").html(tempData);
-//      }
-//  });   
-//}
+function reconstruirExcel(value,index)
+{
+    tempData=new Object();
+//    ultimoNumeroGrid = index;
+//    tempData["id_principal"]= [{'id_seguimiento_entrada':value.id_seguimiento_entrada}];
+    tempData["No"]= index;
+    tempData["Folio de Entrada"]=value.folio_entrada;
+    tempData["Autoridad Remitente"]=value.clave_autoridad;
+    tempData["Asunto"]=value.asunto;
+    tempData["Responsable del Tema"]=value.nombre_completotema;
+    tempData["Fecha de Asignacion"]= getSinFechaFormato(value.fecha_asignacion);
+    tempData["Fecha Limite de Atencion"]= getSinFechaFormato(value.fecha_limite_atencion);
+    tempData["Fecha de alarma"]= getSinFechaFormato(value.fecha_alarma);
+        if(value.status_doc== "1")
+        {
+            tempData["Status"]="En Proceso";
+        };
+        if(value.status_doc== "2")
+        {
+            tempData["Status"]="Supendido";
+        };
+        if(value.status_doc== "3")
+        {
+            tempData["Status"]="Terminado";
+        };
+//        valGantt.push({"id_documento_entrada":value.id_documento_entrada,"folio_entrada":value.folio_entrada});
+    tempData["Condicion Logica"]=value.condicion;    
+    tempData["Responsable del Plan"]=value.id_empleado;
+//    tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_documento_entrada+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
+//    tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
+//    tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info' onClick='cargadePrograma("+JSON.stringify({"id_documento_entrada":value.id_documento_entrada,"folio_entrada":value.folio_entrada})+")'>Cargar Programa</button>";
+    tempData["Avance del Programa"]=(value.avance_programa*100).toFixed(2)+"%";    
+//    tempData["delete"]= [{"reg":value.reg,"validado":value.validado}]; 
+    return tempData;
+}
 
 
 function listarEmpleados()
@@ -391,17 +424,7 @@ console.log(val);
 //   window.location.replace("http://sitioweb.com");        
 }
 
-var $btnDLtoExcel = $('#toExcel'); 
-$btnDLtoExcel.on('click', function () 
-{
-    console.log("Entro al excelexportHibrido");
-    $("#listjson").excelexportHibrido({
-        containerid: "listjson"
-        , datatype: 'json'
-        , dataset: DataGridExcel
-        , columns: getColumns(DataGridExcel)
-    });
-});
+
 
 function refresh()
 {
