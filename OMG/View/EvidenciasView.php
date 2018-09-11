@@ -102,27 +102,28 @@
 <body class="no-skin" >
     <!--<div id="loader"></div>-->
     
-    <?php
-        require_once 'EncabezadoUsuarioView.php';
-        if(isset($_REQUEST["accion"]))
-            $accion = $_REQUEST["accion"];
-        else
-            $accion = -1;
+<?php
+    require_once 'EncabezadoUsuarioView.php';
+    if(isset($_REQUEST["accion"]))
+        $accion = $_REQUEST["accion"];
+    else
+        $accion = -1;
 
-        // $titulosTable = 
-            // array("No.","Requisito","Registro","Frecuencia","Clave Documento",
-            //     "Adjuntar Evidencia","Fecha de Registro","Usuario","Acción Correctiva","Plan de Acción","Desviación","Validación","Opcion");
-    ?>
-    <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
-        <!-- <div style="position: fixed;"> -->
-            <button onClick="limpiarNuevaEvidenciaModal()" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#nuevaEvidenciaModal">
-                Agregar Nuevo Registro
-            </button>
+    // $titulosTable = 
+        // array("No.","Requisito","Registro","Frecuencia","Clave Documento",
+        //     "Adjuntar Evidencia","Fecha de Registro","Usuario","Acción Correctiva","Plan de Acción","Desviación","Validación","Opcion");
+?>
+    
+<div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
+    <!-- <div style="position: fixed;"> -->
+        <button onClick="limpiarNuevaEvidenciaModal()" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#nuevaEvidenciaModal">
+            Agregar Nuevo Registro
+        </button>
 
-            <button id="btnAgregarEvidenciasRefrescar" type="button" class="btn btn-info btn_refrescar" onclick="refresh();" >
-                <i class="glyphicon glyphicon-repeat"></i> 
-            </button>
-    </div>
+        <button id="btnAgregarEvidenciasRefrescar" type="button" class="btn btn-info btn_refrescar" onclick="refresh();" >
+            <i class="glyphicon glyphicon-repeat"></i> 
+        </button>
+</div>
 
     <br><br><br>
     <div id="jsGrid"></div>
@@ -313,17 +314,17 @@
     var estructuraGrid = [
         { name: "id_principal", type: "text",visible:false },
         { name: "validador", type: "text",visible:false },
-        { name: "no", title:"No",type: "text", width: 70, editing:false },
+        { name: "no", title:"No",type: "text", width: 40, editing:false },
         { name: "tema",title:"Tema", type: "text", width: 150, editing:false },
         { name: "registro",title:"Registro", type: "text", width: 150, editing:false  },
         { name: "frecuencia",title:"Frecuencia", type: "text", width: 130, editing:false  },
-        { name: "clave_documento",title:"Clave Documento", type: "text",  width: 128, editing:false },
+        { name: "clave_documento",title:"Clave Documento", type: "text",  width: 150, editing:false },
         { name: "fecha_creacion",title:"Fecha Creación", type: "text",  width: 155, editing:false },
-        { name: "adjuntar_evidencia",title:"Adjuntar Evidencia", type: "text",  width: 110, editing:false },
+        { name: "adjuntar_evidencia",title:"Adjuntar Evidencia", type: "text",  width: 150, editing:false },
         { name: "fecha_registro",title:"Fecha Registro", type: "text", width: 155, editing:false },
-        { name: "usuario",title:"Usuario", type: "text", width:150, editing:false },
-        { name: "accion_correctiva",title:"Accion Correctiva", type: "text", width: 100, editing:false},
-        { name: "plan_accion",title:"Plan Accion", type: "text", width: 170, editing:false },
+        { name: "usuario",title:"Usuario", type: "text", width:250, editing:false },
+        { name: "accion_correctiva",title:"Accion Correctiva", type: "text", width: 150, editing:false},
+        { name: "plan_accion",title:"Plan Accion", type: "text", width: 160, editing:false },
         { name: "desviacion",title:"Desviacion", type: "text", width: 100, editing:false},
         {name: "validacion",title:"Validacion", type: "text", width: 100, editing:false },
         { name:"delete", title:"Opción", type:"customControl",sorting:""},

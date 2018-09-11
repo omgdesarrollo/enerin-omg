@@ -38,10 +38,10 @@ var jsonObj = {
         });
 
                 swal({
-  title: 'Selecciona un contrato',
+  title: 'Selecciona un Cumplimiento',
   input: 'select',
   inputOptions:jsonObj,
-  inputPlaceholder: 'selecciona un contrato ',
+  inputPlaceholder: 'selecciona un Cumplimiento ',
   showCancelButton: true,
   showLoaderOnConfirm: true,
   inputValidator: function (value) {
@@ -49,7 +49,7 @@ var jsonObj = {
       if (value != '') {
         resolve();
       } else {
-        reject('requieres seleccionar un contrato');
+        reject('Requiere seleccionar un Cumplimiento');
       }
     });
   },

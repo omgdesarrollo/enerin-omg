@@ -155,9 +155,9 @@ function listarDatos()
         nameDate=mostrar_urls(value.id_evidencias);
         __datos.push({
             "No":contador++,
-            "Tema":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-            "Requisitos":"<button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
-            "Registros":"<button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+            "Tema":"<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success btn_agregar' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+            "Requisitos":"<button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success btn_agregar' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
+            "Registros":"<button onClick='mostrarRegistros("+value.id_documento+");' type='button' class='btn btn-success btn_agregar' data-toggle='modal' data-target='#mostrar-registros'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>",
             "Clave del Documento":value.clave_documento,
             "Responsable del Documento":value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno,
             "Frecuencia":value.frecuencia,
@@ -192,8 +192,8 @@ function listarDatos()
                 { name: "Requisitos", type: "text", width: 150, validate: "required" },
                 { name: "Registros", type: "text", width: 150, validate: "required" },
 //                { name: "Clave del Documento",textField: "Clave documento", type: "text", width: 150, validate: "required" },
-                { name: "Clave del Documento", type: "text", width: 150, validate: "required" },    
-                { name: "Responsable del Documento", type: "text", width: 150, validate: "required" },
+                { name: "Clave del Documento", type: "text", width: 200, validate: "required" },    
+                { name: "Responsable del Documento", type: "text", width: 250, validate: "required" },
                 { name: "Frecuencia", type: "text", width: 150, validate: "required" },
                 { name: "Evidencia", type: "text", width: 150, validate: "required" },
                 { name: "Fecha de Registro", type: "text", width: 150, validate: "required" },

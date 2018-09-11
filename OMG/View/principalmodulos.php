@@ -140,6 +140,7 @@ var seccionHerramientas=[
  var seccionTareas=[
      {id:'tareas',text:'Registro de Tareas',img:'tareas.png',type:'button',isbig:true} ,
  ];
+ 
   var seccionOficios=[
      {id:'catalogooficios',text:'Catalogos',img:'catalogos.png',type:'button',isbig:true},  
      {id:'documentacion',text:'Documentacion',img:'oficios.png',type:'button',isbig:true},  
@@ -270,7 +271,7 @@ var gantt=[
 //                            loadDataSideBarProcesos();
                         }
 
-                        if(itemIdSeleccion=="Registro de Tareas"){
+                        if(itemIdSeleccion=="Control de Pendientes Especiales"){
                             var listRegistroTareas=[];
                             $.each(listasubmodulos,function (index,value){
 
@@ -278,7 +279,7 @@ var gantt=[
                                 {
 //                                    console.log(value1);
                                     
-                                    if(value1["nombre_contenido_sub"]=="Registro de Tareas"){
+                                    if(value1["nombre_contenido_sub"]=="Control de Pendientes Especiales"){
 //                                        console.log(value1["contenido_vista"]);
                                              loadDataSideBarTareas(value1["contenido_vista"]);
                                     }
@@ -364,7 +365,7 @@ var gantt=[
 	var inicio=[
         {id:'00',text:'<div id=\'desc\'>contrato(NO SELECCIONADO)</div>' ,items:[
         
-                    {id:'0x1',mode:'cols',text:'Contratos',type:'block',
+                    {id:'0x1',mode:'cols',text:'Cumplimientos',type:'block',
           list:datacontratos
         }
         ]},
@@ -681,7 +682,7 @@ var vistas = [];
 	var inicio=[
         {id:'00',text:'<div id=\'desc\'>contrato(NO SELECCIONADO)</div>' ,items:[
         
-                    {id:'0x1',mode:'cols',text:'Contratos',type:'block',
+                    {id:'0x1',mode:'cols',text:'Cumplimientos',type:'block',
           list:datacontratos
         }
         ]},
@@ -889,11 +890,11 @@ var jsonObj = {};
                         success: function(r) {
                               swal({
                                 type: 'success',
-                                html: 'tu has seleccionado el contrato ' + r.clave_cumplimiento,    
+                                html: 'tu has seleccionado el Cumplimiento ' + r.clave_cumplimiento,    
                                 timer: 2000,
                               });
-                                window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
-                                window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
+                                window.top.$("#desc").html("CUMPLIMIENTO("+r.clave_cumplimiento+")");
+                                window.top.$("#infocontrato").html("Cumplimiento Seleccionado:<br>("+r.clave_cumplimiento+")");
 //                                mostrarTareasEnAlarma();
                                 
                                 
