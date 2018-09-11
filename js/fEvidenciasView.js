@@ -101,82 +101,86 @@ function listarDatos()
 
     $(function()
     {
-            $('#BTN_CREAR_NUEVAEVIDENCIAMODAL').click(function()
+        $('#BTN_CREAR_NUEVAEVIDENCIAMODAL').click(function()
+        {
+            claveRegistro = $("#IDREGISTRO_NUEVAEVIDENCIAMODAL").val();
+            claveTema = $("#IDTEMA_NUEVAEVIDENCIAMODAL").val();
+            fecha = $("#FECHA_NUEVAEVIDENCIAMODAL").val();
+            console.log(fecha);
+            if(claveTema!=-1 && claveRegistro!=-1 && fecha!="")
             {
-                claveRegistro = $("#IDREGISTRO_NUEVAEVIDENCIAMODAL").val();
-                claveTema = $("#IDTEMA_NUEVAEVIDENCIAMODAL").val();
-                fecha = $("#FECHA_NUEVAEVIDENCIAMODAL").val();
-                console.log(fecha);
-                if(claveTema!=-1 && claveRegistro!=-1 && fecha!="")
-                {
-                    $.ajax({
-                        url:'../Controller/EvidenciasController.php?Op=ChecarDisponiblidad',
-                        type:'GET',
-                        data: "ID_REGISTRO="+dataRegistro.id_registro+"&FECHA="+fecha,
-                        beforeSend:function()
+                $.ajax({
+                    url:'../Controller/EvidenciasController.php?Op=ChecarDisponiblidad',
+                    type:'GET',
+                    data: "ID_REGISTRO="+dataRegistro.id_registro+"&FECHA="+fecha,
+                    beforeSend:function()
+                    {
+                        growlWait("Crear Evidencia","Creando evidencia");
+                    },
+                    success:function(disponible)
+                    {
+                        if(disponible == 0)
                         {
-                            growlWait("Crear Evidencia","Creando evidencia");
-                        },
-                        success:function(disponible)
-                        {
-                            if(disponible == 0)
-                            {
-                                URL = 'filesEvidenciaDocumento/';
-                                $.ajax
-                                ({
-                                    url: '../Controller/EvidenciasController.php?Op=CrearEvidencia',
-                                    type: 'POST',
-                                    data: "ID_REGISTRO="+dataRegistro.id_registro+"&FECHA_CREACION="+fecha+"&URL="+URL,
-                                    beforesend:function ()
-                                    {},
-                                    success:function(data)
-                                    {
-                                        (typeof(data)=="object")?
-                                        (
-                                            console.log(data),
-                                            growlSuccess("Crear Evidencia","Evidencia Creada"),
-                                            tempData = new Object(),
-                                            $.each(data,function(index,value){
-                                                tempData = reconstruir(value,ultimoNumeroGrid+1);
-                                            }),
-                                            $("#jsGrid").jsGrid("insertItem",tempData).done(function(){}),
-                                            dataListado.push(data[0]),
-                                            DataGrid.push(tempData),
-                                            $("#nuevaEvidenciaModal .close").click()
-                                        )
-                                        :growlError("Error Crear Evidencia","No se puedo crear la evidencia");
-                                    },
-                                    error:function()
-                                    {
-                                        growlError("Error Crear Evidencia","Error en el servidor");
-                                    }
-                                });
-                            }
-                            if(disponible > 0)
-                            {
-                                swalInfo("Ya se ha cargado esta evidencia hoy");
-                                growlError("Crear Evidencia","Ya se ha cargado esta evidencia hoy");
-                            }
-                            if(disponible < 0)
-                                growlError("Error Crear Evidencia","Error al hacer eso cambiar nombre que no se como ponerle");
-                        },
-                        error:function()
-                        {
-                            growlError("Error Crear Evidencia","Error en el servidor");
+                            URL = 'filesEvidenciaDocumento/';
+                            $.ajax
+                            ({
+                                url: '../Controller/EvidenciasController.php?Op=CrearEvidencia',
+                                type: 'POST',
+                                data: "ID_REGISTRO="+dataRegistro.id_registro+"&FECHA_CREACION="+fecha+"&URL="+URL,
+                                beforesend:function ()
+                                {},
+                                success:function(data)
+                                {
+                                    (typeof(data)=="object")?
+                                    (
+                                        console.log(data),
+                                        growlSuccess("Crear Evidencia","Evidencia Creada"),
+                                        tempData = new Object(),
+                                        $.each(data,function(index,value){
+                                            tempData = reconstruir(value,ultimoNumeroGrid+1);
+                                            enviar_notificacion("Tiene una Evidencia por Validar",value.id_responsable,0,false,"EvidenciasView.php?accion="+value.id_evidencias);//msj,para,tipomsj,atendido,asunto
+                                        }),
+                                        $("#jsGrid").jsGrid("insertItem",tempData).done(function(){
+                                            
+                                        }),
+                                        dataListado.push(data[0]),
+                                        DataGrid.push(tempData),
+                                        $("#nuevaEvidenciaModal .close").click()
+                                    )
+                                    :growlError("Error Crear Evidencia","No se puedo crear la evidencia");
+                                },
+                                error:function()
+                                {
+                                    growlError("Error Crear Evidencia","Error en el servidor");
+                                }
+                            });
                         }
-                    });
-                }
-                else
-                {
-                    swal("","Selecciona Correctamente","warning");
-                }
-            });
-
-            $("#subirArchivos").click(function()
+                        if(disponible > 0)
+                        {
+                            swalInfo("Ya se ha cargado esta evidencia hoy");
+                            growlError("Crear Evidencia","Ya se ha cargado esta evidencia hoy");
+                        }
+                        if(disponible < 0)
+                            growlError("Error Crear Evidencia","Error al hacer eso cambiar nombre que no se como ponerle");
+                    },
+                    error:function()
+                    {
+                        growlError("Error Crear Evidencia","Error en el servidor");
+                    }
+                });
+            }
+            else
             {
-                agregarArchivosUrl();
-                $("#subirArchivos").attr("disabled",true);
-            });
+                swal("","Selecciona Correctamente","warning");
+            }
+        });
+
+        $("#subirArchivos").click(function()
+        {
+            agregarArchivosUrl();
+            $("#subirArchivos").attr("disabled",true);
+        });
+
     });
 
     function limpiarNuevaEvidenciaModal()
@@ -1166,11 +1170,11 @@ function enviar_notificacion(mensaje,para,tipoMensaje,atendido,asunto)
         success:function(response)
         {
         (response==true)?(
-            growlSuccess("Notificación","Se notifico del cambio")
+            growlSuccess("Notificación","Se ha notificado")
             // swalSuccess("Se notifico del cambio "),
             //  refresh()
             )
-        :growlError("Error Notificación","No se pudo notificar el cambio");
+        :growlError("Error Notificación","No se pudo notificar");
         
         },
         error:function()
