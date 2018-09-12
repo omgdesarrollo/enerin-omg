@@ -804,9 +804,12 @@ dp.init(gantt);
         
         
         
-obtenerTareas();
+obtenerTareas().then(function (){
+//    alert("ya termino ");
+construirTreeList();
+});
     
-  
+
     
     
       
@@ -830,16 +833,18 @@ obtenerTareas();
 var datosTreeList=[];
     
     function obtenerTareas(){
-  $.ajax({
-                                url:"../Controller/GanttTareasController.php?Op=ListarTodasLasTareasDetallesPorSuId",
-                                async:false,
-                                success:function (res)
-                                {
-                                 datosTreeList=res.data;
-                                  construirTreeList();
-                                }
-                              });
-    }
+        return new Promise(function (resolve,reject){
+                $.ajax({
+                                        url:"../Controller/GanttTareasController.php?Op=ListarTodasLasTareasDetallesPorSuId",
+                                        success:function (res)
+                                        {
+                                         datosTreeList=res.data;
+//                                          construirTreeList();
+                                        }
+                                      });
+                                      resolve();
+                                  })
+        }
   function construirTreeList(){
              
    $("#dx").dxTreeList({
@@ -944,6 +949,12 @@ var datosTreeList=[];
         showPane: true,
         text: "Loading...",
         width: 200
+        },
+        onCellClick:(args)=>{
+//            console.log(args);
+        },
+        onRowClick:(args)=>{
+            console.log(args);
         },
         columns:[
             {
