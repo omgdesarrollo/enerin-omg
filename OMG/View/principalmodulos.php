@@ -11,10 +11,8 @@ $urls["fisica"] = "C:xampp/htdocs/enerin-omg/archivos/";
 $urls["logica"] = "../../../enerin-omg/archivos/";
 //para hallar ruta fisica tanto web como local
 //echo dirname(__FILE__);
-//temrina para hallar ruta fisica tanto web como local 
-//rutas web 
-//$urls["fisica"] = "/home/fpa9q09nzhnx/public_html/omgcum/archivos/";
-//$urls["logica"] = 'http://www.enerin-omgapps.com/omgcum/archivos/';
+//$urls["fisica"] = "/home/fpa9q09nzhnx/public_html/oficina/archivos/";
+//$urls["logica"] = 'http://www.enerin-omgapps.com/oficina/archivos/';
 // $urls[""] = ;
 Session::setSesion("URLS",$urls);
 $Usuario=  Session::getSesion("user");
@@ -43,6 +41,8 @@ $Usuario=  Session::getSesion("user");
         <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
         <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
         <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+
+        <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
         <style>
                 .modal-body{
                       color:#888;
@@ -79,8 +79,9 @@ $Usuario=  Session::getSesion("user");
 		}
                 div#arbolprincipal{
 /*                  position: relative;*/
-                    height:500px; 
+                    height:800px;
                 }
+
                 .dhtmlxribbon_material .dhxrb_block_base{
                         border: 1px solid #b5bebf;
                         /*background-color: #0f76e057;*/
@@ -140,7 +141,6 @@ var seccionHerramientas=[
  var seccionTareas=[
      {id:'tareas',text:'Registro de Tareas',img:'tareas.png',type:'button',isbig:true} ,
  ];
- 
   var seccionOficios=[
      {id:'catalogooficios',text:'Catalogos',img:'catalogos.png',type:'button',isbig:true},  
      {id:'documentacion',text:'Documentacion',img:'oficios.png',type:'button',isbig:true},  
@@ -185,8 +185,76 @@ var gantt=[
  var infosesionusuario=[
      {id:'sesionusuario',text:'<div id="infousuario"><?php echo "Bienvenido <br>".$Usuario["NOMBRE_USUARIO"]; ?></div>',img:'user.png', type:'button',isbig:true}
  ];
-	$(function() {	
-      
+
+function redimencionarLayout()
+{
+    // console.log(tam1);
+    tam1 = $(window).height() - 190;
+    tamW1 = $(window).width();
+    tamW = tamW1 - 330;
+    // console.log(tam1);
+    tam2 = tam1 - 42;
+    $(".dhx_cell_cont_layout").css("height", tam2+"px");
+    // $(".dhx_cell_cont_layout").css("width", tamW+"px");
+
+    $(".dhx_cell_layout").css("height", tam1+"px");
+    // $(".dhx_cell_layout").css("width", tamW+"px");
+
+    $(".dhxlayout_cont").css("height", tam1+"px");//l
+    $(".dhxlayout_cont").css("width", tamW+"px");//l
+
+    $(".dhxlayout_sep").css("height", tam2+"px");
+    $("#arbolprincipal").css("height", tam1+"px");
+
+    $("#sidebarObjV").css("height", tam2+"px");
+    $("#sidebarObjV").css("width", tamW+"px");
+    $("#sidebarObj").css("height", tam2+"px");
+
+    $(".dhxtabbar_tabs").css("width", tamW1+"px");
+    $(".dhx_cell_tabbar").css("width", tamW1+"px");
+    $(".dhxtabbar_cont").css("width", tamW1+"px");
+
+    $(".dhxrb_g_area").css("overflow-y","hidden");
+    $(".dhx_cell_tabbar").css("overflow-x","auto");
+    // $(".dhxrb_g_area").css("overflow-x","auto");
+    // if(tamW1>1060)
+    // {
+        // $(".dhx_cell_tabbar").css("width", 1057+"px");
+    // }
+    $(".dhx_cell_cont_tabbar").css("width", "1057px");
+
+    // $(".dhxrb_g_area").css("width", "max-content");
+    // console.log($(".dhxrb_g_area").css("overflow-y"));
+
+    $("#sidebarObjV").css("width", tamW+"px");
+    $("#sidebarObjV").parent().css("width", tamW+"px");
+    $("#sidebarObjV").parent().parent().css("width", tamW+"px");
+
+    $(".dhxrb_with_tabbar").css("height","190px");
+    $(".dhxtabbar_cont").css("height","190px");
+    $(".dhx_cell_tabbar").css("height","145px");
+
+    // $("#jsGrid");
+
+    // console.log($("#sidebarObjV").parent().parent().css("width", tamW+"px"));
+}
+
+    $(function()
+    {
+        $(document).ready(()=>{
+            redimencionarLayout();
+        });
+
+        $(window).resize(()=>{
+            // $(window).height();
+            // tam1 = $(window).height() - 200;
+            // tam2 = tam1 + 42;
+            // $(".dhx_cell_cont_layout").css("height", tam1+"px");
+            // $(".dhx_cell_layout").css("height", tam2+"px");
+            // $(".dhxlayout_cont").css("height", tam2+"px");
+            // $("#arbolprincipal").css("height", tam2+"px");
+            redimencionarLayout();
+        });
            //  layout = new dhtmlXLayoutObject({parent: "layoutObj",pattern: "2U",cells: [{id: "a", text: "Navegacion", header:true},{id: "b", text: "Visualizacion",header:true}]});
         
         myLayout = new dhtmlXLayoutObject({parent: "layoutObj",pattern: "2U",cells: [{id: "a", text: "Navegacion", header:true},{id: "b", text: "Visualizacion",header:true}]});
@@ -365,7 +433,7 @@ var gantt=[
 	var inicio=[
         {id:'00',text:'<div id=\'desc\'>contrato(NO SELECCIONADO)</div>' ,items:[
         
-                    {id:'0x1',mode:'cols',text:'Cumplimientos',type:'block',
+                    {id:'0x1',mode:'cols',text:'Contratos',type:'block',
           list:datacontratos
         }
         ]},
@@ -682,7 +750,7 @@ var vistas = [];
 	var inicio=[
         {id:'00',text:'<div id=\'desc\'>contrato(NO SELECCIONADO)</div>' ,items:[
         
-                    {id:'0x1',mode:'cols',text:'Cumplimientos',type:'block',
+                    {id:'0x1',mode:'cols',text:'Contratos',type:'block',
           list:datacontratos
         }
         ]},
@@ -890,11 +958,11 @@ var jsonObj = {};
                         success: function(r) {
                               swal({
                                 type: 'success',
-                                html: 'tu has seleccionado el Cumplimiento ' + r.clave_cumplimiento,    
+                                html: 'tu has seleccionado el contrato ' + r.clave_cumplimiento,    
                                 timer: 2000,
                               });
-                                window.top.$("#desc").html("CUMPLIMIENTO("+r.clave_cumplimiento+")");
-                                window.top.$("#infocontrato").html("Cumplimiento Seleccionado:<br>("+r.clave_cumplimiento+")");
+                                window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
+                                window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
 //                                mostrarTareasEnAlarma();
                                 
                                 

@@ -84,14 +84,15 @@ and open the template in the editor.
     <!--<link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>-->
     <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
 
+    <!--aqui empieza librerias qe no son del gantt en funcionalidad y presentacion-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script>window.jQuery || document.write(decodeURIComponent('%3Cscript src="js/jquery.min.js"%3E%3C/script%3E'))</script>
+    <script>window.jQuery || document.write(decodeURIComponent('%3Cscript src="js/jquery.min.js"%3E%3C/script%3E'))</script>
     <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/18.1.6/css/dx.common.css" />
     <link rel="dx-theme" data-theme="generic.light" href="https://cdn3.devexpress.com/jslib/18.1.6/css/dx.light.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
-<script>window.angular || document.write(decodeURIComponent('%3Cscript src="js/angular.min.js"%3E%3C\/script%3E'))</script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>-->
+    <script>window.angular || document.write(decodeURIComponent('%3Cscript src="js/angular.min.js"%3E%3C\/script%3E'))</script>
     <script src="https://cdn3.devexpress.com/jslib/18.1.6/js/dx.all.js"></script>
-    
+    <!--aqui termina las librerias que no son del gantt-->
     
     
  <style type="text/css">
@@ -248,7 +249,6 @@ and open the template in the editor.
 			   accept=".mpp,.xml, text/xml, application/xml, application/vnd.ms-project, application/msproj, application/msproject, application/x-msproject, application/x-ms-project, application/x-dos_ms_project, application/mpp, zz-application/zz-winassoc-mpp"/>
 		<button id="mspImportBtn" type="submit">Seleccion el MS Proyect</button>
 	</form>-->
-    
     <div id="gantt_here" style='width:100%; height:100%;'></div>
     </body>
 <!-- Inicio de Seccion Modal Informe-->
@@ -267,13 +267,7 @@ and open the template in the editor.
                            <div id="tree-list">
                              <div id="dx"></div>
                             </div>
-                          
-                          
-<!--                           <div class="demo-container" ng-app="DemoApp" ng-controller="DemoController">
-                                <div id="tree-list-demo">
-                                    <div id="employees" dx-tree-list="treeListOptions"></div>
-                                </div>
-                             </div>-->
+
                           
                         <!--<div id=""></div>-->
 
@@ -805,14 +799,18 @@ dp.init(gantt);
     gantt.templates.progress_text = function (start, end, task) {
 		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
 	};
-    
+          var datosTreeList=[]; 
     $(function (){
+ 
         
         
-        
-obtenerTareas();
+obtenerTareas().then(function (){
+//    alert("ya termino ");
+console.log(datosTreeList);
+construirTreeList();
+});
     
-  
+
     
     
       
@@ -833,19 +831,21 @@ obtenerTareas();
       
 
     });
-var datosTreeList=[];
+
     
     function obtenerTareas(){
-  $.ajax({
-                                url:"../Controller/GanttTareasController.php?Op=ListarTodasLasTareasDetallesPorSuId",
-                                async:false,
-                                success:function (res)
-                                {
-                                 datosTreeList=res.data;
-                                  construirTreeList();
-                                }
-                              });
-    }
+        return new Promise(function (resolve,reject){
+                $.ajax({
+                                        url:"../Controller/GanttTareasController.php?Op=ListarTodasLasTareasDetallesPorSuId",
+                                        success:function (res)
+                                        {
+                                         datosTreeList=res.data;
+//                                          construirTreeList();
+                                        }
+                                      });
+                                      resolve();
+                                  })
+        }
   function construirTreeList(){
              
    $("#dx").dxTreeList({
@@ -856,6 +856,28 @@ var datosTreeList=[];
         showRowLines: true,
         showBorders: true,
         columnAutoWidth: true,
+        autoExpandAll: true,
+        allowColumnResizing: true,
+        columnChooser: {
+        allowSearch: false,
+        emptyPanelText: "Seleccionar Columna ",
+        enabled: true,
+        height: 260,
+        mode: "dragAndDrop",
+        searchTimeout: 500,
+        title: "Columna A Ocultar",
+        width: 300
+        },
+        columnResizingMode: "nextColumn",
+        columnFixing: {
+        enabled: false,
+        texts: {
+            fix: "Fix",
+            leftPosition: "To the left",
+            rightPosition: "To the right",
+            unfix: "Unfix"
+        },
+        },
         editing: {
             mode: "row",
             allowUpdating: true,
@@ -866,6 +888,74 @@ var datosTreeList=[];
               saveRowChanges: "Guardar",
               cancelRowChanges: "Cancelar",
             }
+        },
+                filterRow: {
+        applyFilter: "auto",
+        applyFilterText: "Apply filter",
+        betweenEndText: "End",
+        betweenStartText: "Start",
+        operationDescriptions: {
+        between: "Between",
+        contains: "Contains",
+        endsWith: "Ends with",
+        equal: "Equals",
+        greaterThan: "Greater than",
+        greaterThanOrEqual: "Greater than or equal to",
+        lessThan: "Less than",
+        lessThanOrEqual: "Less than or equal to",
+        notContains: "Does not contain",
+        notEqual: "Does not equal",
+        startsWith: "Starts with"   
+        },
+        resetOperationText: "Reset",
+        showAllText: "",
+        showOperationChooser: true,
+        visible: true
+        },
+        noDataText: "No Hay Datos",
+         scrolling: {
+            mode: "standard"
+        },
+        paging: {
+            enabled: true,
+            pageSize: 10
+        },
+//        pager: {
+//            showPageSizeSelector: true,
+//            allowedPageSizes: [5, 10, 20],
+//            showInfo: true
+//        },
+        pager: {
+        allowedPageSizes: null,
+        infoText: "Page {0} of {1}",
+        showInfo: true,
+        showNavigationButtons: true,
+        showPageSizeSelector: true,
+        visible: true
+        },
+        searchPanel: {
+        highlightCaseSensitive: false,
+        highlightSearchText: true,
+        placeholder: "Search...",
+        searchVisibleColumnsOnly: false,
+        text: "",
+        visible: true,
+        width: 160
+        },
+        loadPanel: {
+        enabled: true,
+        height: 90,
+        indicatorSrc: "",
+        showIndicator: true,
+        showPane: true,
+        text: "Loading...",
+        width: 200
+        },
+        onCellClick:(args)=>{
+//            console.log(args);
+        },
+        onRowClick:(args)=>{
+            console.log(args);
         },
         columns:[
             {
@@ -908,6 +998,12 @@ var datosTreeList=[];
              { 
                 dataField: "avance",
                  caption: "Avance",
+                  allowEditing:false
+                
+            },
+             { 
+                dataField: "archivo_adjunto",
+                 caption: "Archivo Adjunto",
                   allowEditing:false
                 
             }
