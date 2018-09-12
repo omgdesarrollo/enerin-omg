@@ -79,8 +79,9 @@ $Usuario=  Session::getSesion("user");
 		}
                 div#arbolprincipal{
 /*                  position: relative;*/
-                    height:500px; 
+                    height:800px;
                 }
+
                 .dhtmlxribbon_material .dhxrb_block_base{
                         border: 1px solid #b5bebf;
                         /*background-color: #0f76e057;*/
@@ -185,8 +186,76 @@ var gantt=[
  var infosesionusuario=[
      {id:'sesionusuario',text:'<div id="infousuario"><?php echo "Bienvenido <br>".$Usuario["NOMBRE_USUARIO"]; ?></div>',img:'user.png', type:'button',isbig:true}
  ];
-	$(function() {	
-      
+
+function redimencionarLayout()
+{
+    // console.log(tam1);
+    tam1 = $(window).height() - 190;
+    tamW1 = $(window).width();
+    tamW = tamW1 - 330;
+    // console.log(tam1);
+    tam2 = tam1 - 42;
+    $(".dhx_cell_cont_layout").css("height", tam2+"px");
+    // $(".dhx_cell_cont_layout").css("width", tamW+"px");
+
+    $(".dhx_cell_layout").css("height", tam1+"px");
+    // $(".dhx_cell_layout").css("width", tamW+"px");
+
+    $(".dhxlayout_cont").css("height", tam1+"px");//l
+    $(".dhxlayout_cont").css("width", tamW+"px");//l
+
+    $(".dhxlayout_sep").css("height", tam2+"px");
+    $("#arbolprincipal").css("height", tam1+"px");
+
+    $("#sidebarObjV").css("height", tam2+"px");
+    $("#sidebarObjV").css("width", tamW+"px");
+    $("#sidebarObj").css("height", tam2+"px");
+
+    $(".dhxtabbar_tabs").css("width", tamW1+"px");
+    $(".dhx_cell_tabbar").css("width", tamW1+"px");
+    $(".dhxtabbar_cont").css("width", tamW1+"px");
+
+    $(".dhxrb_g_area").css("overflow-y","hidden");
+    $(".dhx_cell_tabbar").css("overflow-x","auto");
+    // $(".dhxrb_g_area").css("overflow-x","auto");
+    // if(tamW1>1060)
+    // {
+        // $(".dhx_cell_tabbar").css("width", 1057+"px");
+    // }
+    $(".dhx_cell_cont_tabbar").css("width", "1057px");
+
+    // $(".dhxrb_g_area").css("width", "max-content");
+    // console.log($(".dhxrb_g_area").css("overflow-y"));
+
+    $("#sidebarObjV").css("width", tamW+"px");
+    $("#sidebarObjV").parent().css("width", tamW+"px");
+    $("#sidebarObjV").parent().parent().css("width", tamW+"px");
+
+    $(".dhxrb_with_tabbar").css("height","190px");
+    $(".dhxtabbar_cont").css("height","190px");
+    $(".dhx_cell_tabbar").css("height","145px");
+
+    // $("#jsGrid");
+
+    // console.log($("#sidebarObjV").parent().parent().css("width", tamW+"px"));
+}
+
+    $(function()
+    {
+        $(document).ready(()=>{
+            redimencionarLayout();
+        });
+
+        $(window).resize(()=>{
+            // $(window).height();
+            // tam1 = $(window).height() - 200;
+            // tam2 = tam1 + 42;
+            // $(".dhx_cell_cont_layout").css("height", tam1+"px");
+            // $(".dhx_cell_layout").css("height", tam2+"px");
+            // $(".dhxlayout_cont").css("height", tam2+"px");
+            // $("#arbolprincipal").css("height", tam2+"px");
+            redimencionarLayout();
+        });
            //  layout = new dhtmlXLayoutObject({parent: "layoutObj",pattern: "2U",cells: [{id: "a", text: "Navegacion", header:true},{id: "b", text: "Visualizacion",header:true}]});
         
         myLayout = new dhtmlXLayoutObject({parent: "layoutObj",pattern: "2U",cells: [{id: "a", text: "Navegacion", header:true},{id: "b", text: "Visualizacion",header:true}]});
