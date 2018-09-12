@@ -23,7 +23,7 @@ function inicializarFiltros()
             {id:"folio_entrada",type:"text"},
             {id:"clave_autoridad",type:"text"},
             {id:"asunto",type:"text"},
-            {id:"id_empleadotema",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
+            {id:"id_empleadotema",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completotema"},
             {id:"fecha_asignacion",type:"date"},
             {id:"fecha_limite_atencion",type:"date"},
             {id:"fecha_alarma",type:"date"},
@@ -45,7 +45,7 @@ function inicializarFiltros()
                         {"condicion":"Tiempo Vencido","descripcion":"Tiempo Vencido"}
                     ]
             },
-            {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
+            {id:"id_empleadoplan",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completoplan"},
             {id:"noneDos",type:"none"},
             {id:"noneTres",type:"none"},
             {id:"noneCuatro",type:"none"},
@@ -115,10 +115,10 @@ function construirGrid()
             { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required",width:140,editing:false},            
             { name: "status_doc",title:"Status", type: "text", validate: "required",editing:false},
             { name: "condicion",title:"Condicion Logica", type: "text", validate: "required",width:140,editing:false},
-            { name: "id_empleado",title:"Responsable del Plan", type: "select",width:250,
+            { name: "id_empleadoplan",title:"Responsable del Plan", type: "select",width:250,
                 items:EmpleadosCombobox,
-                valueField:"id_empleado",
-                textField:"nombre_completo"
+                valueField:"id_empleadoplan",
+                textField:"nombre_completoplan"
             },
             { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:140, editing:false },            
             { name: "registrar_programa",title:"Registrar programa", type: "text", validate: "required",width:170, editing:false },            
@@ -292,7 +292,7 @@ function reconstruir(value,index)
         };
 //        valGantt.push({"id_documento_entrada":value.id_documento_entrada,"folio_entrada":value.folio_entrada});
     tempData["condicion"]=value.condicion;    
-    tempData["id_empleado"]=value.id_empleado;
+    tempData["id_empleadoplan"]=value.id_empleadoplan;
     tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_documento_entrada+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
     tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
     tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info' onClick='cargadePrograma("+JSON.stringify({"id_documento_entrada":value.id_documento_entrada,"folio_entrada":value.folio_entrada})+")'>Cargar Programa</button>";
@@ -343,7 +343,7 @@ function reconstruirExcel(value,index)
         };
 //        valGantt.push({"id_documento_entrada":value.id_documento_entrada,"folio_entrada":value.folio_entrada});
     tempData["Condicion Logica"]=value.condicion;    
-    tempData["Responsable del Plan"]=value.id_empleado;
+    tempData["Responsable del Plan"]=value.nombre_completoplan;
 //    tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_documento_entrada+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
 //    tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
 //    tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info' onClick='cargadePrograma("+JSON.stringify({"id_documento_entrada":value.id_documento_entrada,"folio_entrada":value.folio_entrada})+")'>Cargar Programa</button>";
@@ -356,7 +356,7 @@ function reconstruirExcel(value,index)
 function listarEmpleados()
 {
     $.ajax({
-        url:"../Controller/EmpleadosController.php?Op=nombresCompletos",
+        url:"../Controller/SeguimientoEntradasController.php?Op=nombresCompletos",
         type:"GET",
         async:false,
         success:function(empleadosComb)

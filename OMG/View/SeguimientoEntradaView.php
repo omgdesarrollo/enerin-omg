@@ -101,7 +101,7 @@ require_once 'EncabezadoUsuarioView.php';
     <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
         <img src="../../images/base/pdf.png" width="30px" height="30px"> 
     </button>    -->
-    <button id='toExcel'>
+    <button style="width:48px;height:42px" type="button" class="btn_agregar" id='toExcel'>
          <img src="../../images/base/_excel.png" width="35px" height="auto">
     </button>
 </div>

@@ -59,6 +59,18 @@ $(function()
 //        loadChartView(true);
 //    });
 
+    var $btnDLtoExcel = $('#toExcel'); 
+    $btnDLtoExcel.on('click', function () 
+    {
+        console.log("Entro al excelexportHibrido");
+        $("#listjson").excelexportHibrido({
+            containerid: "listjson"
+            , datatype: 'json'
+            , dataset: DataGridExcel
+            , columns: getColumns(DataGridExcel)
+        });
+    });      
+
 }); //CIERRA $(function())
 
 var thisEmpleados=[];
@@ -158,7 +170,7 @@ function construirGrid()
             { name: "observaciones",title:"Observaciones", type: "textarea", validate: "required", width:150,},
             { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:150,editing:false },
             { name: "registrar_programa",title:"Registrar Programa", type: "text", validate: "required",width:160, editing:false },
-            { name: "avance_programa",title:"Avance Programa", type: "text", validate: "required",width:150, editing:false },      
+            { name: "avance_programa",title:"Avance del Programa", type: "text", validate: "required",width:150, editing:false },      
             { name:"delete", title:"Opción", type:"customControl",sorting:""}
         ],
         onItemUpdated: function(args)
@@ -285,7 +297,7 @@ function aceptarEdicion()
 
 function listarDatos()
 {
-    __datos=[];
+    var __datos=[],__datosExcel=[];
     datosParamAjaxValues={};
     datosParamAjaxValues["url"]="../Controller/TareasController.php?Op=Listar&URL=Tareas/";
     datosParamAjaxValues["type"]="GET";
@@ -298,6 +310,12 @@ function listarDatos()
         {
             __datos.push(reconstruir(value,index+1));
         });
+        
+        $.each(data,function(index,value)
+        {
+            __datosExcel.push(reconstruirExcel(value,index+1));
+        });
+        DataGridExcel= __datosExcel;
     }
     var listfunciones=[variablefunciondatos];
     ajaxHibrido(datosParamAjaxValues,listfunciones);
@@ -336,6 +354,28 @@ function reconstruir(value,index)
     tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info botones_vista_tabla' onClick='cargarprogram("+value.id_tarea+")'>Cargar Programa</button>";    
     tempData["avance_programa"]=(value.avance_programa*100).toFixed(2)+"%";
     tempData["delete"]= [{"existe_programa":value.existe_programa,"existe_archivo":value.archivosUpload[0].length}];
+    return tempData;
+}
+
+function reconstruirExcel(value,index)
+{
+    tempData=new Object();
+//    ultimoNumeroGrid = index;
+//    tempData["id_principal"]= [{'id_tarea':value.id_tarea}];
+    tempData["No"]= index;  
+    tempData["Referencia"]=value.referencia;
+    tempData["Tarea"]=value.tarea;
+    tempData["Responsable del Plan"]=value.nombre_completo;
+    tempData["Fecha de Creacion"]= getSinFechaFormato(value.fecha_creacion);
+    tempData["Fecha Alarma"]= getSinFechaFormato(value.fecha_alarma);
+    tempData["Fecha de Cumplimiento"]= getSinFechaFormato(value.fecha_cumplimiento);
+    tempData["Status"]=value.status_tarea;
+    tempData["Observaciones"]=value.observaciones;
+//    tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_tarea+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
+//    tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar</button>";
+//    tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info botones_vista_tabla' onClick='cargarprogram("+value.id_tarea+")'>Cargar Programa</button>";    
+    tempData["Avance del Programa"]=(value.avance_programa*100).toFixed(2)+"%";
+//    tempData["delete"]= [{"existe_programa":value.existe_programa,"existe_archivo":value.archivosUpload[0].length}];
     return tempData;
 }
 
