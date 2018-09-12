@@ -415,7 +415,7 @@ function eliminarRegistro(item)
                     {
 //                        swal("","El Documento esta validado o asignado a un Registro","error");
 //                        setTimeout(function(){swal.close();},1500);
-                        swalError("La Tarea tiene cargado un Programa");
+                        swalError("El Documento esta validado o asignado a un Registro");
                     }else{
                         if(data==true)
                         {

@@ -33,8 +33,12 @@ switch ($Op) {
 		return $Lista;
 		break;
             
-	case 'Nuevo':
+	case 'nombresCompletos':
 		# code...
+            $Lista= $model->nombresCompletosCombobox();
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode( $Lista);
+            return $Lista;    
 		break;	
 
 	case 'Guardar':

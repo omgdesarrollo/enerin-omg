@@ -656,18 +656,19 @@ function mostrarMolaresMensual(){
  </script>   
 <script>   	
     
-	var $btnDLtoExcel = $('#toExcel'); 
-                $btnDLtoExcel.on('click', function () {
-                     console.log("Entro al excelexportHibrido");
+var $btnDLtoExcel = $('#toExcel'); 
+    $btnDLtoExcel.on('click', function () 
+    {
+        console.log("Entro al excelexportHibrido");
 //                     if(bandera==true){
-                        $("#listjson").excelexportHibrido({
-                                    containerid: "listjson"
-                                       , datatype: 'json'
-                                       , dataset: DataGridExcel
-                                       , columns: getColumns(DataGridExcel)
+        $("#listjson").excelexportHibrido({
+            containerid: "listjson"
+            , datatype: 'json'
+            , dataset: DataGridExcel
+            , columns: getColumns(DataGridExcel)
 //                                       , dataset: DataGrid
 //                                       , columns: getColumns(DataGrid)
-                                });
+        });
 //                     }
     });    
                

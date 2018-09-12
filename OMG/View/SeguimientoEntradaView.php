@@ -51,7 +51,7 @@ $Usuario=  Session::getSesion("user");
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <script src="../../js/fSeguimientoEntradaView.js" type="text/javascript"></script>
                 <script src="../../js/fechas_formato.js" type="text/javascript"></script>
-                
+                <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
         <style>
             .jsgrid-header-row>.jsgrid-header-cell {
                 background-color:#307ECC ;      /* orange */
@@ -101,7 +101,7 @@ require_once 'EncabezadoUsuarioView.php';
     <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
         <img src="../../images/base/pdf.png" width="30px" height="30px"> 
     </button>    -->
-    <button id='toExcel'>
+    <button style="width:48px;height:42px" type="button" class="btn_agregar" id='toExcel'>
          <img src="../../images/base/_excel.png" width="35px" height="auto">
     </button>
 </div>
@@ -148,6 +148,8 @@ dataListado = [];
 EmpleadosCombobox=[];
 filtros=[];
 ultimoNumeroGrid=0;
+DataGridExcel=[];
+
 
 listarEmpleados();
 listarDatos();
@@ -156,6 +158,7 @@ construirGrid();
 construirFiltros();
 
 </script>
+
 
 
             <!--Inicia para el spiner cargando-->

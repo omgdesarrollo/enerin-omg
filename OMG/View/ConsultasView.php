@@ -91,17 +91,17 @@ $Usuario=  Session::getSesion("user");
         <button onClick="graficar()" title="Graficar Circular" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#Grafica">
         <i class="fa fa-pie-chart"></i>
         </button>
-        <button style="width:51px;height:42px" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
+        <button style="width:48px;height:42px" type="button" class="btn_agregar" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
             <img src="../../images/base/_excel.png" width="30px" height="30px">
         </button>
 
-        <button style="width:51px;height:42px" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
+<!--        <button style="width:51px;height:42px" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
             <img src="../../images/base/word.png" width="30px" height="30px"> 
         </button>
 
         <button style="width:51px;height:42px" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
             <img src="../../images/base/pdf.png" width="30px" height="30px"> 
-        </button>
+        </button>-->
     </div>
 </div>
 
