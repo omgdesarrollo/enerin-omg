@@ -799,13 +799,14 @@ dp.init(gantt);
     gantt.templates.progress_text = function (start, end, task) {
 		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
 	};
-    
+          var datosTreeList=[]; 
     $(function (){
-        
+ 
         
         
 obtenerTareas().then(function (){
 //    alert("ya termino ");
+console.log(datosTreeList);
 construirTreeList();
 });
     
@@ -830,7 +831,7 @@ construirTreeList();
       
 
     });
-var datosTreeList=[];
+
     
     function obtenerTareas(){
         return new Promise(function (resolve,reject){
