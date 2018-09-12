@@ -83,7 +83,7 @@ require_once 'EncabezadoUsuarioView.php';
              
 <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
     
-<button onclick="empleadosComboboxparaModal()" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#crea_documento">
+<button onclick="listarEmpleados()" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#crea_documento">
     Agregar Documento
 </button>    
     
