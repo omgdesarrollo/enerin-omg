@@ -272,6 +272,7 @@ function reconstruir(value,index)
         };
         if(value.status_doc== "3")
         {
+        	
             tempData["status_doc"]="Terminado";
         };
 //        valGantt.push({"id_documento_entrada":value.id_documento_entrada,"folio_entrada":value.folio_entrada});
