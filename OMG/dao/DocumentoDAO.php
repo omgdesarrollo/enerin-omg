@@ -183,8 +183,8 @@ class DocumentoDAO{
         {
             $query="SELECT COUNT(*) AS validado
                     FROM validacion_documento tbvalidacion_documento
-                    WHERE tbvalidacion_documento.validacion_documento_responsable='true' OR tbvalidacion_documento.validacion_tema_responsable='true' 
-                    AND tbvalidacion_documento.id_documento=$ID_DOCUMENTO";
+                    WHERE tbvalidacion_documento.id_documento=$ID_DOCUMENTO AND tbvalidacion_documento.validacion_documento_responsable='true' 
+                    OR tbvalidacion_documento.validacion_tema_responsable='true' ";
             $db= AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             

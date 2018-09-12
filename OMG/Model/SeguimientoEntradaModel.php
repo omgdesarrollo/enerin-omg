@@ -76,6 +76,22 @@ class SeguimientoEntradaModel{
         }
     }
     
+    
+    public function nombresCompletosCombobox()
+    {
+       try
+       {
+           $dao=new SeguimientoEntradaDAO();
+           $rec= $dao->nombresCompletosCombobox();
+           
+           return $rec;
+       } catch (Exception $ex)
+       {
+           throw $ex;
+           return -1;
+       }
+    }
+    
 //    public function  listarSeguimientoEntradas(){
 //        try{
 //            $dao=new SeguimientoEntradaDAO();

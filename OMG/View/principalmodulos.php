@@ -11,10 +11,8 @@ $urls["fisica"] = "C:xampp/htdocs/enerin-omg/archivos/";
 $urls["logica"] = "../../../enerin-omg/archivos/";
 //para hallar ruta fisica tanto web como local
 //echo dirname(__FILE__);
-//temrina para hallar ruta fisica tanto web como local 
-//rutas web 
-//$urls["fisica"] = "/home/fpa9q09nzhnx/public_html/omgcum/archivos/";
-//$urls["logica"] = 'http://www.enerin-omgapps.com/omgcum/archivos/';
+//$urls["fisica"] = "/home/fpa9q09nzhnx/public_html/oficina/archivos/";
+//$urls["logica"] = 'http://www.enerin-omgapps.com/oficina/archivos/';
 // $urls[""] = ;
 Session::setSesion("URLS",$urls);
 $Usuario=  Session::getSesion("user");
@@ -140,7 +138,6 @@ var seccionHerramientas=[
  var seccionTareas=[
      {id:'tareas',text:'Registro de Tareas',img:'tareas.png',type:'button',isbig:true} ,
  ];
- 
   var seccionOficios=[
      {id:'catalogooficios',text:'Catalogos',img:'catalogos.png',type:'button',isbig:true},  
      {id:'documentacion',text:'Documentacion',img:'oficios.png',type:'button',isbig:true},  
@@ -365,7 +362,7 @@ var gantt=[
 	var inicio=[
         {id:'00',text:'<div id=\'desc\'>contrato(NO SELECCIONADO)</div>' ,items:[
         
-                    {id:'0x1',mode:'cols',text:'Cumplimientos',type:'block',
+                    {id:'0x1',mode:'cols',text:'Contratos',type:'block',
           list:datacontratos
         }
         ]},
@@ -682,7 +679,7 @@ var vistas = [];
 	var inicio=[
         {id:'00',text:'<div id=\'desc\'>contrato(NO SELECCIONADO)</div>' ,items:[
         
-                    {id:'0x1',mode:'cols',text:'Cumplimientos',type:'block',
+                    {id:'0x1',mode:'cols',text:'Contratos',type:'block',
           list:datacontratos
         }
         ]},
@@ -890,11 +887,11 @@ var jsonObj = {};
                         success: function(r) {
                               swal({
                                 type: 'success',
-                                html: 'tu has seleccionado el Cumplimiento ' + r.clave_cumplimiento,    
+                                html: 'tu has seleccionado el contrato ' + r.clave_cumplimiento,    
                                 timer: 2000,
                               });
-                                window.top.$("#desc").html("CUMPLIMIENTO("+r.clave_cumplimiento+")");
-                                window.top.$("#infocontrato").html("Cumplimiento Seleccionado:<br>("+r.clave_cumplimiento+")");
+                                window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
+                                window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
 //                                mostrarTareasEnAlarma();
                                 
                                 

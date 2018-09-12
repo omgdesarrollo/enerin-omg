@@ -1,3 +1,18 @@
+$(function(){
+    var $btnDLtoExcel = $('#toExcel'); 
+    $btnDLtoExcel.on('click', function () 
+    {
+//        console.log("Entro al excelexportHibrido");
+        $("#listjson").excelexportHibrido({
+            containerid: "listjson"
+            , datatype: 'json'
+            , dataset: DataGridExcel
+            , columns: getColumns(DataGridExcel)
+        });
+    });                                                                             
+
+}); //LLAVE CIERRE FUNCTION
+
 
 function inicializarFiltros()
 {    
@@ -24,6 +39,7 @@ function reconstruir(value,index)
 {
     tempData = new Object();
 //    tempData["id_principal"] = [{'id_tema':value.id_tema}],
+    tempData["no"]= index;
     tempData["folio_entrada"] = value.folio_entrada,
     tempData["clave_autoridad"] = value.clave_autoridad,
     tempData["asunto"] = value.asunto,
@@ -38,11 +54,29 @@ function reconstruir(value,index)
 }
 
 
+function reconstruirExcel(value,index)
+{
+    tempData = new Object();
+//    tempData["id_principal"] = [{'id_tema':value.id_tema}],
+    tempData["No"]= index;
+    tempData["Folio de Entrada"] = value.folio_entrada,
+    tempData["Autoridad Remitente"] = value.clave_autoridad,
+    tempData["Asunto"] = value.asunto,
+    tempData["Responsable del Tema"] = value.nombre_completo,
+    tempData["Fecha de Asignacion"] = getSinFechaFormato(value.fecha_asignacion),
+    tempData["Fecha Limite de Atencion"] = getSinFechaFormato(value.fecha_limite_atencion),
+    tempData["Fecha de Alarma"] = getSinFechaFormato(value.fecha_alarma),
+    tempData["Status"] = value.status_doc,
+    tempData["Condicion Logica"] = value.condicion
+//    tempData["delete"] = "0";
+    return tempData;
+}
+
 function listarDatos()
 {
     return new Promise((resolve,reject)=>
     {
-        __datos=[];
+        var __datos=[],__datosExcel=[];
         $.ajax({
             url:"../Controller/InformeGerencialController.php?Op=Listar",
             type:"GET",
@@ -64,6 +98,15 @@ function listarDatos()
                     });
                     DataGrid = __datos;
                     gridInstance.loadData();
+                    
+                    dataListado = data;
+                    $.each(data,function (index,value)
+                    {
+                        __datosExcel.push( reconstruirExcel(value,index+1) );
+                    });
+                    
+                    DataGridExcel=__datosExcel
+                    
                     resolve();
                 }
                 else
