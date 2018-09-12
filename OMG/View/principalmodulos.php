@@ -41,6 +41,8 @@ $Usuario=  Session::getSesion("user");
         <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
         <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
         <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+
+        <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
         <style>
                 .modal-body{
                       color:#888;
