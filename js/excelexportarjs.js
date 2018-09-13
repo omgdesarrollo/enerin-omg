@@ -103,13 +103,13 @@
         }
 
         function ConvertDataStructureToTable() {
-//            alert("d");
+            alert("dg");
             var result = "<table id='tabledata'";
 
             result += "<thead><tr>";
             $($settings.columns).each(function (key, value) {
                 if (this.ishidden != true) {
-                    result += "<th";
+                    result += "<th ";
                     if (this.width != null) {
                         result += " style='width: " + this.width + "'";
                     }
