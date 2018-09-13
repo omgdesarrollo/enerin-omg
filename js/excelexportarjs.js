@@ -154,7 +154,11 @@
             fecha = date.getDate() +" "+ months[date.getMonth()] +" "+ date.getFullYear().toString().slice(2,4);
             
             
-            var result = "<table><tr><th style='background:#307ECC; color:#ffffff; border:solid 1px #000000;'>Tareas: </th><th style='border:solid 1px #000000;'>"+fecha+"</th><tr></table>";
+            var result = "<table>\n\
+                          <tr><th></th><th></th><th style='background:#307ECC; color:#ffffff; border:solid 1px #000000;'>Control de Pendientes Especiales</th></tr>\n\
+                          <tr><td></td><td></td><td style='border:solid 1px #000000;'><center>"+fecha+"</center></td>\n\
+                          <tr>\n\
+                          </table>";
             result += "<table id='tabledata'";
             result += "<thead><tr>";
             $($settings.columns).each(function (key, value) {
