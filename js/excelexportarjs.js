@@ -87,7 +87,7 @@
         }
 
         function ConvertDataStructureToTable() {
-            alert("dg");
+         
             var result = "<table id='tabledata'";
 
             result += "<thead><tr>";

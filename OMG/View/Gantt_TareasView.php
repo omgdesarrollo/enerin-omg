@@ -272,7 +272,7 @@ and open the template in the editor.
 		      </div>
 
 		      <div class="modal-body">
-       
+                    
                            <div id="tree-list">
                              <div id="dx"></div>
                             </div>
@@ -284,6 +284,8 @@ and open the template in the editor.
                 </div><!-- cierre div class modal-content -->
         </div><!-- cierre div class="modal-dialog" -->
 </div><!-- cierre del modal -->
+
+
   <script type="text/javascript">  
 //empieza para definir como mostrar las tareas si por dia,semana,mes,año
 	function setScaleConfig(value) {
@@ -842,7 +844,6 @@ construirTreeList();
 //			});
 //		}); 
       
-      
 
     });
 
@@ -885,6 +886,8 @@ construirTreeList();
         columnAutoWidth: true,
         autoExpandAll: true,
         allowColumnResizing: true,
+        columnAutoWidth: true,
+        allowColumnReordering: true,
         columnChooser: {
         allowSearch: false,
         emptyPanelText: "Seleccionar Columna ",
