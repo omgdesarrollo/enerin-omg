@@ -38,7 +38,9 @@ $Usuario=  Session::getSesion("user");
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
                 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
-
+                
+                <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
+                <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 
         <style>
@@ -70,31 +72,26 @@ require_once 'EncabezadoUsuarioView.php';
 ?>
 
              
-<div style="position: fixed;">    
-<button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
-    <i class="glyphicon glyphicon-repeat"></i>   
-</button>
+<div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">    
+    <button type="button" class="btn btn-info btn_refrescar" id="btnrefrescar" onclick="refresh();" >
+        <i class="glyphicon glyphicon-repeat"></i>   
+    </button>
 
-<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
-    <img src="../../images/base/_excel.png" width="30px" height="30px">
-</button>
-<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
-    <img src="../../images/base/word.png" width="30px" height="30px"> 
-</button>
-<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
-    <img src="../../images/base/pdf.png" width="30px" height="30px"> 
-</button>    
-
-        <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave Documento" style="width: 180px;">
-        <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre Documento" style="width: 180px;">
-        <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 180px;">
-        <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+    <div class="pull-right">
+        <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
+            <img src="../../images/base/_excel.png" width="30px" height="30px">
+        </button>
+        <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
+            <img src="../../images/base/word.png" width="30px" height="30px"> 
+        </button>
+        <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
+            <img src="../../images/base/pdf.png" width="30px" height="30px"> 
+        </button>
+    </div>    
 </div>    
 
-
-<div style="height: 40px"></div>
-
-<div class="container">		
+<div style="height: 10px"></div>
+<div class="container" style="height: 0px">		
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-2">
@@ -115,6 +112,8 @@ require_once 'EncabezadoUsuarioView.php';
         </div>    
     </div>
 </div>
+
+<br><br><br>
 
 <div id="jsGrid"></div>
 
