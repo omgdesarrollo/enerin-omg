@@ -1,4 +1,47 @@
 
+// $(document).ready(()=>{
+    
+//     lol();
+// });
+// var heightGrid;
+function lol()
+{
+    var tam1A,tam2A;
+    Frame = $(this)[0].frameElement;
+    // console.log($(window.parent).height());
+    if($(window.parent).height()<720)
+    {
+        tam1A = 740 - 190;
+        tam2A = tam1A - 42;
+        $(Frame).css("height",tam2A-6+"px");
+
+        // $("#jsGrid").css("height","375px");
+        // $(".jsgrid-grid-body").css("height","235px");
+        // console.log("AQUIII");
+        // console.log(gridInstance);
+        gridInstance.height = 390 + "px";
+    }
+    else
+    {
+        tam1A = $(window.parent).height() - 190;
+        tam2A = tam1A - 42;
+        $(Frame).css("height",tam2A-6+"px");
+        t = $(window.parent).height() - 720;
+        // $("#jsGrid").css("height", t + 375 +"px");
+        // $(".jsgrid-grid-body").css("height", t + 236 +"px");
+        // heightGrid = t;
+        // console.log(gridInstance);
+        gridInstance.height = t + 370 + "px";
+        // $(".jsgrid-grid-body").css("height",($(window.parent).height() - 720 + 215) +"px");
+        
+    }
+    // console.log("Reconstruir tamaños");
+}
+
+$(window.parent).resize(()=>{
+    lol();
+});
+
 function customsFieldsGrid()
 {
     $.each(customsFieldsGridData,function(index,value)
@@ -14,8 +57,6 @@ function construirGrid()
     {
         loadData: function()
         {
-            // $(".jsgrid-grid-body").attr("style","height:50%");
-            // alert("4");
             if(DataGrid.length == 0)
                 $(".jsgrid-grid-header").css("overflow-x","auto");
             else
@@ -24,8 +65,7 @@ function construirGrid()
         },
         updateItem:function()
         {
-            alert("5");
-            // console.log(a);
+            // alert("5");
         }
     };
     
@@ -36,7 +76,6 @@ function construirGrid()
             gridInstance=args.grid;
             jsGrid.Grid.prototype.editButton=true;
             jsGrid.Grid.prototype.autoload=true;
-            // $(".jsgrid-grid-body").attr("style","height:50%");
         },
         onDataLoading: (args)=>
         {
@@ -46,8 +85,12 @@ function construirGrid()
         onDataLoaded:(args)=>
         {
             // alert("3");
+            lol();
             $('.jsgrid-filter-row').removeAttr("style",'display:none');
-            $(".jsgrid-grid-body").attr("style","height:53.44228935%");
+            // $(".jsgrid-grid-body").attr("style","height:53.44228935%");
+            // $(window.parent).resizeTo($(window.parente).width(),$(window.parente).height()-200);
+            // this.resizeTo($(window.parente).width(),$(window.parente).height()-200);
+            // window.open("A","B","width=400,height=400");
             // $(".jsgrid-grid-header").attr("style","overflow-x:auto");
         },
         rowDoubleClick:(args)=>
@@ -67,7 +110,7 @@ function construirGrid()
             // console.log("A");
         },
         width: "100%",
-        height: "335px",
+        height: "390px",
         autoload:true,
         heading: true,
         sorting: true,
@@ -80,7 +123,7 @@ function construirGrid()
         updateOnResize: true,
         confirmDeleting: false,
         noDataContent:"No Existen Registros",
-        pagerFormat: "Paginas: {first}  {prev} {pages} {next} {last}   {pageIndex} de {pageCount}",
+        pagerFormat: "     Paginas: {first}  {prev} {pages} {next} {last}   {pageIndex} de {pageCount}",
         fields: estructuraGrid,
         onItemDeleted:function(args)
         {
