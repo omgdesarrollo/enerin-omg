@@ -271,7 +271,8 @@ function reconstruir(value,index)
 //          tempData="";
 //          $.each(empleados,function(index,value)
 //          {
-//              tempData+="<option value='"+value.id_empleado+"'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</option>";
+////                tempData+="<option value='"+value.id_empleado+"'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</option>";
+//                tempData+="<option value='"+value.id_empleado+"'>"+value.nombre_completo+"</option>";
 //          }); 
 //          
 //          $("#ID_EMPLEADOMODAL").html(tempData);
@@ -283,12 +284,20 @@ function reconstruir(value,index)
 function listarEmpleados()
 {
     $.ajax({
-        url:"../Controller/EmpleadosController.php?Op=nombresCompletos",
+        url:"../Controller/DocumentosController.php?Op=nombresCompletos",
         type:"GET",
         async:false,
         success:function(empleadosComb)
         {
             EmpleadosCombobox=empleadosComb;
+            tempData="";
+            $.each(empleadosComb,function(index,value)
+            {
+  //                tempData+="<option value='"+value.id_empleado+"'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</option>";
+                  tempData+="<option value='"+value.id_empleado+"'>"+value.nombre_completo+"</option>";
+            }); 
+
+            $("#ID_EMPLEADOMODAL").html(tempData);
         }
     });
     return EmpleadosCombobox;

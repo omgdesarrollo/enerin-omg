@@ -202,10 +202,10 @@ and open the template in the editor.
         
         
      
-  <form action="">
-      <input type="submit" class="btn btn-info" value="Recargar">      
+  <!--<form action="">-->
+  <input type="submit" class="btn btn-info" value="Recargar" onclick="refrescarDatosGantt()">      
       
-  </form>
+  <!--</form>-->
         <input type="radio" id="scale1" name="scale" value="1" checked/><label for=""><h5>Dia</h5></label>
 <input type="radio" id="scale2" name="scale" value="2"/><label for=""><h5>Semana</h5></label>
 <input type="radio" id="scale3" name="scale" value="3"/><label for=""><h5>Mes</h5></label>
@@ -224,7 +224,16 @@ and open the template in the editor.
     <input value="Exportar a PNG" class="btn btn-info" type="button" onclick="gantt.exportToPNG()">
 <input value="Exportar a MS Proyect" class="btn btn-success" type="button" onclick='gantt.exportToMSProject({skip_circular_links: false})'
 	   style='margin:20px;'>
-<input value="Export a Excel" class="btn btn-info" type="button" onclick='gantt.exportToExcel()' style='margin:20px;'>
+<input value="Export a Excel" class="btn btn-info" type="button" onclick='gantt.exportToExcel({
+    name:"document.xlsx", 
+    columns:[
+        { id:"text",  header:"Tarea", width:100 },
+        { id:"start_date",  header:"Fecha de Inicio", width:50, type:"date" }
+    ],
+    server:"https://export.dhtmlx.com/gantt",
+    visual:true,
+    cellColors:true
+})' style='margin:20px;'>
   
 <!--<div class="row">
 		<div class="col-md-2 col-md-push-10">
@@ -394,7 +403,12 @@ setScaleConfig('1');
                                 {
                                  
                                     if(res==true){
-                                        growlError("Descendencia","Error Tiene Tareas En Descendencia");
+//                                        growlError("Descendencia","Error Tiene Tareas En Descendencia");
+//                                             gantt.alert({
+//                                                    title:"Error",
+//                                                    type:"alert-error",
+//                                                    text:"Error Tiene Tareas En Descendencia"
+//                                              });
 //                                        alert("tiene descendencia ");
 //                                         swalError("No se puede eliminar la actividad, tiene descendencia ");
                                         
@@ -793,20 +807,24 @@ dp.init(gantt);
            }
            
         });
-      
-        
     }
     gantt.templates.progress_text = function (start, end, task) {
 		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
 	};
-    
+        
+        
+
+ 
+          var datosTreeList=[]; 
     $(function (){
+ 
+     
         
-        
-        
-obtenerTareas();
+obtenerTareas().then(function (){
+construirTreeList();
+});
     
-  
+
     
     
       
@@ -827,19 +845,34 @@ obtenerTareas();
       
 
     });
-var datosTreeList=[];
+
     
     function obtenerTareas(){
-  $.ajax({
-                                url:"../Controller/GanttTareasController.php?Op=ListarTodasLasTareasDetallesPorSuId",
-                                async:false,
-                                success:function (res)
-                                {
-                                 datosTreeList=res.data;
-                                  construirTreeList();
-                                }
-                              });
-    }
+        return new Promise(function (resolve,reject){
+                $.ajax({
+                                        url:"../Controller/GanttTareasController.php?Op=ListarTodasLasTareasDetallesPorSuId",
+                                        success:function (res)
+                                        {
+                                         datosTreeList=res.data;
+                                         resolve();
+//                                          construirTreeList();
+                                        }
+                                      });
+                                      
+                                  })
+        }
+// gantt.exportToExcel({
+//    name:"document.xlsx", 
+//    columns:[
+//        { id:"text",  header:"Title", width:150 },
+//        { id:"start_date",  header:"Start date", width:250, type:"date" }
+//    ],
+//    server:"https://myapp.com/myexport/gantt",
+//    visual:true,
+//    cellColors:true
+//});
+        
+        
   function construirTreeList(){
              
    $("#dx").dxTreeList({
@@ -921,7 +954,7 @@ var datosTreeList=[];
 //        },
         pager: {
         allowedPageSizes: null,
-        infoText: "Page {0} of {1}",
+        infoText: "Pagina {0} de {1}",
         showInfo: true,
         showNavigationButtons: true,
         showPageSizeSelector: true,
@@ -944,6 +977,12 @@ var datosTreeList=[];
         showPane: true,
         text: "Loading...",
         width: 200
+        },
+        onCellClick:(args)=>{
+//            console.log(args);
+        },
+        onRowClick:(args)=>{
+            console.log(args);
         },
         columns:[
             {
@@ -1013,15 +1052,27 @@ var datosTreeList=[];
             }
         },
         onEditorPreparing: function(e) {
-            if(e.dataField === "Head_ID" && e.row.data.ID === 1) {
+            if(e.dataField === "parent" && e.row.data.id === 1) {
                 e.cancel = true;
             }
         },
         onInitNewRow: function(e) {
-            e.data.Head_ID = 1;
+            e.data.parent = 1;
         },
         expandedRowKeys: [1, 2, 3, 4, 5]
     }); 
+    }
+    
+    
+    function refrescarDatosGantt(){
+        gantt.refreshData();
+        gantt.init('gantt_here');
+//        gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId");
+        $.when(gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId")).then(function(){
+           
+           
+          
+        });
     }
     
     
