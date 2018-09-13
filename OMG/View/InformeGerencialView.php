@@ -189,6 +189,7 @@ var db={};
 var gridInstance;
 var ultimoNumeroGrid=0;
 var DataGridExcel=[];
+var origenDeDatosVista="informeGerencial";
 var customsFieldsGridData=[
         // {field:"customControl",my_field:MyCControlField},
 //        {field:"porcentaje",my_field:porcentajesFields},
