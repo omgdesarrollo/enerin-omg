@@ -222,9 +222,9 @@ $Usuario=  Session::getSesion("user");
                                         <th class="table-header">Menu</th>
                                         <th class="table-header">Vistas</th>
                                         <th class="table-header">Ver</th>
-<!--                                        <th class="table-header">Guardar</th>
+                                        <th class="table-header">Guardar</th>
                                         <th class="table-header">Modificar</th>
-                                        <th class="table-header">Eliminar</th>-->
+                                        <th class="table-header">Eliminar</th>
                                     </tr>
                                     <tbody id="bodyTablePermisos">
 
