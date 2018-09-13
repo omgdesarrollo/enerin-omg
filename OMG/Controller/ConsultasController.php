@@ -13,8 +13,6 @@ switch ($Op) {
         $Lista = $model->calcular($Lista);
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
-        return $Lista;
-
         break;
 
     default:

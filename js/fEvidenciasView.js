@@ -66,7 +66,7 @@ function listarDatos()
                     {
                         __datos.push( reconstruir(value,index+1) );
                     });
-                    console.log(__datos);
+                    // console.log(__datos);
                     DataGrid = __datos;
                     gridInstance.loadData();
                     resolve();
@@ -79,7 +79,7 @@ function listarDatos()
             },
             error:function(e)
             {
-                console.log(e);
+                // console.log(e);
                 growlError("Error","Error en el servidor");
                 reject();
             }
@@ -106,7 +106,7 @@ function listarDatos()
             claveRegistro = $("#IDREGISTRO_NUEVAEVIDENCIAMODAL").val();
             claveTema = $("#IDTEMA_NUEVAEVIDENCIAMODAL").val();
             fecha = $("#FECHA_NUEVAEVIDENCIAMODAL").val();
-            console.log(fecha);
+            // console.log(fecha);
             if(claveTema!=-1 && claveRegistro!=-1 && fecha!="")
             {
                 $.ajax({
@@ -133,7 +133,7 @@ function listarDatos()
                                 {
                                     (typeof(data)=="object")?
                                     (
-                                        console.log(data),
+                                        // console.log(data),
                                         growlSuccess("Crear Evidencia","Evidencia Creada"),
                                         tempData = new Object(),
                                         $.each(data,function(index,value){
@@ -343,7 +343,7 @@ function listarDatos()
         $("#DOCUMENTO_NUEVAEVIDENCIAMODAL").html(Registros.documento);
         $("#NOMBRE_NUEVAEVIDENCIAMODAL").html(Registros.nombre);
         dataRegistro=Registros;
-        console.log(dataRegistro);
+        // console.log(dataRegistro);
     }
 
     function buscarRegistros(Obj)
@@ -702,7 +702,7 @@ function listarDatos()
 
 function preguntarEliminar(data)
 {
-    console.log(data);
+    // console.log(data);
     swal({
         title: "",
         text: "¿Eliminar Evidencia?",
@@ -1292,7 +1292,7 @@ function mostrar_urls(id_evidencia,validador,validado,id_para)
             }
             tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdEvidenciaDocumento' type='text' style='display:none;' value='"+id_evidencia+"'>"
             tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdParaDocumento' type='text' style='display:none;' value='"+id_para+"'>";
-            console.log(tempDocumentolistadoUrl);
+            // console.log(tempDocumentolistadoUrl);
             $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
             $('#fileupload').fileupload
             ({
