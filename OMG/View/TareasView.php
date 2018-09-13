@@ -103,7 +103,7 @@ require_once 'EncabezadoUsuarioView.php';
 <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">             
 
     <button onClick="archivoyComboboxparaModal();" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#crea_tarea">
-        Agregar Tarea
+        Agregar
     </button>
 
 <!--    <button onClick="loadChartView(true)" type="button" id="btn_informe" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#informe_tareas">
@@ -276,6 +276,7 @@ EmpleadosCombobox=[];
 filtros=[];
 ultimoNumeroGrid=0;
 DataGridExcel=[];
+origenDeDatosVista="tareas";
 
 listarDatos();
 inicializarFiltros();

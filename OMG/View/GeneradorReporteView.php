@@ -227,7 +227,9 @@ $Usuario=  Session::getSesion("user");
 </div>
 <script>
     var data1=[],DataGrid=[],DataGridMolares=[],DataGridExcel=[],myCombo,myCombo2;
-    var fechas_inicio_final={"fecha_inicio":"","fecha_final":""};  
+    var fechas_inicio_final={"fecha_inicio":"","fecha_final":""};
+    var origenDeDatosVista="reportes";
+    
     bandera=0;  
 $(function()
 {    

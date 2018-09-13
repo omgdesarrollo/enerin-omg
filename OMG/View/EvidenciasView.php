@@ -292,6 +292,8 @@
 <script>
     // construirFiltros();
     // construir();
+    
+
     var DataGrid=[];
     var dataListado=[];
     var filtros=[];
