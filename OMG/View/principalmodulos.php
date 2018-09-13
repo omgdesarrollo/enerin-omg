@@ -259,20 +259,20 @@ function redimencionarLayout()
 
     $(function()
     {
-//        $(document).ready(()=>{
-//            redimencionarLayout();
-//        });
-//
-//        $(window).resize(()=>{
-//            // $(window).height();
-//            // tam1 = $(window).height() - 200;
-//            // tam2 = tam1 + 42;
-//            // $(".dhx_cell_cont_layout").css("height", tam1+"px");
-//            // $(".dhx_cell_layout").css("height", tam2+"px");
-//            // $(".dhxlayout_cont").css("height", tam2+"px");
-//            // $("#arbolprincipal").css("height", tam2+"px");
-//            redimencionarLayout();
-//        });
+       $(document).ready(()=>{
+           redimencionarLayout();
+       });
+
+       $(window).resize(()=>{
+           // $(window).height();
+           // tam1 = $(window).height() - 200;
+           // tam2 = tam1 + 42;
+           // $(".dhx_cell_cont_layout").css("height", tam1+"px");
+           // $(".dhx_cell_layout").css("height", tam2+"px");
+           // $(".dhxlayout_cont").css("height", tam2+"px");
+           // $("#arbolprincipal").css("height", tam2+"px");
+           redimencionarLayout();
+       });
            //  layout = new dhtmlXLayoutObject({parent: "layoutObj",pattern: "2U",cells: [{id: "a", text: "Navegacion", header:true},{id: "b", text: "Visualizacion",header:true}]});
         
         myLayout = new dhtmlXLayoutObject({parent: "layoutObj",pattern: "2U",cells: [{id: "a", text: "Navegacion", header:true},{id: "b", text: "Visualizacion",header:true}]});
