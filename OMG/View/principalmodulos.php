@@ -188,6 +188,7 @@ var gantt=[
 
 function redimencionarLayout()
 {
+    
 //    // console.log(tam1);
 //    tam1 = $(window).height() - 190;
 //    tamW1 = $(window).width();
