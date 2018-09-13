@@ -62,7 +62,7 @@ $(function()
     var $btnDLtoExcel = $('#toExcel'); 
     $btnDLtoExcel.on('click', function () 
     {
-        console.log("Entro al excelexportHibrido");
+//        console.log("Entro al excelexportHibrido");
         $("#listjson").excelexportHibrido({
             containerid: "listjson"
             , datatype: 'json'
@@ -73,7 +73,7 @@ $(function()
 
 }); //CIERRA $(function())
 
-var thisEmpleados=[];
+var thisEmpleados=[]; 
 
 function inicializarFiltros()
 {    

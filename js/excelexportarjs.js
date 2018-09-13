@@ -25,8 +25,24 @@
                     excelData = Export(ConvertFromTable());
                     break;
                 case 'json':
-                    excelData = Export(ConvertDataStructureToTable());
+                    
+                    if(origenDeDatosVista=="reportes")
+                    {
+                       excelData = Export(ConvertDataStructureToTable()); 
+                    }
+                    if(origenDeDatosVista=="tareas")
+                    {
+                        excelData = Export(ConvertDataStructureToTableTareas());
+                    }
+                   
+                    
                     break;
+                
+//                case 'jsonTareas':
+//                    console.log("Entro al case");
+//                    excelData = Export(ConvertDataStructureToTableTareas());
+//                    break;
+                    
                 case 'xml':
                     excelData = Export(ConvertDataStructureToTable());
                     break;
@@ -128,6 +144,50 @@
 
             return result;
         }
+        
+           function ConvertDataStructureToTableTareas() {
+//            alert("d");
+            var result = "<table id='tabledata'";
+
+            result += "<thead><tr>";
+            $($settings.columns).each(function (key, value) {
+                if (this.ishidden != true) {
+                    result += "<th style='background:#307ECC; color:#ffffff; border:solid 1px #000000;'";
+                    if (this.width != null) {
+                        result += " style='width: " + this.width + "'";
+                    }
+                    result += ">";
+                    result += this.headertext;
+                    result += "</th>";
+                }
+            });
+            result += "</tr></thead>";
+
+            result += "<tbody>";
+            $(gridData).each(function (key, value) {
+                result += "<tr>";
+                $($settings.columns).each(function (k, v) {
+                    if (value.hasOwnProperty(this.datafield)) {
+                        if (this.ishidden != true) {
+                            result += "<td style='border:solid 1px #000000;'";
+                            if (this.width != null) {
+                                result += " style='width: " + this.width + "'; ";
+                            }
+                            result += ">";
+                            result += value[this.datafield];
+                            result += "</td>";
+                        }
+                    }
+                });
+                result += "</tr>";
+            });
+            result += "</tbody>";
+
+            result += "</table>";
+
+            return result;
+        }
+        
         function Export(htmltable) { /* METODO PARA EXPORTAR DE UNA TABLA HTML FVAZCONCELOS*/
 
             if (isBrowserIE()) {

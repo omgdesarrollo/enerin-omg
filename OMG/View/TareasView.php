@@ -276,6 +276,7 @@ EmpleadosCombobox=[];
 filtros=[];
 ultimoNumeroGrid=0;
 DataGridExcel=[];
+origenDeDatosVista="tareas";
 
 listarDatos();
 inicializarFiltros();
