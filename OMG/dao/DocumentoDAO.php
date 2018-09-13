@@ -75,6 +75,29 @@ class DocumentoDAO{
     }
     }
     
+        
+    public function nombresCompletosCombobox()
+    {
+        try
+        {
+            $query="SELECT empleados.id_empleado, CONCAT(empleados.nombre_empleado,' ',empleados.apellido_paterno,' ',empleados.apellido_materno) 
+                    AS nombre_completo
+                    FROM empleados";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    
+    
     public function verificacionExisteClaveandDocumento($cadena,$cualverificar){
         try{
            $query="SELECT tbdocumentos.clave_documento  FROM documentos tbdocumentos WHERE tbdocumentos.$cualverificar ='$cadena'";

@@ -78,6 +78,21 @@ class DocumentoModel{
     }
     
     
+    public function nombresCompletosCombobox()
+    {
+       try
+       {
+           $dao=new DocumentoDAO();
+           $rec= $dao->nombresCompletosCombobox();
+           
+           return $rec;
+       } catch (Exception $ex)
+       {
+           throw $ex;
+           return -1;
+       }
+    }
+    
     public function verificacionExisteClaveandDocumento($registro,$cualverificar){
         try{
             $dao= new DocumentoDAO();

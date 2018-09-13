@@ -48,7 +48,7 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/tools.js" type="text/javascript"></script>
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script> 
-                <script src="../../js/fEmpleadosView.js" type="text/javascript"></script>
+                <script src="../../js/fEmpleadosOficiosView.js" type="text/javascript"></script>
                 <script src="../../js/fechas_formato.js" type="text/javascript"></script>
                 
         <style>

@@ -369,7 +369,18 @@ function reconstruirExcel(value,index)
     tempData["Fecha de Creacion"]= getSinFechaFormato(value.fecha_creacion);
     tempData["Fecha Alarma"]= getSinFechaFormato(value.fecha_alarma);
     tempData["Fecha de Cumplimiento"]= getSinFechaFormato(value.fecha_cumplimiento);
-    tempData["Status"]=value.status_tarea;
+    if(value.status_tarea==1)
+    {
+        tempData["Status"]="En Proceso";
+    }
+    if(value.status_tarea==2)
+    {
+        tempData["Status"]="Suspendido";
+    }
+    if(value.status_tarea==3)
+    {
+        tempData["Status"]="Terminado";
+    }
     tempData["Observaciones"]=value.observaciones;
 //    tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_tarea+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
 //    tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar</button>";
