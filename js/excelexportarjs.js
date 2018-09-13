@@ -147,8 +147,15 @@
         
            function ConvertDataStructureToTableTareas() {
 //            alert("d");
-            var result = "<table id='tabledata'";
-
+            months = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+            fecha="0000-00-00";
+            date = new Date();
+            date.setSeconds(86400);//86400 segundos son un dia
+            fecha = date.getDate() +" "+ months[date.getMonth()] +" "+ date.getFullYear().toString().slice(2,4);
+            
+            
+            var result = "<table><tr><th style='background:#307ECC; color:#ffffff; border:solid 1px #000000;'>Tareas: </th><th style='border:solid 1px #000000;'>"+fecha+"</th><tr></table>";
+            result += "<table id='tabledata'";
             result += "<thead><tr>";
             $($settings.columns).each(function (key, value) {
                 if (this.ishidden != true) {
