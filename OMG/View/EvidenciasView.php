@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
     
     <!--Inicia para el spiner cargando-->
-    <link async href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+    <!-- <link async href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/> -->
     <!--Termina para el spiner cargando-->
                   
     <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
@@ -292,8 +292,6 @@
 <script>
     // construirFiltros();
     // construir();
-    
-
     var DataGrid=[];
     var dataListado=[];
     var filtros=[];
@@ -301,8 +299,6 @@
     var gridInstance;
     var ws;
     var thisjGrowl;
-
-    // var months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 
     var frecuenciaData = [
                 {frecuencia:"DIARIO"},

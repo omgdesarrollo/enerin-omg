@@ -3,12 +3,12 @@
 
  class InformeEvidenciasModel{
      
-     public function listarEvidencias($v)
+     public function listarEvidencias($CONTRATO)
      {
          try
          {
              $dao=new InformeEvidenciasDAO();
-             $lista= $dao->listarEvidencias($v);
+             $lista= $dao->listarEvidencias($CONTRATO);
              
              return $lista;
          } catch (Exception $ex)

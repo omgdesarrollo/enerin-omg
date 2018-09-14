@@ -50,7 +50,6 @@ function listarDatos()
         $.ajax({
             url: '../Controller/EvidenciasController.php?Op=Listar',
             type: 'GET',
-            async:false,
             data:"URL="+URL,
             beforeSend:function()
             {
