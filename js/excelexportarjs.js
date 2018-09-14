@@ -1,4 +1,4 @@
-﻿(function ($) {
+$(function ($) {
     var $defaults = {
         containerid: null
         , datatype: 'table'
@@ -162,7 +162,6 @@
             });
             result += "</tbody>";
 
-<<<<<<< HEAD
             result += "</table>";
 
             return result;
@@ -225,10 +224,6 @@
         function ConvertDataStructureToTable() 
         {
             alert("dg");
-=======
-        function ConvertDataStructureToTable() {
-         
->>>>>>> a363e22e20d34ff8cf71808e3aa534fa4ba8275f
             var result = "<table id='tabledata'";
 
             result += "<thead><tr>";

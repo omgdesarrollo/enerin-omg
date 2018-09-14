@@ -237,6 +237,7 @@ var mensaje="";
 var thisAutoridad=[];
 var thisEmpleados=[];
 var thisEmpleadosFiltro=[];
+var thisAutoridadesFiltro=[];
 
 var MyComboAutoridad = function(config)
 {
@@ -412,12 +413,12 @@ function inicializarFiltros()
                 { id: "folio_entrada", name: "Folio Entrada", type: "text"},
                 { id: "folio_salida", name: "Folio Entrada", type: "text"},
                 // { name: "fecha_recepcion", title: "Fecha Recepción", type: "text", width, validate: "required" },   
-                {id:"id_empleado", name: "Referencia",type:"combobox",data:[],descripcion:""},
-    //            {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
+//                {id:"id_empleado", name: "Referencia",type:"combobox",data:[],descripcion:""},
+                {id:"id_empleado",type:"combobox",data:thisEmpleadosFiltro,descripcion:"nombre_completo"},
                 {id:"fecha_envio",type:"date"},
                 {id:"asunto",type:"text"},
                 {id:"destinatario",type:"text"},
-                {id:"id_autoridad",type:"combobox",data:thisAutoridad,descripcion:"clave_autoridad"},
+                {id:"id_autoridad",type:"combobox",data:thisAutoridadesFiltro,descripcion:"clave_autoridad"},
               { id:"noneDos", type:"none"},
                 {id:"observaciones",type:"text"},
                 {name:"opcion",id:"opcion",type:"opcion"}
@@ -439,7 +440,7 @@ async function reiniciar()
         $("#btnrefrescar").attr("disabled",true);
         try
         {
-                let doble = await Promise.all([listarThisEmpleados(),listarAutoridades()]);
+                let doble = await Promise.all([listarThisEmpleados(),listarThisEmpleadosFiltro(),listarThisAutoridadesFiltro(),listarAutoridades()]);
                 inicializarEstructuraGrid().then((res)=>
                 {;
                         construirGrid();
@@ -517,6 +518,26 @@ function listarThisEmpleadosFiltro()
                         {
                                 // tempData = autoridades;
                                 thisEmpleadosFiltro = empleados;
+                                resolve();
+                        },
+                        error:(er)=>
+                        {
+                                reject(er);
+                        }
+                });
+        });
+}
+
+function listarThisAutoridadesFiltro()
+{
+        return new Promise((resolve,reject)=>{
+                $.ajax({
+                        url:'../Controller/DocumentosSalidaController.php?Op=autoridadRemitenteFiltro',
+                        type: 'GET',
+                        success:(autoridades)=>
+                        {
+                                // tempData = autoridades;
+                                thisAutoridadesFiltro = autoridades;
                                 resolve();
                         },
                         error:(er)=>

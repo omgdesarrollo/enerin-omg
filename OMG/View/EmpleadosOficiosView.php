@@ -50,8 +50,9 @@ $Usuario=  Session::getSesion("user");
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script> 
                 <script src="../../js/fEmpleadosOficiosView.js" type="text/javascript"></script>
                 <script src="../../js/fechas_formato.js" type="text/javascript"></script>
-                
+                <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
         <style>
+            
             .jsgrid-header-row>.jsgrid-header-cell {
                 background-color:#307ECC ;      /* orange */
                 font-family: "Roboto Slab";
@@ -86,25 +87,19 @@ require_once 'EncabezadoUsuarioView.php';
              
 <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;"> 
 
-<button type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#crea_empleado">
-    Agregar Personal
-</button>
+    <button type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#crea_empleado">
+        Agregar Personal
+    </button>
 
-<button type="button" class="btn btn-info btn_refrescar" id="btnrefrescar" onclick="refresh();" >
-    <i class="glyphicon glyphicon-repeat"></i>   
-</button>
-<!--<div class="pull-right">
-<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
-    <img src="../../images/base/_excel.png" width="30px" height="30px">
-</button>
-<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
-    <img src="../../images/base/word.png" width="30px" height="30px"> 
-</button>
-<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
-    <img src="../../images/base/pdf.png" width="30px" height="30px"> 
-</button> 
-</div>-->
+    <button type="button" class="btn btn-info btn_refrescar" id="btnrefrescar" onclick="refresh();" >
+        <i class="glyphicon glyphicon-repeat"></i>   
+    </button>
     
+    <div class="pull-right">    
+        <button style="width:48px;height:42px" type="button"  class="btn_agregar" id="toExcel">
+            <img src="../../images/base/_excel.png" width="30px" height="30px">
+        </button>
+    </div>
 </div>
 
 <br><br><br>
@@ -166,6 +161,8 @@ require_once 'EncabezadoUsuarioView.php';
 <script>
 DataGrid = [];
 dataListado=[];
+DataGridExcel=[];
+origenDeDatosVista="empleados";
 
 listarDatos();
 inicializarFiltros();

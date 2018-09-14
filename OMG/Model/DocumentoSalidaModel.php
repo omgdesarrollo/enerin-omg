@@ -188,59 +188,9 @@ class DocumentoSalidaModel {
             $dao=new DocumentoSalidaDAO();
             $rec1= $dao->responsableDelTemaParaFiltroConFolio($CONTRATO);
             $rec2= $dao->responsableDelTemaParaFiltroSinFolio($CONTRATO);
-            $lista=[];
-            $contador=0;
-            
-//            foreach ($rec1 as $key => $value) 
-//            {
-//                $lista[$contador]= $value;
-//                $contador++;        
-//            }
-//            echo json_encode($rec1);
-//            echo json_encode($rec2);
-
-//            foreach ($rec2 as $key1 => $value1) 
-//            {
-////                $id_empleado= $value1['id_empleado'];
-//                
-//                foreach ($rec1 as $key2 => $value2) 
-//                {
-//                    
-//                    if($value1['id_empleado'] != $value2['id_empleado'])
-//                    {
-//                        $lista[$contador]= $value1;
-//                         $contador++;
-//                    } else{
-//                        
-//                    }
-//                   
-//                }                
-//                    
-//            }
-            
-            foreach ($rec1 as $key1 => $value1) 
-            {
-                $lista[$contador]= $value1;
-                $contador++;    
-                
-                foreach ($rec2 as $key2 => $value2) 
-                {
-                    
-                    if($value1['id_empleado'] != $value2['id_empleado'])
-                    {
-                        $lista[$contador]= $value2;
-                        
-                    } else{
-
-                    }
-                    $contador++;
-
-                }
-            }
-            
-            
-            
-            
+            $resultado = array_merge($rec1, $rec2);
+            $lista= array_unique($resultado, SORT_REGULAR);
+                                              
             return $lista;
         } catch (Exception $ex) 
         {
@@ -248,8 +198,28 @@ class DocumentoSalidaModel {
             return -1;
         }
     }
-
     
+    public function autoridadRemitenteParaFiltro($CONTRATO)
+    {
+        try 
+        {
+            $dao=new DocumentoSalidaDAO();
+            $rec1= $dao->autoridadRemitenteParaFiltroConFolio($CONTRATO);
+            $rec2= $dao->autoridadRemitenteParaFiltroSinFolio($CONTRATO);
+            $resultado = array_merge($rec1, $rec2);
+            $lista= array_unique($resultado, SORT_REGULAR);
+                                              
+            return $lista;
+            
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+
+
     //    AREA DEL DOCUMENTO DE SALIA SIN FOLIO DE ENTRADA
     
     public function eliminarDocumento($ID_DOCUMENTO)
