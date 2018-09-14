@@ -37,7 +37,7 @@ function inicializarFiltros()
 //            {id:"condicion",type:"text"},
             {id:"condicion",type:"combobox",descripcion:"descripcion",
                 data:[
-                        {"condicion":"Alerta Vencida","descripcion":"Alerta Vencida"},
+                        {"condicion":"Alarma Vencida","descripcion":"Alarma Vencida"},
                         {"condicion":"En Tiempo","descripcion":"En Tiempo"},
                         {"condicion":"Suspendido","descripcion":"Suspendido"},
                         {"condicion":"Terminado","descripcion":"Terminado"},
@@ -114,7 +114,7 @@ function construirGrid()
             { name: "fecha_limite_atencion",title:"Fecha Limite de Atencion", type: "text", validate: "required",width:200,editing:false},            
             { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required",width:140,editing:false},            
             { name: "status_doc",title:"Status", type: "text", validate: "required",editing:false},
-            { name: "condicion",title:"Condicion Logica", type: "text", validate: "required",width:140,editing:false},
+            { name: "condicion",title:"Condición", type: "text", validate: "required",width:140,editing:false},
             { name: "id_empleadoplan",title:"Responsable del Plan", type: "select",width:250,
                 items:EmpleadosCombobox,
                 valueField:"id_empleadoplan",

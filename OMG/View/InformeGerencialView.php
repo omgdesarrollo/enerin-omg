@@ -207,7 +207,7 @@ estructuraGrid = [
         { name: "fecha_limite_atencion",title:"Fecha Limite de Atencion", type: "text",width:200,editing:false},
         { name: "fecha_alarma",title:"Fecha de Alarma", type: "text",width:140,editing:false},
         { name: "status_doc",title:"Status", type: "text",editing:false},
-        { name: "condicion",title:"Condicion Logica", type: "text",width:140,editing:false},
+        { name: "condicion",title:"Condición", type: "text",width:140,editing:false},
         { title:"Opción", type:"",sorting:""},
         
     ];
