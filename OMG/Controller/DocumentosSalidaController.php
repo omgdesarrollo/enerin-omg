@@ -138,6 +138,12 @@ switch ($Op) {
             echo json_encode( $Lista);
             break;
         
+        case 'autoridadRemitenteFiltro':
+            $CONTRATO= Session::getSesion("s_cont");
+            $Lista= $model->autoridadRemitenteParaFiltro($CONTRATO);
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode( $Lista);
+            break;
             
 	default:
 		# code...

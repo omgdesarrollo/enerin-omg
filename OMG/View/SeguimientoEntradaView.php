@@ -149,6 +149,7 @@ EmpleadosCombobox=[];
 filtros=[];
 ultimoNumeroGrid=0;
 DataGridExcel=[];
+origenDeDatosVista="Seguimiento";
 
 
 listarEmpleados();

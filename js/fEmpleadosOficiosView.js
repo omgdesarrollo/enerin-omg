@@ -71,6 +71,18 @@ $(function()
             });
         }
     });
+    
+    var $btnDLtoExcel = $('#toExcel'); 
+    $btnDLtoExcel.on('click', function () 
+    {
+        console.log("Entro al excelexportHibrido");
+        $("#listjson").excelexportHibrido({
+            containerid: "listjson"
+            , datatype: 'json'
+            , dataset: DataGridExcel
+            , columns: getColumns(DataGridExcel)
+        });
+    });
 }); //CIERRA EL $(FUNCTION())
 
 
@@ -80,6 +92,7 @@ var correoEmail=false;
 function inicializarFiltros()
 {
     filtros =[
+        {'name':'No',id:'noneUno',type:'none'},
         {'name':'Nombre','id':'nombre_empleado',type:'text'},
         {'name':'Apellido Paterno','id':'apellido_paterno',type:'text'},
         {'name':'Apellido Materno','id':'apellido_materno',type:'text'},
@@ -153,6 +166,7 @@ function construirGrid()
         fields: 
         [
             { name: "id_principal",visible:false},
+            { name:"no",title:"No",width:40},
             { name: "nombre_empleado",title:"Nombre", type: "text", width: 80, validate: "required" },
             { name: "apellido_paterno",title:"Apellido Paterno", type: "text", width: 150, validate: "required" },
             { name: "apellido_materno",title:"Apellido Materno", type: "text", width: 150, validate: "required" },
@@ -204,7 +218,7 @@ function construirGrid()
 
 function listarDatos()
 {
-    __datos=[];
+    var __datos=[], __datosExcel=[];
     datosParamAjaxValues={};
     datosParamAjaxValues["url"]="../Controller/EmpleadosOficiosController.php?Op=Listar";
     datosParamAjaxValues["type"]="GET";
@@ -217,6 +231,12 @@ function listarDatos()
         {
             __datos.push(reconstruir(value,index++));
         });
+        
+                $.each(data,function(index,value)
+        {
+            __datosExcel.push(reconstruirExcel(value,index++));
+        });
+        DataGridExcel= __datosExcel;
     }
     var listfunciones=[variablefunciondatos];
     ajaxHibrido(datosParamAjaxValues,listfunciones);
@@ -240,12 +260,27 @@ function reconstruir(value,index)
     tempData = new Object();
     tempData["id_principal"] = [{'id_empleado':value.id_empleado}];
     tempData["nombre_empleado"] = value.nombre_empleado;
-    tempData["apellido_materno"] = value.apellido_materno;
     tempData["apellido_paterno"] = value.apellido_paterno;
+    tempData["apellido_materno"] = value.apellido_materno;
     tempData["categoria"] = value.categoria;
     tempData["correo"] = value.correo;
     tempData["fecha_creacion"] = getFechaFormatoH(value.fecha_creacion);
     tempData["cancel"]=false;
+    return tempData;
+}
+
+function reconstruirExcel(value,index)
+{
+    tempData = new Object();
+//    tempData["id_principal"] = [{'id_empleado':value.id_empleado}];
+    tempData["No"]= index;
+    tempData["Nombre"] = value.nombre_empleado;
+    tempData["Apellido Paterno"] = value.apellido_materno;
+    tempData["Apellido Materno"] = value.apellido_paterno;
+    tempData["Categoria"] = value.categoria;
+    tempData["Correo Electronico"] = value.correo;
+    tempData["Fecha de Creacion"] =getFechaFormatoH(value.fecha_creacion);
+//    tempData["cancel"]=false;
     return tempData;
 }
 

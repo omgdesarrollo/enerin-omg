@@ -235,6 +235,29 @@ class DocumentoSalidaDAO{
             return -1;
         }
     }
+    
+    public function autoridadRemitenteParaFiltroConFolio($CONTRATO)
+    {
+        try 
+        {
+            $query="SELECT tbautoridad_remitente.id_autoridad, tbautoridad_remitente.clave_autoridad
+                    FROM documento_salida tbdocumento_salida
+                    JOIN documento_entrada tbdocumento_entrada ON tbdocumento_entrada.id_documento_entrada=tbdocumento_salida.id_documento_entrada
+                    JOIN autoridad_remitente tbautoridad_remitente ON tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad 
+                    WHERE tbdocumento_salida.id_cumplimiento= $CONTRATO GROUP BY tbautoridad_remitente.id_autoridad";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista;
+            
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+        
+    }
 
 
 //    AREA DEL DOCUMENTO DE SALIA SIN FOLIO DE ENTRADA
@@ -337,7 +360,27 @@ class DocumentoSalidaDAO{
         }
     }
     
-    public function listarDocumentoSalidaSinFolio($ID_DOCUMENTO_SALIDA)
+    public function autoridadRemitenteParaFiltroSinFolio($CONTRATO)
+    {
+        try 
+        {
+            $query="SELECT tbautoridad_remitente.id_autoridad, tbautoridad_remitente.clave_autoridad
+                    FROM documento_salida_sinfolio_entrada tbdocumento_salida_sinfolio_entrada
+                    JOIN autoridad_remitente tbautoridad_remitente ON tbautoridad_remitente.id_autoridad=tbdocumento_salida_sinfolio_entrada.id_autoridad
+                    WHERE tbdocumento_salida_sinfolio_entrada.id_cumplimiento= $CONTRATO GROUP BY tbautoridad_remitente.id_autoridad";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista;            
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+        public function listarDocumentoSalidaSinFolio($ID_DOCUMENTO_SALIDA)
     {
         try
         {

@@ -3,33 +3,53 @@ require_once '../ds/AccesoDB.php';
 
 class InformeEvidenciasDAO{
     
-    public function listarEvidencias($v)
+    public function listarEvidencias($CONTRATO)
     {
-        $query_concat="";
-        if($v["param"]["v"]=="true"){
+        // $query_concat="";
+        // if($v["param"]["v"]=="true"){
             
-            $query_concat.="AND( tbevidencias.validacion_supervisor='true'";
-            if($v["param"]["n_v"]=="true"){
-                        $query_concat.="   or tbevidencias.validacion_supervisor='false')";
-            }else{
-                 $query_concat.=")";
-            }
-        }
-        if($v["param"]["n_v"]=="true"){
-            $query_concat.=" AND tbevidencias.validacion_supervisor='false'";            
-        }
+        //     $query_concat.="AND( tbevidencias.validacion_supervisor='true'";
+        //     if($v["param"]["n_v"]=="true"){
+        //                 $query_concat.="   or tbevidencias.validacion_supervisor='false')";
+        //     }else{
+        //          $query_concat.=")";
+        //     }
+        // }
+        // if($v["param"]["n_v"]=="true"){
+        //     $query_concat.=" AND tbevidencias.validacion_supervisor='false'";            
+        // }
         
         try
         {
-            $query="SELECT tbevidencias.id_evidencias,tbevidencias.desviacion,tbevidencias.accion_correctiva,tbevidencias.validacion_supervisor,
-                    tbdocumentos.id_documento,tbdocumentos.clave_documento,
-                    tbempleados.nombre_empleado,tbempleados.apellido_paterno,tbempleados.apellido_materno,
-		    tbregistros.frecuencia		 	
-                    FROM evidencias tbevidencias
-                    JOIN registros tbregistros ON tbregistros.id_registro=tbevidencias.id_registro  
-                    JOIN documentos tbdocumentos ON tbdocumentos.id_documento=tbregistros.id_documento
-                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumentos.id_empleado
-                    WHERE tbdocumentos.contrato=".$v["param"]["contrato"]." ".$query_concat;
+            $query="SELECT tbtemas.id_tema,tbtemas.nombre tema, tbusuarios.id_empleado id_empleado_tema,
+            (SELECT CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) ) as tema_responsable,
+            tbrequisitos.id_requisito,tbrequisitos.requisito, tbregistros.id_registro,tbregistros.registro,tbregistros.frecuencia,
+            tbdocumentos.id_documento, tbdocumentos.clave_documento, tbdocumentos.id_empleado id_empleado_documento,
+            
+            (select concat(tbempleados2.nombre_empleado,' ',tbempleados2.apellido_paterno,'',tbempleados2.apellido_materno) from empleados tbempleados2
+            where tbdocumentos.id_empleado = tbempleados2.id_empleado) as documento_responsable,
+            tbevidencias.id_evidencias,tbevidencias.id_usuario, 
+            
+            (select concat(tbempleados3.nombre_empleado,'',tbempleados3.apellido_paterno,'',tbempleados3.apellido_materno) from empleados tbempleados3 
+            join usuarios tbusuarios2 on tbusuarios2.id_empleado = tbempleados3.id_empleado
+            where tbevidencias.id_usuario = tbusuarios2.id_usuario) as resp,
+            
+            tbevidencias.accion_correctiva,tbevidencias.fecha_creacion,
+            tbevidencias.desviacion, if(tbevidencias.validacion_supervisor='true','Validado','En proceso') estatus
+            
+            FROM temas tbtemas
+            LEFT JOIN asignacion_tema_requisito tbasignacion_tema_requisito ON tbasignacion_tema_requisito.id_tema=tbtemas.id_tema
+            LEFT JOIN asignacion_tema_requisito_requisitos tbasignacion_tema_requisito_requisitos
+            ON tbasignacion_tema_requisito_requisitos.id_asignacion_tema_requisito = tbasignacion_tema_requisito.id_asignacion_tema_requisito
+            JOIN requisitos tbrequisitos ON tbrequisitos.id_requisito = tbasignacion_tema_requisito_requisitos.id_requisito
+            JOIN requisitos_registros tbrequisitos_registros ON tbrequisitos_registros.id_requisito = tbrequisitos.id_requisito
+            JOIN registros tbregistros ON tbregistros.id_registro = tbrequisitos_registros.id_registro
+            JOIN evidencias tbevidencias ON tbevidencias.id_registro = tbregistros.id_registro
+            JOIN empleados tbempleados ON tbempleados.id_empleado = tbtemas.id_empleado
+            JOIN usuarios tbusuarios ON tbusuarios.id_empleado = tbempleados.id_empleado
+            JOIN documentos tbdocumentos ON tbdocumentos.id_documento = tbregistros.id_documento
+            
+            WHERE tbtemas.contrato=$CONTRATO AND tbregistros.registro<>'NULL' AND tbevidencias.validacion_supervisor<>'NULL'";
             
             $db= AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);

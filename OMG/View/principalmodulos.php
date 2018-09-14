@@ -208,6 +208,8 @@ function redimencionarLayout()
         tam2 = tam1 - 42;
         // $("#jsGrid").css("height", $(window).height() - 740 + tam2+"px");
     }
+    // $(".dhx_cell_hdr").css("height", tam1+"px");
+
     $(".dhx_cell_cont_layout").css("height", tam2+"px");
     // $(".dhx_cell_cont_layout").css("width", tamW+"px");
 
@@ -243,6 +245,12 @@ function redimencionarLayout()
     // $("#sidebarObjV").css("width", tamW+"px");
     // $("#sidebarObjV").parent().css("width", tamW+"px");
     // $("#sidebarObjV").parent().parent().css("width", tamW+"px");
+    // console.log($("#sidebarObj").parent().find(".dhx_cell_hdr").css("height"));
+    var dhx_cell_hdr = $(".dhx_cell_hdr")[0];
+    // console.log($(dhx_cell_hdr).css("height"));
+    tamdhc_cell_hdr = $(dhx_cell_hdr).css("height");
+    tamdhc_cell_hdr.split("p")[0] > 47 ?
+    $(dhx_cell_hdr).css("height",tam1+"px"):console.log();
 
     $(".dhxrb_with_tabbar").css("height","190px");
     $(".dhxtabbar_cont").css("height","190px");

@@ -16,30 +16,45 @@ $Usuario=  Session::getSesion("user");
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
 		<!-- bootstrap & fontawesome -->
-                <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-                <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+        <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
 
-		<!-- ace styles -->
+        <script src="../../js/jquery.js" type="text/javascript"></script>
+        <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+
+		<link async href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+        
+        
+        <!-- ace styles -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
 
-		<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />
+		<!-- <link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" /> -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
                 <!--Inicia para el spiner cargando-->
-                <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+        <!-- <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/> -->
                 <!--Termina para el spiner cargando-->
                 
-                <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
-                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-                <script src="../../js/jquery.js" type="text/javascript"></script>
-                <script src="../../js/fInformeEvidenciasView.js" type="text/javascript"></script>
-                
-                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
-                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
-                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+        <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+        <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
 
-                <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+        <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
+        <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
+
+        <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
+        <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
+
+        <script src="../../js/fechas_formato.js" type="text/javascript"></script>
+        <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
+        <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
+        <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
+        <!-- <script src="../../js/tools.js" type="text/javascript"></script> marca un error al agregarse -->
+        <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+
+        <script src="../../js/fInformeEvidenciasView.js" type="text/javascript"></script>
+        <script src="../../js/fGridComponent.js" type="text/javascript"></script>
                 
         <style>
             .jsgrid-header-row>.jsgrid-header-cell {
@@ -59,42 +74,36 @@ $Usuario=  Session::getSesion("user");
 </head>
 
         
-        <body class="no-skin" onload="loadSpinner()">
-             <div id="loader"></div>
+    <body class="no-skin">
        
 
 <?php
-
-require_once 'EncabezadoUsuarioView.php';
-
+    // require_once 'EncabezadoUsuarioView.php';
 ?>
 
              
-<div style="position: fixed;">    
-<button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
-    <i class="glyphicon glyphicon-repeat"></i>   
-</button>
+<div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">    
+    <button type="button" class="btn btn-info btn_refrescar" id="btnrefrescar" onclick="refresh();" >
+        <i class="glyphicon glyphicon-repeat"></i>   
+    </button>
 
-<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
-    <img src="../../images/base/_excel.png" width="30px" height="30px">
-</button>
-<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
-    <img src="../../images/base/word.png" width="30px" height="30px"> 
-</button>
-<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
-    <img src="../../images/base/pdf.png" width="30px" height="30px"> 
-</button>    
+    <div class="pull-right">
+        <button style="width:48px;height:42px" class="btn_agregar" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
+            <img src="../../images/base/_excel.png" width="30px" height="30px">
+        </button>
+        <button style="width:48px;height:42px" class="btn_agregar" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
+            <img src="../../images/base/word.png" width="30px" height="30px"> 
+        </button>
+        <button style="width:48px;height:42px" class="btn_agregar" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
+            <img src="../../images/base/pdf.png" width="30px" height="30px"> 
+        </button>
+    </div>    
+</div>
 
-        <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave Documento" style="width: 180px;">
-        <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre Documento" style="width: 180px;">
-        <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 180px;">
-        <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
-</div>    
-
-
-<div style="height: 40px"></div>
-
-<div class="container">		
+<br><br><br>
+    <div id="jsGrid"></div>
+<!-- <div style="height: 10px"></div>
+<div class="container" style="height: 0px">		
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-2">
@@ -114,10 +123,7 @@ require_once 'EncabezadoUsuarioView.php';
 
         </div>    
     </div>
-</div>
-
-<div id="jsGrid"></div>
-
+</div> -->
                
 <!-- Inicio modal Tema y Responsable -->
 <div class="modal draggable fade" id="mostrar-temaresponsable" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -201,7 +207,57 @@ require_once 'EncabezadoUsuarioView.php';
 </div><!-- cierre del modal -->
 
 <script>
-    listarDatos();
+
+    var DataGrid = [];
+    var dataListado = [];
+    var filtros = [];
+    var db = {};
+    var gridInstance;
+    var ultimoNumeroGrid = 0;
+
+    var frecuenciaData = [
+                {frecuencia:"DIARIO"},
+                {frecuencia:"SEMANAL"},
+                {frecuencia:"MENSUAL"},
+                {frecuencia:"BIMESTRAL"},
+                {frecuencia:"ANUAL"},
+                {frecuencia:"TIEMPO INDEFINIDO"}
+            ];
+
+    var estructuraGrid = [
+        { name: "id_principal", type: "text",visible:false },
+        { name: "no", title:"No",type: "text", width: 40, editing:false },
+        { name: "tema",title:"Tema", type: "text", width: 150, editing:false },
+        { name: "tema_responsable",title:"Responsable Tema", type: "text", width: 150, editing:false },
+        { name: "requisito",title:"Requisito", type: "text", width: 150, editing:false  },
+        { name: "registro",title:"Registro", type: "text", width: 150, editing:false  },
+        { name: "frecuencia",title:"Frecuencia", type: "text", width: 130, editing:false  },
+        { name: "clave_documento",title:"Clave Documento", type: "text",  width: 150, editing:false },
+        { name: "documento_responsable",title:"Responsable Documento", type: "text",  width: 150, editing:false },
+        { name: "evidencia",title:"Evidencia", type: "text",  width: 150, editing:false },
+        { name: "fecha_registro",title:"Fecha Registro", type: "text", width: 155, editing:false },
+        { name: "fecha_creacion",title:"Fecha Evidencia", type: "text",  width: 155, editing:false },
+        // { name: "usuario",title:"Usuario", type: "text", width:250, editing:false },
+        { name: "accion_correctiva",title:"Accion Correctiva", type: "text", width: 150, editing:false},
+        { name: "plan_accion",title:"Plan Accion", type: "text", width: 160, editing:false },
+        { name: "desviacion",title:"Desviacion", type: "text", width: 100, editing:false},
+        { name: "plan",title:"Avance del Plan", type: "text", width: 100, editing:false},
+        {name: "estatus",title:"Estatus", type: "text", width: 100, editing:false },
+        { name:"delete", title:"Opción", type:"customControl",sorting:""},
+    ];
+
+    var customsFieldsGridData=[
+            {field:"customControl",my_field:MyCControlField},
+            // {field:"porcentaje",my_field:porcentajesFields},
+        ];
+
+    construirGrid();
+    inicializarFiltros().then((resolve2)=>
+    {
+        construirFiltros();
+        listarDatos();
+    });
+
 </script>
 
             

@@ -41,12 +41,9 @@ $Usuario=  Session::getSesion("user");
                 <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
                 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
 
-                <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
-                <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
-                <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
 
-                
+                <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
         <style>
             .jsgrid-header-row>.jsgrid-header-cell {
                 background-color:#307ECC ;      /* orange */
@@ -72,51 +69,52 @@ $Usuario=  Session::getSesion("user");
 require_once 'EncabezadoUsuarioView.php';
 
 $filtrosArray = array(
-//    array('name'=>'Clave Documento','id'=>'clave_documento'),
-//    array('name'=>'Nombre Documento','id'=>'documento'),
+    array('name'=>'Clave Documento','id'=>'clave_documento'),
+    array('name'=>'Nombre Documento','id'=>'documento'),
     // array('name'=>'Nombre Documento','id'=>'nombre_documento'),
-//    array('name'=>'Responsable Documento','id'=>'nombrecompleto'),
+    array('name'=>'Responsable Documento','id'=>'nombrecompleto'),
     
     // array("name"=>"Clave Evidencia","column"=>"text"),
 );
 ?>
 
              
-<div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
-    
-    <!--<input type="submit" id="btnGraficar" class="btn btn-danger btn_graficar" value="Graficar">-->
-    
-    <button type="button" class="btn btn-info btn_refrescar" id="btnrefrescar" onclick="refresh();" >
-        <i class="glyphicon glyphicon-repeat"></i>   
-    </button>
+<div style="position: fixed;">    
+<button type="button" class="btn btn-info " id="btnrefrescar" onclick="refresh();" >
+    <i class="glyphicon glyphicon-repeat"></i>   
+</button>
+
+<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
+    <img src="../../images/base/_excel.png" width="30px" height="30px">
+</button>
+<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
+    <img src="../../images/base/word.png" width="30px" height="30px"> 
+</button>
+<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
+    <img src="../../images/base/pdf.png" width="30px" height="30px"> 
+</button>    
+
+        <!-- <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave Documento" style="width: 180px;">
+        <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre Documento" style="width: 180px;">
+        <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 180px;"> -->
         
         <?php foreach($filtrosArray as $value)
         { ?>
         <input id="<?php echo $value['id'] ?>" type="text" onkeyup="filtroSupremo()" 
         placeholder="<?php echo $value['name'] ?>" style="width: 120px;">
-        <?php } ?> 
-            
-    <div class="pull-right">
-        <button title="Graficar" type="button" class="btn btn-success style-filter" id="btnGraficar">
-            <i class="fa fa-pie-chart"></i>
-        </button>
-        
-        <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
-            <img src="../../images/base/_excel.png" width="30px" height="30px">
-        </button>
-        <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
-            <img src="../../images/base/word.png" width="30px" height="30px"> 
-        </button>
-        <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
-            <img src="../../images/base/pdf.png" width="30px" height="30px"> 
-        </button>    
-    </div>
-</div>
+        <?php } ?>
 
-<div style="height: 10px"></div>             
-<div class="container" style="height: 0px">		
+        <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i>
+        <input type="submit" id="btnGraficar" class="btn btn-danger" value="Graficar">    
+</div>    
+
+
+<div style="height: 40px"></div>
+
+<div class="container">		
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-12">
+           
             <div class="col-md-2">
                 <div class="input-group">
                   <!--<input name="remitosucursal" id="remitosucursal" type="text" required class="form-control" placeholder="Sucursal">-->
@@ -129,15 +127,15 @@ $filtrosArray = array(
                   <!--<input type="submit"  style="width: 40px; height: 40px" class="btn btn-info" id="btngraficar" value="Graficar">-->
                 </div>
             </div>
-
-            <div id="arbolprincipal"></div>
-
-        </div>
-    </div>
-    
-</div>             
         
-<br><br><br>
+            <div id="arbolprincipal">
+                
+            </div>
+       
+        </div>
+        
+    </div>
+</div>
 
 <div id="jsGrid"></div>
                
