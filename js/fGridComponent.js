@@ -15,11 +15,13 @@ function lol()
         tam2A = tam1A - 42;
         $(Frame).css("height",tam2A-6+"px");
 
-        // $("#jsGrid").css("height","375px");
-        // $(".jsgrid-grid-body").css("height","235px");
+        $("#jsGrid").css("height","375px");
+        
         // console.log("AQUIII");
         // console.log(gridInstance);
-        gridInstance.height = 390 + "px";
+        // gridInstance.height = 390 + "px";
+        gridInstance._body[0].style.height = "240px";
+        // $(".jsgrid-grid-body").css("height","235px");
     }
     else
     {
@@ -27,11 +29,14 @@ function lol()
         tam2A = tam1A - 42;
         $(Frame).css("height",tam2A-6+"px");
         t = $(window.parent).height() - 720;
-        // $("#jsGrid").css("height", t + 375 +"px");
-        // $(".jsgrid-grid-body").css("height", t + 236 +"px");
+        $("#jsGrid").css("height", t + 375 +"px");
+        
         // heightGrid = t;
         // console.log(gridInstance);
-        gridInstance.height = t + 370 + "px";
+        // gridInstance.height = t + 390 + "px";
+        gridInstance._body[0].style.height = t + 240 +"px";
+        // $(".jsgrid-grid-body").css("height", t + 236 +"px");
+        console.log(gridInstance);
         // $(".jsgrid-grid-body").css("height",($(window.parent).height() - 720 + 215) +"px");
         
     }
@@ -80,12 +85,13 @@ function construirGrid()
         onDataLoading: (args)=>
         {
             // alert("2");
+            // lol();
             // loadBlockUi();
         },
         onDataLoaded:(args)=>
         {
             // alert("3");
-            lol();
+            setTimeout(function(){lol();},10);
             $('.jsgrid-filter-row').removeAttr("style",'display:none');
             // $(".jsgrid-grid-body").attr("style","height:53.44228935%");
             // $(window.parent).resizeTo($(window.parente).width(),$(window.parente).height()-200);
@@ -111,7 +117,7 @@ function construirGrid()
         },
         width: "100%",
         height: "390px",
-        autoload:true,
+        autoload:false,
         heading: true,
         sorting: true,
         editing: true,
@@ -120,7 +126,7 @@ function construirGrid()
         pageLoading:false,
         pageSize: 10,
         pageButtonCount: 5,
-        updateOnResize: true,
+        updateOnResize: false,
         confirmDeleting: false,
         noDataContent:"No Existen Registros",
         pagerFormat: "     Paginas: {first}  {prev} {pages} {next} {last}   {pageIndex} de {pageCount}",
