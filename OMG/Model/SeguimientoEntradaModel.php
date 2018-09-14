@@ -47,7 +47,7 @@ class SeguimientoEntradaModel{
 
                   if ($alarm <= $hoy){
 
-                        $rec[$key]["condicion"]="Alerta Vencida";
+                        $rec[$key]["condicion"]="Alarma Vencida";
                   } else {
 
                         $rec[$key]["condicion"]="En Tiempo";

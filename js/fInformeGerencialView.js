@@ -19,7 +19,7 @@ function inicializarFiltros()
     return new Promise((resolve,reject)=>
     {
         filtros =[
-
+                {id:"noneUno",type:"none"},
                 {id:"folio_entrada",type:"text"},
                 {id:"clave_autoridad",type:"text"},
                 {id:"asunto",type:"text"},
@@ -27,8 +27,25 @@ function inicializarFiltros()
                 {id:"fecha_asignacion",type:"date"},
                 {id:"fecha_limite_atencion",type:"date"},
                 {id:"fecha_alarma",type:"date"},
-                {id:"status_doc",type:"text"},
-                {id:"condicion",type:"text"},
+//                {id:"status_doc",type:"text"},
+                {id:"status_doc",type:"combobox",descripcion:"descripcion",
+                data:[
+                        {"status_doc":"En Proceso","descripcion":"En Proceso"},
+                        {"status_doc":"Suspendido","descripcion":"Suspendido"},
+                        {"status_doc":"Terminado","descripcion":"Terminado"}
+                    ]
+                },
+//                {id:"condicion",type:"text"},
+                {id:"condicion",type:"combobox",descripcion:"descripcion",
+                data:[
+                        {"condicion":"Alarma Vencida","descripcion":"Alarma Vencida"},
+                        {"condicion":"En Tiempo","descripcion":"En Tiempo"},
+                        {"condicion":"Suspendido","descripcion":"Suspendido"},
+                        {"condicion":"Terminado","descripcion":"Terminado"},
+                        {"condicion":"Tiempo Limite","descripcion":"Tiempo Limite"},
+                        {"condicion":"Tiempo Vencido","descripcion":"Tiempo Vencido"}
+                    ]
+                },
                 {name:"opcion",id:"opcion",type:"opcion"}
              ];
          resolve();
