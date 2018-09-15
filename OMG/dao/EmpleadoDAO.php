@@ -51,7 +51,6 @@ class EmpleadoDAO{
             throw $ex;
             return false;
         }
-    
     }
     
     public function nombresCompletosCombobox()
