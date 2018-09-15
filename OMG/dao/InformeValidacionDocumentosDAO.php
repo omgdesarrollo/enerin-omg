@@ -25,7 +25,7 @@ class InformeValidacionDocumentosDAO{
     public function obtenerTemayResponsable ($id_documento)
     {
         try{
-            $query="SELECT tbasignacion_tema_requisito.id_tema, tbtemas.no, tbempleados.id_empleado, tbempleados.nombre_empleado, 
+            $query="SELECT tbtemas.nombre as nombre_tema,tbasignacion_tema_requisito.id_tema, tbtemas.no, tbempleados.id_empleado, tbempleados.nombre_empleado, 
 		    tbempleados.apellido_paterno, tbempleados.apellido_materno
 
                     FROM validacion_documento tbvalidacion_documento

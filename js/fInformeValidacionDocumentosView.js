@@ -18,7 +18,7 @@ function inicializarFiltros()
             { id:"noneTres", type:"none"},
             { id:"noneCuatro", type:"none"},
 //            { id: "status",name:"status", type: "text"},
-            { id: "validacion_tema_responsable",name:"validacion_tema_responsable", type: "combobox",data:[{estado_documento:0,descripcion:"Validado"},{estado_documento:1,descripcion:"En Proceso"}],descripcion:"descripcion"},
+            { id: "estado_documento",name:"validacion_tema_responsable", type: "combobox",data:[{estado_documento:"true",descripcion:"Validado"},{estado_documento:"false",descripcion:"En Proceso"}],descripcion:"descripcion"},
             {name:"opcion",id:"opcion",type:"opcion"}
             // { id:"delete", name:"Opción", type:"customControl",sorting:""},
         ];
@@ -133,7 +133,7 @@ function mostrarTemaResponsable(id_documento)
         success:function(responseTemayResponsable)
         {
             $.each(responseTemayResponsable,function(index,value){
-              ValoresTemaResponsable+="<tr><td>"+value.no+"</td>" ;
+              ValoresTemaResponsable+="<tr><td>"+value.nombre_tema+"</td>" ;
               ValoresTemaResponsable+="<td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";  
 
             });
