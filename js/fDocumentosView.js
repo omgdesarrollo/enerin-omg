@@ -1,40 +1,54 @@
 
 $(function(){
                                                                               
-$("#CLAVE_DOCUMENTO").keyup(function(){
-    var valueclavedocumento=$(this).val();
+    $("#CLAVE_DOCUMENTO").keyup(function()
+    {
+        var valueclavedocumento=$(this).val();
 
-    verificarExiste(valueclavedocumento,"clave_documento");
+        verificarExiste(valueclavedocumento,"clave_documento");
 
-});
+    });
 
-$("#btn_guardar").click(function()
-{
-    documentoDatos=new Object();
-    documentoDatos.clave_documento = $("#CLAVE_DOCUMENTO").val();
-    documentoDatos.documento = $("#DOCUMENTO").val();
-    documentoDatos.id_empleado = $("#ID_EMPLEADOMODAL").val();
+    $("#btn_guardar").click(function()
+    {
+        documentoDatos=new Object();
+        documentoDatos.clave_documento = $("#CLAVE_DOCUMENTO").val();
+        documentoDatos.documento = $("#DOCUMENTO").val();
+        documentoDatos.id_empleado = $("#ID_EMPLEADOMODAL").val();
+
+        listo=
+            (
+               documentoDatos.clave_documento!=""?
+               documentoDatos.documento!=""?
+               documentoDatos.id_empleado!=""?
+               true: false: false: false
+            );
+
+               listo ?  insertarDocumento(documentoDatos):swalError("Completar campos");
+    });
+
+
+    $("#btn_limpiar").click(function()
+    {
+
+              $("#CLAVE_DOCUMENTO").val("");
+              $("#DOCUMENTO").val("");
+    //          $("#REGISTROS").val("");
+
+
+    });
     
-    listo=
-        (
-           documentoDatos.clave_documento!=""?
-           documentoDatos.documento!=""?
-           documentoDatos.id_empleado!=""?
-           true: false: false: false
-        );
-
-           listo ?  insertarDocumento(documentoDatos):swalError("Completar campos");
-});
-
-
-$("#btn_limpiar").click(function(){
-
-          $("#CLAVE_DOCUMENTO").val("");
-          $("#DOCUMENTO").val("");
-//          $("#REGISTROS").val("");
-
-
-});
+    var $btnDLtoExcel = $('#toExcel'); 
+    $btnDLtoExcel.on('click', function () 
+    {
+//        console.log("Entro al excelexportHibrido");
+        $("#listjson").excelexportHibrido({
+            containerid: "listjson"
+            , datatype: 'json'
+            , dataset: DataGridExcel
+            , columns: getColumns(DataGridExcel)
+        });
+    });
 
 }); //LLAVE CIERRE FUNCTION
 
@@ -212,7 +226,7 @@ function aceptarEdicion()
 
 function listarDatos()
 {
-    __datos=[];    
+    var __datos=[],__datosExcel=[];    
     datosParamAjaxValues={};
     datosParamAjaxValues["url"]="../Controller/DocumentosController.php?Op=Listar";
     datosParamAjaxValues["type"]="POST";
@@ -221,11 +235,17 @@ function listarDatos()
     var variablefunciondatos=function obtenerDatosServer (data)
     {
         dataListado = data;
+        
         $.each(data,function(index,value)
         {
             __datos.push(reconstruir(value,index++));
         });
-
+        
+        $.each(data,function(index,value)
+        {
+            __datosExcel.push(reconstruirExcel(value,index++));
+        });
+        DataGridExcel= __datosExcel;
     }
     
     
@@ -256,6 +276,19 @@ function reconstruir(value,index)
     tempData["documento"]=value.documento;
     tempData["id_empleado"]=value.id_empleado;
     tempData["delete"]= [{"reg":value.reg,"validado":value.validado}];
+    return tempData;
+}
+
+function reconstruirExcel(value,index)
+{
+    tempData=new Object();
+//    ultimoNumeroGrid = index;
+//    tempData["id_principal"]= [{'id_documento':value.id_documento}];
+    tempData["No"]= index;
+    tempData["Clave del Documento"]=value.clave_documento;
+    tempData["Documento"]=value.documento;
+    tempData["Responsable del Documento"]=value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
+//    tempData["delete"]= [{"reg":value.reg,"validado":value.validado}];
     return tempData;
 }
 
