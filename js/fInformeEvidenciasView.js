@@ -226,7 +226,7 @@ function reconstruir(value,index)
     tempData["tema"] = value.tema;
     tempData["tema_responsable"] = value.tema_responsable;
 
-     tempData["requisito"] = "<div class='stat-item tooltip' data-stat='95' data-soft='Photoshop' data-color='#C0DCF1'><span tooltiptext><span></span></span><p>"+value.requisito+"</p></div>";
+     tempData["requisito"] = "<span tooltiptext><span></span></span><p>"+value.requisito+"</p>";
 //     tempData["requisito"] = 
 //     "<div class='stat-item tooltip' data-stat='95' data-soft='Photoshop' data-color='#C0DCF1'>\n\
 //        <span tooltiptext><span></span></span>\n\
