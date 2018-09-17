@@ -28,14 +28,14 @@ class InformeEvidenciasDAO{
             
             (select concat(tbempleados2.nombre_empleado,' ',tbempleados2.apellido_paterno,'',tbempleados2.apellido_materno) from empleados tbempleados2
             where tbdocumentos.id_empleado = tbempleados2.id_empleado) as documento_responsable,
-            tbevidencias.id_evidencias,tbevidencias.id_usuario, 
+            tbevidencias.id_evidencias,tbevidencias.id_usuario,
             
             (select concat(tbempleados3.nombre_empleado,'',tbempleados3.apellido_paterno,'',tbempleados3.apellido_materno) from empleados tbempleados3 
             join usuarios tbusuarios2 on tbusuarios2.id_empleado = tbempleados3.id_empleado
             where tbevidencias.id_usuario = tbusuarios2.id_usuario) as resp,
             
-            tbevidencias.accion_correctiva,tbevidencias.fecha_creacion,
-            tbevidencias.desviacion, if(tbevidencias.validacion_supervisor='true','Validado','En proceso') estatus
+            tbevidencias.accion_correctiva,tbevidencias.fecha_creacion, tbevidencias.plan_accion,
+            tbevidencias.desviacion, if(tbevidencias.validacion_supervisor='true','VALIDADO','EN PROCESO') estatus
             
             FROM temas tbtemas
             LEFT JOIN asignacion_tema_requisito tbasignacion_tema_requisito ON tbasignacion_tema_requisito.id_tema=tbtemas.id_tema

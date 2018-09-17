@@ -15,7 +15,7 @@ function lol()
         tam2A = tam1A - 42;
         $(Frame).css("height",tam2A-6+"px");
 
-        $("#jsGrid").css("height","375px");
+        $("#jsGrid").css("height","385px");
         
         // console.log("AQUIII");
         // console.log(gridInstance);
@@ -29,14 +29,14 @@ function lol()
         tam2A = tam1A - 42;
         $(Frame).css("height",tam2A-6+"px");
         t = $(window.parent).height() - 720;
-        $("#jsGrid").css("height", t + 375 +"px");
+        $("#jsGrid").css("height", t + 385 +"px");
         
         // heightGrid = t;
         // console.log(gridInstance);
         // gridInstance.height = t + 390 + "px";
         gridInstance._body[0].style.height = t + 240 +"px";
         // $(".jsgrid-grid-body").css("height", t + 236 +"px");
-        console.log(gridInstance);
+        // console.log(gridInstance);
         // $(".jsgrid-grid-body").css("height",($(window.parent).height() - 720 + 215) +"px");
         
     }
@@ -91,7 +91,7 @@ function construirGrid()
         onDataLoaded:(args)=>
         {
             // alert("3");
-            setTimeout(function(){lol();},10);
+            setTimeout(function(){lol();},90);
             $('.jsgrid-filter-row').removeAttr("style",'display:none');
             // $(".jsgrid-grid-body").attr("style","height:53.44228935%");
             // $(window.parent).resizeTo($(window.parente).width(),$(window.parente).height()-200);
