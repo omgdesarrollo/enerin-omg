@@ -54,6 +54,8 @@ $Usuario=  Session::getSesion("user");
         <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
 
         <script src="../../js/fInformeEvidenciasView.js" type="text/javascript"></script>
+
+        <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
         <script src="../../js/fGridComponent.js" type="text/javascript"></script>
                 
         <style>
@@ -68,6 +70,11 @@ $Usuario=  Session::getSesion("user");
             .modal-lg{width: 100%;}
             .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
             body{overflow:hidden;}
+
+            .jsgrid-cell
+            {
+                word-wrap: break-word;
+            }
         </style>              
                 
  			 
@@ -244,7 +251,7 @@ $Usuario=  Session::getSesion("user");
         { name: "accion_correctiva",title:"Accion Correctiva", type: "text", width: 150, editing:false},
         // { name: "plan_accion",title:"Plan Accion", type: "text", width: 160, editing:false },
         { name: "desviacion",title:"Desviacion", type: "text", width: 100, editing:false},
-        { name: "plan_accion",title:"Avance del Plan", type: "text", width: 100, editing:false},
+        { name: "avance_plan",title:"Avance del Plan", type: "text", width: 100, editing:false},
         {name: "estatus",title:"Estatus", type: "text", width: 150, editing:false },
         { name:"delete", title:"Opción", type:"customControl",sorting:""},
     ];
