@@ -35,7 +35,7 @@ class InformeEvidenciasDAO{
             where tbevidencias.id_usuario = tbusuarios2.id_usuario) as resp,
             
             tbevidencias.accion_correctiva,tbevidencias.fecha_creacion,
-            tbevidencias.desviacion, if(tbevidencias.validacion_supervisor='true','Validado','En proceso') estatus
+            tbevidencias.desviacion, if(tbevidencias.validacion_supervisor='true','VALIDADO','EN PROCESO') estatus
             
             FROM temas tbtemas
             LEFT JOIN asignacion_tema_requisito tbasignacion_tema_requisito ON tbasignacion_tema_requisito.id_tema=tbtemas.id_tema

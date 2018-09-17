@@ -5,8 +5,8 @@ function inicializarFiltros()
 {
     return new Promise((resolve,reject)=>
     {
-        // filtros = [
-        //     { id:"noneUno", type:"none"},
+        filtros = [
+            { id:"noneUno", type:"none"},
         //     { id: "tema",name:"Tema", type: "text"},
         //     { id: "registro",name:"Registro", type: "text"},
         //     { id: "frecuencia",name:"Frecuencia", type: "combobox",data:frecuenciaData,descripcion:"frecuencia"},
@@ -26,7 +26,25 @@ function inicializarFiltros()
         //     // { id: "validacion",name:"Validacion", type: "text"},
         //     {name:"opcion",id:"opcion",type:"opcion"}
         //     // { id:"delete", name:"Opción", type:"customControl",sorting:""},
-        // ];
+        { id: "tema",title:"Tema", type: "text"},
+        { id: "tema_responsable",title:"Responsable Tema",type:"text"},
+        { id: "requisito",title:"Requisito", type: "none"},
+        { id: "registro",title:"Registro", type: "text"},
+        { id: "frecuencia",title:"Frecuencia", type: "combobox",data:frecuenciaData,descripcion:"frecuencia"},
+        { id: "clave_documento",title:"Clave Documento", type: "text"},
+        { id: "documento_responsable",title:"Responsable Documento",type:"text"},
+        { id: "evidencia",title:"Evidencia", type: "none"},
+        { id: "fecha_registro",title:"Fecha Registro", type: "date"},
+        { id: "fecha_creacion",title:"Fecha Evidencia", type: "date"},
+        // { name: "usuario",title:"Usuario", type: "text", width:250, editing:false }
+
+        { id: "accion_correctiva",title:"Accion Correctiva", type: "none"},
+        // { name: "plan_accion",title:"Plan Accion", type: "text", width: 160, editing:false },
+        { id: "desviacion",title:"Desviacion", type: "none"},
+        { id: "plan_accion",title:"Avance del Plan", type: "none"},
+        { id: "estatus",title:"Estatus", type: "combobox",data:estatusFiltro,descripcion:"estatus"},
+        { id:"delete", name:"Opción", type:"opcion",sorting:""},
+        ];
         resolve();
     });
 }
@@ -201,6 +219,7 @@ function reconstruir(value,index)
     ultimoNumeroGrid = index;
     tempData = new Object();
     
+    tempData["no"] = ultimoNumeroGrid;
     tempData["id_principal"] = [];
     tempData["id_principal"].push({'id_evidencias':value.id_evidencias});
     
@@ -213,9 +232,8 @@ function reconstruir(value,index)
     tempData["frecuencia"] = value.frecuencia;
 
     tempData["clave_documento"] = value.clave_documento;
-    tempData["responsable_documento"] = value.responsable_documento;
+    tempData["documento_responsable"] = value.documento_responsable;
 
-    
     if(value.archivosUpload[0].length != 0)
     {
             todoArchivo = value.archivosUpload[0][0].split("^-O-^-M-^-G-^");
