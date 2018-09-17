@@ -50,7 +50,7 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/tools.js" type="text/javascript"></script>
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <script src="../../js/fDocumentosView.js" type="text/javascript"></script>
-                
+                <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
                 
         <style>
             .jsgrid-header-row>.jsgrid-header-cell {
@@ -92,15 +92,15 @@ require_once 'EncabezadoUsuarioView.php';
 </button>
 
 <div class="pull-right">    
-<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
-    <img src="../../images/base/_excel.png" width="30px" height="30px">
-</button>
-<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
-    <img src="../../images/base/word.png" width="30px" height="30px"> 
-</button>
-<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
-    <img src="../../images/base/pdf.png" width="30px" height="30px"> 
-</button>    
+<!--    <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
+        <img src="../../images/base/word.png" width="30px" height="30px"> 
+    </button>
+    <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
+        <img src="../../images/base/pdf.png" width="30px" height="30px"> 
+    </button>    -->
+    <button style="width:48px;height:42px" type="button"  class="btn_agregar" id="toExcel">
+        <img src="../../images/base/_excel.png" width="30px" height="30px">
+    </button>
 </div>
     
 </div>    
@@ -166,6 +166,8 @@ dataListado = [];
 EmpleadosCombobox=[];
 filtros=[];
 ultimoNumeroGrid=0;
+DataGridExcel=[];
+origenDeDatosVista="documentos";
 
 listarDatos();
 inicializarFiltros();

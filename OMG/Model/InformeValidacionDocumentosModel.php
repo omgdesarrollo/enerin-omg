@@ -8,25 +8,7 @@ class InformeValidacionDocumentosModel{
         try
         {
             $dao=new InformeValidacionDocumentosDAO();
-            $lista["info"]= $dao->listarValidaciones($v);
-//            $lista["detallesContrato"]=$dao->obtenerContratos($v["param"]["contrato"]);
-//          echo "con ".json_encode($contratos);  
-//            $categoria=array();
-//            $valores=array();
-//            $principal = array($categoria,$valores);
-//
-//            array_push($principal[0],"tipo");
-//            array_push($principal[1],"pordia","porhora");
-//            array_push($array, $contratos);
-            
-//            
-//            $resultado;
-//            foreach($lista as $value)
-//            {
-//                $list["descripcion_contratos"]= $dao->obtenerContratos($value['id_cumplimiento']);
-////            $lista['']= $list;
-//                echo "list ".json_encode($list); 
-//            }                                    
+            $lista["info"]= $dao->listarValidaciones($v);                                   
             return $lista;
         } catch (Exception $ex)
         {
@@ -80,7 +62,16 @@ class InformeValidacionDocumentosModel{
             return false;
         }
     }
-    
+//    NO BORRAR AQUI PARA ABAJO SI SE HACE CONSULTAR PARA SABER SI NO LE AFECTA EN OTRAS PARTES 
+      
+     public function obtenerTodosLosEmpleadosQueSonResponsableDelDocumento(){
+         try{
+            $informeValidacionDocumentosDAO= new InformeValidacionDocumentosDAO();
+            return $informeValidacionDocumentosDAO->obtenerTodosLosEmpleadosQueSonResponsableDelDocumento();          
+         } catch (Exception $ex) {
+
+         }
+     }   
     
 }
 

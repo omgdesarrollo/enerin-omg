@@ -195,6 +195,46 @@ and open the template in the editor.
 }
 
  .modal-lg{width: 99%;}
+.modal-dialog {
+  /*position: fixed;*/
+  /*margin: 0;*/
+  width: 98%;
+  height: 90%;
+/*  padding: 0;*/
+}
+.modal-content {
+  position: fixed;
+  /*top: 0;*/
+  /*right: 0;*/
+  /*bottom: 0;*/
+  /*left: 0;*/
+/*  border: 2px solid #3c7dcf;
+  border-radius: 0;
+  box-shadow: none;*/
+}
+.modal-header {
+  /*position: absolute;*/
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 50px;
+  padding: 10px;
+  background: black;
+  border: 0;
+}
+.modal-title {
+  /*font-weight: 300;*/
+  /*font-size: 2em;*/
+  color: #fff;
+  /*line-height: 30px;*/
+}
+
+ #tabPanel{
+     height: 8%;
+ }
+ .dx-item-content dx-multiview-item-content{
+   background-color: red;  
+ }
   </style> 	
 		
   </head>
@@ -276,8 +316,8 @@ and open the template in the editor.
                            <div id="tree-list">
                              <div id="dx"></div>
                             </div>
-
-                          
+                          <div id="tabPanel"></div>
+                                <!--<div sty></div>-->
                         <!--<div id=""></div>-->
 
                       </div><!-- cierre div class-body -->
@@ -820,16 +860,25 @@ dp.init(gantt);
           var datosTreeList=[]; 
     $(function (){
  
-     
+    var tabs = [{
+            title: 'Detalles Registros Actividad',
+            text: 'Tabla'
+        }, {
+            title: 'Avances Visuales',
+            text: ''
+        
+        }];
+//        $(function () {
+            $("#tabPanel").dxTabPanel({
+                items: tabs
+            });
+//    }); 
         
 obtenerTareas().then(function (){
 construirTreeList();
 });
     
 
-    
-    
-      
 //     gantt.batchUpdate(function () {
 ////         alert("se ha cargado el gantt exitosamente");
 //    gantt.eachSelectedTask(function(task_id){
