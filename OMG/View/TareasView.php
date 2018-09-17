@@ -282,7 +282,7 @@ listarDatos();
 inicializarFiltros();
 construirGrid();
 construirFiltros();
-
+ $('tbody').sortable();
 </script>
 
 
