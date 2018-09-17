@@ -41,7 +41,7 @@ function inicializarFiltros()
         { id: "accion_correctiva",title:"Accion Correctiva", type: "none"},
         // { name: "plan_accion",title:"Plan Accion", type: "text", width: 160, editing:false },
         { id: "desviacion",title:"Desviacion", type: "none"},
-        { id: "avance_plan",title:"Avance del Plan", type: "none"},
+        { id: "avance_plan",title:"Avance del Plan", type: "text"},
         { id: "estatus",title:"Estatus", type: "combobox",data:estatusFiltro,descripcion:"estatus"},
         { id:"delete", name:"Opción", type:"opcion",sorting:""},
         ];
@@ -226,7 +226,8 @@ function reconstruir(value,index)
     tempData["tema"] = value.tema;
     tempData["tema_responsable"] = value.tema_responsable;
 
-     tempData["requisito"] = "<div><p>"+value.requisito+"</p></div>";
+    //  tempData["requisito"] = "<div><p>"+value.requisito+"</p></div>";
+     tempData["requisito"] = value.requisito;
 //    tempData["requisito"] = "<td class='celda' width='10%' style='font-size: -webkit-xxx-large'><button type='button' class='btn btn-success'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
     tempData["registro"] = value.registro;
     tempData["frecuencia"] = value.frecuencia;
