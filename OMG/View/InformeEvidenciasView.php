@@ -57,7 +57,8 @@ $Usuario=  Session::getSesion("user");
 
         <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
         <script src="../../js/fGridComponent.js" type="text/javascript"></script>
-                
+        <link href="../../css/estilosToolTip.css" rel="stylesheet" type="text/css"/>
+        <script src="../../js/toolsToolTip.js" type="text/javascript"></script>
         <style>
             .jsgrid-header-row>.jsgrid-header-cell {
                 background-color:#307ECC ;      /* orange */

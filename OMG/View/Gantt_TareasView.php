@@ -104,7 +104,7 @@ and open the template in the editor.
       /*overflow: hidden;*/
     }
     
-    
+         
     
     
 /*    .mpp-sample {
@@ -911,6 +911,7 @@ construirTreeList();
                                       
                                   })
         }
+        
 // gantt.exportToExcel({
 //    name:"document.xlsx", 
 //    columns:[
