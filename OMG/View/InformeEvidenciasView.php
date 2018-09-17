@@ -93,7 +93,6 @@ $Usuario=  Session::getSesion("user");
     <button type="button" class="btn btn-info btn_refrescar" id="btnrefrescar" onclick="refresh();" >
         <i class="glyphicon glyphicon-repeat"></i>   
     </button>
-
     <div class="pull-right">
         <button style="width:48px;height:42px" class="btn_agregar" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
             <img src="../../images/base/_excel.png" width="30px" height="30px">
@@ -106,7 +105,6 @@ $Usuario=  Session::getSesion("user");
         </button>
     </div>    
 </div>
-
 <br><br><br>
     <div id="jsGrid"></div>
 <!-- <div style="height: 10px"></div>
@@ -214,6 +212,12 @@ $Usuario=  Session::getSesion("user");
 </div><!-- cierre del modal -->
 
 <script>
+
+// $(function(){
+//     $("td").mouseenter((event)=>{
+//         console.log(event);
+//     });
+// });
 
     var DataGrid = [];
     var dataListado = [];
