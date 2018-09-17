@@ -68,6 +68,11 @@ $Usuario=  Session::getSesion("user");
             .modal-lg{width: 100%;}
             .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
             body{overflow:hidden;}
+
+            .jsgrid-cell
+            {
+                word-wrap: break-word;
+            }
         </style>              
                 
  			 
