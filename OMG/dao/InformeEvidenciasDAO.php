@@ -34,7 +34,7 @@ class InformeEvidenciasDAO{
             join usuarios tbusuarios2 on tbusuarios2.id_empleado = tbempleados3.id_empleado
             where tbevidencias.id_usuario = tbusuarios2.id_usuario) as resp,
             
-            tbevidencias.accion_correctiva,tbevidencias.fecha_creacion, tbevidencias.plan_accion,
+            tbevidencias.accion_correctiva,tbevidencias.fecha_creacion,
             tbevidencias.desviacion, if(tbevidencias.validacion_supervisor='true','VALIDADO','EN PROCESO') estatus
             
             FROM temas tbtemas

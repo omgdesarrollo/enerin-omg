@@ -19,7 +19,7 @@ function lol()
         
         // console.log("AQUIII");
         // console.log(gridInstance);
-        // gridInstance.height = 390 + "px";
+        gridInstance.height = 385 + "px";
         gridInstance._body[0].style.height = "240px";
         // $(".jsgrid-grid-body").css("height","235px");
     }
@@ -33,7 +33,7 @@ function lol()
         
         // heightGrid = t;
         // console.log(gridInstance);
-        // gridInstance.height = t + 390 + "px";
+        gridInstance.height = t + 400 + "px";
         gridInstance._body[0].style.height = t + 240 +"px";
         // $(".jsgrid-grid-body").css("height", t + 236 +"px");
         // console.log(gridInstance);
@@ -126,11 +126,17 @@ function construirGrid()
         pageLoading:false,
         pageSize: 10,
         pageButtonCount: 5,
-        updateOnResize: false,
+        updateOnResize: true,
         confirmDeleting: false,
         noDataContent:"No Existen Registros",
         pagerFormat: "     Paginas: {first}  {prev} {pages} {next} {last}   {pageIndex} de {pageCount}",
+        pagePrevText: "Anterior",
+        pageNextText: "Siguiente",
+        pageFirstText: "Principio",
+        pageLastText: "Final",
         fields: estructuraGrid,
+        pageLoading: false,
+        pageIndex:1,
         onItemDeleted:function(args)
         {
             // console.log("deleted");
