@@ -12,7 +12,7 @@ if (Session:: existeSesion("user")){
 <?php // echo "el error es "+$error;  ?>
 <?php // echo "el usuario es  "+$usuario   ?>
 
-<html>
+<html lang="ES">
     <head>
         <title>OMG</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -31,10 +31,11 @@ if (Session:: existeSesion("user")){
         <style>
             
         </style>
+        <?php 
         
+        ?>
         
     </head>
-
     <div id="Contenedor">
             <div class="Icon"><span class="glyphicon glyphicon-user"></span></div>
 		 <div class="ContentForm">

@@ -911,6 +911,7 @@ construirTreeList();
                                       
                                   })
         }
+        
 // gantt.exportToExcel({
 //    name:"document.xlsx", 
 //    columns:[
