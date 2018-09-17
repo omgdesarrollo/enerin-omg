@@ -136,6 +136,25 @@ class InformeEvidenciasDAO{
         }
     }
     
+    public function avancePlanPorcentaje($ID_EVIDENCIAS)
+    {
+        try 
+        {
+            $query="SELECT SUM(tbgantt_evidencias.progress)/COUNT(tbgantt_evidencias.progress) AS total_avance
+                    FROM gantt_evidencias tbgantt_evidencias
+                    WHERE tbgantt_evidencias.id_evidencias=$ID_EVIDENCIAS AND tbgantt_evidencias.parent=0";
+            
+            $db= AccesoDB::getInstancia();
+            $lista = $db->executeQuery($query);
+            
+            return $lista[0]["total_avance"];            
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
 }
 
 ?>

@@ -8,9 +8,16 @@
          try
          {
              $dao=new InformeEvidenciasDAO();
-             $lista= $dao->listarEvidencias($CONTRATO);
+             $rec= $dao->listarEvidencias($CONTRATO);
+             $lista=array();
+             $contador=0;
              
-             return $lista;
+             foreach ($rec as $key => $value)
+             {                 
+                 $rec[$key]["avance_plan"] = $dao->avancePlanPorcentaje($value["id_evidencias"]);                                          
+             };
+             
+             return $rec;
          } catch (Exception $ex)
          {
              throw $ex;
