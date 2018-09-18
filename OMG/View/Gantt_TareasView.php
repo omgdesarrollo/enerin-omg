@@ -489,39 +489,51 @@ setScaleConfig('1');
       	(function dynamicProgress() {
 
 		function calculateSummaryProgress(task) {
-			if (task.type != gantt.config.types.project)
+                    console.log("entro en calculate summary progress");
+			if (task.type != gantt.config.types.project){
+//                            alert("");
 				return task.progress;
+                            }
 			var totalToDo = 0;
 			var totalDone = 0;
 			gantt.eachTask(function (child) {
 				if (child.type != gantt.config.types.project) {
+                                    
+//                                    alert("d");
 					totalToDo += child.duration;
 					totalDone += (child.progress || 0) * child.duration;
 				}
 			}, task.id);
 			if (!totalToDo) return 0;
 			else return totalDone / totalToDo;
+                        
 		}
+                
+                
 
 		function refreshSummaryProgress(id, submit) {
-			if (!gantt.isTaskExists(id))
-				return;
-
-			var task = gantt.getTask(id);
-			task.progress = calculateSummaryProgress(task);
-
-			if (!submit) {
-				gantt.refreshTask(id);
-			} else {
-				gantt.updateTask(id);
-			}
-
-			if (!submit && gantt.getParent(id) !== gantt.config.root_id) {
-				refreshSummaryProgress(gantt.getParent(id), submit);
-			}
+                   console.log("entro en refresh summary progress");
+//			if (!gantt.isTaskExists(id))
+//				return;
+//
+//			var task = gantt.getTask(id);
+//			task.progress = calculateSummaryProgress(task);
+//
+//			if (!submit) {
+//				gantt.refreshTask(id);
+//			} else {
+//				gantt.updateTask(id);
+//			}
+//
+//			if (!submit && gantt.getParent(id) !== gantt.config.root_id) {
+//				refreshSummaryProgress(gantt.getParent(id), submit);
+//			}
 		}
-
-
+                function calculoDatosSumaProgreso(){
+                
+                
+                }
+                
 		gantt.attachEvent("onParse", function () {
                    
 			gantt.eachTask(function (task) {
@@ -539,15 +551,6 @@ setScaleConfig('1');
 		});
 		gantt.attachEvent("onAfterTaskAdd", function (id) {
 			refreshSummaryProgress(gantt.getParent(id), true);
-//                         gantt.load("../Controller/GanttController.php?Op=MostrarTareasCompletasPorFolioDeEntrada");
-                          
-//                                var dp = new gantt.dataProcessor("../Controller/GanttController.php?Op=Modificar");
-
-//                                dp.init(gantt);
-//                        gantt.render();
-//                        gantt.refreshData();
-//                         alert("quedo agregado");
-//                          $("#gantt_here").load("GanttView.php  #gantt_here");
 		});
 
 

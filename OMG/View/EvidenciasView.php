@@ -61,7 +61,7 @@
     <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
 
-    <script src="../../js/fechas_formato.js" type="text/javascript"></script>
+    <!-- <script src="../../js/fechas_formato.js" type="text/javascript"></script> -->
     <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
     <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
     <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
@@ -69,6 +69,7 @@
     <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
 
     <script src="../../js/fEvidenciasView.js" type="text/javascript"></script>
+    <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
     <script src="../../js/fGridComponent.js" type="text/javascript"></script>
     
    
@@ -318,7 +319,7 @@
     var estructuraGrid = [
         { name: "id_principal", type: "text",visible:false },
         { name: "validador", type: "text",visible:false },
-        { name: "no", title:"No",type: "text", width: 40, editing:false },
+        { name: "no", title:"No",type: "text", width: 50, editing:false },
         { name: "nombre",title:"Tema", type: "text", width: 150, editing:false },
         { name: "registro",title:"Registro", type: "text", width: 150, editing:false  },
         { name: "frecuencia",title:"Frecuencia", type: "text", width: 130, editing:false  },

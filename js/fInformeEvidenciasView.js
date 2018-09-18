@@ -28,14 +28,14 @@ function inicializarFiltros()
         //     // { id:"delete", name:"Opción", type:"customControl",sorting:""},
         { id: "tema",title:"Tema", type: "text"},
         { id: "tema_responsable",title:"Responsable Tema",type:"text"},
-        { id: "requisito",title:"Requisito", type: "none"},
+        { id: "requisito",title:"Requisito", type: "text"},
         { id: "registro",title:"Registro", type: "text"},
         { id: "frecuencia",title:"Frecuencia", type: "combobox",data:frecuenciaData,descripcion:"frecuencia"},
         { id: "clave_documento",title:"Clave Documento", type: "text"},
-        { id: "documento_responsable",title:"Responsable Documento",type:"text"},
-        { id: "evidencia",title:"Evidencia", type: "none"},
-        { id: "fecha_registro",title:"Fecha Registro", type: "date"},
+        // { id: "documento_responsable",title:"Responsable Documento",type:"text"},
         { id: "fecha_creacion",title:"Fecha Evidencia", type: "date"},
+        { id: "fecha_registro",title:"Fecha Registro", type: "none"},
+        { id: "evidencia",title:"Evidencia", type: "none"},
         // { name: "usuario",title:"Usuario", type: "text", width:250, editing:false }
 
         { id: "accion_correctiva",title:"Accion Correctiva", type: "none"},
@@ -214,8 +214,19 @@ function listarDatos()
     });
 }
 
+function mostrarMensajes(msj,num)
+{
+    $("#areaMensaje").html(msj);
+    if(num == 0)
+        $("#myModalLabelMandarNotificacion").html("Desviación");
+    else
+        $("#myModalLabelMandarNotificacion").html("Acción Correctiva");
+}
+
 function reconstruir(value,index)
 {
+    noMsj = "<i class='fa fa-file-o' style='font-size: xx-large;color:#6FB3E0;cursor:pointer' aria-hidden='true'></i>";
+    yesMsj = "<i class='ace-icon fa fa-file-text-o icon-animated-bell' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true'></i>";
     ultimoNumeroGrid = index;
     tempData = new Object();
     
@@ -226,10 +237,13 @@ function reconstruir(value,index)
     tempData["tema"] = value.tema;
     tempData["tema_responsable"] = value.tema_responsable;
 
-    //  tempData["requisito"] = "<div><p>"+value.requisito+"</p></div>";
-     tempData["requisito"] = value.requisito;
+    //  tempData["requisito"] = "<span tooltiptext><span></span></span><p>"+value.requisito+"</p>";
+    tempData["requisito"] = value.requisito;
+//     "<div class='stat-item tooltip' data-stat='95' data-soft='Photoshop' data-color='#C0DCF1'>\n\
+//        <span tooltiptext><span></span></span>\n\
+//        <p>'Hola Mundo'</p>\n\
+//      </div>";
 //    tempData["requisito"] = "<td class='celda' width='10%' style='font-size: -webkit-xxx-large'><button type='button' class='btn btn-success'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
-    
     tempData["registro"] = value.registro;
     tempData["frecuencia"] = value.frecuencia;
 
@@ -249,9 +263,23 @@ function reconstruir(value,index)
     }
     tempData["fecha_creacion"] = getSinFechaFormato(value.fecha_creacion);
 
-    tempData["desviacion"] = value.desviacion;
-    tempData["accion_correctiva"] = value.accion_correctiva;
-    tempData["avance_plan"]=(value.avance_plan*100).toFixed(2)+"%";
+    tempData["desviacion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;'";
+    tempData["desviacion"] += "onClick='mostrarMensajes(\""+value.desviacion+"\",0);' data-toggle='modal'";
+    if(value.desviacion=="")
+        tempData["desviacion"] += "data-target='#MandarNotificacionModal'>"+noMsj+"</button>";
+    else
+        tempData["desviacion"] += "data-target='#MandarNotificacionModal'>"+yesMsj+"</button>";
+    // value.desviacion;
+    // tempData["accion_correctiva"] = value.accion_correctiva;
+    tempData["accion_correctiva"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;'";
+    tempData["accion_correctiva"] += "onClick='mostrarMensajes(\""+value.accion_correctiva+"\",1);' data-toggle='modal'";
+    if(value.accion_correctiva=="")
+        tempData["accion_correctiva"] += "data-target='#MandarNotificacionModal'>"+noMsj+"</button>";
+    else
+        tempData["accion_correctiva"] += "data-target='#MandarNotificacionModal'>"+yesMsj+"</button>";
+
+    // tempData["avance_plan"]=(value.avance_plan*100).toFixed(2)+"%";
+    tempData["avance_plan"] = value.avance_plan;
     tempData["estatus"] = value.estatus;
     // tempData["delete"] = [];
     tempData["delete"]=tempData["id_principal"];

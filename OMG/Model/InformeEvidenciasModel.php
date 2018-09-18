@@ -14,7 +14,8 @@
              
              foreach ($rec as $key => $value)
              {                 
-                 $rec[$key]["avance_plan"] = $dao->avancePlanPorcentaje($value["id_evidencias"]);                                          
+                $resp = $dao->avancePlanPorcentaje($value["id_evidencias"]);
+                $rec[$key]["avance_plan"] = $resp != null ? number_format($resp*100,2,'.','')."%" : "SIN PLAN";
              };
              
              return $rec;

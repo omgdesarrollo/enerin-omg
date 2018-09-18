@@ -57,7 +57,8 @@ $Usuario=  Session::getSesion("user");
 
         <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
         <script src="../../js/fGridComponent.js" type="text/javascript"></script>
-
+        <!-- <link href="../../css/estilosToolTip.css" rel="stylesheet" type="text/css"/> -->
+        <!-- <script src="../../js/toolsToolTip.js" type="text/javascript"></script> -->
         <style>
             .jsgrid-header-row>.jsgrid-header-cell {
                 background-color:#307ECC ;      /* orange */
@@ -211,6 +212,24 @@ $Usuario=  Session::getSesion("user");
     </div><!-- cierre div class="modal-dialog" -->
 </div><!-- cierre del modal -->
 
+<div class="modal draggable fade" id="MandarNotificacionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+        <!-- <div id="loaderModalMostrar"></div> -->
+		<div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabelMandarNotificacion">Mandar Notificación</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label id="areaMensaje" class="control-label" for="title">Mensaje:</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 
 // $(function(){
@@ -234,23 +253,24 @@ $Usuario=  Session::getSesion("user");
                 {frecuencia:"ANUAL"},
                 {frecuencia:"TIEMPO INDEFINIDO"}
             ];
+    
     var estatusFiltro = [
         {estatus:"EN PROCESO"},{estatus:"VALIDADO"}
     ]
 
     var estructuraGrid = [
         { name: "id_principal", type: "text",visible:false },
-        { name: "no", title:"No",type: "text", width: 40, editing:false },
+        { name: "no", title:"No",type: "text", width: 50, editing:false },
         { name: "tema",title:"Tema", type: "text", width: 150, editing:false },
         { name: "tema_responsable",title:"Responsable Tema", type: "text", width: 150, editing:false },
         { name: "requisito",title:"Requisito", type: "text", width: 150, editing:false  },
         { name: "registro",title:"Registro", type: "text", width: 150, editing:false  },
-        { name: "frecuencia",title:"Frecuencia", type: "text", width: 130, editing:false  },
+        { name: "frecuencia",title:"Frecuencia", type: "text", width: 140, editing:false  },
         { name: "clave_documento",title:"Clave Documento", type: "text",  width: 150, editing:false },
-        { name: "documento_responsable",title:"Responsable Documento", type: "text",  width: 150, editing:false },
+        // { name: "documento_responsable",title:"Responsable Documento", type: "text",  width: 150, editing:false },
+        { name: "fecha_creacion",title:"Fecha Evidencia", type: "text",  width: 160, editing:false },
+        { name: "fecha_registro",title:"Fecha Registro", type: "text", width: 160, editing:false },
         { name: "evidencia",title:"Evidencia", type: "text",  width: 150, editing:false },
-        { name: "fecha_registro",title:"Fecha Registro", type: "text", width: 155, editing:false },
-        { name: "fecha_creacion",title:"Fecha Evidencia", type: "text",  width: 155, editing:false },
         // { name: "usuario",title:"Usuario", type: "text", width:250, editing:false },
         { name: "accion_correctiva",title:"Accion Correctiva", type: "text", width: 150, editing:false},
         // { name: "plan_accion",title:"Plan Accion", type: "text", width: 160, editing:false },

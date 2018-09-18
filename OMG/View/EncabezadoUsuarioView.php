@@ -1,5 +1,6 @@
 
 <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<script src="../../js/fechas_formato.js" type="text/javascript"></script>
 
 <style>
 .icon-animated-vertical
