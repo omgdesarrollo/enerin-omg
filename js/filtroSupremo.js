@@ -137,19 +137,20 @@ function aplicarFiltro(DataFinal)
 
 function mostrarFiltros()
 {
-    $(".jsgrid-filter-row").slideToggle();
+    // $(".jsgrid-filter-row").slideToggle();
+    lol();
     // // $(".jsgrid-filter-row").animate({height:"toggle"});
-    // val = $('.jsgrid-filter-row').css("display");}
-    // if(val == "none")
-    // {
-    // //     $('.jsgrid-filter-row').css("display","");
+    val = $('.jsgrid-filter-row').css("display");
+    if(val == "none")
+    {
+        $('.jsgrid-filter-row').css("display","");
     //         $('.jsgrid-filter-row').slideDown();
-    // }
-    // else
-    // {
-    //     // $('.jsgrid-filter-row').css("display","none");
+    }
+    else
+    {
+        $('.jsgrid-filter-row').css("display","none");
     //     $('.jsgrid-filter-row').slideUp();
-    // }
+    }
 }
 
 function limpiarFiltros()
