@@ -360,8 +360,6 @@ function reconstruir(value,index)
 function reconstruirExcel(value,index)
 {
     tempData=new Object();
-//    ultimoNumeroGrid = index;
-//    tempData["id_principal"]= [{'id_tarea':value.id_tarea}];
     tempData["No"]= index;  
     tempData["Referencia"]=value.referencia;
     tempData["Tarea"]=value.tarea;

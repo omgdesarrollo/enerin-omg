@@ -1,4 +1,4 @@
-$(function ($) {
+(function ($) {
     var $defaults = {
         containerid: null
         , datatype: 'table'
@@ -49,7 +49,11 @@ $(function ($) {
                     {
                         excelData = Export(ConvertDataStructureToTableTareas());
                     }
-                   
+                    if(origenDeDatosVista=="validacionDocumentos")
+                    {
+                        excelData = Export(ConvertDataStructureToTableTareasValidacionDocumentos());
+                    }
+                    
                     
                     break;
                 
@@ -432,6 +436,60 @@ $(function ($) {
             return result;
         }
         
+                function ConvertDataStructureToTableTareasValidacionDocumentos() 
+        {
+//            alert("d");
+            months = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+            fecha="0000-00-00";
+            date = new Date();
+            fecha = date.getDate() +" "+ months[date.getMonth()] +" "+ date.getFullYear().toString().slice(2,4);
+            
+            
+            var result = "<table>\n\
+                          <tr><th></th><th></th><th style='background:#307ECC; color:#ffffff; border:solid 1px #000000;'>Validacion</th></tr>\n\
+                          <tr><td></td><td></td><td style='border:solid 1px #000000;'><center>"+fecha+"</center></td>\n\
+                          <tr>\n\
+                          </table>";
+            result += "<table id='tabledata'";
+            result += "<thead><tr>";
+            $($settings.columns).each(function (key, value) {
+                if (this.ishidden != true) {
+                    result += "<th style='background:#307ECC; color:#ffffff; border:solid 1px #000000;'";
+                    if (this.width != null) {
+                        result += " style='width: " + this.width + "'";
+                    }
+                    result += ">";
+                    result += this.headertext;
+                    result += "</th>";
+                }
+            });
+            result += "</tr></thead>";
+
+            result += "<tbody>";
+            $(gridData).each(function (key, value) {
+                result += "<tr>";
+                $($settings.columns).each(function (k, v) {
+                    if (value.hasOwnProperty(this.datafield)) {
+                        if (this.ishidden != true) {
+                            result += "<td style='border:solid 1px #000000;'";
+                            if (this.width != null) {
+                                result += " style='width: " + this.width + "'; ";
+                            }
+                            result += ">";
+                            result += value[this.datafield];
+                            result += "</td>";
+                        }
+                    }
+                });
+                result += "</tr>";
+            });
+            result += "</tbody>";
+
+            result += "</table>";
+
+            return result;
+        }
+        
         function Export(htmltable) { /* METODO PARA EXPORTAR DE UNA TABLA HTML FVAZCONCELOS*/
 
             if (isBrowserIE()) {
@@ -530,6 +588,7 @@ $(function ($) {
         
     };
 })(jQuery);
+
 function getColumns(paramData){
 
 	var header = [];

@@ -10,11 +10,22 @@ class ValidacionDocumentoModel{
     public function  listarValidacionDocumentos($USUARIO,$CONTRATO){
         try{
             $dao=new ValidacionDocumentoDAO();
+            
             $rec=$dao->listarValidacionDocumentos($USUARIO,$CONTRATO);
-            return self::construirListaValidacionDocumento($rec);//self porque la funcion es static
-        }catch (Exception $e)
+            
+            $lista= self::construirListaValidacionDocumento($rec);//self porque la funcion es static
+            
+            foreach ($lista as $key => $value) 
+            {
+                $lista[$key]['detalles_excel']['requisitos']= $dao->obtenerRequisitosporDocumento($value['id_documento']);
+                $lista[$key]['detalles_excel']['registros']= $dao->obtenerRegistrosPorDocumento($value['id_documento']);
+            }
+            
+            return $lista; 
+        }catch (Exception $ex)
         {
-            throw  $e;
+            throw  $ex;
+            return -1;
         }
     }
 
