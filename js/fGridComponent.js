@@ -114,24 +114,18 @@ function construirGrid()
         rowClick:(args)=>
         {
             // console.log(args);
-            console.log(args.event.target);
             obj = args.event.target;
-
-            text = $(obj).html();
-            if(text.includes("<button") || text.includes("<input") || text.includes("<a") || text.includes("<select"))
+            // console.log(obj);
+            if($(obj).hasClass("jsgrid-cell"))
             {
-                
+                text = $(obj).html();
+                // console.log(!text.includes("<button") && !text.includes("<input"));
+                if(!text.includes("<button") && !text.includes("<input") && !text.includes("<a") && !text.includes("<select") && !text.includes("<i"))
+                    swal("",text,"info");
             }
-            else
-            {
-                swal("",text,"info");
-            }
-            console.log(text);
-            // taget = args.event.currentTarget;
             // console.log($(".jsgrid-selected-row")[0]);
             // $("#jsGrid").jsGrid("editItem",$(".jsgrid-selected-row")[0]);
             // var a = $("#jsGrid").jsGrid("rowByItem",$(".jsgrid-selected-row")[0]);
-            // console.log(a);
             $("#jsGrid").jsGrid("cancelEdit");
             // console.log("A");
         },

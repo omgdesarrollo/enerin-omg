@@ -62,6 +62,7 @@ $Usuario=  Session::getSesion("user");
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <script src="../../js/fCatalogoProduccionView.js" type="text/javascript"></script>
                 <!-- <script src="../../js/jqueryblockUI.js" type="text/javascript"></script> -->
+                <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/fGridComponent.js" type="text/javascript"></script>
                 <!-- <script src="../../js/socket.js" type="text/javascript"></script> -->
                 <!-- <script src="../../js/fancywebsocket.js" type="text/javascript"></script> -->

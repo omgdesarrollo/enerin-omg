@@ -386,13 +386,13 @@ function loadDataSideBarOficiosDocumentacion(lista)
              
                 if(value["nombre"]=="InformeValidacionDocumentosView.php"){
                     if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
-                        listInformes.push({id: "informesValidacionDocumentos", text: "Informe Validacion de Documentos", icon: "documentos.png"});
+                        listInformes.push({id: "informesValidacionDocumentos", text: "Inf. De Documentos", icon: "documentos.png"});
                     }
                 }
                 
                  if(value["nombre"]=="InformeEvidenciasView.php"){
                     if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
-                        listInformes.push({id: "informesEvidencias", text: "Informe de Evidencias", icon: "operaciones.png"});
+                        listInformes.push({id: "informesEvidencias", text: "Inf. Evidencias", icon: "operaciones.png"});
                     }
                 }
                  if(value["nombre"]=="ConsultasView.php"){

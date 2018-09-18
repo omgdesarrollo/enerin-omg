@@ -69,6 +69,7 @@
     <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
 
     <script src="../../js/fInformeValidacionDocumentosView.js" type="text/javascript"></script>
+    <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
     <script src="../../js/fGridComponent.js" type="text/javascript"></script>
     
    
@@ -202,14 +203,14 @@
 
 
     var estructuraGrid=[
-        { name: "no", type: "text", width: 80, validate: "required",editing:false },
-        { name: "clave_documento", title:"Clave del documento",type: "text", width: 200, validate: "required",editing:false },
-        { name: "documento", title:"Nombre del Documento", type: "text", width: 450, validate: "required" ,editing:false},
-        { name: "nombrecompleto", title:"Responsable",type: "text", width: 250, validate: "required",editing:false },
-        { name: "temasmodal", title:"Tema",type: "text", width: 150, validate: "required",editing:false},
-        { name: "requisitosmodal",  title:"Requisito",type: "text", width: 150, validate: "required",editing:false },
-        { name: "archivoAdjunto",title:"Archivo Adjunto", width: 150, validate: "required",editing:false },
-        { name: "statusNotBdKey",title:"Estatus", type: "text", width: 150, validate: "required",editing:false },
+        { name: "no",title:"No.", type: "text", width: 50, editing:false },
+        { name: "clave_documento", title:"Clave del documento",type: "text", width: 180, editing:false },
+        { name: "documento", title:"Nombre del Documento", type: "text", width: 200, editing:false},
+        { name: "nombrecompleto", title:"Responsable",type: "text", width: 180, editing:false },
+        { name: "temasmodal", title:"Tema",type: "text", width: 90, editing:false},
+        { name: "requisitosmodal",  title:"Requisito",type: "text", width: 90, editing:false },
+        { name: "archivoAdjunto",title:"Archivo Adjunto", width: 100, editing:false },
+        { name: "statusNotBdKey",title:"Estatus", type: "text", width: 120, editing:false },
         { name:"delete", title:"Opción", type:"customControl",sorting:"",editing:false}
 ];
 

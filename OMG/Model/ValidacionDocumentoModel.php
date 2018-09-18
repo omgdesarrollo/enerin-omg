@@ -17,8 +17,8 @@ class ValidacionDocumentoModel{
             
             foreach ($lista as $key => $value) 
             {
-                $lista[$key]['detalles_excel']['requisitos']= $dao->obtenerRequisitosporDocumento($value['id_documento']);
-                $lista[$key]['detalles_excel']['registros']= $dao->obtenerRegistrosPorDocumento($value['id_documento']);
+                $lista[$key]['detalles_excel'][0]['requisitos']= $dao->obtenerRequisitosporDocumento($value['id_documento']);
+                $lista[$key]['detalles_excel'][1]['registros']= $dao->obtenerRegistrosPorDocumento($value['id_documento']);
             }
             
             return $lista; 

@@ -66,6 +66,7 @@ $Usuario=  Session::getSesion("user");
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <script src="../../js/fDocumentoSalidaView.js" type="text/javascript"></script>
                 <!-- Empieza libreria que contiene la estructura del jsGridCompleta en configuracion-->
+                <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/fGridComponent.js" type="text/javascript"></script>
                 
                 <!--termina libreria que contiene la estructura del jsGridCompleta--> 
@@ -120,15 +121,16 @@ require_once 'EncabezadoUsuarioView.php';
     </button>
     
     <div class="pull-right">
-        <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
+    
+        <button style="width:48px;height:42px" type="button"  class="btn_agregar" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
             <img src="../../images/base/_excel.png" width="30px" height="30px">
         </button>
-        <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
+        <!-- <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
             <img src="../../images/base/word.png" width="30px" height="30px"> 
         </button>
         <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
             <img src="../../images/base/pdf.png" width="30px" height="30px"> 
-        </button> 
+        </button>  -->
     </div>
     
 </div>
@@ -385,15 +387,15 @@ function inicializarEstructuraGrid()
                         { name: "id_principal", visible:false },
                         { name: "id_documento_entrada", visible:false },
                         { name: "no", title: "No", type: "text", width:50,editing:false},
-                        { name: "folio_entrada", title: "Folio de Entrada", type: "text", width:150,editing:false},
-                        { name: "folio_salida", title: "Folio de Salida", type: "text", width:150,editing:false},
+                        { name: "folio_entrada", title: "Folio de Entrada", type: "text", width:140,editing:false},
+                        { name: "folio_salida", title: "Folio de Salida", type: "text", width:140,editing:false},
                         { name: "id_empleado", title: "Responsable Tema", type: "comboEmpleados", width:150},
                         { name: "fecha_envio", title: "Fecha de Envio", type: "text", width:150,editing:false},
-                        { name: "asunto", title: "Asunto", type: "text", width:150},
-                        { name: "destinatario", title: "Destinatario", type: "text", width:150},
+                        { name: "asunto", title: "Asunto", type: "text", width:140},
+                        { name: "destinatario", title: "Destinatario", type: "text", width:140},
                         { name: "id_autoridad", title: "Autoridad Remitente", type: "comboAutoridad", width:150},
-                        { name: "archivo_adjunto", title: "Archivo Adjunto", type: "text", width:150,editing:false},    
-                        { name: "observaciones", title: "Observacion", type: "text", width:150},
+                        { name: "archivo_adjunto", title: "Archivo Adjunto", type: "text", width:100,editing:false},
+                        { name: "observaciones", title: "Observacion", type: "text", width:140},
                         { name: "delete", title: "Opcion", type: "customControl", width:150}
                 ];
                 resolve();
@@ -621,8 +623,8 @@ function reconstruir(value,index)
     tempData["asunto"]=value.asunto;
     tempData["destinatario"]=value.destinatario;
     tempData["id_autoridad"]=value.id_autoridad;
-    tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_documento_salida+")' type='button' class='btn btn-info btn_refrescar' data-toggle='modal' data-target='#create-itemUrls' style='width:100%'>";
-    tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
+    tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_documento_salida+")' type='button' class='botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls' style='width:100%'>";
+    tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 22px'></i></button>";
     tempData["observaciones"]=value.observaciones;
     
 //     if( value.archivosUpload[1].length != 0 )

@@ -477,7 +477,27 @@ function reconstruirExcel(documento,index)//listo
     tempData["Responsable del Documento"] = documento.responsable_documento;
     tempData["Tema"] = documento.nombre_tema;
     tempData["Responsable del Tema"] = documento.responsable_tema;
-    tempData["Requisitos"] = documento[0]['detalles_excel']['requisitos'].requisito;
+    tempData["Requisitos"]="";   
+        $.each(documento['detalles_excel']["0"]['requisitos'],(index,value)=>{
+            tempData["Requisitos"] += "<li>"+value['requisito']+"<li>";                                
+        });
+    tempData["Registros"]="";
+        $.each(documento['detalles_excel']["1"]['registros'],(index,value)=>{
+            tempData["Registros"] += "<li>"+value['registro']+"<li>";                                
+        });
+    if(documento['validacion_documento_responsable']=="false")
+    {
+        tempData["Validacion Responsable Documento"]="No";
+    }else{
+        tempData["Validacion Responsable Documento"]="Si";
+    }
+    if(documento['validacion_tema_responsable']=="false")
+    {
+        tempData["Validacion Responsable Tema"]="No";
+    }else{
+        tempData["Validacion Responsable Tema"]="Si";
+    }
+                
     return tempData;
 }
 

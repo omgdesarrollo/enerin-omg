@@ -61,7 +61,7 @@
     <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
 
-    <script src="../../js/fechas_formato.js" type="text/javascript"></script>
+    <!-- <script src="../../js/fechas_formato.js" type="text/javascript"></script> -->
     <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
     <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
     <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
@@ -69,8 +69,9 @@
     <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
 
     <script src="../../js/fEvidenciasView.js" type="text/javascript"></script>
+    <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
     <script src="../../js/fGridComponent.js" type="text/javascript"></script>
-    
+    <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
    
     <style>
         .jsgrid-header-row>.jsgrid-header-cell
@@ -122,13 +123,20 @@
     
 <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
     <!-- <div style="position: fixed;"> -->
-        <button onClick="limpiarNuevaEvidenciaModal()" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#nuevaEvidenciaModal">
-            Agregar Nuevo Registro
-        </button>
+    <button onClick="limpiarNuevaEvidenciaModal()" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#nuevaEvidenciaModal">
+        Agregar Nuevo Registro
+    </button>
 
-        <button id="btnAgregarEvidenciasRefrescar" type="button" class="btn btn-info btn_refrescar" onclick="refresh();" >
-            <i class="glyphicon glyphicon-repeat"></i> 
+    <button id="btnAgregarEvidenciasRefrescar" type="button" class="btn btn-info btn_refrescar" onclick="refresh();" >
+        <i class="glyphicon glyphicon-repeat"></i> 
+    </button>
+    
+    <div class="pull-right">    
+        <button style="width:48px;height:42px" type="button"  class="btn_agregar" id="toExcel">
+            <img src="../../images/base/_excel.png" width="30px" height="30px">
         </button>
+    </div>
+    
 </div>
 
     <br><br><br>
@@ -299,6 +307,8 @@
     var gridInstance;
     var ws;
     var thisjGrowl;
+    var DataGridExcel=[];
+    var origenDeDatosVista="evidencias";
 
     var frecuenciaData = [
                 {frecuencia:"DIARIO"},
@@ -318,7 +328,7 @@
     var estructuraGrid = [
         { name: "id_principal", type: "text",visible:false },
         { name: "validador", type: "text",visible:false },
-        { name: "no", title:"No",type: "text", width: 40, editing:false },
+        { name: "no", title:"No",type: "text", width: 50, editing:false },
         { name: "nombre",title:"Tema", type: "text", width: 150, editing:false },
         { name: "registro",title:"Registro", type: "text", width: 150, editing:false  },
         { name: "frecuencia",title:"Frecuencia", type: "text", width: 130, editing:false  },
@@ -328,7 +338,7 @@
         { name: "fecha_registro",title:"Fecha Registro", type: "text", width: 155, editing:false },
         { name: "usuario",title:"Usuario", type: "text", width:250, editing:false },
         { name: "accion_correctiva",title:"Accion Correctiva", type: "text", width: 150, editing:false},
-        { name: "plan_accion",title:"Plan Accion", type: "text", width: 160, editing:false },
+        { name: "plan_accion",title:"Plan Accion", type: "text", width: 110, editing:false },
         { name: "desviacion",title:"Desviacion", type: "text", width: 100, editing:false},
         {name: "validacion",title:"Validacion", type: "text", width: 100, editing:false },
         { name:"delete", title:"Opción", type:"customControl",sorting:""},

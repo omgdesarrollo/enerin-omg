@@ -665,6 +665,7 @@ var vistas = [];
  var banderasSeccionesArriba=false;
  var contadoresSeccionesArriba=1    ;
  listasubmodulos=[]=listaModulos;
+ console.log(listasubmodulos);
               $.each(listasubmodulos,function (index,value){
                   nombre_submodulo=value["nombre_submodulo"];
 

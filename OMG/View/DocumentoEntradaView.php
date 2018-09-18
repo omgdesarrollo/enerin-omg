@@ -59,7 +59,7 @@ $Usuario = Session::getSesion("user");
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
 
                 <!-- <script src="../../js/fCatalogoProduccionView.js" type="text/javascript"></script> -->
-
+                <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/fGridComponent.js" type="text/javascript"></script>
 
             <style>
@@ -307,18 +307,19 @@ MyDateField.prototype = new jsGrid.Field
         },
         itemTemplate: function(value)
         {
-                fecha="0000-00-00";
-                // console.log(this);
-                this[this.name] = value;
-                // console.log(data);
-                if(value!=fecha)
-                {
-                        date = new Date(value);
-                        fecha = date.getDate()+1 +" "+ months[date.getMonth()] +" "+ date.getFullYear().toString().slice(2,4);
-                        return fecha;
-                }
-                else
-                        return "Sin fecha";
+                return getSinFechaFormato(value);
+                // fecha="0000-00-00";
+                // // console.log(this);
+                // this[this.name] = value;
+                // // console.log(data);
+                // if(value!=fecha)
+                // {
+                //         date = new Date(value);
+                //         fecha = date.getDate()+1 +" "+ months[date.getMonth()] +" "+ date.getFullYear().toString().slice(2,4);
+                //         return fecha;
+                // }
+                // else
+                //         return "Sin fecha";
         },
         insertTemplate: function(value)
         {},
@@ -359,35 +360,35 @@ function inicializarEstructuraGrid()
                         // { name: "fecha_recepcion", title: "Fecha Recepción", type: "text", width, validate: "required" },
                         { name: "fecha_recepcion", title: "Fecha Recepción", type: "date", width:160},
 
-                        { name: "asunto", title: "Asunto", type: "text", width:130},
+                        { name: "asunto", title: "Asunto", type: "text", width:140},
                         { name: "remitente", title: "Remitente", type: "text", width:150},
 
-                        { name: "id_autoridad", title: "Autoridad Remitente", type: "select",width:120,
+                        { name: "id_autoridad", title: "Autoridad Remitente", type: "select",width:110,
                                 items:thisAutoridad,
                                 valueField:"id_autoridad",
                                 textField:"clave_autoridad"
                                 },
 
-                        { name: "id_tema", title: "Numero Tema", type: "select",width:120,
+                        { name: "id_tema", title: "Numero Tema", type: "select",width:110,
                                 items:thisTemas,
                                 valueField:"id_tema",
                                 textField:"no"},
 
-                        { name: "nombre", title: "Nombre Tema", type: "text", width:150, editing:false },
-                        { name: "nombre_empleado", title: "Responsable Tema", type: "text", width:150, editing:false },
+                        { name: "nombre", title: "Nombre Tema", type: "text", width:140, editing:false },
+                        { name: "nombre_empleado", title: "Responsable Tema", type: "text", width:140, editing:false },
 
-                        { name: "clasificacion", title: "Clasificación", type: "select", width:150,valueField:"clasificacion",textField:"descripcion",
+                        { name: "clasificacion", title: "Clasificación", type: "select", width:140,valueField:"clasificacion",textField:"descripcion",
                                 items:[{"clasificacion":"1","descripcion":"Con limite de tiempo"},{"clasificacion":"2","descripcion":"Sin limite de tiempo"},{"clasificacion":"3","descripcion":"Informativo"}]
                         },
 
-                        { name: "status_doc", title:"Estatus", type: "select", width:150,valueField:"status_doc",textField:"descripcion",
+                        { name: "status_doc", title:"Estatus", type: "select", width:130,valueField:"status_doc",textField:"descripcion",
                                 items:[{"status_doc":"1","descripcion":"PROCESO"},{"status_doc":"2","descripcion":"SUSPENDIDO"},{"status_doc":"3","descripcion":"TERMINADO"}]
                         },
 
                         { name: "fecha_asignacion", title: "Fecha Asignación", type: "date", width:160},
                         { name: "fecha_limite_atencion", title: "Fecha Limite Atención", type: "date", width:190},
                         { name: "fecha_alarma", title: "Fecha Alarma", type: "date", width:160},
-                        { name: "adjuntar_archivo", title: "Adjuntar Archivos", type: "text", width:150, validate: "required", editing:false},
+                        { name: "adjuntar_archivo", title: "Adjuntar Archivos", type: "text", width:100, validate: "required", editing:false},
                         { name: "observaciones", title: "Observaciones", type: "text", width:150},
                         { name:"delete", title:"Opción", type:"customControl",sorting:""},
                         // {type:"control",editButton: true}
@@ -943,8 +944,8 @@ function reconstruir(value,index)//listoooo
 
         tempData["status_doc"] = value.status_doc;
 
-        tempData["adjuntar_archivo"] = "<button onClick='mostrar_urls("+value.id_documento_entrada+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
-        tempData["adjuntar_archivo"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
+        tempData["adjuntar_archivo"] = "<button onClick='mostrar_urls("+value.id_documento_entrada+")' type='button' class='botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
+        tempData["adjuntar_archivo"] += "<i class='fa fa-cloud-upload' style='font-size: 22px'></i></button>";
                                 
         tempData["observaciones"] = value.observaciones;
         tempData["delete"] = tempData["id_principal"];

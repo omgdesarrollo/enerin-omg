@@ -1,15 +1,8 @@
-// var myGrid;
-// 		function doOnLoad(){
-// 			myGrid = new dhtmlXGridObject('gridbox');
-// 			myGrid.setImagePath("../../../codebase/imgs/");
-// 			myGrid.setHeader("Sales, Book Title, Author");
-// 			myGrid.setInitWidths("70,250,*");
-// 			myGrid.setColAlign("right,left,left");
-// 			myGrid.setColTypes("dyn,ed,ed");
-// 			myGrid.setColSorting("int,str,str");
-// 			myGrid.init();
-// 			myGrid.load("../common/data.json","json");
-//         }
+$(function()
+{
+    
+    
+});
 
 function inicializarFiltros()
 {
@@ -909,7 +902,7 @@ function reconstruir(value,index)//listo jsgrid
         tempData["fecha_creacion"] = getSinFechaFormato(value.fecha_creacion);
         
         tempData["adjuntar_evidencia"] = "<button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
-        tempData["adjuntar_evidencia"] += " type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
+        tempData["adjuntar_evidencia"] += " type='button' class='botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
         tempData["adjuntar_evidencia"] += "<i class='fa fa-cloud-upload' style='font-size: 22px'></i></button>";
         $.each(value.archivosUpload[0],function(index2,value2)
         {
@@ -934,9 +927,9 @@ function reconstruir(value,index)//listo jsgrid
             
             tempData["plan_accion"] = "<button id='btn_cargaGantt' class='botones_vista_tabla' onClick='cargarprogram("+value.id_evidencias+","+value.validacion_supervisor+");'>";
             if(value.validacion_supervisor=="true")
-                tempData["plan_accion"] += "Vizualizar Programa";
+                tempData["plan_accion"] += "Vizualizar";
             else
-                tempData["plan_accion"] += "Cargar Programa";
+                tempData["plan_accion"] += "Cargar";
             
             tempData["plan_accion"] += "</button>";
 
