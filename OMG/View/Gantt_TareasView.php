@@ -879,10 +879,10 @@ dp.init(gantt);
         
 obtenerTareas().then(function (){
 construirTreeList();
-console.log(dxtreeList);
-dxtreeList["0"].onmouseover=function(args){
-console.log(args);
-}
+//console.log(dxtreeList);
+//dxtreeList["0"].onmouseover=function(args){
+//console.log(args);
+//}
 
 });
     
@@ -1120,6 +1120,21 @@ console.log(args);
         gantt.init('gantt_here');
 //        gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId");
         $.when(gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId")).then(function(){
+           
+           
+           
+           
+           obtenerTareas().then(function (){
+construirTreeList();
+//console.log(dxtreeList);
+//dxtreeList["0"].onmouseover=function(args){
+//console.log(args);
+//}
+
+});
+           
+           
+           
            
            
           
