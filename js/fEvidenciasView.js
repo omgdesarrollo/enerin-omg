@@ -934,9 +934,9 @@ function reconstruir(value,index)//listo jsgrid
             
             tempData["plan_accion"] = "<button id='btn_cargaGantt' class='botones_vista_tabla' onClick='cargarprogram("+value.id_evidencias+","+value.validacion_supervisor+");'>";
             if(value.validacion_supervisor=="true")
-                tempData["plan_accion"] += "Vizualizar Programa";
+                tempData["plan_accion"] += "Vizualizar Plan";
             else
-                tempData["plan_accion"] += "Cargar Programa";
+                tempData["plan_accion"] += "Cargar Plan";
             
             tempData["plan_accion"] += "</button>";
 
