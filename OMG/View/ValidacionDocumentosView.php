@@ -51,11 +51,8 @@ $Usuario=  Session::getSesion("user");
         <!-- <script src="../../js/tools.js" type="text/javascript"></script> -->
         <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
         <script src="../../js/fValidacionDocumentosView.js" type="text/javascript"></script>
-<<<<<<< HEAD
 
         <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
-=======
->>>>>>> 29a1b63777c1f44b9a398f843366346232c50801
         <script src="../../js/fGridComponent.js" type="text/javascript"></script>
         <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
                 
