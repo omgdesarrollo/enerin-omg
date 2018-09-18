@@ -491,6 +491,12 @@ function reconstruirExcel(documento,index)//listo
     }else{
         tempData["Validacion Responsable Documento"]="Si";
     }
+    if(documento['validacion_tema_responsable']=="false")
+    {
+        tempData["Validacion Responsable Tema"]="No";
+    }else{
+        tempData["Validacion Responsable Tema"]="Si";
+    }
                 
     return tempData;
 }
