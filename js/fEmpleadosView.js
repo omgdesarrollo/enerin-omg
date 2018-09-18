@@ -222,7 +222,7 @@ function listarDatos()
     var __datos=[], __datosExcel=[];
     datosParamAjaxValues={};
     datosParamAjaxValues["url"]="../Controller/EmpleadosController.php?Op=Listar";
-//    datosParamAjaxValues["url"]="../Controller/DocumentosSalidaController.php?Op=autoridadRemitenteFiltro";
+//    datosParamAjaxValues["url"]="../Controller/GanttTareasController.php?Op=calcularPorcentajeActividades";
     
     datosParamAjaxValues["type"]="GET";
     datosParamAjaxValues["async"]=false;

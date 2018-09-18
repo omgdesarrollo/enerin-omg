@@ -8,6 +8,7 @@ function lol()
 {
     var tam1A,tam2A;
     Frame = $(this)[0].frameElement;
+    // $("#jsGrid").jsGrid("refresh");
     // console.log($(window.parent).height());
     if($(window.parent).height()<720)
     {
@@ -21,6 +22,7 @@ function lol()
         // console.log(gridInstance);
         gridInstance.height = 385 + "px";
         gridInstance._body[0].style.height = "240px";
+        
         // $(".jsgrid-grid-body").css("height","235px");
     }
     else
@@ -29,12 +31,16 @@ function lol()
         tam2A = tam1A - 42;
         $(Frame).css("height",tam2A-6+"px");
         t = $(window.parent).height() - 720;
-        $("#jsGrid").css("height", t + 385 +"px");
+        $("#jsGrid").css("height", t + 400 +"px");
         
         // heightGrid = t;
         // console.log(gridInstance);
-        gridInstance.height = t + 400 + "px";
+        gridInstance.height = t + 385 + "px";
+        // console.log($(".jsgrid-grid-body"));
         gridInstance._body[0].style.height = t + 240 +"px";
+        // gridInstance._body[0].style.height = "max-container";
+        // gridInstance._body[0].style.height = 80 +"%";
+        
         // $(".jsgrid-grid-body").css("height", t + 236 +"px");
         // console.log(gridInstance);
         // $(".jsgrid-grid-body").css("height",($(window.parent).height() - 720 + 215) +"px");
@@ -91,7 +97,7 @@ function construirGrid()
         onDataLoaded:(args)=>
         {
             // alert("3");
-            setTimeout(function(){lol();},90);
+            setTimeout(function(){lol();},100);
             $('.jsgrid-filter-row').removeAttr("style",'display:none');
             // $(".jsgrid-grid-body").attr("style","height:53.44228935%");
             // $(window.parent).resizeTo($(window.parente).width(),$(window.parente).height()-200);
@@ -107,6 +113,19 @@ function construirGrid()
         rowClick:(args)=>
         {
             // console.log(args);
+            console.log(args.event.target);
+            obj = args.event.target;
+
+            text = $(obj).html();
+            if(text.includes("<button") || text.includes("<input") || text.includes("<a") || text.includes("<select"))
+            {
+                
+            }
+            else
+            {
+                swal("",text,"info");
+            }
+            console.log(text);
             // taget = args.event.currentTarget;
             // console.log($(".jsgrid-selected-row")[0]);
             // $("#jsGrid").jsGrid("editItem",$(".jsgrid-selected-row")[0]);
@@ -117,7 +136,7 @@ function construirGrid()
         },
         width: "100%",
         height: "390px",
-        autoload:false,
+        autoload:true,
         heading: true,
         sorting: true,
         editing: true,

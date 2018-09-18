@@ -36,6 +36,13 @@ switch ($Op) {
             break;
             
             
+        case 'calcularPorcentajeActividades':
+            $Lista= $modelGantt->calcularPorcentajePorActividad();
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($Lista);
+            break;
+            
+            
         case 'empleadosNombreCompleto':
             
 	$Lista=$modelGantt->listarEmpleadosNombreCompleto("");

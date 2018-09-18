@@ -268,7 +268,7 @@ fieldValidacionTema.prototype = new jsGrid.Field
 function listarDatos()//listo
 {
     return new Promise((resolve,reject)=>{
-        __datos=[];
+        var __datos=[];
         $.ajax({
             url:'../Controller/ValidacionDocumentosController.php?Op=ListarTodo',
             type:"GET",
@@ -288,6 +288,7 @@ function listarDatos()//listo
                     });
                     DataGrid = __datos;
                     gridInstance.loadData();
+                    
                     resolve();
                 }
                 else
@@ -463,6 +464,20 @@ function reconstruir(documento,index)//listo
     tempData["id_principal"].push({eliminar:0});
     tempData["id_principal"].push({editar:0});//si quieres que edite 1, si no 0
     tempData["delete"] = tempData["id_principal"];
+    return tempData;
+}
+
+
+function reconstruirExcel(documento,index)//listo
+{
+    tempData = new Object();
+    tempData["No"] = index;
+    tempData["Clave Dcumento"] = documento.clave_documento;
+    tempData["Documento"] = documento.documento;
+    tempData["Responsable del Documento"] = documento.responsable_documento;
+    tempData["Tema"] = documento.nombre_tema;
+    tempData["Responsable del Tema"] = documento.responsable_tema;
+    tempData["Requisitos"] = documento[0]['detalles_excel']['requisitos'].requisito;
     return tempData;
 }
 
