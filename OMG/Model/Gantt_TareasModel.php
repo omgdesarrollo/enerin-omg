@@ -20,7 +20,7 @@ class Gantt_TareasModel{
                 {
                     $rec[$key]['porcentaje_por_actividad']= $value['duration']*100/$total['total'];
                 }else{
-                    $rec[$key]['porcentaje_por_actividad']= $value['duration']*100/$value['duration'];
+                    $rec[$key]['porcentaje_por_actividad']= 100;
                 }
                 $rec[$key]['total_dias']= $total['total'];
             }
