@@ -498,6 +498,7 @@ setScaleConfig('1');
 			var totalToDo = 0;
 			var totalDone = 0;
 			gantt.eachTask(function (child) {
+                            console.log(child.text);
 				if (child.type != gantt.config.types.project) {
                                     
 //                                    alert("d");
@@ -679,8 +680,8 @@ gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
     gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId");
 
 
-//var dp = new gantt.dataProcessor("../Controller/GanttTareasController.php?Op=Modificar");
-//dp.init(gantt);
+var dp = new gantt.dataProcessor("../Controller/GanttTareasController.php?Op=Modificar");
+dp.init(gantt);
 
 //gantt.config.branch_loading = true;
 
