@@ -9,8 +9,8 @@
          {
              $dao=new InformeEvidenciasDAO();
              $rec= $dao->listarEvidencias($CONTRATO);
-             $lista=array();
-             $contador=0;
+//             $lista=array();
+//             $contador=0;
              
              foreach ($rec as $key => $value)
              {                 

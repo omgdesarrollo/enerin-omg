@@ -13,6 +13,17 @@ class Gantt_TareasModel{
         {
             $dao=new Gantt_TareaDao();
             $rec= $dao->listarRegistrosGanttTareas($VALUE);
+            $total['total']= $dao->totalDeDiasPorTarea($VALUE);            
+            foreach ($rec as $key => $value) 
+            { 
+                if($value['parent']!=0)
+                {
+                    $rec[$key]['porcentaje_por_actividad']= $value['duration']*100/$total['total'];
+                }else{
+                    $rec[$key]['porcentaje_por_actividad']= $value['duration']*100/$value['duration'];
+                }
+                $rec[$key]['total_dias']= $total['total'];
+            }
             
             return $rec;
         } catch (Exception $ex)
@@ -21,6 +32,32 @@ class Gantt_TareasModel{
             return -1;
         }
     }
+    
+//    public function calcularPorcentajePorActividad()
+//    {
+//        try 
+//        {
+////            $contador=0;
+//            $dao=new Gantt_TareaDao();
+//            $rec= $dao->calcularPorcentajePorActividad();
+//            $total= $dao->totalDeDiasPorTarea();
+////            echo "este es rec: ".json_encode($total);
+//            
+//            foreach ($rec as $key=>$value) 
+//            {
+////                $rec[$contador]['porcentaje_por_actividad']= $value['duration']*100/$total;
+////                $rec[$contador]['total_dias']= $total;
+////                $contador++;      
+//                $rec[$key]['porcentaje_por_actividad']= $value['duration']*100/$total;
+//                $rec[$key]['total_dias']= $total;
+//            }
+//            
+//            return $rec;
+//        } catch (Exception $ex) 
+//        {
+//            throw $ex;
+//        }
+//    }
 
 
     public function insertarGanttTareas($VALUES)

@@ -50,12 +50,14 @@ $Usuario=  Session::getSesion("user");
         <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
         <!-- <script src="../../js/tools.js" type="text/javascript"></script> -->
         <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
-        
         <script src="../../js/fValidacionDocumentosView.js" type="text/javascript"></script>
+<<<<<<< HEAD
 
         <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
+=======
+>>>>>>> 29a1b63777c1f44b9a398f843366346232c50801
         <script src="../../js/fGridComponent.js" type="text/javascript"></script>
-               
+        <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
                 
                 
 <style>
@@ -159,24 +161,12 @@ if(isset($_REQUEST["accion"]))
     <button type="button" class="btn btn-info btn_refrescar" id="btnrefrescar" onclick="refresh();" >
         <i class="glyphicon glyphicon-repeat"></i>
     </button>
-
-    <div class="pull-right">
-        <button style="width:51;height:42" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
+    
+    <div class="pull-right">    
+        <button style="width:48px;height:42px" type="button"  class="btn_agregar" id="toExcel">
             <img src="../../images/base/_excel.png" width="30px" height="30px">
         </button>
-        <button style="width:51;height:42" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
-            <img src="../../images/base/word.png" width="30px" height="30px"> 
-        </button>
-        <button style="width:51;height:42" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
-            <img src="../../images/base/pdf.png" width="30px" height="30px"> 
-        </button>
     </div>
-
-        <!-- <input type="text" id="idInputClaveDocumento" onkeyup="filterTableClaveDocumento()" placeholder="Clave Documento" style="width: 180px;">
-        <input type="text" id="idInputNombreDocumento" onkeyup="filterTableNombreDocumento()" placeholder="Nombre Documento" style="width: 180px;">
-        <input type="text" id="idInputResponsableDocumento" onkeyup="filterTableResponsableDocumento()" placeholder="Responsable del Documento" style="width: 180px;"> -->
-
-        <!-- <i class="ace-icon fa fa-search" style="color: #0099ff;font-size: 20px;"></i> -->
 </div>
 <br><br><br>
 
@@ -300,10 +290,10 @@ if(isset($_REQUEST["accion"]))
 <script>
                     
     var id_validacion_documento, columna, objetocheckbox, si_hay_cambio=false;
-
     var DataGrid=[], dataListado=[], filtros=[], dataListado=[];;
     var db={};
     var gridInstance, ultimoNumeroGrid=0;
+    var DataGridExcel=[],origenDeDatosVista="validacionDocumentos";
 
     var customsFieldsGridData=[
         {field:"customControl",my_field:MyCControlField},
@@ -392,10 +382,30 @@ if(isset($_REQUEST["accion"]))
                     }
                 }                
                 });
-      });
+        });
+        
+        
+        var $btnDLtoExcel = $('#toExcel'); 
+        $btnDLtoExcel.on('click', function () 
+        {   
+            __datosExcel=[]
+            $.each(dataListado,function (index,value)
+                {
+                    console.log("Entro al datosExcel");
+                    __datosExcel.push( reconstruirExcel(value,index+1) );
+                });
+                DataGridExcel= __datosExcel;
+//            console.log("Entro al excelexportHibrido");
+            $("#listjson").excelexportHibrido({
+                containerid: "listjson"
+                , datatype: 'json'
+                , dataset: DataGridExcel
+                , columns: getColumns(DataGridExcel)
+            });
+        });      
     
-    // listarValidacionDocumentos();
-    });// Cierra el $function 
+   
+    });//CIERRA $(function()) 
 
     function listarValidacionDocumentos()//listo
     {

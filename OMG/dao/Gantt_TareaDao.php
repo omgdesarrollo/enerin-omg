@@ -200,8 +200,10 @@ class Gantt_TareaDao {
         }   
     }   
     
-    public function guardarNotificacionResponsable($id_usuario,$id_para,$mensaje,$tipo,$atendido,$asunto,$CONTRATO){
-        try{
+    public function guardarNotificacionResponsable($id_usuario,$id_para,$mensaje,$tipo,$atendido,$asunto,$CONTRATO)
+    {
+        try
+        {
 
             $query="INSERT INTO notificaciones  (id_de,id_para,id_contrato,tipo_mensaje,mensaje,atendido,asunto)
             VALUES($id_usuario,$id_para,$CONTRATO,$tipo,'$mensaje','$atendido','$asunto')";
@@ -215,6 +217,47 @@ class Gantt_TareaDao {
             return false;
         }
     }
+    
+    
+//    public function calcularPorcentajePorActividad($VALUE)
+//    {
+//        try 
+//        {
+//            $query="SELECT tbgantt_tareas.id, tbgantt_tareas.text,tbgantt_tareas.duration	                 
+//                    FROM gantt_tareas tbgantt_tareas
+//                    WHERE tbgantt_tareas.id_tarea=$VALUE AND tbgantt_tareas.parent !=0";
+//            
+//            $db=  AccesoDB::getInstancia();
+//            $lista=$db->executeQuery($query);
+//
+//            return $lista[0]; 
+////            return $lista; 
+//        } catch (Exception $ex) 
+//        {
+//            throw $ex;
+//            return -1;
+//        }
+//    }
+    
+    public function totalDeDiasPorTarea($VALUE)
+    {
+        try 
+        {
+            $query="SELECT SUM(tbgantt_tareas.duration) AS total	
+                    FROM gantt_tareas tbgantt_tareas
+                    WHERE tbgantt_tareas.id_tarea=$VALUE AND tbgantt_tareas.parent !=0";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista[0]['total'];            
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
 
 }
 
