@@ -1,15 +1,26 @@
-// var myGrid;
-// 		function doOnLoad(){
-// 			myGrid = new dhtmlXGridObject('gridbox');
-// 			myGrid.setImagePath("../../../codebase/imgs/");
-// 			myGrid.setHeader("Sales, Book Title, Author");
-// 			myGrid.setInitWidths("70,250,*");
-// 			myGrid.setColAlign("right,left,left");
-// 			myGrid.setColTypes("dyn,ed,ed");
-// 			myGrid.setColSorting("int,str,str");
-// 			myGrid.init();
-// 			myGrid.load("../common/data.json","json");
-//         }
+$(function()
+{
+    var $btnDLtoExcel = $('#toExcel'); 
+    $btnDLtoExcel.on('click', function () 
+    {   
+        __datosExcel=[]
+        $.each(dataListado,function (index,value)
+            {
+                console.log("Entro al datosExcel");
+                __datosExcel.push( reconstruirExcel(value,index+1) );
+            });
+            DataGridExcel= __datosExcel;
+//            console.log("Entro al excelexportHibrido");
+        $("#listjson").excelexportHibrido({
+            containerid: "listjson"
+            , datatype: 'json'
+            , dataset: DataGridExcel
+            , columns: getColumns(DataGridExcel)
+        });
+    });      
+    
+    
+});
 
 function inicializarFiltros()
 {
@@ -995,6 +1006,15 @@ function reconstruir(value,index)//listo jsgrid
     tempData["id_principal"].push({editar:0});//si quieres que edite 1, si no 0
     tempData["delete"]=tempData["id_principal"];
     return tempData;
+}
+
+
+function reconstruirExcel(value,index)
+{
+    tempData = new Object();
+    tempData["No"] = index;
+    
+    return tempData
 }
 
 function eliminarEvidencia(id_evidencias)

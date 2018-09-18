@@ -327,6 +327,7 @@ and open the template in the editor.
 
 
   <script type="text/javascript">  
+  var dxtreeList;
 //empieza para definir como mostrar las tareas si por dia,semana,mes,año
 	function setScaleConfig(value) {
 		switch (value) {
@@ -497,6 +498,7 @@ setScaleConfig('1');
 			var totalToDo = 0;
 			var totalDone = 0;
 			gantt.eachTask(function (child) {
+                            console.log(child.text);
 				if (child.type != gantt.config.types.project) {
                                     
 //                                    alert("d");
@@ -513,21 +515,21 @@ setScaleConfig('1');
 
 		function refreshSummaryProgress(id, submit) {
                    console.log("entro en refresh summary progress");
-//			if (!gantt.isTaskExists(id))
-//				return;
-//
-//			var task = gantt.getTask(id);
-//			task.progress = calculateSummaryProgress(task);
-//
-//			if (!submit) {
-//				gantt.refreshTask(id);
-//			} else {
-//				gantt.updateTask(id);
-//			}
-//
-//			if (!submit && gantt.getParent(id) !== gantt.config.root_id) {
-//				refreshSummaryProgress(gantt.getParent(id), submit);
-//			}
+			if (!gantt.isTaskExists(id))
+				return;
+
+			var task = gantt.getTask(id);
+			task.progress = calculateSummaryProgress(task);
+
+			if (!submit) {
+				gantt.refreshTask(id);
+			} else {
+				gantt.updateTask(id);
+			}
+
+			if (!submit && gantt.getParent(id) !== gantt.config.root_id) {
+				refreshSummaryProgress(gantt.getParent(id), submit);
+			}
 		}
                 function calculoDatosSumaProgreso(){
                 
@@ -696,11 +698,9 @@ dp.init(gantt);
 	for (var i = 0; i < els.length; i++) {
 		els[i].onclick = func;
 	} 
- //termina en cuanto a el modo de mostrar las tareas por dia,seman,mes,año  
-        
+ //termina en cuanto a el modo de mostrar las tareas por dia,seman,mes,año        
 //dp.setTransactionMode("REST");
-
-    console.log(dp);
+//    console.log(dp);
     
     //para no actualizar en tiempo real 
 //dp.autoUpdate=false;
@@ -879,6 +879,11 @@ dp.init(gantt);
         
 obtenerTareas().then(function (){
 construirTreeList();
+//console.log(dxtreeList);
+//dxtreeList["0"].onmouseover=function(args){
+//console.log(args);
+//}
+
 });
     
 
@@ -895,6 +900,7 @@ construirTreeList();
 //				setTaskType(task);
 //			});
 //		}); 
+
       
 
     });
@@ -929,7 +935,7 @@ construirTreeList();
         
   function construirTreeList(){
              
-   $("#dx").dxTreeList({
+   dxtreeList= $("#dx").dxTreeList({
         dataSource: datosTreeList,
         keyExpr: "id",
 //        parentIdExpr: "Head_ID",
@@ -1069,7 +1075,7 @@ construirTreeList();
                 validationRules: [{ type: "required" }]
             },
             { 
-                dataField: "ponderado_programado",
+                dataField: "porcentaje_por_actividad",
                  caption: "Ponderado Programado",
                 validationRules: [{ type: "required" }]
             },
@@ -1090,17 +1096,6 @@ construirTreeList();
                   allowEditing:false
                 
             }
-//            ,
-//            {
-//                dataField: "Title",
-//                caption: "Position",
-//                validationRules: [{ type: "required" }]
-//            }, {
-//                dataField: "Hire_Date",
-//                dataType: "date",
-//                width: 120,
-//                validationRules: [{ type: "required" }]
-//            }
         ],
         onCellPrepared: function(e) {
             if(e.column.command === "edit") {
@@ -1125,6 +1120,21 @@ construirTreeList();
         gantt.init('gantt_here');
 //        gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId");
         $.when(gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId")).then(function(){
+           
+           
+           
+           
+           obtenerTareas().then(function (){
+construirTreeList();
+//console.log(dxtreeList);
+//dxtreeList["0"].onmouseover=function(args){
+//console.log(args);
+//}
+
+});
+           
+           
+           
            
            
           

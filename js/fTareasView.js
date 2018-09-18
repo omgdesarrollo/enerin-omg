@@ -153,9 +153,9 @@ function construirGrid()
             { name: "id_principal",visible:false},
             { name:"no",title:"No",width:40},
             { name: "referencia",title:"Referencia", type: "textarea", validate: "required",width:200},
-            { name: "tarea",title:"Tarea", type: "textarea", validate: "required",width:200 },
+            { name: "tarea",title:"Pendiente", type: "textarea", validate: "required",width:200 },
 //            { name: "id_empleado",title:"Responsable del Plan", type: "text", validate: "required" },
-            { name: "id_empleado",title:"Responsable del Plan", type: "select", width:200,
+            { name: "id_empleado",title:"Responsable", type: "select", width:200,
                 items:EmpleadosCombobox,
                 valueField:"id_empleado",
                 textField:"nombre_completo"
@@ -169,7 +169,7 @@ function construirGrid()
             },
             { name: "observaciones",title:"Observaciones", type: "textarea", validate: "required", width:150,},
             { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:150,editing:false },
-            { name: "registrar_programa",title:"Registrar Programa", type: "text", validate: "required",width:160, editing:false },
+            { name: "registrar_programa",title:"Programa", type: "text", validate: "required",width:160, editing:false },
             { name: "avance_programa",title:"Avance del Programa", type: "text", validate: "required",width:150, editing:false },      
             { name:"delete", title:"Opción", type:"customControl",sorting:""}
         ],
@@ -351,7 +351,10 @@ function reconstruir(value,index)
     tempData["observaciones"]=value.observaciones;
     tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_tarea+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
     tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar</button>";
-    tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info botones_vista_tabla' onClick='cargarprogram("+value.id_tarea+")'>Cargar Programa</button>";    
+    if(value.existe_programa!=0)
+        tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info botones_vista_tabla' onClick='cargarprogram("+value.id_tarea+")'>Vizualizar</button>";
+    else
+        tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info botones_vista_tabla' onClick='cargarprogram("+value.id_tarea+")'>Registrar</button>";
     tempData["avance_programa"]=(value.avance_programa*100).toFixed(2)+"%";
     tempData["delete"]= [{"existe_programa":value.existe_programa,"existe_archivo":value.archivosUpload[0].length}];
     return tempData;

@@ -85,6 +85,7 @@ function construirGrid()
         {
             // alert("1");
             gridInstance=args.grid;
+            console.log(gridInstance);
             jsGrid.Grid.prototype.editButton=true;
             jsGrid.Grid.prototype.autoload=true;
         },
