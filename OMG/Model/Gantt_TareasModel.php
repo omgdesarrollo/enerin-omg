@@ -200,7 +200,7 @@ class Gantt_TareasModel{
 
 
     
-    public function insertarTareasGantt($data,$id_tarea,$dataNotificacion){
+    public function insertarTareasGantt($data,$id_tarea){
        
         
         try{

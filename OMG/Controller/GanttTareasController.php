@@ -142,15 +142,9 @@ switch ($Op) {
 //                        Session::setSesion("", $value);
                         //la variable de sesion del dataGant se refiere al id de seguimiento entrada que hace 
                         //referencia al folio de entrada de documento de entrada
-                        $dataNotificarAlResponsableAsignado["id_usuario"];
-                        $dataNotificarAlResponsableAsignado["id_para"];
-                        $dataNotificarAlResponsableAsignado["mensaje"];
-                        $dataNotificarAlResponsableAsignado["tipo"];
-                        $dataNotificarAlResponsableAsignado["atendido"];
-                        $dataNotificarAlResponsableAsignado["asunto"];
-                        $dataNotificarAlResponsableAsignado["CONTRATO"];
+                       
                                                                    
-                        $modelGantt->insertarTareasGantt($arrayTransformado,Session::getSesion("dataGantt_id_tarea"),$dataNotificacion);
+                        $modelGantt->insertarTareasGantt($arrayTransformado,Session::getSesion("dataGantt_id_tarea"));
                         
                         
 			header('Content-type: application/json; charset=utf-8');
