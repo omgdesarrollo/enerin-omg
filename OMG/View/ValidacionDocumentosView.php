@@ -287,7 +287,7 @@ if(isset($_REQUEST["accion"]))
 <script>
                     
     var id_validacion_documento, columna, objetocheckbox, si_hay_cambio=false;
-    var DataGrid=[], dataListado=[], filtros=[], dataListado=[];;
+    var DataGrid=[], dataListado=[], filtros=[];
     var db={};
     var gridInstance, ultimoNumeroGrid=0;
     var DataGridExcel=[],origenDeDatosVista="validacionDocumentos";
