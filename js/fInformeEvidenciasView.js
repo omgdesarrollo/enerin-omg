@@ -37,10 +37,9 @@ function inicializarFiltros()
         { id: "fecha_registro",title:"Fecha Registro", type: "none"},
         { id: "evidencia",title:"Evidencia", type: "none"},
         // { name: "usuario",title:"Usuario", type: "text", width:250, editing:false }
-
-        { id: "accion_correctiva",title:"Accion Correctiva", type: "none"},
         // { name: "plan_accion",title:"Plan Accion", type: "text", width: 160, editing:false },
         { id: "desviacion",title:"Desviacion", type: "none"},
+        { id: "accion_correctiva",title:"Accion Correctiva", type: "none"},
         { id: "avance_plan",title:"Avance del Plan", type: "text"},
         { id: "estatus",title:"Estatus", type: "combobox",data:estatusFiltro,descripcion:"estatus"},
         { id:"delete", name:"Opción", type:"opcion",sorting:""},

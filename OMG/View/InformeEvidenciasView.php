@@ -272,9 +272,10 @@ $Usuario=  Session::getSesion("user");
         { name: "fecha_registro",title:"Fecha Registro", type: "text", width: 160, editing:false },
         { name: "evidencia",title:"Evidencia", type: "text",  width: 150, editing:false },
         // { name: "usuario",title:"Usuario", type: "text", width:250, editing:false },
-        { name: "accion_correctiva",title:"Accion Correctiva", type: "text", width: 150, editing:false},
+        
         // { name: "plan_accion",title:"Plan Accion", type: "text", width: 160, editing:false },
         { name: "desviacion",title:"Desviacion", type: "text", width: 100, editing:false},
+        { name: "accion_correctiva",title:"Accion Correctiva", type: "text", width: 150, editing:false},
         { name: "avance_plan",title:"Avance del Plan", type: "text", width: 100, editing:false},
         {name: "estatus",title:"Estatus", type: "text", width: 150, editing:false },
         { name:"delete", title:"Opción", type:"customControl",sorting:""},

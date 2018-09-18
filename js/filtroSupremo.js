@@ -15,7 +15,7 @@ function construirFiltros()
     }
     $.each(filtros,function(index,value)
     {
-        tempData += "<td class='jsgrid-cell'>";
+        tempData += "<td class='jsgrid-cell' style='background:aliceblue'>";
         if(value.type == "date")
         {
             tempData += "<input id='"+value.id+"' type='text' onkeyup='pressEnter()' style='width: 100%;display:none;'>";

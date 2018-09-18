@@ -107,7 +107,7 @@ function reconstruir(value,index)//listo jsgrid
     tempData["temasmodal"]="<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success btn_agregar' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>";
     tempData["requisitosmodal"]="<button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success btn_agregar' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>";
     tempData["statusNotBdKey"]=(value.validacion_tema_responsable=="false")?"En Proceso":"Validado";
-    tempData["archivoAdjunto"]="<button onClick='mostrar_urls("+value.id_validacion_documento+");' type='button' class='btn btn-success btn_agregar' data-toggle='modal' data-target='#create-itemUrls'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>";
+    tempData["archivoAdjunto"]="<button onClick='mostrar_urls("+value.id_validacion_documento+");' type='button' class='botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'><i class='fa fa-cloud-upload' style='font-size: 22px'></i></button>";
 
     tempData["id_principal"].push({eliminar:0})
     tempData["id_principal"].push({editar:0});//si quieres que edite 1, si no 0
