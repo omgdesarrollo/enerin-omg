@@ -947,7 +947,7 @@ function reconstruir(value,index)//listo jsgrid
             if(value.validacion_supervisor=="true")
                 tempData["plan_accion"] += "Vizualizar";
             else
-                tempData["plan_accion"] += "Cargar";
+                tempData["plan_accion"] += "Registrar";
             
             tempData["plan_accion"] += "</button>";
 
