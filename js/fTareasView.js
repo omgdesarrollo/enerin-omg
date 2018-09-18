@@ -153,9 +153,9 @@ function construirGrid()
             { name: "id_principal",visible:false},
             { name:"no",title:"No",width:40},
             { name: "referencia",title:"Referencia", type: "textarea", validate: "required",width:200},
-            { name: "tarea",title:"Tarea", type: "textarea", validate: "required",width:200 },
+            { name: "tarea",title:"Pendiente", type: "textarea", validate: "required",width:200 },
 //            { name: "id_empleado",title:"Responsable del Plan", type: "text", validate: "required" },
-            { name: "id_empleado",title:"Responsable del Plan", type: "select", width:200,
+            { name: "id_empleado",title:"Responsable", type: "select", width:200,
                 items:EmpleadosCombobox,
                 valueField:"id_empleado",
                 textField:"nombre_completo"
@@ -354,7 +354,7 @@ function reconstruir(value,index)
     if(value.existe_programa!=0)
         tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info botones_vista_tabla' onClick='cargarprogram("+value.id_tarea+")'>Vizualizar</button>";
     else
-        tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info botones_vista_tabla' onClick='cargarprogram("+value.id_tarea+")'>Cargar</button>";
+        tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info botones_vista_tabla' onClick='cargarprogram("+value.id_tarea+")'>Registrar</button>";
     tempData["avance_programa"]=(value.avance_programa*100).toFixed(2)+"%";
     tempData["delete"]= [{"existe_programa":value.existe_programa,"existe_archivo":value.archivosUpload[0].length}];
     return tempData;
