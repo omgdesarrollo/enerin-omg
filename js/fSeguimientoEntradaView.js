@@ -105,15 +105,15 @@ function construirGrid()
         fields: 
         [
             { name: "id_principal",visible:false},
-            { name:"no",title:"No",width:40},
+            { name:"no",title:"No",width:50},
             { name: "folio_entrada",title:"Folio de Entrada", type: "text", validate: "required",width:180,editing:false},
             { name: "clave_autoridad",title:"Autoridad Remitente", type: "text", validate: "required",width:180,editing:false},
             { name: "asunto",title:"Asunto", type: "text", validate: "required",width:180,editing:false},
             { name: "id_empleadotema",title:"Responsable del Tema", type: "text", validate: "required",width:250,editing:false},
             { name: "fecha_asignacion",title:"Fecha de Asignacion", type: "text", validate: "required",width:180,editing:false},            
             { name: "fecha_limite_atencion",title:"Fecha Limite de Atencion", type: "text", validate: "required",width:200,editing:false},            
-            { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required",width:140,editing:false},            
-            { name: "status_doc",title:"Status", type: "text", validate: "required",editing:false},
+            { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required",width:160,editing:false},
+            { name: "status_doc",title:"Estatus", type: "text",width:110, validate: "required",editing:false},
             { name: "condicion",title:"Condición", type: "text", validate: "required",width:140,editing:false},
             { name: "id_empleadoplan",title:"Responsable del Plan", type: "select",width:250,
                 items:EmpleadosCombobox,
@@ -121,8 +121,8 @@ function construirGrid()
                 textField:"nombre_completoplan"
             },
             { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:140, editing:false },            
-            { name: "registrar_programa",title:"Registrar programa", type: "text", validate: "required",width:170, editing:false },            
-            { name: "avance_programa",title:"Avance del Programa", type: "text", validate: "required",width:180,editing:false },           
+            { name: "registrar_programa",title:"Programa", type: "text", validate: "required",width:110, editing:false },
+            { name: "avance_programa",title:"Avance del Programa", type: "text", validate: "required",width:170,editing:false },           
             { name:"delete", title:"Opción", type:"customControl",sorting:""}
         ],
         onItemUpdated: function(args)
@@ -294,9 +294,13 @@ function reconstruir(value,index)
 //        valGantt.push({"id_documento_entrada":value.id_documento_entrada,"folio_entrada":value.folio_entrada});
     tempData["condicion"]=value.condicion;    
     tempData["id_empleadoplan"]=value.id_empleadoplan;
-    tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_documento_entrada+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
-    tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
-    tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info' onClick='cargadePrograma("+JSON.stringify({"id_documento_entrada":value.id_documento_entrada,"folio_entrada":value.folio_entrada})+")'>Cargar Programa</button>";
+    tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_documento_entrada+")' type='button' class='botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
+    tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 22px'></i></button>";
+    if(value.avance_programa!=null)
+        tempData["registrar_programa"]="<button id='btn_cargaGantt' class='botones_vista_tabla' onClick='cargadePrograma("+JSON.stringify({"id_documento_entrada":value.id_documento_entrada,"folio_entrada":value.folio_entrada})+")'>Vizualizar</button>";
+    else
+        tempData["registrar_programa"]="<button id='btn_cargaGantt' class='botones_vista_tabla' onClick='cargadePrograma("+JSON.stringify({"id_documento_entrada":value.id_documento_entrada,"folio_entrada":value.folio_entrada})+")'>Cargar</button>";
+
     tempData["avance_programa"]=(value.avance_programa*100).toFixed(2)+"%";    
 //    tempData["delete"]= [{"reg":value.reg,"validado":value.validado}];
 
