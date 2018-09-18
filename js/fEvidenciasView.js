@@ -1,15 +1,8 @@
-// var myGrid;
-// 		function doOnLoad(){
-// 			myGrid = new dhtmlXGridObject('gridbox');
-// 			myGrid.setImagePath("../../../codebase/imgs/");
-// 			myGrid.setHeader("Sales, Book Title, Author");
-// 			myGrid.setInitWidths("70,250,*");
-// 			myGrid.setColAlign("right,left,left");
-// 			myGrid.setColTypes("dyn,ed,ed");
-// 			myGrid.setColSorting("int,str,str");
-// 			myGrid.init();
-// 			myGrid.load("../common/data.json","json");
-//         }
+$(function()
+{
+    
+    
+});
 
 function inicializarFiltros()
 {

@@ -71,7 +71,7 @@
     <script src="../../js/fEvidenciasView.js" type="text/javascript"></script>
     <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
     <script src="../../js/fGridComponent.js" type="text/javascript"></script>
-    
+    <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
    
     <style>
         .jsgrid-header-row>.jsgrid-header-cell
@@ -123,13 +123,20 @@
     
 <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
     <!-- <div style="position: fixed;"> -->
-        <button onClick="limpiarNuevaEvidenciaModal()" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#nuevaEvidenciaModal">
-            Agregar Nuevo Registro
-        </button>
+    <button onClick="limpiarNuevaEvidenciaModal()" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#nuevaEvidenciaModal">
+        Agregar Nuevo Registro
+    </button>
 
-        <button id="btnAgregarEvidenciasRefrescar" type="button" class="btn btn-info btn_refrescar" onclick="refresh();" >
-            <i class="glyphicon glyphicon-repeat"></i> 
+    <button id="btnAgregarEvidenciasRefrescar" type="button" class="btn btn-info btn_refrescar" onclick="refresh();" >
+        <i class="glyphicon glyphicon-repeat"></i> 
+    </button>
+    
+    <div class="pull-right">    
+        <button style="width:48px;height:42px" type="button"  class="btn_agregar" id="toExcel">
+            <img src="../../images/base/_excel.png" width="30px" height="30px">
         </button>
+    </div>
+    
 </div>
 
     <br><br><br>
@@ -300,6 +307,8 @@
     var gridInstance;
     var ws;
     var thisjGrowl;
+    var DataGridExcel=[];
+    var origenDeDatosVista="evidencias";
 
     var frecuenciaData = [
                 {frecuencia:"DIARIO"},
