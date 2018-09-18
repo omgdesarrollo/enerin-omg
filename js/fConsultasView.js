@@ -13,7 +13,7 @@ function inicializarFiltros()
             { name: "Nombre Tema",id:"responsable_tema", type: "text",},
             { name: "Nombre Tema",id:"cumplimiento_tema", type: "text",},
 
-            { name: "Nombre Tema",id:"estado_tema", type: "combobox",data:[{estado_tema:1,descripcion:"INICIADO"},{estado_tema:0,descripcion:"NO INICIADO"}],descripcion:"descripcion"},
+            { name: "Nombre Tema",id:"estado_tema", type: "combobox",data:[{estado_tema:1,descripcion:"ACTIVO"},{estado_tema:0,descripcion:"INACTIVO"}],descripcion:"descripcion"},
 
             { name: "Nombre Tema",id:"requisito", type: "text",},
 
@@ -41,7 +41,7 @@ function reconstruir(value,index)
     tempData["id_responsable"] = value.id_responsable,
     tempData["responsable_tema"] = value.responsable_tema,
     tempData["cumplimiento_tema"] = value.cumplimiento_tema,
-    tempData["estado_tema"] = value.estado_tema == 0 ? "NO INICIADO" : "INICIADO",
+    tempData["estado_tema"] = value.estado_tema == 0 ? "INACTIVO" : "ACTIVO",
     tempData["id_requisito"] = value.id_requisito,
     tempData["requisito"] = value.requisito,
     tempData["penalizacion"] = value.penalizacion == "true" ? "SI":"NO",

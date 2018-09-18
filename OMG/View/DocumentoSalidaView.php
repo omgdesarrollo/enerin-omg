@@ -121,15 +121,16 @@ require_once 'EncabezadoUsuarioView.php';
     </button>
     
     <div class="pull-right">
-        <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
+    
+        <button style="width:48px;height:42px" type="button"  class="btn_agregar" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
             <img src="../../images/base/_excel.png" width="30px" height="30px">
         </button>
-        <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
+        <!-- <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
             <img src="../../images/base/word.png" width="30px" height="30px"> 
         </button>
         <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
             <img src="../../images/base/pdf.png" width="30px" height="30px"> 
-        </button> 
+        </button>  -->
     </div>
     
 </div>
