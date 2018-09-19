@@ -1051,6 +1051,9 @@ construirTreeList();
 //            console.log(args);
         },
         onRowClick:(args)=>{
+//            console.log(args);
+        },
+        onRowUpdated:function (args){
             console.log(args);
         },
         columns:[
@@ -1088,8 +1091,7 @@ construirTreeList();
             },
              { 
                 dataField: "ponderado_real",
-                 caption: "Ponderado Real",
-                validationRules: [{ type: "required" }]
+                 caption: "Ponderado Real"
             },
              { 
                 dataField: "avance",
