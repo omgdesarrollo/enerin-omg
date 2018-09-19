@@ -263,6 +263,29 @@ class Gantt_TareaDao {
         }
     }
 
+    public function totalPadreCero($VALUE)
+    {
+        try 
+        {
+            // $query="SELECT SUM(tbgantt_tareas.duration) AS total	
+            //         FROM gantt_tareas tbgantt_tareas
+            //         WHERE tbgantt_tareas.id_tarea=$VALUE AND tbgantt_tareas.parent !=0";
+
+            $query="SELECT count(*) as totalPadre 
+                FROM gantt_tareas tbgantt_tareas
+                WHERE tbgantt_tareas.id_tarea=$VALUE and tbgantt_tareas.parent = 0";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista[0]["totalPadre"];
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
     public function guardarPonderados($id,$ponderado_programado)
     {
         try
