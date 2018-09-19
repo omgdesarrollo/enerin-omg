@@ -52,7 +52,7 @@ class Gantt_TareasModel{
                         $id_tarea[$key]["duracion_total"] = 0;
                         $bandera=0;
                     }
-                    if($v["parent"]==$value["id"])
+                    if($v["parent"]==$value["id"] && $v["parent"]!=0 )
                     {
                         $id_tarea[$key]["duracion_total"] += $v["duration"];
                     }
@@ -65,8 +65,13 @@ class Gantt_TareasModel{
                     if($value["parent"]!=0)
                     //  && $val["id"]==$value["parent"])
                     {
-                        $index = array_search($value["parent"],$id_tarea,true);
-                        $rec[$key]["porcentaje_por_actividad"]= $value["duration"]*100/$id_tarea[$index]["duracion_total"];
+                        // $index = array_search($value["parent"],$id_tarea,true);
+                        // echo $id_tarea[$index]["duracion_total"];
+                        foreach($id_tarea as $k => $v)
+                        {
+                            if($value["parent"]==$v["id"])
+                                $rec[$key]["porcentaje_por_actividad"]= $value["duration"]*100/$v["duracion_total"];
+                        }
                     }
                     else
                     {
@@ -75,6 +80,7 @@ class Gantt_TareasModel{
                 }
             // }
             // var_dump($rec);
+
             return $rec;
         } catch (Exception $ex)
         {
