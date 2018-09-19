@@ -332,7 +332,7 @@
         { name: "nombre",title:"Tema", type: "text", width: 150, editing:false },
         { name: "registro",title:"Registro", type: "text", width: 150, editing:false  },
         { name: "frecuencia",title:"Frecuencia", type: "text", width: 130, editing:false  },
-        { name: "clave_documento",title:"Clave Documento", type: "text",  width: 150, editing:false },
+        { name: "clave_documento",title:"Clave del Documento", type: "text",  width: 180, editing:false },
         { name: "fecha_creacion",title:"Fecha Evidencia", type: "text",  width: 160, editing:false },
         { name: "adjuntar_evidencia",title:"Adjuntar Evidencia", type: "text",  width: 150, editing:false },
         { name: "fecha_registro",title:"Fecha Registro", type: "text", width: 160, editing:false },

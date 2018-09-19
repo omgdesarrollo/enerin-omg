@@ -1,5 +1,23 @@
 $(function()
 {
+    var $btnDLtoExcel = $('#toExcel'); 
+    $btnDLtoExcel.on('click', function () 
+    {   
+        __datosExcel=[]
+        $.each(dataListado,function (index,value)
+            {
+                console.log("Entro al datosExcel");
+                __datosExcel.push( reconstruirExcel(value,index+1) );
+            });
+            DataGridExcel= __datosExcel;
+//            console.log("Entro al excelexportHibrido");
+        $("#listjson").excelexportHibrido({
+            containerid: "listjson"
+            , datatype: 'json'
+            , dataset: DataGridExcel
+            , columns: getColumns(DataGridExcel)
+        });
+    });
 
 
 });
