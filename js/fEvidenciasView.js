@@ -20,7 +20,7 @@ $(function()
     });      
     
     
-});
+}); //CIERRA EL $(FUNCTION())
 
 function inicializarFiltros()
 {
@@ -1013,7 +1013,22 @@ function reconstruirExcel(value,index)
 {
     tempData = new Object();
     tempData["No"] = index;
-    
+    tempData["Tema"] = value.nombre;
+    tempData["Registro"] = value.registro;
+    tempData["Frecuencia"] = value.frecuencia;
+    tempData["Clave del Documento"] = value.clave_documento;
+    tempData["Fecha Evidencia"] = value.fecha_creacion;
+//    tempData["Fecha Registro"] = value.;
+    tempData["Usuario"] = value.usuario;
+    tempData["Accion Correctiva"] = value.accion_correctiva;
+//    tempData["Plan Accion"] = value.;
+    tempData["Desviacion"] = value.desviacion;
+    if(value.validacion_supervisor=="true")
+    {
+        tempData["Validacion"] = "Si";
+    }else{
+        tempData["Validacion"] = "No";
+    }
     return tempData
 }
 
