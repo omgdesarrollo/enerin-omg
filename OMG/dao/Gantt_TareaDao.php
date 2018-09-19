@@ -243,14 +243,18 @@ class Gantt_TareaDao {
     {
         try 
         {
-            $query="SELECT SUM(tbgantt_tareas.duration) AS total	
-                    FROM gantt_tareas tbgantt_tareas
-                    WHERE tbgantt_tareas.id_tarea=$VALUE AND tbgantt_tareas.parent !=0";
+            // $query="SELECT SUM(tbgantt_tareas.duration) AS total	
+            //         FROM gantt_tareas tbgantt_tareas
+            //         WHERE tbgantt_tareas.id_tarea=$VALUE AND tbgantt_tareas.parent !=0";
+
+            $query="SELECT distinct tbgantt_tareas.parent id
+                FROM gantt_tareas tbgantt_tareas
+                WHERE tbgantt_tareas.id_tarea=$VALUE";
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
 
-            return $lista[0]['total'];            
+            return $lista;
         } catch (Exception $ex) 
         {
             throw $ex;
