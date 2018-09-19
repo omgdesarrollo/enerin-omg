@@ -499,12 +499,15 @@ setScaleConfig('1');
 			var totalToDo = 0;
 			var totalDone = 0;
 			gantt.eachTask(function (child) {
-                            console.log(child.text);
+//                            console.log(child.text);
 				if (child.type != gantt.config.types.project) {
                                     
 //                                    alert("diferente de r");
-					totalToDo += child.duration;
-					totalDone += (child.progress || 0) * child.duration;
+//					totalToDo += child.duration;
+                                          totalToDo += child.porcentaje_por_actividad;
+                                        console.log(totalToDo);
+//					totalDone += (child.progress || 0) * child.duration;
+                                          totalDone += (child.progress || 0) * child.porcentaje_por_actividad;
 				}
 			}, task.id);
 			if (!totalToDo) return 0;
@@ -516,10 +519,13 @@ setScaleConfig('1');
 
 		function refreshSummaryProgress(id, submit) {
 //                   console.log("entro en refresh summary progress");
-			if (!gantt.isTaskExists(id))
+			if (!gantt.isTaskExists(id)){
+//                            alert();
 				return;
+                            }
 
 			var task = gantt.getTask(id);
+                        console.log(task);
 			task.progress = calculateSummaryProgress(task);
 
 			if (!submit) {
@@ -1121,12 +1127,9 @@ construirTreeList();
         gantt.init('gantt_here');
 //        gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId");
         $.when(gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId")).then(function(){
-           
-           
-           
-           
+   
            obtenerTareas().then(function (){
-construirTreeList();
+           construirTreeList();
 //console.log(dxtreeList);
 //dxtreeList["0"].onmouseover=function(args){
 //console.log(args);

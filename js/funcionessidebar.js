@@ -450,12 +450,17 @@ var listAjusteUsuarios=[];
                     }
                 }
                 
-                 if(value["nombre"]=="UsuarioAjustesView"){
+                if(value["nombre"]=="UsuarioAjustesView"){
                     if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
                         listAjusteUsuarios.push( {id: "ajustes", text: "Cambiar Contraseña", icon: "ajustes.png"});
                     }
                 }
-             
+                
+                if(value["nombre"]=="ControlTemasView.php"){
+                    if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
+                        listAjusteUsuarios.push( {id: "control", text: "Control de Temas", icon: "controlTemas.png"});
+                    }
+                }            
          }); 
 
 
@@ -475,10 +480,12 @@ var listAjusteUsuarios=[];
                                             $("#sidebarObjV").load('InyectarVistasView.php #administrarUsuario');
                                        break;  
                                        
-
                                        case "ajustes":
-                                            // $("#sidebarObjV").load('UsuarioAjustesView.php');
                                             $("#sidebarObjV").load('InyectarVistasView.php #ajustesUsuario');
+                                       break;
+                                       
+                                       case "control":
+                                            $("#sidebarObjV").load('InyectarVistasView.php #controlTemas');
                                        break;
                                                                               
                                    }
