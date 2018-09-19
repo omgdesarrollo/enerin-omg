@@ -71,7 +71,9 @@ class Gantt_TareasModel{
                         foreach($id_tarea as $k => $v)
                         {
                             if($value["parent"]==$v["id"])
-                                $rec[$key]["porcentaje_por_actividad"]= $value["duration"]*100/$v["duracion_total"];
+                            $value["ponderado_programado"]==-1 ?
+                                $rec[$key]["porcentaje_por_actividad"]= $value["duration"]*100/$v["duracion_total"] : 
+                                $rec[$key]["porcentaje_por_actividad"]= $value["ponderado_programado"];
                         }
                     }
                     else
@@ -397,10 +399,7 @@ class Gantt_TareasModel{
     
     
     }
-    
-    
-    
-    
+
     public function listarEmpleadosNombreCompleto()
     {
        try
@@ -414,6 +413,34 @@ class Gantt_TareasModel{
            throw $ex;
            return -1;
        }
+    }
+    
+    public function guardarPonderados($LISTA)
+    {
+        try
+        {
+            $dao=new Gantt_TareaDao();
+            $respuestas = array();
+            $res = "";
+            foreach($LISTA as $key => $value)
+            {
+                $respuestas[$key]["id"] = $value["id"];
+                $respuestas[$key]["res"] = $dao->guardarPonderados($value["id"],$value["ponderado_programado"]);
+            }
+            foreach($respuestas as $key => $values)
+            {
+                if($value["res"]==0)
+                {
+                    $res .= "Error al actualizar la tarea con id = +".$value['id']." \n";
+                }
+            }
+            return $res=="" ? 1 : $res;
+        }
+        catch(Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
     }
 
 }
