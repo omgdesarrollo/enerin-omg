@@ -1154,6 +1154,7 @@ construirTreeList();
     var id_padreTareaPonderado_programadoTemp=-1;
     function saberSiSumanPorcentajePonderadoProgramado100loshijos(args)
     {
+        // console.log(args);
         var bandera=1;
         var key = args.key;
         var sumatoria = 0;
@@ -1195,12 +1196,12 @@ construirTreeList();
             // console.log(value); 
             if(id_padreTareaPonderado_programadoTemp == value.parent)
             {
-                sumatoria += parseInt(value.porcentaje_por_actividad);
+                sumatoria += parseFloat(value.porcentaje_por_actividad);
             }
             
         });
         console.log(datosModificadosActividadesPonderado_ProgramadoTemp);
-        if(sumatoria==100)
+        if(sumatoria>=100 && sumatoria<=100.5)
         {
             alert("Correcto");
             $.each(datosModificadosActividadesPonderado_ProgramadoTemp,(index,value)=>{
@@ -1213,7 +1214,7 @@ construirTreeList();
                 success:(res)=>
                 {
                     if(typeof(res)=="number" && res==1)
-                        alert("Modificado en la base de datos");
+                        alert("Modificado en la base de datos con "+parseFloat((sumatoria-100).toString().slice(0,4))+" de mas");
                     else
                         alert(res);
                 },

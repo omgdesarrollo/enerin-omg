@@ -74,13 +74,22 @@ class Gantt_TareasModel{
                             {
                                 if($value["parent"]==$v["id"])
                                 $value["ponderado_programado"]==-1 ?
-                                    $rec[$key]["porcentaje_por_actividad"]= $value["duration"]*100/$v["duracion_total"] : 
-                                    $rec[$key]["porcentaje_por_actividad"]= $value["ponderado_programado"];
+                                    $rec[$key]["porcentaje_por_actividad"]= round($value["duration"]*100/$v["duracion_total"],2) : 
+                                    $rec[$key]["porcentaje_por_actividad"]= round($value["ponderado_programado"],2);
+                                // $value["ponderado_programado"]==-1 ?
+                                //     $rec[$key]["porcentaje_por_actividad"]= $value["duration"]*100/$v["duracion_total"] : 
+                                //     $rec[$key]["porcentaje_por_actividad"]= $value["ponderado_programado"];
                             }
                         }
                         else
                         {
-                            $rec[$key]["porcentaje_por_actividad"] = 100/$totalPadreCero;
+                            $value["ponderado_programado"]!=-1 ?
+                                $rec[$key]["porcentaje_por_actividad"] = round($value["ponderado_programado"],2) :
+                                $rec[$key]["porcentaje_por_actividad"] = round(100/$totalPadreCero,2);
+
+                            // $value["ponderado_programado"]!=-1 ?
+                            //     $rec[$key]["porcentaje_por_actividad"] = $value["ponderado_programado"] :
+                            //     $rec[$key]["porcentaje_por_actividad"] = 100/$totalPadreCero;
                         }
                     }
             }
