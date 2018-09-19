@@ -1054,7 +1054,8 @@ construirTreeList();
 //            console.log(args);
         },
         onRowUpdated:function (args){
-            console.log(args);
+//            console.log(args);
+            saberSiSumanPorcentajePonderadoProgramado100loshijos(args);
         },
         columns:[
             {
@@ -1146,6 +1147,25 @@ construirTreeList();
           
         });
     }
+    
+    var datosModificadosActividadesPonderado_ProgramadoTemporal=[];
+    function saberSiSumanPorcentajePonderadoProgramado100loshijos(args){
+        console.log(args);
+        
+        $.each(datosTreeList,function (index,value){
+            console.log(value);
+//            if(){
+//            
+//            }
+            
+        });
+        
+        
+        
+    }
+    
+    
+    
     
     
   </script>
