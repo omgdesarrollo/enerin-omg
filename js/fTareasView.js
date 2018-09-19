@@ -841,16 +841,21 @@ function cargarprogram(value){
 
 
 //IniciaGrafica Informes
-function loadChartView(bclose)
+var a=0, b=0, c=0, d=0;
+function obtenerDatos(bclose)
 {
-//    console.log("Entro al loadChartView");
     a=0, b=0, c=0, d=0;
+//    console.log("Entro al loadChartView");
+   
+   return new Promise(function(resolve,reject){ 
     $.ajax({
         url:"../Controller/TareasController.php?Op=datosGrafica",
         type:"GET",
         success:function(data)
         {
+//              $("#graficaTareas").html("");
 //            console.log(data);
+                
             $.each(data,function(index,value)
             {
                 if(value.status=="Tarea vencida")
@@ -874,12 +879,31 @@ function loadChartView(bclose)
 //                  e++;   
 //                }
             });
+            resolve();
         }
     });
     
+   });
 //    
-//    $("#graficaTareas").html("");
-    google.charts.load("current", {packages:["corechart"]});
+  
+
+   
+   
+    
+} //Finaliza Grafica Informes
+
+function loadChartView(){
+    
+    
+    obtenerDatos().then(function (){
+        dibujarGrafica();
+    })
+}
+
+
+function dibujarGrafica(){
+    
+        google.charts.load("current", {packages:["corechart"]});
     google.charts.setOnLoadCallback(drawChart);
     
     function drawChart() {
@@ -902,8 +926,9 @@ function loadChartView(bclose)
 
         var chart = new google.visualization.PieChart(document.getElementById('graficaTareas'));
         chart.draw(data, options);
-    }  
-} //Finaliza Grafica Informes
+    } 
+    
+}
 
 
 
