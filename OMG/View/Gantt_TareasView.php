@@ -507,10 +507,11 @@ setScaleConfig('1');
                                     
 //                                    alert("diferente de r");
 //					totalToDo += child.duration;
-                                          totalToDo += child.porcentaje_por_actividad;
+                                          totalToDo += (child.porcentaje_por_actividad/100);
+                                          console.log(totalToDo);
                                         console.log(totalToDo);
 //					totalDone += (child.progress || 0) * child.duration;
-                                          totalDone += (child.progress || 0) * child.porcentaje_por_actividad;
+                                          totalDone += (child.progress || 0) * (child.porcentaje_por_actividad/100);
 				}
 			}, task.id);
 			if (!totalToDo) return 0;
