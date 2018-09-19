@@ -110,6 +110,10 @@
     <iframe src="UsuarioAjustesView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
 
+<div id="controlTemas">
+    <iframe src="ControlTemasView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
+</div>
+
 <div id="cambiarcontrato">
     <iframe src="SeleccionContratoModalView.php" style="width: 100%; height: 445px;margin-top: auto;margin-left: auto;" name="formularios"></iframe>
 </div>
