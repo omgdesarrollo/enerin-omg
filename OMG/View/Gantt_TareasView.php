@@ -490,7 +490,8 @@ setScaleConfig('1');
       	(function dynamicProgress() {
 
 		function calculateSummaryProgress(task) {
-                    console.log("entro en calculate summary progress");
+//                    alert();
+//                    console.log("entro en calculate summary progress");
 			if (task.type != gantt.config.types.project){
 //                            alert("");
 				return task.progress;
@@ -501,7 +502,7 @@ setScaleConfig('1');
                             console.log(child.text);
 				if (child.type != gantt.config.types.project) {
                                     
-//                                    alert("d");
+//                                    alert("diferente de r");
 					totalToDo += child.duration;
 					totalDone += (child.progress || 0) * child.duration;
 				}
@@ -514,7 +515,7 @@ setScaleConfig('1');
                 
 
 		function refreshSummaryProgress(id, submit) {
-                   console.log("entro en refresh summary progress");
+//                   console.log("entro en refresh summary progress");
 			if (!gantt.isTaskExists(id))
 				return;
 
