@@ -12,13 +12,14 @@ class Gantt_TareasModel{
         try
         {
             $dao=new Gantt_TareaDao();
-            $rec= $dao->listarRegistrosGanttTareas($VALUE);
+            $rec = $dao->listarRegistrosGanttTareas($VALUE);
             $duracionTotal=0;
             // $id_tarea = array();
             $bandera=1;
             $array = array();
             $cont=0;
-            $id_tarea = $dao->totalDeDiasPorTarea($VALUE);
+            $id_tarea = $dao->totalDeDiasPorTarea($VALUE);//obtener todo s los padres
+            $totalPadreCero = $dao->totalPadreCero($VALUE);
             // $total['total']= $dao->totalDeDiasPorTarea($VALUE);
             // foreach ($rec as $key => $value)
             // {
@@ -42,48 +43,48 @@ class Gantt_TareasModel{
             //     $rec[$key]['total_dias']= $total['total'];
             // }
             // var_dump($id_tarea);
-            
-            foreach($id_tarea as $key => $value)
+            if($totalPadreCero!=0)
             {
-                $bandera=1;
-                foreach($rec as $k => $v)
+                foreach($id_tarea as $key => $value)
                 {
-                    if($bandera==1)
+                    $bandera=1;
+                    foreach($rec as $k => $v)
                     {
-                        $id_tarea[$key]["duracion_total"] = 0;
-                        $bandera=0;
-                    }
-                    if($v["parent"]==$value["id"] && $v["parent"]!=0 )
-                    {
-                        $id_tarea[$key]["duracion_total"] += $v["duration"];
-                    }
-                }
-            }
-            // foreach($id_tarea as $k => $val)
-            // {
-                foreach($rec as $key => $value)
-                {
-                    if($value["parent"]!=0)
-                    //  && $val["id"]==$value["parent"])
-                    {
-                        // $index = array_search($value["parent"],$id_tarea,true);
-                        // echo $id_tarea[$index]["duracion_total"];
-                        foreach($id_tarea as $k => $v)
+                        if($bandera==1)
                         {
-                            if($value["parent"]==$v["id"])
-                            $value["ponderado_programado"]==-1 ?
-                                $rec[$key]["porcentaje_por_actividad"]= $value["duration"]*100/$v["duracion_total"] : 
-                                $rec[$key]["porcentaje_por_actividad"]= $value["ponderado_programado"];
+                            $id_tarea[$key]["duracion_total"] = 0;
+                            $bandera=0;
+                        }
+                        if($v["parent"]==$value["id"] && $v["parent"]!=0 )
+                        {
+                            $id_tarea[$key]["duracion_total"] += $v["duration"];
                         }
                     }
-                    else
-                    {
-                        $rec[$key]["porcentaje_por_actividad"] = 100;
-                    }
                 }
-            // }
+                // foreach($id_tarea as $k => $val)
+                // {
+                    foreach($rec as $key => $value)
+                    {
+                        if($value["parent"]!=0)
+                        //  && $val["id"]==$value["parent"])
+                        {
+                            // $index = array_search($value["parent"],$id_tarea,true);
+                            // echo $id_tarea[$index]["duracion_total"];
+                            foreach($id_tarea as $k => $v)
+                            {
+                                if($value["parent"]==$v["id"])
+                                $value["ponderado_programado"]==-1 ?
+                                    $rec[$key]["porcentaje_por_actividad"]= $value["duration"]*100/$v["duracion_total"] : 
+                                    $rec[$key]["porcentaje_por_actividad"]= $value["ponderado_programado"];
+                            }
+                        }
+                        else
+                        {
+                            $rec[$key]["porcentaje_por_actividad"] = 100/$totalPadreCero;
+                        }
+                    }
+            }
             // var_dump($rec);
-
             return $rec;
         } catch (Exception $ex)
         {

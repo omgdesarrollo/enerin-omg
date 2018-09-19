@@ -25,6 +25,10 @@
                     excelData = Export(ConvertFromTable());
                     break;
                 case 'json':
+                    if(origenDeDatosVista=="controlTemas")
+                    {
+                        excelData = Export(ConvertDataStructureToTableControlTemas());
+                    }
                     if(origenDeDatosVista=="documentos")
                     {
                         excelData = Export(ConvertDataStructureToTableDocumentos());
@@ -122,6 +126,61 @@
 
         function ConvertFromTable() {
             var result = $('<div>').append($('#' + $settings.containerid).clone()).html();            
+            return result;
+        }
+        
+        
+        function ConvertDataStructureToTableControlTemas() 
+        {
+//            alert("d");
+            months = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+            fecha="0000-00-00";
+            date = new Date();
+            fecha = date.getDate() +" "+ months[date.getMonth()] +" "+ date.getFullYear().toString().slice(2,4);
+            
+            
+            var result = "<table>\n\
+                          <tr><th></th><th style='background:#307ECC; color:#ffffff; border:solid 1px #000000;'>Temas</th></tr>\n\
+                          <tr><td></td><td style='border:solid 1px #000000;'><center>"+fecha+"</center></td>\n\
+                          <tr>\n\
+                          </table>";
+            result += "<table id='tabledata'";
+            result += "<thead><tr>";
+            $($settings.columns).each(function (key, value) {
+                if (this.ishidden != true) {
+                    result += "<th style='background:#307ECC; color:#ffffff; border:solid 1px #000000;'";
+                    if (this.width != null) {
+                        result += " style='width: " + this.width + "'";
+                    }
+                    result += ">";
+                    result += this.headertext;
+                    result += "</th>";
+                }
+            });
+            result += "</tr></thead>";
+
+            result += "<tbody>";
+            $(gridData).each(function (key, value) {
+                result += "<tr>";
+                $($settings.columns).each(function (k, v) {
+                    if (value.hasOwnProperty(this.datafield)) {
+                        if (this.ishidden != true) {
+                            result += "<td style='border:solid 1px #000000;'";
+                            if (this.width != null) {
+                                result += " style='width: " + this.width + "'; ";
+                            }
+                            result += ">";
+                            result += value[this.datafield];
+                            result += "</td>";
+                        }
+                    }
+                });
+                result += "</tr>";
+            });
+            result += "</tbody>";
+
+            result += "</table>";
+
             return result;
         }
         
