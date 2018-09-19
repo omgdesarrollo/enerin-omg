@@ -13,18 +13,75 @@ class Gantt_TareasModel{
         {
             $dao=new Gantt_TareaDao();
             $rec= $dao->listarRegistrosGanttTareas($VALUE);
-            $total['total']= $dao->totalDeDiasPorTarea($VALUE);            
-            foreach ($rec as $key => $value) 
-            { 
-                if($value['parent']!=0)
-                {
-                    $rec[$key]['porcentaje_por_actividad']= $value['duration']*100/$total['total'];
-                }else{
-                    $rec[$key]['porcentaje_por_actividad']= 100;
-                }
-                $rec[$key]['total_dias']= $total['total'];
-            }
+            $duracionTotal=0;
+            // $id_tarea = array();
+            $bandera=1;
+            $array = array();
+            $cont=0;
+            $id_tarea = $dao->totalDeDiasPorTarea($VALUE);
+            // $total['total']= $dao->totalDeDiasPorTarea($VALUE);
+            // foreach ($rec as $key => $value)
+            // {
+            //     if($value["parent"] == 0)
+            //     {
+            //         $id_tarea[$cont]["id"] = $value["id"];
+            //         $cont++;
+            //     }
+                // if($bandera==1)
+                // {
+                //     if($value["parent"] == 0)
+                //     $bandera=0;
+                // }
+                // $duracionTotal+= $rec["duration"] ;
+            //     if($value['parent']!=0)
+            //     {
+            //         $rec[$key]['porcentaje_por_actividad']= $value['duration']*100/$total['total'];
+            //     }else{
+            //         $rec[$key]['porcentaje_por_actividad']= $value['duration']*100/$value['duration'];
+            //     }
+            //     $rec[$key]['total_dias']= $total['total'];
+            // }
+            // var_dump($id_tarea);
             
+            foreach($id_tarea as $key => $value)
+            {
+                $bandera=1;
+                foreach($rec as $k => $v)
+                {
+                    if($bandera==1)
+                    {
+                        $id_tarea[$key]["duracion_total"] = 0;
+                        $bandera=0;
+                    }
+                    if($v["parent"]==$value["id"] && $v["parent"]!=0 )
+                    {
+                        $id_tarea[$key]["duracion_total"] += $v["duration"];
+                    }
+                }
+            }
+            // foreach($id_tarea as $k => $val)
+            // {
+                foreach($rec as $key => $value)
+                {
+                    if($value["parent"]!=0)
+                    //  && $val["id"]==$value["parent"])
+                    {
+                        // $index = array_search($value["parent"],$id_tarea,true);
+                        // echo $id_tarea[$index]["duracion_total"];
+                        foreach($id_tarea as $k => $v)
+                        {
+                            if($value["parent"]==$v["id"])
+                                $rec[$key]["porcentaje_por_actividad"]= $value["duration"]*100/$v["duracion_total"];
+                        }
+                    }
+                    else
+                    {
+                        $rec[$key]["porcentaje_por_actividad"] = 100;
+                    }
+                }
+            // }
+            // var_dump($rec);
+
             return $rec;
         } catch (Exception $ex)
         {
