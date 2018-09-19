@@ -67,8 +67,7 @@
     <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
     <!-- <script src="../../js/tools.js" type="text/javascript"></script> marca un error al agregarse -->
     <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
-
-    <script src="../../js/fEvidenciasView.js" type="text/javascript"></script>
+    <script src="../../js/fControlTemasView.js" type="text/javascript"></script>
     <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
     <script src="../../js/fGridComponent.js" type="text/javascript"></script>
     <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
@@ -122,11 +121,11 @@
         <i class="glyphicon glyphicon-repeat"></i> 
     </button>
     
-<!--    <div class="pull-right">    
+    <div class="pull-right">    
         <button style="width:48px;height:42px" type="button"  class="btn_agregar" id="toExcel">
             <img src="../../images/base/_excel.png" width="30px" height="30px">
         </button>
-    </div>-->
+    </div>
 </div>
 
     <br><br><br>
@@ -136,6 +135,42 @@
 
 
 <script>
+var DataGrid = [];
+var dataListado = [];
+var filtros=[];
+var db={};
+var gridInstance;
+var ultimoNumeroGrid=0;
+var DataGridExcel=[];
+var origenDeDatosVista="controlTemas";
+var customsFieldsGridData=[
+        // {field:"customControl",my_field:MyCControlField},
+//        {field:"porcentaje",my_field:porcentajesFields},
+];
+
+
+estructuraGrid = [
+//        { name: "id_principal",visible:false},
+        { name:"no",title:"No",width:40,editing:false},
+        { name: "nombre",title:"Tema", type: "text",width:180,editing:false},
+        { name: "descripcion",title:"Descripcion", type: "text",width:160,editing:false},
+        { name: "fecha_inicio",title:"Fecha de Inicio", type: "date",editing:false},
+        { title:"Opción", type:"",sorting:""},
+        
+    ];
+    
+construirGrid();
+
+promesaInicializarFiltros = inicializarFiltros();
+promesaInicializarFiltros.then((resolve2)=>
+{
+    construirFiltros();
+    listarDatos();
+},
+(error)=>
+{
+    growlError("Error!","Error al construir la vista, recargue la página");
+});
 
 </script>
 
