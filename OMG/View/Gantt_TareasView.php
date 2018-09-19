@@ -1227,9 +1227,10 @@ construirTreeList();
         }
         else
         {
-            if(sumatoria<100)
-                alert("El total es menor al 100% del ponderado de la tarea padre");
-            else
+            if(sumatoria<100){
+                alert("El total es menor al 100% del ponderado de la tarea padre  su sumatoria es "+sumatoria +" y su restante es de "+(100-sumatoria));
+                
+            }else
             alert("El total es mayor al 100% del ponderado de la tarea padre");
         }
     }
