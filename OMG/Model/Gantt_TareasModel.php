@@ -422,12 +422,13 @@ class Gantt_TareasModel{
             $dao=new Gantt_TareaDao();
             $respuestas = array();
             $res = "";
+            // var_dump($LISTA);
             foreach($LISTA as $key => $value)
             {
                 $respuestas[$key]["id"] = $value["id"];
                 $respuestas[$key]["res"] = $dao->guardarPonderados($value["id"],$value["ponderado_programado"]);
             }
-            foreach($respuestas as $key => $values)
+            foreach($respuestas as $key => $value)
             {
                 if($value["res"]==0)
                 {

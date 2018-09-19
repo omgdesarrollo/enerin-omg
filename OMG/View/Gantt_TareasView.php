@@ -95,12 +95,14 @@ and open the template in the editor.
     <!--aqui termina las librerias que no son del gantt-->
     
     
+    
+    
  <style type="text/css">
     html, body{
       /*width: 100%;*/
-      height: 100%;
-      padding:0px;
-      margin:0px;
+      height: 92%;
+/*      padding:0px;
+      margin:0px;*/
       /*overflow: hidden;*/
     }
     
@@ -194,7 +196,7 @@ and open the template in the editor.
     max-height: 440px;
 }
 
- .modal-lg{width: 99%;}
+ .modal-lg{width: 92%;}
 .modal-dialog {
   /*position: fixed;*/
   /*margin: 0;*/
@@ -203,11 +205,12 @@ and open the template in the editor.
 /*  padding: 0;*/
 }
 .modal-content {
-  position: fixed;
-  /*top: 0;*/
-  /*right: 0;*/
-  /*bottom: 0;*/
-  /*left: 0;*/
+  position: fixed; 
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  
 /*  border: 2px solid #3c7dcf;
   border-radius: 0;
   box-shadow: none;*/
@@ -870,18 +873,18 @@ dp.init(gantt);
           var datosTreeList=[]; 
     $(function (){
  
-    var tabs = [{
-            title: 'Detalles Registros Actividad',
-            text: 'Tabla'
-        }, {
-            title: 'Avances Visuales',
-            text: ''
-        
-        }];
+//    var tabs = [{
+//            title: 'Detalles Registros Actividad',
+//            text: 'Tabla'
+//        }, {
+//            title: 'Avances Visuales',
+//            text: ''
+//        
+//        }];
 //        $(function () {
-            $("#tabPanel").dxTabPanel({
-                items: tabs
-            });
+//            $("#tabPanel").dxTabPanel({
+//                items: tabs
+//            });
 //    }); 
         
 obtenerTareas().then(function (){
@@ -950,15 +953,16 @@ construirTreeList();
         showRowLines: true,
         showBorders: true,
         columnAutoWidth: true,
-        autoExpandAll: true,
+//        autoExpandAll: true,
         allowColumnResizing: true,
         columnAutoWidth: true,
         allowColumnReordering: true,
+        height:900,
         columnChooser: {
         allowSearch: false,
         emptyPanelText: "Seleccionar Columna ",
         enabled: true,
-        height: 260,
+        height: 360,
         mode: "dragAndDrop",
         searchTimeout: 500,
         title: "Columna A Ocultar",
@@ -985,7 +989,7 @@ construirTreeList();
               cancelRowChanges: "Cancelar",
             }
         },
-                filterRow: {
+        filterRow: {
         applyFilter: "auto",
         applyFilterText: "Apply filter",
         betweenEndText: "End",
@@ -1008,10 +1012,10 @@ construirTreeList();
         showOperationChooser: true,
         visible: true
         },
-        noDataText: "No Hay Datos",
-         scrolling: {
-            mode: "standard"
-        },
+//        noDataText: "No Hay Datos",
+//         scrolling: {
+//            mode: "standard"
+//        },
         paging: {
             enabled: true,
             pageSize: 10
@@ -1103,8 +1107,7 @@ construirTreeList();
              { 
                 dataField: "archivo_adjunto",
                  caption: "Archivo Adjunto",
-                  allowEditing:false
-                
+                  allowEditing:false   
             }
         ],
         onCellPrepared: function(e) {
@@ -1147,21 +1150,86 @@ construirTreeList();
           
         });
     }
-    
-    var datosModificadosActividadesPonderado_ProgramadoTemporal=[];
-    function saberSiSumanPorcentajePonderadoProgramado100loshijos(args){
-        console.log(args);
+    var datosModificadosActividadesPonderado_ProgramadoTemp=[];
+    var id_padreTareaPonderado_programadoTemp=-1;
+    function saberSiSumanPorcentajePonderadoProgramado100loshijos(args)
+    {
+        var bandera=1;
+        var key = args.key;
+        var sumatoria = 0;
+        var dataFinal=[];
+        // var hijos = [];
+
+        // id_padreTareaPonderado_programadoTemp
+        $.each(datosTreeList,(index,value)=>
+        {
+            // console.log(value);
+            if(value.id == key)
+            {
+                if(value.parent != id_padreTareaPonderado_programadoTemp)
+                {
+                    datosModificadosActividadesPonderado_ProgramadoTemp=[];
+                    id_padreTareaPonderado_programadoTemp = value.parent;
+                    console.log("reiniciado");
+                }
+            }
+        });
+
+        // if(datosModificadosActividadesPonderado_ProgramadoTemp.length == 0)
+        //     datosModificadosActividadesPonderado_ProgramadoTemp.push(args);
+        // else
+        // {
+            $.each(datosModificadosActividadesPonderado_ProgramadoTemp,(index,value)=>{
+                if(value.key == key)
+                {
+                    datosModificadosActividadesPonderado_ProgramadoTemp[index] = args;
+                    bandera=0;
+                }
+            });
+        // }
+        if(bandera==1)
+            datosModificadosActividadesPonderado_ProgramadoTemp.push(args);
         
-        $.each(datosTreeList,function (index,value){
-            console.log(value);
-//            if(){
-//            
-//            }
+        $.each(datosTreeList,(index,value)=>
+        {
+            // console.log(value); 
+            if(id_padreTareaPonderado_programadoTemp == value.parent)
+            {
+                sumatoria += parseInt(value.porcentaje_por_actividad);
+            }
             
         });
-        
-        
-        
+        console.log(datosModificadosActividadesPonderado_ProgramadoTemp);
+        if(sumatoria==100)
+        {
+            alert("Correcto");
+            $.each(datosModificadosActividadesPonderado_ProgramadoTemp,(index,value)=>{
+                dataFinal.push({id:parseInt(value.key),ponderado_programado:value.data.porcentaje_por_actividad});
+            });
+            $.ajax({
+                url:'../Controller/GanttTareasController.php?Op=GuardarPonderado',
+                type:"POST",
+                data: "DATA="+JSON.stringify(dataFinal),
+                success:(res)=>
+                {
+                    if(typeof(res)=="number" && res==1)
+                        alert("Modificado en la base de datos");
+                    else
+                        alert(res);
+                },
+                error:()=>
+                {
+                    console.log("Error en el servidor");
+                }
+            })
+        }
+        else
+        {
+            if(sumatoria<100)
+                alert("El total es menor al 100% del ponderado de la tarea padre");
+            else
+            alert("El total es mayor al 100% del ponderado de la tarea padre");
+        }
     }
     
     

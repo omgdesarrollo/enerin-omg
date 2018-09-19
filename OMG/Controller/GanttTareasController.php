@@ -53,11 +53,12 @@ switch ($Op) {
                 
 		break;    
     
-        case 'GuardarPonderados':
+        case 'GuardarPonderado':
         header('Content-type: application/json; charset=utf-8'); 
-        $LISTA = json_decode($_REQUEST["DATA"]);
-        $ID = $_REQUEST["id"];
-        $PONDERADO = $_REQUEST["ponderado_programado"];
+        $LISTA = json_decode($_REQUEST["DATA"],true);
+        // var_dump($LISTA);
+        // $ID = $_REQUEST["id"];
+        // $PONDERADO = $_REQUEST["ponderado_programado"];
         $resp = $modelGantt->guardarPonderados($LISTA);
 //            $VALUES["id"]= Session::getSesion("dataGantt_id_tarea");
 //            $VALUES["text"]= $_REQUEST['TEXT'];
@@ -178,7 +179,7 @@ switch ($Op) {
 	case 'Eliminar':
 		# code...
 		break;	
-                default:
+                default: echo -1;
 		# code...
 		break;
 }
