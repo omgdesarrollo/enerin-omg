@@ -14,18 +14,19 @@ class Gantt_TareasModel{
             $dao=new Gantt_TareaDao();
             $rec= $dao->listarRegistrosGanttTareas($VALUE);
             $duracionTotal=0;
-            $id_tarea = array();
+            // $id_tarea = array();
             $bandera=1;
             $array = array();
             $cont=0;
+            $id_tarea = $dao->totalDeDiasPorTarea($VALUE);
             // $total['total']= $dao->totalDeDiasPorTarea($VALUE);
-            foreach ($rec as $key => $value)
-            {
-                if($value["parent"] == 0)
-                {
-                    $id_tarea[$cont]["id"] = $value["id"];
-                    $cont++;
-                }
+            // foreach ($rec as $key => $value)
+            // {
+            //     if($value["parent"] == 0)
+            //     {
+            //         $id_tarea[$cont]["id"] = $value["id"];
+            //         $cont++;
+            //     }
                 // if($bandera==1)
                 // {
                 //     if($value["parent"] == 0)
@@ -39,8 +40,8 @@ class Gantt_TareasModel{
             //         $rec[$key]['porcentaje_por_actividad']= $value['duration']*100/$value['duration'];
             //     }
             //     $rec[$key]['total_dias']= $total['total'];
-            }
-            // var_dump($rec);
+            // }
+            // var_dump($id_tarea);
             
             foreach($id_tarea as $key => $value)
             {
