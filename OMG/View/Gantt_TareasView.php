@@ -1051,7 +1051,11 @@ construirTreeList();
 //            console.log(args);
         },
         onRowClick:(args)=>{
-            console.log(args);
+//            console.log(args);
+        },
+        onRowUpdated:function (args){
+//            console.log(args);
+            saberSiSumanPorcentajePonderadoProgramado100loshijos(args);
         },
         columns:[
             {
@@ -1088,8 +1092,7 @@ construirTreeList();
             },
              { 
                 dataField: "ponderado_real",
-                 caption: "Ponderado Real",
-                validationRules: [{ type: "required" }]
+                 caption: "Ponderado Real"
             },
              { 
                 dataField: "avance",
@@ -1144,6 +1147,25 @@ construirTreeList();
           
         });
     }
+    
+    var datosModificadosActividadesPonderado_ProgramadoTemporal=[];
+    function saberSiSumanPorcentajePonderadoProgramado100loshijos(args){
+        console.log(args);
+        
+        $.each(datosTreeList,function (index,value){
+            console.log(value);
+//            if(){
+//            
+//            }
+            
+        });
+        
+        
+        
+    }
+    
+    
+    
     
     
   </script>

@@ -5,10 +5,11 @@ class Gantt_TareaDao {
     {
         try
         {
-            $query="SELECT tbgantt_tareas.user,tbgantt_tareas.id, tbgantt_tareas.text, tbgantt_tareas.start_date, tbgantt_tareas.duration, tbgantt_tareas.progress, tbgantt_tareas.parent
-                    
-                    FROM gantt_tareas tbgantt_tareas
-                    WHERE tbgantt_tareas.id_tarea= $VALUE";
+            $query="SELECT tbgantt_tareas.user,tbgantt_tareas.id, tbgantt_tareas.text, tbgantt_tareas.start_date, tbgantt_tareas.duration,
+            tbgantt_tareas.progress, tbgantt_tareas.parent, tbgantt_tareas.ponderado_programado
+            FROM gantt_tareas tbgantt_tareas
+            WHERE tbgantt_tareas.id_tarea= $VALUE";
+
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             return $lista;
@@ -261,7 +262,22 @@ class Gantt_TareaDao {
             return -1;
         }
     }
-    
+
+    public function guardarPonderados($id,$ponderado_programado)
+    {
+        try
+        {
+            $query = "update gantt_tareas set ponderado_programado = $ponderado_programado where id = $id";
+            $db = AccesoDB::getInstancia();
+            $res = $db->executeUpdateRowsAfected($query);
+
+            return $res;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 
 }
 
