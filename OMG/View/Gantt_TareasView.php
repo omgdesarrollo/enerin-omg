@@ -617,10 +617,10 @@ gantt.templates.task_class = function (start, end, task) {
 		return "";
 	}
         
-        
+ var textEditor = {type: "text", map_to: "text"};   
 gantt.config.columns = [
 //    {name:"id",   label:"id",   align:"center"},
-		{name: "text", label: "Nombre", tree: true, width: '*'},
+		{name: "text", label: "Nombre", tree: true,resize: true, editor: textEditor},
 		
 		{
 			name: "owner", width: 80, align: "center", template: function (item) {
