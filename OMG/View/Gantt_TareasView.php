@@ -85,12 +85,12 @@ and open the template in the editor.
     <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
 
     <!--aqui empieza librerias qe no son del gantt en funcionalidad y presentacion-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script>window.jQuery || document.write(decodeURIComponent('%3Cscript src="js/jquery.min.js"%3E%3C/script%3E'))</script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>-->
+    <!--<script>window.jQuery || document.write(decodeURIComponent('%3Cscript src="js/jquery.min.js"%3E%3C/script%3E'))</script>-->
     <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/18.1.6/css/dx.common.css" />
     <link rel="dx-theme" data-theme="generic.light" href="https://cdn3.devexpress.com/jslib/18.1.6/css/dx.light.css" />
     <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>-->
-    <script>window.angular || document.write(decodeURIComponent('%3Cscript src="js/angular.min.js"%3E%3C\/script%3E'))</script>
+    <!--<script>window.angular || document.write(decodeURIComponent('%3Cscript src="js/angular.min.js"%3E%3C\/script%3E'))</script>-->
     <script src="https://cdn3.devexpress.com/jslib/18.1.6/js/dx.all.js"></script>
     <!--aqui termina las librerias que no son del gantt-->
     
@@ -600,8 +600,11 @@ setScaleConfig('1');
 //        para abrir las carpetas por default desde el principio
 
 gantt.templates.task_class = function (start, end, task) {
-		if (task.type == gantt.config.types.project)
+  
+		if (task.type == gantt.config.types.project){
+//                    console.log("entro ");
 			return "hide_project_progress_drag";
+                }
 	};
 
 //        	gantt.config.open_tree_initially = true;
