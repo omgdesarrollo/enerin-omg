@@ -619,7 +619,7 @@ gantt.templates.task_class = function (start, end, task) {
         
         
 gantt.config.columns = [
-    {name:"id",   label:"id",   align:"center" },
+//    {name:"id",   label:"id",   align:"center"},
 		{name: "text", label: "Nombre", tree: true, width: '*'},
 		
 		{
