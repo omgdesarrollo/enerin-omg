@@ -256,8 +256,8 @@ and open the template in the editor.
 <!--<div style="text-align:center;">-->
 	<input value="deshacer" type="button" onclick='gantt.undo()' style='font-size: 10px'>
 	<input value="Rehacer" type="button" onclick='gantt.redo()' style='font-size: 10px'>
-        <button class="btn btn-danger" type="button" onclick='' data-toggle='modal' data-target='#detalles' style='font-size: 10px'>Detalles</button>
-        
+        <!--<button class="btn btn-danger" type="button" onclick='detallesActividadesCompletasGantt()' data-toggle='modal' data-target='#detalles' style='font-size: 10px'>Detalles</button>-->
+        <button class="btn btn-danger" type="button" onclick='detallesActividadesCompletasGantt()' data-toggle='modal' data-target='#detalles' style='font-size: 10px'>Detalles</button>
 <!--</div>-->
         <?php  
         
@@ -888,31 +888,13 @@ dp.init(gantt);
 //            });
 //    }); 
         
-obtenerTareas().then(function (){
-construirTreeList();
-//console.log(dxtreeList);
-//dxtreeList["0"].onmouseover=function(args){
-//console.log(args);
-//}
-
-});
-    
-
-//     gantt.batchUpdate(function () {
-////         alert("se ha cargado el gantt exitosamente");
-//    gantt.eachSelectedTask(function(task_id){
-//        if(gantt.isTaskExists(task_id))
-//            gantt.deleteTask(task_id);
-//    });
+//obtenerTareas().then(function (){
+//construirTreeList();
+//
+//
 //});
-//     gantt.attachEvent("onParse", function () {
-////         alert("le has picado ");
-//			gantt.eachTask(function (task) {
-//				setTaskType(task);
-//			});
-//		}); 
-
-      
+    
+ 
 
     });
 
@@ -930,18 +912,9 @@ construirTreeList();
                                       });
                                       
                                   })
-        }
+        }  
         
-// gantt.exportToExcel({
-//    name:"document.xlsx", 
-//    columns:[
-//        { id:"text",  header:"Title", width:150 },
-//        { id:"start_date",  header:"Start date", width:250, type:"date" }
-//    ],
-//    server:"https://myapp.com/myexport/gantt",
-//    visual:true,
-//    cellColors:true
-//});
+        
         
         
   function construirTreeList(){
@@ -1134,16 +1107,7 @@ construirTreeList();
         gantt.init('gantt_here');
 //        gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId");
         $.when(gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId")).then(function(){
-   
-           obtenerTareas().then(function (){
-           construirTreeList();
-//console.log(dxtreeList);
-//dxtreeList["0"].onmouseover=function(args){
-//console.log(args);
-//}
 
-});
-           
            
            
            
@@ -1151,6 +1115,14 @@ construirTreeList();
           
         });
     }
+    
+    function detallesActividadesCompletasGantt(){
+     obtenerTareas().then(function (){
+//         alert();
+         construirTreeList();
+
+     });
+} 
     var datosModificadosActividadesPonderado_ProgramadoTemp=[];
     var id_padreTareaPonderado_programadoTemp=-1;
     function saberSiSumanPorcentajePonderadoProgramado100loshijos(args)
