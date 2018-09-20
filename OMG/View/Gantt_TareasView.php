@@ -120,11 +120,13 @@ and open the template in the editor.
 		}*/
                 
          .gantt_task_line.gantt_dependent_task {
-			background-color: #65c16f;
-			border: 1px solid #3c9445;
+			/*background-color: #65c16f;*/
+                        /*background-color:  #0042e9;*/
+			/*border: 1px solid #3c9445;*/
 		}       
 .gantt_task_line.gantt_dependent_task .gantt_task_progress {
-			background-color: #46ad51;
+			/*background-color: #46ad51;*/
+                        /*background-color:  #0042e9;*/
 		}
 /*         .hide_project_progress_drag .gantt_task_progress_drag {
 			visibility: hidden;
@@ -508,8 +510,8 @@ setScaleConfig('1');
 //                                    alert("diferente de r");
 //					totalToDo += child.duration;
                                           totalToDo += (child.porcentaje_por_actividad/100);
-                                          console.log(totalToDo);
-                                        console.log(totalToDo);
+//                                          console.log(totalToDo);
+//                                        console.log(totalToDo);
 //					totalDone += (child.progress || 0) * child.duration;
                                           totalDone += (child.progress || 0) * (child.porcentaje_por_actividad/100);
 				}
@@ -529,7 +531,7 @@ setScaleConfig('1');
                             }
 
 			var task = gantt.getTask(id);
-                        console.log(task);
+//                        console.log(task);
 			task.progress = calculateSummaryProgress(task);
 
 			if (!submit) {
@@ -588,7 +590,7 @@ setScaleConfig('1');
       gantt.serverList("user",dataEmpleados); 
 
 	gantt.locale.labels.column_owner ="Encargado";
-		gantt.locale.labels.section_owner = "Encargado";
+        gantt.locale.labels.section_owner = "Encargado";
         
         gantt.config.scale_height = 50;
         gantt.config.order_branch = true;
@@ -618,22 +620,25 @@ gantt.templates.task_class = function (start, end, task) {
 	}
         
  var textEditor = {type: "text", map_to: "text"};   
-gantt.config.columns = [
+gantt.config.columns=[
 //    {name:"id",   label:"id",   align:"center"},
 		{name: "text", label: "Nombre", tree: true,resize: true, editor: textEditor},
 		
 		{
-			name: "owner", width: 80, align: "center", template: function (item) {
+                    name: "owner", width: 80, align: "center",resize: true, template: function (item) {
 				return byId(gantt.serverList('user'), item.user)
-			}
+                    }
 		},
+//                {name: "status", label: "Status",resize: true},
 		{name: "add", width: 40}
 	];
+console.log(gantt);
 
+var status=[];
 
-gantt.config.lightbox.sections = [
+        gantt.config.lightbox.sections = [
 		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
-		
+//		{name: "status", height: 38, map_to: "text", type: "text", focus: true},
 		{name: "owner", height: 22, map_to: "user", type: "select", options: gantt.serverList("user")},	
 		{name: "time", type: "duration", map_to: "auto"}
 	];
@@ -660,26 +665,26 @@ gantt.config.subscales = [
 
 //inicia para expandir o colapsar
 
-        
+
 //        termina para expandir o colapsar
 
-        gantt.config.scale_unit = "month";
-	gantt.config.step = 1;
-	gantt.config.date_scale = "%F, %Y";
-	gantt.config.min_column_width = 50;
-//        gantt.config.scale_height = 90;
-
-
-
-
+gantt.config.scale_unit = "month";
+gantt.config.step = 1;
+gantt.config.date_scale = "%F, %Y";
+gantt.config.min_column_width = 50;
 gantt.config.order_branch = true;
 gantt.config.order_branch_free = true;
 gantt.config.branch_loading = true;
 gantt.config.fit_tasks = true; 
 gantt.config.work_time = false;
 gantt.config.auto_scheduling = true;
+gantt.config.autosize=false; 
 
-	gantt.config.auto_scheduling_strict = true;
+//gantt.config.min_duration = 24*60*60*1000;
+//gantt.config.min_duration = 60*60*1000;
+//gantt.config.drag_project=true;
+//gantt.config.autoscroll = true;
+gantt.config.auto_scheduling_strict = true;
 
 gantt.config.sort = true;
 //gantt.config.readonly = true;
@@ -865,8 +870,16 @@ dp.init(gantt);
         });
     }
     gantt.templates.progress_text = function (start, end, task) {
+//        if(Math.round(task.progress * 100)==100){
+//            $(".gantt_task_line.gantt_dependent_task .gantt_task_progress ").css("background-color","red");
+//        }
+//        console.log(Math.round(task.progress * 100));
 		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
 	};
+//        gantt.templates.task_text=function(start,end,task){
+//            console.log(task);
+//    return "<b>Text:</b> "+task.text+",<b> Holders:</b> "+task.user;
+//};
         
         
 
