@@ -850,12 +850,8 @@ dp.init(gantt);
 //			}
 //		}
 //    gantt.parse(tasksA);
-    
-    
-   
-    
-    function obtenerEmpleados(){
-        
+
+    function obtenerEmpleados(){     
         $.ajax({
 //           url:"../Controller/GanttController.php?Op=ListarEmpleados",
             url:"../Controller/GanttTareasController.php?Op=empleadosNombreCompleto",
@@ -883,11 +879,8 @@ dp.init(gantt);
 //            console.log(task);
 //    return "<b>Text:</b> "+task.text+",<b> Holders:</b> "+task.user;
 //};
-        
-        
 
- 
-          var datosTreeList=[]; 
+    var datosTreeList=[]; 
     $(function (){
  
 //    var tabs = [{
