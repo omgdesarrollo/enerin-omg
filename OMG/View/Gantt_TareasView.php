@@ -1065,12 +1065,13 @@ dp.init(gantt);
             },
             { 
                 dataField: "porcentaje_por_actividad",
-                 caption: "Ponderado Programado",
+                 caption: "Ponderado Programado %",
                 validationRules: [{ type: "required" }]
             },
              { 
                 dataField: "ponderado_real",
-                 caption: "Ponderado Real"
+                 caption: "Ponderado Real",
+                 allowEditing:false
             },
              { 
                 dataField: "avance",
