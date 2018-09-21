@@ -225,7 +225,7 @@ class EvidenciasDAO
                 JOIN  temas tbtemas ON tbusuarios_temas.id_tema = tbtemas.id_tema
                 WHERE tbusuarios_temas.id_usuario = $ID_USUARIO AND
                 LOWER(tbtemas.nombre) LIKE '%$CADENA%' AND tbtemas.padre = 0
-                AND tbtemas.contrato=$CONTRATO AND tbtemas.identificador LIKE '%catalogo%'";
+                AND tbtemas.contrato=$CONTRATO AND tbtemas.identificador LIKE '%catalogo%' AND tbtemas.fecha_inicio!='0000-00-00'";
             // echo $query;
             $db= AccesoDB::getInstancia();        
             $lista= $db->executeQuery($query);

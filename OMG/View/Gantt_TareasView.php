@@ -120,12 +120,12 @@ and open the template in the editor.
 		}*/
                 
          .gantt_task_line.gantt_dependent_task {
-			/*background-color: #65c16f;*/
+			background-color: #65c16f;
                         /*background-color:  #0042e9;*/
 			/*border: 1px solid #3c9445;*/
 		}       
 .gantt_task_line.gantt_dependent_task .gantt_task_progress {
-			/*background-color: #46ad51;*/
+			background-color: #46ad51;
                         /*background-color:  #0042e9;*/
 		}
 /*         .hide_project_progress_drag .gantt_task_progress_drag {
@@ -143,6 +143,17 @@ and open the template in the editor.
                 .gantt_task_content {
                     display: none;
                 }
+                
+                
+                
+                .completed_task {
+		border: 1px solid #94AD94;
+                }
+
+                .completed_task .gantt_task_progress {
+                    background: #0000cc;
+                }
+                
                 /*termina estilos para ocultar el texto de la barra*/
                 /* para la pantalla completa*/ 
 /*                	.gantt-fullscreen {
@@ -556,8 +567,13 @@ setScaleConfig('1');
 				task.progress = calculateSummaryProgress(task);
 			});
 		});
-
-		gantt.attachEvent("onAfterTaskUpdate", function (id) {
+		gantt.attachEvent("onAfterTaskUpdate", function (id,item) {
+//                    if(id==)
+//                    console.log(item);
+                    if(item.progress==1)
+                        gantt.getTask(id).readonly = true;
+                    console.log(gantt.getTask(id));
+//                    gantt.getTask(id).readonly = true;
 			refreshSummaryProgress(gantt.getParent(id), true);
 		});
 
@@ -599,12 +615,18 @@ setScaleConfig('1');
 //gantt.config.order_branch_free = true;
 //        para abrir las carpetas por default desde el principio
 
-gantt.templates.task_class = function (start, end, task) {
-  
+        gantt.templates.task_class = function (start, end, task) {
+//  console.log(task);
 		if (task.type == gantt.config.types.project){
 //                    console.log("entro ");
 			return "hide_project_progress_drag";
                 }
+                    if(task.progress==1){
+                        return "completed_task";
+                    }else{
+                        return "";
+                    }
+                
 	};
 
 //        	gantt.config.open_tree_initially = true;
@@ -873,8 +895,19 @@ dp.init(gantt);
 //            $(".gantt_task_line.gantt_dependent_task .gantt_task_progress ").css("background-color","red");
 //        }
 //        console.log(Math.round(task.progress * 100));
+//            console.log(task);
+                $("#taskid").css("background-color:","red");
 		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
 	};
+        
+        
+//        gantt.templates.tooltip_text = function(start,end,task){
+//            console.log(task);
+//            return "<b>Tarea:</b> "+task.text+"Fecha De Inicio: "+task.start_date;
+//         };
+        
+        
+        
 //        gantt.templates.task_text=function(start,end,task){
 //            console.log(task);
 //    return "<b>Text:</b> "+task.text+",<b> Holders:</b> "+task.user;
