@@ -100,20 +100,29 @@ class TemaModel{
     }
     
     
-    public function verificarSiTemaEstaEnDocumentoDeEntrada($ID_TEMA)
+    public function eliminarNodoParaOficios($ID)
     {
-        try 
+        try
         {
             $dao=new TemaDAO();
-            $rec= $dao->verificarSiTemaEstaEnDocumentoDeEntrada($ID_TEMA);
+            $resultado= $dao->verificarSiTemaEstaEnDocumentoDeEntrada($ID);
+            $rec=false;
+//            echo "este es el resultado: ". json_encode($resultado);
+            if($resultado==0)
+            {
+                $rec= $dao->eliminarNodo($ID);
+                $rec=true;
+            }
             
-            return $rec;
-        } catch (Exception $ex) 
+            return $rec;            
+        } catch (Exception $ex)
         {
             throw $ex;
-            return -1;
+            return false;
         }
     }
+    
+    
     
 }
 
