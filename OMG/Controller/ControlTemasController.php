@@ -13,11 +13,15 @@ switch ($Op) {
         $Lista= $model->listarTemas($CONTRATO, $CADENA);
         header('Content-type: application/json; charset=utf-8'); 
         echo json_encode($Lista);
-        return $Lista;
-        break;
-
+    break;
     
+    case 'Actualizar':
+        $exito = $model->actualizar($_REQUEST["ID_TEMA"],$_REQUEST["FECHA"]);
+        echo $exito;
+    break;
+
     default:
+        echo -1;
         break;
 }
 
