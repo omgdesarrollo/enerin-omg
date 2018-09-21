@@ -1,3 +1,27 @@
+$(function()
+{
+    var $btnDLtoExcel = $('#toExcel'); 
+    $btnDLtoExcel.on('click', function () 
+    {   
+        __datosExcel=[]
+        $.each(dataListado,function (index,value)
+            {
+                console.log("Entro al datosExcel");
+                __datosExcel.push( reconstruirExcel(value,index+1) );
+            });
+            DataGridExcel= __datosExcel;
+//            console.log("Entro al excelexportHibrido");
+        $("#listjson").excelexportHibrido({
+            containerid: "listjson"
+            , datatype: 'json'
+            , dataset: DataGridExcel
+            , columns: getColumns(DataGridExcel)
+        });
+    });
+}); //SE CIERRA EL $(FUNCTION())
+
+
+
 
 parametroscheck={"validado":"false","no_validado":"false","sin_documento":"false"};
 
@@ -27,7 +51,7 @@ function inicializarFiltros()
         //     {name:"opcion",id:"opcion",type:"opcion"}
         //     // { id:"delete", name:"Opción", type:"customControl",sorting:""},
         { id: "tema",title:"Tema", type: "text"},
-        { id: "tema_responsable",title:"Responsable Tema",type:"text"},
+        { id: "tema_responsable",title:"Responsable del Tema",type:"text"},
         { id: "requisito",title:"Requisito", type: "text"},
         { id: "registro",title:"Registro", type: "text"},
         { id: "frecuencia",title:"Frecuencia", type: "combobox",data:frecuenciaData,descripcion:"frecuencia"},
@@ -286,6 +310,41 @@ function reconstruir(value,index)
     tempData["delete"].push({editar:0});
     return tempData;
 }
+
+
+function reconstruirExcel(value,index)
+{
+    tempData = new Object();
+    tempData["No"] = index;
+    tempData["Tema"] = value.tema;
+    tempData["Responsable del Tema"] = value.tema_responsable;
+    tempData["Requisito"] = value.requisito;
+    tempData["Registro"] = value.registro;
+    tempData["Frecuencia"] = value.frecuencia;
+    tempData["Clave del Documento"] = value.clave_documento;
+    tempData["Fecha Evidencia"] = getSinFechaFormato(value.fecha_creacion);
+    if(value.archivosUpload[0].length==0)
+    {
+        tempData["Fecha Registro"] ="";
+        tempData["Evidencia"] ="No";        
+    }else{
+        $.each(value.archivosUpload[0],function(index2,value2){            
+            nametmp = value2.split("^-O-^-M-^-G-^");
+            fecha = getFechaStamp(nametmp[0]);
+            
+            tempData["Fecha Registro"] = fecha;
+            tempData["Evidencia"] = "Si";   
+        });        
+    }
+    tempData["Desviacion"] = value.desviacion;
+    tempData["Accion Correctiva"] = value.accion_correctiva;
+    tempData["Avance del Plan"] = value.avance_plan;
+    tempData["Estatus"] = value.estatus;
+    
+    return tempData;
+}
+
+
    
 //    var listfunciones=[variablefunciondatos];
 //    ajaxHibrido(datosParamAjaxValues,listfunciones); 

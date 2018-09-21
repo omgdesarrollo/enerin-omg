@@ -1022,8 +1022,8 @@ function reconstruirExcel(value,index)
     
     if(value.archivosUpload[0].length==0)
     {
-        tempData["Archivos Adjuntos"] = "No";
-        tempData["Fecha Registro"] = "";           
+        tempData["Fecha Registro"] = "";
+        tempData["Archivos Adjuntos"] = "No";           
     }else{
         $.each(value.archivosUpload[0],function(index2,value2)
         {   
@@ -1032,8 +1032,8 @@ function reconstruirExcel(value,index)
             nametmp = value2.split("^-O-^-M-^-G-^");
             fecha = getFechaStamp(nametmp[0]);
             
-            tempData["Archivos Adjuntos"] = "Si";
-            tempData["Fecha Registro"] = fecha;                       
+            tempData["Fecha Registro"] = fecha;
+            tempData["Archivos Adjuntos"] = "Si";                                   
         });
     }
         

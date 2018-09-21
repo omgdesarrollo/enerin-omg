@@ -54,11 +54,12 @@ $Usuario=  Session::getSesion("user");
         <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
 
         <script src="../../js/fInformeEvidenciasView.js" type="text/javascript"></script>
-
         <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
         <script src="../../js/fGridComponent.js" type="text/javascript"></script>
         <!-- <link href="../../css/estilosToolTip.css" rel="stylesheet" type="text/css"/> -->
         <!-- <script src="../../js/toolsToolTip.js" type="text/javascript"></script> -->
+        <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
+        
         <style>
             .jsgrid-header-row>.jsgrid-header-cell {
                 background-color:#307ECC ;      /* orange */
@@ -94,17 +95,13 @@ $Usuario=  Session::getSesion("user");
     <button type="button" class="btn btn-info btn_refrescar" id="btnrefrescar" onclick="refresh();" >
         <i class="glyphicon glyphicon-repeat"></i>   
     </button>
-    <div class="pull-right">
-        <button style="width:48px;height:42px" class="btn_agregar" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
+    
+    <div class="pull-right">    
+        <button style="width:48px;height:42px" type="button"  class="btn_agregar" id="toExcel">
             <img src="../../images/base/_excel.png" width="30px" height="30px">
         </button>
-        <button style="width:48px;height:42px" class="btn_agregar" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
-            <img src="../../images/base/word.png" width="30px" height="30px"> 
-        </button>
-        <button style="width:48px;height:42px" class="btn_agregar" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
-            <img src="../../images/base/pdf.png" width="30px" height="30px"> 
-        </button>
-    </div>    
+    </div>
+    
 </div>
 <br><br><br>
     <div id="jsGrid"></div>
@@ -244,6 +241,8 @@ $Usuario=  Session::getSesion("user");
     var db = {};
     var gridInstance;
     var ultimoNumeroGrid = 0;
+    var DataGridExcel=[];
+    var origenDeDatosVista="informeEvidencias";
 
     var frecuenciaData = [
                 {frecuencia:"DIARIO"},

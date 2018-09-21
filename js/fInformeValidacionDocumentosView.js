@@ -20,7 +20,8 @@ $(function()
     });
 
 
-});
+}); //SE CIERRA EL $(FUNCTION())
+
 
 function inicializarFiltros()
 {
