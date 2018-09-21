@@ -1,6 +1,57 @@
 
 // configuracionJgrowl = { pool:0, position:" bottom-right", sticky:true, corner:"0px",openDuration:"fast", closeDuration:"slow",theme:"",header:"",themeState:"", glue:"before"};
-
+$(function()
+{
+    $("#BTN_ANTERIOR_GRAFICAMODAL").click(function()
+    {
+        if(activeChart != 0)
+        {
+            if(activeChart == 1)
+            {
+                activeChart=-1;
+                graficar();
+                // selectChart();
+            }
+            else
+            {
+                activeChart=0;
+                selectChart();
+            }
+        }
+        else
+        {
+            activeChart = -1;
+            graficar();
+        } 
+            
+        if(activeChart == 0)
+        {
+            $(this).html("Recargar");
+        }
+        else
+            $(this).html("Anterior");
+        
+    });
+    
+    var $btnDLtoExcel = $('#toExcel'); 
+    $btnDLtoExcel.on('click', function () 
+    {   
+        __datosExcel=[]
+        $.each(dataListado,function (index,value)
+            {
+                console.log("Entro al datosExcel");
+                __datosExcel.push( reconstruirExcel(value,index+1) );
+            });
+            DataGridExcel= __datosExcel;
+//            console.log("Entro al excelexportHibrido");
+        $("#listjson").excelexportHibrido({
+            containerid: "listjson"
+            , datatype: 'json'
+            , dataset: DataGridExcel
+            , columns: getColumns(DataGridExcel)
+        });
+    });
+}); //SE CIERRA EL $(FUNCTION())
 
 
 function inicializarFiltros()
@@ -48,6 +99,22 @@ function reconstruir(value,index)
     tempData["cumplimiento_requisito"] = value.cumplimiento_requisito,
     tempData["estado_requisito"] = value.estado_requisito,
     tempData["delete"] = "0";
+    return tempData;
+}
+
+function reconstruirExcel(value,index)
+{
+    tempData = new Object();
+    tempData["No. Tema"] = value.no_tema;
+    tempData["Nombre Tema"] = value.nombre_tema;
+    tempData["Responsable del Tema"] = value.responsable_tema;
+    tempData["% Cumplimiento Tema"] = value.cumplimiento_tema;
+    tempData["Estado del Tema"] = value.estado_tema == 0 ? "INACTIVO" : "ACTIVO";
+    tempData["Requisito"] = value.requisito;
+    tempData["Penalizacion"] = value.penalizacion == "true" ? "SI":"NO";
+    tempData["% Cumplimiento Requisito"] = value.cumplimiento_requisito;
+    tempData["Estado Requisito"] = value.estado_requisito;
+  
     return tempData;
 }
 
@@ -373,44 +440,6 @@ function selectChart()
         }
     // });
 }
-
-$(function(){
-    $("#BTN_ANTERIOR_GRAFICAMODAL").click(function()
-    {
-        if(activeChart != 0)
-        {
-            if(activeChart == 1)
-            {
-                activeChart=-1;
-                graficar();
-                // selectChart();
-            }
-            else
-            {
-                activeChart=0;
-                selectChart();
-            }
-        }
-        else
-        {
-            activeChart = -1;
-            graficar();
-        } 
-            
-        if(activeChart == 0)
-        {
-            $(this).html("Recargar");
-        }
-        else
-            $(this).html("Anterior");
-        
-    });
-
-    // $("#OPCION_GRAFICAMODAL").change(function()
-    // {
-    //     opcion_vista_grafica = $(this).val();
-    // });
-});
 
 var activeChart = -1;
 var chartsCreados = [];
