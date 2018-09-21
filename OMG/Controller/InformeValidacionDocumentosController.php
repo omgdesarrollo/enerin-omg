@@ -3,17 +3,25 @@
 session_start();
 require_once '../Model/InformeValidacionDocumentosModel.php';
 require_once '../dao/InformeValidacionDocumentosDAO.php';
+require_once '../Model/ArchivoUploadModel.php';
 require_once '../util/Session.php';
 
 $Op=$_REQUEST["Op"];
 $model=new InformeValidacionDocumentosModel();
+$modelArchivo = new ArchivoUploadModel();
 
 switch ($Op) {
 
     
         case 'listarparametros(v,nv,sd)':
-        $v["param"]["contrato"]= Session::getSesion("s_cont");
-        $Lista=$model->listarValidaciones($v);
+            $CONTRATO = Session::getSesion("s_cont");
+            $v["param"]["contrato"]= Session::getSesion("s_cont");
+            $Lista= $model->listarValidaciones($v);
+            foreach($Lista["info"] as $key => $value)
+            {
+                $url = $_REQUEST["URL"].$value["id_validacion_documento"];
+                $Lista["info"][$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
+            }
             header('Content-type: application/json; charset=utf-8');
             echo json_encode($Lista);
         //        echo $v["param"]["v"];

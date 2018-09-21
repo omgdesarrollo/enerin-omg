@@ -49,12 +49,13 @@ function listarDatos()
 
     return new Promise((resolve,reject)=>
     {
-//        URL = 'filesEvidenciaDocumento/';
+        URL = 'filesValidacionDocumento/';
         __datos=[];
         $.ajax({
 //            url: '../Controller/EvidenciasController.php?Op=Listar',
             url:'../Controller/InformeValidacionDocumentosController.php?Op=listarparametros(v,nv,sd)',
             type: 'GET',
+            data:'URL='+URL,
             beforeSend:function()
             {
                 growlWait("Solicitud","Solicitando Datos...");
@@ -134,7 +135,47 @@ function reconstruir(value,index)//listo jsgrid
 }
 
 
+function reconstruirExcel(value,index)//listo jsgrid
+{
+//    ultimoNumeroGrid = index;
+    tempData = new Object();
+//    tempData["id_principal"] = [];
+//    tempData["id_principal"].push({'id_validacion_documento':value.id_validacion_documento});
+    tempData["No"] = index; 
+    tempData["Clave del Documento"] = value.clave_documento; 
+    tempData["Nombre del Documento"] = value.documento; 
+    tempData["Responsable"] = value.nombrecompleto;
+    if(value['temas_responsables'].length==0)
+    {
+        tempData["Tema"] = "";
+        tempData["Responsable del Tema"] = "";        
+    }else{
+        $.each(value['temas_responsables'],function(index2,value2){
+            
+            tempData["Tema"] = value2.nombre_tema;
+            tempData["Responsable del Tema"] = value2.nombre_completotema;
+        });
+    }
+    if(value['requisitos'].length==0)
+    {
+        tempData["Requisito"] = "";
+    }else{
+        $.each(value['requisitos'],function(index2,value2){
+            tempData["Requisito"] = value2.requisito;
+        });
+    }
+    if(value.archivosUpload[0].length==0 )
+    {
+       tempData["Archivo Adjunto"] = "No"; 
+    }else{
+        $.each(value.archivosUpload[0],function(index2,value2){
+            tempData["Archivo Adjunto"] = "Si";
+        });
+    }
+    tempData["Estatus"]=(value.validacion_tema_responsable=="false")?"En Proceso":"Validado";
 
+    return tempData;
+}
 
 function mostrarTemaResponsable(id_documento)
 {
@@ -152,7 +193,7 @@ function mostrarTemaResponsable(id_documento)
         {
             $.each(responseTemayResponsable,function(index,value){
               ValoresTemaResponsable+="<tr><td>"+value.nombre_tema+"</td>" ;
-              ValoresTemaResponsable+="<td>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</td></tr>";  
+              ValoresTemaResponsable+="<td>"+value.nombre_completotema+"</td></tr>";  
 
             });
 
@@ -262,7 +303,7 @@ function borrarArchivo(url,id_para)
         cancelButtonText: "Cancelar",
     },function()
     {
-        var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();
+        var id_validacion_documento = $('#tempInputIdEvidenciaDocumento').val();
         $.ajax({
             url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
             type: 'POST',
@@ -272,8 +313,8 @@ function borrarArchivo(url,id_para)
             if(eliminado)
             {
                 growlSuccess("Eliminacion de Archivo","Archivo Eliminado");
-                mostrar_urls(ID_EVIDENCIA_DOCUMENTO,"1",false,id_para);
-                actualizarEvidencia(ID_EVIDENCIA_DOCUMENTO);
+                mostrar_urls(id_validacion_documento,"1",false,id_para);
+                actualizarEvidencia(id_validacion_documento);
                 // setTimeout(function(){
                     swal.close();
                 // },1000);
@@ -297,8 +338,8 @@ function borrarArchivo(url,id_para)
 
 function agregarArchivosUrl()
 {
-    var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();
-    url = 'filesEvidenciaDocumento/'+ID_EVIDENCIA_DOCUMENTO,
+    var id_validacion_documento = $('#tempInputIdEvidenciaDocumento').val();
+    url = 'filesEvidenciaDocumento/'+id_validacion_documento,
     $.ajax({
         url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
         type: 'GET',
