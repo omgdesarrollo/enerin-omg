@@ -3,7 +3,7 @@ id_seleccionado="";
 
  $(function(){
      
-     $("#temaform").submit(function(e){
+     $("#btn_guardar").click(function(e){
          e.preventDefault();
          
          var formData = {"NO":$('#NO').val(),"NOMBRE":$('#NOMBRE').val(),"DESCRIPCION":$('#DESCRIPCION').val(),
@@ -15,14 +15,17 @@ id_seleccionado="";
              data:formData,
              success:function()
              {
-                 obtenerDatosArbol();
+                swal("","El Tema se ha creado correctamente","success");
+                setTimeout(function(){swal.close();},1500);
+                obtenerDatosArbol();
+                $('#create-itemTema .close').click();
              }
          });
                 
      });
      
      
-     $("#SubTemaform").submit(function(e){
+     $("#btn_guardar_SubTema").click(function(e){
          e.preventDefault();
          
          var formData = {"NO":$('#NO_SUBTEMA').val(),"NOMBRE":$('#NOMBRE_SUBTEMA').val(),"DESCRIPCION":$('#DESCRIPCION_SUBTEMA').val(),
@@ -34,29 +37,31 @@ id_seleccionado="";
              data:formData,
              success:function()
              {
-                 obtenerDatosArbol();
-                 
-//                 myTree.addItem(formData["NO"],formData['NOMBRE_SUBTEMA'], id_seleccionado);
-//                myTree.openItem(formData.);
-                 obtenerHijos(id_seleccionado);
+                swal("","El Sub-Tema se ha creado correctamente","success");
+                setTimeout(function(){swal.close();},1500);
+                obtenerDatosArbol();
+                obtenerHijos(id_seleccionado);
+                $('#create-itemSubTema .close').click();
              }
          });
                 
      });
      
-     $("btn_limpiar_tema").click(function(){
+    $("#btn_limpiar_tema").click(function(){
          $("#NO").val("");
          $("#NOMBRE").val("");
          $("#DESCRIPCION").val("");
          $("#PLAZO").val("");                 
      });
      
-     $("btn_limpiar_SubTema").click(function(){
+     $("#btn_limpiar_SubTema").click(function(){
          $("#NO_SUBTEMA").val("");
          $("#NOMBRE_SUBTEMA").val("");
          $("#DESCRIPCION_SUBTEMA").val("");
          $("#PLAZO_SUBTEMA").val("");         
      });
+     
+     
      
      
  }); //CIERRA EL $FUNCTION                      
@@ -113,8 +118,6 @@ function evaluarToolbarSeccionA(id)
             var subItems= myTree.getSubItems(id_seleccionado);
             if(subItems=="")
             {
-                swal("","Se elimino correctamente el Dato","success");
-                setTimeout(function(){swal.close();},1500);
                 eliminarNodo();
             }else{
 //                alert("no se puede eliminar tiene descendencia");
@@ -134,6 +137,8 @@ function eliminarNodo()
         success:function(response)
         {
             if(response==true){
+                swal("","Se elimino correctamente el Dato","success");
+                setTimeout(function(){swal.close();},1500);
                 obtenerDatosArbol(); 
                 limpiar("#contenidoDetalles");
                 limpiar("#contenido");
@@ -213,7 +218,8 @@ function evaluarToolbarSeccionB(id)
 //    alert("Este es el ID:"+id)
     if(id_seleccionado=="")
     {
-        alert("No hay tema seleccionado");
+        swal("","Seleccione un Tema","error");
+        setTimeout(function(){swal.close();},1500);
     } else {
     if(id=="agregar")
     {
