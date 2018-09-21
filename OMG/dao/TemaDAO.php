@@ -127,6 +127,26 @@ public function eliminarNodo($ID)
     }
 }
 
+    public function verificarSiTemaEstaEnDocumentoDeEntrada($ID_TEMA)
+    {
+        try 
+        {
+            $query="SELECT IF(COUNT(tbdocumento_entrada.id_tema)=0,0,1) AS resultado
+                    FROM documento_entrada tbdocumento_entrada
+                    WHERE tbdocumento_entrada.id_tema=$ID_TEMA";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+        
+            return $lista;            
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+
+    }
+
 
 }
 

@@ -172,8 +172,9 @@
         <!-- <div id="loaderModalMostrar"></div> -->
 		<div class="modal-content">
                         
+                    
             <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
             <h4 class="modal-title" id="myModalLabelItermUrls">Archivos Adjuntos</h4>
             </div>
 
@@ -210,7 +211,7 @@
 
 
     var estructuraGrid=[
-        { name: "no",title:"No.", type: "text", width: 50, editing:false },
+        { name: "no",title:"No", type: "text", width: 50, editing:false },
         { name: "clave_documento", title:"Clave del documento",type: "text", width: 180, editing:false },
         { name: "documento", title:"Nombre del Documento", type: "text", width: 200, editing:false},
         { name: "nombrecompleto", title:"Responsable",type: "text", width: 180, editing:false },
@@ -291,7 +292,7 @@
             <!-- </td> -->
         </tr>
     {% } %}
-    {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();var ID_PARA_DOCUMENTO = $('#tempInputIdParaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO,'1',false,ID_PARA_DOCUMENTO); growlSuccess("Subir Archivo","Archivo Cargado"); actualizarEvidencia(ID_EVIDENCIA_DOCUMENTO); noArchivo=0; } } %}
+    {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_VALIDACION_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();var ID_PARA_DOCUMENTO = $('#tempInputIdParaDocumento').val(); mostrar_urls(ID_VALIDACION_DOCUMENTO,'1',false,ID_PARA_DOCUMENTO); growlSuccess("Subir Archivo","Archivo Cargado"); actualizarEvidencia(ID_VALIDACION_DOCUMENTO); noArchivo=0; } } %}
 </script>
 
     <!--Inicia para el spiner cargando-->

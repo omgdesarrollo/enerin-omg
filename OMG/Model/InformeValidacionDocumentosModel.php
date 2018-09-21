@@ -8,8 +8,15 @@ class InformeValidacionDocumentosModel{
         try
         {
             $dao=new InformeValidacionDocumentosDAO();
-            $lista["info"]= $dao->listarValidaciones($v);                                   
-            return $lista;
+            $rec["info"]= $dao->listarValidaciones($v);
+            
+            foreach ($rec["info"] as $key => $value) 
+            {
+                $rec["info"][$key]["temas_responsables"]= $dao->obtenerTemayResponsable($value["id_documento"]);
+                $rec["info"][$key]["requisitos"]= $dao->obtenerRequisitosporDocumento($value["id_documento"]);
+            }            
+            
+            return $rec;
         } catch (Exception $ex)
         {
             throw $ex;

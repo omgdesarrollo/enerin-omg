@@ -291,4 +291,23 @@ class EvidenciasDAO
         }
     }
     
+    public function verificarSiHayCargadoProgramaGantt($ID_EVIDENCIAS)
+    {
+        try 
+        {
+            $query="SELECT COUNT(tbgantt_evidencias.id) AS programa_cargado
+                    FROM gantt_evidencias tbgantt_evidencias
+                    WHERE tbgantt_evidencias.id_evidencias=$ID_EVIDENCIAS";
+            
+            $db= AccesoDB::getInstancia();
+            $lista= $db->executeQuery($query);
+           
+           return $lista[0]["programa_cargado"];
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
 }

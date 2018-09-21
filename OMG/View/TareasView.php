@@ -223,7 +223,7 @@ require_once 'EncabezadoUsuarioView.php';
 		<div class="modal-content">
                         
 		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="font-size:inherit" aria-hidden="true" class="closeLetra">×</span></button>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="font-size:inherit" aria-hidden="true" class="closeLetra">X</span></button>
 		        <h4 class="modal-title" id="myModalLabel">Archivos Adjuntos</h4>
 		      </div>
 

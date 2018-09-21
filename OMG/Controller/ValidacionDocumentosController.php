@@ -9,11 +9,9 @@
 session_start();
 require_once '../Model/ValidacionDocumentoModel.php';
 require_once '../Pojo/ValidacionDocumentoPojo.php';
-
 require_once '../Model/AsignacionTemaRequisitoModel.php';
 require_once '../Model/DocumentoModel.php';
-
-
+require_once '../Model/ArchivoUploadModel.php';
 require_once '../util/Session.php';
 
 
@@ -22,7 +20,7 @@ $Op=$_REQUEST["Op"];
 $model=new ValidacionDocumentoModel();
 $modelAsignacionTemaRequisito=new AsignacionTemaRequisitoModel();
 $modelDocumento=new DocumentoModel();
-
+$modelArchivo = new ArchivoUploadModel();
 $pojo= new ValidacionDocumentoPojo();
 
 switch ($Op) {
@@ -30,7 +28,13 @@ switch ($Op) {
 		$USUARIO = Session::getSesion("user");
 		$CONTRATO = Session::getSesion("s_cont");
 		$Lista=$model->listarValidacionDocumentos($USUARIO["ID_USUARIO"],$CONTRATO);
-    	header('Content-type: application/json; charset=utf-8');
+                foreach($Lista as $key => $value)
+                {
+                    $url = $_REQUEST["URL"].$value["id_validacion_documento"];
+                    $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
+                }
+                
+                header('Content-type: application/json; charset=utf-8');
 		echo json_encode($Lista);
 	break;
 

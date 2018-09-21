@@ -268,10 +268,12 @@ fieldValidacionTema.prototype = new jsGrid.Field
 function listarDatos()//listo
 {
     return new Promise((resolve,reject)=>{
+        URL = 'filesValidacionDocumento/';
         var __datos=[];
         $.ajax({
             url:'../Controller/ValidacionDocumentosController.php?Op=ListarTodo',
             type:"GET",
+            data:'URL='+URL,
             beforeSend:function()
             {
                 growlWait("Solicitud","Solicitando Datos Validación Documentos");
@@ -477,10 +479,18 @@ function reconstruirExcel(documento,index)//listo
     tempData["Responsable del Documento"] = documento.responsable_documento;
     tempData["Tema"] = documento.nombre_tema;
     tempData["Responsable del Tema"] = documento.responsable_tema;
+    if(documento.archivosUpload[0].length==0)
+    {
+        tempData["Archivo Adjunto"] = "No";
+    }else{
+        $.each(documento.archivosUpload[0],function(index,value){
+            tempData["Archivo Adjunto"] = "Si";
+        });        
+    }
     tempData["Requisitos"]="";   
-        $.each(documento['detalles_excel']["0"]['requisitos'],(index,value)=>{
-            tempData["Requisitos"] += "<li>"+value['requisito']+"<li>";                                
-        });
+    $.each(documento['detalles_excel']["0"]['requisitos'],(index,value)=>{
+        tempData["Requisitos"] += "<li>"+value['requisito']+"<li>";                                
+    });
     tempData["Registros"]="";
         $.each(documento['detalles_excel']["1"]['registros'],(index,value)=>{
             tempData["Registros"] += "<li>"+value['registro']+"<li>";                                
