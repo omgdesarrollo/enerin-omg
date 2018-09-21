@@ -18,52 +18,54 @@ class SeguimientoEntradaModel{
             foreach ($rec as $key => $value) 
             {
             
-            $alarm = new Datetime($value['fecha_alarma']);
-            $alarm = strftime("%d-%B-%y",$alarm -> getTimestamp());
-            $alarm = new Datetime($alarm);
+                $alarm = new Datetime($value['fecha_alarma']);
+                $alarm = strftime("%d-%B-%y",$alarm -> getTimestamp());
+                $alarm = new Datetime($alarm);
 
-            $flimite = new Datetime($value['fecha_limite_atencion']);// Guarda en una variable la fecha de la base de datos
-            $flimite = strftime("%d-%B-%y",$flimite -> getTimestamp());// Esta da el formato: dia. mes y año, sin guardar las horas 
-            $flimite = new Datetime($flimite);//Se guarda en este formato y se reinicializan las horas a 00.
+                $flimite = new Datetime($value['fecha_limite_atencion']);// Guarda en una variable la fecha de la base de datos
+                $flimite = strftime("%d-%B-%y",$flimite -> getTimestamp());// Esta da el formato: dia. mes y año, sin guardar las horas 
+                $flimite = new Datetime($flimite);//Se guarda en este formato y se reinicializan las horas a 00.
 
-            $hoy = new Datetime();
-            $hoy = strftime("%d - %B - %y");
-            $hoy = new Datetime($hoy);
+                $hoy = new Datetime();
+                $hoy = strftime("%d - %B - %y");
+                $hoy = new Datetime($hoy);
 
 
-            if($value["status_doc"]== 1){
+                if($value["status_doc"]== 1)
+                {
 
-                if ($flimite <= $hoy){
+                    if ($flimite <= $hoy){
 
-                    if($flimite == $hoy){
-                        
-                        $rec[$key]["condicion"]="Tiempo Limite";
-                    } else {
-                        
-                        $rec[$key]["condicion"]="Tiempo Vencido";
+                        if($flimite == $hoy){
+
+                            $rec[$key]["condicion"]="Tiempo Limite";
+                        } else {
+
+                            $rec[$key]["condicion"]="Tiempo Vencido";
+                        }
+
+                    } else{
+
+                      if ($alarm <= $hoy){
+
+                            $rec[$key]["condicion"]="Alarma Vencida";
+                      } else {
+
+                            $rec[$key]["condicion"]="En Tiempo";
+                          }                                           
                     }
-
-                } else{
-
-                  if ($alarm <= $hoy){
-
-                        $rec[$key]["condicion"]="Alarma Vencida";
-                  } else {
-
-                        $rec[$key]["condicion"]="En Tiempo";
-                      }                                           
-                }
-            } //Primer If 
+                } //Primer If 
               
-            if($value["status_doc"]== 2){
+                if($value["status_doc"]== 2)
+                {
 
-                    $rec[$key]["condicion"]="Suspendido";
-            } //Segundo If
+                        $rec[$key]["condicion"]="Suspendido";
+                } //Segundo If
             
-            if($value["status_doc"]== 3){
+                if($value["status_doc"]== 3){
 
-                $rec[$key]["condicion"]="Terminado";
-            } //Tercer If, Termina Status Logico
+                    $rec[$key]["condicion"]="Terminado";
+                } //Tercer If, Termina Status Logico
             
             }//FOREACH
               

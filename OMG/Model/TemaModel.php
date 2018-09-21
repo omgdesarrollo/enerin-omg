@@ -15,14 +15,12 @@ class TemaModel{
             $resultadoArbol;
             $contador=0;
             foreach ($rec as $value)
-            {
-                
-            $resultadoArbol[$contador]=
-                array($value['id_tema'],$value['padre'],$value['no']."-".$value['nombre']);                
+            {  
+                $resultadoArbol[$contador]=array($value['id_tema'],$value['padre'],$value['no']."-".$value['nombre']);                
                 $contador++;
             }    
             if($contador!=0)
-            return $resultadoArbol;
+                return $resultadoArbol;
             else
                 return "";
         }  catch (Exception $e)
@@ -98,6 +96,22 @@ class TemaModel{
         {
             throw $ex;
             return false;
+        }
+    }
+    
+    
+    public function verificarSiTemaEstaEnDocumentoDeEntrada($ID_TEMA)
+    {
+        try 
+        {
+            $dao=new TemaDAO();
+            $rec= $dao->verificarSiTemaEstaEnDocumentoDeEntrada($ID_TEMA);
+            
+            return $rec;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
         }
     }
     

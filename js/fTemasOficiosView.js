@@ -104,21 +104,24 @@ function evaluarToolbarSeccionA(id)
     } 
     if(id=="eliminar")
     {
-        var level = myTree.getLevel(id_seleccionado);
-//        if(level==1)
-//        {
+        if(id_seleccionado=="")
+        {
+            swal("","Seleccione un Tema","error");
+            setTimeout(function(){swal.close();},1500);
+        }else{
+//            var level = myTree.getLevel(id_seleccionado);
             var subItems= myTree.getSubItems(id_seleccionado);
             if(subItems=="")
             {
+                swal("","Se elimino correctamente el Dato","success");
+                setTimeout(function(){swal.close();},1500);
                 eliminarNodo();
             }else{
-                alert("no se puede eliminar tiene descendencia");
+//                alert("no se puede eliminar tiene descendencia");
+                swal("","El Tema tiene Sub-Temas","error");
+                setTimeout(function(){swal.close();},1500);  
             }
-//        } 
-//        if(level==2)
-//        {
-//            eliminarNodo();
-//        }
+        }    
     }   
 }
 
@@ -136,7 +139,9 @@ function eliminarNodo()
                 limpiar("#contenido");
                 id_seleccionado="";
             }else{
-                alert("Error no se puede eliminar el tema tiene requisitos");
+//                alert("Error no se puede eliminar el tema tiene requisitos");
+                swal("","El Tema esta asignado a un Documento de Entrada","error");
+                setTimeout(function(){swal.close();},1500);
             }
         }
     });

@@ -11,6 +11,12 @@ class EvidenciasModel
         {
             $dao = new EvidenciasDAO();
             $rec = $dao->listarEvidencias($ID_USUARIO,$CONTRATO);
+            
+            foreach ($rec as $key => $value) 
+            {
+                $rec[$key]['programa_cargado']= $dao->verificarSiHayCargadoProgramaGantt($value['id_evidencias']);
+            }
+            
             return $rec;
         }catch(Exception $e)
         {

@@ -25,11 +25,10 @@ class InformeValidacionDocumentosDAO{
     public function obtenerTemayResponsable ($id_documento)
     {
         try{
-            $query="SELECT tbtemas.nombre as nombre_tema,tbasignacion_tema_requisito.id_tema, tbtemas.no, tbempleados.id_empleado, tbempleados.nombre_empleado, 
-		    tbempleados.apellido_paterno, tbempleados.apellido_materno
-
+            $query="SELECT tbtemas.nombre as nombre_tema,tbasignacion_tema_requisito.id_tema, tbtemas.no, 
+                    tbempleados.id_empleado, CONCAT(tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno)
+                    AS nombre_completotema
                     FROM validacion_documento tbvalidacion_documento
-
                     JOIN documentos tbdocumentos ON tbdocumentos.id_documento=tbvalidacion_documento.id_documento
                     JOIN registros tbregistros ON tbregistros.id_documento=tbdocumentos.id_documento
                     JOIN requisitos_registros tbrequisitos_registros ON tbrequisitos_registros.id_registro=tbregistros.id_registro
@@ -41,6 +40,7 @@ class InformeValidacionDocumentosDAO{
                     JOIN temas tbtemas ON tbtemas.id_tema=tbasignacion_tema_requisito.id_tema
                     JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
                     WHERE tbdocumentos.id_documento=$id_documento GROUP BY tbtemas.no";    
+            
             $db= AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);          
             return $lista;            

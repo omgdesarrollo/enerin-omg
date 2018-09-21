@@ -922,6 +922,7 @@ function reconstruir(value,index)//listo jsgrid
         tempData["adjuntar_evidencia"] = "<button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
         tempData["adjuntar_evidencia"] += " type='button' class='botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
         tempData["adjuntar_evidencia"] += "<i class='fa fa-cloud-upload' style='font-size: 22px'></i></button>";
+        
         $.each(value.archivosUpload[0],function(index2,value2)
         {
             tempArchivo="a";
@@ -1018,10 +1019,32 @@ function reconstruirExcel(value,index)
     tempData["Frecuencia"] = value.frecuencia;
     tempData["Clave del Documento"] = value.clave_documento;
     tempData["Fecha Evidencia"] = value.fecha_creacion;
-//    tempData["Fecha Registro"] = value.;
+    
+    if(value.archivosUpload[0].length==0)
+    {
+        tempData["Archivos Adjuntos"] = "No";
+        tempData["Fecha Registro"] = "";           
+    }else{
+        $.each(value.archivosUpload[0],function(index2,value2)
+        {   
+            console.log(value2);
+            tempArchivo="a";
+            nametmp = value2.split("^-O-^-M-^-G-^");
+            fecha = getFechaStamp(nametmp[0]);
+            
+            tempData["Archivos Adjuntos"] = "Si";
+            tempData["Fecha Registro"] = fecha;                       
+        });
+    }
+        
     tempData["Usuario"] = value.usuario;
     tempData["Accion Correctiva"] = value.accion_correctiva;
-//    tempData["Plan Accion"] = value.;
+    if(value.programa_cargado==0)
+    {
+        tempData["Plan Accion"] = "No";
+    }else{
+        tempData["Plan Accion"] = "Si";
+    }
     tempData["Desviacion"] = value.desviacion;
     if(value.validacion_supervisor=="true")
     {
