@@ -120,12 +120,12 @@ and open the template in the editor.
 		}*/
                 
          .gantt_task_line.gantt_dependent_task {
-			/*background-color: #65c16f;*/
+			background-color: #65c16f;
                         /*background-color:  #0042e9;*/
 			/*border: 1px solid #3c9445;*/
 		}       
 .gantt_task_line.gantt_dependent_task .gantt_task_progress {
-			/*background-color: #46ad51;*/
+			background-color: #46ad51;
                         /*background-color:  #0042e9;*/
 		}
 /*         .hide_project_progress_drag .gantt_task_progress_drag {
@@ -873,6 +873,8 @@ dp.init(gantt);
 //            $(".gantt_task_line.gantt_dependent_task .gantt_task_progress ").css("background-color","red");
 //        }
 //        console.log(Math.round(task.progress * 100));
+//            console.log(task);
+                $("#taskid").css("background-color:","red");
 		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
 	};
 //        gantt.templates.task_text=function(start,end,task){
