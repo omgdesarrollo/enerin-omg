@@ -734,13 +734,23 @@ gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
 
 var dp = new gantt.dataProcessor("../Controller/GanttTareasController.php?Op=Modificar");
 dp.init(gantt);
-//dp.attachEvent("onBeforeUpdate", function (id, status, data) {
-//     if (!data.text) {
-//         dhtmlx.message("La Tarea no puede ir vacia");
-//         return false;
-//     }
-//     return true;
-//});
+//dp.autoUpdate=false;
+dp.attachEvent("onBeforeUpdate", function (id, status, data) {
+     if (!data.text) {
+         dhtmlx.message("La Tarea no puede ir vacia");
+         console.log(data);
+         return false;
+     }
+     else{
+//          data.text="dtexto";
+     }
+     
+//     data.text="d1";
+     
+     
+     return true;
+});
+
 //gantt.config.branch_loading = true;
 
 
