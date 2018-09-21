@@ -410,14 +410,6 @@ setScaleConfig('1');
 //termina de definir si sera por dia,semana,mes ,año que se mostrara las tareas
 
 
-
-
-
-
-
-
-
-
 	(function dynamicTaskType() {
 		var delTaskParent;
 
@@ -531,8 +523,6 @@ setScaleConfig('1');
 			else return totalDone / totalToDo;
                         
 		}
-                
-                
 
 		function refreshSummaryProgress(id, submit) {
 //                   console.log("entro en refresh summary progress");
@@ -585,6 +575,14 @@ setScaleConfig('1');
 		});
 
 
+            
+
+
+
+
+
+
+
 		(function () {
 			var idParentBeforeDeleteTask = 0;
 			gantt.attachEvent("onBeforeTaskDelete", function (id) {
@@ -628,6 +626,20 @@ setScaleConfig('1');
                     }
                 
 	};
+        gantt.locale.labels["complete_button"] = "Completar";
+        console.log(gantt.locale.labels);
+//        gantt.config.lightbox.sections.push({name: "status", height: 22, map_to: "user", type: "select", options:gantt.serverList("user")});
+//         console.log(gantt.config.lightbox);
+	gantt.config.buttons_left = ["dhx_save_btn", "dhx_cancel_btn", "complete_button"];
+        gantt.attachEvent("onLightboxButton", function (button_id, node, e) {
+		if (button_id == "complete_button") {
+			var id = gantt.getState().lightbox;
+			gantt.getTask(id).progress = 1;
+			gantt.updateTask(id)
+			gantt.hideLightbox();
+		}
+	});
+ 
 
 //        	gantt.config.open_tree_initially = true;
 //        	para cerrar las carpetas por default desde el principio
@@ -663,7 +675,6 @@ var status=[];
 
         gantt.config.lightbox.sections = [
 		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
-//		{name: "status", height: 38, map_to: "text", type: "text", focus: true},
 		{name: "owner", height: 22, map_to: "user", type: "select", options: gantt.serverList("user")},	
 		{name: "time", type: "duration", map_to: "auto"}
 	];
@@ -723,7 +734,13 @@ gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
 
 var dp = new gantt.dataProcessor("../Controller/GanttTareasController.php?Op=Modificar");
 dp.init(gantt);
-
+//dp.attachEvent("onBeforeUpdate", function (id, status, data) {
+//     if (!data.text) {
+//         dhtmlx.message("La Tarea no puede ir vacia");
+//         return false;
+//     }
+//     return true;
+//});
 //gantt.config.branch_loading = true;
 
 
