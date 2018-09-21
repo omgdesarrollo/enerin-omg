@@ -85,12 +85,12 @@ and open the template in the editor.
     <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
 
     <!--aqui empieza librerias qe no son del gantt en funcionalidad y presentacion-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script>window.jQuery || document.write(decodeURIComponent('%3Cscript src="js/jquery.min.js"%3E%3C/script%3E'))</script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>-->
+    <!--<script>window.jQuery || document.write(decodeURIComponent('%3Cscript src="js/jquery.min.js"%3E%3C/script%3E'))</script>-->
     <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/18.1.6/css/dx.common.css" />
     <link rel="dx-theme" data-theme="generic.light" href="https://cdn3.devexpress.com/jslib/18.1.6/css/dx.light.css" />
     <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>-->
-    <script>window.angular || document.write(decodeURIComponent('%3Cscript src="js/angular.min.js"%3E%3C\/script%3E'))</script>
+    <!--<script>window.angular || document.write(decodeURIComponent('%3Cscript src="js/angular.min.js"%3E%3C\/script%3E'))</script>-->
     <script src="https://cdn3.devexpress.com/jslib/18.1.6/js/dx.all.js"></script>
     <!--aqui termina las librerias que no son del gantt-->
     
@@ -120,11 +120,13 @@ and open the template in the editor.
 		}*/
                 
          .gantt_task_line.gantt_dependent_task {
-			background-color: #65c16f;
-			border: 1px solid #3c9445;
+			/*background-color: #65c16f;*/
+                        /*background-color:  #0042e9;*/
+			/*border: 1px solid #3c9445;*/
 		}       
 .gantt_task_line.gantt_dependent_task .gantt_task_progress {
-			background-color: #46ad51;
+			/*background-color: #46ad51;*/
+                        /*background-color:  #0042e9;*/
 		}
 /*         .hide_project_progress_drag .gantt_task_progress_drag {
 			visibility: hidden;
@@ -256,8 +258,8 @@ and open the template in the editor.
 <!--<div style="text-align:center;">-->
 	<input value="deshacer" type="button" onclick='gantt.undo()' style='font-size: 10px'>
 	<input value="Rehacer" type="button" onclick='gantt.redo()' style='font-size: 10px'>
-        <button class="btn btn-danger" type="button" onclick='' data-toggle='modal' data-target='#detalles' style='font-size: 10px'>Detalles</button>
-        
+        <!--<button class="btn btn-danger" type="button" onclick='detallesActividadesCompletasGantt()' data-toggle='modal' data-target='#detalles' style='font-size: 10px'>Detalles</button>-->
+        <button class="btn btn-danger" type="button" onclick='detallesActividadesCompletasGantt()' data-toggle='modal' data-target='#detalles' style='font-size: 10px'>Detalles</button>
 <!--</div>-->
         <?php  
         
@@ -507,10 +509,11 @@ setScaleConfig('1');
                                     
 //                                    alert("diferente de r");
 //					totalToDo += child.duration;
-                                          totalToDo += child.porcentaje_por_actividad;
-                                        console.log(totalToDo);
+                                          totalToDo += (child.porcentaje_por_actividad/100);
+//                                          console.log(totalToDo);
+//                                        console.log(totalToDo);
 //					totalDone += (child.progress || 0) * child.duration;
-                                          totalDone += (child.progress || 0) * child.porcentaje_por_actividad;
+                                          totalDone += (child.progress || 0) * (child.porcentaje_por_actividad/100);
 				}
 			}, task.id);
 			if (!totalToDo) return 0;
@@ -528,7 +531,7 @@ setScaleConfig('1');
                             }
 
 			var task = gantt.getTask(id);
-                        console.log(task);
+//                        console.log(task);
 			task.progress = calculateSummaryProgress(task);
 
 			if (!submit) {
@@ -587,7 +590,7 @@ setScaleConfig('1');
       gantt.serverList("user",dataEmpleados); 
 
 	gantt.locale.labels.column_owner ="Encargado";
-		gantt.locale.labels.section_owner = "Encargado";
+        gantt.locale.labels.section_owner = "Encargado";
         
         gantt.config.scale_height = 50;
         gantt.config.order_branch = true;
@@ -597,8 +600,11 @@ setScaleConfig('1');
 //        para abrir las carpetas por default desde el principio
 
 gantt.templates.task_class = function (start, end, task) {
-		if (task.type == gantt.config.types.project)
+  
+		if (task.type == gantt.config.types.project){
+//                    console.log("entro ");
 			return "hide_project_progress_drag";
+                }
 	};
 
 //        	gantt.config.open_tree_initially = true;
@@ -616,23 +622,26 @@ gantt.templates.task_class = function (start, end, task) {
 		return "";
 	}
         
-        
-gantt.config.columns = [
-    {name:"id",   label:"id",   align:"center" },
-		{name: "text", label: "Nombre", tree: true, width: '*'},
+ var textEditor = {type: "text", map_to: "text"};   
+gantt.config.columns=[
+//    {name:"id",   label:"id",   align:"center"},
+		{name: "text", label: "Nombre", tree: true,resize: true, editor: textEditor},
 		
 		{
-			name: "owner", width: 80, align: "center", template: function (item) {
+                    name: "owner", width: 80, align: "center",resize: true, template: function (item) {
 				return byId(gantt.serverList('user'), item.user)
-			}
+                    }
 		},
+//                {name: "status", label: "Status",resize: true},
 		{name: "add", width: 40}
 	];
+console.log(gantt);
 
+var status=[];
 
-gantt.config.lightbox.sections = [
+        gantt.config.lightbox.sections = [
 		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
-		
+//		{name: "status", height: 38, map_to: "text", type: "text", focus: true},
 		{name: "owner", height: 22, map_to: "user", type: "select", options: gantt.serverList("user")},	
 		{name: "time", type: "duration", map_to: "auto"}
 	];
@@ -659,26 +668,26 @@ gantt.config.subscales = [
 
 //inicia para expandir o colapsar
 
-        
+
 //        termina para expandir o colapsar
 
-        gantt.config.scale_unit = "month";
-	gantt.config.step = 1;
-	gantt.config.date_scale = "%F, %Y";
-	gantt.config.min_column_width = 50;
-//        gantt.config.scale_height = 90;
-
-
-
-
+gantt.config.scale_unit = "month";
+gantt.config.step = 1;
+gantt.config.date_scale = "%F, %Y";
+gantt.config.min_column_width = 50;
 gantt.config.order_branch = true;
 gantt.config.order_branch_free = true;
 gantt.config.branch_loading = true;
 gantt.config.fit_tasks = true; 
 gantt.config.work_time = false;
 gantt.config.auto_scheduling = true;
+gantt.config.autosize=false; 
 
-	gantt.config.auto_scheduling_strict = true;
+//gantt.config.min_duration = 24*60*60*1000;
+//gantt.config.min_duration = 60*60*1000;
+//gantt.config.drag_project=true;
+//gantt.config.autoscroll = true;
+gantt.config.auto_scheduling_strict = true;
 
 gantt.config.sort = true;
 //gantt.config.readonly = true;
@@ -841,12 +850,8 @@ dp.init(gantt);
 //			}
 //		}
 //    gantt.parse(tasksA);
-    
-    
-   
-    
-    function obtenerEmpleados(){
-        
+
+    function obtenerEmpleados(){     
         $.ajax({
 //           url:"../Controller/GanttController.php?Op=ListarEmpleados",
             url:"../Controller/GanttTareasController.php?Op=empleadosNombreCompleto",
@@ -864,13 +869,18 @@ dp.init(gantt);
         });
     }
     gantt.templates.progress_text = function (start, end, task) {
+//        if(Math.round(task.progress * 100)==100){
+//            $(".gantt_task_line.gantt_dependent_task .gantt_task_progress ").css("background-color","red");
+//        }
+//        console.log(Math.round(task.progress * 100));
 		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
 	};
-        
-        
+//        gantt.templates.task_text=function(start,end,task){
+//            console.log(task);
+//    return "<b>Text:</b> "+task.text+",<b> Holders:</b> "+task.user;
+//};
 
- 
-          var datosTreeList=[]; 
+    var datosTreeList=[]; 
     $(function (){
  
 //    var tabs = [{
@@ -887,31 +897,13 @@ dp.init(gantt);
 //            });
 //    }); 
         
-obtenerTareas().then(function (){
-construirTreeList();
-//console.log(dxtreeList);
-//dxtreeList["0"].onmouseover=function(args){
-//console.log(args);
-//}
-
-});
-    
-
-//     gantt.batchUpdate(function () {
-////         alert("se ha cargado el gantt exitosamente");
-//    gantt.eachSelectedTask(function(task_id){
-//        if(gantt.isTaskExists(task_id))
-//            gantt.deleteTask(task_id);
-//    });
+//obtenerTareas().then(function (){
+//construirTreeList();
+//
+//
 //});
-//     gantt.attachEvent("onParse", function () {
-////         alert("le has picado ");
-//			gantt.eachTask(function (task) {
-//				setTaskType(task);
-//			});
-//		}); 
-
-      
+    
+ 
 
     });
 
@@ -929,18 +921,9 @@ construirTreeList();
                                       });
                                       
                                   })
-        }
+        }  
         
-// gantt.exportToExcel({
-//    name:"document.xlsx", 
-//    columns:[
-//        { id:"text",  header:"Title", width:150 },
-//        { id:"start_date",  header:"Start date", width:250, type:"date" }
-//    ],
-//    server:"https://myapp.com/myexport/gantt",
-//    visual:true,
-//    cellColors:true
-//});
+        
         
         
   function construirTreeList(){
@@ -1091,12 +1074,13 @@ construirTreeList();
             },
             { 
                 dataField: "porcentaje_por_actividad",
-                 caption: "Ponderado Programado",
+                 caption: "Ponderado Programado %",
                 validationRules: [{ type: "required" }]
             },
              { 
                 dataField: "ponderado_real",
-                 caption: "Ponderado Real"
+                 caption: "Ponderado Real",
+                 allowEditing:false
             },
              { 
                 dataField: "avance",
@@ -1133,16 +1117,7 @@ construirTreeList();
         gantt.init('gantt_here');
 //        gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId");
         $.when(gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId")).then(function(){
-   
-           obtenerTareas().then(function (){
-           construirTreeList();
-//console.log(dxtreeList);
-//dxtreeList["0"].onmouseover=function(args){
-//console.log(args);
-//}
 
-});
-           
            
            
            
@@ -1150,10 +1125,19 @@ construirTreeList();
           
         });
     }
+    
+    function detallesActividadesCompletasGantt(){
+     obtenerTareas().then(function (){
+//         alert();
+         construirTreeList();
+
+     });
+} 
     var datosModificadosActividadesPonderado_ProgramadoTemp=[];
     var id_padreTareaPonderado_programadoTemp=-1;
     function saberSiSumanPorcentajePonderadoProgramado100loshijos(args)
     {
+        // console.log(args);
         var bandera=1;
         var key = args.key;
         var sumatoria = 0;
@@ -1195,12 +1179,12 @@ construirTreeList();
             // console.log(value); 
             if(id_padreTareaPonderado_programadoTemp == value.parent)
             {
-                sumatoria += parseInt(value.porcentaje_por_actividad);
+                sumatoria += parseFloat(value.porcentaje_por_actividad);
             }
             
         });
         console.log(datosModificadosActividadesPonderado_ProgramadoTemp);
-        if(sumatoria==100)
+        if(sumatoria>=100 && sumatoria<=100.5)
         {
             alert("Correcto");
             $.each(datosModificadosActividadesPonderado_ProgramadoTemp,(index,value)=>{
@@ -1213,7 +1197,7 @@ construirTreeList();
                 success:(res)=>
                 {
                     if(typeof(res)=="number" && res==1)
-                        alert("Modificado en la base de datos");
+                        alert("Modificado en la base de datos con "+parseFloat((sumatoria-100).toString().slice(0,4))+" de mas");
                     else
                         alert(res);
                 },
@@ -1225,9 +1209,10 @@ construirTreeList();
         }
         else
         {
-            if(sumatoria<100)
-                alert("El total es menor al 100% del ponderado de la tarea padre");
-            else
+            if(sumatoria<100){
+                alert("El total es menor al 100% del ponderado de la tarea padre  su sumatoria es "+sumatoria +" y su restante es de "+(100-sumatoria));
+                
+            }else
             alert("El total es mayor al 100% del ponderado de la tarea padre");
         }
     }

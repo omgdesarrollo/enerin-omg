@@ -208,11 +208,11 @@ MyCControlField.prototype = new jsGrid.Field
         },
         itemTemplate: function(value,todo)
         {
-            var returnTemp="";
+            var returnTemp="<a></a>";
             // console.log(value);
             // value == 0 ? returnTemp = "" : returnTemp = this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button ',title:"Eliminar", type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
             if(value[2]["editar"]==1)
-                returnTemp = "<input class='jsgrid-button jsgrid-edit-button' type='button' title='Editar' onClick='modoEditar()'>";
+                returnTemp += "<input class='jsgrid-button jsgrid-edit-button' type='button' title='Editar' onClick='modoEditar()'>";
             if(value[1]["eliminar"]==1)
                 returnTemp += "<input class='jsgrid-button jsgrid-delete-button' type='button' title='Eliminar' onClick='preguntarEliminar("+JSON.stringify(value[0])+")'>";
             // returnTemp += "<input type='label' value='"+JSON.stringify(todo)+"' style='display:false'>";
@@ -224,7 +224,7 @@ MyCControlField.prototype = new jsGrid.Field
         },
         editTemplate: function(value)
         {
-            var val = "";
+            var val = "<a></a>";
             // console.log(value);
             if(value[2]["editar"]==1)
             {
