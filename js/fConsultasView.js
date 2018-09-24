@@ -35,19 +35,21 @@ function inicializarFiltros()
 function reconstruir(value,index)
 {
     tempData = new Object();
-    tempData["id_principal"] = [{'id_tema':value.id_tema}],
-    tempData["no_tema"] = value.no_tema,
-    tempData["nombre_tema"] = value.nombre_tema,
-    tempData["id_responsable"] = value.id_responsable,
-    tempData["responsable_tema"] = value.responsable_tema,
-    tempData["cumplimiento_tema"] = value.cumplimiento_tema,
-    tempData["estado_tema"] = value.estado_tema == 0 ? "INACTIVO" : "ACTIVO",
-    tempData["id_requisito"] = value.id_requisito,
-    tempData["requisito"] = value.requisito,
-    tempData["penalizacion"] = value.penalizacion == "true" ? "SI":"NO",
-    tempData["cumplimiento_requisito"] = value.cumplimiento_requisito,
-    tempData["estado_requisito"] = value.estado_requisito,
-    tempData["delete"] = "0";
+    tempData["id_principal"] = [{'id_tema':value.id_tema}];
+    tempData["no_tema"] = value.no_tema;
+    tempData["nombre_tema"] = value.nombre_tema;
+    tempData["id_responsable"] = value.id_responsable;
+    tempData["responsable_tema"] = value.responsable_tema;
+    tempData["cumplimiento_tema"] = value.cumplimiento_tema;
+    tempData["estado_tema"] = value.estado_tema == 0 ? "INACTIVO" : "ACTIVO";
+    tempData["id_requisito"] = value.id_requisito;
+    tempData["requisito"] = value.requisito;
+    tempData["penalizacion"] = value.penalizacion == "true" ? "SI":"NO";
+    tempData["cumplimiento_requisito"] = value.cumplimiento_requisito;
+    tempData["estado_requisito"] = value.estado_requisito;
+    tempData["delete"] = tempData["id_principal"];
+    tempData["delete"].push({eliminar:0});
+    tempData["delete"].push({editar:0});
     return tempData;
 }
 
