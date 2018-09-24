@@ -610,6 +610,8 @@ setScaleConfig('1');
 	gantt.locale.labels.column_owner ="Encargado";
         gantt.locale.labels.section_owner = "Encargado";
         
+       gantt.locale.labels.section_status="Status";
+        
         gantt.config.scale_height = 50;
         gantt.config.order_branch = true;
         
@@ -675,10 +677,14 @@ gantt.config.columns=[
 	];
 console.log(gantt);
 
-var status=[];
-
+//var status=[];
+var opcionstatus = [
+    { key: 1, label: 'En Proceso' },
+    { key: 2, label: 'Suspendido' }
+];
         gantt.config.lightbox.sections = [
 		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
+                {name: "status", height: 38, map_to: "status", type: "select", options:opcionstatus},
 		{name: "owner", height: 22, map_to: "user", type: "select", options: gantt.serverList("user")},	
 		{name: "time", type: "duration", map_to: "auto"}
 	];
@@ -1134,8 +1140,7 @@ construirTreeList();
             },
             { 
                 dataField: "notas",
-                caption: "Notas",
-                validationRules: [{ type: "required" }]
+                caption: "Notas"
             },
             { 
                 dataField: "porcentaje_por_actividad",

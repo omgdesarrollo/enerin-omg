@@ -62,11 +62,14 @@ switch ($Op) {
         // $PONDERADO = $_REQUEST["ponderado_programado"];
         
         
-        if(isset($Lista["ponderado_programado"])){
-            $resp = $modelGantt->guardarPonderados($Lista);
-           
-            $resp= $modelGantt->guardarNota($Lista[0]);
-             echo $resp;
+        if(isset($Lista[0]["ponderado_programado"])){
+            echo "entro ";
+            $resp["response"] = $modelGantt->guardarPonderados($Lista);
+        if(isset($Lista[0]["notas"])){
+            $resp["response"]= $modelGantt->guardarNota($Lista[0]);
+        }
+            header('Content-type: application/json; charset=utf-8');
+             echo json_encode($resp);
         }else{
             $resp= $modelGantt->guardarNota($Lista[0]);
         }
