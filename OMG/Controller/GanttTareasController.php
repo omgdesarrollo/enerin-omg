@@ -63,7 +63,7 @@ switch ($Op) {
             $resp = $modelGantt->guardarPonderados($LISTA);
              echo $resp;
         }else{
-            
+            $resp= $modelGantt->guardarNota($Lista);
         }
 //            $VALUES["id"]= Session::getSesion("dataGantt_id_tarea");
 //            $VALUES["text"]= $_REQUEST['TEXT'];
