@@ -453,5 +453,19 @@ class Gantt_TareasModel{
             return -1;
         }
     }
+    
+    
+    public function actualizarInformacionTareas(){
+        try{
+            $daoGantt= new GanttDao();
+            
+            
+            
+            
+            
+        } catch (Exception $ex) {
+            throw  $ex;
+        }
+    }
 
 }

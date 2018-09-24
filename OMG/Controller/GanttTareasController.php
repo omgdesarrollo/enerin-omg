@@ -59,7 +59,12 @@ switch ($Op) {
         // var_dump($LISTA);
         // $ID = $_REQUEST["id"];
         // $PONDERADO = $_REQUEST["ponderado_programado"];
-        $resp = $modelGantt->guardarPonderados($LISTA);
+        if(isset($LISTA["ponderado_programado"])){
+            $resp = $modelGantt->guardarPonderados($LISTA);
+             echo $resp;
+        }else{
+            
+        }
 //            $VALUES["id"]= Session::getSesion("dataGantt_id_tarea");
 //            $VALUES["text"]= $_REQUEST['TEXT'];
 //            $VALUES["start_date"]= $_REQUEST['START_DATE'];
@@ -71,7 +76,7 @@ switch ($Op) {
 //            
 //            $Lista= $modelGantt->listarRegistrosGanttTareas($VALUES);
 //            header('Content-type: application/json; charset=utf-8');
-        echo $resp;
+       
             
         break;
     
