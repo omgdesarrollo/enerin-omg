@@ -25,6 +25,7 @@ class Gantt_TareaDao {
     {
         try
         {
+            echo "values: ".json_encode($VALUES);
             $query="INSERT INTO gantt_tareas (id,text,start_date,duration,progress,parent,user,id_tarea,notas,status)
                     VALUES('".$VALUES["id"]."','".$VALUES["text"]."','".$VALUES["start_date"]."','".$VALUES["duration"]."',
                     '".$VALUES["progress"]."','".$VALUES["parent"]."','".$VALUES["user"]."','".$VALUES["id_tarea"]."'),'".$VALUES["notas"]."'),'".$VALUES["status"]."')";
