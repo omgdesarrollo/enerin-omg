@@ -319,8 +319,12 @@ class Gantt_TareasModel{
                                          if (!isset($value["progress"])) {
                                              $value["progress"]=0;
                                          }
-                                         self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>$value["notas"],"status"=>$value["status"]), $value["id"]);
-                                         
+                                         if(!isset($value["status"])){
+                                             $value["status"]=1;
+                                         }
+                                            self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>$value["notas"],"status"=>$value["status"]), $value["id"]);
+
+                                           
 //                                         $model->actualizarGanttTareas
 //                                         $dao->updateTareasId_EmpleadoXIdGantt_En_Tabla_Seguimiento_entrada($value);
                                     }

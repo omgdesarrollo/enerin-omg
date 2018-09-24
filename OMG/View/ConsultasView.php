@@ -219,7 +219,7 @@ $Usuario=  Session::getSesion("user");
         { name: "estado_tema",title:"Estado del Tema", type: "text", width: 140,editing:false},
         { name: "id_requisito",visible:false},
         { name: "requisito",title:"Requisito", type: "text", width: 140,editing:false},
-        { name: "penalizacion",title:"Penalizacion", type: "text", width: 80,editing:false},
+        { name: "penalizacion",title:"Penalizacion", type: "text", width: 110,editing:false},
         { name: "cumplimiento_requisito",title:"% Cumplimiento Requisito", type: "porcentaje", width: 140,editing:false},
         { name: "estado_requisito",title:"Estado Requisito", type: "text", width: 100,editing:false},
         { name:"delete", title:"Opción", type:"customControl",sorting:""},
