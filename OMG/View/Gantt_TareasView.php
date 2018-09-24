@@ -611,7 +611,7 @@ setScaleConfig('1');
         gantt.locale.labels.section_owner = "Encargado";
         
        gantt.locale.labels.section_status="Status";
-        
+        gantt.locale.labels.section_notas="Notas";
         gantt.config.scale_height = 50;
         gantt.config.order_branch = true;
         
@@ -685,6 +685,7 @@ var opcionstatus = [
         gantt.config.lightbox.sections = [
 		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
                 {name: "status", height: 38, map_to: "status", type: "select", options:opcionstatus},
+                {name: "notas", height: 38, map_to: "text", type: "textarea"},
 		{name: "owner", height: 22, map_to: "user", type: "select", options: gantt.serverList("user")},	
 		{name: "time", type: "duration", map_to: "auto"}
 	];
