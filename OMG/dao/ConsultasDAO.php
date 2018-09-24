@@ -8,7 +8,7 @@ class ConsultasDAO{
         try
         {
           $query="SELECT distinct tbtemas.id_tema, tbtemas.no, tbtemas.nombre, tbtemas.fecha_inicio,tbtemas.id_empleado,
-                concat (tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) as responsable, 
+                concat (tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) as responsable,
                 tbrequisitos.id_requisito, tbrequisitos.requisito,tbrequisitos.penalizacion,
                 tbregistros.id_registro,tbregistros.registro, tbregistros.frecuencia, tbtemas.padre cumplimiento_requisito,
                 (select count(*) as evidencias_validadas from evidencias tbevidencias where tbevidencias.validacion_supervisor ='true' and tbevidencias.id_registro = tbregistros.id_registro ) evidencias_validadas,
@@ -23,7 +23,7 @@ class ConsultasDAO{
                 left join requisitos_registros tbrequisitos_registros on tbrequisitos_registros.id_requisito = tbrequisitos.id_requisito
                 left join registros tbregistros on tbregistros.id_registro = tbrequisitos_registros.id_registro
                 left join evidencias tbevidencias on tbevidencias.id_registro = tbregistros.id_registro
-                where tbtemas.padre = 0";
+                where tbtemas.padre = 0 and tbtemas.contrato = $CONTRATO";
           $db=  AccesoDB::getInstancia();
           $lista=$db->executeQuery($query);
           return $lista;
