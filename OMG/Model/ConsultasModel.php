@@ -10,7 +10,6 @@ class ConsultasModel{
             date_default_timezone_set("America/Mexico_city");
             $dao=new ConsultasDAO();
             $lista= $dao->listarConsultas($CONTRATO);
-
             $hoy = new Datetime();
 	        $al = strftime("%d - %B - %y");
             $hoy = new Datetime($al);
@@ -144,7 +143,7 @@ class ConsultasModel{
                         }
                         $lista[$key]["evidencias_realizar"] = $cantidad_a_realizar;
                     }
-                    if($frecuencia == "TIEMPO_INDEFINIDO")
+                    if($frecuencia == "TIEMPO INDEFINIDO")
                     {
                         $lista[$key]["evidencias_realizar"] = -1;
                     }
@@ -158,6 +157,7 @@ class ConsultasModel{
                     $lista[$key]["evidencias_realizar"] = "X";
                 }
             }
+            // var_dump($lista);
             return $lista;
         } catch (Exception $ex)
         {

@@ -10,6 +10,7 @@ $model=new ConsultasModel();
 switch ($Op) {
     case 'Listar':
         $Lista = $model->listarConsultas(Session::getSesion("s_cont"));
+        // var_dump($Lista);
         $Lista = $model->calcular($Lista);
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
