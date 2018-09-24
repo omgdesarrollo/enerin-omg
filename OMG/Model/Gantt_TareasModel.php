@@ -472,5 +472,6 @@ class Gantt_TareasModel{
             return -1;
         }
     }
+    
 
 }
