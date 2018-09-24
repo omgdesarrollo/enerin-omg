@@ -453,5 +453,21 @@ class Gantt_TareasModel{
             return -1;
         }
     }
+    
+    
+    public function guardarNotas()
+    {
+        try 
+        {
+            $dao=new Gantt_TareaDao();
+            $rec= $dao->guardarNotas($CADENA, $ID);
+            
+            return $rec;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 
 }

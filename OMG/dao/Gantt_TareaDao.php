@@ -302,6 +302,23 @@ class Gantt_TareaDao {
         }
     }
 
+    public function guardarNotas($CADENA,$ID)
+    {
+        try 
+        {
+            $query="UPDATE gantt_tareas SET notas='$CADENA'
+                    WHERE gantt_tareas.id=$ID";
+            $db= AccesoDB::getInstancia();
+            $lista= $db->executeQueryUpdate($query);
+            
+            return $lista;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+            
 }
 
 ?>
