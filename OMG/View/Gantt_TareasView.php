@@ -986,7 +986,29 @@ construirTreeList();
                                         async:false,
                                         success:function (res)
                                         {
-                                         datosTreeList=res.data;
+                                            console.log("entro aqui");
+//                                            datosTreeList=res.data;
+                                            datosTreeList=[];
+                                            
+                                            $.each(res.data,function(index,value){
+                                                console.log(value);
+                                                datosTreeObj=new Object();
+                                                datosTreeObj["id"]= value.id;
+                                                datosTreeObj["parent"]= value.parent;
+                                                datosTreeObj["text"]= value.text;
+                                                datosTreeObj["user"]= value.user;
+                                                datosTreeObj["notas"]= value.notas;
+                                                datosTreeObj["porcentaje_por_actividad"]= value.porcentaje_por_actividad;
+                                                datosTreeObj["ponderado_real"]= value.ponderado_real;
+                                                datosTreeObj["avance"]= value.avance;
+                                                datosTreeObj["archivo_adjunto"]= "<button onClick='mostrar_urls("+value.id+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'></button>";
+//                                                datosTreeObj["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar</button>";
+
+                                                datosTreeList.push(datosTreeObj);                                                
+//                                                console.log(datosTreeList);
+                                            });
+                                         
+//                                         console.log(res.data);
                                          resolve();
 //                                          construirTreeList();
                                         }
@@ -1119,7 +1141,7 @@ construirTreeList();
         columns:[
             {
                 dataField: "id",
-                caption: "id",
+                caption: "ID",
                 allowEditing:false
             },
             {
@@ -1162,6 +1184,8 @@ construirTreeList();
              { 
                 dataField: "archivo_adjunto",
                  caption: "Archivo Adjunto",
+                 encodeHtml:true,
+//                 falseText:false,
                   allowEditing:false   
             }
         ],
