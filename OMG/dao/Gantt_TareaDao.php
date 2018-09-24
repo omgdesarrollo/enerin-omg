@@ -25,9 +25,9 @@ class Gantt_TareaDao {
     {
         try
         {
-            $query="INSERT INTO gantt_tareas (id,text,start_date,duration,progress,parent,user,id_tarea)
+            $query="INSERT INTO gantt_tareas (id,text,start_date,duration,progress,parent,user,id_tarea,notas,status)
                     VALUES('".$VALUES["id"]."','".$VALUES["text"]."','".$VALUES["start_date"]."','".$VALUES["duration"]."',
-                    '".$VALUES["progress"]."','".$VALUES["parent"]."','".$VALUES["user"]."','".$VALUES["id_tarea"]."')";
+                    '".$VALUES["progress"]."','".$VALUES["parent"]."','".$VALUES["user"]."','".$VALUES["id_tarea"]."'),'".$VALUES["notas"]."'),'".$VALUES["status"]."')";
             
             $db=  AccesoDB::getInstancia();
             $lista = $db->executeQueryUpdate($query);
