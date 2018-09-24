@@ -4,17 +4,19 @@ require_once '../ds/AccesoDB.php';
 
 class AsignacionTemaRequisitoDAO {
     //put your code here
-    public function mostrarAsignacionTemas_Requisito(){
-        try{
-            $query="";
-            
-            $db=AccesoDB::getInstancia();
-            $lista=$db->executeQuery($query);
-            return $lista;
-        } catch (Exception $ex) {
-
-        }
-    }
+//    public function mostrarAsignacionTemas_Requisito()
+//    {
+//        try
+//        {
+//            $query="";
+//            
+//            $db=AccesoDB::getInstancia();
+//            $lista=$db->executeQuery($query);
+//            return $lista;
+//        } catch (Exception $ex) {
+//
+//        }
+//    }
     
     
     public function mostrarAsignacionTemasRequisitos($CADENA,$CONTRATO){
@@ -236,6 +238,25 @@ public function obtenerDetalles_Req($value){
         throw $ex;
     }
 }
+
+public function obtenerDetallesRequisitoConIdAsignacion($ID_ASIGNACION)
+{
+    try 
+    {
+        $query="SELECT tbrequisitos.id_requisito, tbrequisitos.requisito
+                FROM asignacion_tema_requisito_requisitos tbasignacion_tema_requisito_requisitos
+                JOIN requisitos tbrequisitos ON tbrequisitos.id_requisito=tbasignacion_tema_requisito_requisitos.id_requisito
+                WHERE tbasignacion_tema_requisito_requisitos.id_asignacion_tema_requisito=$ID_ASIGNACION";
+        $db= AccesoDB::getInstancia();
+        $lista= $db->executeQuery($query);
+        
+        return $lista;        
+    } catch (Exception $ex) 
+    {
+        
+    }
+}
+
 public function obtenerDetalles_Reg($value){
     try{
       $query="select tbregistros.id_registro,tbregistros.registro,tbregistros.frecuencia,tbdocumentos.clave_documento,
@@ -252,9 +273,30 @@ public function obtenerDetalles_Reg($value){
         throw $ex;
     }
 }
+
+
+public function obtenerDetallesRegistrosConIdAsignacion($ID_ASIGNACION)
+{
+    try 
+    {
+        $query="SELECT tbregistros.id_registro, tbregistros.registro
+		FROM asignacion_tema_requisito_requisitos tbasignacion_tema_requisito_requisitos		
+		JOIN requisitos tbrequisitos ON tbrequisitos.id_requisito=tbasignacion_tema_requisito_requisitos.id_requisito		
+		JOIN requisitos_registros tbrequisitos_registros ON tbrequisitos_registros.id_requisito=tbrequisitos.id_requisito
+		JOIN registros tbregistros ON tbregistros.id_registro=tbrequisitos_registros.id_registro 
+		WHERE tbasignacion_tema_requisito_requisitos.id_asignacion_tema_requisito=$ID_ASIGNACION";
+        $db= AccesoDB::getInstancia();
+        $lista= $db->executeQuery($query);
+        
+        return $lista;        
+    } catch (Exception $ex) 
+    {
+        
+    }
+}
     
     
-    public function actualizarAsignacionTemaRequisito($id_asignacion_tema_requisito, $id_clausula,$requisito){
+public function actualizarAsignacionTemaRequisito($id_asignacion_tema_requisito, $id_clausula,$requisito){
         try{
              $query="UPDATE asignacion_tema_requisito SET id_clausula='$id_clausula', requisito='$requisito',"
                   . "WHERE id_asignacion_tema_requisito=$id_asignacion_tema_requisito";

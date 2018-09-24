@@ -105,28 +105,6 @@ $Usuario=  Session::getSesion("user");
 </div>
 <br><br><br>
     <div id="jsGrid"></div>
-<!-- <div style="height: 10px"></div>
-<div class="container" style="height: 0px">		
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-2">
-                <div class="input-group">
-                    <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkValidado">
-                    <span style="border:none;background-color:transparent;" class="input-group-addon">Validados</span>
-                    
-                    <input type="checkbox" style="width: 40px; height: 40px" name="checkValidado"  class="checkboxDocumento" id="checkNoValidado">
-                    <span style="border:none;background-color: transparent;" class="input-group-addon">En Proceso</span>
-                </div>
-
-            </div>
-            
-            <div id="arbolprincipal">
-                
-            </div>
-
-        </div>    
-    </div>
-</div> -->
                
 <!-- Inicio modal Tema y Responsable -->
 <div class="modal draggable fade" id="mostrar-temaresponsable" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
