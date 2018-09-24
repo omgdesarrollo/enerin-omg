@@ -162,7 +162,7 @@ function construirGrid()
                     // tam2 = $(".dhx_popup_arrow").offset();
                     // $(".dhx_popup_material").css({"max-width":"50%",left:"200px",height:"min-content"});
                     // console.log(tam);
-                    $(".dhx_popup_arrow").css("left",tam-8+"px");
+                    $(".dhx_popup_arrow").css("left",tam-9+"px");
                     
                     // $(".dhx_popup_area").css("border","2px solid #39c");
                     $(".dhx_popup_area").css({
