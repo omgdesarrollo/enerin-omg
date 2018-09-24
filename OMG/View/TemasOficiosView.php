@@ -172,7 +172,7 @@ require_once 'EncabezadoUsuarioView.php';
 		      </div>
                         
 		      <div class="modal-body">
-                          <form id="temaform">
+                          <!--<form id="temaform">-->
                           
                                                 <div class="form-group">
 							<label class="control-label" for="title">No.Tema:</label>
@@ -232,7 +232,7 @@ require_once 'EncabezadoUsuarioView.php';
                                                     <button type="submit" style="width:49%" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
                                                     <button type="submit" style="width:49%" id="btn_limpiar_tema"  class="btn crud-submit btn-info">Limpiar</button>
 						</div>
-                          </form>
+                          <!--</form>-->
 
 		      </div>
 		    </div>
@@ -251,7 +251,7 @@ require_once 'EncabezadoUsuarioView.php';
 		      </div>
                         
 		      <div class="modal-body">
-                          <form id="SubTemaform">
+                          <!--<form id="SubTemaform">-->
                           
                                                 <div class="form-group">
 							<label class="control-label" for="title">No.Sub-Tema:</label>
@@ -286,10 +286,10 @@ require_once 'EncabezadoUsuarioView.php';
                                                                         
                                                                                                                                 
 						<div class="form-group">
-                                                    <button type="submit" style="width:49%" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
+                                                    <button type="submit" style="width:49%" id="btn_guardar_SubTema"  class="btn crud-submit btn-info">Guardar</button>
                                                     <button type="submit" style="width:49%" id="btn_limpiar_SubTema"  class="btn crud-submit btn-info">Limpiar</button>
 						</div>
-                          </form>
+                          <!--</form>-->
 
 		      </div>
 		    </div>

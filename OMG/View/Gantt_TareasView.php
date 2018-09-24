@@ -120,12 +120,12 @@ and open the template in the editor.
 		}*/
                 
          .gantt_task_line.gantt_dependent_task {
-			/*background-color: #65c16f;*/
+			background-color: #65c16f;
                         /*background-color:  #0042e9;*/
 			/*border: 1px solid #3c9445;*/
 		}       
 .gantt_task_line.gantt_dependent_task .gantt_task_progress {
-			/*background-color: #46ad51;*/
+			background-color: #46ad51;
                         /*background-color:  #0042e9;*/
 		}
 /*         .hide_project_progress_drag .gantt_task_progress_drag {
@@ -143,6 +143,17 @@ and open the template in the editor.
                 .gantt_task_content {
                     display: none;
                 }
+                
+                
+                
+                .completed_task {
+		border: 1px solid #94AD94;
+                }
+
+                .completed_task .gantt_task_progress {
+                    background: #0000cc;
+                }
+                
                 /*termina estilos para ocultar el texto de la barra*/
                 /* para la pantalla completa*/ 
 /*                	.gantt-fullscreen {
@@ -195,7 +206,7 @@ and open the template in the editor.
 }    
             
 #dx {
-    max-height: 440px;
+    max-height: 100%;
 }
 
  .modal-lg{width: 92%;}
@@ -259,7 +270,7 @@ and open the template in the editor.
 	<input value="deshacer" type="button" onclick='gantt.undo()' style='font-size: 10px'>
 	<input value="Rehacer" type="button" onclick='gantt.redo()' style='font-size: 10px'>
         <!--<button class="btn btn-danger" type="button" onclick='detallesActividadesCompletasGantt()' data-toggle='modal' data-target='#detalles' style='font-size: 10px'>Detalles</button>-->
-        <button class="btn btn-danger" type="button" onclick='detallesActividadesCompletasGantt()' data-toggle='modal' data-target='#detalles' style='font-size: 10px'>Detalles</button>
+        <button class="btn btn-danger" type="button" onclick='detallesActividadesCompletasGantt()'  style='font-size: 10px'>Detalles</button>
 <!--</div>-->
         <?php  
         
@@ -303,7 +314,11 @@ and open the template in the editor.
 			   accept=".mpp,.xml, text/xml, application/xml, application/vnd.ms-project, application/msproj, application/msproject, application/x-msproject, application/x-ms-project, application/x-dos_ms_project, application/mpp, zz-application/zz-winassoc-mpp"/>
 		<button id="mspImportBtn" type="submit">Seleccion el MS Proyect</button>
 	</form>-->
-    <div id="gantt_here" style='width:100%; height:100%;'></div>
+    <div id="gantt_here" style='width:100%; height:50%;'></div>
+    
+      <div id="tree-list" style='width:100%; height:50%;position: relative'>
+          <div id="dx" ></div>
+                            </div>
     </body>
 <!-- Inicio de Seccion Modal Informe-->
 <div class="modal draggable fade" id="detalles" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -318,9 +333,9 @@ and open the template in the editor.
 
 		      <div class="modal-body">
                     
-                           <div id="tree-list">
-                             <div id="dx"></div>
-                            </div>
+                           <!--<div id="tree-list">-->
+<!--                             <div id="dx"></div>-->
+                            <!--</div>-->
                           <div id="tabPanel"></div>
                                 <!--<div sty></div>-->
                         <!--<div id=""></div>-->
@@ -397,14 +412,6 @@ and open the template in the editor.
 	}
 setScaleConfig('1');
 //termina de definir si sera por dia,semana,mes ,año que se mostrara las tareas
-
-
-
-
-
-
-
-
 
 
 	(function dynamicTaskType() {
@@ -520,8 +527,6 @@ setScaleConfig('1');
 			else return totalDone / totalToDo;
                         
 		}
-                
-                
 
 		function refreshSummaryProgress(id, submit) {
 //                   console.log("entro en refresh summary progress");
@@ -556,8 +561,13 @@ setScaleConfig('1');
 				task.progress = calculateSummaryProgress(task);
 			});
 		});
-
-		gantt.attachEvent("onAfterTaskUpdate", function (id) {
+		gantt.attachEvent("onAfterTaskUpdate", function (id,item) {
+//                    if(id==)
+//                    console.log(item);
+                    if(item.progress==1)
+                        gantt.getTask(id).readonly = true;
+                    console.log(gantt.getTask(id));
+//                    gantt.getTask(id).readonly = true;
 			refreshSummaryProgress(gantt.getParent(id), true);
 		});
 
@@ -567,6 +577,14 @@ setScaleConfig('1');
 		gantt.attachEvent("onAfterTaskAdd", function (id) {
 			refreshSummaryProgress(gantt.getParent(id), true);
 		});
+
+
+            
+
+
+
+
+
 
 
 		(function () {
@@ -592,6 +610,8 @@ setScaleConfig('1');
 	gantt.locale.labels.column_owner ="Encargado";
         gantt.locale.labels.section_owner = "Encargado";
         
+       gantt.locale.labels.section_status="Status";
+        gantt.locale.labels.section_notas="Notas";
         gantt.config.scale_height = 50;
         gantt.config.order_branch = true;
         
@@ -599,13 +619,33 @@ setScaleConfig('1');
 //gantt.config.order_branch_free = true;
 //        para abrir las carpetas por default desde el principio
 
-gantt.templates.task_class = function (start, end, task) {
-  
+        gantt.templates.task_class = function (start, end, task) {
+//  console.log(task);
 		if (task.type == gantt.config.types.project){
 //                    console.log("entro ");
 			return "hide_project_progress_drag";
                 }
+                    if(task.progress==1){
+                        return "completed_task";
+                    }else{
+                        return "";
+                    }
+                
 	};
+        gantt.locale.labels["complete_button"] = "Completar";
+        console.log(gantt.locale.labels);
+//        gantt.config.lightbox.sections.push({name: "status", height: 22, map_to: "user", type: "select", options:gantt.serverList("user")});
+//         console.log(gantt.config.lightbox);
+	gantt.config.buttons_left = ["dhx_save_btn", "dhx_cancel_btn", "complete_button"];
+        gantt.attachEvent("onLightboxButton", function (button_id, node, e) {
+		if (button_id == "complete_button") {
+			var id = gantt.getState().lightbox;
+			gantt.getTask(id).progress = 1;
+			gantt.updateTask(id)
+			gantt.hideLightbox();
+		}
+	});
+ 
 
 //        	gantt.config.open_tree_initially = true;
 //        	para cerrar las carpetas por default desde el principio
@@ -637,11 +677,15 @@ gantt.config.columns=[
 	];
 console.log(gantt);
 
-var status=[];
-
+//var status=[];
+var opcionstatus = [
+    { key: 1, label: 'En Proceso' },
+    { key: 2, label: 'Suspendido' }
+];
         gantt.config.lightbox.sections = [
 		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
-//		{name: "status", height: 38, map_to: "text", type: "text", focus: true},
+                {name: "status", height: 38, map_to: "status", type: "select", options:opcionstatus},
+                {name: "notas", height: 38, map_to: "text", type: "textarea"},
 		{name: "owner", height: 22, map_to: "user", type: "select", options: gantt.serverList("user")},	
 		{name: "time", type: "duration", map_to: "auto"}
 	];
@@ -701,6 +745,22 @@ gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
 
 var dp = new gantt.dataProcessor("../Controller/GanttTareasController.php?Op=Modificar");
 dp.init(gantt);
+//dp.autoUpdate=false;
+//dp.attachEvent("onBeforeUpdate", function (id, status, data) {
+//     if (!data.text) {
+//         dhtmlx.message("La Tarea no puede ir vacia");
+//         console.log(data);
+//         return false;
+//     }
+//     else{
+////          data.text="dtexto";
+//     }
+     
+//     data.text="d1";
+     
+     
+//     return true;
+//});
 
 //gantt.config.branch_loading = true;
 
@@ -873,8 +933,19 @@ dp.init(gantt);
 //            $(".gantt_task_line.gantt_dependent_task .gantt_task_progress ").css("background-color","red");
 //        }
 //        console.log(Math.round(task.progress * 100));
+//            console.log(task);
+                $("#taskid").css("background-color:","red");
 		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
 	};
+        
+        
+//        gantt.templates.tooltip_text = function(start,end,task){
+//            console.log(task);
+//            return "<b>Tarea:</b> "+task.text+"Fecha De Inicio: "+task.start_date;
+//         };
+        
+        
+        
 //        gantt.templates.task_text=function(start,end,task){
 //            console.log(task);
 //    return "<b>Text:</b> "+task.text+",<b> Holders:</b> "+task.user;
@@ -897,11 +968,11 @@ dp.init(gantt);
 //            });
 //    }); 
         
-//obtenerTareas().then(function (){
-//construirTreeList();
-//
-//
-//});
+obtenerTareas().then(function (){
+construirTreeList();
+
+
+});
     
  
 
@@ -912,6 +983,7 @@ dp.init(gantt);
         return new Promise(function (resolve,reject){
                 $.ajax({
                                         url:"../Controller/GanttTareasController.php?Op=ListarTodasLasTareasDetallesPorSuId",
+                                        async:false,
                                         success:function (res)
                                         {
                                          datosTreeList=res.data;
@@ -1069,8 +1141,7 @@ dp.init(gantt);
             },
             { 
                 dataField: "notas",
-                caption: "Notas",
-                validationRules: [{ type: "required" }]
+                caption: "Notas"
             },
             { 
                 dataField: "porcentaje_por_actividad",
@@ -1127,11 +1198,11 @@ dp.init(gantt);
     }
     
     function detallesActividadesCompletasGantt(){
-     obtenerTareas().then(function (){
-//         alert();
-         construirTreeList();
+        $("#tree-list").css("display","none");
+        
+//        $("#gantt_here").css("height","100%");
+        
 
-     });
 } 
     var datosModificadosActividadesPonderado_ProgramadoTemp=[];
     var id_padreTareaPonderado_programadoTemp=-1;
@@ -1187,8 +1258,9 @@ dp.init(gantt);
         if(sumatoria>=100 && sumatoria<=100.5)
         {
             alert("Correcto");
+            console.log(args);
             $.each(datosModificadosActividadesPonderado_ProgramadoTemp,(index,value)=>{
-                dataFinal.push({id:parseInt(value.key),ponderado_programado:value.data.porcentaje_por_actividad});
+                dataFinal.push({id:parseInt(value.key),ponderado_programado:value.data.porcentaje_por_actividad,notas:args.data.notas});
             });
             $.ajax({
                 url:'../Controller/GanttTareasController.php?Op=GuardarPonderado',

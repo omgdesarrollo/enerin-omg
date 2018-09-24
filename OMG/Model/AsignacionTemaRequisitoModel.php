@@ -11,7 +11,11 @@ class AsignacionTemaRequisitoModel {
             $dao=new AsignacionTemaRequisitoDAO();
             $rec=$dao->mostrarAsignacionTemasRequisitos($CADENA,$CONTRATO);
             
-            
+            foreach ($rec as $key => $value) 
+            {
+                $rec[$key]['detalles_requisitos']= $dao->obtenerDetallesRequisitoConIdAsignacion($value['id_asignacion_tema_requisito']);
+                $rec[$key]['detalles_registros']= $dao->obtenerDetallesRegistrosConIdAsignacion($value['id_asignacion_tema_requisito']);
+            }
             
             return $rec;
     }  catch (Exception $e){

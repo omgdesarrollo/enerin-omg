@@ -368,6 +368,26 @@ $(function(){
      });
      
      
+    var $btnDLtoExcel = $('#toExcel'); 
+    $btnDLtoExcel.on('click', function () 
+    {   
+        __datosExcel=[]
+        $.each(dataListado,function (index,value)
+            {
+                console.log("Entro al datosExcel");
+                __datosExcel.push( reconstruirExcel(value,index+1) );
+            });
+            DataGridExcel= __datosExcel;
+//            console.log("Entro al excelexportHibrido");
+        $("#listjson").excelexportHibrido({
+            containerid: "listjson"
+            , datatype: 'json'
+            , dataset: DataGridExcel
+            , columns: getColumns(DataGridExcel)
+        });
+    });
+     
+     
 }); //CIERRA $FUNCTION
 
 var myLayout = new dhtmlXLayoutObject({
@@ -380,20 +400,29 @@ var myLayout = new dhtmlXLayoutObject({
 				
 			]
 		});
+
+var myToolbar = myLayout.cells("a").attachToolbar
+({
+    iconset: "awesome",
+    items: [
+            {id:"toExcel",type: "button", text: "Exportar", img: "fa fa-file-excel-o"},
+
+    ]
+});
+
  myLayout.cells("a").attachObject("seccionIzquierda");
+ 
 
+var myToolbar = myLayout.cells("b").attachToolbar
+({
+    iconset: "awesome",
+    items: [
+            {id:"agregarReq",type: "button", text: "Agregar Requisito", img: "fa fa-save "},
+            {id:"agregar",type: "button", text: "Agregar Registro", img: "fa fa-save "},
+            {id:"eliminar",type: "button", text: "Eliminar", img: "fa fa-trash-o "}
 
-
-var myToolbar = myLayout.cells("b").attachToolbar({
-			iconset: "awesome",
-			items: [
-//				{type: "button", text: "Actualizar", img: "fa fa-refresh fa-spin"},
-                                {id:"agregarReq",type: "button", text: "Agregar Requisito", img: "fa fa-save "},
-                                {id:"agregar",type: "button", text: "Agregar Registro", img: "fa fa-save "},
-				{id:"eliminar",type: "button", text: "Eliminar", img: "fa fa-trash-o "}
-                                
-			]
-		});
+    ]
+});
 
 myLayout.cells("b").attachObject("treeboxbox_tree");
      

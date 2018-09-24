@@ -59,6 +59,7 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/fConsultasView.js" type="text/javascript"></script>
                 <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/fGridComponent.js" type="text/javascript"></script>
+                <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
                 
         <style>
             .jsgrid-header-row>.jsgrid-header-cell {
@@ -94,27 +95,17 @@ $Usuario=  Session::getSesion("user");
 ?>
 
 <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
-
     <button type="button" title="Recargar Datos" class="btn btn-info btn_refrescar" id="btnrefrescar" onclick="refresh();">
         <i class="glyphicon glyphicon-repeat"></i>
     </button>
-
+        
     <div class="pull-right">
-    
         <button onClick="graficar()" title="Graficar Circular" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#Grafica">
         <i class="fa fa-pie-chart"></i>
         </button>
-        <button style="width:48px;height:42px" type="button" class="btn_agregar" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
+        <button style="width:48px;height:42px" type="button"  class="btn_agregar" id="toExcel">
             <img src="../../images/base/_excel.png" width="30px" height="30px">
         </button>
-
-<!--        <button style="width:51px;height:42px" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
-            <img src="../../images/base/word.png" width="30px" height="30px"> 
-        </button>
-
-        <button style="width:51px;height:42px" type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
-            <img src="../../images/base/pdf.png" width="30px" height="30px"> 
-        </button>-->
     </div>
 </div>
 
@@ -162,6 +153,8 @@ $Usuario=  Session::getSesion("user");
     var gridInstance;
 //    var thisjGrowl;
     var ultimoNumeroGrid=0;
+    var DataGridExcel=[];
+    var origenDeDatosVista="consultas";
     var opcion_vista_grafica = 1;
     // var grafica1;
     google.charts.load('current', {'packages':['corechart']});
@@ -218,12 +211,12 @@ $Usuario=  Session::getSesion("user");
     
     estructuraGrid = [
         { name: "id_principal",visible:false},
-        { name: "no_tema",title:"No. Tema", type: "text", width: 60,editing:false},
+        { name: "no_tema",title:"No. Tema", type: "text", width: 90,editing:false},
         { name: "nombre_tema",title:"Nombre Tema", type: "text", width: 130,editing:false},
         { name: "id_responsable", visible:false},
-        { name: "responsable_tema",title:"Responsable del Tema", type: "text", width: 130,editing:false},
-        { name: "cumplimiento_tema",title:"% Cumplimiento Tema", type: "porcentaje", width: 130,editing:false},
-        { name: "estado_tema",title:"Estado del Tema", type: "text", width: 120,editing:false},
+        { name: "responsable_tema",title:"Responsable del Tema", type: "text", width: 180,editing:false},
+        { name: "cumplimiento_tema",title:"% Cumplimiento Tema", type: "porcentaje", width: 180,editing:false},
+        { name: "estado_tema",title:"Estado del Tema", type: "text", width: 140,editing:false},
         { name: "id_requisito",visible:false},
         { name: "requisito",title:"Requisito", type: "text", width: 140,editing:false},
         { name: "penalizacion",title:"Penalizacion", type: "text", width: 80,editing:false},

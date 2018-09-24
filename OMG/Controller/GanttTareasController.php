@@ -55,11 +55,24 @@ switch ($Op) {
     
         case 'GuardarPonderado':
         header('Content-type: application/json; charset=utf-8'); 
-        $LISTA = json_decode($_REQUEST["DATA"],true);
+        $Lista = json_decode($_REQUEST["DATA"],true);
+       
         // var_dump($LISTA);
         // $ID = $_REQUEST["id"];
         // $PONDERADO = $_REQUEST["ponderado_programado"];
-        $resp = $modelGantt->guardarPonderados($LISTA);
+        
+        
+        if(isset($Lista[0]["ponderado_programado"])){
+            echo "entro ";
+            $resp["response"] = $modelGantt->guardarPonderados($Lista);
+        if(isset($Lista[0]["notas"])){
+            $resp["response"]= $modelGantt->guardarNota($Lista[0]);
+        }
+            header('Content-type: application/json; charset=utf-8');
+             echo json_encode($resp);
+        }else{
+            $resp= $modelGantt->guardarNota($Lista[0]);
+        }
 //            $VALUES["id"]= Session::getSesion("dataGantt_id_tarea");
 //            $VALUES["text"]= $_REQUEST['TEXT'];
 //            $VALUES["start_date"]= $_REQUEST['START_DATE'];
@@ -71,7 +84,7 @@ switch ($Op) {
 //            
 //            $Lista= $modelGantt->listarRegistrosGanttTareas($VALUES);
 //            header('Content-type: application/json; charset=utf-8');
-        echo $resp;
+       
             
         break;
     

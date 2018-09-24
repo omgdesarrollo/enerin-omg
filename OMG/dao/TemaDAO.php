@@ -138,7 +138,7 @@ public function eliminarNodo($ID)
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
         
-            return $lista;            
+            return $lista[0]['resultado'];            
         } catch (Exception $ex) 
         {
             throw $ex;

@@ -132,9 +132,9 @@ function construirGrid()
     $("#jsGrid").jsGrid({
         onInit: function(args)
         {
-             gridInstance=args.grid;//linea gridinstance requerida no cambiar pasar el args.grid de esta forma si no , no funcionara
+            gridInstance=args.grid;//linea gridinstance requerida no cambiar pasar el args.grid de esta forma si no , no funcionara
 //            jsGrid.ControlField.prototype.editButton=true;
-//             jsGrid.ControlField.prototype.deleteButton=false;
+            jsGrid.ControlField.prototype.deleteButton=false;
             jsGrid.Grid.prototype.autoload=true;//linea requerida no cambiar o quitar
         },
         onDataLoading: function(args)

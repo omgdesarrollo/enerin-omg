@@ -131,11 +131,11 @@
         <i class="glyphicon glyphicon-repeat"></i> 
     </button>
     
-    <div class="pull-right">    
+<!--    <div class="pull-right">    
         <button style="width:48px;height:42px" type="button"  class="btn_agregar" id="toExcel">
             <img src="../../images/base/_excel.png" width="30px" height="30px">
         </button>
-    </div>
+    </div>-->
     
 </div>
 
@@ -334,8 +334,8 @@
         { name: "frecuencia",title:"Frecuencia", type: "text", width: 130, editing:false  },
         { name: "clave_documento",title:"Clave del Documento", type: "text",  width: 180, editing:false },
         { name: "fecha_creacion",title:"Fecha Evidencia", type: "text",  width: 160, editing:false },
-        { name: "adjuntar_evidencia",title:"Adjuntar Evidencia", type: "text",  width: 150, editing:false },
         { name: "fecha_registro",title:"Fecha Registro", type: "text", width: 160, editing:false },
+        { name: "adjuntar_evidencia",title:"Adjuntar Evidencia", type: "text",  width: 150, editing:false },
         { name: "usuario",title:"Usuario", type: "text", width:250, editing:false },
         { name: "accion_correctiva",title:"Accion Correctiva", type: "text", width: 150, editing:false},
         { name: "plan_accion",title:"Plan Accion", type: "text", width: 110, editing:false },
