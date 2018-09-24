@@ -219,7 +219,10 @@ class ConsultasModel{
                             $cumplimiento_requisito = 0;
                             // $lista[$key]["evidencias_proceso"] = $value["evidencias_totales"]-$value["evidencias_validadas"];
                             // $lista[$key]["cumplimiento_registro"] = ($value["evidencias_validadas"]/$value["evidencias_realizar"])*100;
-                            $cumplimiento_requisito += ($value["evidencias_validadas"]/$value["evidencias_realizar"])*100;
+                            if($value["evidencias_realizar"]!=0)
+                                $cumplimiento_requisito += ($value["evidencias_validadas"]/$value["evidencias_realizar"])*100;
+                            else
+                                $cumplimiento_requisito += ($value["evidencias_validadas"]/1)*100;
                             $divisor_requisito++;
                             $lista[$key]["cumplimiento_requisito"] = $cumplimiento_requisito/$divisor_requisito;
                             if($id_tema != $value["id_tema"])
@@ -262,7 +265,10 @@ class ConsultasModel{
                         // }
 
                         $lista[$key]["evidencias_proceso"] = $value["evidencias_totales"]-$value["evidencias_validadas"];
-                        $lista[$key]["cumplimiento_registro"] = ($value["evidencias_validadas"]/$value["evidencias_realizar"])*100;
+                        if($value["evidencias_realizar"]!=0)
+                            $lista[$key]["cumplimiento_registro"] = ($value["evidencias_validadas"]/$value["evidencias_realizar"])*100;
+                        else
+                            $lista[$key]["cumplimiento_registro"] = ($value["evidencias_validadas"]/1)*100;
                     }
                     else
                     {
