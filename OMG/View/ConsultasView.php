@@ -38,6 +38,10 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
                 <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
 
+                <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
+                <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
+                <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
+
                 <!-- Chart -->
                 <script src="../../assets/chart/loader.js" type="text/javascript"></script>
 
@@ -68,6 +72,14 @@ $Usuario=  Session::getSesion("user");
             .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                    
             .modal-lg{width: 100%;}
             .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
+
+            div.tooltip
+            {
+                /* display:none !important; */
+                position:absolute !important;
+                /* width:0px !important; */
+
+            }
             body{overflow:hidden;}
         </style>              
                 
@@ -193,7 +205,7 @@ $Usuario=  Session::getSesion("user");
     });
 
     var customsFieldsGridData=[
-        // {field:"customControl",my_field:MyCControlField},
+        {field:"customControl",my_field:MyCControlField},
         {field:"porcentaje",my_field:porcentajesFields},
     ];
     
@@ -207,11 +219,11 @@ $Usuario=  Session::getSesion("user");
         { name: "estado_tema",title:"Estado del Tema", type: "text", width: 140,editing:false},
         { name: "id_requisito",visible:false},
         { name: "requisito",title:"Requisito", type: "text", width: 140,editing:false},
-        { name: "penalizacion",title:"Penalizacion", type: "text", width: 100,editing:false},
-        { name: "cumplimiento_requisito",title:"% Cumplimiento Requisito", type: "porcentaje", width: 220,editing:false},
-        { name: "estado_requisito",title:"Estado Requisito", type: "text", width: 140,editing:false},
-        // { name:"delete", title:"Opción", type:"customControl",sorting:""},
-        { title:"Opción", type:"",sorting:""},
+        { name: "penalizacion",title:"Penalizacion", type: "text", width: 80,editing:false},
+        { name: "cumplimiento_requisito",title:"% Cumplimiento Requisito", type: "porcentaje", width: 140,editing:false},
+        { name: "estado_requisito",title:"Estado Requisito", type: "text", width: 100,editing:false},
+        { name:"delete", title:"Opción", type:"customControl",sorting:""},
+        // { title:"Opción", type:"",sorting:""},
         
     ];
     
