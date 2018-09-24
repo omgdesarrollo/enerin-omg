@@ -56,6 +56,7 @@ switch ($Op) {
         case 'GuardarPonderado':
         header('Content-type: application/json; charset=utf-8'); 
         $Lista = json_decode($_REQUEST["DATA"],true);
+       
         // var_dump($LISTA);
         // $ID = $_REQUEST["id"];
         // $PONDERADO = $_REQUEST["ponderado_programado"];
@@ -63,9 +64,11 @@ switch ($Op) {
         
         if(isset($Lista["ponderado_programado"])){
             $resp = $modelGantt->guardarPonderados($Lista);
+           
+            $resp= $modelGantt->guardarNota($Lista[0]);
              echo $resp;
         }else{
-            $resp= $modelGantt->guardarNota($Lista);
+            $resp= $modelGantt->guardarNota($Lista[0]);
         }
 //            $VALUES["id"]= Session::getSesion("dataGantt_id_tarea");
 //            $VALUES["text"]= $_REQUEST['TEXT'];
