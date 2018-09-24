@@ -445,7 +445,6 @@ class Gantt_TareasModel{
                     $res .= "Error al actualizar la tarea con id = +".$value['id']." \n";
                 }
             }
-            
             return $res=="" ? 1 : $res;
         }
         catch(Exception $ex)
@@ -456,16 +455,18 @@ class Gantt_TareasModel{
     }
     
     
-    public function actualizarInformacionTareas(){
-        try{
-            $daoGantt= new GanttDao();
+    public function guardarNotas()
+    {
+        try 
+        {
+            $dao=new Gantt_TareaDao();
+            $rec= $dao->guardarNotas($CADENA, $ID);
             
-            
-            
-            
-            
-        } catch (Exception $ex) {
-            throw  $ex;
+            return $rec;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
         }
     }
 
