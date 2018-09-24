@@ -3,17 +3,22 @@
 require_once '../dao/AsignacionTemaRequisitoDAO.php';
 require_once '../Pojo/AsignacionTemaRequisitoPojo.php';
 
+
 class AsignacionTemaRequisitoModel {
     //put your code here
     
     public function  listarAsignacionTemasRequisitos($CADENA,$CONTRATO){
         try{
             $dao=new AsignacionTemaRequisitoDAO();
-            $rec=$dao->mostrarAsignacionTemasRequisitos($CADENA,$CONTRATO);
             
+            $rec=$dao->mostrarAsignacionTemasRequisitos($CADENA,$CONTRATO);
+//           self::generarDatosArbol($value['id_asignacion_tema_requisito'])
+         
             foreach ($rec as $key => $value) 
             {
                 $rec[$key]['detalles_requisitos']= $dao->obtenerDetallesRequisitoConIdAsignacion($value['id_asignacion_tema_requisito']);
+                
+                
                 $rec[$key]['detalles_registros']= $dao->obtenerDetallesRegistrosConIdAsignacion($value['id_asignacion_tema_requisito']);
             }
             
@@ -259,6 +264,35 @@ class AsignacionTemaRequisitoModel {
         {
             throw $ex;
             return -1;
+        }
+    }
+    
+    
+    
+    
+    public static function generarDatosArbol($id_asignacion)
+    {
+        try
+        {
+            $datosArbol = array();
+            $dao=new RegistrosDAO();
+            $daoA= new AsignacionTemaRequisitoDAO();
+            $daoT=new TemaDAO();
+//            $rec= $daoT->listarDetallesSeleccionados($id_asignacion);
+            $requisitos["data"]= $dao->obtenerRequisitos($id_asignacion);
+            foreach($requisitos["data"] as $index=>$resultado)
+            {
+                $requisitos["data"][$index][0] = $dao->obtenerRegistros($resultado['id_requisito']);
+            }
+            
+//        $id_tema=$daoA->obtenerIdTema($id_asignacion);
+//         $requisitos["detallesTema"]=$daoT->listarDetallesSeleccionados($id_tema);
+            
+            return $requisitos;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
         }
     }
 }
