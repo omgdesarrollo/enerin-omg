@@ -296,7 +296,7 @@ class Gantt_TareasModel{
 //                                         echo "entro en insertas;";
                                          $value["id_tarea"]=$id_tarea;
                                          $value["existeprograma"]=1;
-                                         echo json_encode($value);
+//                                         echo json_encode($value);
                                          $dao->insertarGanttTareas($value);
                                          self:: actualizarExisteProgramaTareas($value);
 //                                         if(isset($value["status"])){
