@@ -52,6 +52,25 @@ function lol()
 $(window.parent).resize(()=>{
     lol();
 });
+var myPop = undefined;
+// $("td.jsgrid-cell").(()=>{
+//     alert("");
+//     if($(this).hasClass("jsgrid-cell"))
+//     {
+//         text = $(this).html();
+//         // console.log(!text.includes("<button") && !text.includes("<input"));
+//         if(!text.includes("<button") && !text.includes("<input") && !text.includes("<a") && !text.includes("<select") && !text.includes("<i"))
+//         {
+//             myPop = new dhtmlXPopup();
+//             myPop.attachHTML(text);
+//             myPop.show(20,20,300,200);
+//         //     swal("",text,"info");
+//             // $(obj).attr("title",text);
+//             // $(obj).popover();
+
+//         }
+//     }
+// });
 
 function customsFieldsGrid()
 {
@@ -116,12 +135,47 @@ function construirGrid()
             // console.log(args);
             obj = args.event.target;
             // console.log(obj);
+            if(myPop != undefined)
+            {
+                myPop.unload();
+                myPop=null;
+            }
+            // console.log(obj);
             if($(obj).hasClass("jsgrid-cell"))
             {
                 text = $(obj).html();
                 // console.log(!text.includes("<button") && !text.includes("<input"));
                 if(!text.includes("<button") && !text.includes("<input") && !text.includes("<a") && !text.includes("<select") && !text.includes("<i"))
-                    swal("",text,"info");
+                {
+                    pos = $(obj).offset();
+                    // console.log($(obj).width());
+                    myPop = new dhtmlXPopup();
+                    myPop.attachHTML(text);
+                    myPop.show(0,-20,0,20);
+                    tamWindow = $(window).width()/2;
+                    $(".dhx_popup_material").css({
+                        "max-width":"50%",left:"25%",height:"min-content",
+                    });
+                    tam = $($(".dhx_popup_material")).width()/2;
+
+                    $(".dhx_popup_material").css("left",tamWindow-tam);
+                    // tam2 = $(".dhx_popup_arrow").offset();
+                    // $(".dhx_popup_material").css({"max-width":"50%",left:"200px",height:"min-content"});
+                    // console.log(tam);
+                    $(".dhx_popup_arrow").css("left",tam-9+"px");
+                    
+                    // $(".dhx_popup_area").css("border","2px solid #39c");
+                    $(".dhx_popup_area").css({
+                    "-webkit-box-shadow":"0px 11px 30px -5px rgba(0,0,0,0.4)",
+                        "-moz-box-shadow": "0px 11px 30px -5px rgba(0,0,0,0.4)",
+                        "box-shadow": "0px 11px 30px -5px rgba(0,0,0,0.4)"
+                    });
+                    // $(".dhx_popup_material").css({left:pos.left-tam+ $(obj).width()/2+"px"});
+                //     swal("",text,"info");
+                    // $(obj).attr("title",text);
+                    // $(obj).popover();
+
+                }
             }
             // console.log($(".jsgrid-selected-row")[0]);
             // $("#jsGrid").jsGrid("editItem",$(".jsgrid-selected-row")[0]);
@@ -228,7 +282,7 @@ MyCControlField.prototype = new jsGrid.Field
             // console.log(value);
             if(value[2]["editar"]==1)
             {
-                val = "<input class='jsgrid-button jsgrid-update-button' type='button' title='Actualizar' onClick='aceptarEdicion()'>";
+                val += "<input class='jsgrid-button jsgrid-update-button' type='button' title='Actualizar' onClick='aceptarEdicion()'>";
                 val += "<input class='jsgrid-button jsgrid-cancel-edit-button' type='button' title='Cancelar Edición' onClick='cancelarEdicion()'>";
             }
             else
