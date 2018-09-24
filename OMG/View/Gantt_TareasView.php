@@ -1184,7 +1184,16 @@ construirTreeList();
              { 
                 dataField: "archivo_adjunto",
                  caption: "Archivo Adjunto",
-                 encodeHtml:true,
+                 cellTemplate:archivoAdjuntoCellTemplate,
+//               customizeText:function (data){
+//                   console.log("entro ");
+//                   console.log(data);
+//                   console.log("salio");
+////                   return data["value"];
+//                    return "<button onClick='mostrar_urls(1537568570483)' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'></button>".substring(0,20); 
+//               },
+               dataType:"string",
+//                 encodeHtml:true
 //                 falseText:false,
                   allowEditing:false   
             }
@@ -1205,7 +1214,14 @@ construirTreeList();
         expandedRowKeys: [1, 2, 3, 4, 5]
     }); 
     }
-    
+   var archivoAdjuntoCellTemplate= function(container, options) {
+       console.log("empezo");
+       container.context.innerHTML="<button onClick='mostrar_urls("+options.data.id+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'></button>";
+        console.log(container);
+       console.log(options);
+       console.log("termino");
+      return options.data.archivo_adjunto;
+};
     
     function refrescarDatosGantt(){
         gantt.refreshData();
