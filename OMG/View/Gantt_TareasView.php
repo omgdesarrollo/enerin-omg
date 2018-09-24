@@ -1217,9 +1217,10 @@ construirTreeList();
     }
    var archivoAdjuntoCellTemplate= function(container, options) {
 //       console.log("empezo");
-       container.context.innerHTML="<button onClick='mostrar_urls("+options.data.id+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'></button>";
-//        console.log(container);
-//       console.log(options);
+//       container.context.innerHTML="<button onClick='mostrar_urls("+options.data.id+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'></button>";
+        container.context.innerHTML=options.data.archivo_adjunto;
+        //        console.log(container);
+       console.log(options);
 //       console.log("termino");
       return options.data.archivo_adjunto;
 };
