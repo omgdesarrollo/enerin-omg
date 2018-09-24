@@ -63,7 +63,7 @@ switch ($Op) {
         
         if(isset($LISTA["ponderado_programado"])){
             $resp = $modelGantt->guardarPonderados($LISTA);
-             echo $resp;
+             echo $resp; 
         }else{
             $resp= $modelGantt->guardarNota($Lista);
         }
