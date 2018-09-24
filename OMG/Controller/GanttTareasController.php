@@ -59,6 +59,8 @@ switch ($Op) {
         // var_dump($LISTA);
         // $ID = $_REQUEST["id"];
         // $PONDERADO = $_REQUEST["ponderado_programado"];
+        
+        
         if(isset($LISTA["ponderado_programado"])){
             $resp = $modelGantt->guardarPonderados($LISTA);
              echo $resp;

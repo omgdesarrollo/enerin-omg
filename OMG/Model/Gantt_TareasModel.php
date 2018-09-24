@@ -445,6 +445,7 @@ class Gantt_TareasModel{
                     $res .= "Error al actualizar la tarea con id = +".$value['id']." \n";
                 }
             }
+            
             return $res=="" ? 1 : $res;
         }
         catch(Exception $ex)
