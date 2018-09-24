@@ -131,11 +131,11 @@
         <i class="glyphicon glyphicon-repeat"></i> 
     </button>
     
-    <div class="pull-right">    
+<!--    <div class="pull-right">    
         <button style="width:48px;height:42px" type="button"  class="btn_agregar" id="toExcel">
             <img src="../../images/base/_excel.png" width="30px" height="30px">
         </button>
-    </div>
+    </div>-->
     
 </div>
 

@@ -68,9 +68,8 @@ $Usuario=  Session::getSesion("user");
                 <!-- Empieza libreria que contiene la estructura del jsGridCompleta en configuracion-->
                 <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/fGridComponent.js" type="text/javascript"></script>
-                
                 <!--termina libreria que contiene la estructura del jsGridCompleta--> 
-                
+                <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
                 
                 <!--empieza libreria para la comunicacion tiempo real y otras --> 
                <!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">-->
@@ -111,7 +110,6 @@ require_once 'EncabezadoUsuarioView.php';
 
              
 <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;"> 
-
     <button onclick="documentosEntradaComboboxparaModal()" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#crea_documentoSalida">
         Agregar Documento de Salida
     </button>
@@ -120,19 +118,14 @@ require_once 'EncabezadoUsuarioView.php';
         <i class="glyphicon glyphicon-repeat"></i>   
     </button>
     
-    <div class="pull-right">
-    
-        <button style="width:48px;height:42px" type="button"  class="btn_agregar" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
+    <div class="pull-right">    
+        <button style="width:48px;height:42px" type="button"  class="btn_agregar" id="toExcel">
             <img src="../../images/base/_excel.png" width="30px" height="30px">
         </button>
-        <!-- <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
-            <img src="../../images/base/word.png" width="30px" height="30px"> 
+        <button style="width:48px;height:42px;" type="button"  class="btn_exportarpdf" id="toPDF">
+            <img src="../../images/base/pdf.png" width="30px" height="30px">
         </button>
-        <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
-            <img src="../../images/base/pdf.png" width="30px" height="30px"> 
-        </button>  -->
     </div>
-    
 </div>
 
 <br><br><br>
@@ -209,7 +202,7 @@ require_once 'EncabezadoUsuarioView.php';
 		<div class="modal-content">
                         
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">x</span></button>
 		        <h4 class="modal-title" id="myModalLabel">Archivos Adjuntos</h4>
       </div>
 
@@ -240,6 +233,8 @@ var thisAutoridad=[];
 var thisEmpleados=[];
 var thisEmpleadosFiltro=[];
 var thisAutoridadesFiltro=[];
+var DataGridExcel=[];
+var origenDeDatosVista="documentoSalida";
 
 var MyComboAutoridad = function(config)
 {
@@ -389,12 +384,12 @@ function inicializarEstructuraGrid()
                         { name: "no", title: "No", type: "text", width:50,editing:false},
                         { name: "folio_entrada", title: "Folio de Entrada", type: "text", width:140,editing:false},
                         { name: "folio_salida", title: "Folio de Salida", type: "text", width:140,editing:false},
-                        { name: "id_empleado", title: "Responsable Tema", type: "comboEmpleados", width:150},
+                        { name: "id_empleado", title: "Responsable del Tema", type: "comboEmpleados", width:180},
                         { name: "fecha_envio", title: "Fecha de Envio", type: "text", width:150,editing:false},
                         { name: "asunto", title: "Asunto", type: "text", width:140},
                         { name: "destinatario", title: "Destinatario", type: "text", width:140},
-                        { name: "id_autoridad", title: "Autoridad Remitente", type: "comboAutoridad", width:150},
-                        { name: "archivo_adjunto", title: "Archivo Adjunto", type: "text", width:100,editing:false},
+                        { name: "id_autoridad", title: "Autoridad Remitente", type: "comboAutoridad", width:180},
+                        { name: "archivo_adjunto", title: "Archivo Adjunto", type: "text", width:150,editing:false},
                         { name: "observaciones", title: "Observacion", type: "text", width:140},
                         { name: "delete", title: "Opcion", type: "customControl", width:150}
                 ];
@@ -649,6 +644,32 @@ function reconstruir(value,index)
      
     return tempData;
 }
+
+
+function reconstruirExcel(value,index)
+{
+    tempData=new Object();
+    tempData["No"]= index;
+    tempData["Folio de Entrada"]= value.folio_entrada;
+    tempData["Folio de Salida"]= value.folio_salida;
+    tempData["Responsable del Tema"]= value.nombre_empleado;
+    tempData["Fecha de Envio"]= value.fecha_envio;
+    tempData["Asunto"]= value.asunto;
+    tempData["Destinatario"]= value.destinatario;
+    tempData["Autoridad Remitente"]= value.clave_autoridad;
+    if(value.archivosUpload[0].length==0)
+    {
+        tempData["Archivo Adjunto"]= "No";
+    }else{
+        $.each(value.archivosUpload[0],function(index2,value2){
+            tempData["Archivo Adjunto"]= "Si";
+        });
+    }
+    tempData["Observaciones"]= value.observaciones;
+    
+    return tempData;
+}
+
 function componerDataListado(value)// id de la vista documento, listo
 {
     id_vista = value.id_documento_salida;

@@ -94,7 +94,7 @@ require_once 'EncabezadoUsuarioView.php';
         <i class="glyphicon glyphicon-repeat"></i>   
     </button>
     
-    <div class="pull-right">
+<!--    <div class="pull-right">
         <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
             <img src="../../images/base/_excel.png" width="30px" height="30px">
         </button>
@@ -104,7 +104,7 @@ require_once 'EncabezadoUsuarioView.php';
         <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
             <img src="../../images/base/pdf.png" width="30px" height="30px"> 
         </button> 
-    </div>
+    </div>-->
     
 </div>
 
