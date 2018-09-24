@@ -405,7 +405,7 @@ var myToolbar = myLayout.cells("a").attachToolbar
 ({
     iconset: "awesome",
     items: [
-            {id:"toExcel",type: "button", text: "Exportar", img: "fa fa-trash-o"},
+            {id:"toExcel",type: "button", text: "Exportar", img: "fa fa-file-excel-o"},
 
     ]
 });

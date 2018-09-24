@@ -55,14 +55,14 @@ switch ($Op) {
     
         case 'GuardarPonderado':
         header('Content-type: application/json; charset=utf-8'); 
-        $LISTA = json_decode($_REQUEST["DATA"],true);
+        $Lista = json_decode($_REQUEST["DATA"],true);
         // var_dump($LISTA);
         // $ID = $_REQUEST["id"];
         // $PONDERADO = $_REQUEST["ponderado_programado"];
         
         
-        if(isset($LISTA["ponderado_programado"])){
-            $resp = $modelGantt->guardarPonderados($LISTA);
+        if(isset($Lista["ponderado_programado"])){
+            $resp = $modelGantt->guardarPonderados($Lista);
              echo $resp;
         }else{
             $resp= $modelGantt->guardarNota($Lista);
