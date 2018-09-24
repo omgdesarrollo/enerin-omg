@@ -455,12 +455,12 @@ class Gantt_TareasModel{
     }
     
     
-    public function guardarNotas()
+    public function guardarNota($Lista)
     {
         try 
         {
             $dao=new Gantt_TareaDao();
-            $rec= $dao->guardarNotas($CADENA, $ID);
+            $rec= $dao->guardarNota($Lista);
             
             return $rec;
         } catch (Exception $ex) 

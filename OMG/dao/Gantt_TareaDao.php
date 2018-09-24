@@ -302,12 +302,14 @@ class Gantt_TareaDao {
         }
     }
 
-    public function guardarNotas($CADENA,$ID)
+    public function guardarNota($Lista)
     {
         try 
         {
-            $query="UPDATE gantt_tareas SET notas='$CADENA'
-                    WHERE gantt_tareas.id=$ID";
+            $cadena= $Lista['notas'];
+            $id= $Lista['id'];
+            $query="UPDATE gantt_tareas SET notas='$cadena'
+                    WHERE gantt_tareas.id=$id";
             $db= AccesoDB::getInstancia();
             $lista= $db->executeQueryUpdate($query);
             
