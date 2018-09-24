@@ -685,7 +685,7 @@ var opcionstatus = [
         gantt.config.lightbox.sections = [
 		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
                 {name: "status", height: 38, map_to: "status", type: "select", options:opcionstatus},
-                {name: "notas", height: 38, map_to: "text", type: "textarea"},
+                {name: "notas", height: 38, map_to: "notas", type: "textarea"},
 		{name: "owner", height: 22, map_to: "user", type: "select", options: gantt.serverList("user")},	
 		{name: "time", type: "duration", map_to: "auto"}
 	];
