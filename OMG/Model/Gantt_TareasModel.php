@@ -298,6 +298,9 @@ class Gantt_TareasModel{
                                          $value["existeprograma"]=1;
                                          $dao->insertarGanttTareas($value);
                                          self:: actualizarExisteProgramaTareas($value);
+//                                         if(isset($value["status"])){
+//                                             
+//                                         }
                                          
                                     }
                                 }
@@ -469,5 +472,6 @@ class Gantt_TareasModel{
             return -1;
         }
     }
+    
 
 }
