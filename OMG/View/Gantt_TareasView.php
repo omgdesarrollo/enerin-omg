@@ -1002,8 +1002,8 @@ construirTreeList();
                                                 datosTreeObj["ponderado_real"]= value.ponderado_real;
                                                 datosTreeObj["avance"]= value.avance;
                                                 datosTreeObj["archivo_adjunto"]= "<button onClick='mostrar_urls("+value.id+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'></button>";
-//                                                datosTreeObj["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar</button>";
-
+                                                datosTreeObj["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar</button>";
+                                                
                                                 datosTreeList.push(datosTreeObj);                                                
 //                                                console.log(datosTreeList);
                                             });
@@ -1195,7 +1195,8 @@ construirTreeList();
                dataType:"string",
 //                 encodeHtml:true
 //                 falseText:false,
-                  allowEditing:false   
+                  allowEditing:false
+                  
             }
         ],
         onCellPrepared: function(e) {
