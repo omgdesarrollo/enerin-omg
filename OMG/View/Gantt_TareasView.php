@@ -206,7 +206,7 @@ and open the template in the editor.
 }    
             
 #dx {
-    max-height: 440px;
+    max-height: 100%;
 }
 
  .modal-lg{width: 92%;}
@@ -270,7 +270,7 @@ and open the template in the editor.
 	<input value="deshacer" type="button" onclick='gantt.undo()' style='font-size: 10px'>
 	<input value="Rehacer" type="button" onclick='gantt.redo()' style='font-size: 10px'>
         <!--<button class="btn btn-danger" type="button" onclick='detallesActividadesCompletasGantt()' data-toggle='modal' data-target='#detalles' style='font-size: 10px'>Detalles</button>-->
-        <button class="btn btn-danger" type="button" onclick='detallesActividadesCompletasGantt()' data-toggle='modal' data-target='#detalles' style='font-size: 10px'>Detalles</button>
+        <button class="btn btn-danger" type="button" onclick='detallesActividadesCompletasGantt()'  style='font-size: 10px'>Detalles</button>
 <!--</div>-->
         <?php  
         
@@ -314,7 +314,11 @@ and open the template in the editor.
 			   accept=".mpp,.xml, text/xml, application/xml, application/vnd.ms-project, application/msproj, application/msproject, application/x-msproject, application/x-ms-project, application/x-dos_ms_project, application/mpp, zz-application/zz-winassoc-mpp"/>
 		<button id="mspImportBtn" type="submit">Seleccion el MS Proyect</button>
 	</form>-->
-    <div id="gantt_here" style='width:100%; height:100%;'></div>
+    <div id="gantt_here" style='width:100%; height:50%;'></div>
+    
+      <div id="tree-list" style='width:100%; height:50%;position: relative'>
+          <div id="dx" ></div>
+                            </div>
     </body>
 <!-- Inicio de Seccion Modal Informe-->
 <div class="modal draggable fade" id="detalles" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -329,9 +333,9 @@ and open the template in the editor.
 
 		      <div class="modal-body">
                     
-                           <div id="tree-list">
-                             <div id="dx"></div>
-                            </div>
+                           <!--<div id="tree-list">-->
+<!--                             <div id="dx"></div>-->
+                            <!--</div>-->
                           <div id="tabPanel"></div>
                                 <!--<div sty></div>-->
                         <!--<div id=""></div>-->
@@ -735,21 +739,21 @@ gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
 var dp = new gantt.dataProcessor("../Controller/GanttTareasController.php?Op=Modificar");
 dp.init(gantt);
 //dp.autoUpdate=false;
-dp.attachEvent("onBeforeUpdate", function (id, status, data) {
-     if (!data.text) {
-         dhtmlx.message("La Tarea no puede ir vacia");
-         console.log(data);
-         return false;
-     }
-     else{
-//          data.text="dtexto";
-     }
+//dp.attachEvent("onBeforeUpdate", function (id, status, data) {
+//     if (!data.text) {
+//         dhtmlx.message("La Tarea no puede ir vacia");
+//         console.log(data);
+//         return false;
+//     }
+//     else{
+////          data.text="dtexto";
+//     }
      
 //     data.text="d1";
      
      
-     return true;
-});
+//     return true;
+//});
 
 //gantt.config.branch_loading = true;
 
@@ -957,11 +961,11 @@ dp.attachEvent("onBeforeUpdate", function (id, status, data) {
 //            });
 //    }); 
         
-//obtenerTareas().then(function (){
-//construirTreeList();
-//
-//
-//});
+obtenerTareas().then(function (){
+construirTreeList();
+
+
+});
     
  
 
@@ -972,6 +976,7 @@ dp.attachEvent("onBeforeUpdate", function (id, status, data) {
         return new Promise(function (resolve,reject){
                 $.ajax({
                                         url:"../Controller/GanttTareasController.php?Op=ListarTodasLasTareasDetallesPorSuId",
+                                        async:false,
                                         success:function (res)
                                         {
                                          datosTreeList=res.data;
@@ -1187,11 +1192,11 @@ dp.attachEvent("onBeforeUpdate", function (id, status, data) {
     }
     
     function detallesActividadesCompletasGantt(){
-     obtenerTareas().then(function (){
-//         alert();
-         construirTreeList();
+        $("#tree-list").css("display","none");
+        
+//        $("#gantt_here").css("height","100%");
+        
 
-     });
 } 
     var datosModificadosActividadesPonderado_ProgramadoTemp=[];
     var id_padreTareaPonderado_programadoTemp=-1;
@@ -1247,8 +1252,9 @@ dp.attachEvent("onBeforeUpdate", function (id, status, data) {
         if(sumatoria>=100 && sumatoria<=100.5)
         {
             alert("Correcto");
+            console.log(args);
             $.each(datosModificadosActividadesPonderado_ProgramadoTemp,(index,value)=>{
-                dataFinal.push({id:parseInt(value.key),ponderado_programado:value.data.porcentaje_por_actividad});
+                dataFinal.push({id:parseInt(value.key),ponderado_programado:value.data.porcentaje_por_actividad,notas:args.data.notas});
             });
             $.ajax({
                 url:'../Controller/GanttTareasController.php?Op=GuardarPonderado',
