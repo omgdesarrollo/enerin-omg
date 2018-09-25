@@ -2,7 +2,7 @@
 session_start();
 require_once '../util/Session.php';
 if(isset($_REQUEST["id_tarea"])){
-    Session::setSesion("dataGantt_id_tarea",$_REQUEST["id_tarea"]);
+   Session::setSesion("dataGantt_id_tarea",$_REQUEST["id_tarea"]);
     //    echo "el seguimiento de entrada linkeado al de doc de entrada y al folio de entrada   ".$dataGantt=Session::getSesion("dataGantt");;
     echo "<h2><center></center><h2>";
 }else{
@@ -24,9 +24,12 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
+        <!--<meta charset="UTF-8" name="viewport" content="width=500, initial-scale=1, maximum-scale=1">-->
         <title></title>
         
-        
+    <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <!--Para abrir alertas de aviso, success,warning, error--> 
+    <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>    
 <!--        <script src="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.js"></script>
   <link href="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.css" rel="stylesheet">
   <script src="../../assets/dhtmlxGantt/api.js" type="text/javascript"></script>-->
@@ -34,6 +37,14 @@ and open the template in the editor.
         <script src="../../assets/gantt_5.1.2_com/codebase/dhtmlxgantt.js" type="text/javascript"></script>
         <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_auto_scheduling.js" type="text/javascript"></script>-->
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_auto_scheduling.js.map"></a>-->
+    <!--<script src="../../js/jquery.js" type="text/javascript"></script>-->
+    <script src="../../js/jquery.min.js" type="text/javascript"></script>
+    <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+    <!-- cargar archivo -->
+<!--    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
+    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
+    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
+    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">-->
     
     <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_critical_path.js" type="text/javascript"></script>-->
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_critical_path.js.map"></a>-->
@@ -54,7 +65,8 @@ and open the template in the editor.
     <!--aqui empieza para hacer aparecer la ventanita cuando seleccionas--> 
     <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_quick_info.js" type="text/javascript"></script>-->
     <!--aqui cierra-->
-    
+    <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+    <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_quick_info.js.map"></a>-->
     <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_smart_rendering.js" type="text/javascript"></script>-->
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_smart_rendering.js.map"></a>-->
@@ -69,7 +81,7 @@ and open the template in the editor.
     
     
    <!--<script src="../../codebase/ext/dhtmlxgantt_smart_rendering.js"></script>-->
-   <script src="../../js/jquery.min.js" type="text/javascript"></script>
+   
    <script src="../../assets/gantt_5.1.2_com/codebase/sources/ext/dhtmlxgantt_keyboard_navigation.js" type="text/javascript"></script>
    
    <link href="../../assets/gantt_5.1.2_com/codebase/skins/dhtmlxgantt_meadow.css" rel="stylesheet" type="text/css"/>
@@ -84,6 +96,8 @@ and open the template in the editor.
     <!--<link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>-->
     <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
 
+    <script src="../../js/dragresize.js" type="text/javascript"></script>
+    
     <!--aqui empieza librerias qe no son del gantt en funcionalidad y presentacion-->
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>-->
     <!--<script>window.jQuery || document.write(decodeURIComponent('%3Cscript src="js/jquery.min.js"%3E%3C/script%3E'))</script>-->
@@ -92,9 +106,37 @@ and open the template in the editor.
     <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>-->
     <!--<script>window.angular || document.write(decodeURIComponent('%3Cscript src="js/angular.min.js"%3E%3C\/script%3E'))</script>-->
     <script src="https://cdn3.devexpress.com/jslib/18.1.6/js/dx.all.js"></script>
+    <link href="../../css/PersonalizacionVistasGantt.css" rel="stylesheet" type="text/css"/>
     <!--aqui termina las librerias que no son del gantt-->
     
     
+    
+<!--     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
+    
+    
+    
+    <script>
+        var dragresize = new DragResize('dragresize',
+            { minWidth: 50, minHeight: 50, minLeft: 20, minTop: 20, maxLeft: 600, maxTop: 600 });
+        dragresize.isElement = function(elm)
+        {
+            if (elm.className && elm.className.indexOf('drsElement') > -1) return true;
+        };
+        dragresize.isHandle = function(elm)
+        {
+            if (elm.className && elm.className.indexOf('drsMoveHandle') > -1) return true;
+        };
+        dragresize.ondragfocus = function() { };
+        dragresize.ondragstart = function(isResize) { };
+        dragresize.ondragmove = function(isResize) { };
+        dragresize.ondragend = function(isResize) { };
+        dragresize.ondragblur = function() { };
+        dragresize.apply(document);
+//        drsElement drsMoveHandle
+     </script>
     
     
  <style type="text/css">
@@ -203,61 +245,137 @@ and open the template in the editor.
     white-space: normal;
     vertical-align: top;
     color: white;
-}    
-            
+}               
 #dx {
     max-height: 100%;
 }
 
- .modal-lg{width: 92%;}
-.modal-dialog {
-  /*position: fixed;*/
-  /*margin: 0;*/
-  width: 98%;
-  height: 90%;
-/*  padding: 0;*/
-}
-.modal-content {
-  position: fixed; 
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  
-/*  border: 2px solid #3c7dcf;
-  border-radius: 0;
-  box-shadow: none;*/
-}
-.modal-header {
-  /*position: absolute;*/
-  top: 0;
-  right: 0;
-  left: 0;
-  height: 50px;
-  padding: 10px;
-  background: black;
-  border: 0;
-}
-.modal-title {
-  /*font-weight: 300;*/
-  /*font-size: 2em;*/
-  color: #fff;
-  /*line-height: 30px;*/
-}
-
+ .modal-lg{width: 50%;}
  #tabPanel{
      height: 8%;
  }
  .dx-item-content dx-multiview-item-content{
    background-color: red;  
  }
-  </style> 	
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ .drsElement {
+ position: absolute;
+ border: 1px solid #333;
+}
+
+.drsMoveHandle {
+ height: 20px;
+ background-color: #CCC;
+ border-bottom: 1px solid #666;
+ cursor: move;
+}
+ .dragresize {
+ position: absolute;
+ width: 5px;
+ height: 5px;
+ font-size: 1px;
+ background: #EEE;
+ border: 1px solid #333;
+}
+
+.dragresize-tl {
+ top: -8px;
+ left: -8px;
+ cursor: nw-resize;
+}
+.dragresize-tm {
+ top: -8px;
+ left: 50%;
+ margin-left: -4px;
+ cursor: n-resize;
+}
+.dragresize-tr {
+ top: -8px;
+ right: -8px;
+ cursor: ne-resize;
+}
+
+.dragresize-ml {
+ top: 50%;
+ margin-top: -4px;
+ left: -8px;
+ cursor: w-resize;
+}
+.dragresize-mr {
+ top: 50%;
+ margin-top: -4px;
+ right: -8px;
+ cursor: e-resize;
+}
+
+.dragresize-bl {
+ bottom: -8px;
+ left: -8px;
+ cursor: sw-resize;
+}
+.dragresize-bm {
+ bottom: -8px;
+ left: 50%;
+ margin-left: -4px;
+ cursor: s-resize;
+}
+.dragresize-br {
+ bottom: -8px;
+ right: -8px;
+ cursor: se-resize;
+} 
+
+#resizable { width: 100%; height: 150px; padding: 0.5em; }
+  #resizable h3 { text-align: center; margin: 0; }
+</style> 	
 		
   </head>
     <body>
         
         
-     
+  
+        
+        
   <!--<form action="">-->
   <input type="submit" class="btn btn-info" value="Recargar" onclick="refrescarDatosGantt()">      
       
@@ -314,12 +432,77 @@ and open the template in the editor.
 			   accept=".mpp,.xml, text/xml, application/xml, application/vnd.ms-project, application/msproj, application/msproject, application/x-msproject, application/x-ms-project, application/x-dos_ms_project, application/mpp, zz-application/zz-winassoc-mpp"/>
 		<button id="mspImportBtn" type="submit">Seleccion el MS Proyect</button>
 	</form>-->
-    <div id="gantt_here" style='width:100%; height:50%;'></div>
+
+
+    <div class="drsElement drsMoveHandle" id="gantt_here" style='width:100%; height:50%;'>       
+</div>
+<div  class="drsElement drsMoveHandle" id="detallesInformacion" style="display: none;width:100%; height:200px;position: absolute;">
+    <!--<div class="drsElement drsMoveHandle" style="position: fixed;width: 100%;height: 90%;background-color: #666600">-->
+
+<!--         <div id="detallesInformacion">
+-->      <div class="" id="tree-list" >
+          <div id="dx" ></div>
+                            </div>
+    <!--</div>-->
+        
+        
+<!--</div>-->
+</div>
+
+<div id="resizable" class="ui-widget-content">
+  <h3 class="ui-widget-header"></h3>
+</div>
+
+
+<!--left: 150px; top: 280px;--> 
+<!--    <div class="drsElement drsMoveHandle" style="width: 100%;height: 50%;background-color: #666600">   
+        </div>-->
+<!--    <div class="drsElement"
+ style="left: 50px; top: 150px; width: 250px; height: 120px;
+ background: #CDF; text-align: center">
+ <div class="drsMoveHandle">Div 0</div>
+ Content
+</div>-->
     
+<!--    
+    <div id="detallesInformacion">
       <div id="tree-list" style='width:100%; height:50%;position: relative'>
           <div id="dx" ></div>
                             </div>
+    </div>-->
+    
+    
+    
     </body>
+    
+<!-- Inicio de Seccion Modal Archivos-->
+<div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+        <div id="loaderModalMostrar"></div>
+		<div class="modal-content">
+                        
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Archivos Adjuntos</h4>
+		      </div>
+
+		      <div class="modal-body">
+                        <div id="DocumentolistadoUrl"></div>
+
+                        
+                        <div class="form-group">
+                                <div id="DocumentolistadoUrlModal"></div>
+			</div>
+
+                        <div class="form-group" method="post" >
+                                <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Archivo</button>
+                        </div>
+                      </div><!-- cierre div class-body -->
+                </div><!-- cierre div class modal-content -->
+        </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal -->    
+    
+    
 <!-- Inicio de Seccion Modal Informe-->
 <div class="modal draggable fade" id="detalles" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog modal-lg" role="document">
@@ -953,6 +1136,17 @@ dp.init(gantt);
 
     var datosTreeList=[]; 
     $(function (){
+//        $("#detallesInformacion").resize();
+            $("#detallesInformacion" ).resizable();
+              $("#detallesInformacion" ).draggable();
+            
+//         $(window).on("resize", 
+//         
+//        function (){
+//            alert();
+//        });
+  
+  // y al cargar la página
  
 //    var tabs = [{
 //            title: 'Detalles Registros Actividad',
@@ -986,7 +1180,29 @@ construirTreeList();
                                         async:false,
                                         success:function (res)
                                         {
-                                         datosTreeList=res.data;
+                                            console.log("entro aqui");
+//                                            datosTreeList=res.data;
+                                            datosTreeList=[];
+                                            
+                                            $.each(res.data,function(index,value){
+                                                console.log(value);
+                                                datosTreeObj=new Object();
+                                                datosTreeObj["id"]= value.id;
+                                                datosTreeObj["parent"]= value.parent;
+                                                datosTreeObj["text"]= value.text;
+                                                datosTreeObj["user"]= value.user;
+                                                datosTreeObj["notas"]= value.notas;
+                                                datosTreeObj["porcentaje_por_actividad"]= value.porcentaje_por_actividad;
+                                                datosTreeObj["ponderado_real"]= value.ponderado_real;
+                                                datosTreeObj["avance"]= value.avance;
+                                                datosTreeObj["archivo_adjunto"]= "<button onClick='mostrar_urls("+value.id+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
+                                                datosTreeObj["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar</button>";
+                                                
+                                                datosTreeList.push(datosTreeObj);                                                
+//                                                console.log(datosTreeList);
+                                            });
+                                         
+//                                         console.log(res.data);
                                          resolve();
 //                                          construirTreeList();
                                         }
@@ -1119,12 +1335,12 @@ construirTreeList();
         columns:[
             {
                 dataField: "id",
-                caption: "id",
+                caption: "ID",
                 allowEditing:false
             },
             {
                 dataField: "text",
-                caption: "Nombre de la Actividad",
+                caption: "Descripcion de la Actividad",
                  allowEditing:false
             },
             
@@ -1139,19 +1355,10 @@ construirTreeList();
                     displayExpr: "label"
                 }
             },
-            { 
-                dataField: "notas",
-                caption: "Notas"
-            },
+            
             { 
                 dataField: "porcentaje_por_actividad",
-                 caption: "Ponderado Programado %",
-                validationRules: [{ type: "required" }]
-            },
-             { 
-                dataField: "ponderado_real",
-                 caption: "Ponderado Real",
-                 allowEditing:false
+                 caption: "Peso de la Actividad"
             },
              { 
                 dataField: "avance",
@@ -1159,10 +1366,26 @@ construirTreeList();
                   allowEditing:false
                 
             },
+            { 
+                dataField: "notas",
+                caption: "Notas"
+            },
              { 
                 dataField: "archivo_adjunto",
                  caption: "Archivo Adjunto",
-                  allowEditing:false   
+                 cellTemplate:archivoAdjuntoCellTemplate,
+//               customizeText:function (data){
+//                   console.log("entro ");
+//                   console.log(data);
+//                   console.log("salio");
+////                   return data["value"];
+//                    return "<button onClick='mostrar_urls(1537568570483)' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'></button>".substring(0,20); 
+//               },
+               dataType:"string",
+//                 encodeHtml:true
+//                 falseText:false,
+                  allowEditing:false
+                  
             }
         ],
         onCellPrepared: function(e) {
@@ -1181,7 +1404,16 @@ construirTreeList();
         expandedRowKeys: [1, 2, 3, 4, 5]
     }); 
     }
-    
+   var archivoAdjuntoCellTemplate= function(container, options) {
+       
+//       console.log("empezo");
+//       container.context.innerHTML="<button onClick='mostrar_urls("+options.data.id+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'></button>";
+//        container.context.innerHTML=options.data.archivo_adjunto;
+        //        console.log(container);
+       console.log(options);
+//       console.log("termino");
+      return container.context.innerHTML=options.data.archivo_adjunto;
+};
     
     function refrescarDatosGantt(){
         gantt.refreshData();
@@ -1198,8 +1430,21 @@ construirTreeList();
     }
     
     function detallesActividadesCompletasGantt(){
-        $("#tree-list").css("display","none");
-        
+//        alert("d");
+        if( $("#detallesInformacion").css("display")!="none"){
+//             $("#gantt_here").height("100%");
+//            alert("esta visible");
+                 $("#detallesInformacion").css("display","none");
+//                $("body").css("zoom", window.innerWidth / 500);
+                   
+        }else{
+//            alert("no lo esta")
+            $("#detallesInformacion").css("display","");
+//             $("#detallesInformacion").css("display","");
+//                        $("#gantt_here").height("50%");
+
+        }
+//        
 //        $("#gantt_here").css("height","100%");
         
 
@@ -1290,14 +1535,212 @@ construirTreeList();
     }
     
     
+    var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/form-data'>";
+        ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
+        ModalCargaArchivo += "<div class='fileupload-buttons'>";
+        ModalCargaArchivo += "<span class='fileinput-button'>";
+        ModalCargaArchivo += "<span><a >Agregar Archivos(Click o Arrastrar)...</a></span>";
+        ModalCargaArchivo += "<input type='file' name='files[]' multiple></span>";
+        ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
+        ModalCargaArchivo += "<div class='fileupload-progress' >";
+        // ModalCargaArchivo += "<div class='progress' role='progressbar' aria-valuemin='0' aria-valuemax='100'></div>";
+        ModalCargaArchivo += "<div class='progress-extended'>&nbsp;</div>";
+        ModalCargaArchivo += "</div></div>";
+        ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
+
+    $("#subirArchivos").click(function()
+    {
+        agregarArchivosUrl();
+    });
+    months = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+
+    function mostrar_urls(id)
+    {
+            id_tarea= <?php echo Session::getSesion("dataGantt_id_tarea")?>;
+            var tempDocumentolistadoUrl = "";
+            URL = 'gantt/gantt_tareas/'+id_tarea+'/'+id;
+            $.ajax({
+                    url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
+                    type: 'GET',
+                    data: 'URL='+URL+'&SIN_CONTRATO=',
+                    success: function(todo)
+                    {
+                            if(todo[0].length!=0)
+                            {
+                                    tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
+                                    $.each(todo[0], function (index,value)
+                                    {
+                                            nametmp = value.split("^-O-^-M-^-G-^");
+                                            fecha = new Date(nametmp[0]*1000);
+                                            fecha = fecha.getDate() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+
+                                            tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
+                                            tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\" download='"+nametmp[1]+"'>"+nametmp[1]+"</a></td>";
+                                            tempDocumentolistadoUrl += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
+                                            tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
+                                            tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";
+                                    });
+                                    tempDocumentolistadoUrl += "</tbody></table>";
+                            }
+                            if(tempDocumentolistadoUrl == " ")
+                            {
+                                    tempDocumentolistadoUrl = " No hay archivos agregados ";
+                            }
+                            tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdDocumento' type='text' style='display:none;' value='"+id+"'>";
+                            // alert(tempDocumentolistadoUrl);
+                            $('#DocumentoEntradaAgregarModal').html(" ");
+                            $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
+                            $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
+                            // $('#fileupload').fileupload();
+                            $('#fileupload').fileupload({
+                            url: '../View/',
+                            });
+                    }
+            });
+    }
     
     
+    function agregarArchivosUrl()
+    {
+            id_tarea= <?php echo Session::getSesion("dataGantt_id_tarea")?>;
+            var ID = $('#tempInputIdDocumento').val();
+            url = 'gantt/gantt_tareas/'+id_tarea+'/'+ID,
+            $.ajax({
+                    url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
+                    type: 'GET',
+                    data: 'URL='+url+'&SIN_CONTRATO=',
+                    success:function(creado)
+                    {
+                            if(creado==true)
+                                    $('.start').click();
+                    },
+                    error:function()
+                    {
+                            swalError("Error del servidor");
+                    }
+            });
+    }
+    
+    
+    function borrarArchivo(url)
+    {
+
+        swal({
+                title: "ELIMINAR",
+                text: "Confirme para eliminar el Archivo",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true
+                }, function()
+                {
+                        var ID = $('#tempInputIdDocumento').val();
+                        $.ajax({
+                                url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
+                                type: 'GET',
+                                data: 'URL='+url+'&SIN_CONTRATO=',
+                                success: function(eliminado)
+                                {
+                                        // eliminar = eliminado;
+                                        if(eliminado)
+                                        {
+                                                mostrar_urls(ID);
+//                                                refresh();
+                                                swal("","Archivo eliminado");
+                                                setTimeout(function(){swal.close();},1000);
+                                        }
+                                        else
+                                                swal("","Ocurrio un error al eliminar el archivo", "error");
+                                },
+                                error:function()
+                                {
+                                        swal("","Ocurrio un error al elimiar el archivo", "error");
+                                }
+                        });
+                });
+    }
+
     
   </script>
   
   
- 
+  <script id="template-upload" type="text/x-tmpl">
+        {% for (var i=0, file; file=o.files[i]; i++) { %}
+        <tr class="template-upload" style="width:100%">
+                <td>
+                <span class="preview"></span>
+                </td>
+                <td>
+                <p class="name">{%=file.name%}</p>
+                <strong class="error"></strong>
+                </td>
+                <td>
+                <p class="size">Processing...</p>
+                <!-- <div class="progress"></div> -->
+                </td>
+                <td>
+                {% if (!i && !o.options.autoUpload) { %}
+                        <button class="start" style="display:none;padding: 0px 4px 0px 4px;" disabled>Start</button>
+                {% } %}
+                {% if (!i) { %}
+                        <button class="cancel" style="padding: 0px 4px 0px 4px;color:white">Cancel</button>
+                {% } %}
+                </td>
+        </tr>
+        {% } %} 
+</script>
+
+<script id="template-download" type="text/x-tmpl">
+{% var t = $('#fileupload').fileupload('active'); var i,file; %}
+        {% for (i=0,file; file=o.files[i]; i++) { %}
+        <tr class="template-download">
+                <td>
+                <span class="preview">
+                        {% if (file.thumbnailUrl) { %}
+                        <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                        {% } %}
+                </span>
+                </td>
+                <td>
+                <p class="name">
+                        <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+                </p>
+                </td>
+                <td>
+                <span class="size">{%=o.formatFileSize(file.size)%}</span>
+                </td>
+                <!-- <td> -->
+                <!-- <button class="delete" style="padding: 0px 4px 0px 4px;" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>Delete</button> -->
+                <!-- <input type="checkbox" name="delete" value="1" class="toggle"> -->
+                <!-- </td> -->
+        </tr>
+        {% } %}
+        {% if(t == 1){ if( $('#tempInputIdDocumento').length > 0 ) { var ID = $('#tempInputIdDocumento').val(); mostrar_urls(ID); actualizarDocumentoEntrada(ID); }else{ $('#btnAgregarDocumentoEntradaRefrescar').click(); } } %}
+</script>
+
+    <!--Para abrir alertas de aviso, success,warning, error-->       
+    <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
   
+    
+        <!-- js cargar archivo -->
+    <script src="../../assets/FileUpload/js/tmpl.min.js"></script>
+    <script src="../../assets/FileUpload/js/load-image.all.min.js"></script>
+    <script src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.blueimp-gallery.min.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.iframe-transport.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-process.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-image.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-audio.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-video.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
+
+    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
+    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
+    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
+    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
   
   
 </html>
