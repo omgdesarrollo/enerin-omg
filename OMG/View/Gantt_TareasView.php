@@ -418,16 +418,16 @@ and open the template in the editor.
 			   accept=".mpp,.xml, text/xml, application/xml, application/vnd.ms-project, application/msproj, application/msproject, application/x-msproject, application/x-ms-project, application/x-dos_ms_project, application/mpp, zz-application/zz-winassoc-mpp"/>
 		<button id="mspImportBtn" type="submit">Seleccion el MS Proyect</button>
 	</form>-->
-    <div id="gantt_here" style='width:100%; height:100%;'>       
+    <div class="drsElement" id="gantt_here" style='width:100%; height:100%;'>       
 </div>
-<div id="detallesInformacion" style="display: none;">
-    <div class="drsElement drsMoveHandle" style="position: absolute;width: 100%;height: 50%;background-color: #666600">
+<div  class="drsElement " id="detallesInformacion" style="display: none;width:100%; height:200px;position: fixed;z-index: 2;">
+    <!--<div class="drsElement drsMoveHandle" style="position: fixed;width: 100%;height: 90%;background-color: #666600">-->
 
 <!--         <div id="detallesInformacion">
--->      <div id="tree-list" style='width:100%; height:90%;position: absolute'>
+-->      <div class="" id="tree-list" style=''>
           <div id="dx" ></div>
                             </div>
-    </div>
+    <!--</div>-->
         
         
 </div>
@@ -1408,7 +1408,7 @@ construirTreeList();
     function detallesActividadesCompletasGantt(){
 //        alert("d");
         if( $("#detallesInformacion").css("display")!="none"){
-             $("#gantt_here").height("100%");
+//             $("#gantt_here").height("100%");
 //            alert("esta visible");
                  $("#detallesInformacion").css("display","none");
 //                $("body").css("zoom", window.innerWidth / 500);
@@ -1417,7 +1417,7 @@ construirTreeList();
 //            alert("no lo esta")
             $("#detallesInformacion").css("display","");
 //             $("#detallesInformacion").css("display","");
-                        $("#gantt_here").height("50%");
+//                        $("#gantt_here").height("50%");
 
         }
 //        
