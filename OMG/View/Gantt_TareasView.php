@@ -23,8 +23,8 @@ and open the template in the editor.
 
 <html>
     <head>
-        <!--<meta charset="UTF-8">-->
-        <meta charset="UTF-8" name="viewport" content="width=500, initial-scale=1, maximum-scale=1">
+        <meta charset="UTF-8">
+        <!--<meta charset="UTF-8" name="viewport" content="width=500, initial-scale=1, maximum-scale=1">-->
         <title></title>
         
     <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>    
@@ -35,7 +35,8 @@ and open the template in the editor.
         <script src="../../assets/gantt_5.1.2_com/codebase/dhtmlxgantt.js" type="text/javascript"></script>
         <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_auto_scheduling.js" type="text/javascript"></script>-->
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_auto_scheduling.js.map"></a>-->
-    <script src="../../js/jquery.js" type="text/javascript"></script>
+    <!--<script src="../../js/jquery.js" type="text/javascript"></script>-->
+    <script src="../../js/jquery.min.js" type="text/javascript"></script>
     <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
     <!-- cargar archivo -->
     <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
@@ -78,7 +79,7 @@ and open the template in the editor.
     
     
    <!--<script src="../../codebase/ext/dhtmlxgantt_smart_rendering.js"></script>-->
-   <script src="../../js/jquery.min.js" type="text/javascript"></script>
+   
    <script src="../../assets/gantt_5.1.2_com/codebase/sources/ext/dhtmlxgantt_keyboard_navigation.js" type="text/javascript"></script>
    
    <link href="../../assets/gantt_5.1.2_com/codebase/skins/dhtmlxgantt_meadow.css" rel="stylesheet" type="text/css"/>
