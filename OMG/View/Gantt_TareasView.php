@@ -25,8 +25,11 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title></title>
-        
-    <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>    
+    <!-- bootstrap & fontawesome -->
+    <!--<link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>-->    
+    <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <!--Para abrir alertas de aviso, success,warning, error--> 
+    <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
 <!--        <script src="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.js"></script>
   <link href="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.css" rel="stylesheet">
   <script src="../../assets/dhtmlxGantt/api.js" type="text/javascript"></script>-->
@@ -34,13 +37,12 @@ and open the template in the editor.
         <script src="../../assets/gantt_5.1.2_com/codebase/dhtmlxgantt.js" type="text/javascript"></script>
         <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_auto_scheduling.js" type="text/javascript"></script>-->
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_auto_scheduling.js.map"></a>-->
-    <script src="../../js/jquery.js" type="text/javascript"></script>
+    <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+    <!--<link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>-->
+    <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
+    <!--<script src="../../js/jquery.js" type="text/javascript"></script>-->
+    <script src="../../js/jquery.min.js" type="text/javascript"></script>
     <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-    <!-- cargar archivo -->
-    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
-    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
-    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
-    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
     
     <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_critical_path.js" type="text/javascript"></script>-->
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_critical_path.js.map"></a>-->
@@ -61,8 +63,7 @@ and open the template in the editor.
     <!--aqui empieza para hacer aparecer la ventanita cuando seleccionas--> 
     <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_quick_info.js" type="text/javascript"></script>-->
     <!--aqui cierra-->
-    <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
-    <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
+ 
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_quick_info.js.map"></a>-->
     <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_smart_rendering.js" type="text/javascript"></script>-->
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_smart_rendering.js.map"></a>-->
@@ -77,7 +78,6 @@ and open the template in the editor.
     
     
    <!--<script src="../../codebase/ext/dhtmlxgantt_smart_rendering.js"></script>-->
-   <script src="../../js/jquery.min.js" type="text/javascript"></script>
    <script src="../../assets/gantt_5.1.2_com/codebase/sources/ext/dhtmlxgantt_keyboard_navigation.js" type="text/javascript"></script>
    
    <link href="../../assets/gantt_5.1.2_com/codebase/skins/dhtmlxgantt_meadow.css" rel="stylesheet" type="text/css"/>
@@ -217,7 +217,7 @@ and open the template in the editor.
     max-height: 100%;
 }
 
- .modal-lg{width: 50%;}
+ .modal-lg{width: 40%;}
 /*.modal-dialog {
   position: fixed;
   margin: 0;
@@ -259,6 +259,34 @@ and open the template in the editor.
  .dx-item-content dx-multiview-item-content{
    background-color: red;  
  }
+ 
+ .table-header {
+    background-color: #307ECC;
+    color: #FFF;
+    font-size: 14px;
+    line-height: 60px;
+    padding-left: 12px;
+    margin-bottom: 1px;
+}
+
+.table-row{
+    box-sizing: border-box;
+    font-family: sans-serif;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    background-color: #F5F5F5;
+    line-height: 60px;
+}
+
+.fileupload-buttons{
+    box-sizing: border-box;
+    font-family: sans-serif;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
+ 
   </style> 	
 		
   </head>
@@ -1006,21 +1034,24 @@ dp.init(gantt);
 //            });
 //    }); 
         
-obtenerTareas().then(function (){
-construirTreeList();
-
-
-});
-    
- 
-
+    obtenerTareas().then(function ()
+    {
+    construirTreeList();
     });
+    
+    
+    $("#subirArchivos").click(function()
+    {
+        agregarArchivosUrl();
+    });
+
+    }); //CIERRA 
 
     
     function obtenerTareas(){
         return new Promise(function (resolve,reject){
                 $.ajax({
-                                        url:"../Controller/GanttTareasController.php?Op=ListarTodasLasTareasDetallesPorSuId",
+                                        url:"../Controller/GanttTareasController.php?Op=ListarTodasLasTareasDetallesPorSuId&URL=gantt/gantt_tareas/",
                                         async:false,
                                         success:function (res)
                                         {
@@ -1380,136 +1411,125 @@ construirTreeList();
     }
     
     
-    var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/form-data'>";
-        ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
-        ModalCargaArchivo += "<div class='fileupload-buttons'>";
-        ModalCargaArchivo += "<span class='fileinput-button'>";
-        ModalCargaArchivo += "<span><a >Agregar Archivos(Click o Arrastrar)...</a></span>";
-        ModalCargaArchivo += "<input type='file' name='files[]' multiple></span>";
-        ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
-        ModalCargaArchivo += "<div class='fileupload-progress' >";
-        // ModalCargaArchivo += "<div class='progress' role='progressbar' aria-valuemin='0' aria-valuemax='100'></div>";
-        ModalCargaArchivo += "<div class='progress-extended'>&nbsp;</div>";
-        ModalCargaArchivo += "</div></div>";
-        ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
-
-    $("#subirArchivos").click(function()
-    {
-        agregarArchivosUrl();
-    });
-    months = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
-
     function mostrar_urls(id)
-    {
-            var tempDocumentolistadoUrl = "";
-            URL = 'gantt/gantt_tareas/'+id;
-            $.ajax({
-                    url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
-                    type: 'GET',
-                    data: 'URL='+URL,
-                    success: function(todo)
-                    {
-                            if(todo[0].length!=0)
-                            {
-                                    tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
-                                    $.each(todo[0], function (index,value)
-                                    {
-                                            nametmp = value.split("^-O-^-M-^-G-^");
-                                            fecha = new Date(nametmp[0]*1000);
-                                            fecha = fecha.getDate() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+{
+        var tempDocumentolistadoUrl = "";
+        URL = 'gantt/gantt_tareas/'+id;
+        $.ajax({
+                url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
+                type: 'GET',
+                data: 'URL='+URL+'&SIN_CONTRATO=',
+                async:false,
+                success: function(todo)
+                {
+                        if(todo[0].length!=0)
+                        {
+                                tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
+                                $.each(todo[0], function (index,value)
+                                {
+                                        nametmp = value.split("^-O-^-M-^-G-^");
+                                        fecha = new Date(nametmp[0]*1000);
+                                        fecha = fecha.getDate() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+                                        
+                                        tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
+                                        tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\" download='"+nametmp[1]+"'>"+nametmp[1]+"</a></td>";
+                                        tempDocumentolistadoUrl += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
+                                        tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
+                                        tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";
+                                });
+                                tempDocumentolistadoUrl += "</tbody></table>";
+                        }
+                        if(tempDocumentolistadoUrl == " ")
+                        {
+                                tempDocumentolistadoUrl = " No hay archivos agregados ";
+                        }
+                        tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdDocumento' type='text' style='display:none;' value='"+id+"'>";
+                        // alert(tempDocumentolistadoUrl);
+                        $('#DocumentoEntradaAgregarModal').html(" ");
+                        $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
+                        $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
+                        // $('#fileupload').fileupload();
+                        $('#fileupload').fileupload({
+                        url: '../View/',
+                        });
+                }
+        });
+}
 
-                                            tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
-                                            tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\" download='"+nametmp[1]+"'>"+nametmp[1]+"</a></td>";
-                                            tempDocumentolistadoUrl += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
-                                            tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
-                                            tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";
-                                    });
-                                    tempDocumentolistadoUrl += "</tbody></table>";
-                            }
-                            if(tempDocumentolistadoUrl == " ")
-                            {
-                                    tempDocumentolistadoUrl = " No hay archivos agregados ";
-                            }
-                            tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdDocumento' type='text' style='display:none;' value='"+id+"'>";
-                            // alert(tempDocumentolistadoUrl);
-                            $('#DocumentoEntradaAgregarModal').html(" ");
-                            $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
-                            $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
-                            // $('#fileupload').fileupload();
-                            $('#fileupload').fileupload({
-                            url: '../View/',
-                            });
-                    }
-            });
-    }
+var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/form-data'>";
+                ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
+                ModalCargaArchivo += "<div class='fileupload-buttons'>";
+                ModalCargaArchivo += "<span class='fileinput-button'>";
+                ModalCargaArchivo += "<span><a >Agregar Archivos(Click o Arrastrar)...</a></span>";
+                ModalCargaArchivo += "<input type='file' name='files[]' multiple></span>";
+                ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
+                ModalCargaArchivo += "<div class='fileupload-progress' >";
+                ModalCargaArchivo += "</div></div>";
+                ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
+                
+
+months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+
+
+function agregarArchivosUrl()
+{
+        var ID = $('#tempInputIdDocumento').val();
+        url = 'gantt/gantt_tareas/'+ID,
+        $.ajax({
+                url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
+                type: 'GET',
+                data: 'URL='+url+'&SIN_CONTRATO=',
+                success:function(creado)
+                {
+                    if(creado==true)
+                        $('.start').click();
+                },
+                error:function()
+                {
+                        swalError("Error del servidor");
+                }
+        });
+}
     
     
-    function agregarArchivosUrl()
-    {
-            var ID = $('#tempInputIdDocumento').val();
-            url = 'gantt/gantt_tareas/'+ID,
-            $.ajax({
-                    url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
-                    type: 'GET',
-                    data: 'URL='+url,
-                    success:function(creado)
-                    {
-                            if(creado==true)
-                                    $('.start').click();
-                    },
-                    error:function()
-                    {
-                            swalError("Error del servidor");
-                    }
-            });
-    }
-    
-    
-    function borrarArchivo(url)
-    {
-    swal({
-            title: "ELIMINAR",
-            text: "Confirme para eliminar el Archivo",
-            type: "warning",
-            showCancelButton: true,
-            // closeOnConfirm: false,
-            // showLoaderOnConfirm: true
-            confirmButtonText:'SI'
-            }).then((res)=>
-            {
-                    if(res)
-                    {
-                            var ID = $('#tempInputIdDocumento').val();
-                            $.ajax({
-                                    url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
-                                    type: 'GET',
-                                    data: 'URL='+url,
-                                    beforeSend:()=>
-                                    {
-                                            growlWait("Eliminar Archivo","Eliminando Archivo...");
-                                    },
-                                    success: function(eliminado)
-                                    {
-                                            // eliminar = eliminado;
-                                            if(eliminado)
-                                            {
-                                                    growlSuccess("Eliminar Archivo","Archivo Eliminado");
-                                                    mostrar_urls(ID);
-                                                    actualizarDocumentoEntrada(ID);
-                                                    // swal("","Archivo eliminado");
-                                                    setTimeout(function(){swal.close();},1000);
-                                            }
-                                            else
-                                                    growlError("Error Eliminar","Ocurrio un error al eliminar el archivo");
-                                    },
-                                    error:function()
-                                    {
-                                            growlError("Error","Error en el servidor");
-                                    }
-                            });
-                    }
-            });
-    }
+function borrarArchivo(url)
+{
+
+        swal({
+                title: "ELIMINAR",
+                text: "Confirme para eliminar el Archivo",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true
+                }, function()
+                {
+                        var ID = $('#tempInputIdDocumento').val();
+                        $.ajax({
+                                url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
+                                type: 'GET',
+                                data: 'URL='+url+'&SIN_CONTRATO=',
+                                success: function(eliminado)
+                                {
+                                        // eliminar = eliminado;
+                                        if(eliminado)
+                                        {
+                                                mostrar_urls(ID);
+//                                                refresh();
+                                                swal("","Archivo eliminado");
+                                                setTimeout(function(){swal.close();},1000);
+                                        }
+                                        else
+                                                swal("","Ocurrio un error al eliminar el archivo", "error");
+                                },
+                                error:function()
+                                {
+                                        swal("","Ocurrio un error al elimiar el archivo", "error");
+                                }
+                        });
+                });
+}    
+
     
   </script>
   
@@ -1568,25 +1588,31 @@ construirTreeList();
         {% if(t == 1){ if( $('#tempInputIdDocumento').length > 0 ) { var ID = $('#tempInputIdDocumento').val(); mostrar_urls(ID); actualizarDocumentoEntrada(ID); }else{ $('#btnAgregarDocumentoEntradaRefrescar').click(); } } %}
 </script>
   
-  
-<!-- js cargar archivo -->
-                 <!--<script src="../../assets/FileUpload/js/jquery.min.js"></script>-->
-                <!--<script src="../../assets/FileUpload/js/jquery-ui.min.js"></script>--> 
-                <script src="../../assets/FileUpload/js/tmpl.min.js"></script>
-                <script src="../../assets/FileUpload/js/load-image.all.min.js"></script>
-                <script src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.blueimp-gallery.min.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.iframe-transport.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-process.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-image.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-audio.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-video.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
-                <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
-                <script src="../../assets/FileUpload/js/main.js"></script>
-  
+    <!--Bootstrap-->
+    <!--<script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>-->
+    <!--Para abrir alertas de aviso, success,warning, error-->       
+    <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+
+   <!-- js cargar archivo -->
+    <script src="../../assets/FileUpload/js/tmpl.min.js"></script>
+    <script src="../../assets/FileUpload/js/load-image.all.min.js"></script>
+    <script src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>
+    
+    <script src="../../assets/FileUpload/js/jquery.blueimp-gallery.min.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.iframe-transport.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-process.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-image.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-audio.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-video.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
+
+    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
+    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
+    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
+    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
   
   
 </html>

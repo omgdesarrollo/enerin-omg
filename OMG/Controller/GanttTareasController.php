@@ -16,7 +16,12 @@ switch ($Op) {
               Gantt_TareasModel::actualizarExisteProgramaTareas(array("existeprograma"=>1,"id_tarea"=>Session::getSesion("dataGantt_id_tarea")));
           }else{
                Gantt_TareasModel::actualizarExisteProgramaTareas(array("existeprograma"=>0,"id_tarea"=>Session::getSesion("dataGantt_id_tarea")));
-          }      
+          }
+            foreach ($Lista as $key => $value) {
+            $url= $_REQUEST['URL'].$value['id'];
+            $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls(-1,$url);
+            }
+          
             header('Content-type: application/json; charset=utf-8');
             echo json_encode(array("data"=>$Lista));
             break;
