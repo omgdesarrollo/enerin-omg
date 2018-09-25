@@ -109,6 +109,15 @@ and open the template in the editor.
     <link href="../../css/PersonalizacionVistasGantt.css" rel="stylesheet" type="text/css"/>
     <!--aqui termina las librerias que no son del gantt-->
     
+    
+    
+<!--     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
+    
+    
+    
     <script>
         var dragresize = new DragResize('dragresize',
             { minWidth: 50, minHeight: 50, minLeft: 20, minTop: 20, maxLeft: 600, maxTop: 600 });
@@ -354,16 +363,19 @@ and open the template in the editor.
  bottom: -8px;
  right: -8px;
  cursor: se-resize;
-}
- 
- 
-  </style> 	
+} 
+
+#resizable { width: 100%; height: 150px; padding: 0.5em; }
+  #resizable h3 { text-align: center; margin: 0; }
+</style> 	
 		
   </head>
     <body>
         
         
-     
+  
+        
+        
   <!--<form action="">-->
   <input type="submit" class="btn btn-info" value="Recargar" onclick="refrescarDatosGantt()">      
       
@@ -420,20 +432,28 @@ and open the template in the editor.
 			   accept=".mpp,.xml, text/xml, application/xml, application/vnd.ms-project, application/msproj, application/msproject, application/x-msproject, application/x-ms-project, application/x-dos_ms_project, application/mpp, zz-application/zz-winassoc-mpp"/>
 		<button id="mspImportBtn" type="submit">Seleccion el MS Proyect</button>
 	</form>-->
-    <div class="drsElement" id="gantt_here" style='width:100%; height:100%;'>       
+
+
+    <div class="drsElement drsMoveHandle" id="gantt_here" style='width:100%; height:50%;'>       
 </div>
-<div  class="drsElement " id="detallesInformacion" style="display: none;width:100%; height:200px;position: fixed;z-index: 2;">
+<div  class="drsElement drsMoveHandle" id="detallesInformacion" style="display: none;width:100%; height:200px;position: absolute;">
     <!--<div class="drsElement drsMoveHandle" style="position: fixed;width: 100%;height: 90%;background-color: #666600">-->
 
 <!--         <div id="detallesInformacion">
--->      <div class="" id="tree-list" style=''>
+-->      <div class="" id="tree-list" >
           <div id="dx" ></div>
                             </div>
     <!--</div>-->
         
         
+<!--</div>-->
 </div>
- </div>
+
+<div id="resizable" class="ui-widget-content">
+  <h3 class="ui-widget-header"></h3>
+</div>
+
+
 <!--left: 150px; top: 280px;--> 
 <!--    <div class="drsElement drsMoveHandle" style="width: 100%;height: 50%;background-color: #666600">   
         </div>-->
@@ -1116,8 +1136,10 @@ dp.init(gantt);
 
     var datosTreeList=[]; 
     $(function (){
-        
-        
+//        $("#detallesInformacion").resize();
+            $("#detallesInformacion" ).resizable();
+              $("#detallesInformacion" ).draggable();
+            
 //         $(window).on("resize", 
 //         
 //        function (){
