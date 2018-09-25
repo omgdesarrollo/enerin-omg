@@ -104,6 +104,7 @@ and open the template in the editor.
     <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>-->
     <!--<script>window.angular || document.write(decodeURIComponent('%3Cscript src="js/angular.min.js"%3E%3C\/script%3E'))</script>-->
     <script src="https://cdn3.devexpress.com/jslib/18.1.6/js/dx.all.js"></script>
+    <link href="../../css/PersonalizacionVistasGantt.css" rel="stylesheet" type="text/css"/>
     <!--aqui termina las librerias que no son del gantt-->
     
     <script>
@@ -233,50 +234,12 @@ and open the template in the editor.
     white-space: normal;
     vertical-align: top;
     color: white;
-}    
-            
+}               
 #dx {
     max-height: 100%;
-/*    align-items: stretch;
-display: flex;*/
 }
 
  .modal-lg{width: 50%;}
-/*.modal-dialog {
-  position: fixed;
-  margin: 0;
-  width: 98%;
-  height: 90%;
-  padding: 0;
-}*/
-/*.modal-content {
-  position: fixed; 
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  
-  border: 2px solid #3c7dcf;
-  border-radius: 0;
-  box-shadow: none;
-}*/
-/*.modal-header {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  height: 50px;
-  padding: 10px;
-  background: black;
-  border: 0;
-}*/
-/*.modal-title {
-  font-weight: 300;
-  font-size: 2em;
-  color: #fff;
-  line-height: 30px;
-}*/
-
  #tabPanel{
      height: 8%;
  }
@@ -301,6 +264,29 @@ display: flex;*/
  
  
  
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
  .drsElement {
  position: absolute;
  border: 1px solid #333;
