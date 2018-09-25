@@ -434,7 +434,7 @@ and open the template in the editor.
 	</form>-->
 
 
-    <div class="drsElement drsMoveHandle" id="gantt_here" style='width:100%; height:50%;'>       
+    <div class="drsElement drsMoveHandle" id="gantt_here" style='width:100%; height:100%;'>       
 </div>
 <div  class="drsElement drsMoveHandle" id="detallesInformacion" style="display: none;width:100%; height:200px;position: absolute;">
     <!--<div class="drsElement drsMoveHandle" style="position: fixed;width: 100%;height: 90%;background-color: #666600">-->
