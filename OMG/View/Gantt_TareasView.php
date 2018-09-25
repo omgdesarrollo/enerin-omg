@@ -23,7 +23,8 @@ and open the template in the editor.
 
 <html>
     <head>
-        <meta charset="UTF-8">
+        <!--<meta charset="UTF-8">-->
+        <meta charset="UTF-8" name="viewport" content="width=500, initial-scale=1, maximum-scale=1">
         <title></title>
         
     <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>    
@@ -92,6 +93,8 @@ and open the template in the editor.
     <!--<link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>-->
     <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
 
+    <script src="../../js/dragresize.js" type="text/javascript"></script>
+    
     <!--aqui empieza librerias qe no son del gantt en funcionalidad y presentacion-->
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>-->
     <!--<script>window.jQuery || document.write(decodeURIComponent('%3Cscript src="js/jquery.min.js"%3E%3C/script%3E'))</script>-->
@@ -102,7 +105,25 @@ and open the template in the editor.
     <script src="https://cdn3.devexpress.com/jslib/18.1.6/js/dx.all.js"></script>
     <!--aqui termina las librerias que no son del gantt-->
     
-    
+    <script>
+        var dragresize = new DragResize('dragresize',
+            { minWidth: 50, minHeight: 50, minLeft: 20, minTop: 20, maxLeft: 600, maxTop: 600 });
+        dragresize.isElement = function(elm)
+        {
+            if (elm.className && elm.className.indexOf('drsElement') > -1) return true;
+        };
+        dragresize.isHandle = function(elm)
+        {
+            if (elm.className && elm.className.indexOf('drsMoveHandle') > -1) return true;
+        };
+        dragresize.ondragfocus = function() { };
+        dragresize.ondragstart = function(isResize) { };
+        dragresize.ondragmove = function(isResize) { };
+        dragresize.ondragend = function(isResize) { };
+        dragresize.ondragblur = function() { };
+        dragresize.apply(document);
+//        drsElement drsMoveHandle
+     </script>
     
     
  <style type="text/css">
@@ -215,6 +236,8 @@ and open the template in the editor.
             
 #dx {
     max-height: 100%;
+/*    align-items: stretch;
+display: flex;*/
 }
 
  .modal-lg{width: 50%;}
@@ -259,6 +282,74 @@ and open the template in the editor.
  .dx-item-content dx-multiview-item-content{
    background-color: red;  
  }
+ .drsElement {
+ position: absolute;
+ border: 1px solid #333;
+}
+
+.drsMoveHandle {
+ height: 20px;
+ background-color: #CCC;
+ border-bottom: 1px solid #666;
+ cursor: move;
+}
+ .dragresize {
+ position: absolute;
+ width: 5px;
+ height: 5px;
+ font-size: 1px;
+ background: #EEE;
+ border: 1px solid #333;
+}
+
+.dragresize-tl {
+ top: -8px;
+ left: -8px;
+ cursor: nw-resize;
+}
+.dragresize-tm {
+ top: -8px;
+ left: 50%;
+ margin-left: -4px;
+ cursor: n-resize;
+}
+.dragresize-tr {
+ top: -8px;
+ right: -8px;
+ cursor: ne-resize;
+}
+
+.dragresize-ml {
+ top: 50%;
+ margin-top: -4px;
+ left: -8px;
+ cursor: w-resize;
+}
+.dragresize-mr {
+ top: 50%;
+ margin-top: -4px;
+ right: -8px;
+ cursor: e-resize;
+}
+
+.dragresize-bl {
+ bottom: -8px;
+ left: -8px;
+ cursor: sw-resize;
+}
+.dragresize-bm {
+ bottom: -8px;
+ left: 50%;
+ margin-left: -4px;
+ cursor: s-resize;
+}
+.dragresize-br {
+ bottom: -8px;
+ right: -8px;
+ cursor: se-resize;
+}
+ 
+ 
   </style> 	
 		
   </head>
@@ -322,12 +413,39 @@ and open the template in the editor.
 			   accept=".mpp,.xml, text/xml, application/xml, application/vnd.ms-project, application/msproj, application/msproject, application/x-msproject, application/x-ms-project, application/x-dos_ms_project, application/mpp, zz-application/zz-winassoc-mpp"/>
 		<button id="mspImportBtn" type="submit">Seleccion el MS Proyect</button>
 	</form>-->
-    <div id="gantt_here" style='width:100%; height:50%;'></div>
+    <div id="gantt_here" style='width:100%; height:100%;'>       
+</div>
+<div id="detallesInformacion" style="display: none;">
+    <div class="drsElement drsMoveHandle" style="position: absolute;width: 100%;height: 50%;background-color: #666600">
+
+<!--         <div id="detallesInformacion">
+-->      <div id="tree-list" style='width:100%; height:90%;position: absolute'>
+          <div id="dx" ></div>
+                            </div>
+    </div>
+        
+        
+</div>
+ </div>
+<!--left: 150px; top: 280px;--> 
+<!--    <div class="drsElement drsMoveHandle" style="width: 100%;height: 50%;background-color: #666600">   
+        </div>-->
+<!--    <div class="drsElement"
+ style="left: 50px; top: 150px; width: 250px; height: 120px;
+ background: #CDF; text-align: center">
+ <div class="drsMoveHandle">Div 0</div>
+ Content
+</div>-->
+    
+<!--    
     <div id="detallesInformacion">
       <div id="tree-list" style='width:100%; height:50%;position: relative'>
           <div id="dx" ></div>
                             </div>
-    </div>
+    </div>-->
+    
+    
+    
     </body>
     
 <!-- Inicio de Seccion Modal Archivos-->
@@ -991,6 +1109,15 @@ dp.init(gantt);
 
     var datosTreeList=[]; 
     $(function (){
+        
+        
+//         $(window).on("resize", 
+//         
+//        function (){
+//            alert();
+//        });
+  
+  // y al cargar la página
  
 //    var tabs = [{
 //            title: 'Detalles Registros Actividad',
@@ -1275,15 +1402,19 @@ construirTreeList();
     
     function detallesActividadesCompletasGantt(){
 //        alert("d");
-        if( $("#detallesInformacion").is(":visible")){
+        if( $("#detallesInformacion").css("display")!="none"){
+             $("#gantt_here").height("100%");
+//            alert("esta visible");
                  $("#detallesInformacion").css("display","none");
-                 $("#gantt_here").height("100%");
+//                $("body").css("zoom", window.innerWidth / 500);
                    
         }else{
-            $("#gantt_here").height("50%");
+//            alert("no lo esta")
             $("#detallesInformacion").css("display","");
-        }
+//             $("#detallesInformacion").css("display","");
+                        $("#gantt_here").height("50%");
 
+        }
 //        
 //        $("#gantt_here").css("height","100%");
         
