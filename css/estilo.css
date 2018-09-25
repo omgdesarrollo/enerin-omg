@@ -14,10 +14,15 @@ body{
 	width: 400px;
 	margin: 50px auto;
 	/*background-color: #F3EDED;*/
-        border: 1px solid #ffffff;
+        /*border: 1px solid #ffffff;*/
+        border: 2px solid #5cb85c;
 	height: 400px;
 	/*border-radius:8px;*/
 	padding: 0px 9px 0px 9px;
+        
+        -webkit-box-shadow: 0px 7px 10px 5px rgba(119,119,119,0.5);
+-moz-box-shadow: 0px 7px 10px 5px rgba(119,119,119,0.5);
+box-shadow: 0px 7px 10px 5px rgba(119,119,119,0.5);
 }
 
 /**
