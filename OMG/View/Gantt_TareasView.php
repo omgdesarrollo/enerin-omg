@@ -26,7 +26,7 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <title></title>
         
-        
+    <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>    
 <!--        <script src="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.js"></script>
   <link href="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.css" rel="stylesheet">
   <script src="../../assets/dhtmlxGantt/api.js" type="text/javascript"></script>-->
@@ -34,6 +34,13 @@ and open the template in the editor.
         <script src="../../assets/gantt_5.1.2_com/codebase/dhtmlxgantt.js" type="text/javascript"></script>
         <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_auto_scheduling.js" type="text/javascript"></script>-->
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_auto_scheduling.js.map"></a>-->
+    <script src="../../js/jquery.js" type="text/javascript"></script>
+    <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+    <!-- cargar archivo -->
+    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
+    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
+    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
+    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
     
     <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_critical_path.js" type="text/javascript"></script>-->
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_critical_path.js.map"></a>-->
@@ -54,7 +61,8 @@ and open the template in the editor.
     <!--aqui empieza para hacer aparecer la ventanita cuando seleccionas--> 
     <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_quick_info.js" type="text/javascript"></script>-->
     <!--aqui cierra-->
-    
+    <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+    <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_quick_info.js.map"></a>-->
     <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_smart_rendering.js" type="text/javascript"></script>-->
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_smart_rendering.js.map"></a>-->
@@ -209,27 +217,27 @@ and open the template in the editor.
     max-height: 100%;
 }
 
- .modal-lg{width: 92%;}
-.modal-dialog {
-  /*position: fixed;*/
-  /*margin: 0;*/
+ .modal-lg{width: 50%;}
+/*.modal-dialog {
+  position: fixed;
+  margin: 0;
   width: 98%;
   height: 90%;
-/*  padding: 0;*/
-}
-.modal-content {
+  padding: 0;
+}*/
+/*.modal-content {
   position: fixed; 
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   
-/*  border: 2px solid #3c7dcf;
+  border: 2px solid #3c7dcf;
   border-radius: 0;
-  box-shadow: none;*/
-}
-.modal-header {
-  /*position: absolute;*/
+  box-shadow: none;
+}*/
+/*.modal-header {
+  position: absolute;
   top: 0;
   right: 0;
   left: 0;
@@ -237,13 +245,13 @@ and open the template in the editor.
   padding: 10px;
   background: black;
   border: 0;
-}
-.modal-title {
-  /*font-weight: 300;*/
-  /*font-size: 2em;*/
+}*/
+/*.modal-title {
+  font-weight: 300;
+  font-size: 2em;
   color: #fff;
-  /*line-height: 30px;*/
-}
+  line-height: 30px;
+}*/
 
  #tabPanel{
      height: 8%;
@@ -320,6 +328,35 @@ and open the template in the editor.
           <div id="dx" ></div>
                             </div>
     </body>
+    
+<!-- Inicio de Seccion Modal Archivos-->
+<div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+        <div id="loaderModalMostrar"></div>
+		<div class="modal-content">
+                        
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Archivos Adjuntos</h4>
+		      </div>
+
+		      <div class="modal-body">
+                        <div id="DocumentolistadoUrl"></div>
+
+                        
+                        <div class="form-group">
+                                <div id="DocumentolistadoUrlModal"></div>
+			</div>
+
+                        <div class="form-group" method="post" >
+                                <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Archivo</button>
+                        </div>
+                      </div><!-- cierre div class-body -->
+                </div><!-- cierre div class modal-content -->
+        </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal -->    
+    
+    
 <!-- Inicio de Seccion Modal Informe-->
 <div class="modal draggable fade" id="detalles" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog modal-lg" role="document">
@@ -1001,7 +1038,7 @@ construirTreeList();
                                                 datosTreeObj["porcentaje_por_actividad"]= value.porcentaje_por_actividad;
                                                 datosTreeObj["ponderado_real"]= value.ponderado_real;
                                                 datosTreeObj["avance"]= value.avance;
-                                                datosTreeObj["archivo_adjunto"]= "<button onClick='mostrar_urls("+value.id+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'></button>";
+                                                datosTreeObj["archivo_adjunto"]= "<button onClick='mostrar_urls("+value.id+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
                                                 datosTreeObj["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar</button>";
                                                 
                                                 datosTreeList.push(datosTreeObj);                                                
@@ -1332,13 +1369,212 @@ construirTreeList();
     }
     
     
+    var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/form-data'>";
+        ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
+        ModalCargaArchivo += "<div class='fileupload-buttons'>";
+        ModalCargaArchivo += "<span class='fileinput-button'>";
+        ModalCargaArchivo += "<span><a >Agregar Archivos(Click o Arrastrar)...</a></span>";
+        ModalCargaArchivo += "<input type='file' name='files[]' multiple></span>";
+        ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
+        ModalCargaArchivo += "<div class='fileupload-progress' >";
+        // ModalCargaArchivo += "<div class='progress' role='progressbar' aria-valuemin='0' aria-valuemax='100'></div>";
+        ModalCargaArchivo += "<div class='progress-extended'>&nbsp;</div>";
+        ModalCargaArchivo += "</div></div>";
+        ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
+
+    $("#subirArchivos").click(function()
+    {
+        agregarArchivosUrl();
+    });
+    months = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+
+    function mostrar_urls(id)
+    {
+            var tempDocumentolistadoUrl = "";
+            URL = 'gantt/gantt_tareas/'+id;
+            $.ajax({
+                    url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
+                    type: 'GET',
+                    data: 'URL='+URL,
+                    success: function(todo)
+                    {
+                            if(todo[0].length!=0)
+                            {
+                                    tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
+                                    $.each(todo[0], function (index,value)
+                                    {
+                                            nametmp = value.split("^-O-^-M-^-G-^");
+                                            fecha = new Date(nametmp[0]*1000);
+                                            fecha = fecha.getDate() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+
+                                            tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
+                                            tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\" download='"+nametmp[1]+"'>"+nametmp[1]+"</a></td>";
+                                            tempDocumentolistadoUrl += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
+                                            tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
+                                            tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";
+                                    });
+                                    tempDocumentolistadoUrl += "</tbody></table>";
+                            }
+                            if(tempDocumentolistadoUrl == " ")
+                            {
+                                    tempDocumentolistadoUrl = " No hay archivos agregados ";
+                            }
+                            tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdDocumento' type='text' style='display:none;' value='"+id+"'>";
+                            // alert(tempDocumentolistadoUrl);
+                            $('#DocumentoEntradaAgregarModal').html(" ");
+                            $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
+                            $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
+                            // $('#fileupload').fileupload();
+                            $('#fileupload').fileupload({
+                            url: '../View/',
+                            });
+                    }
+            });
+    }
     
     
+    function agregarArchivosUrl()
+    {
+            var ID = $('#tempInputIdDocumento').val();
+            url = 'gantt/gantt_tareas/'+ID,
+            $.ajax({
+                    url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
+                    type: 'GET',
+                    data: 'URL='+url,
+                    success:function(creado)
+                    {
+                            if(creado==true)
+                                    $('.start').click();
+                    },
+                    error:function()
+                    {
+                            swalError("Error del servidor");
+                    }
+            });
+    }
+    
+    
+    function borrarArchivo(url)
+    {
+    swal({
+            title: "ELIMINAR",
+            text: "Confirme para eliminar el Archivo",
+            type: "warning",
+            showCancelButton: true,
+            // closeOnConfirm: false,
+            // showLoaderOnConfirm: true
+            confirmButtonText:'SI'
+            }).then((res)=>
+            {
+                    if(res)
+                    {
+                            var ID = $('#tempInputIdDocumento').val();
+                            $.ajax({
+                                    url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
+                                    type: 'GET',
+                                    data: 'URL='+url,
+                                    beforeSend:()=>
+                                    {
+                                            growlWait("Eliminar Archivo","Eliminando Archivo...");
+                                    },
+                                    success: function(eliminado)
+                                    {
+                                            // eliminar = eliminado;
+                                            if(eliminado)
+                                            {
+                                                    growlSuccess("Eliminar Archivo","Archivo Eliminado");
+                                                    mostrar_urls(ID);
+                                                    actualizarDocumentoEntrada(ID);
+                                                    // swal("","Archivo eliminado");
+                                                    setTimeout(function(){swal.close();},1000);
+                                            }
+                                            else
+                                                    growlError("Error Eliminar","Ocurrio un error al eliminar el archivo");
+                                    },
+                                    error:function()
+                                    {
+                                            growlError("Error","Error en el servidor");
+                                    }
+                            });
+                    }
+            });
+    }
     
   </script>
   
   
- 
+  <script id="template-upload" type="text/x-tmpl">
+        {% for (var i=0, file; file=o.files[i]; i++) { %}
+        <tr class="template-upload" style="width:100%">
+                <td>
+                <span class="preview"></span>
+                </td>
+                <td>
+                <p class="name">{%=file.name%}</p>
+                <strong class="error"></strong>
+                </td>
+                <td>
+                <p class="size">Processing...</p>
+                <!-- <div class="progress"></div> -->
+                </td>
+                <td>
+                {% if (!i && !o.options.autoUpload) { %}
+                        <button class="start" style="display:none;padding: 0px 4px 0px 4px;" disabled>Start</button>
+                {% } %}
+                {% if (!i) { %}
+                        <button class="cancel" style="padding: 0px 4px 0px 4px;color:white">Cancel</button>
+                {% } %}
+                </td>
+        </tr>
+        {% } %} 
+</script>
+
+<script id="template-download" type="text/x-tmpl">
+{% var t = $('#fileupload').fileupload('active'); var i,file; %}
+        {% for (i=0,file; file=o.files[i]; i++) { %}
+        <tr class="template-download">
+                <td>
+                <span class="preview">
+                        {% if (file.thumbnailUrl) { %}
+                        <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                        {% } %}
+                </span>
+                </td>
+                <td>
+                <p class="name">
+                        <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+                </p>
+                </td>
+                <td>
+                <span class="size">{%=o.formatFileSize(file.size)%}</span>
+                </td>
+                <!-- <td> -->
+                <!-- <button class="delete" style="padding: 0px 4px 0px 4px;" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>Delete</button> -->
+                <!-- <input type="checkbox" name="delete" value="1" class="toggle"> -->
+                <!-- </td> -->
+        </tr>
+        {% } %}
+        {% if(t == 1){ if( $('#tempInputIdDocumento').length > 0 ) { var ID = $('#tempInputIdDocumento').val(); mostrar_urls(ID); actualizarDocumentoEntrada(ID); }else{ $('#btnAgregarDocumentoEntradaRefrescar').click(); } } %}
+</script>
+  
+  
+<!-- js cargar archivo -->
+                 <!--<script src="../../assets/FileUpload/js/jquery.min.js"></script>-->
+                <!--<script src="../../assets/FileUpload/js/jquery-ui.min.js"></script>--> 
+                <script src="../../assets/FileUpload/js/tmpl.min.js"></script>
+                <script src="../../assets/FileUpload/js/load-image.all.min.js"></script>
+                <script src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.blueimp-gallery.min.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.iframe-transport.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.fileupload.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.fileupload-process.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.fileupload-image.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.fileupload-audio.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.fileupload-video.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
+                <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
+                <script src="../../assets/FileUpload/js/main.js"></script>
   
   
   
