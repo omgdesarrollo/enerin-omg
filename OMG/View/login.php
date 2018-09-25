@@ -27,69 +27,7 @@ if (Session:: existeSesion("user")){
         <script src="../../js/is.js" type="text/javascript"></script>
         <script src="../../js/tooltip.js" type="text/javascript"></script>
         <script src="../../angular/angular.min.js" type="text/javascript"></script>
-       
-        <style>
-            body {
-                background-color: #00c4ff26;
-            }
-
-            footer {
-                    background: #337ab7;
-                    position: absolute;
-                    bottom: 0;
-                    width: 100%;
-                    height: 50px;
-                    color: white;
-            }
-
-            footer .copyright {
-                    text-align: center;
-                    font-size: 14px;
-                    padding: 15px 0;
-            }
-
-            .rombo {
-                 width: 100px; 
-                 height: 100px; 
-                 border: 3px solid #337ab7; 
-                 background: #00c4ff26;
-                 margin-top: 100px;
-                 color: #fff;
-                 position: absolute;
-                 
-                 -webkit-transform: rotate(45deg) skew(15deg, 15deg);
-                 -moz-transform: rotate(45deg) skew(15deg, 15deg);
-                 -ms-transform: rotate(45deg) skew(15deg, 15deg);
-                 -o-transform: rotate(45deg) skew(15deg, 15deg);
-                 transform: rotate(45deg) skew(15deg, 15deg);
-            }
-
-            .cuadrado {
-                 width: 100px; 
-                 height: 100px; 
-                 border: 3px solid #337ab7;
-                 background: #428bca;
-                 margin-top: 250px;
-                 position: absolute;
-            }
-
-            .oval {
-                 width: 250px;
-                 height: 100px;
-                 -moz-border-radius: 0 50% / 0 100%;
-                 -webkit-border-radius: 0 50% / 0 100%;
-                 border-radius: 0 50% / 0 100%;
-                 background: #5cb85c;
-                 border: 3px solid #337ab7;
-                 margin-top: 370px;
-                 position: absolute;
-            }
-                
-        </style>
-        <?php 
-        
-        ?>
-        
+               
     </head>
     
     <body>
