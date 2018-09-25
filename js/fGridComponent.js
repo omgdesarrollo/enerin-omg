@@ -4,6 +4,21 @@
 //     lol();
 // });
 // var heightGrid;
+function inyectar_librerias()
+{
+    let librerias = "<link href='../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css' rel='stylesheet' type='text/css'/>";
+    librerias += "<script src='../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js' type='text/javascript'></script>";
+    librerias +="<link href='../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css' rel='stylesheet' type='text/css'/>";
+    librerias += "<link href='../../assets/jsgrid/jsgrid-theme.min.css' rel='stylesheet' type='text/css'/>";
+    librerias += "<link href='../../assets/jsgrid/jsgrid.min.css' rel='stylesheet' type='text/css'/>";
+    librerias += "<script src='../../assets/jsgrid/jsgrid.min.js' type='text/javascript'></script>";
+    librerias += "<script src='../../js/filtroSupremo.js' type='text/javascript'></script>";
+    librerias += "<link href='../../css/filtroSupremo.css' rel='stylesheet' type='text/css'/>";
+    librerias += "<link href='../../css/jsgridconfiguration.css' rel='stylesheet' type='text/css'/>";
+    $("head").append(librerias);
+}
+inyectar_librerias();
+
 function lol()
 {
     var tam1A,tam2A;
@@ -16,12 +31,12 @@ function lol()
         tam2A = tam1A - 42;
         $(Frame).css("height",tam2A-6+"px");
 
-        $("#jsGrid").css("height","385px");
+        $("#jsGrid").css("height","380px");
         
         // console.log("AQUIII");
         // console.log(gridInstance);
-        gridInstance.height = 385 + "px";
-        gridInstance._body[0].style.height = "240px";
+        gridInstance.height = 380 + "px";
+        gridInstance._body[0].style.height = "210px";
         
         // $(".jsgrid-grid-body").css("height","235px");
     }
@@ -31,13 +46,14 @@ function lol()
         tam2A = tam1A - 42;
         $(Frame).css("height",tam2A-6+"px");
         t = $(window.parent).height() - 720;
-        $("#jsGrid").css("height", t + 400 +"px");
+        $("#jsGrid").css("height", t + 380 +"px");
+        // $("#jsGrid").css("bottom","0px");
         
         // heightGrid = t;
         // console.log(gridInstance);
-        gridInstance.height = t + 385 + "px";
+        gridInstance.height = t + 380 + "px";
         // console.log($(".jsgrid-grid-body"));
-        gridInstance._body[0].style.height = t + 240 +"px";
+        gridInstance._body[0].style.height = t + 210 +"px";
         // gridInstance._body[0].style.height = "max-container";
         // gridInstance._body[0].style.height = 80 +"%";
         
@@ -117,8 +133,9 @@ function construirGrid()
         onDataLoaded:(args)=>
         {
             // alert("3");
-            setTimeout(function(){lol();},100);
+            // setTimeout(function(){lol();},200);
             $('.jsgrid-filter-row').removeAttr("style",'display:none');
+            setTimeout(function(){lol();},100);
             // $(".jsgrid-grid-body").attr("style","height:53.44228935%");
             // $(window.parent).resizeTo($(window.parente).width(),$(window.parente).height()-200);
             // this.resizeTo($(window.parente).width(),$(window.parente).height()-200);
@@ -185,7 +202,7 @@ function construirGrid()
         },
         width: "100%",
         height: "390px",
-        autoload:true,
+        autoload:false,
         heading: true,
         sorting: true,
         editing: true,

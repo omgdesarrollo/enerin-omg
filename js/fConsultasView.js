@@ -62,7 +62,7 @@ function inicializarFiltros()
             { name: "Nombre Tema",id:"no_tema", type: "text",},
             { name: "Nombre Tema",id:"nombre_tema", type: "text",},
             { name: "Nombre Tema",id:"responsable_tema", type: "text",},
-            { name: "Nombre Tema",id:"cumplimiento_tema", type: "text",},
+            { name: "Nombre Tema",id:"cumplimiento_tema", type: "none",},
 
             { name: "Nombre Tema",id:"estado_tema", type: "combobox",data:[{estado_tema:1,descripcion:"ACTIVO"},{estado_tema:0,descripcion:"INACTIVO"}],descripcion:"descripcion"},
 
@@ -695,4 +695,16 @@ function graficar3(datos,concepto)
         dataGrafica.push([ "NO EXISTEN REGISTROS",1,"SIN REGISTROS",""]);
     
     construirGrafica(dataGrafica,tituloGrafica);
+}
+
+function refresh()
+{
+    inicializarFiltros().then((resolve2)=>
+    {
+        construirFiltros();
+        listarDatos();
+    },(error)=>
+    {
+        growlError("Error!","Error al construir la vista, recargue la página");
+    });
 }

@@ -47,29 +47,29 @@
 
     <!--jquery-->
     
-    <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
+    <!-- <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
-    <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
+    <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script> -->
 
     <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
     <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
     <!-- <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script> -->
-    
+<!--     
     <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
     <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
-    <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/> -->
 
     <!-- <script src="../../js/fechas_formato.js" type="text/javascript"></script> -->
-    <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
-    <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
+    <!-- <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
+    <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/> -->
     <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
     <!-- <script src="../../js/tools.js" type="text/javascript"></script> marca un error al agregarse -->
     <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
 
     <script src="../../js/fEvidenciasView.js" type="text/javascript"></script>
-    <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
+    <!-- <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/> -->
     <script src="../../js/fGridComponent.js" type="text/javascript"></script>
     <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
    

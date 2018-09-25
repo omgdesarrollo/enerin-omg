@@ -289,7 +289,18 @@ function redimencionarLayout()
          myLayout.cells("a").setHeight(710);
         myLayout.cells("a").attachObject("sidebarObj");
         myLayout.cells("b").attachObject("sidebarObjV");
-        
+
+        myLayout.attachEvent("onResizeFinish", function(){
+            redimencionarLayout();
+        });
+
+        myLayout.attachEvent("onExpand", function(name){
+            redimencionarLayout();
+        });
+
+        myLayout.attachEvent("onPanelResizeFinish", function(names){
+            redimencionarLayout();
+        });
 
                     detallescontratosiahyseleccionado();
 //                  loadDataMenuArriba("","NO SELECCIONADO");
@@ -911,7 +922,7 @@ function loadDataNotificaciones(){
 <div id="ribbonObj" style="position: relative;width: 100%;"></div>
    
     
-<div id="layoutObj" class="layoutObj" > 
+<div id="layoutObj" class="layoutObj" style="width:99.9%"> 
     <div id="arbolprincipal"> </div>
     <!--<div id="combo_zone2" style="width:200px; height:30px;"></div>-->
 </div>

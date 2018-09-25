@@ -41,18 +41,18 @@ $Usuario=  Session::getSesion("user");
         <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
         <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
 
-        <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
+        <!-- <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
         <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
-        <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
+        <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script> -->
 
-        <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
-        <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
+        <!-- <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
+        <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/> -->
         <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
         <!-- <script src="../../js/tools.js" type="text/javascript"></script> -->
         <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
         <script src="../../js/fValidacionDocumentosView.js" type="text/javascript"></script>
 
-        <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
+        <!-- <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/> -->
         <script src="../../js/fGridComponent.js" type="text/javascript"></script>
         <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
                 
