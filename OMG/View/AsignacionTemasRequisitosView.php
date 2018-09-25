@@ -189,7 +189,7 @@ $Usuario=  Session::getSesion("user");
 <!--<div id="gridbox"></div>-->
 
 	<script>
-            var myLayout, myTree, myToolbar,id_asignacion_t=-1,levelv=0,id_asignacion_r=-1,selec_tema=-1,id_seleccionado=-1,dataIds_req=[],dataIds_reg=[];
+            var myLayout, myTree, myToolbar,myToolbarExportar,id_asignacion_t=-1,levelv=0,id_asignacion_r=-1,selec_tema=-1,id_seleccionado=-1,dataIds_req=[],dataIds_reg=[];
             myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
 	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
 //            myCombo = new dhtmlXCombo({
@@ -401,7 +401,7 @@ var myLayout = new dhtmlXLayoutObject({
 			]
 		});
 
-var myToolbar = myLayout.cells("a").attachToolbar
+ myToolbarExportar = myLayout.cells("a").attachToolbar
 ({
     iconset: "awesome",
     items: [
@@ -409,7 +409,7 @@ var myToolbar = myLayout.cells("a").attachToolbar
 
     ]
 });
-
+myToolbarExportar.base.id="toExcel";
  myLayout.cells("a").attachObject("seccionIzquierda");
  
 
@@ -433,6 +433,11 @@ myToolbar.attachEvent("onClick", function(id){
     evaluarToolbarSeccionB(id);
 
 });
+
+
+
+
+
 
 myTree.attachEvent("onClick", function(id){
 

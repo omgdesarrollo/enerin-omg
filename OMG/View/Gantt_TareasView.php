@@ -323,10 +323,11 @@ and open the template in the editor.
 		<button id="mspImportBtn" type="submit">Seleccion el MS Proyect</button>
 	</form>-->
     <div id="gantt_here" style='width:100%; height:50%;'></div>
-    
+    <div id="detallesInformacion">
       <div id="tree-list" style='width:100%; height:50%;position: relative'>
           <div id="dx" ></div>
                             </div>
+    </div>
     </body>
     
 <!-- Inicio de Seccion Modal Archivos-->
@@ -1253,13 +1254,14 @@ construirTreeList();
     }); 
     }
    var archivoAdjuntoCellTemplate= function(container, options) {
+       
 //       console.log("empezo");
 //       container.context.innerHTML="<button onClick='mostrar_urls("+options.data.id+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'></button>";
-        container.context.innerHTML=options.data.archivo_adjunto;
+//        container.context.innerHTML=options.data.archivo_adjunto;
         //        console.log(container);
        console.log(options);
 //       console.log("termino");
-      return options.data.archivo_adjunto;
+      return container.context.innerHTML=options.data.archivo_adjunto;
 };
     
     function refrescarDatosGantt(){
@@ -1277,8 +1279,17 @@ construirTreeList();
     }
     
     function detallesActividadesCompletasGantt(){
-        $("#tree-list").css("display","none");
-        
+//        alert("d");
+        if( $("#detallesInformacion").is(":visible")){
+                 $("#detallesInformacion").css("display","none");
+                 $("#gantt_here").height("100%");
+                   
+        }else{
+            $("#gantt_here").height("50%");
+            $("#detallesInformacion").css("display","");
+        }
+
+//        
 //        $("#gantt_here").css("height","100%");
         
 
