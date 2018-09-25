@@ -1184,7 +1184,7 @@ construirTreeList();
             },
             {
                 dataField: "text",
-                caption: "Nombre de la Actividad",
+                caption: "Descripcion de la Actividad",
                  allowEditing:false
             },
             
@@ -1199,25 +1199,20 @@ construirTreeList();
                     displayExpr: "label"
                 }
             },
-            { 
-                dataField: "notas",
-                caption: "Notas"
-            },
+            
             { 
                 dataField: "porcentaje_por_actividad",
-                 caption: "Ponderado Programado %",
-                validationRules: [{ type: "required" }]
-            },
-             { 
-                dataField: "ponderado_real",
-                 caption: "Ponderado Real",
-                 allowEditing:false
+                 caption: "Peso de la Actividad"
             },
              { 
                 dataField: "avance",
                  caption: "Avance",
                   allowEditing:false
                 
+            },
+            { 
+                dataField: "notas",
+                caption: "Notas"
             },
              { 
                 dataField: "archivo_adjunto",
