@@ -2,6 +2,8 @@
 body{
     font-size: 12px;
     background-color: #00c4ff26;
+    
+
 }
 
 #Contenedor{
@@ -16,6 +18,12 @@ body{
     box-shadow: 0px 7px 10px 5px rgba(119,119,119,0.5);
     
     
+    /*para el efecto del border*/
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border: 0px solid #000000;
+    /*termina el efecto del border*/
     
 /*    -moz-box-shadow: 0 0 5px #888;
 -webkit-box-shadow: 0 0 5px#888;
@@ -77,6 +85,20 @@ footer .copyright {
     font-size: 14px;
     padding: 15px 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .Icon span{
     background: #006699;

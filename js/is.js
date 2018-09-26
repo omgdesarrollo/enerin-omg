@@ -1,4 +1,7 @@
 $(function(){
+    
+     $("#loginform").draggable();
+    
     $("#loginform").submit(function(e){
 //        jQuery("#loginform").submit(function(e){
 //                                    alert("ya entro aqui ");

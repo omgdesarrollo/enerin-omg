@@ -23,6 +23,7 @@ if (Session:: existeSesion("user")){
         <script src="../../assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
                 <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
         <script src="../../js/jquery.min.js" type="text/javascript"></script>
+        <!--<script src="../../js/jquery-ui.min.js" type="text/javascript"></script>-->
         <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
         <script src="../../js/is.js" type="text/javascript"></script>
         <script src="../../js/tooltip.js" type="text/javascript"></script>
