@@ -275,12 +275,12 @@ class ConsultasModel{
                                     $lista2[$contador]["estado_requisito"]="EN PROCESO";
                             }
                         }
-                        $lista2[$contador]["estado_tema"]="ACTIVO";
+                        $lista2[$contador]["estado_tema"]=1;
                     }
                     else
                     {
                         $lista2[$contador]["cumplimiento_requisito"] = "X";
-                        $lista2[$contador]["estado_tema"]="INACTIVO";
+                        $lista2[$contador]["estado_tema"]=0;
                         $lista2[$contador]["estado_requisito"]="NO INICIADO";
                     }
                     $contador2++;
