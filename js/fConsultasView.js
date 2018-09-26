@@ -4,6 +4,7 @@ $(function()
 {
     $("#BTN_ANTERIOR_GRAFICAMODAL").click(function()
     {
+        // google.charts.setOnLoadCallback(drawChart);
         if(activeChart != 0)
         {
             if(activeChart == 1)
@@ -277,8 +278,8 @@ function graficar()
     $.each(dataListado,function(index,value)
     {
         requisitos++;
-        registros+=value.detalles.length;
-        $.each(value.detalles,function(ind,val){
+        registros+=value.detalles_requisito.length;
+        $.each(value.detalles_requisito,function(ind,val){
             evidencias_realizar += val.evidencias_realizar;
         });
         if(value.estado_requisito == "ATRASADO")
@@ -637,7 +638,7 @@ function graficar3(datos,concepto)
             // }
             if(value.estado_requisito == estado && estado == "CUMPLIDO")
             {
-                $.each(value.detalles,function(key,valor)
+                $.each(value.detalles_requisito,function(key,valor)
                 {
                     // if( valor.evidencias_validadas == valor.evidencias_realizar )
                     // {
@@ -656,7 +657,7 @@ function graficar3(datos,concepto)
             {
                 if(value.estado_requisito == estado && value.penalizacion == penalizacion && estado == "EN PROCESO")
                 {
-                    $.each(value.detalles,function(key,valor)
+                    $.each(value._requisito,function(key,valor)
                     {
                         // if( valor.evidencias_validadas != valor.evidencias_realizar)
                             contadorEvidencias = valor.evidencias_proceso;
@@ -666,7 +667,7 @@ function graficar3(datos,concepto)
                 }
                 if(value.estado_requisito == estado && value.penalizacion == penalizacion && estado == "ATRASADO")
                 {
-                    $.each(value.detalles,function(key,valor)
+                    $.each(value.detalles_requisito,function(key,valor)
                     {
                         // if( valor.evidencias_proceso  0)
                         if( ( valor.evidencias_realizar - valor.evidencias_validadas ) >= 2 && valor.id_registro != null)

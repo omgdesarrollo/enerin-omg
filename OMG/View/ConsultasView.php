@@ -156,7 +156,7 @@ $Usuario=  Session::getSesion("user");
     var opcion_vista_grafica = 1;
     // var grafica1;
     google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
+    // google.charts.setOnLoadCallback(drawChart);
 
     var activeChart = -1;
     var chartsCreados = [];
