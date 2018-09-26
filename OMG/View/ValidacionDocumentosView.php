@@ -50,10 +50,10 @@ $Usuario=  Session::getSesion("user");
         <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
         <!-- <script src="../../js/tools.js" type="text/javascript"></script> -->
         <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
-        <script src="../../js/fValidacionDocumentosView.js" type="text/javascript"></script>
 
         <!-- <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/> -->
         <script src="../../js/fGridComponent.js" type="text/javascript"></script>
+        <script src="../../js/fValidacionDocumentosView.js" type="text/javascript"></script>
         <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
                 
                 
@@ -141,7 +141,7 @@ textarea:focus
 	</head>
 
         
-<body class="no-skin">
+<body>
        
 <?php
 require_once 'EncabezadoUsuarioView.php';
@@ -305,17 +305,17 @@ if(isset($_REQUEST["accion"]))
 
     estructuraGrid = [
         { name:"id_principal", visible:false},
-        { name:"no", title:"No",width:40},
-        { name: "clave_documento", title:"Clave Documento", type: "text", width: 140,editing:false},
-        { name: "documento", title:"Documento", type: "text", width: 140,editing:false},
-        { name: "responsable_documento", title:"Responsable Documento", type: "text", width: 140,editing:false},
-        { name: "tema_responsableBTN", title:"Temas y Responsables", type: "text", width: 90, editing:false},
-        { name: "mostrar_urlsBTN", title:"Archivo Adjunto", type: "text", width: 100, editing:false},
+        { name:"no", title:"No",width:50},
+        { name: "clave_documento", title:"Clave Documento", type: "text", width: 130,editing:false},
+        { name: "documento", title:"Documento", type: "text", width: 110,editing:false},
+        { name: "responsable_documento", title:"Responsable Documento", type: "text", width: 120,editing:false},
+        { name: "tema_responsableBTN", title:"Temas y Responsables", type: "text", width: 110, editing:false},
+        { name: "mostrar_urlsBTN", title:"Archivo Adjunto", type: "text", width: 90, editing:false},
         { name: "requisitosBTN", title:"Requisitos", type: "text", width: 90, editing:false},
         { name: "registrosBTN", title:"Registros", type: "text", width: 90, editing:false},
-        { name: "validacion_documento_responsable", title:"Validación Responsable Documento", type: "FValidacionDocumento", width: 90, editing:false},
-        { name: "validacion_tema_responsable", title:"Validación Responsable Tema", type: "FValidacionTema", width: 90, editing:false},
-        { name: "observaciones", title:"Observación", type: "text", width: 80, editing:false},
+        { name: "validacion_documento_responsable", title:"Validación Responsable Documento", type: "FValidacionDocumento", width: 100, editing:false},
+        { name: "validacion_tema_responsable", title:"Validación Responsable Tema", type: "FValidacionTema", width: 100, editing:false},
+        { name: "observaciones", title:"Observación", type: "text", width: 110, editing:false},
         // { name: "desviacion_mayor", title:"Desviación Mayor", type: "text", width: 90, editing:false},
 
         { name:"delete", title:"Opción", type:"customControl",sorting:""},
