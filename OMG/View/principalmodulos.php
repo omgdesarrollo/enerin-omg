@@ -328,14 +328,17 @@ function redimencionarLayout()
         myLayout.cells("b").attachObject("sidebarObjV");
 
         myLayout.attachEvent("onResizeFinish", function(){
+            // alert("A");
             redimencionarLayout();
         });
 
         myLayout.attachEvent("onExpand", function(name){
+            // alert("Z");
             redimencionarLayout();
         });
 
         myLayout.attachEvent("onPanelResizeFinish", function(names){
+            // alert("X");
             redimencionarLayout();
         });
 
