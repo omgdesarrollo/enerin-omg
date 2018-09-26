@@ -111,6 +111,7 @@ and open the template in the editor.
     
     
     
+    
 <!--     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -142,12 +143,17 @@ and open the template in the editor.
  <style type="text/css">
     html, body{
       /*width: 100%;*/
-      height: 92%;
+      height: 100%;
+      /*overflow-y: visible;*/
 /*      padding:0px;
       margin:0px;*/
       /*overflow: hidden;*/
     }
-    
+    a{
+        color: #337ab7;
+        text-decoration: none;
+        font-size: 15;
+    }
          
     
     
@@ -335,18 +341,18 @@ and open the template in the editor.
  cursor: ne-resize;
 }
 
-.dragresize-ml {
+/*.dragresize-ml {
  top: 50%;
  margin-top: -4px;
  left: -8px;
  cursor: w-resize;
-}
-.dragresize-mr {
+}*/
+/*.dragresize-mr {
  top: 50%;
  margin-top: -4px;
  right: -8px;
  cursor: e-resize;
-}
+}*/
 
 .dragresize-bl {
  bottom: -8px;
@@ -388,7 +394,7 @@ and open the template in the editor.
 	<input value="deshacer" type="button" onclick='gantt.undo()' style='font-size: 10px'>
 	<input value="Rehacer" type="button" onclick='gantt.redo()' style='font-size: 10px'>
         <!--<button class="btn btn-danger" type="button" onclick='detallesActividadesCompletasGantt()' data-toggle='modal' data-target='#detalles' style='font-size: 10px'>Detalles</button>-->
-        <button class="btn btn-danger" type="button" onclick='detallesActividadesCompletasGantt()'  style='font-size: 10px'>Detalles</button>
+        <!--<button class="btn btn-danger" type="button" onclick='detallesActividadesCompletasGantt()'  style='font-size: 10px'>Detalles</button>-->
 <!--</div>-->
         <?php  
         
@@ -409,70 +415,64 @@ and open the template in the editor.
     cellColors:true
 })' style='margin:20px;'>
   
-<!--<div class="row">
-		<div class="col-md-2 col-md-push-10">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">Gantt info</h3>
-				</div>
-				<div class="panel-body">
-					<ul class="nav nav-pills nav-stacked" id="gantt_info">
-					</ul>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-10 col-md-pull-2">
-			<div class="gantt_wrapper panel" id="gantt_here"></div>
-		</div>
-	</div>-->
+<div class="accordion" id="accordionExample">
 
 
-<!--	<form id="mspImport" action="" method="POST" enctype="multipart/form-data">
-		<input type="file" id="mspFile" name="file"
-			   accept=".mpp,.xml, text/xml, application/xml, application/vnd.ms-project, application/msproj, application/msproject, application/x-msproject, application/x-ms-project, application/x-dos_ms_project, application/mpp, zz-application/zz-winassoc-mpp"/>
-		<button id="mspImportBtn" type="submit">Seleccion el MS Proyect</button>
-	</form>-->
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+           Mostrar
+        </button>
+      </h5>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+      <div class="card-body">
+ 
 
+          
+          
+          <p>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Detalles</button>
 
-    <div class="drsElement drsMoveHandle" id="gantt_here" style='width:100%; height:100%;'>       
+</p>
+<div class="row">
+  <div class="col">
+    <div class="collapse multi-collapse" id="multiCollapseExample1">
+      <div class="card card-body">
+          
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="collapse multi-collapse" id="multiCollapseExample2">
+      <div class="card card-body">
+            <div  class="drsElement" id="detallesInformacion" style="width:100%;height:80% ;position: absolute;z-index: 4">
+
+               <div class="" id="tree-list" >
+                    <div id="dx" ></div>
+                                      </div>
+
+            </div>
+          
+         
+      </div>
+    </div>
+  </div>
 </div>
-<div  class="drsElement drsMoveHandle" id="detallesInformacion" style="display: none;width:100%; height:200px;position: absolute;">
-    <!--<div class="drsElement drsMoveHandle" style="position: fixed;width: 100%;height: 90%;background-color: #666600">-->
-
-<!--         <div id="detallesInformacion">
--->      <div class="" id="tree-list" >
-          <div id="dx" ></div>
-                            </div>
-    <!--</div>-->
-        
-        
-<!--</div>-->
+          
+          
+          
+          
+                   
+      </div>
+    </div>
+  </div>
 </div>
 
-<div id="resizable" class="ui-widget-content">
-  <h3 class="ui-widget-header"></h3>
-</div>
+ <div class="" id="gantt_here" style='width: 100%;height: 75%;position: absolute'>       </div>
 
-
-<!--left: 150px; top: 280px;--> 
-<!--    <div class="drsElement drsMoveHandle" style="width: 100%;height: 50%;background-color: #666600">   
-        </div>-->
-<!--    <div class="drsElement"
- style="left: 50px; top: 150px; width: 250px; height: 120px;
- background: #CDF; text-align: center">
- <div class="drsMoveHandle">Div 0</div>
- Content
-</div>-->
-    
-<!--    
-    <div id="detallesInformacion">
-      <div id="tree-list" style='width:100%; height:50%;position: relative'>
-          <div id="dx" ></div>
-                            </div>
-    </div>-->
-    
-    
-    
+ 
     </body>
     
 <!-- Inicio de Seccion Modal Archivos-->
@@ -1139,7 +1139,12 @@ dp.init(gantt);
 //        $("#detallesInformacion").resize();
             $("#detallesInformacion" ).resizable();
               $("#detallesInformacion" ).draggable();
-            
+              
+//              gantt_here
+            $("#acordionGantt").click(function (){
+                 $("#gantt_here").css("display:","");
+//                 $("#gantt_here").css("display:","");
+            });
 //         $(window).on("resize", 
 //         
 //        function (){
@@ -1715,7 +1720,7 @@ construirTreeList();
                 <!-- </td> -->
         </tr>
         {% } %}
-        {% if(t == 1){ if( $('#tempInputIdDocumento').length > 0 ) { var ID = $('#tempInputIdDocumento').val(); mostrar_urls(ID); actualizarDocumentoEntrada(ID); }else{ $('#btnAgregarDocumentoEntradaRefrescar').click(); } } %}
+        {% if(t == 1){ if( $('#tempInputIdDocumento').length > 0 ) { var ID = $('#tempInputIdDocumento').val(); mostrar_urls(ID);}else{ $('#btnAgregarDocumentoEntradaRefrescar').click(); } } %}
 </script>
 
     <!--Para abrir alertas de aviso, success,warning, error-->       

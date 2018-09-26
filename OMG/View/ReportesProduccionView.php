@@ -203,8 +203,8 @@
                 </div>
                 
                 <div class="form-group" method="post">
-                        <button type="submit" style="width:49%" id="btn_guardar_reportediario" class="btn crud-submit btn-info">Crear Reporte</button>
-                        <button type="submit" style="width:49%" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
+                        <button type="submit" style="width:49%" id="btn_guardar_reportediario" class="btn crud-submit btn-info botones_vista_tabla">Crear Reporte</button>
+                        <button type="submit" style="width:49%" id="btn_limpiar"  class="btn crud-submit btn-info botones_vista_tabla">Limpiar</button>
 
                 </div>
                 

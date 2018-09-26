@@ -1166,7 +1166,7 @@ function MandarNotificacionDesviacion(idPara,responsable,msj,idEvidencia)
         tempData = "<button onClick='notificar("+idPara+","+idEvidencia+",\"desviacion\")' type='submit' id='subirArchivos'  class='btn crud-submit btn-info form-control'>Enviar</button>";
         $("#BTNENVIAR_MANDARNOTIFICACIONMODAL").html(tempData);
         $("#textAreaNotificacionModal").val(msj);
-        $("#myModalLabelMandarNotificacion").html("Mandar Desviación");
+        $("#myModalLabelMandarNotificacion").html("Enviar Desviación");
     }
     else
     {

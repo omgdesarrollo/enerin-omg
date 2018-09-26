@@ -141,7 +141,7 @@ require_once 'EncabezadoUsuarioView.php';
     <div class="modal-dialog " role="document">
         <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">x</span></button>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
               <h4 class="modal-title" id="myModalLabel">Crear Nuevo Documento de Salida</h4>
             </div>
                 <div class="modal-body">
@@ -206,7 +206,7 @@ require_once 'EncabezadoUsuarioView.php';
 		<div class="modal-content">
                         
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">x</span></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
 		        <h4 class="modal-title" id="myModalLabel">Archivos Adjuntos</h4>
       </div>
 
@@ -218,7 +218,7 @@ require_once 'EncabezadoUsuarioView.php';
 			  </div>
 
         <div class="form-group" method="post" >
-          <button type="submit" id="subirArchivos" class="btn crud-submit btn-info btn_refrescar" style="width:98%">Adjuntar Archivo</button>
+          <button type="submit" id="subirArchivos" class="btn crud-submit btn-info btn_refrescar" style="width:100%">Adjuntar Archivo</button>
         </div>
       </div><!-- cierre div class-body -->
     </div><!-- cierre div class modal-content -->
