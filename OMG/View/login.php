@@ -99,7 +99,7 @@ clock();
             <div class="Icon"><span class="glyphicon glyphicon-user  "></span></div>
             
             <div class="ContentForm">
-                <div style="" id="basicclock">d</div>
+               
 
 
                 <form id="loginform"  method="post" name="FormEntrar">
