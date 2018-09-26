@@ -2,7 +2,7 @@
 
 require_once '../dao/AsignacionTemaRequisitoDAO.php';
 require_once '../Pojo/AsignacionTemaRequisitoPojo.php';
-
+require_once '../Model/AsignacionTemaRequisitoModel.php';
 
 class AsignacionTemaRequisitoModel {
     //put your code here
@@ -10,16 +10,14 @@ class AsignacionTemaRequisitoModel {
     public function  listarAsignacionTemasRequisitos($CADENA,$CONTRATO){
         try{
             $dao=new AsignacionTemaRequisitoDAO();
-            
+            $model=new AsignacionTemaRequisitoModel(); 
+                    
             $rec=$dao->mostrarAsignacionTemasRequisitos($CADENA,$CONTRATO);
-//           self::generarDatosArbol($value['id_asignacion_tema_requisito'])
          
             foreach ($rec as $key => $value) 
             {
-                $rec[$key]['detalles_requisitos']= $dao->obtenerDetallesRequisitoConIdAsignacion($value['id_asignacion_tema_requisito']);
-                
-                
-                $rec[$key]['detalles_registros']= $dao->obtenerDetallesRegistrosConIdAsignacion($value['id_asignacion_tema_requisito']);
+                $rec[$key]['detalles_requisitos']= $model->obtenerDetallesRequisitoConIdAsignacion($value['id_asignacion_tema_requisito']);                                
+//                $rec[$key]['detalles_registros']= $dao->obtenerDetallesRegistrosConIdAsignacion($value['id_asignacion_tema_requisito']);
             }
             
             return $rec;
@@ -106,7 +104,7 @@ class AsignacionTemaRequisitoModel {
 //                    $htmlFrontend=$valuet["registro"];
                     $htmlFrontend.="<tr><td class='info'>Registro</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabaseRegistros(this,'registro',".$valuet['id_registro'].")\">".$valuet['registro']."</td></tr>";
                     $htmlFrontend.="<tr><td class='info'>Frecuencia</td><td>".$valuet['frecuencia']."</td></tr>";                    
-                    $htmlFrontend.="<tr><td class='info'>Clave Documento</td><td>".$valuet['clave_documento']."</td></tr>";
+                    $htmlFrontend.="<tr><td class='info'>Clave del Documento</td><td>".$valuet['clave_documento']."</td></tr>";
                     if($valuet["documento"]!="")
                     $htmlFrontend.="<tr><td class='info'>Documento</td><td>".$valuet['documento']."</td></tr>";
                     else
@@ -294,5 +292,25 @@ class AsignacionTemaRequisitoModel {
             throw $ex;
             return false;
         }
+    }
+    
+    public function obtenerDetallesRequisitoConIdAsignacion($ID_ASIGNACION)
+    {
+        try 
+        {
+            $dao=new AsignacionTemaRequisitoDAO();
+            $rec= $dao->obtenerDetallesRequisitoConIdAsignacion($ID_ASIGNACION);
+            foreach ($rec as $key => $value) 
+            {
+                $rec[$key]['detalles_registros']= $dao->obtenerDetallesRegistrosConIdAsignacion($value['id_requisito']);
+            }
+            
+            return $rec;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+        
     }
 }

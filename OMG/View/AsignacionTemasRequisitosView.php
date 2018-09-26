@@ -33,33 +33,34 @@ $Usuario=  Session::getSesion("user");
         <script src="../../js/dhtmlxExtGrid.js" type="text/javascript"></script>
         <script src="../../js/dhtmlxFunctions.js" type="text/javascript"></script>
         <script src="../../js/dhtmlxdataprocessor.js" type="text/javascript"></script>
-            <style>
-               
-                div#sidebarObj {
-			position: relative;
-			margin-left: 10px;
-			margin-top: 10px;
-			width: 900px;
-			height: 350px;
-			box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
-		}
-                div#layout_here {
-		position: relative;
-		width: 100%;
-		height: 392px;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
-		/*margin: 0 auto;*/
+        <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
+        
+        <style>
+            div#sidebarObj {
+                    position: relative;
+                    margin-left: 10px;
+                    margin-top: 10px;
+                    width: 900px;
+                    height: 350px;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
+            }
+            div#layout_here {
+            position: relative;
+            width: 100%;
+            height: 392px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
+            /*margin: 0 auto;*/
+            }
+
+            div#treeboxbox_tree{
+               height: 300px;
+               box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
+            }              
+            .altotablascrollbar{
+                     height: 320px;
                 }
-                
-                div#treeboxbox_tree{
-                   height: 300px;
-                   box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);
-                }              
-                .altotablascrollbar{
-                         height: 320px;
-                    }
-                       
-                </style>    
+
+            </style>    
                                                
 
 	</head>
@@ -190,6 +191,9 @@ $Usuario=  Session::getSesion("user");
 
 	<script>
             var myLayout, myTree, myToolbar,myToolbarExportar,id_asignacion_t=-1,levelv=0,id_asignacion_r=-1,selec_tema=-1,id_seleccionado=-1,dataIds_req=[],dataIds_reg=[];
+            var dataListado=[];
+            var DataGridExcel=[];
+            var origenDeDatosVista="asignacionTemaRequisito";
             myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
 	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
 //            myCombo = new dhtmlXCombo({
@@ -389,6 +393,72 @@ $(function(){
      
      
 }); //CIERRA $FUNCTION
+
+
+function reconstruirExcel(value,index)
+{
+//    console.log(value);
+//    console.log("Entro al reconstruirExcel");
+    tempData=new Object();
+    tempData["No.Tema"]= value.no;
+    tempData["Tema"]= value.nombre;
+    
+    tempData["Requisitos"]="";
+    if(value['detalles_requisitos'].length==0)
+    {
+        tempData["Requisitos"]+="No";
+    }else{
+//          console.log();
+        $.each(value['detalles_requisitos'],function(index2,value2)
+        {
+//              console.log(value2);
+                tempData["Requisitos"]+="<li>"+value2.requisito+"</li>";
+        });
+    }
+    
+    tempData["Registros"]="";
+    tempData["Frecuencia"]="";
+    tempData["Clave del Documento"]="";
+    tempData["Documento"]="";
+    tempData["Responsable"]="";
+    if(value['detalles_requisitos'].length==0)
+    {
+        tempData["Registros"]+="No";
+        tempData["Frecuencia"]+="No";
+        tempData["Clave del Documento"]+="No";
+        tempData["Documento"]+="No";
+        tempData["Responsable"]+="No";
+    }else{
+//          console.log();
+        $.each(value['detalles_requisitos'],function(index2,value2)
+        {
+//            console.log(value2);
+            if(value2['detalles_registros'].length==0)
+            {
+                tempData["Registros"]+="<li>No</li>";
+                tempData["Frecuencia"]+="<li>No</li>";
+                tempData["Clave del Documento"]+="<li>No</li>";
+                tempData["Documento"]+="<li>No</li>";
+                tempData["Responsable"]+="<li>No</li>";
+            } else{
+                $.each(value2['detalles_registros'],function(index3,value3)
+                {
+//                    console.log(value3);
+                    tempData["Registros"]+="<li>"+value3.registro+"</li>";
+                    tempData["Frecuencia"]+="<li>"+value3.frecuencia+"</li>";
+                    tempData["Clave del Documento"]+="<li>"+value3.clave_documento+"</li>";
+                    tempData["Documento"]+=(value3.documento=="")?"No":"<li>"+value3.documento+"</li>";
+                    tempData["Responsable"]+="<li>"+value3.responsable+"</li>";
+                });
+            }   
+
+        });
+    }
+    
+    return tempData;    
+}
+
+
 
 var myLayout = new dhtmlXLayoutObject({
 			parent: "layout_here",
@@ -592,6 +662,8 @@ function evaluarToolbarSeccionB(id)
             url: '../Controller/AsignacionTemasRequisitosController.php?Op=Listar',
             success:function(data)
             {
+               dataListado = data;
+//               console.log(data);
                $htmlData="<div style='overflow-y:auto;' class='table-responsive altotablascrollbar'><ul class='list-group'>";
                $.each(data,function(index,value){
 //                  $htmlData+="<li class='list-group-item'><button onclick='obtenerDatosArbol("+value.id_asignacion_tema_requisito+")' >"+value.no+"-"+value.nombre+"</button><span class='badge'></li>"; 
