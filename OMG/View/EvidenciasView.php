@@ -206,7 +206,7 @@
                 </div>
                 
                 <div class="form-group" style="text-align:center" method="post">
-                    <button style="width:100%" type="submit" id="BTN_CREAR_NUEVAEVIDENCIAMODAL" class="btn crud-submit btn-info">Crear Evidencia</button>
+                    <button style="width:100%" type="submit" id="BTN_CREAR_NUEVAEVIDENCIAMODAL" class="btn crud-submit btn-info botones_vista_tabla">Crear Evidencia</button>
                 </div>
             </div>
         </div>
@@ -220,7 +220,7 @@
         <!-- <div id="loaderModalMostrar"></div> -->
 		<div class="modal-content">                
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
           <h4 class="modal-title" id="myModalLabelMostrarRegistros">Lista Registros</h4>
         </div>
 
@@ -239,7 +239,7 @@
 		<div class="modal-content">
                         
             <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="font-size:inherit" aria-hidden="true">X</span></button>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
             <h4 class="modal-title" id="myModalLabelItermUrls">Archivos Adjuntos</h4>
             </div>
 
@@ -252,7 +252,7 @@
                 </div>
 
                 <div class="form-group" method="post" >
-                    <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Archivo</button>
+                    <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info botones_vista_tabla" style="width:100%">Adjuntar Archivo</button>
                 </div>
             </div><!-- cierre div class-body -->
         </div><!-- cierre div class modal-content -->
@@ -265,8 +265,8 @@
         <!-- <div id="loaderModalMostrar"></div> -->
 		<div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title" id="myModalLabelMandarNotificacion">Mandar Notificación</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
+                <h4 class="modal-title" id="myModalLabelMandarNotificacion">Enviar Notificación</h4>
             </div>
 
             <div class="modal-body">
@@ -285,7 +285,7 @@
         <!-- <div id="loaderModalMostrar"></div> -->
 		<div class="modal-content">                
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
           <h4 class="modal-title" id="myModalLabelMostrarRegistros">Lista Registros</h4>
         </div>
 

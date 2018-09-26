@@ -209,8 +209,8 @@ $Usuario=  Session::getSesion("user");
                 </div> -->
             </div>
             <div class="form-group" method="post" style="text-align:center">
-                <button type="submit" id="BTN_CREAR_NUEVOREGISTROMODAL" class="btn crud-submit btn-info" style="width:49%" >Crear Registro</button>
-                <button type="submit" id="BTN_LIMPIAR_NUEVOREGISTROMODAL" class="btn crud-submit btn-info" style="width:49%">Limpiar</button>
+                <button type="submit" id="BTN_CREAR_NUEVOREGISTROMODAL" class="btn crud-submit btn-info botones_vista_tabla" style="width:49%" >Crear Registro</button>
+                <button type="submit" id="BTN_LIMPIAR_NUEVOREGISTROMODAL" class="btn crud-submit btn-info botones_vista_tabla" style="width:49%">Limpiar</button>
             </div>
         </div>
     </div>

@@ -106,7 +106,7 @@ require_once 'EncabezadoUsuarioView.php';
     <div class="modal-dialog " role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">x</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
                 <h4 class="modal-title" id="myModalLabel">Crear Nuevo Empleado</h4>
             </div>
 
@@ -143,8 +143,8 @@ require_once 'EncabezadoUsuarioView.php';
                     </div>
 
                     <div class="form-group">
-                        <button type="submit" style="width:49%" id="btn_crearEmpleado" disabled class="btn crud-submit btn-info">Guardar</button>
-                        <button type="submit" style="width:49%" id="btn_limpiarEmpleado"  class="btn crud-submit btn-info">Limpiar</button>
+                        <button type="submit" style="width:49%" id="btn_crearEmpleado" disabled class="btn crud-submit btn-info botones_vista_tabla">Guardar</button>
+                        <button type="submit" style="width:49%" id="btn_limpiarEmpleado"  class="btn crud-submit btn-info botones_vista_tabla">Limpiar</button>
                     </div>
                 </div>
             </div>
