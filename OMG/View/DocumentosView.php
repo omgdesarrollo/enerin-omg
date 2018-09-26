@@ -146,8 +146,8 @@ require_once 'EncabezadoUsuarioView.php';
 
 
                                         <div class="form-group">
-                                            <button type="submit" style="width:49%" id="btn_guardar"  class="btn crud-submit btn-info">Guardar</button>
-                                            <button type="submit" style="width:49%" id="btn_limpiar"  class="btn crud-submit btn-info">Limpiar</button>
+                                            <button type="submit" style="width:49%" id="btn_guardar"  class="btn crud-submit btn-info botones_vista_tabla">Guardar</button>
+                                            <button type="submit" style="width:49%" id="btn_limpiar"  class="btn crud-submit btn-info botones_vista_tabla">Limpiar</button>
                                         </div>
 
 

@@ -144,7 +144,7 @@ require_once 'EncabezadoUsuarioView.php';
     <div class="modal-dialog " role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">x</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
                 <h4 class="modal-title" id="myModalLabel">Crear Nueva Tarea</h4>
             </div>
 
@@ -206,8 +206,8 @@ require_once 'EncabezadoUsuarioView.php';
                     <!--<div id="DocumentoEntradaAgregarModal"></div>-->
 
                     <div class="form-group">
-                        <button style="width:49%;" type="submit" id="btn_crearTarea" class="btn crud-submit btn-info">Guardar</button>
-                        <button style="width:49%;" type="submit" id="btn_limpiarModalTarea"  class="btn crud-submit btn-info">Limpiar</button>
+                        <button style="width:49%;" type="submit" id="btn_crearTarea" class="btn crud-submit btn-info botones_vista_tabla">Guardar</button>
+                        <button style="width:49%;" type="submit" id="btn_limpiarModalTarea"  class="btn crud-submit btn-info botones_vista_tabla">Limpiar</button>
                     </div>
                 </div>
             </div>
@@ -236,7 +236,7 @@ require_once 'EncabezadoUsuarioView.php';
 			</div>
 
                         <div class="form-group" method="post" >
-                                <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Archivo</button>
+                            <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info botones_vista_tabla" style="width: 100%;">Adjuntar Archivo</button>
                         </div>
                       </div><!-- cierre div class-body -->
                 </div><!-- cierre div class modal-content -->

@@ -1720,7 +1720,7 @@ construirTreeList();
                 <!-- </td> -->
         </tr>
         {% } %}
-        {% if(t == 1){ if( $('#tempInputIdDocumento').length > 0 ) { var ID = $('#tempInputIdDocumento').val(); mostrar_urls(ID); actualizarDocumentoEntrada(ID); }else{ $('#btnAgregarDocumentoEntradaRefrescar').click(); } } %}
+        {% if(t == 1){ if( $('#tempInputIdDocumento').length > 0 ) { var ID = $('#tempInputIdDocumento').val(); mostrar_urls(ID);}else{ $('#btnAgregarDocumentoEntradaRefrescar').click(); } } %}
 </script>
 
     <!--Para abrir alertas de aviso, success,warning, error-->       
