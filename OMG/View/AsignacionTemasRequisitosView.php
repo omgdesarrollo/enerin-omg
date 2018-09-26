@@ -432,7 +432,7 @@ function reconstruirExcel(value,index)
 //          console.log();
         $.each(value['detalles_requisitos'],function(index2,value2)
         {
-            console.log(value2);
+//            console.log(value2);
             if(value2['detalles_registros'].length==0)
             {
                 tempData["Registros"]+="<li>No</li>";
@@ -443,7 +443,7 @@ function reconstruirExcel(value,index)
             } else{
                 $.each(value2['detalles_registros'],function(index3,value3)
                 {
-                    console.log(value3);
+//                    console.log(value3);
                     tempData["Registros"]+="<li>"+value3.registro+"</li>";
                     tempData["Frecuencia"]+="<li>"+value3.frecuencia+"</li>";
                     tempData["Clave del Documento"]+="<li>"+value3.clave_documento+"</li>";
