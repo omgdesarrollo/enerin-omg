@@ -111,6 +111,7 @@ function reconstruir(value,index)
 
 function reconstruirExcel(value,index)
 {
+//    console.log(value);
     tempData = new Object();
     tempData["No. Tema"] = value.no_tema;
     tempData["Nombre Tema"] = value.nombre_tema;

@@ -447,9 +447,9 @@ and open the template in the editor.
   <div class="col">
     <div class="collapse multi-collapse" id="multiCollapseExample2">
       <div class="card card-body">
-            <div  class="drsElement" id="detallesInformacion" style="width:100%;height:80% ;position: absolute;z-index: 4">
+            <div  class="" id="detallesInformacion" style="width:100%;height:80% ;position: fixed;z-index: 4">
 
-               <div class="" id="tree-list" >
+                <div class="" id="tree-list" style="position: absolute" >
                     <div id="dx" ></div>
                                       </div>
 

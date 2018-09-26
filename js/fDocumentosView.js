@@ -281,6 +281,7 @@ function reconstruir(value,index)
 
 function reconstruirExcel(value,index)
 {
+//    console.log(value);
     tempData=new Object();
 //    ultimoNumeroGrid = index;
 //    tempData["id_principal"]= [{'id_documento':value.id_documento}];
