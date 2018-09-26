@@ -71,7 +71,7 @@ function inicializarFiltros()
 
             { name: "Nombre Tema",id:"penalizacion", type: "combobox",data:[{penalizacion:"true",descripcion:"SI"},{penalizacion:"false",descripcion:"NO"}],descripcion:"descripcion"},
 
-            { name: "Nombre Tema",id:"cumplimiento_requisito", type: "text",},
+            { name: "Nombre Tema",id:"cumplimiento_requisito", type: "none",},
             { name: "Nombre Tema",id:"estado_requisito",type: "combobox",data:[
                 {estado_requisito:"ATRASADO",descripcion:"ATRASADO"},
                 {estado_requisito:"CUMPLIDO",descripcion:"CUMPLIDO"},

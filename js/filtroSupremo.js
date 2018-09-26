@@ -124,13 +124,15 @@ function filtroSupremo()
 
 function aplicarFiltro(DataFinal)
 {
-    console.log(DataFinal);
+    // console.log(DataFinal);
     __datos=[];
     $.each(DataFinal,function (index,value)
     {
         __datos.push( reconstruir(value,index+1) );
     });
-    DataGrid=__datos;
+    if(DataFinal.length!=0)
+        $("#jsGrid").jsGrid("openPage",1);
+    DataGrid = __datos;
     gridInstance.loadData();
     $(".jsgrid-grid-body").css({"height":"171px"});
 }
