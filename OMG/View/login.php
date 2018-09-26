@@ -29,6 +29,9 @@ if (Session:: existeSesion("user")){
         <script src="../../js/is.js" type="text/javascript"></script>
         <!--<script src="../../js/tooltip.js" type="text/javascript"></script>-->
         <!--<script src="../../angular/angular.min.js" type="text/javascript"></script>-->
+        <link href="../../css/wb/imagen_de_inicio.css" rel="stylesheet" type="text/css"/>
+        
+        
         <style>
         .animacion {
 -webkit-animation:fa-spin 20s infinite linear;animation:fa-spin 24s infinite linear;
@@ -38,10 +41,15 @@ if (Session:: existeSesion("user")){
     </head>
     
     <body>
+      
+        <div id="" style="position:absolute;left:10px;top:1px;width:175px;height:315px;z-index:0;">
+<img src="../../images/base/img0001.png" id="Shape1" alt="" style="width:125px;height:315px;"></div>
+<div id="" style="position:absolute;left:2px;top:280px;width:175px;height:310px;z-index:1;">
+<img src="../../images/base/img0002.png" id="Shape2" alt="" style="width:125px;height:315px;"></div>
         <div id=""> <img  class="" style="float:right;width:220px;height:220px;" src="../../images/base/omgapps.png" alt="descripción" /></div>
-        <div class="rombo"></div>
+<!--        <div class="rombo"></div>
         <div class="cuadrado"></div>
-	<div class="oval "></div>
+	<div class="oval "></div>-->
         <!--<p>ddsd </p>-->
         <div id="Contenedor">
             <div class="Icon"><span class="glyphicon glyphicon-user  "></span></div>
