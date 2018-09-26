@@ -144,7 +144,7 @@ and open the template in the editor.
     html, body{
       /*width: 100%;*/
       height: 100%;
-      overflow-y: visible;
+      /*overflow-y: visible;*/
 /*      padding:0px;
       margin:0px;*/
       /*overflow: hidden;*/
@@ -341,18 +341,18 @@ and open the template in the editor.
  cursor: ne-resize;
 }
 
-.dragresize-ml {
+/*.dragresize-ml {
  top: 50%;
  margin-top: -4px;
  left: -8px;
  cursor: w-resize;
-}
-.dragresize-mr {
+}*/
+/*.dragresize-mr {
  top: 50%;
  margin-top: -4px;
  right: -8px;
  cursor: e-resize;
-}
+}*/
 
 .dragresize-bl {
  bottom: -8px;
@@ -447,7 +447,7 @@ and open the template in the editor.
   <div class="col">
     <div class="collapse multi-collapse" id="multiCollapseExample2">
       <div class="card card-body">
-            <div  class="" id="detallesInformacion" style="width:100%;position: absolute;z-index: 4">
+            <div  class="drsElement" id="detallesInformacion" style="width:100%;height:80% ;position: absolute;z-index: 4">
 
                <div class="" id="tree-list" >
                     <div id="dx" ></div>
@@ -470,7 +470,7 @@ and open the template in the editor.
   </div>
 </div>
 
- <div class="" id="gantt_here" style='width: 100%;height: 100%;position: absolute'>       </div>
+ <div class="" id="gantt_here" style='width: 100%;height: 75%;position: absolute'>       </div>
 
  
     </body>
