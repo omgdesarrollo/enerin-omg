@@ -209,14 +209,45 @@ function redimencionarLayout()
         // $("#jsGrid").css("height", $(window).height() - 740 + tam2+"px");
     }
     // $(".dhx_cell_hdr").css("height", tam1+"px");
+    $("#layoutObj").height(tam1);
+    $("#arbolprincipal").height(tam1);
+    $(".dhxlayout_cont").width(tamW1-10);
+    $(".dhxlayout_cont").height(tam1);
 
-    $(".dhx_cell_cont_layout").css("height", tam2+"px");
-    // $(".dhx_cell_cont_layout").css("width", tamW+"px");
+    let nav = $(".dhxlayout_cont")[0].childNodes[0];//objecto navegacion
+    let vis = $(".dhxlayout_cont")[0].childNodes[1];//objecto visualizacion
+    let sep = $(".dhxlayout_cont")[0].childNodes[2];//objecto separador
+    let tamNav = $(nav).width();
 
-    $(".dhx_cell_layout").css("height", tam1+"px");
+    // $(".dhx_cell_cont_layout").css("height", tam2+"px");
+    $(nav).height(tam1);
+    $(sep).height(tam1);
+    $(vis).height(tam1);
+    $(vis).width(tamW1 - 25 - tamNav);
+
+    $($(vis)[0].childNodes[0]).width(tamW1 - 25 - tamNav);
+    $($(vis)[0].childNodes[1]).width(tamW1 - 25 - tamNav);
+    $($(vis)[0].childNodes[1]).height(tam2-1);
+
+    $($(nav)[0].childNodes[1]).height(tam2-1);
+
+    let navNode1 = $(nav)[0].childNodes[1];
+    let navNode2 = $(navNode1)[0].childNodes[0];
+    let navNode3 = $(navNode2)[0].childNodes[1];
+    if(navNode3!=undefined)
+    {
+        let navNode4 = $(navNode3)[0].childNodes[0];
+        $(navNode4).css("border-width","0px 0px 0px 0px");
+        console.log($(navNode4).width());
+    }
+    // $(".dhx_cell_cont_layout").css("width", tamW1 - 42 - tamNav +"px");
+
+    // $(".dhx_cell_layout").css("height", tam1+"px");
     // $(".dhx_cell_layout").css("width", tamW+"px");
 
-    $(".dhxlayout_cont").css("height", tam1+"px");//l
+    // $(".dhxlayout_cont").css("height", tam1+"px");//l
+    
+
     // $(".dhxlayout_cont").css("width", tamW+"px");//l
 
     $(".dhxlayout_sep").css("height", tam2+"px");
@@ -246,10 +277,15 @@ function redimencionarLayout()
     // $("#sidebarObjV").parent().css("width", tamW+"px");
     // $("#sidebarObjV").parent().parent().css("width", tamW+"px");
     // console.log($("#sidebarObj").parent().find(".dhx_cell_hdr").css("height"));
+    if($(vis).hasClass("dhxlayout_collapsed_v"))
+    {
+        $($(vis)[0].childNodes[0]).width(28);
+        $($(vis)[0].childNodes[0]).height(tam1);
+    }
     var dhx_cell_hdr = $(".dhx_cell_hdr")[0];
     // console.log($(dhx_cell_hdr).css("height"));
-    tamdhc_cell_hdr = $(dhx_cell_hdr).css("height");
-    tamdhc_cell_hdr.split("p")[0] > 47 ?
+    tamdhc_cell_hdr = $(dhx_cell_hdr).height();
+    tamdhc_cell_hdr > 47 ?
     $(dhx_cell_hdr).css("height",tam1+"px"):console.log();
 
     $(".dhxrb_with_tabbar").css("height","190px");
@@ -263,6 +299,7 @@ function redimencionarLayout()
     // $("#jsGrid");
 
     // console.log($("#sidebarObjV").parent().parent().css("width", tamW+"px"));
+    // myLayout.setAutoSize("a;b;e");
 }
 
     $(function()
