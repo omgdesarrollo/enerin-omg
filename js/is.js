@@ -1,8 +1,11 @@
-jQuery(document).ready(function(){
-    jQuery("#loginform").submit(function(e){
+$(function(){
+
+    
+    $("#loginform").submit(function(e){
+//        jQuery("#loginform").submit(function(e){
 //                                    alert("ya entro aqui ");
         e.preventDefault();
-        var formData = jQuery(this).serialize();
+        var formData = $(this).serialize();
         $.ajax({
             type: "POST",
             url: "../Controller/LoginController.php",
@@ -47,3 +50,7 @@ jQuery(document).ready(function(){
                     return false;
                 });
             });
+            
+            
+            
+            
