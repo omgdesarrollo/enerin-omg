@@ -20,22 +20,22 @@ if (Session:: existeSesion("user")){
         <link rel="stylesheet" type="text/css" href="../../css/estilo.css">
         <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
 		<!-- Libreria java scritp de bootstrap -->
-        <script src="../../assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <!--<script src="../../assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>-->
                 <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
         <script src="../../js/jquery.min.js" type="text/javascript"></script>
         <!--<script src="../../js/jquery-ui.min.js" type="text/javascript"></script>-->
         <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
         <script src="../../js/is.js" type="text/javascript"></script>
-        <script src="../../js/tooltip.js" type="text/javascript"></script>
+        <!--<script src="../../js/tooltip.js" type="text/javascript"></script>-->
         <script src="../../angular/angular.min.js" type="text/javascript"></script>
     </head>
     
     <body>
-        <img style="float:right;width:220px;height:220px;" src="../../images/base/omgapps.png" alt="descripción" />
+        <div id=""> <img style="float:right;width:220px;height:220px;" src="../../images/base/omgapps.png" alt="descripción" /></div>
         <div class="rombo"></div>
         <div class="cuadrado"></div>
 	<div class="oval"></div>
-        
+        <div id="animacion-imagen">ddsd </div>
         <div id="Contenedor">
             <div class="Icon"><span class="glyphicon glyphicon-user"></span></div>
             
