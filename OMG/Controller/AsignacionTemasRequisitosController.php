@@ -119,7 +119,14 @@ switch ($Op) {
             
             $Lista= $model->eliminarNodoRequisito($_REQUEST['ID_REQUISITO']);
             echo $Lista;
-		break;    
+		break;
+            
+        case'Prueba':
+            $Lista= $model->obtenerDetallesRequisitoConIdAsignacion(0);
+            header('Content-type: application/json; charset=utf-8'); 
+            echo json_encode($Lista);
+            return $Lista;
+            break;
             
 	default:
 		# code...

@@ -487,14 +487,17 @@ function reconstruirExcel(documento,index)//listo
             tempData["Archivo Adjunto"] = "Si";
         });        
     }
+    
     tempData["Requisitos"]="";   
     $.each(documento['detalles_excel']["0"]['requisitos'],(index,value)=>{
         tempData["Requisitos"] += "<li>"+value['requisito']+"<li>";                                
     });
+    
     tempData["Registros"]="";
         $.each(documento['detalles_excel']["1"]['registros'],(index,value)=>{
             tempData["Registros"] += "<li>"+value['registro']+"<li>";                                
         });
+        
     if(documento['validacion_documento_responsable']=="false")
     {
         tempData["Validacion Responsable Documento"]="No";

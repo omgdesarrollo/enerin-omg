@@ -257,6 +257,30 @@ public function obtenerDetallesRequisitoConIdAsignacion($ID_ASIGNACION)
     }
 }
 
+public function obtenerDetallesRegistrosConIdAsignacion($ID_REQUISITO)
+{
+    try 
+    {
+        $query="SELECT tbregistros.id_registro, tbregistros.registro, tbregistros.frecuencia, tbdocumentos.clave_documento, tbdocumentos.documento,
+		 tbempleados.id_empleado, CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)
+		 AS responsable
+                FROM asignacion_tema_requisito_requisitos tbasignacion_tema_requisito_requisitos		
+                JOIN requisitos tbrequisitos ON tbrequisitos.id_requisito=tbasignacion_tema_requisito_requisitos.id_requisito		
+                JOIN requisitos_registros tbrequisitos_registros ON tbrequisitos_registros.id_requisito=tbrequisitos.id_requisito
+                JOIN registros tbregistros ON tbregistros.id_registro=tbrequisitos_registros.id_registro
+                JOIN documentos tbdocumentos ON tbdocumentos.id_documento=tbregistros.id_documento
+                JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumentos.id_empleado  
+                WHERE tbrequisitos.id_requisito=$ID_REQUISITO";
+        $db= AccesoDB::getInstancia();
+        $lista= $db->executeQuery($query);
+        
+        return $lista;        
+    } catch (Exception $ex) 
+    {
+        
+    }
+}
+
 public function obtenerDetalles_Reg($value){
     try{
       $query="select tbregistros.id_registro,tbregistros.registro,tbregistros.frecuencia,tbdocumentos.clave_documento,
@@ -273,28 +297,7 @@ public function obtenerDetalles_Reg($value){
         throw $ex;
     }
 }
-
-
-public function obtenerDetallesRegistrosConIdAsignacion($ID_ASIGNACION)
-{
-    try 
-    {
-        $query="SELECT tbregistros.id_registro, tbregistros.registro
-		FROM asignacion_tema_requisito_requisitos tbasignacion_tema_requisito_requisitos		
-		JOIN requisitos tbrequisitos ON tbrequisitos.id_requisito=tbasignacion_tema_requisito_requisitos.id_requisito		
-		JOIN requisitos_registros tbrequisitos_registros ON tbrequisitos_registros.id_requisito=tbrequisitos.id_requisito
-		JOIN registros tbregistros ON tbregistros.id_registro=tbrequisitos_registros.id_registro 
-		WHERE tbasignacion_tema_requisito_requisitos.id_asignacion_tema_requisito=$ID_ASIGNACION";
-        $db= AccesoDB::getInstancia();
-        $lista= $db->executeQuery($query);
-        
-        return $lista;        
-    } catch (Exception $ex) 
-    {
-        
-    }
-}
-    
+ 
     
 public function actualizarAsignacionTemaRequisito($id_asignacion_tema_requisito, $id_clausula,$requisito){
         try{

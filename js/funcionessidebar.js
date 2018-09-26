@@ -73,24 +73,24 @@ function loadDataSideBarCatalogoInformacion(lista){
                                        
 
                                        case "asignaciontemasrequisitos":
-                                             consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
-                                             consultarInformacion("../Controller/ClausulasController.php?Op=mostrarcombo");
-                                             consultarInformacion("../Controller/DocumentosController.php?Op=mostrarcombo");                                             
+//                                             consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
+//                                             consultarInformacion("../Controller/ClausulasController.php?Op=mostrarcombo");
+//                                             consultarInformacion("../Controller/DocumentosController.php?Op=mostrarcombo");                                             
                                             $("#sidebarObjV").load('InyectarVistasView.php #asignaciontemasrequisitos');
                                        break;
 
 
-                                       case "asignaciondocumentostemas":
-                                             
-                                             consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=mostrarcombo");                                          
-                                             consultarInformacion("../Controller/DocumentosController.php?Op=mostrarcombo");
-                                             consultarInformacion("../Controller/ClausulasController.php?Op=mostrarcombo");
-                                             consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
-                                             consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
-                                             consultarInformacion("../Controller/AsignacionDocumentosTemasController.php?Op=Listar");
-                                             
-                                            $("#sidebarObjV").load('InyectarVistasView.php #asignaciondocumentostemas');                                                                                 
-                                       break;
+//                                       case "asignaciondocumentostemas":
+//                                             
+//                                             consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=mostrarcombo");                                          
+//                                             consultarInformacion("../Controller/DocumentosController.php?Op=mostrarcombo");
+//                                             consultarInformacion("../Controller/ClausulasController.php?Op=mostrarcombo");
+//                                             consultarInformacion("../Controller/ClausulasController.php?Op=Listar");
+//                                             consultarInformacion("../Controller/AsignacionTemasRequisitosController.php?Op=Listar");
+//                                             consultarInformacion("../Controller/AsignacionDocumentosTemasController.php?Op=Listar");
+//                                             
+//                                            $("#sidebarObjV").load('InyectarVistasView.php #asignaciondocumentostemas');                                                                                 
+//                                       break;
                                    }
       });
       
