@@ -43,7 +43,7 @@ if (Session:: existeSesion("user")){
                 <form id="loginform"  method="post" name="FormEntrar">
                         <div class="input-group input-group-lg">
                           <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-user"></i></span>
-                          <input type="text" class="form-control" name="usuario" placeholder="Usuario" id="Usuario"  required>
+                          <input type="text" class="form-control" autocomplete="false" name="usuario" placeholder="Usuario" id="Usuario"  required>
                         </div>
                         <br>
                         <div class="input-group input-group-lg">
@@ -53,6 +53,11 @@ if (Session:: existeSesion("user")){
                         <br>
                         <button data-placement="right" title="Haga clic aquí para iniciar sesión" class="btn btn-lg btn-primary btn-block btn-signin" id="IngresoLog" type="submit">Entrar</button>
                         <div class="opcioncontra"><a href="">Olvidaste tu contraseña?</a></div>
+                        
+                        
+                        
+                        
+                        
                 </form>   
 
             </div>
