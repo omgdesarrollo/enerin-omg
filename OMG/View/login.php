@@ -27,7 +27,7 @@ if (Session:: existeSesion("user")){
         <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
         <script src="../../js/is.js" type="text/javascript"></script>
         <!--<script src="../../js/tooltip.js" type="text/javascript"></script>-->
-        <script src="../../angular/angular.min.js" type="text/javascript"></script>
+        <!--<script src="../../angular/angular.min.js" type="text/javascript"></script>-->
     </head>
     
     <body>
