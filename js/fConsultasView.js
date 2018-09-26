@@ -87,6 +87,10 @@ function inicializarFiltros()
 function reconstruir(value,index)
 {
     tempData = new Object();
+    if(value.cumplimiento_contrato!=undefined)
+    {
+        $("#cumplimiento_contrato_show").html("% Cumplimiento: "+value.cumplimiento_contrato.toFixed(2));
+    }
     tempData["id_principal"] = [{'id_tema':value.id_tema}];
     tempData["no_tema"] = value.no_tema;
     tempData["nombre_tema"] = value.nombre_tema;
