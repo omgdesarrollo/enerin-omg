@@ -620,7 +620,7 @@ setScaleConfig('1');
                 
 	};
         gantt.locale.labels["complete_button"] = "Completar";
-        console.log(gantt.locale.labels);
+//        console.log(gantt.locale.labels);
 //        gantt.config.lightbox.sections.push({name: "status", height: 22, map_to: "user", type: "select", options:gantt.serverList("user")});
 //         console.log(gantt.config.lightbox);
 	gantt.config.buttons_left = ["dhx_save_btn", "dhx_cancel_btn", "complete_button"];
@@ -662,7 +662,7 @@ gantt.config.columns=[
 //                {name: "status", label: "Status",resize: true},
 		{name: "add", width: 40}
 	];
-console.log(gantt);
+//console.log(gantt);
 
 //var status=[];
 var opcionstatus = [
@@ -733,7 +733,7 @@ gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
 var dp = new gantt.dataProcessor("../Controller/GanttTareasController.php?Op=Modificar");
 dp.init(gantt);
 //dp.autoUpdate=false;
-dp.attachEvent("onBeforeUpdate", function (id, status, data) {
+//dp.attachEvent("onBeforeUpdate", function (id, status, data) {
 //     if (!data.text) {
 //         dhtmlx.message("La Tarea no puede ir vacia");
 //         console.log(data);
@@ -741,7 +741,7 @@ dp.attachEvent("onBeforeUpdate", function (id, status, data) {
 ////             console.log(value);
 //         })
          
-         return true;
+//         return true;
 //     }
 //     else{
 ////          data.text="dtexto";
@@ -751,7 +751,7 @@ dp.attachEvent("onBeforeUpdate", function (id, status, data) {
      
      
 //     return true;
-});
+//});
 
 //gantt.config.branch_loading = true;
 
@@ -1028,7 +1028,7 @@ construirTreeList();
         
         
         
-        
+  var dataTemporalTreeList=[];
   function construirTreeList(){
              
    dxtreeList= $("#dx").dxTreeList({
@@ -1065,7 +1065,7 @@ construirTreeList();
         },
         },
         editing: {
-            mode: "row",
+            mode: "cell",
             allowUpdating: true,
             allowDeleting: false,
             allowAdding: false,
@@ -1138,14 +1138,30 @@ construirTreeList();
         width: 200
         },
         onCellClick:(args)=>{
+            
+//            console.log("le dio click ");
+//            console.log(args);
+//            
+//            
+//            console.log(datosTreeList);
+//            console.log("termino el click");
 //            console.log(args);
         },
         onRowClick:(args)=>{
 //            console.log(args);
         },
-        onRowUpdated:function (args){
+        onCellPrepared:function (args){
 //            console.log(args);
-            saberSiSumanPorcentajePonderadoProgramado100loshijos(args);
+
+console.log("s");
+        console.log(args);
+        console.log("termino el update de s");
+
+
+
+
+
+//            saberSiSumanPorcentajePonderadoProgramado100loshijos(args);
         },
         columns:[
             {
@@ -1226,7 +1242,7 @@ construirTreeList();
 //       container.context.innerHTML="<button onClick='mostrar_urls("+options.data.id+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'></button>";
 //        container.context.innerHTML=options.data.archivo_adjunto;
         //        console.log(container);
-       console.log(options);
+//       console.log(options);
 //       console.log("termino");
       return container.context.innerHTML=options.data.archivo_adjunto;
 };
