@@ -37,7 +37,7 @@ function inicializarFiltros()
             { id:"noneTres", type:"none"},
             { id:"noneCuatro", type:"none"},
 //            { id: "status",name:"status", type: "text"},
-            { id: "estado_documento",name:"validacion_tema_responsable", type: "combobox",data:[{estado_documento:"true",descripcion:"Validado"},{estado_documento:"false",descripcion:"En Proceso"}],descripcion:"descripcion"},
+            { id: "validacion_tema_responsable",name:"validacion_tema_responsable", type: "combobox",data:[{validacion_tema_responsable:"true",descripcion:"Validado"},{validacion_tema_responsable:"false",descripcion:"En Proceso"}],descripcion:"descripcion"},
             {name:"opcion",id:"opcion",type:"opcion"}
             // { id:"delete", name:"Opción", type:"customControl",sorting:""},
         ];

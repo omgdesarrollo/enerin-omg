@@ -58,7 +58,7 @@ $Usuario=  Session::getSesion("user");
             }              
             .altotablascrollbar{
                      height: 320px;
-                }
+                }   
 
             </style>    
                                                
@@ -471,15 +471,20 @@ var myLayout = new dhtmlXLayoutObject({
 			]
 		});
 
+
+
  myToolbarExportar = myLayout.cells("a").attachToolbar
 ({
-    iconset: "awesome",
+//    iconset: "awesome",
     items: [
-            {id:"toExcel",type: "button", text: "Exportar", img: "fa fa-file-excel-o"},
-
+            {id:"toExcel",type: "button", text: "<h5>Exportar</h5>", img: "../../images/base/_excel.png"},
     ]
 });
+
+//myToolbarExportar.setIconsPath("../../images/base/");
 myToolbarExportar.base.id="toExcel";
+myToolbarExportar.setIconSize(32);
+console.log(myToolbarExportar);
  myLayout.cells("a").attachObject("seccionIzquierda");
  
 

@@ -478,5 +478,20 @@ class Gantt_TareasModel{
         }
     }
     
+    
+    public function guardarStatus($Lista)
+    {
+        try 
+        {
+            $dao=new Gantt_TareaDao();
+            $rec= $dao->guardarStatus($Lista);
+            
+            return $rec;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 
 }
