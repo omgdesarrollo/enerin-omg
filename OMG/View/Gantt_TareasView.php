@@ -155,13 +155,45 @@ and open the template in the editor.
     color: white;
 }               
 #dx {
-    max-height: 90%;
+    /*max-height: 90%;*/
 }
 
  .modal-lg{width: 50%;}
  #tabPanel{
      height: 8%;
  }
+ 
+ 
+
+/* #detallesInformacion{
+    height: 100px;
+    width: 15%;
+    background-color: #303030;
+    float: left;
+    resize: horizontal;
+    overflow: hidden;;
+    max-width: 30%;
+ }*/
+ div.contenedor {
+  display:flex;
+}
+div.files-tree{
+  height: 100px;
+  width: 15%;
+  background-color: #303030;
+  float: left;
+  resize: horizontal;
+  overflow: hidden;;
+  max-width: 30%;
+}
+div.work-area{
+  height: 100px;
+  background-color: #606060;
+  float: right;
+  flex:1;
+}
+
+
 
 </style> 	
 		
@@ -169,7 +201,10 @@ and open the template in the editor.
     <body>
  
 
-
+<!--<div class="contenedor">
+  <div class="files-tree">cvcv</div>
+  <div class="work-area"></div>
+</div>-->
 <div class="accordion" id="accordionExample">
 
 
@@ -635,7 +670,7 @@ var opcionstatus = [
 ];
         gantt.config.lightbox.sections = [
 		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
-                {name: "status", height: 38, map_to: "status", type: "select", options:opcionstatus},
+                {name: "status", height: 38, map_to: "opcionstatus", type: "select", options:opcionstatus},
                 {name: "notas", height: 38, map_to: "notas", type: "textarea"},
 		{name: "owner", height: 22, map_to: "user", type: "select", options: gantt.serverList("user")},	
 		{name: "time", type: "duration", map_to: "auto"}
@@ -934,6 +969,8 @@ dp.init(gantt);
 //                items: tabs
 //            });
 //    }); 
+        
+        
         
 obtenerTareas().then(function (){
 construirTreeList();
