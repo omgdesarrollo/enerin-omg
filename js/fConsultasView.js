@@ -71,7 +71,7 @@ function inicializarFiltros()
 
             { name: "Nombre Tema",id:"penalizacion", type: "combobox",data:[{penalizacion:"true",descripcion:"SI"},{penalizacion:"false",descripcion:"NO"}],descripcion:"descripcion"},
 
-            { name: "Nombre Tema",id:"cumplimiento_requisito", type: "text",},
+            { name: "Nombre Tema",id:"cumplimiento_requisito", type: "none",},
             { name: "Nombre Tema",id:"estado_requisito",type: "combobox",data:[
                 {estado_requisito:"ATRASADO",descripcion:"ATRASADO"},
                 {estado_requisito:"CUMPLIDO",descripcion:"CUMPLIDO"},
@@ -87,6 +87,10 @@ function inicializarFiltros()
 function reconstruir(value,index)
 {
     tempData = new Object();
+    if(value.cumplimiento_contrato!=undefined)
+    {
+        $("#cumplimiento_contrato_show").html("% Cumplimiento: "+value.cumplimiento_contrato.toFixed(2));
+    }
     tempData["id_principal"] = [{'id_tema':value.id_tema}];
     tempData["no_tema"] = value.no_tema;
     tempData["nombre_tema"] = value.nombre_tema;

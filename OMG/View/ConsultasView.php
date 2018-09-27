@@ -98,6 +98,7 @@ $Usuario=  Session::getSesion("user");
     </button>
         
     <div class="pull-right">
+        <label style="margin-right:30px;"><h4 id="cumplimiento_contrato_show"></h4></label>
         <button onClick="graficar()" title="Graficar Circular" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#Grafica">
         <i class="fa fa-pie-chart"></i>
         </button>

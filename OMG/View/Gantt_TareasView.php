@@ -96,77 +96,23 @@ and open the template in the editor.
     <!--<link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>-->
     <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
 
-    <script src="../../js/dragresize.js" type="text/javascript"></script>
-    
     <!--aqui empieza librerias qe no son del gantt en funcionalidad y presentacion-->
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>-->
-    <!--<script>window.jQuery || document.write(decodeURIComponent('%3Cscript src="js/jquery.min.js"%3E%3C/script%3E'))</script>-->
     <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/18.1.6/css/dx.common.css" />
     <link rel="dx-theme" data-theme="generic.light" href="https://cdn3.devexpress.com/jslib/18.1.6/css/dx.light.css" />
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>-->
-    <!--<script>window.angular || document.write(decodeURIComponent('%3Cscript src="js/angular.min.js"%3E%3C\/script%3E'))</script>-->
     <script src="https://cdn3.devexpress.com/jslib/18.1.6/js/dx.all.js"></script>
     <link href="../../css/PersonalizacionVistasGantt.css" rel="stylesheet" type="text/css"/>
     <!--aqui termina las librerias que no son del gantt-->
-    
-    
-    
-    
-<!--     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
-    
-    
-    
-    <script>
-        var dragresize = new DragResize('dragresize',
-            { minWidth: 50, minHeight: 50, minLeft: 20, minTop: 20, maxLeft: 600, maxTop: 600 });
-        dragresize.isElement = function(elm)
-        {
-            if (elm.className && elm.className.indexOf('drsElement') > -1) return true;
-        };
-        dragresize.isHandle = function(elm)
-        {
-            if (elm.className && elm.className.indexOf('drsMoveHandle') > -1) return true;
-        };
-        dragresize.ondragfocus = function() { };
-        dragresize.ondragstart = function(isResize) { };
-        dragresize.ondragmove = function(isResize) { };
-        dragresize.ondragend = function(isResize) { };
-        dragresize.ondragblur = function() { };
-        dragresize.apply(document);
-//        drsElement drsMoveHandle
-     </script>
-    
+     
     
  <style type="text/css">
     html, body{
-      /*width: 100%;*/
       height: 100%;
-      /*overflow-y: visible;*/
-/*      padding:0px;
-      margin:0px;*/
-      /*overflow: hidden;*/
     }
     a{
         color: #337ab7;
         text-decoration: none;
         font-size: 15;
-    }
-         
-    
-    
-/*    .mpp-sample {
-			background: url("../../assets/gantt_5.1.2_com/samples/08_api/common/ms-project.png");
-			width: 32px;
-			height: 32px;
-			background-repeat: no-repeat;
-			padding-left: 40px;
-			line-height: 32px;
-			display: inline-block;
-		}*/
-                
+    }        
          .gantt_task_line.gantt_dependent_task {
 			background-color: #65c16f;
                         /*background-color:  #0042e9;*/
@@ -174,12 +120,7 @@ and open the template in the editor.
 		}       
 .gantt_task_line.gantt_dependent_task .gantt_task_progress {
 			background-color: #46ad51;
-                        /*background-color:  #0042e9;*/
-		}
-/*         .hide_project_progress_drag .gantt_task_progress_drag {
-			visibility: hidden;
-		}*/
-                
+		}           
        .gantt_task_progress {
 			text-align: left;
 			padding-left: 10px;
@@ -190,51 +131,13 @@ and open the template in the editor.
                 /*estilos para ocultar el texto de la barra*/ 
                 .gantt_task_content {
                     display: none;
-                }
-                
-                
-                
+                }   
                 .completed_task {
 		border: 1px solid #94AD94;
                 }
-
                 .completed_task .gantt_task_progress {
                     background: #0000cc;
                 }
-                
-                /*termina estilos para ocultar el texto de la barra*/
-                /* para la pantalla completa*/ 
-/*                	.gantt-fullscreen {
-			position: absolute;
-			bottom: 20px;
-			right: 20px;
-			width: 30px;
-			height: 30px;
-			padding: 2px;
-			font-size: 32px;
-			background: transparent;
-			cursor: pointer;
-			opacity: 0.5;
-			text-align: center;
-			-webkit-transition: background-color 0.5s, opacity 0.5s;
-			transition: background-color 0.5s, opacity 0.5s;
-		}
-                .gantt-fullscreen:hover {
-			background: rgba(150, 150, 150, 0.5);
-			opacity: 1;
-		}*/
-                /*termina para la pantalla completa*/ 
-                
-/*     .gantt_data_area {
-    position: relative;
-    overflow-x: auto;
-    overflow-y: auto;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: auto;
-}  */
-
  .dx-treelist-borders > 
  .dx-treelist-pager, 
  .dx-treelist-borders > 
@@ -242,7 +145,6 @@ and open the template in the editor.
  .dx-treelist-borders > 
  .dx-treelist-filter-panel{
             background-color:#307ECC ; 
-            /*color: #ffffff;*/
             font-family: "Roboto Slab";
             font-size: 1.2em;
             font-weight: normal;
@@ -253,153 +155,46 @@ and open the template in the editor.
     color: white;
 }               
 #dx {
-    max-height: 100%;
+    max-height: 90%;
 }
 
  .modal-lg{width: 50%;}
  #tabPanel{
      height: 8%;
  }
- .dx-item-content dx-multiview-item-content{
-   background-color: red;  
- }
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
 
-
-
-
-
-
-
-
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
- .drsElement {
- position: absolute;
- border: 1px solid #333;
-}
-
-.drsMoveHandle {
- height: 20px;
- background-color: #CCC;
- border-bottom: 1px solid #666;
- cursor: move;
-}
- .dragresize {
- position: absolute;
- width: 5px;
- height: 5px;
- font-size: 1px;
- background: #EEE;
- border: 1px solid #333;
-}
-
-.dragresize-tl {
- top: -8px;
- left: -8px;
- cursor: nw-resize;
-}
-.dragresize-tm {
- top: -8px;
- left: 50%;
- margin-left: -4px;
- cursor: n-resize;
-}
-.dragresize-tr {
- top: -8px;
- right: -8px;
- cursor: ne-resize;
-}
-
-/*.dragresize-ml {
- top: 50%;
- margin-top: -4px;
- left: -8px;
- cursor: w-resize;
-}*/
-/*.dragresize-mr {
- top: 50%;
- margin-top: -4px;
- right: -8px;
- cursor: e-resize;
-}*/
-
-.dragresize-bl {
- bottom: -8px;
- left: -8px;
- cursor: sw-resize;
-}
-.dragresize-bm {
- bottom: -8px;
- left: 50%;
- margin-left: -4px;
- cursor: s-resize;
-}
-.dragresize-br {
- bottom: -8px;
- right: -8px;
- cursor: se-resize;
-} 
-
-#resizable { width: 100%; height: 150px; padding: 0.5em; }
-  #resizable h3 { text-align: center; margin: 0; }
 </style> 	
 		
   </head>
     <body>
-        
-        
-  
-        
-        
-  <!--<form action="">-->
+ 
+
+
+<div class="accordion" id="accordionExample">
+
+
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+           Mostrar
+        </button>
+      </h5>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+      <div class="card-body">
+          <div>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Detalles</button>
   <input type="submit" class="btn btn-info" value="Recargar" onclick="refrescarDatosGantt()">      
       
-  <!--</form>-->
+
         <input type="radio" id="scale1" name="scale" value="1" checked/><label for=""><h5>Dia</h5></label>
 <input type="radio" id="scale2" name="scale" value="2"/><label for=""><h5>Semana</h5></label>
 <input type="radio" id="scale3" name="scale" value="3"/><label for=""><h5>Mes</h5></label>
 <input type="radio" id="scale4" name="scale" value="4"/><label for=""><h5>Año</h5></label>
-<!--<div style="text-align:center;">-->
 	<input value="deshacer" type="button" onclick='gantt.undo()' style='font-size: 10px'>
 	<input value="Rehacer" type="button" onclick='gantt.redo()' style='font-size: 10px'>
-        <!--<button class="btn btn-danger" type="button" onclick='detallesActividadesCompletasGantt()' data-toggle='modal' data-target='#detalles' style='font-size: 10px'>Detalles</button>-->
-        <!--<button class="btn btn-danger" type="button" onclick='detallesActividadesCompletasGantt()'  style='font-size: 10px'>Detalles</button>-->
-<!--</div>-->
-        <?php  
-        
-//        echo"e  ".Session::getSesion("dataGantt");
-        ?>
+
         <input value="Exportar a PDF"  class="btn btn-info" type="button" onclick="gantt.exportToPDF()" style="margin:20px;">
     <input value="Exportar a PNG" class="btn btn-info" type="button" onclick="gantt.exportToPNG()">
 <input value="Exportar a MS Proyect" class="btn btn-success" type="button" onclick='gantt.exportToMSProject({skip_circular_links: false})'
@@ -415,27 +210,7 @@ and open the template in the editor.
     cellColors:true
 })' style='margin:20px;'>
   
-<div class="accordion" id="accordionExample">
-
-
-  <div class="card">
-    <div class="card-header" id="headingTwo">
-      <h5 class="mb-0">
-        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-           Mostrar
-        </button>
-      </h5>
-    </div>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-      <div class="card-body">
- 
-
-          
-          
-          <p>
-  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Detalles</button>
-
-</p>
+          </div>
 <div class="row">
   <div class="col">
     <div class="collapse multi-collapse" id="multiCollapseExample1">
@@ -447,9 +222,9 @@ and open the template in the editor.
   <div class="col">
     <div class="collapse multi-collapse" id="multiCollapseExample2">
       <div class="card card-body">
-            <div  class="drsElement" id="detallesInformacion" style="width:100%;height:80% ;position: absolute;z-index: 4">
+            <div  class="" id="detallesInformacion" style="width:100%;height:80% ;position: fixed;z-index: 4">
 
-               <div class="" id="tree-list" >
+                <div class="" id="tree-list" style="position: absolute" >
                     <div id="dx" ></div>
                                       </div>
 
@@ -459,20 +234,13 @@ and open the template in the editor.
       </div>
     </div>
   </div>
-</div>
-          
-          
-          
-          
-                   
+</div>                 
       </div>
     </div>
   </div>
 </div>
 
  <div class="" id="gantt_here" style='width: 100%;height: 75%;position: absolute'>       </div>
-
- 
     </body>
     
 <!-- Inicio de Seccion Modal Archivos-->
@@ -1435,40 +1203,24 @@ construirTreeList();
     }
     
     function detallesActividadesCompletasGantt(){
-//        alert("d");
         if( $("#detallesInformacion").css("display")!="none"){
-//             $("#gantt_here").height("100%");
-//            alert("esta visible");
-                 $("#detallesInformacion").css("display","none");
-//                $("body").css("zoom", window.innerWidth / 500);
-                   
+                 $("#detallesInformacion").css("display","none");               
         }else{
-//            alert("no lo esta")
             $("#detallesInformacion").css("display","");
-//             $("#detallesInformacion").css("display","");
-//                        $("#gantt_here").height("50%");
 
         }
-//        
-//        $("#gantt_here").css("height","100%");
-        
 
 } 
     var datosModificadosActividadesPonderado_ProgramadoTemp=[];
     var id_padreTareaPonderado_programadoTemp=-1;
     function saberSiSumanPorcentajePonderadoProgramado100loshijos(args)
     {
-        // console.log(args);
         var bandera=1;
         var key = args.key;
         var sumatoria = 0;
         var dataFinal=[];
-        // var hijos = [];
-
-        // id_padreTareaPonderado_programadoTemp
         $.each(datosTreeList,(index,value)=>
         {
-            // console.log(value);
             if(value.id == key)
             {
                 if(value.parent != id_padreTareaPonderado_programadoTemp)
@@ -1479,11 +1231,6 @@ construirTreeList();
                 }
             }
         });
-
-        // if(datosModificadosActividadesPonderado_ProgramadoTemp.length == 0)
-        //     datosModificadosActividadesPonderado_ProgramadoTemp.push(args);
-        // else
-        // {
             $.each(datosModificadosActividadesPonderado_ProgramadoTemp,(index,value)=>{
                 if(value.key == key)
                 {
@@ -1538,8 +1285,7 @@ construirTreeList();
             alert("El total es mayor al 100% del ponderado de la tarea padre");
         }
     }
-    
-    
+
     var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/form-data'>";
         ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
         ModalCargaArchivo += "<div class='fileupload-buttons'>";
