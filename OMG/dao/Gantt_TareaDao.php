@@ -320,6 +320,26 @@ class Gantt_TareaDao {
             return -1;
         }
     }
+    
+    
+    public function guardarStatus($Lista)
+    {
+        try 
+        {
+            $status= $Lista['status'];
+            $id= $Lista['id'];
+            $query="UPDATE gantt_tareas SET notas=$status
+                    WHERE gantt_tareas.id=$id";
+            $db= AccesoDB::getInstancia();
+            $lista= $db->executeQueryUpdate($query);
+            
+            return $lista;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
             
 }
 
