@@ -6,7 +6,7 @@ class Gantt_TareaDao {
         try
         {
             $query="SELECT tbgantt_tareas.user,tbgantt_tareas.id, tbgantt_tareas.text, tbgantt_tareas.start_date, tbgantt_tareas.duration,
-            tbgantt_tareas.progress, tbgantt_tareas.parent, tbgantt_tareas.ponderado_programado,tbgantt_tareas.notas
+            tbgantt_tareas.progress, tbgantt_tareas.parent, tbgantt_tareas.ponderado_programado,tbgantt_tareas.notas,tbgantt_tareas.status
             FROM gantt_tareas tbgantt_tareas
             WHERE tbgantt_tareas.id_tarea= $VALUE";
 
@@ -309,6 +309,26 @@ class Gantt_TareaDao {
             $cadena= $Lista['notas'];
             $id= $Lista['id'];
             $query="UPDATE gantt_tareas SET notas='$cadena'
+                    WHERE gantt_tareas.id=$id";
+            $db= AccesoDB::getInstancia();
+            $lista= $db->executeQueryUpdate($query);
+            
+            return $lista;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    
+    public function guardarStatus($Lista)
+    {
+        try 
+        {
+            $status= $Lista['status'];
+            $id= $Lista['id'];
+            $query="UPDATE gantt_tareas SET notas=$status
                     WHERE gantt_tareas.id=$id";
             $db= AccesoDB::getInstancia();
             $lista= $db->executeQueryUpdate($query);
