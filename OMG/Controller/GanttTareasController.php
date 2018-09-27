@@ -64,14 +64,15 @@ switch ($Op) {
         if(isset($Lista[0]["ponderado_programado"])){
             echo "entro ";
             $resp["response"] = $modelGantt->guardarPonderados($Lista);
-        if(isset($Lista[0]["notas"])){
-            $resp["response"]= $modelGantt->guardarNota($Lista[0]);
         }
-            header('Content-type: application/json; charset=utf-8');
-             echo json_encode($resp);
-        }else{
-            $resp= $modelGantt->guardarNota($Lista[0]);
-        }
+//        if(isset($Lista[0]["notas"])){
+//            $resp["response"]= $modelGantt->guardarNota($Lista[0]);
+//        }
+//            header('Content-type: application/json; charset=utf-8');
+//             echo json_encode($resp);
+//        }else{
+//            $resp= $modelGantt->guardarNota($Lista[0]);
+//        }
 //            $VALUES["id"]= Session::getSesion("dataGantt_id_tarea");
 //            $VALUES["text"]= $_REQUEST['TEXT'];
 //            $VALUES["start_date"]= $_REQUEST['START_DATE'];
