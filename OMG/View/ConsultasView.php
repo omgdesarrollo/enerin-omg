@@ -79,6 +79,22 @@ $Usuario=  Session::getSesion("user");
                 /* position:absolute !important; */
                 /* width:0px !important; */
             /* } */
+            div.google-visualization-tooltip
+            {
+                /* transform:rotate(1deg); */
+                background:bisque;
+                border-radius:5px;
+                position:fixed;
+                top:55px !important;
+                left:81% !important;
+                width:200px;
+                /* right:0px !important; */
+                /* color:black; */
+                -webkit-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
+                -moz-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
+                box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
+            }
+
             body{overflow:hidden;}
         </style>              
                 
@@ -118,7 +134,7 @@ $Usuario=  Session::getSesion("user");
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="closeLetra">X</span>
                 </button>
-		        <h4 class="modal-title" id="myModalLabelNuevaEvidencia">Grafico</h4>
+		        <h4 class="modal-title" id="myModalLabelNuevaEvidencia">Indicador de Cumplimiento</h4>
             </div>
 
             <div class="modal-body">

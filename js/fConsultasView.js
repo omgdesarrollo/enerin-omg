@@ -322,11 +322,11 @@ function graficar()
             no_iniciados++;
     });
     dataGrafica = [
-        ["Cumplidos",requisitos_cumplidos,"Numero de Requisitos: "+requisitos_cumplidos.toString(),JSON.stringify(cumplidos_temas)],
-        ["En Proceso",requisitos_proceso_sp,"Numero de Requisitos: "+requisitos_proceso_sp.toString(),JSON.stringify(proceso_sp_temas)],
-        ["En Proceso Penalizados",requisitos_proceso_cp,"Numero de Requisitos: "+requisitos_proceso_cp.toString(),JSON.stringify(proceso_cp_temas)],
-        ["Atrasados",requisitos_atrasados_sp,"Numero de Requisitos: "+requisitos_atrasados_sp.toString(),JSON.stringify(atrasados_sp_temas)],
-        ["Atrasados Penalizados",requisitos_atrasados_cp,"Numero de Requisitos: "+requisitos_atrasados_cp.toString(),JSON.stringify(atrasados_cp_temas)],
+        ["Cumplidos",requisitos_cumplidos,"Requisitos:"+requisitos_cumplidos.toString(),JSON.stringify(cumplidos_temas)],
+        ["En Proceso",requisitos_proceso_sp,"Requisitos:"+requisitos_proceso_sp.toString(),JSON.stringify(proceso_sp_temas)],
+        ["En Proceso Penalizados",requisitos_proceso_cp,"Requisitos:"+requisitos_proceso_cp.toString(),JSON.stringify(proceso_cp_temas)],
+        ["Atrasados",requisitos_atrasados_sp,"Requisitos:"+requisitos_atrasados_sp.toString(),JSON.stringify(atrasados_sp_temas)],
+        ["Atrasados Penalizados",requisitos_atrasados_cp,"Requisitos:"+requisitos_atrasados_cp.toString(),JSON.stringify(atrasados_cp_temas)],
         // ["No Iniciados",no_iniciados],
     ];
     // console.log("requisitos = "+requisitos);
@@ -389,7 +389,7 @@ function chartOptions(tituloGrafica)
             },
         pieSliceText:"none",
         title: tituloGrafica,
-        // tooltip:{textStyle:{color:"red"},text:"none"},
+        tooltip:{textStyle:{color:"#000000"},text:"none",isHtml:true,background:'red'},
         // pieSliceText:"",
         titleTextStyle:{color:"black"},
         'is3D':true,
@@ -546,7 +546,7 @@ function graficar2(temas,concepto)
             }
         });
     });
-    console.log(temasTemp);
+    // console.log(temasTemp);
     dataGrafica = [];
     bandera = 0;
     $.each(temasTemp,function(index,value)
@@ -555,7 +555,7 @@ function graficar2(temas,concepto)
         {
             value["concepto"] = concepto;
             value["penalizacion"] = penalizacion;
-            dataGrafica.push(["Numero de Tema: "+value.no_tema,value.requisitos, "Nombre de Tema:\n "+value.nombre+" \nResponsable:\n "+value.responsable, JSON.stringify(value)]);
+            dataGrafica.push(["Tema: "+value.no_tema,value.requisitos, "~Tema:\n  "+value.nombre+" \n~Responsable:\n  "+value.responsable, JSON.stringify(value)]);
             bandera = 1;
         }
     });
@@ -693,7 +693,7 @@ function graficar3(datos,concepto)
     {
         if( value.evidencias != 0)
         {
-            dataGrafica.push(["Nombre Registro:\n "+value.nombre_registro,value.evidencias, "Evidencias: "+value.evidencias.toString() , JSON.stringify(value)]);
+            dataGrafica.push(["Registro:\n"+value.nombre_registro,value.evidencias, "~Evidencias:"+value.evidencias.toString() , JSON.stringify(value)]);
             bandera = 1;
         }
     });

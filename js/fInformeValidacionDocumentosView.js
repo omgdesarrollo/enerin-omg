@@ -25,7 +25,6 @@ $(function()
 
 function inicializarFiltros()
 {
-   
     return new Promise((resolve,reject)=>
     {
         filtros = [
@@ -39,6 +38,7 @@ function inicializarFiltros()
 //            { id: "status",name:"status", type: "text"},
             { id: "validacion_tema_responsable",name:"validacion_tema_responsable", type: "combobox",data:[{validacion_tema_responsable:"true",descripcion:"Validado"},{validacion_tema_responsable:"false",descripcion:"En Proceso"}],descripcion:"descripcion"},
             {name:"opcion",id:"opcion",type:"opcion"}
+            // 3075264647556791394195
             // { id:"delete", name:"Opción", type:"customControl",sorting:""},
         ];
         resolve();
