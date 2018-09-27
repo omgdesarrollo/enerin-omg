@@ -40,7 +40,7 @@ $(function()
         __datosExcel=[]
         $.each(dataListado,function (index,value)
             {
-                console.log("Entro al datosExcel");
+                // console.log("Entro al datosExcel");
                 __datosExcel.push( reconstruirExcel(value,index+1) );
             });
             DataGridExcel= __datosExcel;
@@ -361,7 +361,7 @@ function construirGrafica(dataGrafica,tituloGrafica)
 
 function chartEstructura(dataGrafica)
 {
-    console.log(dataGrafica);
+    // console.log(dataGrafica);
     data = new google.visualization.DataTable();
     data.addColumn('string', 'nombre');
     data.addColumn('number', 'valor');
@@ -555,7 +555,7 @@ function graficar2(temas,concepto)
         {
             value["concepto"] = concepto;
             value["penalizacion"] = penalizacion;
-            dataGrafica.push(["Tema: "+value.no_tema,value.requisitos, "~Tema:\n  "+value.nombre+" \n~Responsable:\n  "+value.responsable, JSON.stringify(value)]);
+            dataGrafica.push(["Tema: "+value.no_tema,value.requisitos, "¬Tema:\n"+value.nombre+" \n-Responsable:\n"+value.responsable+"\n~Requisitos: "+value.requisitos , JSON.stringify(value)]);
             bandera = 1;
         }
     });
@@ -609,8 +609,8 @@ function graficar3(datos,concepto)
         tituloGrafica = "INCUMPLIMIENTO PENALIZADOS EVIDENCIAS";
     }
     // console.log(estado);
-    console.log(penalizacion);
-    console.log(tituloGrafica);
+    // console.log(penalizacion);
+    // console.log(tituloGrafica);
 
     // for(var i in temas)
     // {
