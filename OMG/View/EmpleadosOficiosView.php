@@ -11,48 +11,32 @@ $Usuario=  Session::getSesion("user");
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
 		<title>OMG APPS</title>
-
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-
+                
 		<!-- bootstrap & fontawesome -->
                 <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
                 <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-                
                 <!--Para abrir alertas de aviso, success,warning, error-->
                 <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
-
 		<!-- ace styles Para Encabezado-->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-                
-                <!--Inicia para el spiner cargando-->
-                <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
-                <!--Termina para el spiner cargando-->
+                <!--JQUERY-->
+                <script src="../../js/jquery.js" type="text/javascript"></script>
+                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+                <!--JGROWL-->
+                <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
+                <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
                 
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
-                <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-                <script src="../../js/jquery.js" type="text/javascript"></script>
-                <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>               
-
-<!--                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
-                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
-                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>-->
-
-                <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
-                <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
-                <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
-                
-                <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
-                <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
-                <script src="../../js/tools.js" type="text/javascript"></script>
-                <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script> 
+                <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>                
                 <script src="../../js/fEmpleadosOficiosView.js" type="text/javascript"></script>
+                <script src="../../js/fGridComponent.js" type="text/javascript"></script>
                 <script src="../../js/fechas_formato.js" type="text/javascript"></script>
                 <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
         <style>
-            
             .jsgrid-header-row>.jsgrid-header-cell {
                 background-color:#307ECC ;      /* orange */
                 font-family: "Roboto Slab";
@@ -64,10 +48,6 @@ $Usuario=  Session::getSesion("user");
             {
                 display:none;
             }
-            .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                    
-            .modal-lg{width: 100%;}
-            .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
-            body{overflow:hidden;}
         </style>              
                 
  			 
@@ -99,7 +79,7 @@ require_once 'EncabezadoUsuarioView.php';
         <button style="width:48px;height:42px" type="button"  class="btn_agregar" id="toExcel">
             <img src="../../images/base/_excel.png" width="30px" height="30px">
         </button>
-    </div>
+    </div>    
 </div>
 
 <br><br><br>
@@ -159,18 +139,52 @@ require_once 'EncabezadoUsuarioView.php';
 <!--Final de Seccion Modal-->
 
 <script>
-DataGrid = [];
-dataListado=[];
-DataGridExcel=[];
-origenDeDatosVista="empleados";
+var DataGrid = [];
+var dataListado=[];
+var filtros=[];
+var db={};
+var gridInstance;
+var ultimoNumeroGrid=0;
+var DataGridExcel=[];
+var origenDeDatosVista="empleados";
 
-listarDatos();
-inicializarFiltros();
+
+var customsFieldsGridData=[
+         {field:"customControl",my_field:MyCControlField},
+//        {field:"porcentaje",my_field:porcentajesFields},
+];
+
+ 
+estructuraGrid = [
+    { name: "id_principal",visible:false},
+    { name:"no",title:"No",width:40},
+    { name: "nombre_empleado",title:"Nombre", type: "text", width: 80, validate: "required" },
+    { name: "apellido_paterno",title:"Apellido Paterno", type: "text", width: 150, validate: "required" },
+    { name: "apellido_materno",title:"Apellido Materno", type: "text", width: 150, validate: "required" },
+    { name: "categoria",title:"Categoria", type: "text", width: 150, validate: "required" },
+    { name: "correo",title:"Correo Electronico", type: "text", width: 150, validate: "required" },
+    { name: "fecha_creacion",title:"Fecha Creacion", type: "text", width: 150, validate: "required",editing: false},
+//    {name:"cancel", type:"control"}
+    { name: "delete", title: "Opcion", type: "customControl", width:100}
+],
+
 construirGrid();
-construirFiltros();
+
+promesaInicializarFiltros = inicializarFiltros();
+
+promesaInicializarFiltros.then((resolve2)=>
+{
+    construirFiltros();
+    listarDatos();
+},
+(error)=>
+{
+    growlError("Error!","Error al construir la vista, recargue la página");
+});
+
 </script>
     <!--Inicia para el spiner cargando-->
-    <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+    <!--<script src="../../js/loaderanimation.js" type="text/javascript"></script>-->
     <!--Termina para el spiner cargando-->
     
     <!--Bootstrap-->

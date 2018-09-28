@@ -18,23 +18,38 @@ $Usuario=  Session::getSesion("user");
 		<!-- bootstrap & fontawesome -->
                 <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
                 <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+                
                 <!--Para abrir alertas de aviso, success,warning, error-->
                 <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+
 		<!-- ace styles Para Encabezado-->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-                <!--JQUERY-->
-                <script src="../../js/jquery.js" type="text/javascript"></script>
-                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-                <!--JGROWL-->
-                <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
-                <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
+                
+                <!--Inicia para el spiner cargando-->
+                <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+                <!--Termina para el spiner cargando-->
                 
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+                <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+                <script src="../../js/jquery.js" type="text/javascript"></script>
+                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+                <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
+
+<!--                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>-->
+
+                <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
+                <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
+                
+                <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
+                <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
+                <script src="../../js/tools.js" type="text/javascript"></script>
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
                 <script src="../../js/fDocumentosView.js" type="text/javascript"></script>
-                <script src="../../js/fGridComponent.js" type="text/javascript"></script>
                 <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
                 
         <style>
@@ -146,47 +161,25 @@ require_once 'EncabezadoUsuarioView.php';
 
 <script>
     
-var DataGrid = [];
-var dataListado = [];
-var EmpleadosCombobox=[];
-var filtros=[];
-var db={};
-var gridInstance;
-var ultimoNumeroGrid=0;
-var DataGridExcel=[];
-var origenDeDatosVista="documentos";
-var customsFieldsGridData=[
-         {field:"customControl",my_field:MyCControlField},
-//        {field:"porcentaje",my_field:porcentajesFields},
-];
+DataGrid = [];
+dataListado = [];
+EmpleadosCombobox=[];
+filtros=[];
+ultimoNumeroGrid=0;
+DataGridExcel=[];
+origenDeDatosVista="documentos";
 
-
-estructuraGrid =  [
-    { name: "id_principal",visible:false},
-    { name:"no",title:"No",width:20},
-    { name: "clave_documento",title:"Clave del Documento",type: "textarea", validate: "required" },
-    { name: "documento",title:"Documento",type: "textarea", validate: "required" },
-    { name: "id_empleado",title:"Responsable del Documento", type: "select",
-        items:EmpleadosCombobox,
-        valueField:"id_empleado",
-        textField:"nombre_completo"
-    },
-    { name:"delete", title:"Opción", type:"customControl",sorting:"", width:100}
-],
-
+listarDatos();
+inicializarFiltros();
 construirGrid();
-
-inicializarFiltros().then((resolve2)=>
-{
-    construirFiltros();
-    listarDatos();
-},
-(error)=>
-{
-    growlError("Error!","Error al construir la vista, recargue la página");
-});
+construirFiltros();
 
 </script>
+
+
+            <!--Inicia para el spiner cargando-->
+            <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+            <!--Termina para el spiner cargando-->
            
             <!--Bootstrap-->
             <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>

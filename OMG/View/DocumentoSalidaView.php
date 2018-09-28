@@ -38,10 +38,10 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
 
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
-                <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
+                <!--<link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>-->
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 <!--<script src="../../js/jquery.js" type="text/javascript"></script>-->
-                <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>               
+                <!--<script src="../../js/jqueryblockUI.js" type="text/javascript"></script>-->               
 
                 <!-- <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
                 <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
@@ -62,7 +62,6 @@ $Usuario=  Session::getSesion("user");
                 <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
                 <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
                 <!--END LIBRERIA SWEET ALERT 2-->
-                <script src="../../js/fechas_formato.js" type="text/javascript"></script>
                 <!-- <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
                 <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/> -->
                 <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
@@ -72,6 +71,7 @@ $Usuario=  Session::getSesion("user");
                 <!-- Empieza libreria que contiene la estructura del jsGridCompleta en configuracion-->
                 <!-- <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/> -->
                 <script src="../../js/fGridComponent.js" type="text/javascript"></script>
+                <script src="../../js/fechas_formato.js" type="text/javascript"></script>
                 <!--termina libreria que contiene la estructura del jsGridCompleta--> 
                 <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
                 
@@ -395,7 +395,7 @@ function inicializarEstructuraGrid()
                         { name: "id_autoridad", title: "Autoridad Remitente", type: "comboAutoridad", width:180},
                         { name: "archivo_adjunto", title: "Archivo Adjunto", type: "text", width:150,editing:false},
                         { name: "observaciones", title: "Observacion", type: "text", width:140},
-                        { name: "delete", title: "Opcion", type: "customControl", width:150}
+                        { name: "delete", title: "Opcion", type: "customControl", width:100}
                 ];
                 resolve();
         });
