@@ -173,6 +173,34 @@ class Gantt_TareasModel{
             return -1;
         }
     }
+    public static function actualizarGanttTareasDeTablaDetalles($COLUMNAS,$ID)
+    {
+        try
+        {
+            $dao=new Gantt_TareaDao();
+            $query= "UPDATE gantt_tareas SET";
+            $index=0;
+            foreach ($COLUMNAS as $key => $value) 
+            { 
+                if($index!=0)
+                {
+                    $query.=" , ";
+                }
+                
+                $query .= " $key = '$value'";
+                $index++;
+            }
+            
+            $query.= "WHERE id = $ID";
+            $update= $dao->actualizarGanttTareas($query);
+            return ($update!=0)?1:0;            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
     public static function actualizarExisteProgramaTareas($VALUES)
     {
         try

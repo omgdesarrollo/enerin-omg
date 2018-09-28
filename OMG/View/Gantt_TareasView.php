@@ -174,40 +174,42 @@ and open the template in the editor.
     overflow: hidden;;
     max-width: 30%;
  }*/
- div.contenedor {
-  display:flex;
-}
-div.files-tree{
-  height: 100px;
-  width: 15%;
-  background-color: #303030;
-  float: left;
-  resize: horizontal;
-  overflow: hidden;;
-  max-width: 30%;
-}
-div.work-area{
-  height: 100px;
-  background-color: #606060;
-  float: right;
-  flex:1;
+
+
+#mydiv {
+    position: absolute;
+    z-index: 9;
+    padding-left: 5%;
+    background-color: #f1f1f1;
+    text-align: center;
+    border: 1px solid #d3d3d3;
 }
 
+#mydivheader {
+    padding: 10px;
+    cursor: move;
+    font-size: 10px;
+    z-index: 10;
+    background-color: #2196F3;
+    color: #fff;
+}
 
 
 </style> 	
-		
+		    
   </head>
     <body>
  
+<!-- Draggable DIV -->
 
-<!--<div class="contenedor">
-  <div class="files-tree">cvcv</div>
-  <div class="work-area"></div>
-</div>-->
+
+
+
+
 <div class="accordion" id="accordionExample">
 
 
+    
   <div class="card">
     <div class="card-header" id="headingTwo">
       <h5 class="mb-0">
@@ -220,7 +222,8 @@ div.work-area{
       <div class="card-body">
           <div>
   <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Detalles</button>
-  <input type="submit" class="btn btn-info" value="Recargar" onclick="refrescarDatosGantt()">      
+  <input type="submit" class="btn btn-info" value="Recargar" onclick="refrescarDatosGantt()">
+  <!--<input type="submit" class="btn btn-info" value="Recargar Detalles" onclick="refrescarDatosGantt()">-->   
       
 
         <input type="radio" id="scale1" name="scale" value="1" checked/><label for=""><h5>Dia</h5></label>
@@ -257,15 +260,23 @@ div.work-area{
   <div class="col">
     <div class="collapse multi-collapse" id="multiCollapseExample2">
       <div class="card card-body">
-            <div  class="" id="detallesInformacion" style="width:100%;height:80% ;position: fixed;z-index: 4">
-
-                <div class="" id="tree-list" style="position: absolute" >
+          
+<div id="mydiv">
+  <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
+  
+  <div  class="" id="detallesInformacion" style="width:94%;height:60% ;position: fixed;z-index: 2;">
+                <div id="mydivheader" style="position: absolute">Click Para Mover</div>   
+                <!--<div class="" id="tree-list"  >-->
                     <div id="dx" ></div>
-                                      </div>
+                                      <!--</div>-->
 
             </div>
+ 
+  
+</div>
           
-         
+          
+        
       </div>
     </div>
   </div>
@@ -276,6 +287,57 @@ div.work-area{
 </div>
 
  <div class="" id="gantt_here" style='width: 100%;height: 75%;position: absolute'>       </div>
+   
+    
+<script>
+//Make the DIV element draggagle:
+dragElement(document.getElementById("mydiv"));
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id + "header")) {
+    /* if present, the header is where you move the DIV from:*/
+    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+  } else {
+    /* otherwise, move the DIV from anywhere inside the DIV:*/
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    /* stop moving when mouse button is released:*/
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+</script>
+    
+    
+    
+    
     </body>
     
 <!-- Inicio de Seccion Modal Archivos-->
@@ -443,21 +505,10 @@ setScaleConfig('1');
                                 success:function (res)
                                 {
                                  
-                                    if(res==true){
-//                                        growlError("Descendencia","Error Tiene Tareas En Descendencia");
-//                                             gantt.alert({
-//                                                    title:"Error",
-//                                                    type:"alert-error",
-//                                                    text:"Error Tiene Tareas En Descendencia"
-//                                              });
-//                                        alert("tiene descendencia ");
-//                                         swalError("No se puede eliminar la actividad, tiene descendencia ");
-                                        
+                                    if(res==true){                                        
                                          desc=false;
                                     }else{
                                         if(res==false){
-//                                                    alert("no tiene descendencia");
-//                                                    $.jGrowl("Eliminacion Exitosa", { header: '' });
                                              desc=true;
                                     }
                                     }
@@ -467,9 +518,6 @@ setScaleConfig('1');
 		});
 
 		gantt.attachEvent("onAfterTaskDelete", function onAfterTaskDelete(id, task) {
-//			alert("s");
-//alert("des");
-//                    alert("tarea eliminada es "+id);
                              $.ajax({
                                 url:"../Controller/GanttTareasController.php?Op=EliminarTarea&deleteidtarea="+id,
                                 success:function (res){
@@ -479,32 +527,23 @@ setScaleConfig('1');
                               });
                                  
                                 if (delTaskParent != gantt.config.root_id) {
-				gantt.batchUpdate(checkParents(delTaskParent));
-                                 
+				gantt.batchUpdate(checkParents(delTaskParent));       
                          }
-//                         window.location.href="GanttView.php";
 		});
 	})();            
       	(function dynamicProgress() {
 
 		function calculateSummaryProgress(task) {
-//                    alert();
-//                    console.log("entro en calculate summary progress");
 			if (task.type != gantt.config.types.project){
-//                            alert("");
 				return task.progress;
                             }
 			var totalToDo = 0;
 			var totalDone = 0;
 			gantt.eachTask(function (child) {
-//                            console.log(child.text);
 				if (child.type != gantt.config.types.project) {
                                     
-//                                    alert("diferente de r");
 //					totalToDo += child.duration;
                                           totalToDo += (child.porcentaje_por_actividad/100);
-//                                          console.log(totalToDo);
-//                                        console.log(totalToDo);
 //					totalDone += (child.progress || 0) * child.duration;
                                           totalDone += (child.progress || 0) * (child.porcentaje_por_actividad/100);
 				}
@@ -515,16 +554,12 @@ setScaleConfig('1');
 		}
 
 		function refreshSummaryProgress(id, submit) {
-//                   console.log("entro en refresh summary progress");
 			if (!gantt.isTaskExists(id)){
-//                            alert();
 				return;
                             }
 
 			var task = gantt.getTask(id);
-//                        console.log(task);
 			task.progress = calculateSummaryProgress(task);
-
 			if (!submit) {
 				gantt.refreshTask(id);
 			} else {
@@ -542,18 +577,39 @@ setScaleConfig('1');
                 
 		gantt.attachEvent("onParse", function () {
                    
+//                   obtenerTareas().then(function (){
+//construirTreeList();
+//
+//});
+                   
+                   
+                   
+                   
 			gantt.eachTask(function (task) {
 //                             alert("e");
 				task.progress = calculateSummaryProgress(task);
 			});
 		});
 		gantt.attachEvent("onAfterTaskUpdate", function (id,item) {
-//                    if(id==)
-//                    console.log(item);
+                    
+//                    obtenerTareas().then(function (){
+//construirTreeList();
+//
+//});
+                    
+                    
+                    
+                    
                     if(item.progress==1)
                         gantt.getTask(id).readonly = true;
-                    console.log(gantt.getTask(id));
-//                    gantt.getTask(id).readonly = true;
+                    if(item.status==3){
+                       gantt.getTask(id).readonly = true;
+                        gantt.getTask(id).progress = 1;
+                    }
+//			gantt.updateTask(id)
+                    
+                    
+//                    console.log(gantt.getTask(id));
 			refreshSummaryProgress(gantt.getParent(id), true);
 		});
 
@@ -563,15 +619,6 @@ setScaleConfig('1');
 		gantt.attachEvent("onAfterTaskAdd", function (id) {
 			refreshSummaryProgress(gantt.getParent(id), true);
 		});
-
-
-            
-
-
-
-
-
-
 
 		(function () {
 			var idParentBeforeDeleteTask = 0;
@@ -583,11 +630,6 @@ setScaleConfig('1');
 			});
 		})();
 	})();
-
-      
- 
-      
-      
      var dataEmpleados=[];
 //     var data
      obtenerEmpleados();
@@ -602,16 +644,19 @@ setScaleConfig('1');
         gantt.config.scale_height = 50;
         gantt.config.order_branch = true;
         
-//        gantt.config.branch_loading = true;
-//gantt.config.order_branch_free = true;
-//        para abrir las carpetas por default desde el principio
-
+        gantt.config.branch_loading = true;
+        gantt.config.order_branch_free = true;
         gantt.templates.task_class = function (start, end, task) {
-//  console.log(task);
 		if (task.type == gantt.config.types.project){
 //                    console.log("entro ");
 			return "hide_project_progress_drag";
                 }
+                console.log(task);
+                
+                if(task.status==3){
+                    return "completed_task";
+                }
+                
                     if(task.progress==1){
                         return "completed_task";
                     }else{
@@ -620,9 +665,7 @@ setScaleConfig('1');
                 
 	};
         gantt.locale.labels["complete_button"] = "Completar";
-        console.log(gantt.locale.labels);
-//        gantt.config.lightbox.sections.push({name: "status", height: 22, map_to: "user", type: "select", options:gantt.serverList("user")});
-//         console.log(gantt.config.lightbox);
+//        console.log(gantt.locale.labels);
 	gantt.config.buttons_left = ["dhx_save_btn", "dhx_cancel_btn", "complete_button"];
         gantt.attachEvent("onLightboxButton", function (button_id, node, e) {
 		if (button_id == "complete_button") {
@@ -634,12 +677,8 @@ setScaleConfig('1');
 	});
  
 
-//        	gantt.config.open_tree_initially = true;
+        	gantt.config.open_tree_initially = true;
 //        	para cerrar las carpetas por default desde el principio
-
-
-//	gantt.locale.labels.column_stage =
-//		gantt.locale.labels.section_stage = "Escenario";
 
 	function byId(list, id) {
 		for (var i = 0; i < list.length; i++) {
@@ -662,12 +701,13 @@ gantt.config.columns=[
 //                {name: "status", label: "Status",resize: true},
 		{name: "add", width: 40}
 	];
-console.log(gantt);
+//console.log(gantt);
 
 //var status=[];
 var opcionstatus = [
     { key: 1, label: 'En Proceso' },
-    { key: 2, label: 'Suspendido' }
+    { key: 2, label: 'Suspendido' },
+    { key: 3, label: 'Terminado'}
 ];
         gantt.config.lightbox.sections = [
 		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
@@ -690,13 +730,6 @@ gantt.config.subscales = [
 		{unit: "day", step: 1, date: "%j, %D"}
 	];
 
-//gantt.config.lightbox.project_sections = [
-//		{name: "description", height: 70, map_to: "text", type: "textarea", focus: true},
-//		{name: "time", type: "duration", map_to: "auto", readonly: true}
-//	];
-
-
-
 //inicia para expandir o colapsar
 
 
@@ -714,10 +747,8 @@ gantt.config.work_time = false;
 gantt.config.auto_scheduling = true;
 gantt.config.autosize=false; 
 
-//gantt.config.min_duration = 24*60*60*1000;
-//gantt.config.min_duration = 60*60*1000;
-//gantt.config.drag_project=true;
-//gantt.config.autoscroll = true;
+
+gantt.config.autoscroll = true;
 gantt.config.auto_scheduling_strict = true;
 
 gantt.config.sort = true;
@@ -733,27 +764,9 @@ gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
 var dp = new gantt.dataProcessor("../Controller/GanttTareasController.php?Op=Modificar");
 dp.init(gantt);
 //dp.autoUpdate=false;
-dp.attachEvent("onBeforeUpdate", function (id, status, data) {
-//     if (!data.text) {
-//         dhtmlx.message("La Tarea no puede ir vacia");
-//         console.log(data);
-//         $.each(data,function (index,value){
-////             console.log(value);
-//         })
-         
-         return true;
-//     }
-//     else{
-////          data.text="dtexto";
-//     }
-     
-//     data.text="d1";
-     
-     
-//     return true;
-});
-
-//gantt.config.branch_loading = true;
+//dp.attachEvent("onBeforeUpdate", function (id, status, data) {
+//         return true;
+//});
 
 
 //empieza en cuanto a el modo de mostrar las tareas por dia,seman,mes,año
@@ -768,139 +781,6 @@ dp.attachEvent("onBeforeUpdate", function (id, status, data) {
 	for (var i = 0; i < els.length; i++) {
 		els[i].onclick = func;
 	} 
- //termina en cuanto a el modo de mostrar las tareas por dia,seman,mes,año        
-//dp.setTransactionMode("REST");
-//    console.log(dp);
-    
-    //para no actualizar en tiempo real 
-//dp.autoUpdate=false;
-//dp.action_param="status";
-
-
-    
-//    	gantt.attachEvent("onAfterTaskDrag", function (id, mode) {
-//		var task = gantt.getTask(id);
-//		if (mode == gantt.config.drag_mode.progress) {
-//			var pr = Math.floor(task.progress * 100 * 10) / 10;
-////			gantt.message(task.text + " is now " + pr + "% completed!");
-//		} else {
-//			var convert = gantt.date.date_to_str("%H:%i, %F %j");
-//			var s = convert(task.start_date);
-//			var e = convert(task.end_date);
-////			gantt.message(task.text + " starts at " + s + " and ends at " + e);
-//		}
-//	});
-    
-//    gantt.attachEvent("onBeforeTaskDrag", function (id, mode) {
-//		var task = gantt.getTask(id);
-//		var message = "la Tarea "+task.text + " ";
-//
-//		if (mode == gantt.config.drag_mode.progress) {
-//			message += "su progreso fue actualizado";
-//		} else {
-//			message += "se ha ";
-//			if (mode == gantt.config.drag_mode.move)
-//				message += "movido";
-//			else if (mode == gantt.config.drag_mode.resize)
-//				message += "reacomodado";
-//		}
-//
-//		gantt.message(message);
-//		return true;
-//	});
-    
-//    gantt.templates.progress_text = function (start, end, task) {
-//		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
-//	};
-//    gantt.templates.task_class = function (start, end, task) {
-//		if (task.type == gantt.config.types.project)
-//			return "hide_project_progress_drag";
-//	};
-
- 
-//    gantt.attachEvent("onTaskDrag", function (id) {
-////        alert("d");
-//			refreshSummaryProgress(gantt.getParent(id), false);
-//		});
-                
-//             gantt.attachEvent("onTaskDrag", function(id, mode, task, original){
-//  	var minimal_date = gantt.getState().min_date// + 86400;
-//    minimal_date = gantt.date.add(minimal_date, 1, 'day');
-// 	if (task.start_date < minimal_date) gantt.refreshData();
-//  
-//  	var maximal_date = gantt.getState().max_date// + 86400;
-//    maximal_date = gantt.date.add(maximal_date, 1, 'day');
-// 	if (task.end_date < maximal_date) gantt.refreshData();  
-//});
-//             gantt.attachEvent("onAfterAutoSchedule",function(taskId, updatedTasks){
-//                 alert("");
-//    // any custom logic here
-//});
-             
-             
-             
-//        function refreshSummaryProgress(id, submit) {
-////            alert("le has picado para avanzar");
-//			if (!gantt.isTaskExists(id))
-//				return;
-//
-//			var task = gantt.getTask(id);
-//			task.progress = calculateSummaryProgress(task);
-//
-//			if (!submit) {
-//				gantt.refreshTask(id);
-//			} else {
-//				gantt.updateTask(id);
-//			}
-//
-//			if (!submit && gantt.getParent(id) !== gantt.config.root_id) {
-//				refreshSummaryProgress(gantt.getParent(id), submit);
-//			}
-//		}
-                
-                
-//                function calculateSummaryProgress(task) {
-////                    alert("calcula el progreso del padre");
-//			if (task.type != gantt.config.types.project)
-//				return task.progress;
-//			var totalToDo = 0;
-//			var totalDone = 0;
-//			gantt.eachTask(function (child) {
-//				if (child.type != gantt.config.types.project) {
-//					totalToDo += child.duration;
-//					totalDone += (child.progress || 0) * child.duration;
-//				}
-//			}, task.id);
-//			if (!totalToDo) return 0;
-//			else return totalDone / totalToDo;
-//		}
-                
-                
-//                function checkParents(id) {
-//			setTaskType(id);
-//			var parent = gantt.getParent(id);
-//			if (parent != gantt.config.root_id) {
-//				checkParents(parent);
-//			}
-//		}
-//                function setTaskType(id) {
-//			id = id.id ? id.id : id;
-//			var task = gantt.getTask(id);
-//			var type = gantt.hasChild(task.id) ? gantt.config.types.project : gantt.config.types.task;
-//			if (type != task.type) {
-//				task.type = type;
-////                                alert("");
-//                                console.log("jh");
-////cuando crea una tarea
-//				gantt.updateTask(id);
-////                                dp.init(gantt);
-////                                gantt.refreshData();
-////                                gantt.getTask(id).readonly = true;
-////                                gantt.load("../Controller/GanttController.php?Op=MostrarTareasCompletasPorFolioDeEntrada");
-////                                gantt.refreshTask(id);
-//			}
-//		}
-//    gantt.parse(tasksA);
 
     function obtenerEmpleados(){     
         $.ajax({
@@ -923,70 +803,21 @@ dp.attachEvent("onBeforeUpdate", function (id, status, data) {
 //        if(Math.round(task.progress * 100)==100){
 //            $(".gantt_task_line.gantt_dependent_task .gantt_task_progress ").css("background-color","red");
 //        }
-//        console.log(Math.round(task.progress * 100));
-//            console.log(task);
                 $("#taskid").css("background-color:","red");
 		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
 	};
         
-        
-//        gantt.templates.tooltip_text = function(start,end,task){
-//            console.log(task);
-//            return "<b>Tarea:</b> "+task.text+"Fecha De Inicio: "+task.start_date;
-//         };
-        
-        
-        
-//        gantt.templates.task_text=function(start,end,task){
-//            console.log(task);
-//    return "<b>Text:</b> "+task.text+",<b> Holders:</b> "+task.user;
-//};
 
     var datosTreeList=[]; 
     $(function (){
-//        $("#detallesInformacion").resize();
-            $("#detallesInformacion" ).resizable();
-              $("#detallesInformacion" ).draggable();
+//        $("#detallesInformacion" ).draggable();
               
-//              gantt_here
-            $("#acordionGantt").click(function (){
-                 $("#gantt_here").css("display:","");
-//                 $("#gantt_here").css("display:","");
-            });
-//         $(window).on("resize", 
-//         
-//        function (){
-//            alert();
-//        });
-  
-  // y al cargar la página
- 
-//    var tabs = [{
-//            title: 'Detalles Registros Actividad',
-//            text: 'Tabla'
-//        }, {
-//            title: 'Avances Visuales',
-//            text: ''
-//        
-//        }];
-//        $(function () {
-//            $("#tabPanel").dxTabPanel({
-//                items: tabs
-//            });
-//    }); 
-        
-        
-        
 obtenerTareas().then(function (){
 construirTreeList();
 
-
 });
-    
- 
 
     });
-
     
     function obtenerTareas(){
         return new Promise(function (resolve,reject){
@@ -995,8 +826,6 @@ construirTreeList();
                                         async:false,
                                         success:function (res)
                                         {
-//                                            console.log("entro aqui");
-//                                            datosTreeList=res.data;
                                             datosTreeList=[];
                                             
                                             $.each(res.data,function(index,value){
@@ -1009,28 +838,19 @@ construirTreeList();
                                                 datosTreeObj["notasname"]= value.notas;
                                                 datosTreeObj["porcentaje_por_actividad"]= value.porcentaje_por_actividad;
                                                 datosTreeObj["ponderado_real"]= "value.ponderado_real";
-                                                datosTreeObj["avance"]=" value.avance";
+                                                datosTreeObj["avance"]=Math.round(value.progress*100);
                                                 datosTreeObj["archivo_adjunto"]= "<button onClick='mostrar_urls("+value.id+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
                                                 datosTreeObj["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar</button>";
-                                                
-                                                datosTreeList.push(datosTreeObj);                                                
-//                                                console.log(datosTreeList);
+                                                datosTreeObj["status"]= value.status;
+                                                datosTreeList.push(datosTreeObj);
                                             });
-                                         
-//                                         console.log(res.data);
                                          resolve();
-//                                          construirTreeList();
                                         }
                                       });
                                       
                                   })
         }  
-        
-        
-        
-        
   function construirTreeList(){
-             
    dxtreeList= $("#dx").dxTreeList({
         dataSource: datosTreeList,
         keyExpr: "id",
@@ -1039,11 +859,11 @@ construirTreeList();
         showRowLines: true,
         showBorders: true,
         columnAutoWidth: true,
-//        autoExpandAll: true,
+        autoExpandAll: true,
         allowColumnResizing: true,
         columnAutoWidth: true,
         allowColumnReordering: true,
-        height:900,
+        height:700,
         columnChooser: {
         allowSearch: false,
         emptyPanelText: "Seleccionar Columna ",
@@ -1065,15 +885,15 @@ construirTreeList();
         },
         },
         editing: {
-            mode: "row",
+            mode: "cell",
             allowUpdating: true,
-            allowDeleting: false,
-            allowAdding: false,
-            texts:{
-              editRow: "Editar",
-              saveRowChanges: "Guardar",
-              cancelRowChanges: "Cancelar",
-            }
+//            allowDeleting: false,
+//            allowAdding: false
+//            texts:{
+//              editRow: "Editar",
+//              saveRowChanges: "Guardar",
+//              cancelRowChanges: "Cancelar",
+//            }
         },
         filterRow: {
         applyFilter: "auto",
@@ -1098,19 +918,11 @@ construirTreeList();
         showOperationChooser: true,
         visible: true
         },
-//        noDataText: "No Hay Datos",
-//         scrolling: {
-//            mode: "standard"
-//        },
+        noDataText: "No Hay Datos",
         paging: {
             enabled: true,
             pageSize: 10
         },
-//        pager: {
-//            showPageSizeSelector: true,
-//            allowedPageSizes: [5, 10, 20],
-//            showInfo: true
-//        },
         pager: {
         allowedPageSizes: null,
         infoText: "Pagina {0} de {1}",
@@ -1137,15 +949,27 @@ construirTreeList();
         text: "Loading...",
         width: 200
         },
-        onCellClick:(args)=>{
-//            console.log(args);
-        },
         onRowClick:(args)=>{
 //            console.log(args);
         },
         onRowUpdated:function (args){
-//            console.log(args);
-            saberSiSumanPorcentajePonderadoProgramado100loshijos(args);
+            console.log(args);
+            if( args.data.hasOwnProperty('notasname') ) {
+                actualizarDeTablaDetalles("notas",args.data["notasname"],args.key);   
+            }
+            if( args.data.hasOwnProperty('user') ) {
+                actualizarDeTablaDetalles("user",args.data["user"],args.key);
+            }
+            if(args.data.hasOwnProperty('status')){
+                actualizarDeTablaDetalles("status",args.data["status"],args.key);
+            }
+            if(args.data.hasOwnProperty('porcentaje_por_actividad')){
+                saberSiSumanPorcentajePonderadoProgramado100loshijos(args);
+            }
+            
+            
+            
+            
         },
         columns:[
             {
@@ -1162,8 +986,7 @@ construirTreeList();
             { 
                 dataField: "user",
                 caption: "Responsable",
-                validationRules: [{ type: "required" }],
-                 allowEditing:false,
+                 allowEditing:true,
                   lookup: {
                     dataSource:dataEmpleados,
                     valueExpr: "key",
@@ -1173,85 +996,92 @@ construirTreeList();
             
             { 
                 dataField: "porcentaje_por_actividad",
-                 caption: "Peso de la Actividad"
+                 caption: "Peso de la Actividad",
+                  allowEditing:true
             },
              { 
                 dataField: "avance",
-                 caption: "Avance",
+                 caption: "Avance (%)",
                   allowEditing:false
                 
             },
             { 
                 dataField: "notasname",
                 caption: "Notas",
-                validationRules: [{ type: "required" }],
-                 allowEditing:true
+                 allowEditing:true,
+                 allowUpdating:true
+            },
+            { 
+                dataField: "status",
+                caption: "Estatus",
+                 allowEditing:false,
+                  lookup: {
+                    dataSource:opcionstatus,
+                    valueExpr: "key",
+                    displayExpr: "label"
+                }
             },
              { 
                 dataField: "archivo_adjunto",
-                 caption: "Archivo Adjunto",
+                 captbion: "Archivo Adjunto",
                  cellTemplate:archivoAdjuntoCellTemplate,
-//               customizeText:function (data){
-//                   console.log("entro ");
-//                   console.log(data);
-//                   console.log("salio");
-////                   return data["value"];
-//                    return "<button onClick='mostrar_urls(1537568570483)' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'></button>".substring(0,20); 
-//               },
-               dataType:"string",
-//                 encodeHtml:true
-//                 falseText:false,
                   allowEditing:false
                   
             }
         ],
-        onCellPrepared: function(e) {
-            if(e.column.command === "edit") {
-                e.cellElement.children(".dx-link-add").remove();
-            }
-        },
-        onEditorPreparing: function(e) {
-            if(e.dataField === "parent" && e.row.data.id === 1) {
-                e.cancel = true;
-            }
-        },
-        onInitNewRow: function(e) {
-            e.data.parent = 1;
-        },
+//        ,
+//        onCellPrepared: function(e) {
+//            console.log(e);
+//            if(e.column.command === "edit") {
+//                e.cellElement.children(".dx-link-add").remove();
+//            }
+//        },
+//        onEditorPreparing: function(e) {
+//            console.log("pre");
+//            console.log(e);
+//            console.log("termine pre");
+//            if(e.dataField === "parent" && e.row.data.id === 1) {
+//                e.cancel = true;
+//            }
+//        },
+//        onInitNewRow: function(e) {
+//            e.data.parent = 1;
+//        },
         expandedRowKeys: [1, 2, 3, 4, 5]
-    }); 
+    });
+    
+    
     }
-   var archivoAdjuntoCellTemplate= function(container, options) {
-       
-//       console.log("empezo");
-//       container.context.innerHTML="<button onClick='mostrar_urls("+options.data.id+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'></button>";
-//        container.context.innerHTML=options.data.archivo_adjunto;
-        //        console.log(container);
-       console.log(options);
-//       console.log("termino");
+   var archivoAdjuntoCellTemplate= function(container, options) {       
+//       console.log(options);
       return container.context.innerHTML=options.data.archivo_adjunto;
 };
     
     function refrescarDatosGantt(){
         gantt.refreshData();
         gantt.init('gantt_here');
-//        gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId");
         $.when(gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId")).then(function(){
+                
+                
+            obtenerTareas().then(function (){
+                construirTreeList();
 
-           
-           
-           
-           
-          
+            });
+
+
+                
+                
+                
+                
+                
+                
         });
     }
-    
     function detallesActividadesCompletasGantt(){
         if( $("#detallesInformacion").css("display")!="none"){
                  $("#detallesInformacion").css("display","none");               
         }else{
             $("#detallesInformacion").css("display","");
-
         }
 
 } 
@@ -1300,7 +1130,7 @@ construirTreeList();
         {
             alert("Correcto");
 //            console.log(args);
-console.log(datosModificadosActividadesPonderado_ProgramadoTemp);
+//console.log(datosModificadosActividadesPonderado_ProgramadoTemp);
             $.each(datosModificadosActividadesPonderado_ProgramadoTemp,(index,value)=>{
                 dataFinal.push({id:parseInt(value.key),ponderado_programado:value.data.porcentaje_por_actividad});
             });
@@ -1330,6 +1160,29 @@ console.log(datosModificadosActividadesPonderado_ProgramadoTemp);
             alert("El total es mayor al 100% del ponderado de la tarea padre no se guardo ");
         }
     }
+    
+    
+    
+    function actualizarDeTablaDetalles(COLUMNA,VALUE,ID_TAREA){
+//    console.log(data);
+     $.ajax({
+                url:'../Controller/GanttTareasController.php?Op=actualizardetabladetalles',
+                type:"POST",
+                data:"COLUMNA="+COLUMNA+"&VALUE="+VALUE+"&ID_TAREA="+ID_TAREA,
+                success:(res)=>
+                {
+                   
+                   
+                   
+                },
+                error:()=>
+                {
+                    console.log("Error en el servidor");
+                }
+            })
+    
+    }
+    
 
     var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/form-data'>";
         ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
