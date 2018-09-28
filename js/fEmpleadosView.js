@@ -313,7 +313,7 @@ function saveUpdateToDatabase(args)//listo
 }
 
 
- function actualizarEmpleado(id_empleado)
+function actualizarEmpleado(id_empleado)
 {
         $.ajax({
                 url:'../Controller/EmpleadosController.php?Op=ListarEmpleado',

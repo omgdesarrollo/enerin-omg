@@ -60,6 +60,7 @@
     <!-- <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
     <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/> -->
+    <script src="../../assets/chart/loader.js" type="text/javascript"></script>
 
     <script src="../../js/fechas_formato.js" type="text/javascript"></script>
     <!-- <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
@@ -82,12 +83,40 @@
                 color: white;
                 font-weight: normal;
         }
-            .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                    
-            .modal-lg{width: 100%;}
+            /* .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                     */
+            /* .modal-lg{width: 100%;} */
             .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
             body{overflow:hidden;}
-   
 
+            div.google-visualization-tooltip
+            {
+                background:bisque;
+                border-radius:5px;
+                position:fixed;
+                top:60px !important;
+                left:1% !important;
+                width:200px;
+                -webkit-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
+                -moz-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
+                box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
+            }
+            div.ltr
+            {
+                width:-webkit-fill-available !important;
+                height:80% !important;
+            }
+            circle
+            {
+                r:4;
+            }
+            text
+            {
+                cursor:pointer;
+            }
+            /* path
+            {
+                stroke-width:2;
+            } */
         </style>
 </head>
 <!-- <body> -->
@@ -110,8 +139,12 @@
     <button id="btnAgregarEvidenciasRefrescar" type="button" class="btn btn-info btn_refrescar" onclick="refresh();" >
         <i class="glyphicon glyphicon-repeat"></i> 
     </button>
-    
+
     <div class="pull-right">    
+        <button onClick="graficar()" title="Graficar Circular" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#Grafica">
+            <i class="fa fa-pie-chart"></i>
+        </button>
+        
         <button style="width:48px;height:42px" type="button"  class="btn_agregar" id="toExcel">
             <img src="../../images/base/_excel.png" width="30px" height="30px">
         </button>
@@ -195,6 +228,35 @@
 </div><!-- cierre del modal -->
 
 <!--cierre del modal Mensaje-->
+
+<!-- Modal grafica -->
+<div class="modal draggable fade" id="Grafica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <!-- <div class="form-group" method="post" style="text-align:center" id="BTNS_GRAFICAMODAL"> -->
+                    <!-- <button type="submit" id="BTN_ANTERIOR_GRAFICAMODAL" class="botones_vista" style="width:fit-content" >Recargar</button> -->
+                <!-- </div> -->
+                
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="closeLetra">X</span>
+                </button>
+		        <h4 class="modal-title" id="myModalLabelNuevaEvidencia">Indicador de Cumplimiento</h4>
+            </div>
+
+            <div class="modal-body">
+                <div id="graficaPie" ></div>
+
+                <div class="form-group" method="post" style="text-align:center" id="BTNS_GRAFICAMODAL">
+                    <button type="submit" id="BTN_ANTERIOR_GRAFICAMODAL" class="btn crud-submit btn-info" style="width:90%" >Recargar</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
 <script>
     // construirFiltros();
     // construir();
@@ -209,6 +271,7 @@
     var DataGridExcel=[];
     var origenDeDatosVista="informeValidacionDocumentos";
 
+    google.charts.load('current', {'packages':['corechart']});
 
     var estructuraGrid=[
         { name: "no",title:"No", type: "text", width: 50, editing:false },
@@ -218,7 +281,7 @@
         { name: "temasmodal", title:"Tema",type: "text", width: 90, editing:false},
         { name: "requisitosmodal",  title:"Requisito",type: "text", width: 90, editing:false },
         { name: "archivoAdjunto",title:"Archivo Adjunto", width: 100, editing:false },
-        { name: "statusNotBdKey",title:"Estatus", type: "text", width: 120, editing:false },
+        { name: "estatus",title:"Estatus", type: "text", width: 120, editing:false },
         { name:"delete", title:"Opción", type:"customControl",sorting:"",editing:false}
 ];
 
@@ -230,11 +293,11 @@
     ultimoNumeroGrid=0;
     construirGrid();
     lispromesaInicializarFiltros = inicializarFiltros();
-   lispromesaInicializarFiltros.then((resolve2)=>
-        {
-            construirFiltros();
-            listarDatos();
-        })
+    lispromesaInicializarFiltros.then((resolve2)=>
+    {
+        construirFiltros();
+        listarDatos();
+    })
     
     
 

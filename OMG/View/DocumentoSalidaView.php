@@ -491,21 +491,22 @@ reiniciar();
 
 function listarThisEmpleados()
 {
-        return new Promise((resolve,reject)=>{
-                $.ajax({
-                        url:'../Controller/DocumentosSalidaController.php?Op=responsablesDelTema',
-                        type: 'GET',
-                        success:(empleados)=>
-                        {
-                                // tempData = autoridades;
-                                thisEmpleados = empleados;
-                                resolve();
-                        },
-                        error:(er)=>
-                        {
-                                reject(er);
-                        }
-                });
+        return new Promise((resolve,reject)=>
+        {
+            $.ajax({
+                    url:'../Controller/DocumentosSalidaController.php?Op=responsablesDelTema',
+                    type: 'GET',
+                    success:(empleados)=>
+                    {
+                            // tempData = autoridades;
+                            thisEmpleados = empleados;
+                            resolve();
+                    },
+                    error:(er)=>
+                    {
+                            reject(er);
+                    }
+            });
         });
 }
  

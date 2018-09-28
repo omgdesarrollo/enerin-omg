@@ -42,6 +42,24 @@ class DocumentoModel{
         }
     }
     
+    public function listarDocumento($ID_DOCUMENTO, $CONTRATO)
+    {
+        try 
+        {
+            $dao= new DocumentoDAO();
+            $rec= $dao->mostrarDocumento($ID_DOCUMENTO, $CONTRATO);
+            
+            return $rec;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+
+
+
     public function  listarDocumentos2($contrato)
     {
         try{
@@ -84,6 +102,21 @@ class DocumentoModel{
        {
            $dao=new DocumentoDAO();
            $rec= $dao->nombresCompletosCombobox();
+           
+           return $rec;
+       } catch (Exception $ex)
+       {
+           throw $ex;
+           return -1;
+       }
+    }
+    
+    public function responsableDelDocumento()
+    {
+       try
+       {
+           $dao=new DocumentoDAO();
+           $rec= $dao->responsableDelDocumento();
            
            return $rec;
        } catch (Exception $ex)
