@@ -586,8 +586,12 @@ setScaleConfig('1');
                    
                    
 			gantt.eachTask(function (task) {
+//                            console.log("empezo tareas");
+//                            console.log(task);
+//                            console.log("termino tareas");
 //                             alert("e");
 				task.progress = calculateSummaryProgress(task);
+                                console.log(task.progress)
 			});
 		});
 		gantt.attachEvent("onAfterTaskUpdate", function (id,item) {
@@ -596,16 +600,28 @@ setScaleConfig('1');
 //construirTreeList();
 //
 //});
-                    
-                    
-                    
-                    
-                    if(item.progress==1)
+
+//console.log("cuando ");
+                    if(item.progress==1){
                         gantt.getTask(id).readonly = true;
-                    if(item.status==3){
-                       gantt.getTask(id).readonly = true;
-                        gantt.getTask(id).progress = 1;
+                        gantt.getTask(id).status = 3;
                     }
+                    
+                    
+                    if(item.status==2){
+//                        gantt.getTask(id).readonly = true;
+                    }
+                    
+                    
+                    if(item.status==3){
+                        gantt.getTask(id).readonly = true;
+                        gantt.getTask(id).progress = 1;
+//                        gantt.getTask(id).status = 3;
+
+                    }
+                    
+                    
+                    
 //			gantt.updateTask(id)
                     
                     
@@ -764,9 +780,15 @@ gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
 var dp = new gantt.dataProcessor("../Controller/GanttTareasController.php?Op=Modificar");
 dp.init(gantt);
 //dp.autoUpdate=false;
-//dp.attachEvent("onBeforeUpdate", function (id, status, data) {
-//         return true;
-//});
+dp.attachEvent("onBeforeUpdate", function (id, status, data) {
+    console.log("empez");
+//    console.log(data);  
+    console.log(dp);
+    
+    console.log("termino");
+    
+         return true;
+});
 
 
 //empieza en cuanto a el modo de mostrar las tareas por dia,seman,mes,año
@@ -799,6 +821,7 @@ dp.init(gantt);
            
         });
     }
+    console.log( gantt.templates);
     gantt.templates.progress_text = function (start, end, task) {
 //        if(Math.round(task.progress * 100)==100){
 //            $(".gantt_task_line.gantt_dependent_task .gantt_task_progress ").css("background-color","red");
