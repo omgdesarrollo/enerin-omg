@@ -179,6 +179,7 @@ and open the template in the editor.
 #mydiv {
     position: absolute;
     z-index: 9;
+    padding-left: 5%;
     background-color: #f1f1f1;
     text-align: center;
     border: 1px solid #d3d3d3;
@@ -262,17 +263,15 @@ and open the template in the editor.
           
 <div id="mydiv">
   <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
-  <div id="mydivheader">Click Para Mover</div>
   
-    
-            <div  class="" id="detallesInformacion" style="width:100%;height:60% ;position: fixed;z-index: 4">
-
+  <div  class="" id="detallesInformacion" style="width:94%;height:60% ;position: fixed;z-index: 2;">
+                <div id="mydivheader" style="position: absolute">Click Para Mover</div>   
                 <!--<div class="" id="tree-list"  >-->
                     <div id="dx" ></div>
                                       <!--</div>-->
 
             </div>
-  
+ 
   
 </div>
           
@@ -603,6 +602,13 @@ setScaleConfig('1');
                     
                     if(item.progress==1)
                         gantt.getTask(id).readonly = true;
+                    if(item.status==3){
+                       gantt.getTask(id).readonly = true;
+                        gantt.getTask(id).progress = 1;
+                    }
+//			gantt.updateTask(id)
+                    
+                    
 //                    console.log(gantt.getTask(id));
 			refreshSummaryProgress(gantt.getParent(id), true);
 		});
@@ -639,12 +645,18 @@ setScaleConfig('1');
         gantt.config.order_branch = true;
         
         gantt.config.branch_loading = true;
-gantt.config.order_branch_free = true;
+        gantt.config.order_branch_free = true;
         gantt.templates.task_class = function (start, end, task) {
 		if (task.type == gantt.config.types.project){
 //                    console.log("entro ");
 			return "hide_project_progress_drag";
                 }
+                console.log(task);
+                
+                if(task.status==3){
+                    return "completed_task";
+                }
+                
                     if(task.progress==1){
                         return "completed_task";
                     }else{
@@ -694,7 +706,8 @@ gantt.config.columns=[
 //var status=[];
 var opcionstatus = [
     { key: 1, label: 'En Proceso' },
-    { key: 2, label: 'Suspendido' }
+    { key: 2, label: 'Suspendido' },
+    { key: 3, label: 'Terminado'}
 ];
         gantt.config.lightbox.sections = [
 		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
