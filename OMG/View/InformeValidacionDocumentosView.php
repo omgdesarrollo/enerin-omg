@@ -239,6 +239,11 @@
                 <!-- <div class="form-group" method="post" style="text-align:center" id="BTNS_GRAFICAMODAL"> -->
                     <!-- <button type="submit" id="BTN_ANTERIOR_GRAFICAMODAL" class="botones_vista" style="width:fit-content" >Recargar</button> -->
                 <!-- </div> -->
+                <!-- <div class="btn-group btn-group-justified">
+                    <a href="#" class="btn btn-primary">Apple</a>
+                    <a href="#" class="btn btn-primary">Samsung</a>
+                    <a href="#" class="btn btn-primary">Sony</a>
+                </div> -->
                 
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="closeLetra">X</span>
