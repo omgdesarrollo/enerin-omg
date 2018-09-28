@@ -24,6 +24,14 @@ switch ($Op) {
                 
 		break;
             
+        case'ListarDocumento':
+            $CONTRATO= Session::getSesion("s_cont");
+            $Lista= $model->listarDocumento($_REQUEST['ID_DOCUMENTO'], $CONTRATO);
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($Lista);
+            return $Lista;
+            break;
+            
         case 'mostrarcombo':
 		$Lista=$model->listarDocumentosComboBox();
 //    	Session::setSesion("listarDocumentosComboBox",$Lista);
@@ -49,7 +57,13 @@ switch ($Op) {
             $Lista= $model->nombresCompletosCombobox();
             header('Content-type: application/json; charset=utf-8');
             echo json_encode($Lista);
-            break;    
+            break;
+        
+        case 'responsableDocumento':   
+            $Lista= $model->responsableDelDocumento();
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($Lista);
+            break; 
 	
 	case 'Nuevo':
 		# code...
@@ -96,9 +110,11 @@ switch ($Op) {
     
 	case 'Eliminar':
 		# code...
+//            header('Content-type: application/json; charset=utf-8'); 
+//            $data = json_decode($_REQUEST['ID_DOCUMENTO'],true);
+//            $Lista= $model->eliminarDocumento($data['id_documento']);
+            $Lista= $model->eliminarDocumento($_REQUEST['ID_DOCUMENTO']);
             header('Content-type: application/json; charset=utf-8'); 
-            $data = json_decode($_REQUEST['ID_DOCUMENTO'],true);
-            $Lista= $model->eliminarDocumento($data['id_documento']);
             echo json_encode($Lista);
             return $Lista;
 		break;	

@@ -153,11 +153,76 @@ var filtros=[];
 var db={};
 var gridInstance;
 var ultimoNumeroGrid=0;
+var thisEmpleados=[];
 var DataGridExcel=[];
 var origenDeDatosVista="documentos";
+
+var MyComboEmpleados = function(config)
+{
+    jsGrid.Field.call(this, config);
+};
+ 
+MyComboEmpleados.prototype = new jsGrid.Field
+({
+        align: "center",
+        sorter: function(date1, date2)
+        {
+            
+        },
+        itemTemplate: function(value)
+        {
+                var res ="";
+                value!=null ?
+                $.each(thisEmpleados,(index,val)=>{
+                        if(val.id_empleado == value)
+                                res = val.nombre_completo;
+                })
+                : console.log();
+                return res;
+        },
+        insertTemplate: function(value)
+        {},
+        editTemplate: function(value,todo)
+        {
+                var temp = "";
+                var temp2 = "";
+                var temp3 = "";
+                $.each(thisEmpleados,(index,val)=>
+                {
+                        if(val.id_empleado == value)
+                        {
+                                temp += "<option value='"+val.id_empleado+"' selected>"+val.nombre_completo+"</option>";
+                                temp2 = val.nombre_completo;
+                                temp3 = val.id_empleado;
+                        }
+                        else
+                                temp += "<option value='"+val.id_empleado+"'>"+val.nombre_completo+"</option>";
+                })
+                this._inputDate = $("<select>").attr({style:"margin:-5px;width:145px"});
+                $(this._inputDate[0]).append(temp);
+
+                if(todo.id_documento!=-1)
+                {
+                        this._inputDate[0] = temp2;
+                        this._inputDate[1] = temp3;
+                }
+                return this._inputDate[0];
+                
+        },
+        insertValue: function()
+        {},
+        editValue: function()
+        {
+                if( this._inputDate[1] == undefined )
+                        return $(this._inputDate[0]).val();
+                else
+                        return this._inputDate[1];
+        }
+});
 var customsFieldsGridData=[
          {field:"customControl",my_field:MyCControlField},
 //        {field:"porcentaje",my_field:porcentajesFields},
+        {field:"comboEmpleados",my_field:MyComboEmpleados},
 ];
 
 
@@ -166,19 +231,21 @@ estructuraGrid =  [
     { name:"no",title:"No",width:20},
     { name: "clave_documento",title:"Clave del Documento",type: "textarea", validate: "required" },
     { name: "documento",title:"Documento",type: "textarea", validate: "required" },
-    { name: "id_empleado",title:"Responsable del Documento", type: "select",
-        items:EmpleadosCombobox,
-        valueField:"id_empleado",
-        textField:"nombre_completo"
-    },
+    { name: "id_empleado", title: "Responsable del Documento", type: "comboEmpleados", width:180},
+//    { name: "id_empleado",title:"Responsable del Documento", type: "select",
+//        items:EmpleadosCombobox,
+//        valueField:"id_empleado",
+//        textField:"nombre_completo"
+//    },
     { name:"delete", title:"Opción", type:"customControl",sorting:"", width:100}
 ],
 
 construirGrid();
 
-inicializarFiltros().then((resolve2)=>
+inicializarFiltros().then((resolve)=>
 {
     construirFiltros();
+    listarThisEmpleados()
     listarDatos();
 },
 (error)=>
