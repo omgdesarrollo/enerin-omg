@@ -5,14 +5,16 @@ class InformeValidacionDocumentosDAO{
     {
         try
         {
-            $query="SELECT tbvalidacion_documento.id_validacion_documento, tbdocumentos.id_documento, tbdocumentos.clave_documento,
+            $query="SELECT DISTINCT tbvalidacion_documento.id_validacion_documento, tbdocumentos.id_documento, tbdocumentos.clave_documento,
  		 tbdocumentos.documento,tbdocumentos.contrato,
-		 tbempleados.id_empleado,concat(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) nombrecompleto,  
+		 tbempleados.id_empleado,concat(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) nombrecompleto,
+         IF(tbvalidacion_documento.validacion_tema_responsable = 'false',IF(tbempleados.id_empleado = 0,0,1),2) as estatus,
 		 tbvalidacion_documento.validacion_tema_responsable
                  FROM validacion_documento tbvalidacion_documento
                  JOIN documentos tbdocumentos ON tbdocumentos.id_documento=tbvalidacion_documento.id_documento
                  JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumentos.id_empleado 
-                 WHERE tbdocumentos.contrato= ".$v["param"]["contrato"];
+                 JOIN registros tbregistros ON tbregistros.id_documento = tbdocumentos.id_documento
+                 WHERE tbdocumentos.contrato = ".$v["param"]["contrato"];
             $db= AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);   
             return $lista;    

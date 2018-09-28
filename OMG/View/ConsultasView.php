@@ -81,15 +81,12 @@ $Usuario=  Session::getSesion("user");
             /* } */
             div.google-visualization-tooltip
             {
-                /* transform:rotate(1deg); */
                 background:bisque;
                 border-radius:5px;
                 position:fixed;
                 top:55px !important;
                 left:81% !important;
                 width:200px;
-                /* right:0px !important; */
-                /* color:black; */
                 -webkit-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
                 -moz-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
                 box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
@@ -116,7 +113,7 @@ $Usuario=  Session::getSesion("user");
     <div class="pull-right">
         <label style="margin-right:30px;"><h4 id="cumplimiento_contrato_show"></h4></label>
         <button onClick="graficar()" title="Graficar Circular" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#Grafica">
-        <i class="fa fa-pie-chart"></i>
+            <i class="fa fa-pie-chart"></i>
         </button>
         <button style="width:48px;height:42px" type="button"  class="btn_agregar" id="toExcel">
             <img src="../../images/base/_excel.png" width="30px" height="30px">
@@ -138,23 +135,10 @@ $Usuario=  Session::getSesion("user");
             </div>
 
             <div class="modal-body">
-                
-                <!-- <div class="form-group"> -->
-                    <!-- <label class="control-label">Grafico: </label> -->
-                    <!-- <select id="OPCION_GRAFICAMODAL"> -->
-                        <!-- <option value="1"> Por requisito </option> -->
-                        <!-- <option value="2"> Por evidencia </option> -->
-                    <!-- </select> -->
-                    <!-- <div id="INPUT_REGIONFISCAL_NUEVOREGISTRO" style="witdth:100%;"></div> -->
-                <!-- </div> -->
-                <!-- <div> div para la seleccion de los temas a graficar
-                </div> -->
                 <div id="graficaPie" ></div>
-
             </div>
             <div class="form-group" method="post" style="text-align:center" id="BTNS_GRAFICAMODAL">
                 <button type="submit" id="BTN_ANTERIOR_GRAFICAMODAL" class="btn crud-submit btn-info" style="width:90%" >Recargar</button>
-                <!-- <button type="submit" id="BTN_LIMPIAR_NUEVOREGISTROMODAL" class="btn crud-submit btn-info" style="width:49%">Limpiar</button> -->
             </div>
         </div>
     </div>
