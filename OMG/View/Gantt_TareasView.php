@@ -221,7 +221,8 @@ and open the template in the editor.
       <div class="card-body">
           <div>
   <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Detalles</button>
-  <input type="submit" class="btn btn-info" value="Recargar" onclick="refrescarDatosGantt()">      
+  <input type="submit" class="btn btn-info" value="Recargar" onclick="refrescarDatosGantt()">
+  <!--<input type="submit" class="btn btn-info" value="Recargar Detalles" onclick="refrescarDatosGantt()">-->   
       
 
         <input type="radio" id="scale1" name="scale" value="1" checked/><label for=""><h5>Dia</h5></label>
@@ -1047,7 +1048,20 @@ construirTreeList();
         gantt.refreshData();
         gantt.init('gantt_here');
         $.when(gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId")).then(function(){
-          
+                
+                
+            obtenerTareas().then(function (){
+                construirTreeList();
+
+            });
+
+
+                
+                
+                
+                
+                
+                
         });
     }
     function detallesActividadesCompletasGantt(){
