@@ -152,7 +152,7 @@ function construirGrid()
         [
             { name: "id_principal",visible:false},
             { name:"no",title:"No",width:40},
-            { name: "referencia",title:"Referencia", type: "textarea", validate: "required",width:200},
+            { name: "referencia",title:"Referencia", type: "textarea",width:200},
             { name: "tarea",title:"Pendiente", type: "textarea", validate: "required",width:200 },
 //            { name: "id_empleado",title:"Responsable del Plan", type: "text", validate: "required" },
             { name: "id_empleado",title:"Responsable", type: "select", width:200,
@@ -167,7 +167,7 @@ function construirGrid()
             { name: "status_tarea", title:"Estatus", type: "select", width:150,valueField:"status_tarea",textField:"descripcion",
                 items:[{"status_tarea":"1","descripcion":"En Proceso"},{"status_tarea":"2","descripcion":"Suspendido"},{"status_tarea":"3","descripcion":"Terminado"}]
             },
-            { name: "observaciones",title:"Observaciones", type: "textarea", validate: "required", width:150,},
+            { name: "observaciones",title:"Observaciones", type: "textarea", width:150,},
             { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:150,editing:false },
             { name: "registrar_programa",title:"Programa", type: "text", validate: "required",width:160, editing:false },
             { name: "avance_programa",title:"Avance del Programa", type: "text", validate: "required",width:150, editing:false },      
