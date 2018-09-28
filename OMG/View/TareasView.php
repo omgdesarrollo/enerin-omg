@@ -269,7 +269,6 @@ require_once 'EncabezadoUsuarioView.php';
 
 
 <script>
-
 DataGrid = [];
 dataListado = [];
 EmpleadosCombobox=[];
@@ -277,7 +276,6 @@ filtros=[];
 ultimoNumeroGrid=0;
 DataGridExcel=[];
 origenDeDatosVista="tareas";
-
 listarDatos();
 inicializarFiltros();
 construirGrid();

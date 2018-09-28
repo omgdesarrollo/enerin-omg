@@ -6,7 +6,7 @@ $(function()
         __datosExcel=[]
         $.each(dataListado,function (index,value)
             {
-                console.log("Entro al datosExcel");
+                // console.log("Entro al datosExcel");
                 __datosExcel.push( reconstruirExcel(value,index+1) );
             });
             DataGridExcel= __datosExcel;
@@ -19,6 +19,24 @@ $(function()
         });
     });
 
+    $("#BTN_ANTERIOR_GRAFICAMODAL").click(function()
+    {
+        // google.charts.setOnLoadCallback(drawChart);
+        // if(activeChart != 0)
+        // {
+        //     alert("anterior");
+        //     $(this).html("Anterior");
+        //     activeChart = 0;
+        //     selectChart();
+        // }
+        // else
+        // {
+            // alert("primero");
+            // $(this).html("Anterior");
+            activeChart = -1;
+            graficar();
+        // }
+    });
 
 }); //SE CIERRA EL $(FUNCTION())
 
@@ -36,7 +54,8 @@ function inicializarFiltros()
             { id:"noneTres", type:"none"},
             { id:"noneCuatro", type:"none"},
 //            { id: "status",name:"status", type: "text"},
-            { id: "validacion_tema_responsable",name:"validacion_tema_responsable", type: "combobox",data:[{validacion_tema_responsable:"true",descripcion:"Validado"},{validacion_tema_responsable:"false",descripcion:"En Proceso"}],descripcion:"descripcion"},
+            { id: "estatus",name:"validacion_tema_responsable", type: "combobox",
+                data:[{estatus:0,descripcion:"Sin Asignar"},{estatus:1,descripcion:"En Proceso"},{estatus:2,descripcion:"Validado"}],descripcion:"descripcion"},
             {name:"opcion",id:"opcion",type:"opcion"}
             // 3075264647556791394195
             // { id:"delete", name:"Opción", type:"customControl",sorting:""},
@@ -112,7 +131,7 @@ function refresh()
         construirFiltros();
         listarDatos();
     });
-    }
+}
   
 function reconstruir(value,index)//listo jsgrid
 {
@@ -126,7 +145,10 @@ function reconstruir(value,index)//listo jsgrid
     tempData["nombrecompleto"] = value.nombrecompleto; 
     tempData["temasmodal"]="<button onClick='mostrarTemaResponsable("+value.id_documento+");' type='button' class='btn btn-success btn_agregar' data-toggle='modal' data-target='#mostrar-temaresponsable'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>";
     tempData["requisitosmodal"]="<button onClick='mostrarRequisitos("+value.id_documento+");' type='button' class='btn btn-success btn_agregar' data-toggle='modal' data-target='#mostrar-requisitos'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>";
-    tempData["statusNotBdKey"]=(value.validacion_tema_responsable=="false")?"En Proceso":"Validado";
+    
+    
+    tempData["estatus"]= value.estatus == 0 ? "Sin Asignar" : value.estatus == 1 ? "En Proceso" : "Validado";
+    
     tempData["archivoAdjunto"]="<button onClick='mostrar_urls("+value.id_validacion_documento+");' type='button' class='botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'><i class='fa fa-cloud-upload' style='font-size: 22px'></i></button>";
 
     tempData["id_principal"].push({eliminar:0})
@@ -226,8 +248,6 @@ function mostrarRequisitos(id_documento)
             }
         });
 }
-
-
 
 function mostrar_urls(id_validacion_documento)//listo
 {
@@ -469,4 +489,192 @@ function cargarprogram(v,validado)
 //    alert("el valor de la evidencia es "+v);
 //alert("e:  "+validado);
     window.location.href="GanttEvidenciaView.php?id_evid="+v;
+}
+
+var activeChart = -1;
+var chartsCreados = [];
+function graficar()
+{
+    let validados = 0;
+    let validados_data = [];
+    let proceso = 0;
+    let proceso_data = [];
+    let sin_asignar = 0;
+    let sin_asignar_data = [];
+
+    // console.log(dataListado);
+    $.each(dataListado,(index,value)=>{
+        if(value.estatus == 0)
+        {
+            sin_asignar++;
+            $.each(value.temas_responsables,(ind,val)=>{
+                sin_asignar_data.push({no_tema:val.no, nombre_tema:val.nombre_tema, responsable_tema:val.nombre_completotema}); 
+            });
+        }
+        if(value.estatus == 1)
+        {
+            proceso++;
+            $.each(value.temas_responsables,(ind,val)=>{
+                proceso_data.push({no_tema:val.no,nombre_tema:val.nombre_tema,responsable_tema:val.nombre_completotema});
+            })
+        }
+        if(value.estatus == 2)
+        {
+            validados++;
+            $.each(value.temas_responsables,(ind,val)=>{
+                validados_data.push({no_tema:val.no, nombre_tema:val.nombre_tema, responsable_tema:val.nombre_completotema});
+            });
+        }
+    });
+    let dataGrafica = [
+        ["Sin Asignar",sin_asignar,">> Documentos:"+sin_asignar.toString(),JSON.stringify(sin_asignar_data)],
+        ["Validados",validados,">> Documentos:"+validados.toString(),JSON.stringify(validados_data)],
+        ["En Proceso",proceso,">> Documentos:"+proceso.toString(),JSON.stringify(proceso_data)]
+    ];
+    activeChart = -1;
+    chartsCreados = [];
+    let tituloGrafica = "VALIDACIÓN DOCUMENTOS";
+    let bandera = 0;
+    $.each(dataGrafica,function(index,value){
+        if(value[1] != 0)
+            bandera=1;
+    });
+
+    if(bandera == 0)
+    {
+        dataGrafica.push([ "NO EXISTEN DOCUMENTOS",1,"SIN DOCUMENTOS","[]"]);
+        tituloGrafica = "NO EXISTEN DOCUMENTOS";
+    }
+    // console.log(JSON.parse(dataGrafica[1][3]));
+    construirGrafica(dataGrafica,tituloGrafica);
+    $("#BTN_ANTERIOR_GRAFICAMODAL").html("Recargar");
+}
+
+function construirGrafica(dataGrafica,tituloGrafica)
+{
+    estructuraGrafica = chartEstructura(dataGrafica);
+    opcionesGrafica = chartOptions(tituloGrafica);
+    instanceGrafica = drawChart(dataGrafica,estructuraGrafica,opcionesGrafica);
+    activeChart++;
+    chartsCreados.push({grafica:instanceGrafica,data:estructuraGrafica});
+}
+
+function chartEstructura(dataGrafica)//funcion sin cambio
+{
+    // console.log(dataGrafica);
+    data = new google.visualization.DataTable();
+    data.addColumn('string', 'nombre');
+    data.addColumn('number', 'valor');
+    // if(tooltip!=0)
+        data.addColumn({type:"string",role:"tooltip"});
+    data.addColumn('string','datos');
+    
+    // if(dataGrafica.length != 0)
+        data.addRows(dataGrafica);
+    // else
+    //     data.addRows([[ "NO HAY DATOS",1,"SIN DATOS",""]]);
+    return data;
+}
+
+function chartOptions(tituloGrafica)//funcion sin cambio
+{
+    var options = 
+    {
+        legend:{
+                position:"labeled",alignment:"start",
+                textStyle:
+                {
+                    color:"black", fontSize:14, bold:true
+                }
+            },
+        pieSliceText:"none",
+        title: tituloGrafica,
+        tooltip:{textStyle:{color:"#000000"},text:"none",isHtml:true},
+        // pieSliceText:"",
+        titleTextStyle:{color:"black"},
+        'is3D':true,
+        slices: { 
+            1: {offset: 0.02,color:"#80ffbf"},
+            3: {offset: 0.02,color:"#bfff80"},
+            0: {offset: 0.02,color:"#ffbf80"},
+            4: {offset: 0.02,color:"#ff80bf"},
+            2: {offset: 0.02,color:"#bf80ff"},
+        },
+        backgroundColor:"",
+        "width":800,
+        "height":400
+    };
+    return options;
+}
+
+function drawChart(dataGrafica,data,options)//funcion sin cambio
+{
+    grafica = new google.visualization.PieChart(document.getElementById('graficaPie'));
+    grafica.draw(data, options);
+    if(dataGrafica[0][3]!="[]")
+        google.visualization.events.addListener(grafica, 'select', selectChart);
+    return grafica;
+}
+
+function selectChart()
+{
+    var select = chartsCreados[activeChart].grafica.getSelection()[0];
+    if(select != undefined)
+    {
+        dataNextGrafica = chartsCreados[activeChart].data.getValue(select.row,3);
+        concepto = chartsCreados[activeChart].data.getValue(select.row,0);
+            graficar2(dataNextGrafica,concepto);
+        $("#BTN_ANTERIOR_GRAFICAMODAL").html("Anterior");
+    }
+}
+
+function graficar2(temas,concepto)
+{
+    temas = JSON.parse(temas);
+    let lista = [];
+    let no_tema;
+    let bandera = 0;
+    let estatus = 0;
+    let dataGrafica = [];
+
+    $.each(temas,(index,value)=>{
+        if(bandera==0)
+        {
+            no_tema = value.no_tema;
+            lista.push(value);
+        }
+        bandera=1;
+        if(value.no_tema != no_tema)
+        {
+            lista.push(value);
+        }
+        else
+        {
+            no_tema = value.no_tema;
+        }
+    });
+    estatus = concepto == "Sin Asignar" ? 0 : concepto == "En Proceso" ? 1 : 2;
+    tituloGrafica = "DOCUMENTOS POR TEMA";
+    
+    $.each(dataListado,(index,value)=>{
+        if(value.estatus == estatus)
+        {
+            $.each(value.temas_responsables,(ind,val)=>{
+                $.each(lista,(key,valor)=>{
+                    if(valor.no_tema==val.no)
+                    {
+                        if(lista[key]["documentos"]!=undefined)
+                            lista[key]["documentos"]++;
+                        else
+                            lista[key]["documentos"]=1;
+                    }
+                });
+            });
+        }
+    });
+    $.each(lista,(index,value)=>{
+        dataGrafica.push(["Tema: "+value.no_tema,value.documentos,">> Tema:\n"+value.nombre_tema+"\n>> Responsable:\n"+value.responsable_tema+"\n>> Documentos:"+value.documentos,"[]"]);
+    });
+    // console.log(dataGrafica);
+    construirGrafica(dataGrafica,tituloGrafica);
 }
