@@ -86,7 +86,8 @@ $Usuario=  Session::getSesion("user");
                 position:fixed;
                 top:60px !important;
                 left:1% !important;
-                width:200px;
+                min-width:200px;
+                max-width:400px;
                 -webkit-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
                 -moz-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
                 box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
@@ -138,7 +139,7 @@ $Usuario=  Session::getSesion("user");
 
 <div class="modal draggable fade" id="Grafica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
-        <div class="modal-content" style="width:fit-content">
+        <div class="modal-content">
             <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="closeLetra">X</span>

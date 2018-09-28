@@ -95,7 +95,8 @@
                 position:fixed;
                 top:60px !important;
                 left:1% !important;
-                width:200px;
+                min-width:200px;
+                max-width:400px;
                 -webkit-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
                 -moz-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
                 box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
@@ -238,6 +239,11 @@
                 <!-- <div class="form-group" method="post" style="text-align:center" id="BTNS_GRAFICAMODAL"> -->
                     <!-- <button type="submit" id="BTN_ANTERIOR_GRAFICAMODAL" class="botones_vista" style="width:fit-content" >Recargar</button> -->
                 <!-- </div> -->
+                <!-- <div class="btn-group btn-group-justified">
+                    <a href="#" class="btn btn-primary">Apple</a>
+                    <a href="#" class="btn btn-primary">Samsung</a>
+                    <a href="#" class="btn btn-primary">Sony</a>
+                </div> -->
                 
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="closeLetra">X</span>
