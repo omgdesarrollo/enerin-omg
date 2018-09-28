@@ -483,11 +483,15 @@ setScaleConfig('1');
 			}
 		}
 
-		gantt.attachEvent("onParse", function () {
-			gantt.eachTask(function (task) {
-				setTaskType(task);
-			});
-		});
+//		gantt.attachEvent("onParse", function () {
+//                    obtenerTareas().then(function (){   
+//                        construirTreeList();
+//
+//                    });
+//			gantt.eachTask(function (task) {
+//				setTaskType(task);
+//			});
+//		});
 
 		gantt.attachEvent("onAfterTaskAdd", function onAfterTaskAdd(id) {
 			gantt.batchUpdate(checkParents(id));
@@ -577,12 +581,29 @@ setScaleConfig('1');
                 
 		gantt.attachEvent("onParse", function () {
                    
+//                   obtenerTareas().then(function (){
+//construirTreeList();
+//
+//});
+                   
+                   
+                   
+                   
 			gantt.eachTask(function (task) {
 //                             alert("e");
 				task.progress = calculateSummaryProgress(task);
 			});
 		});
 		gantt.attachEvent("onAfterTaskUpdate", function (id,item) {
+                    
+//                    obtenerTareas().then(function (){
+//construirTreeList();
+//
+//});
+                    
+                    
+                    
+                    
                     if(item.progress==1)
                         gantt.getTask(id).readonly = true;
 //                    console.log(gantt.getTask(id));
