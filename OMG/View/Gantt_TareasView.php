@@ -483,15 +483,11 @@ setScaleConfig('1');
 			}
 		}
 
-//		gantt.attachEvent("onParse", function () {
-//                    obtenerTareas().then(function (){   
-//                        construirTreeList();
-//
-//                    });
-//			gantt.eachTask(function (task) {
-//				setTaskType(task);
-//			});
-//		});
+		gantt.attachEvent("onParse", function () {
+			gantt.eachTask(function (task) {
+				setTaskType(task);
+			});
+		});
 
 		gantt.attachEvent("onAfterTaskAdd", function onAfterTaskAdd(id) {
 			gantt.batchUpdate(checkParents(id));
