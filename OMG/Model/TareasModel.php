@@ -37,7 +37,23 @@ class TareasModel{
         }
     }
     
+    public function empleadosConUsuario()
+    {
+        try 
+        {
+            $dao=new TareasDAO();
+            $rec= $dao->empleadosConUsuario();
+            
+            return $rec;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
     
+
     public function datosParaGraficaTareas()
     {
         try
@@ -107,34 +123,15 @@ class TareasModel{
             $dao=new TareasDAO();
             $ID= $dao->obtenerUsuarioPorIdEmpleado($responsable_plan);
             $model=new NotificacionesModel();
+            
             $exito= $dao->insertarTarea($referencia, $tarea, $fecha_creacion, $fecha_alarma, $fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado);
             $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $ID, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
             
-//            echo "este es model: ".json_encode($model);
+//            echo "este es model: ".json_encode($ID);
+            
             if($exito[0] = 1)
             {
-                $lista = $dao->listarTarea($exito['id_nuevo']);
-                
-//                foreach ($lista as $key => $value)
-//            {
-//                if($value["status_tarea"]== 1)
-//                {
-//                    $lista[$key]["status_tarea"]="En proceso";
-////                    echo "Esta es la lista: ".json_encode($lista);
-//                }
-//                
-//                if($value["status_tarea"]== 2)
-//                {
-//                    $lista[$key]["status_tarea"]="Suspendido";
-//                }
-//                
-//                if($value["status_tarea"]== 3)
-//                {
-//                    $lista[$key]["status_tarea"]="Terminado";
-//                }
-//                 
-//            }
-                       
+                $lista = $dao->listarTarea($exito['id_nuevo']);                       
             }
             else
                 return $exito[0];
