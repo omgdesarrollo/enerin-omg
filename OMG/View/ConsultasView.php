@@ -86,8 +86,8 @@ $Usuario=  Session::getSesion("user");
                 position:fixed;
                 top:60px !important;
                 left:1% !important;
-                width:200px;
-                /* max-width:400px; */
+                min-width:200px;
+                max-width:400px;
                 -webkit-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
                 -moz-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
                 box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
