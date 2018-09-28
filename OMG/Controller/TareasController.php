@@ -22,6 +22,13 @@ switch ($Op) {
         
         break;
         
+    case'empleadosConUsuario':
+        $Lista= $model->empleadosConUsuario();
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+        return $Lista;
+        break;
+        
     case 'datosGrafica':
         $Lista= $model->datosParaGraficaTareas();
         header('Content-type: application/json; charset=utf-8');

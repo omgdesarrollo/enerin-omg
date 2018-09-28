@@ -23,15 +23,15 @@ $(function()
         tareaDatos.atendido= 'false';
         listo=
             (
-                tareaDatos.referencia!=""?
+//                tareaDatos.referencia!=""?
                 tareaDatos.tarea!=""?
                 tareaDatos.id_empleado!=""?
                 tareaDatos.fecha_creacion!=""?
                 tareaDatos.fecha_alarma!=""?
                 tareaDatos.fecha_cumplimiento!=""?
                 tareaDatos.status_tarea!=""?
-                tareaDatos.observaciones!=""?
-                true: false: false: false: false: false: false: false: false                                                               
+//                tareaDatos.observaciones!=""?
+                true: false: false: false: false: false: false                                                               
             );
         
             listo ? insertarTareas(tareaDatos):swalError("Completar campos");
@@ -152,7 +152,7 @@ function construirGrid()
         [
             { name: "id_principal",visible:false},
             { name:"no",title:"No",width:40},
-            { name: "referencia",title:"Referencia", type: "textarea", validate: "required",width:200},
+            { name: "referencia",title:"Referencia", type: "textarea",width:200},
             { name: "tarea",title:"Pendiente", type: "textarea", validate: "required",width:200 },
 //            { name: "id_empleado",title:"Responsable del Plan", type: "text", validate: "required" },
             { name: "id_empleado",title:"Responsable", type: "select", width:200,
@@ -167,7 +167,7 @@ function construirGrid()
             { name: "status_tarea", title:"Estatus", type: "select", width:150,valueField:"status_tarea",textField:"descripcion",
                 items:[{"status_tarea":"1","descripcion":"En Proceso"},{"status_tarea":"2","descripcion":"Suspendido"},{"status_tarea":"3","descripcion":"Terminado"}]
             },
-            { name: "observaciones",title:"Observaciones", type: "textarea", validate: "required", width:150,},
+            { name: "observaciones",title:"Observaciones", type: "textarea", width:150,},
             { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:150,editing:false },
             { name: "registrar_programa",title:"Programa", type: "text", validate: "required",width:160, editing:false },
             { name: "avance_programa",title:"Avance del Programa", type: "text", validate: "required",width:150, editing:false },      
@@ -399,14 +399,14 @@ function archivoyComboboxparaModal()
   $('#DocumentoEntradaAgregarModal').html(ModalCargaArchivo);
   
   $.ajax({
-      url:"../Controller/EmpleadosController.php?Op=mostrarcombo",
+      url:"../Controller/TareasController.php?Op=empleadosConUsuario",
       type:"GET",
       success:function(empleados)
       {
           tempData="";
           $.each(empleados,function(index,value)
           {
-              tempData+="<option value='"+value.id_empleado+"'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</option>";
+              tempData+="<option value='"+value.id_empleado+"'>"+value.nombre_completo+"</option>";
           }); 
           
           $("#ID_EMPLEADOMODAL").html(tempData);
@@ -450,8 +450,8 @@ function insertarTareas(tareaDatos)
             if(typeof(datos) == "object")
             {
                 
+//                console.log(datos);
                 tempData;
-                
                 swalSuccess("Tarea Creada");                
                 $.each(datos,function(index,value)
                 {

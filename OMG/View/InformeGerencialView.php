@@ -43,7 +43,6 @@ $Usuario=  Session::getSesion("user");
                 
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-                
                 <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
                 
 <!--                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
@@ -213,10 +212,7 @@ estructuraGrid = [
     ];
 
 
-//listarDatos();
-//inicializarFiltros();
 construirGrid();
-//construirFiltros();
 
 promesaInicializarFiltros = inicializarFiltros();
 promesaInicializarFiltros.then((resolve2)=>

@@ -87,6 +87,12 @@ switch ($Op) {
        
             
         break;
+        
+        case 'actualizardetabladetalles':
+             $lista=$modelGantt->actualizarGanttTareasDeTablaDetalles(array($_REQUEST["COLUMNA"]=>$_REQUEST["VALUE"]),$_REQUEST["ID_TAREA"]);
+             header('Content-type: application/json; charset=utf-8'); 
+             echo json_encode($lista);
+        break;
     
         case 'Eliminar':
             $Lista= $modelGantt->eliminarGanttTareas($_REQUEST['ID_GANTT_TAREAS']);

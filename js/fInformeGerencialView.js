@@ -52,6 +52,56 @@ function inicializarFiltros()
     });
 }
 
+function listarDatos()
+{
+    return new Promise((resolve,reject)=>
+    {
+        var __datos=[],__datosExcel=[];
+        $.ajax({
+            url:"../Controller/InformeGerencialController.php?Op=Listar",
+            type:"GET",
+            beforeSend:function()
+            {
+                growlWait("Solicitud","Solicitando Datos...");
+            },
+            success:function(data)
+            {
+//                console.log(data);
+                if(typeof(data)=="object")
+                {
+//                    console.log(data);
+                    growlSuccess("Solicitud","Registros obtenidos");
+                    dataListado = data;
+                    $.each(data,function (index,value)
+                    {
+                        __datos.push( reconstruir(value,index+1) );
+                    });
+                    DataGrid = __datos;
+                    gridInstance.loadData();
+                    
+//                    $.each(data,function (index,value)
+//                    {
+//                        __datosExcel.push( reconstruirExcel(value,index+1) );
+//                    });
+//                    DataGridExcel=__datosExcel
+                    
+                    resolve();
+                }else{
+                    growlSuccess("Solicitud","No Existen Registros");
+                    reject();
+                }
+            },
+            error:function(e)
+            {
+                console.log(e);
+                growlError("Error","Error en el servidor");
+                reject();
+            }
+        });
+        
+    });
+}
+
 function reconstruir(value,index)
 {
     tempData = new Object();
@@ -84,63 +134,9 @@ function reconstruirExcel(value,index)
     tempData["Fecha Limite de Atencion"] = getSinFechaFormato(value.fecha_limite_atencion),
     tempData["Fecha de Alarma"] = getSinFechaFormato(value.fecha_alarma),
     tempData["Status"] = value.status_doc,
-    tempData["Condicion Logica"] = value.condicion
+    tempData["Condicion"] = value.condicion
 //    tempData["delete"] = "0";
     return tempData;
-}
-
-function listarDatos()
-{
-    return new Promise((resolve,reject)=>
-    {
-        var __datos=[],__datosExcel=[];
-        $.ajax({
-            url:"../Controller/InformeGerencialController.php?Op=Listar",
-            type:"GET",
-            beforeSend:function()
-            {
-                growlWait("Solicitud","Solicitando Datos...");
-            },
-            success:function(data)
-            {
-//                console.log(data);
-                if(typeof(data)=="object")
-                {
-//                    console.log(data);
-                    growlSuccess("Solicitud","Registros obtenidos");
-                    dataListado = data;
-                    $.each(data,function (index,value)
-                    {
-                        __datos.push( reconstruir(value,index+1) );
-                    });
-                    DataGrid = __datos;
-                    gridInstance.loadData();
-                    
-                    dataListado = data;
-                    $.each(data,function (index,value)
-                    {
-                        __datosExcel.push( reconstruirExcel(value,index+1) );
-                    });
-                    
-                    DataGridExcel=__datosExcel
-                    
-                    resolve();
-                }
-                else
-                {
-                    growlSuccess("Solicitud","No Existen Registros");
-                    reject();
-                }
-            },
-            error:function(e)
-            {
-                console.log(e);
-                growlError("Error","Error en el servidor");
-                reject();
-            }
-        });
-        
-    });
 }
 
 //IniciaGrafica Informes
