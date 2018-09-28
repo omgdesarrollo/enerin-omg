@@ -157,8 +157,8 @@ var customsFieldsGridData=[
  
 estructuraGrid = [
     { name: "id_principal",visible:false},
-    { name:"no",title:"No",width:40},
-    { name: "nombre_empleado",title:"Nombre", type: "text", width: 80, validate: "required" },
+    { name:"no",title:"No",width:50},
+    { name: "nombre_empleado",title:"Nombre", type: "text", width: 150, validate: "required" },
     { name: "apellido_paterno",title:"Apellido Paterno", type: "text", width: 150, validate: "required" },
     { name: "apellido_materno",title:"Apellido Materno", type: "text", width: 150, validate: "required" },
     { name: "categoria",title:"Categoria", type: "text", width: 150, validate: "required" },

@@ -319,12 +319,11 @@ class Gantt_TareasModel{
                                          if (!isset($value["progress"])) {
                                              $value["progress"]=0;
                                          }
-                                         if(!isset($value["status"])){
-                                             $value["status"]=1;
-                                         }
+                                         if(isset($value["status"])){
                                             self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>$value["notas"],"status"=>$value["status"]), $value["id"]);
-
-                                           
+                                         }else{                                        
+                                            self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>$value["notas"]), $value["id"]);
+                                         }
 //                                         $model->actualizarGanttTareas
 //                                         $dao->updateTareasId_EmpleadoXIdGantt_En_Tabla_Seguimiento_entrada($value);
                                     }
@@ -435,6 +434,7 @@ class Gantt_TareasModel{
     
     public function guardarPonderados($LISTA)
     {
+        echo "entro ";  
         try
         {
             $dao=new Gantt_TareaDao();
@@ -444,7 +444,9 @@ class Gantt_TareasModel{
             foreach($LISTA as $key => $value)
             {
                 $respuestas[$key]["id"] = $value["id"];
-                $respuestas[$key]["res"] = $dao->guardarPonderados($value["id"],$value["ponderado_programado"]);
+                $respuestas[$key]["res"] =self::actualizarGanttTareas(array("ponderado_programado"
+                                          =>$value["ponderado_programado"]),$value["id"]);
+//                        $dao->guardarPonderados($value["id"],$value["ponderado_programado"]);
             }
             foreach($respuestas as $key => $value)
             {

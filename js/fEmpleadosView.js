@@ -93,11 +93,12 @@ $(function()
                 , dataset: DataGridExcel
                 , columns: getColumns(DataGridExcel)
             });
-            
+            $("#toExcel").removeAttr("disabled");
         },
         (error)=>
         {
             growlError("Error!","Error al exportar, intente de nuevo");
+            $("#toExcel").removeAttr("disabled");
         });
         
     });
@@ -149,7 +150,7 @@ function listarDatos()
                     
                     $.each(data,function(index,value)
                     {
-                        __datos.push(reconstruir(value,index++));
+                        __datos.push(reconstruir(value,index+1));
                     });                    
                     DataGrid = __datos;
                     gridInstance.loadData();

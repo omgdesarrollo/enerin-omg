@@ -155,13 +155,45 @@ and open the template in the editor.
     color: white;
 }               
 #dx {
-    max-height: 90%;
+    /*max-height: 90%;*/
 }
 
  .modal-lg{width: 50%;}
  #tabPanel{
      height: 8%;
  }
+ 
+ 
+
+/* #detallesInformacion{
+    height: 100px;
+    width: 15%;
+    background-color: #303030;
+    float: left;
+    resize: horizontal;
+    overflow: hidden;;
+    max-width: 30%;
+ }*/
+ div.contenedor {
+  display:flex;
+}
+div.files-tree{
+  height: 100px;
+  width: 15%;
+  background-color: #303030;
+  float: left;
+  resize: horizontal;
+  overflow: hidden;;
+  max-width: 30%;
+}
+div.work-area{
+  height: 100px;
+  background-color: #606060;
+  float: right;
+  flex:1;
+}
+
+
 
 </style> 	
 		
@@ -169,7 +201,10 @@ and open the template in the editor.
     <body>
  
 
-
+<!--<div class="contenedor">
+  <div class="files-tree">cvcv</div>
+  <div class="work-area"></div>
+</div>-->
 <div class="accordion" id="accordionExample">
 
 
@@ -561,7 +596,8 @@ setScaleConfig('1');
 	gantt.locale.labels.column_owner ="Encargado";
         gantt.locale.labels.section_owner = "Encargado";
         
-       gantt.locale.labels.section_status="Status";
+       gantt.locale.labels.section_statusname="Estatus";
+       gantt.locale.labels.column_statusname="Estatus";
         gantt.locale.labels.section_notas="Notas";
         gantt.config.scale_height = 50;
         gantt.config.order_branch = true;
@@ -584,7 +620,7 @@ setScaleConfig('1');
                 
 	};
         gantt.locale.labels["complete_button"] = "Completar";
-        console.log(gantt.locale.labels);
+//        console.log(gantt.locale.labels);
 //        gantt.config.lightbox.sections.push({name: "status", height: 22, map_to: "user", type: "select", options:gantt.serverList("user")});
 //         console.log(gantt.config.lightbox);
 	gantt.config.buttons_left = ["dhx_save_btn", "dhx_cancel_btn", "complete_button"];
@@ -626,7 +662,7 @@ gantt.config.columns=[
 //                {name: "status", label: "Status",resize: true},
 		{name: "add", width: 40}
 	];
-console.log(gantt);
+//console.log(gantt);
 
 //var status=[];
 var opcionstatus = [
@@ -635,9 +671,9 @@ var opcionstatus = [
 ];
         gantt.config.lightbox.sections = [
 		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
-                {name: "status", height: 38, map_to: "status", type: "select", options:opcionstatus},
+                {name: "statusname", height: 38, map_to: "status", type: "select", options:opcionstatus},
                 {name: "notas", height: 38, map_to: "notas", type: "textarea"},
-		{name: "owner", height: 22, map_to: "user", type: "select", options: gantt.serverList("user")},	
+		{name: "owner", height: 22, map_to: "user", type: "select", options:dataEmpleados},	
 		{name: "time", type: "duration", map_to: "auto"}
 	];
 
@@ -701,7 +737,11 @@ dp.init(gantt);
 //     if (!data.text) {
 //         dhtmlx.message("La Tarea no puede ir vacia");
 //         console.log(data);
-//         return false;
+//         $.each(data,function (index,value){
+////             console.log(value);
+//         })
+         
+//         return true;
 //     }
 //     else{
 ////          data.text="dtexto";
@@ -935,6 +975,8 @@ dp.init(gantt);
 //            });
 //    }); 
         
+        
+        
 obtenerTareas().then(function (){
 construirTreeList();
 
@@ -953,12 +995,12 @@ construirTreeList();
                                         async:false,
                                         success:function (res)
                                         {
-                                            console.log("entro aqui");
+//                                            console.log("entro aqui");
 //                                            datosTreeList=res.data;
                                             datosTreeList=[];
                                             
                                             $.each(res.data,function(index,value){
-                                                console.log(value);
+//                                                console.log(value);
                                                 datosTreeObj=new Object();
                                                 datosTreeObj["id"]= value.id;
                                                 datosTreeObj["parent"]= value.parent;
@@ -986,7 +1028,7 @@ construirTreeList();
         
         
         
-        
+  var dataTemporalTreeList=[];
   function construirTreeList(){
              
    dxtreeList= $("#dx").dxTreeList({
@@ -1023,7 +1065,7 @@ construirTreeList();
         },
         },
         editing: {
-            mode: "row",
+            mode: "cell",
             allowUpdating: true,
             allowDeleting: false,
             allowAdding: false,
@@ -1096,14 +1138,30 @@ construirTreeList();
         width: 200
         },
         onCellClick:(args)=>{
+            
+//            console.log("le dio click ");
+//            console.log(args);
+//            
+//            
+//            console.log(datosTreeList);
+//            console.log("termino el click");
 //            console.log(args);
         },
         onRowClick:(args)=>{
 //            console.log(args);
         },
-        onRowUpdated:function (args){
+        onCellPrepared:function (args){
 //            console.log(args);
-            saberSiSumanPorcentajePonderadoProgramado100loshijos(args);
+
+console.log("s");
+        console.log(args);
+        console.log("termino el update de s");
+
+
+
+
+
+//            saberSiSumanPorcentajePonderadoProgramado100loshijos(args);
         },
         columns:[
             {
@@ -1141,7 +1199,8 @@ construirTreeList();
             },
             { 
                 dataField: "notas",
-                caption: "Notas"
+                caption: "Notas",
+                 allowEditing:false
             },
              { 
                 dataField: "archivo_adjunto",
@@ -1183,7 +1242,7 @@ construirTreeList();
 //       container.context.innerHTML="<button onClick='mostrar_urls("+options.data.id+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'></button>";
 //        container.context.innerHTML=options.data.archivo_adjunto;
         //        console.log(container);
-       console.log(options);
+//       console.log(options);
 //       console.log("termino");
       return container.context.innerHTML=options.data.archivo_adjunto;
 };
@@ -1227,7 +1286,7 @@ construirTreeList();
                 {
                     datosModificadosActividadesPonderado_ProgramadoTemp=[];
                     id_padreTareaPonderado_programadoTemp = value.parent;
-                    console.log("reiniciado");
+//                    console.log("reiniciado");
                 }
             }
         });
@@ -1251,13 +1310,14 @@ construirTreeList();
             }
             
         });
-        console.log(datosModificadosActividadesPonderado_ProgramadoTemp);
+//        console.log(datosModificadosActividadesPonderado_ProgramadoTemp);
         if(sumatoria>=100 && sumatoria<=100.5)
         {
             alert("Correcto");
-            console.log(args);
+//            console.log(args);
+console.log(datosModificadosActividadesPonderado_ProgramadoTemp);
             $.each(datosModificadosActividadesPonderado_ProgramadoTemp,(index,value)=>{
-                dataFinal.push({id:parseInt(value.key),ponderado_programado:value.data.porcentaje_por_actividad,notas:args.data.notas});
+                dataFinal.push({id:parseInt(value.key),ponderado_programado:value.data.porcentaje_por_actividad});
             });
             $.ajax({
                 url:'../Controller/GanttTareasController.php?Op=GuardarPonderado',
@@ -1279,10 +1339,10 @@ construirTreeList();
         else
         {
             if(sumatoria<100){
-                alert("El total es menor al 100% del ponderado de la tarea padre  su sumatoria es "+sumatoria +" y su restante es de "+(100-sumatoria));
+                alert("El total es menor al 100% del ponderado de la tarea padre  su sumatoria es "+sumatoria +" y su restante es de "+(100-sumatoria)+" no se guardo ");
                 
             }else
-            alert("El total es mayor al 100% del ponderado de la tarea padre");
+            alert("El total es mayor al 100% del ponderado de la tarea padre no se guardo ");
         }
     }
 
