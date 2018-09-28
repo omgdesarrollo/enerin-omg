@@ -69,8 +69,8 @@ $Usuario=  Session::getSesion("user");
                 color: white;
                 font-weight: normal;
             }
-            .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                    
-            .modal-lg{width: 100%;}
+            /* .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                     */
+            /* .modal-lg{width: 100%;} */
             .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
 
             /* div.tooltip
@@ -84,14 +84,26 @@ $Usuario=  Session::getSesion("user");
                 background:bisque;
                 border-radius:5px;
                 position:fixed;
-                top:55px !important;
-                left:81% !important;
+                top:60px !important;
+                left:1% !important;
                 width:200px;
                 -webkit-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
                 -moz-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
                 box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
             }
-
+            div.ltr
+            {
+                width:-webkit-fill-available !important;
+                height:80% !important;
+            }
+            circle
+            {
+                r:4;
+            }
+            text
+            {
+                cursor:pointer;
+            }
             body{overflow:hidden;}
         </style>              
                 

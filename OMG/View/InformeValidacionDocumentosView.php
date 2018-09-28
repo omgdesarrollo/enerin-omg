@@ -93,8 +93,8 @@
                 background:bisque;
                 border-radius:5px;
                 position:fixed;
-                top:55px !important;
-                left:120% !important;
+                top:60px !important;
+                left:1% !important;
                 width:200px;
                 -webkit-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
                 -moz-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
@@ -234,6 +234,11 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
+
+                <!-- <div class="form-group" method="post" style="text-align:center" id="BTNS_GRAFICAMODAL"> -->
+                    <!-- <button type="submit" id="BTN_ANTERIOR_GRAFICAMODAL" class="botones_vista" style="width:fit-content" >Recargar</button> -->
+                <!-- </div> -->
+                
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="closeLetra">X</span>
                 </button>
