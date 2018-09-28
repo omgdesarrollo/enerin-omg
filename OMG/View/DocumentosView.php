@@ -19,12 +19,17 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
                 <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
                 <!--Para abrir alertas de aviso, success,warning, error-->
-                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+                <!--<link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>-->
+               
 		<!-- ace styles Para Encabezado-->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
                 <!--JQUERY-->
                 <script src="../../js/jquery.js" type="text/javascript"></script>
                 <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+                
+                 <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
+                <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
+                
                 <!--JGROWL-->
                 <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
                 <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
@@ -185,27 +190,19 @@ MyComboEmpleados.prototype = new jsGrid.Field
         editTemplate: function(value,todo)
         {
                 var temp = "";
-                var temp2 = "";
-                var temp3 = "";
+                
                 $.each(thisEmpleados,(index,val)=>
                 {
                         if(val.id_empleado == value)
                         {
-                                temp += "<option value='"+val.id_empleado+"' selected>"+val.nombre_completo+"</option>";
-                                temp2 = val.nombre_completo;
-                                temp3 = val.id_empleado;
+                            temp += "<option value='"+val.id_empleado+"' selected>"+val.nombre_completo+"</option>";
                         }
                         else
-                                temp += "<option value='"+val.id_empleado+"'>"+val.nombre_completo+"</option>";
+                            temp += "<option value='"+val.id_empleado+"'>"+val.nombre_completo+"</option>";
                 })
                 this._inputDate = $("<select>").attr({style:"margin:-5px;width:145px"});
                 $(this._inputDate[0]).append(temp);
 
-                if(todo.id_documento!=-1)
-                {
-                        this._inputDate[0] = temp2;
-                        this._inputDate[1] = temp3;
-                }
                 return this._inputDate[0];
                 
         },
@@ -228,10 +225,10 @@ var customsFieldsGridData=[
 
 estructuraGrid =  [
     { name: "id_principal",visible:false},
-    { name:"no",title:"No",width:20},
+    { name:"no",title:"No",width:50},
     { name: "clave_documento",title:"Clave del Documento",type: "textarea", validate: "required" },
     { name: "documento",title:"Documento",type: "textarea", validate: "required" },
-    { name: "id_empleado", title: "Responsable del Documento", type: "comboEmpleados", width:180},
+    { name: "id_empleado", title: "Responsable del Documento", type: "comboEmpleados", width:150},
 //    { name: "id_empleado",title:"Responsable del Documento", type: "select",
 //        items:EmpleadosCombobox,
 //        valueField:"id_empleado",
@@ -258,7 +255,7 @@ inicializarFiltros().then((resolve)=>
             <!--Bootstrap-->
             <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
             <!--Para abrir alertas de aviso, success,warning, error-->       
-            <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+            <!--<script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>-->
             
             <!--Para abrir alertas del encabezado-->
             <script src="../../assets/probando/js/ace-elements.min.js"></script>
