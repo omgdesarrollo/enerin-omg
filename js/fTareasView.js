@@ -23,15 +23,15 @@ $(function()
         tareaDatos.atendido= 'false';
         listo=
             (
-                tareaDatos.referencia!=""?
+//                tareaDatos.referencia!=""?
                 tareaDatos.tarea!=""?
                 tareaDatos.id_empleado!=""?
                 tareaDatos.fecha_creacion!=""?
                 tareaDatos.fecha_alarma!=""?
                 tareaDatos.fecha_cumplimiento!=""?
                 tareaDatos.status_tarea!=""?
-                tareaDatos.observaciones!=""?
-                true: false: false: false: false: false: false: false: false                                                               
+//                tareaDatos.observaciones!=""?
+                true: false: false: false: false: false: false                                                               
             );
         
             listo ? insertarTareas(tareaDatos):swalError("Completar campos");
@@ -399,14 +399,14 @@ function archivoyComboboxparaModal()
   $('#DocumentoEntradaAgregarModal').html(ModalCargaArchivo);
   
   $.ajax({
-      url:"../Controller/EmpleadosController.php?Op=mostrarcombo",
+      url:"../Controller/TareasController.php?Op=empleadosConUsuario",
       type:"GET",
       success:function(empleados)
       {
           tempData="";
           $.each(empleados,function(index,value)
           {
-              tempData+="<option value='"+value.id_empleado+"'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</option>";
+              tempData+="<option value='"+value.id_empleado+"'>"+value.nombre_completo+"</option>";
           }); 
           
           $("#ID_EMPLEADOMODAL").html(tempData);
@@ -450,8 +450,8 @@ function insertarTareas(tareaDatos)
             if(typeof(datos) == "object")
             {
                 
+//                console.log(datos);
                 tempData;
-                
                 swalSuccess("Tarea Creada");                
                 $.each(datos,function(index,value)
                 {
