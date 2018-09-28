@@ -401,8 +401,8 @@ function chartOptions(tituloGrafica)
             2: {offset: 0.02,color:"#bf80ff"},
         },
         backgroundColor:"",
-        "width":660,
-        "height":340
+        "width":800,
+        "height":400
     };
     return options;
 }

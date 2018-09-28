@@ -589,7 +589,7 @@ function chartOptions(tituloGrafica)//funcion sin cambio
             },
         pieSliceText:"none",
         title: tituloGrafica,
-        tooltip:{textStyle:{color:"#000000"},text:"none",isHtml:true,background:'red'},
+        tooltip:{textStyle:{color:"#000000"},text:"none",isHtml:true},
         // pieSliceText:"",
         titleTextStyle:{color:"black"},
         'is3D':true,
@@ -601,8 +601,8 @@ function chartOptions(tituloGrafica)//funcion sin cambio
             2: {offset: 0.02,color:"#bf80ff"},
         },
         backgroundColor:"",
-        "width":700,
-        "height":410
+        "width":800,
+        "height":400
     };
     return options;
 }
@@ -673,7 +673,7 @@ function graficar2(temas,concepto)
         }
     });
     $.each(lista,(index,value)=>{
-        dataGrafica.push(["Tema: "+value.no_tema,value.documentos,">> Tema:\n"+value.nombre_tema+"\n>> Responsable:\n"+value.responsable_tema+"\n>> Documentos:\n"+value.documentos,"[]"]);
+        dataGrafica.push(["Tema: "+value.no_tema,value.documentos,">> Tema:\n"+value.nombre_tema+"\n>> Responsable:\n"+value.responsable_tema+"\n>> Documentos:"+value.documentos,"[]"]);
     });
     // console.log(dataGrafica);
     construirGrafica(dataGrafica,tituloGrafica);
