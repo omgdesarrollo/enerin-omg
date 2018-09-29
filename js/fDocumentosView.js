@@ -238,7 +238,7 @@ function inicializarFiltros()
 
 function listarDatos()
 {
-    return new Promise(()=>
+    return new Promise((resolve,reject)=>
     {
         var __datos=[];
         $.ajax(
@@ -275,17 +275,6 @@ function listarDatos()
         });
     });
 }
-
-
-//function reconstruirTable(_datos)
-//{
-//    __datos=[];
-//    $.each(_datos,function(index,value)
-//    {
-//        __datos.push(reconstruir(value,index++));
-//    });
-//    construirGrid(__datos);
-//}
 
 
 function reconstruir(value,index)
@@ -325,27 +314,6 @@ function reconstruirExcel(value,index)
 }
 
 
-//function empleadosComboboxparaModal()
-//{
-//  
-//  $.ajax({
-//      url:"../Controller/EmpleadosController.php?Op=mostrarcombo",
-//      type:"GET",
-//      success:function(empleados)
-//      {
-//          tempData="";
-//          $.each(empleados,function(index,value)
-//          {
-////                tempData+="<option value='"+value.id_empleado+"'>"+value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno+"</option>";
-//                tempData+="<option value='"+value.id_empleado+"'>"+value.nombre_completo+"</option>";
-//          }); 
-//          
-//          $("#ID_EMPLEADOMODAL").html(tempData);
-//      }
-//  });   
-//}
-
-
 function listarEmpleados()
 {
     $.ajax({
@@ -354,7 +322,6 @@ function listarEmpleados()
         async:false,
         success:function(empleadosComb)
         {
-//            thisEmpleados= empleadosComb;
             EmpleadosCombobox=empleadosComb;
             tempData="";
             $.each(empleadosComb,function(index,value)
@@ -367,6 +334,7 @@ function listarEmpleados()
         }
     });
     return EmpleadosCombobox;
+//return tempData;
 }
 
 
@@ -584,144 +552,145 @@ $.ajax({
 }
 
 
-function preguntarEliminar(data)
-{
-//    console.log(data);
-    // valor = true;
-    swal({
-        title: "",
-        text: "¿Eliminar Registro?",
-        type: "info",
-        showCancelButton: true,
-        closeOnConfirm: false,
-        showLoaderOnConfirm: true,
-        confirmButtonText: "Eliminar",
-        cancelButtonText: "Cancelar",
-        },
-        function(confirmacion)
-        {
-            if(confirmacion)
-            {
-                eliminarDocumento(data);
-            }
-            else
-            {
-            }
-        });
-}
-
-
-function eliminarDocumento(item)
-{
-//    alert("Entro a la funcion eliminar: "+item);
-
-//            id_afectado=item['id_principal'][0];
-            id_afectado=item['id_documento'];
-//            console.log(id_afectado);
-            $.ajax({
-
-                url:"../Controller/DocumentosController.php?Op=Eliminar",
-                type:"POST",
-//                data:"ID_DOCUMENTO="+JSON.stringify(id_afectado),
-                data:"ID_DOCUMENTO="+id_afectado,
-//                beforeSend:function()
-//                {
-//                    growlWait("Eliminación Documento","Eliminando...");
-//                },
-                success:function(data)
-                {
-//                    alert("Entro al success "+data);
-                    if(data==false)
-                    {
-//                        swal("","El Documento esta validado o asignado a un Registro","error");
-//                        setTimeout(function(){swal.close();},1500);
-                        swalError("El Documento esta validado o asignado a un Registro");
-                    }else{
-                        if(data==true)
-                        {
-                            refresh();
-//                            actualizarDespuesdeEditaryEliminar();
-//                            swal("","Se elimino correctamente el Documento","success");
-//                            setTimeout(function(){swal.close();},1500);
-                            swalSuccess("Se elimino correctamente el Documento");
-                        }
-                    }
-                },
-                error:function()        
-                {
-                    swal("","Error en el servidor","error");
-                    setTimeout(function(){swal.close();},1500);
-                }
-            });
-}
-
 //function preguntarEliminar(data)
 //{
-////     console.log("jajaja",data);
+////    console.log(data);
+//    // valor = true;
 //    swal({
 //        title: "",
-//        text: "¿Eliminar Documento?",
+//        text: "¿Eliminar Registro?",
 //        type: "info",
 //        showCancelButton: true,
-//        // closeOnConfirm: false,
+//        closeOnConfirm: false,
 //        showLoaderOnConfirm: true,
 //        confirmButtonText: "Eliminar",
 //        cancelButtonText: "Cancelar",
-//        }).then((confirmacion)=>{
-//                if(confirmacion)
-//                {
-//                        eliminarDocumento(data);
-//                }
+//        },
+//        function(confirmacion)
+//        {
+//            if(confirmacion)
+//            {
+//                eliminarDocumento(data);
+//            }
+//            else
+//            {
+//            }
 //        });
 //}
 
-// function eliminarDocumento(id_afectado)
-// {
-//        $.ajax({
+
+//function eliminarDocumento(item)
+//{
+////    alert("Entro a la funcion eliminar: "+item);
+//
+////            id_afectado=item['id_principal'][0];
+//            id_afectado=item['id_documento'];
+////            console.log(id_afectado);
+//            $.ajax({
+//
 //                url:"../Controller/DocumentosController.php?Op=Eliminar",
 //                type:"POST",
-//                data:"ID_DOCUMENTO="+id_afectado.id_documento,
-//                beforeSend:()=>
+////                data:"ID_DOCUMENTO="+JSON.stringify(id_afectado),
+//                data:"ID_DOCUMENTO="+id_afectado,
+////                beforeSend:function()
+////                {
+////                    growlWait("Eliminación Documento","Eliminando...");
+////                },
+//                success:function(data)
 //                {
-//                        growlWait("Eliminación Documento","Eliminando...");
-//                },
-//                success:(res)=>
-//                {
-//                        // console.log(data);
-//                        if(res >= 0)
+////                    alert("Entro al success "+data);
+//                    if(data==false)
+//                    {
+////                        swal("","El Documento esta validado o asignado a un Registro","error");
+////                        setTimeout(function(){swal.close();},1500);
+//                        swalError("El Documento esta validado o asignado a un Registro");
+//                    }else{
+//                        if(data==true)
 //                        {
-//                                dataListadoTemp=[];
-//                                dataItem = [];
-//                                numeroEliminar=0;
-//                                itemEliminar={};
-//                                id = id_afectado.id_documento;
-//                                $.each(dataListado,function(index,value)
-//                                {
-//                                        value.id_documento != id ? dataListadoTemp.push(value) : (dataItem.push(value), numeroEliminar=index+1);
-//                                });
-//                                // console.log(dataListadoTemp);
-//                                // itemEliminar = reconstruir(dataItem[0],numeroEliminar);este esra para el eliminar directo en grid
-//                                DataGrid = [];
-//                                dataListado = dataListadoTemp;
-//                                if(dataListado.length == 0 )
-//                                        ultimoNumeroGrid=0;
-//                                $.each(dataListado,function(index,value)
-//                                {
-//                                        DataGrid.push( reconstruir(value,index+1) );
-//                                });
-//
-//                                gridInstance.loadData();
-//                                growlSuccess("Eliminación","Registro Eliminado");
+//                            refresh();
+////                            actualizarDespuesdeEditaryEliminar();
+////                            swal("","Se elimino correctamente el Documento","success");
+////                            setTimeout(function(){swal.close();},1500);
+//                            swalSuccess("Se elimino correctamente el Documento");
 //                        }
-//                        else
-//                                growlError("Error Eliminación","Error al Eliminar Registro");
+//                    }
 //                },
-//                error:()=>
+//                error:function()        
 //                {
-//                        growlError("Error Eliminación","Error del Servidor");
+//                    swal("","Error en el servidor","error");
+//                    setTimeout(function(){swal.close();},1500);
 //                }
-//        });
-// }
+//            });
+//}
+
+
+function preguntarEliminar(data)
+{
+//     console.log("jajaja",data);
+    swal({
+        title: "",
+        text: "¿Eliminar Documento?",
+        type: "info",
+        showCancelButton: true,
+        // closeOnConfirm: false,
+        showLoaderOnConfirm: true,
+        confirmButtonText: "Eliminar",
+        cancelButtonText: "Cancelar",
+        }).then((confirmacion)=>{
+                if(confirmacion)
+                {
+                        eliminarDocumento(data);
+                }
+        });
+}
+
+ function eliminarDocumento(id_afectado)
+ {
+        $.ajax({
+                url:"../Controller/DocumentosController.php?Op=Eliminar",
+                type:"POST",
+                data:"ID_DOCUMENTO="+id_afectado.id_documento,
+                beforeSend:()=>
+                {
+                        growlWait("Eliminación Documento","Eliminando...");
+                },
+                success:(res)=>
+                {
+                        // console.log(data);
+                        if(res >= 0)
+                        {
+                                dataListadoTemp=[];
+                                dataItem = [];
+                                numeroEliminar=0;
+                                itemEliminar={};
+                                id = id_afectado.id_documento;
+                                $.each(dataListado,function(index,value)
+                                {
+                                        value.id_documento != id ? dataListadoTemp.push(value) : (dataItem.push(value), numeroEliminar=index+1);
+                                });
+                                // console.log(dataListadoTemp);
+                                // itemEliminar = reconstruir(dataItem[0],numeroEliminar);este esra para el eliminar directo en grid
+                                DataGrid = [];
+                                dataListado = dataListadoTemp;
+                                if(dataListado.length == 0 )
+                                        ultimoNumeroGrid=0;
+                                $.each(dataListado,function(index,value)
+                                {
+                                        DataGrid.push( reconstruir(value,index+1) );
+                                });
+
+                                gridInstance.loadData();
+                                growlSuccess("Eliminación","Registro Eliminado");
+                        }
+                        else
+                                growlError("Error Eliminación","Error al Eliminar Registro");
+                },
+                error:()=>
+                {
+                        growlError("Error Eliminación","Error del Servidor");
+                }
+        });
+ }
 
 
 function refresh()
