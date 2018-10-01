@@ -306,9 +306,7 @@ class Gantt_TareasModel{
             $dao= new Gantt_TareaDao();
             $modelGantt= new Gantt_TareasModel();
 //            $modelGanttTareasModel= new Gantt_TareasModel();
-//            $modelGantt->guardarNotificacionResponsable($dataNotificacion["id_usuario"],$dataNotificacion["id_para"],$dataNotificacion["mensaje"],
-//                                                                   $dataNotificacion["tipo"],$dataNotificacion["atendido"],$dataNotificacion["asunto"],$dataNotificacion["CONTRATO"]
-//                                                                   );
+            $dataNotificacion=array();
             $lista_tareas_verificadas=self::verificarTareasExiste($data);
             foreach ($data as $value) {
                 if (isset($value["id"])) {
@@ -326,6 +324,13 @@ class Gantt_TareasModel{
                                          $value["existeprograma"]=1;
 //                                         echo json_encode($value);
                                          $dao->insertarGanttTareas($value);
+                                         
+                                        $modelGantt->guardarNotificacionResponsable($value);
+                                       
+                                         
+                                         
+                                         
+//                                         echo "entro";
                                          self:: actualizarExisteProgramaTareas($value);
 //                                         if(isset($value["status"])){
 //                                             
@@ -430,13 +435,30 @@ class Gantt_TareasModel{
     }
     
 
-      public function guardarNotificacionResponsable($id_usuario,$id_para,$mensaje,$tipo,$atendido,$asunto,$CONTRATO){
+      public function guardarNotificacionResponsable($values){
       try{
-            $dao=new NotificacionesDAO();
-            $rec=$dao->guardarNotificacionHibry($id_usuario,$id_para,$mensaje,$tipo,$atendido,$asunto,$CONTRATO);
+//           echo json_encode($values);
+            $contrato= Session::getSesion("s_cont");
+            $id_usuario=Session::getSesion("user");
+            $asunto="";
+            $dao=new Gantt_TareaDao();
+            $idparaquien= $dao->obtenerUsuarioPorIdEmpleado($values["user"]);
+            $model=new NotificacionesModel();
+            
+             $mensaje="Se le asigno la tarea: ".$values["text"]." por el Usuario: ";
+             $tipo_mensaje= 0;
+             $atendido= 'false';
+             $asunto="";
+//            echo ""+$ID;
+             
+             
+            $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idparaquien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+            
+            
+            
             
 //            echo "valores rec: ".json_encode($rec);
-            return $rec;
+            return true;
         }catch (Exception $ex)
         {
             return false;
