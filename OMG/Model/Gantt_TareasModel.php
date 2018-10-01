@@ -445,7 +445,7 @@ class Gantt_TareasModel{
             $idparaquien= $dao->obtenerUsuarioPorIdEmpleado($values["user"]);
             $model=new NotificacionesModel();
             
-             $mensaje="Gantt: Asignacion  ".$values["text"]." por el Usuario: ";
+             $mensaje="Se le asigno una tarea ".$values["text"]." por el Usuario: ";
              $tipo_mensaje= 0;
              $atendido= 'false';
              $asunto="";

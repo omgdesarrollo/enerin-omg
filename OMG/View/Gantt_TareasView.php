@@ -759,7 +759,7 @@ gantt.templates.task_class = function (start, end, task) {
  var textEditor = {type: "text", map_to: "text"};   
 gantt.config.columns=[
 //    {name:"id",   label:"id",   align:"center"},
-		{name: "text", label: "Nombre", tree: true,resize: true, editor: textEditor},
+		{name: "text", label: "Descripcion", tree: true,resize: true, editor: textEditor},
 		
 		{
                     name: "owner", width: 80, align: "center",resize: true, template: function (item) {
@@ -773,7 +773,7 @@ gantt.config.columns=[
 //console.log(gantt);
 
 //var status=[];
-var opcionstatus = [
+var opcionstatus=[
     { key: 1, label: 'En Proceso' },
     { key: 2, label: 'Suspendido' },
     { key: 3, label: 'Terminado'}
