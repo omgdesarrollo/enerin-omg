@@ -18,6 +18,32 @@ $(function()
             , columns: getColumns(DataGridExcel)
         });
     });
+
+    $("#BTN_ANTERIOR_GRAFICAMODAL").click(function()
+    {
+        // google.charts.setOnLoadCallback(drawChart);
+        // if(activeChart != 0)
+        // {
+        //     alert("anterior");
+        //     $(this).html("Anterior");
+            if(activeChart>1)
+            {
+                activeChart-=2;
+                selectChart();
+            }
+            else
+                activeChart = -1;
+                graficar();
+        // }
+        // else
+        // {
+        //     // alert("primero");
+        //     // $(this).html("Anterior");
+        //     activeChart = -1;
+        //     graficar();
+        // }
+    });
+
 }); //SE CIERRA EL $(FUNCTION())
 
 
@@ -475,6 +501,7 @@ var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(d
 console.log(chartsFunciones);
 function graficar()
 {
+    activeChart = 0;
     let validados = 0;
     let validados_data = [];
     let proceso = 0;
@@ -495,12 +522,13 @@ function graficar()
             validados_data.push({id_tema:value.id_tema});
         }
     });
-    let dataGrafica = [
+    let dataGrafica = [];
+    if(proceso!=0)
+        dataGrafica.push(["Validados",validados,">> Evidencias:"+validados.toString(),JSON.stringify(validados_data)]);
+    if(proceso!=0)
+        dataGrafica.push(["En Proceso",proceso,">> Evidencias:"+proceso.toString(),JSON.stringify(proceso_data)]);
         // ["Sin Asignar",sin_asignar,">> Documentos:"+sin_asignar.toString(),JSON.stringify(sin_asignar_data)],
-        ["Validados",validados,">> Evidencias:"+validados.toString(),JSON.stringify(validados_data)],
-        ["En Proceso",proceso,">> Evidencias:"+proceso.toString(),JSON.stringify(proceso_data)]
-    ];
-    activeChart = -1;
+    
     chartsCreados = [];
     let tituloGrafica = "VALIDACIÓN DE EVIDENCIAS";
     let bandera = 0;
@@ -515,6 +543,7 @@ function graficar()
         tituloGrafica = "NO EXISTEN DOCUMENTOS";
     }
     // console.log(JSON.parse(dataGrafica[1][3]));
+    // console.log(dataGrafica[0][3]);
     construirGrafica(dataGrafica,tituloGrafica);
     $("#BTN_ANTERIOR_GRAFICAMODAL").html("Recargar");
 }
@@ -524,7 +553,7 @@ function construirGrafica(dataGrafica,tituloGrafica)//funcion sin cambio
     estructuraGrafica = chartEstructura(dataGrafica);
     opcionesGrafica = chartOptions(tituloGrafica);
     instanceGrafica = drawChart(dataGrafica,estructuraGrafica,opcionesGrafica);
-    activeChart++;
+    // activeChart++;
     chartsCreados.push({grafica:instanceGrafica,data:estructuraGrafica});
 }
 
@@ -600,57 +629,59 @@ function selectChart()
 
 function graficar2(temas,concepto)
 {
+    activeChart = 1;
     temas = JSON.parse(temas);
     // console.log(temas);
-    let lista = [];
+    let lista = new Object();
+    let lista2 = [];
     let id_tema;
     let bandera = 0;
     let estatus = 0;
     let dataGrafica = [];
-
+    let contador = -1;
     $.each(temas,(index,value)=>{
         if(bandera==0)
         {
             id_tema = value.id_tema;
-            lista.push(value);
+            lista[value.id_tema]="";
         }
         bandera=1;
         if(value.id_tema != id_tema)
         {
-            lista.push(value);
+            lista[value.id_tema]="";
+            id_tema = value.id_tema;
         }
         else
         {
             id_tema = value.id_tema;
         }
     });
-    console.log(lista);
-    // estatus = concepto == "Sin Asignar" ? 0 : concepto == "En Proceso" ? 1 : 2;
+    
+    concepto = concepto=="En Proceso" ? "EN PROCESO" : "VALIDADO";
     tituloGrafica = concepto == "VALIDADO" ? "EVIDENCIAS VALIDADAS" : "EVIDENCIAS EN PROCESO";
     
-    $.each(temas,(index,value)=>{
-        s
+    $.each(dataListado,(index,value)=>{
+        if(lista[value.id_tema]!=undefined)
+        {
+            if(value.estatus == concepto)
+            {
+                if(lista[value.id_tema]["evidencias"]!=undefined)
+                    lista[value.id_tema]["evidencias"]++;
+                else
+                {
+                    lista[value.id_tema]={"no_tema":value.no_tema,"nombre_tema":value.tema,"responsable_tema":value.tema_responsable,"evidencias":1};
+                }
+            }
+        }
     });
-
-    // $.each(dataListado,(index,value)=>{
-    //     if(value.estatus == concepto)
-    //     {
-    //         $.each(value.temas_responsables,(ind,val)=>{
-    //             $.each(lista,(key,valor)=>{
-    //                 if(valor.no_tema==val.no)
-    //                 {
-    //                     if(lista[key]["documentos"]!=undefined)
-    //                         lista[key]["documentos"]++;
-    //                     else
-    //                         lista[key]["documentos"]=1;
-    //                 }
-    //             });
-    //         });
-    //     }
-    // });
     $.each(lista,(index,value)=>{
-        dataGrafica.push(["Tema: "+value.no_tema,value.documentos,">> Tema:\n"+value.nombre_tema+"\n>> Responsable:\n"+value.responsable_tema+"\n>> Documentos:"+value.documentos,"[]"]);
+        dataGrafica.push(["Tema: "+value.no_tema,value.evidencias,">> Tema:\n"+value.nombre_tema+"\n>> Responsable:\n"+value.responsable_tema+"\n>> Evidencias:"+value.evidencias,"[]"]);
     });
-    // console.log(dataGrafica);
+    console.log(dataGrafica);
     construirGrafica(dataGrafica,tituloGrafica);
 }
+
+// function grafica3(,concepto)
+// {
+
+// }

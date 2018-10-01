@@ -21,7 +21,7 @@ class InformeEvidenciasDAO{
         
         try
         {
-            $query="SELECT tbtemas.id_tema,tbtemas.nombre tema, tbusuarios.id_empleado id_empleado_tema,
+            $query="SELECT tbtemas.id_tema,tbtemas.no no_tema, tbtemas.nombre tema, tbusuarios.id_empleado id_empleado_tema,
             (SELECT CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) ) as tema_responsable,
             tbrequisitos.id_requisito,tbrequisitos.requisito, tbregistros.id_registro,tbregistros.registro,tbregistros.frecuencia,
             tbdocumentos.id_documento, tbdocumentos.clave_documento, tbdocumentos.id_empleado id_empleado_documento,
