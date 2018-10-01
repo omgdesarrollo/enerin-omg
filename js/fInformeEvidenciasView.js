@@ -514,12 +514,14 @@ function graficar()
         if(value.estatus == "EN PROCESO")
         {
             proceso++;
-            proceso_data.push({id_tema:value.id_tema});
+            // proceso_data.push({id_tema:value.id_tema});
+            proceso_data.push(value);
         }
         if(value.estatus == "VALIDADO")
         {
             validados++;
-            validados_data.push({id_tema:value.id_tema});
+            // validados_data.push({id_tema:value.id_tema});
+            validados_data.push(value);
         }
     });
     let dataGrafica = [];
@@ -643,47 +645,79 @@ function graficar2(temas,concepto)
         if(bandera==0)
         {
             id_tema = value.id_tema;
-            lista[value.id_tema]="";
+            lista[value.id_tema]=[];
+            // lista[value.id_tema]=[];
+            // lista[value.id_tema].push(value);
         }
         bandera=1;
         if(value.id_tema != id_tema)
         {
-            lista[value.id_tema]="";
+            lista[value.id_tema]=[];
+            lista[value.id_tema].push(value);
             id_tema = value.id_tema;
         }
         else
         {
             id_tema = value.id_tema;
+            lista[value.id_tema].push(value);
         }
     });
-    
-    concepto = concepto=="En Proceso" ? "EN PROCESO" : "VALIDADO";
-    tituloGrafica = concepto == "VALIDADO" ? "EVIDENCIAS VALIDADAS" : "EVIDENCIAS EN PROCESO";
-    
-    $.each(dataListado,(index,value)=>{
-        if(lista[value.id_tema]!=undefined)
-        {
-            if(value.estatus == concepto)
-            {
-                if(lista[value.id_tema]["evidencias"]!=undefined)
-                    lista[value.id_tema]["evidencias"]++;
-                else
-                {
-                    lista[value.id_tema]={"no_tema":value.no_tema,"nombre_tema":value.tema,"responsable_tema":value.tema_responsable,
-                    "evidencias":1,"registro":value.registro,"frecuencia":value.frecuencia};
-                }
-            }
-        }
-    });
+    console.log(lista);
+    // concepto = concepto=="En Proceso" ? "EN PROCESO" : "VALIDADO";
+    // tituloGrafica = concepto == "VALIDADO" ? "EVIDENCIAS VALIDADAS" : "EVIDENCIAS EN PROCESO";
+
+    // concepto = concepto=="En Proceso" ? "EN PROCESO" : "VALIDADO";
+    tituloGrafica = concepto != "En Proceso" ? "EVIDENCIAS VALIDADAS" : "EVIDENCIAS EN PROCESO";
+
+    // $.each(dataListado,(index,value)=>{
+    //     if(lista[value.id_tema]!=undefined)
+    //     {
+    //         if(value.estatus == concepto)
+    //         {
+    //             if(lista[value.id_tema]["evidencias"]!=undefined)
+    //                 lista[value.id_tema]["evidencias"]++;
+    //             else
+    //             {
+    //                 lista[value.id_tema]={"no_tema":value.no_tema,"nombre_tema":value.tema,"responsable_tema":value.tema_responsable,
+    //                 "evidencias":1,"registro":value.registro,"frecuencia":value.frecuencia};
+    //             }
+    //         }
+    //     }
+    // });
     $.each(lista,(index,value)=>{
-        dataGrafica.push(["Tema: "+value.no_tema,value.evidencias,">> Tema:\n"+value.nombre_tema+"\n>> Responsable:\n"+value.responsable_tema+"\n>> Evidencias:"+value.evidencias,JSON.stringify(value)]);
+        dataGrafica.push(["Tema: "+value[0].no_tema,value.length,">> Tema:\n"+value[0].tema+"\n>> Responsable:\n"+value[0].tema_responsable+"\n>> Evidencias:"+value.length,JSON.stringify(value)]);
     });
-    console.log(dataGrafica);
+    // console.log(dataGrafica);
     construirGrafica(dataGrafica,tituloGrafica);
 }
 
 function graficar3(datos,concepto)
 {
-    activeChart = 2;
-    console.log(datos);
+    datos = JSON.parse(datos);
+    tituloGrafica = datos[0].estatus == "VALIDADO" ? "DETALLES EVIDENCIAS VALIDADAS" : "DETALLES EVIDENCIAS EN PROCESO";
+    let dataGrafica = [];
+    $.each(temas,(index,value)=>{
+        if(bandera==0)
+        {
+            id_tema = value.id_tema;
+            lista[value.id_tema]=[];
+        }
+        bandera=1;
+        if(value.id_tema != id_tema)
+        {
+            lista[value.id_tema]=[];
+            lista[value.id_tema].push(value);
+            id_tema = value.id_tema;
+        }
+        else
+        {
+            id_tema = value.id_tema;
+            lista[value.id_tema].push(value);
+        }
+    });
+    $.each(datos,(index,value)=>{
+        
+    });
+
+    construirGrafica(dataGrafica,tituloGrafica);
 }
