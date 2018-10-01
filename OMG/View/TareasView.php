@@ -280,6 +280,7 @@ var ultimoNumeroGrid=0;
 var DataGridExcel=[];
 var origenDeDatosVista="tareas";
 
+google.charts.load('current', {'packages':['corechart']});
 // $('tbody').sortable();
 
 
