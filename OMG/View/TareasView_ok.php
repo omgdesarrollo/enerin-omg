@@ -18,31 +18,47 @@ $Usuario=  Session::getSesion("user");
 		<!-- bootstrap & fontawesome -->
                 <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
                 <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+            
+                <!--Para abrir alertas de aviso, success,warning, error--> 
+                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+
 		<!-- ace styles Para Encabezado-->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-                <!--JQUERY-->
-                <script src="../../js/jquery.js" type="text/javascript"></script>
-                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-                <!--Para abrir alertas de aviso, success,warning, error--> 
-                <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
-                <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
-                <!--JGROWL-->
-                <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
-                <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
+                
+                <!--Inicia para el spiner cargando-->
+                <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+                <!--Termina para el spiner cargando-->
+                
                 <!--Libreria local, para grafica-->
                 <script src="../../assets/chart/loader.js" type="text/javascript"></script>
                 <!--Libreria web, para grafica-->
                 <!--<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>-->
+                
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+                <!--<link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>-->
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-                <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
-                <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
-                <script src="../../js/fTareasView.js" type="text/javascript"></script>
-                <script src="../../js/fGridComponent.js" type="text/javascript"></script>
-                <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
-                <script src="../../js/fechas_formato.js" type="text/javascript"></script>
-    
+                <script src="../../js/jquery.js" type="text/javascript"></script>
+                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+                <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
+                
+<!--                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+                <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>-->
+                
 
+                <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
+                <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
+                <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>   
+                
+                <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
+                <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
+                <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
+                <!--<script src="../../js/tools.js" type="text/javascript"></script>-->
+                <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+                <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
+                <script src="../../js/fTareasView.js" type="text/javascript"></script>                
+                <script src="../../js/fechas_formato.js" type="text/javascript"></script>
+                <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
                 
         <style>
             .jsgrid-header-row>.jsgrid-header-cell {
@@ -99,6 +115,15 @@ require_once 'EncabezadoUsuarioView.php';
     </button>
 
     <div class="pull-right">    
+<!--    <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
+        <img src="../../images/base/_excel.png" width="30px" height="30px">
+    </button>
+    <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
+        <img src="../../images/base/word.png" width="30px" height="30px"> 
+    </button>
+    <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
+        <img src="../../images/base/pdf.png" width="30px" height="30px"> 
+    </button>       -->
         <button onClick="loadChartView(true)" title="Informe" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#informe_tareas">
             <i class="fa fa-pie-chart"></i>
         </button>
@@ -244,114 +269,18 @@ require_once 'EncabezadoUsuarioView.php';
 
 
 <script>
-var DataGrid = [];
-var dataListado = [];
-//EmpleadosCombobox=[];
-var thisEmpleados=[];
-var filtros=[];
-var db={};
-var gridInstance;
-var ultimoNumeroGrid=0;
-var DataGridExcel=[];
-var origenDeDatosVista="tareas";
-
-// $('tbody').sortable();
-
-
-var MyComboEmpleados = function(config)
-{
-    jsGrid.Field.call(this, config);
-};
- 
-MyComboEmpleados.prototype = new jsGrid.Field
-({
-        align: "center",
-        sorter: function(date1, date2)
-        {
-            
-        },
-        itemTemplate: function(value)
-        {
-                var res ="";
-                value!=null ?
-                $.each(thisEmpleados,(index,val)=>{
-                        if(val.id_empleado == value)
-                                res = val.nombre_completo;
-                })
-                : console.log();
-                return res;
-        },
-        insertTemplate: function(value)
-        {},
-        editTemplate: function(value,todo)
-        {
-                var temp = "";
-                
-                $.each(thisEmpleados,(index,val)=>
-                {
-                        if(val.id_empleado == value)
-                        {
-                            temp += "<option value='"+val.id_empleado+"' selected>"+val.nombre_completo+"</option>";
-                        }
-                        else
-                            temp += "<option value='"+val.id_empleado+"'>"+val.nombre_completo+"</option>";
-                })
-                this._inputDate = $("<select>").attr({style:"margin:-5px;width:145px"});
-                $(this._inputDate[0]).append(temp);
-
-                return this._inputDate[0];
-                
-        },
-        insertValue: function()
-        {},
-        editValue: function()
-        {
-                if( this._inputDate[1] == undefined )
-                        return $(this._inputDate[0]).val();
-                else
-                        return this._inputDate[1];
-        }
-});
-
- 
- var customsFieldsGridData=[
-         {field:"customControl",my_field:MyCControlField},
-//        {field:"porcentaje",my_field:porcentajesFields},
-        {field:"comboEmpleados",my_field:MyComboEmpleados},
-];
- 
- 
-estructuraGrid= [
-    { name: "id_principal",visible:false},
-    { name:"no",title:"No",width:50},
-    { name: "referencia",title:"Referencia", type: "textarea",width:200},
-    { name: "tarea",title:"Pendiente", type: "textarea", validate: "required",width:200 },
-    { name: "id_empleado", title: "Responsable", type: "comboEmpleados", width:250},
-    { name: "fecha_creacion",title:"Fecha de Creacion", type: "text", validate: "required", width:150,editing: false},
-    { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required", width:150,},
-    { name: "fecha_cumplimiento",title:"Fecha de Cumplimiento", type: "text", validate: "required", width:190,editing: false},
-    { name: "status_tarea", title:"Estatus", type: "select", width:150,valueField:"status_tarea",textField:"descripcion",
-        items:[{"status_tarea":"1","descripcion":"En Proceso"},{"status_tarea":"2","descripcion":"Suspendido"},{"status_tarea":"3","descripcion":"Terminado"}]
-    },
-    { name: "observaciones",title:"Observaciones", type: "textarea", width:150,},
-    { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:150,editing:false },
-    { name: "registrar_programa",title:"Programa", type: "text", validate: "required",width:160, editing:false },
-    { name: "avance_programa",title:"Avance del Programa", type: "text", validate: "required",width:180, editing:false },      
-    { name:"delete", title:"Opción", type:"customControl",sorting:"", width:100}
-], 
- 
-construirGrid(); 
- 
-inicializarFiltros().then((resolve)=>
-{ 
-    construirFiltros();
-    listarThisEmpleados();
-    listarDatos();
-},
-(error)=>
-{
-    growlError("Error!","Error al construir la vista, recargue la página");
-}); 
+DataGrid = [];
+dataListado = [];
+EmpleadosCombobox=[];
+filtros=[];
+ultimoNumeroGrid=0;
+DataGridExcel=[];
+origenDeDatosVista="tareas";
+listarDatos();
+inicializarFiltros();
+construirGrid();
+construirFiltros();
+ $('tbody').sortable();
 </script>
 
 
@@ -412,9 +341,15 @@ inicializarFiltros().then((resolve)=>
 </script>
 <!-- FINALIZA SECCION PARA CARGAR ARCHIVOS-->
 
+
+    <!--Inicia para el spiner cargando-->
+    <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+    <!--Termina para el spiner cargando-->
     
     <!--Bootstrap-->
     <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
+    <!--Para abrir alertas de aviso, success,warning, error-->       
+    <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
     
     <!--Para abrir alertas del encabezado-->
     <script src="../../assets/probando/js/ace-elements.min.js"></script>

@@ -37,6 +37,22 @@ class TareasModel{
         }
     }
     
+    public function listarTarea($ID_TAREA)
+    {
+        try 
+        {
+            $dao=new TareasDAO();
+            $rec= $dao->listarTarea($ID_TAREA);
+            
+            return $rec;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+
     public function empleadosConUsuario()
     {
         try 
@@ -51,9 +67,24 @@ class TareasModel{
             return -1;
         }
     }
+    
+    
+    public function responsableTarea()
+    {
+        try 
+        {
+            $dao=new TareasDAO();
+            $rec= $dao->responsableTarea();
+            
+            return $rec;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 
     
-
     public function datosParaGraficaTareas()
     {
         try
