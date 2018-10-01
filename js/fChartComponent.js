@@ -1,3 +1,20 @@
+$(function()
+{
+    $("#BTN_ANTERIOR_GRAFICAMODAL").click(function()
+    {
+        if(activeChart>1)
+        {
+            activeChart-=2;
+            selectChart();
+        }
+        else
+        {
+            activeChart = -1;
+            graficar();
+        }
+    });
+});
+
 function construirGrafica(dataGrafica,tituloGrafica)//funcion sin cambio
 {
     estructuraGrafica = chartEstructura(dataGrafica);

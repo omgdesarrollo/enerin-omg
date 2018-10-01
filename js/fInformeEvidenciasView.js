@@ -21,27 +21,16 @@ $(function()
 
     $("#BTN_ANTERIOR_GRAFICAMODAL").click(function()
     {
-        // google.charts.setOnLoadCallback(drawChart);
-        // if(activeChart != 0)
-        // {
-        //     alert("anterior");
-        //     $(this).html("Anterior");
-            if(activeChart>1)
-            {
-                activeChart-=2;
-                selectChart();
-            }
-            else
-                activeChart = -1;
-                graficar();
-        // }
-        // else
-        // {
-        //     // alert("primero");
-        //     // $(this).html("Anterior");
-        //     activeChart = -1;
-        //     graficar();
-        // }
+        if(activeChart>1)
+        {
+            activeChart-=2;
+            selectChart();
+        }
+        else
+        {
+            activeChart = -1;
+            graficar();
+        }
     });
 
 }); //SE CIERRA EL $(FUNCTION())
@@ -497,43 +486,37 @@ function reconstruirExcel(value,index)
 // }
 var activeChart = -1;
 var chartsCreados = [];
-var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)},(dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)}];//checar como poner funciones en un arreglo
-// console.log(chartsFunciones);
+var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)},(dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)}];
 function graficar()
 {
     activeChart = 0;
+    chartsCreados = [];
     let validados = 0;
     let validados_data = [];
     let proceso = 0;
     let proceso_data = [];
-    // let sin_asignar = 0;
-    // let sin_asignar_data = [];
+    let dataGrafica = [];
+    let tituloGrafica = "VALIDACIÓN DE EVIDENCIAS";
+    let bandera = 0;
 
-    // console.log(dataListado);
     $.each(dataListado,(index,value)=>{
         if(value.estatus == "EN PROCESO")
         {
             proceso++;
-            // proceso_data.push({id_tema:value.id_tema});
             proceso_data.push(value);
         }
         if(value.estatus == "VALIDADO")
         {
             validados++;
-            // validados_data.push({id_tema:value.id_tema});
             validados_data.push(value);
         }
     });
-    let dataGrafica = [];
+    
     if(proceso!=0)
         dataGrafica.push(["Validados",validados,">> Evidencias:"+validados.toString(),JSON.stringify(validados_data)]);
     if(proceso!=0)
         dataGrafica.push(["En Proceso",proceso,">> Evidencias:"+proceso.toString(),JSON.stringify(proceso_data)]);
-        // ["Sin Asignar",sin_asignar,">> Documentos:"+sin_asignar.toString(),JSON.stringify(sin_asignar_data)],
     
-    chartsCreados = [];
-    let tituloGrafica = "VALIDACIÓN DE EVIDENCIAS";
-    let bandera = 0;
     $.each(dataGrafica,function(index,value){
         if(value[1] != 0)
             bandera=1;
@@ -544,8 +527,6 @@ function graficar()
         dataGrafica.push([ "NO EXISTEN DOCUMENTOS",1,"SIN DOCUMENTOS","[]"]);
         tituloGrafica = "NO EXISTEN DOCUMENTOS";
     }
-    // console.log(JSON.parse(dataGrafica[1][3]));
-    // console.log(dataGrafica[0][3]);
     construirGrafica(dataGrafica,tituloGrafica);
     $("#BTN_ANTERIOR_GRAFICAMODAL").html("Recargar");
 }
@@ -555,24 +536,17 @@ function construirGrafica(dataGrafica,tituloGrafica)//funcion sin cambio
     estructuraGrafica = chartEstructura(dataGrafica);
     opcionesGrafica = chartOptions(tituloGrafica);
     instanceGrafica = drawChart(dataGrafica,estructuraGrafica,opcionesGrafica);
-    // activeChart++;
     chartsCreados.push({grafica:instanceGrafica,data:estructuraGrafica});
 }
 
 function chartEstructura(dataGrafica)//funcion sin cambio
 {
-    // console.log(dataGrafica);
     data = new google.visualization.DataTable();
     data.addColumn('string', 'nombre');
     data.addColumn('number', 'valor');
-    // if(tooltip!=0)
-        data.addColumn({type:"string",role:"tooltip"});
+    data.addColumn({type:"string",role:"tooltip"});
     data.addColumn('string','datos');
-    
-    // if(dataGrafica.length != 0)
-        data.addRows(dataGrafica);
-    // else
-    //     data.addRows([[ "NO HAY DATOS",1,"SIN DATOS",""]]);
+    data.addRows(dataGrafica);
     return data;
 }
 
@@ -624,7 +598,6 @@ function selectChart()
         dataNextGrafica = chartsCreados[activeChart].data.getValue(select.row,3);
         concepto = chartsCreados[activeChart].data.getValue(select.row,0);
         chartsFunciones[activeChart+1](dataNextGrafica,concepto);
-            // graficar2(dataNextGrafica,concepto);
         $("#BTN_ANTERIOR_GRAFICAMODAL").html("Anterior");
     }
 }
@@ -632,22 +605,18 @@ function selectChart()
 function graficar2(temas,concepto)
 {
     activeChart = 1;
-    temas = JSON.parse(temas);
-    // console.log(temas);
     let lista = new Object();
-    let lista2 = [];
     let id_tema;
     let bandera = 0;
-    let estatus = 0;
     let dataGrafica = [];
-    let contador = -1;
+
+    tituloGrafica = concepto != "En Proceso" ? "EVIDENCIAS VALIDADAS" : "EVIDENCIAS EN PROCESO";
+    temas = JSON.parse(temas);
     $.each(temas,(index,value)=>{
         if(bandera==0)
         {
             id_tema = value.id_tema;
             lista[value.id_tema]=[];
-            // lista[value.id_tema]=[];
-            // lista[value.id_tema].push(value);
         }
         bandera=1;
         if(value.id_tema != id_tema)
@@ -662,62 +631,44 @@ function graficar2(temas,concepto)
             lista[value.id_tema].push(value);
         }
     });
-    console.log(lista);
-    // concepto = concepto=="En Proceso" ? "EN PROCESO" : "VALIDADO";
-    // tituloGrafica = concepto == "VALIDADO" ? "EVIDENCIAS VALIDADAS" : "EVIDENCIAS EN PROCESO";
-
-    // concepto = concepto=="En Proceso" ? "EN PROCESO" : "VALIDADO";
-    tituloGrafica = concepto != "En Proceso" ? "EVIDENCIAS VALIDADAS" : "EVIDENCIAS EN PROCESO";
-
-    // $.each(dataListado,(index,value)=>{
-    //     if(lista[value.id_tema]!=undefined)
-    //     {
-    //         if(value.estatus == concepto)
-    //         {
-    //             if(lista[value.id_tema]["evidencias"]!=undefined)
-    //                 lista[value.id_tema]["evidencias"]++;
-    //             else
-    //             {
-    //                 lista[value.id_tema]={"no_tema":value.no_tema,"nombre_tema":value.tema,"responsable_tema":value.tema_responsable,
-    //                 "evidencias":1,"registro":value.registro,"frecuencia":value.frecuencia};
-    //             }
-    //         }
-    //     }
-    // });
     $.each(lista,(index,value)=>{
+        console.log(index,value);
         dataGrafica.push(["Tema: "+value[0].no_tema,value.length,">> Tema:\n"+value[0].tema+"\n>> Responsable:\n"+value[0].tema_responsable+"\n>> Evidencias:"+value.length,JSON.stringify(value)]);
     });
-    // console.log(dataGrafica);
     construirGrafica(dataGrafica,tituloGrafica);
 }
 
 function graficar3(datos,concepto)
 {
+    activeChart = 2;
+    let dataGrafica = [];
+    let id_registro;
+    let bandera = 0;
+    let lista = new Object();
+
     datos = JSON.parse(datos);
     tituloGrafica = datos[0].estatus == "VALIDADO" ? "DETALLES EVIDENCIAS VALIDADAS" : "DETALLES EVIDENCIAS EN PROCESO";
-    let dataGrafica = [];
-    $.each(temas,(index,value)=>{
+    $.each(datos,(index,value)=>{
         if(bandera==0)
         {
-            id_tema = value.id_tema;
-            lista[value.id_tema]=[];
+            id_registro = value.id_registro;
+            lista[value.id_registro]=[];
         }
         bandera=1;
-        if(value.id_tema != id_tema)
+        if(value.id_registro != id_registro)
         {
-            lista[value.id_tema]=[];
-            lista[value.id_tema].push(value);
-            id_tema = value.id_tema;
+            lista[value.id_registro]=[];
+            lista[value.id_registro].push(value);
+            id_registro = value.id_registro;
         }
         else
         {
-            id_tema = value.id_tema;
-            lista[value.id_tema].push(value);
+            id_registro = value.id_registro;
+            lista[value.id_registro].push(value);
         }
     });
-    $.each(datos,(index,value)=>{
-        
+    $.each(lista,(index,value)=>{
+        dataGrafica.push([value[0].registro,value.length,">> Responsable Registro:\n"+value[0].resp+"\n>> Frecuencia:\n"+value[0].frecuencia+"\n>> Evidencias:"+value.length,"[]"]);
     });
-
     construirGrafica(dataGrafica,tituloGrafica);
 }
