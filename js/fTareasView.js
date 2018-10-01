@@ -59,6 +59,12 @@ $(function()
 //        loadChartView(true);
 //    });
 
+    $("#BTN_ANTERIOR_GRAFICAMODAL").click(function()
+    {
+        activeChart = -1;
+        graficar();
+    });
+
     var $btnDLtoExcel = $('#toExcel'); 
     $btnDLtoExcel.on('click', function () 
     {
@@ -274,8 +280,11 @@ function insertarTareas(tareaDatos)
                 
                 $("#jsGrid").jsGrid("insertItem",tempData).done(function()
                 {
-                    $("#crea_tarea .close ").click();
+                    
                 });
+                dataListado.push(datos[0]),
+                DataGrid.push(tempData),
+                $("#crea_tarea .close ").click();
                 mostrarTareasEnAlarma();
                 mostrarTareasVencidas();
                 
@@ -690,8 +699,16 @@ function preguntarEliminar(data)
 
  function eliminarTarea(id_afectado)
  {
-        id_empleadoActual=item["id_empleado"];
-        tarea=item["tarea"];
+        $.each(dataListado,function(index,value)
+        {
+            if(value.id_tarea==id_afectado.id_tarea)
+            {
+                id_empleadoActual=value.id_empleado;
+                tarea=value.tarea;
+            }
+        });
+//        console.log(id_empleadoActual);
+//        console.log(tarea);
         $.ajax({
                 url:"../Controller/TareasController.php?Op=Eliminar",
                 type:"POST",
@@ -856,11 +873,7 @@ function enviarNotificacionWhenDeleteTarea(id_empleadoActual,tarea)
 
 
 //area de gantt
-function cargarprogram(value){
-//    alert("d  "+value);
-//    window.location.href="Gantt_TareasView.php?id_tarea="+value;
-    
-    
+function cargarprogram(value){    
     window.open("Gantt_TareasView.php?id_tarea="+value,'_blank');
 }//finaliza area de gantt
 
@@ -869,18 +882,13 @@ function cargarprogram(value){
 var a=0, b=0, c=0, d=0;
 function obtenerDatos(bclose)
 {
-    a=0, b=0, c=0, d=0;
-//    console.log("Entro al loadChartView");
-   
+    a=0, b=0, c=0, d=0;   
    return new Promise(function(resolve,reject){ 
     $.ajax({
         url:"../Controller/TareasController.php?Op=datosGrafica",
         type:"GET",
         success:function(data)
-        {
-//              $("#graficaTareas").html("");
-//            console.log(data);
-                
+        {                
             $.each(data,function(index,value)
             {
                 if(value.status=="Tarea vencida")
@@ -915,43 +923,44 @@ function obtenerDatos(bclose)
     
 } //Finaliza Grafica Informes
 
-function loadChartView(){
-    
-    
-    obtenerDatos().then(function (){
-        dibujarGrafica();
-    })
-}
+
+//function loadChartView()
+//{    
+//    obtenerDatos().then(function ()
+//    {
+//        dibujarGrafica();
+//    })
+//}
 
 
-function dibujarGrafica(){
-    
-        google.charts.load("current", {packages:["corechart"]});
-    google.charts.setOnLoadCallback(drawChart);
-    
-    function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-
-          ['Status', 'Cantidad'],
-          ['En proceso(En Tiempo)', c],
-          ['En proceso(Alarma Vencida)',b],
-          ['En proceso(Tiempo Vencido)', a],
-          ['Suspendido', d]
-//          ['Terminado', e]
-        ]);
-
-        var options = {
-          title: 'Tareas',
-          is3D: true,
-          "width":660,
-          "height":340
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('graficaTareas'));
-        chart.draw(data, options);
-    } 
-    
-}
+//function dibujarGrafica(){
+//    
+//        google.charts.load("current", {packages:["corechart"]});
+//    google.charts.setOnLoadCallback(drawChart);
+//    
+//    function drawChart() {
+//        var data = google.visualization.arrayToDataTable([
+//
+//          ['Status', 'Cantidad'],
+//          ['En proceso(En Tiempo)', c],
+//          ['En proceso(Alarma Vencida)',b],
+//          ['En proceso(Tiempo Vencido)', a],
+//          ['Suspendido', d]
+////          ['Terminado', e]
+//        ]);
+//
+//        var options = {
+//          title: 'Tareas',
+//          is3D: true,
+//          "width":660,
+//          "height":340
+//        };
+//
+//        var chart = new google.visualization.PieChart(document.getElementById('graficaTareas'));
+//        chart.draw(data, options);
+//    } 
+//    
+//}
 
 
 
