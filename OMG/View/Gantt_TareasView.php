@@ -716,8 +716,8 @@ gantt.templates.task_class = function (start, end, task) {
         obtenerEmpleados();
         gantt.serverList("user",dataEmpleados); 
 
-	gantt.locale.labels.column_owner ="Encargado";
-        gantt.locale.labels.section_owner = "Encargado";
+	gantt.locale.labels.column_owner ="Responsable";
+        gantt.locale.labels.section_owner = "Responsable";
         
         gantt.locale.labels.section_statusname="Estatus";
         gantt.locale.labels.column_statusname="Estatus";
