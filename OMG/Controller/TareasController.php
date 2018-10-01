@@ -12,18 +12,39 @@ $modelArchivo=new ArchivoUploadModel();
 switch ($Op) {
     case 'Listar':
         $Lista= $model->listarTareas();
+        
         foreach ($Lista as $key => $value) {
             $url= $_REQUEST['URL'].$value['id_tarea'];
             $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls(-1,$url);
         }
+        
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+        return $Lista;        
+        break;
+        
+    case'ListarTarea':
+        $Lista= $model->listarTarea($_REQUEST['ID_TAREA']);
+        
+        foreach ($Lista as $key => $value) {
+            $url= $_REQUEST['URL'].$value['id_tarea'];
+            $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls(-1,$url);
+        }
+        
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
         return $Lista;
-        
         break;
         
     case'empleadosConUsuario':
         $Lista= $model->empleadosConUsuario();
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+        return $Lista;
+        break;
+    
+    case'responsableTarea':
+        $Lista= $model->responsableTarea();
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
         return $Lista;
@@ -108,10 +129,9 @@ switch ($Op) {
     
     
     case 'Eliminar':
+//        $data= json_decode($_REQUEST['ID_TAREA'],true);
+        $Lista= $model->eliminarTarea($_REQUEST['ID_TAREA']);
         header('Content-type: application/json; charset=utf-8');
-        $data= json_decode($_REQUEST['ID_TAREA'],true);
-        $Lista= $model->eliminarTarea($data['id_tarea']);
-        
         echo json_encode($Lista);
         return $Lista;
         break;

@@ -67,9 +67,26 @@ class TareasDAO{
             return -1;
         }
     }
-            
+    
+    public function responsableTarea()
+    {
+        try 
+        {
+            $query="SELECT tbempleados.id_empleado, CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) 
+                    AS nombre_completo
+                    FROM empleados tbempleados";
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
 
-        public function datosParaGraficaTareas()
+            return $lista;            
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+    public function datosParaGraficaTareas()
     {
         try
         {

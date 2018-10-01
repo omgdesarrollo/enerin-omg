@@ -591,7 +591,7 @@ setScaleConfig('1');
 //                            console.log("termino tareas");
 //                             alert("e");
 				task.progress = calculateSummaryProgress(task);
-                                console.log(task.progress)
+//                                console.log(task.progress)
 			});
 		});
 		gantt.attachEvent("onAfterTaskUpdate", function (id,item) {
@@ -606,13 +606,9 @@ setScaleConfig('1');
                         gantt.getTask(id).readonly = true;
                         gantt.getTask(id).status = 3;
                     }
-                    
-                    
                     if(item.status==2){
 //                        gantt.getTask(id).readonly = true;
                     }
-                    
-                    
                     if(item.status==3){
                         gantt.getTask(id).readonly = true;
                         gantt.getTask(id).progress = 1;
@@ -663,12 +659,11 @@ setScaleConfig('1');
         gantt.config.branch_loading = true;
         gantt.config.order_branch_free = true;
         gantt.templates.task_class = function (start, end, task) {
-		if (task.type == gantt.config.types.project){
+		if(task.type == gantt.config.types.project){
 //                    console.log("entro ");
 			return "hide_project_progress_drag";
                 }
-                console.log(task);
-                
+//                console.log(task);
                 if(task.status==3){
                     return "completed_task";
                 }
