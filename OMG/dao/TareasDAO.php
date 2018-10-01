@@ -10,7 +10,7 @@ class TareasDAO{
         {
             $query="SELECT tbtareas.id_tarea, tbtareas.referencia, tbtareas.tarea, tbtareas.fecha_creacion, tbtareas.fecha_alarma,
                     tbtareas.fecha_cumplimiento, tbtareas.status_tarea, tbtareas.observaciones, tbtareas.existe_programa,tbtareas.avance_programa,		 
-                    tbempleados.id_empleado, CONCAT(tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno) AS nombre_completo
+                    tbempleados.id_empleado, CONCAT(tbempleados.nombre_empleado,' ', tbempleados.apellido_paterno,' ', tbempleados.apellido_materno) AS nombre_completo
                     FROM tareas tbtareas
                     JOIN empleados tbempleados ON tbempleados.id_empleado=tbtareas.id_empleado";
             

@@ -99,7 +99,10 @@ require_once 'EncabezadoUsuarioView.php';
     </button>
 
     <div class="pull-right">    
-        <button onClick="loadChartView(true)" title="Informe" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#informe_tareas">
+<!--        <button onClick="loadChartView(true)" title="Informe" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#informe_tareas">
+            <i class="fa fa-pie-chart"></i>
+        </button>-->
+        <button onClick="graficar()" title="Graficar Circular" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#Grafica">
             <i class="fa fa-pie-chart"></i>
         </button>
 
@@ -220,7 +223,7 @@ require_once 'EncabezadoUsuarioView.php';
 
 
 <!-- Inicio de Seccion Modal Informe-->
-<div class="modal draggable fade" id="informe_tareas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!--<div class="modal draggable fade" id="informe_tareas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-lg" role="document">
         <div id="loaderModalMostrar"></div>
         <div class="modal-content">
@@ -236,11 +239,33 @@ require_once 'EncabezadoUsuarioView.php';
 
               <div id="graficaTareas"></div>
 
-            </div><!-- cierre div class-body -->
-        </div><!-- cierre div class modal-content -->
-    </div><!-- cierre div class="modal-dialog" -->
-</div><!-- cierre del modal -->
+            </div> cierre div class-body 
+        </div> cierre div class modal-content 
+    </div> cierre div class="modal-dialog" 
+</div> cierre del modal -->
 
+<!-- Modal grafica -->
+<div class="modal draggable fade" id="Grafica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">                
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="closeLetra">X</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabelNuevaEvidencia">Informe de Pendientes Especiales</h4>
+            </div>
+
+            <div class="modal-body">
+                <div id="graficaPie" ></div>
+
+                <div class="form-group" method="post" style="text-align:center" id="BTNS_GRAFICAMODAL">
+                    <button type="submit" id="BTN_ANTERIOR_GRAFICAMODAL" class="btn crud-submit btn-info" style="width:90%" >Recargar</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
 
 
 <script>
