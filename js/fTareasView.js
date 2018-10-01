@@ -879,49 +879,45 @@ function cargarprogram(value){
 
 
 //IniciaGrafica Informes
-var a=0, b=0, c=0, d=0;
-function obtenerDatos(bclose)
-{
-    a=0, b=0, c=0, d=0;   
-   return new Promise(function(resolve,reject){ 
-    $.ajax({
-        url:"../Controller/TareasController.php?Op=datosGrafica",
-        type:"GET",
-        success:function(data)
-        {                
-            $.each(data,function(index,value)
-            {
-                if(value.status=="Tarea vencida")
-                {
-                  a++;   
-                }
-                if(value.status=="Alarma vencida")
-                {
-                  b++;   
-                }
-                if(value.status=="En tiempo")
-                {
-                  c++;   
-                }
-                if(value.status=="Suspendido")
-                {
-                  d++;   
-                }
-//                if(value.status=="Terminado")
+//var a=0, b=0, c=0, d=0;
+//function obtenerDatos(bclose)
+//{
+//    a=0, b=0, c=0, d=0;   
+//   return new Promise(function(resolve,reject){ 
+//    $.ajax({
+//        url:"../Controller/TareasController.php?Op=datosGrafica",
+//        type:"GET",
+//        success:function(data)
+//        {                
+//            $.each(data,function(index,value)
+//            {
+//                if(value.status=="Tarea vencida")
 //                {
-//                  e++;   
+//                  a++;   
 //                }
-            });
-            resolve();
-        }
-    });
-    
-   });
+//                if(value.status=="Alarma vencida")
+//                {
+//                  b++;   
+//                }
+//                if(value.status=="En tiempo")
+//                {
+//                  c++;   
+//                }
+//                if(value.status=="Suspendido")
+//                {
+//                  d++;   
+//                }
+////                if(value.status=="Terminado")
+////                {
+////                  e++;   
+////                }
+//            });
+//            resolve();
+//        }
+//    });
 //    
-  
-
-    
-} //Finaliza Grafica Informes
+//   });       
+//} //Finaliza Grafica Informes
 
 
 //function loadChartView()
@@ -963,10 +959,82 @@ function obtenerDatos(bclose)
 //}
 
 
+var activeChart = -1;
+var chartsCreados = [];
+function graficar()
+{
+    let enTiempo = 0;
+    let enTiempo_data = [];
+    let alarmaVencida = 0;
+    let alarmaVencida_data = [];
+    let tareaVencida = 0;
+    let tareaVencida_data = [];
+    let suspendido = 0;
+    let suspendido_data = []; 
+
+    $.each(dataListado,(index,value)=>
+    {
+        if(value.status_grafica == "En tiempo")
+        {
+            enTiempo++;
+            enTiempo_data.push({nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
+        }
+        
+        if(value.status_grafica == "Alarma vencida")
+        {
+            alarmaVencida++;
+            alarmaVencida_data.push({nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
+        }
+        
+        if(value.status_grafica == "Tarea vencida")
+        {
+            tareaVencida++;
+            tareaVencida_data.push({nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
+        }
+        
+        if(value.status_grafica == "Suspendido")
+        {
+            suspendido++;
+            suspendido_data.push({nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
+        }
+
+    });
+    let dataGrafica=[];
+    if(enproceso!=0)
+        dataGrafica.push(["En Proceso",enproceso,">> Pendientes:"+enproceso.toString(),JSON.stringify(enproceso_data)]);
+    if(suspendido!=0)
+        dataGrafica.push(["Suspendido",suspendido,">> Pendientes:"+suspendido.toString(),JSON.stringify(suspendido_data)]);
 
 
+    activeChart = -1;
+    chartsCreados = [];
+    let tituloGrafica = "Pendientes Especiales";
+    let bandera = 0;
+    $.each(dataGrafica,function(index,value){
+        if(value[1] != 0)
+            bandera=1;
+    });
+
+    if(bandera == 0)
+    {
+        dataGrafica.push([ "NO EXISTEN PENDIENTES",1,"SIN PENDIENTES","[]"]);
+        tituloGrafica = "NO EXISTEN PENDIENTES";
+    }
+    // console.log(dataGrafica); 
+    // console.log(JSON.parse(dataGrafica[1][3]));
+    construirGrafica(dataGrafica,tituloGrafica);
+    $("#BTN_ANTERIOR_GRAFICAMODAL").html("Recargar");
+}
 
 
+function construirGrafica(dataGrafica,tituloGrafica)//funcion sin cambio
+{
+    estructuraGrafica = chartEstructura(dataGrafica);
+    opcionesGrafica = chartOptions(tituloGrafica);
+    instanceGrafica = drawChart(dataGrafica,estructuraGrafica,opcionesGrafica);
+    activeChart++;
+    chartsCreados.push({grafica:instanceGrafica,data:estructuraGrafica});
+}
 
 
 
