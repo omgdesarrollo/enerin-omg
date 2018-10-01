@@ -469,5 +469,188 @@ function reconstruirExcel(value,index)
 // function loadSpinner(){
 //         myFunction();
 // }
+var activeChart = -1;
+var chartsCreados = [];
+var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)}];//checar como poner funciones en un arreglo
+console.log(chartsFunciones);
+function graficar()
+{
+    let validados = 0;
+    let validados_data = [];
+    let proceso = 0;
+    let proceso_data = [];
+    // let sin_asignar = 0;
+    // let sin_asignar_data = [];
 
+    // console.log(dataListado);
+    $.each(dataListado,(index,value)=>{
+        if(value.estatus == "EN PROCESO")
+        {
+            proceso++;
+            proceso_data.push({id_tema:value.id_tema});
+        }
+        if(value.estatus == "VALIDADO")
+        {
+            validados++;
+            validados_data.push({id_tema:value.id_tema});
+        }
+    });
+    let dataGrafica = [
+        // ["Sin Asignar",sin_asignar,">> Documentos:"+sin_asignar.toString(),JSON.stringify(sin_asignar_data)],
+        ["Validados",validados,">> Evidencias:"+validados.toString(),JSON.stringify(validados_data)],
+        ["En Proceso",proceso,">> Evidencias:"+proceso.toString(),JSON.stringify(proceso_data)]
+    ];
+    activeChart = -1;
+    chartsCreados = [];
+    let tituloGrafica = "VALIDACIÓN DE EVIDENCIAS";
+    let bandera = 0;
+    $.each(dataGrafica,function(index,value){
+        if(value[1] != 0)
+            bandera=1;
+    });
+
+    if(bandera == 0)
+    {
+        dataGrafica.push([ "NO EXISTEN DOCUMENTOS",1,"SIN DOCUMENTOS","[]"]);
+        tituloGrafica = "NO EXISTEN DOCUMENTOS";
+    }
+    // console.log(JSON.parse(dataGrafica[1][3]));
+    construirGrafica(dataGrafica,tituloGrafica);
+    $("#BTN_ANTERIOR_GRAFICAMODAL").html("Recargar");
+}
+
+function construirGrafica(dataGrafica,tituloGrafica)//funcion sin cambio
+{
+    estructuraGrafica = chartEstructura(dataGrafica);
+    opcionesGrafica = chartOptions(tituloGrafica);
+    instanceGrafica = drawChart(dataGrafica,estructuraGrafica,opcionesGrafica);
+    activeChart++;
+    chartsCreados.push({grafica:instanceGrafica,data:estructuraGrafica});
+}
+
+function chartEstructura(dataGrafica)//funcion sin cambio
+{
+    // console.log(dataGrafica);
+    data = new google.visualization.DataTable();
+    data.addColumn('string', 'nombre');
+    data.addColumn('number', 'valor');
+    // if(tooltip!=0)
+        data.addColumn({type:"string",role:"tooltip"});
+    data.addColumn('string','datos');
     
+    // if(dataGrafica.length != 0)
+        data.addRows(dataGrafica);
+    // else
+    //     data.addRows([[ "NO HAY DATOS",1,"SIN DATOS",""]]);
+    return data;
+}
+
+function chartOptions(tituloGrafica)//funcion sin cambio
+{
+    var options = 
+    {
+        legend:{
+                position:"labeled",alignment:"start",
+                textStyle:
+                {
+                    color:"black", fontSize:14, bold:true
+                }
+            },
+        pieSliceText:"none",
+        title: tituloGrafica,
+        tooltip:{textStyle:{color:"#000000"},text:"none",isHtml:true},
+        // pieSliceText:"",
+        titleTextStyle:{color:"black"},
+        'is3D':true,
+        slices: { 
+            1: {offset: 0.02,color:"#80ffbf"},
+            3: {offset: 0.02,color:"#bfff80"},
+            0: {offset: 0.02,color:"#ffbf80"},
+            4: {offset: 0.02,color:"#ff80bf"},
+            2: {offset: 0.02,color:"#bf80ff"},
+        },
+        backgroundColor:"",
+        "width":800,
+        "height":400
+    };
+    return options;
+}
+
+function drawChart(dataGrafica,data,options)//funcion sin cambio
+{
+    grafica = new google.visualization.PieChart(document.getElementById('graficaPie'));
+    grafica.draw(data, options);
+    if(dataGrafica[0][3]!="[]")
+        google.visualization.events.addListener(grafica, 'select', selectChart);
+    return grafica;
+}
+
+function selectChart()
+{
+    var select = chartsCreados[activeChart].grafica.getSelection()[0];
+    if(select != undefined)
+    {
+        dataNextGrafica = chartsCreados[activeChart].data.getValue(select.row,3);
+        concepto = chartsCreados[activeChart].data.getValue(select.row,0);
+        chartsFunciones[activeChart+1](dataNextGrafica,concepto);
+            // graficar2(dataNextGrafica,concepto);
+        $("#BTN_ANTERIOR_GRAFICAMODAL").html("Anterior");
+    }
+}
+
+function graficar2(temas,concepto)
+{
+    temas = JSON.parse(temas);
+    // console.log(temas);
+    let lista = [];
+    let id_tema;
+    let bandera = 0;
+    let estatus = 0;
+    let dataGrafica = [];
+
+    $.each(temas,(index,value)=>{
+        if(bandera==0)
+        {
+            id_tema = value.id_tema;
+            lista.push(value);
+        }
+        bandera=1;
+        if(value.id_tema != id_tema)
+        {
+            lista.push(value);
+        }
+        else
+        {
+            id_tema = value.id_tema;
+        }
+    });
+    console.log(lista);
+    // estatus = concepto == "Sin Asignar" ? 0 : concepto == "En Proceso" ? 1 : 2;
+    tituloGrafica = concepto == "VALIDADO" ? "EVIDENCIAS VALIDADAS" : "EVIDENCIAS EN PROCESO";
+    
+    $.each(temas,(index,value)=>{
+        s
+    });
+
+    // $.each(dataListado,(index,value)=>{
+    //     if(value.estatus == concepto)
+    //     {
+    //         $.each(value.temas_responsables,(ind,val)=>{
+    //             $.each(lista,(key,valor)=>{
+    //                 if(valor.no_tema==val.no)
+    //                 {
+    //                     if(lista[key]["documentos"]!=undefined)
+    //                         lista[key]["documentos"]++;
+    //                     else
+    //                         lista[key]["documentos"]=1;
+    //                 }
+    //             });
+    //         });
+    //     }
+    // });
+    $.each(lista,(index,value)=>{
+        dataGrafica.push(["Tema: "+value.no_tema,value.documentos,">> Tema:\n"+value.nombre_tema+"\n>> Responsable:\n"+value.responsable_tema+"\n>> Documentos:"+value.documentos,"[]"]);
+    });
+    // console.log(dataGrafica);
+    construirGrafica(dataGrafica,tituloGrafica);
+}

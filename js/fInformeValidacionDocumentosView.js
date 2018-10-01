@@ -526,11 +526,14 @@ function graficar()
             });
         }
     });
-    let dataGrafica = [
-        ["Sin Asignar",sin_asignar,">> Documentos:"+sin_asignar.toString(),JSON.stringify(sin_asignar_data)],
-        ["Validados",validados,">> Documentos:"+validados.toString(),JSON.stringify(validados_data)],
-        ["En Proceso",proceso,">> Documentos:"+proceso.toString(),JSON.stringify(proceso_data)]
-    ];
+    let dataGrafica=[];
+    if(sin_asignar!=0)
+        dataGrafica.push(["Sin Asignar",sin_asignar,">> Documentos:"+sin_asignar.toString(),JSON.stringify(sin_asignar_data)]);
+    if(proceso!=0)
+        dataGrafica.push(["En Proceso",proceso,">> Documentos:"+proceso.toString(),JSON.stringify(proceso_data)]);
+    if(validados!=0)
+        dataGrafica.push(["Validados",validados,">> Documentos:"+validados.toString(),JSON.stringify(validados_data)]);
+
     activeChart = -1;
     chartsCreados = [];
     let tituloGrafica = "VALIDACIÓN DOCUMENTOS";
@@ -545,12 +548,13 @@ function graficar()
         dataGrafica.push([ "NO EXISTEN DOCUMENTOS",1,"SIN DOCUMENTOS","[]"]);
         tituloGrafica = "NO EXISTEN DOCUMENTOS";
     }
+    // console.log(dataGrafica); 
     // console.log(JSON.parse(dataGrafica[1][3]));
     construirGrafica(dataGrafica,tituloGrafica);
     $("#BTN_ANTERIOR_GRAFICAMODAL").html("Recargar");
 }
 
-function construirGrafica(dataGrafica,tituloGrafica)
+function construirGrafica(dataGrafica,tituloGrafica)//funcion sin cambio
 {
     estructuraGrafica = chartEstructura(dataGrafica);
     opcionesGrafica = chartOptions(tituloGrafica);
@@ -611,6 +615,7 @@ function drawChart(dataGrafica,data,options)//funcion sin cambio
 {
     grafica = new google.visualization.PieChart(document.getElementById('graficaPie'));
     grafica.draw(data, options);
+    console.log(dataGrafica[0][3]);
     if(dataGrafica[0][3]!="[]")
         google.visualization.events.addListener(grafica, 'select', selectChart);
     return grafica;
@@ -619,6 +624,7 @@ function drawChart(dataGrafica,data,options)//funcion sin cambio
 function selectChart()
 {
     var select = chartsCreados[activeChart].grafica.getSelection()[0];
+    console.log(select);
     if(select != undefined)
     {
         dataNextGrafica = chartsCreados[activeChart].data.getValue(select.row,3);
