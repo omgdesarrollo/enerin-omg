@@ -169,7 +169,7 @@ class TareasModel{
 
         public function insertarTarea($referencia,$tarea,$fecha_creacion,$fecha_alarma,$fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado,$mensaje,
                                   $responsable_plan,$tipo_mensaje,$atendido)
-    {
+        {
         try
         {
             $contrato= Session::getSesion("s_cont");

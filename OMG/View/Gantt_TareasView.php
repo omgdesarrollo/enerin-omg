@@ -51,7 +51,7 @@ and open the template in the editor.
     
     <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_csp.js" type="text/javascript"></script>-->
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_csp.js.map"></a>-->
-    <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_fullscreen.js" type="text/javascript"></script>-->
+    <script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_fullscreen.js" type="text/javascript"></script>
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_fullscreen.js.map"></a>-->
     <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_grouping.js" type="text/javascript"></script>-->
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_grouping.js.map"></a>-->
@@ -113,31 +113,41 @@ and open the template in the editor.
         text-decoration: none;
         font-size: 15;
     }        
+    /*tareas padres -->*/
          .gantt_task_line.gantt_dependent_task {
 			background-color: #65c16f;
                         /*background-color:  #0042e9;*/
 			/*border: 1px solid #3c9445;*/
-		}       
+		}   
+       /*<--*/         
+                
 .gantt_task_line.gantt_dependent_task .gantt_task_progress {
 			background-color: #46ad51;
-		}           
+		}
+                
        .gantt_task_progress {
 			text-align: left;
 			padding-left: 10px;
 			box-sizing: border-box;
-			color: white;
+			color: black;
 			font-weight: bold;
-		}   
+               
+                        
+		}
                 /*estilos para ocultar el texto de la barra*/ 
-                .gantt_task_content {
+/*                .gantt_task_content {
                     display: none;
-                }   
+                }   */
                 .completed_task {
 		border: 1px solid #94AD94;
                 }
                 .completed_task .gantt_task_progress {
                     background: #0000cc;
                 }
+                .task_suspendida .gantt_task_progress{
+                    background:yellow; 
+                }
+             
  .dx-treelist-borders > 
  .dx-treelist-pager, 
  .dx-treelist-borders > 
@@ -225,7 +235,7 @@ and open the template in the editor.
   <input type="submit" class="btn btn-info" value="Recargar" onclick="refrescarDatosGantt()">
   <!--<input type="submit" class="btn btn-info" value="Recargar Detalles" onclick="refrescarDatosGantt()">-->   
       
-
+<!--<input id="fullscreen_button" type="button" value="Toggle Fullscreen"/>-->
         <input type="radio" id="scale1" name="scale" value="1" checked/><label for=""><h5>Dia</h5></label>
 <input type="radio" id="scale2" name="scale" value="2"/><label for=""><h5>Semana</h5></label>
 <input type="radio" id="scale3" name="scale" value="3"/><label for=""><h5>Mes</h5></label>
@@ -459,7 +469,15 @@ function dragElement(elmnt) {
 		}
 	}
 setScaleConfig('1');
+
 //termina de definir si sera por dia,semana,mes ,año que se mostrara las tareas
+
+//empieza para darle tamaño pantalla completa 
+//termina para darle tamaño pantalla completa
+
+
+
+
 
 
 	(function dynamicTaskType() {
@@ -487,6 +505,7 @@ setScaleConfig('1');
 			gantt.eachTask(function (task) {
 				setTaskType(task);
 			});
+//                        gantt.updateTask(id)
 		});
 
 		gantt.attachEvent("onAfterTaskAdd", function onAfterTaskAdd(id) {
@@ -570,52 +589,36 @@ setScaleConfig('1');
 				refreshSummaryProgress(gantt.getParent(id), submit);
 			}
 		}
-                function calculoDatosSumaProgreso(){
                 
-                
-                }
-                
-		gantt.attachEvent("onParse", function () {
-                   
-//                   obtenerTareas().then(function (){
-//construirTreeList();
-//
-//});
-                   
-                   
-                   
+		gantt.attachEvent("onParse", function () {          
                    
 			gantt.eachTask(function (task) {
-//                            console.log("empezo tareas");
-//                            console.log(task);
-//                            console.log("termino tareas");
-//                             alert("e");
 				task.progress = calculateSummaryProgress(task);
-//                                console.log(task.progress)
 			});
 		});
 		gantt.attachEvent("onAfterTaskUpdate", function (id,item) {
-                    
-//                    obtenerTareas().then(function (){
-//construirTreeList();
-//
-//});
 
-//console.log("cuando ");
                     if(item.progress==1){
                         gantt.getTask(id).readonly = true;
                         gantt.getTask(id).status = 3;
                     }
-                    if(item.status==2){
-//                        gantt.getTask(id).readonly = true;
-                    }
+//                    if(item.status==2){
+////                        gantt.getTask(id).readonly = true;
+//                    }
                     if(item.status==3){
                         gantt.getTask(id).readonly = true;
                         gantt.getTask(id).progress = 1;
 //                        gantt.getTask(id).status = 3;
 
                     }
+//                    if(item.status==2){
+//                        gantt.getTask(id).readonly = true;
+//                        gantt.getTask(id).progress = 1;
+//                        gantt.getTask(id).status = 3;
+
+//                    }
                     
+//                    console.log("entro en ");
                     
                     
 //			gantt.updateTask(id)
@@ -642,31 +645,46 @@ setScaleConfig('1');
 			});
 		})();
 	})();
-     var dataEmpleados=[];
-//     var data
-     obtenerEmpleados();
-      gantt.serverList("user",dataEmpleados); 
+        
+        gantt.attachEvent("onBeforeLightbox", function(id) {
+            var task = gantt.getTask(id);
+            task.my_template ="<span id='title2'>Progreso: </span>"+Math.round(task.progress*100) +" %";
+            return true;
+        });
+        
+        
+        console.log(gantt.templates);
+            gantt.templates.progress_text = function (start, end, task) {
+//        if(Math.round(task.progress * 100)==100){
+//            $(".gantt_task_line.gantt_dependent_task .gantt_task_progress ").css("background-color","red");
+//        }
+//                $("#taskid").css("background-color:","red");
+//		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
+                return "";
+	};
+                
 
-	gantt.locale.labels.column_owner ="Encargado";
-        gantt.locale.labels.section_owner = "Encargado";
-        
-       gantt.locale.labels.section_statusname="Estatus";
-       gantt.locale.labels.column_statusname="Estatus";
-        gantt.locale.labels.section_notas="Notas";
-        gantt.config.scale_height = 50;
-        gantt.config.order_branch = true;
-        
-        gantt.config.branch_loading = true;
-        gantt.config.order_branch_free = true;
-        gantt.templates.task_class = function (start, end, task) {
+gantt.templates.task_class = function (start, end, task) {
 		if(task.type == gantt.config.types.project){
 //                    console.log("entro ");
 			return "hide_project_progress_drag";
                 }
+                
+                
+//                if(task.status == 2){
+////                    console.log("entro ");
+//			return "hide_project_progress_drag";
+//                }
 //                console.log(task);
                 if(task.status==3){
                     return "completed_task";
                 }
+//                si es igual a suspendido
+                if(task.status==2){
+//                    alert("d");
+                    return "task_suspendida";
+                }
+                
                 
                     if(task.progress==1){
                         return "completed_task";
@@ -675,17 +693,56 @@ setScaleConfig('1');
                     }
                 
 	};
-        gantt.locale.labels["complete_button"] = "Completar";
-//        console.log(gantt.locale.labels);
-	gantt.config.buttons_left = ["dhx_save_btn", "dhx_cancel_btn", "complete_button"];
-        gantt.attachEvent("onLightboxButton", function (button_id, node, e) {
-		if (button_id == "complete_button") {
-			var id = gantt.getState().lightbox;
-			gantt.getTask(id).progress = 1;
-			gantt.updateTask(id)
-			gantt.hideLightbox();
-		}
-	});
+        
+        gantt.templates.task_text=function (t,e,task) {
+            
+             var taskLocal = gantt.getTask(task.id);
+            taskLocal ="<span id='title2'></span>"+Math.round(task.progress*100) +" %";
+            return taskLocal;
+        }
+     gantt.templates.tooltip_text = function(start,end,task){
+  	if(task.type == gantt.config.types.project)
+        return "Tarea tipo: Project"
+  
+        return "<b>Tarea:</b> "+task.text+"<br/><b>Start date:</b> " + 
+        gantt.templates.tooltip_date_format(start)+ 
+        "<br/><b>End date:</b> "+gantt.templates.tooltip_date_format(end);
+    };   
+        
+        
+        
+     var dataEmpleados=[];
+//     var data
+        obtenerEmpleados();
+        gantt.serverList("user",dataEmpleados); 
+
+	gantt.locale.labels.column_owner ="Responsable";
+        gantt.locale.labels.section_owner = "Responsable";
+        
+        gantt.locale.labels.section_statusname="Estatus";
+        gantt.locale.labels.column_statusname="Estatus";
+        gantt.locale.labels.section_notas="Notas";
+        
+        
+        gantt.locale.labels.section_template = "Detalles"
+        
+        gantt.config.scale_height = 50;
+        gantt.config.order_branch = true;
+        
+        gantt.config.branch_loading = true;
+        gantt.config.order_branch_free = true;
+
+//        gantt.locale.labels["complete_button"] = "Completar";
+////        console.log(gantt.locale.labels);
+//	gantt.config.buttons_left = ["dhx_save_btn", "dhx_cancel_btn", "complete_button"];
+//        gantt.attachEvent("onLightboxButton", function (button_id, node, e) {
+//		if (button_id == "complete_button") {
+//			var id = gantt.getState().lightbox;
+//			gantt.getTask(id).progress = 1;
+//			gantt.updateTask(id)
+//			gantt.hideLightbox();
+//		}
+//	});
  
 
         	gantt.config.open_tree_initially = true;
@@ -709,6 +766,7 @@ gantt.config.columns=[
 				return byId(gantt.serverList('user'), item.user)
                     }
 		},
+                {name: "start_date", label: "Fecha de Inicio"},
 //                {name: "status", label: "Status",resize: true},
 		{name: "add", width: 40}
 	];
@@ -724,7 +782,8 @@ var opcionstatus = [
 		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
                 {name: "statusname", height: 38, map_to: "status", type: "select", options:opcionstatus},
                 {name: "notas", height: 38, map_to: "notas", type: "textarea"},
-		{name: "owner", height: 22, map_to: "user", type: "select", options:dataEmpleados},	
+		{name: "owner", height: 22, map_to: "user", type: "select", options:dataEmpleados},
+                 {name:"template", height:16, type:"template", map_to:"my_template"}, 
 		{name: "time", type: "duration", map_to: "auto"}
 	];
 
@@ -749,6 +808,7 @@ gantt.config.subscales = [
 gantt.config.scale_unit = "month";
 gantt.config.step = 1;
 gantt.config.date_scale = "%F, %Y";
+//antt.config.date_grid = "%m/%d/%Y";
 gantt.config.min_column_width = 50;
 gantt.config.order_branch = true;
 gantt.config.order_branch_free = true;
@@ -775,15 +835,15 @@ gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
 var dp = new gantt.dataProcessor("../Controller/GanttTareasController.php?Op=Modificar");
 dp.init(gantt);
 //dp.autoUpdate=false;
-dp.attachEvent("onBeforeUpdate", function (id, status, data) {
-    console.log("empez");
-//    console.log(data);  
-    console.log(dp);
-    
-    console.log("termino");
-    
-         return true;
-});
+//dp.attachEvent("onBeforeUpdate", function (id, status, data) {
+//    console.log("empez");
+////    console.log(data);  
+//    console.log(dp);
+//    
+//    console.log("termino");
+//    
+//         return true;
+//});
 
 
 //empieza en cuanto a el modo de mostrar las tareas por dia,seman,mes,año
@@ -816,14 +876,7 @@ dp.attachEvent("onBeforeUpdate", function (id, status, data) {
            
         });
     }
-    console.log( gantt.templates);
-    gantt.templates.progress_text = function (start, end, task) {
-//        if(Math.round(task.progress * 100)==100){
-//            $(".gantt_task_line.gantt_dependent_task .gantt_task_progress ").css("background-color","red");
-//        }
-                $("#taskid").css("background-color:","red");
-		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
-	};
+
         
 
     var datosTreeList=[]; 

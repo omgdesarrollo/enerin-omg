@@ -28,7 +28,7 @@ class Gantt_TareaDao {
             $query="INSERT INTO gantt_tareas (id,text,start_date,duration,progress,parent,user,id_tarea,ponderado_programado,notas,status)
                     VALUES('".$VALUES["id"]."','".$VALUES["text"]."','".$VALUES["start_date"]."','".$VALUES["duration"]."',
                     '".$VALUES["progress"]."','".$VALUES["parent"]."','".$VALUES["user"]."','".$VALUES["id_tarea"]."',-1,'".$VALUES["notas"]."','".$VALUES["status"]."')";
-            echo "values: ".json_encode($query);
+//            echo "values: ".json_encode($query);
             $db=  AccesoDB::getInstancia();
             $lista = $db->executeQueryUpdate($query);
             
@@ -339,6 +339,31 @@ class Gantt_TareaDao {
             throw $ex;
             return -1;
         }
+    }
+    
+    
+    
+    
+    
+        public function obtenerUsuarioPorIdEmpleado($ID_EMPLEADO)
+    {
+        try
+        {
+            $query="SELECT tbusuarios.id_usuario
+                    FROM usuarios tbusuarios
+                    WHERE tbusuarios.id_empleado=$ID_EMPLEADO";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            
+//            echo "este es el query id_usuario: ".json_encode($query);
+            return $lista[0]['id_usuario'];
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+        
     }
             
 }
