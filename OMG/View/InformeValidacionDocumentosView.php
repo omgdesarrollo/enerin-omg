@@ -276,6 +276,7 @@
     var dataEmpleados=[];
     var DataGridExcel=[];
     var origenDeDatosVista="informeValidacionDocumentos";
+    var ultimoNumeroGrid=0;
 
     google.charts.load('current', {'packages':['corechart']});
 
@@ -296,10 +297,9 @@
             // {field:"porcentaje",my_field:porcentajesFields},
         ];
 
-    ultimoNumeroGrid=0;
+    
     construirGrid();
-    lispromesaInicializarFiltros = inicializarFiltros();
-    lispromesaInicializarFiltros.then((resolve2)=>
+    inicializarFiltros().then((resolve)=>
     {
         construirFiltros();
         listarDatos();

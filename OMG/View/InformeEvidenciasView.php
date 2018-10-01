@@ -24,6 +24,9 @@ $Usuario=  Session::getSesion("user");
         <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
 
 		<link async href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+
+        <script src="../../assets/chart/loader.js" type="text/javascript"></script>
+        
         
         
         <!-- ace styles -->
@@ -77,6 +80,34 @@ $Usuario=  Session::getSesion("user");
             {
                 word-wrap: break-word;
             }
+
+            div.google-visualization-tooltip
+            {
+                background:bisque;
+                border-radius:5px;
+                position:fixed;
+                top:60px !important;
+                left:1% !important;
+                min-width:200px;
+                max-width:400px;
+                -webkit-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
+                -moz-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
+                box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
+            }
+            div.ltr
+            {
+                width:-webkit-fill-available !important;
+                height:80% !important;
+            }
+            circle
+            {
+                r:4;
+            }
+            text
+            {
+                cursor:pointer;
+            }
+
         </style>              
                 
  			 
@@ -96,7 +127,11 @@ $Usuario=  Session::getSesion("user");
         <i class="glyphicon glyphicon-repeat"></i>   
     </button>
     
-    <div class="pull-right">    
+    <div class="pull-right">
+        <button onClick="graficar()" title="Graficar Circular" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#Grafica">
+            <i class="fa fa-pie-chart"></i>
+        </button>
+
         <button style="width:48px;height:42px" type="button"  class="btn_agregar" id="toExcel">
             <img src="../../images/base/_excel.png" width="30px" height="30px">
         </button>
@@ -205,6 +240,38 @@ $Usuario=  Session::getSesion("user");
     </div>
 </div>
 
+<div class="modal draggable fade" id="Grafica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <!-- <div class="form-group" method="post" style="text-align:center" id="BTNS_GRAFICAMODAL"> -->
+                    <!-- <button type="submit" id="BTN_ANTERIOR_GRAFICAMODAL" class="botones_vista" style="width:fit-content" >Recargar</button> -->
+                <!-- </div> -->
+                <!-- <div class="btn-group btn-group-justified">
+                    <a href="#" class="btn btn-primary">Apple</a>
+                    <a href="#" class="btn btn-primary">Samsung</a>
+                    <a href="#" class="btn btn-primary">Sony</a>
+                </div> -->
+                
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="closeLetra">X</span>
+                </button>
+		        <h4 class="modal-title" id="myModalLabelNuevaEvidencia">Indicador de Cumplimiento</h4>
+            </div>
+
+            <div class="modal-body">
+                <div id="graficaPie" ></div>
+
+                <div class="form-group" method="post" style="text-align:center" id="BTNS_GRAFICAMODAL">
+                    <button type="submit" id="BTN_ANTERIOR_GRAFICAMODAL" class="btn crud-submit btn-info" style="width:90%" >Recargar</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
 <script>
 
 // $(function(){
@@ -222,6 +289,8 @@ $Usuario=  Session::getSesion("user");
     var DataGridExcel=[];
     var origenDeDatosVista="informeEvidencias";
 
+    google.charts.load('current', {'packages':['corechart']});
+    
     var frecuenciaData = [
                 {frecuencia:"DIARIO"},
                 {frecuencia:"SEMANAL"},
