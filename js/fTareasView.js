@@ -260,7 +260,7 @@ function insertarTareas(tareaDatos)
         url:"../Controller/TareasController.php?Op=Guardar",
         type:"POST",
         data:"tareaDatos="+JSON.stringify(tareaDatos),
-//        async:false,
+        async:false,
         success:function(datos)
         {
 //            alert("valor datos: "+datos);
@@ -977,31 +977,35 @@ function graficar()
         if(value.status_grafica == "En tiempo")
         {
             enTiempo++;
-            enTiempo_data.push({nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
+            enTiempo_data.push({id_empleado:value.id_empleado,nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
         }
         
         if(value.status_grafica == "Alarma vencida")
         {
             alarmaVencida++;
-            alarmaVencida_data.push({nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
+            alarmaVencida_data.push({id_empleado:value.id_empleado,nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
         }
         
         if(value.status_grafica == "Tarea vencida")
         {
             tareaVencida++;
-            tareaVencida_data.push({nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
+            tareaVencida_data.push({id_empleado:value.id_empleado,nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
         }
         
         if(value.status_grafica == "Suspendido")
         {
             suspendido++;
-            suspendido_data.push({nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
+            suspendido_data.push({id_empleado:value.id_empleado,nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
         }
 
     });
     let dataGrafica=[];
-    if(enproceso!=0)
-        dataGrafica.push(["En Proceso",enproceso,">> Pendientes:"+enproceso.toString(),JSON.stringify(enproceso_data)]);
+    if(enTiempo!=0)
+        dataGrafica.push(["En Proceso-En Tiempo",enTiempo,">> Pendientes:"+enTiempo.toString(),JSON.stringify(enTiempo_data)]);
+    if(alarmaVencida!=0)
+        dataGrafica.push(["En Proceso-Alarma Vencida",alarmaVencida,">> Pendientes:"+alarmaVencida.toString(),JSON.stringify(alarmaVencida_data)]);
+    if(tareaVencida!=0)
+        dataGrafica.push(["En Proceso-Pendiente Vencido",tareaVencida,">> Pendientes:"+tareaVencida.toString(),JSON.stringify(tareaVencida_data)]);
     if(suspendido!=0)
         dataGrafica.push(["Suspendido",suspendido,">> Pendientes:"+suspendido.toString(),JSON.stringify(suspendido_data)]);
 
@@ -1026,7 +1030,6 @@ function graficar()
     $("#BTN_ANTERIOR_GRAFICAMODAL").html("Recargar");
 }
 
-
 function construirGrafica(dataGrafica,tituloGrafica)//funcion sin cambio
 {
     estructuraGrafica = chartEstructura(dataGrafica);
@@ -1036,7 +1039,149 @@ function construirGrafica(dataGrafica,tituloGrafica)//funcion sin cambio
     chartsCreados.push({grafica:instanceGrafica,data:estructuraGrafica});
 }
 
+function chartEstructura(dataGrafica)//funcion sin cambio
+{
+    // console.log(dataGrafica);
+    data = new google.visualization.DataTable();
+    data.addColumn('string', 'nombre');
+    data.addColumn('number', 'valor');
+    data.addColumn({type:"string",role:"tooltip"});
+    data.addColumn('string','datos');
+    data.addRows(dataGrafica);
 
+    return data;
+}
+
+function chartOptions(tituloGrafica)//funcion sin cambio
+{
+    var options = 
+    {
+        legend:{
+                position:"labeled",alignment:"start",
+                textStyle:
+                {
+                    color:"black", fontSize:14, bold:true
+                }
+            },
+        pieSliceText:"none",
+        title: tituloGrafica,
+        tooltip:{textStyle:{color:"#000000"},text:"none",isHtml:true},
+        // pieSliceText:"",
+        titleTextStyle:{color:"black"},
+        'is3D':true,
+        slices: { 
+            1: {offset: 0.02,color:"#80ffbf"},
+            3: {offset: 0.02,color:"#bfff80"},
+            0: {offset: 0.02,color:"#ffbf80"},
+            4: {offset: 0.02,color:"#ff80bf"},
+            2: {offset: 0.02,color:"#bf80ff"},
+        },
+        backgroundColor:"",
+        "width":800,
+        "height":400
+    };
+    
+    return options;
+}
+
+function drawChart(dataGrafica,data,options)//funcion sin cambio
+{
+    grafica = new google.visualization.PieChart(document.getElementById('graficaPie'));
+    grafica.draw(data, options);
+    console.log(dataGrafica[0][3]);
+    if(dataGrafica[0][3]!="[]")
+    google.visualization.events.addListener(grafica, 'select', selectChart);
+ 
+    return grafica;
+}
+
+function selectChart()
+{
+    var select = chartsCreados[activeChart].grafica.getSelection()[0];
+    console.log(select);
+    if(select != undefined)
+    {
+        dataNextGrafica = chartsCreados[activeChart].data.getValue(select.row,3);
+        concepto = chartsCreados[activeChart].data.getValue(select.row,0);
+            graficar2(dataNextGrafica,concepto);
+        $("#BTN_ANTERIOR_GRAFICAMODAL").html("Anterior");
+    }
+}
+
+function graficar2(tareas,concepto)
+{
+    console.log("tareas",tareas);
+    console.log("concepto",concepto);
+
+    tareas = JSON.parse(tareas);
+    let lista = [];
+    let nombre_responsable;
+    let bandera = 0;
+    let estatus = 0;
+    let dataGrafica = [];
+
+    $.each(tareas,(index,value)=>{
+        if(bandera==0)
+        {
+            nombre_responsable = value.nombre_responsable;
+            lista.push(value);
+        }
+        bandera=1;
+        if(value.nombre_responsable != nombre_responsable)
+        {
+            lista.push(value);
+        }
+        else
+        {
+            nombre_responsable = value.nombre_responsable;
+        }
+    });
+//    estatus = concepto == "Sin Asignar" ? 0 : concepto == "En Proceso" ? 1 : 2;
+    
+        if(concepto == "En tiempo")
+        {
+            estatus= 0;
+        }
+        if(concepto == "Alarma vencida")
+        {
+            estatus= 1;
+        }
+        if(concepto == "Tarea vencida")
+        {
+            estatus= 2;
+        }
+        if(concepto == "Suspendido")
+        {
+            estatus= 3;
+        }
+    
+    
+    tituloGrafica = "PENDIENTES POR RESPONSABLE";
+    
+    $.each(dataListado,(index,value)=>{
+        if(value.status_grafica == estatus)
+        {
+//            $.each(value.temas_responsables,(ind,val)=>
+//            {
+                $.each(lista,(key,valor)=>
+                {
+                    if(valor.id_empleado==value.id_empleado)
+                    {
+                        if(lista[key]["documentos"]!=undefined)
+                            lista[key]["documentos"]++;
+                        else
+                            lista[key]["documentos"]=1;
+                    }
+                });
+//            });
+        }
+    });
+    $.each(lista,(index,value)=>{
+        dataGrafica.push(["Tema: "+value.no_tema,value.documentos,">> Tema:\n"+value.nombre_tema+"\n>> Responsable:\n"+value.responsable_tema+"\n>> Documentos:"+value.documentos,"[]"]);
+    });
+    // console.log(dataGrafica);
+    construirGrafica(dataGrafica,tituloGrafica);
+}
 
 
 

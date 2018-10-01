@@ -497,8 +497,8 @@ function reconstruirExcel(value,index)
 // }
 var activeChart = -1;
 var chartsCreados = [];
-var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)}];//checar como poner funciones en un arreglo
-console.log(chartsFunciones);
+var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)},(dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)}];//checar como poner funciones en un arreglo
+// console.log(chartsFunciones);
 function graficar()
 {
     activeChart = 0;
@@ -669,19 +669,21 @@ function graficar2(temas,concepto)
                     lista[value.id_tema]["evidencias"]++;
                 else
                 {
-                    lista[value.id_tema]={"no_tema":value.no_tema,"nombre_tema":value.tema,"responsable_tema":value.tema_responsable,"evidencias":1};
+                    lista[value.id_tema]={"no_tema":value.no_tema,"nombre_tema":value.tema,"responsable_tema":value.tema_responsable,
+                    "evidencias":1,"registro":value.registro,"frecuencia":value.frecuencia};
                 }
             }
         }
     });
     $.each(lista,(index,value)=>{
-        dataGrafica.push(["Tema: "+value.no_tema,value.evidencias,">> Tema:\n"+value.nombre_tema+"\n>> Responsable:\n"+value.responsable_tema+"\n>> Evidencias:"+value.evidencias,"[]"]);
+        dataGrafica.push(["Tema: "+value.no_tema,value.evidencias,">> Tema:\n"+value.nombre_tema+"\n>> Responsable:\n"+value.responsable_tema+"\n>> Evidencias:"+value.evidencias,JSON.stringify(value)]);
     });
     console.log(dataGrafica);
     construirGrafica(dataGrafica,tituloGrafica);
 }
 
-// function grafica3(,concepto)
-// {
-
-// }
+function graficar3(datos,concepto)
+{
+    activeChart = 2;
+    console.log(datos);
+}
