@@ -50,7 +50,15 @@ class TareasModel{
                 if($value['status_tarea']==3)
                 {
                     $rec[$key]['status_grafica'] = "Terminado";
-                }        
+                }
+                
+             
+                $rec[$key]["avance_programa"]=self::avanceProgramaTareas(array("id_tarea"=>$value["id_tarea"]));
+                
+                
+                
+                
+                
             }
             
             return $rec;            
@@ -320,6 +328,28 @@ class TareasModel{
             $rec= $dao->verificarSiYaExisteLaTarea($cualverificar, $cadena);
             
             return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    
+    
+     public static function avanceProgramaTareas($VALUES)
+    {
+        try
+        {
+            $query="SELECT SUM(tbgantt_tareas.progress)/COUNT(tbgantt_tareas.progress) AS total_avance
+                    FROM gantt_tareas tbgantt_tareas
+                    WHERE tbgantt_tareas.id_tarea= ".$VALUES['id_tarea']."   and tbgantt_tareas.parent=0";
+//            AND tbgantt_tareas.parent=0
+            
+            $db=  AccesoDB::getInstancia();
+            $lista = $db->executeQuery($query);
+            
+            return $lista[0]["total_avance"];
         } catch (Exception $ex)
         {
             throw $ex;
