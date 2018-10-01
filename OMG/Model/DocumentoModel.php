@@ -49,6 +49,12 @@ class DocumentoModel{
             $dao= new DocumentoDAO();
             $rec= $dao->mostrarDocumento($ID_DOCUMENTO, $CONTRATO);
             
+            foreach ($rec as $key => $value) 
+            {
+                $rec[$key]['reg']= $dao->verificarExistenciadeDocumentoEnRegistros($value['id_documento']);
+                $rec[$key]['validado']= $dao->verificarSiDocumentoEstaValidado($value['id_documento']);                
+            }
+            
             return $rec;
         } catch (Exception $ex) 
         {

@@ -18,18 +18,14 @@ $Usuario=  Session::getSesion("user");
 		<!-- bootstrap & fontawesome -->
                 <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
                 <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-                <!--Para abrir alertas de aviso, success,warning, error-->
-                <!--<link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>-->
-               
 		<!-- ace styles Para Encabezado-->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
                 <!--JQUERY-->
                 <script src="../../js/jquery.js" type="text/javascript"></script>
                 <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-                
-                 <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
+                <!--Para abrir alertas de aviso, success,warning, error-->
+                <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
                 <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
-                
                 <!--JGROWL-->
                 <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
                 <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
@@ -153,7 +149,8 @@ require_once 'EncabezadoUsuarioView.php';
     
 var DataGrid = [];
 var dataListado = [];
-var EmpleadosCombobox=[];
+//var EmpleadosCombobox=[];
+var thisEmpleados=[]; 
 var filtros=[];
 var db={};
 var gridInstance;
@@ -229,11 +226,6 @@ estructuraGrid =  [
     { name: "clave_documento",title:"Clave del Documento",type: "textarea", validate: "required" },
     { name: "documento",title:"Documento",type: "textarea", validate: "required" },
     { name: "id_empleado", title: "Responsable del Documento", type: "comboEmpleados", width:150},
-//    { name: "id_empleado",title:"Responsable del Documento", type: "select",
-//        items:EmpleadosCombobox,
-//        valueField:"id_empleado",
-//        textField:"nombre_completo"
-//    },
     { name:"delete", title:"Opción", type:"customControl",sorting:"", width:100}
 ],
 

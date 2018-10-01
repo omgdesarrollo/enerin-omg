@@ -59,22 +59,10 @@ $(function()
 //        loadChartView(true);
 //    });
 
-    $("#BTN_ANTERIOR_GRAFICAMODAL").click(function()
-    {
-        activeChart = -1;
-        graficar();
-    });
-
     var $btnDLtoExcel = $('#toExcel'); 
     $btnDLtoExcel.on('click', function () 
     {
-        __datosExcel=[];
-        $.each(dataListado,function(index,value)
-        {
-            console.log("Entro al datosExcel");
-            __datosExcel.push(reconstruirExcel(value,index+1));
-        });
-        DataGridExcel= __datosExcel;        
+//        console.log("Entro al excelexportHibrido");
         $("#listjson").excelexportHibrido({
             containerid: "listjson"
             , datatype: 'json'
@@ -83,80 +71,267 @@ $(function()
         });
     });      
 
-}); //CIERRA $(FUNCTION())
+}); //CIERRA $(function())
 
-
+var thisEmpleados=[]; 
 
 function inicializarFiltros()
-{  
-    return new Promise((resolve,reject)=>
-    {
-        filtros =[
-                {id:"noneUno",type:"none"},
-                {id:"referencia",type:"text"},
-                {id:"tarea",type:"text"},
-                {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
-                {id:"fecha_creacion",type:"date"},
-                {id:"fecha_alarma",type:"date"},
-                {id:"fecha_cumplimiento",type:"date"},
-                {id:"status_tarea",type: "combobox",descripcion:"descripcion",
-                    data:[{"status_tarea":"1","descripcion":"En Proceso"},{"status_tarea":"2","descripcion":"Suspendido"},{"status_tarea":"3","descripcion":"Terminado"}]
-                },
-                {id:"observaciones",type:"text"},
-                {id:"archivo_adjunto",type:"text"},
-                {id:"registrar_programa",type:"text"},
-                {id:"avance_programa",type:"text"},
-                {id:"noneDos",type:"none"},
-                {name:"opcion",id:"opcion",type:"opcion"}
-        ];
-        resolve();
-    });    
+{    
+    filtros =[
+            {id:"noneUno",type:"none"},
+            {id:"referencia",type:"text"},
+            {id:"tarea",type:"text"},
+            {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
+            {id:"fecha_creacion",type:"date"},
+            {id:"fecha_alarma",type:"date"},
+            {id:"fecha_cumplimiento",type:"date"},
+//            {id:"status_tarea",type:"text"},
+            {id:"status_tarea",type: "combobox",descripcion:"descripcion",
+                data:[{"status_tarea":"1","descripcion":"En Proceso"},{"status_tarea":"2","descripcion":"Suspendido"},{"status_tarea":"3","descripcion":"Terminado"}]
+            },
+            
+            {id:"observaciones",type:"text"},
+            {id:"archivo_adjunto",type:"text"},
+            {id:"registrar_programa",type:"text"},
+            {id:"avance_programa",type:"text"},
+            {id:"noneDos",type:"none"},
+            {name:"opcion",id:"opcion",type:"opcion"}
+         ];    
 }
 
+
+function construirGrid()
+{
+    jsGrid.fields.customControl = MyCControlField;
+    db={
+            loadData: function()
+            {
+                return DataGrid;
+            },
+            insertItem: function(item)
+            {
+                return item;
+            },
+        };
+    
+    $("#jsGrid").jsGrid({
+        onInit: function(args)
+        {
+            gridInstance=args.grid;
+            jsGrid.Grid.prototype.autoload=true;
+        },
+        onDataLoading: function(args)
+        {
+//            loadBlockUi();
+        },
+        onDataLoaded:function(args)
+        {
+            $('.jsgrid-filter-row').removeAttr("style",'display:none');
+            
+        },
+        onRefreshing: function(args) {
+        },
+        
+        width: "100%",
+        height: "300px",
+        autoload:true,
+        heading: true,
+        sorting: true,
+        editing: true,
+        paging: true,
+        controller:db,
+        pageLoading:false,
+        pageSize: 5,
+        pageButtonCount: 5,
+        updateOnResize: true,
+        confirmDeleting: true,
+        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+//        filtering:false,
+//        data: __datos,
+        fields: 
+        [
+            { name: "id_principal",visible:false},
+            { name:"no",title:"No",width:40},
+            { name: "referencia",title:"Referencia", type: "textarea",width:200},
+            { name: "tarea",title:"Pendiente", type: "textarea", validate: "required",width:200 },
+//            { name: "id_empleado",title:"Responsable del Plan", type: "text", validate: "required" },
+            { name: "id_empleado",title:"Responsable", type: "select", width:200,
+                items:EmpleadosCombobox,
+                valueField:"id_empleado",
+                textField:"nombre_completo"
+            },
+            { name: "fecha_creacion",title:"Fecha de Creacion", type: "text", validate: "required", width:150,editing: false},
+            { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required", width:150,},
+            { name: "fecha_cumplimiento",title:"Fecha de Cumplimiento", type: "text", validate: "required", width:190,editing: false},
+//            { name: "status_tarea",title:"status_tarea", type: "text", validate: "required"},
+            { name: "status_tarea", title:"Estatus", type: "select", width:150,valueField:"status_tarea",textField:"descripcion",
+                items:[{"status_tarea":"1","descripcion":"En Proceso"},{"status_tarea":"2","descripcion":"Suspendido"},{"status_tarea":"3","descripcion":"Terminado"}]
+            },
+            { name: "observaciones",title:"Observaciones", type: "textarea", width:150,},
+            { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:150,editing:false },
+            { name: "registrar_programa",title:"Programa", type: "text", validate: "required",width:160, editing:false },
+            { name: "avance_programa",title:"Avance del Programa", type: "text", validate: "required",width:150, editing:false },      
+            { name:"delete", title:"Opción", type:"customControl",sorting:""}
+        ],
+        onItemUpdated: function(args)
+        {
+            console.log(args);
+            columnas={};
+            id_afectado=args["item"]["id_principal"][0];
+            id_empleadoActual=args["item"]["id_empleado"];
+            id_empleadoAnterior=args["previousItem"]["id_empleado"];
+            tarea=args["item"]["tarea"];
+            
+//            console.log("el nuevo: "+id_empleadoActual);
+//            console.log("el que estaba: "+id_empleadoAnterior);
+//            console.log("La: "+tarea);
+            
+            $.each(args["item"],function(index,value)
+            {
+                    if(args["previousItem"][index] != value && value!="")
+                    {
+                            if(index!="id_principal" && !value.includes("<button") && index!="delete")
+                            {
+                                    columnas[index]=value;
+                            }
+                    }
+            });
+            if(Object.keys(columnas).length!=0)
+            {
+                    $.ajax({
+                            url: '../Controller/GeneralController.php?Op=Actualizar',
+                            type:'GET',
+                            data:'TABLA=tareas'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
+//                            data:'COLUMNAS='+JSON.stringify(columnas)+"&ID="+JSON.stringify(id_afectado),
+                            success:function(datos)
+                            {
+//                                console.log(datos);
+                                if(id_empleadoActual==id_empleadoAnterior)
+                                {
+                                    enviarNotificacionWhenUpdate(id_empleadoActual,tarea);
+                                } else{
+                                    if(id_empleadoActual!=id_empleadoAnterior)
+                                    {
+                                        enviarNotificacionWhenRemoveTarea(id_empleadoAnterior,tarea);
+                                        enviarNotificacionWhenRemoveTareaAlNuevoUsuario(id_empleadoActual,tarea);
+                                    }
+                                }
+                                mostrarTareasEnAlarma();
+                                mostrarTareasVencidas();
+                                refresh();
+                                swal("","Actualizacion Exitosa!","success");
+                                setTimeout(function(){swal.close();},1000);
+                            },
+                            error:function()
+                            {
+                                swal("","Error en el servidor","error");
+                                setTimeout(function(){swal.close();},1500);
+                            }
+                    });
+            }
+        },
+        
+        onItemDeleting: function(args) 
+        {
+
+        }
+        
+    });
+    
+}
+
+
+var MyCControlField = function(config)
+{
+    jsGrid.Field.call(this, config);
+};
+
+
+MyCControlField.prototype = new jsGrid.Field
+({
+        css: "date-field",
+        align: "center",
+        sorter: function(date1, date2)
+        {
+            console.log("haber cuando entra aqui");
+            console.log(date1);
+            console.log(date2);
+            // return 1;
+        },
+        itemTemplate: function(value,todo)
+        {
+//            console.log(value,todo);            
+            if(value[0]['existe_programa']!="0" || value[0]['existe_archivo']!=0)
+                return "";
+            else
+                return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button ',title:"Eliminar", type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
+        },
+        insertTemplate: function(value)
+        {
+        },
+        editTemplate: function(value)
+        {
+            val = "<input class='jsgrid-button jsgrid-update-button' type='button' title='Actualizar' onClick='aceptarEdicion()'>";
+            val += "<input class='jsgrid-button jsgrid-cancel-edit-button' type='button' title='Cancelar Edición' onClick='cancelarEdicion()'>";
+            return val;
+        },
+        insertValue: function()
+        {
+        },
+        editValue: function()
+        {
+        }
+});
+
+
+function cancelarEdicion()
+{
+    $("#jsGrid").jsGrid("cancelEdit");
+}
+
+function aceptarEdicion()
+{
+    gridInstance.updateItem();
+}
 
 
 function listarDatos()
 {
-    return new Promise((resolve,reject)=>
-    {
-        
+    var __datos=[],__datosExcel=[];
+    datosParamAjaxValues={};
+    datosParamAjaxValues["url"]="../Controller/TareasController.php?Op=Listar&URL=Tareas/";
+    datosParamAjaxValues["type"]="GET";
+    datosParamAjaxValues["async"]=false;
     
-        var __datos=[];
-        $.ajax(
+    var variablefunciondatos=function obtenerDatosServer(data)
+    {
+        dataListado = data;
+        $.each(data,function(index,value)
         {
-            url:"../Controller/TareasController.php?Op=Listar&URL=Tareas/",
-            type:"GET",
-            beforeSend:function()
-            {
-                growlWait("Solicitud","Solicitando Datos...");
-            },
-            success:function(data)
-            {
-                if(typeof(data)=="object")
-                {
-                    growlSuccess("Solicitud","Registros obtenidos");
-                    dataListado = data;
-                    $.each(data,function(index,value)
-                    {
-                        __datos.push(reconstruir(value,index+1));
-                    });
-                    DataGrid = __datos;
-                    gridInstance.loadData();
-                    resolve();
-                    
-                }else{
-                    growlSuccess("Solicitud","No Existen Registros");
-                    reject();
-                }
-            },
-            error:function()
-            {
-                growlError("Error","Error en el servidor");
-                reject();
-            }
-
+            __datos.push(reconstruir(value,index+1));
         });
-    });    
+        
+        $.each(data,function(index,value)
+        {
+            __datosExcel.push(reconstruirExcel(value,index+1));
+        });
+        DataGridExcel= __datosExcel;
+    }
+    var listfunciones=[variablefunciondatos];
+    ajaxHibrido(datosParamAjaxValues,listfunciones);
+    DataGrid = __datos;
+}
+
+//PARA FILTROS
+function reconstruirTable(_datos)
+{
+    __datos=[];
+    $.each(_datos,function(index,value)
+    {
+        __datos.push(reconstruir(value,index++));
+        
+    });
+    construirGrid(__datos);
 }
 
 
@@ -181,16 +356,7 @@ function reconstruir(value,index)
     else
         tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info botones_vista_tabla' onClick='cargarprogram("+value.id_tarea+")'>Registrar</button>";
     tempData["avance_programa"]=(value.avance_programa*100).toFixed(2)+"%";
-    
-    if(value.archivosUpload[0].length==0 && value.existe_programa==0)
-    {
-        tempData["id_principal"].push({eliminar : 1});
-    }else{
-        tempData["id_principal"].push({eliminar : 0});
-    }
-    tempData["id_principal"].push({editar : 1});
-    tempData["delete"]= tempData["id_principal"] ;
-    
+    tempData["delete"]= [{"existe_programa":value.existe_programa,"existe_archivo":value.archivosUpload[0].length}];
     return tempData;
 }
 
@@ -253,6 +419,22 @@ function archivoyComboboxparaModal()
   
 }
 
+
+function listarEmpleados()
+{
+    $.ajax({
+        url:"../Controller/EmpleadosController.php?Op=nombresCompletos",
+        type:"GET",
+        async:false,
+        success:function(empleadosComb)
+        {
+            EmpleadosCombobox=empleadosComb;
+        }
+    });
+    return EmpleadosCombobox;
+}
+
+
 function insertarTareas(tareaDatos)
 {
     console.log(tareaDatos);
@@ -260,7 +442,7 @@ function insertarTareas(tareaDatos)
         url:"../Controller/TareasController.php?Op=Guardar",
         type:"POST",
         data:"tareaDatos="+JSON.stringify(tareaDatos),
-//        async:false,
+        async:false,
         success:function(datos)
         {
 //            alert("valor datos: "+datos);
@@ -280,11 +462,8 @@ function insertarTareas(tareaDatos)
                 
                 $("#jsGrid").jsGrid("insertItem",tempData).done(function()
                 {
-                    
+                    $("#crea_tarea .close ").click();
                 });
-                dataListado.push(datos[0]),
-                DataGrid.push(tempData),
-                $("#crea_tarea .close ").click();
                 mostrarTareasEnAlarma();
                 mostrarTareasVencidas();
                 
@@ -304,172 +483,6 @@ function insertarTareas(tareaDatos)
             }
     });
 }
-
-
-function saveUpdateToDatabase(args)//listo
-{
-        columnas=new Object();
-        id_afectado = args['item']['id_principal'][0];
-        id_empleadoActual=args["item"]["id_empleado"];
-        id_empleadoAnterior=args["previousItem"]["id_empleado"];
-        tarea=args["item"]["tarea"];
-        verificar = 0;
-        $.each(args['item'],(index,value)=>
-        {
-                if(args['previousItem'][index]!=value && value!="")
-                {
-                        if(index!='id_principal' && !value.includes("<button") && index!="delete")
-                        {
-                                columnas[index]=value;
-                        }
-                }
-        });
-        
-        if( Object.keys(columnas).length != 0 && verificar==0)
-        {
-            
-            $.ajax({
-                url:"../Controller/GeneralController.php?Op=Actualizar",
-                type:"POST",
-                data:'TABLA=tareas'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
-                beforeSend:()=>
-                {
-                        growlWait("Actualización","Espere...");
-                },
-                success:(data)=>
-                {
-                        if(data==1)
-                        {
-                            growlSuccess("Actulización","Se actualizaron los campos");
-                            actualizarTarea(id_afectado.id_tarea);
-                            
-                            if(id_empleadoActual==id_empleadoAnterior)
-                            {
-                                enviarNotificacionWhenUpdate(id_empleadoActual,tarea);
-                            } else{
-                                if(id_empleadoActual!=id_empleadoAnterior)
-                                {
-                                    enviarNotificacionWhenRemoveTarea(id_empleadoAnterior,tarea);
-                                    enviarNotificacionWhenRemoveTareaAlNuevoUsuario(id_empleadoActual,tarea);
-                                }
-                            }                                
-                        }
-                        else
-                        {
-                                growlError("Actualización","No se pudo actualizar");
-                                componerDataGrid();
-                                gridInstance.loadData();
-                        }
-                },
-                error:function()
-                {
-                        componerDataGrid();
-                        gridInstance.loadData();
-                        growlError("Error","Error del servidor");
-                }
-            });
-        }
-        else
-        {
-                componerDataGrid();
-                gridInstance.loadData();
-        }
-}
-
-function actualizarTarea(id_tarea)
-{
-        $.ajax({
-                url:'../Controller/TareasController.php?Op=ListarTarea&URL=Tareas/',
-                type: 'GET',
-                data:'ID_TAREA='+id_tarea,
-                success:function(datos)
-                {
-                        if(typeof(datos)=="object")
-                        {
-                            $.each(datos,function(index,value){
-                                    componerDataListado(value);
-                            });
-                            componerDataGrid();
-                            gridInstance.loadData();
-                        }
-                        else
-                        {
-                                growlError("Actualizar Vista","No se pudo actualizar la vista, refresque");
-                                componerDataGrid();
-                                gridInstance.loadData();
-                        }
-                },
-                error:function()
-                {
-                        componerDataGrid();
-                        gridInstance.loadData();
-                        growlError("Error","Error del servidor");
-                }
-        });
-}
-
-function componerDataListado(value)// id de la vista documento, listo
-{
-    id_vista = value.id_tarea;
-    id_string = "id_tarea";
-    $.each(dataListado,function(indexList,valueList)
-    {
-        $.each(valueList,function(ind,val)
-        {
-            if(ind == id_string)
-                    ( val==id_vista) ? dataListado[indexList]=value : console.log();
-        });
-    });
-}
-
-function componerDataGrid()//listo
-{
-    __datos = [];
-    $.each(dataListado,function(index,value){
-        __datos.push(reconstruir(value,index+1));
-    });
-    DataGrid = __datos;
-}
-
-function listarEmpleados()
-{
-    $.ajax({
-        url:"../Controller/EmpleadosController.php?Op=nombresCompletos",
-        type:"GET",
-        async:false,
-        success:function(empleadosComb)
-        {
-            EmpleadosCombobox=empleadosComb;
-        }
-    });
-    return EmpleadosCombobox;
-}
-
-function listarThisEmpleados()
-{
-    return new Promise((resolve,reject)=>
-    {
-        $.ajax(
-            {
-                url:"../Controller/TareasController.php?Op=responsableTarea",
-                type:"GET",
-                success:function(empleados)
-                {
-                    thisEmpleados = empleados;
-                    resolve();
-                    
-                },
-                error:function(er)
-                {
-                    reject(er);
-                }
-
-            });
-    });
-}
-
-
-
 
 function verificarExiste(dataString,cualverificar)
 {
@@ -580,26 +593,17 @@ function agregarArchivosUrl()
 }
 
 
-function borrarArchivo2(url)
+function borrarArchivo(url)
 {
 
         swal({
-//                title: "ELIMINAR",
-//                text: "Confirme para eliminar el Archivo",
-//                type: "warning",
-//                showCancelButton: true,
-//                closeOnConfirm: false,
-//                showLoaderOnConfirm: true
-            title: "Eliminar",
-            text: "¿Eliminar Pendiente?",
-            type: "Warning",
-            showCancelButton: true,
-            // closeOnConfirm: false,
-            showLoaderOnConfirm: true,
-            confirmButtonText: "Eliminar",
-            cancelButtonText: "Cancelar",
-                }, 
-                function()
+                title: "ELIMINAR",
+                text: "Confirme para eliminar el Archivo",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true
+                }, function()
                 {
                         var ID_TAREA = $('#tempInputIdDocumento').val();
                         $.ajax({
@@ -628,134 +632,69 @@ function borrarArchivo2(url)
 }
 
 
-function borrarArchivo(url)
-{
-        swal({
-                title: "",
-                text: "¿Desea eliminar el Archivo?",
-                type: "warning",
-                showCancelButton: true,
-                // closeOnConfirm: false,
-                showLoaderOnConfirm: true,
-//                confirmButtonText:'SI'
-                confirmButtonText: "Eliminar",
-                cancelButtonText: "Cancelar"
-                }).then((res)=>
-                {
-                        if(res)
-                        {
-                                var ID_TAREA = $('#tempInputIdDocumento').val();
-                                $.ajax({
-                                        url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
-                                        type: 'POST',
-                                        data: 'URL='+url+'&SIN_CONTRATO=',
-                                        beforeSend:()=>
-                                        {
-                                                growlWait("Eliminar Archivo","Eliminando Archivo...");
-                                        },
-                                        success: function(eliminado)
-                                        {
-                                                // eliminar = eliminado;
-                                                if(eliminado)
-                                                {
-                                                        growlSuccess("Eliminar Archivo","Archivo Eliminado");
-                                                        mostrar_urls(ID_TAREA);
-                                                        actualizarTarea(ID_TAREA);
-                                                        // swal("","Archivo eliminado");
-                                                        setTimeout(function(){swal.close();},1000);
-                                                }
-                                                else
-                                                        growlError("Error Eliminar","Ocurrio un error al eliminar el archivo");
-                                        },
-                                        error:function()
-                                        {
-                                                growlError("Error","Error en el servidor");
-                                        }
-                                });
-                        }
-                });
-}
-
-
 function preguntarEliminar(data)
 {
-//     console.log("jajaja",data);
+    // valor = true;
     swal({
         title: "",
-        text: "¿Desea Eliminar el Pendiente?",
-        type: "warning",
+        text: "¿Eliminar Registro?",
+        type: "info",
         showCancelButton: true,
-        // closeOnConfirm: false,
+        closeOnConfirm: false,
         showLoaderOnConfirm: true,
         confirmButtonText: "Eliminar",
-        cancelButtonText: "Cancelar"
-        }).then((confirmacion)=>{
-                if(confirmacion)
-                {
-                        eliminarTarea(data);
-                }
-        });
-}
-
- function eliminarTarea(id_afectado)
- {
-        $.each(dataListado,function(index,value)
+        cancelButtonText: "Cancelar",
+        },
+        function(confirmacion)
         {
-            if(value.id_tarea==id_afectado.id_tarea)
+            if(confirmacion)
             {
-                id_empleadoActual=value.id_empleado;
-                tarea=value.tarea;
+                eliminarRegistro(data);
+            }
+            else
+            {
             }
         });
-//        console.log(id_empleadoActual);
-//        console.log(tarea);
-        $.ajax({
-                url:"../Controller/TareasController.php?Op=Eliminar",
-                type:"POST",
-                data:"ID_TAREA="+id_afectado.id_tarea,
-                beforeSend:()=>
-                {
-                        growlWait("Eliminación Tarea","Eliminando...");
-                },
-                success:(res)=>
-                {
-                        // console.log(data);
-                        if(res >= 0)
-                        {
-                                dataListadoTemp=[];
-                                dataItem = [];
-                                numeroEliminar=0;
-                                itemEliminar={};
-                                id = id_afectado.id_tarea;
-                                $.each(dataListado,function(index,value)
-                                {
-                                        value.id_tarea != id ? dataListadoTemp.push(value) : (dataItem.push(value), numeroEliminar=index+1);
-                                });
-                                // console.log(dataListadoTemp);
-                                // itemEliminar = reconstruir(dataItem[0],numeroEliminar);este esra para el eliminar directo en grid
-                                DataGrid = [];
-                                dataListado = dataListadoTemp;
-                                if(dataListado.length == 0 )
-                                        ultimoNumeroGrid=0;
-                                $.each(dataListado,function(index,value)
-                                {
-                                        DataGrid.push( reconstruir(value,index+1) );
-                                });
+        // return eliminarRegistro(data.id_principal[0].id_contrato);
+}
 
-                                gridInstance.loadData();
-                                growlSuccess("Eliminación","Registro Eliminado");
-                                enviarNotificacionWhenDeleteTarea(id_empleadoActual,tarea);
-                        }
-                        else
-                                growlError("Error Eliminación","Error al Eliminar Registro");
-                },
-                error:()=>
+function eliminarRegistro(item)
+{
+//    alert("Entro a la funcion eliminar: "+item);
+    id_afectado= item['id_principal'][0];
+    id_empleadoActual=item["id_empleado"];
+    tarea=item["tarea"];
+//    console.log("ID Eliminado: "+id_empleadoActual);
+//    console.log("TArea Eliminada: "+tarea);  
+    
+    $.ajax({
+        url:"../Controller/TareasController.php?Op=Eliminar",
+        type:"POST",
+        data:"ID_TAREA="+JSON.stringify(id_afectado),
+        success:function(data)
+        {
+//            alert("Entro al success "+data);
+            if(data==false)
+            {
+                swalError("La Tarea tiene cargado un Programa");
+                
+            }else{
+                if(data==true)
                 {
-                        growlError("Error Eliminación","Error del Servidor");
+                    refresh();
+                    swalSuccess("Se elimino correctamente La Tarea");
+                    enviarNotificacionWhenDeleteTarea(id_empleadoActual,tarea);
                 }
-        });
- }
-
+            }
+        },
+        error:function()        
+        {
+//            swal("","Error en el servidor","error");
+//            setTimeout(function(){swal.close();},1500);
+              swalSuccess("Error en el servidor");
+        }
+    });
+}
 
 
 function refresh()
@@ -765,7 +704,12 @@ function refresh()
    inicializarFiltros();
    construirFiltros();
    gridInstance.loadData();
-//   $(".jsgrid-grid-body").css({"height":"171px"});
+   $(".jsgrid-grid-body").css({"height":"171px"});
+}
+
+function loadSpinner()
+{
+    myFunction();
 }
 
 
@@ -871,9 +815,27 @@ function enviarNotificacionWhenDeleteTarea(id_empleadoActual,tarea)
      });
  }
 
+function loadBlockUi()
+{
+    $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF"> Espere Por Favor</span>', css:
+    { 
+        border: 'none', 
+        padding: '15px', 
+        backgroundColor: '#000', 
+        '-webkit-border-radius': '10px', 
+        '-moz-border-radius': '10px', 
+        opacity: .5, 
+        color: '#fff' 
+    },overlayCSS: { backgroundColor: '#000000',opacity:0.1,cursor:'wait'} }); 
+    setTimeout($.unblockUI, 2000);
+}
 
 //area de gantt
-function cargarprogram(value){    
+function cargarprogram(value){
+//    alert("d  "+value);
+//    window.location.href="Gantt_TareasView.php?id_tarea="+value;
+    
+    
     window.open("Gantt_TareasView.php?id_tarea="+value,'_blank');
 }//finaliza area de gantt
 
@@ -882,13 +844,18 @@ function cargarprogram(value){
 var a=0, b=0, c=0, d=0;
 function obtenerDatos(bclose)
 {
-    a=0, b=0, c=0, d=0;   
+    a=0, b=0, c=0, d=0;
+//    console.log("Entro al loadChartView");
+   
    return new Promise(function(resolve,reject){ 
     $.ajax({
         url:"../Controller/TareasController.php?Op=datosGrafica",
         type:"GET",
         success:function(data)
-        {                
+        {
+//              $("#graficaTareas").html("");
+//            console.log(data);
+                
             $.each(data,function(index,value)
             {
                 if(value.status=="Tarea vencida")
@@ -920,47 +887,48 @@ function obtenerDatos(bclose)
 //    
   
 
+   
+   
     
 } //Finaliza Grafica Informes
 
+function loadChartView(){
+    
+    
+    obtenerDatos().then(function (){
+        dibujarGrafica();
+    })
+}
 
-//function loadChartView()
-//{    
-//    obtenerDatos().then(function ()
-//    {
-//        dibujarGrafica();
-//    })
-//}
 
+function dibujarGrafica(){
+    
+        google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
+    
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
 
-//function dibujarGrafica(){
-//    
-//        google.charts.load("current", {packages:["corechart"]});
-//    google.charts.setOnLoadCallback(drawChart);
-//    
-//    function drawChart() {
-//        var data = google.visualization.arrayToDataTable([
-//
-//          ['Status', 'Cantidad'],
-//          ['En proceso(En Tiempo)', c],
-//          ['En proceso(Alarma Vencida)',b],
-//          ['En proceso(Tiempo Vencido)', a],
-//          ['Suspendido', d]
-////          ['Terminado', e]
-//        ]);
-//
-//        var options = {
-//          title: 'Tareas',
-//          is3D: true,
-//          "width":660,
-//          "height":340
-//        };
-//
-//        var chart = new google.visualization.PieChart(document.getElementById('graficaTareas'));
-//        chart.draw(data, options);
-//    } 
-//    
-//}
+          ['Status', 'Cantidad'],
+          ['En proceso(En Tiempo)', c],
+          ['En proceso(Alarma Vencida)',b],
+          ['En proceso(Tiempo Vencido)', a],
+          ['Suspendido', d]
+//          ['Terminado', e]
+        ]);
+
+        var options = {
+          title: 'Tareas',
+          is3D: true,
+          "width":660,
+          "height":340
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('graficaTareas'));
+        chart.draw(data, options);
+    } 
+    
+}
 
 
 

@@ -78,164 +78,6 @@ function inicializarFiltros()
 }
 
 
-
-//function construirGrid()
-//{
-//    jsGrid.fields.customControl = MyCControlField;
-//    db={
-//            loadData: function()
-//            {
-//                return DataGrid;
-//            },
-//            insertItem: function(item)
-//            {
-//                return item;
-//            },
-//        };
-//    
-//    $("#jsGrid").jsGrid({
-//        onInit: function(args)
-//        {
-//            gridInstance=args.grid;
-//            jsGrid.Grid.prototype.autoload=true;
-//        },
-//        onDataLoading: function(args)
-//        {
-//            loadBlockUi();
-//        },
-//        onDataLoaded:function(args)
-//        {
-//            $('.jsgrid-filter-row').removeAttr("style",'display:none');
-//        },
-//        onRefreshing: function(args) {
-//        },
-//        
-//        width: "100%",
-//        height: "300px",
-//        autoload:true,
-//        heading: true,
-//        sorting: true,
-//        editing: true,
-//        paging: true,
-//        controller:db,
-//        pageLoading:false,
-//        pageSize: 5,
-//        pageButtonCount: 5,
-//        updateOnResize: true,
-//        confirmDeleting: true,
-//        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
-////        filtering:false,
-////        data: __datos,
-//        fields: 
-//        [
-//            { name: "id_principal",visible:false},
-//            { name:"no",title:"No",width:20},
-//            { name: "clave_documento",title:"Clave del Documento",type: "textarea", validate: "required" },
-//            { name: "documento",title:"Documento",type: "textarea", validate: "required" },
-//            { name: "id_empleado",title:"Responsable del Documento", type: "select",
-//                items:EmpleadosCombobox,
-//                valueField:"id_empleado",
-//                textField:"nombre_completo"
-//            },
-//            { name:"delete", title:"Opción", type:"customControl",sorting:""}
-//        ],
-//        onItemUpdated: function(args)
-//        {
-//            console.log(args);
-//            columnas={};
-//            id_afectado=args["item"]["id_principal"][0];
-//            $.each(args["item"],function(index,value)
-//            {
-//                if(args["previousItem"][index] != value && value!="")
-//                {
-//                        if(index!="id_principal" && !value.includes("<button") && index!="delete")
-//                        {
-//                                columnas[index]=value;
-//                        }
-//                }
-//            });
-//            if(Object.keys(columnas).length!=0)
-//            {
-//                    $.ajax({
-//                            url: '../Controller/GeneralController.php?Op=Actualizar',
-//                            type:'GET',
-//                            data:'TABLA=documentos'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
-//                            success:function(exito)
-//                            {
-//                                refresh();
-//                                swal("","Actualizacion Exitosa!","success");
-//                                setTimeout(function(){swal.close();},1000);
-//                            },
-//                            error:function()
-//                            {
-//                                swal("","Error en el servidor","error");
-//                                setTimeout(function(){swal.close();},1500);
-//                            }
-//                    });
-//            }
-//        },
-//        
-//        onItemDeleting: function(args) 
-//        {
-//
-//        }
-//        
-//    });
-//}
-//
-//var MyCControlField = function(config)
-//{
-//    jsGrid.Field.call(this, config);
-//};
-//
-//
-//MyCControlField.prototype = new jsGrid.Field
-//({
-//        css: "date-field",
-//        align: "center",
-//        sorter: function(date1, date2)
-//        {
-//            console.log("haber cuando entra aqui");
-//            console.log(date1);
-//            console.log(date2);
-//            // return 1;
-//        },
-//        itemTemplate: function(value,todo)
-//        {
-////            alert(value,todo);
-//            if(value[0]['reg']!="0" || value[0]['validado']!=0)
-//                return "";
-//            else
-//                return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button ',title:"Eliminar", type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
-//        },
-//        insertTemplate: function(value)
-//        {
-//        },
-//        editTemplate: function(value)
-//        {
-//            val = "<input class='jsgrid-button jsgrid-update-button' type='button' title='Actualizar' onClick='aceptarEdicion()'>";
-//            val += "<input class='jsgrid-button jsgrid-cancel-edit-button' type='button' title='Cancelar Edición' onClick='cancelarEdicion()'>";
-//            return val;
-//        },
-//        insertValue: function()
-//        {
-//        },
-//        editValue: function()
-//        {
-//        }
-//});
-//
-//
-//function cancelarEdicion()
-//{
-//    $("#jsGrid").jsGrid("cancelEdit");
-//}
-//
-//function aceptarEdicion()
-//{
-//    gridInstance.updateItem();
-//}
-
 function listarDatos()
 {
     return new Promise((resolve,reject)=>
@@ -411,7 +253,7 @@ function insertarDocumento(documentoDatos)
 function saveUpdateToDatabase(args)//listo
 {
         columnas=new Object();
-        entro=0;
+//        entro=0;
         id_afectado = args['item']['id_principal'][0];
         verificar = 0;
         $.each(args['item'],(index,value)=>
@@ -465,7 +307,7 @@ function saveUpdateToDatabase(args)//listo
         }
 }
 
- function actualizarDocumento(id_documento)
+function actualizarDocumento(id_documento)
 {
         $.ajax({
                 url:'../Controller/DocumentosController.php?Op=ListarDocumento',
