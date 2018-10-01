@@ -961,8 +961,10 @@ function cargarprogram(value){
 
 var activeChart = -1;
 var chartsCreados = [];
+var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)},(dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)}];//checar como poner funciones en un arreglo
 function graficar()
 {
+    activeChart = 0;
     let enTiempo = 0;
     let enTiempo_data = [];
     let alarmaVencida = 0;
@@ -977,25 +979,29 @@ function graficar()
         if(value.status_grafica == "En tiempo")
         {
             enTiempo++;
-            enTiempo_data.push({id_empleado:value.id_empleado,nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
+////            enTiempo_data.push({id_empleado:value.id_empleado,nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
+            enTiempo_data.push(value); 
         }
         
         if(value.status_grafica == "Alarma vencida")
         {
             alarmaVencida++;
-            alarmaVencida_data.push({id_empleado:value.id_empleado,nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
+//            alarmaVencida_data.push({id_empleado:value.id_empleado,nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
+            alarmaVencida_data.push(value); 
         }
         
         if(value.status_grafica == "Tarea vencida")
         {
             tareaVencida++;
-            tareaVencida_data.push({id_empleado:value.id_empleado,nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
+//            tareaVencida_data.push({id_empleado:value.id_empleado,nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
+            tareaVencida_data.push(value); 
         }
         
         if(value.status_grafica == "Suspendido")
         {
             suspendido++;
-            suspendido_data.push({id_empleado:value.id_empleado,nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
+//            suspendido_data.push({id_empleado:value.id_empleado,nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
+            suspendido_data.push(value); 
         }
 
     });
@@ -1112,47 +1118,50 @@ function graficar2(tareas,concepto)
 {
     console.log("tareas",tareas);
     console.log("concepto",concepto);
-
+    activeChart = 1;
     tareas = JSON.parse(tareas);
-    let lista = [];
-    let nombre_responsable;
+    let lista = new Object();
+    let lista2 = [];
+    let id_empleado;
     let bandera = 0;
     let estatus = 0;
     let dataGrafica = [];
 
-    $.each(tareas,(index,value)=>{
+    $.each(tareas,(index,value)=>
+    {
         if(bandera==0)
         {
-            nombre_responsable = value.nombre_responsable;
-            lista.push(value);
+            id_empleado = value.id_empleado;
+            lista[value.id_empleado]="";
         }
         bandera=1;
-        if(value.nombre_responsable != nombre_responsable)
+        if(value.id_empleado != id_empleado)
         {
-            lista.push(value);
+            lista[value.id_empleado]="";
+            id_empleado = value.id_empleado;
         }
         else
         {
-            nombre_responsable = value.nombre_responsable;
+            id_empleado = value.id_empleado;
         }
     });
 //    estatus = concepto == "Sin Asignar" ? 0 : concepto == "En Proceso" ? 1 : 2;
     
-        if(concepto == "En tiempo")
+        if(concepto == "En Proceso-En Tiempo")
         {
-            estatus= 0;
+            estatus= "En tiempo";
         }
-        if(concepto == "Alarma vencida")
+        if(concepto == "En Proceso-Alarma Vencida")
         {
-            estatus= 1;
+            estatus= "Alarma vencida";
         }
-        if(concepto == "Tarea vencida")
+        if(concepto == "En Proceso-Pendiente Vencido")
         {
-            estatus= 2;
+            estatus= "Tarea vencida";
         }
         if(concepto == "Suspendido")
         {
-            estatus= 3;
+            estatus= "Suspendido";
         }
     
     
