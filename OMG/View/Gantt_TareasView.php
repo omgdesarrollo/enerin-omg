@@ -272,7 +272,14 @@ and open the template in the editor.
    <button class="btn btn-link collapsed" type="button" onclick="refrescarDatosGantt()">
       <i class="fa fa-refresh"></i>
         </button>
- <input type='button' class="btn btn-info" id='user' onclick="showGroups('user')" value="Agrupar Por Responsable">
+  <!--<div class="col-md-6">-->
+      <!--<div class="col-md-4">-->
+        <input type='button' class="btn btn-info" id='default' onclick="showGroups()" value="Descripcion">
+      </div>
+      <!--<div class="col-md-2">-->
+        <input type='button' class="btn btn-info" id='user' onclick="showGroups('user')" value="Responsable">
+      <!--</div>-->
+  <!--</div>-->
   <!--<input type="submit" class="btn btn-info" value="Recargar Detalles" onclick="refrescarDatosGantt()">-->   
 
       
