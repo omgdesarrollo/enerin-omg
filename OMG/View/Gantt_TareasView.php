@@ -29,7 +29,11 @@ and open the template in the editor.
         
     <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <!--Para abrir alertas de aviso, success,warning, error--> 
-    <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>    
+    <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>  
+    
+   
+    
+    
 <!--        <script src="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.js"></script>
   <link href="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.css" rel="stylesheet">
   <script src="../../assets/dhtmlxGantt/api.js" type="text/javascript"></script>-->
@@ -38,8 +42,13 @@ and open the template in the editor.
         <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_auto_scheduling.js" type="text/javascript"></script>-->
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_auto_scheduling.js.map"></a>-->
     <!--<script src="../../js/jquery.js" type="text/javascript"></script>-->
+   
+    <link href="../../assets/gantt_5.1.2_com/codebase/skins/dhtmlxgantt_terrace.css" rel="stylesheet" type="text/css"/>
     <script src="../../js/jquery.min.js" type="text/javascript"></script>
     <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+    
+    
+    
     <!-- cargar archivo -->
 <!--    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
     <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
@@ -51,9 +60,9 @@ and open the template in the editor.
     
     <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_csp.js" type="text/javascript"></script>-->
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_csp.js.map"></a>-->
-    <script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_fullscreen.js" type="text/javascript"></script>
+    <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_fullscreen.js" type="text/javascript"></script>-->
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_fullscreen.js.map"></a>-->
-    <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_grouping.js" type="text/javascript"></script>-->
+    <script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_grouping.js" type="text/javascript"></script>
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_grouping.js.map"></a>-->
     <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_keyboard_navigation.js" type="text/javascript"></script>-->
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_keyboard_navigation.js.map"></a>-->
@@ -87,11 +96,15 @@ and open the template in the editor.
    <link href="../../assets/gantt_5.1.2_com/codebase/skins/dhtmlxgantt_meadow.css" rel="stylesheet" type="text/css"/>
    
     
-     <link href="../../assets/gantt_5.1.2_com/samples/common/third-party/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
+   <link href="../../assets/gantt_5.1.2_com/samples/common/third-party/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+   <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
    <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
    
    
+   
+   
+   
+    
     <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!--<link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>-->
     <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
@@ -102,8 +115,7 @@ and open the template in the editor.
     <script src="https://cdn3.devexpress.com/jslib/18.1.6/js/dx.all.js"></script>
     <link href="../../css/PersonalizacionVistasGantt.css" rel="stylesheet" type="text/css"/>
     <!--aqui termina las librerias que no son del gantt-->
-     
-    
+   
  <style type="text/css">
     html, body{
       height: 100%;
@@ -147,6 +159,30 @@ and open the template in the editor.
                 .task_suspendida .gantt_task_progress{
                     background:yellow; 
                 }
+                
+                .text_tarea_terminada_Azul{
+                    color: white;
+                }
+                .text_tarea_suspendida_amarilla{
+                    color: black;
+                }
+                
+                .summary-row,
+		.summary-row.odd {
+			background-color: #EEEEEE;
+			font-weight: bold;
+		}
+
+		.gantt_grid div,
+		.gantt_data_area div {
+			font-size: 12px;
+		}
+
+		.summary-bar {
+			opacity: 0.4;
+		}
+                
+                
              
  .dx-treelist-borders > 
  .dx-treelist-pager, 
@@ -232,8 +268,13 @@ and open the template in the editor.
       <div class="card-body">
           <div>
   <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Detalles</button>
-  <input type="submit" class="btn btn-info" value="Recargar" onclick="refrescarDatosGantt()">
+ <!--<input type="submit" class="btn btn-info " style="font-size: 12px;" value="Recargar" onclick="refrescarDatosGantt()">-->
+   <button class="btn btn-link collapsed" type="button" onclick="refrescarDatosGantt()">
+      <i class="fa fa-refresh"></i>
+        </button>
+ <input type='button' class="btn btn-info" id='user' onclick="showGroups('user')" value="Agrupar Por Responsable">
   <!--<input type="submit" class="btn btn-info" value="Recargar Detalles" onclick="refrescarDatosGantt()">-->   
+
       
 <!--<input id="fullscreen_button" type="button" value="Toggle Fullscreen"/>-->
         <input type="radio" id="scale1" name="scale" value="1" checked/><label for=""><h5>Dia</h5></label>
@@ -243,11 +284,11 @@ and open the template in the editor.
 	<input value="deshacer" type="button" onclick='gantt.undo()' style='font-size: 10px'>
 	<input value="Rehacer" type="button" onclick='gantt.redo()' style='font-size: 10px'>
 
-        <input value="Exportar a PDF"  class="btn btn-info" type="button" onclick="gantt.exportToPDF()" style="margin:20px;">
-    <input value="Exportar a PNG" class="btn btn-info" type="button" onclick="gantt.exportToPNG()">
-<input value="Exportar a MS Proyect" class="btn btn-success" type="button" onclick='gantt.exportToMSProject({skip_circular_links: false})'
+        <input value="PDF"  class="btn btn-info " type="button" onclick="gantt.exportToPDF()" style="margin:20px;">
+    <input value="PNG" class="btn btn-info" type="button" onclick="gantt.exportToPNG()">
+<input value="MS Proyect" class="btn btn-success" type="button" onclick='gantt.exportToMSProject({skip_circular_links: false})'
 	   style='margin:20px;'>
-<input value="Export a Excel" class="btn btn-info" type="button" onclick='gantt.exportToExcel({
+<input value="Excel" class="btn btn-info" type="button" onclick='gantt.exportToExcel({
     name:"document.xlsx", 
     columns:[
         { id:"text",  header:"Tarea", width:100 },
@@ -257,7 +298,6 @@ and open the template in the editor.
     visual:true,
     cellColors:true
 })' style='margin:20px;'>
-  
           </div>
 <div class="row">
   <div class="col">
@@ -403,9 +443,11 @@ function dragElement(elmnt) {
         </div><!-- cierre div class="modal-dialog" -->
 </div><!-- cierre del modal -->
 
-
   <script type="text/javascript">  
   var dxtreeList;
+   
+  
+  
 //empieza para definir como mostrar las tareas si por dia,semana,mes,año
 	function setScaleConfig(value) {
 		switch (value) {
@@ -475,7 +517,20 @@ setScaleConfig('1');
 //empieza para darle tamaño pantalla completa 
 //termina para darle tamaño pantalla completa
 
+	function showGroups(listname) {
+		if (listname) {
+			gantt.groupBy({
+				groups: gantt.serverList(listname),
+				relation_property: listname,
+				group_id: "key",
+				group_text: "label"
+			});
+			gantt.sort("start_date");
+		} else {
+			gantt.groupBy(false);
 
+		}
+	}
 
 
 
@@ -485,6 +540,7 @@ setScaleConfig('1');
 
 		function checkParents(id) {
 			setTaskType(id);
+                        
 			var parent = gantt.getParent(id);
 			if (parent != gantt.config.root_id) {
 				checkParents(parent);
@@ -492,6 +548,7 @@ setScaleConfig('1');
 		}
 
 		function setTaskType(id) {
+                
 			id = id.id ? id.id : id;
 			var task = gantt.getTask(id);
 			var type = gantt.hasChild(task.id) ? gantt.config.types.project : gantt.config.types.task;
@@ -646,14 +703,30 @@ setScaleConfig('1');
 		})();
 	})();
         
+//esta seccion es cuando abre seleccionas la tarea con click  te trae la informacion de esa tarea--->
         gantt.attachEvent("onBeforeLightbox", function(id) {
+//console.log(gantt.getTask(id));
             var task = gantt.getTask(id);
+//            var task;
             task.my_template ="<span id='title2'>Progreso: </span>"+Math.round(task.progress*100) +" %";
             return true;
+           
         });
+ //<----
+     
+
         
         
-        console.log(gantt.templates);
+        
+        
+        
+        
+        gantt.templates.grid_row_class =
+		gantt.templates.task_row_class = function (start, end, task) {
+			if (task.$virtual)
+				return "summary-row"
+		};
+//        console.log(gantt.templates);
             gantt.templates.progress_text = function (start, end, task) {
 //        if(Math.round(task.progress * 100)==100){
 //            $(".gantt_task_line.gantt_dependent_task .gantt_task_progress ").css("background-color","red");
@@ -662,14 +735,17 @@ setScaleConfig('1');
 //		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
                 return "";
 	};
-                
+            
+            
+            
 
 gantt.templates.task_class = function (start, end, task) {
 		if(task.type == gantt.config.types.project){
 //                    console.log("entro ");
 			return "hide_project_progress_drag";
                 }
-                
+                if (task.$virtual)
+			return "summary-bar";
                 
 //                if(task.status == 2){
 ////                    console.log("entro ");
@@ -697,8 +773,24 @@ gantt.templates.task_class = function (start, end, task) {
         gantt.templates.task_text=function (t,e,task) {
             
              var taskLocal = gantt.getTask(task.id);
-            taskLocal ="<span id='title2'></span>"+Math.round(task.progress*100) +" %";
-            return taskLocal;
+      
+//            if(task.type != gantt.config.types.project){
+//                if(task.status==1)
+//                taskLocal ="<span id='title2'><div class='text_tarea_terminada_Azul'>"+Math.round(task.progress*100) +" % </div>"+"</span>";
+//                if(task.status==2)
+//                taskLocal ="<span id='title2'><div class='text_tarea_suspendida_amarilla'>"+Math.round(task.progress*100) +" % </div>"+"</span>"; 
+                if(task.status==3){
+                    taskLocal ="<span id='title2'><div class='text_tarea_terminada_Azul'>"+Math.round(task.progress*100) +" % </div>"+"</span>";
+                    return taskLocal;
+                 }
+//            }else{
+                  if(task.progress==undefined){
+                   taskLocal ="<span id='title2'></span>0 %";
+                    return taskLocal; 
+                  }
+                  taskLocal ="<span id='title2'></span>"+Math.round(task.progress*100) +" %";
+                  return taskLocal; 
+//            }
         }
      gantt.templates.tooltip_text = function(start,end,task){
   	if(task.type == gantt.config.types.project)
@@ -732,18 +824,6 @@ gantt.templates.task_class = function (start, end, task) {
         gantt.config.branch_loading = true;
         gantt.config.order_branch_free = true;
 
-//        gantt.locale.labels["complete_button"] = "Completar";
-////        console.log(gantt.locale.labels);
-//	gantt.config.buttons_left = ["dhx_save_btn", "dhx_cancel_btn", "complete_button"];
-//        gantt.attachEvent("onLightboxButton", function (button_id, node, e) {
-//		if (button_id == "complete_button") {
-//			var id = gantt.getState().lightbox;
-//			gantt.getTask(id).progress = 1;
-//			gantt.updateTask(id)
-//			gantt.hideLightbox();
-//		}
-//	});
- 
 
         	gantt.config.open_tree_initially = true;
 //        	para cerrar las carpetas por default desde el principio
@@ -759,14 +839,45 @@ gantt.templates.task_class = function (start, end, task) {
  var textEditor = {type: "text", map_to: "text"};   
 gantt.config.columns=[
 //    {name:"id",   label:"id",   align:"center"},
-		{name: "text", label: "Descripcion", tree: true,resize: true, editor: textEditor},
-		
+		{name: "text", label: "Descripcion", tree: true,resize: true},
+                {
+			name: "progress", label: "Progreso", width: '*', align: "center",resize: true,
+			template: function (item) {
+				if (item.progress >= 1)
+					return "Completa";
+				if (item.progress == 0)
+					return "No Iniciada";
+                                if(item.progress==undefined){
+                                    return "sin tareas";
+                                }
+                                console.log(item);
+                                
+				return Math.round(item.progress * 100) + "%";
+			}
+		},
 		{
-                    name: "owner", width: 80, align: "center",resize: true, template: function (item) {
-				return byId(gantt.serverList('user'), item.user)
+			name: "status", label: "Estatus", width: '*', align: "center",resize: true,
+			template: function (item) {
+                                if (item.status == undefined)
+                                    return "";
+				if (item.status == 1)
+					return "En Proceso";
+				if (item.status == 2)
+					return "Suspendido";
+                                if(item.status==3)
+                                        return  "Terminado";
+			}
+		},
+		{
+                    name: "owner", width: '*', align: "center",resize: true, template: function (item) {
+				return byId(dataEmpleados, item.user);
                     }
 		},
-                {name: "start_date", label: "Fecha de Inicio"},
+                
+                
+                
+                {name: "start_date", label: "Fecha de Inicio" 
+                },
 //                {name: "status", label: "Status",resize: true},
 		{name: "add", width: 40}
 	];
@@ -778,13 +889,32 @@ var opcionstatus=[
     { key: 2, label: 'Suspendido' },
     { key: 3, label: 'Terminado'}
 ];
+
+
+        gantt.locale.labels["section_progress"] = "Progreso";
+        gantt.locale.labels["section_parent"] = "Seleccione Tarea Padre";
         gantt.config.lightbox.sections = [
 		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
                 {name: "statusname", height: 38, map_to: "status", type: "select", options:opcionstatus},
                 {name: "notas", height: 38, map_to: "notas", type: "textarea"},
-		{name: "owner", height: 22, map_to: "user", type: "select", options:dataEmpleados},
+		{name: "owner", height: 33, map_to: "user", type: "select", options:dataEmpleados},
+                {
+			name: "progress", height: 33, map_to: "progress", type: "select", options: [
+				{key: "0", label: "No Iniciada"},
+				{key: "0.1", label: "10%"},
+				{key: "0.2", label: "20%"},
+				{key: "0.3", label: "30%"},
+				{key: "0.4", label: "40%"},
+				{key: "0.5", label: "50%"},
+				{key: "0.6", label: "60%"},
+				{key: "0.7", label: "70%"},
+				{key: "0.8", label: "80%"},
+				{key: "0.9", label: "90%"},
+				{key: "1", label: "Completa"}
+			]
+		},
                  {name:"template", height:16, type:"template", map_to:"my_template"}, 
-		{name: "time", type: "duration", map_to: "auto"}
+		{name: "time",  height: 50, type: "duration", map_to: "auto"}
 	];
 
 
@@ -817,6 +947,8 @@ gantt.config.fit_tasks = true;
 gantt.config.work_time = false;
 gantt.config.auto_scheduling = true;
 gantt.config.autosize=false; 
+gantt.config.grid_width = 680;
+
 
 
 gantt.config.autoscroll = true;
@@ -882,7 +1014,9 @@ dp.init(gantt);
     var datosTreeList=[]; 
     $(function (){
 //        $("#detallesInformacion" ).draggable();
-              
+       
+            
+            
 obtenerTareas().then(function (){
 construirTreeList();
 
