@@ -274,10 +274,10 @@ function graficar()
     let evidencias_realizar = 0;
 
     let requisitos_cumplidos = 0;
-    let cumplidos_temas = [];
+    let data_requisitos_cumplidos = [];
 
-    let requisitos_proceso = 0;
-    let data_requisitos_proceso = [];
+    let requisitos_procesos = 0;
+    let data_requisitos_procesos = [];
     // let requisitos_proceso_sp = 0;
     // let proceso_sp_temas = [];
 
@@ -299,36 +299,20 @@ function graficar()
         $.each(value,(ind,val)=>{
             if(val.estado_requisito == "ATRASADO")
             {
-                if(value.penalizacion == "true")
-                {
-                    requisitos_atrasados_cp++;
-                    atrasados_cp_temas.push(val);
-                }
-                else
-                {
-                    requisitos_atrasados_sp++;
-                    atrasados_sp_temas.push(val);
-                }
+                requisitos_atrasados++;
+                data_requisitos_atrasados.push(val);
             }
 
-            if(value.estado_requisito == "CUMPLIDO")
+            if(val.estado_requisito == "CUMPLIDO")
             {
                 requisitos_cumplidos++;
-                cumplidos_temas.push(value);
+                data_requisitos_cumplidos.push(val);
             }
 
-            if(value.estado_requisito == "EN PROCESO")
+            if(val.estado_requisito == "EN PROCESO")
             {
-                if(value.penalizacion == "true")
-                {
-                    requisitos_proceso_cp++;
-                    proceso_cp_temas.push(value);
-                }
-                else
-                {
-                    requisitos_proceso_sp++;
-                    proceso_sp_temas.push(value);
-                }
+                requisitos_procesos++;
+                data_requisitos_procesos.push(val);
             }
         });
         // requisitos++;
@@ -371,15 +355,20 @@ function graficar()
         //     no_iniciados++;
     });
     if(requisitos_cumplidos!=0)
-        dataGrafica.push(["Cumplidos",requisitos_cumplidos,">> Requisitos:"+requisitos_cumplidos.toString(),JSON.stringify(cumplidos_temas)]);
-    if(requisitos_proceso_sp!=0)
-        dataGrafica.push(["En Proceso",requisitos_proceso_sp,">> Requisitos:"+requisitos_proceso_sp.toString(),JSON.stringify(proceso_sp_temas)]);
-    if(requisitos_proceso_cp!=0)
-        dataGrafica.push(["En Proceso Penalizados",requisitos_proceso_cp,">> Requisitos:"+requisitos_proceso_cp.toString(),JSON.stringify(proceso_cp_temas)]);
-    if(requisitos_cumplidos!=0)
-        dataGrafica.push(["Atrasados",requisitos_atrasados_sp,">> Requisitos:"+requisitos_atrasados_sp.toString(),JSON.stringify(atrasados_sp_temas)]);
-    if(requisitos_cumplidos!=0)
-        dataGrafica.push(["Atrasados Penalizados",requisitos_atrasados_cp,">> Requisitos:"+requisitos_atrasados_cp.toString(),JSON.stringify(atrasados_cp_temas)]);
+        dataGrafica.push(["Cumplido",requisitos_cumplidos,">> Requisitos:"+requisitos_cumplidos.toString(),JSON.stringify(data_requisitos_cumplidos)]);
+    if(requisitos_atrasados!=0)
+        dataGrafica.push(["Atrasado",requisitos_atrasados,">> Requisitos:"+requisitos_atrasados.toString(),JSON.stringify(data_requisitos_atrasados)]);
+    if(requisitos_procesos!=0)
+        dataGrafica.push(["En proceso",requisitos_procesos,">> Requisitos:"+requisitos_procesos.toString(),JSON.stringify(data_requisitos_procesos)]);
+
+    // if(requisitos_proceso_sp!=0)
+    //     dataGrafica.push(["En Proceso",requisitos_proceso_sp,">> Requisitos:"+requisitos_proceso_sp.toString(),JSON.stringify(proceso_sp_temas)]);
+    // if(requisitos_proceso_cp!=0)
+    //     dataGrafica.push(["En Proceso Penalizados",requisitos_proceso_cp,">> Requisitos:"+requisitos_proceso_cp.toString(),JSON.stringify(proceso_cp_temas)]);
+    // if(requisitos_cumplidos!=0)
+    //     dataGrafica.push(["Atrasados",requisitos_atrasados_sp,">> Requisitos:"+requisitos_atrasados_sp.toString(),JSON.stringify(atrasados_sp_temas)]);
+    // if(requisitos_cumplidos!=0)
+    //     dataGrafica.push(["Atrasados Penalizados",requisitos_atrasados_cp,">> Requisitos:"+requisitos_atrasados_cp.toString(),JSON.stringify(atrasados_cp_temas)]);
     
     $.each(dataGrafica,function(index,value){
         if(value[1] != 0)
