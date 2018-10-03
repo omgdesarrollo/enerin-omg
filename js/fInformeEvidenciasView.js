@@ -21,8 +21,10 @@ $(function()
 
     $("#BTN_ANTERIOR_GRAFICAMODAL").click(function()
     {
+//        console.log("Entro al primero");
         if(activeChart>1)
         {
+//                    console.log("Entro al if");
             activeChart-=2;
             selectChart();
         }

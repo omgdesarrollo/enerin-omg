@@ -330,7 +330,7 @@ function loadDataSideBarOficiosDocumentacion(lista)
                 
                  if(value["nombre"]=="TareasView.php"){
                     if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
-                        listTareas.push({id: "tareas", text: "Registros de Pendientes", icon: "registrarTareas.png"});
+                        listTareas.push({id: "tareas", text: "Registros de Temas", icon: "registrarTareas.png"});
                     }
                 }
                 

@@ -123,7 +123,7 @@ require_once 'EncabezadoUsuarioView.php';
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
-                <h4 class="modal-title" id="myModalLabel">Crear Nueva Tarea</h4>
+                <h4 class="modal-title" id="myModalLabel">Crear Nuevo Tema</h4>
             </div>
 
             <div id="validacion_empleado" class="modal-body">
@@ -135,7 +135,7 @@ require_once 'EncabezadoUsuarioView.php';
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label" for="title"> Tarea:</label>
+                        <label class="control-label" for="title"> Tema:</label>
                         <textarea  id="TAREA" class="form-control" data-error="Ingrese la Tarea" required></textarea>
                         <div id="mensaje2"class="help-block with-errors"></div>
                         <div id="msgerrorTarea" ></div>
@@ -252,7 +252,7 @@ require_once 'EncabezadoUsuarioView.php';
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="closeLetra">X</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabelNuevaEvidencia">Informe de Pendientes Especiales</h4>
+                <h4 class="modal-title" id="myModalLabelNuevaEvidencia">Informe de Temas Especiales</h4>
             </div>
 
             <div class="modal-body">
@@ -351,7 +351,7 @@ estructuraGrid= [
     { name: "id_principal",visible:false},
     { name:"no",title:"No",width:50},
     { name: "referencia",title:"Referencia", type: "textarea",width:200},
-    { name: "tarea",title:"Pendiente", type: "textarea", validate: "required",width:200 },
+    { name: "tarea",title:"Tema", type: "textarea", validate: "required",width:200 },
     { name: "id_empleado", title: "Responsable", type: "comboEmpleados", width:250},
     { name: "fecha_creacion",title:"Fecha de Creacion", type: "text", validate: "required", width:150,editing: false},
     { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required", width:150,},
