@@ -33,7 +33,8 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../assets/chart/loader.js" type="text/javascript"></script>
                 <!--Libreria web, para grafica-->
                 <!--<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>-->
-                <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+                <!--<link href="../../css/modal.css" rel="stylesheet" type="text/css"/>-->
+                <link href="../../css/modalChart.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
