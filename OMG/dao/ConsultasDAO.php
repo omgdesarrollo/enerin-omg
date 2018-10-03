@@ -23,7 +23,7 @@ class ConsultasDAO{
                 left join requisitos_registros tbrequisitos_registros on tbrequisitos_registros.id_requisito = tbrequisitos.id_requisito
                 left join registros tbregistros on tbregistros.id_registro = tbrequisitos_registros.id_registro
                 left join evidencias tbevidencias on tbevidencias.id_registro = tbregistros.id_registro
-                where tbtemas.padre = 0 and tbtemas.contrato = $CONTRATO order by tbtemas.no";
+                where tbtemas.padre = 0 and tbtemas.fecha_inicio != '0000-00-00' and tbtemas.contrato = $CONTRATO order by tbtemas.no";
                 // echo $query;
           $db=  AccesoDB::getInstancia();
           $lista=$db->executeQuery($query);

@@ -37,6 +37,7 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+                <script src="../../js/fChartComponent.js" type="text/javascript"></script>
                 <script src="../../js/fTareasView.js" type="text/javascript"></script>
                 <script src="../../js/fGridComponent.js" type="text/javascript"></script>
                 <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
@@ -245,7 +246,7 @@ require_once 'EncabezadoUsuarioView.php';
 </div> cierre del modal -->
 
 <!-- Modal grafica -->
-<div class="modal draggable fade" id="Grafica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!--<div class="modal draggable fade" id="Grafica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">                
@@ -265,8 +266,10 @@ require_once 'EncabezadoUsuarioView.php';
             
         </div>
     </div>
-</div>
+</div>-->
 
+<!-- Modal grafica -->
+<div id="jsChart"></div>
 
 <script>
 var DataGrid = [];
@@ -280,8 +283,11 @@ var ultimoNumeroGrid=0;
 var DataGridExcel=[];
 var origenDeDatosVista="tareas";
 
-google.charts.load('current', {'packages':['corechart']});
+//google.charts.load('current', {'packages':['corechart']});
 // $('tbody').sortable();
+var activeChart = -1;
+var chartsCreados = [];
+var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)},(dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)}];
 
 
 var MyComboEmpleados = function(config)
@@ -366,7 +372,8 @@ estructuraGrid= [
     { name:"delete", title:"Opción", type:"customControl",sorting:"", width:100}
 ], 
  
-construirGrid(); 
+construirGrid();
+inicializaChartjs();
  
 inicializarFiltros().then((resolve)=>
 { 
