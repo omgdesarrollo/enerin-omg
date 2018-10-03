@@ -416,7 +416,7 @@ function redimencionarLayout()
 //                            loadDataSideBarProcesos();
                         }
 
-                        if(itemIdSeleccion=="Control de Pendientes Especiales"){
+                        if(itemIdSeleccion=="Control de Temas Especiales"){
                             var listRegistroTareas=[];
                             $.each(listasubmodulos,function (index,value){
 
@@ -424,7 +424,7 @@ function redimencionarLayout()
                                 {
 //                                    console.log(value1);
                                     
-                                    if(value1["nombre_contenido_sub"]=="Control de Pendientes Especiales"){
+                                    if(value1["nombre_contenido_sub"]=="Control de Temas Especiales"){
 //                                        console.log(value1["contenido_vista"]);
                                              loadDataSideBarTareas(value1["contenido_vista"]);
                                     }
