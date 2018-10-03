@@ -975,7 +975,7 @@ dp.init(gantt);
 			myToolbar.addSeparator("sep1", 3);
                         
                         var agrupacionesCampos=Array(	Array('agrupar_descripcion', 'obj', 'Descripcion', '661.png'),
-						Array('agrupar_responsables','obj', 'Empleados' , '659.png'));
+						Array('agrupar_responsables','obj', 'Responsables' , '659.png'));
                         
                         myToolbar.addButtonSelect("agrupar_descripcion", 13, "Agrupar", agrupacionesCampos, "691.png");
 
