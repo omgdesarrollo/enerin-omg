@@ -2,37 +2,36 @@
 // configuracionJgrowl = { pool:0, position:" bottom-right", sticky:true, corner:"0px",openDuration:"fast", closeDuration:"slow",theme:"",header:"",themeState:"", glue:"before"};
 $(function()
 {
-    $("#BTN_ANTERIOR_GRAFICAMODAL").click(function()
-    {
-        // google.charts.setOnLoadCallback(drawChart);
-        if(activeChart != 0)
-        {
-            if(activeChart == 1)
-            {
-                activeChart=-1;
-                graficar();
-                // selectChart();
-            }
-            else
-            {
-                activeChart=0;
-                selectChart();
-            }
-        }
-        else
-        {
-            activeChart = -1;
-            graficar();
-        } 
+    // $("#BTN_ANTERIOR_GRAFICAMODAL").click(function()
+    // {
+    //     // google.charts.setOnLoadCallback(drawChart);
+    //     if(activeChart != 0)
+    //     {
+    //         if(activeChart == 1)
+    //         {
+    //             activeChart=-1;
+    //             graficar();
+    //             // selectChart();
+    //         }
+    //         else
+    //         {
+    //             activeChart=0;
+    //             selectChart();
+    //         }
+    //     }
+    //     else
+    //     {
+    //         activeChart = -1;
+    //         graficar();
+    //     } 
             
-        if(activeChart == 0)
-        {
-            $(this).html("Recargar");
-        }
-        else
-            $(this).html("Anterior");
-        
-    });
+    //     if(activeChart == 0)
+    //     {
+    //         $(this).html("Recargar");
+    //     }
+    //     else
+    //         $(this).html("Anterior");
+    // });
     
     var $btnDLtoExcel = $('#toExcel'); 
     $btnDLtoExcel.on('click', function () 
@@ -258,28 +257,29 @@ function listarDatos()
 
 function graficar()
 {
-    var requisitos = 0;
-    var registros = 0;
-    var evidencias_realizar = 0;
+    activeChart = 0;
+    let chartsCreados = [];
+    let requisitos = 0;
+    let registros = 0;
+    let evidencias_realizar = 0;
 
-    var requisitos_cumplidos = 0;
-    var cumplidos_temas = [];
+    let requisitos_cumplidos = 0;
+    let cumplidos_temas = [];
 
-    var requisitos_proceso_sp = 0;
-    var proceso_sp_temas = [];
+    let requisitos_proceso_sp = 0;
+    let proceso_sp_temas = [];
 
-    var requisitos_proceso_cp = 0;
-    var proceso_cp_temas = [];
+    let requisitos_proceso_cp = 0;
+    let proceso_cp_temas = [];
 
-    var requisitos_atrasados_cp = 0;
-    var atrasados_cp_temas = [];
+    let requisitos_atrasados_cp = 0;
+    let atrasados_cp_temas = [];
 
-    var requisitos_atrasados_sp = 0;
-    var atrasados_sp_temas = [];
+    let requisitos_atrasados_sp = 0;
+    let atrasados_sp_temas = [];
 
-    var no_iniciados=0;
-    
-    
+    let no_iniciados=0;
+
     $.each(dataListado,function(index,value)
     {
         requisitos++;
@@ -331,8 +331,7 @@ function graficar()
     ];
     // console.log("requisitos = "+requisitos);
     // console.log("registros = "+registros);
-    activeChart = -1;
-    chartsCreados = [];
+    
 
     tituloGrafica = "CUMPLIMIENTO DE REQUISITOS";
     bandera = 0;
@@ -350,110 +349,108 @@ function graficar()
     construirGrafica(dataGrafica,tituloGrafica);
 }
 
-function construirGrafica(dataGrafica,tituloGrafica)
-{
-    estructuraGrafica = chartEstructura(dataGrafica);
-    opcionesGrafica = chartOptions(tituloGrafica);
-    instanceGrafica = drawChart(dataGrafica,estructuraGrafica,opcionesGrafica);
-    activeChart++;
-    chartsCreados.push({grafica:instanceGrafica,data:estructuraGrafica});
-}
+// function construirGrafica(dataGrafica,tituloGrafica)
+// {
+//     estructuraGrafica = chartEstructura(dataGrafica);
+//     opcionesGrafica = chartOptions(tituloGrafica);
+//     instanceGrafica = drawChart(dataGrafica,estructuraGrafica,opcionesGrafica);
+//     activeChart++;
+//     chartsCreados.push({grafica:instanceGrafica,data:estructuraGrafica});
+// }
 
-function chartEstructura(dataGrafica)
-{
-    // console.log(dataGrafica);
-    data = new google.visualization.DataTable();
-    data.addColumn('string', 'nombre');
-    data.addColumn('number', 'valor');
-    // if(tooltip!=0)
-        data.addColumn({type:"string",role:"tooltip"});
-    data.addColumn('string','datos');
+// function chartEstructura(dataGrafica)
+// {
+//     // console.log(dataGrafica);
+//     data = new google.visualization.DataTable();
+//     data.addColumn('string', 'nombre');
+//     data.addColumn('number', 'valor');
+//     // if(tooltip!=0)
+//         data.addColumn({type:"string",role:"tooltip"});
+//     data.addColumn('string','datos');
     
-    // if(dataGrafica.length != 0)
-        data.addRows(dataGrafica);
-    // else
-    //     data.addRows([[ "NO HAY DATOS",1,"SIN DATOS",""]]);
-    return data;
-}
+//     // if(dataGrafica.length != 0)
+//         data.addRows(dataGrafica);
+//     // else
+//     //     data.addRows([[ "NO HAY DATOS",1,"SIN DATOS",""]]);
+//     return data;
+// }
 
-function chartOptions(tituloGrafica)
-{
-    var options = 
-    {
-        legend:{
-                position:"labeled",alignment:"start",
-                textStyle:
-                {
-                    color:"black", fontSize:14, bold:true
-                }
-            },
-        pieSliceText:"none",
-        title: tituloGrafica,
-        tooltip:{textStyle:{color:"#000000"},text:"none",isHtml:true,background:'red'},
-        // pieSliceText:"",
-        titleTextStyle:{color:"black"},
-        'is3D':true,
-        slices: { 
-            1: {offset: 0.02,color:"#80ffbf"},
-            3: {offset: 0.02,color:"#bfff80"},
-            0: {offset: 0.02,color:"#ffbf80"},
-            4: {offset: 0.02,color:"#ff80bf"},
-            2: {offset: 0.02,color:"#bf80ff"},
-        },
-        backgroundColor:"",
-        "width":800,
-        "height":340
-    };
-    return options;
-}
+// function chartOptions(tituloGrafica)
+// {
+//     var options = 
+//     {
+//         legend:{
+//                 position:"labeled",alignment:"start",
+//                 textStyle:
+//                 {
+//                     color:"black", fontSize:14, bold:true
+//                 }
+//             },
+//         pieSliceText:"none",
+//         title: tituloGrafica,
+//         tooltip:{textStyle:{color:"#000000"},text:"none",isHtml:true,background:'red'},
+//         // pieSliceText:"",
+//         titleTextStyle:{color:"black"},
+//         'is3D':true,
+//         slices: { 
+//             1: {offset: 0.02,color:"#80ffbf"},
+//             3: {offset: 0.02,color:"#bfff80"},
+//             0: {offset: 0.02,color:"#ffbf80"},
+//             4: {offset: 0.02,color:"#ff80bf"},
+//             2: {offset: 0.02,color:"#bf80ff"},
+//         },
+//         backgroundColor:"",
+//         "width":800,
+//         "height":340
+//     };
+//     return options;
+// }
 
-function drawChart(dataGrafica,data,options)
-{
-    grafica = new google.visualization.PieChart(document.getElementById('graficaPie'));
-    grafica.draw(data, options);
-    if(dataGrafica[0][3]!="[]")
-        google.visualization.events.addListener(grafica, 'select', selectChart);
-    return grafica;
-}
+// function drawChart(dataGrafica,data,options)
+// {
+//     grafica = new google.visualization.PieChart(document.getElementById('graficaPie'));
+//     grafica.draw(data, options);
+//     if(dataGrafica[0][3]!="[]")
+//         google.visualization.events.addListener(grafica, 'select', selectChart);
+//     return grafica;
+// }
 
 // selectChart();
 
-function selectChart()
-{
-    // var jsonObj = {};
-    // console.log("S");
-    // {
-        var select = chartsCreados[activeChart].grafica.getSelection()[0];
-        // console.log(select);
-        if(select != undefined)
-        {
-            // str = data1.getFormattedValue(select[0].row,select[0].row);
-            // console.log("1");
-            dataNextGrafica = chartsCreados[activeChart].data.getValue(select.row,3);
-            // console.log("2");
-            // console.log(dataNextGrafica);
-            concepto = chartsCreados[activeChart].data.getValue(select.row,0);
-            // console.log("3");
-            // console.log(dataNextGrafica);
-            // console.log(concepto);
-            // if(opcion_vista_grafica == 1)
-            if(activeChart == 0)
-            {
-                graficar2(dataNextGrafica,concepto);
-            }
-            else
-                if(activeChart == 1)
-                    graficar3(dataNextGrafica,concepto);
-            $("#BTN_ANTERIOR_GRAFICAMODAL").html("Anterior");
-        }
-    // });
-}
-
-var activeChart = -1;
-var chartsCreados = [];
+// function selectChart()
+// {
+//     // var jsonObj = {};
+//     // console.log("S");
+//     // {
+//         var select = chartsCreados[activeChart].grafica.getSelection()[0];
+//         // console.log(select);
+//         if(select != undefined)
+//         {
+//             // str = data1.getFormattedValue(select[0].row,select[0].row);
+//             // console.log("1");
+//             dataNextGrafica = chartsCreados[activeChart].data.getValue(select.row,3);
+//             // console.log("2");
+//             // console.log(dataNextGrafica);
+//             concepto = chartsCreados[activeChart].data.getValue(select.row,0);
+//             // console.log("3");
+//             // console.log(dataNextGrafica);
+//             // console.log(concepto);
+//             // if(opcion_vista_grafica == 1)
+//             if(activeChart == 0)
+//             {
+//                 graficar2(dataNextGrafica,concepto);
+//             }
+//             else
+//                 if(activeChart == 1)
+//                     graficar3(dataNextGrafica,concepto);
+//             $("#BTN_ANTERIOR_GRAFICAMODAL").html("Anterior");
+//         }
+//     // });
+// }
 
 function graficar2(temas,concepto)
 {
+    activeChart = 1;
     temas = JSON.parse(temas);
     var newArray = [];
     var lookupObject  = {};
@@ -567,7 +564,7 @@ function graficar2(temas,concepto)
 
 function graficar3(datos,concepto)
 {
-    // alert("porque?");
+    activeChart = 2;
     datos = JSON.parse(datos);
     // console.log(datos);
     // var newArray = [];

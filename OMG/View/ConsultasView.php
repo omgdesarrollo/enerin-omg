@@ -56,9 +56,12 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/> -->
                 <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+                <script src="../../js/fChartComponent.js" type="text/javascript"></script>
                 <script src="../../js/fConsultasView.js" type="text/javascript"></script>
                 <!-- <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/> -->
                 <script src="../../js/fGridComponent.js" type="text/javascript"></script>
+                
+                
                 <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
                 
         <style>
@@ -72,39 +75,7 @@ $Usuario=  Session::getSesion("user");
             /* .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                     */
             /* .modal-lg{width: 100%;} */
             .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
-
-            /* div.tooltip
-            { */
-                /* display:none !important; */
-                /* position:absolute !important; */
-                /* width:0px !important; */
-            /* } */
-            div.google-visualization-tooltip
-            {
-                background:bisque;
-                border-radius:5px;
-                position:fixed;
-                top:60px !important;
-                left:1% !important;
-                min-width:200px;
-                max-width:400px;
-                -webkit-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
-                -moz-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
-                box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
-            }
-            div.ltr
-            {
-                width:-webkit-fill-available !important;
-                height:80% !important;
-            }
-            circle
-            {
-                r:4;
-            }
-            text
-            {
-                cursor:pointer;
-            }
+            
             body{overflow:hidden;}
         </style>              
                 
@@ -137,25 +108,7 @@ $Usuario=  Session::getSesion("user");
 <br><br><br>
 <div id="jsGrid"></div>
 
-<div class="modal draggable fade" id="Grafica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="closeLetra">X</span>
-                </button>
-		        <h4 class="modal-title" id="myModalLabelNuevaEvidencia">Indicador de Cumplimiento</h4>
-            </div>
-
-            <div class="modal-body">
-                <div id="graficaPie" ></div>
-            </div>
-            <div class="form-group" method="post" style="text-align:center" id="BTNS_GRAFICAMODAL">
-                <button type="submit" id="BTN_ANTERIOR_GRAFICAMODAL" class="btn crud-submit btn-info" style="width:90%" >Recargar</button>
-            </div>
-        </div>
-    </div>
-</div>
+<div id="jsChart"></div>
 
 <script>
     var DataGrid=[];
@@ -168,12 +121,11 @@ $Usuario=  Session::getSesion("user");
     var DataGridExcel=[];
     var origenDeDatosVista="consultas";
     var opcion_vista_grafica = 1;
-    // var grafica1;
-    google.charts.load('current', {'packages':['corechart']});
     // google.charts.setOnLoadCallback(drawChart);
 
     var activeChart = -1;
     var chartsCreados = [];
+    var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)},(dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)}];
 
     var porcentajesFields = function(config)
     {
@@ -259,7 +211,7 @@ $Usuario=  Session::getSesion("user");
             // {
             //     this.DOMlist.style.zIndex = 2000;
             // });
-
+        inicializaChartjs();
         inicializarFiltros().then((resolve2)=>
         {
             construirFiltros();
