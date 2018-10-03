@@ -1159,12 +1159,16 @@ if(concepto== "Suspendido")
         if(bandera==0)
         {
             id_empleado = value.id_empleado;
-            lista[value.id_empleado]=[];
+//            lista[value.id_empleado]=[];
         }
         bandera=1;
-        if(value.id_empleado != id_empleado)
+        if(value.id_empleado==undefined)
         {
             lista[value.id_empleado]=[];
+        }
+        if(value.id_empleado != id_empleado)
+        {
+//            lista[value.id_empleado]=[];
             lista[value.id_empleado].push(value);
             id_empleado = value.id_empleado;
         }else{
