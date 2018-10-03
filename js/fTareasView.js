@@ -59,11 +59,6 @@ $(function()
 //        loadChartView(true);
 //    });
 
-    $("#BTN_ANTERIOR_GRAFICAMODAL").click(function()
-    {
-        activeChart = -1;
-        graficar();
-    });
 
     var $btnDLtoExcel = $('#toExcel'); 
     $btnDLtoExcel.on('click', function () 
@@ -81,7 +76,23 @@ $(function()
             , dataset: DataGridExcel
             , columns: getColumns(DataGridExcel)
         });
-    });      
+    });
+    
+        $("#BTN_ANTERIOR_GRAFICAMODAL").click(function()
+    {
+//        activeChart = -1;
+//        graficar();
+        if(activeChart>1)
+        {
+            activeChart-=2;
+            selectChart();
+        }
+        else
+        {
+            activeChart = -1;
+            graficar();
+        }
+    });
 
 }); //CIERRA $(FUNCTION())
 
@@ -972,7 +983,10 @@ function graficar()
     let tareaVencida = 0;
     let tareaVencida_data = [];
     let suspendido = 0;
-    let suspendido_data = []; 
+    let suspendido_data = [];
+    let dataGrafica = [];
+    let tituloGrafica = "Pendientes Especiales";
+    let bandera = 0;
 
     $.each(dataListado,(index,value)=>
     {
@@ -1005,7 +1019,7 @@ function graficar()
         }
 
     });
-    let dataGrafica=[];
+    
     if(enTiempo!=0)
         dataGrafica.push(["En Proceso-En Tiempo",enTiempo,">> Pendientes:"+enTiempo.toString(),JSON.stringify(enTiempo_data)]);
     if(alarmaVencida!=0)
@@ -1015,11 +1029,11 @@ function graficar()
     if(suspendido!=0)
         dataGrafica.push(["Suspendido",suspendido,">> Pendientes:"+suspendido.toString(),JSON.stringify(suspendido_data)]);
 
-
-    activeChart = -1;
-    chartsCreados = [];
-    let tituloGrafica = "Pendientes Especiales";
-    let bandera = 0;
+//
+//    activeChart = -1;
+//    chartsCreados = [];
+//    let tituloGrafica = "";
+//    let bandera = 0;
     $.each(dataGrafica,function(index,value){
         if(value[1] != 0)
             bandera=1;
@@ -1041,7 +1055,7 @@ function construirGrafica(dataGrafica,tituloGrafica)//funcion sin cambio
     estructuraGrafica = chartEstructura(dataGrafica);
     opcionesGrafica = chartOptions(tituloGrafica);
     instanceGrafica = drawChart(dataGrafica,estructuraGrafica,opcionesGrafica);
-    activeChart++;
+//    activeChart++;
     chartsCreados.push({grafica:instanceGrafica,data:estructuraGrafica});
 }
 
@@ -1104,89 +1118,60 @@ function drawChart(dataGrafica,data,options)//funcion sin cambio
 function selectChart()
 {
     var select = chartsCreados[activeChart].grafica.getSelection()[0];
-    console.log(select);
+//    console.log(select);
     if(select != undefined)
     {
         dataNextGrafica = chartsCreados[activeChart].data.getValue(select.row,3);
         concepto = chartsCreados[activeChart].data.getValue(select.row,0);
-            graficar2(dataNextGrafica,concepto);
+        chartsFunciones[activeChart+1](dataNextGrafica,concepto);
+//        graficar2(dataNextGrafica,concepto);
         $("#BTN_ANTERIOR_GRAFICAMODAL").html("Anterior");
     }
 }
 
 function graficar2(tareas,concepto)
 {
-    console.log("tareas",tareas);
-    console.log("concepto",concepto);
+    console.log("concepto: ",concepto);
     activeChart = 1;
-    tareas = JSON.parse(tareas);
     let lista = new Object();
-    let lista2 = [];
     let id_empleado;
     let bandera = 0;
-    let estatus = 0;
     let dataGrafica = [];
-
+//    tituloGrafica = concepto != "En Proceso" ? "EVIDENCIAS VALIDADAS" : "EVIDENCIAS EN PROCESO";
+    tituloGrafica = "PENDIENTES POR RESPONSABLE";
+    
+    tareas = JSON.parse(tareas);    
     $.each(tareas,(index,value)=>
     {
         if(bandera==0)
         {
             id_empleado = value.id_empleado;
-            lista[value.id_empleado]="";
+            lista[value.id_empleado]=[];
         }
         bandera=1;
         if(value.id_empleado != id_empleado)
         {
-            lista[value.id_empleado]="";
+            lista[value.id_empleado]=[];
+            lista[value.id_empleado].push(value);
             id_empleado = value.id_empleado;
         }
         else
         {
             id_empleado = value.id_empleado;
+            lista[value.id_empleado].push(value);
         }
     });
-//    estatus = concepto == "Sin Asignar" ? 0 : concepto == "En Proceso" ? 1 : 2;
     
-        if(concepto == "En Proceso-En Tiempo")
-        {
-            estatus= "En tiempo";
-        }
-        if(concepto == "En Proceso-Alarma Vencida")
-        {
-            estatus= "Alarma vencida";
-        }
-        if(concepto == "En Proceso-Pendiente Vencido")
-        {
-            estatus= "Tarea vencida";
-        }
-        if(concepto == "Suspendido")
-        {
-            estatus= "Suspendido";
-        }
+//    tituloGrafica = "Pendientes por Responsable";
     
-    
-    tituloGrafica = "PENDIENTES POR RESPONSABLE";
-    
-    $.each(dataListado,(index,value)=>{
-        if(value.status_grafica == estatus)
+    $.each(lista,(index,value)=>
+    {
+        console.log("La lista: ",index);
+        console.log(index,value);
+        $.each(value,(index2,value2)=>
         {
-//            $.each(value.temas_responsables,(ind,val)=>
-//            {
-                $.each(lista,(key,valor)=>
-                {
-                    if(valor.id_empleado==value.id_empleado)
-                    {
-                        if(lista[key]["documentos"]!=undefined)
-                            lista[key]["documentos"]++;
-                        else
-                            lista[key]["documentos"]=1;
-                    }
-                });
-//            });
-        }
-    });
-    $.each(lista,(index,value)=>{
-        dataGrafica.push(["Tema: "+value.no_tema,value.documentos,">> Tema:\n"+value.nombre_tema+"\n>> Responsable:\n"+value.responsable_tema+"\n>> Documentos:"+value.documentos,"[]"]);
+            dataGrafica.push([value[0].nombre_completo,value.length,">> Pendiente:"+value2.tarea,"[]"]);
+        });
     });
     // console.log(dataGrafica);
     construirGrafica(dataGrafica,tituloGrafica);

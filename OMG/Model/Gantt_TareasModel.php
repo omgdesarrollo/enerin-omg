@@ -353,8 +353,10 @@ class Gantt_TareasModel{
                                              $value["progress"]=0;
                                          }
                                          if(isset($value["status"])){
+                                             
                                             self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>$value["notas"],"status"=>$value["status"]), $value["id"]);
-                                         }else{                                        
+                                            
+                                         }else{
                                             self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>$value["notas"]), $value["id"]);
                                          }
 //                                         $model->actualizarGanttTareas
@@ -379,6 +381,8 @@ class Gantt_TareasModel{
         }
         
     }
+    
+    
     
     
     public static function verificarTareasExiste($array){
@@ -466,6 +470,11 @@ class Gantt_TareasModel{
     
     
     }
+//    public static  function checarsiTarea
+
+
+
+
 
     public function listarEmpleadosNombreCompleto()
     {
