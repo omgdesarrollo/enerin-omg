@@ -258,6 +258,9 @@ function listarDatos()
 function graficar()
 {
     activeChart = 0;
+    let dataGrafica=[];
+    let tituloGrafica = "CUMPLIMIENTO DE REQUISITOS";
+    let bandera = 0;
     let chartsCreados = [];
     let requisitos = 0;
     let registros = 0;
@@ -292,55 +295,50 @@ function graficar()
             if(value.penalizacion == "true")
             {
                 requisitos_atrasados_cp++;
-                atrasados_cp_temas.push(value.no_tema);
+                atrasados_cp_temas.push(value);
             }
             else
             {
                 requisitos_atrasados_sp++;
-                atrasados_sp_temas.push(value.no_tema);
+                atrasados_sp_temas.push(value);
             }
         }
         if(value.estado_requisito == "CUMPLIDO")
         {
             requisitos_cumplidos++;
-            cumplidos_temas.push(value.no_tema);
+            cumplidos_temas.push(value);
         }
         if(value.estado_requisito == "EN PROCESO")
         {
             if(value.penalizacion == "true")
             {
                 requisitos_proceso_cp++;
-                proceso_cp_temas.push(value.no_tema);
+                proceso_cp_temas.push(value);
             }
             else
             {
                 requisitos_proceso_sp++;
-                proceso_sp_temas.push(value.no_tema);
+                proceso_sp_temas.push(value);
             }
         }
         if(value.estado_tema == 0)
             no_iniciados++;
     });
-    dataGrafica = [
-        ["Cumplidos",requisitos_cumplidos,">> Requisitos:"+requisitos_cumplidos.toString(),JSON.stringify(cumplidos_temas)],
-        ["En Proceso",requisitos_proceso_sp,">> Requisitos:"+requisitos_proceso_sp.toString(),JSON.stringify(proceso_sp_temas)],
-        ["En Proceso Penalizados",requisitos_proceso_cp,">> Requisitos:"+requisitos_proceso_cp.toString(),JSON.stringify(proceso_cp_temas)],
-        ["Atrasados",requisitos_atrasados_sp,">> Requisitos:"+requisitos_atrasados_sp.toString(),JSON.stringify(atrasados_sp_temas)],
-        ["Atrasados Penalizados",requisitos_atrasados_cp,">> Requisitos:"+requisitos_atrasados_cp.toString(),JSON.stringify(atrasados_cp_temas)],
-        // ["No Iniciados",no_iniciados],
-    ];
-    // console.log("requisitos = "+requisitos);
-    // console.log("registros = "+registros);
+    if(requisitos_cumplidos!=0)
+        dataGrafica.push(["Cumplidos",requisitos_cumplidos,">> Requisitos:"+requisitos_cumplidos.toString(),JSON.stringify(cumplidos_temas)]);
+    if(requisitos_proceso_sp!=0)
+        dataGrafica.push(["En Proceso",requisitos_proceso_sp,">> Requisitos:"+requisitos_proceso_sp.toString(),JSON.stringify(proceso_sp_temas)]);
+    if(requisitos_proceso_cp!=0)
+        dataGrafica.push(["En Proceso Penalizados",requisitos_proceso_cp,">> Requisitos:"+requisitos_proceso_cp.toString(),JSON.stringify(proceso_cp_temas)]);
+    if(requisitos_cumplidos!=0)
+        dataGrafica.push(["Atrasados",requisitos_atrasados_sp,">> Requisitos:"+requisitos_atrasados_sp.toString(),JSON.stringify(atrasados_sp_temas)]);
+    if(requisitos_cumplidos!=0)
+        dataGrafica.push(["Atrasados Penalizados",requisitos_atrasados_cp,">> Requisitos:"+requisitos_atrasados_cp.toString(),JSON.stringify(atrasados_cp_temas)]);
     
-
-    tituloGrafica = "CUMPLIMIENTO DE REQUISITOS";
-    bandera = 0;
-
     $.each(dataGrafica,function(index,value){
         if(value[1] != 0)
             bandera=1;
     });
-
     if(bandera == 0)
     {
         dataGrafica.push([ "NO EXISTEN REQUISITOS",1,"SIN REQUISITOS","[]"]);
@@ -448,19 +446,20 @@ function graficar()
 //     // });
 // }
 
-function graficar2(temas,concepto)
+function graficar2(datos,concepto)
 {
     activeChart = 1;
-    temas = JSON.parse(temas);
-    var newArray = [];
-    var lookupObject  = {};
+    datos = JSON.parse(datos);
+    console.log(datos);
+    // let newArray = [];
+    // let lookupObject  = {};
 
-    var requisitos = 0;
-    var registros = 0;
-    var temasTemp = [];
-    var estado = "";
-    var penalizacion="false";
-    var tituloGrafica = "NO EXISTEN REQUISITOS";
+    let requisitos = 0;
+    let registros = 0;
+    let temasTemp = [];
+    let estado = "";
+    let penalizacion="false";
+    let tituloGrafica = "NO EXISTEN REQUISITOS";
 
     if(concepto == "Cumplidos")
     {
@@ -490,59 +489,78 @@ function graficar2(temas,concepto)
         tituloGrafica = "INCUMPLIMIENTO PENALIZADOS REQUISITOS";
     }
 
-    for(var i in temas)
-    {
-        lookupObject[temas[i]] = temas[i];
-    }
+    // for(var i in temas)
+    // {
+    //     lookupObject[temas[i]] = temas[i];
+    // }
 
-    for(i in lookupObject)
-    {
-        newArray.push(lookupObject[i]);
-    }
-    temas = newArray;
-    contadorRequisitos=0;
-    nombre_tema;
+    // for(i in lookupObject)
+    // {
+    //     newArray.push(lookupObject[i]);
+    // }
+    // temas = newArray;
+    $.each(datos,(index,value)=>{
+        if(bandera==0)
+        {
+            id_tema = value.id_tema;
+            lista[value.id_tema]=[];
+        }
+        bandera=1;
+        if(value.id_tema != id_tema)
+        {
+            lista[value.id_tema]=[];
+            lista[value.id_tema].push(value);
+            id_tema = value.id_tema;
+        }
+        else
+        {
+            id_tema = value.id_tema;
+            lista[value.id_tema].push(value);
+        }
+    });
+
+    let contadorRequisitos=0;
+    let nombre_tema;
     contadorArreglo=-1;
     no_tema;
     bandera=1;
     bandera2=1;
-    // console.log(penalizacion);
-    // console.log(dataListado);
-    $.each(dataListado,function(index,value)
-    {
-        if(bandera == 1)
-        {
-            no_tema = value.no_tema;
-            bandera=0;
-        }
-        if(no_tema != value.no_tema)
-        {
-            no_tema = value.no_tema;
-            contadorRequisitos=0;
-            bandera2 = 1;
-        }
-        $.each(temas,function(ind,val)
-        {
-            if(value.no_tema == val)
-            {
-                if(bandera2 == 1)
-                {
-                    temasTemp.push({no_tema:value.no_tema ,nombre:value.nombre_tema,responsable:value.responsable_tema,requisitos:""});
-                    contadorArreglo++;
-                    bandera2=0;
-                }
-                if(value.estado_requisito == "CUMPLIDO" && estado == "CUMPLIDO")
-                    contadorRequisitos++;
-                else
-                {
 
-                    if(value.estado_requisito == estado && value.penalizacion == penalizacion)
-                        contadorRequisitos++;
-                }
-                temasTemp[contadorArreglo]["requisitos"] = contadorRequisitos;
-            }
-        });
-    });
+    // $.each(dataListado,function(index,value)
+    // {
+    //     if(bandera == 1)
+    //     {
+    //         no_tema = value.no_tema;
+    //         bandera=0;
+    //     }
+    //     if(no_tema != value.no_tema)
+    //     {
+    //         no_tema = value.no_tema;
+    //         contadorRequisitos=0;
+    //         bandera2 = 1;
+    //     }
+    //     $.each(temas,function(ind,val)
+    //     {
+    //         if(value.no_tema == val)
+    //         {
+    //             if(bandera2 == 1)
+    //             {
+    //                 temasTemp.push({no_tema:value.no_tema ,nombre:value.nombre_tema,responsable:value.responsable_tema,requisitos:""});
+    //                 contadorArreglo++;
+    //                 bandera2=0;
+    //             }
+    //             if(value.estado_requisito == "CUMPLIDO" && estado == "CUMPLIDO")
+    //                 contadorRequisitos++;
+    //             else
+    //             {
+
+    //                 if(value.estado_requisito == estado && value.penalizacion == penalizacion)
+    //                     contadorRequisitos++;
+    //             }
+    //             temasTemp[contadorArreglo]["requisitos"] = contadorRequisitos;
+    //         }
+    //     });
+    // });
     // console.log(temasTemp);
     dataGrafica = [];
     bandera = 0;

@@ -60,7 +60,7 @@ function construirGrafica(dataGrafica,tituloGrafica)//funcion sin cambio
     estructuraGrafica = chartEstructura(dataGrafica);
     opcionesGrafica = chartOptions(tituloGrafica);
     instanceGrafica = drawChart(dataGrafica,estructuraGrafica,opcionesGrafica);
-    chartsCreados.push({grafica:instanceGrafica,data:estructuraGrafica});
+    chartsCreados[activeChart]={grafica:instanceGrafica,data:estructuraGrafica};
 }
 
 function chartEstructura(dataGrafica)//funcion sin cambio
