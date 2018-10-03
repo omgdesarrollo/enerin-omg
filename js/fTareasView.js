@@ -989,7 +989,7 @@ if(concepto== "Suspendido")
 }
 
     tareas = JSON.parse(tareas);
-    console.log("Estas son las tareas.parse: ",tareas);
+//    console.log("Estas son las tareas.parse: ",tareas);
     $.each(tareas,(index,value)=>
     {
 
@@ -1001,8 +1001,33 @@ if(concepto== "Suspendido")
     tarea="";    
     $.each(lista,(index,value)=>
     {
-        console.log("value: ",value);
-        dataGrafica.push([value[0].nombre_completo,value.length,">> Temas:"+value.length,"[]"]);  
+//        console.log("value: ",value);
+        dataGrafica.push([value[0].nombre_completo,value.length,">> Temas:"+value.length,JSON.stringify(value)]);  
+    });
+    construirGrafica(dataGrafica,tituloGrafica);
+}
+
+function graficar3(datos,concepto)
+{
+    activeChart = 2;
+    let dataGrafica = [];
+    let lista = new Object();
+
+    datos = JSON.parse(datos);
+    tituloGrafica = "TEMAS";
+    
+    $.each(datos,(index,value)=>
+    {
+//        console.log("Estos son los datos: ",datos);
+        if(lista[value.id_tarea]==undefined)
+            lista[value.id_tarea]=[];
+        lista[value.id_tarea].push(value);
+    });
+    // console.log(lista);
+    $.each(lista,(index,value)=>
+    {
+//        console.log("este es el value: ",value);
+        dataGrafica.push([value[0].tarea,value.length,">> Tema:\n"+value[0].tarea+"\n>> Responsable:\n"+value[0].nombre_completo,"[]"]);
     });
     construirGrafica(dataGrafica,tituloGrafica);
 }
