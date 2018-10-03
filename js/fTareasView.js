@@ -78,8 +78,8 @@ $(function()
         });
     });
     
-        $("#BTN_ANTERIOR_GRAFICAMODAL").click(function()
-    {
+//        $("#BTN_ANTERIOR_GRAFICAMODAL").click(function()
+//    {
 //        activeChart = -1;
 //        graficar();
 //        if(activeChart>1)
@@ -95,9 +95,9 @@ $(function()
 //            graficar();
 //        }
 
-        activeChart = -1;
-        graficar();
-    });
+//        activeChart = -1;
+//        graficar();
+//    });
 
 }); //CIERRA $(FUNCTION())
 
@@ -975,12 +975,13 @@ function cargarprogram(value){
 //}
 
 
-var activeChart = -1;
-var chartsCreados = [];
-var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)}];//checar como poner funciones en un arreglo
+//var activeChart = -1;
+//var chartsCreados = [];
+//var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)}];//checar como poner funciones en un arreglo
 function graficar()
 {
     activeChart = 0;
+    chartsCreados = [];
     let enTiempo = 0;
     let enTiempo_data = [];
     let alarmaVencida = 0;
@@ -998,29 +999,24 @@ function graficar()
         if(value.status_grafica == "En tiempo")
         {
             enTiempo++;
-////            enTiempo_data.push({id_empleado:value.id_empleado,nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
             enTiempo_data.push(value);
-            console.log("Este es en tiempo",enTiempo_data);
         }
         
         if(value.status_grafica == "Alarma vencida")
         {
             alarmaVencida++;
-//            alarmaVencida_data.push({id_empleado:value.id_empleado,nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
             alarmaVencida_data.push(value); 
         }
         
         if(value.status_grafica == "Tarea vencida")
         {
             tareaVencida++;
-//            tareaVencida_data.push({id_empleado:value.id_empleado,nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
             tareaVencida_data.push(value); 
         }
         
         if(value.status_grafica == "Suspendido")
         {
             suspendido++;
-//            suspendido_data.push({id_empleado:value.id_empleado,nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
             suspendido_data.push(value); 
         }
 
@@ -1031,18 +1027,12 @@ function graficar()
     if(alarmaVencida!=0)
         dataGrafica.push(["En Proceso-Alarma Vencida",alarmaVencida,">> Pendientes:"+alarmaVencida.toString(),JSON.stringify(alarmaVencida_data)]);
     if(tareaVencida!=0)
-        dataGrafica.push(["En Proceso-Pendiente Vencido",tareaVencida,">> Pendientes:"+tareaVencida.toString(),JSON.stringify(tareaVencida_data)]);
+        dataGrafica.push(["En Proceso-Tema Vencido",tareaVencida,">> Pendientes:"+tareaVencida.toString(),JSON.stringify(tareaVencida_data)]);
     if(suspendido!=0)
         dataGrafica.push(["Suspendido",suspendido,">> Pendientes:"+suspendido.toString(),JSON.stringify(suspendido_data)]);
 
-//
-//    activeChart = -1;
-//    chartsCreados = [];
-//    let tituloGrafica = "";
-//    let bandera = 0;
     $.each(dataGrafica,function(index,value)
     {
-        console.log("Esto trae dataGrafica",value);
         if(value[1] != 0)
             bandera=1;
     });
@@ -1052,103 +1042,118 @@ function graficar()
         dataGrafica.push([ "NO EXISTEN PENDIENTES",1,"SIN PENDIENTES","[]"]);
         tituloGrafica = "NO EXISTEN PENDIENTES";
     }
-    // console.log(dataGrafica); 
-    // console.log(JSON.parse(dataGrafica[1][3]));
+    
     construirGrafica(dataGrafica,tituloGrafica);
     $("#BTN_ANTERIOR_GRAFICAMODAL").html("Recargar");
 }
 
-function construirGrafica(dataGrafica,tituloGrafica)//funcion sin cambio
-{
-    estructuraGrafica = chartEstructura(dataGrafica);
-    opcionesGrafica = chartOptions(tituloGrafica);
-    instanceGrafica = drawChart(dataGrafica,estructuraGrafica,opcionesGrafica);
-//    activeChart++;
-    chartsCreados.push({grafica:instanceGrafica,data:estructuraGrafica});
-}
+//function construirGrafica(dataGrafica,tituloGrafica)//funcion sin cambio
+//{
+//    estructuraGrafica = chartEstructura(dataGrafica);
+//    opcionesGrafica = chartOptions(tituloGrafica);
+//    instanceGrafica = drawChart(dataGrafica,estructuraGrafica,opcionesGrafica);
+////    activeChart++;
+//    chartsCreados.push({grafica:instanceGrafica,data:estructuraGrafica});
+//}
 
-function chartEstructura(dataGrafica)//funcion sin cambio
-{
-    // console.log(dataGrafica);
-    data = new google.visualization.DataTable();
-    data.addColumn('string', 'nombre');
-    data.addColumn('number', 'valor');
-    data.addColumn({type:"string",role:"tooltip"});
-    data.addColumn('string','datos');
-    data.addRows(dataGrafica);
-    console.log("este es el data: ",data);
-    return data;
-}
+//function chartEstructura(dataGrafica)//funcion sin cambio
+//{
+//    // console.log(dataGrafica);
+//    data = new google.visualization.DataTable();
+//    data.addColumn('string', 'nombre');
+//    data.addColumn('number', 'valor');
+//    data.addColumn({type:"string",role:"tooltip"});
+//    data.addColumn('string','datos');
+//    data.addRows(dataGrafica);
+//    console.log("este es el data: ",data);
+//    return data;
+//}
 
-function chartOptions(tituloGrafica)//funcion sin cambio
-{
-    var options = 
-    {
-        legend:{
-                position:"labeled",alignment:"start",
-                textStyle:
-                {
-                    color:"black", fontSize:14, bold:true
-                }
-            },
-        pieSliceText:"none",
-        title: tituloGrafica,
-        tooltip:{textStyle:{color:"#000000"},text:"none",isHtml:true},
-        // pieSliceText:"",
-        titleTextStyle:{color:"black"},
-        'is3D':true,
-        slices: { 
-            1: {offset: 0.02,color:"#80ffbf"},
-            3: {offset: 0.02,color:"#bfff80"},
-            0: {offset: 0.02,color:"#ffbf80"},
-            4: {offset: 0.02,color:"#ff80bf"},
-            2: {offset: 0.02,color:"#bf80ff"},
-        },
-        backgroundColor:"",
-        "width":800,
-        "height":400
-    };
-    
-    return options;
-}
+//function chartOptions(tituloGrafica)//funcion sin cambio
+//{
+//    var options = 
+//    {
+//        legend:{
+//                position:"labeled",alignment:"start",
+//                textStyle:
+//                {
+//                    color:"black", fontSize:14, bold:true
+//                }
+//            },
+//        pieSliceText:"none",
+//        title: tituloGrafica,
+//        tooltip:{textStyle:{color:"#000000"},text:"none",isHtml:true},
+//        // pieSliceText:"",
+//        titleTextStyle:{color:"black"},
+//        'is3D':true,
+//        slices: { 
+//            1: {offset: 0.02,color:"#80ffbf"},
+//            3: {offset: 0.02,color:"#bfff80"},
+//            0: {offset: 0.02,color:"#ffbf80"},
+//            4: {offset: 0.02,color:"#ff80bf"},
+//            2: {offset: 0.02,color:"#bf80ff"},
+//        },
+//        backgroundColor:"",
+//        "width":800,
+//        "height":400
+//    };
+//    
+//    return options;
+//}
 
-function drawChart(dataGrafica,data,options)//funcion sin cambio
-{
-    grafica = new google.visualization.PieChart(document.getElementById('graficaPie'));
-    grafica.draw(data, options);
-    console.log(dataGrafica[0][3]);
-    if(dataGrafica[0][3]!="[]")
-    google.visualization.events.addListener(grafica, 'select', selectChart);
- 
-    return grafica;
-}
+//function drawChart(dataGrafica,data,options)//funcion sin cambio
+//{
+//    grafica = new google.visualization.PieChart(document.getElementById('graficaPie'));
+//    grafica.draw(data, options);
+//    console.log(dataGrafica[0][3]);
+//    if(dataGrafica[0][3]!="[]")
+//    google.visualization.events.addListener(grafica, 'select', selectChart);
+// 
+//    return grafica;
+//}
 
-function selectChart()
-{
-    var select = chartsCreados[activeChart].grafica.getSelection()[0];
-    console.log("Este es el select: ",select);
-    if(select != undefined)
-    {
-        dataNextGrafica = chartsCreados[activeChart].data.getValue(select.row,3);
-        concepto = chartsCreados[activeChart].data.getValue(select.row,0);
-        chartsFunciones[activeChart+1](dataNextGrafica,concepto);
-        graficar2(dataNextGrafica,concepto);
-        $("#BTN_ANTERIOR_GRAFICAMODAL").html("Anterior");
-    }
-}
+//function selectChart()
+//{
+//    var select = chartsCreados[activeChart].grafica.getSelection()[0];
+//    console.log("Este es el select: ",select);
+//    if(select != undefined)
+//    {
+//        dataNextGrafica = chartsCreados[activeChart].data.getValue(select.row,3);
+//        concepto = chartsCreados[activeChart].data.getValue(select.row,0);
+//        chartsFunciones[activeChart+1](dataNextGrafica,concepto);
+//        graficar2(dataNextGrafica,concepto);
+//        $("#BTN_ANTERIOR_GRAFICAMODAL").html("Anterior");
+//    }
+//}
 
 function graficar2(tareas,concepto)
 {
-    console.log("concepto: ",concepto);
+//    console.log("concepto: ",concepto);
     activeChart = 1;
     let lista = new Object();
     let id_empleado;
     let bandera = 0;
     let dataGrafica = [];
 //    tituloGrafica = concepto != "En Proceso" ? "EVIDENCIAS VALIDADAS" : "EVIDENCIAS EN PROCESO";
-    tituloGrafica = "TEMAS POR RESPONSABLE";
-    
-    tareas = JSON.parse(tareas);    
+if(concepto== "En Proceso-En Tiempo")
+{
+    tituloGrafica = "TEMAS EN PROCESO-EN TIEMPO";
+}
+if(concepto== "En Proceso-Alarma Vencida")
+{
+    tituloGrafica = "TEMAS EN PROCESO-ALARMA VENCIDA";
+}
+if(concepto== "En Proceso-Tema Vencido")
+{
+    tituloGrafica = "TEMAS EN PROCESO-VENCIDO";
+}
+if(concepto== "Suspendido")
+{
+    tituloGrafica = "TEMAS SUSPENDIDOS";
+}
+
+    tareas = JSON.parse(tareas);
+    console.log("Estas son las tareas.parse: ",tareas);
     $.each(tareas,(index,value)=>
     {
         if(bandera==0)
@@ -1162,28 +1167,18 @@ function graficar2(tareas,concepto)
             lista[value.id_empleado]=[];
             lista[value.id_empleado].push(value);
             id_empleado = value.id_empleado;
-        }
-        else
-        {
+        }else{
             id_empleado = value.id_empleado;
             lista[value.id_empleado].push(value);
         }
     });
-    
-//    tituloGrafica = "Pendientes por Responsable";
-    
+        
     $.each(lista,(index,value)=>
     {
-//        console.log(index,value);
-        $.each(value,(index2,value2)=>
-        {
-            console.log(index,value2);
-//            dataGrafica.push([value2.nombre_completo,value.length,">> Pendiente:"+value2.tarea,"[]"]);
-            dataGrafica.push([value2.nombre_completo,value.length,">> Pendiente:\n"+value2.tarea+"\n>> Cantidad:"+value.length,"[]"]);
-
-        });
+        console.log("Esta es lista aqui: ",lista);
+        console.log("Este es el value: ",value);
+          dataGrafica.push([value[0].nombre_completo,value.length,">> Pendiente:\n"+value[0].tarea+"\n>> Cantidad:"+value.length,"[]"]);
     });
-    // console.log(dataGrafica);
     construirGrafica(dataGrafica,tituloGrafica);
 }
 
