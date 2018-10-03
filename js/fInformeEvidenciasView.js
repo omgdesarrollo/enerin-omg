@@ -611,23 +611,9 @@ function graficar2(temas,concepto)
     tituloGrafica = concepto != "En Proceso" ? "EVIDENCIAS VALIDADAS" : "EVIDENCIAS EN PROCESO";
     temas = JSON.parse(temas);
     $.each(temas,(index,value)=>{
-        if(bandera==0)
-        {
-            id_tema = value.id_tema;
-        }
-        bandera=1;
         if(lista[value.id_tema]==undefined)
             lista[value.id_tema]=[];
-        if(value.id_tema != id_tema)
-        {
-            lista[value.id_tema].push(value);
-            id_tema = value.id_tema;
-        }
-        else
-        {
-            id_tema = value.id_tema;
-            lista[value.id_tema].push(value);
-        }
+        lista[value.id_tema].push(value);
     });
     $.each(lista,(index,value)=>{
         console.log(index,value);

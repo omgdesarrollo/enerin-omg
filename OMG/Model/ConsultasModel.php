@@ -16,8 +16,8 @@ class ConsultasModel{
             foreach($lista as $key=>$value)
             {
                 // $dias = 0;
-                if($value["fecha_inicio"] != "0000-00-00")
-                {
+                // if($value["fecha_inicio"] != "0000-00-00")
+                // {
                     $fecha_inicio = new Datetime($value["fecha_inicio"]);
                     $frecuencia = $value["frecuencia"];
                     if($frecuencia == "DIARIO")
@@ -147,11 +147,11 @@ class ConsultasModel{
                     {
                         $lista[$key]["evidencias_realizar"] = -1;
                     }
-                }
-                else
-                {
-                    $lista[$key]["evidencias_realizar"] = "X";
-                }
+                // }
+                // else
+                // {
+                //     $lista[$key]["evidencias_realizar"] = "X";
+                // }
                 if($value["id_registro"]==null)
                 {
                     $lista[$key]["evidencias_realizar"] = "X";
@@ -223,8 +223,8 @@ class ConsultasModel{
                     $lista2[$contador]["detalles_requisito"][$contador2]["evidencias_proceso"] = $lista[$i]["evidencias_totales"]-$lista[$i]["evidencias_validadas"];
                     $lista2[$contador]["detalles_requisito"][$contador2]["cumplimiento_evidencias"] = $lista[$i]["cumplimiento_evidencias"];
                     
-                    if($lista[$i]["fecha_inicio"]!="0000-00-00")
-                    {
+                    // if($lista[$i]["fecha_inicio"]!="0000-00-00")
+                    // {
                         if($lista[$i]["id_registro"]==NULL)
                         {
                             if(isset($lista2[$contador]["divisor_evidencias"]))
@@ -276,13 +276,13 @@ class ConsultasModel{
                             }
                         }
                         $lista2[$contador]["estado_tema"]=1;
-                    }
-                    else
-                    {
-                        $lista2[$contador]["cumplimiento_requisito"] = "X";
-                        $lista2[$contador]["estado_tema"]=0;
-                        $lista2[$contador]["estado_requisito"]="NO INICIADO";
-                    }
+                    // }
+                    // else
+                    // {
+                    //     $lista2[$contador]["cumplimiento_requisito"] = "X";
+                    //     $lista2[$contador]["estado_tema"]=0;
+                    //     $lista2[$contador]["estado_requisito"]="NO INICIADO";
+                    // }
                     $contador2++;
                 }
                 else
@@ -309,8 +309,8 @@ class ConsultasModel{
                     $id_tema = $value["id_tema"];
                     $bandera=1;
                 }
-                if($value["fecha_inicio"]!="0000-00-00")
-                {
+                // if($value["fecha_inicio"]!="0000-00-00")
+                // {
                     if($id_tema==$value["id_tema"])
                     {
                         if(isset($cumplimiento_tema[$id_tema]))
@@ -342,11 +342,11 @@ class ConsultasModel{
                             $cumplimiento_tema[$id_tema]["cumplimiento"] = $cumplimiento_tema[$id_tema]["sumatoria"];
                         }
                     }
-                }
-                else
-                {
-                    $cumplimiento_tema[$value["id_tema"]]["cumplimiento"] = "X";
-                }
+                // }
+                // else
+                // {
+                //     $cumplimiento_tema[$value["id_tema"]]["cumplimiento"] = "X";
+                // }
             }
             $cumplimiento_contrato = 0;
             $contador=0;
@@ -950,24 +950,24 @@ class ConsultasModel{
             $lista3 = [];
             foreach($lista2 as $key => $value)
             {
-                if($bandera == 0)
-                {
-                    // $lista3[0];
-                    $id_tema = $value["id_tema"];
-                    $bandera=1;
-                }
-                if(!isset($lista3[$id_tema]))
-                    $lista3[$id_tema] = [];
-                if($id_tema != $value["id_tema"])
-                {
-                    array_push($lista3[$id_tema],$value);
-                    $id_tema = $value["id_tema"];
-                }
-                else
-                {
-                    $id_tema = $value["id_tema"];
-                    array_push($lista3[$id_tema],$value);
-                }
+                // if($bandera == 0)
+                // {
+                //     // $lista3[0];
+                //     $id_tema = $value["id_tema"];
+                //     $bandera=1;
+                // }
+                if(!isset($lista3[$value["id_tema"]]))
+                    $lista3[$value["id_tema"]] = [];
+                // if($id_tema != $value["id_tema"])
+                // {
+                //     array_push($lista3[],$value);
+                //     $id_tema = $value["id_tema"];
+                // }
+                // else
+                // {
+                    // $id_tema = $value["id_tema"];
+                    array_push($lista3[$value["id_tema"]],$value);
+                // }
             }
             return $lista3;
         }catch(Exception $e)
