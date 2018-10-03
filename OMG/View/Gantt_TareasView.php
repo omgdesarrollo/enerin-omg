@@ -1022,7 +1022,7 @@ dp.init(gantt);
                                refrescarDatosGantt();
                            break;
                            case "agrupar_descripcion":
-                               showGroups('text');
+                               showGroups();
                            break;
                            case "agrupar_responsables":
                                showGroups('user');
