@@ -94,6 +94,7 @@ and open the template in the editor.
       height: 100%;
       padding:0px;
       margin:0px;
+
       /*overflow: hidden;*/
     }
     
@@ -148,7 +149,7 @@ and open the template in the editor.
         	
 		
   </head>
-    <body>
+    <body >
         
   <form action="">
       <input type="submit" class="btn btn-info" value="Recargar">      
