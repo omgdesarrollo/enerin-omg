@@ -945,7 +945,31 @@ class ConsultasModel{
             //     $listaFinal[$key]["cumplimiento_tema"] = $lista4[$value["id_tema"]];
             // }
             // var_dump($lista4);
-            return $lista2;
+            $bandera = 0;
+            $id_tema;
+            $lista3 = [];
+            foreach($lista2 as $key => $value)
+            {
+                if($bandera == 0)
+                {
+                    // $lista3[0];
+                    $id_tema = $value["id_tema"];
+                    $bandera=1;
+                }
+                if(!isset($lista3[$id_tema]))
+                    $lista3[$id_tema] = [];
+                if($id_tema != $value["id_tema"])
+                {
+                    array_push($lista3[$id_tema],$value);
+                    $id_tema = $value["id_tema"];
+                }
+                else
+                {
+                    $id_tema = $value["id_tema"];
+                    array_push($lista3[$id_tema],$value);
+                }
+            }
+            return $lista3;
         }catch(Exception $e)
         {
             throw $e;

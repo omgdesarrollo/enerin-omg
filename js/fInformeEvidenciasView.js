@@ -665,7 +665,7 @@ function graficar3(datos,concepto)
             lista[value.id_registro].push(value);
         }
     });
-    console.log(lista);
+    // console.log(lista);
     $.each(lista,(index,value)=>{
         dataGrafica.push([value[0].registro,value.length,">> Responsable Registro:\n"+value[0].resp+"\n>> Frecuencia:\n"+value[0].frecuencia+"\n>> Evidencias:"+value.length,"[]"]);
     });

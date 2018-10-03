@@ -563,12 +563,12 @@ function graficar2(datos,concepto)
         if(bandera==0)
         {
             id_tema = value.id_tema;
-            lista[value.id_tema]=[];
         }
         bandera=1;
+        if(lista[value.id_tema]==undefined)
+            lista[value.id_tema]=[];
         if(value.id_tema != id_tema)
         {
-            lista[value.id_tema]=[];
             lista[value.id_tema].push(value);
             id_tema = value.id_tema;
         }
