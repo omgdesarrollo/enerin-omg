@@ -554,29 +554,12 @@ function graficar2(datos,concepto)
     activeChart = 1;
     datos = JSON.parse(datos);
     let lista = new Object();
-    let id_tema;
-    let bandera = 0;
-    let estatus = 0;
     let dataGrafica = [];
 
     $.each(datos,(index,value)=>{
-        if(bandera==0)
-        {
-            id_tema = value.id_tema;
-        }
-        bandera=1;
         if(lista[value.id_tema]==undefined)
             lista[value.id_tema]=[];
-        if(value.id_tema != id_tema)
-        {
-            lista[value.id_tema].push(value);
-            id_tema = value.id_tema;
-        }
-        else
-        {
-            id_tema = value.id_tema;
-            lista[value.id_tema].push(value);
-        }
+        lista[value.id_tema].push(value);
     });
     tituloGrafica = "DOCUMENTOS POR TEMA";
     $.each(lista,(index,value)=>{
