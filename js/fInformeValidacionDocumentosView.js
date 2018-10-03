@@ -19,24 +19,24 @@ $(function()
         });
     });
 
-    $("#BTN_ANTERIOR_GRAFICAMODAL").click(function()
-    {
-        // google.charts.setOnLoadCallback(drawChart);
-        // if(activeChart != 0)
-        // {
-        //     alert("anterior");
-        //     $(this).html("Anterior");
-        //     activeChart = 0;
-        //     selectChart();
-        // }
-        // else
-        // {
-            // alert("primero");
-            // $(this).html("Anterior");
-            activeChart = -1;
-            graficar();
-        // }
-    });
+    // $("#BTN_ANTERIOR_GRAFICAMODAL").click(function()
+    // {
+    //     // google.charts.setOnLoadCallback(drawChart);
+    //     // if(activeChart != 0)
+    //     // {
+    //     //     alert("anterior");
+    //     //     $(this).html("Anterior");
+    //     //     activeChart = 0;
+    //     //     selectChart();
+    //     // }
+    //     // else
+    //     // {
+    //         // alert("primero");
+    //         // $(this).html("Anterior");
+    //         activeChart = -1;
+    //         graficar();
+    //     // }
+    // });
 
 }); //SE CIERRA EL $(FUNCTION())
 
@@ -491,16 +491,17 @@ function cargarprogram(v,validado)
     window.location.href="GanttEvidenciaView.php?id_evid="+v;
 }
 
-var activeChart = -1;
-var chartsCreados = [];
 function graficar()
 {
+    activeChart = 0;
     let validados = 0;
     let validados_data = [];
     let proceso = 0;
     let proceso_data = [];
     let sin_asignar = 0;
     let sin_asignar_data = [];
+    let tituloGrafica = "VALIDACIÓN DOCUMENTOS";
+    let bandera = 0;
 
     // console.log(dataListado);
     $.each(dataListado,(index,value)=>{
@@ -534,10 +535,6 @@ function graficar()
     if(validados!=0)
         dataGrafica.push(["Validados",validados,">> Documentos:"+validados.toString(),JSON.stringify(validados_data)]);
 
-    activeChart = -1;
-    chartsCreados = [];
-    let tituloGrafica = "VALIDACIÓN DOCUMENTOS";
-    let bandera = 0;
     $.each(dataGrafica,function(index,value){
         if(value[1] != 0)
             bandera=1;
@@ -548,94 +545,13 @@ function graficar()
         dataGrafica.push([ "NO EXISTEN DOCUMENTOS",1,"SIN DOCUMENTOS","[]"]);
         tituloGrafica = "NO EXISTEN DOCUMENTOS";
     }
-    // console.log(dataGrafica); 
-    // console.log(JSON.parse(dataGrafica[1][3]));
     construirGrafica(dataGrafica,tituloGrafica);
     $("#BTN_ANTERIOR_GRAFICAMODAL").html("Recargar");
 }
 
-function construirGrafica(dataGrafica,tituloGrafica)//funcion sin cambio
-{
-    estructuraGrafica = chartEstructura(dataGrafica);
-    opcionesGrafica = chartOptions(tituloGrafica);
-    instanceGrafica = drawChart(dataGrafica,estructuraGrafica,opcionesGrafica);
-    activeChart++;
-    chartsCreados.push({grafica:instanceGrafica,data:estructuraGrafica});
-}
-
-function chartEstructura(dataGrafica)//funcion sin cambio
-{
-    // console.log(dataGrafica);
-    data = new google.visualization.DataTable();
-    data.addColumn('string', 'nombre');
-    data.addColumn('number', 'valor');
-    // if(tooltip!=0)
-        data.addColumn({type:"string",role:"tooltip"});
-    data.addColumn('string','datos');
-    
-    // if(dataGrafica.length != 0)
-        data.addRows(dataGrafica);
-    // else
-    //     data.addRows([[ "NO HAY DATOS",1,"SIN DATOS",""]]);
-    return data;
-}
-
-function chartOptions(tituloGrafica)//funcion sin cambio
-{
-    var options = 
-    {
-        legend:{
-                position:"labeled",alignment:"start",
-                textStyle:
-                {
-                    color:"black", fontSize:14, bold:true
-                }
-            },
-        pieSliceText:"none",
-        title: tituloGrafica,
-        tooltip:{textStyle:{color:"#000000"},text:"none",isHtml:true},
-        // pieSliceText:"",
-        titleTextStyle:{color:"black"},
-        'is3D':true,
-        slices: { 
-            1: {offset: 0.02,color:"#80ffbf"},
-            3: {offset: 0.02,color:"#bfff80"},
-            0: {offset: 0.02,color:"#ffbf80"},
-            4: {offset: 0.02,color:"#ff80bf"},
-            2: {offset: 0.02,color:"#bf80ff"},
-        },
-        backgroundColor:"",
-        "width":800,
-        "height":400
-    };
-    return options;
-}
-
-function drawChart(dataGrafica,data,options)//funcion sin cambio
-{
-    grafica = new google.visualization.PieChart(document.getElementById('graficaPie'));
-    grafica.draw(data, options);
-    console.log(dataGrafica[0][3]);
-    if(dataGrafica[0][3]!="[]")
-        google.visualization.events.addListener(grafica, 'select', selectChart);
-    return grafica;
-}
-
-function selectChart()
-{
-    var select = chartsCreados[activeChart].grafica.getSelection()[0];
-    console.log(select);
-    if(select != undefined)
-    {
-        dataNextGrafica = chartsCreados[activeChart].data.getValue(select.row,3);
-        concepto = chartsCreados[activeChart].data.getValue(select.row,0);
-            graficar2(dataNextGrafica,concepto);
-        $("#BTN_ANTERIOR_GRAFICAMODAL").html("Anterior");
-    }
-}
-
 function graficar2(temas,concepto)
 {
+    activeChart = 1;
     temas = JSON.parse(temas);
     let lista = [];
     let no_tema;
@@ -681,6 +597,5 @@ function graficar2(temas,concepto)
     $.each(lista,(index,value)=>{
         dataGrafica.push(["Tema: "+value.no_tema,value.documentos,">> Tema:\n"+value.nombre_tema+"\n>> Responsable:\n"+value.responsable_tema+"\n>> Documentos:"+value.documentos,"[]"]);
     });
-    // console.log(dataGrafica);
     construirGrafica(dataGrafica,tituloGrafica);
 }

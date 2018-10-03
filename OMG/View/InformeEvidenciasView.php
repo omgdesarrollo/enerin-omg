@@ -82,32 +82,6 @@ $Usuario=  Session::getSesion("user");
                 word-wrap: break-word;
             }
 
-            div.google-visualization-tooltip
-            {
-                background:bisque;
-                border-radius:5px;
-                position:fixed;
-                top:60px !important;
-                left:1% !important;
-                min-width:200px;
-                max-width:400px;
-                -webkit-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
-                -moz-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
-                box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
-            }
-            div.ltr
-            {
-                width:-webkit-fill-available !important;
-                height:80% !important;
-            }
-            circle
-            {
-                r:4;
-            }
-            text
-            {
-                cursor:pointer;
-            }
 
         </style>              
                 
@@ -241,19 +215,10 @@ $Usuario=  Session::getSesion("user");
     </div>
 </div>
 
-<div class="modal draggable fade" id="Grafica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!-- <div class="modal draggable fade" id="Grafica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-
-                <!-- <div class="form-group" method="post" style="text-align:center" id="BTNS_GRAFICAMODAL"> -->
-                    <!-- <button type="submit" id="BTN_ANTERIOR_GRAFICAMODAL" class="botones_vista" style="width:fit-content" >Recargar</button> -->
-                <!-- </div> -->
-                <!-- <div class="btn-group btn-group-justified">
-                    <a href="#" class="btn btn-primary">Apple</a>
-                    <a href="#" class="btn btn-primary">Samsung</a>
-                    <a href="#" class="btn btn-primary">Sony</a>
-                </div> -->
                 
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="closeLetra">X</span>
@@ -271,8 +236,8 @@ $Usuario=  Session::getSesion("user");
             
         </div>
     </div>
-</div>
-
+</div> -->
+<div id="jsChart"></div>
 <script>
 
 // $(function(){
@@ -290,7 +255,9 @@ $Usuario=  Session::getSesion("user");
     var DataGridExcel=[];
     var origenDeDatosVista="informeEvidencias";
 
-    google.charts.load('current', {'packages':['corechart']});
+    var activeChart = -1;
+    var chartsCreados = [];
+    var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)},(dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)}];
     
     var frecuenciaData = [
                 {frecuencia:"DIARIO"},
@@ -334,6 +301,7 @@ $Usuario=  Session::getSesion("user");
         ];
 
     construirGrid();
+    inicializaChartjs();
     inicializarFiltros().then((resolve2)=>
     {
         construirFiltros();

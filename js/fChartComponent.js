@@ -1,3 +1,5 @@
+google.charts.load('current', {'packages':['corechart']});
+
 $(function()
 {
     $("#BTN_ANTERIOR_GRAFICAMODAL").click(function()
@@ -36,7 +38,21 @@ function inicializaChartjs()
         modal +=     '</div>';
         modal += '</div>';
         modal += '</div>';
+    let cssChart = "div.google-visualization-tooltip{";
+        cssChart += "background:bisque; border-radius:5px;";
+        cssChart += "position:fixed; top:60px !important;";
+        cssChart += "left:1% !important; min-width:200px;";
+        cssChart += "max-width:400px;";
+        cssChart += "-webkit-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);";
+        cssChart += "-moz-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);";
+        cssChart += "box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);}";
+        cssChart += "div.ltr{";
+        cssChart += "width:-webkit-fill-available !important;";
+        cssChart += "height:80% !important;}";
+        cssChart += "circle{ r:4; }";
+        cssChart += "text{ cursor:pointer; }";
     $("#jsChart").html(modal);
+    $("style").append(cssChart);
 }
 
 function construirGrafica(dataGrafica,tituloGrafica)//funcion sin cambio

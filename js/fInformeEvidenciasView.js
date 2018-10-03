@@ -484,9 +484,7 @@ function reconstruirExcel(value,index)
 // function loadSpinner(){
 //         myFunction();
 // }
-var activeChart = -1;
-var chartsCreados = [];
-var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)},(dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)}];
+
 function graficar()
 {
     activeChart = 0;
