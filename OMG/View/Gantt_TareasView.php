@@ -30,20 +30,16 @@ and open the template in the editor.
     <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <!--Para abrir alertas de aviso, success,warning, error--> 
     <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>  
-    
-   
-    
-    
 <!--        <script src="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.js"></script>
   <link href="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.css" rel="stylesheet">
   <script src="../../assets/dhtmlxGantt/api.js" type="text/javascript"></script>-->
-        <link href="../../assets/gantt_5.1.2_com/codebase/dhtmlxgantt.css" rel="stylesheet" type="text/css"/>
+        <link  href="../../assets/gantt_5.1.2_com/codebase/dhtmlxgantt.css" rel="stylesheet" type="text/css"/>
         <script src="../../assets/gantt_5.1.2_com/codebase/dhtmlxgantt.js" type="text/javascript"></script>
         <!--<script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_auto_scheduling.js" type="text/javascript"></script>-->
     <!--<a href="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_auto_scheduling.js.map"></a>-->
     <!--<script src="../../js/jquery.js" type="text/javascript"></script>-->
    
-    <link href="../../assets/gantt_5.1.2_com/codebase/skins/dhtmlxgantt_terrace.css" rel="stylesheet" type="text/css"/>
+    <!--<link id="skin" href="../../assets/gantt_5.1.2_com/codebase/skins/dhtmlxgantt_terrace.css" rel="stylesheet" type="text/css"/>-->
     <script src="../../js/jquery.min.js" type="text/javascript"></script>
     <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
     
@@ -99,22 +95,32 @@ and open the template in the editor.
    <link href="../../assets/gantt_5.1.2_com/samples/common/third-party/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
    <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
    <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
-   
-   
-   
-   
-   
+
     
     <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!--<link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>-->
     <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
 
+    
+    
+    <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
+    <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
+    <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
+    
+    <link href="../../assets/dhtmlxSuite_v51_std/skins/material/dhtmlx.css" rel="stylesheet" type="text/css"/>
+    <!--<link href="../../assets/dhtmlxSuite_v51_std/skins/skyblue/dhtmlx.css" rel="stylesheet" type="text/css"/>-->
+    <!--<link href="../../assets/dhtmlxSuite_v51_std/skins/terrace/dhtmlx.css" rel="stylesheet" type="text/css"/>-->
+    <!--<link href="../../assets/dhtmlxSuite_v51_std/skins/web/dhtmlx.css" rel="stylesheet" type="text/css"/>-->
+    
+    
     <!--aqui empieza librerias qe no son del gantt en funcionalidad y presentacion-->
     <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/18.1.6/css/dx.common.css" />
     <link rel="dx-theme" data-theme="generic.light" href="https://cdn3.devexpress.com/jslib/18.1.6/css/dx.light.css" />
     <script src="https://cdn3.devexpress.com/jslib/18.1.6/js/dx.all.js"></script>
     <link href="../../css/PersonalizacionVistasGantt.css" rel="stylesheet" type="text/css"/>
     <!--aqui termina las librerias que no son del gantt-->
+    
+    
    
  <style type="text/css">
     html, body{
@@ -181,9 +187,7 @@ and open the template in the editor.
 		.summary-bar {
 			opacity: 0.4;
 		}
-                
-                
-             
+               
  .dx-treelist-borders > 
  .dx-treelist-pager, 
  .dx-treelist-borders > 
@@ -205,22 +209,6 @@ and open the template in the editor.
 }
 
  .modal-lg{width: 50%;}
- #tabPanel{
-     height: 8%;
- }
- 
- 
-
-/* #detallesInformacion{
-    height: 100px;
-    width: 15%;
-    background-color: #303030;
-    float: left;
-    resize: horizontal;
-    overflow: hidden;;
-    max-width: 30%;
- }*/
-
 
 #mydiv {
     position: absolute;
@@ -240,6 +228,8 @@ and open the template in the editor.
     color: #fff;
 }
 
+   
+
 
 </style> 	
 		    
@@ -247,9 +237,6 @@ and open the template in the editor.
     <body>
  
 <!-- Draggable DIV -->
-
-
-
 
 
 <div class="accordion" id="accordionExample">
@@ -266,45 +253,14 @@ and open the template in the editor.
     </div>
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
       <div class="card-body">
-          <div>
-  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Detalles</button>
- <!--<input type="submit" class="btn btn-info " style="font-size: 12px;" value="Recargar" onclick="refrescarDatosGantt()">-->
-   <button class="btn btn-link collapsed" type="button" onclick="refrescarDatosGantt()">
-      <i class="fa fa-refresh"></i>
-        </button>
-  <!--<div class="col-md-6">-->
-      <!--<div class="col-md-4">-->
-        <input type='button' class="btn btn-info" id='default' onclick="showGroups()" value="Descripcion">
-      </div>
-      <!--<div class="col-md-2">-->
-        <input type='button' class="btn btn-info" id='user' onclick="showGroups('user')" value="Responsable">
-      <!--</div>-->
-  <!--</div>-->
-  <!--<input type="submit" class="btn btn-info" value="Recargar Detalles" onclick="refrescarDatosGantt()">-->   
+          
+          <div style="height: 35px;">
+          <div id="toolbarObj"></div>
+          </div>
+          <!--<div>-->
 
-      
-<!--<input id="fullscreen_button" type="button" value="Toggle Fullscreen"/>-->
-        <input type="radio" id="scale1" name="scale" value="1" checked/><label for=""><h5>Dia</h5></label>
-<input type="radio" id="scale2" name="scale" value="2"/><label for=""><h5>Semana</h5></label>
-<input type="radio" id="scale3" name="scale" value="3"/><label for=""><h5>Mes</h5></label>
-<input type="radio" id="scale4" name="scale" value="4"/><label for=""><h5>Año</h5></label>
-	<input value="deshacer" type="button" onclick='gantt.undo()' style='font-size: 10px'>
-	<input value="Rehacer" type="button" onclick='gantt.redo()' style='font-size: 10px'>
-
-        <input value="PDF"  class="btn btn-info " type="button" onclick="gantt.exportToPDF()" style="margin:20px;">
-    <input value="PNG" class="btn btn-info" type="button" onclick="gantt.exportToPNG()">
-<input value="MS Proyect" class="btn btn-success" type="button" onclick='gantt.exportToMSProject({skip_circular_links: false})'
-	   style='margin:20px;'>
-<input value="Excel" class="btn btn-info" type="button" onclick='gantt.exportToExcel({
-    name:"document.xlsx", 
-    columns:[
-        { id:"text",  header:"Tarea", width:100 },
-        { id:"start_date",  header:"Fecha de Inicio", width:50, type:"date" }
-    ],
-    server:"https://export.dhtmlx.com/gantt",
-    visual:true,
-    cellColors:true
-})' style='margin:20px;'>
+<!--	<input value="deshacer" type="button" onclick='gantt.undo()' style='font-size: 10px'>
+	<input value="Rehacer" type="button" onclick='gantt.redo()' style='font-size: 10px'>-->
           </div>
 <div class="row">
   <div class="col">
@@ -328,7 +284,7 @@ and open the template in the editor.
                                       <!--</div>-->
 
             </div>
- 
+
   
 </div>
           
@@ -343,7 +299,7 @@ and open the template in the editor.
   </div>
 </div>
 
- <div class="" id="gantt_here" style='width: 100%;height: 75%;position: absolute'>       </div>
+ <div class="" id="gantt_here" style='width: 100%;height: 95%;position: absolute'>       </div>
    
     
 <script>
@@ -391,10 +347,7 @@ function dragElement(elmnt) {
   }
 }
 </script>
-    
-    
-    
-    
+
     </body>
     
 <!-- Inicio de Seccion Modal Archivos-->
@@ -428,7 +381,7 @@ function dragElement(elmnt) {
 <!-- Inicio de Seccion Modal Informe-->
 <div class="modal draggable fade" id="detalles" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog modal-lg" role="document">
-        <div id="loaderModalMostrar"></div>
+            <div id="loaderModalMostrar"></div>
 		<div class="modal-content">
                         
 		      <div class="modal-header">
@@ -444,7 +397,6 @@ function dragElement(elmnt) {
                           <div id="tabPanel"></div>
                                 <!--<div sty></div>-->
                         <!--<div id=""></div>-->
-
                       </div><!-- cierre div class-body -->
                 </div><!-- cierre div class modal-content -->
         </div><!-- cierre div class="modal-dialog" -->
@@ -538,6 +490,8 @@ setScaleConfig('1');
 
 		}
 	}
+        
+
 
 
 
@@ -666,9 +620,11 @@ setScaleConfig('1');
                         gantt.getTask(id).readonly = true;
                         gantt.getTask(id).status = 3;
                     }
+                    
 //                    if(item.status==2){
 ////                        gantt.getTask(id).readonly = true;
 //                    }
+
                     if(item.status==3){
                         gantt.getTask(id).readonly = true;
                         gantt.getTask(id).progress = 1;
@@ -714,19 +670,17 @@ setScaleConfig('1');
         gantt.attachEvent("onBeforeLightbox", function(id) {
 //console.log(gantt.getTask(id));
             var task = gantt.getTask(id);
+//            if (task.progress == 1) {
+//			gantt.message({text: "La tarea esta completada", type: "completed"});
+//			return false;
+//		}
 //            var task;
             task.my_template ="<span id='title2'>Progreso: </span>"+Math.round(task.progress*100) +" %";
             return true;
            
         });
  //<----
-     
 
-        
-        
-        
-        
-        
         
         gantt.templates.grid_row_class =
 		gantt.templates.task_row_class = function (start, end, task) {
@@ -734,6 +688,9 @@ setScaleConfig('1');
 				return "summary-row"
 		};
 //        console.log(gantt.templates);
+
+
+
             gantt.templates.progress_text = function (start, end, task) {
 //        if(Math.round(task.progress * 100)==100){
 //            $(".gantt_task_line.gantt_dependent_task .gantt_task_progress ").css("background-color","red");
@@ -741,8 +698,15 @@ setScaleConfig('1');
 //                $("#taskid").css("background-color:","red");
 //		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
                 return "";
-	};
+            };
             
+//            gantt.templates.rightside_text = function (start, end, task) {
+//		return "ID: #" + task.id;
+//            };
+
+//            gantt.templates.leftside_text = function (start, end, task) {
+//                    return task.duration + " dias";
+//            };
             
             
 
@@ -973,31 +937,6 @@ gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
 
 var dp = new gantt.dataProcessor("../Controller/GanttTareasController.php?Op=Modificar");
 dp.init(gantt);
-//dp.autoUpdate=false;
-//dp.attachEvent("onBeforeUpdate", function (id, status, data) {
-//    console.log("empez");
-////    console.log(data);  
-//    console.log(dp);
-//    
-//    console.log("termino");
-//    
-//         return true;
-//});
-
-
-//empieza en cuanto a el modo de mostrar las tareas por dia,seman,mes,año
-	var func = function (e) {
-		e = e || window.event;
-		var el = e.target || e.srcElement;
-		var value = el.value;
-		setScaleConfig(value);
-		gantt.render();
-	};
-       	var els = document.getElementsByName("scale");
-	for (var i = 0; i < els.length; i++) {
-		els[i].onclick = func;
-	} 
-
     function obtenerEmpleados(){     
         $.ajax({
 //           url:"../Controller/GanttController.php?Op=ListarEmpleados",
@@ -1019,11 +958,116 @@ dp.init(gantt);
         
 
     var datosTreeList=[]; 
+    var ventana_detalles_abierta=false;
     $(function (){
-//        $("#detallesInformacion" ).draggable();
-       
-            
-            
+
+       cargarMenuArriba();
+        var myToolbar;
+		function cargarMenuArriba() {
+			myToolbar = new dhtmlXToolbarObject({
+				parent: "toolbarObj",
+				icons_path: "../../images/base/"
+			});    
+
+                        myToolbar.addButton("detalles", 3, "Detalles", "File_Table.png", "save_dis.gif");
+                        
+                         myToolbar.addButton("refresh", 3, "Recargar", "refresh.png");
+			myToolbar.addSeparator("sep1", 3);
+                        
+                        var agrupacionesCampos=Array(	Array('agrupar_descripcion', 'obj', 'Descripcion', '661.png'),
+						Array('agrupar_responsables','obj', 'Empleados' , '659.png'));
+                        
+                        myToolbar.addButtonSelect("agrupar_descripcion", 13, "Agrupar", agrupacionesCampos, "691.png");
+
+			myToolbar.addSeparator("sep3", 8);
+                        var visualizacionBarras=Array(	Array('tiempodia', 'obj', 'Dia', '663.png'),
+						Array('tiemposemana','obj', 'Semana' , '663.png'),
+                                                Array('tiempomes','obj', 'Mes' , '663.png'),
+                                                Array('tiempoaño','obj', 'Año' , '663.png'));
+                        
+                        
+                        myToolbar.addButtonSelect("visualizacionTiempo", 13, "Visualizacion Barras ", visualizacionBarras, "670.png");
+                        
+                        myToolbar.addSeparator("sep4", 8);
+                        
+                        var printOpts = [	['exportar_excel', 'obj', 'Excel', '_excel.png'],
+						['exportar_pdf','obj', 'Pdf' , 'pdf.png'],
+						['exportar_png',  'obj', 'Png'  , 'image.png']
+                                        ];
+//						Array('print_cfg',  'obj', 'MS Proyect'   , ''));
+			console.log(printOpts);
+			myToolbar.addButtonSelect("exportar", 13, "Exportar", printOpts, "descargar.png");
+                   
+                        myToolbar.addSeparator("sep5", 8);
+			
+                }
+                
+                myToolbar.attachEvent("onClick", function(id){
+                       console.log(id);
+                       switch(id){
+                           case "detalles":
+                               
+                               if(ventana_detalles_abierta==false){
+                                    $("#multiCollapseExample2").show();
+                                    ventana_detalles_abierta=true;
+                                }
+                                else{
+                                     if(ventana_detalles_abierta==true){
+                                        $("#multiCollapseExample2").hide();
+                                        ventana_detalles_abierta=false;
+                                     }
+                                }
+                           break;
+                           case "refresh":
+                               refrescarDatosGantt();
+                           break;
+                           case "agrupar_descripcion":
+                               showGroups('text');
+                           break;
+                           case "agrupar_responsables":
+                               showGroups('user');
+                           break;
+                            case "tiempodia":
+                                setScaleConfig("1");
+                                gantt.render();
+                                
+                            break;
+                             case "tiemposemana":
+                                  setScaleConfig("2");
+                                  gantt.render();
+                            break;
+                             case "tiempomes":
+                                 setScaleConfig("3");
+                                  gantt.render();
+                            break;
+                             case "tiempoaño":
+                                 setScaleConfig("4");
+                                  gantt.render();
+                            break;
+                            case "exportar_excel":
+                            gantt.exportToExcel({
+                                name:"document.xlsx", 
+                                columns:[
+                                    { id:"text",  header:"Tarea", width:100 },
+                                    { id:"start_date",  header:"Fecha de Inicio", width:50, type:"date" }
+                                ],
+                                server:"https://export.dhtmlx.com/gantt",
+                                visual:true,
+                                cellColors:true
+                            })
+                            break;
+                            case "exportar_pdf":
+                                gantt.exportToPDF();
+                            break;
+                            case "exportar_png":
+                                gantt.exportToPNG()
+                            break;
+                            case "exportar_MSProyect":
+                                gantt.exportToMSProject();
+                            break;
+                           
+                        }
+                });
 obtenerTareas().then(function (){
 construirTreeList();
 
