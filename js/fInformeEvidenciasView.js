@@ -627,30 +627,15 @@ function graficar3(datos,concepto)
 {
     activeChart = 2;
     let dataGrafica = [];
-    let id_registro;
-    let bandera = 0;
     let lista = new Object();
 
     datos = JSON.parse(datos);
     tituloGrafica = datos[0].estatus == "VALIDADO" ? "DETALLES EVIDENCIAS VALIDADAS" : "DETALLES EVIDENCIAS EN PROCESO";
+    
     $.each(datos,(index,value)=>{
-        if(bandera==0)
-        {
-            id_registro = value.id_registro;
-        }
-        bandera=1;
         if(lista[value.id_registro]==undefined)
             lista[value.id_registro]=[];
-        if(value.id_registro != id_registro)
-        {
-            lista[value.id_registro].push(value);
-            id_registro = value.id_registro;
-        }
-        else
-        {
-            id_registro = value.id_registro;
-            lista[value.id_registro].push(value);
-        }
+        lista[value.id_registro].push(value);
     });
     // console.log(lista);
     $.each(lista,(index,value)=>{

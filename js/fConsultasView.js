@@ -244,7 +244,7 @@ function listarDatos()
 //         paging: true,
 //         controller:db,
 //         filtering:true,
-// //        data: __datos,
+// /    /        data: __datos,
 //         fields: [
 //                 { name: "id_principal",visible:false },
 //                 { name: "no",title:"No.Tema", type: "text", width: 80, validate: "required" },
@@ -276,60 +276,99 @@ function graficar()
     let requisitos_cumplidos = 0;
     let cumplidos_temas = [];
 
-    let requisitos_proceso_sp = 0;
-    let proceso_sp_temas = [];
+    let requisitos_proceso = 0;
+    let data_requisitos_proceso = [];
+    // let requisitos_proceso_sp = 0;
+    // let proceso_sp_temas = [];
 
-    let requisitos_proceso_cp = 0;
-    let proceso_cp_temas = [];
+    // let requisitos_proceso_cp = 0;
+    // let proceso_cp_temas = [];
 
-    let requisitos_atrasados_cp = 0;
-    let atrasados_cp_temas = [];
+    let requisitos_atrasados = 0;
+    let data_requisitos_atrasados = [];
+    // let requisitos_atrasados_cp = 0;
+    // let atrasados_cp_temas = [];
 
-    let requisitos_atrasados_sp = 0;
-    let atrasados_sp_temas = [];
+    // let requisitos_atrasados_sp = 0;
+    // let atrasados_sp_temas = [];
 
     let no_iniciados=0;
 
     $.each(dataListado,function(index,value)
     {
-        requisitos++;
-        registros+=value.detalles_requisito.length;
-        $.each(value.detalles_requisito,function(ind,val){
-            evidencias_realizar += val.evidencias_realizar;
+        $.each(value,(ind,val)=>{
+            if(val.estado_requisito == "ATRASADO")
+            {
+                if(value.penalizacion == "true")
+                {
+                    requisitos_atrasados_cp++;
+                    atrasados_cp_temas.push(val);
+                }
+                else
+                {
+                    requisitos_atrasados_sp++;
+                    atrasados_sp_temas.push(val);
+                }
+            }
+
+            if(value.estado_requisito == "CUMPLIDO")
+            {
+                requisitos_cumplidos++;
+                cumplidos_temas.push(value);
+            }
+
+            if(value.estado_requisito == "EN PROCESO")
+            {
+                if(value.penalizacion == "true")
+                {
+                    requisitos_proceso_cp++;
+                    proceso_cp_temas.push(value);
+                }
+                else
+                {
+                    requisitos_proceso_sp++;
+                    proceso_sp_temas.push(value);
+                }
+            }
         });
-        if(value.estado_requisito == "ATRASADO")
-        {
-            if(value.penalizacion == "true")
-            {
-                requisitos_atrasados_cp++;
-                atrasados_cp_temas.push(value);
-            }
-            else
-            {
-                requisitos_atrasados_sp++;
-                atrasados_sp_temas.push(value);
-            }
-        }
-        if(value.estado_requisito == "CUMPLIDO")
-        {
-            requisitos_cumplidos++;
-            cumplidos_temas.push(value);
-        }
-        if(value.estado_requisito == "EN PROCESO")
-        {
-            if(value.penalizacion == "true")
-            {
-                requisitos_proceso_cp++;
-                proceso_cp_temas.push(value);
-            }
-            else
-            {
-                requisitos_proceso_sp++;
-                proceso_sp_temas.push(value);
-            }
-        }
-        if(value.estado_tema == 0)
-            no_iniciados++;
+        // requisitos++;
+        // registros+=value.detalles_requisito.length;
+        // $.each(value.detalles_requisito,function(ind,val){
+        //     evidencias_realizar += val.evidencias_realizar;
+        // });
+        // if(value.estado_requisito == "ATRASADO")
+        // {
+        //     if(value.penalizacion == "true")
+        //     {
+        //         requisitos_atrasados_cp++;
+        //         atrasados_cp_temas.push(value);
+        //     }
+        //     else
+        //     {
+        //         requisitos_atrasados_sp++;
+        //         atrasados_sp_temas.push(value);
+        //     }
+        // }
+        // if(value.estado_requisito == "CUMPLIDO")
+        // {
+        //     requisitos_cumplidos++;
+        //     cumplidos_temas.push(value);
+        // }
+        // if(value.estado_requisito == "EN PROCESO")
+        // {
+        //     if(value.penalizacion == "true")
+        //     {
+        //         requisitos_proceso_cp++;
+        //         proceso_cp_temas.push(value);
+        //     }
+        //     else
+        //     {
+        //         requisitos_proceso_sp++;
+        //         proceso_sp_temas.push(value);
+        //     }
+        // }
+        // if(value.estado_tema == 0)
+        //     no_iniciados++;
     });
     if(requisitos_cumplidos!=0)
         dataGrafica.push(["Cumplidos",requisitos_cumplidos,">> Requisitos:"+requisitos_cumplidos.toString(),JSON.stringify(cumplidos_temas)]);
