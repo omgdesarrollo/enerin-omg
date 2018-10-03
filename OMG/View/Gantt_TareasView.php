@@ -183,7 +183,6 @@ and open the template in the editor.
 		.gantt_data_area div {
 			font-size: 12px;
 		}
-
 		.summary-bar {
 			opacity: 0.4;
 		}
@@ -282,14 +281,8 @@ and open the template in the editor.
                 <!--<div class="" id="tree-list"  >-->
                     <div id="dx" ></div>
                                       <!--</div>-->
-
             </div>
-
-  
-</div>
-          
-          
-        
+</div>  
       </div>
     </div>
   </div>
