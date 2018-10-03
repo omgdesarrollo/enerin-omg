@@ -20,7 +20,7 @@ $(function()
 function inicializaChartjs()
 {
     let modal = '<div class="modal draggable fade" id="Grafica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">';
-        modal += '<div class="modal-dialog" role="document">';
+        modal += '<div class="modal-dialog" role="document" style="text-align: -webkit-center;">';
         modal +=     '<div class="modal-content">';
         modal +=         '<div class="modal-header">';
         modal +=             '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
