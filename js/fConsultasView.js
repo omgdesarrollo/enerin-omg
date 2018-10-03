@@ -2,37 +2,36 @@
 // configuracionJgrowl = { pool:0, position:" bottom-right", sticky:true, corner:"0px",openDuration:"fast", closeDuration:"slow",theme:"",header:"",themeState:"", glue:"before"};
 $(function()
 {
-    $("#BTN_ANTERIOR_GRAFICAMODAL").click(function()
-    {
-        // google.charts.setOnLoadCallback(drawChart);
-        if(activeChart != 0)
-        {
-            if(activeChart == 1)
-            {
-                activeChart=-1;
-                graficar();
-                // selectChart();
-            }
-            else
-            {
-                activeChart=0;
-                selectChart();
-            }
-        }
-        else
-        {
-            activeChart = -1;
-            graficar();
-        } 
+    // $("#BTN_ANTERIOR_GRAFICAMODAL").click(function()
+    // {
+    //     // google.charts.setOnLoadCallback(drawChart);
+    //     if(activeChart != 0)
+    //     {
+    //         if(activeChart == 1)
+    //         {
+    //             activeChart=-1;
+    //             graficar();
+    //             // selectChart();
+    //         }
+    //         else
+    //         {
+    //             activeChart=0;
+    //             selectChart();
+    //         }
+    //     }
+    //     else
+    //     {
+    //         activeChart = -1;
+    //         graficar();
+    //     } 
             
-        if(activeChart == 0)
-        {
-            $(this).html("Recargar");
-        }
-        else
-            $(this).html("Anterior");
-        
-    });
+    //     if(activeChart == 0)
+    //     {
+    //         $(this).html("Recargar");
+    //     }
+    //     else
+    //         $(this).html("Anterior");
+    // });
     
     var $btnDLtoExcel = $('#toExcel'); 
     $btnDLtoExcel.on('click', function () 
@@ -258,28 +257,32 @@ function listarDatos()
 
 function graficar()
 {
-    var requisitos = 0;
-    var registros = 0;
-    var evidencias_realizar = 0;
+    activeChart = 0;
+    let dataGrafica=[];
+    let tituloGrafica = "CUMPLIMIENTO DE REQUISITOS";
+    let bandera = 0;
+    let chartsCreados = [];
+    let requisitos = 0;
+    let registros = 0;
+    let evidencias_realizar = 0;
 
-    var requisitos_cumplidos = 0;
-    var cumplidos_temas = [];
+    let requisitos_cumplidos = 0;
+    let cumplidos_temas = [];
 
-    var requisitos_proceso_sp = 0;
-    var proceso_sp_temas = [];
+    let requisitos_proceso_sp = 0;
+    let proceso_sp_temas = [];
 
-    var requisitos_proceso_cp = 0;
-    var proceso_cp_temas = [];
+    let requisitos_proceso_cp = 0;
+    let proceso_cp_temas = [];
 
-    var requisitos_atrasados_cp = 0;
-    var atrasados_cp_temas = [];
+    let requisitos_atrasados_cp = 0;
+    let atrasados_cp_temas = [];
 
-    var requisitos_atrasados_sp = 0;
-    var atrasados_sp_temas = [];
+    let requisitos_atrasados_sp = 0;
+    let atrasados_sp_temas = [];
 
-    var no_iniciados=0;
-    
-    
+    let no_iniciados=0;
+
     $.each(dataListado,function(index,value)
     {
         requisitos++;
@@ -292,56 +295,50 @@ function graficar()
             if(value.penalizacion == "true")
             {
                 requisitos_atrasados_cp++;
-                atrasados_cp_temas.push(value.no_tema);
+                atrasados_cp_temas.push(value);
             }
             else
             {
                 requisitos_atrasados_sp++;
-                atrasados_sp_temas.push(value.no_tema);
+                atrasados_sp_temas.push(value);
             }
         }
         if(value.estado_requisito == "CUMPLIDO")
         {
             requisitos_cumplidos++;
-            cumplidos_temas.push(value.no_tema);
+            cumplidos_temas.push(value);
         }
         if(value.estado_requisito == "EN PROCESO")
         {
             if(value.penalizacion == "true")
             {
                 requisitos_proceso_cp++;
-                proceso_cp_temas.push(value.no_tema);
+                proceso_cp_temas.push(value);
             }
             else
             {
                 requisitos_proceso_sp++;
-                proceso_sp_temas.push(value.no_tema);
+                proceso_sp_temas.push(value);
             }
         }
         if(value.estado_tema == 0)
             no_iniciados++;
     });
-    dataGrafica = [
-        ["Cumplidos",requisitos_cumplidos,">> Requisitos:"+requisitos_cumplidos.toString(),JSON.stringify(cumplidos_temas)],
-        ["En Proceso",requisitos_proceso_sp,">> Requisitos:"+requisitos_proceso_sp.toString(),JSON.stringify(proceso_sp_temas)],
-        ["En Proceso Penalizados",requisitos_proceso_cp,">> Requisitos:"+requisitos_proceso_cp.toString(),JSON.stringify(proceso_cp_temas)],
-        ["Atrasados",requisitos_atrasados_sp,">> Requisitos:"+requisitos_atrasados_sp.toString(),JSON.stringify(atrasados_sp_temas)],
-        ["Atrasados Penalizados",requisitos_atrasados_cp,">> Requisitos:"+requisitos_atrasados_cp.toString(),JSON.stringify(atrasados_cp_temas)],
-        // ["No Iniciados",no_iniciados],
-    ];
-    // console.log("requisitos = "+requisitos);
-    // console.log("registros = "+registros);
-    activeChart = -1;
-    chartsCreados = [];
-
-    tituloGrafica = "CUMPLIMIENTO DE REQUISITOS";
-    bandera = 0;
-
+    if(requisitos_cumplidos!=0)
+        dataGrafica.push(["Cumplidos",requisitos_cumplidos,">> Requisitos:"+requisitos_cumplidos.toString(),JSON.stringify(cumplidos_temas)]);
+    if(requisitos_proceso_sp!=0)
+        dataGrafica.push(["En Proceso",requisitos_proceso_sp,">> Requisitos:"+requisitos_proceso_sp.toString(),JSON.stringify(proceso_sp_temas)]);
+    if(requisitos_proceso_cp!=0)
+        dataGrafica.push(["En Proceso Penalizados",requisitos_proceso_cp,">> Requisitos:"+requisitos_proceso_cp.toString(),JSON.stringify(proceso_cp_temas)]);
+    if(requisitos_cumplidos!=0)
+        dataGrafica.push(["Atrasados",requisitos_atrasados_sp,">> Requisitos:"+requisitos_atrasados_sp.toString(),JSON.stringify(atrasados_sp_temas)]);
+    if(requisitos_cumplidos!=0)
+        dataGrafica.push(["Atrasados Penalizados",requisitos_atrasados_cp,">> Requisitos:"+requisitos_atrasados_cp.toString(),JSON.stringify(atrasados_cp_temas)]);
+    
     $.each(dataGrafica,function(index,value){
         if(value[1] != 0)
             bandera=1;
     });
-
     if(bandera == 0)
     {
         dataGrafica.push([ "NO EXISTEN REQUISITOS",1,"SIN REQUISITOS","[]"]);
@@ -350,120 +347,121 @@ function graficar()
     construirGrafica(dataGrafica,tituloGrafica);
 }
 
-function construirGrafica(dataGrafica,tituloGrafica)
-{
-    estructuraGrafica = chartEstructura(dataGrafica);
-    opcionesGrafica = chartOptions(tituloGrafica);
-    instanceGrafica = drawChart(dataGrafica,estructuraGrafica,opcionesGrafica);
-    activeChart++;
-    chartsCreados.push({grafica:instanceGrafica,data:estructuraGrafica});
-}
+// function construirGrafica(dataGrafica,tituloGrafica)
+// {
+//     estructuraGrafica = chartEstructura(dataGrafica);
+//     opcionesGrafica = chartOptions(tituloGrafica);
+//     instanceGrafica = drawChart(dataGrafica,estructuraGrafica,opcionesGrafica);
+//     activeChart++;
+//     chartsCreados.push({grafica:instanceGrafica,data:estructuraGrafica});
+// }
 
-function chartEstructura(dataGrafica)
-{
-    // console.log(dataGrafica);
-    data = new google.visualization.DataTable();
-    data.addColumn('string', 'nombre');
-    data.addColumn('number', 'valor');
-    // if(tooltip!=0)
-        data.addColumn({type:"string",role:"tooltip"});
-    data.addColumn('string','datos');
+// function chartEstructura(dataGrafica)
+// {
+//     // console.log(dataGrafica);
+//     data = new google.visualization.DataTable();
+//     data.addColumn('string', 'nombre');
+//     data.addColumn('number', 'valor');
+//     // if(tooltip!=0)
+//         data.addColumn({type:"string",role:"tooltip"});
+//     data.addColumn('string','datos');
     
-    // if(dataGrafica.length != 0)
-        data.addRows(dataGrafica);
-    // else
-    //     data.addRows([[ "NO HAY DATOS",1,"SIN DATOS",""]]);
-    return data;
-}
+//     // if(dataGrafica.length != 0)
+//         data.addRows(dataGrafica);
+//     // else
+//     //     data.addRows([[ "NO HAY DATOS",1,"SIN DATOS",""]]);
+//     return data;
+// }
 
-function chartOptions(tituloGrafica)
-{
-    var options = 
-    {
-        legend:{
-                position:"labeled",alignment:"start",
-                textStyle:
-                {
-                    color:"black", fontSize:14, bold:true
-                }
-            },
-        pieSliceText:"none",
-        title: tituloGrafica,
-        tooltip:{textStyle:{color:"#000000"},text:"none",isHtml:true,background:'red'},
-        // pieSliceText:"",
-        titleTextStyle:{color:"black"},
-        'is3D':true,
-        slices: { 
-            1: {offset: 0.02,color:"#80ffbf"},
-            3: {offset: 0.02,color:"#bfff80"},
-            0: {offset: 0.02,color:"#ffbf80"},
-            4: {offset: 0.02,color:"#ff80bf"},
-            2: {offset: 0.02,color:"#bf80ff"},
-        },
-        backgroundColor:"",
-        "width":800,
-        "height":340
-    };
-    return options;
-}
+// function chartOptions(tituloGrafica)
+// {
+//     var options = 
+//     {
+//         legend:{
+//                 position:"labeled",alignment:"start",
+//                 textStyle:
+//                 {
+//                     color:"black", fontSize:14, bold:true
+//                 }
+//             },
+//         pieSliceText:"none",
+//         title: tituloGrafica,
+//         tooltip:{textStyle:{color:"#000000"},text:"none",isHtml:true,background:'red'},
+//         // pieSliceText:"",
+//         titleTextStyle:{color:"black"},
+//         'is3D':true,
+//         slices: { 
+//             1: {offset: 0.02,color:"#80ffbf"},
+//             3: {offset: 0.02,color:"#bfff80"},
+//             0: {offset: 0.02,color:"#ffbf80"},
+//             4: {offset: 0.02,color:"#ff80bf"},
+//             2: {offset: 0.02,color:"#bf80ff"},
+//         },
+//         backgroundColor:"",
+//         "width":800,
+//         "height":340
+//     };
+//     return options;
+// }
 
-function drawChart(dataGrafica,data,options)
-{
-    grafica = new google.visualization.PieChart(document.getElementById('graficaPie'));
-    grafica.draw(data, options);
-    if(dataGrafica[0][3]!="[]")
-        google.visualization.events.addListener(grafica, 'select', selectChart);
-    return grafica;
-}
+// function drawChart(dataGrafica,data,options)
+// {
+//     grafica = new google.visualization.PieChart(document.getElementById('graficaPie'));
+//     grafica.draw(data, options);
+//     if(dataGrafica[0][3]!="[]")
+//         google.visualization.events.addListener(grafica, 'select', selectChart);
+//     return grafica;
+// }
 
 // selectChart();
 
-function selectChart()
+// function selectChart()
+// {
+//     // var jsonObj = {};
+//     // console.log("S");
+//     // {
+//         var select = chartsCreados[activeChart].grafica.getSelection()[0];
+//         // console.log(select);
+//         if(select != undefined)
+//         {
+//             // str = data1.getFormattedValue(select[0].row,select[0].row);
+//             // console.log("1");
+//             dataNextGrafica = chartsCreados[activeChart].data.getValue(select.row,3);
+//             // console.log("2");
+//             // console.log(dataNextGrafica);
+//             concepto = chartsCreados[activeChart].data.getValue(select.row,0);
+//             // console.log("3");
+//             // console.log(dataNextGrafica);
+//             // console.log(concepto);
+//             // if(opcion_vista_grafica == 1)
+//             if(activeChart == 0)
+//             {
+//                 graficar2(dataNextGrafica,concepto);
+//             }
+//             else
+//                 if(activeChart == 1)
+//                     graficar3(dataNextGrafica,concepto);
+//             $("#BTN_ANTERIOR_GRAFICAMODAL").html("Anterior");
+//         }
+//     // });
+// }
+
+function graficar2(datos,concepto)
 {
-    // var jsonObj = {};
-    // console.log("S");
-    // {
-        var select = chartsCreados[activeChart].grafica.getSelection()[0];
-        // console.log(select);
-        if(select != undefined)
-        {
-            // str = data1.getFormattedValue(select[0].row,select[0].row);
-            // console.log("1");
-            dataNextGrafica = chartsCreados[activeChart].data.getValue(select.row,3);
-            // console.log("2");
-            // console.log(dataNextGrafica);
-            concepto = chartsCreados[activeChart].data.getValue(select.row,0);
-            // console.log("3");
-            // console.log(dataNextGrafica);
-            // console.log(concepto);
-            // if(opcion_vista_grafica == 1)
-            if(activeChart == 0)
-            {
-                graficar2(dataNextGrafica,concepto);
-            }
-            else
-                if(activeChart == 1)
-                    graficar3(dataNextGrafica,concepto);
-            $("#BTN_ANTERIOR_GRAFICAMODAL").html("Anterior");
-        }
-    // });
-}
+    activeChart = 1;
+    datos = JSON.parse(datos);
+    console.log(datos);
+    // let newArray = [];
+    // let lookupObject  = {};
 
-var activeChart = -1;
-var chartsCreados = [];
-
-function graficar2(temas,concepto)
-{
-    temas = JSON.parse(temas);
-    var newArray = [];
-    var lookupObject  = {};
-
-    var requisitos = 0;
-    var registros = 0;
-    var temasTemp = [];
-    var estado = "";
-    var penalizacion="false";
-    var tituloGrafica = "NO EXISTEN REQUISITOS";
+    let requisitos = 0;
+    let registros = 0;
+    let temasTemp = [];
+    let estado = "";
+    let penalizacion="false";
+    let tituloGrafica = "NO EXISTEN REQUISITOS";
+    let dataGrafica = [];
+    let bandera = 0;
 
     if(concepto == "Cumplidos")
     {
@@ -493,62 +491,80 @@ function graficar2(temas,concepto)
         tituloGrafica = "INCUMPLIMIENTO PENALIZADOS REQUISITOS";
     }
 
-    for(var i in temas)
-    {
-        lookupObject[temas[i]] = temas[i];
-    }
+    // for(var i in temas)
+    // {
+    //     lookupObject[temas[i]] = temas[i];
+    // }
 
-    for(i in lookupObject)
-    {
-        newArray.push(lookupObject[i]);
-    }
-    temas = newArray;
-    contadorRequisitos=0;
-    nombre_tema;
-    contadorArreglo=-1;
-    no_tema;
-    bandera=1;
-    bandera2=1;
-    // console.log(penalizacion);
-    // console.log(dataListado);
-    $.each(dataListado,function(index,value)
-    {
-        if(bandera == 1)
+    // for(i in lookupObject)
+    // {
+    //     newArray.push(lookupObject[i]);
+    // }
+    // temas = newArray;
+    $.each(datos,(index,value)=>{
+        if(bandera==0)
         {
-            no_tema = value.no_tema;
-            bandera=0;
+            id_tema = value.id_tema;
+            lista[value.id_tema]=[];
         }
-        if(no_tema != value.no_tema)
+        bandera=1;
+        if(value.id_tema != id_tema)
         {
-            no_tema = value.no_tema;
-            contadorRequisitos=0;
-            bandera2 = 1;
+            lista[value.id_tema]=[];
+            lista[value.id_tema].push(value);
+            id_tema = value.id_tema;
         }
-        $.each(temas,function(ind,val)
+        else
         {
-            if(value.no_tema == val)
-            {
-                if(bandera2 == 1)
-                {
-                    temasTemp.push({no_tema:value.no_tema ,nombre:value.nombre_tema,responsable:value.responsable_tema,requisitos:""});
-                    contadorArreglo++;
-                    bandera2=0;
-                }
-                if(value.estado_requisito == "CUMPLIDO" && estado == "CUMPLIDO")
-                    contadorRequisitos++;
-                else
-                {
-
-                    if(value.estado_requisito == estado && value.penalizacion == penalizacion)
-                        contadorRequisitos++;
-                }
-                temasTemp[contadorArreglo]["requisitos"] = contadorRequisitos;
-            }
-        });
+            id_tema = value.id_tema;
+            lista[value.id_tema].push(value);
+        }
     });
+
+    let contadorRequisitos=0;
+    let nombre_tema;
+    let contadorArreglo=-1;
+    let no_tema;
+    bandera=1;
+    let bandera2=1;
+
+    // $.each(dataListado,function(index,value)
+    // {
+    //     if(bandera == 1)
+    //     {
+    //         no_tema = value.no_tema;
+    //         bandera=0;
+    //     }
+    //     if(no_tema != value.no_tema)
+    //     {
+    //         no_tema = value.no_tema;
+    //         contadorRequisitos=0;
+    //         bandera2 = 1;
+    //     }
+    //     $.each(temas,function(ind,val)
+    //     {
+    //         if(value.no_tema == val)
+    //         {
+    //             if(bandera2 == 1)
+    //             {
+    //                 temasTemp.push({no_tema:value.no_tema ,nombre:value.nombre_tema,responsable:value.responsable_tema,requisitos:""});
+    //                 contadorArreglo++;
+    //                 bandera2=0;
+    //             }
+    //             if(value.estado_requisito == "CUMPLIDO" && estado == "CUMPLIDO")
+    //                 contadorRequisitos++;
+    //             else
+    //             {
+
+    //                 if(value.estado_requisito == estado && value.penalizacion == penalizacion)
+    //                     contadorRequisitos++;
+    //             }
+    //             temasTemp[contadorArreglo]["requisitos"] = contadorRequisitos;
+    //         }
+    //     });
+    // });
     // console.log(temasTemp);
-    dataGrafica = [];
-    bandera = 0;
+    
     $.each(temasTemp,function(index,value)
     {
         if( value.requisitos != 0)
@@ -567,7 +583,7 @@ function graficar2(temas,concepto)
 
 function graficar3(datos,concepto)
 {
-    // alert("porque?");
+    activeChart = 2;
     datos = JSON.parse(datos);
     // console.log(datos);
     // var newArray = [];

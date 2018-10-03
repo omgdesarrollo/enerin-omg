@@ -69,6 +69,7 @@
     <!-- <script src="../../js/tools.js" type="text/javascript"></script> marca un error al agregarse -->
     <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
 
+    <script src="../../js/fChartComponent.js" type="text/javascript"></script>
     <script src="../../js/fInformeValidacionDocumentosView.js" type="text/javascript"></script>
     <!-- <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/> -->
     <script src="../../js/fGridComponent.js" type="text/javascript"></script>
@@ -88,36 +89,6 @@
             .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
             body{overflow:hidden;}
 
-            div.google-visualization-tooltip
-            {
-                background:bisque;
-                border-radius:5px;
-                position:fixed;
-                top:60px !important;
-                left:1% !important;
-                min-width:200px;
-                max-width:400px;
-                -webkit-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
-                -moz-box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
-                box-shadow: 0px 11px 30px -5px rgba(0,0,0,0.4);
-            }
-            div.ltr
-            {
-                width:-webkit-fill-available !important;
-                height:80% !important;
-            }
-            circle
-            {
-                r:4;
-            }
-            text
-            {
-                cursor:pointer;
-            }
-            /* path
-            {
-                stroke-width:2;
-            } */
         </style>
 </head>
 <!-- <body> -->
@@ -231,20 +202,11 @@
 <!--cierre del modal Mensaje-->
 
 <!-- Modal grafica -->
-<div class="modal draggable fade" id="Grafica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!-- <div class="modal draggable fade" id="Grafica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
 
-                <!-- <div class="form-group" method="post" style="text-align:center" id="BTNS_GRAFICAMODAL"> -->
-                    <!-- <button type="submit" id="BTN_ANTERIOR_GRAFICAMODAL" class="botones_vista" style="width:fit-content" >Recargar</button> -->
-                <!-- </div> -->
-                <!-- <div class="btn-group btn-group-justified">
-                    <a href="#" class="btn btn-primary">Apple</a>
-                    <a href="#" class="btn btn-primary">Samsung</a>
-                    <a href="#" class="btn btn-primary">Sony</a>
-                </div> -->
-                
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="closeLetra">X</span>
                 </button>
@@ -261,8 +223,8 @@
             
         </div>
     </div>
-</div>
-
+</div> -->
+<div id="jsChart"></div>
 <script>
     // construirFiltros();
     // construir();
@@ -278,7 +240,9 @@
     var origenDeDatosVista="informeValidacionDocumentos";
     var ultimoNumeroGrid=0;
 
-    google.charts.load('current', {'packages':['corechart']});
+    var activeChart = -1;
+    var chartsCreados = [];
+    var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)}];
 
     var estructuraGrid=[
         { name: "no",title:"No", type: "text", width: 50, editing:false },
@@ -297,8 +261,8 @@
             // {field:"porcentaje",my_field:porcentajesFields},
         ];
 
-    
     construirGrid();
+    inicializaChartjs();
     inicializarFiltros().then((resolve)=>
     {
         construirFiltros();

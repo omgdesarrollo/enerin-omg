@@ -82,16 +82,21 @@ $(function()
     {
 //        activeChart = -1;
 //        graficar();
-        if(activeChart>1)
-        {
-            activeChart-=2;
-            selectChart();
-        }
-        else
-        {
-            activeChart = -1;
-            graficar();
-        }
+//        if(activeChart>1)
+//        {
+////            console.log("entro al primero");
+//            activeChart-=2;
+//            selectChart();
+//        }
+//        else
+//        {
+////            console.log("entro al else");
+//            activeChart = -1;
+//            graficar();
+//        }
+
+        activeChart = -1;
+        graficar();
     });
 
 }); //CIERRA $(FUNCTION())
@@ -210,7 +215,7 @@ function reconstruirExcel(value,index)
     tempData=new Object();
     tempData["No"]= index;  
     tempData["Referencia"]=value.referencia;
-    tempData["Tarea"]=value.tarea;
+    tempData["Tema"]=value.tarea;
     tempData["Responsable del Plan"]=value.nombre_completo;
     tempData["Fecha de Creacion"]= getSinFechaFormato(value.fecha_creacion);
     tempData["Fecha Alarma"]= getSinFechaFormato(value.fecha_alarma);
@@ -972,7 +977,7 @@ function cargarprogram(value){
 
 var activeChart = -1;
 var chartsCreados = [];
-var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)},(dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)}];//checar como poner funciones en un arreglo
+var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)}];//checar como poner funciones en un arreglo
 function graficar()
 {
     activeChart = 0;
@@ -985,7 +990,7 @@ function graficar()
     let suspendido = 0;
     let suspendido_data = [];
     let dataGrafica = [];
-    let tituloGrafica = "Pendientes Especiales";
+    let tituloGrafica = "TEMAS ESPECIALES";
     let bandera = 0;
 
     $.each(dataListado,(index,value)=>
@@ -994,7 +999,8 @@ function graficar()
         {
             enTiempo++;
 ////            enTiempo_data.push({id_empleado:value.id_empleado,nombre_responsable:value.nombre_completo, tarea:value.tarea}); 
-            enTiempo_data.push(value); 
+            enTiempo_data.push(value);
+            console.log("Este es en tiempo",enTiempo_data);
         }
         
         if(value.status_grafica == "Alarma vencida")
@@ -1034,7 +1040,9 @@ function graficar()
 //    chartsCreados = [];
 //    let tituloGrafica = "";
 //    let bandera = 0;
-    $.each(dataGrafica,function(index,value){
+    $.each(dataGrafica,function(index,value)
+    {
+        console.log("Esto trae dataGrafica",value);
         if(value[1] != 0)
             bandera=1;
     });
@@ -1068,7 +1076,7 @@ function chartEstructura(dataGrafica)//funcion sin cambio
     data.addColumn({type:"string",role:"tooltip"});
     data.addColumn('string','datos');
     data.addRows(dataGrafica);
-
+    console.log("este es el data: ",data);
     return data;
 }
 
@@ -1118,13 +1126,13 @@ function drawChart(dataGrafica,data,options)//funcion sin cambio
 function selectChart()
 {
     var select = chartsCreados[activeChart].grafica.getSelection()[0];
-//    console.log(select);
+    console.log("Este es el select: ",select);
     if(select != undefined)
     {
         dataNextGrafica = chartsCreados[activeChart].data.getValue(select.row,3);
         concepto = chartsCreados[activeChart].data.getValue(select.row,0);
         chartsFunciones[activeChart+1](dataNextGrafica,concepto);
-//        graficar2(dataNextGrafica,concepto);
+        graficar2(dataNextGrafica,concepto);
         $("#BTN_ANTERIOR_GRAFICAMODAL").html("Anterior");
     }
 }
@@ -1138,7 +1146,7 @@ function graficar2(tareas,concepto)
     let bandera = 0;
     let dataGrafica = [];
 //    tituloGrafica = concepto != "En Proceso" ? "EVIDENCIAS VALIDADAS" : "EVIDENCIAS EN PROCESO";
-    tituloGrafica = "PENDIENTES POR RESPONSABLE";
+    tituloGrafica = "TEMAS POR RESPONSABLE";
     
     tareas = JSON.parse(tareas);    
     $.each(tareas,(index,value)=>
@@ -1166,11 +1174,13 @@ function graficar2(tareas,concepto)
     
     $.each(lista,(index,value)=>
     {
-        console.log("La lista: ",index);
-        console.log(index,value);
+//        console.log(index,value);
         $.each(value,(index2,value2)=>
         {
-            dataGrafica.push([value[0].nombre_completo,value.length,">> Pendiente:"+value2.tarea,"[]"]);
+            console.log(index,value2);
+//            dataGrafica.push([value2.nombre_completo,value.length,">> Pendiente:"+value2.tarea,"[]"]);
+            dataGrafica.push([value2.nombre_completo,value.length,">> Pendiente:\n"+value2.tarea+"\n>> Cantidad:"+value.length,"[]"]);
+
         });
     });
     // console.log(dataGrafica);
