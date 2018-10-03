@@ -494,6 +494,7 @@ function cargarprogram(v,validado)
 function graficar()
 {
     activeChart = 0;
+    let dataGrafica=[];
     let validados = 0;
     let validados_data = [];
     let proceso = 0;
@@ -503,31 +504,30 @@ function graficar()
     let tituloGrafica = "VALIDACIÓN DOCUMENTOS";
     let bandera = 0;
 
-    // console.log(dataListado);
     $.each(dataListado,(index,value)=>{
         if(value.estatus == 0)
         {
             sin_asignar++;
             $.each(value.temas_responsables,(ind,val)=>{
-                sin_asignar_data.push({no_tema:val.no, nombre_tema:val.nombre_tema, responsable_tema:val.nombre_completotema}); 
+                sin_asignar_data.push(val);
             });
         }
         if(value.estatus == 1)
         {
             proceso++;
             $.each(value.temas_responsables,(ind,val)=>{
-                proceso_data.push({no_tema:val.no,nombre_tema:val.nombre_tema,responsable_tema:val.nombre_completotema});
+                proceso_data.push(val);
             })
         }
         if(value.estatus == 2)
         {
             validados++;
             $.each(value.temas_responsables,(ind,val)=>{
-                validados_data.push({no_tema:val.no, nombre_tema:val.nombre_tema, responsable_tema:val.nombre_completotema});
+                validados_data.push(val);
             });
         }
     });
-    let dataGrafica=[];
+    
     if(sin_asignar!=0)
         dataGrafica.push(["Sin Asignar",sin_asignar,">> Documentos:"+sin_asignar.toString(),JSON.stringify(sin_asignar_data)]);
     if(proceso!=0)
@@ -549,53 +549,38 @@ function graficar()
     $("#BTN_ANTERIOR_GRAFICAMODAL").html("Recargar");
 }
 
-function graficar2(temas,concepto)
+function graficar2(datos,concepto)
 {
     activeChart = 1;
-    temas = JSON.parse(temas);
-    let lista = [];
-    let no_tema;
+    datos = JSON.parse(datos);
+    let lista = new Object();
+    let id_tema;
     let bandera = 0;
     let estatus = 0;
     let dataGrafica = [];
 
-    $.each(temas,(index,value)=>{
+    $.each(datos,(index,value)=>{
         if(bandera==0)
         {
-            no_tema = value.no_tema;
-            lista.push(value);
+            id_tema = value.id_tema;
+            lista[value.id_tema]=[];
         }
         bandera=1;
-        if(value.no_tema != no_tema)
+        if(value.id_tema != id_tema)
         {
-            lista.push(value);
+            lista[value.id_tema]=[];
+            lista[value.id_tema].push(value);
+            id_tema = value.id_tema;
         }
         else
         {
-            no_tema = value.no_tema;
+            id_tema = value.id_tema;
+            lista[value.id_tema].push(value);
         }
     });
-    estatus = concepto == "Sin Asignar" ? 0 : concepto == "En Proceso" ? 1 : 2;
     tituloGrafica = "DOCUMENTOS POR TEMA";
-    
-    $.each(dataListado,(index,value)=>{
-        if(value.estatus == estatus)
-        {
-            $.each(value.temas_responsables,(ind,val)=>{
-                $.each(lista,(key,valor)=>{
-                    if(valor.no_tema==val.no)
-                    {
-                        if(lista[key]["documentos"]!=undefined)
-                            lista[key]["documentos"]++;
-                        else
-                            lista[key]["documentos"]=1;
-                    }
-                });
-            });
-        }
-    });
     $.each(lista,(index,value)=>{
-        dataGrafica.push(["Tema: "+value.no_tema,value.documentos,">> Tema:\n"+value.nombre_tema+"\n>> Responsable:\n"+value.responsable_tema+"\n>> Documentos:"+value.documentos,"[]"]);
+        dataGrafica.push(["Tema: "+value[0].no,value.length,">> Tema:\n"+value[0].nombre_tema+"\n>> Responsable:\n"+value[0].responsable_tema+"\n>> Documentos:"+value.length,"[]"]);
     });
     construirGrafica(dataGrafica,tituloGrafica);
 }
