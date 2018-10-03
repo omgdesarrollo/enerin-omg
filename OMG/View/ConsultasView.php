@@ -56,9 +56,12 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/> -->
                 <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+                <script src="../../js/fChartComponent.js" type="text/javascript"></script>
                 <script src="../../js/fConsultasView.js" type="text/javascript"></script>
                 <!-- <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/> -->
                 <script src="../../js/fGridComponent.js" type="text/javascript"></script>
+                
+                
                 <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
                 
         <style>
@@ -137,25 +140,7 @@ $Usuario=  Session::getSesion("user");
 <br><br><br>
 <div id="jsGrid"></div>
 
-<div class="modal draggable fade" id="Grafica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="closeLetra">X</span>
-                </button>
-		        <h4 class="modal-title" id="myModalLabelNuevaEvidencia">Indicador de Cumplimiento</h4>
-            </div>
-
-            <div class="modal-body">
-                <div id="graficaPie" ></div>
-            </div>
-            <div class="form-group" method="post" style="text-align:center" id="BTNS_GRAFICAMODAL">
-                <button type="submit" id="BTN_ANTERIOR_GRAFICAMODAL" class="btn crud-submit btn-info" style="width:90%" >Recargar</button>
-            </div>
-        </div>
-    </div>
-</div>
+<div id="jsChart"></div>
 
 <script>
     var DataGrid=[];
@@ -174,6 +159,7 @@ $Usuario=  Session::getSesion("user");
 
     var activeChart = -1;
     var chartsCreados = [];
+    var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)},(dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)}];
 
     var porcentajesFields = function(config)
     {
@@ -259,7 +245,7 @@ $Usuario=  Session::getSesion("user");
             // {
             //     this.DOMlist.style.zIndex = 2000;
             // });
-
+        inicializaChartjs();
         inicializarFiltros().then((resolve2)=>
         {
             construirFiltros();

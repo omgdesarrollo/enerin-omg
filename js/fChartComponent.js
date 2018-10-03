@@ -15,29 +15,46 @@ $(function()
     });
 });
 
+function inicializaChartjs()
+{
+    let modal = '<div class="modal draggable fade" id="Grafica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">';
+        modal += '<div class="modal-dialog" role="document">';
+        modal +=     '<div class="modal-content">';
+        modal +=         '<div class="modal-header">';
+        modal +=             '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+        modal +=                 '<span aria-hidden="true" class="closeLetra">X</span>';
+        modal +=             '</button>';
+        modal +=             '<h4 class="modal-title" id="myModalLabelNuevaEvidencia">Indicador de Cumplimiento</h4>';
+        modal +=         '</div>';
+
+        modal +=         '<div class="modal-body">';
+        modal +=             '<div id="graficaPie" ></div>';
+        modal +=         '</div>';
+        modal +=         '<div class="form-group" method="post" style="text-align:center" id="BTNS_GRAFICAMODAL">';
+        modal +=             '<button type="submit" id="BTN_ANTERIOR_GRAFICAMODAL" class="btn crud-submit btn-info" style="width:90%" >Recargar</button>';
+        modal +=         '</div>';
+        modal +=     '</div>';
+        modal += '</div>';
+        modal += '</div>';
+    $("#jsChart").html(modal);
+}
+
 function construirGrafica(dataGrafica,tituloGrafica)//funcion sin cambio
 {
     estructuraGrafica = chartEstructura(dataGrafica);
     opcionesGrafica = chartOptions(tituloGrafica);
     instanceGrafica = drawChart(dataGrafica,estructuraGrafica,opcionesGrafica);
-    activeChart++;
     chartsCreados.push({grafica:instanceGrafica,data:estructuraGrafica});
 }
 
 function chartEstructura(dataGrafica)//funcion sin cambio
 {
-    // console.log(dataGrafica);
     data = new google.visualization.DataTable();
     data.addColumn('string', 'nombre');
     data.addColumn('number', 'valor');
-    // if(tooltip!=0)
-        data.addColumn({type:"string",role:"tooltip"});
+    data.addColumn({type:"string",role:"tooltip"});
     data.addColumn('string','datos');
-    
-    // if(dataGrafica.length != 0)
-        data.addRows(dataGrafica);
-    // else
-    //     data.addRows([[ "NO HAY DATOS",1,"SIN DATOS",""]]);
+    data.addRows(dataGrafica);
     return data;
 }
 
@@ -89,7 +106,6 @@ function selectChart()
         dataNextGrafica = chartsCreados[activeChart].data.getValue(select.row,3);
         concepto = chartsCreados[activeChart].data.getValue(select.row,0);
         chartsFunciones[activeChart+1](dataNextGrafica,concepto);
-            // graficar2(dataNextGrafica,concepto);
         $("#BTN_ANTERIOR_GRAFICAMODAL").html("Anterior");
     }
 }

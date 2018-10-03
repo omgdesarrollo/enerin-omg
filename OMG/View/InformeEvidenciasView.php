@@ -59,6 +59,7 @@ $Usuario=  Session::getSesion("user");
         <script src="../../js/fInformeEvidenciasView.js" type="text/javascript"></script>
         <!-- <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/> -->
         <script src="../../js/fGridComponent.js" type="text/javascript"></script>
+        <script src="../../js/fChartComponent.js" type="text/javascript"></script>
         <!-- <link href="../../css/estilosToolTip.css" rel="stylesheet" type="text/css"/> -->
         <!-- <script src="../../js/toolsToolTip.js" type="text/javascript"></script> -->
         <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
