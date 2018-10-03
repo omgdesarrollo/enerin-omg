@@ -614,12 +614,12 @@ function graficar2(temas,concepto)
         if(bandera==0)
         {
             id_tema = value.id_tema;
-            lista[value.id_tema]=[];
         }
         bandera=1;
+        if(lista[value.id_tema]==undefined)
+            lista[value.id_tema]=[];
         if(value.id_tema != id_tema)
         {
-            lista[value.id_tema]=[];
             lista[value.id_tema].push(value);
             id_tema = value.id_tema;
         }
@@ -650,12 +650,12 @@ function graficar3(datos,concepto)
         if(bandera==0)
         {
             id_registro = value.id_registro;
-            lista[value.id_registro]=[];
         }
         bandera=1;
+        if(lista[value.id_registro]==undefined)
+            lista[value.id_registro]=[];
         if(value.id_registro != id_registro)
         {
-            lista[value.id_registro]=[];
             lista[value.id_registro].push(value);
             id_registro = value.id_registro;
         }
@@ -665,6 +665,7 @@ function graficar3(datos,concepto)
             lista[value.id_registro].push(value);
         }
     });
+    console.log(lista);
     $.each(lista,(index,value)=>{
         dataGrafica.push([value[0].registro,value.length,">> Responsable Registro:\n"+value[0].resp+"\n>> Frecuencia:\n"+value[0].frecuencia+"\n>> Evidencias:"+value.length,"[]"]);
     });

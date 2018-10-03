@@ -460,6 +460,8 @@ function graficar2(datos,concepto)
     let estado = "";
     let penalizacion="false";
     let tituloGrafica = "NO EXISTEN REQUISITOS";
+    let dataGrafica = [];
+    let bandera = 0;
 
     if(concepto == "Cumplidos")
     {
@@ -521,10 +523,10 @@ function graficar2(datos,concepto)
 
     let contadorRequisitos=0;
     let nombre_tema;
-    contadorArreglo=-1;
-    no_tema;
+    let contadorArreglo=-1;
+    let no_tema;
     bandera=1;
-    bandera2=1;
+    let bandera2=1;
 
     // $.each(dataListado,function(index,value)
     // {
@@ -562,8 +564,7 @@ function graficar2(datos,concepto)
     //     });
     // });
     // console.log(temasTemp);
-    dataGrafica = [];
-    bandera = 0;
+    
     $.each(temasTemp,function(index,value)
     {
         if( value.requisitos != 0)
