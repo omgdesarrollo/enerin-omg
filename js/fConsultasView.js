@@ -543,6 +543,7 @@ function graficar4(datos,concepto)
     construirGrafica(dataGrafica,tituloGrafica);
 }
 
+
 function refresh()
 {
     inicializarFiltros().then((resolve2)=>
