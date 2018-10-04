@@ -9,8 +9,8 @@ class GanttEvidenciasDao {
     public function obtenerT($v){
         try
         { 
-           $query="SELECT tbevidencias.user, tbevidencias.id, tbevidencias.text, tbevidencias.start_date, tbevidencias.duration, tbevidencias.progress,tbevidencias.parent  
-                   FROM gantt_evidencias tbevidencias WHERE tbevidencias.id_evidencias=".$v['id_evidencia'];
+           $query="SELECT tbevidencias.user, tbevidencias.id, tbevidencias.text, tbevidencias.start_date, tbevidencias.duration, tbevidencias.progress,tbevidencias.parent,  
+                  tbevidencias.ponderado_programado,tbevidencias.notas,tbevidencias.status FROM gantt_evidencias tbevidencias WHERE tbevidencias.id_evidencias=".$v['id_evidencia'];
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             
@@ -35,6 +35,56 @@ class GanttEvidenciasDao {
           } catch (Exception $ex) {
               throw $ex;
               return false;
+        }
+    }
+    
+    
+    
+     public function totalDeDiasPorTarea($VALUE)
+    {
+        try 
+        {
+            // $query="SELECT SUM(tbgantt_tareas.duration) AS total	
+            //         FROM gantt_tareas tbgantt_tareas
+            //         WHERE tbgantt_tareas.id_tarea=$VALUE AND tbgantt_tareas.parent !=0";
+
+            $query="SELECT distinct tbgantt_evidencias.parent id
+                FROM gantt_evidencias tbgantt_evidencias
+                WHERE tbgantt_evidencias.id_evidencias=$VALUE";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    
+    
+    public function totalPadreCero($VALUE)
+    {
+        try 
+        {
+            // $query="SELECT SUM(tbgantt_tareas.duration) AS total	
+            //         FROM gantt_tareas tbgantt_tareas
+            //         WHERE tbgantt_tareas.id_tarea=$VALUE AND tbgantt_tareas.parent !=0";
+
+            $query="SELECT count(*) as totalPadre 
+                FROM gantt_evidencias tbgantt_evidencias
+                WHERE tbgantt_evidencias.id_evidencias=$VALUE and tbgantt_evidencias.parent = 0";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista[0]["totalPadre"];
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
         }
     }
     

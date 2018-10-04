@@ -11,6 +11,70 @@ class GanttEvidenciaModel {
             $dao= new GanttEvidenciasDao();
             $rec=$dao->obtenerT($v);
             
+            $duracionTotal=0;
+            // $id_tarea = array();
+            $bandera=1;
+            $array = array();
+            $cont=0;
+            $id_tarea = $dao->totalDeDiasPorTarea($v["id_evidencia"]);//obtener todo s los padres
+            $totalPadreCero = $dao->totalPadreCero($v["id_evidencia"]);
+     
+            if($totalPadreCero!=0)
+            {
+                foreach($id_tarea as $key => $value)
+                {
+                    $bandera=1;
+                    foreach($rec as $k => $v)
+                    {
+                        if($bandera==1)
+                        {
+                            $id_tarea[$key]["duracion_total"] = 0;
+                            $bandera=0;
+                        }
+                        if($v["parent"]==$value["id"] && $v["parent"]!=0 )
+                        {
+                            $id_tarea[$key]["duracion_total"] += $v["duration"];
+                        }
+                    }
+                }
+                // foreach($id_tarea as $k => $val)
+                // {
+                    foreach($rec as $key => $value)
+                    {
+                        if($value["parent"]!=0)
+                        //  && $val["id"]==$value["parent"])
+                        {
+                            // $index = array_search($value["parent"],$id_tarea,true);
+                            // echo $id_tarea[$index]["duracion_total"];
+                            foreach($id_tarea as $k => $v)
+                            {
+                                if($value["parent"]==$v["id"])
+                                $value["ponderado_programado"]==-1 ?
+                                    $rec[$key]["porcentaje_por_actividad"]= round($value["duration"]*100/$v["duracion_total"],2) : 
+                                    $rec[$key]["porcentaje_por_actividad"]= round($value["ponderado_programado"],2);
+                                // $value["ponderado_programado"]==-1 ?
+                                //     $rec[$key]["porcentaje_por_actividad"]= $value["duration"]*100/$v["duracion_total"] : 
+                                //     $rec[$key]["porcentaje_por_actividad"]= $value["ponderado_programado"];
+                            }
+                        }
+                        else
+                        {
+                            $value["ponderado_programado"]!=-1 ?
+                                $rec[$key]["porcentaje_por_actividad"] = round($value["ponderado_programado"],2) :
+                                $rec[$key]["porcentaje_por_actividad"] = round(100/$totalPadreCero,2);
+
+                            // $value["ponderado_programado"]!=-1 ?
+                            //     $rec[$key]["porcentaje_por_actividad"] = $value["ponderado_programado"] :
+                            //     $rec[$key]["porcentaje_por_actividad"] = 100/$totalPadreCero;
+                        }
+                    }
+            }
+            
+            
+            
+            
+            
+            
             return $rec;
             
         } catch (Exception $ex) {
