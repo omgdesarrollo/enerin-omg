@@ -36,8 +36,21 @@ switch ($Op) {
     	header('Content-type: application/json; charset=utf-8');
 	echo json_encode($Lista);
                 
-		break;
-            
+	break;
+    
+        case 'GuardarPonderado':
+        header('Content-type: application/json; charset=utf-8'); 
+        $Lista = json_decode($_REQUEST["DATA"],true);   
+        if(isset($Lista[0]["ponderado_programado"])){
+            $resp["response"] = $modelGantt->guardarPonderados($Lista);
+        }
+
+        break;
+        case 'actualizardetabladetalles':
+             $lista=$modelGantt->actualizarGanttEvidenciasDeTablaDetalles(array($_REQUEST["COLUMNA"]=>$_REQUEST["VALUE"]),$_REQUEST["ID_TAREA"]);
+             header('Content-type: application/json; charset=utf-8'); 
+             echo json_encode($lista);
+        break;
             
 //        case'obtenerFolioEntradaSeguimiento':
 //            

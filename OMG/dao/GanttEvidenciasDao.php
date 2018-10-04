@@ -299,6 +299,44 @@ class GanttEvidenciasDao {
         }
     }
     
+    
+    
+    public function guardarNota($Lista)
+    {
+        try 
+        {
+            $cadena= $Lista['notas'];
+            $id= $Lista['id'];
+            $query="UPDATE gantt_tareas SET notas='$cadena'
+                    WHERE gantt_tareas.id=$id";
+            $db= AccesoDB::getInstancia();
+            $lista= $db->executeQueryUpdate($query);
+            
+            return $lista;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+     public function guardarStatus($Lista)
+    {
+        try 
+        {
+            $status= $Lista['status'];
+            $id= $Lista['id'];
+            $query="UPDATE gantt_evidencias SET notas=$status
+                    WHERE gantt_evidencias.id=$id";
+            $db= AccesoDB::getInstancia();
+            $lista= $db->executeQueryUpdate($query);
+            
+            return $lista;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 }
 
 ?>
