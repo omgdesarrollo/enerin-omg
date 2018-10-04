@@ -22,7 +22,12 @@ switch ($Op) {
 	echo json_encode($Lista);
         
         break;
-    
+        case 'ListarTodasLasTareasDetallesPorSuId':
+        $v["id_evidencia"]=Session::getSesion("dataGanttEvidencia");
+        $Lista=$modelGantt->obtenerT($v);
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode(["data"=>$Lista]);
+        break;
         case 'empleadosNombreCompleto':
             
 	$Lista=$modelGantt->listarEmpleadosNombreCompleto("");
