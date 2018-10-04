@@ -348,23 +348,28 @@ class ConsultasModel{
                 //     $cumplimiento_tema[$value["id_tema"]]["cumplimiento"] = "X";
                 // }
             }
-            $cumplimiento_contrato = 0;
+            // $cumplimiento_contrato = 0;
             $contador=0;
             $total=0;
+            foreach($cumplimiento_tema as $key => $value)
+            {
+                $total += $value["cumplimiento"];
+                $contador++;
+            }
             foreach($lista2 as $key => $value)
             {
                 // if($cumplimiento_tema[$value["id_tema"]]["cumplimiento"]!="X")
                 //     $lista2[$key]["cumplimiento_tema"] = number_format(floatval($cumplimiento_tema[$value["id_tema"]]["cumplimiento"]),2,".","");
                 // else
                     $lista2[$key]["cumplimiento_tema"] = $cumplimiento_tema[$value["id_tema"]]["cumplimiento"];
-                    if(gettype($cumplimiento_tema[$value["id_tema"]]["cumplimiento"])!="string")
-                    {
-                        $total += $cumplimiento_tema[$value["id_tema"]]["cumplimiento"];
-                        $contador++;
-                        $cumplimiento_contrato = $total/$contador;
-                    }
+                    // if(gettype($cumplimiento_tema[$value["id_tema"]]["cumplimiento"])!="string")
+                    // {
+                        // $total += $cumplimiento_tema[$value["id_tema"]]["cumplimiento"];
+                        // $contador++;
+                        // $cumplimiento_contrato = $total/$contador;
+                    // }
             }
-            $lista2[0]["cumplimiento_contrato"] = $cumplimiento_contrato;
+            $lista2[0]["cumplimiento_contrato"] = $total/$contador;
             // var_dump($lista2);
             // var_dump($cumplimiento_tema);
             // foreach($lista as $key=>$value)
