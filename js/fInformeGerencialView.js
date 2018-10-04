@@ -208,7 +208,7 @@ function reconstruirExcel(value,index)
 
 function graficar()
 {
-    activeChart = 0;
+//    activeChart = 0;
     chartsCreados = [];
     let alarmaVencida= 0;
     let alarmaVencida_data= [];
@@ -254,15 +254,15 @@ function graficar()
     });
     
     if(alarmaVencida!=0)
-        dataGrafica.push(["En Proceso-Alarma Vencida",alarmaVencida,">> Documentos de Entrada:"+alarmaVencida.toString(),JSON.stringify(alarmaVencida_data)]);
+        dataGrafica.push(["En Proceso-Alarma Vencida",alarmaVencida,">> Documentos de Entrada:"+alarmaVencida.toString(),JSON.stringify(alarmaVencida_data),1]);
     if(enTiempo!=0)
-        dataGrafica.push(["En Proceso-En Tiempo",enTiempo,">> Documentos de Entrada:"+enTiempo.toString(),JSON.stringify(enTiempo_data)]);
+        dataGrafica.push(["En Proceso-En Tiempo",enTiempo,">> Documentos de Entrada:"+enTiempo.toString(),JSON.stringify(enTiempo_data),1]);
     if(suspendido!=0)
-        dataGrafica.push(["Suspendido",suspendido,">> Documentos de Entrada:"+suspendido.toString(),JSON.stringify(suspendido_data)]);
+        dataGrafica.push(["Suspendido",suspendido,">> Documentos de Entrada:"+suspendido.toString(),JSON.stringify(suspendido_data),1]);
     if(tiempoLimite!=0)
-        dataGrafica.push(["En Proceso-Tiempo Limite",tiempoLimite,">> Documentos de Entrada:"+tiempoLimite.toString(),JSON.stringify(tiempoLimite_data)]);
+        dataGrafica.push(["En Proceso-Tiempo Limite",tiempoLimite,">> Documentos de Entrada:"+tiempoLimite.toString(),JSON.stringify(tiempoLimite_data),1]);
     if(tiempoVencido!=0)
-        dataGrafica.push(["En Proceso-Tiempo Vencido",tiempoVencido,">> Documentos de Entrada:"+tiempoVencido.toString(),JSON.stringify(tiempoVencido_data)]);
+        dataGrafica.push(["En Proceso-Tiempo Vencido",tiempoVencido,">> Documentos de Entrada:"+tiempoVencido.toString(),JSON.stringify(tiempoVencido_data),1]);
     
     $.each(dataGrafica,function(index,value)
     {
@@ -282,7 +282,7 @@ function graficar()
 
 function graficar2(documentosEntrada,concepto)
 {
-    activeChart = 1;
+//    activeChart = 1;
     let lista = new Object();
     let bandera = 0;
     let dataGrafica = [];
@@ -309,7 +309,7 @@ function graficar2(documentosEntrada,concepto)
     
     $.each(lista,(index,value)=>
     {
-        dataGrafica.push(["Responsable del Tema: "+value[0].nombre_completo,value.length,">> Documentos de Entrada:"+value.length,JSON.stringify(value)]);
+        dataGrafica.push(["Responsable del Tema: "+value[0].nombre_completo,value.length,">> Documentos de Entrada:"+value.length,JSON.stringify(value),2]);
     });
     
     construirGrafica(dataGrafica,tituloGrafica);
@@ -317,7 +317,7 @@ function graficar2(documentosEntrada,concepto)
 
 function graficar3(documentosEntrada,concepto)
 {
-    activeChart = 2;
+//    activeChart = 2;
     let dataGrafica = [];
     let lista = new Object();
     
@@ -334,7 +334,7 @@ function graficar3(documentosEntrada,concepto)
     
     $.each(lista,(index,value)=>
     {
-        dataGrafica.push(["Documento de Entrada: "+value[0].folio_entrada,value.length,">> Documento de Entrada:\n"+value[0].folio_entrada+"\n>> Responsable del Tema:\n"+value[0].nombre_completo,"[]"]);
+        dataGrafica.push(["Documento de Entrada: "+value[0].folio_entrada,value.length,">> Documento de Entrada:\n"+value[0].folio_entrada+"\n>> Responsable del Tema:\n"+value[0].nombre_completo,"[]",3]);
     });
     construirGrafica(dataGrafica,tituloGrafica);
 }
