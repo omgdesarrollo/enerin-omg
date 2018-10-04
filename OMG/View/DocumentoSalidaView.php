@@ -126,9 +126,9 @@ require_once 'EncabezadoUsuarioView.php';
         <button style="width:48px;height:42px" type="button"  class="btn_agregar" id="toExcel">
             <img src="../../images/base/_excel.png" width="30px" height="30px">
         </button>
-        <button style="width:48px;height:42px;" type="button"  class="btn_exportarpdf" id="toPDF">
+<!--        <button style="width:48px;height:42px;" type="button"  class="btn_exportarpdf" id="toPDF">
             <img src="../../images/base/pdf.png" width="30px" height="30px">
-        </button>
+        </button>-->
     </div>
 </div>
 

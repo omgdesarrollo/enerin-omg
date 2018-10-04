@@ -1,8 +1,16 @@
-$(function(){
+$(function()
+{
+    
     var $btnDLtoExcel = $('#toExcel'); 
     $btnDLtoExcel.on('click', function () 
     {
-//        console.log("Entro al excelexportHibrido");
+        console.log("Entro al excelexportHibrido");
+        __datosExcel=[];
+        $.each(dataListado,function (index,value)
+        {
+            __datosExcel.push( reconstruirExcel(value,index+1) );
+        });
+        DataGridExcel=__datosExcel;
         $("#listjson").excelexportHibrido({
             containerid: "listjson"
             , datatype: 'json'
@@ -56,7 +64,7 @@ function listarDatos()
 {
     return new Promise((resolve,reject)=>
     {
-        var __datos=[],__datosExcel=[];
+        var __datos=[];
         $.ajax({
             url:"../Controller/InformeGerencialController.php?Op=Listar",
             type:"GET",
@@ -78,13 +86,7 @@ function listarDatos()
                     });
                     DataGrid = __datos;
                     gridInstance.loadData();
-                    
-//                    $.each(data,function (index,value)
-//                    {
-//                        __datosExcel.push( reconstruirExcel(value,index+1) );
-//                    });
-//                    DataGridExcel=__datosExcel
-                    
+                                        
                     resolve();
                 }else{
                     growlSuccess("Solicitud","No Existen Registros");
@@ -140,66 +142,199 @@ function reconstruirExcel(value,index)
 }
 
 //IniciaGrafica Informes
-function loadChartView(bclose)
+//function loadChartView(bclose)
+//{
+////    console.log("Entro al loadChartView");
+//    a=0, b=0, c=0, d=0, e=0;
+//    $.ajax({
+//        url:"../Controller/InformeGerencialController.php?Op=Listar",
+//        type:"GET",
+//        success:function(data)
+//        {
+////            console.log(data);
+//            $.each(data,function(index,value)
+//            {
+//                if(value.condicion=="En Tiempo")
+//                {
+//                  a++;   
+//                }
+//                if(value.condicion=="Alarma Vencida")
+//                {
+//                  b++;   
+//                }
+//                if(value.condicion=="Tiempo Limite")
+//                {
+//                  c++;   
+//                }
+//                if(value.condicion=="Tiempo Vencido")
+//                {
+//                  d++;   
+//                }
+//                if(value.condicion=="Suspendido")
+//                {
+//                  e++;   
+//                }
+//            });
+//        }
+//    });
+//    
+////    $("#graficaInformeGerencial").html("");
+//    google.charts.load("current", {packages:["corechart"]});
+//    google.charts.setOnLoadCallback(drawChart);
+//    
+//    function drawChart() {
+//        var data = google.visualization.arrayToDataTable([
+//
+//          ['Status', 'Cantidad'],
+//          ['En proceso(En Tiempo)', a],
+//          ['En proceso(Alarma Vencida)',b],
+//          ['En proceso(Tiempo Limite)', c],
+//          ['En proceso(Tiempo Vencido)', d],
+//          ['Suspendido', e]
+////          ['Terminado', f]
+//        ]);
+//
+//        var options = {
+//          title: 'Documentos de Entrada',
+//          is3D: true,
+//          "width":660,
+//          "height":340
+//        };
+//
+//        var chart = new google.visualization.PieChart(document.getElementById('graficaInformeGerencial'));
+//        chart.draw(data, options);
+//    }  
+//} //Finaliza Grafica Informes
+
+function graficar()
 {
-//    console.log("Entro al loadChartView");
-    a=0, b=0, c=0, d=0, e=0;
-    $.ajax({
-        url:"../Controller/InformeGerencialController.php?Op=Listar",
-        type:"GET",
-        success:function(data)
+    activeChart = 0;
+    chartsCreados = [];
+    let alarmaVencida= 0;
+    let alarmaVencida_data= [];
+    let enTiempo= 0;
+    let enTiempo_data= [];
+    let suspendido= 0;
+    let suspendido_data= [];
+    let tiempoLimite= 0;
+    let tiempoLimite_data= [];
+    let tiempoVencido= 0;
+    let tiempoVencido_data= [];
+    let dataGrafica = [];
+    let tituloGrafica = "DOCUMENTOS DE ENTRADA";
+    let bandera = 0;
+    
+    $.each(dataListado,function(index,value)
+    {
+        if(value.condicion=="Alarma Vencida")
         {
-//            console.log(data);
-            $.each(data,function(index,value)
-            {
-                if(value.condicion=="En Tiempo")
-                {
-                  a++;   
-                }
-                if(value.condicion=="Alarma Vencida")
-                {
-                  b++;   
-                }
-                if(value.condicion=="Tiempo Limite")
-                {
-                  c++;   
-                }
-                if(value.condicion=="Tiempo Vencido")
-                {
-                  d++;   
-                }
-                if(value.condicion=="Suspendido")
-                {
-                  e++;   
-                }
-            });
+            alarmaVencida++;
+            alarmaVencida_data.push(value);
+        }
+        if(value.condicion=="En Tiempo")
+        {
+            enTiempo++
+            enTiempo_data.push(value);
+        }
+        if(value.condicion=="Suspendido")
+        {
+            suspendido++
+            suspendido_data.push(value);
+        }
+        if(value.condicion=="Tiempo Limite")
+        {
+            tiempoLimite++;
+            tiempoLimite_data.push(value);
+        }
+        if(value.condicion=="Tiempo Vencido")
+        {
+            tiempoVencido++;
+            tiempoVencido_data.push(value);
         }
     });
     
-//    $("#graficaInformeGerencial").html("");
-    google.charts.load("current", {packages:["corechart"]});
-    google.charts.setOnLoadCallback(drawChart);
+    if(alarmaVencida!=0)
+        dataGrafica.push(["En Proceso-Alarma Vencida",alarmaVencida,">> Documentos de Entrada:"+alarmaVencida.toString(),JSON.stringify(alarmaVencida_data)]);
+    if(enTiempo!=0)
+        dataGrafica.push(["En Proceso-En Tiempo",enTiempo,">> Documentos de Entrada:"+enTiempo.toString(),JSON.stringify(enTiempo_data)]);
+    if(suspendido!=0)
+        dataGrafica.push(["Suspendido",suspendido,">> Documentos de Entrada:"+suspendido.toString(),JSON.stringify(suspendido_data)]);
+    if(tiempoLimite!=0)
+        dataGrafica.push(["En Proceso-Tiempo Limite",tiempoLimite,">> Documentos de Entrada:"+tiempoLimite.toString(),JSON.stringify(tiempoLimite_data)]);
+    if(tiempoVencido!=0)
+        dataGrafica.push(["En Proceso-Tiempo Vencido",tiempoVencido,">> Documentos de Entrada:"+tiempoVencido.toString(),JSON.stringify(tiempoVencido_data)]);
     
-    function drawChart() {
-        var data = google.visualization.arrayToDataTable([
+    $.each(dataGrafica,function(index,value)
+    {
+        if(value[1] != 0)
+            bandera=1;
+    });
 
-          ['Status', 'Cantidad'],
-          ['En proceso(En Tiempo)', a],
-          ['En proceso(Alarma Vencida)',b],
-          ['En proceso(Tiempo Limite)', c],
-          ['En proceso(Tiempo Vencido)', d],
-          ['Suspendido', e]
-//          ['Terminado', f]
-        ]);
+    if(bandera == 0)
+    {
+        dataGrafica.push([ "NO EXISTEN DOCUMENTOS DE ENTRADA",1,"SIN DOCUMENTOS DE ENTRADA","[]"]);
+        tituloGrafica = "NO EXISTEN DOCUMENTOS DE ENTRADA";
+    }
+    
+    construirGrafica(dataGrafica,tituloGrafica);
+    $("#BTN_ANTERIOR_GRAFICAMODAL").html("Recargar");
+}
 
-        var options = {
-          title: 'Documentos de Entrada',
-          is3D: true,
-          "width":660,
-          "height":340
-        };
+function graficar2(documentosEntrada,concepto)
+{
+    activeChart = 1;
+    let lista = new Object();
+    let bandera = 0;
+    let dataGrafica = [];
+    
+    if(concepto=="En Proceso-Alarma Vencida")
+        tituloGrafica= "DOCUMENTOS DE ENTRADA EN PROCESO-ALARMA VENCIDA";
+    if(concepto=="En Proceso-En Tiempo")
+        tituloGrafica= "DOCUMENTOS DE ENTRADA EN PROCESO-EN TIEMPO";
+    if(concepto=="Suspendido")
+        tituloGrafica= "DOCUMENTOS DE ENTRADA SUSPENDIDOS";
+    if(concepto=="En Proceso-Tiempo Limite")
+        tituloGrafica= "DOCUMENTOS DE ENTRADA EN PROCESO-TIEMPO LIMITE";
+    if(concepto=="En Proceso-Tiempo Vencido")
+        tituloGrafica= "DOCUMENTOS DE ENTRADA EN PROCESO-TIEMPO VENCIDO";
+    
+    documentosEntrada= JSON.parse(documentosEntrada);
+    
+    $.each(documentosEntrada,(index,value)=>
+    {
+        if(lista[value.id_documento_entrada]==undefined)
+            lista[value.id_documento_entrada]=[];
+        lista[value.id_documento_entrada].push(value);
+    });
+    
+    $.each(lista,(index,value)=>
+    {
+        dataGrafica.push(["Responsable del Tema: "+value[0].nombre_completo,value.length,">> Documentos de Entrada:"+value.length,JSON.stringify(value)]);
+    });
+    
+    construirGrafica(dataGrafica,tituloGrafica);
+}
 
-        var chart = new google.visualization.PieChart(document.getElementById('graficaInformeGerencial'));
-        chart.draw(data, options);
-    }  
-} //Finaliza Grafica Informes
+function graficar3(documentosEntrada,concepto)
+{
+    activeChart = 2;
+    let dataGrafica = [];
+    let lista = new Object();
+    
+    documentosEntrada= JSON.parse(documentosEntrada);
+    tituloGrafica = "DOCUMENTOS DE ENTRADA";
+    
+    $.each(documentosEntrada,(index,value)=>
+    {
+//        console.log("Estos son los datos: ",datos);
+        if(lista[value.id_documento_entrada]==undefined)
+            lista[value.id_documento_entrada]=[];
+        lista[value.id_documento_entrada].push(value);
+    });
+    
+    $.each(lista,(index,value)=>
+    {
+        dataGrafica.push(["Documento de Entrada: "+value[0].folio_entrada,value.length,">> Documento de Entrada:\n"+value[0].folio_entrada+"\n>> Responsable del Tema:\n"+value[0].nombre_completo,"[]"]);
+    });
+    construirGrafica(dataGrafica,tituloGrafica);
+}
