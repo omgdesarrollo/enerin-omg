@@ -39,7 +39,13 @@ switch ($Op) {
             header('Content-type: application/json; charset=utf-8');
             echo json_encode(array("data"=>$Lista));
             break;
+        case 'ListarDescripcionEnDondeSeEstanLojandoLasTareas':
             
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($Lista);
+            
+            
+        break;
             
         case 'calcularPorcentajeActividades':
             $Lista= $modelGantt->calcularPorcentajePorActividad();
