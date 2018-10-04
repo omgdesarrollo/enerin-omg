@@ -92,7 +92,7 @@ require_once 'EncabezadoUsuarioView.php';
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
-                <h4 class="modal-title" id="myModalLabel">Crear Nuevo Empleado</h4>
+                <h4 class="modal-title" id="myModalLabel">Agregar Nuevo Personal</h4>
             </div>
 
             <div id="validacion_empleado" class="modal-body">
@@ -158,14 +158,14 @@ var customsFieldsGridData=[
 estructuraGrid = [
     { name: "id_principal",visible:false},
     { name:"no",title:"No",width:50},
-    { name: "nombre_empleado",title:"Nombre", type: "text", width: 150, validate: "required" },
-    { name: "apellido_paterno",title:"Apellido Paterno", type: "text", width: 150, validate: "required" },
-    { name: "apellido_materno",title:"Apellido Materno", type: "text", width: 150, validate: "required" },
-    { name: "categoria",title:"Categoria", type: "text", width: 150, validate: "required" },
-    { name: "correo",title:"Correo Electronico", type: "text", width: 150, validate: "required" },
-    { name: "fecha_creacion",title:"Fecha Creacion", type: "text", width: 150, validate: "required",editing: false},
+    { name: "nombre_empleado",title:"Nombre", type: "textarea", width: 150, validate: "required" },
+    { name: "apellido_paterno",title:"Apellido Paterno", type: "textarea", width: 150, validate: "required" },
+    { name: "apellido_materno",title:"Apellido Materno", type: "textarea", width: 150, validate: "required" },
+    { name: "categoria",title:"Categoría", type: "textarea", width: 150, validate: "required" },
+    { name: "correo",title:"Correo Electrónico", type: "textarea", width: 150, validate: "required" },
+    { name: "fecha_creacion",title:"Fecha Creación", type: "text", width: 150, validate: "required",editing: false},
 //    {name:"cancel", type:"control"}
-    { name: "delete", title: "Opcion", type: "customControl", width:100}
+    { name: "delete", title: "Opción", type: "customControl", width:100}
 ],
 
 construirGrid();

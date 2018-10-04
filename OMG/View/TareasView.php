@@ -359,7 +359,7 @@ estructuraGrid= [
     { name: "referencia",title:"Referencia", type: "textarea",width:200},
     { name: "tarea",title:"Tema", type: "textarea", validate: "required",width:200 },
     { name: "id_empleado", title: "Responsable", type: "comboEmpleados", width:250},
-    { name: "fecha_creacion",title:"Fecha de Creacion", type: "text", validate: "required", width:150,editing: false},
+    { name: "fecha_creacion",title:"Fecha de Creación", type: "text", validate: "required", width:150,editing: false},
     { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required", width:150,},
     { name: "fecha_cumplimiento",title:"Fecha de Cumplimiento", type: "text", validate: "required", width:190,editing: false},
     { name: "status_tarea", title:"Estatus", type: "select", width:150,valueField:"status_tarea",textField:"descripcion",
