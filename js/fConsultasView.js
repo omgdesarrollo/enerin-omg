@@ -55,7 +55,7 @@ function reconstruir(value,index)
 {
     tempData = new Object();    
     if(value[0].cumplimiento_contrato!=undefined)
-        $("#cumplimiento_contrato_show").html("% Cumplimiento: "+value[0].cumplimiento_contrato.toFixed(2));
+        $("#cumplimiento_contrato_show").html("% Cumplimiento General: "+value[0].cumplimiento_contrato.toFixed(2));
     tempData["id_principal"] = [{'id_tema':value[0].id_tema}];
     tempData["no_tema"] = value[0].no_tema;
     tempData["nombre_tema"] = value[0].nombre_tema;
