@@ -111,7 +111,10 @@ function drawChart(dataGrafica,data,options)//funcion sin cambio
     grafica = new google.visualization.PieChart(document.getElementById('graficaPie'));
     grafica.draw(data, options);
     activeChart++;
-    // if(dataGrafica[0][3]!="[]")
+    if(activeChart!=0)
+        $("#BTN_ANTERIOR_GRAFICAMODAL").html("Anterior");
+    else
+        $("#BTN_ANTERIOR_GRAFICAMODAL").html("Recargar");
         google.visualization.events.addListener(grafica, 'select', selectChart);
     return grafica;
 }
@@ -125,12 +128,6 @@ function selectChart()
         concepto = chartsCreados[activeChart].data.getValue(select.row,0);
         fn = chartsCreados[activeChart].data.getValue(select.row,4);
         if(fn>=0)
-        {
             chartsFunciones[fn](dataNextGrafica,concepto);
-        // fn = JSON.parse(fn);
-        // console.log(fn);
-        // chartsFunciones[activeChart+1](dataNextGrafica,concepto);
-            $("#BTN_ANTERIOR_GRAFICAMODAL").html("Anterior");
-        }
     }
 }

@@ -482,7 +482,7 @@ function graficar3(datos,concepto)
             });
         });
         dataGrafica.push(["Tema: "+value[0].no_tema,value.length,
-        ">> Tema:\n"+value[0].nombre_tema+" \n>> Responsable:\n"+value[0].responsable_tema+"\n>> Requisitos: "+value.length+"\n>> Evidencias:"+evidencias_tema, JSON.stringify(value),3]);
+        ">> Tema:\n"+value[0].nombre_tema+" \n>> Responsable:\n"+value[0].responsable_tema+"\n>> Requisitos: "+value.length+"\n>> Evidencias:"+evidencias_tema, JSON.stringify(value),-1]);
     });
     construirGrafica(dataGrafica,tituloGrafica);
 }
