@@ -896,7 +896,7 @@ function cargarprogram(value){
 
 function graficar()
 {
-    activeChart = 0;
+//    activeChart = 0;
     chartsCreados = [];
     let enTiempo = 0;
     let enTiempo_data = [];
@@ -940,13 +940,13 @@ function graficar()
     
     
     if(enTiempo!=0)
-        dataGrafica.push(["En Proceso-En Tiempo",enTiempo,">> Temas:"+enTiempo.toString(),JSON.stringify(enTiempo_data)]);
+        dataGrafica.push(["En Proceso-En Tiempo",enTiempo,">> Temas:"+enTiempo.toString(),JSON.stringify(enTiempo_data),1]);
     if(alarmaVencida!=0)
-        dataGrafica.push(["En Proceso-Alarma Vencida",alarmaVencida,">> Temas:"+alarmaVencida.toString(),JSON.stringify(alarmaVencida_data)]);
+        dataGrafica.push(["En Proceso-Alarma Vencida",alarmaVencida,">> Temas:"+alarmaVencida.toString(),JSON.stringify(alarmaVencida_data),1]);
     if(tareaVencida!=0)
-        dataGrafica.push(["En Proceso-Tema Vencido",tareaVencida,">> Temas:"+tareaVencida.toString(),JSON.stringify(tareaVencida_data)]);
+        dataGrafica.push(["En Proceso-Tema Vencido",tareaVencida,">> Temas:"+tareaVencida.toString(),JSON.stringify(tareaVencida_data),1]);
     if(suspendido!=0)
-        dataGrafica.push(["Suspendido",suspendido,">> Temas:"+suspendido.toString(),JSON.stringify(suspendido_data)]);
+        dataGrafica.push(["Suspendido",suspendido,">> Temas:"+suspendido.toString(),JSON.stringify(suspendido_data),1]);
 
     $.each(dataGrafica,function(index,value)
     {
@@ -967,7 +967,7 @@ function graficar()
 function graficar2(tareas,concepto)
 {
 //    console.log("concepto: ",concepto);
-    activeChart = 1;
+//    activeChart = 1;
     let lista = new Object();
     let id_empleado;
     let bandera = 0;
@@ -986,24 +986,22 @@ if(concepto== "Suspendido")
 //    console.log("Estas son las tareas.parse: ",tareas);
     $.each(tareas,(index,value)=>
     {
-
         if(lista[value.id_empleado]==undefined)
             lista[value.id_empleado]=[];
-        lista[value.id_empleado].push(value);
-        
+        lista[value.id_empleado].push(value);        
     });
-//    tarea="";    
+    
     $.each(lista,(index,value)=>
     {
 //        console.log("value: ",value);
-        dataGrafica.push(["Responsable: "+value[0].nombre_completo,value.length,">> Temas:"+value.length,JSON.stringify(value)]);  
+        dataGrafica.push(["Responsable: "+value[0].nombre_completo,value.length,">> Temas:"+value.length,JSON.stringify(value),2]);  
     });
     construirGrafica(dataGrafica,tituloGrafica);
 }
 
 function graficar3(datos,concepto)
 {
-    activeChart = 2;
+//    activeChart = 2;
     let dataGrafica = [];
     let lista = new Object();
 
@@ -1021,7 +1019,7 @@ function graficar3(datos,concepto)
     $.each(lista,(index,value)=>
     {
 //        console.log("este es el value: ",value);
-        dataGrafica.push(["Tema: "+value[0].tarea,value.length,">> Tema:\n"+value[0].tarea+"\n>> Responsable:\n"+value[0].nombre_completo,"[]"]);
+        dataGrafica.push(["Tema: "+value[0].tarea,value.length,">> Tema:\n"+value[0].tarea+"\n>> Responsable:\n"+value[0].nombre_completo,"[]",3]);
     });
     construirGrafica(dataGrafica,tituloGrafica);
 }
