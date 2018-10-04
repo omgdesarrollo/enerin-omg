@@ -493,7 +493,6 @@ function cargarprogram(v,validado)
 
 function graficar()
 {
-    activeChart = 0;
     let dataGrafica=[];
     let validados = 0;
     let validados_data = [];
@@ -529,11 +528,11 @@ function graficar()
     });
     
     if(sin_asignar!=0)
-        dataGrafica.push(["Sin Asignar",sin_asignar,">> Documentos:"+sin_asignar.toString(),JSON.stringify(sin_asignar_data)]);
+        dataGrafica.push(["Sin Asignar",sin_asignar,">> Documentos:"+sin_asignar.toString(),JSON.stringify(sin_asignar_data),1]);
     if(proceso!=0)
-        dataGrafica.push(["En Proceso",proceso,">> Documentos:"+proceso.toString(),JSON.stringify(proceso_data)]);
+        dataGrafica.push(["En Proceso",proceso,">> Documentos:"+proceso.toString(),JSON.stringify(proceso_data),1]);
     if(validados!=0)
-        dataGrafica.push(["Validados",validados,">> Documentos:"+validados.toString(),JSON.stringify(validados_data)]);
+        dataGrafica.push(["Validados",validados,">> Documentos:"+validados.toString(),JSON.stringify(validados_data),1]);
 
     $.each(dataGrafica,function(index,value){
         if(value[1] != 0)
@@ -550,7 +549,6 @@ function graficar()
 
 function graficar2(datos,concepto)
 {
-    activeChart = 1;
     datos = JSON.parse(datos);
     let lista = new Object();
     let dataGrafica = [];
@@ -562,7 +560,7 @@ function graficar2(datos,concepto)
     });
     tituloGrafica = "DOCUMENTOS POR TEMA";
     $.each(lista,(index,value)=>{
-        dataGrafica.push(["Tema: "+value[0].no,value.length,">> Tema:\n"+value[0].nombre_tema+"\n>> Responsable:\n"+value[0].responsable_tema+"\n>> Documentos:"+value.length,"[]"]);
+        dataGrafica.push(["Tema: "+value[0].no,value.length,">> Tema:\n"+value[0].nombre_tema+"\n>> Responsable:\n"+value[0].responsable_tema+"\n>> Documentos:"+value.length,"[]",-1]);
     });
     construirGrafica(dataGrafica,tituloGrafica);
 }
