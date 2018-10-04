@@ -6,13 +6,13 @@ if(isset($_REQUEST["id_evid"])){
     Session::setSesion("dataGanttEvidencia",$_REQUEST["id_evid"]);
 //    Session::setSesion("dataGanttFolio_Entrada",$_REQUEST["folio_entrada"]);
 //    echo "el seguimiento de entrada linkeado al de doc de entrada y al folio de entrada   ".$dataGantt=Session::getSesion("dataGantt");;
-    echo "<h4><center>El id de evidencia = ".Session::getSesion("dataGanttEvidencia")."</center><h4>";
+//    echo "<h4><center>El id de evidencia = ".Session::getSesion("dataGanttEvidencia")."</center><h4>";
     ?>
     <center><div id="infoquepuedehacer"></div></center> 
 <?php
 }else{
         $dataGantt=Session::getSesion("dataGanttEvidencia");
-       echo "<h2><center>El id de evidencia = ".Session::getSesion("dataGanttEvidencia")."</center><h2>";
+//       echo "<h2><center>El id de evidencia = ".Session::getSesion("dataGanttEvidencia")."</center><h2>";
        ?>
        
         <center><div id="infoquepuedehacer"></div></center> 
@@ -244,10 +244,6 @@ and open the template in the editor.
   </head>
     <body >
 <!-- Draggable DIV -->
-<form action="">
-    
-    <button>recargar temporal</button>
-</form>
 
 <div class="accordion" id="accordionExample">
 
@@ -309,11 +305,90 @@ and open the template in the editor.
    
     
     <!--<input id="id_evid" type="text" value="<?php echo Session::getSesion("dataGanttEvidencia") ?>">-->
+   
+    <!-- Inicio de Seccion Modal Archivos-->
+<div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+        <div id="loaderModalMostrar"></div>
+		<div class="modal-content">
+                        
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Archivos Adjuntos</h4>
+		      </div>
+
+		      <div class="modal-body">
+                        <div id="DocumentolistadoUrl"></div>
+
+                        
+                        <div class="form-group">
+                                <div id="DocumentolistadoUrlModal"></div>
+			</div>
+
+                        <div class="form-group" method="post" >
+                                <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Archivo</button>
+                        </div>
+                      </div><!-- cierre div class-body -->
+                </div><!-- cierre div class modal-content -->
+        </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal -->   
+    
+    
+    
     </body>
   
     
     
-  <script type="text/javascript">   
+  <script type="text/javascript"> 
+      
+     //Make the DIV element draggagle:
+dragElement(document.getElementById("mydiv"));
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id + "header")) {
+    /* if present, the header is where you move the DIV from:*/
+    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+  } else {
+    /* otherwise, move the DIV from anywhere inside the DIV:*/
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    /* stop moving when mouse button is released:*/
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+} 
+      
+      
+      
+      
+      
       //empieza para definir como mostrar las tareas si por dia,semana,mes,año
 	function setScaleConfig(value) {
 		switch (value) {
@@ -379,7 +454,20 @@ and open the template in the editor.
 setScaleConfig('1');
 //termina de definir si sera por dia,semana,mes ,año que se mostrara las tareas
 
+	function showGroups(listname) {
+		if (listname) {
+			gantt.groupBy({
+				groups: gantt.serverList(listname),
+				relation_property: listname,
+				group_id: "key",
+				group_text: "label"
+			});
+			gantt.sort("start_date");
+		} else {
+			gantt.groupBy(false);
 
+		}
+	}
 
       
       
@@ -419,16 +507,8 @@ setScaleConfig('1');
 		});
 
 		gantt.attachEvent("onBeforeTaskDelete", function onBeforeTaskDelete(id, task) {
-//			alert("antes");
-//                       gantt.refreshData();
-//                        alert("procedera a eliminarse");
+			
                         delTaskParent = gantt.getParent(id);
-                        
-//                         alert("d  "+delTaskParent);
-//                        var taskId = gantt.getSelectedId();
-//                        gantt.deleteTask(delTaskParent);
-//                        gantt.deleteTask(delTaskParent);
-//                                alert("el id es : "+id);
                         var desc=false;
                         $.ajax({
                                 url:"../Controller/GanttEvidenciasController.php?Op=descendencia&deleteidtarea="+id,
@@ -469,19 +549,6 @@ setScaleConfig('1');
                                 }
            
                               });
-//                                var tienehijos=false; 
-//                                 gantt.eachTask(function (child) {
-//                                     tienehijos=true;
-//				if (child.type != gantt.config.types.project) {
-//					totalToDo += child.duration;
-//					totalDone += (child.progress || 0) * child.duration;
-//				}
-//			},id);
-//                                 if(tienehijos==true){
-//                                     alert("tiene hijos ");
-//                                 }else{
-//                                     alert("no tiene");
-//                                 }
                                  
                                 if (delTaskParent != gantt.config.root_id) {
 				gantt.batchUpdate(checkParents(delTaskParent));
@@ -497,12 +564,16 @@ setScaleConfig('1');
 		function calculateSummaryProgress(task) {
 			if (task.type != gantt.config.types.project)
 				return task.progress;
+                            
 			var totalToDo = 0;
 			var totalDone = 0;
 			gantt.eachTask(function (child) {
 				if (child.type != gantt.config.types.project) {
-					totalToDo += child.duration;
-					totalDone += (child.progress || 0) * child.duration;
+                                      totalToDo += (child.porcentaje_por_actividad/100);
+                                      totalDone += (child.progress || 0) * (child.porcentaje_por_actividad/100);
+//					totalToDo += child.duration;
+//					totalDone += (child.progress || 0) * child.duration;
+                                        
 				}
 			}, task.id);
 			if (!totalToDo) return 0;
@@ -536,7 +607,23 @@ setScaleConfig('1');
 			});
 		});
 
-		gantt.attachEvent("onAfterTaskUpdate", function (id) {
+		gantt.attachEvent("onAfterTaskUpdate", function (id,item) {
+                    if(item.progress==1){
+                        gantt.getTask(id).readonly = true;
+                        gantt.getTask(id).status = 3;
+                    }
+                    if(item.status==3){
+                        gantt.getTask(id).readonly = true;
+                        gantt.getTask(id).progress = 1;
+//                        gantt.getTask(id).status = 3;
+
+                    }
+                    
+                    
+                    
+                    
+                    
+                    
 			refreshSummaryProgress(gantt.getParent(id), true);
 		});
 
@@ -568,29 +655,122 @@ setScaleConfig('1');
 		})();
 	})();
 
+      //esta seccion es cuando abre seleccionas la tarea con click  te trae la informacion de esa tarea--->
+        gantt.attachEvent("onBeforeLightbox", function(id) {
+//console.log(gantt.getTask(id));
+            var task = gantt.getTask(id);
+//            if (task.progress == 1) {
+//			gantt.message({text: "La tarea esta completada", type: "completed"});
+//			return false;
+//		}
+//            var task;
+            task.my_template ="<span id='title2'>Progreso: </span>"+Math.round(task.progress*100) +" %";
+            return true;
+           
+        });
+ //<----
+   gantt.templates.grid_row_class =
+		gantt.templates.task_row_class = function (start, end, task) {
+			if (task.$virtual)
+				return "summary-row"
+		};
       
- 
+    gantt.templates.progress_text = function (start, end, task) {
+//        if(Math.round(task.progress * 100)==100){
+//            $(".gantt_task_line.gantt_dependent_task .gantt_task_progress ").css("background-color","red");
+//        }
+//                $("#taskid").css("background-color:","red");
+//		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
+        return "";
+    };
+    
+    
+    gantt.templates.task_class = function (start, end, task) {
+		if(task.type == gantt.config.types.project){
+//                    console.log("entro ");
+			return "hide_project_progress_drag";
+                }
+                if (task.$virtual)
+			return "summary-bar";
+                
+//                if(task.status == 2){
+////                    console.log("entro ");
+//			return "hide_project_progress_drag";
+//                }
+//                console.log(task);
+                if(task.status==3){
+                    return "completed_task";
+                }
+//                si es igual a suspendido
+                if(task.status==2){
+//                    alert("d");
+                    return "task_suspendida";
+                }
+                
+                
+                    if(task.progress==1){
+                        return "completed_task";
+                    }else{
+                        return "";
+                    }
+                
+	};
+              gantt.templates.task_text=function (t,e,task) {
+            
+             var taskLocal = gantt.getTask(task.id);
       
-      
+//            if(task.type != gantt.config.types.project){
+//                if(task.status==1)
+//                taskLocal ="<span id='title2'><div class='text_tarea_terminada_Azul'>"+Math.round(task.progress*100) +" % </div>"+"</span>";
+//                if(task.status==2)
+//                taskLocal ="<span id='title2'><div class='text_tarea_suspendida_amarilla'>"+Math.round(task.progress*100) +" % </div>"+"</span>"; 
+                if(task.status==3){
+                    taskLocal ="<span id='title2'><div class='text_tarea_terminada_Azul'>"+Math.round(task.progress*100) +" % </div>"+"</span>";
+                    return taskLocal;
+                 }
+//            }else{
+                  if(task.progress==undefined){
+                   taskLocal ="<span id='title2'></span>0 %";
+                    return taskLocal; 
+                  }
+                  taskLocal ="<span id='title2'></span>"+Math.round(task.progress*100) +" %";
+                  return taskLocal; 
+//            }
+        }
+        gantt.templates.tooltip_text = function(start,end,task){
+  	if(task.type == gantt.config.types.project){
+            return "Tarea Principal: "+task.text;
+        }
+  
+        return "<b>Tarea:</b> "+task.text+"<br/><b>Start date:</b> " + 
+        gantt.templates.tooltip_date_format(start)+ 
+        "<br/><b>End date:</b> "+gantt.templates.tooltip_date_format(end);
+    }; 
      var dataEmpleados=[];
 //     var data
      obtenerEmpleados();
       gantt.serverList("user",dataEmpleados); 
 
-	gantt.locale.labels.column_owner ="Encargado";
-		gantt.locale.labels.section_owner = "Encargado";
+	gantt.locale.labels.column_owner ="Responsable";
+	gantt.locale.labels.section_owner = "Responsable";
+        
+        gantt.locale.labels.column_statusname="Estatus";
+        gantt.locale.labels.section_statusname="Estatus";
+        
+        gantt.locale.labels.section_notas="Notas";
+        gantt.locale.labels.section_template = "Detalles"
+        
         
         gantt.config.scale_height = 50;
         gantt.config.order_branch = true;
-        
-//        gantt.config.branch_loading = true;
-//gantt.config.order_branch_free = true;
-//        para abrir las carpetas por default desde el principio
+        gantt.config.branch_loading = true;
+        gantt.config.order_branch_free = true;
+        gantt.config.open_tree_initially = true;
 
-gantt.templates.task_class = function (start, end, task) {
-		if (task.type == gantt.config.types.project)
-			return "hide_project_progress_drag";
-	};
+     
+        
+
+
 
 
 //        	gantt.config.open_tree_initially = true;
@@ -608,16 +788,49 @@ gantt.templates.task_class = function (start, end, task) {
 		return "";
 	}
         
-        
-gantt.config.columns = [
-    {name:"id",   label:"id",   align:"center" },
-		{name: "text", label: "Nombre",tree: true, width: '*'},
-		
-		{
-			name: "owner", width: 80, align: "center", template: function (item) {
-				return byId(gantt.serverList('user'), item.user)
+    var textEditor = {type: "text", map_to: "text"};   
+gantt.config.columns=[
+//    {name:"id",   label:"id",   align:"center"},
+		{name: "text", label: "Descripcion", tree: true,resize: true},
+                {
+			name: "progress", label: "Progreso", width: '*', align: "center",resize: true,
+			template: function (item) {
+				if (item.progress >= 1)
+					return "Completa";
+				if (item.progress == 0)
+					return "No Iniciada";
+                                if(item.progress==undefined){
+                                    return "sin tareas";
+                                }
+                                console.log(item);
+                                
+				return Math.round(item.progress * 100) + "%";
 			}
 		},
+		{
+			name: "status", label: "Estatus", width: '*', align: "center",resize: true,
+			template: function (item) {
+                                if (item.status == undefined)
+                                    return "";
+				if (item.status == 1)
+					return "En Proceso";
+				if (item.status == 2)
+					return "Suspendido";
+                                if(item.status==3)
+                                        return  "Terminado";
+			}
+		},
+		{
+                    name: "owner", width: '*', align: "center",resize: true, template: function (item) {
+				return byId(dataEmpleados, item.user);
+                    }
+		},
+                
+                
+                
+                {name: "start_date", label: "Fecha de Inicio" 
+                },
+//                {name: "status", label: "Status",resize: true},
 		{name: "add", width: 40}
 	];
 
@@ -629,11 +842,30 @@ var opcionstatus=[
 
 
 
-gantt.config.lightbox.sections = [
+gantt.locale.labels["section_progress"] = "Progreso";
+        gantt.locale.labels["section_parent"] = "Seleccione Tarea Padre";
+        gantt.config.lightbox.sections = [
 		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
-		
-		{name: "owner", height: 22, map_to: "user", type: "select", options: gantt.serverList("user")},	
-		{name: "time", type: "duration", map_to: "auto"}
+                {name: "statusname", height: 38, map_to: "status", type: "select", options:opcionstatus},
+                {name: "notas", height: 38, map_to: "notas", type: "textarea"},
+		{name: "owner", height: 33, map_to: "user", type: "select", options:dataEmpleados},
+                {
+			name: "progress", height: 33, map_to: "progress", type: "select", options: [
+				{key: "0", label: "No Iniciada"},
+				{key: "0.1", label: "10%"},
+				{key: "0.2", label: "20%"},
+				{key: "0.3", label: "30%"},
+				{key: "0.4", label: "40%"},
+				{key: "0.5", label: "50%"},
+				{key: "0.6", label: "60%"},
+				{key: "0.7", label: "70%"},
+				{key: "0.8", label: "80%"},
+				{key: "0.9", label: "90%"},
+				{key: "1", label: "Completa"}
+			]
+		},
+                 {name:"template", height:16, type:"template", map_to:"my_template"}, 
+		{name: "time",  height: 50, type: "duration", map_to: "auto"}
 	];
 
 
@@ -643,7 +875,10 @@ gantt.config.lightbox.sections = [
 //	];
 
   
-
+//gantt.templates.task_class = function (start, end, task) {
+//		if (task.type == gantt.config.types.project)
+//			return "hide_project_progress_drag";
+//	};
 
 
 
@@ -651,10 +886,10 @@ gantt.config.order_branch = true;
 gantt.config.order_branch_free = true;
 gantt.config.branch_loading = true;
 gantt.config.fit_tasks = true; 
-gantt.config.work_time = true;
+gantt.config.work_time = false;
 gantt.config.auto_scheduling = true;
 gantt.config.sort = true;
-
+gantt.config.grid_width = 680;
 //gantt.config.readonly = false;
 
 
@@ -690,9 +925,9 @@ dp.init(gantt);
 
 
     
-    gantt.templates.progress_text = function (start, end, task) {
-		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
-	};
+//    gantt.templates.progress_text = function (start, end, task) {
+//		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
+//	};
     var datosTreeList=[]; 
     var ventana_detalles_abierta=false;
     $(function (){
@@ -1113,6 +1348,109 @@ dp.init(gantt);
 };
     
     
+      function refrescarDatosGantt(){
+        gantt.refreshData();
+        gantt.init('gantt_here');
+        $.when(gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId")).then(function(){
+                
+                
+            obtenerTareas().then(function (){
+                construirTreeList();
+
+            });
+
+
+                
+                
+                
+                
+                
+                
+        });
+    }
+//    function detallesActividadesCompletasGantt(){
+//        if( $("#detallesInformacion").css("display")!="none"){
+//                 $("#detallesInformacion").css("display","none");               
+//        }else{
+//            $("#detallesInformacion").css("display","");
+//        }
+
+ 
+    var datosModificadosActividadesPonderado_ProgramadoTemp=[];
+    var id_padreTareaPonderado_programadoTemp=-1;
+    function saberSiSumanPorcentajePonderadoProgramado100loshijos(args)
+    {
+        var bandera=1;
+        var key = args.key;
+        var sumatoria = 0;
+        var dataFinal=[];
+        $.each(datosTreeList,(index,value)=>
+        {
+            if(value.id == key)
+            {
+                if(value.parent != id_padreTareaPonderado_programadoTemp)
+                {
+                    datosModificadosActividadesPonderado_ProgramadoTemp=[];
+                    id_padreTareaPonderado_programadoTemp = value.parent;
+//                    console.log("reiniciado");
+                }
+            }
+        });
+            $.each(datosModificadosActividadesPonderado_ProgramadoTemp,(index,value)=>{
+                if(value.key == key)
+                {
+                    datosModificadosActividadesPonderado_ProgramadoTemp[index] = args;
+                    bandera=0;
+                }
+            });
+        // }
+        if(bandera==1)
+            datosModificadosActividadesPonderado_ProgramadoTemp.push(args);
+        
+        $.each(datosTreeList,(index,value)=>
+        {
+            // console.log(value); 
+            if(id_padreTareaPonderado_programadoTemp == value.parent)
+            {
+                sumatoria += parseFloat(value.porcentaje_por_actividad);
+            }
+            
+        });
+//        console.log(datosModificadosActividadesPonderado_ProgramadoTemp);
+        if(sumatoria>=100 && sumatoria<=100.5)
+        {
+            alert("Correcto");
+//            console.log(args);
+//console.log(datosModificadosActividadesPonderado_ProgramadoTemp);
+            $.each(datosModificadosActividadesPonderado_ProgramadoTemp,(index,value)=>{
+                dataFinal.push({id:parseInt(value.key),ponderado_programado:value.data.porcentaje_por_actividad});
+            });
+            $.ajax({
+                url:'../Controller/GanttTareasController.php?Op=GuardarPonderado',
+                type:"POST",
+                data: "DATA="+JSON.stringify(dataFinal),
+                success:(res)=>
+                {
+                    if(typeof(res)=="number" && res==1)
+                        alert("Modificado en la base de datos con "+parseFloat((sumatoria-100).toString().slice(0,4))+" de mas");
+                    else
+                        alert(res);
+                },
+                error:()=>
+                {
+                    console.log("Error en el servidor");
+                }
+            })
+        }
+        else
+        {
+            if(sumatoria<100){
+                alert("El total es menor al 100% del ponderado de la tarea padre  su sumatoria es "+sumatoria +" y su restante es de "+(100-sumatoria)+" no se guardo ");
+                
+            }else
+            alert("El total es mayor al 100% del ponderado de la tarea padre no se guardo ");
+        }
+    }
     
     
     
@@ -1139,6 +1477,89 @@ dp.init(gantt);
   
   
  
+  
+  
+  
+  
+  <script id="template-upload" type="text/x-tmpl">
+        {% for (var i=0, file; file=o.files[i]; i++) { %}
+        <tr class="template-upload" style="width:100%">
+                <td>
+                <span class="preview"></span>
+                </td>
+                <td>
+                <p class="name">{%=file.name%}</p>
+                <strong class="error"></strong>
+                </td>
+                <td>
+                <p class="size">Processing...</p>
+                <!-- <div class="progress"></div> -->
+                </td>
+                <td>
+                {% if (!i && !o.options.autoUpload) { %}
+                        <button class="start" style="display:none;padding: 0px 4px 0px 4px;" disabled>Start</button>
+                {% } %}
+                {% if (!i) { %}
+                        <button class="cancel" style="padding: 0px 4px 0px 4px;color:white">Cancel</button>
+                {% } %}
+                </td>
+        </tr>
+        {% } %} 
+</script>
+
+<script id="template-download" type="text/x-tmpl">
+{% var t = $('#fileupload').fileupload('active'); var i,file; %}
+        {% for (i=0,file; file=o.files[i]; i++) { %}
+        <tr class="template-download">
+                <td>
+                <span class="preview">
+                        {% if (file.thumbnailUrl) { %}
+                        <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                        {% } %}
+                </span>
+                </td>
+                <td>
+                <p class="name">
+                        <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+                </p>
+                </td>
+                <td>
+                <span class="size">{%=o.formatFileSize(file.size)%}</span>
+                </td>
+                <!-- <td> -->
+                <!-- <button class="delete" style="padding: 0px 4px 0px 4px;" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>Delete</button> -->
+                <!-- <input type="checkbox" name="delete" value="1" class="toggle"> -->
+                <!-- </td> -->
+        </tr>
+        {% } %}
+        {% if(t == 1){ if( $('#tempInputIdDocumento').length > 0 ) { var ID = $('#tempInputIdDocumento').val(); mostrar_urls(ID);}else{ $('#btnAgregarDocumentoEntradaRefrescar').click(); } } %}
+</script>
+
+    <!--Para abrir alertas de aviso, success,warning, error-->       
+    <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+  
+    
+        <!-- js cargar archivo -->
+    <script src="../../assets/FileUpload/js/tmpl.min.js"></script>
+    <script src="../../assets/FileUpload/js/load-image.all.min.js"></script>
+    <script src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.blueimp-gallery.min.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.iframe-transport.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-process.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-image.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-audio.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-video.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
+
+    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
+    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
+    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
+    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
+  
+  
   
   
   

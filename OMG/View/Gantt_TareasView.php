@@ -771,8 +771,9 @@ gantt.templates.task_class = function (start, end, task) {
 //            }
         }
      gantt.templates.tooltip_text = function(start,end,task){
-  	if(task.type == gantt.config.types.project)
-        return "Tarea tipo: Project"
+  	if(task.type == gantt.config.types.project){
+            return "Tarea Principal:"+task.text;
+        }
   
         return "<b>Tarea:</b> "+task.text+"<br/><b>Start date:</b> " + 
         gantt.templates.tooltip_date_format(start)+ 
