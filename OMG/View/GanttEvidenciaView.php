@@ -739,7 +739,9 @@ setScaleConfig('1');
         }
         gantt.templates.tooltip_text = function(start,end,task){
   	if(task.type == gantt.config.types.project){
-            return "Tarea Principal: "+task.text;
+         return "<b>Tarea:</b> "+task.text+"<br/><b>Tipo:</b> Proyect<br/><b>Start date:</b> " + 
+        gantt.templates.tooltip_date_format(start)+ 
+        "<br/><b>End date:</b> "+gantt.templates.tooltip_date_format(end);
         }
   
         return "<b>Tarea:</b> "+task.text+"<br/><b>Start date:</b> " + 
@@ -1452,10 +1454,151 @@ dp.init(gantt);
         }
     }
     
+       function actualizarDeTablaDetalles(COLUMNA,VALUE,ID_TAREA){
+//    console.log(data);
+     $.ajax({
+                url:'../Controller/GanttTareasController.php?Op=actualizardetabladetalles',
+                type:"POST",
+                data:"COLUMNA="+COLUMNA+"&VALUE="+VALUE+"&ID_TAREA="+ID_TAREA,
+                success:(res)=>
+                {
+                   
+                   
+                   
+                },
+                error:()=>
+                {
+                    console.log("Error en el servidor");
+                }
+            })
+    
+    }
+     var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/form-data'>";
+        ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
+        ModalCargaArchivo += "<div class='fileupload-buttons'>";
+        ModalCargaArchivo += "<span class='fileinput-button'>";
+        ModalCargaArchivo += "<span><a >Agregar Archivos(Click o Arrastrar)...</a></span>";
+        ModalCargaArchivo += "<input type='file' name='files[]' multiple></span>";
+        ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
+        ModalCargaArchivo += "<div class='fileupload-progress' >";
+        // ModalCargaArchivo += "<div class='progress' role='progressbar' aria-valuemin='0' aria-valuemax='100'></div>";
+        ModalCargaArchivo += "<div class='progress-extended'>&nbsp;</div>";
+        ModalCargaArchivo += "</div></div>";
+        ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
+
+    $("#subirArchivos").click(function()
+    {
+        agregarArchivosUrl();
+    });
+    
+    months = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+
+    function mostrar_urls(id)
+    {
+            id_evidencia= <?php echo Session::getSesion("dataGanttEvidencia")?>;
+            var tempDocumentolistadoUrl = "";
+            URL = 'gantt/gantt_evidencias/'+id_evidencia+'/'+id;
+            $.ajax({
+                    url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
+                    type: 'GET',
+                    data: 'URL='+URL+'&SIN_CONTRATO=',
+                    success: function(todo)
+                    {
+                            if(todo[0].length!=0)
+                            {
+                                    tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
+                                    $.each(todo[0], function (index,value)
+                                    {
+                                            nametmp = value.split("^-O-^-M-^-G-^");
+                                            fecha = new Date(nametmp[0]*1000);
+                                            fecha = fecha.getDate() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+
+                                            tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
+                                            tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\" download='"+nametmp[1]+"'>"+nametmp[1]+"</a></td>";
+                                            tempDocumentolistadoUrl += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
+                                            tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
+                                            tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";
+                                    });
+                                    tempDocumentolistadoUrl += "</tbody></table>";
+                            }
+                            if(tempDocumentolistadoUrl == " ")
+                            {
+                                    tempDocumentolistadoUrl = " No hay archivos agregados ";
+                            }
+                            tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdDocumento' type='text' style='display:none;' value='"+id+"'>";
+                            // alert(tempDocumentolistadoUrl);
+                            $('#DocumentoEntradaAgregarModal').html(" ");
+                            $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
+                            $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
+                            // $('#fileupload').fileupload();
+                            $('#fileupload').fileupload({
+                            url: '../View/',
+                            });
+                    }
+            });
+    }
     
     
+    function agregarArchivosUrl()
+    {
+            id_evidencia= <?php echo Session::getSesion("dataGanttEvidencia")?>;
+            var ID = $('#tempInputIdDocumento').val();
+            url = 'gantt/gantt_evidencias/'+id_evidencia+'/'+ID,
+            $.ajax({
+                    url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
+                    type: 'GET',
+                    data: 'URL='+url+'&SIN_CONTRATO=',
+                    success:function(creado)
+                    {
+                            if(creado==true)
+                                    $('.start').click();
+                    },
+                    error:function()
+                    {
+                            swalError("Error del servidor");
+                    }
+            });
+    }
     
     
+    function borrarArchivo(url)
+    {
+
+        swal({
+                title: "ELIMINAR",
+                text: "Confirme para eliminar el Archivo",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true
+                }, function()
+                {
+                        var ID = $('#tempInputIdDocumento').val();
+                        $.ajax({
+                                url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
+                                type: 'GET',
+                                data: 'URL='+url+'&SIN_CONTRATO=',
+                                success: function(eliminado)
+                                {
+                                        // eliminar = eliminado;
+                                        if(eliminado)
+                                        {
+                                                mostrar_urls(ID);
+//                                                refresh();
+                                                swal("","Archivo eliminado");
+                                                setTimeout(function(){swal.close();},1000);
+                                        }
+                                        else
+                                                swal("","Ocurrio un error al eliminar el archivo", "error");
+                                },
+                                error:function()
+                                {
+                                        swal("","Ocurrio un error al elimiar el archivo", "error");
+                                }
+                        });
+                });
+    }
+
     
     
     function swalError(msj)
