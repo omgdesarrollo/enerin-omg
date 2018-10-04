@@ -264,14 +264,9 @@ function listarDatos()
 
 function graficar()
 {
-    activeChart = 0;
     let dataGrafica=[];
     let tituloGrafica = "CUMPLIMIENTO DE REQUISITOS";
     let bandera = 0;
-    let chartsCreados = [];
-    let requisitos = 0;
-    let registros = 0;
-    let evidencias_realizar = 0;
 
     let requisitos_cumplidos = 0;
     let data_requisitos_cumplidos = [];
@@ -292,7 +287,7 @@ function graficar()
     // let requisitos_atrasados_sp = 0;
     // let atrasados_sp_temas = [];
 
-    let no_iniciados=0;
+    // let no_iniciados=0;
 
     $.each(dataListado,function(index,value)
     {
@@ -355,11 +350,11 @@ function graficar()
         //     no_iniciados++;
     });
     if(requisitos_cumplidos!=0)
-        dataGrafica.push(["Cumplido",requisitos_cumplidos,">> Requisitos:"+requisitos_cumplidos.toString(),JSON.stringify(data_requisitos_cumplidos)]);
+        dataGrafica.push(["Cumplido",requisitos_cumplidos,">> Requisitos:"+requisitos_cumplidos.toString(),JSON.stringify(data_requisitos_cumplidos),1]);
     if(requisitos_atrasados!=0)
-        dataGrafica.push(["Atrasado",requisitos_atrasados,">> Requisitos:"+requisitos_atrasados.toString(),JSON.stringify(data_requisitos_atrasados)]);
+        dataGrafica.push(["Atrasado",requisitos_atrasados,">> Requisitos:"+requisitos_atrasados.toString(),JSON.stringify(data_requisitos_atrasados),2]);
     if(requisitos_procesos!=0)
-        dataGrafica.push(["En proceso",requisitos_procesos,">> Requisitos:"+requisitos_procesos.toString(),JSON.stringify(data_requisitos_procesos)]);
+        dataGrafica.push(["En proceso",requisitos_procesos,">> Requisitos:"+requisitos_procesos.toString(),JSON.stringify(data_requisitos_procesos),2]);
 
     // if(requisitos_proceso_sp!=0)
     //     dataGrafica.push(["En Proceso",requisitos_proceso_sp,">> Requisitos:"+requisitos_proceso_sp.toString(),JSON.stringify(proceso_sp_temas)]);
@@ -382,112 +377,11 @@ function graficar()
     construirGrafica(dataGrafica,tituloGrafica);
 }
 
-// function construirGrafica(dataGrafica,tituloGrafica)
-// {
-//     estructuraGrafica = chartEstructura(dataGrafica);
-//     opcionesGrafica = chartOptions(tituloGrafica);
-//     instanceGrafica = drawChart(dataGrafica,estructuraGrafica,opcionesGrafica);
-//     activeChart++;
-//     chartsCreados.push({grafica:instanceGrafica,data:estructuraGrafica});
-// }
-
-// function chartEstructura(dataGrafica)
-// {
-//     // console.log(dataGrafica);
-//     data = new google.visualization.DataTable();
-//     data.addColumn('string', 'nombre');
-//     data.addColumn('number', 'valor');
-//     // if(tooltip!=0)
-//         data.addColumn({type:"string",role:"tooltip"});
-//     data.addColumn('string','datos');
-    
-//     // if(dataGrafica.length != 0)
-//         data.addRows(dataGrafica);
-//     // else
-//     //     data.addRows([[ "NO HAY DATOS",1,"SIN DATOS",""]]);
-//     return data;
-// }
-
-// function chartOptions(tituloGrafica)
-// {
-//     var options = 
-//     {
-//         legend:{
-//                 position:"labeled",alignment:"start",
-//                 textStyle:
-//                 {
-//                     color:"black", fontSize:14, bold:true
-//                 }
-//             },
-//         pieSliceText:"none",
-//         title: tituloGrafica,
-//         tooltip:{textStyle:{color:"#000000"},text:"none",isHtml:true,background:'red'},
-//         // pieSliceText:"",
-//         titleTextStyle:{color:"black"},
-//         'is3D':true,
-//         slices: { 
-//             1: {offset: 0.02,color:"#80ffbf"},
-//             3: {offset: 0.02,color:"#bfff80"},
-//             0: {offset: 0.02,color:"#ffbf80"},
-//             4: {offset: 0.02,color:"#ff80bf"},
-//             2: {offset: 0.02,color:"#bf80ff"},
-//         },
-//         backgroundColor:"",
-//         "width":800,
-//         "height":340
-//     };
-//     return options;
-// }
-
-// function drawChart(dataGrafica,data,options)
-// {
-//     grafica = new google.visualization.PieChart(document.getElementById('graficaPie'));
-//     grafica.draw(data, options);
-//     if(dataGrafica[0][3]!="[]")
-//         google.visualization.events.addListener(grafica, 'select', selectChart);
-//     return grafica;
-// }
-
-// selectChart();
-
-// function selectChart()
-// {
-//     // var jsonObj = {};
-//     // console.log("S");
-//     // {
-//         var select = chartsCreados[activeChart].grafica.getSelection()[0];
-//         // console.log(select);
-//         if(select != undefined)
-//         {
-//             // str = data1.getFormattedValue(select[0].row,select[0].row);
-//             // console.log("1");
-//             dataNextGrafica = chartsCreados[activeChart].data.getValue(select.row,3);
-//             // console.log("2");
-//             // console.log(dataNextGrafica);
-//             concepto = chartsCreados[activeChart].data.getValue(select.row,0);
-//             // console.log("3");
-//             // console.log(dataNextGrafica);
-//             // console.log(concepto);
-//             // if(opcion_vista_grafica == 1)
-//             if(activeChart == 0)
-//             {
-//                 graficar2(dataNextGrafica,concepto);
-//             }
-//             else
-//                 if(activeChart == 1)
-//                     graficar3(dataNextGrafica,concepto);
-//             $("#BTN_ANTERIOR_GRAFICAMODAL").html("Anterior");
-//         }
-//     // });
-// }
-
 function graficar2(datos,concepto)
 {
-    activeChart = 1;
     datos = JSON.parse(datos);
     console.log(datos);
-    // let newArray = [];
-    // let lookupObject  = {};
+
     let lista = new Object();
     let requisitos = 0;
     let registros = 0;
@@ -526,16 +420,6 @@ function graficar2(datos,concepto)
         tituloGrafica = "INCUMPLIMIENTO PENALIZADOS REQUISITOS";
     }
 
-    // for(var i in temas)
-    // {
-    //     lookupObject[temas[i]] = temas[i];
-    // }
-
-    // for(i in lookupObject)
-    // {
-    //     newArray.push(lookupObject[i]);
-    // }
-    // temas = newArray;
     $.each(datos,(index,value)=>{
         if(bandera==0)
         {
