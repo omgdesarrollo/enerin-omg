@@ -124,7 +124,7 @@ function selectChart()
         dataNextGrafica = chartsCreados[activeChart].data.getValue(select.row,3);
         concepto = chartsCreados[activeChart].data.getValue(select.row,0);
         fn = chartsCreados[activeChart].data.getValue(select.row,4);
-        if(fn!=0)
+        if(fn>=0)
         {
             chartsFunciones[fn](dataNextGrafica,concepto);
         // fn = JSON.parse(fn);
