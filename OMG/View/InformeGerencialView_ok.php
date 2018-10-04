@@ -58,7 +58,7 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
                 <script src="../../js/tools.js" type="text/javascript"></script>
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
-                <script src="../../js/fChartComponent.js" type="text/javascript"></script>
+                <!-- <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/> -->
                 <script src="../../js/fInformeGerencialView.js" type="text/javascript"></script>
                 <script src="../../js/fGridComponent.js" type="text/javascript"></script>
                 <script src="../../js/fechas_formato.js" type="text/javascript"></script>
@@ -123,7 +123,7 @@ require_once 'EncabezadoUsuarioView.php';
     <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
         <img src="../../images/base/pdf.png" width="30px" height="30px"> 
     </button>       -->
-        <button onClick="graficar()" title="Informe" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#Grafica">
+        <button onClick="loadChartView(true)" title="Informe" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#informe_gerencial">
             <i class="fa fa-pie-chart"></i>
         </button>
         <button style="width:48px;height:42px" type="button" class="btn_agregar" id='toExcel'>
@@ -158,7 +158,7 @@ require_once 'EncabezadoUsuarioView.php';
 
 
 <!-- Inicio de Seccion Modal Informe-->
-<!--<div class="modal draggable fade" id="informe_gerencial" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal draggable fade" id="informe_gerencial" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog modal-lg" role="document">
         <div id="loaderModalMostrar"></div>
 		<div class="modal-content">
@@ -172,13 +172,12 @@ require_once 'EncabezadoUsuarioView.php';
                           
                         <div id="graficaInformeGerencial"></div>
 
-                      </div> cierre div class-body 
-                </div> cierre div class modal-content 
-        </div> cierre div class="modal-dialog" 
-</div> cierre del modal -->
+                      </div><!-- cierre div class-body -->
+                </div><!-- cierre div class modal-content -->
+        </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal -->
 
-<!-- Modal grafica -->
-<div id="jsChart"></div>
+
 
 <script>
 
@@ -190,10 +189,6 @@ var gridInstance;
 var ultimoNumeroGrid=0;
 var DataGridExcel=[];
 var origenDeDatosVista="informeGerencial";
-var activeChart = -1;
-var chartsCreados = [];
-var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)},(dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)}];
-
 var customsFieldsGridData=[
         // {field:"customControl",my_field:MyCControlField},
 //        {field:"porcentaje",my_field:porcentajesFields},
@@ -218,7 +213,6 @@ estructuraGrid = [
 
 
 construirGrid();
-inicializaChartjs();
 
 promesaInicializarFiltros = inicializarFiltros();
 promesaInicializarFiltros.then((resolve2)=>

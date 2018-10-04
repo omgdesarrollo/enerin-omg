@@ -115,6 +115,13 @@
  * - Removed dependency on metadata plugin in favor of .data()
  * - Namespaced all events
  */
+
+$(function(){
+	$("#jGrowl").click(()=>{
+		mostrarOcultarGrowl();
+	});
+});
+
 var contadorInstancia=1;
 var newInstanceJGrowl;
 var banderaParaAnimacion=false;

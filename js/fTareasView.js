@@ -292,7 +292,7 @@ function insertarTareas(tareaDatos)
                    tempData= reconstruir(value,ultimoNumeroGrid+1);  
 //                   console.log(value.id_empleado); 
                 });
-                console.log(tempData);
+//                console.log(tempData);
                 
                 $("#jsGrid").jsGrid("insertItem",tempData).done(function()
                 {
@@ -974,21 +974,13 @@ function graficar2(tareas,concepto)
     let dataGrafica = [];
 //    tituloGrafica = concepto != "En Proceso" ? "EVIDENCIAS VALIDADAS" : "EVIDENCIAS EN PROCESO";
 if(concepto== "En Proceso-En Tiempo")
-{
     tituloGrafica = "TEMAS EN PROCESO-EN TIEMPO";
-}
 if(concepto== "En Proceso-Alarma Vencida")
-{
     tituloGrafica = "TEMAS EN PROCESO-ALARMA VENCIDA";
-}
 if(concepto== "En Proceso-Tema Vencido")
-{
     tituloGrafica = "TEMAS EN PROCESO-VENCIDO";
-}
 if(concepto== "Suspendido")
-{
     tituloGrafica = "TEMAS SUSPENDIDOS";
-}
 
     tareas = JSON.parse(tareas);
 //    console.log("Estas son las tareas.parse: ",tareas);
@@ -1000,11 +992,11 @@ if(concepto== "Suspendido")
         lista[value.id_empleado].push(value);
         
     });
-    tarea="";    
+//    tarea="";    
     $.each(lista,(index,value)=>
     {
 //        console.log("value: ",value);
-        dataGrafica.push([value[0].nombre_completo,value.length,">> Temas:"+value.length,JSON.stringify(value)]);  
+        dataGrafica.push(["Responsable: "+value[0].nombre_completo,value.length,">> Temas:"+value.length,JSON.stringify(value)]);  
     });
     construirGrafica(dataGrafica,tituloGrafica);
 }
@@ -1029,7 +1021,7 @@ function graficar3(datos,concepto)
     $.each(lista,(index,value)=>
     {
 //        console.log("este es el value: ",value);
-        dataGrafica.push([value[0].tarea,value.length,">> Tema:\n"+value[0].tarea+"\n>> Responsable:\n"+value[0].nombre_completo,"[]"]);
+        dataGrafica.push(["Tema: "+value[0].tarea,value.length,">> Tema:\n"+value[0].tarea+"\n>> Responsable:\n"+value[0].nombre_completo,"[]"]);
     });
     construirGrafica(dataGrafica,tituloGrafica);
 }
