@@ -413,10 +413,9 @@ function graficar2(datos,concepto)
 
 function graficar3(datos,concepto)
 {
-    console.log("Aqui");
-    console.log(concepto);
+    // console.log(concepto);
     datos = JSON.parse(datos);
-    console.log(datos);
+    // console.log(datos);
     let tituloGrafica = "CUMPLIMIENTO POR TEMA";
     let lista = new Object();
     let evidencias_tema = 0;
@@ -482,19 +481,16 @@ function graficar3(datos,concepto)
             });
         });
         dataGrafica.push(["Tema: "+value[0].no_tema,value.length,
-        ">> Tema:\n"+value[0].nombre_tema+" \n>> Responsable:\n"+value[0].responsable_tema+"\n>> Requisitos: "+value.length+"\n>> Evidencias:"+evidencias_tema, JSON.stringify(value),-1]);
+        ">> Tema:\n"+value[0].nombre_tema+" \n>> Responsable:\n"+value[0].responsable_tema+"\n>> Requisitos: "+value.length+"\n>> Evidencias:"+evidencias_tema, JSON.stringify(value),3]);
     });
     construirGrafica(dataGrafica,tituloGrafica);
 }
 
 function graficar4(datos,concepto)
 {
-    activeChart = 2;
     datos = JSON.parse(datos);
     let lista = new Object();
     console.log(datos);
-    // var newArray = [];
-    // var lookupObject  = {};
     let dataGrafica = [];
     let bandera = 0;
     let requisitos = 0;
@@ -504,6 +500,7 @@ function graficar4(datos,concepto)
     let penalizacion = datos.penalizacion;
     concepto = datos.concepto;
     let tituloGrafica = "NO EXISTEN REGISTROS";
+    let id_registro;
 
     if(concepto == "Cumplidos")
     {
@@ -532,120 +529,17 @@ function graficar4(datos,concepto)
         penalizacion="true";
         tituloGrafica = "INCUMPLIMIENTO PENALIZADOS EVIDENCIAS";
     }
-    // console.log(estado);
-    // console.log(penalizacion);
-    // console.log(tituloGrafica);
-
-    // for(var i in temas)
-    // {
-    //     lookupObject[temas[i]] = temas[i];
-    // }
-
-    // for(i in lookupObject)
-    // {
-    //     newArray.push(lookupObject[i]);
-    // }
-    // console.log(newArray);
-
-    // contadorEvidencias=0;
-    // nombre_tema;
-    // contadorArreglo=-1;
-    // no_tema;
-    // bandera=1;
-    // bandera2=1;
-
-    // $.each(dataListado,function(index,value)
-    // {
-    //     if(value.no_tema == datos.no_tema)
-    //     {
-    //         // if(bandera2 == 1)
-    //         // {
-                
-    //             // console.log("tamaño de registros :" +value.detalles.length);
-    //             // contadorArreglo++;
-    //         //     bandera2=0;
-    //         // }
-    //         if(value.estado_requisito == estado && estado == "CUMPLIDO")
-    //         {
-    //             $.each(value.detalles_requisito,function(key,valor)
-    //             {
-    //                 // if( valor.evidencias_validadas == valor.evidencias_realizar )
-    //                 // {
-    //                     contadorEvidencias = valor.evidencias_validadas;
-    //                     if(valor.registro == null)
-    //                         registroTemp.push({nombre_registro:"SIN REGISTRO",evidencias:0});
-    //                     else
-    //                         registroTemp.push({nombre_registro:valor.registro,evidencias:contadorEvidencias});
-                        
-    //                     contadorArreglo++;
-                        
-    //                 // }
-    //             });
-    //         }
-    //         else
-    //         {
-    //             if(value.estado_requisito == estado && value.penalizacion == penalizacion && estado == "EN PROCESO")
-    //             {
-    //                 $.each(value._requisito,function(key,valor)
-    //                 {
-    //                     // if( valor.evidencias_validadas != valor.evidencias_realizar)
-    //                         contadorEvidencias = valor.evidencias_proceso;
-    //                         registroTemp.push({nombre_registro:valor.registro,evidencias:contadorEvidencias});
-    //                         contadorArreglo++;
-    //                 });
-    //             }
-    //             if(value.estado_requisito == estado && value.penalizacion == penalizacion && estado == "ATRASADO")
-    //             {
-    //                 $.each(value.detalles_requisito,function(key,valor)
-    //                 {
-    //                     // if( valor.evidencias_proceso  0)
-    //                     if( ( valor.evidencias_realizar - valor.evidencias_validadas ) >= 2 && valor.id_registro != null)
-    //                     {
-    //                         contadorEvidencias = valor.evidencias_realizar - valor.evidencias_validadas - 1;
-    //                         registroTemp.push({nombre_registro:valor.registro,evidencias:contadorEvidencias});
-    //                         contadorArreglo++;
-    //                     }   
-    //                 });
-    //             }
-    //         }
-    //         // registroTemp[contadorArreglo]["registros"] = contadorEvidencias;
-    //     }
-    // });
-    let id_registro;
     $.each(datos,(index,value)=>{
         $.each(value.detalles_requisito,(ind,val)=>{
-            if(bandera==0)
+            if(val.id_registro != null)
             {
-                id_registro = val.id_registro;
-            }
-            bandera=1;
-            if(lista[val.id_registro]==undefined)
-                lista[val.id_registro]=[];
-            if(val.id_registro != id_tema)
-            {
-                lista[val.id_registro].push(val);
-                id_tema = val.id_registro;
-            }
-            else
-            {
-                id_tema = val.id_registro;
-                lista[val.id_registro].push(val);
+                dataGrafica.push(["Registro:\n"+val.registro,1, ">>Registro:"+val.registro+"\n>> Frecuencia:"+val.frecuencia ,"[]",-1]);
+                bandera=1;
             }
         });
     });
-    console.log(lista);
-
-    $.each(registroTemp,function(index,value)
-    {
-        // if( value.evidencias != 0)
-        // {
-            dataGrafica.push(["Registro:\n"+value.nombre_registro,value.evidencias, ">>Evidencias:"+value.evidencias.toString() ,"[]"]);
-            bandera = 1;
-        // }
-    });
     if(bandera == 0)
-        dataGrafica.push([ "NO EXISTEN REGISTROS",1,"SIN REGISTROS",""]);
-    
+        dataGrafica.push([ "NO EXISTEN REGISTROS",1,"SIN REGISTROS","[]",-1]);
     construirGrafica(dataGrafica,tituloGrafica);
 }
 
