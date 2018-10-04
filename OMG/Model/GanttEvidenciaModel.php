@@ -129,7 +129,19 @@ class GanttEvidenciaModel {
 //                                         $dao->deleteTareasDe_Gantt_Seguimiento_Entrada($value);
                                             
                                     }else{
-                                         $dao->updateTareas($value); 
+                                        
+                                         if (!isset($value["progress"])) {
+                                             $value["progress"]=0;
+                                         }
+                                        
+                                         if(isset($value["status"])){
+                                             
+                                            self::actualizarGanttTareasConstruccionQuery(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>$value["notas"],"status"=>$value["status"]), $value["id"]);
+                                            
+                                         }else{
+                                            self::actualizarGanttTareasConstruccionQuery(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>$value["notas"]), $value["id"]);
+                                         }
+                                     
 //                                         $dao->updateTareasId_EmpleadoXIdGantt_En_Tabla_Seguimiento_entrada($value);
                                     }
                                 }
@@ -144,6 +156,40 @@ class GanttEvidenciaModel {
         }
         
     }
+    
+     public static function actualizarGanttTareasConstruccionQuery($COLUMNAS,$ID)
+    {
+        try
+        {
+            $dao=new GanttEvidenciasDao();
+            $query= "UPDATE gantt_evidencias SET";
+            $index=0;
+            foreach ($COLUMNAS as $key => $value) 
+            { 
+                if($index!=0)
+                {
+                    $query.=" , ";
+                }
+                
+                $query .= " $key = '$value'";
+                $index++;
+            }
+            
+            $query.= "WHERE id = $ID";
+            $update= $dao->actualizarGanttTareas($query);
+            return ($update!=0)?1:0;            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    
+    
+    
+    
+    
     
     
     public static function verificarTareasExiste($array){
