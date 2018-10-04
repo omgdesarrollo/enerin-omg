@@ -193,9 +193,9 @@ function reconstruir(value,index)
     tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_tarea+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
     tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar</button>";
     if(value.existe_programa!=0)
-        tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info botones_vista_tabla' onClick='cargarprogram("+value.id_tarea+")'>Vizualizar</button>";
+        tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info botones_vista_tabla' onClick='cargarprogram("+JSON.stringify({"id_t":value.id_tarea,"descripcion":value.tarea})+")'>Vizualizar</button>";
     else
-        tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info botones_vista_tabla' onClick='cargarprogram("+value.id_tarea+")'>Registrar</button>";
+        tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info botones_vista_tabla' onClick='cargarprogram("+JSON.stringify({"id_t":value.id_tarea,"descripcion":value.tarea})+")'>Registrar</button>";
     tempData["avance_programa"]=(value.avance_programa*100).toFixed(2)+"%";
     
     if(value.archivosUpload[0].length==0 && value.existe_programa==0)
@@ -890,7 +890,8 @@ function enviarNotificacionWhenDeleteTarea(id_empleadoActual,tarea)
 
 //area de gantt
 function cargarprogram(value){    
-    window.open("Gantt_TareasView.php?id_tarea="+value,'_blank');
+//    console.log(value[""]);
+    window.open("Gantt_TareasView.php?id_tarea="+value["id_t"]+"&descripcion="+value["descripcion"],'_blank');
 }//finaliza area de gantt
 
 function graficar()
@@ -936,6 +937,7 @@ function graficar()
         }
 
     });
+    
     
     if(enTiempo!=0)
         dataGrafica.push(["En Proceso-En Tiempo",enTiempo,">> Temas:"+enTiempo.toString(),JSON.stringify(enTiempo_data)]);

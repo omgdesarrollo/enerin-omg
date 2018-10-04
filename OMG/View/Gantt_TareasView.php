@@ -1,14 +1,28 @@
 <?php
 session_start();
 require_once '../util/Session.php';
+$dataGanttDescripcion="";
 if(isset($_REQUEST["id_tarea"])){
    Session::setSesion("dataGantt_id_tarea",$_REQUEST["id_tarea"]);
     //    echo "el seguimiento de entrada linkeado al de doc de entrada y al folio de entrada   ".$dataGantt=Session::getSesion("dataGantt");;
     echo "<h2><center></center><h2>";
 }else{
     $dataGantt=Session::getSesion("dataGantt_id_tarea");
-    echo "<h2><center></center><h2>";
 }
+
+
+if(isset($_REQUEST["descripcion"])){
+   Session::setSesion("dataGantt_descripcion",$_REQUEST["descripcion"]);
+   $dataGanttDescripcion=Session::getSesion("dataGantt_descripcion");
+    //    echo "el seguimiento de entrada linkeado al de doc de entrada y al folio de entrada   ".$dataGantt=Session::getSesion("dataGantt");;
+}else{
+    $dataGanttDescripcion=Session::getSesion("dataGantt_descripcion");
+    echo "en el else";
+}
+
+
+
+
 //Session::setSesion("dataGantt",$_REQUEST["id_documento_entrada"]);
 //  Session::setSesion("dataGantt",":(");
 ?>
@@ -757,8 +771,9 @@ gantt.templates.task_class = function (start, end, task) {
 //            }
         }
      gantt.templates.tooltip_text = function(start,end,task){
-  	if(task.type == gantt.config.types.project)
-        return "Tarea tipo: Project"
+  	if(task.type == gantt.config.types.project){
+            return "Tarea Principal:"+task.text;
+        }
   
         return "<b>Tarea:</b> "+task.text+"<br/><b>Start date:</b> " + 
         gantt.templates.tooltip_date_format(start)+ 
@@ -991,7 +1006,14 @@ dp.init(gantt);
 			console.log(printOpts);
 			myToolbar.addButtonSelect("exportar", 13, "Exportar", printOpts, "descargar.png");
                    
-                        myToolbar.addSeparator("sep5", 8);
+                        myToolbar.addSeparator("sep5", 8);                     
+                          
+                                  
+                        
+//                        obtenerDescripcionDEnDondeSeEstanCargandoLasTareas().then(function (){
+                                myToolbar.addButton("descripcion", 8, "<?php echo $dataGanttDescripcion; ?>", "infodescripciongantt.png");
+//                        })
+                        
 			
                 }
                 
@@ -1067,6 +1089,8 @@ construirTreeList();
 });
 
     });
+
+    
     
     function obtenerTareas(){
         return new Promise(function (resolve,reject){

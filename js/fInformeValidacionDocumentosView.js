@@ -546,7 +546,6 @@ function graficar()
         tituloGrafica = "NO EXISTEN DOCUMENTOS";
     }
     construirGrafica(dataGrafica,tituloGrafica);
-    $("#BTN_ANTERIOR_GRAFICAMODAL").html("Recargar");
 }
 
 function graficar2(datos,concepto)

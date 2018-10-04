@@ -125,7 +125,8 @@ $Usuario=  Session::getSesion("user");
 
     var activeChart = -1;
     var chartsCreados = [];
-    var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)},(dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)}];
+    var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)},
+    (dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)},(dataNextGrafica,concepto)=>{graficar4(dataNextGrafica,concepto)}];
 
     var porcentajesFields = function(config)
     {

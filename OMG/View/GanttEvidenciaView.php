@@ -6,22 +6,19 @@ if(isset($_REQUEST["id_evid"])){
     Session::setSesion("dataGanttEvidencia",$_REQUEST["id_evid"]);
 //    Session::setSesion("dataGanttFolio_Entrada",$_REQUEST["folio_entrada"]);
 //    echo "el seguimiento de entrada linkeado al de doc de entrada y al folio de entrada   ".$dataGantt=Session::getSesion("dataGantt");;
-    echo "<h4><center>El id de evidencia = ".Session::getSesion("dataGanttEvidencia")."</center><h4>";
+//    echo "<h4><center>El id de evidencia = ".Session::getSesion("dataGanttEvidencia")."</center><h4>";
     ?>
     <center><div id="infoquepuedehacer"></div></center> 
 <?php
 }else{
         $dataGantt=Session::getSesion("dataGanttEvidencia");
-       echo "<h2><center>El id de evidencia = ".Session::getSesion("dataGanttEvidencia")."</center><h2>";
+//       echo "<h2><center>El id de evidencia = ".Session::getSesion("dataGanttEvidencia")."</center><h2>";
        ?>
        
         <center><div id="infoquepuedehacer"></div></center> 
 <?php
     }     
-//Session::setSesion("dataGantt",$_REQUEST["id_documento_entrada"]);
-  //  Session::setSesion("dataGantt",":(");
 ?>
-
 
 
 <!DOCTYPE html>
@@ -34,8 +31,8 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <!--<meta charset="UTF-8" name="viewport" content="width=500, initial-scale=1, maximum-scale=1">-->
         <title></title>
+        
         
     <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <!--Para abrir alertas de aviso, success,warning, error--> 
@@ -130,9 +127,7 @@ and open the template in the editor.
     <link href="../../css/PersonalizacionVistasGantt.css" rel="stylesheet" type="text/css"/>
     <!--aqui termina las librerias que no son del gantt-->
     
-    
-   
- <style type="text/css">
+  <style type="text/css">
     html, body{
       height: 100%;
     }
@@ -240,13 +235,15 @@ and open the template in the editor.
    
 
 
-</style> 	
-		    
-  </head>
-    <body>
+</style> 
  
+      
+        
+        	
+		
+  </head>
+    <body >
 <!-- Draggable DIV -->
-
 
 <div class="accordion" id="accordionExample">
 
@@ -299,14 +296,52 @@ and open the template in the editor.
 </div>                 
       </div>
     </div>
-  </div>
-</div>
+  </div>   
 
- <div class="" id="gantt_here" style='width: 100%;height: 95%;position: absolute'>       </div>
+
+
+    
+  <div class="" id="gantt_here" style='width: 100%;height: 95%;position: absolute'>       </div>
    
     
-<script>
-//Make the DIV element draggagle:
+    <!--<input id="id_evid" type="text" value="<?php echo Session::getSesion("dataGanttEvidencia") ?>">-->
+   
+    <!-- Inicio de Seccion Modal Archivos-->
+<div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+        <div id="loaderModalMostrar"></div>
+		<div class="modal-content">
+                        
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Archivos Adjuntos</h4>
+		      </div>
+
+		      <div class="modal-body">
+                        <div id="DocumentolistadoUrl"></div>
+
+                        
+                        <div class="form-group">
+                                <div id="DocumentolistadoUrlModal"></div>
+			</div>
+
+                        <div class="form-group" method="post" >
+                                <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Archivo</button>
+                        </div>
+                      </div><!-- cierre div class-body -->
+                </div><!-- cierre div class modal-content -->
+        </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal -->   
+    
+    
+    
+    </body>
+  
+    
+    
+  <script type="text/javascript"> 
+      
+     //Make the DIV element draggagle:
 dragElement(document.getElementById("mydiv"));
 
 function dragElement(elmnt) {
@@ -348,69 +383,13 @@ function dragElement(elmnt) {
     document.onmouseup = null;
     document.onmousemove = null;
   }
-}
-</script>
-
-    </body>
-    
-<!-- Inicio de Seccion Modal Archivos-->
-<div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog modal-lg" role="document">
-        <div id="loaderModalMostrar"></div>
-		<div class="modal-content">
-                        
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Archivos Adjuntos</h4>
-		      </div>
-
-		      <div class="modal-body">
-                        <div id="DocumentolistadoUrl"></div>
-
-                        
-                        <div class="form-group">
-                                <div id="DocumentolistadoUrlModal"></div>
-			</div>
-
-                        <div class="form-group" method="post" >
-                                <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Archivo</button>
-                        </div>
-                      </div><!-- cierre div class-body -->
-                </div><!-- cierre div class modal-content -->
-        </div><!-- cierre div class="modal-dialog" -->
-</div><!-- cierre del modal -->    
-    
-    
-<!-- Inicio de Seccion Modal Informe-->
-<div class="modal draggable fade" id="detalles" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog modal-lg" role="document">
-            <div id="loaderModalMostrar"></div>
-		<div class="modal-content">
-                        
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="font-size:inherit" aria-hidden="true" class="closeLetra">×</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Detalles</h4>
-		      </div>
-
-		      <div class="modal-body">
-                    
-                           <!--<div id="tree-list">-->
-<!--                             <div id="dx"></div>-->
-                            <!--</div>-->
-                          <div id="tabPanel"></div>
-                                <!--<div sty></div>-->
-                        <!--<div id=""></div>-->
-                      </div><!-- cierre div class-body -->
-                </div><!-- cierre div class modal-content -->
-        </div><!-- cierre div class="modal-dialog" -->
-</div><!-- cierre del modal -->
-
-  <script type="text/javascript">  
-  var dxtreeList;
-   
-  
-  
-//empieza para definir como mostrar las tareas si por dia,semana,mes,año
+} 
+      
+      
+      
+      
+      
+      //empieza para definir como mostrar las tareas si por dia,semana,mes,año
 	function setScaleConfig(value) {
 		switch (value) {
 			case "1":
@@ -473,11 +452,7 @@ function dragElement(elmnt) {
 		}
 	}
 setScaleConfig('1');
-
 //termina de definir si sera por dia,semana,mes ,año que se mostrara las tareas
-
-//empieza para darle tamaño pantalla completa 
-//termina para darle tamaño pantalla completa
 
 	function showGroups(listname) {
 		if (listname) {
@@ -493,18 +468,18 @@ setScaleConfig('1');
 
 		}
 	}
-        
 
-
-
-
-
+      
+      
+      
+      
+      
+      
 	(function dynamicTaskType() {
 		var delTaskParent;
 
 		function checkParents(id) {
 			setTaskType(id);
-                        
 			var parent = gantt.getParent(id);
 			if (parent != gantt.config.root_id) {
 				checkParents(parent);
@@ -512,7 +487,6 @@ setScaleConfig('1');
 		}
 
 		function setTaskType(id) {
-                
 			id = id.id ? id.id : id;
 			var task = gantt.getTask(id);
 			var type = gantt.hasChild(task.id) ? gantt.config.types.project : gantt.config.types.task;
@@ -526,7 +500,6 @@ setScaleConfig('1');
 			gantt.eachTask(function (task) {
 				setTaskType(task);
 			});
-//                        gantt.updateTask(id)
 		});
 
 		gantt.attachEvent("onAfterTaskAdd", function onAfterTaskAdd(id) {
@@ -534,30 +507,40 @@ setScaleConfig('1');
 		});
 
 		gantt.attachEvent("onBeforeTaskDelete", function onBeforeTaskDelete(id, task) {
-//			alert("antes");
-//                       gantt.refreshData();
+			
                         delTaskParent = gantt.getParent(id);
-                      
-                       var desc=false;
+                        var desc=false;
                         $.ajax({
-                                url:"../Controller/GanttTareasController.php?Op=descendencia&deleteidtarea="+id,
+                                url:"../Controller/GanttEvidenciasController.php?Op=descendencia&deleteidtarea="+id,
                                 async:false,
                                 success:function (res)
                                 {
                                  
-                                    if(res==true){                                        
+                                    if(res==true){
+//                                        alert("tiene descendencia ");
+                                         swalError("No se puede eliminar la actividad, tiene descendencia ");
+                                        
                                          desc=false;
                                     }else{
                                         if(res==false){
+//                                                    alert("no tiene descendencia");
+//                                                    $.jGrowl("Eliminacion Exitosa", { header: '' });
                                              desc=true;
                                     }
                                     }
                                 }
+           
                               });
+
+
+
 			return desc;
 		});
 
 		gantt.attachEvent("onAfterTaskDelete", function onAfterTaskDelete(id, task) {
+//			alert("s");
+//alert("des");
+//                    alert("tarea eliminada es "+id);
                              $.ajax({
                                 url:"../Controller/GanttEvidenciasController.php?Op=EliminarTarea&deleteidtarea="+id,
                                 async:false,
@@ -568,39 +551,42 @@ setScaleConfig('1');
                               });
                                  
                                 if (delTaskParent != gantt.config.root_id) {
-				gantt.batchUpdate(checkParents(delTaskParent));       
+				gantt.batchUpdate(checkParents(delTaskParent));
+                                 
                          }
+//                         window.location.href="GanttView.php";
 		});
-	})();            
+
+	})();      
+      
       	(function dynamicProgress() {
 
 		function calculateSummaryProgress(task) {
-			if (task.type != gantt.config.types.project){
+			if (task.type != gantt.config.types.project)
 				return task.progress;
-                            }
+                            
 			var totalToDo = 0;
 			var totalDone = 0;
 			gantt.eachTask(function (child) {
 				if (child.type != gantt.config.types.project) {
-                                    
+                                      totalToDo += (child.porcentaje_por_actividad/100);
+                                      totalDone += (child.progress || 0) * (child.porcentaje_por_actividad/100);
 //					totalToDo += child.duration;
-                                          totalToDo += (child.porcentaje_por_actividad/100);
 //					totalDone += (child.progress || 0) * child.duration;
-                                          totalDone += (child.progress || 0) * (child.porcentaje_por_actividad/100);
+                                        
 				}
 			}, task.id);
 			if (!totalToDo) return 0;
 			else return totalDone / totalToDo;
-                        
 		}
 
 		function refreshSummaryProgress(id, submit) {
-			if (!gantt.isTaskExists(id)){
+			if (!gantt.isTaskExists(id))
 				return;
-                            }
 
 			var task = gantt.getTask(id);
 			task.progress = calculateSummaryProgress(task);
+
 			if (!submit) {
 				gantt.refreshTask(id);
 			} else {
@@ -611,44 +597,33 @@ setScaleConfig('1');
 				refreshSummaryProgress(gantt.getParent(id), submit);
 			}
 		}
-                
-		gantt.attachEvent("onParse", function () {          
+
+
+		gantt.attachEvent("onParse", function () {
                    
 			gantt.eachTask(function (task) {
+//                             alert("e");
 				task.progress = calculateSummaryProgress(task);
 			});
 		});
-		gantt.attachEvent("onAfterTaskUpdate", function (id,item) {
 
+		gantt.attachEvent("onAfterTaskUpdate", function (id,item) {
                     if(item.progress==1){
                         gantt.getTask(id).readonly = true;
                         gantt.getTask(id).status = 3;
                     }
-                    
-//                    if(item.status==2){
-////                        gantt.getTask(id).readonly = true;
-//                    }
-
                     if(item.status==3){
                         gantt.getTask(id).readonly = true;
                         gantt.getTask(id).progress = 1;
 //                        gantt.getTask(id).status = 3;
 
                     }
-//                    if(item.status==2){
-//                        gantt.getTask(id).readonly = true;
-//                        gantt.getTask(id).progress = 1;
-//                        gantt.getTask(id).status = 3;
-
-//                    }
-                    
-//                    console.log("entro en ");
                     
                     
-//			gantt.updateTask(id)
                     
                     
-//                    console.log(gantt.getTask(id));
+                    
+                    
 			refreshSummaryProgress(gantt.getParent(id), true);
 		});
 
@@ -657,7 +632,17 @@ setScaleConfig('1');
 		});
 		gantt.attachEvent("onAfterTaskAdd", function (id) {
 			refreshSummaryProgress(gantt.getParent(id), true);
+//                         gantt.load("../Controller/GanttController.php?Op=MostrarTareasCompletasPorFolioDeEntrada");
+                          
+//                                var dp = new gantt.dataProcessor("../Controller/GanttController.php?Op=Modificar");
+
+//                                dp.init(gantt);
+//                        gantt.render();
+//                        gantt.refreshData();
+//                         alert("quedo agregado");
+//                          $("#gantt_here").load("GanttView.php  #gantt_here");
 		});
+
 
 		(function () {
 			var idParentBeforeDeleteTask = 0;
@@ -669,8 +654,8 @@ setScaleConfig('1');
 			});
 		})();
 	})();
-        
-//esta seccion es cuando abre seleccionas la tarea con click  te trae la informacion de esa tarea--->
+
+      //esta seccion es cuando abre seleccionas la tarea con click  te trae la informacion de esa tarea--->
         gantt.attachEvent("onBeforeLightbox", function(id) {
 //console.log(gantt.getTask(id));
             var task = gantt.getTask(id);
@@ -684,37 +669,23 @@ setScaleConfig('1');
            
         });
  //<----
-
-        
-        gantt.templates.grid_row_class =
+   gantt.templates.grid_row_class =
 		gantt.templates.task_row_class = function (start, end, task) {
 			if (task.$virtual)
 				return "summary-row"
 		};
-//        console.log(gantt.templates);
-
-
-
-            gantt.templates.progress_text = function (start, end, task) {
+      
+    gantt.templates.progress_text = function (start, end, task) {
 //        if(Math.round(task.progress * 100)==100){
 //            $(".gantt_task_line.gantt_dependent_task .gantt_task_progress ").css("background-color","red");
 //        }
 //                $("#taskid").css("background-color:","red");
 //		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
-                return "";
-            };
-            
-//            gantt.templates.rightside_text = function (start, end, task) {
-//		return "ID: #" + task.id;
-//            };
-
-//            gantt.templates.leftside_text = function (start, end, task) {
-//                    return task.duration + " dias";
-//            };
-            
-            
-
-gantt.templates.task_class = function (start, end, task) {
+        return "";
+    };
+    
+    
+    gantt.templates.task_class = function (start, end, task) {
 		if(task.type == gantt.config.types.project){
 //                    console.log("entro ");
 			return "hide_project_progress_drag";
@@ -744,8 +715,7 @@ gantt.templates.task_class = function (start, end, task) {
                     }
                 
 	};
-        
-        gantt.templates.task_text=function (t,e,task) {
+              gantt.templates.task_text=function (t,e,task) {
             
              var taskLocal = gantt.getTask(task.id);
       
@@ -767,41 +737,48 @@ gantt.templates.task_class = function (start, end, task) {
                   return taskLocal; 
 //            }
         }
-     gantt.templates.tooltip_text = function(start,end,task){
-  	if(task.type == gantt.config.types.project)
-        return "Tarea tipo: Project"
+        gantt.templates.tooltip_text = function(start,end,task){
+  	if(task.type == gantt.config.types.project){
+            return "Tarea Principal: "+task.text;
+        }
   
         return "<b>Tarea:</b> "+task.text+"<br/><b>Start date:</b> " + 
         gantt.templates.tooltip_date_format(start)+ 
         "<br/><b>End date:</b> "+gantt.templates.tooltip_date_format(end);
-    };   
-        
-        
-        
+    }; 
      var dataEmpleados=[];
 //     var data
-        obtenerEmpleados();
-        gantt.serverList("user",dataEmpleados); 
+     obtenerEmpleados();
+      gantt.serverList("user",dataEmpleados); 
 
 	gantt.locale.labels.column_owner ="Responsable";
-        gantt.locale.labels.section_owner = "Responsable";
+	gantt.locale.labels.section_owner = "Responsable";
         
-        gantt.locale.labels.section_statusname="Estatus";
         gantt.locale.labels.column_statusname="Estatus";
+        gantt.locale.labels.section_statusname="Estatus";
+        
         gantt.locale.labels.section_notas="Notas";
-        
-        
         gantt.locale.labels.section_template = "Detalles"
+        
         
         gantt.config.scale_height = 50;
         gantt.config.order_branch = true;
-        
         gantt.config.branch_loading = true;
         gantt.config.order_branch_free = true;
+        gantt.config.open_tree_initially = true;
+
+     
+        
 
 
-        	gantt.config.open_tree_initially = true;
+
+
+//        	gantt.config.open_tree_initially = true;
 //        	para cerrar las carpetas por default desde el principio
+
+
+//	gantt.locale.labels.column_stage =
+//		gantt.locale.labels.section_stage = "Escenario";
 
 	function byId(list, id) {
 		for (var i = 0; i < list.length; i++) {
@@ -811,7 +788,7 @@ gantt.templates.task_class = function (start, end, task) {
 		return "";
 	}
         
- var textEditor = {type: "text", map_to: "text"};   
+    var textEditor = {type: "text", map_to: "text"};   
 gantt.config.columns=[
 //    {name:"id",   label:"id",   align:"center"},
 		{name: "text", label: "Descripcion", tree: true,resize: true},
@@ -856,9 +833,7 @@ gantt.config.columns=[
 //                {name: "status", label: "Status",resize: true},
 		{name: "add", width: 40}
 	];
-//console.log(gantt);
 
-//var status=[];
 var opcionstatus=[
     { key: 1, label: 'En Proceso' },
     { key: 2, label: 'Suspendido' },
@@ -866,7 +841,8 @@ var opcionstatus=[
 ];
 
 
-        gantt.locale.labels["section_progress"] = "Progreso";
+
+gantt.locale.labels["section_progress"] = "Progreso";
         gantt.locale.labels["section_parent"] = "Seleccione Tarea Padre";
         gantt.config.lightbox.sections = [
 		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
@@ -893,59 +869,45 @@ var opcionstatus=[
 	];
 
 
+//gantt.config.lightbox.project_sections = [
+//		{name: "description", height: 70, map_to: "text", type: "textarea", focus: true},
+//		{name: "time", type: "duration", map_to: "auto", readonly: true}
+//	];
+
+  
+//gantt.templates.task_class = function (start, end, task) {
+//		if (task.type == gantt.config.types.project)
+//			return "hide_project_progress_drag";
+//	};
 
 
-	var weekScaleTemplate = function (date) {
-		var dateToStr = gantt.date.date_to_str("%d %M");
-		var endDate = gantt.date.add(gantt.date.add(date, 1, "week"), -1, "day");
-		return dateToStr(date) + " - " + dateToStr(endDate);
-	};
-gantt.config.subscales = [
-//		{unit: "week", step: 1, template: weekScaleTemplate},
-		{unit: "day", step: 1, date: "%j, %D"}
-	];
 
-//inicia para expandir o colapsar
-
-
-//        termina para expandir o colapsar
-
-gantt.config.scale_unit = "month";
-gantt.config.step = 1;
-gantt.config.date_scale = "%F, %Y";
-//antt.config.date_grid = "%m/%d/%Y";
-gantt.config.min_column_width = 50;
 gantt.config.order_branch = true;
 gantt.config.order_branch_free = true;
 gantt.config.branch_loading = true;
 gantt.config.fit_tasks = true; 
 gantt.config.work_time = false;
 gantt.config.auto_scheduling = true;
-gantt.config.autosize=false; 
-gantt.config.grid_width = 680;
-
-
-
-gantt.config.autoscroll = true;
-gantt.config.auto_scheduling_strict = true;
-
 gantt.config.sort = true;
-//gantt.config.readonly = true;
+gantt.config.grid_width = 680;
+//gantt.config.readonly = false;
+
+
 gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
-
-
-
     gantt.init("gantt_here");
-    gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId");
+    gantt.load("../Controller/GanttEvidenciasController.php?Op=Mostrar_Plan");
 
 
-var dp = new gantt.dataProcessor("../Controller/GanttTareasController.php?Op=Modificar");
+var dp = new gantt.dataProcessor("../Controller/GanttEvidenciasController.php?Op=Modificar");
+////
 dp.init(gantt);
-    function obtenerEmpleados(){     
+
+    
+    function obtenerEmpleados(){
+        
         $.ajax({
-//           url:"../Controller/GanttController.php?Op=ListarEmpleados",
-            url:"../Controller/GanttTareasController.php?Op=empleadosNombreCompleto",
-//           url:"../Controller/EmpleadosController.php?Op=nombresCompletos",
+//           url:"../Controller/GanttEvidenciasController.php?Op=ListarEmpleados",
+           url:"../Controller/GanttEvidenciasController.php?Op=empleadosNombreCompleto",
            data:"",
            async:false,
            success:function (res){
@@ -957,14 +919,21 @@ dp.init(gantt);
            }
            
         });
+      
+        
     }
 
-        
 
+    
+//    gantt.templates.progress_text = function (start, end, task) {
+//		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
+//	};
     var datosTreeList=[]; 
     var ventana_detalles_abierta=false;
     $(function (){
-
+        
+        
+        
        cargarMenuArriba();
         var myToolbar;
 		function cargarMenuArriba() {
@@ -1002,7 +971,14 @@ dp.init(gantt);
 			console.log(printOpts);
 			myToolbar.addButtonSelect("exportar", 13, "Exportar", printOpts, "descargar.png");
                    
-                        myToolbar.addSeparator("sep5", 8);
+                        myToolbar.addSeparator("sep5", 8);                     
+                          
+                                  
+                        
+//                        obtenerDescripcionDEnDondeSeEstanCargandoLasTareas().then(function (){
+                                myToolbar.addButton("descripcion", 8, "<?php echo ""; ?>", "infodescripciongantt.png");
+//                        })
+                        
 			
                 }
                 
@@ -1072,17 +1048,64 @@ dp.init(gantt);
                            
                         }
                 });
-obtenerTareas().then(function (){
-construirTreeList();
+        
+        
+        
+        
+        
+//        var solounavez=0;
+      $.ajax({
+          url:"../Controller/GanttEvidenciasController.php?Op=verificar_valid",
+          type:"POST",
+          async:false,
+          data:"id_evid=<?php echo Session::getSesion("dataGanttEvidencia") ?>"
+          ,success:function (res){
+                if(res=="true"){
+                        gantt.config.readonly = true;  
+                    $("#infoquepuedehacer").html("Solo Visualizacion");
+                   
+                }else
+                {
+                    if(res=="false"){
+                        gantt.config.readonly = false;  
+//                        var script = document.createElement('script');
+//                        script.src = 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js';
+//                        document.head.appendChild(script);
+                        $("#infoquepuedehacer").html("Permitido Edicion");
+//                        var nuevoScript = document.createElement("script");
+//                        nuevoScript.type = "text/javascript";
+//                        script.src = "../../assets/gantt_5.1.2_com/codebase/sources/ext/dhtmlxgantt_keyboard_navigation.js";
+//                    if(solounavez==0){
+//                        var s = $('script');
+//                        var libreria = '../../assets/gantt_5.1.2_com/codebase/sources/ext/dhtmlxgantt_keyboard_navigation.js';
+//                        s.attr('src', libreria);
+//                        $(document.head).html(s);
+//                    }
+//                    solounavez++;
+                        lib="<script";
+                        lib+="  src=\"../../assets/gantt_5.1.2_com/codebase/sources/ext/dhtmlxgantt_keyboard_navigation.js\"";
+                        lib+="  type=\"text/javascript\">";
+                        lib+="  <\/script>";
+                        $("#lib").html(lib);
+                    }
+                }
+                
+           }
+      });
+      
+   obtenerTareas().then(function (){
+        construirTreeList();
 
-});
+    });   
+      
+      
 
     });
-    
+       
     function obtenerTareas(){
         return new Promise(function (resolve,reject){
                 $.ajax({
-                                        url:"../Controller/GanttTareasController.php?Op=ListarTodasLasTareasDetallesPorSuId",
+                                        url:"../Controller/GanttEvidenciasController.php?Op=ListarTodasLasTareasDetallesPorSuId",
                                         async:false,
                                         success:function (res)
                                         {
@@ -1109,8 +1132,15 @@ construirTreeList();
                                       });
                                       
                                   })
-        }  
-  function construirTreeList(){
+        } 
+    
+    
+    
+    
+    
+    
+    
+      function construirTreeList(){
    dxtreeList= $("#dx").dxTreeList({
         dataSource: datosTreeList,
         keyExpr: "id",
@@ -1312,12 +1342,13 @@ construirTreeList();
     
     
     }
-   var archivoAdjuntoCellTemplate= function(container, options) {       
+       var archivoAdjuntoCellTemplate= function(container, options) {       
 //       console.log(options);
       return container.context.innerHTML=options.data.archivo_adjunto;
 };
     
-    function refrescarDatosGantt(){
+    
+      function refrescarDatosGantt(){
         gantt.refreshData();
         gantt.init('gantt_here');
         $.when(gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId")).then(function(){
@@ -1337,14 +1368,14 @@ construirTreeList();
                 
         });
     }
-    function detallesActividadesCompletasGantt(){
-        if( $("#detallesInformacion").css("display")!="none"){
-                 $("#detallesInformacion").css("display","none");               
-        }else{
-            $("#detallesInformacion").css("display","");
-        }
+//    function detallesActividadesCompletasGantt(){
+//        if( $("#detallesInformacion").css("display")!="none"){
+//                 $("#detallesInformacion").css("display","none");               
+//        }else{
+//            $("#detallesInformacion").css("display","");
+//        }
 
-} 
+ 
     var datosModificadosActividadesPonderado_ProgramadoTemp=[];
     var id_padreTareaPonderado_programadoTemp=-1;
     function saberSiSumanPorcentajePonderadoProgramado100loshijos(args)
@@ -1423,154 +1454,31 @@ construirTreeList();
     
     
     
-    function actualizarDeTablaDetalles(COLUMNA,VALUE,ID_TAREA){
-//    console.log(data);
-     $.ajax({
-                url:'../Controller/GanttTareasController.php?Op=actualizardetabladetalles',
-                type:"POST",
-                data:"COLUMNA="+COLUMNA+"&VALUE="+VALUE+"&ID_TAREA="+ID_TAREA,
-                success:(res)=>
-                {
-                   
-                   
-                   
-                },
-                error:()=>
-                {
-                    console.log("Error en el servidor");
-                }
-            })
     
-    }
     
-
-    var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/form-data'>";
-        ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
-        ModalCargaArchivo += "<div class='fileupload-buttons'>";
-        ModalCargaArchivo += "<span class='fileinput-button'>";
-        ModalCargaArchivo += "<span><a >Agregar Archivos(Click o Arrastrar)...</a></span>";
-        ModalCargaArchivo += "<input type='file' name='files[]' multiple></span>";
-        ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
-        ModalCargaArchivo += "<div class='fileupload-progress' >";
-        // ModalCargaArchivo += "<div class='progress' role='progressbar' aria-valuemin='0' aria-valuemax='100'></div>";
-        ModalCargaArchivo += "<div class='progress-extended'>&nbsp;</div>";
-        ModalCargaArchivo += "</div></div>";
-        ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
-
-    $("#subirArchivos").click(function()
+    
+    
+    function swalError(msj)
     {
-        agregarArchivosUrl();
-    });
-    months = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
-
-    function mostrar_urls(id)
-    {
-            id_tarea= <?php echo Session::getSesion("dataGantt_id_tarea")?>;
-            var tempDocumentolistadoUrl = "";
-            URL = 'gantt/gantt_tareas/'+id_tarea+'/'+id;
-            $.ajax({
-                    url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
-                    type: 'GET',
-                    data: 'URL='+URL+'&SIN_CONTRATO=',
-                    success: function(todo)
-                    {
-                            if(todo[0].length!=0)
-                            {
-                                    tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
-                                    $.each(todo[0], function (index,value)
-                                    {
-                                            nametmp = value.split("^-O-^-M-^-G-^");
-                                            fecha = new Date(nametmp[0]*1000);
-                                            fecha = fecha.getDate() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-
-                                            tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
-                                            tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\" download='"+nametmp[1]+"'>"+nametmp[1]+"</a></td>";
-                                            tempDocumentolistadoUrl += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
-                                            tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
-                                            tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";
-                                    });
-                                    tempDocumentolistadoUrl += "</tbody></table>";
-                            }
-                            if(tempDocumentolistadoUrl == " ")
-                            {
-                                    tempDocumentolistadoUrl = " No hay archivos agregados ";
-                            }
-                            tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdDocumento' type='text' style='display:none;' value='"+id+"'>";
-                            // alert(tempDocumentolistadoUrl);
-                            $('#DocumentoEntradaAgregarModal').html(" ");
-                            $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
-                            $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
-                            // $('#fileupload').fileupload();
-                            $('#fileupload').fileupload({
-                            url: '../View/',
-                            });
-                    }
-            });
-    }
-    
-    
-    function agregarArchivosUrl()
-    {
-            id_tarea= <?php echo Session::getSesion("dataGantt_id_tarea")?>;
-            var ID = $('#tempInputIdDocumento').val();
-            url = 'gantt/gantt_tareas/'+id_tarea+'/'+ID,
-            $.ajax({
-                    url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
-                    type: 'GET',
-                    data: 'URL='+url+'&SIN_CONTRATO=',
-                    success:function(creado)
-                    {
-                            if(creado==true)
-                                    $('.start').click();
-                    },
-                    error:function()
-                    {
-                            swalError("Error del servidor");
-                    }
-            });
-    }
-    
-    
-    function borrarArchivo(url)
-    {
-
         swal({
-                title: "ELIMINAR",
-                text: "Confirme para eliminar el Archivo",
-                type: "warning",
-                showCancelButton: true,
-                closeOnConfirm: false,
-                showLoaderOnConfirm: true
-                }, function()
-                {
-                        var ID = $('#tempInputIdDocumento').val();
-                        $.ajax({
-                                url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
-                                type: 'GET',
-                                data: 'URL='+url+'&SIN_CONTRATO=',
-                                success: function(eliminado)
-                                {
-                                        // eliminar = eliminado;
-                                        if(eliminado)
-                                        {
-                                                mostrar_urls(ID);
-//                                                refresh();
-                                                swal("","Archivo eliminado");
-                                                setTimeout(function(){swal.close();},1000);
-                                        }
-                                        else
-                                                swal("","Ocurrio un error al eliminar el archivo", "error");
-                                },
-                                error:function()
-                                {
-                                        swal("","Ocurrio un error al elimiar el archivo", "error");
-                                }
-                        });
-                });
+                title: '',
+                text: msj,
+                showCancelButton: false,
+                showConfirmButton: false,
+                type:"error",
+                timer:1500
+            });
+            //esta linea esta de mas mejor pasarselo al objeto json del swal que tiene su key de tiempo 
+//        setTimeout(function(){swal.close();$('#agregarUsuario .close').click()},1500);
+//        $('#loader').hide();
     }
-
     
   </script>
+  
+  
+ 
+  
+  
   
   
   <script id="template-upload" type="text/x-tmpl">
@@ -1650,6 +1558,9 @@ construirTreeList();
     <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
     <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
     <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
+  
+  
+  
   
   
 </html>
