@@ -350,7 +350,7 @@ class GanttEvidenciaModel {
     {
         try
         {
-            $dao=new Gantt_TareaDao();
+            $dao=new GanttEvidenciasDao();
             $query= "UPDATE gantt_evidencias SET";
             $index=0;
             foreach ($COLUMNAS as $key => $value) 
