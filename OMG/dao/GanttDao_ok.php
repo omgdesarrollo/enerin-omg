@@ -6,16 +6,14 @@ class GanttDao {
     
     
     
-    public function obtenerTareasCompletasPorFolioEntrada($VALUE){
+    public function obtenerTareasCompletasPorFolioEntrada($folio_entrada){
         try
         { 
-           $query="SELECT tbempleados.id_empleado user, tbgantt_tasks.id, tbgantt_tasks.text, tbgantt_tasks.start_date, tbgantt_tasks.duration,
- 		   tbgantt_tasks.progress, tbgantt_tasks.parent, tbgantt_tasks.ponderado_programado, tbgantt_tasks.notas, tbgantt_tasks.status  
-                   FROM gantt_seguimiento_entrada tbgantt_seguimiento_entrada
-                   JOIN gantt_tasks tbgantt_tasks ON tbgantt_tasks.id=tbgantt_seguimiento_entrada.id_gantt
-                   JOIN empleados tbempleados ON tbempleados.id_empleado=tbgantt_seguimiento_entrada.id_empleado
-                   WHERE tbgantt_seguimiento_entrada.id_seguimiento_entrada=$VALUE";
-           
+           $query="SELECT tbempleados.id_empleado user, tbgantt_tasks.id, tbgantt_tasks.text, tbgantt_tasks.start_date, tbgantt_tasks.duration, tbgantt_tasks.progress,tbgantt_tasks.parent  
+                    FROM gantt_seguimiento_entrada tbgantt_seguimiento_entrada
+                    JOIN gantt_tasks tbgantt_tasks ON tbgantt_tasks.id=tbgantt_seguimiento_entrada.id_gantt
+                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbgantt_seguimiento_entrada.id_empleado
+                     WHERE tbgantt_seguimiento_entrada.id_seguimiento_entrada=$folio_entrada";
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             
@@ -30,14 +28,13 @@ class GanttDao {
     
     public function insertarTareasGantt($value){
         try{
-           $query="INSERT INTO gantt_tasks(id, text, start_date, duration, progress, parent, ponderado_programado, notas, status)
-                   VALUES('".$value["id"]."','".$value["text"]."','".$value["start_date"]."','".$value["duration"]."','".$value["progress"]."',
-                          '".$value["parent"]."',-1,'".$value["notas"]."','".$value["status"]."')";
-//            echo "d  ".$query;
+           $query="INSERT INTO gantt_tasks(gantt_tasks.id,gantt_tasks.text,gantt_tasks.start_date,duration,progress,parent) "
+                    . "VALUES('".$value["id"]."','".$value["text"]."','".$value["start_date"]."','".$value["duration"]."','".$value["progress"]."','".$value["parent"]."');";
+            echo "d  ".$query;
             $db= AccesoDB::getInstancia();
             $exito=$db->executeQueryUpdate($query);
             
-            return $exito;
+            
         } catch (Exception $ex) {
             throw $ex;
         }
