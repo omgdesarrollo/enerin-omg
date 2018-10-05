@@ -1,20 +1,19 @@
 <?php
 session_start();
 require_once '../util/Session.php';
+require_once 'rutasArchivos.php';
 //$error=Session::eliminarSesion("error");
 //$usuario=Session::eliminarSesion("usuario");
 if (Session:: NoExisteSeSion("user")){
     header("location: login.php");
     return;
 }
-$urls["fisica"] = "C:xampp/htdocs/enerin-omg/archivos/";
-$urls["logica"] = "../../../enerin-omg/archivos/";
 //para hallar ruta fisica tanto web como local
 //echo dirname(__FILE__);
 //$urls["fisica"] = "/home/fpa9q09nzhnx/public_html/oficina/archivos/";
 //$urls["logica"] = 'http://www.enerin-omgapps.com/oficina/archivos/';
 // $urls[""] = ;
-Session::setSesion("URLS",$urls);
+
 $Usuario=  Session::getSesion("user");
 
 //$tokenseguridad=  Session::getSesion("token");
