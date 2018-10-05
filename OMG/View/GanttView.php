@@ -486,8 +486,10 @@ setScaleConfig('1');
 			var totalDone = 0;
 			gantt.eachTask(function (child) {
 				if (child.type != gantt.config.types.project) {
-					totalToDo += child.duration;
-					totalDone += (child.progress || 0) * child.duration;
+//					totalToDo += child.duration;
+//					totalDone += (child.progress || 0) * child.duration;
+                                          totalToDo += (child.porcentaje_por_actividad/100);
+                                          totalDone += (child.progress || 0) * (child.porcentaje_por_actividad/100);
 				}
 			}, task.id);
 			if (!totalToDo) return 0;
@@ -521,7 +523,27 @@ setScaleConfig('1');
 			});
 		});
 
-		gantt.attachEvent("onAfterTaskUpdate", function (id) {
+		gantt.attachEvent("onAfterTaskUpdate", function (id,item) {
+                    
+                      if(item.progress==1){
+                        gantt.getTask(id).readonly = true;
+                        gantt.getTask(id).status = 3;
+                    }
+                    
+//                    if(item.status==2){
+////                        gantt.getTask(id).readonly = true;
+//                    }
+
+                    if(item.status==3){
+                        gantt.getTask(id).readonly = true;
+                        gantt.getTask(id).progress = 1;
+//                        gantt.getTask(id).status = 3;
+
+                    }
+                    
+                    
+                    
+                    
 			refreshSummaryProgress(gantt.getParent(id), true);
 		});
 
@@ -553,7 +575,113 @@ setScaleConfig('1');
 		})();
 	})();
 
+            
+//esta seccion es cuando abre seleccionas la tarea con click  te trae la informacion de esa tarea--->
+        gantt.attachEvent("onBeforeLightbox", function(id) {
+//console.log(gantt.getTask(id));
+            var task = gantt.getTask(id);
+//            if (task.progress == 1) {
+//			gantt.message({text: "La tarea esta completada", type: "completed"});
+//			return false;
+//		}
+//            var task;
+            task.my_template ="<span id='title2'>Progreso: </span>"+Math.round(task.progress*100) +" %";
+            return true;
+           
+        });
+ //<----
+
+        
+        gantt.templates.grid_row_class =
+		gantt.templates.task_row_class = function (start, end, task) {
+			if (task.$virtual)
+				return "summary-row"
+		};
+//        console.log(gantt.templates);
+
+
+
+            gantt.templates.progress_text = function (start, end, task) {
+//        if(Math.round(task.progress * 100)==100){
+//            $(".gantt_task_line.gantt_dependent_task .gantt_task_progress ").css("background-color","red");
+//        }
+//                $("#taskid").css("background-color:","red");
+//		return "<span style='text-align:left;'>" + Math.round(task.progress * 100) + "% </span>";
+                return "";
+            };
+            
+//            gantt.templates.rightside_text = function (start, end, task) {
+//		return "ID: #" + task.id;
+//            };
+
+//            gantt.templates.leftside_text = function (start, end, task) {
+//                    return task.duration + " dias";
+//            };
+            
+            
+
+gantt.templates.task_class = function (start, end, task) {
+		if(task.type == gantt.config.types.project){
+//                    console.log("entro ");
+			return "hide_project_progress_drag";
+                }
+                if (task.$virtual)
+			return "summary-bar";
+                
+//                if(task.status == 2){
+////                    console.log("entro ");
+//			return "hide_project_progress_drag";
+//                }
+//                console.log(task);
+                if(task.status==3){
+                    return "completed_task";
+                }
+//                si es igual a suspendido
+                if(task.status==2){
+//                    alert("d");
+                    return "task_suspendida";
+                }
+                
+                
+                    if(task.progress==1){
+                        return "completed_task";
+                    }else{
+                        return "";
+                    }
+                
+	};
+        
+        gantt.templates.task_text=function (t,e,task) {
+            
+             var taskLocal = gantt.getTask(task.id);
       
+//            if(task.type != gantt.config.types.project){
+//                if(task.status==1)
+//                taskLocal ="<span id='title2'><div class='text_tarea_terminada_Azul'>"+Math.round(task.progress*100) +" % </div>"+"</span>";
+//                if(task.status==2)
+//                taskLocal ="<span id='title2'><div class='text_tarea_suspendida_amarilla'>"+Math.round(task.progress*100) +" % </div>"+"</span>"; 
+                if(task.status==3){
+                    taskLocal ="<span id='title2'><div class='text_tarea_terminada_Azul'>"+Math.round(task.progress*100) +" % </div>"+"</span>";
+                    return taskLocal;
+                 }
+//            }else{
+                  if(task.progress==undefined){
+                   taskLocal ="<span id='title2'></span>0 %";
+                    return taskLocal; 
+                  }
+                  taskLocal ="<span id='title2'></span>"+Math.round(task.progress*100) +" %";
+                  return taskLocal; 
+//            }
+        }
+     gantt.templates.tooltip_text = function(start,end,task){
+  	if(task.type == gantt.config.types.project){
+            return "Tarea Principal:"+task.text;
+        }
+  
+        return "<b>Tarea:</b> "+task.text+"<br/><b>Start date:</b> " + 
+        gantt.templates.tooltip_date_format(start)+ 
+        "<br/><b>End date:</b> "+gantt.templates.tooltip_date_format(end);
+    };   
  
       
       
@@ -562,35 +690,25 @@ setScaleConfig('1');
      obtenerEmpleados();
       gantt.serverList("user",dataEmpleados); 
 
-	gantt.locale.labels.column_owner ="Encargado";
-		gantt.locale.labels.section_owner = "Encargado";
+	gantt.locale.labels.column_owner ="Responsable";
+        gantt.locale.labels.section_owner = "Responsable";
+        
+        gantt.locale.labels.section_statusname="Estatus";
+        gantt.locale.labels.column_statusname="Estatus";
+        gantt.locale.labels.section_notas="Notas";
+        
+        
+        gantt.locale.labels.section_template = "Detalles"
         
         gantt.config.scale_height = 50;
         gantt.config.order_branch = true;
         
-//        gantt.config.branch_loading = true;
-//gantt.config.order_branch_free = true;
-//        para abrir las carpetas por default desde el principio
-
-gantt.templates.task_class = function (start, end, task) {
-		if (task.type == gantt.config.types.project)
-			return "hide_project_progress_drag";
-	};
+        gantt.config.branch_loading = true;
+        gantt.config.order_branch_free = true;
 
 
-
-
-
-
-
-
-
-//        	gantt.config.open_tree_initially = true;
+        	gantt.config.open_tree_initially = true;
 //        	para cerrar las carpetas por default desde el principio
-
-
-//	gantt.locale.labels.column_stage =
-//		gantt.locale.labels.section_stage = "Escenario";
 
 	function byId(list, id) {
 		for (var i = 0; i < list.length; i++) {
@@ -600,26 +718,83 @@ gantt.templates.task_class = function (start, end, task) {
 		return "";
 	}
         
-        
-gantt.config.columns = [
-    {name:"id",   label:"id",   align:"center" },
-		{name: "text", label: "Nombre", tree: true, width: '*'},
-		
-		{
-			name: "owner", width: 80, align: "center", template: function (item) {
-				return byId(gantt.serverList('user'), item.user)
+  
+gantt.config.columns=[
+//    {name:"id",   label:"id",   align:"center"},
+		{name: "text", label: "Descripcion", tree: true,resize: true},
+                {
+			name: "progress", label: "Progreso", width: '*', align: "center",resize: true,
+			template: function (item) {
+				if (item.progress >= 1)
+					return "Completa";
+				if (item.progress == 0)
+					return "No Iniciada";
+                                if(item.progress==undefined){
+                                    return "sin tareas";
+                                }
+                                console.log(item);
+                                
+				return Math.round(item.progress * 100) + "%";
 			}
 		},
+		{
+			name: "status", label: "Estatus", width: '*', align: "center",resize: true,
+			template: function (item) {
+                                if (item.status == undefined)
+                                    return "";
+				if (item.status == 1)
+					return "En Proceso";
+				if (item.status == 2)
+					return "Suspendido";
+                                if(item.status==3)
+                                        return  "Terminado";
+			}
+		},
+		{
+                    name: "owner", width: '*', align: "center",resize: true, template: function (item) {
+				return byId(dataEmpleados, item.user);
+                    }
+		},
+                
+                
+                
+                {name: "start_date", label: "Fecha de Inicio" 
+                },
+//                {name: "status", label: "Status",resize: true},
 		{name: "add", width: 40}
 	];
+var opcionstatus=[
+    { key: 1, label: 'En Proceso' },
+    { key: 2, label: 'Suspendido' },
+    { key: 3, label: 'Terminado'}
+];
 
-
-gantt.config.lightbox.sections = [
+  gantt.locale.labels["section_progress"] = "Progreso";
+        gantt.locale.labels["section_parent"] = "Seleccione Tarea Padre";
+        gantt.config.lightbox.sections = [
 		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
-		
-		{name: "owner", height: 22, map_to: "user", type: "select", options: gantt.serverList("user")},	
-		{name: "time", type: "duration", map_to: "auto"}
+                {name: "statusname", height: 38, map_to: "status", type: "select", options:opcionstatus},
+                {name: "notas", height: 38, map_to: "notas", type: "textarea"},
+		{name: "owner", height: 33, map_to: "user", type: "select", options:dataEmpleados},
+                {
+			name: "progress", height: 33, map_to: "progress", type: "select", options: [
+				{key: "0", label: "No Iniciada"},
+				{key: "0.1", label: "10%"},
+				{key: "0.2", label: "20%"},
+				{key: "0.3", label: "30%"},
+				{key: "0.4", label: "40%"},
+				{key: "0.5", label: "50%"},
+				{key: "0.6", label: "60%"},
+				{key: "0.7", label: "70%"},
+				{key: "0.8", label: "80%"},
+				{key: "0.9", label: "90%"},
+				{key: "1", label: "Completa"}
+			]
+		},
+                 {name:"template", height:16, type:"template", map_to:"my_template"}, 
+		{name: "time",  height: 50, type: "duration", map_to: "auto"}
 	];
+
 
 
 //gantt.config.lightbox.project_sections = [
@@ -639,9 +814,9 @@ gantt.config.fit_tasks = true;
 gantt.config.work_time = false;
 gantt.config.auto_scheduling = true;
 gantt.config.sort = true;
-
+gantt.config.grid_width = 680;
 //gantt.config.readonly = true;
-
+gantt.config.autoscroll = true;
 
 gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
     gantt.init("gantt_here");
@@ -872,7 +1047,7 @@ dp.init(gantt);
                                   
                         
 //                        obtenerDescripcionDEnDondeSeEstanCargandoLasTareas().then(function (){
-                                myToolbar.addButton("descripcion", 8, "<?php echo $dataGanttDescripcion; ?>", "infodescripciongantt.png");
+                                myToolbar.addButton("descripcion", 8, "<?php echo ""; ?>", "infodescripciongantt.png");
 //                        })
                         
 			
@@ -972,8 +1147,8 @@ construirTreeList();
                                                 datosTreeObj["porcentaje_por_actividad"]= value.porcentaje_por_actividad;
                                                 datosTreeObj["ponderado_real"]= "value.ponderado_real";
                                                 datosTreeObj["avance"]=Math.round(value.progress*100);
-//                                                datosTreeObj["archivo_adjunto"]= "<button onClick='mostrar_urls("+value.id+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
-//                                                datosTreeObj["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar</button>";
+                                                datosTreeObj["archivo_adjunto"]= "<button onClick='mostrar_urls("+value.id+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
+                                                datosTreeObj["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar</button>";
                                                 datosTreeObj["status"]= value.status;
                                                 datosTreeList.push(datosTreeObj);
                                             });
@@ -1195,6 +1370,85 @@ function construirTreeList(){
 
 
   </script>
+  
+  
+  <script id="template-upload" type="text/x-tmpl">
+        {% for (var i=0, file; file=o.files[i]; i++) { %}
+        <tr class="template-upload" style="width:100%">
+                <td>
+                <span class="preview"></span>
+                </td>
+                <td>
+                <p class="name">{%=file.name%}</p>
+                <strong class="error"></strong>
+                </td>
+                <td>
+                <p class="size">Processing...</p>
+                <!-- <div class="progress"></div> -->
+                </td>
+                <td>
+                {% if (!i && !o.options.autoUpload) { %}
+                        <button class="start" style="display:none;padding: 0px 4px 0px 4px;" disabled>Start</button>
+                {% } %}
+                {% if (!i) { %}
+                        <button class="cancel" style="padding: 0px 4px 0px 4px;color:white">Cancel</button>
+                {% } %}
+                </td>
+        </tr>
+        {% } %} 
+</script>
+
+<script id="template-download" type="text/x-tmpl">
+{% var t = $('#fileupload').fileupload('active'); var i,file; %}
+        {% for (i=0,file; file=o.files[i]; i++) { %}
+        <tr class="template-download">
+                <td>
+                <span class="preview">
+                        {% if (file.thumbnailUrl) { %}
+                        <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                        {% } %}
+                </span>
+                </td>
+                <td>
+                <p class="name">
+                        <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+                </p>
+                </td>
+                <td>
+                <span class="size">{%=o.formatFileSize(file.size)%}</span>
+                </td>
+                <!-- <td> -->
+                <!-- <button class="delete" style="padding: 0px 4px 0px 4px;" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>Delete</button> -->
+                <!-- <input type="checkbox" name="delete" value="1" class="toggle"> -->
+                <!-- </td> -->
+        </tr>
+        {% } %}
+        {% if(t == 1){ if( $('#tempInputIdDocumento').length > 0 ) { var ID = $('#tempInputIdDocumento').val(); mostrar_urls(ID);}else{ $('#btnAgregarDocumentoEntradaRefrescar').click(); } } %}
+</script>
+
+    <!--Para abrir alertas de aviso, success,warning, error-->       
+    <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+  
+    
+        <!-- js cargar archivo -->
+    <script src="../../assets/FileUpload/js/tmpl.min.js"></script>
+    <script src="../../assets/FileUpload/js/load-image.all.min.js"></script>
+    <script src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.blueimp-gallery.min.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.iframe-transport.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-process.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-image.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-audio.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-video.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
+
+    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
+    <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
+    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
+    <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
   
   
  
