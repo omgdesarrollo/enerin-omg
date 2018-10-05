@@ -5,6 +5,5 @@
 *.sw[mnpcod]
 OMG/conf/*.ini
 OMG/log/omg.log
-nbproject/private/private.xml
-
 OMG/View/rutasArchivos.php
+nbproject/private/private.xml
