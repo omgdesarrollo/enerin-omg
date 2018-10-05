@@ -304,7 +304,7 @@ and open the template in the editor.
       </div>
     </div>
   </div>
-</div>
+
 
  <div class="" id="gantt_here" style='width: 100%;height: 95%;position: absolute'>       </div>
    
@@ -1103,7 +1103,7 @@ construirTreeList();
                                             
                                             $.each(res.data,function(index,value){
 //                                                console.log(value);
-                                                datosTreeObj=new Object();
+                                                datosTreeObj={};
                                                 datosTreeObj["id"]= value.id;
                                                 datosTreeObj["parent"]= value.parent;
                                                 datosTreeObj["text"]= value.text;

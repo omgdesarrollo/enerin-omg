@@ -36,8 +36,9 @@ switch ($Op) {
     	header('Content-type: application/json; charset=utf-8');
 	echo json_encode($Lista);
                 
-		break;
-            
+	break;
+        
+       
             
         case'obtenerFolioEntradaSeguimiento':
             
@@ -52,8 +53,12 @@ switch ($Op) {
             echo json_encode(array("data"=>$Lista));
 //        Session::setSesion("", $value)
             
-                break;
-    
+        break;
+        case 'ListarTodasLasTareasDetallesPorSuId':
+             $Lista=$modelGantt->obtenerTareasCompletasPorFolioEntrada(Session::getSesion("dataGantt"));
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode(array("data"=>$Lista));
+        break;   
     
 	case 'Nuevo':
 		# code...
