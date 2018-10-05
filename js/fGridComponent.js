@@ -15,7 +15,13 @@ function inyectar_librerias()
     librerias += "<script src='../../js/filtroSupremo.js' type='text/javascript'></script>";
     librerias += "<link href='../../css/filtroSupremo.css' rel='stylesheet' type='text/css'/>";
     librerias += "<link href='../../css/jsgridconfiguration.css' rel='stylesheet' type='text/css'/>";
+
+    let style = ".jsgrid-header-row>.jsgrid-header-cell {";
+    style += "background-color:#307ECC; font-family: 'Roboto Slab';";
+    style += "font-size: 1.2em; color: white; font-weight: normal;}";
+
     $("head").append(librerias);
+    // $("style").append(style);
 }
 inyectar_librerias();
 
