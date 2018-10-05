@@ -33,7 +33,7 @@ $Usuario=  Session::getSesion("user");
         <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
         <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
 
-        <script src="../../assets/probando/js/ace-extra.min.js"></script>
+        <!-- <script src="../../assets/probando/js/ace-extra.min.js"></script> -->
         
         <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
         <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
@@ -311,12 +311,6 @@ $Usuario=  Session::getSesion("user");
         growlError("Error!","Error al construir la vista, recargue la página");
     });
 
-    $(function(){
-        $("<td>").click(()=>{
-            console.log(this);
-        });
-    });
-
     // console.log($('#NOMBREESCRITURA_AGREGARUSUARIO').left());
     function abrirCumplimientos(id_Usuario)
     {
@@ -377,9 +371,9 @@ $Usuario=  Session::getSesion("user");
         yes = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true' onClick='asignarPermisoCumplimiento(this,"+cumplimiento.id_cumplimiento+")'></i>";
         numero++;
         tempData = "<td>"+numero+"</td>";
-        tempData += "<td>"+cumplimiento.clave_cumplimiento+"</td>";
-        tempData += "<td>"+cumplimiento.cumplimiento+"</td>";
-        tempData += "<td>";
+        tempData += "<td >"+cumplimiento.clave_cumplimiento+"</td>";
+        tempData += "<td >"+cumplimiento.cumplimiento+"</td>";
+        tempData += "<td >";
         if(cumplimiento.acceso=="true")
             tempData += yes;
         else
