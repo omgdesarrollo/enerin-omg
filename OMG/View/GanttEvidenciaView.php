@@ -1353,7 +1353,7 @@ dp.init(gantt);
       function refrescarDatosGantt(){
         gantt.refreshData();
         gantt.init('gantt_here');
-        $.when(gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId")).then(function(){
+        $.when(gantt.load("../Controller/GanttEvidenciasController.php?Op=ListarTodasLasTareasPorId")).then(function(){
                 
                 
             obtenerTareas().then(function (){
@@ -1428,7 +1428,7 @@ dp.init(gantt);
                 dataFinal.push({id:parseInt(value.key),ponderado_programado:value.data.porcentaje_por_actividad});
             });
             $.ajax({
-                url:'../Controller/GanttTareasController.php?Op=GuardarPonderado',
+                url:'../Controller/GanttEvidenciasController.php?Op=GuardarPonderado',
                 type:"POST",
                 data: "DATA="+JSON.stringify(dataFinal),
                 success:(res)=>
@@ -1457,7 +1457,7 @@ dp.init(gantt);
        function actualizarDeTablaDetalles(COLUMNA,VALUE,ID_TAREA){
 //    console.log(data);
      $.ajax({
-                url:'../Controller/GanttTareasController.php?Op=actualizardetabladetalles',
+                url:'../Controller/GanttEvidenciasController.php?Op=actualizardetabladetalles',
                 type:"POST",
                 data:"COLUMNA="+COLUMNA+"&VALUE="+VALUE+"&ID_TAREA="+ID_TAREA,
                 success:(res)=>

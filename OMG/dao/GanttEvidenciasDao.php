@@ -91,20 +91,68 @@ class GanttEvidenciasDao {
     public function insertarTareasGantt($value){
         try{
            $query="INSERT INTO gantt_evidencias(gantt_evidencias.id,gantt_evidencias.text,gantt_evidencias.start_date,
-                   gantt_evidencias.duration,gantt_evidencias.progress,gantt_evidencias.parent,gantt_evidencias.user,gantt_evidencias.id_evidencias)
+                   gantt_evidencias.duration,gantt_evidencias.progress,gantt_evidencias.parent,gantt_evidencias.user,gantt_evidencias.id_evidencias,gantt_evidencias.ponderado_programado,gantt_evidencias.notas,gantt_evidencias.status)
 
                    VALUES('".$value["id"]."','".$value["text"]."','".$value["start_date"]."','".$value["duration"]."',
-                          '".$value["progress"]."','".$value["parent"]."','".$value["user"]."','".$value["id_evidencia"]."');";
+                          '".$value["progress"]."','".$value["parent"]."','".$value["user"]."','".$value["id_evidencia"]."',-1,'".$value["notas"]."','".$value["status"]."');";
            
-            echo "d  ".$query;
+//            echo "d  ".$query;
             $db= AccesoDB::getInstancia();
             $exito=$db->executeQueryUpdate($query);
             
-            
+             return $exito;
         } catch (Exception $ex) {
             throw $ex;
         }
     }
+    
+     public function actualizarGanttTareas($QUERY)
+    {
+        try
+        {
+            $db=  AccesoDB::getInstancia();
+            $update = $db->executeUpdateRowsAfected($QUERY);       
+
+            return $update;            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+      public static function actualizarGanttTareasConstruccionQuery($COLUMNAS,$ID)
+    {
+        try
+        {
+            $dao=new Gantt_TareaDao();
+            $query= "UPDATE gantt_tareas SET";
+            $index=0;
+            foreach ($COLUMNAS as $key => $value) 
+            { 
+                if($index!=0)
+                {
+                    $query.=" , ";
+                }
+                
+                $query .= " $key = '$value'";
+                $index++;
+            }
+            
+            $query.= "WHERE id = $ID";
+            $update= $dao->actualizarGanttTareas($query);
+            return ($update!=0)?1:0;            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    
+    
+    
+    
+    
 //    public function insertarTareasConFolioEntrada_de_seguimiento_entrada($value){
 //        try{
 //            $query="INSERT INTO gantt_seguimiento_entrada(gantt_seguimiento_entrada.ID_GANTT,gantt_seguimiento_entrada.id_seguimiento_entrada,gantt_seguimiento_entrada.id_empleado) "
@@ -299,6 +347,44 @@ class GanttEvidenciasDao {
         }
     }
     
+    
+    
+    public function guardarNota($Lista)
+    {
+        try 
+        {
+            $cadena= $Lista['notas'];
+            $id= $Lista['id'];
+            $query="UPDATE gantt_tareas SET notas='$cadena'
+                    WHERE gantt_tareas.id=$id";
+            $db= AccesoDB::getInstancia();
+            $lista= $db->executeQueryUpdate($query);
+            
+            return $lista;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+     public function guardarStatus($Lista)
+    {
+        try 
+        {
+            $status= $Lista['status'];
+            $id= $Lista['id'];
+            $query="UPDATE gantt_evidencias SET notas=$status
+                    WHERE gantt_evidencias.id=$id";
+            $db= AccesoDB::getInstancia();
+            $lista= $db->executeQueryUpdate($query);
+            
+            return $lista;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 }
 
 ?>

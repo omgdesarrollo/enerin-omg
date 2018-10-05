@@ -302,9 +302,9 @@ function graficar2(documentosEntrada,concepto)
     
     $.each(documentosEntrada,(index,value)=>
     {
-        if(lista[value.id_documento_entrada]==undefined)
-            lista[value.id_documento_entrada]=[];
-        lista[value.id_documento_entrada].push(value);
+        if(lista[value.id_empleado]==undefined)
+            lista[value.id_empleado]=[];
+        lista[value.id_empleado].push(value);
     });
     
     $.each(lista,(index,value)=>
@@ -334,7 +334,7 @@ function graficar3(documentosEntrada,concepto)
     
     $.each(lista,(index,value)=>
     {
-        dataGrafica.push(["Documento de Entrada: "+value[0].folio_entrada,value.length,">> Documento de Entrada:\n"+value[0].folio_entrada+"\n>> Responsable del Tema:\n"+value[0].nombre_completo,"[]",3]);
+        dataGrafica.push(["Documento de Entrada: "+value[0].folio_entrada,value.length,">> Asunto:\n"+value[0].asunto+"\n>> Responsable del Tema:\n"+value[0].nombre_completo,"[]",3]);
     });
     construirGrafica(dataGrafica,tituloGrafica);
 }

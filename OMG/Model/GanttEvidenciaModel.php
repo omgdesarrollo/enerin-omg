@@ -82,6 +82,9 @@ class GanttEvidenciaModel {
             return false;
         }
     }
+    
+ 
+    
     public function verificarsitienedescendencia($v){
         try{
             $dao=new GanttEvidenciasDao();
@@ -126,7 +129,19 @@ class GanttEvidenciaModel {
 //                                         $dao->deleteTareasDe_Gantt_Seguimiento_Entrada($value);
                                             
                                     }else{
-                                         $dao->updateTareas($value); 
+                                        
+                                         if (!isset($value["progress"])) {
+                                             $value["progress"]=0;
+                                         }
+                                        
+                                         if(isset($value["status"])){
+                                             
+                                            self::actualizarGanttTareasConstruccionQuery(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>$value["notas"],"status"=>$value["status"]), $value["id"]);
+                                            
+                                         }else{
+                                            self::actualizarGanttTareasConstruccionQuery(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>$value["notas"]), $value["id"]);
+                                         }
+                                     
 //                                         $dao->updateTareasId_EmpleadoXIdGantt_En_Tabla_Seguimiento_entrada($value);
                                     }
                                 }
@@ -141,6 +156,40 @@ class GanttEvidenciaModel {
         }
         
     }
+    
+     public static function actualizarGanttTareasConstruccionQuery($COLUMNAS,$ID)
+    {
+        try
+        {
+            $dao=new GanttEvidenciasDao();
+            $query= "UPDATE gantt_evidencias SET";
+            $index=0;
+            foreach ($COLUMNAS as $key => $value) 
+            { 
+                if($index!=0)
+                {
+                    $query.=" , ";
+                }
+                
+                $query .= " $key = '$value'";
+                $index++;
+            }
+            
+            $query.= "WHERE id = $ID";
+            $update= $dao->actualizarGanttTareas($query);
+            return ($update!=0)?1:0;            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    
+    
+    
+    
+    
     
     
     public static function verificarTareasExiste($array){
@@ -252,4 +301,127 @@ class GanttEvidenciaModel {
            return -1;
        }
     }
+     public function guardarPonderados($LISTA)
+    { 
+        try
+        {
+            $dao=new GanttEvidenciasDao();
+            $respuestas = array();
+            $res = "";
+            // var_dump($LISTA);
+            foreach($LISTA as $key => $value)
+            {
+                $respuestas[$key]["id"] = $value["id"];
+                $respuestas[$key]["res"] =self::actualizarGanttEvidencias(array("ponderado_programado"
+                                          =>$value["ponderado_programado"]),$value["id"]);
+//                        $dao->guardarPonderados($value["id"],$value["ponderado_programado"]);
+            }
+            foreach($respuestas as $key => $value)
+            {
+                if($value["res"]==0)
+                {
+                    $res .= "Error al actualizar la tarea con id = +".$value['id']." \n";
+                }
+            }
+            return $res=="" ? 1 : $res;
+        }
+        catch(Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+     public function guardarNota($Lista)
+    {
+        try 
+        {
+            $dao=new GanttEvidenciasDao();
+            $rec= $dao->guardarNota($Lista);
+            
+            return $rec;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    
+    public function guardarStatus($Lista)
+    {
+        try 
+        {
+            $dao=new GanttEvidenciasDao();
+            $rec= $dao->guardarStatus($Lista);
+            
+            return $rec;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+     public static function actualizarGanttEvidencias($COLUMNAS,$ID)
+    {
+        try
+        {
+            $dao=new GanttEvidenciasDao();
+            $query= "UPDATE gantt_evidencias SET";
+            $index=0;
+            foreach ($COLUMNAS as $key => $value) 
+            { 
+                if($index!=0)
+                {
+                    $query.=" , ";
+                }
+                
+                $query .= " $key = '$value'";
+                $index++;
+            }
+            
+            $query.= "WHERE id = $ID";
+            $update= $dao->actualizarGanttTareas($query);
+            return ($update!=0)?1:0;            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    
+    
+      public static function actualizarGanttEvidenciasDeTablaDetalles($COLUMNAS,$ID)
+    {
+        try
+        {
+            $dao=new GanttEvidenciasDao();
+            $query= "UPDATE gantt_evidencias SET";
+            $index=0;
+            foreach ($COLUMNAS as $key => $value) 
+            { 
+                if($index!=0)
+                {
+                    $query.=" , ";
+                }
+                
+                $query .= " $key = '$value'";
+                $index++;
+            }
+            
+            $query.= "WHERE id = $ID";
+            $update= $dao->actualizarGanttTareas($query);
+            return ($update!=0)?1:0;            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    
+    
+    
+    
 }
