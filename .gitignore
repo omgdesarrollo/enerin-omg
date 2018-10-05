@@ -6,3 +6,5 @@
 OMG/conf/*.ini
 OMG/log/omg.log
 nbproject/private/private.xml
+
+OMG/View/rutasArchivos.php
