@@ -4,6 +4,7 @@
 //     lol();
 // });
 // var heightGrid;
+var banderaEditEstado=0;
 $(function(){
     $("tbody").on('click','tr td',(obj)=>{
         obj = obj.currentTarget;
@@ -229,7 +230,11 @@ function construirGrid()
             // console.log($(".jsgrid-selected-row")[0]);
             // $("#jsGrid").jsGrid("editItem",$(".jsgrid-selected-row")[0]);
             // var a = $("#jsGrid").jsGrid("rowByItem",$(".jsgrid-selected-row")[0]);
-            $("#jsGrid").jsGrid("cancelEdit");
+            // alert("B");
+            if(banderaEditEstado==0)
+                $("#jsGrid").jsGrid("cancelEdit");
+            else
+                banderaEditEstado=0;
             // console.log("A");
         },
         width: "100%",
@@ -366,6 +371,7 @@ function modoEditar()
     // $("#grid").jsGrid("updateItem");
     // console.log(gridInstance);
     // gridInstance.rowDoubleClick();
+    banderaEditEstado=1;
     $("#jsGrid").jsGrid("editItem",$(".jsgrid-selected-row")[0]);
     // console.log($(".jsgrid-row")[0]);
 }
