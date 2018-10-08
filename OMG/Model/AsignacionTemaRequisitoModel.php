@@ -105,7 +105,11 @@ class AsignacionTemaRequisitoModel {
                 $rec= $dao->obtenerDetalles_Reg($value);
                 foreach($rec as $valuet){
 //                    $htmlFrontend=$valuet["registro"];
-                    $htmlFrontend.="<tr><td class='info'>Registro</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabaseRegistros(this,'registro',".$valuet['id_registro'].")\">".$valuet['registro']."</td></tr>";
+                     if(isset(AsignacionTemaRequisitoModel::verificarRegistroExisteEnDocumentoandEstaValidadoPorDelDocumentoYTema(array("id"=>$id))[0]["validacion_documento_responsable"])!=true || AsignacionTemaRequisitoModel::verificarRegistroExisteEnEvidencias(array("id"=>$id))==0){
+                        $htmlFrontend.="<tr><td class='info'>Registro</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabaseRegistros(this,'registro',".$valuet['id_registro'].")\">".$valuet['registro']."</td></tr>";
+                     }else{
+                         $htmlFrontend.="<tr><td class='info'>Registro</td><td>".$valuet['registro']."</td></tr>"; 
+                     }
                     $htmlFrontend.="<tr><td class='info'>Frecuencia</td><td>".$valuet['frecuencia']."</td></tr>";                    
                     $htmlFrontend.="<tr><td class='info'>Clave del Documento</td><td>".$valuet['clave_documento']."</td></tr>";
                     if($valuet["documento"]!="")
