@@ -76,7 +76,7 @@ $Usuario=  Session::getSesion("user");
 		    <div class="modal-content">
 		      <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Crear Nuevo Requisito</h4>
+                          <h4 class="modal-title" id="myModalLabel">Crear Nuevo Requisito</h4>
 		      </div>
                         
 		      <div class="modal-body">
@@ -114,7 +114,7 @@ $Usuario=  Session::getSesion("user");
 		    <div class="modal-content">
 		      <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Crear Nuevo Registro</h4>
+                          <h4 class="modal-title" id="myModalLabel"><div id="textoHeaderRegistro">Nuevo Registro</div></h4>
 		      </div>
                         
 		      <div class="modal-body">
@@ -171,7 +171,11 @@ $Usuario=  Session::getSesion("user");
 
 		  </div>
        </div>
-            
+  
+    
+    
+
+    
 <div style="height: 10px"></div>
 
 <div id="layout_here"></div>
@@ -191,9 +195,11 @@ $Usuario=  Session::getSesion("user");
 
 	<script>
             var myLayout, myTree, myToolbar,myToolbarExportar,id_asignacion_t=-1,levelv=0,id_asignacion_r=-1,selec_tema=-1,id_seleccionado=-1,dataIds_req=[],dataIds_reg=[];
+            var cualModoModalAgregarEdicioRegistro="agregarregistro";
             var dataListado=[];
             var DataGridExcel=[];
             var origenDeDatosVista="asignacionTemaRequisito";
+            var id_real_arbol_seleccionado=-1;
             myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
 	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
 //            myCombo = new dhtmlXCombo({
@@ -320,13 +326,8 @@ $(function(){
      
      $("#btn_guardar_reg").click(function(e){
          e.preventDefault();
-         $("#btn_guardar_reg").attr("disabled", "disabled");
-//         alert("dcf  "+id);
-        
-//        console.log(dataIds_req);
+        console.log(dataIds_req);
         id_req=-1;
-//        console.log(dataIds_req);
-//console.log("seleccionado es "+id_seleccionado);
         $.each(dataIds_req,function(index,value){
             if(value.padre==id_seleccionado){
                id_req= value.id_requisito;
@@ -334,37 +335,73 @@ $(function(){
             }
 //            alert("d "+value.id_requisito);
         });
-//       if(id_){ 
+        if(cualModoModalAgregarEdicioRegistro=="agregarregistro") {
+         $("#btn_guardar_reg").attr("disabled", "disabled");
+         
+         
+         
+         
+//         alert("dcf  "+id);
+
 //$("#selectFrecuencia option[value="+ valor +"]").attr("selected",true)
          var formData = {"ID_REQUISITO":id_req,"REGISTRO":$('#REGISTRO').val(),"ID_DOCUMENTO":idDocumentoSelect,"FRECUENCIA":$("#selectFrecuencia").prop("value")};
 //         alert("Entro al ajax");
-         $.ajax({
-             url:'../Controller/AsignacionTemasRequisitosController.php?Op=GuardarSubNodo',
-             type:'POST', 
+            $.ajax({
+                url:'../Controller/AsignacionTemasRequisitosController.php?Op=GuardarSubNodo',
+                type:'POST', 
+                data:formData,
+                success:function(r)
+                {
+   //                 alert("Entro al success");
+                    if(r==false)
+                    {
+   //                     alert("Entro al if");
+                        swal("","Error en el servidor","error");
+                        setTimeout(function(){swal.close();},1500);
+                        $("#btn_guardar_reg").removeAttr("disabled")
+                    }else{
+                        if(r==true)
+                        {
+                            swal("","Guardado Exitoso","success");
+                            setTimeout(function(){swal.close();$("#create-itemRegistro . close").click();},1500);
+                            obtenerDatosArbol(id_asignacion_t);
+
+                            $("#btn_guardar_reg").removeAttr("disabled")
+                        }
+                    }
+
+                }
+            });
+          
+        }
+        else{
+//           alert( id_real_arbol_seleccionado)
+           var id_registro=id_real_arbol_seleccionado;
+           
+           var formData = {"ID_REQUISITO":id_req,"ID_REGISTRO":id_registro,"REGISTRO":$('#REGISTRO').val(),"ID_DOCUMENTO":idDocumentoSelect,"FRECUENCIA":$("#selectFrecuencia").prop("value")};
+            $.ajax({
+             url:'../Controller/AsignacionTemasRequisitosController.php?Op=EdicionNodo',
+             type:'POST',
              data:formData,
              success:function(r)
              {
-//                 alert("Entro al success");
-                 if(r==false)
-                 {
-//                     alert("Entro al if");
-                     swal("","Error en el servidor","error");
-                     setTimeout(function(){swal.close();},1500);
-                     $("#btn_guardar_reg").removeAttr("disabled")
+                 if(r==true){
+                  swal("","Edicion Exitosa","success");
+                         setTimeout(function(){swal.close();},1500);
                  }else{
-                     if(r==true)
-                     {
-                         swal("","Guardado Exitoso","success");
-                         setTimeout(function(){swal.close();$("#create-itemRegistro . close").click();},1500);
-                         obtenerDatosArbol(id_asignacion_t);
-                         
-                         $("#btn_guardar_reg").removeAttr("disabled")
-                     }
+                       swal("","Actualizacion no Realizada","error");
+                         setTimeout(function(){swal.close();},1500);
                  }
-
+                 if(r==-1){
+                      swal("","Error En El servidor","error");
+                         setTimeout(function(){swal.close();},1500);
+                 }
+                 
+                 
              }
          });
-                
+//            alert("edicion registro ");
+        } 
      });
      
      $("btn_limpiar_reg").click(function(){
@@ -494,6 +531,7 @@ var myToolbar = myLayout.cells("b").attachToolbar
     items: [
             {id:"agregarReq",type: "button", text: "Agregar Requisito", img: "fa fa-save "},
             {id:"agregar",type: "button", text: "Agregar Registro", img: "fa fa-save "},
+            {id:"editar",type: "button", text: "Editar Registro", img: "fa fa-edit"},
             {id:"eliminar",type: "button", text: "Eliminar", img: "fa fa-trash-o "}
 
     ]
@@ -549,6 +587,7 @@ function evaluarToolbarSeccionB(id)
                    
                         if(levelv==1){
                             $('#create-itemRegistro').modal('show');
+                             $("#textoHeaderRegistro").html("Guardar Registro");
 
                        }else{
                             swal("","Seleccione un Requisito","error");
@@ -569,7 +608,27 @@ function evaluarToolbarSeccionB(id)
 
 //    id_asignacion_t
             }
-            
+            if(id=="editar"){
+                if(levelv==2){
+                    $.ajax({
+                       url:"../Controller/AsignacionTemasRequisitosController.php?Op=detalles",
+                       type:"POST",
+                       data:{"id":id_real_arbol_seleccionado,"tipo":"reg","tipoEdicionOrigenPurosDatosDeServer":"registrosEdicionDeDatosModal"},
+                       success:function(r){
+                           $("#REGISTRO").val(r.registro);
+//                           construirDetalles(r);
+                       }
+                     });
+                    $('#create-itemRegistro').modal('show');
+                    $("#textoHeaderRegistro").html("Edicion de Registro");
+                    cualModoModalAgregarEdicioRegistro="edicionregistro";
+                   
+                }else{
+                    swal("","Seleccione un Registro","error");
+                            setTimeout(function(){swal.close();},1500);
+                }
+//                alert("le has picado en editar");              
+            }
             if(id=="eliminar")
             {
                     var level = myTree.getLevel(id_seleccionado);
@@ -761,25 +820,30 @@ function evaluarToolbarSeccionB(id)
    
         $("#contenidoDetalles").html(tempData2);
     }
-    
+   
     function obtenerInfo(id){
 //        alert("ya has entrado aqui "+data);
         if(id==-1){
 //         alert("accederas a registros");
             idTree=-1;
+//            alert("d");
 //alert("el id seleccionado es :  "+id_seleccionado);
              $.each(dataIds_reg,function(index,value){
 //                 console.log("id_reg:  "+value.hijo);
                         if(value.hijo==id_seleccionado){
                                idTree= value.id_registro;
                         }
-             });        
+             });
+              id_real_arbol_seleccionado=idTree;
+//                console.log(id_real_arbol_seleccionado);
             obtenerDetalles_Seleccionado(idTree,"reg"); 
         }
         else{
 //            alert("d "+id);
+               
             obtenerDetalles_Seleccionado(id,"req");
-        }
+            
+        } 
     }
     
     

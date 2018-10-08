@@ -73,7 +73,15 @@ switch ($Op) {
             echo json_encode($Lista);
             return $Lista;
             break;
-        
+        case 'EdicionNodo':
+            
+            $data=array("id_registro"=>$_REQUEST["ID_REGISTRO"],"registro"=>$_REQUEST["REGISTRO"],"id_documento"=>$_REQUEST["ID_DOCUMENTO"],"frecuencia"=>$_REQUEST["FRECUENCIA"]);
+             $Lista= $model->actualizarRegistro($data);
+            header('Content-type: application/json; charset=utf-8'); 
+            echo json_encode($Lista);
+            return $Lista;
+            
+        break;
         case'GuardarSubNodo':
             $Lista= $model->insertarRegistros($_REQUEST['ID_REQUISITO'],$_REQUEST['REGISTRO'],$_REQUEST['FRECUENCIA'], $_REQUEST['ID_DOCUMENTO']);
             header('Content-type: application/json; charset=utf-8'); 
@@ -85,10 +93,20 @@ switch ($Op) {
         case 'detalles':
            $id= $_REQUEST["id"];
            $tipo=$_REQUEST["tipo"];
-//           if($tipo=="reg" ){
-//               echo "entro en reg";
+           if(isset($_REQUEST["tipoEdicionOrigenPurosDatosDeServer"])){
+                $tipo=$_REQUEST["tipoEdicionOrigenPurosDatosDeServer"];
+                header('Content-type: application/json; charset=utf-8'); 
                 
-               $lista=$model->obtenerDetallesHidrid($id,$tipo);
+                echo json_encode($model->obtenerDetallesHidrid($id,$tipo)[0]);
+               
+           }else{     
+                $lista=$model->obtenerDetallesHidrid($id,$tipo);
+               
+               
+               
+           }
+           
+           
 //               echo "d";
 //           }
 //           else{

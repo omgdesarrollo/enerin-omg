@@ -205,6 +205,7 @@ and open the template in the editor.
 }               
 #dx {
     /*max-height: 90%;*/
+    
 }
 
  .modal-lg{width: 50%;}
@@ -826,23 +827,10 @@ gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
 var dp = new gantt.dataProcessor("../Controller/GanttController.php?Op=Modificar");
 
 dp.init(gantt);
-//empieza en cuanto a el modo de mostrar las tareas por dia,seman,mes,año
-	var func = function (e) {
-		e = e || window.event;
-		var el = e.target || e.srcElement;
-		var value = el.value;
-		setScaleConfig(value);
-		gantt.render();
-	};
-       	var els = document.getElementsByName("scale");
-	for (var i = 0; i < els.length; i++) {
-		els[i].onclick = func;
-	} 
- //termina en cuanto a el modo de mostrar las tareas por dia,seman,mes,año  
-   
+
 //dp.setTransactionMode("REST");
 
-    console.log(dp);
+//    console.log(dp);
     
     //para no actualizar en tiempo real 
 //dp.autoUpdate=false;

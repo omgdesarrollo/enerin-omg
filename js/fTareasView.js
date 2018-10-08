@@ -33,7 +33,9 @@ $(function()
 //                tareaDatos.observaciones!=""?
                 true: false: false: false: false: false: false                                                               
             );
-        
+        console.log(tareaDatos);
+        console.log("termino");
+//        console
             listo ? insertarTareas(tareaDatos):swalError("Completar campos");
     });
     
@@ -272,6 +274,7 @@ function archivoyComboboxparaModal()
 function insertarTareas(tareaDatos)
 {
     console.log(tareaDatos);
+    
     $.ajax({
         url:"../Controller/TareasController.php?Op=Guardar",
         type:"POST",

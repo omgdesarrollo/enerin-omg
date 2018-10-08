@@ -116,6 +116,13 @@ class AsignacionTemaRequisitoModel {
                  echo $htmlFrontend;
               }
             }
+          if($tipo=="registrosEdicionDeDatosModal"){
+              
+              $rec= $dao->obtenerDetalles_Reg($value);
+                return $rec;
+          }  
+            
+            
             
         } catch (Exception $ex) {
             throw $ex;
@@ -123,7 +130,6 @@ class AsignacionTemaRequisitoModel {
         }
 
     }
-
 
 
     public function insertar($pojo){
@@ -136,7 +142,20 @@ class AsignacionTemaRequisitoModel {
                 throw $ex;
         }
     }
-   
+    public function actualizarRegistro($data){
+        
+        try{
+            $dao= new AsignacionTemaRequisitoDAO();
+            return $dao->actualizarRegistro($data);
+        } catch (Exception $ex) {
+                throw $ex;
+                return -1;
+        }
+        
+    }
+    
+    
+    
     public function insertarRequisitos($ID_ASIGNACION,$requisito,$penalizacion)
     {
         try

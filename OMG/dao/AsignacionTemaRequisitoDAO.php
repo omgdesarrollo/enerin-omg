@@ -117,6 +117,25 @@ class AsignacionTemaRequisitoDAO {
                 throw $ex;
         }   
     }
+     public function actualizarRegistro($data)
+    {
+        try
+        {
+          $query="UPDATE registros SET registro='".$data["registro"]."', id_documento=".$data["id_documento"].", frecuencia='".$data["frecuencia"]."'  where id_registro=".$data["id_registro"];
+//          echo $query;
+          $db=  AccesoDB::getInstancia();
+          $lista= $db->executeQueryUpdate($query);      
+          
+          return $lista;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
+    
+    
     
     
     public function insertarRequisito($requisito,$penalizacion)
