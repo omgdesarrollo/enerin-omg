@@ -549,31 +549,47 @@ function graficar()
 
 function graficar2(datos,concepto)
 {
-    datos = JSON.parse(datos);
     let lista = new Object();
     let dataGrafica = [];
+    let tituloGrafica = "DOCUMENTOS POR TEMA";
 
+    datos = JSON.parse(datos);
     $.each(datos,(index,value)=>{
         $.each(value.temas_responsables,(ind,val)=>{
             if(lista[val.id_tema]==undefined)
+            {
                 lista[val.id_tema]=[];
-            lista[val.id_tema].push(value);
+                lista[val.id_tema]["id_tema"] = val.id_tema;
+                lista[val.id_tema]["no_tema"] = val.no;
+                lista[val.id_tema]["nombre_tema"] = val.nombre_tema;
+                lista[val.id_tema]["tema_responsable"] = val.nombre_completotema;
+                lista[val.id_tema]["documentos"]=[];
+            }
+            lista[val.id_tema]["documentos"].push(value);
         });
     });
-    // console.log(lista);
-    tituloGrafica = "DOCUMENTOS POR TEMA";
+    
     $.each(lista,(index,value)=>{
-        console.log(value);
-        $.each(value.temas_responsables,(ind,val)=>{
-            if(index==val.id_tema)
-                dataGrafica.push(["Tema: "+val.no,value.length,">> Tema:\n"+val.nombre_tema+"\n>> Responsable:\n"+val.responsable_tema+"\n>> Documentos:"+value.length,JSON.stringify(value),2]);
-        });
+        dataGrafica.push(["Tema: "+value.no_tema,value.documentos.length,">> Tema:\n"+value.nombre_tema+"\n>> Responsable:\n"+value.tema_responsable+"\n>> Documentos:"+value.documentos.length,JSON.stringify(value.documentos),2]);
     });
     construirGrafica(dataGrafica,tituloGrafica);
 }
 
 graficar3 = (datos,concepto)=>
 {
+    let lista = new Object();
+    let dataGrafica = [];
+    let tituloGrafica = "DETALLES DE DOCUMENTOS";
+
     datos = JSON.parse(datos);
-    console.log(datos);
+    $.each(datos,(index,value)=>{
+        if(lista[value.id_documento]==undefined)
+            lista[value.id_documento]=[];
+        lista[value.id_documento].push(value);
+    });
+    
+    $.each(lista,(index,value)=>{
+        dataGrafica.push(["Documento: "+value[0].clave_documento,value.length,">> Documento:\n"+value[0].documento+"\n>> Responsable:\n"+value[0].nombrecompleto+"\n>> Documentos:"+value.length,"[]",-1]);
+    });
+    construirGrafica(dataGrafica,tituloGrafica);
 }
