@@ -123,7 +123,7 @@ var seccionHerramientas=[
 // ];
  
  var seccionCatalogo=[
-     {id:'Información', text:'Información',img:'catalogo.png',type:'button',isbig:true}  
+     {id:'Informacion', text:'Informacion',img:'catalogo.png',type:'button',isbig:true}  
  ];
  
  
@@ -384,12 +384,12 @@ function redimencionarLayout()
                             loadDataSideBarContratos();  
                         
                 
-                        if(itemIdSeleccion=="Información") {
+                        if(itemIdSeleccion=="Informacion") {
 //                            console.log(listasubmodulos);
 //                            console.log(listasubmodulos["0"]["contenido_sub"]["0"]["contenido_vista"]);
                            loadDataSideBarCatalogoInformacion(listasubmodulos["0"]["contenido_sub"]["0"]["contenido_vista"]);
                        }   
-                        if(itemIdSeleccion=="Validación")
+                        if(itemIdSeleccion=="Validacion")
                            loadDataSideBarCumplimientosDocumentos();
                        
                         if(itemIdSeleccion=="Evidencias")
@@ -457,7 +457,7 @@ function redimencionarLayout()
                             
                         }
                         
-                        if(itemIdSeleccion=="Catálogos"){
+                        if(itemIdSeleccion=="Catalogos"){
                             
                              $.each(listasubmodulos,function (index,value){
 
@@ -465,7 +465,7 @@ function redimencionarLayout()
                                 {
 //                                    console.log(value1);
                                     
-                                    if(value1["nombre_contenido_sub"]=="Catálogos"){
+                                    if(value1["nombre_contenido_sub"]=="Catalogos"){
 //                                        console.log(value1["contenido_vista"]);
                                              loadDataSideBarOficiosCatalogos(value1["contenido_vista"]);
                                     }
@@ -475,7 +475,7 @@ function redimencionarLayout()
                            
                         }
                        
-                        if(itemIdSeleccion=="Documentación"){
+                        if(itemIdSeleccion=="Documentacion"){
                             
                             
                             
@@ -485,7 +485,7 @@ function redimencionarLayout()
                                 {
 //                                    console.log(value1);
                                     
-                                    if(value1["nombre_contenido_sub"]=="Documentación"){
+                                    if(value1["nombre_contenido_sub"]=="Documentacion"){
 //                                        console.log(value1["contenido_vista"]);
                                              loadDataSideBarOficiosDocumentacion(value1["contenido_vista"]);
                                     }

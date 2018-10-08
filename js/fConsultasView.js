@@ -64,14 +64,15 @@ function inicializarFiltros()
 function reconstruir(value,index)
 {
     tempData = new Object();    
-    if(value[0].cumplimiento_contrato!=undefined)
-        $("#cumplimiento_contrato_show").html("% Cumplimiento General: "+value[0].cumplimiento_contrato.toFixed(2));
+    // if(value[0].cumplimiento_contrato!=undefined)
+        // $("#cumplimiento_contrato_show").html("% Cumplimiento General: "+value[0].cumplimiento_contrato.toFixed(2));
     tempData["id_principal"] = [{'id_tema':value[0].id_tema}];
     tempData["no_tema"] = value[0].no_tema;
     tempData["nombre_tema"] = value[0].nombre_tema;
     // tempData["id_responsable"] = value.id_responsable;
     tempData["responsable_tema"] = value[0].responsable_tema;
-    tempData["cumplimiento_tema"] = value[0].cumplimiento_tema;
+    // tempData["cumplimiento_tema"] = value[0].cumplimiento_tema;
+
     tempData["requisitos_tema"] = value.length;
     tempData["requisitos_cumplidos"] = 0;
 
@@ -80,6 +81,10 @@ function reconstruir(value,index)
         if(val["estado_requisito"] == "CUMPLIDO")
             tempData["requisitos_cumplidos"]++;
     });
+    tempData["cumplimiento_tema"] = (tempData["requisitos_cumplidos"]/tempData["requisitos_tema"])*100;
+
+    // cumplimiento_contrato = $("#cumplimiento_contrato_show").html();
+    // $("#cumplimiento_contrato_show").html("% Cumplimiento General: "+value[0].cumplimiento_contrato.toFixed(2));
 
     // tempData["estado_tema"] = value.estado_tema == 0 ? "INACTIVO" : "ACTIVO";
     // tempData["id_requisito"] = value.id_requisito;
@@ -206,6 +211,11 @@ function listarDatos()
                     {
                         __datos.push( reconstruir(value,index+1) );
                     });
+                    cumplimiento_contrato=0;
+                    $.each(__datos,(index,value)=>{
+                        cumplimiento_contrato += value.cumplimiento_tema;
+                    });
+                    $("#cumplimiento_contrato_show").html("% Cumplimiento General: "+(cumplimiento_contrato/__datos.length).toFixed(2));
                     DataGrid = __datos;
                     gridInstance.loadData();
                     resolve();
