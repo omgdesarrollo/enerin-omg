@@ -95,11 +95,17 @@ $Usuario=  Session::getSesion("user");
     </button>
         
     <div class="pull-right">
-        <label style="margin-right:30px;"><h4 id="cumplimiento_contrato_show"></h4></label>
+        
+        <!--<label style="margin-right:30px;"><h4 id="cumplimiento_contrato_show"></h4></label>-->
+        <label style="margin-right:5px;border-radius:5px;border:3px #49986d solid;width:auto;height:44px;padding-left:14px;padding-right:14px;background:aliceblue;" class=""><h4 id="cumplimiento_contrato_show"></h4></label>
+        
         <button onClick="graficar()" title="Graficar Circular" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#Grafica">
             <i class="fa fa-pie-chart"></i>
         </button>
-        <button style="width:48px;height:42px" type="button"  class="btn_agregar" id="toExcel">
+<!--        <button style="width:48px;height:42px" type="button"  class="btn_agregar" id="toExcel">
+            <img src="../../images/base/_excel.png" width="30px" height="30px">
+        </button>-->
+        <button style="width:48px;height:42px" type="button"  class="btn_agregar" data-toggle="modal" data-target="#reporte_consultas">
             <img src="../../images/base/_excel.png" width="30px" height="30px">
         </button>
     </div>
@@ -108,7 +114,39 @@ $Usuario=  Session::getSesion("user");
 <br><br><br>
 <div id="jsGrid"></div>
 
+<!--Modal para Grafica-->
 <div id="jsChart"></div>
+
+<!-- Inicio de Seccion Modal Crear Tarea -->
+<div class="modal draggable fade" id="reporte_consultas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
+                <h4 class="modal-title" id="myModalLabel">Exportar Reporte</h4>
+            </div>
+
+            <div id="consultas" class="modal-body">
+                        
+                    <div class="form-group">
+                        <label class="control-label" for="title">Seleccionar:</label>
+                        <select id="REPORTES">
+                        <option value="1">Reporte Consultas</option>
+                        <option value="2">Reporte Consultas con Detalle</option>
+                        </select>
+                    </div>
+                
+                    <div class="form-group">
+                        <button style="width:100%;" type="submit" id="btn_exportar" class="btn crud-submit btn-info botones_vista_tabla">Exportar</button>
+                        <!--<button style="width:49%;" type="submit" id="btn_limpiarModal"  class="btn crud-submit btn-info botones_vista_tabla">Limpiar</button>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Final de Seccion Modal Crear Tarea-->
+
 
 <script>
     var DataGrid=[];

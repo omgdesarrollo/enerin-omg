@@ -16,7 +16,7 @@ $(function()
         tareaDatos.fecha_cumplimiento = $("#FECHA_CUMPLIMIENTO").val();
         tareaDatos.status_tarea = $("#STATUS_TAREA").val();
         tareaDatos.observaciones = $("#OBSERVACIONES").val();
-        tareaDatos.archivo_adjunto = $('#fileupload').fileupload('option', 'url');
+//        tareaDatos.archivo_adjunto = $('#fileupload').fileupload('option', 'url');
         tareaDatos.mensaje="Se le asigno la tarea: "+$("#TAREA").val()+" por el Usuario: ";
         tareaDatos.reponsable_plan= $("#ID_EMPLEADOMODAL").val();
         tareaDatos.tipo_mensaje= 0;

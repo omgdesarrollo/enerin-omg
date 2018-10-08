@@ -2,14 +2,24 @@
 // configuracionJgrowl = { pool:0, position:" bottom-right", sticky:true, corner:"0px",openDuration:"fast", closeDuration:"slow",theme:"",header:"",themeState:"", glue:"before"};
 $(function()
 {   
-    var $btnDLtoExcel = $('#toExcel'); 
+    var $btnDLtoExcel = $('#btn_exportar'); 
     $btnDLtoExcel.on('click', function () 
     {   
+        reporteSeleccionado= $("#REPORTES").val();
+//        console.log("valor reporte select: ",reporteSeleccionado);        
         __datosExcel=[]
         $.each(dataListado,function (index,value)
             {
                 // console.log("Entro al datosExcel");
-                __datosExcel.push( reconstruirExcel(value,index+1) );
+                if(reporteSeleccionado == 1)
+                {
+                    __datosExcel.push( reconstruirExcel(value,index+1) );
+                }else{
+                    if(reporteSeleccionado == 2)
+                    {
+                        __datosExcel.push( reconstruirExcelDetalles(value,index+1) );
+                    }
+                }                
             });
             DataGridExcel= __datosExcel;
 //            console.log("Entro al excelexportHibrido");
@@ -65,7 +75,8 @@ function reconstruir(value,index)
     tempData["requisitos_tema"] = value.length;
     tempData["requisitos_cumplidos"] = 0;
 
-    $.each(value,(ind,val)=>{
+    $.each(value,(ind,val)=>
+    {
         if(val["estado_requisito"] == "CUMPLIDO")
             tempData["requisitos_cumplidos"]++;
     });
@@ -82,20 +93,89 @@ function reconstruir(value,index)
     return tempData;
 }
 
+//function reconstruirExcel(value,index)
+//{
+////    console.log(value);
+//    tempData = new Object();
+//    tempData["No. Tema"] = value.no_tema;
+//    tempData["Nombre Tema"] = value.nombre_tema;
+//    tempData["Responsable del Tema"] = value.responsable_tema;
+//    tempData["% Cumplimiento Tema"] = value.cumplimiento_tema;
+//    tempData["Estado del Tema"] = value.estado_tema == 0 ? "INACTIVO" : "ACTIVO";
+//    tempData["Requisito"] = value.requisito;
+//    tempData["Penalizacion"] = value.penalizacion == "true" ? "SI":"NO";
+//    tempData["% Cumplimiento Requisito"] = value.cumplimiento_requisito;
+//    tempData["Estado Requisito"] = value.estado_requisito;
+//  
+//    return tempData;
+//}
+
 function reconstruirExcel(value,index)
 {
 //    console.log(value);
     tempData = new Object();
-    tempData["No. Tema"] = value.no_tema;
-    tempData["Nombre Tema"] = value.nombre_tema;
-    tempData["Responsable del Tema"] = value.responsable_tema;
-    tempData["% Cumplimiento Tema"] = value.cumplimiento_tema;
-    tempData["Estado del Tema"] = value.estado_tema == 0 ? "INACTIVO" : "ACTIVO";
-    tempData["Requisito"] = value.requisito;
-    tempData["Penalizacion"] = value.penalizacion == "true" ? "SI":"NO";
-    tempData["% Cumplimiento Requisito"] = value.cumplimiento_requisito;
-    tempData["Estado Requisito"] = value.estado_requisito;
+    tempData["No. Tema"] = value[0].no_tema;
+    tempData["Nombre Tema"] = value[0].nombre_tema;
+    tempData["Responsable del Tema"] = value[0].responsable_tema;
+    tempData["% Cumplimiento Tema"] = value[0].cumplimiento_tema;
+    tempData["Requisitos por Tema"] = value.length;
+    tempData["Requisitos Cumplidos"]= 0;
+    $.each(value,(ind,val)=>
+    {
+        if(val["estado_requisito"] == "CUMPLIDO")            
+            tempData["Requisitos Cumplidos"]++;
+    });
   
+    return tempData;
+}
+
+function reconstruirExcelDetalles(value,index)
+{
+//    console.log(value);
+    tempData = new Object();
+    tempData["No. Tema"] = value[0].no_tema;
+    tempData["Nombre Tema"] = value[0].nombre_tema;
+    tempData["Responsable del Tema"] = value[0].responsable_tema;
+    tempData["% Cumplimiento Tema"] = value[0].cumplimiento_tema;
+    tempData["Requisitos por Tema"] = value.length;
+    tempData["Requisitos Cumplidos"]= 0;
+    $.each(value,(ind,val)=>
+    {
+        if(val["estado_requisito"] == "CUMPLIDO")            
+            tempData["Requisitos Cumplidos"]++;
+    });
+    
+    tempData["Registros"]= "";
+    tempData["Frecuencia"]= "";
+    tempData["Evidencias por Cumplir"]= "";
+    tempData["Evidencias Cumplidas"]= "";
+    $.each(value,(ind,val)=>
+    {
+        $.each(val['detalles_requisito'],(ind2,val2)=>
+        {            
+//            console.log("Resultado resta: ",EvidenciasPorCumplir);
+            if(val2.id_registro==null)
+            {
+                tempData["Registros"] += "No";
+                tempData["Frecuencia"] += "No";
+                tempData["Evidencias por Cumplir"] += "No";
+                tempData["Evidencias Cumplidas"] += "No";
+            }else{
+                tempData["Registros"] += "<li>"+val2.registro+"</li>";
+                tempData["Frecuencia"] += "<li>"+val2.frecuencia+"</li>";
+                EvidenciasPorCumplir=parseInt(val2.evidencias_realizar)-parseInt(val2.evidencias_validadas);
+                tempData["Evidencias por Cumplir"] += "<li>"+EvidenciasPorCumplir+"</li>";
+                tempData["Evidencias Cumplidas"] += "<li>"+val2.evidencias_validadas+"</li>";
+
+            }
+        });
+    });
+    
+    tempData["Estado del Requisito"]= "";
+    $.each(value,(ind,val)=>
+    {
+        tempData["Estado del Requisito"]+= "<li>"+val.estado_requisito+"</li>";
+    });    
     return tempData;
 }
 
