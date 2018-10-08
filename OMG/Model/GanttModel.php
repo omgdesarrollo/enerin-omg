@@ -11,6 +11,72 @@ class GanttModel {
             $dao= new GanttDao();
             $rec=$dao->obtenerTareasCompletasPorFolioEntrada($folio_entrada);
             
+            $duracionTotal=0;
+            // $id_tarea = array();
+            $bandera=1;
+            $array = array();
+            $cont=0;
+            $id_tarea = $dao->totalDeDiasPorTarea($folio_entrada);//obtener todo s los padres
+            $totalPadreCero = $dao->totalPadreCero($folio_entrada);
+ 
+            if($totalPadreCero!=0)
+            {
+                foreach($id_tarea as $key => $value)
+                {
+                    $bandera=1;
+                    foreach($rec as $k => $v)
+                    {
+                        if($bandera==1)
+                        {
+                            $id_tarea[$key]["duracion_total"] = 0;
+                            $bandera=0;
+                        }
+                        if($v["parent"]==$value["id"] && $v["parent"]!=0 )
+                        {
+                            $id_tarea[$key]["duracion_total"] += $v["duration"];
+                        }
+                    }
+                }
+                // foreach($id_tarea as $k => $val)
+                // {
+                    foreach($rec as $key => $value)
+                    {
+                        if($value["parent"]!=0)
+                        //  && $val["id"]==$value["parent"])
+                        {
+                            // $index = array_search($value["parent"],$id_tarea,true);
+                            // echo $id_tarea[$index]["duracion_total"];
+                            foreach($id_tarea as $k => $v)
+                            {
+                                if($value["parent"]==$v["id"])
+                                $value["ponderado_programado"]==-1 ?
+                                    $rec[$key]["porcentaje_por_actividad"]= round($value["duration"]*100/$v["duracion_total"],2) : 
+                                    $rec[$key]["porcentaje_por_actividad"]= round($value["ponderado_programado"],2);
+                                // $value["ponderado_programado"]==-1 ?
+                                //     $rec[$key]["porcentaje_por_actividad"]= $value["duration"]*100/$v["duracion_total"] : 
+                                //     $rec[$key]["porcentaje_por_actividad"]= $value["ponderado_programado"];
+                            }
+                        }
+                        else
+                        {
+                            $value["ponderado_programado"]!=-1 ?
+                                $rec[$key]["porcentaje_por_actividad"] = round($value["ponderado_programado"],2) :
+                                $rec[$key]["porcentaje_por_actividad"] = round(100/$totalPadreCero,2);
+
+                            // $value["ponderado_programado"]!=-1 ?
+                            //     $rec[$key]["porcentaje_por_actividad"] = $value["ponderado_programado"] :
+                            //     $rec[$key]["porcentaje_por_actividad"] = 100/$totalPadreCero;
+                        }
+                    }
+            }
+            
+            
+            
+            
+            
+            
+            
+            
             return $rec;
             
         } catch (Exception $ex) {
@@ -49,6 +115,17 @@ class GanttModel {
                                          $dao->deleteTareasDe_Gantt_Seguimiento_Entrada($value);
                                             
                                     }else{
+                                       if (!isset($value["progress"])) {
+                                             $value["progress"]=0;
+                                         } 
+//                                         if(isset($value["status"])){
+                                             
+//                                            self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"notas"=>$value["notas"],"status"=>$value["status"]), $value["id"]);
+                                            
+//                                         }else{
+//                                            self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"notas"=>$value["notas"]), $value["id"]);
+//                                         }
+//                                         echo js
                                          $dao->updateTareas($value); 
                                          $dao->updateTareasId_EmpleadoXIdGantt_En_Tabla_Seguimiento_entrada($value);
                                     }
@@ -66,7 +143,33 @@ class GanttModel {
         }
         
     }
-    
+       public static function actualizarGanttTareas($COLUMNAS,$ID)
+    {
+        try
+        {
+            $dao=new GanttDao();
+            $query= "UPDATE gantt_task SET";
+            $index=0;
+            foreach ($COLUMNAS as $key => $value) 
+            { 
+                if($index!=0)
+                {
+                    $query.=" , ";
+                }
+                
+                $query .= " $key = '$value'";
+                $index++;
+            }
+            
+            $query.= "WHERE id = $ID";
+            $update= $dao->actualizarGanttTareas($query);
+            return ($update!=0)?1:0;            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
     
     public static function verificarTareasExiste($array){
         try{

@@ -4,6 +4,45 @@
 //     lol();
 // });
 // var heightGrid;
+var banderaEditEstado=0;
+$(function(){
+    $("tbody").on('click','tr td',(obj)=>{
+        obj = obj.currentTarget;
+        if(myPop != undefined)
+        {
+            myPop.unload();
+            myPop=null;
+        }
+        // if($(obj).hasClass("jsgrid-cell"))
+        // {
+            text = $(obj).html();
+            if(!text.includes("<button") && !text.includes("<input") && !text.includes("<a") && !text.includes("<select") && !text.includes("<i"))
+            {
+                pos = $(obj).offset();
+
+                myPop = new dhtmlXPopup();
+                myPop.attachHTML(text);
+                myPop.show(0,-20,0,20);
+                tamWindow = $(window).width()/2;
+                $(".dhx_popup_material").css({
+                    "max-width":"50%",left:"25%",height:"min-content","z-index":1050
+                });
+                tam = $($(".dhx_popup_material")).width()/2;
+
+                $(".dhx_popup_material").css("left",tamWindow-tam);
+                $(".dhx_popup_arrow").css("left",tam-9+"px");
+                
+                $(".dhx_popup_area").css({
+                "-webkit-box-shadow":"0px 11px 30px -5px rgba(0,0,0,0.4)",
+                    "-moz-box-shadow": "0px 11px 30px -5px rgba(0,0,0,0.4)",
+                    "box-shadow": "0px 11px 30px -5px rgba(0,0,0,0.4)"
+                });
+
+            }
+        // }
+    });
+});
+
 function inyectar_librerias()
 {
     let librerias = "<link href='../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css' rel='stylesheet' type='text/css'/>";
@@ -15,7 +54,13 @@ function inyectar_librerias()
     librerias += "<script src='../../js/filtroSupremo.js' type='text/javascript'></script>";
     librerias += "<link href='../../css/filtroSupremo.css' rel='stylesheet' type='text/css'/>";
     librerias += "<link href='../../css/jsgridconfiguration.css' rel='stylesheet' type='text/css'/>";
+
+    let style = ".jsgrid-header-row>.jsgrid-header-cell {";
+    style += "background-color:#307ECC; font-family: 'Roboto Slab';";
+    style += "font-size: 1.2em; color: white; font-weight: normal;}";
+
     $("head").append(librerias);
+    // $("style").append(style);
 }
 inyectar_librerias();
 
@@ -149,55 +194,47 @@ function construirGrid()
         },
         rowClick:(args)=>
         {
-            // console.log(args);
-            obj = args.event.target;
-            // console.log(obj);
-            if(myPop != undefined)
-            {
-                myPop.unload();
-                myPop=null;
-            }
-            // console.log(obj);
-            if($(obj).hasClass("jsgrid-cell"))
-            {
-                text = $(obj).html();
-                // console.log(!text.includes("<button") && !text.includes("<input"));
-                if(!text.includes("<button") && !text.includes("<input") && !text.includes("<a") && !text.includes("<select") && !text.includes("<i"))
-                {
-                    pos = $(obj).offset();
-                    // console.log($(obj).width());
-                    myPop = new dhtmlXPopup();
-                    myPop.attachHTML(text);
-                    myPop.show(0,-20,0,20);
-                    tamWindow = $(window).width()/2;
-                    $(".dhx_popup_material").css({
-                        "max-width":"50%",left:"25%",height:"min-content",
-                    });
-                    tam = $($(".dhx_popup_material")).width()/2;
+            // obj = args.event.target;
+            // if(myPop != undefined)
+            // {
+            //     myPop.unload();
+            //     myPop=null;
+            // }
+            // if($(obj).hasClass("jsgrid-cell"))
+            // {
+            //     text = $(obj).html();
+            //     if(!text.includes("<button") && !text.includes("<input") && !text.includes("<a") && !text.includes("<select") && !text.includes("<i"))
+            //     {
+            //         pos = $(obj).offset();
 
-                    $(".dhx_popup_material").css("left",tamWindow-tam);
-                    // tam2 = $(".dhx_popup_arrow").offset();
-                    // $(".dhx_popup_material").css({"max-width":"50%",left:"200px",height:"min-content"});
-                    // console.log(tam);
-                    $(".dhx_popup_arrow").css("left",tam-9+"px");
+            //         myPop = new dhtmlXPopup();
+            //         myPop.attachHTML(text);
+            //         myPop.show(0,-20,0,20);
+            //         tamWindow = $(window).width()/2;
+            //         $(".dhx_popup_material").css({
+            //             "max-width":"50%",left:"25%",height:"min-content",
+            //         });
+            //         tam = $($(".dhx_popup_material")).width()/2;
+
+            //         $(".dhx_popup_material").css("left",tamWindow-tam);
+            //         $(".dhx_popup_arrow").css("left",tam-9+"px");
                     
-                    // $(".dhx_popup_area").css("border","2px solid #39c");
-                    $(".dhx_popup_area").css({
-                    "-webkit-box-shadow":"0px 11px 30px -5px rgba(0,0,0,0.4)",
-                        "-moz-box-shadow": "0px 11px 30px -5px rgba(0,0,0,0.4)",
-                        "box-shadow": "0px 11px 30px -5px rgba(0,0,0,0.4)"
-                    });
-                    // $(".dhx_popup_material").css({left:pos.left-tam+ $(obj).width()/2+"px"});
-                //     swal("",text,"info");
-                    // $(obj).attr("title",text);
-                    // $(obj).popover();
+            //         $(".dhx_popup_area").css({
+            //         "-webkit-box-shadow":"0px 11px 30px -5px rgba(0,0,0,0.4)",
+            //             "-moz-box-shadow": "0px 11px 30px -5px rgba(0,0,0,0.4)",
+            //             "box-shadow": "0px 11px 30px -5px rgba(0,0,0,0.4)"
+            //         });
 
-                }
-            }
+            //     }
+            // }
             // console.log($(".jsgrid-selected-row")[0]);
             // $("#jsGrid").jsGrid("editItem",$(".jsgrid-selected-row")[0]);
             // var a = $("#jsGrid").jsGrid("rowByItem",$(".jsgrid-selected-row")[0]);
-            $("#jsGrid").jsGrid("cancelEdit");
+            // alert("B");
+            if(banderaEditEstado==0)
+                $("#jsGrid").jsGrid("cancelEdit");
+            else
+                banderaEditEstado=0;
             // console.log("A");
         },
         width: "100%",
@@ -334,6 +371,7 @@ function modoEditar()
     // $("#grid").jsGrid("updateItem");
     // console.log(gridInstance);
     // gridInstance.rowDoubleClick();
+    banderaEditEstado=1;
     $("#jsGrid").jsGrid("editItem",$(".jsgrid-selected-row")[0]);
     // console.log($(".jsgrid-row")[0]);
 }

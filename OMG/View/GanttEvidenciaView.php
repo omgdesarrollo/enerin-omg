@@ -1353,7 +1353,7 @@ dp.init(gantt);
       function refrescarDatosGantt(){
         gantt.refreshData();
         gantt.init('gantt_here');
-        $.when(gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId")).then(function(){
+        $.when(gantt.load("../Controller/GanttEvidenciasController.php?Op=ListarTodasLasTareasPorId")).then(function(){
                 
                 
             obtenerTareas().then(function (){
