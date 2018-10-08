@@ -163,8 +163,13 @@ function reconstruirExcelDetalles(value,index)
             }else{
                 tempData["Registros"] += "<li>"+val2.registro+"</li>";
                 tempData["Frecuencia"] += "<li>"+val2.frecuencia+"</li>";
-                EvidenciasPorCumplir=parseInt(val2.evidencias_realizar)-parseInt(val2.evidencias_validadas);
-                tempData["Evidencias por Cumplir"] += "<li>"+EvidenciasPorCumplir+"</li>";
+                if(val2.frecuencia== "TIEMPO INDEFINIDO")
+                {
+                    tempData["Evidencias por Cumplir"] += "<li>"+0+"</li>";
+                }else{
+                    EvidenciasPorCumplir=parseInt(val2.evidencias_realizar)-parseInt(val2.evidencias_validadas);
+                    tempData["Evidencias por Cumplir"] += "<li>"+EvidenciasPorCumplir+"</li>";
+                }                
                 tempData["Evidencias Cumplidas"] += "<li>"+val2.evidencias_validadas+"</li>";
 
             }
