@@ -508,21 +508,21 @@ function graficar()
         {
             sin_asignar++;
             $.each(value.temas_responsables,(ind,val)=>{
-                sin_asignar_data.push(val);
+                sin_asignar_data.push(value);
             });
         }
         if(value.estatus == 1)
         {
             proceso++;
             $.each(value.temas_responsables,(ind,val)=>{
-                proceso_data.push(val);
+                proceso_data.push(value);
             })
         }
         if(value.estatus == 2)
         {
             validados++;
             $.each(value.temas_responsables,(ind,val)=>{
-                validados_data.push(val);
+                validados_data.push(value);
             });
         }
     });
@@ -554,13 +554,26 @@ function graficar2(datos,concepto)
     let dataGrafica = [];
 
     $.each(datos,(index,value)=>{
-        if(lista[value.id_tema]==undefined)
-            lista[value.id_tema]=[];
-        lista[value.id_tema].push(value);
+        $.each(value.temas_responsables,(ind,val)=>{
+            if(lista[val.id_tema]==undefined)
+                lista[val.id_tema]=[];
+            lista[val.id_tema].push(value);
+        });
     });
+    // console.log(lista);
     tituloGrafica = "DOCUMENTOS POR TEMA";
     $.each(lista,(index,value)=>{
-        dataGrafica.push(["Tema: "+value[0].no,value.length,">> Tema:\n"+value[0].nombre_tema+"\n>> Responsable:\n"+value[0].responsable_tema+"\n>> Documentos:"+value.length,"[]",-1]);
+        console.log(value);
+        $.each(value.temas_responsables,(ind,val)=>{
+            if(index==val.id_tema)
+                dataGrafica.push(["Tema: "+val.no,value.length,">> Tema:\n"+val.nombre_tema+"\n>> Responsable:\n"+val.responsable_tema+"\n>> Documentos:"+value.length,JSON.stringify(value),2]);
+        });
     });
     construirGrafica(dataGrafica,tituloGrafica);
+}
+
+graficar3 = (datos,concepto)=>
+{
+    datos = JSON.parse(datos);
+    console.log(datos);
 }

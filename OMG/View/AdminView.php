@@ -71,7 +71,11 @@ $Usuario=  Session::getSesion("user");
                 font-size: 1.2em;
                 color: white;
                 font-weight: normal;
-            }     
+            }
+            td
+            {
+                cursor:pointer;
+            }
         </style>
     </head>
 
@@ -212,7 +216,7 @@ $Usuario=  Session::getSesion("user");
                                         <th style="width:10%" class="jsgrid-header-cell">No.</th>
                                         <th style="width:20%" class="jsgrid-header-cell">Tema</th>
                                         <th style="width:30%" class="jsgrid-header-cell">Descripcion</th>
-                                        <th style="width:30%" class="jsgrid-header-cell">Sub-Modulo</th>
+                                        <!-- <th style="width:30%" class="jsgrid-header-cell">Sub-Modulo</th> -->
                                         <th style="width:10%" class="jsgrid-header-cell">Opcion</th>
                                     </tr>
                                     <tbody class="jsgrid-grid-body" id="bodyTableTemas">
@@ -473,7 +477,7 @@ $Usuario=  Session::getSesion("user");
         tempData = "<tr class= id='idTema_"+usuarioTemas.id_tema+"' >";
         tempData += "<td>"+usuarioTemas.no+"</td>";
         tempData += "<td>"+usuarioTemas.nombre+"</td>";
-        tempData += "<td>"+usuarioTemas.descripcion+"</td>";
+        // tempData += "<td>"+usuarioTemas.descripcion+"</td>";
         tempData += "<td>"+usuarioTemas.identificador+"</td>";
         tempData += "<td>";
         tempData += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
