@@ -44,6 +44,7 @@ $Usuario=  Session::getSesion("user");
 
                 <!-- Chart -->
                 <script src="../../assets/chart/loader.js" type="text/javascript"></script>
+                <script src="../../js/fChartComponent.js" type="text/javascript"></script>
 
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
@@ -56,11 +57,10 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/> -->
                 <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
                 <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
-                <script src="../../js/fChartComponent.js" type="text/javascript"></script>
+                
                 <script src="../../js/fConsultasView.js" type="text/javascript"></script>
                 <!-- <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/> -->
                 <script src="../../js/fGridComponent.js" type="text/javascript"></script>
-                
                 
                 <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
                 
@@ -95,11 +95,17 @@ $Usuario=  Session::getSesion("user");
     </button>
         
     <div class="pull-right">
-        <label style="margin-right:30px;"><h4 id="cumplimiento_contrato_show"></h4></label>
+        
+        <!--<label style="margin-right:30px;"><h4 id="cumplimiento_contrato_show"></h4></label>-->
+        <label style="margin-right:5px;border-radius:5px;border:3px #49986d solid;width:auto;height:44px;padding-left:14px;padding-right:14px;background:aliceblue;" class=""><h4 id="cumplimiento_contrato_show"></h4></label>
+        
         <button onClick="graficar()" title="Graficar Circular" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#Grafica">
             <i class="fa fa-pie-chart"></i>
         </button>
-        <button style="width:48px;height:42px" type="button"  class="btn_agregar" id="toExcel">
+<!--        <button style="width:48px;height:42px" type="button"  class="btn_agregar" id="toExcel">
+            <img src="../../images/base/_excel.png" width="30px" height="30px">
+        </button>-->
+        <button style="width:48px;height:42px" type="button"  class="btn_agregar" data-toggle="modal" data-target="#reporte_consultas">
             <img src="../../images/base/_excel.png" width="30px" height="30px">
         </button>
     </div>
@@ -108,32 +114,64 @@ $Usuario=  Session::getSesion("user");
 <br><br><br>
 <div id="jsGrid"></div>
 
+<!--Modal para Grafica-->
 <div id="jsChart"></div>
 
+<!-- Inicio de Seccion Modal Crear Tarea -->
+<div class="modal draggable fade" id="reporte_consultas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
+                <h4 class="modal-title" id="myModalLabel">Exportar Reporte</h4>
+            </div>
+
+            <div id="consultas" class="modal-body">
+                        
+                    <div class="form-group">
+                        <label class="control-label" for="title">Seleccionar:</label>
+                        <select id="REPORTES">
+                        <option value="1">Reporte Consultas</option>
+                        <option value="2">Reporte Consultas con Detalle</option>
+                        </select>
+                    </div>
+                
+                    <div class="form-group">
+                        <button style="width:100%;" type="submit" id="btn_exportar" class="btn crud-submit btn-info botones_vista_tabla">Exportar</button>
+                        <!--<button style="width:49%;" type="submit" id="btn_limpiarModal"  class="btn crud-submit btn-info botones_vista_tabla">Limpiar</button>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Final de Seccion Modal Crear Tarea-->
+
+
 <script>
-    var DataGrid=[];
-    var dataListado=[];
-    var filtros=[];
-    var db={};
-    var gridInstance;
-//    var thisjGrowl;
-    var ultimoNumeroGrid=0;
+    
+    var DataGrid=[];//grid
+    var dataListado=[];//grid
+    var filtros=[];//grid
+    var db={};//grid
+    var gridInstance;//grid
+    var ultimoNumeroGrid=0;//grid
     var DataGridExcel=[];
     var origenDeDatosVista="consultas";
     var opcion_vista_grafica = 1;
     // google.charts.setOnLoadCallback(drawChart);
 
-    var activeChart = -1;
-    var chartsCreados = [];
+    var activeChart = -1;//chart
+    var chartsCreados = [];//chart
     var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)},
-    (dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)},(dataNextGrafica,concepto)=>{graficar4(dataNextGrafica,concepto)}];
+    (dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)},(dataNextGrafica,concepto)=>{graficar4(dataNextGrafica,concepto)}];//chart
 
-    var porcentajesFields = function(config)
+    var porcentajesFields = function(config)//grid
     {
         jsGrid.Field.call(this, config);
     };
     
-    porcentajesFields.prototype = new jsGrid.Field
+    porcentajesFields.prototype = new jsGrid.Field//grid
     ({
         css: "date-field",
         align: "center",
@@ -172,7 +210,7 @@ $Usuario=  Session::getSesion("user");
     var customsFieldsGridData=[
         {field:"customControl",my_field:MyCControlField},
         {field:"porcentaje",my_field:porcentajesFields},
-    ];
+    ];//grid
     
     estructuraGrid = [
         { name: "id_principal",visible:false},
@@ -193,9 +231,9 @@ $Usuario=  Session::getSesion("user");
         { name:"delete", title:"Opción", type:"customControl",sorting:""},
         // { title:"Opción", type:"",sorting:""},
         
-    ];
+    ];//grid
     
-    construirGrid();
+    construirGrid();//grid
             // RegionesFiscalesComboDhtml = new dhtmlXCombo({
             //     parent: "INPUT_REGIONFISCAL_NUEVOREGISTRO",
             //     width: 540,
@@ -226,22 +264,18 @@ $Usuario=  Session::getSesion("user");
         });
         
 </script>
-
-
-            <!--Inicia para el spiner cargando-->
-            <script src="../../js/loaderanimation.js" type="text/javascript"></script>
-            <!--Termina para el spiner cargando-->
-           
-            <!--Bootstrap-->
-            <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
-            <!--Para abrir alertas de aviso, success,warning, error-->       
-            <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
-            
-            <!--Para abrir alertas del encabezado-->
-            <script src="../../assets/probando/js/ace-elements.min.js"></script>
-            <script src="../../assets/probando/js/ace.min.js"></script>
-          
-                
+        <!--Inicia para el spiner cargando-->
+        <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+        <!--Termina para el spiner cargando-->
+        
+        <!--Bootstrap-->
+        <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
+        <!--Para abrir alertas de aviso, success,warning, error-->       
+        <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+        
+        <!--Para abrir alertas del encabezado-->
+        <script src="../../assets/probando/js/ace-elements.min.js"></script>
+        <script src="../../assets/probando/js/ace.min.js"></script>  
 	</body>
      
 </html>
