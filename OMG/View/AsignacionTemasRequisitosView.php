@@ -615,12 +615,19 @@ function evaluarToolbarSeccionB(id)
                        type:"POST",
                        data:{"id":id_real_arbol_seleccionado,"tipo":"reg","tipoEdicionOrigenPurosDatosDeServer":"registrosEdicionDeDatosModal"},
                        success:function(r){
-                           $("#REGISTRO").val(r.registro);
+                           if(r.validado_documento_responsable_or_evidenciascargadas!="se_encuentra_validado_o_ahy_evidencias" ){
+                               $("#REGISTRO").val(r.registro);
+                               $('#create-itemRegistro').modal('show');
+                               $("#textoHeaderRegistro").html("Edicion de Registro");
+                           }else{
+                               
+                                 swal("","No Es posible Modificar El Registro ya esta en un documento validado por el responsable o ya tiene al menos una evidencia ","error");
+//                            setTimeout(function(){swal.close();},1500);
+                           }
 //                           construirDetalles(r);
                        }
                      });
-                    $('#create-itemRegistro').modal('show');
-                    $("#textoHeaderRegistro").html("Edicion de Registro");
+                   
                     cualModoModalAgregarEdicioRegistro="edicionregistro";
                    
                 }else{

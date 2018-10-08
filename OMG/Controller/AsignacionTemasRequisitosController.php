@@ -90,32 +90,28 @@ switch ($Op) {
             return $Lista;
             
             break;
+        
         case 'detalles':
            $id= $_REQUEST["id"];
            $tipo=$_REQUEST["tipo"];
            if(isset($_REQUEST["tipoEdicionOrigenPurosDatosDeServer"])){
+               
                 $tipo=$_REQUEST["tipoEdicionOrigenPurosDatosDeServer"];
                 header('Content-type: application/json; charset=utf-8'); 
-                
-                echo json_encode($model->obtenerDetallesHidrid($id,$tipo)[0]);
-               
+             
+                if(isset(AsignacionTemaRequisitoModel::verificarRegistroExisteEnDocumentoandEstaValidadoPorDelDocumentoYTema(array("id"=>$id))[0]["validacion_documento_responsable"])!=true || AsignacionTemaRequisitoModel::verificarRegistroExisteEnEvidencias(array("id"=>$id))==0){
+                    echo json_encode($model->obtenerDetallesHidrid($id,$tipo)[0]);
+                }else{
+                     echo json_encode(array("validado_documento_responsable_or_evidenciascargadas"=>"se_encuentra_validado_o_ahy_evidencias"));
+                }    
            }else{     
                 $lista=$model->obtenerDetallesHidrid($id,$tipo);
                
                
                
            }
-           
-           
-//               echo "d";
-//           }
-//           else{
-//               if($tipo=="req"){
-//                   echo "entro en req";
-                  
-//               }
-//           }
         break;
+
 
 	case 'Modificar':
 		# code...
