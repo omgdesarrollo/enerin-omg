@@ -62,7 +62,22 @@ class AdminModel{
         }
     }
     
-    public function listarTemas($CADENA,$ID_USUARIO,$CONTRATO)
+//    public function listarTemas($CADENA,$ID_USUARIO,$CONTRATO)
+//    {
+//        try
+//        {
+//            $dao=new AdminDAO();
+//            $rec = $dao->listarTemas($CADENA,$ID_USUARIO,$CONTRATO);
+//            return $rec;
+//            // var_dump($rec);
+//        } catch (Exception $ex)
+//        {
+//            throw $ex;
+//            return false;
+//        }
+//    }
+    
+        public function listarTemas($CADENA,$ID_USUARIO,$CONTRATO)
     {
         try
         {
