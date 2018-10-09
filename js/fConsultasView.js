@@ -74,13 +74,14 @@ function reconstruir(value,index)
     // tempData["cumplimiento_tema"] = value[0].cumplimiento_tema;
 
     tempData["requisitos_tema"] = value.length;
+    
     tempData["requisitos_cumplidos"] = 0;
-
     $.each(value,(ind,val)=>
     {
         if(val["estado_requisito"] == "CUMPLIDO")
             tempData["requisitos_cumplidos"]++;
     });
+    
     tempData["cumplimiento_tema"] = (tempData["requisitos_cumplidos"]/tempData["requisitos_tema"])*100;
 
     // cumplimiento_contrato = $("#cumplimiento_contrato_show").html();
@@ -122,7 +123,7 @@ function reconstruirExcel(value,index)
     tempData["No. Tema"] = value[0].no_tema;
     tempData["Nombre Tema"] = value[0].nombre_tema;
     tempData["Responsable del Tema"] = value[0].responsable_tema;
-    tempData["% Cumplimiento Tema"] = value[0].cumplimiento_tema;
+    tempData["% Cumplimiento Tema"]= 0;            
     tempData["Requisitos por Tema"] = value.length;
     tempData["Requisitos Cumplidos"]= 0;
     $.each(value,(ind,val)=>
@@ -130,25 +131,57 @@ function reconstruirExcel(value,index)
         if(val["estado_requisito"] == "CUMPLIDO")            
             tempData["Requisitos Cumplidos"]++;
     });
-  
+    tempData["% Cumplimiento Tema"]= ((tempData["Requisitos Cumplidos"]/tempData["Requisitos por Tema"])*100).toFixed(2)+("%");
+    
+    console.log("Cumplimiento Tema: ",tempData["% Cumplimiento Tema"]);
     return tempData;
 }
 
 function reconstruirExcelDetalles(value,index)
 {
-//    console.log(value);
     tempData = new Object();
     tempData["No. Tema"] = value[0].no_tema;
     tempData["Nombre Tema"] = value[0].nombre_tema;
     tempData["Responsable del Tema"] = value[0].responsable_tema;
-    tempData["% Cumplimiento Tema"] = value[0].cumplimiento_tema;
-    tempData["Requisitos por Tema"] = value.length;
-    tempData["Requisitos Cumplidos"]= 0;
+    tempData["% Cumplimiento Tema"]= 0;
+    
+    tempData["Requisitos por Tema"]= 0;
+    $.each(value,(ind,val)=>
+    {
+        $.each(val['detalles_requisito'],(ind2,val2)=>
+        {
+            if(val2.id_registro!=null)
+            {
+                tempData["Requisitos por Tema"]++;
+            }
+        });
+    });  
+    
+    tempData["Requisitos Cumplidos"]= 0;    
     $.each(value,(ind,val)=>
     {
         if(val["estado_requisito"] == "CUMPLIDO")            
             tempData["Requisitos Cumplidos"]++;
     });
+    tempData["% Cumplimiento Tema"] = ((tempData["Requisitos Cumplidos"]/tempData["Requisitos por Tema"])*100).toFixed(2)+("%");
+    
+    cumplimientoRequisitos= 0;
+    $.each(value,(ind,val)=>
+    {
+        $.each(val['detalles_requisito'],(ind2,val2)=>
+        {
+            if(val2.id_registro!=null)
+            {
+//                tempData["cumplimientoRequisitos"]+= val.cumplimiento_requisito;
+                cumplimientoRequisitos+= val.cumplimiento_requisito;
+            }
+        });
+    });
+    
+//        tempData["% De Cumplimiento por Requisitos"]= (tempData["cumplimientoRequisitos"]/tempData["Requisitos por Tema"]).toFixed(2)+("%");
+        tempData["% De Cumplimiento por Requisitos"]= (cumplimientoRequisitos/tempData["Requisitos por Tema"]).toFixed(2)+("%");
+
+    console.log("porcentaje: ",cumplimientoRequisitos);
     
     tempData["Registros"]= "";
     tempData["Frecuencia"]= "";
@@ -158,13 +191,12 @@ function reconstruirExcelDetalles(value,index)
     {
         $.each(val['detalles_requisito'],(ind2,val2)=>
         {            
-//            console.log("Resultado resta: ",EvidenciasPorCumplir);
             if(val2.id_registro==null)
             {
-                tempData["Registros"] += "No";
-                tempData["Frecuencia"] += "No";
-                tempData["Evidencias por Cumplir"] += "No";
-                tempData["Evidencias Cumplidas"] += "No";
+                tempData["Registros"] += "";
+                tempData["Frecuencia"] += "";
+                tempData["Evidencias por Cumplir"] += "";
+                tempData["Evidencias Cumplidas"] += "";
             }else{
                 tempData["Registros"] += "<li>"+val2.registro+"</li>";
                 tempData["Frecuencia"] += "<li>"+val2.frecuencia+"</li>";
@@ -184,7 +216,15 @@ function reconstruirExcelDetalles(value,index)
     tempData["Estado del Requisito"]= "";
     $.each(value,(ind,val)=>
     {
-        tempData["Estado del Requisito"]+= "<li>"+val.estado_requisito+"</li>";
+        $.each(val['detalles_requisito'],(ind2,val2)=>
+        {
+            if(val2['id_registro']==null)
+            {
+               tempData["Estado del Requisito"]+=""; 
+            }else{
+                            tempData["Estado del Requisito"]+= "<li>"+val.estado_requisito+"</li>";
+            }
+        });
     });    
     return tempData;
 }
