@@ -92,14 +92,14 @@ function listarDatos()
 
 function refresh()
 {
-    // inicializarFiltros().then((resolve)=>
-    // {
-    //     construirFiltros();
-    //     listarDatos();
-    // },(error)=>
-    // {
-    //     growlError("Error!","Error al construir la vista, recargue la página");
-    // });
-    console.log(gridInstance);
-    console.log($(gridInstance));
+    inicializarFiltros().then((resolve)=>
+    {
+        construirFiltros();
+        listarDatos();
+    },(error)=>
+    {
+        growlError("Error!","Error al construir la vista, recargue la página");
+    });
+    // console.log(gridInstance);
+    // console.log($(gridInstance));
 }
