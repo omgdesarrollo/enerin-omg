@@ -457,14 +457,27 @@ function graficar4(datos,concepto)
     let estado = "";
     let tituloGrafica = "REGISTROS";
     let id_registro;
+    let evidencias = 0;
 
     datos = JSON.parse(datos);
-    
+    console.log(datos);
     $.each(datos,(index,value)=>{
         $.each(value.detalles_requisito,(ind,val)=>{
             if(val.id_registro != null)
             {
-                dataGrafica.push(["Registro:\n"+val.registro,1, ">>Registro:"+val.registro+"\n>> Frecuencia:"+val.frecuencia ,"[]",-1]);
+                if(value.estado_requisito=="ATRASADO")
+                {
+                    evidencias = val.evidencias_realizar - val.evidencias_validadas;
+                }
+                if(value.estado_requisito=="CUMPLIDO")
+                {
+                    evidencias = val.evidencias_validadas;
+                }
+                if(value.estado_requisito=="EN PROCESO")
+                {
+                    evidencias = val.evidencias_proceso;
+                }
+                dataGrafica.push(["Registro:\n"+val.registro,evidencias, ">>Registro:"+val.registro+"\n>> Frecuencia:"+val.frecuencia+"\n>> Evidencias:"+evidencias,"[]",-1]);
                 bandera=1;
             }
         });
