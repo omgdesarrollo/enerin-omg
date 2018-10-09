@@ -137,7 +137,6 @@ class AsignacionTemaRequisitoDAO {
     
     
     
-    
     public function insertarRequisito($requisito,$penalizacion)
     {
         try
@@ -418,5 +417,34 @@ public function actualizarAsignacionTemaRequisito($id_asignacion_tema_requisito,
             return false;
         }
     }
-
+    public function verificarRegistroExisteEnDocumentoandEstaValidadoPorDelDocumentoYTema($data){
+        try{
+            $query="select  tbvalidaciondocumento.VALIDACION_DOCUMENTO_RESPONSABLE as validacion_documento_responsable from registros tbregistros join documentos tbdocumentos 
+            ON tbdocumentos.ID_DOCUMENTO=tbregistros.ID_DOCUMENTO join 
+            validacion_documento tbvalidaciondocumento 
+            ON tbvalidaciondocumento.ID_DOCUMENTO=tbdocumentos.ID_DOCUMENTO
+            where tbregistros.ID_REGISTRO=".$data["id_registro"];
+//            echo $query;
+            $db= AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            return $lista;
+        } catch (Exception $ex) {
+                 throw $ex;
+                 return -1;
+        }
+    }
+    
+    public function verificarRegistroExisteEnEvidencias($data){
+        try{
+            $query="select  count(*) as totalevidencias from evidencias tbevidencias
+                    where tbevidencias.ID_REGISTRO=".$data["id_registro"];
+            $db= AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            return $lista[0]["totalevidencias"];
+        } catch (Exception $ex) {
+             throw $ex;
+             return -1;
+        }
+    }
+    
 }

@@ -68,6 +68,9 @@ class AsignacionTemaRequisitoModel {
             return false;
         }
     }
+    
+    
+    
     public function obtenerDetallesHidrid($id,$tipo){
         try{
             $dao= new AsignacionTemaRequisitoDAO();
@@ -102,7 +105,7 @@ class AsignacionTemaRequisitoModel {
                 $rec= $dao->obtenerDetalles_Reg($value);
                 foreach($rec as $valuet){
 //                    $htmlFrontend=$valuet["registro"];
-                    $htmlFrontend.="<tr><td class='info'>Registro</td><td contenteditable='true' onClick='showEdit(this)' onBlur=\"saveToDatabaseRegistros(this,'registro',".$valuet['id_registro'].")\">".$valuet['registro']."</td></tr>";
+                    $htmlFrontend.="<tr><td class='info'>Registro</td><td contenteditable='false' onClick='showEdit(this)' onBlur=\"saveToDatabaseRegistros(this,'registro',".$valuet['id_registro'].")\">".$valuet['registro']."</td></tr>";
                     $htmlFrontend.="<tr><td class='info'>Frecuencia</td><td>".$valuet['frecuencia']."</td></tr>";                    
                     $htmlFrontend.="<tr><td class='info'>Clave del Documento</td><td>".$valuet['clave_documento']."</td></tr>";
                     if($valuet["documento"]!="")
@@ -117,9 +120,15 @@ class AsignacionTemaRequisitoModel {
               }
             }
           if($tipo=="registrosEdicionDeDatosModal"){
-              
-              $rec= $dao->obtenerDetalles_Reg($value);
+//              $rec="gf";
+//             echo  self::verificarRegistroExisteEnDocumentoandEstaValidadoPorDelDocumentoYTema($value)[0]["validacion_documento_responsable"];
+//              if(){
+                $rec= $dao->obtenerDetalles_Reg($value);
                 return $rec;
+//              }else{
+//                  return array("validacion_documento_responsable"=>"no_procede");
+//              }
+//                
           }  
             
             
@@ -131,6 +140,34 @@ class AsignacionTemaRequisitoModel {
 
     }
 
+   public static function verificarRegistroExisteEnDocumentoandEstaValidadoPorDelDocumentoYTema($data){
+       try{
+           $dao= new AsignacionTemaRequisitoDAO();
+           $documento_validado=$dao->verificarRegistroExisteEnDocumentoandEstaValidadoPorDelDocumentoYTema(array("id_registro"=>$data["id"]));
+           return $documento_validado;
+       } catch (Exception $ex) {
+            throw $ex;
+           return -1;
+       }
+       
+       
+   }
+   
+   public static function verificarRegistroExisteEnEvidencias($data){
+       try{
+           $dao= new AsignacionTemaRequisitoDAO();
+           $evidencias=$dao->verificarRegistroExisteEnEvidencias(array("id_registro"=>$data["id"]));
+//           echo $evidencias;
+           return $evidencias;
+
+       } catch (Exception $ex) {
+            throw $ex;
+           return -1;
+       }
+   }
+   
+   
+    
 
     public function insertar($pojo){
         try{
