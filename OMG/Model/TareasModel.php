@@ -29,7 +29,7 @@ class TareasModel{
                 {
                     if($flimite <= $hoy)
                     {
-                        $rec[$key]['status_grafica'] = "Tarea vencida";
+                        $rec[$key]['status_grafica'] = "Tiempo vencido";
                     } else{
                         if($alarm <= $hoy)
                         {
