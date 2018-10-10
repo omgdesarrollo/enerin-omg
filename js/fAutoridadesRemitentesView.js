@@ -262,9 +262,9 @@ function actualizarAutoridad(id_autoridad)
                 },
                 error:function()
                 {
-                        componerDataGrid();
-                        gridInstance.loadData();
-                        growlError("Error","Error del servidor");
+                    growlError("Error","Error del servidor");
+                    componerDataGrid();
+                    gridInstance.loadData();
                 }
         });
 }
