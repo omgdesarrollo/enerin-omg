@@ -74,12 +74,12 @@ switch ($Op) {
 
 	case 'Eliminar':
 		# code...
-                header('Content-type: application/json; charset=utf-8');
-                $data= json_decode($_REQUEST['ID_AUTORIDAD'],true);
-                        
-                $pojo->setId_autoridad($data['id_autoridad']);
-                $Lista= $model->eliminar($pojo);
-                                 
+//                header('Content-type: application/json; charset=utf-8');
+//                $data= json_decode($_REQUEST['ID_AUTORIDAD'],true);
+//                        
+//                $pojo->setId_autoridad($data['id_autoridad']);
+                $Lista= $model->eliminarAutoridadRemitente($_REQUEST['ID_AUTORIDAD']);
+                header('Content-type: application/json; charset=utf-8');                 
                 echo json_encode($Lista);
                 return $Lista;
             
