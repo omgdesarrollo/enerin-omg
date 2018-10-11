@@ -16,10 +16,9 @@ $(function(){
         // if($(obj).hasClass("jsgrid-cell"))
         // {
             text = $(obj).html();
-            if(!text.includes("<button") && !text.includes("<input") && !text.includes("<a") && !text.includes("<select") && !text.includes("<i"))
+            if(!text.includes("<button") && !text.includes("<input") && !text.includes("<a") && !text.includes("<select") && !text.includes("<i") && !text.includes("<textarea"))
             {
                 pos = $(obj).offset();
-
                 myPop = new dhtmlXPopup();
                 myPop.attachHTML(text);
                 myPop.show(0,-20,0,20);
@@ -88,7 +87,9 @@ function lol()
     else
     {
         tam1A = $(window.parent).height() - 190;
+        console.log(tam1A);
         tam2A = tam1A - 42;
+        console.log(tam2A);
         $(Frame).css("height",tam2A-6+"px");
         t = $(window.parent).height() - 720;
         $("#jsGrid").css("height", t + 380 +"px");
@@ -102,7 +103,7 @@ function lol()
         // gridInstance._body[0].style.height = "max-container";
         // gridInstance._body[0].style.height = 80 +"%";
         
-        // $(".jsgrid-grid-body").css("height", t + 236 +"px");
+        $(".jsgrid-grid-body").css("height", t + 210 +"px");
         // console.log(gridInstance);
         // $(".jsgrid-grid-body").css("height",($(window.parent).height() - 720 + 215) +"px");
         
@@ -239,16 +240,16 @@ function construirGrid()
         },
         width: "100%",
         height: "390px",
-        autoload:false,
+        autoload: false,
         heading: true,
         sorting: true,
         editing: true,
         paging: true,
         controller:db,
-        pageLoading:false,
+        pageLoading: false,
         pageSize: 10,
         pageButtonCount: 5,
-        updateOnResize: true,
+        updateOnResize: false,
         confirmDeleting: false,
         noDataContent:"No Existen Registros",
         pagerFormat: "     Paginas: {first}  {prev} {pages} {next} {last}   {pageIndex} de {pageCount}",

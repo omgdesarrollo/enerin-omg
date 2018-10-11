@@ -281,8 +281,6 @@ var dataListado=[];
 var filtros=[];
 var db={};
 var gridInstance;
-var ws;
-var thisjGrowl;
 
 var id_documento_entrada;
 var cualmodificar;
@@ -2050,7 +2048,7 @@ function Habilitar_DesabilitarFechas(accion)
                 <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
                 <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
                 <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
-                <script src="../../assets/FileUpload/js/main.js"></script>
+                <!-- <script src="../../assets/FileUpload/js/main.js"></script> -->
 	</body>
         
         
