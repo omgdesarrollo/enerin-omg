@@ -234,6 +234,7 @@ $Usuario=  Session::getSesion("user");
     ];//grid
     
     construirGrid();//grid
+    gridInstance.loadData();
             // RegionesFiscalesComboDhtml = new dhtmlXCombo({
             //     parent: "INPUT_REGIONFISCAL_NUEVOREGISTRO",
             //     width: 540,

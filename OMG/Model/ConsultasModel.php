@@ -143,7 +143,7 @@ class ConsultasModel{
                         }
                         $lista[$key]["evidencias_realizar"] = $cantidad_a_realizar;
                     }
-                    if($frecuencia == "TIEMPO INDEFINIDO")
+                    if($frecuencia == "INDEFINIDO")
                     {
                         $lista[$key]["evidencias_realizar"] = -1;
                     }
@@ -167,7 +167,10 @@ class ConsultasModel{
                     $lista[$key]["cumplimiento_evidencias"] = ($lista[$key]["evidencias_validadas"]/$lista[$key]["evidencias_realizar"])*100;
                 if($lista[$key]["evidencias_realizar"]==-1)
                 {
-                    $lista[$key]["cumplimiento_evidencias"] = $lista[$key]["evidencias_validadas"]>0 ? 100 : 0;
+                    if($frecuencia == "POR EVENTO")
+                        $lista[$key]["cumplimiento_evidencias"] = $lista[$key]["evidencias_validadas"]>0 ? 100 : 0;
+                    else
+                        $lista[$key]["cumplimiento_evidencias"] = $lista[$key]["evidencias_validadas"]>0 ? 100 : 0;
                 }
                 if($lista[$key]["evidencias_realizar"]=="X")
                     $lista[$key]["cumplimiento_evidencias"] = "X";

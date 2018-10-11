@@ -245,19 +245,26 @@ function listarDatos()
             {
                 if(typeof(data)=="object")
                 {
-                    growlSuccess("Solicitud","Registros obtenidos");
-                    dataListado = data;
-                    $.each(data,function (index,value)
+                    if(data.length!=0)
                     {
-                        __datos.push( reconstruir(value,index+1) );
-                    });
-                    cumplimiento_contrato=0;
-                    $.each(__datos,(index,value)=>{
-                        cumplimiento_contrato += value.cumplimiento_tema;
-                    });
-                    $("#cumplimiento_contrato_show").html("% Cumplimiento General: "+(cumplimiento_contrato/__datos.length).toFixed(2));
-                    DataGrid = __datos;
-                    gridInstance.loadData();
+                        growlSuccess("Solicitud","Registros obtenidos");
+                        dataListado = data;
+                        $.each(data,function (index,value)
+                        {
+                            __datos.push( reconstruir(value,index+1) );
+                        });
+                        cumplimiento_contrato=0;
+                        $.each(__datos,(index,value)=>{
+                            cumplimiento_contrato += value.cumplimiento_tema;
+                        });
+                        $("#cumplimiento_contrato_show").html("% Cumplimiento General: "+(cumplimiento_contrato/__datos.length).toFixed(2));
+                        DataGrid = __datos;
+                        gridInstance.loadData();
+                    }
+                    else
+                    {
+                        growlSuccess("Solicitud","Sin Registros Para Mostrar");
+                    }
                     resolve();
                 }
                 else
@@ -269,6 +276,7 @@ function listarDatos()
             error:function(e)
             {
                 console.log(e);
+                gridInstance.loadData();
                 growlError("Error","Error en el servidor");
                 reject();
             }
