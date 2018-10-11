@@ -144,7 +144,7 @@ $Usuario=  Session::getSesion("user");
                   <option value="DIARIO">DIARIO</option>
                   <option value="INDEFINIDO">INDEFINIDO</option>
                   <option value="MENSUAL">MENSUAL</option>
-                  <option value="POR EVENTO">BIMESTRAL</option>
+                  <option value="POR EVENTO">POR EVENTO</option>
                   <option value="SEMANAL">SEMANAL</option>                  
               </select>
           </div>

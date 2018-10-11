@@ -94,10 +94,11 @@ $Usuario=  Session::getSesion("user");
         <i class="glyphicon glyphicon-repeat"></i>
     </button>
         
-    <div class="pull-right">
-        
-        <!--<label style="margin-right:30px;"><h4 id="cumplimiento_contrato_show"></h4></label>-->
-        <label style="margin-right:5px;border-radius:5px;border:3px #49986d solid;width:auto;height:44px;padding-left:14px;padding-right:14px;background:aliceblue;" class=""><h4 id="cumplimiento_contrato_show"></h4></label>
+    <div class="pull-right">        
+        <!--<label style="margin-right:30px"><h4 id="cumplimiento_contrato_show"></h4></label>-->
+        <label style="margin-right:5px;border-radius:5px;border:3px #49986d solid;width:auto;height:44px;padding-left:14px;padding-right:14px;background:aliceblue;" class="">
+            <h4 id="cumplimiento_contrato_show">% Cumplimiento General: 0.00</h4>
+        </label>
         
         <button onClick="graficar()" title="Graficar Circular" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#Grafica">
             <i class="fa fa-pie-chart"></i>
