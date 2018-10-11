@@ -125,13 +125,13 @@ switch ($Op) {
 //                echo "entro ";
 //                 $value["id"]=$_REQUEST["deleteidtarea"];
                 $modelGantt->eliminarGanttTareas($_REQUEST["deleteidtarea"]);
-                  if(Gantt_TareasModel::verificarSiExisteIDTareaEnGanttTareas(array("id_tarea"=>Session::getSesion("dataGantt_id_tarea")))=="true"){
-                    Gantt_TareasModel::actualizarExisteProgramaTareas(array("existeprograma"=>1,"id_tarea"=>Session::getSesion("dataGantt_id_tarea")));
+                  if($modelGantt->verificarSiExisteIDTareaEnGanttTareas(array("id_tarea"=>Session::getSesion("dataGantt_id_tarea")))=="true"){
+                    $modelGantt->actualizarExisteProgramaTareas(array("existeprograma"=>1,"id_tarea"=>Session::getSesion("dataGantt_id_tarea")));
                   }else{
-                    Gantt_TareasModel::actualizarExisteProgramaTareas(array("existeprograma"=>0,"id_tarea"=>Session::getSesion("dataGantt_id_tarea")));
+                    $modelGantt::actualizarExisteProgramaTareas(array("existeprograma"=>0,"id_tarea"=>Session::getSesion("dataGantt_id_tarea")));
                 }    
                 
-                 self::actualizarAvanceProgramaTareas(array("avance"=>self::avanceProgramaTareas(array("id_tarea"=>Session::getSesion("dataGantt_id_tarea"))),"id_tarea"=>Session::getSesion("dataGantt_id_tarea")));
+                 $modelGantt::actualizarAvanceProgramaTareas(array("avance"=>$modelGantt::avanceProgramaTareas(array("id_tarea"=>Session::getSesion("dataGantt_id_tarea"))),"id_tarea"=>Session::getSesion("dataGantt_id_tarea")));
                 
             }else{
                 echo ":(";

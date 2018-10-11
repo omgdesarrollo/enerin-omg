@@ -211,8 +211,10 @@ class Gantt_TareaDao {
     {
         try
        {
-            $query="SELECT empleados.id_empleado, CONCAT(empleados.nombre_empleado,' ',empleados.apellido_paterno,' ',empleados.apellido_materno) 
-                    AS nombre_completo FROM empleados";
+            $query="SELECT tbempleados.id_empleado, CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)
+                    AS nombre_completo
+                    FROM usuarios tbusuarios
+                    JOIN  empleados tbempleados ON tbempleados.id_empleado=tbusuarios.id_empleado";
 
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
