@@ -156,6 +156,7 @@ div.jGrowl div.jGrowl-closer {
                 /* border: 1px red solid; */
                 border-color: 			#5ab500;
 				color: 					#fff;
+				cursor:pointer;
             }
 
             div.jGrowl div.themeG-error
