@@ -346,9 +346,12 @@ class Gantt_TareasModel{
                                          $dao->eliminarGanttTareas($value["id"]);
 //                                         $dao->deleteTareasDe_Gantt_Seguimiento_Entrada($value);    
                                     }else{
-                                        echo "entro en actualizar";
-//                                         $dao->updateTareas($value); 
+//                                        echo "entro en actualizar";
+//                                        echo "este es el value: ".json_encode($value);
+//                                         $dao->updateTareas($value);
                                         
+                                        $modelGantt->compararInformacionAntesYDespues($value);
+   
                                          if (!isset($value["progress"])) {
                                              $value["progress"]=0;
                                          }
@@ -439,12 +442,11 @@ class Gantt_TareasModel{
     }
     
 
-      public function guardarNotificacionResponsable($values){
+    public function guardarNotificacionResponsable($values)
+    {
       try{
-//           echo json_encode($values);
             $contrato= Session::getSesion("s_cont");
             $id_usuario=Session::getSesion("user");
-            $asunto="";
             $dao=new Gantt_TareaDao();
             $idparaquien= $dao->obtenerUsuarioPorIdEmpleado($values["user"]);
             $model=new NotificacionesModel();
@@ -453,25 +455,79 @@ class Gantt_TareasModel{
              $tipo_mensaje= 0;
              $atendido= 'false';
              $asunto="";
-//            echo ""+$ID;
-             
-             
             $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idparaquien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
-            
-            
-            
-            
-//            echo "valores rec: ".json_encode($rec);
+                        
             return true;
         }catch (Exception $ex)
         {
             return false;
         }
-    
-    
+        
     }
-//    public static  function checarsiTarea
+    
+    
+    public function compararInformacionAntesYDespues($value)
+    {
+        try 
+        {
+            $dao=new Gantt_TareaDao();
+            $rec= $dao->listarTareaGantt($value['id']);
+            echo "response: ".json_encode($rec);
+            echo "datos: ".json_encode($value);
+            $modelGantt= new Gantt_TareasModel();
+            
+            foreach ($rec as $value2) 
+            {
+//                echo"valu1".json_encode($value['id']);
+//                echo"value2".json_encode($value2['id']);
+                
+                if($value2['id']==$value['id'])
+                {
+//                    echo "entro al primer if";
+                    if(
+                            $value2['text']!=$value['text'] ||
+                            $value2['user']!=$value['user'] ||
+                            $value2['notas']!=$value['notas'] ||                            
+                            $value2['status']!=$value['status']                                
+                      )
+                    {
+//                        echo "entro al segundo if";
+                        $modelGantt->guardarNotificacionDeactualizaciones($value);
 
+                    }
+                }
+            }
+            
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+        
+    }
+
+
+    public function guardarNotificacionDeactualizaciones($values)
+    {
+        try 
+        {
+            $contrato= Session::getSesion("s_cont");
+            $id_usuario=Session::getSesion("user");
+            $mensaje="Se actualizo la tarea: ".$values["text"]." por el Usuario: ";
+            $tipo_mensaje= 0;
+            $atendido= 'false';
+            $asunto="";
+            $dao=new Gantt_TareaDao();
+            $idparaquien= $dao->obtenerUsuarioPorIdEmpleado($values["user"]);
+            $model=new NotificacionesModel();
+            $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idparaquien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+            
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 
 
 

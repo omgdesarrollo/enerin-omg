@@ -215,7 +215,7 @@ class TareasModel{
         {
             $contrato= Session::getSesion("s_cont");
             $id_usuario=Session::getSesion("user");
-            $mensaje= "Se ha actualizado la tarea: ".$TAREA." por el Usuario: ";
+            $mensaje= "Se ha actualizado el Tema: ".$TAREA." por el Usuario: ";
             $tipo_mensaje=0;
             $atendido= 'false';
             $asunto="";
@@ -238,7 +238,7 @@ class TareasModel{
         {
             $contrato= Session::getSesion("s_cont");
             $id_usuario=Session::getSesion("user");
-            $mensaje= "Se asigno a otro usuario la tarea: ".$TAREA." por el Usuario: ";
+            $mensaje= "Se asigno a otro usuario el Tema: ".$TAREA." por el Usuario: ";
             $tipo_mensaje=0;
             $atendido= 'false';
             $asunto="";
@@ -262,7 +262,7 @@ class TareasModel{
         {
             $contrato= Session::getSesion("s_cont");
             $id_usuario=Session::getSesion("user");
-            $mensaje= "Se le asigno la tarea: ".$TAREA." por el Usuario: ";
+            $mensaje= "Se le asigno el Tema: ".$TAREA." por el Usuario: ";
             $tipo_mensaje=0;
             $atendido= 'false';
             $asunto="";
@@ -286,7 +286,7 @@ class TareasModel{
         {
             $contrato= Session::getSesion("s_cont");
             $id_usuario=Session::getSesion("user");
-            $mensaje= "La Tarea: ".$TAREA." ha sido Eliminada por el Usuario: ";
+            $mensaje= "El Tema: ".$TAREA." ha sido Eliminado por el Usuario: ";
             $tipo_mensaje=0;
             $atendido= 'false';
             $asunto="";

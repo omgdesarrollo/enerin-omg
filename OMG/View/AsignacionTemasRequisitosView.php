@@ -139,12 +139,13 @@ $Usuario=  Session::getSesion("user");
           <div class="form-group">
               <label class="control-label">Frecuencia: </label>
               <select id="selectFrecuencia" >
+                  <option value="ANUAL">ANUAL</option>
+                  <option value="BIMESTRAL">BIMESTRAL</option>
                   <option value="DIARIO">DIARIO</option>
                   <option value="MENSUAL">MENSUAL</option>
-                  <option value="SEMANAL">SEMANAL</option>
-                  <option value="BIMESTRAL">BIMESTRAL</option>
-                  <option value="ANUAL">ANUAL</option>
-                   <option value="TIEMPO INDEFINIDO">TIEMPO INDEFINIDO</option>
+                  <option value="POR EVENTO">BIMESTRAL</option>
+                  <option value="SEMANAL">SEMANAL</option>                  
+                  <option value="TIEMPO INDEFINIDO">TIEMPO INDEFINIDO</option>
 
               </select>
           </div>
