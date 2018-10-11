@@ -15,52 +15,24 @@
     <!--Bootstrap y fontawesome-->
     <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome-animation.min.css" rel="stylesheet" type="text/css"/>
-    
-    <link async href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
-    
-    <!-- text fonts -->
-	<!--<link rel="stylesheet" href=".../../assets/probando/css/fonts.googleapis.com.css" />-->
-    <!-- ace styles -->
+    <!-- ace styles Para Encabezado-->
     <link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-    <!--<link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" />-->
-    <!--<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />-->
-    
-    <!--Inicia para el spiner cargando-->
-    <link async href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
-    <!--Termina para el spiner cargando-->
-                  
-    <link async href="../../css/modal.css" rel="stylesheet" type="text/css"/>
-    <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/>
-    <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
-    <!--<link href="../../css/tabla.css" rel="stylesheet" type="text/css"/>-->
     <!--jquery-->
     <script src="../../js/jquery.js" type="text/javascript"></script>
-    <script src="../../js/jqueryblockUI.js" type="text/javascript"></script>
-<!--    <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
-    <!--LIBRERIA DE dhtmlx-->
-    <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
-    <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
-    <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
-    <!--TERMINA LIBRERIA DE dhtmlx-->
-    <!--EMPIEZA LIBRERIA DE SWEETALERT-->
-     <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
+    <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+    <!--Para abrir alertas de aviso, success,warning, error-->
+    <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
-    <!--TERMINA LIBRERIA DE SWEETALERT-->
-    <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
-<!--    LIBRERIA JSGRID-->
-    <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
-    <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script>
-    <!--END JSGRID--> 
+    <!--jgrowl-->
+    <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
+    <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
     
-    <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
-    <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/>
+    <link async href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+    <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
     <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
-    <script src="../../js/tools.js" type="text/javascript"></script>
     <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
     <script src="../../js/fReportesView.js" type="text/javascript"></script>
+    <script src="../../js/fGridComponent.js" type="text/javascript"></script>
 
     <style>
 /*        .dhxcombo_select_img{
@@ -100,49 +72,32 @@
         </style>
 
 </head>
-<!-- <body> -->
+
 <body class="no-skin" >
-    <!--<div id="loader"></div>-->
     
-    <?php
-        require_once 'EncabezadoUsuarioView.php';
-    ?>
+<?php
+    require_once 'EncabezadoUsuarioView.php';
+?>
     
-<!--    <div id="headerFiltros" style="position: fixed;">
-        <div id="DemoLogin" class="btn btn-success target-click">  Agregar Nuevo Reporte Diario</div>
-        <button onClick="" type="button" class="btn btn-success" data-toggle="modal" data-target="#nuevaReporteModal">
-		 Agregar  Reporte Diario
-        </button>
-    </div>-->
 
 <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;"> 
 
-<button type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#nuevoReporteModal">
-    Agregar Reporte Diario
-</button>
+    <button type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#nuevoReporteModal">
+        Agregar Reporte Diario
+    </button>
 
-<button type="button" class="btn btn-info btn_refrescar" id="btnrefrescar" onclick="refresh();" >
-    <i class="glyphicon glyphicon-repeat"></i>   
-</button>
-<div class="pull-right">
-<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Excel'">
-    <img src="../../images/base/_excel.png" width="30px" height="30px">
-</button>
-<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
-    <img src="../../images/base/word.png" width="30px" height="30px"> 
-</button>
-<button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
-    <img src="../../images/base/pdf.png" width="30px" height="30px"> 
-</button> 
-</div>
+    <button type="button" class="btn btn-info btn_refrescar" id="btnrefrescar" onclick="refresh();" >
+        <i class="glyphicon glyphicon-repeat"></i>   
+    </button>
     
 </div>
 
-
 <!--    <div class="row"></div>-->
 <br><br><br><!--esta linea no deberia ir hacerlo con boostrap-->
-    <div id="jsGrid"></div>
-<!-- Inicio de Seccion Modal Crear nueva Evidencia-->
+
+<div id="jsGrid"></div>
+
+<!--Modal Crear nueva Evidencia-->
 <div class="modal draggable fade" id="nuevoReporteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -208,104 +163,75 @@
 
                 </div>
                 
-                    <!--<form id="forma" name="forma" method="post" class="frmcss" style="width:100%; overflow: hidden;"  >-->
-<!--                    <fieldset>
-                        <table>-->
-<!--                        <tr>
-
-                                     <td>Cumplimiento<label style="cursor: pointer;padding-left: 6px;"><div id="contrato"></div></label></td>
-                            </tr>-->
-            <!--		<tr>
-                                    <td>Orden</td>
-                                    <td><input type="text" id ="orden" value="" readonly class="inputhdr"> </td>
-                            </tr>-->
-<!--                            <tr>
-                                    <td></td>
-                                <td>Fecha<label style="cursor: pointer;padding-left: 6px;"><input type="date" name ="fecha"  id="fecha"  class="inputhdr" ></label> </td>
-                            </tr>-->
-<!--                        </table>
-                    </fieldset>-->
-                        
-                    <!--<div style="position: relative;width: 100%;height: 4px;"></div>-->	
-
-            <!--	<fieldset>
-                            <table>
-                                    <tr><td><button id="deshabilitar" type="button" onclick="">Deshabilitar</button></td>
-                                    <td><button id="reporte" type="button" onclick="descargarReporte();">Generar reporte</button></td></tr>
-                            </table>
-                    </fieldset>-->
-
-<!--                    <div style="position: relative;width: 100%;height: 10px;"></div>	
-                    <fieldset><legend><b>Precargado a seleccionar</b></legend>
-                            <table>
-                            <tr>
-                                <td><label style="cursor: pointer;padding-left: 3px;">Region fiscal<div id="region_fiscal"></div></label></td>
-                                    <td><label style="cursor: pointer;padding-left: 3px;">Punto de medicion<div id="pm"></div></label></td>
-                                    <td><label style="cursor: pointer;padding-left: 3px;">Tag del patin de medicion<div id="tpm"></div></label></td>
-                                    <td><label style="cursor: pointer;padding-left: 3px;">Tipo de medidor<div id="tm"></div></label></td>
-                                    <td><label style="cursor: pointer;padding-left: 3px;">Clasificacion de sistema de medicion<div id="clasificacionsistemamedicion"></div></label></td>
-                                    <td><label style="cursor: pointer;padding-left: 3px;">Tipo de Hidrocarburo<div id="th"></div></label></td>
-                            </tr>
-                            </table>
-                    </fieldset>-->
-<!--                    <div style="position: relative;width: 100%;height: 8px;"></div>
-                    <fieldset><legend><b>Ingresar Datos Opcionales</b></legend>
-                            
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span style="border:none;background-color:transparent;" class="input-group-addon">Porcentajes</span>
-                                    <input type="checkbox" style="width: 40px; height: 40px" class="checkbox" id="checkBoxPorcentaje">
-                                </div>							
-                            </div>
-                        
-                            <table>
-                            <tr>	
-                                <td><label style="cursor: pointer;padding-left: 3px;">C1<pre><input id="DATO_MANUAL_1" name=""  type="text"   ></label></td>
-                                    <td><label style="cursor: pointer;padding-left: 3px;">C2<pre><input id="DATO_MANUAL_2" name=""  type="text"  ></label></td>
-                                    <td><label style="cursor: pointer;padding-left: 3px;">C3<pre><input id="DATO_MANUAL_3" name=""  type="text"  ></label></td>
-                                    <td><label style="cursor: pointer;padding-left: 3px;">C4<pre>   <input id="DATO_MANUAL_4" name="" type="text" checked ></label></td>
-                                    <td><label style="cursor: pointer;padding-left: 3px;">IC4<pre>    <input id="DATO_MANUAL_5" name=""  type="text"  ></label></td>
-                                    <td><label style="cursor: pointer;padding-left: 3px;">C5<pre>  <input id="DATO_MANUAL_6" name=""  type="text"  ></label></td>
-                            </tr>
-                            <tr>
-                                    <td><label style="cursor: pointer;padding-left: 3px;">IC5<pre><input id="DATO_MANUAL_7" name="pgmedido" type="text" ></label></td>
-                                    <td><label style="cursor: pointer;padding-left: 3px;">C6+<pre><input id="DATO_MANUAL_8" name="podercalorifico"   type="text" ></label></td>
-                                    <td><label style="cursor: pointer;padding-left: 3px;">CO2<pre><input id="DATO_MANUAL_9" name="pesomolecular"  type="text"  ></label></td>
-                                    <td><label style="cursor: pointer;padding-left: 3px;">H2S<pre> <input id="DATO_MANUAL_10" name="egas"  type="text"  ></label></td>
-                                    <td><label style="cursor: pointer;padding-left: 3px;">N2<pre><input id="DATO_MANUAL_11" name="eventos"  type="text" ></label></td>
-                            </tr>
-
-                            </table>
-                    </fieldset>
-                    <div style="position: relative;width: 100%;height: 5px;"></div>-->
-                    <!--</form>-->
             </div>
         </div>
     </div>
 </div>
 
-<script>
-DataGrid=[];
-dataListado=[];
-filtros=[];
-ultimoNumeroGrid=0;
 
-listarDatos();
-inicializarFiltros();
+
+<script>
+var DataGrid=[];
+var dataListado=[];
+var filtros=[];
+var db={};
+var gridInstance;
+var ultimoNumeroGrid=0;
+
+var customsFieldsGridData=[
+    {field:"customControl",my_field:MyCControlField},
+];
+
+estructuraGrid=[
+    { name:"id_principal", visible:false},
+    { name:"no",title:"No",width:50},
+    { name:"clave_contrato", title: "ID del Contrato o Asignación", type: "text", width: 250, validate: "required", "editing": false},
+    { name:"region_fiscal", title: "Región Fiscal", type: "text", width: 200, validate: "required", "editing": false},
+    { name:"ubicacion", title: "Ubicación del Punto de Medición", type: "text", width: 250, validate: "required", "editing": false},
+    { name:"tag_patin", title: "Tag del Patín de Medición", type: "text", width: 250, validate: "required","editing": false },
+    { name:"tipo_medidor", title: "Tipo de Medidor", type: "text", width: 200, validate: "required", "editing": false},    
+    { name:"tag_medidor", title: "Tag del Medidor", type: "text", width: 130, validate: "required", "editing": false},
+    { name:"clasificacion", title: "Clasificación del Sistema de Medición", type: "text", width: 300, validate: "required", "editing": false},
+    { name:"hidrocarburo", title: "Tipo de Hidrocarburo", type: "text", width: 250, validate: "required", "editing": false},
+    { name:"omgc1", title: "Fecha[dd/mm/aaaa]", type: "text", width: 150, validate: "required", "editing": false},
+    { name:"omgc2", title: "Presión[kg/cm2]", type: "textarea", width: 150},
+    { name:"omgc3", title: "Temperatura[°C]", type: "textarea", width: 150},
+    { name:"omgc4", title: "Producción de Petróleo Medido Neto[bls]", type: "textarea", width: 300},
+    { name:"omgc5", title: "°API", type: "textarea", width: 150},
+    { name:"omgc6", title: "%S", type: "textarea", width: 150},
+    { name:"omgc7", title: "Sal[lb/mbls]", type: "text", width: 150},
+    { name:"omgc8", title: "%H20", type: "textarea", width: 200},
+    { name:"omgc9", title: "Producción de Condensado Medido Neto", type: "textarea", width: 300},
+    { name:"omgc10", title: "°API", type: "textarea", width: 170},
+    { name:"omgc11", title: "%S", type: "textarea", width: 170},
+    { name:"omgc12", title: "%H20", type: "textarea", width: 180},
+    { name:"omgc13", title: "Producción de Gas Medido[mmpc]", type: "textarea", width: 280},
+    { name:"omgc14", title: "Poder Calorífico de Gas[btu/pc]", type: "textarea", width: 250},
+    { name:"omgc15", title: "Peso Molecular de Gas[lb/mol]", type: "textarea", width: 250},
+    { name:"omgc16", title: "Energía de Gas[mmbtu]", type: "textarea", width: 200},
+    { name:"omgc17", title: "Eventos", type: "textarea", width: 150},
+    { name:"delete", title:"Opción", type:"customControl",sorting:"", width:100}    
+],
+
 construirGrid();
-construirFiltros();
 buscarRegionesFiscales();    
+
+inicializarFiltros().then((resolve)=>
+{
+    construirFiltros();
+    listarDatos();
+},
+(error)=>
+{
+    growlError("Error!","Error al construir la vista, recargue la página");    
+});
+
   
 </script>
-
-<!--Final de Seccion Modal-->
-    <!--Inicia para el spiner cargando-->
-    <script src="../../js/loaderanimation.js" type="text/javascript"></script>
-    <!--Termina para el spiner cargando-->   
+  
     <!--Bootstrap-->
     <script src="../../assets/probando/js/bootstrap.min.js"></script>
-    <!--Para abrir alertas de aviso, success,warning, error-->
-    <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+
     <!--Para abrir alertas del encabezado-->
     <script src="../../assets/probando/js/ace-elements.min.js"></script>
     <script src="../../assets/probando/js/ace.min.js"></script>

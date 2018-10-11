@@ -43,7 +43,9 @@ $(function(){
 
 function inicializarFiltros()
 {
-    filtros =[
+    return new Promise((resolve,reject)=>
+    {
+        filtros =[
             {id:"noneUno",type:"none"},
             {id:"clave_autoridad",type:"text"},
             {id:"descripcion",type:"text"},
@@ -53,202 +55,55 @@ function inicializarFiltros()
             {id:"email",type:"text"},
             {id:"direccion_web",type:"text"},          
             {name:"opcion",id:"opcion",type:"opcion"}
-            ];
-}
-
-
-function construirGrid()
-{
-    jsGrid.fields.customControl = MyCControlField;
-    db={
-            loadData: function()
-            {
-                return DataGrid;
-            },
-            insertItem: function(item)
-            {
-                return item;
-            },
-        };
-    
-    $("#jsGrid").jsGrid({
-        onInit: function(args)
-        {
-            gridInstance=args.grid;
-            jsGrid.Grid.prototype.autoload=true;
-        },
-        onDataLoading: function(args)
-        {
-            loadBlockUi();
-        },
-        onDataLoaded:function(args)
-        {
-            $('.jsgrid-filter-row').removeAttr("style",'display:none');
-        },
-        onRefreshing: function(args) {
-        },
+        ];
         
-        width: "100%",
-        height: "300px",
-        autoload:true,
-        heading: true,
-        sorting: true,
-        editing: true,
-        paging: true,
-        controller:db,
-        pageLoading:false,
-        pageSize: 5,
-        pageButtonCount: 5,
-        updateOnResize: true,
-        confirmDeleting: true,
-        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
-//        filtering:false,
-//        data: __datos,
-        fields: 
-        [
-            { name: "id_principal",visible:false},
-            { name:"no",title:"No",width:40},
-            { name: "clave_autoridad",title:"Clave de la Autoridad", type: "text", validate: "required", width:120},
-            { name: "descripcion",title:"Descripcion", type: "text", validate: "required" },
-            { name: "direccion",title:"Direccion", type: "text", validate: "required" },
-            { name: "telefono",title:"Telefono", type: "text", validate: "required" },
-            { name: "extension",title:"Extension", type: "text", validate: "required" },
-            { name: "email",title:"Email", type: "text", validate: "required" },
-            { name: "direccion_web",title:"Direccion Web", type: "text", validate: "required" },
-            { name:"delete", title:"Opción", type:"customControl",sorting:""}
-        ],
-        onItemUpdated: function(args)
-        {
-            console.log(args);
-            columnas={};
-            id_afectado=args["item"]["id_principal"][0];
-            $.each(args["item"],function(index,value)
-            {
-                if(args["previousItem"][index] != value && value!="")
-                {
-                        if(index!="id_principal" && !value.includes("<button") && index!="delete")
-                        {
-                                columnas[index]=value;
-                        }
-                }
-            });
-            if(Object.keys(columnas).length!=0)
-            {
-                    $.ajax({
-                            url: '../Controller/GeneralController.php?Op=Actualizar',
-                            type:'GET',
-                            data:'TABLA=autoridad_remitente'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
-                            success:function(exito)
-                            {
-                                refresh();
-                                swal("","Actualizacion Exitosa!","success");
-                                setTimeout(function(){swal.close();},1000);
-                            },
-                            error:function()
-                            {
-                                swal("","Error en el servidor","error");
-                                setTimeout(function(){swal.close();},1500);
-                            }
-                    });
-            }
-        },
-        
-        onItemDeleting: function(args) 
-        {
-
-        }
-        
-    });   
-}
-
-
-var MyCControlField = function(config)
-{
-    jsGrid.Field.call(this, config);
-};
-
-
-MyCControlField.prototype = new jsGrid.Field
-({
-        css: "date-field",
-        align: "center",
-        sorter: function(date1, date2)
-        {
-            console.log("haber cuando entra aqui");
-            console.log(date1);
-            console.log(date2);
-            // return 1;
-        },
-        itemTemplate: function(value,todo)
-        {
-            console.log(value,todo);
-            if(value[0]['resultado']!=0)
-                return "";
-            else
-                return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button ',title:"Eliminar", type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
-        },
-        insertTemplate: function(value)
-        {
-        },
-        editTemplate: function(value)
-        {
-            val = "<input class='jsgrid-button jsgrid-update-button' type='button' title='Actualizar' onClick='aceptarEdicion()'>";
-            val += "<input class='jsgrid-button jsgrid-cancel-edit-button' type='button' title='Cancelar Edición' onClick='cancelarEdicion()'>";
-            return val;
-        },
-        insertValue: function()
-        {
-        },
-        editValue: function()
-        {
-        }
-});
-
-
-function cancelarEdicion()
-{
-    $("#jsGrid").jsGrid("cancelEdit");
-}
-
-function aceptarEdicion()
-{
-    gridInstance.updateItem();
+        resolve();    
+    });        
 }
 
 
 function listarDatos()
 {
-//    alert("Entra a listarDatos");
-    __datos=[];
-    datosParamAjaxValues={};
-    datosParamAjaxValues["url"]="../Controller/AutoridadesRemitentesController.php?Op=Listar";
-    datosParamAjaxValues["type"]="POST";
-    datosParamAjaxValues["async"]=false;
-    
-    var variablefunciondatos=function obtenerDatosServer(data)
+    return new Promise((resolve,reject)=>
     {
-        dataListado = data;
-        $.each(data.autoridades,function(index,value)
+        var __datos=[];
+        $.ajax(
         {
-            __datos.push(reconstruir(value,index+1));
+            url:"../Controller/AutoridadesRemitentesController.php?Op=Listar",
+            type:"GET",
+            
+            beforeSend:function()
+            {
+                growlWait("Solicitud","Solicitando Datos...");
+            },
+            success:function(data)
+            {
+                if(typeof(data)=="object")
+                {
+                    growlSuccess("Solicitud","Registros obtenidos");
+                    dataListado = data;
+                    $.each(data,function(index,value)
+                    {
+                        __datos.push(reconstruir(value,index+1));
+                    });
+                    DataGrid = __datos;
+                    gridInstance.loadData();
+                    resolve();                    
+                }else{
+                    growlSuccess("Solicitud","No Existen Registros");
+                    reject();
+                }
+                
+            },
+            error:function()
+            {
+                growlError("Error","Error en el servidor");
+                reject();
+            }
         });
-    }
-    var listfunciones=[variablefunciondatos];
-    ajaxHibrido(datosParamAjaxValues,listfunciones);
-    DataGrid = __datos;
-}
-
-
-function reconstruirTable(_datos)
-{
-    __datos=[];
-    $.each(_datos,function(index,value)
-    {
-        __datos.push(reconstruir(value,index++));
-        
     });
-    construirGrid(__datos);
 }
+
 
 function reconstruir(value,index)
 {
@@ -264,7 +119,16 @@ function reconstruir(value,index)
     tempData["extension"]=value.extension;
     tempData["email"]=value.email;
     tempData["direccion_web"]=value.direccion_web;
-    tempData["delete"]= [{"resultado":value.resultado}];
+    if(value.verificacion_documento_entrada==0 && value.verificacion_documento_salida_sinfolio==0)
+    {
+        tempData["id_principal"].push({eliminar : 1});        
+    }else{
+        tempData["id_principal"].push({eliminar : 0});
+    }        
+    tempData["id_principal"].push({editar : 1});
+    tempData["delete"]= tempData["id_principal"] ;
+//    tempData["delete"]= [{"resultado":value.resultado}];
+    
     return tempData;
 }
 
@@ -287,15 +151,16 @@ function insertarAutoridad(autoridadesDatos)
                 swalSuccess("Autoridad Creada");                
                 $.each(datos.autoridades,function(index,value)
                 {
-//                console.log("Este es el value: "+value); 
                    tempData= reconstruir(value,ultimoNumeroGrid+1);  
                 });
-//                console.log("este es el tempData: "+tempData);
                 
                 $("#jsGrid").jsGrid("insertItem",tempData).done(function()
                 {
-                    $("#crea_autoridad .close ").click();
+                    
                 });
+                    dataListado.push(datos[0]),
+                    DataGrid.push(tempData),
+                    $("#crea_autoridad .close ").click();
                 
             } else{
                 if(datos==0)
@@ -315,69 +180,187 @@ function insertarAutoridad(autoridadesDatos)
 }
 
 
+function saveUpdateToDatabase(args)//listo
+{
+        columnas=new Object();
+//        entro=0;
+        id_afectado = args['item']['id_principal'][0];
+        verificar = 0;
+        $.each(args['item'],(index,value)=>
+        {
+                if(args['previousItem'][index]!=value && value!="")
+                {
+                        if(index!='id_principal' && !value.includes("<button") && index!="delete")
+                        {
+                                columnas[index]=value;
+                        }
+                }
+        });
+        
+        if( Object.keys(columnas).length != 0 && verificar==0)
+        {
+            
+            $.ajax({
+                url:"../Controller/GeneralController.php?Op=Actualizar",
+                type:"POST",
+                data:'TABLA=autoridad_remitente'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
+                beforeSend:()=>
+                {
+                        growlWait("Actualización","Espere...");
+                },
+                success:(data)=>
+                {
+                        if(data==1)
+                        {
+                                growlSuccess("Actulización","Se actualizaron los campos");
+                                actualizarAutoridad(id_afectado.id_autoridad);
+                        }
+                        else
+                        {
+                                growlError("Actualización","No se pudo actualizar");
+                                componerDataGrid();
+                                gridInstance.loadData();
+                        }
+                },
+                error:function()
+                {
+                        componerDataGrid();
+                        gridInstance.loadData();
+                        growlError("Error","Error del servidor");
+                }
+            });
+        }
+        else
+        {
+                componerDataGrid();
+                gridInstance.loadData();
+        }
+}
+
+function actualizarAutoridad(id_autoridad)
+{
+        $.ajax({
+                url:'../Controller/AutoridadesRemitentesController.php?Op=listarAutoridad',
+                type: 'GET',
+                data:'ID_AUTORIDAD='+id_autoridad,
+                success:function(datos)
+                {
+                        if(typeof(datos)=="object")
+                        {
+                            $.each(datos,function(index,value){
+                                    componerDataListado(value);
+                            });
+                            componerDataGrid();
+                            gridInstance.loadData();
+                        }
+                        else
+                        {
+                                growlError("Actualizar Vista","No se pudo actualizar la vista, refresque");
+                                componerDataGrid();
+                                gridInstance.loadData();
+                        }
+                },
+                error:function()
+                {
+                    growlError("Error","Error del servidor");
+                    componerDataGrid();
+                    gridInstance.loadData();
+                }
+        });
+}
+
+
+function componerDataListado(value)// id de la vista documento, listo
+{
+    id_vista = value.id_autoridad;
+    id_string = "id_autoridad";
+    $.each(dataListado,function(indexList,valueList)
+    {
+        $.each(valueList,function(ind,val)
+        {
+            if(ind == id_string)
+                    ( val==id_vista) ? dataListado[indexList]=value : console.log();
+        });
+    });
+}
+
+function componerDataGrid()//listo
+{
+    __datos = [];
+    $.each(dataListado,function(index,value){
+        __datos.push(reconstruir(value,index+1));
+    });
+    DataGrid = __datos;
+}
+
+
 function preguntarEliminar(data)
 {
-    // valor = true;
+//     console.log("jajaja",data);
     swal({
         title: "",
-        text: "¿Eliminar Registro?",
+        text: "¿Eliminar Autoridad?",
         type: "info",
         showCancelButton: true,
-        closeOnConfirm: false,
+        // closeOnConfirm: false,
         showLoaderOnConfirm: true,
         confirmButtonText: "Eliminar",
         cancelButtonText: "Cancelar",
-        },
-        function(confirmacion)
-        {
-            if(confirmacion)
-            {
-                eliminarRegistro(data);
-            }
-            else
-            {
-            }
+        }).then((confirmacion)=>{
+                if(confirmacion)
+                {
+                        eliminarAutoridad(data);
+                }
         });
-        // return eliminarRegistro(data.id_principal[0].id_contrato);
 }
 
-
-function eliminarRegistro(item)
-{
-//    alert("Entro a la funcion eliminar: "+item);
-                id_afectado=item['id_principal'][0];
-    
-            $.ajax({
-
+ function eliminarAutoridad(id_afectado)
+ {
+        $.ajax({
                 url:"../Controller/AutoridadesRemitentesController.php?Op=Eliminar",
                 type:"POST",
-                data:"ID_AUTORIDAD="+JSON.stringify(id_afectado),
-                success:function(data)
+                data:"ID_AUTORIDAD="+id_afectado.id_autoridad,
+                beforeSend:()=>
                 {
-//                    alert("Entro al success "+data);
-                    if(data==false)
-                    {
-//                        swal("","El Documento esta validado o asignado a un Registro","error");
-//                        setTimeout(function(){swal.close();},1500);
-                        swalError("La Autoridad esta cargada en Documento de Entrada");
-                    }else{
-                        if(data==true)
-                        {
-                            refresh();
-//                            actualizarDespuesdeEditaryEliminar();
-//                            swal("","Se elimino correctamente el Documento","success");
-//                            setTimeout(function(){swal.close();},1500);
-                            swalSuccess("Se elimino correctamente la Autoridad");
-                        }
-                    }
+                        growlWait("Eliminación Autoridad","Eliminando...");
                 },
-                error:function()        
+                success:(res)=>
                 {
-                    swal("","Error en el servidor","error");
-                    setTimeout(function(){swal.close();},1500);
+                        // console.log(data);
+                        if(res >= 0)
+                        {
+                                dataListadoTemp=[];
+                                dataItem = [];
+                                numeroEliminar=0;
+                                itemEliminar={};
+                                id = id_afectado.id_autoridad;
+                                $.each(dataListado,function(index,value)
+                                {
+                                        value.id_autoridad != id ? dataListadoTemp.push(value) : (dataItem.push(value), numeroEliminar=index+1);
+                                });
+                                // console.log(dataListadoTemp);
+                                // itemEliminar = reconstruir(dataItem[0],numeroEliminar);este esra para el eliminar directo en grid
+                                DataGrid = [];
+                                dataListado = dataListadoTemp;
+                                if(dataListado.length == 0 )
+                                        ultimoNumeroGrid=0;
+                                $.each(dataListado,function(index,value)
+                                {
+                                        DataGrid.push( reconstruir(value,index+1) );
+                                });
+
+                                gridInstance.loadData();
+                                growlSuccess("Eliminación","Registro Eliminado");
+                        }
+                        else
+                                growlError("Error Eliminación","Error al Eliminar Registro");
+                },
+                error:()=>
+                {
+                        growlError("Error Eliminación","Error del Servidor");
                 }
-            });
-}
+        });
+ }
 
 
 function refresh(){
@@ -385,28 +368,6 @@ function refresh(){
     inicializarFiltros();
     construirFiltros();
     gridInstance.loadData();
-}
-
-
-
-
-function loadSpinner(){
-        myFunction();
-}
-
-function loadBlockUi()
-{
-    $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF"> Espere Por Favor</span>', css:
-    { 
-        border: 'none', 
-        padding: '15px', 
-        backgroundColor: '#000', 
-        '-webkit-border-radius': '10px', 
-        '-moz-border-radius': '10px', 
-        opacity: .5, 
-        color: '#fff' 
-    },overlayCSS: { backgroundColor: '#000000',opacity:0.1,cursor:'wait'} }); 
-    setTimeout($.unblockUI, 2000);
 }
 
 

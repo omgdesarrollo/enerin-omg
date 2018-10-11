@@ -416,6 +416,7 @@ $Usuario=  Session::getSesion("user");
     function buscarTemas(data)
     {
         cadena = $(data).val().toLowerCase();
+        console.log("valor cadena: ",cadena);
         tempData="";
         if(cadena!="")
         {
@@ -430,10 +431,12 @@ $Usuario=  Session::getSesion("user");
                     $.each(temas,function(index,value)
                     {
                         // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
-                        datos = value.id_tema+"^_^"+value.no+"^_^"+value.nombre+"^_^"+value.descripcion+"^_^"+value.identificador;
+//                        datos = value.id_tema+"^_^"+value.no+"^_^"+value.nombre+"^_^"+value.descripcion+"^_^"+value.identificador;
+                        datos = value.id_tema+"^_^"+value.no+"^_^"+value.nombre+"^_^"+value.descripcion;
                         tempData += "<li role='presentation'><a role='menuitem' tabindex='-1'";
                         tempData += "onClick='seleccionarItemTemas("+JSON.stringify(value)+")'>";
-                        tempData += value.no+" - "+value.nombre+"- "+value.identificador+"</a></li>";
+//                        tempData += value.no+" - "+value.nombre+"- "+value.identificador+"</a></li>";
+                        tempData += value.no+" - "+value.nombre+"</a></li>";
                     });
                     $("#dropdownEventTemas").html(tempData);
                 }
@@ -477,8 +480,8 @@ $Usuario=  Session::getSesion("user");
         tempData = "<tr class= id='idTema_"+usuarioTemas.id_tema+"' >";
         tempData += "<td>"+usuarioTemas.no+"</td>";
         tempData += "<td>"+usuarioTemas.nombre+"</td>";
-        // tempData += "<td>"+usuarioTemas.descripcion+"</td>";
-        tempData += "<td>"+usuarioTemas.identificador+"</td>";
+        tempData += "<td>"+usuarioTemas.descripcion+"</td>";
+        // tempData += "<td>"+usuarioTemas.identificador+"</td>";
         tempData += "<td>";
         tempData += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
         tempData += "onclick='eliminarTema("+usuarioTemas.id_tema+");'>";

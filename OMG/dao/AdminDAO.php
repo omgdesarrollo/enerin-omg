@@ -99,19 +99,42 @@ class AdminDAO{
     }
 
 
+//    public function listarTemas($CADENA,$ID_USUARIO,$CONTRATO)
+//    {
+//        try
+//        {
+//            $query="SELECT tbtemas.id_tema,tbtemas.no, tbtemas.nombre, tbtemas.descripcion,tbtemas.identificador
+//                    FROM temas tbtemas
+//                    WHERE LOWER(tbtemas.nombre) LIKE '%$CADENA%' AND tbtemas.padre=0 AND tbtemas.contrato=$CONTRATO
+//                    AND tbtemas.id_tema 
+//                    NOT IN( SELECT tbusuario_temas.id_tema FROM usuarios_temas tbusuario_temas 
+//                    WHERE tbusuario_temas.id_usuario=$ID_USUARIO )";
+//
+//            $db= AccesoDB::getInstancia();        
+//            $lista= $db->executeQuery($query);
+//            return $lista;
+//            // var_dump($lista);
+//        } catch (Exception $ex)
+//        {
+//            throw $ex;
+//            return false;
+//        }
+//    }
+    
     public function listarTemas($CADENA,$ID_USUARIO,$CONTRATO)
     {
         try
         {
             $query="SELECT tbtemas.id_tema,tbtemas.no, tbtemas.nombre, tbtemas.descripcion,tbtemas.identificador
                     FROM temas tbtemas
-                    WHERE LOWER(tbtemas.nombre) LIKE '%$CADENA%' AND tbtemas.padre=0 AND tbtemas.contrato=$CONTRATO
-                    AND tbtemas.id_tema 
+                    WHERE LOWER(tbtemas.nombre) LIKE '%$CADENA%' AND tbtemas.identificador LIKE '%catalogo%' AND tbtemas.padre=0 AND tbtemas.contrato=$CONTRATO
+                    AND tbtemas.id_tema
                     NOT IN( SELECT tbusuario_temas.id_tema FROM usuarios_temas tbusuario_temas 
-                    WHERE tbusuario_temas.id_usuario=$ID_USUARIO )";
+                    WHERE tbusuario_temas.id_usuario=$ID_USUARIO)";
 
             $db= AccesoDB::getInstancia();        
             $lista= $db->executeQuery($query);
+//            echo "Este es el query: ".json_encode($query);
             return $lista;
             // var_dump($lista);
         } catch (Exception $ex)

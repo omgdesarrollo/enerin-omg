@@ -17,7 +17,7 @@ $(function()
         tareaDatos.status_tarea = $("#STATUS_TAREA").val();
         tareaDatos.observaciones = $("#OBSERVACIONES").val();
 //        tareaDatos.archivo_adjunto = $('#fileupload').fileupload('option', 'url');
-        tareaDatos.mensaje="Se le asigno la tarea: "+$("#TAREA").val()+" por el Usuario: ";
+        tareaDatos.mensaje="Se le asigno el Tema: "+$("#TAREA").val()+" por el Usuario: ";
         tareaDatos.reponsable_plan= $("#ID_EMPLEADOMODAL").val();
         tareaDatos.tipo_mensaje= 0;
         tareaDatos.atendido= 'false';
@@ -927,7 +927,7 @@ function graficar()
             alarmaVencida_data.push(value); 
         }
         
-        if(value.status_grafica == "Tarea vencida")
+        if(value.status_grafica == "Tiempo vencido")
         {
             tareaVencida++;
             tareaVencida_data.push(value); 
@@ -947,7 +947,7 @@ function graficar()
     if(alarmaVencida!=0)
         dataGrafica.push(["En Proceso-Alarma Vencida",alarmaVencida,">> Temas:"+alarmaVencida.toString(),JSON.stringify(alarmaVencida_data),1]);
     if(tareaVencida!=0)
-        dataGrafica.push(["En Proceso-Tema Vencido",tareaVencida,">> Temas:"+tareaVencida.toString(),JSON.stringify(tareaVencida_data),1]);
+        dataGrafica.push(["En Proceso-Tiempo Vencido",tareaVencida,">> Temas:"+tareaVencida.toString(),JSON.stringify(tareaVencida_data),1]);
     if(suspendido!=0)
         dataGrafica.push(["Suspendido",suspendido,">> Temas:"+suspendido.toString(),JSON.stringify(suspendido_data),1]);
 
@@ -980,7 +980,7 @@ if(concepto== "En Proceso-En Tiempo")
     tituloGrafica = "TEMAS EN PROCESO-EN TIEMPO";
 if(concepto== "En Proceso-Alarma Vencida")
     tituloGrafica = "TEMAS EN PROCESO-ALARMA VENCIDA";
-if(concepto== "En Proceso-Tema Vencido")
+if(concepto== "En Proceso-Tiempo Vencido")
     tituloGrafica = "TEMAS EN PROCESO-VENCIDO";
 if(concepto== "Suspendido")
     tituloGrafica = "TEMAS SUSPENDIDOS";

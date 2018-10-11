@@ -20,13 +20,13 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 		<!-- ace styles Para Encabezado-->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-                <!--JQUERY-->
+                <!--jquery-->
                 <script src="../../js/jquery.js" type="text/javascript"></script>
                 <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
                 <!--Para abrir alertas de aviso, success,warning, error--> 
                 <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
                 <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
-                <!--JGROWL-->
+                <!--jgrowl-->
                 <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
                 <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
                 <!--Libreria local, para grafica-->
@@ -222,51 +222,6 @@ require_once 'EncabezadoUsuarioView.php';
         </div><!-- cierre div class="modal-dialog" -->
 </div><!-- cierre del modal -->
 
-
-<!-- Inicio de Seccion Modal Informe-->
-<!--<div class="modal draggable fade" id="informe_tareas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-lg" role="document">
-        <div id="loaderModalMostrar"></div>
-        <div class="modal-content">
-
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span style="font-size:inherit" aria-hidden="true" class="closeLetra">X</span>
-              </button>
-              <h4 class="modal-title" id="myModalLabel">Informe Tareas</h4>
-            </div>
-
-            <div class="modal-body">
-
-              <div id="graficaTareas"></div>
-
-            </div> cierre div class-body 
-        </div> cierre div class modal-content 
-    </div> cierre div class="modal-dialog" 
-</div> cierre del modal -->
-
-<!-- Modal grafica -->
-<!--<div class="modal draggable fade" id="Grafica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">                
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="closeLetra">X</span>
-                </button>
-                <h4 class="modal-title" id="myModalLabelNuevaEvidencia">Informe de Temas Especiales</h4>
-            </div>
-
-            <div class="modal-body">
-                <div id="graficaPie" ></div>
-
-                <div class="form-group" method="post" style="text-align:center" id="BTNS_GRAFICAMODAL">
-                    <button type="submit" id="BTN_ANTERIOR_GRAFICAMODAL" class="btn crud-submit btn-info" style="width:90%" >Recargar</button>
-                </div>
-            </div>
-            
-        </div>
-    </div>
-</div>-->
 
 <!-- Modal grafica -->
 <div id="jsChart"></div>

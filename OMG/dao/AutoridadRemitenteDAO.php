@@ -120,7 +120,6 @@ class AutoridadRemitenteDAO{
             $db=  AccesoDB::getInstancia();
             $lista= $db->executeQueryUpdate($query);
             
-//            echo "este es el query: ".json_encode($query);
             return $lista;
         } catch (Exception $ex) 
         {
@@ -133,7 +132,7 @@ class AutoridadRemitenteDAO{
     {
         try
         {
-            $query="SELECT COUNT(*) AS resultado
+            $query="SELECT COUNT(*) AS verificacion_documento_entrada
                     FROM documento_entrada tbdocumento_entrada
                     JOIN autoridad_remitente tbautoridad_remitente ON tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad
                     WHERE tbautoridad_remitente.id_autoridad=$ID_AUTORIDAD";
@@ -141,7 +140,26 @@ class AutoridadRemitenteDAO{
             $db= AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
 
-            return $lista[0]['resultado'];
+            return $lista[0]['verificacion_documento_entrada'];
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+        public function verificarExistenciadeAutoridadenDocumentoSalidaSinFolio($ID_AUTORIDAD)
+    {
+        try
+        {
+            $query="SELECT COUNT(*) AS verificacion_documento_salida_sinfolio
+                    FROM documento_salida_sinfolio_entrada tbdocumento_salida_sinfolio_entrada
+                    WHERE tbdocumento_salida_sinfolio_entrada.id_autoridad=$ID_AUTORIDAD";
+            
+            $db= AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista[0]['verificacion_documento_salida_sinfolio'];
         } catch (Exception $ex)
         {
             throw $ex;

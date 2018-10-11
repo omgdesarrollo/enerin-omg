@@ -3,9 +3,10 @@ id_seleccionado="";
 
  $(function(){
      
-     $("#btn_guardar").click(function(e){
+     $("#btn_guardar").click(function(e)
+     {
          e.preventDefault();
-         $("#btn_guardar").attr("disabled", "disabled");
+//         $("#btn_guardar").attr("disabled", "disabled");
          var formData = {"NO":$('#NO').val(),"NOMBRE":$('#NOMBRE').val(),"DESCRIPCION":$('#DESCRIPCION').val(),
                          "PLAZO":$('#PLAZO').val(),"NODO":0,"ID_EMPLEADOMODAL":$('#ID_EMPLEADOMODAL').val()};            
          
@@ -17,15 +18,18 @@ id_seleccionado="";
              {
                
                  if(r==false){
-                     swal("","Error en el servidor","error");
+                    swal("","Error en el servidor","error");
                     setTimeout(function(){swal.close();},1500);
-                     $("#btn_guardar").removeAttr("disabled");
+//                     $("#btn_guardar").removeAttr("disabled");
+                    $('#create-itemTema .close').click();
                  }else{
-                     if(r==true){
+                     if(r==true)
+                     {
                        swal("","Guardado Exitoso","success");
                        setTimeout(function(){swal.close();},1500);
                         obtenerDatosArbol();
-                        $("#btn_guardar").removeAttr("disabled");
+//                      $("#btn_guardar").removeAttr("disabled");
+                       $('#create-itemTema .close').click(); 
                      }
                  }
                  
@@ -37,7 +41,7 @@ id_seleccionado="";
      
      $("#btn_guardarSub").click(function(e){
          e.preventDefault();
-         $("#btn_guardarSub").attr("disabled", "disabled");
+//         $("#btn_guardarSub").attr("disabled", "disabled");
          var formData = {"NO":$('#NO_SUBTEMA').val(),"NOMBRE":$('#NOMBRE_SUBTEMA').val(),"DESCRIPCION":$('#DESCRIPCION_SUBTEMA').val(),
                          "PLAZO":$('#PLAZO_SUBTEMA').val(),"NODO":id_seleccionado,"ID_EMPLEADOMODAL":"0"};            
          
@@ -47,32 +51,38 @@ id_seleccionado="";
              data:formData,
              success:function(r)
              {
-                    if(r==false){
-                     swal("","Error en el servidor","error");
-                        $("#btn_guardarSub").removeAttr("disabled");
+                if(r==false)
+                {
+                    swal("","Error en el servidor","error");
+//                        $("#btn_guardarSub").removeAttr("disabled");
                     setTimeout(function(){swal.close();},1500);
-                 }else{
-                     if(r==true){
-                       swal("","Guardado Exitoso","success");
-                       setTimeout(function(){swal.close();},1500);
-                         obtenerDatosArbol();
-                          obtenerHijos(id_seleccionado);
-                       $("#btn_guardarSub").removeAttr("disabled");
-                     }
-                 }  
+                    $('#create-itemSubTema .close').click();
+                }else{
+                    if(r==true)
+                    {
+                        swal("","Guardado Exitoso","success");
+                        setTimeout(function(){swal.close();},1500);
+                        obtenerDatosArbol();
+                        obtenerHijos(id_seleccionado);
+//                       $("#btn_guardarSub").removeAttr("disabled");
+                        $('#create-itemSubTema .close').click();
+                    }
+                }  
              }
          });
                 
      });
      
-     $("#btn_limpiar_tema").click(function(){
+     $("#btn_limpiar_tema").click(function()
+     {
          $("#NO").val("");
          $("#NOMBRE").val("");
          $("#DESCRIPCION").val("");
          $("#PLAZO").val("");                 
      });
      
-     $("#btn_limpiar_SubTema").click(function(){
+     $("#btn_limpiar_SubTema").click(function()
+     {
          $("#NO_SUBTEMA").val("");
          $("#NOMBRE_SUBTEMA").val("");
          $("#DESCRIPCION_SUBTEMA").val("");

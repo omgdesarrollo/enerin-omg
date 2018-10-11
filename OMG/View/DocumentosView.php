@@ -20,13 +20,13 @@ $Usuario=  Session::getSesion("user");
                 <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 		<!-- ace styles Para Encabezado-->
 		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-                <!--JQUERY-->
+                <!--jquery-->
                 <script src="../../js/jquery.js" type="text/javascript"></script>
                 <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
                 <!--Para abrir alertas de aviso, success,warning, error-->
                 <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
                 <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
-                <!--JGROWL-->
+                <!--jgrowl-->
                 <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
                 <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
                 
@@ -61,33 +61,25 @@ $Usuario=  Session::getSesion("user");
 <body class="no-skin">       
 
 <?php
-
-require_once 'EncabezadoUsuarioView.php';
-
+    require_once 'EncabezadoUsuarioView.php';
 ?>
 
              
 <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
     
-<button onclick="listarEmpleados()" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#crea_documento">
-    Agregar Documento
-</button>    
+    <button onclick="listarEmpleados()" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#crea_documento">
+        Agregar Documento
+    </button>    
     
-<button type="button" class="btn btn-info btn_refrescar" id="btnrefrescar" onclick="refresh();" >
-    <i class="glyphicon glyphicon-repeat"></i>   
-</button>
+    <button type="button" class="btn btn-info btn_refrescar" id="btnrefrescar" onclick="refresh();" >
+        <i class="glyphicon glyphicon-repeat"></i>   
+    </button>
 
-<div class="pull-right">    
-<!--    <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Word'">
-        <img src="../../images/base/word.png" width="30px" height="30px"> 
-    </button>
-    <button type="button" onclick="window.location.href='../ExportarView/exportarValidacionDocumentoViewTiposDocumentos.php?t=Pdf'">
-        <img src="../../images/base/pdf.png" width="30px" height="30px"> 
-    </button>    -->
-    <button style="width:48px;height:42px" type="button"  class="btn_agregar" id="toExcel">
-        <img src="../../images/base/_excel.png" width="30px" height="30px">
-    </button>
-</div>
+    <div class="pull-right">    
+        <button style="width:48px;height:42px" type="button"  class="btn_agregar" id="toExcel">
+            <img src="../../images/base/_excel.png" width="30px" height="30px">
+        </button>
+    </div>
     
 </div>    
 
@@ -246,8 +238,6 @@ inicializarFiltros().then((resolve)=>
            
             <!--Bootstrap-->
             <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
-            <!--Para abrir alertas de aviso, success,warning, error-->       
-            <!--<script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>-->
             
             <!--Para abrir alertas del encabezado-->
             <script src="../../assets/probando/js/ace-elements.min.js"></script>

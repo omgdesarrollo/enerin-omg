@@ -19,6 +19,27 @@ class Gantt_TareaDao {
             return -1;
         }        
     }
+    
+    
+    public function listarTareaGantt($ID)
+    {
+        try 
+        {
+            $query="SELECT tbgantt_tareas.id,tbgantt_tareas.text,tbgantt_tareas.start_date,tbgantt_tareas.duration,tbgantt_tareas.progress,
+                    tbgantt_tareas.parent,tbgantt_tareas.user,tbgantt_tareas.notas,tbgantt_tareas.status	
+                    FROM gantt_tareas tbgantt_tareas
+                    WHERE tbgantt_tareas.id=$ID";
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            
+            return $lista;            
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
 
 
     public function insertarGanttTareas($VALUES)
@@ -345,7 +366,7 @@ class Gantt_TareaDao {
     
     
     
-        public function obtenerUsuarioPorIdEmpleado($ID_EMPLEADO)
+    public function obtenerUsuarioPorIdEmpleado($ID_EMPLEADO)
     {
         try
         {

@@ -17,8 +17,13 @@ switch($Op)
         $Lista = $modelReporte->listarReportes($CONTRATO);
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
-    break;   
-    case 'listarDatos':       
+    break;
+
+    case 'listarReporte':
+        $CONTRATO = Session::getSesion("s_cont");
+        $Lista= $modelReporte->listarReporte($_REQUEST['ID_REPORTE'], $CONTRATO);
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
     break;
 
     case 'listarReportesporFecha':
@@ -27,10 +32,6 @@ switch($Op)
         echo json_encode($Lista);
         return $Lista;
         break;
-    
-    case 'listarDatos':
-        
-    break;
 
     case 'buscarID':
         $CONTRATO= Session::getSesion("s_cont");
