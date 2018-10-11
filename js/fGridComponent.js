@@ -16,10 +16,9 @@ $(function(){
         // if($(obj).hasClass("jsgrid-cell"))
         // {
             text = $(obj).html();
-            if(!text.includes("<button") && !text.includes("<input") && !text.includes("<a") && !text.includes("<select") && !text.includes("<i"))
+            if(!text.includes("<button") && !text.includes("<input") && !text.includes("<a") && !text.includes("<select") && !text.includes("<i") && !text.includes("<textarea"))
             {
                 pos = $(obj).offset();
-
                 myPop = new dhtmlXPopup();
                 myPop.attachHTML(text);
                 myPop.show(0,-20,0,20);
