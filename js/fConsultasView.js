@@ -239,7 +239,7 @@ function listarDatos()
             type:"GET",
             beforeSend:function()
             {
-                growlWait("Solicitud","Solicitando Datos...");
+                growlWait("Solicitud","Solicitando Registros...");
             },
             success:function(data)
             {
