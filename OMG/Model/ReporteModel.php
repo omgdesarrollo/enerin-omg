@@ -1,20 +1,37 @@
 <?php
 require_once '../dao/ReporteDao.php';
   class ReporteModel{
-        public function listarReportes($CONTRATO)
+      
+    public function listarReportes($CONTRATO)
+    {
+        try
         {
-            try
-            {
-                $dao=new ReporteDao();
-                $lista= $dao->listarReportes($CONTRATO);   
-                return $lista;
-            }catch (Exception $ex)
-            {
-                throw $ex;
-                return -1;
-            }
+            $dao=new ReporteDao();
+            $lista= $dao->listarReportes($CONTRATO);   
+            return $lista;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
         }
+    }
     
+    public function listarReporte($ID_REPORTE, $CONTRATO)
+    {
+        try 
+        {
+            $dao=new ReporteDao();
+            $rec= $dao->listarReporte($ID_REPORTE, $CONTRATO);
+            
+            return $rec;
+        } catch (Exception $ex) 
+        {
+            throw  $ex;
+            return -1;
+        }
+    }
+
+
     public function listarReportesporFecha($FECHA_INICIO, $FECHA_FINAL, $CONTRATO)
     {
         try

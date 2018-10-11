@@ -95,9 +95,7 @@ $(function (){
 
 function inicializarFiltros()
 {
-    return new Promise((resolve,reject)=>
-    {
-        filtros =[
+    filtros =[
             {id:"noneUno",type:"none"},
             {id:"clave_contrato",type:"text"},
             {id:"region_fiscal",type:"text"},
@@ -125,9 +123,7 @@ function inicializarFiltros()
             {id:"omgc16",type:"text"},
             {id:"omgc17",type:"text"},
             {name:"opcion",id:"opcion",type:"opcion"}
-        ];
-        resolve();    
-    });        
+            ];
 }
               
 
@@ -412,44 +408,259 @@ function buscarTipoMedidorYOtrosDatosPorTagMedidor(tagMedidor)
 }
 
 
+function insertarReporte(datos)
+{
+    $.ajax({
+        url:"../Controller/ReportesController.php?Op=Guardar",
+        type:"POST",
+        data:"FECHA_CREACION="+datos[0]+"&ID_CATALOGOP="+datos[1],
+        async:false,
+        success:function(datos)
+        {
+             tempData;
+//            alert("Entro al success: "+datos);
+            if(typeof(datos) == "object")
+            {
+//                alert("Entro aqui al IF");
+                swalSuccess("Reporte Creado");                
+                $.each(datos,function(index,value)
+                {
+                   console.log(value); 
+                   tempData= reconstruir(value,ultimoNumeroGrid+1);  
+                });
+//                console.log(tempData);
+                
+                $("#jsGrid").jsGrid("insertItem",tempData).done(function()
+                {
+                    $("#nuevoReporteModal .close ").click();
+                });
+                
+            } else{
+                if(datos==0)
+                {
+                    swalError("Ya existe un Reporte Creado en esta Fecha");                    
+                } else{
+                    swalInfo("Creado, Pero no listado, Actualice");
+                }                
+            }
+        },
+        error:function()
+        {
+//            alert("Entro al error");
+        }
+    });
+    
+}
+
+
+function construirGrid()
+{
+    jsGrid.fields.customControl = MyCControlField;
+        db=
+        {
+            loadData: function()
+            {
+                return DataGrid;
+            },
+            insertItem: function(item)
+            {
+                return item;
+            },
+        };
+    
+    $("#jsGrid").jsGrid({
+         onInit: function(args)
+         {
+             gridInstance=args.grid;
+             jsGrid.Grid.prototype.autoload=true;
+             jsGrid.ControlField.prototype.deleteButton=false;
+         },
+        onDataLoading: function(args)
+        {
+            loadBlockUi();
+        },
+        onDataLoaded:function(args)
+        {
+            $('.jsgrid-filter-row').removeAttr("style",'display:none');
+        },
+        onRefreshing: function(args) {
+        },
+        
+        width: "100%",
+        height: "350px",
+        autoload:true,
+        heading: true,
+        sorting: true,
+        editing: true,
+//        sorter:true,
+        paging: true,
+        controller:db,
+        pageLoading:false,
+        pageSize: 10,
+        pageButtonCount: 5,
+        updateOnResize: true,
+        confirmDeleting: true,
+        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
+        fields: [
+                { name:"id_principal", visible:false},
+                { name:"no",title:"No",width:60},
+                { name:"clave_contrato", title: "ID del Contrato o Asignación", type: "text", width: 150, validate: "required", "editing": false},
+                { name:"region_fiscal", title: "Region Fiscal", type: "text", width: 150, validate: "required", "editing": false},
+                { name:"ubicacion", title: "Ubicación del Punto de Medición", type: "text", width: 150, validate: "required", "editing": false},
+                { name:"tag_patin", title: "Tag del Patin de Medición", type: "text", width: 130, validate: "required","editing": false },
+                { name:"tipo_medidor", title: "Tipo de Medidor", type: "text", width: 150, validate: "required", "editing": false},    
+                { name:"tag_medidor", title: "Tag del Medidor", type: "text", width: 130, validate: "required", "editing": false},
+                { name:"clasificacion", title: "Clasificación del Sistema de Medición", type: "text", width: 150, validate: "required", "editing": false},
+                { name:"hidrocarburo", title: "Tipo de Hidrocarburo", type: "text", width: 150, validate: "required", "editing": false},
+                { name:"omgc1", title: "Fecha Produccion", type: "text", width: 150, validate: "required", "editing": false},
+                { name:"omgc2", title: "Presion", type: "text", width: 150},
+                { name:"omgc3", title: "Temperatura", type: "text", width: 150},
+                { name:"omgc4", title: "Produccion de Petroleo", type: "text", width: 150},
+                { name:"omgc5", title: "°AP(PETROLEO)I", type: "text", width: 150},
+                { name:"omgc6", title: "%S(PETROLEO)", type: "text", width: 150},
+                { name:"omgc7", title: "Sal", type: "text", width: 150},
+                { name:"omgc8", title: "%H20(PETROLEO)", type: "text", width: 150},
+                { name:"omgc9", title: "Produccion de condensado Medido Neto", type: "text", width: 190},
+                { name:"omgc10", title: "°API(CONDENSADO)", type: "text", width: 170},
+                { name:"omgc11", title: "%S(CONDENSADO)", type: "text", width: 170},
+                { name:"omgc12", title: "%H20(CONDENSADO)", type: "text", width: 180},
+                { name:"omgc13", title: "Produccion de gas medido", type: "text", width: 180},
+                { name:"omgc14", title: "Poder Calorifico de gas", type: "text", width: 180},
+                { name:"omgc15", title: "Peso Molecular de gas", type: "text", width: 150},
+                { name:"omgc16", title: "Energia de gas", type: "text", width: 150},
+                { name:"omgc17", title: "Eventos", type: "text", width: 150},
+//                { name:"omgc18", title: "Fecha Real Reporte", type: "text", width: 190},
+                
+                { name:"delete", title:"Opción", type:"customControl",sorting:"" }
+        ],
+        
+        onItemUpdated: function(args)
+        {
+            console.log(args);
+            columnas={};
+            id_afectado=args["item"]["id_principal"][0];
+//            alert("ID afectado");
+            $.each(args["item"],function(index,value)
+            {
+                if(args["previousItem"][index] != value && value!="")
+                {
+                        if(index!="id_principal" && !value.includes("<button") && index!="delete")
+                        {
+                                columnas[index]=value;
+                        }
+                }
+            });
+            if(Object.keys(columnas).length!=0)
+            {
+                    $.ajax({
+                            url: '../Controller/GeneralController.php?Op=Actualizar',
+                            type:'GET',
+                            data:'TABLA=omg_reporte_produccion'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
+                            success:function(exito)
+                            {
+                                refresh();
+                                swal("","Actualizacion Exitosa!","success");
+                                setTimeout(function(){swal.close();},1000);
+                            },
+                            error:function()
+                            {
+                                swal("","Error en el servidor","error");
+                                setTimeout(function(){swal.close();},1500);
+                            }
+                    });
+            }
+        },
+        
+        
+    });
+}
+
+
+var MyCControlField = function(config)
+{
+    jsGrid.Field.call(this, config);
+};
+
+
+MyCControlField.prototype = new jsGrid.Field
+({
+        css: "date-field",
+        align: "center",
+        sorter: function(date1, date2)
+        {
+            console.log("haber cuando entra aqui");
+            console.log(date1);
+            console.log(date2);
+            // return 1;
+        },
+        itemTemplate: function(value,todo)
+        {
+//            alert(value,todo);
+//            if(value[0]['reg']!="0" || value[0]['validado']!=0)
+//                return "";
+//            else
+//            return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button ',title:"Eliminar", type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
+            return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-edit-button ',title:"Editar", type:'button'});
+        },
+        insertTemplate: function(value)
+        {
+        },
+        editTemplate: function(value)
+        {
+            val = "<input class='jsgrid-button jsgrid-update-button' type='button' title='Actualizar' onClick='aceptarEdicion()'>";
+            val += "<input class='jsgrid-button jsgrid-cancel-edit-button' type='button' title='Cancelar Edición' onClick='cancelarEdicion()'>";
+            return val;
+        },
+        insertValue: function()
+        {
+        },
+        editValue: function()
+        {
+        }
+});
+
+
+function cancelarEdicion()
+{
+    $("#jsGrid").jsGrid("cancelEdit");
+}
+
+function aceptarEdicion()
+{
+    gridInstance.updateItem();
+}
+
+
 function listarDatos()//listarDatos
 {
-//    console.log("Entro a listarDatos");
-    return new Promise((resolve,reject)=>
+    __datos=[];
+    datosParamAjaxValues={};
+    datosParamAjaxValues["url"]="../Controller/ReportesController.php?Op=listar&data=2";
+    datosParamAjaxValues["type"]="POST";
+    datosParamAjaxValues["async"]=false;
+    var variablefunciondatos=function obtenerDatosServer(data)
     {
-        __datos=[];
-        $.ajax(
+        dataListado = data;
+        $.each(data,function (index,value)
         {
-            url:"../Controller/ReportesController.php?Op=listar&data=2",
-            type:"GET",
-            beforeSend:function()
-            {
-                growlWait("Solicitud","Solicitando Datos...");
-            },
-            success:function(data)
-            {
-                if(typeof(data=="object"))
-                {
-                    dataListado = data;
-                    $.each(data,function (index,value)
-                    {
-                        __datos.push( reconstruir(value,index+1) );
-                    });
-                    DataGrid = __datos;
-                    gridInstance.loadData();
-                    resolve();       
-                }else{
-                    growlSuccess("Solicitud","No Existen Registros");
-                    reject();
-                }                
-            },
-            error:function()
-            {
-                growlError("Error","Error en el servidor");
-                reject();
-            }                        
+            __datos.push( reconstruir(value,index++) );
         });
+    }
+    var listfunciones=[variablefunciondatos];
+    ajaxHibrido(datosParamAjaxValues,listfunciones);
+    DataGrid = __datos;
+//    return 1;
+}
+
+
+function reconstruirTable(_datos)
+{
+    __datos=[];
+    $.each(_datos,function(index,value)
+    {
+        __datos.push(reconstruir(value,index++));
     });
+    construirGrid(__datos);
 }
 
 
@@ -485,180 +696,96 @@ function reconstruir(value,index)
     tempData["omgc16"] = value.omgc16;
     tempData["omgc17"] = value.omgc17;
 //    tempData["omgc18"] = value.omgc18;
-    tempData["id_principal"].push({eliminar : 0});
-    tempData["id_principal"].push({editar : 1});
-    tempData["delete"]= tempData["id_principal"] ;
+    tempData["delete"] = "1";
     return tempData;
 }
 
 
-function insertarReporte(datos)
-{
-    $.ajax({
-        url:"../Controller/ReportesController.php?Op=Guardar",
-        type:"POST",
-        data:"FECHA_CREACION="+datos[0]+"&ID_CATALOGOP="+datos[1],
-        async:false,
-        success:function(datos)
-        {
-             tempData;
-//            alert("Entro al success: "+datos);
-            if(typeof(datos) == "object")
-            {
-//                alert("Entro aqui al IF");
-                swalSuccess("Reporte Creado");                
-                $.each(datos,function(index,value)
-                {
-                   console.log(value); 
-                   tempData= reconstruir(value,ultimoNumeroGrid+1);  
-                });
-//                console.log(tempData);
-                
-                $("#jsGrid").jsGrid("insertItem",tempData).done(function()
-                {
-                    
-                });
-                    dataListado.push(datos[0]),
-                    DataGrid.push(tempData),
-                    $("#nuevoReporteModal .close ").click();
-            } else{
-                if(datos==0)
-                {
-                    swalError("Ya existe un Reporte Creado en esta Fecha");                    
-                } else{
-                    swalInfo("Creado, Pero no listado, Actualice");
-                }                
-            }
-        },
-        error:function()
-        {
-//            alert("Entro al error");
-        }
-    });   
-}
-
-function saveUpdateToDatabase(args)//listo
-{
-        columnas=new Object();
-//        entro=0;
-        id_afectado = args['item']['id_principal'][0];
-        verificar = 0;
-        $.each(args['item'],(index,value)=>
-        {
-                if(args['previousItem'][index]!=value && value!="")
-                {
-                        if(index!='id_principal' && !value.includes("<button") && index!="delete")
-                        {
-                                columnas[index]=value;
-                        }
-                }
-        });
-        
-        if( Object.keys(columnas).length != 0 && verificar==0)
-        {
-            
-            $.ajax({
-                url:"../Controller/GeneralController.php?Op=Actualizar",
-                type:"POST",
-                data:'TABLA=omg_reporte_produccion'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
-                beforeSend:()=>
-                {
-                        growlWait("Actualización","Espere...");
-                },
-                success:(data)=>
-                {
-                        if(data==1)
-                        {
-                                growlSuccess("Actulización","Se actualizaron los campos");
-                                actualizarReporte(id_afectado.id_reporte);
-                        }
-                        else
-                        {
-                                growlError("Actualización","No se pudo actualizar");
-                                componerDataGrid();
-                                gridInstance.loadData();
-                        }
-                },
-                error:function()
-                {
-                        componerDataGrid();
-                        gridInstance.loadData();
-                        growlError("Error","Error del servidor");
-                }
-            });
-        }
-        else
-        {
-                componerDataGrid();
-                gridInstance.loadData();
-        }
-}
-
-function actualizarReporte(id_reporte)
-{
-        $.ajax({
-                url:'../Controller/ReportesController.php?Op=listarReporte',
-                type: 'GET',
-                data:'ID_REPORTE='+id_reporte,
-                success:function(datos)
-                {
-                        if(typeof(datos)=="object")
-                        {
-                            $.each(datos,function(index,value){
-                                componerDataListado(value);
-                            });
-                            componerDataGrid();
-                            gridInstance.loadData();
-                        }
-                        else
-                        {
-                                growlError("Actualizar Vista","No se pudo actualizar la vista, refresque");
-                                componerDataGrid();
-                                gridInstance.loadData();
-                        }
-                },
-                error:function()
-                {
-                        growlError("Error","Error del servidor");
-                        componerDataGrid();
-                        gridInstance.loadData();
-                        
-                }
-        });
-}
 
 
-function componerDataListado(value)// id de la vista documento, listo
-{
-    id_vista = value.id_reporte;
-    id_string = "id_reporte";
-    $.each(dataListado,function(indexList,valueList)
+
+
+
+
+
+
+
+
+
+
+
+function precargados()
     {
-        $.each(valueList,function(ind,val)
-        {
-            if(ind == id_string)
-                    ( val==id_vista) ? dataListado[indexList]=value : console.log();
+     var _data=""; 
+//     var  clave_contrato='<input list="opcionescontratos" name="eleccioncontratos" /><datalist id="opcionescontratos">'
+         clave_contrato="<select>";
+//        region_fiscal='<input list="opciones" name="opciones" /><datalist id="opciones"><option </datalist>';
+        region_fiscal="<select>";
+        pm="<select>";
+        tpm="<select>";
+        tm="<select>";
+        clasificacionsistemamedicion="<select>";
+        th="<select>";
+        
+        $.ajax({
+            url : '../Controller/ReportesController.php?Op=listar&data=2',
+            async:false,
+            success 	: function(r)
+            {
+//                console.log(r);
+//                                    $("#contrato").val(r["clave_cumplimiento"]);
+                $.each(r,function (index,value)
+                {
+                    clave_contrato+="<option value="+value['clave_contrato']+">"+value['clave_contrato']+"</option>";
+                   region_fiscal+="<option value="+value['region_fiscal']+">"+value['region_fiscal']+"</option>";
+                    pm+="<option value="+value['ubicacion']+">"+value["ubicacion"]+"</option>";
+                    tpm+="<option value="+value['tag_patin']+">"+value["tag_patin"]+"</option>";
+                    tm+="<option value="+value['tipo_medidor']+">"+value["tipo_medidor"]+"</option>";
+                    clasificacionsistemamedicion+="<option value="+value['clasificacion']+">"+value["clasificacion"]+"</option>";
+                    th+="<option value="+value['hidrocarburo']+">"+value["hidrocarburo"]+"</option>";
+                });
+//                clave_contrato+="</datalist>"
+                $("#clave_contrato").html(clave_contrato);
+                $("#contrato").html(clave_contrato);
+                $("#region_fiscal").html(region_fiscal);
+                $("#pm").html(pm);
+                $("#tpm").html(tpm);
+                $("#tm").html(region_fiscal);
+                  $("#clasificacionsistemamedicion").html(clasificacionsistemamedicion);
+                     $("#th").html(th);
+//                jBoxReportes.html.form=_data;
+                
+//                $("#clasificacionsistemamedicion").html(clasificacionsistemamedicion);
+//                $("#th").html(th);
+            }
         });
-    });
-}
-
-function componerDataGrid()//listo
-{
-    __datos = [];
-    $.each(dataListado,function(index,value){
-        __datos.push(reconstruir(value,index+1));
-    });
-    DataGrid = __datos;
-}
+    }
 
 
 function refresh()
-{
+{  
+    alert("Entro al refresh");
     listarDatos();
-    inicializarFiltros();
-    construirFiltros();
-    gridInstance.loadData();
+   inicializarFiltros();
+   construirFiltros();
+   gridInstance.loadData();
+   $(".jsgrid-grid-body").css({"height":"171px"});
 }
 
+
+function loadBlockUi()
+{
+    $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF"> Espere Por Favor</span>', css:
+    { 
+        border: 'none', 
+        padding: '15px', 
+        backgroundColor: '#000', 
+        '-webkit-border-radius': '10px', 
+        '-moz-border-radius': '10px', 
+        opacity: .5, 
+        color: '#fff' 
+    },overlayCSS: { backgroundColor: '#000000',opacity:0.1,cursor:'wait'} }); 
+    setTimeout($.unblockUI, 2000);
+}
 
 

@@ -7,46 +7,50 @@ class AutoridadRemitenteModel{
 
 
     
+//    public function  listarAutoridadesRemitentes()
+//    {
+//        try{
+//            $dao=new AutoridadRemitenteDAO();
+//            $rec['autoridades']=$dao->mostrarAutoridadesRemitentes();
+//            $lista=array();
+//            $contador=0;
+//            
+//            foreach ($rec['autoridades'] as $value) 
+//            {
+//                $lista['autoridades'][$contador]= array(
+//                    "id_autoridad"=>$value["id_autoridad"],
+//                    "clave_autoridad"=>$value["clave_autoridad"],
+//                    "descripcion"=>$value["descripcion"],
+//                    "direccion"=>$value["direccion"],
+//                    "telefono"=>$value["telefono"],
+//                    "extension"=>$value["extension"],
+//                    "email"=>$value["email"],
+//                    "direccion_web"=>$value["direccion_web"],
+//                    "resultado"=>$dao->verificarExistenciadeAutoridadenDocumentoEntrada($value["id_autoridad"])
+//                );
+//                $contador++;
+//            }
+//            
+//            return $lista;
+//        }  catch (Exception $ex)
+//        {
+//            throw  $ex;
+//            return -1;
+//        }
+//    }
+    
+    
     public function  listarAutoridadesRemitentes()
-    {
-        try{
-            $dao=new AutoridadRemitenteDAO();
-            $rec['autoridades']=$dao->mostrarAutoridadesRemitentes();
-            $lista=array();
-            $contador=0;
-            
-            foreach ($rec['autoridades'] as $value) 
-            {
-                $lista['autoridades'][$contador]= array(
-                    "id_autoridad"=>$value["id_autoridad"],
-                    "clave_autoridad"=>$value["clave_autoridad"],
-                    "descripcion"=>$value["descripcion"],
-                    "direccion"=>$value["direccion"],
-                    "telefono"=>$value["telefono"],
-                    "extension"=>$value["extension"],
-                    "email"=>$value["email"],
-                    "direccion_web"=>$value["direccion_web"],
-                    "resultado"=>$dao->verificarExistenciadeAutoridadenDocumentoEntrada($value["id_autoridad"])
-                );
-                $contador++;
-            }
-            
-            return $lista;
-        }  catch (Exception $ex)
-        {
-            throw  $ex;
-            return -1;
-        }
-    }
-    
-    
-    public function  listarAutoridadesRemitentes2()
     {
         try{
             $dao=new AutoridadRemitenteDAO();
             $rec=$dao->mostrarAutoridadesRemitentes();
             
-            
+            foreach ($rec as $key => $value) 
+            {
+                $rec[$key]['verificacion_documento_entrada']= $dao->verificarExistenciadeAutoridadenDocumentoEntrada($value['id_autoridad']);
+                $rec[$key]['verificacion_documento_salida_sinfolio']= $dao->verificarExistenciadeAutoridadenDocumentoSalidaSinFolio($value['id_autoridad']);
+            }
             return $rec;
         }  catch (Exception $ex)
         {
@@ -62,6 +66,12 @@ class AutoridadRemitenteModel{
         {
             $dao=new AutoridadRemitenteDAO();
             $rec= $dao->listarAutoridadRemitente($ID_AUTORIDAD);
+            
+            foreach ($rec as $key => $value) 
+            {
+                $rec[$key]['verificacion_documento_entrada']= $dao->verificarExistenciadeAutoridadenDocumentoEntrada($value['id_autoridad']);
+                $rec[$key]['verificacion_documento_salida_sinfolio']= $dao->verificarExistenciadeAutoridadenDocumentoSalidaSinFolio($value['id_autoridad']);
+            }
             
             return $rec;
         } catch (Exception $ex)
@@ -154,19 +164,14 @@ class AutoridadRemitenteModel{
 
     
     
-    public function eliminar($pojo)
+    public function eliminarAutoridadRemitente($ID_AUTORIDAD)
     {
-        try{
+        try
+        {
             $dao= new AutoridadRemitenteDAO();            
-            $validacion= $dao->verificarExistenciadeAutoridadenDocumentoEntrada($pojo->getId_autoridad());
+            $rec= $dao->eliminarAutoridadRemitente($ID_AUTORIDAD);
             
-            if($validacion==0)
-            {
-                $exito= $dao->eliminarAutoridadRemitente($pojo->getId_autoridad());
-            }
-            
-            return $exito;
-            
+            return $rec;     
         } catch (Exception $ex) 
         {
             throw $ex;

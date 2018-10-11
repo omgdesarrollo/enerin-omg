@@ -65,112 +65,113 @@ $Usuario=  Session::getSesion("user");
 
 	</head>
 
-<body class="no-skin" >            
-<?php
-
-    require_once 'EncabezadoUsuarioView.php';
-
-?>
-   <div class="modal draggable fade" id="create-itemRequisito" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
-                          <h4 class="modal-title" id="myModalLabel">Crear Nuevo Requisito</h4>
-		      </div>
-                        
-		      <div class="modal-body">
-                          <!--<form id="formRequisitos">-->
-                                     
-                                                <div class="form-group">
-							<label class="control-label" for="title">Requisito</label>
-                                                        <textarea  id="REQUISITO" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
-							<div class="help-block with-errors"></div>
-						</div>
-
-                                                <div class="form-group">
-                                                    <div class="input-group">
-                                                        <span style="border:none;background-color:transparent;" class="input-group-addon">Con Penalizacion</span>
-                                                        <input type="checkbox" style="width: 40px; height: 40px" class="checkbox" id="checkPenalizado">
-                                                        
-                                                    </div>							
-						</div>    
-                                                                                                                                
-						<div class="form-group">
-                                                    <button type="submit" style="width:49%" id="btn_guardar_req"  class="btn crud-submit btn-info">Guardar</button>
-                                                    <button type="submit" style="width:49%" id="btn_limpiar_req"  class="btn crud-submit btn-info">Limpiar</button>
-						</div>
-                          <!--</form>-->
-
-		      </div>
-		    </div>
-
-		  </div>
-       </div>
-
+<body class="no-skin" >
     
- <div class="modal draggable fade" id="create-itemRegistro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
-                          <h4 class="modal-title" id="myModalLabel"><div id="textoHeaderRegistro">Nuevo Registro</div></h4>
-		      </div>
-                        
-		      <div class="modal-body">
-                    <!--<form id="formRegistro">-->   
-                        <div class="form-group">
-                            <label class="control-label" for="title">Registro</label>
-                            <textarea  id="REGISTRO" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
-                            <div class="help-block with-errors"></div>
-                        </div>                                                                                                                          
+<?php
+    require_once 'EncabezadoUsuarioView.php';
+?>
 
-                        <div class="form-group">
-                            <label class="control-label">Clave/Descripcion: </label>
+<!--Modal Requisitos-->    
+<div class="modal draggable fade" id="create-itemRequisito" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+               <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                   <div class="modal-header">
+                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
+                       <h4 class="modal-title" id="myModalLabel">Crear Nuevo Requisito</h4>
+                   </div>
+
+                   <div class="modal-body">
+                       <!--<form id="formRequisitos">-->
+
+                                             <div class="form-group">
+                                                     <label class="control-label" for="title">Requisito</label>
+                                                     <textarea  id="REQUISITO" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+                                                     <div class="help-block with-errors"></div>
+                                             </div>
+
+                                             <div class="form-group">
+                                                 <div class="input-group">
+                                                     <span style="border:none;background-color:transparent;" class="input-group-addon">Con Penalizacion</span>
+                                                     <input type="checkbox" style="width: 40px; height: 40px" class="checkbox" id="checkPenalizado">
+
+                                                 </div>							
+                                             </div>    
+
+                                             <div class="form-group">
+                                                 <button type="submit" style="width:49%" id="btn_guardar_req"  class="btn crud-submit btn-info">Guardar</button>
+                                                 <button type="submit" style="width:49%" id="btn_limpiar_req"  class="btn crud-submit btn-info">Limpiar</button>
+                                             </div>
+                       <!--</form>-->
+
+                   </div>
+                 </div>
+
+               </div>
+    </div>
+
+<!--Modal Registros-->    
+<div class="modal draggable fade" id="create-itemRegistro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
+            <h4 class="modal-title" id="myModalLabel"><div id="textoHeaderRegistro">Nuevo Registro</div></h4>
+        </div>
+
+        <div class="modal-body">
+      <!--<form id="formRegistro">-->   
+          <div class="form-group">
+              <label class="control-label" for="title">Registro</label>
+              <textarea  id="REGISTRO" class="form-control" data-error="Ingrese la Descripcion del Sub-Tema" required></textarea>
+              <div class="help-block with-errors"></div>
+          </div>                                                                                                                          
+
+          <div class="form-group">
+              <label class="control-label">Clave/Descripcion: </label>
 <!--                            <div id='comboclave_descripcion'  ></div>-->
-                            <div class="dropdown">
-                                <input onBlur="registroClaveEscritura()" style="width:100%" type="text" class="dropdown-toggle" 
-                                id="CLAVEESCRITURA_AGREGARREGISTRO" data-toggle="dropdown" onKeyup="buscarDocumento(this)" autocomplete="off"/>
-                                <ul style="width:100%;cursor:pointer;" class="dropdown-menu" id="dropdownEvent" role="menu" 
-                                aria-labelledby="menu1"></ul>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Frecuencia: </label>
-                            <select id="selectFrecuencia" >
-                                <option value="DIARIO">DIARIO</option>
-                                <option value="MENSUAL">MENSUAL</option>
-                                <option value="SEMANAL">SEMANAL</option>
-                                <option value="BIMESTRAL">BIMESTRAL</option>
-                                <option value="ANUAL">ANUAL</option>
-                                 <option value="TIEMPO INDEFINIDO">TIEMPO INDEFINIDO</option>
-                               
-                            </select>
-                        </div>
-                        
-                        <div id="INFO_AGREGARREGISTRO">
-                            <div class="form-group">
-                                Clave Documento:
-                            </div>
-                            <div class="form-group">
-                                Descripcion Documento:
-                            </div>
-                            <div class="form-group">
-                                Responsable Documento:
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <button type="submit" style="width:49%" id="btn_guardar_reg"  class="btn crud-submit btn-info">Guardar</button>
-                            <button type="submit" style="width:49%" id="btn_limpiar_reg"  class="btn crud-submit btn-info">Limpiar</button>
-                        </div>
+              <div class="dropdown">
+                  <input onBlur="registroClaveEscritura()" style="width:100%" type="text" class="dropdown-toggle" 
+                  id="CLAVEESCRITURA_AGREGARREGISTRO" data-toggle="dropdown" onKeyup="buscarDocumento(this)" autocomplete="off"/>
+                  <ul style="width:100%;cursor:pointer;" class="dropdown-menu" id="dropdownEvent" role="menu" 
+                  aria-labelledby="menu1"></ul>
+              </div>
+          </div>
+          <div class="form-group">
+              <label class="control-label">Frecuencia: </label>
+              <select id="selectFrecuencia" >
+                  <option value="ANUAL">ANUAL</option>
+                  <option value="BIMESTRAL">BIMESTRAL</option>
+                  <option value="DIARIO">DIARIO</option>
+                  <option value="INDEFINIDO">INDEFINIDO</option>
+                  <option value="MENSUAL">MENSUAL</option>
+                  <option value="POR EVENTO">BIMESTRAL</option>
+                  <option value="SEMANAL">SEMANAL</option>                  
+              </select>
+          </div>
 
-                    <!--</form>-->
-		      </div>
-		    </div>
+          <div id="INFO_AGREGARREGISTRO">
+              <div class="form-group">
+                  Clave Documento:
+              </div>
+              <div class="form-group">
+                  Descripcion Documento:
+              </div>
+              <div class="form-group">
+                  Responsable Documento:
+              </div>
+          </div>
 
-		  </div>
-       </div>
+          <div class="form-group">
+              <button type="submit" style="width:49%" id="btn_guardar_reg"  class="btn crud-submit btn-info">Guardar</button>
+              <button type="submit" style="width:49%" id="btn_limpiar_reg"  class="btn crud-submit btn-info">Limpiar</button>
+          </div>
+
+      <!--</form>-->
+        </div>
+      </div>
+
+    </div>
+</div>
   
     
     
@@ -277,16 +278,18 @@ function registroClaveEscritura()
 
 parametroscheck={"penalizado":"false"};
 
-$(function(){
+$(function()
+{
     
     $('#checkPenalizado').click(function() {
         parametroscheck["penalizado"]=$(this).is(':checked');
 //        alert(parametroscheck["penalizado"]);
     });
     
-    $("#btn_guardar_req").click(function(e){
+    $("#btn_guardar_req").click(function(e)
+    {
          e.preventDefault();
-         $("#btn_guardar_req").attr("disabled", "disabled");
+//         $("#btn_guardar_req").attr("disabled", "disabled");
 //         alert("dcf  "+id_asignacion_t);
          var formData = {"ID_ASIGNACION_TEMA_REQUISITO":id_asignacion_t,"REQUISITO":$('#REQUISITO').val(),"PENALIZACION":parametroscheck["penalizado"]}; 
          
@@ -301,16 +304,18 @@ $(function(){
 //                alert("Entro al success");
                  if(r==false)
                  {
-                     swal("","Error en el servidor","error");
-                     setTimeout(function(){swal.close();$("#create-itemRequisito .close").click();},1500);
-                     $("#btn_guardar_req").removeAttr("disabled")
+                    swal("","Error en el servidor","error");
+                    setTimeout(function(){swal.close();$("#create-itemRequisito .close").click();},1500);
+//                     $("#btn_guardar_req").removeAttr("disabled")
+                    $('#create-itemRequisito .close').click();   
                  } else{
                      if(r==true)
                      {
                          swal("","Guardado Exitoso","success");
                          setTimeout(function(){swal.close();},1500);
                          obtenerDatosArbol(id_asignacion_t);
-                         $("#btn_guardar_req").removeAttr("disabled")
+//                         $("#btn_guardar_req").removeAttr("disabled")
+                        $('#create-itemRequisito .close').click();
                      }
                  }
              }
@@ -319,12 +324,14 @@ $(function(){
      });
      
      
-     $("btn_limpiar_req").click(function(){
+     $("btn_limpiar_req").click(function()
+     {
          $("#REQUISITO").val("");
      });
                
      
-     $("#btn_guardar_reg").click(function(e){
+     $("#btn_guardar_reg").click(function(e)
+     {
          e.preventDefault();
         console.log(dataIds_req);
         id_req=-1;
@@ -335,12 +342,10 @@ $(function(){
             }
 //            alert("d "+value.id_requisito);
         });
-        if(cualModoModalAgregarEdicioRegistro=="agregarregistro") {
-         $("#btn_guardar_reg").attr("disabled", "disabled");
-         
-         
-         
-         
+        if(cualModoModalAgregarEdicioRegistro=="agregarregistro") 
+        {
+//         $("#btn_guardar_reg").attr("disabled", "disabled");
+                  
 //         alert("dcf  "+id);
 
 //$("#selectFrecuencia option[value="+ valor +"]").attr("selected",true)
@@ -358,15 +363,16 @@ $(function(){
    //                     alert("Entro al if");
                         swal("","Error en el servidor","error");
                         setTimeout(function(){swal.close();},1500);
-                        $("#btn_guardar_reg").removeAttr("disabled")
+//                        $("#btn_guardar_reg").removeAttr("disabled")
+                        $('#create-itemRegistro .close').click();
                     }else{
                         if(r==true)
                         {
                             swal("","Guardado Exitoso","success");
                             setTimeout(function(){swal.close();$("#create-itemRegistro . close").click();},1500);
                             obtenerDatosArbol(id_asignacion_t);
-
-                            $("#btn_guardar_reg").removeAttr("disabled")
+//                            $("#btn_guardar_reg").removeAttr("disabled")
+                            $('#create-itemRegistro .close').click();
                         }
                     }
 
@@ -386,15 +392,19 @@ $(function(){
              success:function(r)
              {
                  if(r==true){
-                  swal("","Edicion Exitosa","success");
-                         setTimeout(function(){swal.close();},1500);
+                    swal("","Edicion Exitosa","success");
+                    setTimeout(function(){swal.close();},1500);
+                    obtenerDatosArbol(id_asignacion_t);
+                    $('#create-itemRegistro .close').click();
                  }else{
-                       swal("","Actualizacion no Realizada","error");
-                         setTimeout(function(){swal.close();},1500);
+                    swal("","Actualizacion no Realizada","error");
+                    setTimeout(function(){swal.close();},1500);
+                    $('#create-itemRegistro .close').click();
                  }
                  if(r==-1){
-                      swal("","Error En El servidor","error");
-                         setTimeout(function(){swal.close();},1500);
+                    swal("","Error En El servidor","error");
+                    setTimeout(function(){swal.close();},1500);
+                    $('#create-itemRegistro .close').click();
                  }
                  
                  
@@ -404,7 +414,8 @@ $(function(){
         } 
      });
      
-     $("btn_limpiar_reg").click(function(){
+     $("btn_limpiar_reg").click(function()
+     {
          $("#REGISTRO").val("");
      });
      
