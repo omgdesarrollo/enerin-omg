@@ -354,6 +354,7 @@ function graficar2(datos,concepto)
     let dataGrafica = [];
 
     datos = JSON.parse(datos);
+    console.log(datos);
     tituloGrafica += concepto.toUpperCase();
     $.each(datos,(index,value)=>{
         if(value.penalizacion == "true")
@@ -385,6 +386,7 @@ function graficar3(datos,concepto)
     let estado;
 
     datos = JSON.parse(datos);
+    console.log(datos);
     if(concepto == "Cumplido")
     {
         estado = "CUMPLIDO";
@@ -418,7 +420,8 @@ function graficar3(datos,concepto)
             lista[value.id_tema]=[];
         lista[value.id_tema].push(value);
     });
-
+    // console.log("list");
+    // console.log(lista);
     $.each(lista,(index,value)=>{
         evidencias_tema = 0;
         $.each(value,(ind,val)=>{
@@ -435,7 +438,8 @@ function graficar3(datos,concepto)
                     }
                     if(estado == "ATRASADO")
                     {
-                        evidencias_tema+=parseInt(vl.evidencias_realizar)-parseInt(vl.evidencias_validadas);
+                        if(val.frecuencia != "TIEMPO INDEFINIDO")
+                            evidencias_tema+=parseInt(vl.evidencias_realizar)-parseInt(vl.evidencias_validadas);
                     }
                 }
             });
@@ -443,6 +447,7 @@ function graficar3(datos,concepto)
         dataGrafica.push(["Tema: "+value[0].no_tema,value.length,
         ">> Tema:\n"+value[0].nombre_tema+" \n>> Responsable:\n"+value[0].responsable_tema+"\n>> Requisitos: "+value.length+"\n>> Evidencias:"+evidencias_tema, JSON.stringify(value),3]);
     });
+    // console.log(dataGrafica);
     construirGrafica(dataGrafica,tituloGrafica);
 }
 
@@ -465,20 +470,26 @@ function graficar4(datos,concepto)
         $.each(value.detalles_requisito,(ind,val)=>{
             if(val.id_registro != null)
             {
-                if(value.estado_requisito=="ATRASADO")
+                if(value.estado_requisito=="ATRASADO" && val.estado_evidencias == "ATRASADO")
                 {
                     evidencias = val.evidencias_realizar - val.evidencias_validadas;
                 }
-                if(value.estado_requisito=="CUMPLIDO")
+                if(value.estado_requisito=="CUMPLIDO" && val.estado_evidencias == "CUMPLIDO")
                 {
                     evidencias = val.evidencias_validadas;
                 }
-                if(value.estado_requisito=="EN PROCESO")
+                if(value.estado_requisito=="EN PROCESO" && val.estado_evidencias == "EN PROCESO")
                 {
-                    evidencias = val.evidencias_proceso;
+                    if(val.frecuencia == "TIEMPO INDEFINIDO")
+                        evidencias = 1;
+                    else
+                        evidencias = val.evidencias_proceso;
                 }
-                dataGrafica.push(["Registro:\n"+val.registro,evidencias, ">>Registro:"+val.registro+"\n>> Frecuencia:"+val.frecuencia+"\n>> Evidencias:"+evidencias,"[]",-1]);
-                bandera=1;
+                if(evidencias!=0)
+                {
+                    dataGrafica.push(["Registro:\n"+val.registro,evidencias, ">>Registro:"+val.registro+"\n>> Frecuencia:"+val.frecuencia+"\n>> Evidencias:"+evidencias,"[]",-1]);
+                    bandera=1;
+                }
             }
         });
     });

@@ -147,6 +147,10 @@ class ConsultasModel{
                     {
                         $lista[$key]["evidencias_realizar"] = -1;
                     }
+                    if($frecuencia == "POR EVENTO")
+                    {
+                        $lista[$key]["evidencias_realizar"] = -1;
+                    }
                 // }
                 // else
                 // {
@@ -222,7 +226,8 @@ class ConsultasModel{
                     $lista2[$contador]["detalles_requisito"][$contador2]["evidencias_realizar"] = $lista[$i]["evidencias_realizar"];
                     $lista2[$contador]["detalles_requisito"][$contador2]["evidencias_proceso"] = $lista[$i]["evidencias_totales"]-$lista[$i]["evidencias_validadas"];
                     $lista2[$contador]["detalles_requisito"][$contador2]["cumplimiento_evidencias"] = $lista[$i]["cumplimiento_evidencias"];
-                    
+                    if($lista[$i]["frecuencia"]=="TIEMPO INDEFINIDO")
+                        $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] = "EN PROCESO";
                     // if($lista[$i]["fecha_inicio"]!="0000-00-00")
                     // {
                         if($lista[$i]["id_registro"]==NULL)
@@ -259,20 +264,30 @@ class ConsultasModel{
                         if( ($lista[$i]["evidencias_realizar"] - $lista[$i]["evidencias_validadas"] ) >= 2)
                         {
                             $lista2[$contador]["estado_requisito"]="ATRASADO";
+                            $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] = "ATRASADO";
                         }
                         else
                         {
                             if($lista2[$contador]["cumplimiento_requisito"]==100)
+                            {
                                 $lista2[$contador]["estado_requisito"]="CUMPLIDO";
+                                $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] = "CUMPLIDO";
+                            }
                             else
                             {
                                 if(isset($lista2[$contador]["estado_requisito"]))
                                 {
                                     if($lista2[$contador]["estado_requisito"]!="ATRASADO")
+                                    {
                                         $lista2[$contador]["estado_requisito"]="EN PROCESO";
+                                        $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] = "EN PROCESO";
+                                    }
                                 }
                                 else
+                                {
                                     $lista2[$contador]["estado_requisito"]="EN PROCESO";
+                                    $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] = "EN PROCESO";
+                                }
                             }
                         }
                         $lista2[$contador]["estado_tema"]=1;

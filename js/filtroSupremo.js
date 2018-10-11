@@ -140,7 +140,6 @@ function aplicarFiltro(DataFinal)
 function mostrarFiltros()
 {
     // $(".jsgrid-filter-row").slideToggle();
-    lol();
     // // $(".jsgrid-filter-row").animate({height:"toggle"});
     val = $('.jsgrid-filter-row').css("display");
     if(val == "none")
@@ -153,6 +152,8 @@ function mostrarFiltros()
         $('.jsgrid-filter-row').css("display","none");
     //     $('.jsgrid-filter-row').slideUp();
     }
+    // alert("A");
+    setTimeout(lol(),200);
 }
 
 function limpiarFiltros()
