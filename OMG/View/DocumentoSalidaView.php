@@ -443,7 +443,7 @@ async function reiniciar()
         {
                 let doble = await Promise.all([listarThisEmpleados(),listarThisEmpleadosFiltro(),listarThisAutoridadesFiltro(),listarAutoridades()]);
                 inicializarEstructuraGrid().then((res)=>
-                {;
+                {
                         construirGrid();
                         inicializarFiltros().then(()=>
                         {

@@ -214,8 +214,7 @@ estructuraGrid = [
 
 construirGrid();
 
-promesaInicializarFiltros = inicializarFiltros();
-promesaInicializarFiltros.then((resolve2)=>
+inicializarFiltros().then((resolve2)=>
 {
     construirFiltros();
     listarDatos();

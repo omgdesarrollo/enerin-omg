@@ -6,7 +6,10 @@
 // var heightGrid;
 var banderaEditEstado=0;
 $(function(){
+    // $(document).ready(()=>{
+        // console.log("function body");
     $("tbody").on('click','tr td',(obj)=>{
+        // console.log("function body");
         obj = obj.currentTarget;
         if(myPop != undefined)
         {
@@ -40,6 +43,8 @@ $(function(){
             }
         // }
     });
+    console.log($("tbody"));
+    // });
 });
 
 function inyectar_librerias()
