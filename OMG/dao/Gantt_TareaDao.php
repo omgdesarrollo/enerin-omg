@@ -113,7 +113,7 @@ class Gantt_TareaDao {
         }
     }
 
-        public function eliminarGanttTareas($VALUES)
+    public function eliminarGanttTareas($VALUES)
     {
         try
         {
@@ -122,11 +122,31 @@ class Gantt_TareaDao {
             $db=  AccesoDB::getInstancia();
             $lista = $db->executeQueryUpdate($query);
             
+//            echo "este es query eliminar: ".json_encode($query);
             return $lista;
         } catch (Exception $ex)
         {
             throw $ex;
             return -1;
+        }
+    }
+    
+    public function obtenerDatosParaEliminarTarea($id)
+    {
+        try 
+        {
+            $query="SELECT tbgantt_tareas.id, tbgantt_tareas.text, tbgantt_tareas.user
+                    FROM gantt_tareas tbgantt_tareas
+                    WHERE tbgantt_tareas.id=$id";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista = $db->executeQuery($query);
+            
+//            echo "este es el query obtener: ".json_encode($query);
+        return $lista[0];            
+        } catch (Exception $ex) 
+        {
+            
         }
     }
     
