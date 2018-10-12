@@ -362,8 +362,8 @@ function graficar2(datos,concepto)
     let dataGrafica = [];
 
     datos = JSON.parse(datos);
-    console.log("graficar 2");
-    console.log(datos);
+    // console.log("graficar 2");
+    // console.log(datos);
     tituloGrafica += concepto.toUpperCase();
     $.each(datos,(index,value)=>{
         if(value.penalizacion == "true")
@@ -396,9 +396,9 @@ function graficar3(datos,concepto)
     let bandera=0;
 
     datos = JSON.parse(datos);
-    console.log("Graficar 3");
-    console.log(datos);
-    console.log(concepto);
+    // console.log("Graficar 3");
+    // console.log(datos);
+    // console.log(concepto);
     if(concepto == "Cumplido")
     {
         estado = "CUMPLIDO";
@@ -433,7 +433,7 @@ function graficar3(datos,concepto)
         lista[value.id_tema].push(value);
     });
     // console.log("list");
-    console.log(lista);
+    // console.log(lista);
 
     $.each(lista,(index,value)=>{
         bandera=0;
@@ -483,9 +483,9 @@ function graficar4(datos,concepto)
     let evidencias = 0;
 
     datos = JSON.parse(datos);
-    console.log("Grafica 4");
-    console.log(datos);
-    console.log(concepto);
+    // console.log("Grafica 4");
+    // console.log(datos);
+    // console.log(concepto);
 
     $.each(datos,(index,value)=>{
         $.each(value.detalles_requisito,(ind,val)=>{
