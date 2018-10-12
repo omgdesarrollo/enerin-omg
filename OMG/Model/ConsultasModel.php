@@ -163,15 +163,23 @@ class ConsultasModel{
 
                 if($lista[$key]["evidencias_realizar"]==0)
                     $lista[$key]["cumplimiento_evidencias"] = 100;
+
                 if($lista[$key]["evidencias_realizar"]>0)
                     $lista[$key]["cumplimiento_evidencias"] = ($lista[$key]["evidencias_validadas"]/$lista[$key]["evidencias_realizar"])*100;
+
                 if($lista[$key]["evidencias_realizar"]==-1)
                 {
-                    if($frecuencia == "POR EVENTO")
-                        $lista[$key]["cumplimiento_evidencias"] = $lista[$key]["evidencias_validadas"]>0 ? 100 : 0;
+                    if( $lista[$key]["evidencias_totales"] == $lista[$key]["evidencias_validadas"] && $lista[$key]["evidencias_totales"]>0)
+                        $lista[$key]["cumplimiento_evidencias"] = 100;
                     else
-                        $lista[$key]["cumplimiento_evidencias"] = $lista[$key]["evidencias_validadas"]>0 ? 100 : 0;
+                        if( $lista[$key]["evidencias_totales"]>0 )
+                        {
+                            $lista[$key]["cumplimiento_evidencias"] = ($lista[$key]["evidencias_validadas"]/$lista[$key]["evidencias_totales"])*100;
+                        }
+                        else
+                            $lista[$key]["cumplimiento_evidencias"] = 0;
                 }
+
                 if($lista[$key]["evidencias_realizar"]=="X")
                     $lista[$key]["cumplimiento_evidencias"] = "X";
             }
@@ -229,71 +237,127 @@ class ConsultasModel{
                     $lista2[$contador]["detalles_requisito"][$contador2]["evidencias_realizar"] = $lista[$i]["evidencias_realizar"];
                     $lista2[$contador]["detalles_requisito"][$contador2]["evidencias_proceso"] = $lista[$i]["evidencias_totales"]-$lista[$i]["evidencias_validadas"];
                     $lista2[$contador]["detalles_requisito"][$contador2]["cumplimiento_evidencias"] = $lista[$i]["cumplimiento_evidencias"];
-                    if($lista[$i]["frecuencia"]=="TIEMPO INDEFINIDO")
-                        $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] = "EN PROCESO";
+
+                    // if($lista[$i]["frecuencia"]=="INDEFINIDO")
+                    // {
+                        // if($lista[$i]["evidencias_validadas"]==$lista[$i]["evidencias_totales"])
+                        //     $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] = "CUMPLIDO";
+
                     // if($lista[$i]["fecha_inicio"]!="0000-00-00")
                     // {
-                        if($lista[$i]["id_registro"]==NULL)
+                    if( $lista2[$contador]["detalles_requisito"][$contador2]["frecuencia"]=="INDEFINIDO" || $lista2[$contador]["detalles_requisito"][$contador2]["frecuencia"]=="POR EVENTO" )
+                    {
+                        if( $lista2[$contador]["detalles_requisito"][$contador2]["cumplimiento_evidencias"]==100 )
+                            $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"]= "CUMPLIDO";
+                        else
                         {
-                            if(isset($lista2[$contador]["divisor_evidencias"]))
+                            if( ($lista[$i]["evidencias_totales"] - $lista[$i]["evidencias_validadas"] ) >= 2)
+                                $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] = "ATRASADO";
+                            else
+                            {
+                                if( $lista2[$contador]["detalles_requisito"][$contador2]["evidencias_proceso"]>0 )
+                                    $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] = "EN PROCESO";
+                                else
+                                {
+                                    if( $lista2[$contador]["detalles_requisito"][$contador2]["frecuencia"]=="INDEFINIDO" )
+                                        $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] = "NO APLICA";
+                                    else
+                                    {
+                                        $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] = "EN PROCESO";
+                                        $lista2[$contador]["detalles_requisito"][$contador2]["evidencias_proceso"] = 1;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if( ($lista[$i]["evidencias_realizar"] - $lista[$i]["evidencias_validadas"] ) >= 2)
+                            $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] = "ATRASADO";
+                        else
+                        {
+                            if( $lista2[$contador]["detalles_requisito"][$contador2]["cumplimiento_evidencias"] == 100 )
+                                $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] = "CUMPLIDO";
+                            else
+                                $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] = "EN PROCESO";
+                        }
+                    }
+
+                    if(isset($lista2[$contador]["estado_requisito"]))
+                    {
+                        if($lista2[$contador]["estado_requisito"]!="ATRASADO")
+                        {
+                            if( $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] == "ATRASADO")
+                                $lista2[$contador]["estado_requisito"] = "ATRASADO";
+                            else
+                            {
+                                if( $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] == "EN PROCESO" || $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] == "NO APLICA")
+                                    $lista2[$contador]["estado_requisito"] = "EN PROCESO";
+                                else
+                                    $lista2[$contador]["estado_requisito"] = "CUMPLIDO";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if( $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] == "NO APLICA" )
+                        {
+                            $lista2[$contador]["estado_requisito"] = "EN PROCESO";
+                        }
+                        else
+                            $lista2[$contador]["estado_requisito"] = $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"];
+                    }
+
+                    if($lista[$i]["id_registro"]==NULL)
+                    {
+                        if(isset($lista2[$contador]["divisor_evidencias"]))
+                        {
+                            // if( $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] != "NO APLICA" )
+                            // {
+                                $lista2[$contador]["divisor_evidencias"]++;
+                                $lista2[$contador]["sumatoria_evidencias"] += $lista[$i]["cumplimiento_evidencias"];
+                                $lista2[$contador]["cumplimiento_requisito"] = $lista2[$contador]["sumatoria_evidencias"]/$lista2[$contador]["divisor_evidencias"];
+                            // }
+                        }
+                        else
+                        {
+                            // if( $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] != "NO APLICA" )
+                            // {
+                                $lista2[$contador]["divisor_evidencias"] = 1;
+                                $lista2[$contador]["sumatoria_evidencias"] = 100;
+                                $lista2[$contador]["cumplimiento_requisito"] = 100;
+                            // }
+                            // else{}
+                        }
+                    }
+                    else
+                    {
+                        if(isset($lista2[$contador]["divisor_evidencias"]))
+                        {
+                            if( $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] != "NO APLICA" )
                             {
                                 $lista2[$contador]["divisor_evidencias"]++;
                                 $lista2[$contador]["sumatoria_evidencias"] += $lista[$i]["cumplimiento_evidencias"];
                                 $lista2[$contador]["cumplimiento_requisito"] = $lista2[$contador]["sumatoria_evidencias"]/$lista2[$contador]["divisor_evidencias"];
-                            }
-                            else
-                            {
-                                $lista2[$contador]["divisor_evidencias"] = 1;
-                                $lista2[$contador]["sumatoria_evidencias"] = 100;
-                                $lista2[$contador]["cumplimiento_requisito"] = 100;
                             }
                         }
                         else
                         {
-                            if(isset($lista2[$contador]["divisor_evidencias"]))
-                            {
-                                $lista2[$contador]["divisor_evidencias"]++;
-                                $lista2[$contador]["sumatoria_evidencias"] += $lista[$i]["cumplimiento_evidencias"];
-                                $lista2[$contador]["cumplimiento_requisito"] = $lista2[$contador]["sumatoria_evidencias"]/$lista2[$contador]["divisor_evidencias"];
-                            }
-                            else
+                            if( $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] != "NO APLICA" )
                             {
                                 $lista2[$contador]["divisor_evidencias"] = 1;
                                 $lista2[$contador]["sumatoria_evidencias"] = $lista[$i]["cumplimiento_evidencias"];
                                 $lista2[$contador]["cumplimiento_requisito"] = $lista[$i]["cumplimiento_evidencias"];
                             }
-                        }
-
-                        if( ($lista[$i]["evidencias_realizar"] - $lista[$i]["evidencias_validadas"] ) >= 2)
-                        {
-                            $lista2[$contador]["estado_requisito"]="ATRASADO";
-                            $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] = "ATRASADO";
-                        }
-                        else
-                        {
-                            if($lista2[$contador]["cumplimiento_requisito"]==100)
-                            {
-                                $lista2[$contador]["estado_requisito"]="CUMPLIDO";
-                                $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] = "CUMPLIDO";
-                            }
                             else
                             {
-                                if(isset($lista2[$contador]["estado_requisito"]))
-                                {
-                                    if($lista2[$contador]["estado_requisito"]!="ATRASADO")
-                                    {
-                                        $lista2[$contador]["estado_requisito"]="EN PROCESO";
-                                        $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] = "EN PROCESO";
-                                    }
-                                }
-                                else
-                                {
-                                    $lista2[$contador]["estado_requisito"]="EN PROCESO";
-                                    $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] = "EN PROCESO";
-                                }
+                                $lista2[$contador]["divisor_evidencias"] = 0;
+                                $lista2[$contador]["sumatoria_evidencias"] = 0;
+                                $lista2[$contador]["cumplimiento_requisito"] = 0;
                             }
                         }
-                        $lista2[$contador]["estado_tema"]=1;
+                    }
+                    $lista2[$contador]["estado_tema"]=1;
                     // }
                     // else
                     // {
@@ -317,6 +381,7 @@ class ConsultasModel{
             //                     $lista[$key]["estado_requisito"]="EN PROCESO";
             }
             // var_dump($lista2);
+            
             $bandera=0;
             $cumplimiento_tema=[];
             $id_tema;

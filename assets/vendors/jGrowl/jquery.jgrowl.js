@@ -116,11 +116,11 @@
  * - Namespaced all events
  */
 
-$(function(){
-	$("#jGrowl").click(()=>{
-		mostrarOcultarGrowl();
-	});
-});
+// $(function(){
+// 	$("#jGrowl").click(()=>{
+// 		mostrarOcultarGrowl();
+// 	});
+// });
 
 var contadorInstancia=1;
 var newInstanceJGrowl;
@@ -140,6 +140,7 @@ function growlError(head,msj)
 function growlWait(head,msj)
 {
 	$.jGrowl(msj, {header:head, theme:"themeG-wait"});
+	$("#jGrowl").attr("ondblclick","mostrarOcultarGrowl()");
 }
 
 function hora()

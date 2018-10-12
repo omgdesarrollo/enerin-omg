@@ -362,6 +362,7 @@ function graficar2(datos,concepto)
     let dataGrafica = [];
 
     datos = JSON.parse(datos);
+    console.log("graficar 2");
     console.log(datos);
     tituloGrafica += concepto.toUpperCase();
     $.each(datos,(index,value)=>{
@@ -394,6 +395,7 @@ function graficar3(datos,concepto)
     let estado;
 
     datos = JSON.parse(datos);
+    console.log("Graficar 3");
     console.log(datos);
     if(concepto == "Cumplido")
     {
