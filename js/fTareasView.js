@@ -11,7 +11,7 @@ $(function()
         tareaDatos.referencia = $("#REFERENCIA").val();
         tareaDatos.tarea = $("#TAREA").val();
         tareaDatos.id_empleado = $("#ID_EMPLEADOMODAL").val();
-        tareaDatos.fecha_creacion = $("#FECHA_CREACION").val();
+//        tareaDatos.fecha_creacion = $("#FECHA_CREACION").val();
         tareaDatos.fecha_alarma = $("#FECHA_ALARMA").val();
         tareaDatos.fecha_cumplimiento = $("#FECHA_CUMPLIMIENTO").val();
         tareaDatos.status_tarea = $("#STATUS_TAREA").val();
@@ -26,12 +26,12 @@ $(function()
 //                tareaDatos.referencia!=""?
                 tareaDatos.tarea!=""?
                 tareaDatos.id_empleado!=""?
-                tareaDatos.fecha_creacion!=""?
+//                tareaDatos.fecha_creacion!=""?
                 tareaDatos.fecha_alarma!=""?
                 tareaDatos.fecha_cumplimiento!=""?
                 tareaDatos.status_tarea!=""?
 //                tareaDatos.observaciones!=""?
-                true: false: false: false: false: false: false                                                               
+                true: false: false: false: false: false                                                               
             );
         console.log(tareaDatos);
         console.log("termino");
@@ -187,7 +187,8 @@ function reconstruir(value,index)
     tempData["referencia"]=value.referencia;
     tempData["tarea"]=value.tarea;
     tempData["id_empleado"]=value.id_empleado;
-    tempData["fecha_creacion"]= getSinFechaFormato(value.fecha_creacion);
+//    tempData["fecha_creacion"]= getSinFechaFormato(value.fecha_creacion);
+    tempData["fecha_creacion"]= getFechaFormatoH(value.fecha_creacion);
     tempData["fecha_alarma"]= getSinFechaFormato(value.fecha_alarma);
     tempData["fecha_cumplimiento"]= getSinFechaFormato(value.fecha_cumplimiento);
     tempData["status_tarea"]=value.status_tarea;

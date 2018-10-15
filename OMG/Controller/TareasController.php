@@ -64,7 +64,7 @@ switch ($Op) {
         $Lista= $model->insertarTarea(
                 $data['referencia'],
                 $data['tarea'],
-                $data['fecha_creacion'],
+//                $data['fecha_creacion'],
                 $data['fecha_alarma'],
                 $data['fecha_cumplimiento'],
                 $data['status_tarea'],
