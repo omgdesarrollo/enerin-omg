@@ -79,36 +79,59 @@ function lol()
         tam1A = 740 - 190;
         tam2A = tam1A - 42;
         $(Frame).css("height",tam2A-6+"px");
-
-        $("#jsGrid").css("height","380px");
-        
-        // console.log("AQUIII");
-        // console.log(gridInstance);
-        gridInstance.height = 380 + "px";
-        gridInstance._body[0].style.height = "210px";
-        
-        // $(".jsgrid-grid-body").css("height","235px");
+        $("#jsGrid").css("height","390px");
+        gridInstance.height = 390 + "px";
+        let val = $('.jsgrid-filter-row').css("display");
+        if(val != "none")
+        {
+            gridInstance._body[0].style.height = 260 +"px";
+            $(".jsgrid-grid-body").css("height", 260 + "px");
+        }
+        else
+        {
+            gridInstance._body[0].style.height = 318.8 +"px";
+            $(".jsgrid-grid-body").css("height", 318.8 +"px");
+        }
+        $(".jsgrid-pager-container").css({
+            top: 465 + "px",
+            position:"fixed",
+            // left:(leftT/2)-(tamPager/2)
+            left:20
+        });
     }
     else
     {
         tam1A = $(window.parent).height() - 190;
-        console.log(tam1A);
         tam2A = tam1A - 42;
-        console.log(tam2A);
         $(Frame).css("height",tam2A-6+"px");
-        t = $(window.parent).height() - 720;
+        t = $(window.parent).height() - 718;
+
         $("#jsGrid").css("height", t + 380 +"px");
-        // $("#jsGrid").css("bottom","0px");
-        
-        // heightGrid = t;
-        // console.log(gridInstance);
         gridInstance.height = t + 380 + "px";
+
+        let val = $('.jsgrid-filter-row').css("display");
+        if(val != "none")
+        {
+            $(".jsgrid-grid-body").css("height", (t + 235) + "px");
+            gridInstance._body[0].style.height = (t + 235) +"px";
+        }
+        else
+        {
+            $(".jsgrid-grid-body").css("height", (t + 293.8) +"px");
+            gridInstance._body[0].style.height = (t + 293.8) +"px";
+        }
+        $(".jsgrid-pager-container").css({
+            top: t + 445 + "px",
+            position:"fixed",
+            // left:(leftT/2)-(tamPager/2)
+            left:20
+        });
         // console.log($(".jsgrid-grid-body"));
-        gridInstance._body[0].style.height = t + 210 +"px";
+        // gridInstance._body[0].style.height = t + 210 +"px";
         // gridInstance._body[0].style.height = "max-container";
         // gridInstance._body[0].style.height = 80 +"%";
         
-        $(".jsgrid-grid-body").css("height", t + 210 +"px");
+        // $(".jsgrid-grid-body").css("height", t + 210 +"px");
         // console.log(gridInstance);
         // $(".jsgrid-grid-body").css("height",($(window.parent).height() - 720 + 215) +"px");
         
@@ -186,12 +209,19 @@ function construirGrid()
             // alert("3");
             // setTimeout(function(){lol();},200);
             $('.jsgrid-filter-row').removeAttr("style",'display:none');
-            setTimeout(function(){lol();},100);
+            setTimeout(()=>{lol();},100);
             // $(".jsgrid-grid-body").attr("style","height:53.44228935%");
             // $(window.parent).resizeTo($(window.parente).width(),$(window.parente).height()-200);
             // this.resizeTo($(window.parente).width(),$(window.parente).height()-200);
             // window.open("A","B","width=400,height=400");
             // $(".jsgrid-grid-header").attr("style","overflow-x:auto");
+        },
+        onPageChanged:()=>
+        {
+            // $('.jsgrid-filter-row').removeAttr("style",'display:none');
+            setTimeout(() => {
+                lol();
+            },10);
         },
         rowDoubleClick:(args)=>
         {
@@ -244,8 +274,8 @@ function construirGrid()
             // console.log("A");
         },
         width: "100%",
-        height: "390px",
-        autoload: false,
+        height: "300px",
+        autoload: true,
         heading: true,
         sorting: true,
         editing: true,
@@ -254,7 +284,7 @@ function construirGrid()
         pageLoading: false,
         pageSize: 10,
         pageButtonCount: 5,
-        updateOnResize: false,
+        updateOnResize: true,
         confirmDeleting: false,
         noDataContent:"No Existen Registros",
         pagerFormat: "     Paginas: {first}  {prev} {pages} {next} {last}   {pageIndex} de {pageCount}",

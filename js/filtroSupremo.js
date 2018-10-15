@@ -153,7 +153,9 @@ function mostrarFiltros()
     //     $('.jsgrid-filter-row').slideUp();
     }
     // alert("A");
-    setTimeout(lol(),200);
+    // setTimeout(
+        lol();
+        // ,200);
 }
 
 function limpiarFiltros()
