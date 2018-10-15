@@ -142,7 +142,7 @@ $Usuario=  Session::getSesion("user");
 var DataGrid = [];
 var dataListado = [];
 //var EmpleadosCombobox=[];
-var thisEmpleados=[]; 
+//var thisEmpleados=[]; 
 var filtros=[];
 var db={};
 var gridInstance;
@@ -205,12 +205,12 @@ MyComboEmpleados.prototype = new jsGrid.Field
                         return this._inputDate[1];
         }
 });
+
 var customsFieldsGridData=[
          {field:"customControl",my_field:MyCControlField},
 //        {field:"porcentaje",my_field:porcentajesFields},
         {field:"comboEmpleados",my_field:MyComboEmpleados},
 ];
-
 
 estructuraGrid =  [
     { name: "id_principal",visible:false},

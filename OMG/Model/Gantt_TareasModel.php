@@ -584,8 +584,7 @@ class Gantt_TareasModel{
         {
             throw $ex;
             return -1;
-        }
-        
+        }        
     }
 
 

@@ -97,8 +97,8 @@ and open the template in the editor.
     <script src="https://export.dhtmlx.com/gantt/api.js?v=20180322"></script>
     
     <script src="../../assets/gantt_5.1.2_com/codebase/ext/dhtmlxgantt_fullscreen.js" type="text/javascript"></script>
-    
-    
+         
+      
    <!--<script src="../../codebase/ext/dhtmlxgantt_smart_rendering.js"></script>-->
    
    <script src="../../assets/gantt_5.1.2_com/codebase/sources/ext/dhtmlxgantt_keyboard_navigation.js" type="text/javascript"></script>
