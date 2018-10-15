@@ -484,9 +484,46 @@ setScaleConfig('1');
 //termina para darle tamaño pantalla completa
 
 	function showGroups(listname) {
+//            alert("c");
+var listResponsables_con_tareas_asignadas=[];
+var listTemporalResponsables=gantt.serverList(listname);
+var listaLocalOficialResponsables=[];
+var existeResponsableIngresado=false;
+
+var banderaIngresarElPrimerResponsable=true;
+            console.log("gan  ",gantt);
+           
+            gantt.eachTask(function (task) {
+                            console.log("e",task);
+//                             listResponsables_con_tareas_asignadas.push({key:value.id_empleado,label:value.nombre_completo});
+                            $.each(listTemporalResponsables,function (index,value){
+                              if(task.user==value["key"]){
+                                        if(banderaIngresarElPrimerResponsable==true)
+                                             listaLocalOficialResponsables.push({key:value.key,label:value.label});
+                                         
+                                    $.each(listaLocalOficialResponsables,function(index,value){
+                                        if(task.user==value["key"]){
+                                            existeResponsableIngresado=true;
+                                        }
+                                    })
+                                      if(banderaIngresarElPrimerResponsable==false){
+                                        if(existeResponsableIngresado==false){
+                                             listaLocalOficialResponsables.push({key:value.key,label:value.label});
+                                        }
+                                    }
+                                        banderaIngresarElPrimerResponsable=false;
+                                        existeResponsableIngresado=false;
+//                                      listaLocalOficialResponsables.push({key:value.key,label:value.label});
+                                    }  
+                            })
+                                    
+                            })
+
+            
+//            console.log("datos ",gantt.serverList(listname));
 		if (listname) {
 			gantt.groupBy({
-				groups: gantt.serverList(listname),
+				groups:listaLocalOficialResponsables ,
 				relation_property: listname,
 				group_id: "key",
 				group_text: "label"
@@ -691,6 +728,7 @@ setScaleConfig('1');
         
         gantt.templates.grid_row_class =
 		gantt.templates.task_row_class = function (start, end, task) {
+//                    console.log("entro");
 			if (task.$virtual)
 				return "summary-row"
 		};
@@ -815,10 +853,26 @@ gantt.templates.task_class = function (start, end, task) {
 		return "";
 	}
         
+ var responsableQueTienenTareas=[];
  var textEditor = {type: "text", map_to: "text"};   
 gantt.config.columns=[
 //    {name:"id",   label:"id",   align:"center"},
-		{name: "text", label: "Descripcion", tree: true,resize: true},
+		{name: "text", label: "Descripcion", tree: true,resize: true,
+                        template: function (item) {
+//                            console.log("datos de text ",item);
+                            if(item.progress==undefined){
+                                
+//                                responsableQueTienenTareas.push({item.user});
+                                      item.tiene_tareas_asignadas="no"
+                                      return item.text;
+                                }else{
+                                      item.tiene_tareas_asignadas="si"
+                                    return item.text;
+                                }
+                            
+                           
+                        }
+                },
                 {
 			name: "progress", label: "Progreso", width: '*', align: "center",resize: true,
 			template: function (item) {
@@ -827,9 +881,9 @@ gantt.config.columns=[
 				if (item.progress == 0)
 					return "No Iniciada";
                                 if(item.progress==undefined){
-                                    return "sin tareas";
+                                    return "";
                                 }
-                                console.log(item);
+//                                console.log(item);
                                 
 				return Math.round(item.progress * 100) + "%";
 			}
@@ -855,7 +909,17 @@ gantt.config.columns=[
                 
                 
                 
-                {name: "start_date", label: "Fecha de Inicio" 
+                {name: "start_date", label: "Fecha de Inicio",
+                        template: function (item) {
+//                            console.log("datos de text ",item);
+                            if(item.progress==undefined){
+                                      return "sin fecha";
+                                }else{
+                                    return item.start_date;
+                                }
+                            
+                           
+                        } 
                 },
 //                {name: "status", label: "Status",resize: true},
 		{name: "add", width: 40}
@@ -1018,7 +1082,7 @@ dp.init(gantt);
                 }
                 
                 myToolbar.attachEvent("onClick", function(id){
-                       console.log(id);
+//                       console.log(id);
                        switch(id){
                            case "detalles":
                                
