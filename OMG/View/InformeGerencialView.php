@@ -220,8 +220,7 @@ estructuraGrid = [
 construirGrid();
 inicializaChartjs();
 
-promesaInicializarFiltros = inicializarFiltros();
-promesaInicializarFiltros.then((resolve2)=>
+inicializarFiltros().then((resolve2)=>
 {
     construirFiltros();
     listarDatos();

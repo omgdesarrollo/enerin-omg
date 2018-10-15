@@ -230,25 +230,7 @@ class Gantt_TareasModel{
             throw $ex;
             return -1;
         }
-    }
-
-    
-
-    public function eliminarGanttTareas($VALUES)
-    {
-        try
-        {
-            $dao=new Gantt_TareaDao();
-            $rec= $dao->eliminarGanttTareas($VALUES);
-            
-            return $rec;
-        } catch (Exception $ex)
-        {
-            throw $ex;
-            return -1;
-        }
-    }
-    
+    }    
     
     public  static function verificarParentHijoEnTarea($VALUES)
     {
@@ -342,9 +324,9 @@ class Gantt_TareasModel{
                                 }
                                 else{
                                      if($value["!nativeeditor_status"]=='deleted'){
-                                         echo "entro a eliminar la tarea";
-                                         $dao->eliminarGanttTareas($value["id"]);
-//                                         $dao->deleteTareasDe_Gantt_Seguimiento_Entrada($value);    
+//                                         echo "entro a eliminar la tarea";
+//                                         $modelGantt->eliminarGanttTareas($value);
+                                             
                                     }else{
 //                                        echo "entro en actualizar";
 //                                        echo "este es el value: ".json_encode($value);
@@ -442,96 +424,6 @@ class Gantt_TareasModel{
     }
     
 
-    public function guardarNotificacionResponsable($values)
-    {
-      try{
-            $contrato= Session::getSesion("s_cont");
-            $id_usuario=Session::getSesion("user");
-            $dao=new Gantt_TareaDao();
-            $idparaquien= $dao->obtenerUsuarioPorIdEmpleado($values["user"]);
-            $model=new NotificacionesModel();
-            
-             $mensaje="Se le asigno una tarea ".$values["text"]." por el Usuario: ";
-             $tipo_mensaje= 0;
-             $atendido= 'false';
-             $asunto="";
-            $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idparaquien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
-                        
-            return true;
-        }catch (Exception $ex)
-        {
-            return false;
-        }
-        
-    }
-    
-    
-    public function compararInformacionAntesYDespues($value)
-    {
-        try 
-        {
-            $dao=new Gantt_TareaDao();
-            $rec= $dao->listarTareaGantt($value['id']);
-            echo "response: ".json_encode($rec);
-            echo "datos: ".json_encode($value);
-            $modelGantt= new Gantt_TareasModel();
-            
-            foreach ($rec as $value2) 
-            {
-//                echo"valu1".json_encode($value['id']);
-//                echo"value2".json_encode($value2['id']);
-                
-                if($value2['id']==$value['id'])
-                {
-//                    echo "entro al primer if";
-                    if(
-                            $value2['text']!=$value['text'] ||
-                            $value2['user']!=$value['user'] ||
-                            $value2['notas']!=$value['notas'] ||                            
-                            $value2['status']!=$value['status']                                
-                      )
-                    {
-//                        echo "entro al segundo if";
-                        $modelGantt->guardarNotificacionDeactualizaciones($value);
-
-                    }
-                }
-            }
-            
-        } catch (Exception $ex) 
-        {
-            throw $ex;
-            return -1;
-        }
-        
-    }
-
-
-    public function guardarNotificacionDeactualizaciones($values)
-    {
-        try 
-        {
-            $contrato= Session::getSesion("s_cont");
-            $id_usuario=Session::getSesion("user");
-            $mensaje="Se actualizo la tarea: ".$values["text"]." por el Usuario: ";
-            $tipo_mensaje= 0;
-            $atendido= 'false';
-            $asunto="";
-            $dao=new Gantt_TareaDao();
-            $idparaquien= $dao->obtenerUsuarioPorIdEmpleado($values["user"]);
-            $model=new NotificacionesModel();
-            $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idparaquien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
-            
-        } catch (Exception $ex) 
-        {
-            throw $ex;
-            return -1;
-        }
-    }
-
-
-
-
     public function listarEmpleadosNombreCompleto()
     {
        try
@@ -610,5 +502,182 @@ class Gantt_TareasModel{
             return -1;
         }
     }
+    
+    
+    public function eliminarGanttTareas($values)
+    {
+        try 
+        {
+            $dao=new Gantt_TareaDao();
+            $model=new Gantt_TareasModel();
+            
+            $datos= $dao->obtenerDatosParaEliminarTarea($values);
+            $model->guardarNotificacionTareaEliminada($datos);
+            
+            $rec= $dao->eliminarGanttTareas($values);                                    
+            
+            return $rec;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 
+    
+
+    public function guardarNotificacionResponsable($values)
+    {
+      try{
+            $contrato= Session::getSesion("s_cont");
+            $id_usuario=Session::getSesion("user");
+            $dao=new Gantt_TareaDao();
+            $idparaquien= $dao->obtenerUsuarioPorIdEmpleado($values["user"]);
+            $model=new NotificacionesModel();
+            
+             $mensaje="Se le asigno una tarea ".$values["text"]." por el Usuario: ";
+             $tipo_mensaje= 0;
+             $atendido= 'false';
+             $asunto="";
+            $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idparaquien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+                        
+            return true;
+        }catch (Exception $ex)
+        {
+            return false;
+        }
+        
+    }
+    
+    
+    public function compararInformacionAntesYDespues($value)
+    {
+        try 
+        {
+            $dao=new Gantt_TareaDao();
+            $rec= $dao->listarTareaGantt($value['id']);
+            $modelGantt= new Gantt_TareasModel();
+            
+            foreach ($rec as $value2) 
+            {                
+                if($value2['id']==$value['id'])
+                {
+                    if($value2['user']!=$value['user'])
+                    {
+                        $modelGantt->enviarNotificacionWhenRemoveTarea($value2);
+                        $modelGantt->enviarNotificacionWhenRemoveTareaAlNuevoUsuario($value);
+                    }else{
+                        if(
+                            $value2['text']!=$value['text'] ||
+                            $value2['user']!=$value['user'] ||
+                            $value2['notas']!=$value['notas'] ||                            
+                            $value2['status']!=$value['status']                                
+                        )
+                        {
+                            $modelGantt->guardarNotificacionDeactualizaciones($value);
+                        }                        
+                    }
+                }
+            }
+            
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+        
+    }
+
+
+    public function guardarNotificacionDeactualizaciones($values)
+    {
+        try 
+        {
+            $contrato= Session::getSesion("s_cont");
+            $id_usuario=Session::getSesion("user");
+            $mensaje="Se actualizo la tarea: ".$values["text"]." por el Usuario: ";
+            $tipo_mensaje= 0;
+            $atendido= 'false';
+            $asunto="";
+            $dao=new Gantt_TareaDao();
+            $idparaquien= $dao->obtenerUsuarioPorIdEmpleado($values["user"]);
+            $model=new NotificacionesModel();
+            $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idparaquien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+            
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    public function enviarNotificacionWhenRemoveTarea($value2)
+    {
+        try
+        {
+            $contrato= Session::getSesion("s_cont");
+            $id_usuario=Session::getSesion("user");
+            $mensaje= "Se asigno a otro usuario la Tarea: ".$value2['text']." por el Usuario: ";
+            $tipo_mensaje=0;
+            $atendido= 'false';
+            $asunto="";
+            $dao=new Gantt_TareaDao();
+            $idparaquien= $dao->obtenerUsuarioPorIdEmpleado($value2['user']);
+            $model=new NotificacionesModel();
+            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idparaquien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }        
+    }
+
+
+    public function enviarNotificacionWhenRemoveTareaAlNuevoUsuario($value)
+    {
+        try
+        {
+            $contrato= Session::getSesion("s_cont");
+            $id_usuario=Session::getSesion("user");
+            $mensaje= "Se le asigno la Tarea: ".$value['text']." por el Usuario: ";
+            $tipo_mensaje=0;
+            $atendido= 'false';
+            $asunto="";
+            $dao=new Gantt_TareaDao();
+            $idparaquien= $dao->obtenerUsuarioPorIdEmpleado($value['user']);
+            $model=new NotificacionesModel();
+            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idparaquien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }        
+    }    
+    
+       public function guardarNotificacionTareaEliminada($datos)
+    {
+        try 
+        {
+//            echo "datos: ".json_encode($datos);            
+            $contrato= Session::getSesion("s_cont");
+            $id_usuario=Session::getSesion("user");
+            $mensaje="Se elimino la Tarea: ".$datos["text"]." por el Usuario: ";
+            $tipo_mensaje= 0;
+            $atendido= 'false';
+            $asunto="";
+            $dao=new Gantt_TareaDao();
+            $idparaquien= $dao->obtenerUsuarioPorIdEmpleado($datos["user"]);
+            $model=new NotificacionesModel();
+            $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idparaquien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+            
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 }

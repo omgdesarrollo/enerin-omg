@@ -367,8 +367,7 @@
     ultimoNumeroGrid=0;
     construirGrid();
     
-    promesaInicializarFiltros = inicializarFiltros();
-    promesaInicializarFiltros.then((resolve2)=>
+    inicializarFiltros().then((resolve2)=>
     {
         construirFiltros();
         listarDatos();

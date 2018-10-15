@@ -362,7 +362,8 @@ function graficar2(datos,concepto)
     let dataGrafica = [];
 
     datos = JSON.parse(datos);
-    console.log(datos);
+    // console.log("graficar 2");
+    // console.log(datos);
     tituloGrafica += concepto.toUpperCase();
     $.each(datos,(index,value)=>{
         if(value.penalizacion == "true")
@@ -392,9 +393,12 @@ function graficar3(datos,concepto)
     let evidencias_tema = 0;
     let dataGrafica = [];
     let estado;
+    let bandera=0;
 
     datos = JSON.parse(datos);
-    console.log(datos);
+    // console.log("Graficar 3");
+    // console.log(datos);
+    // console.log(concepto);
     if(concepto == "Cumplido")
     {
         estado = "CUMPLIDO";
@@ -430,30 +434,36 @@ function graficar3(datos,concepto)
     });
     // console.log("list");
     // console.log(lista);
+
     $.each(lista,(index,value)=>{
+        bandera=0;
         evidencias_tema = 0;
         $.each(value,(ind,val)=>{
             $.each(val.detalles_requisito,(id,vl)=>{
                 if(vl.id_registro != null)
                 {
-                    if(estado == "CUMPLIDO")
+                    if(estado == "CUMPLIDO" && vl.estado_evidencias == estado)
                     {
+                        // if(vl.estado_evidencias == estado && vl.estado_evidencias == estado)
                         evidencias_tema+=parseInt(vl.evidencias_validadas);
                     }
-                    if(estado == "EN PROCESO")
+                    if(estado == "EN PROCESO" && vl.estado_evidencias == estado)
                     {
                         evidencias_tema+=parseInt(vl.evidencias_proceso);
                     }
                     if(estado == "ATRASADO")
                     {
-                        if(val.frecuencia != "TIEMPO INDEFINIDO")
+                        if(vl.frecuencia != "INDEFINIDO")
                             evidencias_tema+=parseInt(vl.evidencias_realizar)-parseInt(vl.evidencias_validadas);
+                        else
+                            bandera=1;
                     }
                 }
             });
         });
-        dataGrafica.push(["Tema: "+value[0].no_tema,value.length,
-        ">> Tema:\n"+value[0].nombre_tema+" \n>> Responsable:\n"+value[0].responsable_tema+"\n>> Requisitos: "+value.length+"\n>> Evidencias:"+evidencias_tema, JSON.stringify(value),3]);
+        if(bandera==0)
+            dataGrafica.push(["Tema: "+value[0].no_tema,value.length,
+                ">> Tema:\n"+value[0].nombre_tema+" \n>> Responsable:\n"+value[0].responsable_tema+"\n>> Requisitos: "+value.length+"\n>> Evidencias:"+evidencias_tema, JSON.stringify(value),3]);
     });
     // console.log(dataGrafica);
     construirGrafica(dataGrafica,tituloGrafica);
@@ -473,25 +483,28 @@ function graficar4(datos,concepto)
     let evidencias = 0;
 
     datos = JSON.parse(datos);
-    console.log(datos);
+    // console.log("Grafica 4");
+    // console.log(datos);
+    // console.log(concepto);
+
     $.each(datos,(index,value)=>{
         $.each(value.detalles_requisito,(ind,val)=>{
             if(val.id_registro != null)
             {
                 if(value.estado_requisito=="ATRASADO" && val.estado_evidencias == "ATRASADO")
                 {
-                    evidencias = val.evidencias_realizar - val.evidencias_validadas;
+                    evidencias = parseInt(val.evidencias_realizar) - parseInt(val.evidencias_validadas);
                 }
                 if(value.estado_requisito=="CUMPLIDO" && val.estado_evidencias == "CUMPLIDO")
                 {
-                    evidencias = val.evidencias_validadas;
+                    evidencias = parseInt(val.evidencias_validadas);
                 }
                 if(value.estado_requisito=="EN PROCESO" && val.estado_evidencias == "EN PROCESO")
                 {
-                    if(val.frecuencia == "TIEMPO INDEFINIDO")
+                    if(val.frecuencia == "INDEFINIDO")
                         evidencias = 1;
                     else
-                        evidencias = val.evidencias_proceso;
+                        evidencias = parseInt(val.evidencias_proceso);
                 }
                 if(evidencias!=0)
                 {
