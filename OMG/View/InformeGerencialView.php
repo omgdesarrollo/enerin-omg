@@ -202,10 +202,10 @@ var customsFieldsGridData=[
 
 estructuraGrid = [
 //        { name: "id_principal",visible:false},
-        { name:"no",title:"No",width:40},
+        { name:"no",title:"No",width:50},
         { name: "folio_entrada",title:"Folio de Entrada", type: "text",width:180,editing:false},
         { name: "clave_autoridad",title:"Autoridad Remitente", type: "text",width:160,editing:false},
-        { name: "asunto",title:"Asunto", type: "text",editing:false},
+        { name: "asunto",title:"Asunto", type: "text",width:160, editing:false},
         { name: "nombre_completo",title:"Responsable del Tema", type: "text",width:220,editing:false},
         { name: "fecha_asignacion",title:"Fecha de Asignacion", type: "text",width:180,editing:false},
         { name: "fecha_limite_atencion",title:"Fecha Limite de Atencion", type: "text",width:200,editing:false},
