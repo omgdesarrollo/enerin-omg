@@ -191,7 +191,7 @@ function redimencionarLayout()
     var tam1,tam2,tamW,tamW1;
     if($(window).height()<720)
     {
-        tam1 = 740 - 190;
+        tam1 = 740 - 193;
         tamW1 = $(window).width();
         tamW = tamW1 - 330;
         tam2 = tam1 - 42;
@@ -201,7 +201,7 @@ function redimencionarLayout()
     }
     else
     {
-        tam1 = $(window).height() - 190;
+        tam1 = $(window).height() - 193;
         tamW1 = $(window).width();
         tamW = tamW1 - 330;
         tam2 = tam1 - 42;
