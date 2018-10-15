@@ -10,8 +10,8 @@ session_start();
 require_once '../Model/SeguimientoEntradaModel.php';
 require_once '../Pojo/SeguimientoEntradaPojo.php';
 require_once '../util/Session.php';
-//require_once '../Model/GanttModel.php';
-
+require_once '../Model/ArchivoUploadModel.php';
+$modelArchivo=new ArchivoUploadModel();
 
 $Op=$_REQUEST["Op"];
 $model=new SeguimientoEntradaModel();
@@ -20,18 +20,34 @@ $pojo= new SeguimientoEntradaPojo();
 
 switch ($Op) {
 	case 'Listar':
-//                $_REQUEST[""];
-                $Lista=$model->listarSeguimientoEntradas();
-//                $Lista["avanceprograma"]=$model->calculoSumaParents($value);
-                Session::setSesion("listarSeguimientoEntradas",$Lista);//Se esta ocupando para el modulo de informe gerencial
+            $CONTRATO = Session::getSesion("s_cont");
+            $Lista=$model->listarSeguimientoEntradas();
+//                Session::setSesion("listarSeguimientoEntradas",$Lista);//Se esta ocupando para el modulo de informe gerencial
+            foreach($Lista as $key => $value)
+            {
+                    $url = $_REQUEST["URL"].$value["id_documento_entrada"];
+                    $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
+            }
                 
-        //    	$tarjet="../view/principalmodulos.php";
-                header('Content-type: application/json; charset=utf-8');
-		echo json_encode( $Lista);
-		//header("location: login.php");
-//echo $json = json_encode(array("n" => "".$Lista.NOMBRE_EMPLEADO, "a" => "apellido",  "c" => "test"));
-		return $Lista;
-		break;
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode( $Lista);
+            return $Lista;
+            break;
+            
+        case'listarSeguimientoEntrada':
+            $CONTRATO = Session::getSesion("s_cont");
+            $Lista=$model->listarSeguimientoDeEntrada($_REQUEST['ID_SEGUIMIENTO_ENTRADA']);
+
+            foreach($Lista as $key => $value)
+            {
+                    $url = $_REQUEST["URL"].$value["id_documento_entrada"];
+                    $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
+            }
+                
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode( $Lista);
+            return $Lista;
+            break;
             
 	case 'nombresCompletos':
 		# code...
@@ -40,11 +56,13 @@ switch ($Op) {
             echo json_encode( $Lista);
             return $Lista;    
 		break;	
-
-	case 'Guardar':
-                  
-		# code...
-		break;
+            
+        case'responsablePlan':
+            $Lista= $model->responsablePlan();
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($Lista);
+            return $Lista;
+                break;    
 
 	case 'Modificar':
 		# code...

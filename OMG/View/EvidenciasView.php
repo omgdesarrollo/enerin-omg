@@ -311,12 +311,14 @@
     var origenDeDatosVista="evidencias";
 
     var frecuenciaData = [
-                {frecuencia:"DIARIO"},
-                {frecuencia:"SEMANAL"},
-                {frecuencia:"MENSUAL"},
-                {frecuencia:"BIMESTRAL"},
                 {frecuencia:"ANUAL"},
-                {frecuencia:"TIEMPO INDEFINIDO"}
+                {frecuencia:"BIMESTRAL"},
+                {frecuencia:"DIARIO"},
+                {frecuencia:"INDEFINIDO"},
+                {frecuencia:"MENSUAL"},
+                {frecuencia:"POR EVENTO"},
+                {frecuencia:"SEMANAL"},
+                
             ];
 
     // var filtros = [

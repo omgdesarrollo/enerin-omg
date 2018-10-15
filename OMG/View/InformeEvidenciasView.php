@@ -260,15 +260,17 @@ $Usuario=  Session::getSesion("user");
     // var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)},(dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)}];
     var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)},
     (dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)}];
-    
+                
     var frecuenciaData = [
-                {frecuencia:"DIARIO"},
-                {frecuencia:"SEMANAL"},
-                {frecuencia:"MENSUAL"},
-                {frecuencia:"BIMESTRAL"},
-                {frecuencia:"ANUAL"},
-                {frecuencia:"TIEMPO INDEFINIDO"}
-            ];
+        {frecuencia:"ANUAL"},
+        {frecuencia:"BIMESTRAL"},
+        {frecuencia:"DIARIO"},
+        {frecuencia:"INDEFINIDO"},
+        {frecuencia:"MENSUAL"},
+        {frecuencia:"POR EVENTO"},
+        {frecuencia:"SEMANAL"},
+
+    ];        
     
     var estatusFiltro = [
         {estatus:"EN PROCESO"},{estatus:"VALIDADO"}

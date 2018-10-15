@@ -1,5 +1,6 @@
 
-$(function(){
+$(function()
+{
                                                                               
     $("#CLAVE_DOCUMENTO").keyup(function()
     {
