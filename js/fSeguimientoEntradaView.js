@@ -1,9 +1,17 @@
 
-$(function(){
+$(function()
+{
     var $btnDLtoExcel = $('#toExcel'); 
     $btnDLtoExcel.on('click', function () 
     {
-//        console.log("Entro al excelexportHibrido");
+        __datosExcel=[]
+        $.each(dataListado,function (index,value)
+        {
+            console.log("Entro al datosExcel");
+            __datosExcel.push( reconstruirExcel(value,index+1) );
+        });
+        DataGridExcel= __datosExcel;
+        
         $("#listjson").excelexportHibrido({
             containerid: "listjson"
             , datatype: 'json'
@@ -18,7 +26,9 @@ $(function(){
 
 function inicializarFiltros()
 {
-    filtros =[
+    return new Promise((resolve,reject)=>
+    {
+        filtros =[
             {id:"noneUno",type:"none"},
             {id:"folio_entrada",type:"text"},
             {id:"clave_autoridad",type:"text"},
@@ -45,223 +55,58 @@ function inicializarFiltros()
                         {"condicion":"Tiempo Vencido","descripcion":"Tiempo Vencido"}
                     ]
             },
-            {id:"id_empleadoplan",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completoplan"},
+            {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completoplan"},
             {id:"noneDos",type:"none"},
             {id:"noneTres",type:"none"},
             {id:"noneCuatro",type:"none"},
             {name:"opcion",id:"opcion",type:"opcion"}
-            ];
+                ];
+        resolve();    
+    });        
 }
 
-
-
-function construirGrid()
-{
-    jsGrid.fields.customControl = MyCControlField;
-    db={
-            loadData: function()
-            {
-                return DataGrid;
-            },
-            insertItem: function(item)
-            {
-                return item;
-            },
-        };
-    
-    $("#jsGrid").jsGrid({
-        onInit: function(args)
-        {
-            gridInstance=args.grid;
-            jsGrid.Grid.prototype.autoload=true;
-        },
-        onDataLoading: function(args)
-        {
-            loadBlockUi();
-        },
-        onDataLoaded:function(args)
-        {
-            $('.jsgrid-filter-row').removeAttr("style",'display:none');
-        },
-        onRefreshing: function(args) {
-        },
-        
-        width: "100%",
-        height: "300px",
-        autoload:true,
-        heading: true,
-        sorting: true,
-        editing: true,
-        paging: true,
-        controller:db,
-        pageLoading:false,
-        pageSize: 5,
-        pageButtonCount: 5,
-        updateOnResize: true,
-        confirmDeleting: true,
-        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
-//        filtering:false,
-//        data: __datos,
-        fields: 
-        [
-            { name: "id_principal",visible:false},
-            { name:"no",title:"No",width:50},
-            { name: "folio_entrada",title:"Folio de Entrada", type: "text", validate: "required",width:180,editing:false},
-            { name: "clave_autoridad",title:"Autoridad Remitente", type: "text", validate: "required",width:180,editing:false},
-            { name: "asunto",title:"Asunto", type: "text", validate: "required",width:180,editing:false},
-            { name: "id_empleadotema",title:"Responsable del Tema", type: "text", validate: "required",width:250,editing:false},
-            { name: "fecha_asignacion",title:"Fecha de Asignacion", type: "text", validate: "required",width:180,editing:false},            
-            { name: "fecha_limite_atencion",title:"Fecha Limite de Atencion", type: "text", validate: "required",width:200,editing:false},            
-            { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required",width:160,editing:false},
-            { name: "status_doc",title:"Estatus", type: "text",width:110, validate: "required",editing:false},
-            { name: "condicion",title:"Condición", type: "text", validate: "required",width:140,editing:false},
-            { name: "id_empleadoplan",title:"Responsable del Plan", type: "select",width:250,
-                items:EmpleadosCombobox,
-                valueField:"id_empleadoplan",
-                textField:"nombre_completoplan"
-            },
-            { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:140, editing:false },            
-            { name: "registrar_programa",title:"Programa", type: "text", validate: "required",width:110, editing:false },
-            { name: "avance_programa",title:"Avance del Programa", type: "text", validate: "required",width:170,editing:false },           
-            { name:"delete", title:"Opción", type:"customControl",sorting:""}
-        ],
-        onItemUpdated: function(args)
-        {
-            console.log(args);
-            columnas={};
-            id_afectado=args["item"]["id_principal"][0];
-            $.each(args["item"],function(index,value)
-            {
-                if(args["previousItem"][index] != value && value!="")
-                {
-                        if(index!="id_principal" && !value.includes("<button") && index!="delete")
-                        {
-                                columnas[index]=value;
-                        }
-                }
-            });
-            if(Object.keys(columnas).length!=0)
-            {
-                    $.ajax({
-                            url: '../Controller/GeneralController.php?Op=Actualizar',
-                            type:'GET',
-                            data:'TABLA=seguimiento_entrada'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
-                            success:function(exito)
-                            {
-                                refresh();
-                                swal("","Actualizacion Exitosa!","success");
-                                setTimeout(function(){swal.close();},1000);
-                            },
-                            error:function()
-                            {
-                                swal("","Error en el servidor","error");
-                                setTimeout(function(){swal.close();},1500);
-                            }
-                    });
-            }
-        },
-        
-        onItemDeleting: function(args) 
-        {
-
-        }
-        
-    });
-}
-
-var MyCControlField = function(config)
-{
-    jsGrid.Field.call(this, config);
-};
-
-
-MyCControlField.prototype = new jsGrid.Field
-({
-        css: "date-field",
-        align: "center",
-        sorter: function(date1, date2)
-        {
-            console.log("haber cuando entra aqui");
-            console.log(date1);
-            console.log(date2);
-            // return 1;
-        },
-        itemTemplate: function(value,todo)
-        {
-//            alert(value,todo);
-//            if(value[0]['reg']!="0" || value[0]['validado']!=0)
-//                return "";
-//            else
-//                return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-delete-button ',title:"Eliminar", type:'button',onClick:"preguntarEliminar("+JSON.stringify(todo)+")"});
-            return this._inputDate = $("<input>").attr( {class:'jsgrid-button jsgrid-edit-button ',title:"Editar", type:'button'});
-        },
-        insertTemplate: function(value)
-        {
-        },
-        editTemplate: function(value)
-        {
-            val = "<input class='jsgrid-button jsgrid-update-button' type='button' title='Actualizar' onClick='aceptarEdicion()'>";
-            val += "<input class='jsgrid-button jsgrid-cancel-edit-button' type='button' title='Cancelar Edición' onClick='cancelarEdicion()'>";
-            return val;
-        },
-        insertValue: function()
-        {
-        },
-        editValue: function()
-        {
-        }
-});
-
-
-function cancelarEdicion()
-{
-    $("#jsGrid").jsGrid("cancelEdit");
-}
-
-function aceptarEdicion()
-{
-    gridInstance.updateItem();
-}
 
 function listarDatos()
 {
-    var __datos=[],__datosExcel=[];    
-    datosParamAjaxValues={};
-    datosParamAjaxValues["url"]="../Controller/SeguimientoEntradasController.php?Op=Listar";
-    datosParamAjaxValues["type"]="POST";
-    datosParamAjaxValues["async"]=false;
-    
-    var variablefunciondatos=function obtenerDatosServer (data)
+    return new Promise((resolve,reject)=>
     {
-        dataListado = data;
-        $.each(data,function(index,value)
+        URL = 'filesDocumento/Entrada/';
+        var __datos=[];
+        $.ajax(
         {
-            __datos.push(reconstruir(value,index++));
-        });
-        
-        $.each(data,function(index,value)
-        {
-            __datosExcel.push(reconstruirExcel(value,index++));
-        });
-        
-        DataGridExcel=__datosExcel;
-    }
-    
-    
-    var listfunciones=[variablefunciondatos];
-    ajaxHibrido(datosParamAjaxValues,listfunciones);
-    DataGrid = __datos;
-}
-
-
-function reconstruirTable(_datos)
-{
-    __datos=[];
-    $.each(_datos,function(index,value)
-    {
-        __datos.push(reconstruir(value,index++));
-    });
-    construirGrid(__datos);
+            url:"../Controller/SeguimientoEntradasController.php?Op=Listar",
+            type:"GET",
+            data:"URL="+URL,
+            beforeSend:function()
+            {
+                growlWait("Solicitud","Solicitando Datos...");
+            },
+            success:function(data)
+            {
+                if(typeof(data)=="object")
+                {
+                    dataListado = data;
+                    $.each(data,function(index,value)
+                    {
+                        __datos.push(reconstruir(value,index++));
+                    });
+                    DataGrid = __datos;
+                    gridInstance.loadData();
+                    resolve();
+                    
+                }else{
+                    growlSuccess("Solicitud","No Existen Registros");
+                    reject();
+                }
+                
+            },
+            error:function()
+            {
+                growlError("Error","Error en el servidor");
+                reject();
+            }
+        });     
+    });        
 }
 
 
@@ -293,29 +138,21 @@ function reconstruir(value,index)
         };
 //        valGantt.push({"id_documento_entrada":value.id_documento_entrada,"folio_entrada":value.folio_entrada});
     tempData["condicion"]=value.condicion;    
-    tempData["id_empleadoplan"]=value.id_empleadoplan;
+    tempData["id_empleado"]=value.id_empleado;
+    
     tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_documento_entrada+")' type='button' class='botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
     tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 22px'></i></button>";
+    
     if(value.avance_programa!=null)
         tempData["registrar_programa"]="<button id='btn_cargaGantt' class='botones_vista_tabla' onClick='cargadePrograma("+JSON.stringify({"id_documento_entrada":value.id_documento_entrada,"folio_entrada":value.folio_entrada})+")'>Vizualizar</button>";
     else
         tempData["registrar_programa"]="<button id='btn_cargaGantt' class='botones_vista_tabla' onClick='cargadePrograma("+JSON.stringify({"id_documento_entrada":value.id_documento_entrada,"folio_entrada":value.folio_entrada})+")'>Cargar</button>";
 
-    tempData["avance_programa"]=(value.avance_programa*100).toFixed(2)+"%";    
-//    tempData["delete"]= [{"reg":value.reg,"validado":value.validado}];
-
-//este lo voy a checar no borrar
-//var n2 = 12.398491;
-//n2 = parseFloat(n2);
-//alert('Con redondeo: ' + parseFloat(n2).toFixed(2));
-//var a2 = Math.floor(n2 * 100) / 100;
-//alert('Sin redondeo: ' + a2.toFixed(2));
- //aqui termina lo que voy a a checar
-// var a2 = Math.floor(n2 * 100) / 100;
-//alert('Sin redondeo: ' + a2.toFixed(2));
-// aqui termina lo que voy a a checar
- 
- 
+    tempData["avance_programa"]=(value.avance_programa*100).toFixed(2)+"%"; 
+    tempData["id_principal"].push({eliminar : 0});
+    tempData["id_principal"].push({editar : 1});
+    tempData["delete"]= tempData["id_principal"] ;
+    
     return tempData;
 }
 
@@ -346,15 +183,131 @@ function reconstruirExcel(value,index)
         {
             tempData["Status"]="Terminado";
         };
-//        valGantt.push({"id_documento_entrada":value.id_documento_entrada,"folio_entrada":value.folio_entrada});
-    tempData["Condicion Logica"]=value.condicion;    
+    tempData["Condicion"]=value.condicion;    
     tempData["Responsable del Plan"]=value.nombre_completoplan;
-//    tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_documento_entrada+")' type='button' class='btn btn-info' data-toggle='modal' data-target='#create-itemUrls'>";
-//    tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Mostrar</button>";
-//    tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info' onClick='cargadePrograma("+JSON.stringify({"id_documento_entrada":value.id_documento_entrada,"folio_entrada":value.folio_entrada})+")'>Cargar Programa</button>";
-    tempData["Avance del Programa"]=(value.avance_programa*100).toFixed(2)+"%";    
-//    tempData["delete"]= [{"reg":value.reg,"validado":value.validado}]; 
+    
+    if(value.archivosUpload[0].length==0)
+        tempData["Archivo Adjunto"]="No";
+    else
+        tempData["Archivo Adjunto"]="Si";
+        
+    tempData["Avance del Programa"]=(value.avance_programa*100).toFixed(2)+"%";
+    
     return tempData;
+}
+
+
+function saveUpdateToDatabase(args)//listo
+{
+        columnas=new Object();
+        id_afectado = args['item']['id_principal'][0];
+        verificar = 0;
+        $.each(args['item'],(index,value)=>
+        {
+                if(args['previousItem'][index]!=value && value!="")
+                {
+                        if(index!='id_principal' && !value.includes("<button") && index!="delete")
+                        {
+                                columnas[index]=value;
+                        }
+                }
+        });
+        
+        if( Object.keys(columnas).length != 0 && verificar==0)
+        {
+            
+            $.ajax({
+                url:"../Controller/GeneralController.php?Op=Actualizar",
+                type:"POST",
+                data:'TABLA=seguimiento_entrada'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
+                beforeSend:()=>
+                {
+                        growlWait("Actualización","Espere...");
+                },
+                success:(data)=>
+                {
+                        if(data==1)
+                        {
+                                growlSuccess("Actulización","Se actualizaron los campos");
+                                actualizarSeguimientoEntrada(id_afectado.id_seguimiento_entrada);
+                        }
+                        else
+                        {
+                                growlError("Actualización","No se pudo actualizar");
+                                componerDataGrid();
+                                gridInstance.loadData();
+                        }
+                },
+                error:function()
+                {
+                        componerDataGrid();
+                        gridInstance.loadData();
+                        growlError("Error","Error del servidor");
+                }
+            });
+        }
+        else
+        {
+                componerDataGrid();
+                gridInstance.loadData();
+        }
+}
+
+function actualizarSeguimientoEntrada(id_seguimiento_entrada)
+{
+    URL = 'filesDocumento/Entrada/';
+    $.ajax({
+        url:'../Controller/SeguimientoEntradasController.php?Op=listarSeguimientoEntrada',
+        type: 'POST',
+        data:'ID_SEGUIMIENTO_ENTRADA='+id_seguimiento_entrada+"&URL="+URL,
+        success:function(datos)
+        {
+                if(typeof(datos)=="object")
+                {
+                    $.each(datos,function(index,value){
+                            componerDataListado(value);
+                    });
+                    componerDataGrid();
+                    gridInstance.loadData();
+                }
+                else
+                {
+                        growlError("Actualizar Vista","No se pudo actualizar la vista, refresque");
+                        componerDataGrid();
+                        gridInstance.loadData();
+                }
+        },
+        error:function()
+        {
+                componerDataGrid();
+                gridInstance.loadData();
+                growlError("Error","Error del servidor");
+        }
+    });
+}
+
+
+function componerDataListado(value)// id de la vista documento, listo
+{
+    id_vista = value.id_seguimiento_entrada;
+    id_string = "id_seguimiento_entrada";
+    $.each(dataListado,function(indexList,valueList)
+    {
+        $.each(valueList,function(ind,val)
+        {
+            if(ind == id_string)
+                    ( val==id_vista) ? dataListado[indexList]=value : console.log();
+        });
+    });
+}
+
+function componerDataGrid()//listo
+{
+    __datos = [];
+    $.each(dataListado,function(index,value){
+        __datos.push(reconstruir(value,index+1));
+    });
+    DataGrid = __datos;
 }
 
 
@@ -370,6 +323,29 @@ function listarEmpleados()
         }
     });
     return EmpleadosCombobox;
+}
+
+function listarThisEmpleados()
+{
+    return new Promise((resolve,reject)=>
+    {
+        $.ajax(
+            {
+                url:"../Controller/SeguimientoEntradasController.php?Op=responsablePlan",
+                type:"GET",
+                success:function(empleados)
+                {
+                    thisEmpleados = empleados;
+                    resolve();
+                    
+                },
+                error:function(er)
+                {
+                    reject(er);
+                }
+
+            });
+    });
 }
 
 months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
@@ -434,26 +410,4 @@ function refresh()
    inicializarFiltros();
    construirFiltros();
    gridInstance.loadData();
-   $(".jsgrid-grid-body").css({"height":"171px"});
-}
-
-function loadSpinner()
-{
-    myFunction();
-}
-
-
-function loadBlockUi()
-{
-    $.blockUI({message: '<img src="../../images/base/loader.GIF" alt=""/><span style="color:#FFFFFF"> Espere Por Favor</span>', css:
-    { 
-        border: 'none', 
-        padding: '15px', 
-        backgroundColor: '#000', 
-        '-webkit-border-radius': '10px', 
-        '-moz-border-radius': '10px', 
-        opacity: .5, 
-        color: '#fff' 
-    },overlayCSS: { backgroundColor: '#000000',opacity:0.1,cursor:'wait'} }); 
-    setTimeout($.unblockUI, 2000);
 }

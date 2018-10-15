@@ -378,10 +378,10 @@ var customsFieldsGridData=[
 //        {field:"date",my_field:MyField},
 ];
 
-function inicializarEstructuraGrid()
-{
-        return new Promise((resolve,reject)=>
-        {
+// function inicializarEstructuraGrid()
+// {
+//         return new Promise((resolve,reject)=>
+//         {
                 estructuraGrid=[
                         { name: "id_principal", visible:false },
                         { name: "id_documento_entrada", visible:false },
@@ -397,9 +397,9 @@ function inicializarEstructuraGrid()
                         { name: "observaciones", title: "Observacion", type: "text", width:140},
                         { name: "delete", title: "Opcion", type: "customControl", width:100}
                 ];
-                resolve();
-        });
-}
+                // resolve();
+        // });
+// }
 
 ultimoNumeroGrid=0;
 
@@ -436,27 +436,28 @@ function inicializarFiltros()
 // });
 
 
+// inicializarEstructuraGrid();
+construirGrid();
 async function reiniciar()
 {
         $("#btnrefrescar").attr("disabled",true);
         try
         {
                 let doble = await Promise.all([listarThisEmpleados(),listarThisEmpleadosFiltro(),listarThisAutoridadesFiltro(),listarAutoridades()]);
-                inicializarEstructuraGrid().then((res)=>
-                {
-                        construirGrid();
+                // inicializarEstructuraGrid().then((res)=>
+                // {
                         inicializarFiltros().then(()=>
                         {
                                 construirFiltros();
                                 listarDatos().then((listD)=>{ $("#btnrefrescar").removeAttr("disabled"); });
                         });
-                }
-                ,
-                (error)=>
-                {
+                // }
+                // ,
+                // (error)=>
+                // {
                         growlError("Error","Error en el servidor");
                         $("#btnrefrescar").removeAttr("disabled");
-                });
+                // });
         }catch(error)
         {
                 growlError("Error","Error "+error);

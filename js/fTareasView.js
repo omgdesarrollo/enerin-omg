@@ -218,7 +218,7 @@ function reconstruirExcel(value,index)
     tempData["No"]= index;  
     tempData["Referencia"]=value.referencia;
     tempData["Tema"]=value.tarea;
-    tempData["Responsable del Plan"]=value.nombre_completo;
+    tempData["Responsable"]=value.nombre_completo;
     tempData["Fecha de Creacion"]= getSinFechaFormato(value.fecha_creacion);
     tempData["Fecha Alarma"]= getSinFechaFormato(value.fecha_alarma);
     tempData["Fecha de Cumplimiento"]= getSinFechaFormato(value.fecha_cumplimiento);
@@ -235,11 +235,14 @@ function reconstruirExcel(value,index)
         tempData["Status"]="Terminado";
     }
     tempData["Observaciones"]=value.observaciones;
-//    tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_tarea+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
-//    tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar</button>";
-//    tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info botones_vista_tabla' onClick='cargarprogram("+value.id_tarea+")'>Cargar Programa</button>";    
+    
+    if(value.archivosUpload[0].length==0)
+        tempData["Archivo Adjunto"]= "No"
+    else
+        tempData["Archivo Adjunto"]= "Si"
+        
     tempData["Avance del Programa"]=(value.avance_programa*100).toFixed(2)+"%";
-//    tempData["delete"]= [{"existe_programa":value.existe_programa,"existe_archivo":value.archivosUpload[0].length}];
+    
     return tempData;
 }
 

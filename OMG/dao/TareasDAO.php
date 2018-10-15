@@ -4,19 +4,45 @@ require_once '../ds/AccesoDB.php';
 class TareasDAO{
     
 
-    public function listarTareas()
+//    public function listarTareas()
+//    {
+//        try
+//        {
+//            $query="SELECT tbtareas.id_tarea, tbtareas.referencia, tbtareas.tarea, tbtareas.fecha_creacion, tbtareas.fecha_alarma,
+//                    tbtareas.fecha_cumplimiento, tbtareas.status_tarea, tbtareas.observaciones, tbtareas.existe_programa,tbtareas.avance_programa,		 
+//                    tbempleados.id_empleado, CONCAT(tbempleados.nombre_empleado,' ', tbempleados.apellido_paterno,' ', tbempleados.apellido_materno) AS nombre_completo
+//                    FROM tareas tbtareas
+//                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbtareas.id_empleado";
+//            
+//            $db=  AccesoDB::getInstancia();
+//            $lista=$db->executeQuery($query);
+//
+//            return $lista;
+//            
+//        } catch (Exception $ex)
+//        {
+//            throw $ex;
+//            return -1;
+//        }
+//    }
+    
+    public function listarTareas($id_empleado)
     {
         try
         {
             $query="SELECT tbtareas.id_tarea, tbtareas.referencia, tbtareas.tarea, tbtareas.fecha_creacion, tbtareas.fecha_alarma,
-                    tbtareas.fecha_cumplimiento, tbtareas.status_tarea, tbtareas.observaciones, tbtareas.existe_programa,tbtareas.avance_programa,		 
-                    tbempleados.id_empleado, CONCAT(tbempleados.nombre_empleado,' ', tbempleados.apellido_paterno,' ', tbempleados.apellido_materno) AS nombre_completo
+                    tbtareas.fecha_cumplimiento, tbtareas.status_tarea, tbtareas.observaciones, tbtareas.existe_programa,
+                    tbtareas.avance_programa, tbempleados.id_empleado, CONCAT(tbempleados.nombre_empleado,' ', tbempleados.apellido_paterno,' ', tbempleados.apellido_materno) 
+                    AS nombre_completo                    
                     FROM tareas tbtareas
-                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbtareas.id_empleado";
+                    LEFT JOIN empleados tbempleados ON tbempleados.id_empleado=tbtareas.id_empleado                  
+                    LEFT JOIN gantt_tareas tbgantt_tareas ON tbgantt_tareas.id_tarea=tbtareas.id_tarea                    
+                    WHERE tbtareas.id_empleado=$id_empleado OR tbgantt_tareas.user=$id_empleado  GROUP BY tbtareas.tarea";
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
 
+//            echo "Este es el Query: ".json_encode($query);
             return $lista;
             
         } catch (Exception $ex)
@@ -174,6 +200,27 @@ class TareasDAO{
         
     }
     
+        public function obtenerEmpleadoPorIdUsuario($id_usuario)
+    {
+        try
+        {
+            $query="SELECT tbusuarios.id_empleado
+                    FROM usuarios tbusuarios
+                    WHERE tbusuarios.id_usuario=$id_usuario";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            
+//            echo "este es el query id_usuario: ".json_encode($query);
+            return $lista[0]['id_empleado'];
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+        
+    }
+    
     public function verificarSiYaExisteLaTarea($cualverificar,$cadena)
     {
       try
@@ -192,6 +239,8 @@ class TareasDAO{
       }
     }
     
+    
+//    public function 
 }
 
 ?>
