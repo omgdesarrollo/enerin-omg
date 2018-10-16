@@ -133,7 +133,7 @@ function reconstruirExcel(value,index)
     });
     tempData["% Cumplimiento Tema"]= ((tempData["Requisitos Cumplidos"]/tempData["Requisitos por Tema"])*100).toFixed(2)+("%");
     
-    console.log("Cumplimiento Tema: ",tempData["% Cumplimiento Tema"]);
+//    console.log("Cumplimiento Tema: ",tempData["% Cumplimiento Tema"]);
     return tempData;
 }
 
