@@ -1049,7 +1049,7 @@ dp.init(gantt);
                         var agrupacionesCampos=Array(	Array('agrupar_descripcion', 'obj', 'Descripcion', '661.png'),
 						Array('agrupar_responsables','obj', 'Responsables' , '659.png'));
                         
-                        myToolbar.addButtonSelect("agrupar_descripcion", 13, "Agrupar", agrupacionesCampos, "691.png");
+                        myToolbar.addButtonSelect("agrupar_descripcion", 13, "Filtrar", agrupacionesCampos, "691.png");
 
 			myToolbar.addSeparator("sep3", 8);
                         var visualizacionBarras=Array(	Array('tiempodia', 'obj', 'Dia', '663.png'),
