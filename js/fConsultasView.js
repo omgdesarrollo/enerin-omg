@@ -484,7 +484,7 @@ function graficar4(datos,concepto)
 
     datos = JSON.parse(datos);
     // console.log("Grafica 4");
-    // console.log(datos);
+    console.log(datos);
     // console.log(concepto);
 
     $.each(datos,(index,value)=>{
@@ -504,7 +504,7 @@ function graficar4(datos,concepto)
                     if(val.frecuencia == "INDEFINIDO")
                         evidencias = 1;
                     else
-                        evidencias = parseInt(val.evidencias_proceso);
+                        evidencias = parseInt(val.evidencias_proceso) == 0 ? 1 : parseInt(val.evidencias_proceso) ;
                 }
                 if(evidencias!=0)
                 {

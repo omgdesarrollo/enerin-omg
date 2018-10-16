@@ -455,8 +455,8 @@ async function reiniciar()
                 // ,
                 // (error)=>
                 // {
-                        growlError("Error","Error en el servidor");
-                        $("#btnrefrescar").removeAttr("disabled");
+                        // growlError("Error","Error en el servidor");
+                        // $("#btnrefrescar").removeAttr("disabled");
                 // });
         }catch(error)
         {
