@@ -1002,12 +1002,12 @@ var jsonObj = {};
                         }    
         });
                 swal({
-  title: 'Selecciona un cumplimiento',
+  title: 'Seleccione una Opcion',
   input: 'select',
 //  html:s,
 //  html:'<input type=\'text\' disabled>',
   inputOptions:jsonObj,
-  inputPlaceholder: 'selecciona un cumplimiento ',
+  inputPlaceholder: 'Sin cumplimiento seleccionado ',
   showCancelButton: false,
   showLoaderOnConfirm: true,
    allowEscapeKey:false,
