@@ -149,11 +149,11 @@ require_once 'EncabezadoUsuarioView.php';
                         <div class="help-block with-errors"></div>
                     </div>
                 
-                    <div class="form-group">
+<!--                    <div class="form-group">
                         <label class="control-label" for="title">Fecha de Creacion:</label>
                         <input type="date" id="FECHA_CREACION" class="form-control" data-error="Ingrese la Fecha de Recepcion" required>
                         <div id="mensaje3" class="help-block with-errors"></div>
-                    </div>
+                    </div>-->
 
                     <div class="form-group">
                         <label class="control-label" for="title">Fecha de Alarma:</label>                         
