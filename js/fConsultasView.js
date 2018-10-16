@@ -71,15 +71,23 @@ function reconstruir(value,index)
     tempData["nombre_tema"] = value[0].nombre_tema;
     // tempData["id_responsable"] = value.id_responsable;
     tempData["responsable_tema"] = value[0].responsable_tema;
+    bandara = 0;
     // tempData["cumplimiento_tema"] = value[0].cumplimiento_tema;
 
-    tempData["requisitos_tema"] = value.length;
+    tempData["requisitos_tema"] = 0;
     
     tempData["requisitos_cumplidos"] = 0;
     $.each(value,(ind,val)=>
     {
+        bandera = 0;
         if(val["estado_requisito"] == "CUMPLIDO")
             tempData["requisitos_cumplidos"]++;
+        $.each(val.detalles_requisito,(i,v)=>{
+            if(v.id_registro != null)
+                bandera = 1;
+        });
+        if(bandera==1)
+            tempData["requisitos_tema"]++;
     });
     
     tempData["cumplimiento_tema"] = (tempData["requisitos_cumplidos"]/tempData["requisitos_tema"])*100;
@@ -481,6 +489,7 @@ function graficar4(datos,concepto)
     let tituloGrafica = "REGISTROS";
     let id_registro;
     let evidencias = 0;
+    let especial = 0;
 
     datos = JSON.parse(datos);
     // console.log("Grafica 4");
@@ -489,6 +498,8 @@ function graficar4(datos,concepto)
 
     $.each(datos,(index,value)=>{
         $.each(value.detalles_requisito,(ind,val)=>{
+            evidencias=0;
+            especial=0;
             if(val.id_registro != null)
             {
                 if(value.estado_requisito=="ATRASADO" && val.estado_evidencias == "ATRASADO")
@@ -502,13 +513,21 @@ function graficar4(datos,concepto)
                 if(value.estado_requisito=="EN PROCESO" && val.estado_evidencias == "EN PROCESO")
                 {
                     if(val.frecuencia == "INDEFINIDO")
+                    {
+                        // especial = 1;
                         evidencias = 1;
+                    }
                     else
-                        evidencias = parseInt(val.evidencias_proceso) == 0 ? 1 : parseInt(val.evidencias_proceso) ;
+                    {
+                        parseInt(val.evidencias_proceso) == 0 ? (especial = 1, evidencias=1) : evidencias = parseInt(val.evidencias_proceso) ;
+                    }
                 }
                 if(evidencias!=0)
                 {
-                    dataGrafica.push(["Registro:\n"+val.registro,evidencias, ">>Registro:"+val.registro+"\n>> Frecuencia:"+val.frecuencia+"\n>> Evidencias:"+evidencias,"[]",-1]);
+                    if(especial == 0)
+                        dataGrafica.push(["Registro:\n"+val.registro,evidencias, ">>Registro:"+val.registro+"\n>> Frecuencia:"+val.frecuencia+"\n>> Evidencias:"+evidencias,"[]",-1]);
+                    else
+                        dataGrafica.push(["Registro:\n"+val.registro,evidencias, ">>Registro:"+val.registro+"\n>> Frecuencia:"+val.frecuencia+"\n>> Evidencias:0","[]",-1]);
                     bandera=1;
                 }
             }
