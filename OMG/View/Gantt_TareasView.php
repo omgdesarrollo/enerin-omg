@@ -935,6 +935,7 @@ var opcionstatus=[
 
 
         gantt.locale.labels["section_progress"] = "Progreso";
+        gantt.locale.labels["section_porcentaje_programado_aviso"] = "Aviso Avance";
         gantt.locale.labels["section_parent"] = "Seleccione Tarea Padre";
         gantt.config.lightbox.sections = [
 		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
@@ -954,6 +955,16 @@ var opcionstatus=[
 				{key: "0.8", label: "80%"},
 				{key: "0.9", label: "90%"},
 				{key: "1", label: "Completa"}
+			]
+		},
+                {
+			name: "porcentaje_programado_aviso", height: 33, map_to: "porcentaje_programado_notificacion", type: "select", options: [
+				
+				{key: "0.5", label: "50%"},
+				{key: "0.6", label: "60%"},
+				{key: "0.7", label: "70%"},
+				{key: "0.8", label: "80%"},
+				{key: "0.9", label: "90%"}
 			]
 		},
                  {name:"template", height:16, type:"template", map_to:"my_template"}, 

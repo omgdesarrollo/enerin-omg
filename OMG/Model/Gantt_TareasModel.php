@@ -306,9 +306,9 @@ class Gantt_TareasModel{
                                          $value["existeprograma"]=1;
 //                                         echo json_encode($value);
                                          $dao->insertarGanttTareas($value);
+//                                         if($value["user"]!=0)
+                                             $modelGantt->guardarNotificacionResponsable($value);
                                          
-                                        $modelGantt->guardarNotificacionResponsable($value);
-                                       
                                          
                                          
                                          
