@@ -99,8 +99,7 @@ $Usuario=  Session::getSesion("user");
                     height: 118px;
                     overflow: hidden;
                     position: relative;
-                }
-                
+                }                
                #seleccion_informacion{ 
 
                     margin: 3px 0 3px 3px;
@@ -111,7 +110,11 @@ $Usuario=  Session::getSesion("user");
                     overflow: hidden;
                     position: relative;
                 }
-                
+                #seleccion_informacion_palabra{ 
+
+                    
+                    background-color: yellow;
+                }
                 
                 
                 
@@ -372,7 +375,7 @@ function redimencionarLayout()
                   
                     ribbon.setSizes();
                     ribbon.attachEvent("onClick", function(itemIdSeleccion, bId){
-                        ribbon._items["Información"].base.id="seleccion_informacion";
+                       limpiarSeleccionDeRibbon();
 //                        limpiarSeleccionesRibbon
                         
                         console.log(ribbon);
@@ -412,12 +415,15 @@ function redimencionarLayout()
                         if(itemIdSeleccion=="excel")
                            alert("le has picado a excel ");
                         
-                        if(itemIdSeleccion=="cambiarcontrato")
+                        if(itemIdSeleccion=="cambiarcontrato"){
+                             ribbon._items["cambiarcontrato"].base.lastElementChild.id="seleccion_informacion_palabra"
                             loadDataSideBarContratos();  
+                        }
                           
                 
                         if(itemIdSeleccion=="Información") {
-                            alert();
+//                            ribbon._items["Información"].base.id="seleccion_informacion";
+                            ribbon._items["Información"].base.lastElementChild.id="seleccion_informacion_palabra"
 //                            ribbon._items["Información"].base.className="class_informacion";
                            
                            
@@ -539,6 +545,14 @@ function redimencionarLayout()
                     }	                            
          );
 
+
+function limpiarSeleccionDeRibbon(){
+//                        ribbon._items["Información"].base.id="";
+                        ribbon._items["Información"].base.lastElementChild.id=""
+                        ribbon._items["cambiarcontrato"].base.lastElementChild.id=""
+//                        ribbon._items["Validación"].base.id="";
+                        ribbon._items["Validación"].base.lastElementChild.id=""
+    }
  function loadDataMenuArriba(iniciodinamic,info){	
 
      
