@@ -91,6 +91,30 @@ $Usuario=  Session::getSesion("user");
                 .dhtmlxribbon_material .dhxrb_big_button {
                     padding: 1px;
                 }
+                #limpiarSeleccionesRibbon{
+                    margin: 3px 0 3px 3px;
+                    float: left;
+                    border: 1px solid #dfdfdf;
+                    background-color: #fafafa;
+                    height: 118px;
+                    overflow: hidden;
+                    position: relative;
+                }
+                
+               #seleccion_informacion{ 
+
+                    margin: 3px 0 3px 3px;
+                    float: left;
+                    border: 1px solid #dfdfdf;
+                    background-color: red;
+                    height: 118px;
+                    overflow: hidden;
+                    position: relative;
+                }
+                
+                
+                
+                
                 
 /*                body{
                     height: 100%;
@@ -348,7 +372,15 @@ function redimencionarLayout()
                   
                     ribbon.setSizes();
                     ribbon.attachEvent("onClick", function(itemIdSeleccion, bId){
+                        ribbon._items["Información"].base.id="seleccion_informacion";
+//                        limpiarSeleccionesRibbon
+                        
+                        console.log(ribbon);
+//                        dhxrb_big_button
+                        
                         if(itemIdSeleccion=="Bienvenido"){
+//                            ribbon.check(itemIdSeleccion);
+//                                      ribbon.isVisible(bId);  
                                $.each(listasubmodulos,function (index,value){
 
                                 $.each(value["contenido_sub"],function(index1,value1)
@@ -382,9 +414,13 @@ function redimencionarLayout()
                         
                         if(itemIdSeleccion=="cambiarcontrato")
                             loadDataSideBarContratos();  
-                        
+                          
                 
                         if(itemIdSeleccion=="Información") {
+                            alert();
+//                            ribbon._items["Información"].base.className="class_informacion";
+                           
+                           
 //                            console.log(listasubmodulos);
 //                            console.log(listasubmodulos["0"]["contenido_sub"]["0"]["contenido_vista"]);
                            loadDataSideBarCatalogoInformacion(listasubmodulos["0"]["contenido_sub"]["0"]["contenido_vista"]);
