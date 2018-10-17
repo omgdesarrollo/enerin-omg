@@ -563,7 +563,6 @@ class Gantt_TareasModel{
             $dao=new Gantt_TareaDao();
             $rec= $dao->listarTareaGantt($value['id']);
             $modelGantt= new Gantt_TareasModel();
-            
             foreach ($rec as $value2) 
             {                
                 if($value2['id']==$value['id'])
@@ -573,19 +572,57 @@ class Gantt_TareasModel{
                         $modelGantt->enviarNotificacionWhenRemoveTarea($value2);
                         $modelGantt->enviarNotificacionWhenRemoveTareaAlNuevoUsuario($value);
                     }else{
-                        if(
+                        if($value2['notificacion_porcentaje_programado']!=-1)
+                        {
+                           if(isset($value['notificacion_porcentaje_programado']))
+                           {
+                                if($value2['notificacion_porcentaje_programado']!=$value['notificacion_porcentaje_programado'])
+                                {
+                                   $modelGantt->enviarNotificacionProgramaDeAvance($value); 
+                                }
+                           } 
+                        }
+                        
+                        if
+                        ( 
                             $value2['text']!=$value['text'] ||
                             $value2['user']!=$value['user'] ||
                             $value2['notas']!=$value['notas'] ||                            
                             $value2['status']!=$value['status']                                
                         )
                         {
-                            
                             $modelGantt->guardarNotificacionDeactualizaciones($value);
                         }                        
                     }
                 }
+                echo "value: ".json_encode($value);
+//                echo "value2: ".json_encode($value2);                
             }
+            
+//            foreach ($rec as $value2) 
+//            {                
+//                if($value2['id']==$value['id'])
+//                {
+//                    if($value2['user']!=$value['user'])
+//                    {
+//                        $modelGantt->enviarNotificacionWhenRemoveTarea($value2);
+//                        $modelGantt->enviarNotificacionWhenRemoveTareaAlNuevoUsuario($value);
+//                    }else{
+//                        if
+//                        ( 
+//                            $value2['text']!=$value['text'] ||
+//                            $value2['user']!=$value['user'] ||
+//                            $value2['notas']!=$value['notas'] ||                            
+//                            $value2['status']!=$value['status']                                
+//                        )
+//                        {
+//                            
+//                            $modelGantt->guardarNotificacionDeactualizaciones($value);
+//                        }                        
+//                    }
+//                }
+//                echo "value2: ".json_encode($value2);
+//            }
             
         } catch (Exception $ex) 
         {
@@ -664,7 +701,7 @@ class Gantt_TareasModel{
         }        
     }    
     
-       public function guardarNotificacionTareaEliminada($datos)
+    public function guardarNotificacionTareaEliminada($datos)
     {
         try 
         {
@@ -688,14 +725,27 @@ class Gantt_TareasModel{
     }
     
     
-    
-//    public function guardarAvisoAvanceTareaProgramadoManualParaMod
-//    {
-//       try{
-//           
-//       } catch (Exception $ex) {
-//           throw $ex;
-//           return -1;
-//       } 
-//    }
+    public function enviarNotificacionProgramaDeAvance($value)
+    {
+        try
+        {
+            $contrato= Session::getSesion("s_cont");
+            $id_usuario=Session::getSesion("user");
+            $mensaje= "Se actualizo el Porcentaje de Avance de la Tarea: ".$value['text']." por el Usuario: ";
+            $tipo_mensaje=0;
+            $atendido= 'false';
+            $asunto="";
+            $dao=new Gantt_TareaDao();
+            $idparaquien= $dao->obtenerUsuarioPorIdEmpleado($value['user']);
+            $model=new NotificacionesModel();
+            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idparaquien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }        
+    }            
+   
 }

@@ -26,7 +26,7 @@ class Gantt_TareaDao {
         try 
         {
             $query="SELECT tbgantt_tareas.id,tbgantt_tareas.text,tbgantt_tareas.start_date,tbgantt_tareas.duration,tbgantt_tareas.progress,
-                    tbgantt_tareas.parent,tbgantt_tareas.user,tbgantt_tareas.notas,tbgantt_tareas.status	
+                    tbgantt_tareas.parent,tbgantt_tareas.user,tbgantt_tareas.notas,tbgantt_tareas.status,tbgantt_tareas.notificacion_porcentaje_programado 	
                     FROM gantt_tareas tbgantt_tareas
                     WHERE tbgantt_tareas.id=$ID";
             $db=  AccesoDB::getInstancia();
