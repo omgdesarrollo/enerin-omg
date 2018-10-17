@@ -1,5 +1,3 @@
-
-
 <?php
 session_start();
 require_once '../util/Session.php';
@@ -901,6 +899,7 @@ gantt.config.columns=[
 					return "Suspendido";
                                 if(item.status==3)
                                         return  "Terminado";
+                                    return "En Proceso";
 			}
 		},
 		{
@@ -937,12 +936,23 @@ var opcionstatus=[
 
 
         gantt.locale.labels["section_progress"] = "Progreso";
+        gantt.locale.labels["section_notificacion_porcentaje_programado"] = "Aviso Avance";
         gantt.locale.labels["section_parent"] = "Seleccione Tarea Padre";
         gantt.config.lightbox.sections = [
 		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
                 {name: "statusname", height: 38, map_to: "status", type: "select", options:opcionstatus},
                 {name: "notas", height: 38, map_to: "notas", type: "textarea"},
 		{name: "owner", height: 33, map_to: "user", type: "select", options:dataEmpleados},
+                  {
+			name: "notificacion_porcentaje_programado", height: 33, map_to: "notificacion_porcentaje_programado", type: "select", options: [
+							
+				{key: "50", label: "50%"},
+				{key: "60", label: "60%"},
+				{key: "70", label: "70%"},
+				{key: "80", label: "80%"},
+				{key: "90", label: "90%"}
+			]
+		},
                 {
 			name: "progress", height: 33, map_to: "progress", type: "select", options: [
 				{key: "0", label: "No Iniciada"},
@@ -1011,6 +1021,10 @@ gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
 
 var dp = new gantt.dataProcessor("../Controller/GanttTareasController.php?Op=Modificar");
 dp.init(gantt);
+
+
+
+
     function obtenerEmpleados(){     
         $.ajax({
 //           url:"../Controller/GanttController.php?Op=ListarEmpleados",
