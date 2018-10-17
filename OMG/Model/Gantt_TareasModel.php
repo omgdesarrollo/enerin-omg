@@ -280,7 +280,6 @@ class Gantt_TareasModel{
 
     
     public function insertarTareasGantt($data,$id_tarea){
-       
         
         try{
             $inserccion;
@@ -306,11 +305,8 @@ class Gantt_TareasModel{
                                          $value["existeprograma"]=1;
 //                                         echo json_encode($value);
                                          $dao->insertarGanttTareas($value);
-//                                         if($value["user"]!=0)
+                                         if($value["user"]!=0)
                                              $modelGantt->guardarNotificacionResponsable($value);
-                                         
-                                         
-                                         
                                          
 //                                         echo "entro";
                                          self:: actualizarExisteProgramaTareas($value);
@@ -331,17 +327,26 @@ class Gantt_TareasModel{
 //                                        echo "entro en actualizar";
 //                                        echo "este es el value: ".json_encode($value);
 //                                         $dao->updateTareas($value);
-                                        
+//                                         if($value["user"]!=0)
                                         $modelGantt->compararInformacionAntesYDespues($value);
    
                                          if (!isset($value["progress"])) {
                                              $value["progress"]=0;
                                          }
-                                         if(isset($value["status"])){
+//                                         if(!isset($value["notificacion_porcentaje_programado"])){
+//                                             $value["notificacion_porcentaje_programado"]=50;
+//                                         }
                                              
-                                            self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>$value["notas"],"status"=>$value["status"]), $value["id"]);
-                                            
+                                         
+                                         if(isset($value["status"]) ){
+                                             if(isset($value["notificacion_porcentaje_programado"])){
+                                                  self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>$value["notas"],"status"=>$value["status"],"notificacion_porcentaje_programado"=>$value["notificacion_porcentaje_programado"]), $value["id"]);
+                                             }else{
+                                                  self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>$value["notas"],"status"=>$value["status"]), $value["id"]);
+                                             }
                                          }else{
+//                                             este else ya no es necesario pero se esta pensando para removerlo en la proxima actualizacion
+                                             echo "entro";
                                             self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>$value["notas"]), $value["id"]);
                                          }
 //                                         $model->actualizarGanttTareas
@@ -364,7 +369,6 @@ class Gantt_TareasModel{
         } catch (Exception $ex) {
             throw $ex;
         }
-        
     }
     
     
@@ -388,40 +392,42 @@ class Gantt_TareasModel{
         }
     }
     
+
     
-    public function obtenerFolioEntradaSeguimiento($ID_SEGUIMIENTO)
-    {
-        try
-        {
-            $dao=new GanttDao();
-            $rec= $dao->obtenerFolioEntradaSeguimiento($ID_SEGUIMIENTO);
-            
-            return $rec;
-            
-        } catch (Exception $ex)
-        {
-            throw $ex;
-            return false;
-        }
-    }
     
-    public  function calculoAvanceProgramaGeneral($id_seguimiento_que_lleva_al_folio_de_entrada)
-    {
-        try
-        {
-            $dao=new GanttDao();
-             $rec= $dao->calculoAvanceProgramaGeneral($id_seguimiento_que_lleva_al_folio_de_entrada);
-             echo "s  : ".$rec[0]["total_avance_programa"];
-             $value["id_seguimiento"]=$id_seguimiento_que_lleva_al_folio_de_entrada;
-             $value["avance_programa"]=$rec[0]["total_avance_programa"];
-            $dao->updateAvanceProgramaGeneral($value);
-            return $rec;
-        } catch (Exception $ex)
-        {
-            throw $ex;
-            return false;
-        }
-    }
+//    public function obtenerFolioEntradaSeguimiento($ID_SEGUIMIENTO)
+//    {
+//        try
+//        {
+//            $dao=new GanttDao();
+//            $rec= $dao->obtenerFolioEntradaSeguimiento($ID_SEGUIMIENTO);
+//            
+//            return $rec;
+//            
+//        } catch (Exception $ex)
+//        {
+//            throw $ex;
+//            return false;
+//        }
+//    }
+    
+//    public  function calculoAvanceProgramaGeneral($id_seguimiento_que_lleva_al_folio_de_entrada)
+//    {
+//        try
+//        {
+//            $dao=new GanttDao();
+//             $rec= $dao->calculoAvanceProgramaGeneral($id_seguimiento_que_lleva_al_folio_de_entrada);
+//             echo "s  : ".$rec[0]["total_avance_programa"];
+//             $value["id_seguimiento"]=$id_seguimiento_que_lleva_al_folio_de_entrada;
+//             $value["avance_programa"]=$rec[0]["total_avance_programa"];
+//            $dao->updateAvanceProgramaGeneral($value);
+//            return $rec;
+//        } catch (Exception $ex)
+//        {
+//            throw $ex;
+//            return false;
+//        }
+//    }
     
 
     public function listarEmpleadosNombreCompleto()
@@ -574,6 +580,7 @@ class Gantt_TareasModel{
                             $value2['status']!=$value['status']                                
                         )
                         {
+                            
                             $modelGantt->guardarNotificacionDeactualizaciones($value);
                         }                        
                     }
@@ -679,4 +686,16 @@ class Gantt_TareasModel{
             return -1;
         }
     }
+    
+    
+    
+//    public function guardarAvisoAvanceTareaProgramadoManualParaMod
+//    {
+//       try{
+//           
+//       } catch (Exception $ex) {
+//           throw $ex;
+//           return -1;
+//       } 
+//    }
 }
