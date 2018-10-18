@@ -167,8 +167,8 @@ clock();
 </form>
 </center>-->
  <div class="navbar-fixed">
-        <nav class="navbar white">
-          <div class="nav-wrapper"><a href="#!" class="brand-logo grey-text text-darken-4"></a>
+     <nav class="navbar" style="background-color:#006699 ">
+          <div class="nav-wrapper"> <a href="#" class="brand-logo"><img src="../../images/base/enerinLogo.png" height="100%"></a>
             <ul id="nav-mobile" class="right">
               <li class="hide-on-med-and-down"><a href="/products/admin"></a></li>
               <li class="hide-on-med-and-down"><a href="#!" data-target="dropdown1" class="dropdown-trigger waves-effect"><i class="material-icons">notifications</i></a></li>
@@ -177,6 +177,19 @@ clock();
           </div>
         </nav>
       </div>
+
+<!--<div class="navbar-fixed">
+    <nav class="navbar white">
+      <div class="nav-wrapper">
+        <a href="#!" class="brand-logo">Logo</a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="sass.html">Sass</a></li>
+          <li><a href="badges.html">Components</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>-->
+
 <!--<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>-->
         <div class="col s12 m7">
         <!--<h5 class="header">Horizontal Card</h5>-->
