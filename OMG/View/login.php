@@ -74,6 +74,8 @@ clock();
         $(document).ready(function(){
             $('.sidenav').sidenav();
             $(".dropdown-trigger").dropdown();
+            $('.carousel').carousel();
+             $('.fixed-action-btn').floatingActionButton();
             
 //            alert();
         });
@@ -96,12 +98,12 @@ clock();
   // Or with jQuery
 
   $(document).ready(function(){
-    $('.fixed-action-btn').floatingActionButton();
+   
   });
 
 //  $('.fixed-action-btn').floatingActionButton({
 ////    toolbarEnabled: true,
-     direction: 'top',
+//     direction: 'top',
 //      hoverEnabled: false
 //  })
 //  end floating components
@@ -218,7 +220,11 @@ clock();
                     <nav>
                         <div class="nav-wrapper">
                           <div class="col s12">
-                              
+<!--                               <div class="carousel">
+                                    <a class="carousel-item" href="#one!"><img src="https://lorempixel.com/250/250/nature/1"></a>
+                                    <a class="carousel-item" href="#two!"><img src="https://lorempixel.com/250/250/nature/2"></a>
+                                    
+                                </div>-->
 <!--                              <a href="#!" class="breadcrumb" style="background-color: blue">First</a>
                             <a href="#!" class="breadcrumb" style="background-color: blue">Second</a>
                             <a href="#!" class="breadcrumb" style="background-color: blue">Third</a>-->
@@ -308,12 +314,12 @@ clock();
               <!--<i class="large material-icons">mode_edit</i>-->
               <img src="../../images/base/enerinLogo.png" height="100%">
             </a>
-<!--            <ul>
+            <ul>
               <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
-              <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-              <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-              <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
-            </ul>-->
+              <!--<li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>-->
+              <!--<li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>-->
+              <!--<li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>-->
+            </ul>
         </div>
 
 <!--        <footer class="page-footer grey valign-wrapper" >
