@@ -945,7 +945,7 @@ var opcionstatus=[
 		{name: "owner", height: 33, map_to: "user", type: "select", options:dataEmpleados},
                   {
 			name: "notificacion_porcentaje_programado", height: 33, map_to: "notificacion_porcentaje_programado", type: "select", options: [
-							
+                                {key: "-1", label: "Selecciones el Porcentaje"},
 				{key: "50", label: "50%"},
 				{key: "60", label: "60%"},
 				{key: "70", label: "70%"},

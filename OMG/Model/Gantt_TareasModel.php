@@ -529,32 +529,6 @@ class Gantt_TareasModel{
             return -1;
         }
     }
-
-    
-
-    public function guardarNotificacionResponsable($values)
-    {
-      try{
-            $contrato= Session::getSesion("s_cont");
-            $id_usuario=Session::getSesion("user");
-            $dao=new Gantt_TareaDao();
-            $idparaquien= $dao->obtenerUsuarioPorIdEmpleado($values["user"]);
-            $model=new NotificacionesModel();
-            
-             $mensaje="Se le asigno una tarea ".$values["text"]." por el Usuario: ";
-             $tipo_mensaje= 0;
-             $atendido= 'false';
-             $asunto="";
-            $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idparaquien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
-                        
-            return true;
-        }catch (Exception $ex)
-        {
-            return false;
-        }
-        
-    }
-    
     
     public function compararInformacionAntesYDespues($value)
     {
@@ -563,40 +537,50 @@ class Gantt_TareasModel{
             $dao=new Gantt_TareaDao();
             $rec= $dao->listarTareaGantt($value['id']);
             $modelGantt= new Gantt_TareasModel();
+//            $porcentajeAvance= $value['progress']*100;
             foreach ($rec as $value2) 
             {                
                 if($value2['id']==$value['id'])
                 {
                     if($value2['user']!=$value['user'])
                     {
-                        $modelGantt->enviarNotificacionWhenRemoveTarea($value2);
-                        $modelGantt->enviarNotificacionWhenRemoveTareaAlNuevoUsuario($value);
-                    }else{
-                        if($value2['notificacion_porcentaje_programado']!=-1)
+                        if($value['user']!=0)
                         {
-                           if(isset($value['notificacion_porcentaje_programado']))
-                           {
-                                if($value2['notificacion_porcentaje_programado']!=$value['notificacion_porcentaje_programado'])
-                                {
-                                   $modelGantt->enviarNotificacionProgramaDeAvance($value); 
-                                }
-                           } 
+                            $modelGantt->enviarNotificacionWhenRemoveTareaAlNuevoUsuario($value);
                         }
-                        
-                        if
-                        ( 
-                            $value2['text']!=$value['text'] ||
-                            $value2['user']!=$value['user'] ||
-                            $value2['notas']!=$value['notas'] ||                            
-                            $value2['status']!=$value['status']                                
-                        )
+                        if($value2['user']!=0)
+                        {
+                            $modelGantt->enviarNotificacionWhenRemoveTarea($value2);
+                        }
+                    }
+
+                    if(isset($value['notificacion_porcentaje_programado']))
+                    {
+                         if($value2['notificacion_porcentaje_programado']!=$value['notificacion_porcentaje_programado'] && $value['notificacion_porcentaje_programado']!=-1)
+                         {
+                            $modelGantt->enviarNotificacionDeProgramacionAvisoDeAvance($value); 
+                         }                                
+                    }
+
+                    if($value2['notificacion_porcentaje_programado']!=-1 && ($value['progress']*100)>=$value['notificacion_porcentaje_programado'])
+                    {
+                        $modelGantt->enviarNotificacionDelPorcentajeDeAvanceDelaTarea($value);
+                    }
+
+                    if
+                    ( 
+                        $value2['text']!=$value['text'] ||
+//                            $value2['user']!=$value['user'] ||
+                        $value2['notas']!=$value['notas'] ||                            
+                        $value2['status']!=$value['status']                                
+                    )
+                    {
+                        if($value['user']!=0)
                         {
                             $modelGantt->guardarNotificacionDeactualizaciones($value);
-                        }                        
-                    }
-                }
-//                echo "value: ".json_encode($value);
-//                echo "value2: ".json_encode($value2);                
+                        }
+                    }                        
+                }                
             }
             
 //            foreach ($rec as $value2) 
@@ -630,7 +614,29 @@ class Gantt_TareasModel{
             return -1;
         }        
     }
-
+    
+        public function guardarNotificacionResponsable($values)
+    {
+      try{
+            $contrato= Session::getSesion("s_cont");
+            $id_usuario=Session::getSesion("user");
+            $dao=new Gantt_TareaDao();
+            $idparaquien= $dao->obtenerUsuarioPorIdEmpleado($values["user"]);
+            $model=new NotificacionesModel();
+            
+             $mensaje="Se le asigno la Tarea ".$values["text"]." por el Usuario: ";
+             $tipo_mensaje= 0;
+             $atendido= 'false';
+             $asunto="";
+            $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idparaquien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+                        
+            return true;
+        }catch (Exception $ex)
+        {
+            return false;
+        }
+        
+    }
 
     public function guardarNotificacionDeactualizaciones($values)
     {
@@ -725,13 +731,13 @@ class Gantt_TareasModel{
     }
     
     
-    public function enviarNotificacionProgramaDeAvance($value)
+    public function enviarNotificacionDeProgramacionAvisoDeAvance($value)
     {
         try
         {
             $contrato= Session::getSesion("s_cont");
             $id_usuario=Session::getSesion("user");
-            $mensaje= "Se actualizo el Porcentaje de Avance de la Tarea: ".$value['text']." por el Usuario: ";
+            $mensaje= "Se Programo al ".$value['notificacion_porcentaje_programado']."% el Aviso de Avance de la Tarea: ".$value['text']." por el Usuario: ";
             $tipo_mensaje=0;
             $atendido= 'false';
             $asunto="";
@@ -746,6 +752,29 @@ class Gantt_TareasModel{
             throw $ex;
             return -1;
         }        
-    }            
+    }
+    
+    public function enviarNotificacionDelPorcentajeDeAvanceDelaTarea($value)
+    {
+        try
+        {
+            $contrato= Session::getSesion("s_cont");
+            $id_usuario=Session::getSesion("user");
+            $mensaje= "Se Actualizo al ".($value['progress']*100)."% el Porcentaje de Avance de la Tarea: ".$value['text']." por el Usuario: ";
+            $tipo_mensaje=0;
+            $atendido= 'false';
+            $asunto="";
+            $dao=new Gantt_TareaDao();
+            $idparaquien= $dao->obtenerUsuarioPorIdEmpleado($value['user']);
+            $model=new NotificacionesModel();
+            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idparaquien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }        
+    }
    
 }
