@@ -542,49 +542,45 @@ class Gantt_TareasModel{
             {                
                 if($value2['id']==$value['id'])
                 {
-                        if($value2['user']!=$value['user'])
+                    if($value2['user']!=$value['user'])
+                    {
+                        if($value['user']!=0)
                         {
-                            if($value['user']!=0)
-                            {
-                                $modelGantt->enviarNotificacionWhenRemoveTareaAlNuevoUsuario($value);
-                            }
-                            if($value2['user']!=0)
-                            {
-                                $modelGantt->enviarNotificacionWhenRemoveTarea($value2);
-                            }
+                            $modelGantt->enviarNotificacionWhenRemoveTareaAlNuevoUsuario($value);
                         }
-
-                        if(isset($value['notificacion_porcentaje_programado']))
+                        if($value2['user']!=0)
                         {
-                             if($value2['notificacion_porcentaje_programado']!=$value['notificacion_porcentaje_programado'] && $value['notificacion_porcentaje_programado']!=-1)
-                             {
-                                $modelGantt->enviarNotificacionDeProgramacionAvisoDeAvance($value); 
-                             }                                
+                            $modelGantt->enviarNotificacionWhenRemoveTarea($value2);
                         }
-
-                        if($value2['notificacion_porcentaje_programado']!=-1 && ($value['progress']*100)>=$value['notificacion_porcentaje_programado'])
-                        {
-                            $modelGantt->enviarNotificacionDelPorcentajeDeAvanceDelaTarea($value);
-                        }
-
-                        if
-                        ( 
-                            $value2['text']!=$value['text'] ||
-//                            $value2['user']!=$value['user'] ||
-                            $value2['notas']!=$value['notas'] ||                            
-                            $value2['status']!=$value['status']                                
-                        )
-                        {
-                            if($value['user']!=0)
-                            {
-                                $modelGantt->guardarNotificacionDeactualizaciones($value);
-                            }
-                            
-                        }                        
                     }
-                }
-//                echo "value: ".json_encode($value);
-//                echo "value2: ".json_encode($value2);                
+
+                    if(isset($value['notificacion_porcentaje_programado']))
+                    {
+                         if($value2['notificacion_porcentaje_programado']!=$value['notificacion_porcentaje_programado'] && $value['notificacion_porcentaje_programado']!=-1)
+                         {
+                            $modelGantt->enviarNotificacionDeProgramacionAvisoDeAvance($value); 
+                         }                                
+                    }
+
+                    if($value2['notificacion_porcentaje_programado']!=-1 && ($value['progress']*100)>=$value['notificacion_porcentaje_programado'])
+                    {
+                        $modelGantt->enviarNotificacionDelPorcentajeDeAvanceDelaTarea($value);
+                    }
+
+                    if
+                    ( 
+                        $value2['text']!=$value['text'] ||
+//                            $value2['user']!=$value['user'] ||
+                        $value2['notas']!=$value['notas'] ||                            
+                        $value2['status']!=$value['status']                                
+                    )
+                    {
+                        if($value['user']!=0)
+                        {
+                            $modelGantt->guardarNotificacionDeactualizaciones($value);
+                        }
+                    }                        
+                }                
             }
             
 //            foreach ($rec as $value2) 
