@@ -222,7 +222,7 @@ clock();
                           <div class="col s12">
                               
                                <ul class="tabs tabs-fixed-width tab-demo z-depth-1">
-                                    <li class="tab"><a href="#test1">Opcion 1</a></li>
+                                    <li class="tab"><a href="#test1">Acceso Al Sistema</a></li>
                                     <li class="tab"><a class="active" href="#test2">Opcion 2</a></li>
                                     <li class="tab disabled"><a href="#test3">Opcion 3</a></li>
                                     <li class="tab"><a href="#test4">Opcion 4</a></li>
