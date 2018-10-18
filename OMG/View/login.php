@@ -73,6 +73,8 @@ clock();
         
         $(document).ready(function(){
             $('.sidenav').sidenav();
+            $(".dropdown-trigger").dropdown();
+            
 //            alert();
         });
         document.addEventListener('DOMContentLoaded', function() {
@@ -166,13 +168,23 @@ clock();
    </table>
 </form>
 </center>-->
+
  <div class="navbar-fixed">
      <nav class="navbar" style="background-color:#006699 ">
           <div class="nav-wrapper"> <a href="#" class="brand-logo"><img src="../../images/base/enerinLogo.png" height="100%"></a>
             <ul id="nav-mobile" class="right">
-              <li class="hide-on-med-and-down"><a href="/products/admin"></a></li>
-              <li class="hide-on-med-and-down"><a href="#!" data-target="dropdown1" class="dropdown-trigger waves-effect"><i class="material-icons">notifications</i></a></li>
-              <li><a href="#!" data-target="chat-dropdown" class="dropdown-trigger waves-effect"><i class="material-icons">settings</i></a></li>
+               <ul class="right hide-on-med-and-down">
+<!--                    <li><a href="sass.html"><i class="material-icons">search</i></a></li>
+                    <li><a href="badges.html"><i class="material-icons">view_module</i></a></li>
+                    <li><a href="collapsible.html"><i class="material-icons">refresh</i></a></li>-->
+                    <li><a href=""><i class="material-icons">more_vert</i></a></li>
+                </ul>
+                <div class="nav-content">
+                    <span class="nav-title">  </span>
+                    <a class="btn-floating btn-large halfway-fab waves-effect waves-light teal">
+                      <i class="material-icons">add</i>
+                    </a>
+                </div>
             </ul><a href="#!" data-target="sidenav-left" class="sidenav-trigger left"><i class="material-icons black-text">menu</i></a>
           </div>
         </nav>
