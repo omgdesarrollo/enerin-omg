@@ -581,7 +581,10 @@ class Gantt_TareasModel{
                             }
                             
                         }                        
-                }                
+                    }
+                }
+//                echo "value: ".json_encode($value);
+//                echo "value2: ".json_encode($value2);                
             }
             
 //            foreach ($rec as $value2) 
