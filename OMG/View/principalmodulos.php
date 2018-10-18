@@ -1008,8 +1008,14 @@ function loadDataNotificaciones(){
             // alert("show");
         });
     dhxWins.attachEvent("onHide", function(win){
-            // alert("en onhide");
+             alert("en onhide");
 });
+ dhxWins.attachEvent("onClose", function(win){
+//             alert("en c");
+             ribbon._items["Seguimiento"].base.lastElementChild.id="";
+             return 1;
+});
+
 
     }
     
