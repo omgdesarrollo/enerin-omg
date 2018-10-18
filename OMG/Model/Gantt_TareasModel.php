@@ -595,7 +595,7 @@ class Gantt_TareasModel{
                         }                        
                     }
                 }
-                echo "value: ".json_encode($value);
+//                echo "value: ".json_encode($value);
 //                echo "value2: ".json_encode($value2);                
             }
             
