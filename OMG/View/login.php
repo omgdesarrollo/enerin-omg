@@ -264,7 +264,7 @@ clock();
                              <div class="row">
                                  <div class="input-field col s12 light-blue-text text-darken-3">
                                      <i class="material-icons prefix">person</i>
-                                         <label for="user-input">USUARIO</label>
+                                         <label for="Usuario">USUARIO</label>
                                         <input id="Usuario" name="usuario" type="text"  class="autocomplete light-blue-text text-darken-4" >
                                       
                                     
@@ -275,7 +275,7 @@ clock();
                                  <div class="input-field col s12 light-blue-text text-darken-3">
                                      <i class="material-icons prefix">vpn_key</i>
                                      <input id="contrasenaInput" name="pass" type="password" id="pass-input" class="autocomplete">
-                                     <label for="pass-input">CONTRASEÑA</label>
+                                     <label for="contrasenaInput">CONTRASEÑA</label>
                                  </div>
                              </div>
 
