@@ -135,7 +135,7 @@ clock();
    cursor: url(../../images/base/enerinLogo.png), help;
     }*/
    
-  .sidenav .divider
+/*  .sidenav .divider
             {
                 margin:0px !important;
             }
@@ -152,7 +152,7 @@ clock();
                 padding: 0 0 0 32px;
             }
          
-            
+            */
             
 </style>
     </head>
@@ -240,35 +240,7 @@ clock();
             <div class="card-content">
                 
                 <!--#ee6e73-->
-                    <nav>
-                        <div class="nav-wrapper">
-                          <div class="col s12">
-                             <!--f-->
-                                             <div class="row" >
-                                                <div class="col s12">
-<!--                                                  <ul class="tabs">
-                                                    <li class="tab col s6"><a href="#accesoSistema">Acceso Al Sistema</a></li>
-                                                    <li class="tab col s6"><a class="active" href="#test2">Test 2</a></li>
-                                                    <li class="tab col s3 disabled"><a href="#test3">Disabled Tab</a></li>
-                                                    <li class="tab col s3"><a href="#test4">Test 4</a></li>
-                                                  </ul>-->
-                                                    <ul id="tabs" class="tabs">
-                                                        <li class="tab col s4" style="border-style: solid;"><a href="#accesoSistema" style="color:black;background: gray;"><b>Acceso Al Sistema</b></a></li>
-                                                        <li class="tab col s4" style="border-style: solid;"><a class="active" style="color:black;background: gray;" href="#test-swipe-2"><b>Inicio</b></a></li>
-                                                        <li class="tab col s4" style="border-style: solid;"><a href="#test-swipe-3" style="color:black;background: gray;"><b>Registro Al Sistema</b></li>
-                                                    </ul>
-
-                                                </div>
-                                    
-                                            </div>
                  
-                          </div>
-                            
-                         
-    
-    
-                        </div>
-                    </nav>
                 
 
 
