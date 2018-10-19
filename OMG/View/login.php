@@ -243,9 +243,9 @@ clock();
                                                     <li class="tab col s3"><a href="#test4">Test 4</a></li>
                                                   </ul>-->
                                                     <ul id="tabs" class="tabs">
-                                                        <li class="tab col s4"><a href="#accesoSistema" style="color:#006699">Acceso Al Sistema</a></li>
-                                                        <li class="tab col s4"><a class="active" style="color:#006699" href="#test-swipe-2">Inicio</a></li>
-                                                        <li class="tab col s4"><a href="#test-swipe-3" style="color:#006699">Registro Al Sistema</li>
+                                                        <li class="tab col s4"><a href="#accesoSistema" style="color:black;background: gray;"><b>Acceso Al Sistema</b></a></li>
+                                                        <li class="tab col s4"><a class="active" style="color:black;background: gray;" href="#test-swipe-2"><b>Inicio</b></a></li>
+                                                        <li class="tab col s4"><a href="#test-swipe-3" style="color:black;background: gray;"><b>Registro Al Sistema</b></li>
                                                     </ul>
 
                                                 </div>
