@@ -178,12 +178,16 @@ clock();
  <div class="navbar-fixed">
      <nav class="navbar" style="background-color:#006699 ">
           <div class="nav-wrapper"> <a href="#" class="brand-logo"><img src="../../images/base/enerinLogo.png" height="100%"></a>
+              <center><h4>OMG Apps</h4> </center>
             <ul id="nav-mobile" class="right">
                <ul class="right hide-on-med-and-down">
 <!--                    <li><a href="sass.html"><i class="material-icons">search</i></a></li>
                     <li><a href="badges.html"><i class="material-icons">view_module</i></a></li>
                     <li><a href="collapsible.html"><i class="material-icons">refresh</i></a></li>-->
                     <!--<li><a href=""><i class="material-icons">more_vert</i></a></li>-->
+                   
+                 
+
                 </ul>
                 <div class="nav-content">
                     <span class="nav-title">  </span>
@@ -212,6 +216,9 @@ clock();
 
 <!--<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>-->
         <div class="col s12 m7">
+            
+            <center><div style="font-size: 20px">Interacción estructurada, con datos precisos para Decisiones adecuadas.</div></center>
+            
         <!--<h5 class="header">Horizontal Card</h5>-->
         <!--<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>-->
         <div class="card horizontal">
@@ -345,7 +352,7 @@ clock();
       
       
        <div class="row"  >
-           <div class="col s12 m4" style="height: 50%;" >
+           <div class="col s12 m4"  >
                       <div class="card">
                         <div class="card-image">
                           <img src="../../images/base/grafica.png">
@@ -357,7 +364,7 @@ clock();
                         </div>
                       </div>
             </div>
-            <div class="col s12 m4" style="height: 50%;" >
+            <div class="col s12 m4"  >
                       <div class="card">
                         <div class="card-image">
                           <img src="../../images/base/gant_tareas.jpg">
@@ -369,7 +376,7 @@ clock();
                         </div>
                       </div>
             </div>
-            <div class="col s12 m4" style="height: 50%;" >
+            <div class="col s12 m4"  >
                       <div class="card">
                         <div class="card-image">
                           <img src="../../images/base/temasespeciales_presentacion_login.png">
