@@ -180,12 +180,14 @@ clock();
 <!--                    <li><a href="sass.html"><i class="material-icons">search</i></a></li>
                     <li><a href="badges.html"><i class="material-icons">view_module</i></a></li>
                     <li><a href="collapsible.html"><i class="material-icons">refresh</i></a></li>-->
-                    <li><a href=""><i class="material-icons">more_vert</i></a></li>
+                    <!--<li><a href=""><i class="material-icons">more_vert</i></a></li>-->
                 </ul>
                 <div class="nav-content">
                     <span class="nav-title">  </span>
                     <a class="btn-floating btn-large halfway-fab waves-effect waves-light teal">
-                      <i class="material-icons">add</i>
+                      <!--<i class="material-icons">add</i>-->
+                        <i class="material-icons">business_center</i>
+                        <!--<img src="../../images/base/omgapps.png" height="90%">-->                  
                     </a>
                 </div>
             </ul><a href="#!" data-target="sidenav-left" class="sidenav-trigger left"><i class="material-icons black-text">menu</i></a>
@@ -259,7 +261,7 @@ clock();
               
               <!--<div style="height: 40%;" ></div>-->
               
-              <div class="card-action" style="height: 70%">
+              <div class="card-action" style="height: 80%">
               <!--<a href="#">This is a link</a>-->
            
               
