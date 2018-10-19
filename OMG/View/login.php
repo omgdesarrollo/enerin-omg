@@ -188,8 +188,8 @@ clock();
 
  <div class="navbar-fixed">
      <nav class="navbar" style="background-color:#006699 ">
-          <div class="nav-wrapper"> <a href="#" class="brand-logo"><img src="../../images/base/enerinLogo.png" height="100%"></a>
-              <center><h4>OMG Apps</h4> </center>
+          <div class="nav-wrapper"> 
+              <center><h4>OMG <a href="#" class="brand-logo"><img src="../../images/base/enerinLogo.png" height="100%"></a> &nbsp;&nbsp;&nbsp; Apps</h4> </center>
             <ul id="nav-mobile" class="right">
                <ul class="right hide-on-med-and-down">
 <!--                    <li><a href="sass.html"><i class="material-icons">search</i></a></li>
