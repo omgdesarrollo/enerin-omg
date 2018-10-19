@@ -563,7 +563,9 @@ function limpiarSeleccionDeRibbon(){
     
     
 //                        ribbon._items["Información"].base.id="";
-                        ribbon._items["Información"].base.lastElementChild.id="";
+                        if(ribbon._items["Información"]!=undefined){
+                            ribbon._items["Información"].base.lastElementChild.id="";
+                        }
                         if(ribbon._items["Validación"]!=undefined){
                             ribbon._items["Validación"].base.lastElementChild.id="";
                         }
