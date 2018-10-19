@@ -558,20 +558,49 @@ function redimencionarLayout()
 
 
 function limpiarSeleccionDeRibbon(){
+    
+                            
+    
+    
 //                        ribbon._items["Información"].base.id="";
-                        ribbon._items["Información"].base.lastElementChild.id="";
-                        ribbon._items["Validación"].base.lastElementChild.id="";
-                        ribbon._items["Evidencias"].base.lastElementChild.id="";
-                        ribbon._items["Informe"].base.lastElementChild.id="";
-                        ribbon._items["Reportes"].base.lastElementChild.id="";
-                        ribbon._items["Control de Temas Especiales"].base.lastElementChild.id="";
-                        ribbon._items["Catálogos"].base.lastElementChild.id="";
-                        ribbon._items["Documentación"].base.lastElementChild.id="";
-                        ribbon._items["Seguimiento"].base.lastElementChild.id="";
-                        ribbon._items["Informe Gerencial"].base.lastElementChild.id="";                  
+                        if(ribbon._items["Información"]!=undefined){
+                            ribbon._items["Información"].base.lastElementChild.id="";
+                        }
+                        if(ribbon._items["Validación"]!=undefined){
+                            ribbon._items["Validación"].base.lastElementChild.id="";
+                        }
+                        if(ribbon._items["Evidencias"]!=undefined){
+                            ribbon._items["Evidencias"].base.lastElementChild.id="";
+                        }
+                        if(ribbon._items["Informe"]!=undefined){
+                            ribbon._items["Informe"].base.lastElementChild.id="";
+                        }
+                        if(ribbon._items["Reportes"]!=undefined){
+                            ribbon._items["Reportes"].base.lastElementChild.id="";
+                        }
+                        if(ribbon._items["Control de Temas Especiales"]!=undefined){
+                            ribbon._items["Control de Temas Especiales"].base.lastElementChild.id="";
+                        }
+                        if(ribbon._items["Catálogos"]!=undefined){
+                            ribbon._items["Catálogos"].base.lastElementChild.id="";
+                        }
+                        if(ribbon._items["Documentación"]!=undefined){
+                            ribbon._items["Documentación"].base.lastElementChild.id="";
+                        }
+                        if(ribbon._items["Seguimiento"]!=undefined){
+                            ribbon._items["Seguimiento"].base.lastElementChild.id="";
+                        }
+                        if(ribbon._items["Informe Gerencial"]!=undefined){
+                            ribbon._items["Informe Gerencial"].base.lastElementChild.id="";
+                        }
+                        if(ribbon._items["Bienvenido"]!=undefined){
+                            ribbon._items["Bienvenido"].base.lastElementChild.id="";
+                        }
+                        if(ribbon._items["cambiarcontrato"]!=undefined){
+                            ribbon._items["cambiarcontrato"].base.lastElementChild.id="";
+                        }
 //                        ribbon._items["Validación"].base.id="";                      
-                        ribbon._items["Bienvenido"].base.lastElementChild.id="";
-                        ribbon._items["cambiarcontrato"].base.lastElementChild.id=""
+                        
     }
  function loadDataMenuArriba(iniciodinamic,info){	
 
@@ -1008,8 +1037,14 @@ function loadDataNotificaciones(){
             // alert("show");
         });
     dhxWins.attachEvent("onHide", function(win){
-            // alert("en onhide");
+             alert("en onhide");
 });
+ dhxWins.attachEvent("onClose", function(win){
+//             alert("en c");
+             ribbon._items["Seguimiento"].base.lastElementChild.id="";
+             return 1;
+});
+
 
     }
     

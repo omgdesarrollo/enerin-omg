@@ -27,10 +27,18 @@ if (Session:: existeSesion("user")){
         <!--<script src="../../js/jquery-ui.min.js" type="text/javascript"></script>-->
         <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
         <script src="../../js/is.js" type="text/javascript"></script>
+        <!--materialize-->
+        <link type="text/css" rel="stylesheet" href="../../assets/materialize/css/materialize.min.css"  media="screen,projection"/>
+         <script type="text/javascript" src="../../assets/materialize/js/materialize.min.js"></script>
+        <!--end materialize-->
+         <link href="../../assets/googleApi/icon.css" rel="stylesheet">
+       
+        
+         <!--<link href="//cdn.shopify.com/s/files/1/1775/8583/t/1/assets/admin-materialize.min.css?701317015908805120" rel="stylesheet">-->
         <!--<script src="../../js/tooltip.js" type="text/javascript"></script>-->
         <!--<script src="../../angular/angular.min.js" type="text/javascript"></script>-->
         <!--<link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>-->
-        <link href="../../css/wb/imagen_de_inicio.css" rel="stylesheet" type="text/css"/>
+        <!--<link href="../../css/wb/imagen_de_inicio.css" rel="stylesheet" type="text/css"/>-->
             <script>
 //              function decrypt(password) 
 //{
@@ -58,23 +66,90 @@ clock();
 
 
             </script>
+   <script>
+        // $(document).ready(function(){
+        //     $('.tabs').tabs();
+        // });
+        
+        $(document).ready(function(){
+            $('.sidenav').sidenav();
+            $(".dropdown-trigger").dropdown();
+            $('.carousel').carousel();
+             $('.fixed-action-btn').floatingActionButton();
             
+//            alert();
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.sidenav');
+        var instances = M.Sidenav.init(elems, options);
+        });
+
+        $(()=>{
+            $(".btn-menu").click((t)=>{
+                
+                $(".btn-menu").css("background","transparent");
+                $(t.currentTarget).css("background","burlywood");
+            });
+        });
+        
+        
+//     floating components
+
+  // Or with jQuery
+
+  $(document).ready(function(){
+   
+  });
+
+//  $('.fixed-action-btn').floatingActionButton({
+////    toolbarEnabled: true,
+//     direction: 'top',
+//      hoverEnabled: false
+//  })
+//  end floating components
+         document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.fixed-action-btn');
+    var instances = M.FloatingActionButton.init(elems, {
+//      direction: 'left',
+      hoverEnabled: false
+    });
+  });
+       
+       
+       
+        
+    </script>         
         
         <style>
         .animacion {
 -webkit-animation:fa-spin 20s infinite linear;animation:fa-spin 24s infinite linear;
  /*animation-name: slidein;*/
-}
+  .sidenav .divider
+            {
+                margin:0px !important;
+            }
+            .waves-effect.waves-omg .waves-ripple
+            {
+                background-color: #3399cc;
+            }
+            .blue-text
+            {
+                color: #3399cc !important;
+            }
+            .sidenav li>a
+            {
+                padding: 0 0 0 32px;
+            }
 </style>
     </head>
     
-    <body>
-      
+    <body class="has-fixed-sidenav">
+<!--      
         <div id="" style="position:absolute;left:10px;top:1px;width:175px;height:315px;z-index:0;">
 <img src="../../images/base/img0001.png" id="Shape1" alt="" style="width:125px;height:315px;"></div>
 <div id="" style="position:absolute;left:2px;top:280px;width:175px;height:310px;z-index:1;">
-<img src="../../images/base/img0002.png" id="Shape2" alt="" style="width:125px;height:315px;"></div>
-        <div id=""> <img  class="" style="float:right;width:220px;height:220px;" src="../../images/base/omgapps.png" alt="descripción" /></div>
+<img src="../../images/base/img0002.png" id="Shape2" alt="" style="width:125px;height:315px;"></div>-->
+        <!--<div id=""> <img  class="" style="float:right;width:220px;height:220px;" src="../../images/base/omgapps.png" alt="descripción" /></div>-->
 <!--        <div class="rombo"></div>
         <div class="cuadrado"></div>
 	<div class="oval "></div>-->
@@ -95,26 +170,135 @@ clock();
    </table>
 </form>
 </center>-->
+
+ <div class="navbar-fixed">
+     <nav class="navbar" style="background-color:#006699 ">
+          <div class="nav-wrapper"> <a href="#" class="brand-logo"><img src="../../images/base/enerinLogo.png" height="100%"></a>
+            <ul id="nav-mobile" class="right">
+               <ul class="right hide-on-med-and-down">
+<!--                    <li><a href="sass.html"><i class="material-icons">search</i></a></li>
+                    <li><a href="badges.html"><i class="material-icons">view_module</i></a></li>
+                    <li><a href="collapsible.html"><i class="material-icons">refresh</i></a></li>-->
+                    <li><a href=""><i class="material-icons">more_vert</i></a></li>
+                </ul>
+                <div class="nav-content">
+                    <span class="nav-title">  </span>
+                    <a class="btn-floating btn-large halfway-fab waves-effect waves-light teal">
+                      <i class="material-icons">add</i>
+                    </a>
+                </div>
+            </ul><a href="#!" data-target="sidenav-left" class="sidenav-trigger left"><i class="material-icons black-text">menu</i></a>
+          </div>
+        </nav>
+      </div>
+
+<!--<div class="navbar-fixed">
+    <nav class="navbar white">
+      <div class="nav-wrapper">
+        <a href="#!" class="brand-logo">Logo</a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="sass.html">Sass</a></li>
+          <li><a href="badges.html">Components</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>-->
+
+<!--<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>-->
+        <div class="col s12 m7">
+        <!--<h5 class="header">Horizontal Card</h5>-->
+        <!--<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>-->
+        <div class="card horizontal">
+              
+          <div class="card-image">
+              <!--<img src="../../images/base/enerinLogo.png" height="20%">-->
+          </div>
+          <div class="card-stacked">
+            <div class="card-content">
+                
+                
+                    <nav>
+                        <div class="nav-wrapper">
+                          <div class="col s12">
+                              
+                               <ul class="tabs tabs-fixed-width tab-demo z-depth-1">
+                                    <li class="tab"><a href="#test1">Acceso Al Sistema</a></li>
+                                    <li class="tab"><a class="active" href="#test2">Opcion 2</a></li>
+                                    <li class="tab disabled"><a href="#test3">Opcion 3</a></li>
+                                    <li class="tab"><a href="#test4">Opcion 4</a></li>
+                                  </ul>
+<!--                               <div class="carousel">
+                                    <a class="carousel-item" href="#one!"><img src="https://lorempixel.com/250/250/nature/1"></a>
+                                    <a class="carousel-item" href="#two!"><img src="https://lorempixel.com/250/250/nature/2"></a>
+                                    
+                                </div>-->
+<!--                              <a href="#!" class="breadcrumb" style="background-color: blue">First</a>
+                            <a href="#!" class="breadcrumb" style="background-color: blue">Second</a>
+                            <a href="#!" class="breadcrumb" style="background-color: blue">Third</a>-->
+                                <!--<p><center><h5>Bienvenido a la plataforma</h5></center></p>-->
+
+                          </div>
+                        </div>
+                    </nav>
+                
+                
+                
+                            </div>
+            <div class="card-action">
+              <!--<a href="#">This is a link</a>-->
+           
+              
+             
+              
+              
+              
+              
+
         <div id="Contenedor">
-            <div class="Icon"><span class="glyphicon glyphicon-user  "></span></div>
+            <div class="Icon"><span class="glyphicon glyphicon-user"></span>  </div>
             
             <div class="ContentForm">
                
 
 
                 <form id="loginform"  method="post" name="FormEntrar">
-                        <div class="input-group input-group-lg">
+<!--                        <div class="input-group input-group-lg">
                           <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-user"></i></span>
+                          
                           <input type="text" class="form-control" autocomplete="false" name="usuario" placeholder="Usuario" id="Usuario"  required>
                         </div>
                         <br>
                         <div class="input-group input-group-lg ">
                           <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-lock"></i></span>
                           <input type="password" name="pass" class="form-control" placeholder="******" aria-describedby="sizing-addon1" required>
-                        </div>
-                        <br>
-                        <button data-placement="right" title="Haga clic aquí para iniciar sesión" class="btn btn-lg btn-primary btn-block btn-signin" id="IngresoLog" type="submit">Entrar</button>
-                        <div class="opcioncontra "><a href="">Olvidaste tu contraseña?</a></div>
+                        </div>-->
+                        
+                             <div class="row">
+                                 <div class="input-field col s12 light-blue-text text-darken-3">
+                                     <i class="material-icons prefix">person</i>
+                                         <label for="user-input">USUARIO</label>
+                                        <input id="Usuario" name="usuario" type="text"  class="autocomplete light-blue-text text-darken-4" >
+                                      
+                                    
+                                 </div>
+                             </div>
+
+                             <div class="row">
+                                 <div class="input-field col s12 light-blue-text text-darken-3">
+                                     <i class="material-icons prefix">vpn_key</i>
+                                     <input id="contrasenaInput" name="pass" type="password" id="pass-input" class="autocomplete">
+                                     <label for="pass-input">CONTRASEÑA</label>
+                                 </div>
+                             </div>
+
+                             <div class="row">
+                                 <div class="input-field col s12">
+                                     <button data-placement="right" title="Haga clic aquí para iniciar sesión" class="btn btn-lg btn-primary btn-block btn-signin" id="IngresoLog" type="submit">Entrar</button>
+                                 </div>
+                             </div>
+                        
+                       
+                        <!--<div class="opcioncontra "><a href="">Olvidaste tu contraseña?</a></div>-->
                         
                         
                         
@@ -124,9 +308,39 @@ clock();
 
             </div>
          </div>
-        
-        <footer>
+         </div>
+          </div>
+        </div>
+      </div>
+
+
+<!--        <footer>
 		<p class="copyright">Copyright © 2018 - 2019 Javier M. Davila Bartoluchi</p>
-	</footer>
+	</footer>-->
+
+        <div class="fixed-action-btn">
+            <a class="btn-floating btn-large" style="background-color:#006699">
+              <!--<i class="large material-icons">mode_edit</i>-->
+              <img src="../../images/base/enerinLogo.png" height="100%">
+            </a>
+            <ul>
+              <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+              <!--<li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>-->
+              <!--<li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>-->
+              <!--<li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>-->
+            </ul>
+        </div>
+
+<!--        <footer class="page-footer grey valign-wrapper" >
+               <div class="container center-align truncate">
+                   <text-footer class="black-text">
+                         Copyright © 2018 - 2019 Javier M. Davila Bartoluchi
+                   </text-footer>
+               </div>      
+        </footer>-->
+
+
+
+
     </body>    
 </html>

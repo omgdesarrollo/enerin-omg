@@ -953,21 +953,21 @@ var opcionstatus=[
 				{key: "90", label: "90%"}
 			]
 		},
-                {
-			name: "progress", height: 33, map_to: "progress", type: "select", options: [
-				{key: "0", label: "No Iniciada"},
-				{key: "0.1", label: "10%"},
-				{key: "0.2", label: "20%"},
-				{key: "0.3", label: "30%"},
-				{key: "0.4", label: "40%"},
-				{key: "0.5", label: "50%"},
-				{key: "0.6", label: "60%"},
-				{key: "0.7", label: "70%"},
-				{key: "0.8", label: "80%"},
-				{key: "0.9", label: "90%"},
-				{key: "1", label: "Completa"}
-			]
-		},
+//                {
+//			name: "progress", height: 33, map_to: "progress", type: "select", options: [
+//				{key: "0", label: "No Iniciada"},
+//				{key: "0.1", label: "10%"},
+//				{key: "0.2", label: "20%"},
+//				{key: "0.3", label: "30%"},
+//				{key: "0.4", label: "40%"},
+//				{key: "0.5", label: "50%"},
+//				{key: "0.6", label: "60%"},
+//				{key: "0.7", label: "70%"},
+//				{key: "0.8", label: "80%"},
+//				{key: "0.9", label: "90%"},
+//				{key: "1", label: "Completa"}
+//			]
+//		},
                  {name:"template", height:16, type:"template", map_to:"my_template"}, 
 		{name: "time",  height: 50, type: "duration", map_to: "auto"}
 	];
