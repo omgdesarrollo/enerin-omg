@@ -72,18 +72,18 @@ clock();
         // });
         
         $(document).ready(function(){
-            $('.sidenav').sidenav();
-            $(".dropdown-trigger").dropdown();
-            $('.carousel').carousel();
+//            $('.sidenav').sidenav();
+//            $(".dropdown-trigger").dropdown();
+//            $('.carousel').carousel();
             $('.fixed-action-btn').floatingActionButton();
-            $('.tabs').tabs();
+            console.log($('.tabs').tabs());
             
 //            alert();
         });
-        document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.sidenav');
-        var instances = M.Sidenav.init(elems, options);
-        });
+//        document.addEventListener('DOMContentLoaded', function() {
+//        var elems = document.querySelectorAll('.sidenav');
+//        var instances = M.Sidenav.init(elems, options);
+//        });
 
         $(()=>{
             $(".btn-menu").click((t)=>{
@@ -102,12 +102,13 @@ clock();
    
   });
 
-//  $('.fixed-action-btn').floatingActionButton({
-////    toolbarEnabled: true,
-//     direction: 'top',
-//      hoverEnabled: false
-//  })
+  $('.fixed-action-btn').floatingActionButton({
+//    toolbarEnabled: true,
+     direction: 'top',
+      hoverEnabled: false
+  })
 //  end floating components
+
          document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.fixed-action-btn');
     var instances = M.FloatingActionButton.init(elems, {
@@ -241,7 +242,7 @@ clock();
     <div class="card-content grey lighten-4">
         <div id="accesologin">
             
-                    <div id="Contenedor">
+                    <!--<div id="Contenedor">-->
             <div class="Icon"><span class="glyphicon glyphicon-user"></span>  </div>
             
             <div class="ContentForm">
@@ -294,7 +295,7 @@ clock();
                 </form>   
 
             </div>
-         </div>
+         <!--</div>-->
             
             
         </div>
