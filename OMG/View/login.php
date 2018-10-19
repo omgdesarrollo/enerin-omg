@@ -253,9 +253,22 @@ clock();
                 
                             </div>
               <center>CONOCIMIENTO, EXPERIENCIA E INNOVACION, EN LOS MAS DE 27 AÑOS ATENDIENDO EL MERCADO EMPRESARIAL.</center>
-            <div class="card-action">
+              
+              
+              
+              
+              <!--<div style="height: 40%;" ></div>-->
+              
+              <div class="card-action" style="height: 70%">
               <!--<a href="#">This is a link</a>-->
            
+              
+              
+              
+              
+              
+              
+              
               
              <div id="accesoSistema" class="col s12">
                             
