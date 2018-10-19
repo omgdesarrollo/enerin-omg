@@ -225,49 +225,23 @@ clock();
   </div>-->
 
 <!--<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>-->
-        <div class="col s12 m7">
+
+
+ <div class="card">
+    <div class="card-content">
+      <p>  <center><div style="font-size: 20px">Interacción estructurada y orientada, con datos precisos para Decisiones adecuadas.</div></center> </p>
+    </div>
+    <div class="card-tabs">
+      <ul class="tabs tabs-fixed-width">
+          <li class="tab" style="border-style: solid;border-color: #006699"><a class="active" href="#accesologin" style="color:black;background: gray;">Acceso Al Sistema</a></li>
+        <li class="tab" style="border-style: solid;border-color: #006699"><a  href="#terminosycondiciones" style="color:black;background: gray;">Terminos Y Condiciones</a></li>
+        <li class="tab" style="border-style: solid;border-color: #006699"><a href="#registroalsistema" style="color:black;background: gray;">Registro Al Sistema</a></li>
+      </ul>
+    </div>
+    <div class="card-content grey lighten-4">
+        <div id="accesologin">
             
-            <center><div style="font-size: 20px">Interacción estructurada, con datos precisos para Decisiones adecuadas.</div></center>
-            
-        <!--<h5 class="header">Horizontal Card</h5>-->
-        <!--<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>-->
-        <div class="card horizontal">
-              
-          <div class="card-image">
-              <!--<img src="../../images/base/enerinLogo.png" height="20%">-->
-          </div>
-          <div class="card-stacked">
-            <div class="card-content">
-                
-                <!--#ee6e73-->
-                 
-                
-
-
-                
-                            </div>
-              <a  style="text-decoration:none"><center>CONOCIMIENTO, EXPERIENCIA E INNOVACION, EN LOS MAS DE 27 AÑOS ATENDIENDO EL MERCADO EMPRESARIAL.</center></a>
-              
-              
-              
-              
-              <!--<div style="height: 40%;" ></div>-->
-              
-              <!--<div class="card-action" style="height: 80%">-->
-              <!--<a href="#">This is a link</a>-->
-              
-              
-              
-             <div id="accesoSistema" class="col s12">
-                            
-<!--                                    <div id="test3" class="col s12">Test 3</div>
-                                    <div id="test4" class="col s12">Test 4</div>-->
-              
-              
-              
-              
-
-        <div id="Contenedor">
+                    <div id="Contenedor">
             <div class="Icon"><span class="glyphicon glyphicon-user"></span>  </div>
             
             <div class="ContentForm">
@@ -321,15 +295,190 @@ clock();
 
             </div>
          </div>
+            
+            
+        </div>
+        <div id="terminosycondiciones">
+            
+            
+            TERMINOS  CONDICIONES
+            
+            
+        </div>
+        <div id="registroalsistema">
+            
+            ESTA ES LA SECCION DE DONDE SE EXPLICARA Y SE GUIARA DE COMO ADQUIRIR ESTE SOFTWARE
+            
+            
+            
+        </div>
+    </div>
+
+
+
+
+  </div>
+
+
+
+        <div class="col s12 m7">
+            
+           
+            
+        <!--<h5 class="header">Horizontal Card</h5>-->
+        <!--<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>-->
+<!--         <div class="card horizontal">
+         <div class="row" >
+                                                <div class="col s12">
+                                                    <ul id="tabs" class="tabs">
+                                                        <li class="tab col s4" style="border-style: solid;"><a href="#accesoSistema" style="color:black;background: gray;"><b>Acceso Al Sistema</b></a></li>
+                                                        <li class="tab col s4" style="border-style: solid;"><a class="active" style="color:black;background: gray;" href="#test-swipe-2"><b>Inicio</b></a></li>
+                                                        <li class="tab col s4" style="border-style: solid;"><a href="#test-swipe-3" style="color:black;background: gray;"><b>Registro Al Sistema</b></li>
+                                                    </ul>
+
+                                                </div>
+                                    
+                                            </div>
+         </div>-->
+        <div class="card horizontal">
+              
+          <div class="card-image">
+              <!--<img src="../../images/base/enerinLogo.png" height="20%">-->
+          </div>
+          <div class="card-stacked">
+            <div class="card-content">
+                
+                <!--#ee6e73-->
+<!--                    <nav>
+                        <div class="nav-wrapper">
+                          <div class="col s12">
+                                <div class="col s5">
+                             f
+                                            
+                 
+                          </div>
+                            
+                         
+    
+    
+                        </div>
+                    </nav>-->
+                
+
+
+                
+                            <!--</div>-->
+              <a  style="text-decoration:none"><center>CONOCIMIENTO, EXPERIENCIA E INNOVACION, EN LOS MAS DE 27 AÑOS ATENDIENDO EL MERCADO EMPRESARIAL.</center></a>
+              
+              
+              
+              
+              <!--<div style="height: 40%;" ></div>-->
+              
+              <!--<div class="card-action" style="height: 80%">-->
+              <!--<a href="#">This is a link</a>-->
+              
+              
+              
+             <!--<div id="accesoSistema" class="col s12">-->
+                            
+<!--                                    <div id="test3" class="col s12">Test 3</div>
+                                    <div id="test4" class="col s12">Test 4</div>-->
+              
+              
+              
+              
+
+<!--        <div id="Contenedor">
+            <div class="Icon"><span class="glyphicon glyphicon-user"></span>  </div>
+            
+            <div class="ContentForm">
+               
+
+
+                <form id="loginform"  method="post" name="FormEntrar">
+                        <div class="input-group input-group-lg">
+                          <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-user"></i></span>
+                          
+                          <input type="text" class="form-control" autocomplete="false" name="usuario" placeholder="Usuario" id="Usuario"  required>
+                        </div>
+                        <br>
+                        <div class="input-group input-group-lg ">
+                          <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-lock"></i></span>
+                          <input type="password" name="pass" class="form-control" placeholder="******" aria-describedby="sizing-addon1" required>
+                        </div>
+                        
+                             <div class="row">
+                                 <div class="input-field col s12 light-blue-text text-darken-3">
+                                     <i class="material-icons prefix">person</i>
+                                         <label for="user-input">USUARIO</label>
+                                        <input id="Usuario" name="usuario" type="text"  class="autocomplete light-blue-text text-darken-4" >
+                                      
+                                    
+                                 </div>
+                             </div>
+
+                             <div class="row">
+                                 <div class="input-field col s12 light-blue-text text-darken-3">
+                                     <i class="material-icons prefix">vpn_key</i>
+                                     <input id="contrasenaInput" name="pass" type="password" id="pass-input" class="autocomplete">
+                                     <label for="pass-input">CONTRASEÑA</label>
+                                 </div>
+                             </div>
+
+                             <div class="row">
+                                 <div class="input-field col s12">
+                                     <button data-placement="right" title="Haga clic aquí para iniciar sesión" class="btn btn-lg btn-primary btn-block btn-signin" id="IngresoLog" type="submit">Entrar</button>
+                                 </div>
+                             </div>
+                        
+                       
+                        <div class="opcioncontra "><a href="">Olvidaste tu contraseña?</a></div>
+                        
+                        
+                        
+                        
+                        
+                </form>   
+
+            </div>
+         </div>-->
 
 <!--cierre del primer tabs con el contenido en este caso del login-->
-             </div>
+             <!--</div>-->
 <!--aqi termina--> 
+
+
+
+<!--segunda opcion del tab-->
+<!--<div id="terminosycondiciones" class="col s12">
+    
+    
+    
+    H
+    
+    
+  </div>-->
+
+
+
+<!--end segunda opcion del tab-->
+
+
+
+
+
+
+
+
+
+
+
 
          </div>
           </div>
         </div>
-      </div>
+      <!--</div>-->
 
        
       
