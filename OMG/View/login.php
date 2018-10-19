@@ -141,6 +141,9 @@ clock();
             {
                 padding: 0 0 0 32px;
             }
+         
+            
+            
 </style>
     </head>
     
@@ -233,9 +236,9 @@ clock();
                                                     <li class="tab col s3"><a href="#test4">Test 4</a></li>
                                                   </ul>-->
                                                     <ul id="tabs" class="tabs">
-                                                        <li class="tab col s4"><a href="#accesoSistema">Acceso Al Sistema</a></li>
-                                                        <li class="tab col s4"><a class="active" href="#test-swipe-2"></a></li>
-                                                        <li class="tab col s4"><a href="#test-swipe-3">Registro Al Sistema</li>
+                                                        <li class="tab col s4"><a href="#accesoSistema" style="color:#006699">Acceso Al Sistema</a></li>
+                                                        <li class="tab col s4"><a class="active" style="color:#006699" href="#test-swipe-2">Inicio</a></li>
+                                                        <li class="tab col s4"><a href="#test-swipe-3" style="color:#006699">Registro Al Sistema</li>
                                                     </ul>
 
                                                 </div>
@@ -261,14 +264,8 @@ clock();
               
               <!--<div style="height: 40%;" ></div>-->
               
-              <div class="card-action" style="height: 80%">
+              <!--<div class="card-action" style="height: 80%">-->
               <!--<a href="#">This is a link</a>-->
-           
-              
-              
-              
-              
-              
               
               
               
@@ -345,6 +342,46 @@ clock();
         </div>
       </div>
 
+      
+      
+       <div class="row"  >
+           <div class="col s12 m4" style="height: 50%;" >
+                      <div class="card">
+                        <div class="card-image">
+                          <img src="../../images/base/grafica.png">
+                          <span class="card-title">Card Title</span>
+                          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+                        </div>
+                        <div class="card-content">
+                          <p>dfgfdg</p>
+                        </div>
+                      </div>
+            </div>
+            <div class="col s12 m4" style="height: 50%;" >
+                      <div class="card">
+                        <div class="card-image">
+                          <img src="../../images/base/gant_tareas.jpg">
+                          <span class="card-title">Card Title</span>
+                          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+                        </div>
+                        <div class="card-content">
+                          <p>jhjg</p>
+                        </div>
+                      </div>
+            </div>
+            <div class="col s12 m4" style="height: 50%;" >
+                      <div class="card">
+                        <div class="card-image">
+                          <img src="../../images/base/temasespeciales_presentacion_login.png">
+                          <span class="card-title">Card Title</span>
+                          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+                        </div>
+                        <div class="card-content">
+                          <p>khjkjh</p>
+                        </div>
+                      </div>
+            </div>
+        </div>
 
 <!--        <footer>
 		<p class="copyright">Copyright © 2018 - 2019 Javier M. Davila Bartoluchi</p>
