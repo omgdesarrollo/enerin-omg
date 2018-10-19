@@ -349,45 +349,80 @@ clock();
         </div>
       </div>
 
-      
+       
       
        <div class="row"  >
            <div class="col s12 m4"  >
-                      <div class="card">
-                        <div class="card-image">
-                          <img src="../../images/base/grafica.png">
-                          <span class="card-title">Card Title</span>
-                          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
-                        </div>
-                        <div class="card-content">
-                          <p>dfgfdg</p>
-                        </div>
-                      </div>
-            </div>
-            <div class="col s12 m4"  >
-                      <div class="card">
-                        <div class="card-image">
-                          <img src="../../images/base/gant_tareas.jpg">
-                          <span class="card-title">Card Title</span>
-                          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
-                        </div>
-                        <div class="card-content">
-                          <p>jhjg</p>
-                        </div>
-                      </div>
-            </div>
-            <div class="col s12 m4"  >
-                      <div class="card">
-                        <div class="card-image">
-                          <img src="../../images/base/temasespeciales_presentacion_login.png">
-                          <span class="card-title">Card Title</span>
-                          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
-                        </div>
-                        <div class="card-content">
-                          <p>khjkjh</p>
-                        </div>
-                      </div>
-            </div>
+             <div class="card">
+    <div class="card-image waves-effect waves-block waves-light">
+      <img class="activator" src="../../images/base/grafica.png">
+    </div>
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4">Visualiza el proceso de tus tareas
+<i class="material-icons right">more_vert</i></span>
+      <p><a href="#">....</a></p>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4">Visualiza el proceso de tus tareas<i class="material-icons right">close</i></span>
+      <p>Visualiza el proceso de tus tareas
+Una gráfica de pastel es una circunferencia ("pastel") que se divide en segmentos ("rebanadas") para representar la proporción de observaciones que están en cada categoría.
+
+Para interpretar una gráfica de pastel, compare los grupos.
+Cuando usted interprete una gráfica de pastel, busque las diferencias en el tamaños de las rebanadas. El tamaño de una rebanada muestra la proporción de observaciones que están en ese grupo.
+Cuando usted compare múltiples gráficas de pastel, busque las diferencis en el tamaños de las rebanadas para la misma categoría en todas las gráficas de pastel.
+</p>
+    </div>
+  </div>
+           </div>
+           
+           
+        
+           
+     
+                  <div class="col s12 m4"  >
+             <div class="card">
+    <div class="card-image waves-effect waves-block waves-light">
+      <img class="activator" src="../../images/base/gant_tareas.jpg">
+    </div>
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4">Haz eficiente tus reuniones<i class="material-icons right">more_vert</i></span>
+      <p><a href="#">....</a></p>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4">Haz eficiente tus reuniones<i class="material-icons right">close</i></span>
+      <p>Haz eficiente tus reuniones
+Llega a la reuniones con tus colaboradores y otras personas con datos clave de seguimiento y actualizados, eliminando el uso de sistemas de almacenamiento de archivos y documentos con varias versiones que te generan tiempo improductivo.
+</p>
+    </div>
+  </div>
+           </div>
+   
+           
+                  <div class="col s12 m4"  >
+             <div class="card">
+    <div class="card-image waves-effect waves-block waves-light">
+      <img class="activator" src="../../images/base/temasespeciales_presentacion_login.png">
+    </div>
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4">Controla tus Temas<i class="material-icons right">more_vert</i></span>
+      <p><a href="#">....</a></p>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4">Controla tus Temas<i class="material-icons right">close</i></span>
+      <p>Controla tus Temas
+Registra aquellos temas a los cuales debes dar seguimiento, asigna un plan de trabajo a tus colaboradores,
+Revisa sus avance, las anotaciones, integra a tu equipo para trabajar en un mismo lugar y hacia un mismo objetivo. 
+
+</p>
+    </div>
+  </div>
+           </div>
+           
+           
+           
+           
+           
+           
         </div>
 
 <!--        <footer>
