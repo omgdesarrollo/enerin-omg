@@ -405,8 +405,27 @@ class Gantt_TareaDao {
         {
             throw $ex;
             return -1;
+        }        
+    }
+    
+    public function obtenerIdDelEmpleadoResponsableDelTema($id_tarea)
+    {
+        try 
+        {
+            $query="SELECT tbtareas.id_empleado
+                    FROM tareas tbtareas
+                    JOIN gantt_tareas tbgantt_tareas ON tbgantt_tareas.id_tarea=tbtareas.id_tarea
+                    WHERE tbgantt_tareas.id=$id_tarea";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            
+            return $lista[0]['id_empleado'];
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
         }
-        
     }
             
 }

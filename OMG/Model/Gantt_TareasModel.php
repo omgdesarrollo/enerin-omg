@@ -542,7 +542,6 @@ class Gantt_TareasModel{
             $dao=new Gantt_TareaDao();
             $rec= $dao->listarTareaGantt($value['id']);
             $modelGantt= new Gantt_TareasModel();
-//            $porcentajeAvance= $value['progress']*100;
             foreach ($rec as $value2) 
             {                
                 if($value2['id']==$value['id'])
@@ -569,7 +568,12 @@ class Gantt_TareasModel{
 
                     if($value2['notificacion_porcentaje_programado']!=-1 && ($value['progress']*100)>=$value['notificacion_porcentaje_programado'])
                     {
-                        $modelGantt->enviarNotificacionDelPorcentajeDeAvanceDelaTarea($value);
+                        if($value2['progress']!=$value['progress'])
+                        {
+                            $modelGantt->enviarNotificacionDelPorcentajeDeAvanceDelaTarea($value);
+                        }                       
+//                        echo "Value: ".json_encode($value);
+//                        echo "Value2: ".json_encode($value2);
                     }
 
                     if
@@ -770,9 +774,30 @@ class Gantt_TareasModel{
             $atendido= 'false';
             $asunto="";
             $dao=new Gantt_TareaDao();
-            $idparaquien= $dao->obtenerUsuarioPorIdEmpleado($value['user']);
+            $idResponsableTarea= $dao->obtenerUsuarioPorIdEmpleado($value['user']);
+            $idResponsableTema= $dao->obtenerUsuarioPorIdEmpleado($dao->obtenerIdDelEmpleadoResponsableDelTema($value['id']));        
             $model=new NotificacionesModel();
-            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idparaquien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+            
+            if($idResponsableTarea==$idResponsableTema)
+            {
+                if($idResponsableTarea!=0)
+                {
+                    $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTarea, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+                }
+            }else
+            {
+                if($idResponsableTarea!=0)
+                {
+                    $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTarea, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+                }
+                if($idResponsableTema!=0)
+                {
+                    $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTema, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);                                    
+                }
+            }
+            
+//            echo "Usuario Tarea".json_encode($idResponsableTarea);
+//            echo "Usuario Tema".json_encode($idResponsableTema);
             
             return $rec;
         } catch (Exception $ex)
