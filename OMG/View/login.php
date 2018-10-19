@@ -252,7 +252,7 @@ clock();
 
                 
                             </div>
-              <center>CONOCIMIENTO, EXPERIENCIA E INNOVACION, EN LOS MAS DE 27 AÑOS ATENDIENDO EL MERCADO EMPRESARIAL.</center>
+              <a  style="text-decoration:none"><center>CONOCIMIENTO, EXPERIENCIA E INNOVACION, EN LOS MAS DE 27 AÑOS ATENDIENDO EL MERCADO EMPRESARIAL.</center></a>
               
               
               
