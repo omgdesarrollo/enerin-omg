@@ -224,19 +224,22 @@ clock();
                              <!--f-->
                                              <div class="row" >
                                                 <div class="col s12">
-                                                  <ul class="tabs">
+<!--                                                  <ul class="tabs">
                                                     <li class="tab col s6"><a href="#accesoSistema">Acceso Al Sistema</a></li>
                                                     <li class="tab col s6"><a class="active" href="#test2">Test 2</a></li>
-                                                    <!--<li class="tab col s3 disabled"><a href="#test3">Disabled Tab</a></li>-->
-                                                    <!--<li class="tab col s3"><a href="#test4">Test 4</a></li>-->
-                                                  </ul>
+                                                    <li class="tab col s3 disabled"><a href="#test3">Disabled Tab</a></li>
+                                                    <li class="tab col s3"><a href="#test4">Test 4</a></li>
+                                                  </ul>-->
+                                                    <ul id="tabs" class="tabs">
+                                                        <li class="tab col s4"><a href="#accesoSistema">Acceso Al Sistema</a></li>
+                                                        <li class="tab col s4"><a class="active" href="#test-swipe-2"></a></li>
+                                                        <li class="tab col s4"><a href="#test-swipe-3">Registro Al Sistema</li>
+                                                    </ul>
+
                                                 </div>
                                     
                                             </div>
-                             
-                             
-                             
-                             
+                 
                           </div>
                             
                          
@@ -249,6 +252,7 @@ clock();
 
                 
                             </div>
+              <center>CONOCIMIENTO, EXPERIENCIA E INNOVACION, EN LOS MAS DE 27 AÑOS ATENDIENDO EL MERCADO EMPRESARIAL.</center>
             <div class="card-action">
               <!--<a href="#">This is a link</a>-->
            
