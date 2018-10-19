@@ -125,6 +125,16 @@ clock();
         .animacion {
 -webkit-animation:fa-spin 20s infinite linear;animation:fa-spin 24s infinite linear;
  /*animation-name: slidein;*/
+ 
+ 
+/*    body{
+        cursor:url(http://falconmasters.com/img/cursor.gif), auto;
+      cursor: url(../../images/base/enerinLogo.png);
+   }*/
+/*   a, a:hover{
+   cursor: url(../../images/base/enerinLogo.png), help;
+    }*/
+   
   .sidenav .divider
             {
                 margin:0px !important;
@@ -243,9 +253,9 @@ clock();
                                                     <li class="tab col s3"><a href="#test4">Test 4</a></li>
                                                   </ul>-->
                                                     <ul id="tabs" class="tabs">
-                                                        <li class="tab col s4"><a href="#accesoSistema" style="color:black;background: gray;"><b>Acceso Al Sistema</b></a></li>
-                                                        <li class="tab col s4"><a class="active" style="color:black;background: gray;" href="#test-swipe-2"><b>Inicio</b></a></li>
-                                                        <li class="tab col s4"><a href="#test-swipe-3" style="color:black;background: gray;"><b>Registro Al Sistema</b></li>
+                                                        <li class="tab col s4" style="border-style: solid;"><a href="#accesoSistema" style="color:black;background: gray;"><b>Acceso Al Sistema</b></a></li>
+                                                        <li class="tab col s4" style="border-style: solid;"><a class="active" style="color:black;background: gray;" href="#test-swipe-2"><b>Inicio</b></a></li>
+                                                        <li class="tab col s4" style="border-style: solid;"><a href="#test-swipe-3" style="color:black;background: gray;"><b>Registro Al Sistema</b></li>
                                                     </ul>
 
                                                 </div>
