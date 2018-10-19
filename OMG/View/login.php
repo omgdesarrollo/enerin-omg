@@ -75,7 +75,8 @@ clock();
             $('.sidenav').sidenav();
             $(".dropdown-trigger").dropdown();
             $('.carousel').carousel();
-             $('.fixed-action-btn').floatingActionButton();
+            $('.fixed-action-btn').floatingActionButton();
+            $('.tabs').tabs();
             
 //            alert();
         });
@@ -216,39 +217,46 @@ clock();
           <div class="card-stacked">
             <div class="card-content">
                 
-                
+                <!--#ee6e73-->
                     <nav>
                         <div class="nav-wrapper">
                           <div class="col s12">
-                              
-                               <ul class="tabs tabs-fixed-width tab-demo z-depth-1">
-                                    <li class="tab"><a href="#test1">Acceso Al Sistema</a></li>
-                                    <li class="tab"><a class="active" href="#test2">Opcion 2</a></li>
-                                    <li class="tab disabled"><a href="#test3">Opcion 3</a></li>
-                                    <li class="tab"><a href="#test4">Opcion 4</a></li>
-                                  </ul>
-<!--                               <div class="carousel">
-                                    <a class="carousel-item" href="#one!"><img src="https://lorempixel.com/250/250/nature/1"></a>
-                                    <a class="carousel-item" href="#two!"><img src="https://lorempixel.com/250/250/nature/2"></a>
+                             <!--f-->
+                                             <div class="row" >
+                                                <div class="col s12">
+                                                  <ul class="tabs">
+                                                    <li class="tab col s6"><a href="#accesoSistema">Acceso Al Sistema</a></li>
+                                                    <li class="tab col s6"><a class="active" href="#test2">Test 2</a></li>
+                                                    <!--<li class="tab col s3 disabled"><a href="#test3">Disabled Tab</a></li>-->
+                                                    <!--<li class="tab col s3"><a href="#test4">Test 4</a></li>-->
+                                                  </ul>
+                                                </div>
                                     
-                                </div>-->
-<!--                              <a href="#!" class="breadcrumb" style="background-color: blue">First</a>
-                            <a href="#!" class="breadcrumb" style="background-color: blue">Second</a>
-                            <a href="#!" class="breadcrumb" style="background-color: blue">Third</a>-->
-                                <!--<p><center><h5>Bienvenido a la plataforma</h5></center></p>-->
-
+                                            </div>
+                             
+                             
+                             
+                             
                           </div>
+                            
+                         
+    
+    
                         </div>
                     </nav>
                 
-                
+
+
                 
                             </div>
             <div class="card-action">
               <!--<a href="#">This is a link</a>-->
            
               
-             
+             <div id="accesoSistema" class="col s12">
+                            
+<!--                                    <div id="test3" class="col s12">Test 3</div>
+                                    <div id="test4" class="col s12">Test 4</div>-->
               
               
               
@@ -308,6 +316,11 @@ clock();
 
             </div>
          </div>
+
+<!--cierre del primer tabs con el contenido en este caso del login-->
+             </div>
+<!--aqi termina--> 
+
          </div>
           </div>
         </div>
