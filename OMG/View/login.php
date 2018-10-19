@@ -276,8 +276,10 @@ clock();
                              <div class="row">
                                  <div class="input-field col s12 light-blue-text text-darken-3">
                                      <i class="material-icons prefix">person</i>
-                                     <input id="Usuario" name="usuario" type="text"  class="autocomplete light-blue-text text-darken-4">
-                                     <label for="user-input">USUARIO</label>
+                                         <label for="user-input">USUARIO</label>
+                                        <input id="Usuario" name="usuario" type="text"  class="autocomplete light-blue-text text-darken-4" >
+                                      
+                                    
                                  </div>
                              </div>
 
