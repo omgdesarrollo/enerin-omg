@@ -125,6 +125,13 @@ clock();
         <style>
         .animacion {
 -webkit-animation:fa-spin 20s infinite linear;animation:fa-spin 24s infinite linear;
+
+/*@media only screen and (max-width:320px){
+#Contenedor{
+	width: 100%;
+	height: auto;
+	margin: 0px;
+}*/
  /*animation-name: slidein;*/
  
  
@@ -243,6 +250,8 @@ clock();
         <div id="accesologin">
             
                     <!--<div id="Contenedor">-->
+                <!--<div id="container">-->
+                <div style="padding-left: 20%;padding-right: 20%">
             <div class="Icon"><span class="glyphicon glyphicon-user"></span>  </div>
             
             <div class="ContentForm">
@@ -295,7 +304,7 @@ clock();
                 </form>   
 
             </div>
-         <!--</div>-->
+         </div>
             
             
         </div>
