@@ -1,7 +1,9 @@
 <?php
     $urls["fisica"] = "C:xampp/htdocs/enerin-omg/archivos/";
-    $urls["logica"] = "../../../enerin-omg/archivos/";
+     $urls["logica"] = $_SERVER['HTTP_HOST']."/enerin-omg/archivos/";
+//    $urls["logica"] = "../../../enerin-omg/archivos/";
 
+    echo "onter ".$urls["logica"];
 //         $urls["fisica"] = "/home/fpa9q09nzhnx/public_html/cliente/archivos/";
 //         $urls["logica"] = 'http://www.enerin-omgapps.com/cliente/archivos/';
 
