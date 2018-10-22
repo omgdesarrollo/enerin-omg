@@ -457,7 +457,7 @@ function componerDataGrid()//listo
 function listarEmpleados()
 {
     $.ajax({
-        url:"../Controller/EmpleadosController.php?Op=nombresCompletos",
+        url:"../Controller/TareasController.php?Op=empleadosConUsuario",
         type:"GET",
         async:false,
         success:function(empleadosComb)

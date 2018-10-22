@@ -200,7 +200,7 @@ var gantt=[
 
   datacontratos=[
 //         {id:'cambiarcontrato',text:'Cambiar Contrato',img:'contratos.png',type:'button',isbig:true}
-         {id:'cambiarcontrato',text:'<div id=\'infocontrato\'>Contrato Seleccionado:</div>',img:'contratos.png',type:'button',isbig:true}
+         {id:'cambiarcontrato',text:'<div id=\'infocontrato\'>Opcion Seleccionada:</div>',img:'contratos.png',type:'button',isbig:true}
   ];
   dataSeccionRibbon=[];
    var listasubmodulos=[];
@@ -1146,7 +1146,7 @@ var jsonObj = {};
                                 timer: 2000,
                               });
                                 window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
-                                window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
+                                window.top.$("#infocontrato").html("Opcion Seleccionada:<br>("+r.clave_cumplimiento+")");
 //                                mostrarTareasEnAlarma();
                                 
                                 
