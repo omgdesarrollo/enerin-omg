@@ -249,11 +249,11 @@ function reconstruirExcelDetalles(value,index)
                     
                     if(val2.frecuencia=="INDEFINIDO" && val2.evidencias_proceso==0)
                     {
-                        tempData["Evidencias por Cumplir"] += "";                                                         
+                        tempData["Evidencias por Cumplir"] +="<li>"+0+"</li>";                                                         
                     }else{
                         if(val2.frecuencia=="INDEFINIDO" && val2.evidencias_proceso!=0)
                         {
-                            tempData["Evidencias por Cumplir"] += "<li>"+evidencias_proceso+"</li>";
+                            tempData["Evidencias por Cumplir"] += "<li>"+val2.evidencias_proceso+"</li>";
                         }
                     } 
                     
