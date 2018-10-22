@@ -72,18 +72,18 @@ clock();
         // });
         
         $(document).ready(function(){
-            $('.sidenav').sidenav();
-            $(".dropdown-trigger").dropdown();
-            $('.carousel').carousel();
+//            $('.sidenav').sidenav();
+//            $(".dropdown-trigger").dropdown();
+//            $('.carousel').carousel();
             $('.fixed-action-btn').floatingActionButton();
-            $('.tabs').tabs();
+            console.log($('.tabs').tabs());
             
 //            alert();
         });
-        document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.sidenav');
-        var instances = M.Sidenav.init(elems, options);
-        });
+//        document.addEventListener('DOMContentLoaded', function() {
+//        var elems = document.querySelectorAll('.sidenav');
+//        var instances = M.Sidenav.init(elems, options);
+//        });
 
         $(()=>{
             $(".btn-menu").click((t)=>{
@@ -102,12 +102,13 @@ clock();
    
   });
 
-//  $('.fixed-action-btn').floatingActionButton({
-////    toolbarEnabled: true,
-//     direction: 'top',
-//      hoverEnabled: false
-//  })
+  $('.fixed-action-btn').floatingActionButton({
+//    toolbarEnabled: true,
+     direction: 'top',
+      hoverEnabled: false
+  })
 //  end floating components
+
          document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.fixed-action-btn');
     var instances = M.FloatingActionButton.init(elems, {
@@ -124,8 +125,25 @@ clock();
         <style>
         .animacion {
 -webkit-animation:fa-spin 20s infinite linear;animation:fa-spin 24s infinite linear;
+
+/*@media only screen and (max-width:320px){
+#Contenedor{
+	width: 100%;
+	height: auto;
+	margin: 0px;
+}*/
  /*animation-name: slidein;*/
-  .sidenav .divider
+ 
+ 
+/*    body{
+        cursor:url(http://falconmasters.com/img/cursor.gif), auto;
+      cursor: url(../../images/base/enerinLogo.png);
+   }*/
+/*   a, a:hover{
+   cursor: url(../../images/base/enerinLogo.png), help;
+    }*/
+   
+/*  .sidenav .divider
             {
                 margin:0px !important;
             }
@@ -142,7 +160,7 @@ clock();
                 padding: 0 0 0 32px;
             }
          
-            
+            */
             
 </style>
     </head>
@@ -177,8 +195,8 @@ clock();
 
  <div class="navbar-fixed">
      <nav class="navbar" style="background-color:#006699 ">
-          <div class="nav-wrapper"> <a href="#" class="brand-logo"><img src="../../images/base/enerinLogo.png" height="100%"></a>
-              <center><h4>OMG Apps</h4> </center>
+          <div class="nav-wrapper"> 
+              <center><h4>OMG <a href="#" class="brand-logo"><img src="../../images/base/enerinLogo.png" height="100%"></a> &nbsp;&nbsp;&nbsp; Apps</h4> </center>
             <ul id="nav-mobile" class="right">
                <ul class="right hide-on-med-and-down">
 <!--                    <li><a href="sass.html"><i class="material-icons">search</i></a></li>
@@ -215,77 +233,25 @@ clock();
   </div>-->
 
 <!--<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>-->
-        <div class="col s12 m7">
+
+
+ <div class="card">
+    <div class="card-content">
+      <p>  <center><div style="font-size: 20px">Interacción estructurada y orientada, con datos precisos para Decisiones adecuadas.</div></center> </p>
+    </div>
+    <div class="card-tabs">
+      <ul class="tabs tabs-fixed-width">
+          <li class="tab" style="border-style: solid;border-color: #006699"><a class="active" href="#accesologin" style="color:black;background: gray;">Acceso Al Sistema</a></li>
+        <li class="tab" style="border-style: solid;border-color: #006699"><a  href="#terminosycondiciones" style="color:black;background: gray;">Terminos Y Condiciones</a></li>
+        <li class="tab" style="border-style: solid;border-color: #006699"><a href="#registroalsistema" style="color:black;background: gray;">Registro Al Sistema</a></li>
+      </ul>
+    </div>
+    <div class="card-content grey lighten-4">
+        <div id="accesologin">
             
-            <center><div style="font-size: 20px">Interacción estructurada, con datos precisos para Decisiones adecuadas.</div></center>
-            
-        <!--<h5 class="header">Horizontal Card</h5>-->
-        <!--<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>-->
-        <div class="card horizontal">
-              
-          <div class="card-image">
-              <!--<img src="../../images/base/enerinLogo.png" height="20%">-->
-          </div>
-          <div class="card-stacked">
-            <div class="card-content">
-                
-                <!--#ee6e73-->
-                    <nav>
-                        <div class="nav-wrapper">
-                          <div class="col s12">
-                             <!--f-->
-                                             <div class="row" >
-                                                <div class="col s12">
-<!--                                                  <ul class="tabs">
-                                                    <li class="tab col s6"><a href="#accesoSistema">Acceso Al Sistema</a></li>
-                                                    <li class="tab col s6"><a class="active" href="#test2">Test 2</a></li>
-                                                    <li class="tab col s3 disabled"><a href="#test3">Disabled Tab</a></li>
-                                                    <li class="tab col s3"><a href="#test4">Test 4</a></li>
-                                                  </ul>-->
-                                                    <ul id="tabs" class="tabs">
-                                                        <li class="tab col s4"><a href="#accesoSistema" style="color:black;background: gray;"><b>Acceso Al Sistema</b></a></li>
-                                                        <li class="tab col s4"><a class="active" style="color:black;background: gray;" href="#test-swipe-2"><b>Inicio</b></a></li>
-                                                        <li class="tab col s4"><a href="#test-swipe-3" style="color:black;background: gray;"><b>Registro Al Sistema</b></li>
-                                                    </ul>
-
-                                                </div>
-                                    
-                                            </div>
-                 
-                          </div>
-                            
-                         
-    
-    
-                        </div>
-                    </nav>
-                
-
-
-                
-                            </div>
-              <a  style="text-decoration:none"><center>CONOCIMIENTO, EXPERIENCIA E INNOVACION, EN LOS MAS DE 27 AÑOS ATENDIENDO EL MERCADO EMPRESARIAL.</center></a>
-              
-              
-              
-              
-              <!--<div style="height: 40%;" ></div>-->
-              
-              <!--<div class="card-action" style="height: 80%">-->
-              <!--<a href="#">This is a link</a>-->
-              
-              
-              
-             <div id="accesoSistema" class="col s12">
-                            
-<!--                                    <div id="test3" class="col s12">Test 3</div>
-                                    <div id="test4" class="col s12">Test 4</div>-->
-              
-              
-              
-              
-
-        <div id="Contenedor">
+                    <!--<div id="Contenedor">-->
+                <!--<div id="container">-->
+                <div style="padding-left: 20%;padding-right: 20%">
             <div class="Icon"><span class="glyphicon glyphicon-user"></span>  </div>
             
             <div class="ContentForm">
@@ -303,6 +269,154 @@ clock();
                           <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-lock"></i></span>
                           <input type="password" name="pass" class="form-control" placeholder="******" aria-describedby="sizing-addon1" required>
                         </div>-->
+                        
+                             <div class="row">
+                                 <div class="input-field col s12 light-blue-text text-darken-3">
+                                     <i class="material-icons prefix">person</i>
+                                         <label for="Usuario">USUARIO</label>
+                                        <input id="Usuario" name="usuario" type="text"  class="autocomplete light-blue-text text-darken-4" >
+                                      
+                                    
+                                 </div>
+                             </div>
+
+                             <div class="row">
+                                 <div class="input-field col s12 light-blue-text text-darken-3">
+                                     <i class="material-icons prefix">vpn_key</i>
+                                     <input id="contrasenaInput" name="pass" type="password" id="pass-input" class="autocomplete">
+                                     <label for="contrasenaInput">CONTRASEÑA</label>
+                                 </div>
+                             </div>
+
+                             <div class="row">
+                                 <div class="input-field col s12">
+                                     <button data-placement="right" title="Haga clic aquí para iniciar sesión" class="btn btn-lg btn-primary btn-block btn-signin" id="IngresoLog" type="submit">Entrar</button>
+                                 </div>
+                             </div>
+                        
+                       
+                        <!--<div class="opcioncontra "><a href="">Olvidaste tu contraseña?</a></div>-->
+                        
+                        
+                        
+                        
+                        
+                </form>   
+
+            </div>
+         </div>
+            
+            
+        </div>
+        <div id="terminosycondiciones">
+            
+            
+            TERMINOS  CONDICIONES
+            
+            
+        </div>
+        <div id="registroalsistema">
+            
+            ESTA ES LA SECCION DE DONDE SE EXPLICARA Y SE GUIARA DE COMO ADQUIRIR ESTE SOFTWARE
+            
+            
+            
+        </div>
+    </div>
+
+
+
+
+  </div>
+
+
+
+        <div class="col s12 m7">
+            
+           
+            
+        <!--<h5 class="header">Horizontal Card</h5>-->
+        <!--<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>-->
+<!--         <div class="card horizontal">
+         <div class="row" >
+                                                <div class="col s12">
+                                                    <ul id="tabs" class="tabs">
+                                                        <li class="tab col s4" style="border-style: solid;"><a href="#accesoSistema" style="color:black;background: gray;"><b>Acceso Al Sistema</b></a></li>
+                                                        <li class="tab col s4" style="border-style: solid;"><a class="active" style="color:black;background: gray;" href="#test-swipe-2"><b>Inicio</b></a></li>
+                                                        <li class="tab col s4" style="border-style: solid;"><a href="#test-swipe-3" style="color:black;background: gray;"><b>Registro Al Sistema</b></li>
+                                                    </ul>
+
+                                                </div>
+                                    
+                                            </div>
+         </div>-->
+        <div class="card horizontal">
+              
+          <div class="card-image">
+              <!--<img src="../../images/base/enerinLogo.png" height="20%">-->
+          </div>
+          <div class="card-stacked">
+            <div class="card-content">
+                
+                <!--#ee6e73-->
+<!--                    <nav>
+                        <div class="nav-wrapper">
+                          <div class="col s12">
+                                <div class="col s5">
+                             f
+                                            
+                 
+                          </div>
+                            
+                         
+    
+    
+                        </div>
+                    </nav>-->
+                
+
+
+                
+                            <!--</div>-->
+              <a  style="text-decoration:none"><center>CONOCIMIENTO, EXPERIENCIA E INNOVACION, EN LOS MAS DE 27 AÑOS ATENDIENDO EL MERCADO EMPRESARIAL.</center></a>
+              
+              
+              
+              
+              <!--<div style="height: 40%;" ></div>-->
+              
+              <!--<div class="card-action" style="height: 80%">-->
+              <!--<a href="#">This is a link</a>-->
+              
+              
+              
+             <!--<div id="accesoSistema" class="col s12">-->
+                            
+<!--                                    <div id="test3" class="col s12">Test 3</div>
+                                    <div id="test4" class="col s12">Test 4</div>-->
+              
+              
+              
+              
+
+<!--        <div id="Contenedor">
+            <div class="Icon"><span class="glyphicon glyphicon-user"></span>  </div>
+            
+            <div class="ContentForm">
+               
+
+
+                <form id="loginform"  method="post" name="FormEntrar">
+                        <div class="input-group input-group-lg">
+                          <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-user"></i></span>
+                          
+                          <input type="text" class="form-control" autocomplete="false" name="usuario" placeholder="Usuario" id="Usuario"  required>
+                        </div>
+                        <br>
+                        <div class="input-group input-group-lg ">
+                          <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-lock"></i></span>
+                          <input type="password" name="pass" class="form-control" placeholder="******" aria-describedby="sizing-addon1" required>
+                        </div>
                         
                              <div class="row">
                                  <div class="input-field col s12 light-blue-text text-darken-3">
@@ -329,7 +443,7 @@ clock();
                              </div>
                         
                        
-                        <!--<div class="opcioncontra "><a href="">Olvidaste tu contraseña?</a></div>-->
+                        <div class="opcioncontra "><a href="">Olvidaste tu contraseña?</a></div>
                         
                         
                         
@@ -338,16 +452,43 @@ clock();
                 </form>   
 
             </div>
-         </div>
+         </div>-->
 
 <!--cierre del primer tabs con el contenido en este caso del login-->
-             </div>
+             <!--</div>-->
 <!--aqi termina--> 
+
+
+
+<!--segunda opcion del tab-->
+<!--<div id="terminosycondiciones" class="col s12">
+    
+    
+    
+    H
+    
+    
+  </div>-->
+
+
+
+<!--end segunda opcion del tab-->
+
+
+
+
+
+
+
+
+
+
+
 
          </div>
           </div>
         </div>
-      </div>
+      <!--</div>-->
 
        
       
