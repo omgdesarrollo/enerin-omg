@@ -25,7 +25,7 @@ class NotificacionesTareasModel {
                 $ID_EMPLEADO= $value['id_empleado'];
                 
                 $ID= $dao->obtenerUsuarioPorIdEmpleado($ID_EMPLEADO);
-                $mensaje= "La Tarea: ".$TAREA." esta en Alarma";
+                $mensaje= "El Tema: ".$TAREA." esta en Alarma";
                 $resultado= $dao->veriricarSiYaExisteLaNotificacion($mensaje);
 //                echo "este es el resultado: ".$resultado;
                 if($resultado==0)
@@ -79,7 +79,7 @@ class NotificacionesTareasModel {
                 $TAREA= $value['tarea'];
                 $ID_EMPLEADO= $value['id_empleado'];
                 $ID= $dao->obtenerUsuarioPorIdEmpleado($ID_EMPLEADO);
-                $mensaje= "Tarea: ".$TAREA." con Fecha de Cumplimiento Vencido";
+                $mensaje= "Tema: ".$TAREA." con Fecha de Cumplimiento Vencido";
                 
                 $resultado= $dao->veriricarSiYaExisteLaNotificacion($mensaje);
                 
