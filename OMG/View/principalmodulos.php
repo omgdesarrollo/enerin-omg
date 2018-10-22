@@ -113,7 +113,10 @@ $Usuario=  Session::getSesion("user");
                 #seleccion_informacion_palabra{ 
 
                     
-                    background-color: yellow;
+                    color: blue;
+                }
+                #seleccion_opcionmenuarriba{
+                    background-color: #cccccc;
                 }
                 
                 
@@ -382,7 +385,8 @@ function redimencionarLayout()
 //                        dhxrb_big_button
                         
                         if(itemIdSeleccion=="Bienvenido"){
-                             ribbon._items["Bienvenido"].base.lastElementChild.id="seleccion_informacion_palabra"
+                             ribbon._items["Bienvenido"].base.id="seleccion_opcionmenuarriba";
+//                             ribbon._items["Bienvenido"].base.lastElementChild.id="seleccion_informacion_palabra"
 //                            ribbon.check(itemIdSeleccion);
 //                                      ribbon.isVisible(bId);  
                                $.each(listasubmodulos,function (index,value){
@@ -418,33 +422,37 @@ function redimencionarLayout()
                         
                         if(itemIdSeleccion=="cambiarcontrato"){
                              ribbon._items["cambiarcontrato"].base.lastElementChild.id="seleccion_informacion_palabra"
-                            loadDataSideBarContratos();  
+                             ribbon._items["cambiarcontrato"].base.id="seleccion_opcionmenuarriba";
+                                 loadDataSideBarContratos();  
                         }
                           
                 
                         if(itemIdSeleccion=="Información") {
 //                            ribbon._items["Información"].base.id="seleccion_informacion";
-                            ribbon._items["Información"].base.lastElementChild.id="seleccion_informacion_palabra"
+//                            ribbon._items["Información"].base.lastElementChild.id="seleccion_informacion_palabra"
 //                            ribbon._items["Información"].base.className="class_informacion";
-                           
+                           ribbon._items["Información"].base.id="seleccion_opcionmenuarriba";
                            
 //                            console.log(listasubmodulos);
 //                            console.log(listasubmodulos["0"]["contenido_sub"]["0"]["contenido_vista"]);
                            loadDataSideBarCatalogoInformacion(listasubmodulos["0"]["contenido_sub"]["0"]["contenido_vista"]);
                        }   
                         if(itemIdSeleccion=="Validación"){
-                            ribbon._items["Validación"].base.lastElementChild.id="seleccion_informacion_palabra";
+                            ribbon._items["Validación"].base.id="seleccion_opcionmenuarriba";
+//                            ribbon._items["Validación"].base.lastElementChild.id="seleccion_informacion_palabra";
                           
                            loadDataSideBarCumplimientosDocumentos();
                         }
                        
                         if(itemIdSeleccion=="Evidencias"){
-                            ribbon._items["Evidencias"].base.lastElementChild.id="seleccion_informacion_palabra"
-                            loadDataSideBarCumplimientosEvidencias();
+//                            ribbon._items["Evidencias"].base.lastElementChild.id="seleccion_informacion_palabra"
+                            ribbon._items["Evidencias"].base.id="seleccion_opcionmenuarriba";
+                                loadDataSideBarCumplimientosEvidencias();
                         }
                         
                         if(itemIdSeleccion=="Reportes"){
-                            ribbon._items["Reportes"].base.lastElementChild.id="seleccion_informacion_palabra";
+                             ribbon._items["Reportes"].base.id="seleccion_opcionmenuarriba";
+//                            ribbon._items["Reportes"].base.lastElementChild.id="seleccion_informacion_palabra";
                             
                               $.each(listasubmodulos,function (index,value){
 
@@ -464,7 +472,8 @@ function redimencionarLayout()
                         }
 
                         if(itemIdSeleccion=="Control de Temas Especiales"){
-                            ribbon._items["Control de Temas Especiales"].base.lastElementChild.id="seleccion_informacion_palabra";
+                            ribbon._items["Control de Temas Especiales"].base.id="seleccion_opcionmenuarriba";
+//                            ribbon._items["Control de Temas Especiales"].base.lastElementChild.id="seleccion_informacion_palabra";
                             var listRegistroTareas=[];
                             $.each(listasubmodulos,function (index,value){
 
@@ -484,7 +493,8 @@ function redimencionarLayout()
                         }
                         
                         if(itemIdSeleccion=="Informe"){
-                            ribbon._items["Informe"].base.lastElementChild.id="seleccion_informacion_palabra";
+                              ribbon._items["Informe"].base.id="seleccion_opcionmenuarriba";
+//                            ribbon._items["Informe"].base.lastElementChild.id="seleccion_informacion_palabra";
                             
                             
                                  $.each(listasubmodulos,function (index,value){
@@ -507,7 +517,8 @@ function redimencionarLayout()
                         }
                         
                         if(itemIdSeleccion=="Catálogos"){
-                             ribbon._items["Catálogos"].base.lastElementChild.id="seleccion_informacion_palabra";
+                            ribbon._items["Catálogos"].base.id="seleccion_opcionmenuarriba";
+//                             ribbon._items["Catálogos"].base.lastElementChild.id="seleccion_informacion_palabra";
                              $.each(listasubmodulos,function (index,value){
 
                                 $.each(value["contenido_sub"],function(index1,value1)
@@ -525,8 +536,8 @@ function redimencionarLayout()
                         }
                        
                         if(itemIdSeleccion=="Documentación"){
-                            
-                            ribbon._items["Documentación"].base.lastElementChild.id="seleccion_informacion_palabra";
+                              ribbon._items["Documentación"].base.id="seleccion_opcionmenuarriba";
+//                            ribbon._items["Documentación"].base.lastElementChild.id="seleccion_informacion_palabra";
                             
                               $.each(listasubmodulos,function (index,value){
 
@@ -544,11 +555,13 @@ function redimencionarLayout()
                            
                         }
                         if(itemIdSeleccion=="Informe Gerencial"){
-                        ribbon._items["Informe Gerencial"].base.lastElementChild.id="seleccion_informacion_palabra"; 
+                             ribbon._items["Informe Gerencial"].base.id="seleccion_opcionmenuarriba";
+//                        ribbon._items["Informe Gerencial"].base.lastElementChild.id="seleccion_informacion_palabra"; 
                             loadDataInformeGerencial();
                         }
                         if(itemIdSeleccion=="Seguimiento"){
-                              ribbon._items["Seguimiento"].base.lastElementChild.id="seleccion_informacion_palabra"; 
+                              ribbon._items["Seguimiento"].base.id="seleccion_opcionmenuarriba";
+//                              ribbon._items["Seguimiento"].base.lastElementChild.id="seleccion_informacion_palabra"; 
                             loadDataCargaProgramaGantt();
                         }
                        
@@ -562,41 +575,54 @@ function limpiarSeleccionDeRibbon(){
                             
     
     
-//                        ribbon._items["Información"].base.id="";
+                       
                         if(ribbon._items["Información"]!=undefined){
+                           ribbon._items["Información"].base.id="";
                             ribbon._items["Información"].base.lastElementChild.id="";
+                            
                         }
                         if(ribbon._items["Validación"]!=undefined){
+                            ribbon._items["Validación"].base.id="";
                             ribbon._items["Validación"].base.lastElementChild.id="";
                         }
                         if(ribbon._items["Evidencias"]!=undefined){
+                            ribbon._items["Evidencias"].base.id="";
                             ribbon._items["Evidencias"].base.lastElementChild.id="";
                         }
                         if(ribbon._items["Informe"]!=undefined){
+                              ribbon._items["Informe"].base.id="";
                             ribbon._items["Informe"].base.lastElementChild.id="";
                         }
                         if(ribbon._items["Reportes"]!=undefined){
+                            ribbon._items["Reportes"].base.id="";
                             ribbon._items["Reportes"].base.lastElementChild.id="";
                         }
                         if(ribbon._items["Control de Temas Especiales"]!=undefined){
+                            ribbon._items["Control de Temas Especiales"].base.id="";
                             ribbon._items["Control de Temas Especiales"].base.lastElementChild.id="";
                         }
                         if(ribbon._items["Catálogos"]!=undefined){
+                            ribbon._items["Catálogos"].base.id="";
                             ribbon._items["Catálogos"].base.lastElementChild.id="";
                         }
                         if(ribbon._items["Documentación"]!=undefined){
+                            ribbon._items["Documentación"].base.id="";
                             ribbon._items["Documentación"].base.lastElementChild.id="";
                         }
                         if(ribbon._items["Seguimiento"]!=undefined){
+                            ribbon._items["Seguimiento"].base.id="";
                             ribbon._items["Seguimiento"].base.lastElementChild.id="";
                         }
                         if(ribbon._items["Informe Gerencial"]!=undefined){
+                            ribbon._items["Informe Gerencial"].base.id="";
                             ribbon._items["Informe Gerencial"].base.lastElementChild.id="";
                         }
                         if(ribbon._items["Bienvenido"]!=undefined){
+                            ribbon._items["Bienvenido"].base.id="";
                             ribbon._items["Bienvenido"].base.lastElementChild.id="";
                         }
                         if(ribbon._items["cambiarcontrato"]!=undefined){
+                            ribbon._items["cambiarcontrato"].base.id="";
                             ribbon._items["cambiarcontrato"].base.lastElementChild.id="";
                         }
 //                        ribbon._items["Validación"].base.id="";                      
