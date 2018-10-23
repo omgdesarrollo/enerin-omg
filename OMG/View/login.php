@@ -123,6 +123,16 @@ clock();
     </script>         
         
         <style>
+            
+            .footer {
+                position: fixed;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                background-color:#009999 ;
+                color: white;
+                text-align: center;
+            }
         .animacion {
 -webkit-animation:fa-spin 20s infinite linear;animation:fa-spin 24s infinite linear;
 
@@ -274,7 +284,7 @@ clock();
                                  <div class="input-field col s12 light-blue-text text-darken-3">
                                      <i class="material-icons prefix">person</i>
                                          <label for="Usuario">USUARIO</label>
-                                        <input id="Usuario" name="usuario" type="text"  class="autocomplete light-blue-text text-darken-4" >
+                                        <input id="Usuario" name="usuario" type="text"  class="autocomplete light-blue-text text-darken-4" autocomplete="off">
                                       
                                     
                                  </div>
@@ -283,7 +293,7 @@ clock();
                              <div class="row">
                                  <div class="input-field col s12 light-blue-text text-darken-3">
                                      <i class="material-icons prefix">vpn_key</i>
-                                     <input id="contrasenaInput" name="pass" type="password" id="pass-input" class="autocomplete">
+                                     <input id="contrasenaInput" name="pass" type="password" id="pass-input" class="autocomplete" autocomplete="off">
                                      <label for="contrasenaInput">CONTRASEÑA</label>
                                  </div>
                              </div>
@@ -309,11 +319,14 @@ clock();
             
         </div>
         <div id="terminosycondiciones">
-            
-            
-            TERMINOS  CONDICIONES
-            
-            
+            <div align="justify">
+                <b>  Bienvenido a OMG Apps, opera por medio de Energía Integral S.A. de C.V. bajo la licencia del Autor Javier M. Dávila Bartoluchi. (La “Compañía”, “nosotros” o “nos”). Nos permite ofrecerle acceso al Servicio (como se define más abajo), sujeto a estos términos y condiciones, así como a la Política de Privacidad de la empresa. Al ingresar y utilizar el Servicio, usted da su aprobación, acuerdo y entendimiento de los Términos y condiciones.</b> 
+                <p><b> 1. Generalidades sobre los Términos de Servicio.</b></p>
+                <p><b> 1.1 Para su conveniencia, estos términos están disponibles en español y en inglés, pero en caso de cualquier conflicto la versión en español será la definitiva.</b></p>
+                <p><b>1.2 Los términos que están en mayúscula se definen en el cuerpo de estos Términos de Servicio o en la Sección 10.</b></p>
+                <p><b>1.3 La Compañía posee y opera la herramienta web, que se encuentra disponible a través de https://enerin-omgapps.com (el “website” o el “sitio”). Le ofrecemos una herramienta  que se fundamenta en tres partes Organización, medición y gestión. El Servicio incluye el acceso al sitio específicamente para la capacidad contratada. Estos datos de contratación son administrados por la Compañía.</b></p>
+                <p><b>1.4 Lo siguiente es un breve resumen de determinados términos y condiciones que se incluyen en estos Términos de Servicio. No obstante, este resumen se proporciona únicamente para su comodidad; por lo tanto, usted debería leer todos los Términos de Servicio antes de aceptarlos. Se le concede el derecho a utilizar el Servicio, sometido a los presentes Términos de Servicio. Este derecho de uso está limitado a la cantidad establecida en el contrato con la compañía, siendo de carácter  individual, negocio o entidad corporativa, el cual es intransferible, a menos que conste por escrito el consentimiento expreso de la Compañía. Su negativa a aceptar los términos de dichos acuerdos podría limitar su capacidad de utilizar plenamente el Servicio. No obstante otra disposición contenida en el presente documento, el Servicio estará disponible en periodo máximo de 3 días, posterior al pago correspondiente por el derecho de uso del servicio. El Servicio funciona con  computadora personal y dispositivos móviles mientras tenga conexión a internet. Para utilizar el Servicio, se le proporcionará una cuenta de administrador del sitio para crear el número de usuarios establecidos en el servicio. Nos reservamos el derecho a realizar actualizaciones periódicas del Servicio, con o sin previo aviso. El Servicio incluye funciones relacionadas con la seguridad y la manipulación indebida que, en caso de activarse, podrían ocasionar que el contenido previamente disponible para su uso, deje de estarlo a partir de entonces. Al utilizar el Servicio, usted autoriza la recopilación, procesamiento y utilización de toda aquella información relacionada con el uso que usted hace del Servicio, la cual se recopila y maneja de conformidad con los términos de nuestra Política de Privacidad. En caso de algún cambio sustancial, haremos todos los esfuerzos comercialmente razonables para notificárselo, en caso de tener alguna duda, envíela desde cualquier correo a la dirección soporteomgapps@enerin.mx.</b></p>
+            </div>
         </div>
         <div id="registroalsistema">
             
@@ -499,19 +512,19 @@ clock();
       <img class="activator" src="../../images/base/grafica.png">
     </div>
     <div class="card-content">
-      <span class="card-title activator grey-text text-darken-4">Visualiza el proceso de tus tareas
+      <span class="card-title activator grey-text text-darken-4">Visualiza el proceso de tus temas.
 <i class="material-icons right">more_vert</i></span>
       <p><a href="#">....</a></p>
     </div>
     <div class="card-reveal">
-      <span class="card-title grey-text text-darken-4">Visualiza el proceso de tus tareas<i class="material-icons right">close</i></span>
-      <p>Visualiza el proceso de tus tareas
-Una gráfica de pastel es una circunferencia ("pastel") que se divide en segmentos ("rebanadas") para representar la proporción de observaciones que están en cada categoría.
-
-Para interpretar una gráfica de pastel, compare los grupos.
-Cuando usted interprete una gráfica de pastel, busque las diferencias en el tamaños de las rebanadas. El tamaño de una rebanada muestra la proporción de observaciones que están en ese grupo.
-Cuando usted compare múltiples gráficas de pastel, busque las diferencis en el tamaños de las rebanadas para la misma categoría en todas las gráficas de pastel.
-</p>
+      <span class="card-title grey-text text-darken-4">Visualiza el proceso de tus temas.<i class="material-icons right">close</i></span>
+    <p>Visualiza el proceso de tus tareas
+        Por medio de un gráfico circular, dividido en segmentos en un primer nivel puede visualizar el proceso de los temas de acuerdo a la clasificación predeterminada por el sistema, basada en
+        Temas suspendidos, en proceso – en tiempo, con alerta vencida y con Tiempo Vencido.
+    </p>
+    <p>
+        En un nivel de detalle 2, al seleccionar un segmento podrá visualizar el Nombre del responsable o responsables y si requiere más detalle podrá ver los temas asignados a dichos responsables.
+    </p>
     </div>
   </div>
            </div>
@@ -565,10 +578,12 @@ Revisa sus avance, las anotaciones, integra a tu equipo para trabajar en un mism
            
            
         </div>
+      
+      <div class="footer">
+        <p>Copyright © 2018 - 2019 Javier M. Davila Bartoluchi</p>
+      </div>
+      
 
-<!--        <footer>
-		<p class="copyright">Copyright © 2018 - 2019 Javier M. Davila Bartoluchi</p>
-	</footer>-->
 
         <div class="fixed-action-btn">
             <a class="btn-floating btn-large" style="background-color:#006699">
@@ -583,16 +598,13 @@ Revisa sus avance, las anotaciones, integra a tu equipo para trabajar en un mism
             </ul>
         </div>
 
-<!--        <footer class="page-footer grey valign-wrapper" >
-               <div class="container center-align truncate">
-                   <text-footer class="black-text">
-                         Copyright © 2018 - 2019 Javier M. Davila Bartoluchi
-                   </text-footer>
-               </div>      
-        </footer>-->
 
 
 
 
-    </body>    
+    </body> 
+    
+    
+    
+    
 </html>
