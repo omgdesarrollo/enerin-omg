@@ -91,6 +91,36 @@ $Usuario=  Session::getSesion("user");
                 .dhtmlxribbon_material .dhxrb_big_button {
                     padding: 1px;
                 }
+                #limpiarSeleccionesRibbon{
+                    margin: 3px 0 3px 3px;
+                    float: left;
+                    border: 1px solid #dfdfdf;
+                    background-color: #fafafa;
+                    height: 118px;
+                    overflow: hidden;
+                    position: relative;
+                }                
+               #seleccion_informacion{ 
+
+                    margin: 3px 0 3px 3px;
+                    float: left;
+                    border: 1px solid #dfdfdf;
+                    background-color: red;
+                    height: 118px;
+                    overflow: hidden;
+                    position: relative;
+                }
+                #seleccion_informacion_palabra{ 
+
+                    
+                    color: blue;
+                }
+                #seleccion_opcionmenuarriba{
+                    background-color: #cccccc;
+                }
+                
+                
+                
                 
 /*                body{
                     height: 100%;
@@ -173,7 +203,7 @@ var gantt=[
 
   datacontratos=[
 //         {id:'cambiarcontrato',text:'Cambiar Contrato',img:'contratos.png',type:'button',isbig:true}
-         {id:'cambiarcontrato',text:'<div id=\'infocontrato\'>Contrato Seleccionado:</div>',img:'contratos.png',type:'button',isbig:true}
+         {id:'cambiarcontrato',text:'<div id=\'infocontrato\'>Opcion Seleccionada:</div>',img:'contratos.png',type:'button',isbig:true}
   ];
   dataSeccionRibbon=[];
    var listasubmodulos=[];
@@ -348,7 +378,17 @@ function redimencionarLayout()
                   
                     ribbon.setSizes();
                     ribbon.attachEvent("onClick", function(itemIdSeleccion, bId){
+                       limpiarSeleccionDeRibbon();
+//                        limpiarSeleccionesRibbon
+                        
+                        console.log(ribbon);
+//                        dhxrb_big_button
+                        
                         if(itemIdSeleccion=="Bienvenido"){
+                             ribbon._items["Bienvenido"].base.id="seleccion_opcionmenuarriba";
+//                             ribbon._items["Bienvenido"].base.lastElementChild.id="seleccion_informacion_palabra"
+//                            ribbon.check(itemIdSeleccion);
+//                                      ribbon.isVisible(bId);  
                                $.each(listasubmodulos,function (index,value){
 
                                 $.each(value["contenido_sub"],function(index1,value1)
@@ -380,23 +420,39 @@ function redimencionarLayout()
                         if(itemIdSeleccion=="excel")
                            alert("le has picado a excel ");
                         
-                        if(itemIdSeleccion=="cambiarcontrato")
-                            loadDataSideBarContratos();  
-                        
+                        if(itemIdSeleccion=="cambiarcontrato"){
+                             ribbon._items["cambiarcontrato"].base.lastElementChild.id="seleccion_informacion_palabra"
+                             ribbon._items["cambiarcontrato"].base.id="seleccion_opcionmenuarriba";
+                                 loadDataSideBarContratos();  
+                        }
+                          
                 
                         if(itemIdSeleccion=="Información") {
+//                            ribbon._items["Información"].base.id="seleccion_informacion";
+//                            ribbon._items["Información"].base.lastElementChild.id="seleccion_informacion_palabra"
+//                            ribbon._items["Información"].base.className="class_informacion";
+                           ribbon._items["Información"].base.id="seleccion_opcionmenuarriba";
+                           
 //                            console.log(listasubmodulos);
 //                            console.log(listasubmodulos["0"]["contenido_sub"]["0"]["contenido_vista"]);
                            loadDataSideBarCatalogoInformacion(listasubmodulos["0"]["contenido_sub"]["0"]["contenido_vista"]);
                        }   
-                        if(itemIdSeleccion=="Validación")
+                        if(itemIdSeleccion=="Validación"){
+                            ribbon._items["Validación"].base.id="seleccion_opcionmenuarriba";
+//                            ribbon._items["Validación"].base.lastElementChild.id="seleccion_informacion_palabra";
+                          
                            loadDataSideBarCumplimientosDocumentos();
+                        }
                        
-                        if(itemIdSeleccion=="Evidencias")
-                            loadDataSideBarCumplimientosEvidencias();
+                        if(itemIdSeleccion=="Evidencias"){
+//                            ribbon._items["Evidencias"].base.lastElementChild.id="seleccion_informacion_palabra"
+                            ribbon._items["Evidencias"].base.id="seleccion_opcionmenuarriba";
+                                loadDataSideBarCumplimientosEvidencias();
+                        }
                         
                         if(itemIdSeleccion=="Reportes"){
-                            
+                             ribbon._items["Reportes"].base.id="seleccion_opcionmenuarriba";
+//                            ribbon._items["Reportes"].base.lastElementChild.id="seleccion_informacion_palabra";
                             
                               $.each(listasubmodulos,function (index,value){
 
@@ -416,6 +472,8 @@ function redimencionarLayout()
                         }
 
                         if(itemIdSeleccion=="Control de Temas Especiales"){
+                            ribbon._items["Control de Temas Especiales"].base.id="seleccion_opcionmenuarriba";
+//                            ribbon._items["Control de Temas Especiales"].base.lastElementChild.id="seleccion_informacion_palabra";
                             var listRegistroTareas=[];
                             $.each(listasubmodulos,function (index,value){
 
@@ -435,7 +493,8 @@ function redimencionarLayout()
                         }
                         
                         if(itemIdSeleccion=="Informe"){
-                            
+                              ribbon._items["Informe"].base.id="seleccion_opcionmenuarriba";
+//                            ribbon._items["Informe"].base.lastElementChild.id="seleccion_informacion_palabra";
                             
                             
                                  $.each(listasubmodulos,function (index,value){
@@ -458,7 +517,8 @@ function redimencionarLayout()
                         }
                         
                         if(itemIdSeleccion=="Catálogos"){
-                            
+                            ribbon._items["Catálogos"].base.id="seleccion_opcionmenuarriba";
+//                             ribbon._items["Catálogos"].base.lastElementChild.id="seleccion_informacion_palabra";
                              $.each(listasubmodulos,function (index,value){
 
                                 $.each(value["contenido_sub"],function(index1,value1)
@@ -476,8 +536,8 @@ function redimencionarLayout()
                         }
                        
                         if(itemIdSeleccion=="Documentación"){
-                            
-                            
+                              ribbon._items["Documentación"].base.id="seleccion_opcionmenuarriba";
+//                            ribbon._items["Documentación"].base.lastElementChild.id="seleccion_informacion_palabra";
                             
                               $.each(listasubmodulos,function (index,value){
 
@@ -494,15 +554,80 @@ function redimencionarLayout()
                              })
                            
                         }
-                        if(itemIdSeleccion=="Informe Gerencial")
+                        if(itemIdSeleccion=="Informe Gerencial"){
+                             ribbon._items["Informe Gerencial"].base.id="seleccion_opcionmenuarriba";
+//                        ribbon._items["Informe Gerencial"].base.lastElementChild.id="seleccion_informacion_palabra"; 
                             loadDataInformeGerencial();
-                        if(itemIdSeleccion=="Seguimiento")
+                        }
+                        if(itemIdSeleccion=="Seguimiento"){
+                              ribbon._items["Seguimiento"].base.id="seleccion_opcionmenuarriba";
+//                              ribbon._items["Seguimiento"].base.lastElementChild.id="seleccion_informacion_palabra"; 
                             loadDataCargaProgramaGantt();
+                        }
                        
                     });      
                     }	                            
          );
 
+
+function limpiarSeleccionDeRibbon(){
+    
+                            
+    
+    
+                       
+                        if(ribbon._items["Información"]!=undefined){
+                           ribbon._items["Información"].base.id="";
+                            ribbon._items["Información"].base.lastElementChild.id="";
+                            
+                        }
+                        if(ribbon._items["Validación"]!=undefined){
+                            ribbon._items["Validación"].base.id="";
+                            ribbon._items["Validación"].base.lastElementChild.id="";
+                        }
+                        if(ribbon._items["Evidencias"]!=undefined){
+                            ribbon._items["Evidencias"].base.id="";
+                            ribbon._items["Evidencias"].base.lastElementChild.id="";
+                        }
+                        if(ribbon._items["Informe"]!=undefined){
+                              ribbon._items["Informe"].base.id="";
+                            ribbon._items["Informe"].base.lastElementChild.id="";
+                        }
+                        if(ribbon._items["Reportes"]!=undefined){
+                            ribbon._items["Reportes"].base.id="";
+                            ribbon._items["Reportes"].base.lastElementChild.id="";
+                        }
+                        if(ribbon._items["Control de Temas Especiales"]!=undefined){
+                            ribbon._items["Control de Temas Especiales"].base.id="";
+                            ribbon._items["Control de Temas Especiales"].base.lastElementChild.id="";
+                        }
+                        if(ribbon._items["Catálogos"]!=undefined){
+                            ribbon._items["Catálogos"].base.id="";
+                            ribbon._items["Catálogos"].base.lastElementChild.id="";
+                        }
+                        if(ribbon._items["Documentación"]!=undefined){
+                            ribbon._items["Documentación"].base.id="";
+                            ribbon._items["Documentación"].base.lastElementChild.id="";
+                        }
+                        if(ribbon._items["Seguimiento"]!=undefined){
+                            ribbon._items["Seguimiento"].base.id="";
+                            ribbon._items["Seguimiento"].base.lastElementChild.id="";
+                        }
+                        if(ribbon._items["Informe Gerencial"]!=undefined){
+                            ribbon._items["Informe Gerencial"].base.id="";
+                            ribbon._items["Informe Gerencial"].base.lastElementChild.id="";
+                        }
+                        if(ribbon._items["Bienvenido"]!=undefined){
+                            ribbon._items["Bienvenido"].base.id="";
+                            ribbon._items["Bienvenido"].base.lastElementChild.id="";
+                        }
+                        if(ribbon._items["cambiarcontrato"]!=undefined){
+                            ribbon._items["cambiarcontrato"].base.id="";
+                            ribbon._items["cambiarcontrato"].base.lastElementChild.id="";
+                        }
+//                        ribbon._items["Validación"].base.id="";                      
+                        
+    }
  function loadDataMenuArriba(iniciodinamic,info){	
 
      
@@ -938,8 +1063,14 @@ function loadDataNotificaciones(){
             // alert("show");
         });
     dhxWins.attachEvent("onHide", function(win){
-            // alert("en onhide");
+             alert("en onhide");
 });
+ dhxWins.attachEvent("onClose", function(win){
+//             alert("en c");
+             ribbon._items["Seguimiento"].base.lastElementChild.id="";
+             return 1;
+});
+
 
     }
     
@@ -1041,7 +1172,7 @@ var jsonObj = {};
                                 timer: 2000,
                               });
                                 window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
-                                window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
+                                window.top.$("#infocontrato").html("Opcion Seleccionada:<br>("+r.clave_cumplimiento+")");
 //                                mostrarTareasEnAlarma();
                                 
                                 

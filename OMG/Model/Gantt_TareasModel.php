@@ -280,7 +280,6 @@ class Gantt_TareasModel{
 
     
     public function insertarTareasGantt($data,$id_tarea){
-       
         
         try{
             $inserccion;
@@ -307,12 +306,13 @@ class Gantt_TareasModel{
 //                                         echo json_encode($value);
                                          $dao->insertarGanttTareas($value);
                                          
-                                        $modelGantt->guardarNotificacionResponsable($value);
-                                       
+                                         if($value["user"]!=0)
+                                         {
+                                             $modelGantt->guardarNotificacionResponsable($value);
+                                         }
+                                                                                  
+//                                         echo "Este es el value aqui mismo: ". json_encode($value2);
                                          
-                                         
-                                         
-//                                         echo "entro";
                                          self:: actualizarExisteProgramaTareas($value);
 //                                         if(isset($value["status"])){
 //                                             
@@ -331,17 +331,31 @@ class Gantt_TareasModel{
 //                                        echo "entro en actualizar";
 //                                        echo "este es el value: ".json_encode($value);
 //                                         $dao->updateTareas($value);
-                                        
+//                                         if($value["user"]!=0)
                                         $modelGantt->compararInformacionAntesYDespues($value);
    
                                          if (!isset($value["progress"])) {
                                              $value["progress"]=0;
                                          }
-                                         if(isset($value["status"])){
+//                                         if(!isset($value["notificacion_porcentaje_programado"])){
+//                                             $value["notificacion_porcentaje_programado"]=50;
+//                                         }
                                              
-                                            self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>$value["notas"],"status"=>$value["status"]), $value["id"]);
-                                            
+                                         
+                                         if(isset($value["status"]) ){
+                                             if(isset($value["notificacion_porcentaje_programado"])){
+//                                                 echo "el  ".$value["progress"];
+//                                                 if(!empty($value["progress"]))
+                                                  self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>$value["notas"],"status"=>$value["status"],"notificacion_porcentaje_programado"=>$value["notificacion_porcentaje_programado"]), $value["id"]);
+//                                                 else 
+//                                                   self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>$value["notas"],"status"=>$value["status"],"notificacion_porcentaje_programado"=>$value["notificacion_porcentaje_programado"]), $value["id"]);  
+                                                     
+                                             }else{
+                                                  self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>$value["notas"],"status"=>$value["status"]), $value["id"]);
+                                             }
                                          }else{
+//                                             este else ya no es necesario pero se esta pensando para removerlo en la proxima actualizacion
+                                             echo "entro";
                                             self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>$value["notas"]), $value["id"]);
                                          }
 //                                         $model->actualizarGanttTareas
@@ -364,7 +378,6 @@ class Gantt_TareasModel{
         } catch (Exception $ex) {
             throw $ex;
         }
-        
     }
     
     
@@ -388,40 +401,42 @@ class Gantt_TareasModel{
         }
     }
     
+
     
-    public function obtenerFolioEntradaSeguimiento($ID_SEGUIMIENTO)
-    {
-        try
-        {
-            $dao=new GanttDao();
-            $rec= $dao->obtenerFolioEntradaSeguimiento($ID_SEGUIMIENTO);
-            
-            return $rec;
-            
-        } catch (Exception $ex)
-        {
-            throw $ex;
-            return false;
-        }
-    }
     
-    public  function calculoAvanceProgramaGeneral($id_seguimiento_que_lleva_al_folio_de_entrada)
-    {
-        try
-        {
-            $dao=new GanttDao();
-             $rec= $dao->calculoAvanceProgramaGeneral($id_seguimiento_que_lleva_al_folio_de_entrada);
-             echo "s  : ".$rec[0]["total_avance_programa"];
-             $value["id_seguimiento"]=$id_seguimiento_que_lleva_al_folio_de_entrada;
-             $value["avance_programa"]=$rec[0]["total_avance_programa"];
-            $dao->updateAvanceProgramaGeneral($value);
-            return $rec;
-        } catch (Exception $ex)
-        {
-            throw $ex;
-            return false;
-        }
-    }
+//    public function obtenerFolioEntradaSeguimiento($ID_SEGUIMIENTO)
+//    {
+//        try
+//        {
+//            $dao=new GanttDao();
+//            $rec= $dao->obtenerFolioEntradaSeguimiento($ID_SEGUIMIENTO);
+//            
+//            return $rec;
+//            
+//        } catch (Exception $ex)
+//        {
+//            throw $ex;
+//            return false;
+//        }
+//    }
+    
+//    public  function calculoAvanceProgramaGeneral($id_seguimiento_que_lleva_al_folio_de_entrada)
+//    {
+//        try
+//        {
+//            $dao=new GanttDao();
+//             $rec= $dao->calculoAvanceProgramaGeneral($id_seguimiento_que_lleva_al_folio_de_entrada);
+//             echo "s  : ".$rec[0]["total_avance_programa"];
+//             $value["id_seguimiento"]=$id_seguimiento_que_lleva_al_folio_de_entrada;
+//             $value["avance_programa"]=$rec[0]["total_avance_programa"];
+//            $dao->updateAvanceProgramaGeneral($value);
+//            return $rec;
+//        } catch (Exception $ex)
+//        {
+//            throw $ex;
+//            return false;
+//        }
+//    }
     
 
     public function listarEmpleadosNombreCompleto()
@@ -512,7 +527,11 @@ class Gantt_TareasModel{
             $model=new Gantt_TareasModel();
             
             $datos= $dao->obtenerDatosParaEliminarTarea($values);
-            $model->guardarNotificacionTareaEliminada($datos);
+            
+            if($datos['user']!=0)
+            {
+                $model->guardarNotificacionTareaEliminada($datos);
+            }
             
             $rec= $dao->eliminarGanttTareas($values);                                    
             
@@ -523,32 +542,6 @@ class Gantt_TareasModel{
             return -1;
         }
     }
-
-    
-
-    public function guardarNotificacionResponsable($values)
-    {
-      try{
-            $contrato= Session::getSesion("s_cont");
-            $id_usuario=Session::getSesion("user");
-            $dao=new Gantt_TareaDao();
-            $idparaquien= $dao->obtenerUsuarioPorIdEmpleado($values["user"]);
-            $model=new NotificacionesModel();
-            
-             $mensaje="Se le asigno una tarea ".$values["text"]." por el Usuario: ";
-             $tipo_mensaje= 0;
-             $atendido= 'false';
-             $asunto="";
-            $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idparaquien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
-                        
-            return true;
-        }catch (Exception $ex)
-        {
-            return false;
-        }
-        
-    }
-    
     
     public function compararInformacionAntesYDespues($value)
     {
@@ -557,52 +550,214 @@ class Gantt_TareasModel{
             $dao=new Gantt_TareaDao();
             $rec= $dao->listarTareaGantt($value['id']);
             $modelGantt= new Gantt_TareasModel();
-            
             foreach ($rec as $value2) 
             {                
                 if($value2['id']==$value['id'])
                 {
                     if($value2['user']!=$value['user'])
                     {
-                        $modelGantt->enviarNotificacionWhenRemoveTarea($value2);
-                        $modelGantt->enviarNotificacionWhenRemoveTareaAlNuevoUsuario($value);
-                    }else{
-                        if(
-                            $value2['text']!=$value['text'] ||
-                            $value2['user']!=$value['user'] ||
-                            $value2['notas']!=$value['notas'] ||                            
-                            $value2['status']!=$value['status']                                
-                        )
+                        if($value['user']!=0)
                         {
-                            $modelGantt->guardarNotificacionDeactualizaciones($value);
-                        }                        
+                            $modelGantt->enviarNotificacionWhenRemoveTareaAlNuevoUsuario($value,$value2);
+                        }
+                        if($value2['user']!=0)
+                        {
+                            $modelGantt->enviarNotificacionWhenRemoveTarea($value2);
+                        }
                     }
-                }
+
+                    if(isset($value['notificacion_porcentaje_programado']))
+                    {
+                         if($value2['notificacion_porcentaje_programado']!=$value['notificacion_porcentaje_programado'] && $value['notificacion_porcentaje_programado']!=-1)
+                         {
+                            $modelGantt->enviarNotificacionDeProgramacionAvisoDeAvance($value,$value2); 
+                         }                                
+                    }
+
+                    if(($value['progress']*100)>=$value['notificacion_porcentaje_programado'])
+                    {
+//                        echo "value en este IF: ".json_encode($value);
+                        
+                        if($value2['progress']!=$value['progress'])
+                        {
+                            if($value['notificacion_porcentaje_programado']!=-1)
+                            {
+                                $modelGantt->enviarNotificacionDelPorcentajeDeAvanceDelaTarea($value,$value2);
+                            }
+                            if($value['notificacion_porcentaje_programado']==-1 && $value['progress']==1)
+                            {
+                                $modelGantt->enviarNotificacionDelPorcentajeDeAvanceDelaTarea($value,$value2);
+                            }
+                            
+                        }                       
+//                        echo "Value: ".json_encode($value);
+                    }
+                    
+                    if($value2['status']!=$value['status'])
+                    {
+//                        echo"status existente: ".json_encode($value2['status']);
+//                        echo"status nuevo: ".json_encode($value['status']);
+                        $modelGantt->enviarNotificacionDelStatusDelaTarea($value,$value2);
+                    }
+
+                    if
+                    ( 
+                        $value2['text']!=$value['text'] ||
+//                            $value2['user']!=$value['user'] ||
+                        $value2['notas']!=$value['notas']                            
+//                        $value2['status']!=$value['status']                                
+                    )
+                    {
+//                        echo "value en este if: ".json_encode($value);
+                        if($value['user']!=0 && $value['progress']!=1)
+                        {
+                            $modelGantt->guardarNotificacionDeactualizaciones($value,$value2);
+                        }
+                    }                        
+                }                
             }
-            
+                        
         } catch (Exception $ex) 
         {
             throw $ex;
             return -1;
         }        
     }
-
-
-    public function guardarNotificacionDeactualizaciones($values)
+    
+    public function guardarNotificacionResponsable($value)
+    {
+      try{
+            $contrato= Session::getSesion("s_cont");
+            $id_usuario=Session::getSesion("user");
+            $dao=new Gantt_TareaDao();
+            $idparaquien= $dao->obtenerUsuarioPorIdEmpleado($value["user"]);
+            $tema= $dao->obtenerDatosTema($value['id_tarea']);
+            $model=new NotificacionesModel();
+            $mensaje="Se le asigno la Tarea: ".$value["text"]." del Tema: ".$tema." por el Usuario: ";
+            $tipo_mensaje= 0;
+            $atendido= 'false';
+            $asunto="";
+            $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idparaquien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+//            echo "Este es el Tema: ".json_encode($tema);            
+            return true;
+        }catch (Exception $ex)
+        {
+            return false;
+        }        
+    }
+    
+    public function enviarNotificacionDelStatusDelaTarea($value,$value2)
     {
         try 
         {
             $contrato= Session::getSesion("s_cont");
             $id_usuario=Session::getSesion("user");
-            $mensaje="Se actualizo la tarea: ".$values["text"]." por el Usuario: ";
+            $dao=new Gantt_TareaDao();
             $tipo_mensaje= 0;
             $atendido= 'false';
             $asunto="";
-            $dao=new Gantt_TareaDao();
-            $idparaquien= $dao->obtenerUsuarioPorIdEmpleado($values["user"]);
+            $idResponsableTarea= $dao->obtenerUsuarioPorIdEmpleado($value["user"]);
+            $idResponsableTema= $dao->obtenerUsuarioPorIdEmpleado($dao->obtenerIdDelEmpleadoResponsableDelTema($value['id']));
+            $tema= $dao->obtenerDatosTema($value2['id_tarea']);
             $model=new NotificacionesModel();
-            $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idparaquien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
             
+            if($idResponsableTarea==$idResponsableTema)
+            {
+                if($idResponsableTarea!=0)
+                {
+                    if($value['status']==1)
+                    {
+                        $mensaje="La tarea: ".$value["text"]." del Tema: ".$tema." Esta en Proceso por el Usuario: ";
+                        $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTarea, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+                    }else{
+                        if($value['status']==2)
+                        {
+                            $mensaje="La tarea: ".$value["text"]." del Tema: ".$tema." ha sido Suspendida por el Usuario: ";
+                            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTarea, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);                        
+                        }
+                    }    
+                }    
+            }else{
+                
+                if($idResponsableTarea!=0)
+                {
+                    if($value['status']==1)
+                    {
+                        $mensaje="La tarea: ".$value["text"]." del Tema: ".$tema." Esta en Proceso por el Usuario: ";
+                        $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTarea, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+                    }else{
+                        if($value['status']==2)
+                        {
+                            $mensaje="La tarea: ".$value["text"]." del Tema: ".$tema." ha sido Suspendida por el Usuario: ";
+                            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTarea, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);                        
+                        }
+                    }    
+                }
+                
+                if($idResponsableTema!=0)
+                {
+                    if($value['status']==1)
+                    {
+                        $mensaje="La tarea: ".$value["text"]." del Tema: ".$tema." Esta en Proceso por el Usuario: ";
+                        $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTema, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+                    }else{
+                        if($value['status']==2)
+                        {
+                            $mensaje="La tarea: ".$value["text"]." del Tema: ".$tema." ha sido Suspendida por el Usuario: ";
+                            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTema, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);                        
+                        }
+                    }    
+                }
+                
+            }
+            
+//            echo "Este es el value: ".json_encode($value);
+            return $rec;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+
+    public function guardarNotificacionDeactualizaciones($value,$value2)
+    {
+        try 
+        {
+            $contrato= Session::getSesion("s_cont");
+            $id_usuario=Session::getSesion("user");
+            $dao=new Gantt_TareaDao();
+            $tipo_mensaje= 0;
+            $atendido= 'false';
+            $asunto="";
+//            $idparaquien= $dao->obtenerUsuarioPorIdEmpleado($value["user"]);
+            $idResponsableTarea= $dao->obtenerUsuarioPorIdEmpleado($value['user']);
+            $idResponsableTema= $dao->obtenerUsuarioPorIdEmpleado($dao->obtenerIdDelEmpleadoResponsableDelTema($value['id']));
+            $tema= $dao->obtenerDatosTema($value2['id_tarea']);
+            $mensaje="Se actualizo la tarea: ".$value["text"]." del Tema: ".$tema." por el Usuario: ";
+            $model=new NotificacionesModel();
+//            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idparaquien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+            
+            if($idResponsableTarea==$idResponsableTema)
+            {
+                if($idResponsableTarea!=0)
+                {
+                    $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTarea, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+                }                      
+            }else{
+                
+                if($idResponsableTarea!=0)
+                {
+                    $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTarea, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+                }
+                if($idResponsableTema!=0)
+                {
+                    $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTema, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+                }                
+            }
+            
+            return $rec;
         } catch (Exception $ex) 
         {
             throw $ex;
@@ -616,12 +771,13 @@ class Gantt_TareasModel{
         {
             $contrato= Session::getSesion("s_cont");
             $id_usuario=Session::getSesion("user");
-            $mensaje= "Se asigno a otro usuario la Tarea: ".$value2['text']." por el Usuario: ";
+            $dao=new Gantt_TareaDao();
             $tipo_mensaje=0;
             $atendido= 'false';
             $asunto="";
-            $dao=new Gantt_TareaDao();
             $idparaquien= $dao->obtenerUsuarioPorIdEmpleado($value2['user']);
+            $tema= $dao->obtenerDatosTema($value2['id_tarea']);
+            $mensaje= "Se asigno a otro usuario la Tarea: ".$value2['text']." del Tema: ".$tema."por el Usuario: ";
             $model=new NotificacionesModel();
             $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idparaquien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
             
@@ -634,21 +790,24 @@ class Gantt_TareasModel{
     }
 
 
-    public function enviarNotificacionWhenRemoveTareaAlNuevoUsuario($value)
+    public function enviarNotificacionWhenRemoveTareaAlNuevoUsuario($value,$value2)
     {
         try
         {
             $contrato= Session::getSesion("s_cont");
             $id_usuario=Session::getSesion("user");
+            $dao=new Gantt_TareaDao();
             $mensaje= "Se le asigno la Tarea: ".$value['text']." por el Usuario: ";
             $tipo_mensaje=0;
             $atendido= 'false';
             $asunto="";
-            $dao=new Gantt_TareaDao();
             $idparaquien= $dao->obtenerUsuarioPorIdEmpleado($value['user']);
+            $tema= $dao->obtenerDatosTema($value2['id_tarea']);
+            $mensaje= "Se le asigno la Tarea: ".$value['text']." del Tema: ".$tema." por el Usuario: ";
             $model=new NotificacionesModel();
             $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idparaquien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
             
+//            echo "Esto trae value2: ".json_encode($value2);
             return $rec;
         } catch (Exception $ex)
         {
@@ -657,26 +816,227 @@ class Gantt_TareasModel{
         }        
     }    
     
-       public function guardarNotificacionTareaEliminada($datos)
+    public function guardarNotificacionTareaEliminada($datos)
     {
         try 
         {
 //            echo "datos: ".json_encode($datos);            
             $contrato= Session::getSesion("s_cont");
             $id_usuario=Session::getSesion("user");
-            $mensaje="Se elimino la Tarea: ".$datos["text"]." por el Usuario: ";
+            $dao=new Gantt_TareaDao();
             $tipo_mensaje= 0;
             $atendido= 'false';
             $asunto="";
-            $dao=new Gantt_TareaDao();
-            $idparaquien= $dao->obtenerUsuarioPorIdEmpleado($datos["user"]);
+            $idResponsableTarea= $dao->obtenerUsuarioPorIdEmpleado($datos["user"]);
+            $idResponsableTema= $dao->obtenerUsuarioPorIdEmpleado($dao->obtenerIdDelEmpleadoResponsableDelTema($datos['id']));
+            $tema= $dao->obtenerDatosTema($datos['id_tarea']);
+            $mensaje="Se elimino la Tarea: ".$datos["text"]." del Tema: ".$tema." por el Usuario: ";
             $model=new NotificacionesModel();
-            $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idparaquien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
             
+            if($idResponsableTarea==$idResponsableTema)
+            {
+                if($idResponsableTarea!=0)
+                {
+                    $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTarea, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+                }                      
+            }else{
+                
+                if($idResponsableTarea!=0)
+                {
+                    $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTarea, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+                }
+                if($idResponsableTema!=0)
+                {
+                    $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTema, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+                }                
+            }
+            
+            return $rec;
         } catch (Exception $ex) 
         {
             throw $ex;
             return -1;
         }
     }
+    
+    
+    public function enviarNotificacionDeProgramacionAvisoDeAvance($value,$value2)
+    {
+        try
+        {
+            $contrato= Session::getSesion("s_cont");
+            $id_usuario=Session::getSesion("user");
+            $dao=new Gantt_TareaDao();
+            $tipo_mensaje=0;
+            $atendido= 'false';
+            $asunto="";
+//            $idparaquien= $dao->obtenerUsuarioPorIdEmpleado($value['user']);
+            $idResponsableTarea= $dao->obtenerUsuarioPorIdEmpleado($value['user']);
+            $idResponsableTema= $dao->obtenerUsuarioPorIdEmpleado($dao->obtenerIdDelEmpleadoResponsableDelTema($value['id']));
+            $tema= $dao->obtenerDatosTema($value2['id_tarea']);
+            $mensaje= "Se Programo al ".$value['notificacion_porcentaje_programado']."% el Aviso de Avance de la Tarea: ".$value['text']." del Tema: ".$tema." por el Usuario: ";
+            $model=new NotificacionesModel();
+//            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idparaquien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+            
+            if($idResponsableTarea==$idResponsableTema)
+            {
+                if($idResponsableTarea!=0)
+                {
+                    $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTarea, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+                }                      
+            }else{
+                
+                if($idResponsableTarea!=0)
+                {
+                    $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTarea, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+                }
+                if($idResponsableTema!=0)
+                {
+                    $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTema, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+                }                
+            }
+          
+//            echo"Este es el value: ".json_encode($value);
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }        
+    }
+    
+    public function enviarNotificacionDelPorcentajeDeAvanceDelaTarea($value,$value2)
+    {
+        try
+        {
+            $contrato= Session::getSesion("s_cont");
+            $id_usuario=Session::getSesion("user");
+            $dao=new Gantt_TareaDao();
+            $porcentaje_avance_nuevo=$value['progress']*100;
+            $porcentaje_avance_exitente=$value2['progress']*100;
+            $mensaje="";
+            $tipo_mensaje=0;
+            $atendido= 'false';
+            $asunto="";            
+            $idResponsableTarea= $dao->obtenerUsuarioPorIdEmpleado($value['user']);
+            $idResponsableTema= $dao->obtenerUsuarioPorIdEmpleado($dao->obtenerIdDelEmpleadoResponsableDelTema($value['id']));
+            $tema= $dao->obtenerDatosTema($value2['id_tarea']);
+            $model=new NotificacionesModel();
+            
+            if($idResponsableTarea==$idResponsableTema)
+            {
+                if($idResponsableTarea!=0)
+                {
+                    if($porcentaje_avance_nuevo>=50 && $porcentaje_avance_nuevo<60 && $porcentaje_avance_exitente<50)
+                    {
+                        $mensaje= "La Tarea: ".$value['text']." del Tema: ".$tema." alcanzo el 50% de avance.Por el Usuario: ";
+                        $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTarea, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);                        
+                    }
+                    if($porcentaje_avance_nuevo>=60 && $porcentaje_avance_nuevo<70 && $porcentaje_avance_exitente<60)
+                    {
+                        $mensaje= "La Tarea: ".$value['text']." del Tema: ".$tema." alcanzo el 60% de avance.Por el Usuario: ";
+                        $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTarea, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);                        
+                    }
+                    if($porcentaje_avance_nuevo>=70 && $porcentaje_avance_nuevo<80 && $porcentaje_avance_exitente<70)
+                    {
+                        $mensaje= "La Tarea: ".$value['text']." del Tema: ".$tema." alcanzo el 70% de avance.Por el Usuario: ";
+                        $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTarea, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);                        
+                    }
+                    if($porcentaje_avance_nuevo>=80 && $porcentaje_avance_nuevo<90 && $porcentaje_avance_exitente<80)
+                    {
+                        $mensaje= "La Tarea: ".$value['text']." del Tema: ".$tema." alcanzo el 80% de avance.Por el Usuario: ";                        
+                        $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTarea, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);                        
+                    }
+                    if($porcentaje_avance_nuevo>=90 && $porcentaje_avance_nuevo<100 && $porcentaje_avance_exitente<90)
+                    {
+                        $mensaje= "La Tarea: ".$value['text']." del Tema: ".$tema." alcanzo el 90% de avance.Por el Usuario: "; 
+                        $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTarea, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);                        
+                    }
+                    if($porcentaje_avance_nuevo==100)
+                    {
+                        $mensaje= "La Tarea: ".$value['text']." del Tema: ".$tema." alcanzo el 100% de avance.Por el Usuario: ";
+                        $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTarea, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);                        
+                    }
+                }
+            }else
+            {
+                if($idResponsableTarea!=0)
+                {
+                    if($porcentaje_avance_nuevo>=50 && $porcentaje_avance_nuevo<60 && $porcentaje_avance_exitente<50)
+                    {
+                        $mensaje= "La Tarea: ".$value['text']." del Tema: ".$tema." alcanzo el 50% de avance.Por el Usuario: ";
+                        $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTarea, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);                        
+                    }
+                    if($porcentaje_avance_nuevo>=60 && $porcentaje_avance_nuevo<70 && $porcentaje_avance_exitente<60)
+                    {
+                        $mensaje= "La Tarea: ".$value['text']." del Tema: ".$tema." alcanzo el 60% de avance.Por el Usuario: ";
+                        $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTarea, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);                        
+                    }
+                    if($porcentaje_avance_nuevo>=70 && $porcentaje_avance_nuevo<80 && $porcentaje_avance_exitente<70)
+                    {
+                        $mensaje= "La Tarea: ".$value['text']." del Tema: ".$tema." alcanzo el 70% de avance.Por el Usuario: ";
+                        $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTarea, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);                        
+                    }
+                    if($porcentaje_avance_nuevo>=80 && $porcentaje_avance_nuevo<90 && $porcentaje_avance_exitente<80)
+                    {
+                        $mensaje= "La Tarea: ".$value['text']." del Tema: ".$tema." alcanzo el 80% de avance.Por el Usuario: ";                        
+                        $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTarea, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);                        
+                    }
+                    if($porcentaje_avance_nuevo>=90 && $porcentaje_avance_nuevo<100 && $porcentaje_avance_exitente<90)
+                    {
+                        $mensaje= "La Tarea: ".$value['text']." del Tema: ".$tema." alcanzo el 90% de avance.Por el Usuario: "; 
+                        $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTarea, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);                        
+                    }
+                    if($porcentaje_avance_nuevo==100)
+                    {
+                        $mensaje= "La Tarea: ".$value['text']." del Tema: ".$tema." alcanzo el 100% de avance.Por el Usuario: ";
+                        $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTarea, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);                        
+                    }
+                }
+                if($idResponsableTema!=0)
+                {
+                    if($porcentaje_avance_nuevo>=50 && $porcentaje_avance_nuevo<60 && $porcentaje_avance_exitente<50)
+                    {
+                        $mensaje= "La Tarea: ".$value['text']." del Tema: ".$tema." alcanzo el 50% de avance.Por el Usuario: ";
+                        $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTema, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);                        
+                    }
+                    if($porcentaje_avance_nuevo>=60 && $porcentaje_avance_nuevo<70 && $porcentaje_avance_exitente<60)
+                    {
+                        $mensaje= "La Tarea: ".$value['text']." del Tema: ".$tema." alcanzo el 60% de avance.Por el Usuario: ";
+                        $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTema, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);                        
+                    }
+                    if($porcentaje_avance_nuevo>=70 && $porcentaje_avance_nuevo<80 && $porcentaje_avance_exitente<70)
+                    {
+                        $mensaje= "La Tarea: ".$value['text']." del Tema: ".$tema." alcanzo el 70% de avance.Por el Usuario: ";
+                        $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTema, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);                        
+                    }
+                    if($porcentaje_avance_nuevo>=80 && $porcentaje_avance_nuevo<90 && $porcentaje_avance_exitente<80)
+                    {
+                        $mensaje= "La Tarea: ".$value['text']." del Tema: ".$tema." alcanzo el 80% de avance.Por el Usuario: ";                        
+                        $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTema, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);                        
+                    }
+                    if($porcentaje_avance_nuevo>=90 && $porcentaje_avance_nuevo<100 && $porcentaje_avance_exitente<90)
+                    {
+                        $mensaje= "La Tarea: ".$value['text']." del Tema: ".$tema." alcanzo el 90% de avance.Por el Usuario: "; 
+                        $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTema, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);                        
+                    }
+                    if($porcentaje_avance_nuevo==100)
+                    {
+                        $mensaje= "La Tarea: ".$value['text']." del Tema: ".$tema." alcanzo el 100% de avance.Por el Usuario: ";
+                        $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTema, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);                        
+                    }
+                }
+            }
+            
+//            echo "Nuevo: ".json_encode($porcentaje_avance_nuevo);
+//            echo "existente: ".json_encode($porcentaje_avance_exitente);
+//            echo"Esto es value2: ".json_encode($value2);
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }        
+    }
+   
 }

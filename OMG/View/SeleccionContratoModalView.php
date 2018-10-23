@@ -86,7 +86,7 @@ overflow:hidden;
 <div id="loader"></div>
           
 <button type="button" id="btn-cont" class="btn btn-success" >
-    Seleccionar Cumplimiento
+    Seleccione Opcion
 </button>
 
 
@@ -96,8 +96,8 @@ overflow:hidden;
             <tbody>
                 <tr class="jsgrid-header-row"> 
 				
-                                <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 170px;">Clave del Cumplimiento</th>
-                                  <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 170px;">Cumplimiento</th>
+                                <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 170px;">Clave</th>
+                                  <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 170px;">Descripción</th>
     </tr>
  
 

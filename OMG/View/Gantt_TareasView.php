@@ -1,5 +1,3 @@
-
-
 <?php
 session_start();
 require_once '../util/Session.php';
@@ -901,6 +899,7 @@ gantt.config.columns=[
 					return "Suspendido";
                                 if(item.status==3)
                                         return  "Terminado";
+                                    return "En Proceso";
 			}
 		},
 		{
@@ -937,27 +936,38 @@ var opcionstatus=[
 
 
         gantt.locale.labels["section_progress"] = "Progreso";
+        gantt.locale.labels["section_notificacion_porcentaje_programado"] = "Alerta por Avance";
         gantt.locale.labels["section_parent"] = "Seleccione Tarea Padre";
         gantt.config.lightbox.sections = [
 		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
                 {name: "statusname", height: 38, map_to: "status", type: "select", options:opcionstatus},
                 {name: "notas", height: 38, map_to: "notas", type: "textarea"},
 		{name: "owner", height: 33, map_to: "user", type: "select", options:dataEmpleados},
-                {
-			name: "progress", height: 33, map_to: "progress", type: "select", options: [
-				{key: "0", label: "No Iniciada"},
-				{key: "0.1", label: "10%"},
-				{key: "0.2", label: "20%"},
-				{key: "0.3", label: "30%"},
-				{key: "0.4", label: "40%"},
-				{key: "0.5", label: "50%"},
-				{key: "0.6", label: "60%"},
-				{key: "0.7", label: "70%"},
-				{key: "0.8", label: "80%"},
-				{key: "0.9", label: "90%"},
-				{key: "1", label: "Completa"}
+                  {
+			name: "notificacion_porcentaje_programado", height: 33, map_to: "notificacion_porcentaje_programado", type: "select", options: [
+                                {key: "-1", label: "Seleccione el Porcentaje"},
+				{key: "50", label: "50%"},
+				{key: "60", label: "60%"},
+				{key: "70", label: "70%"},
+				{key: "80", label: "80%"},
+				{key: "90", label: "90%"}
 			]
 		},
+//                {
+//			name: "progress", height: 33, map_to: "progress", type: "select", options: [
+//				{key: "0", label: "No Iniciada"},
+//				{key: "0.1", label: "10%"},
+//				{key: "0.2", label: "20%"},
+//				{key: "0.3", label: "30%"},
+//				{key: "0.4", label: "40%"},
+//				{key: "0.5", label: "50%"},
+//				{key: "0.6", label: "60%"},
+//				{key: "0.7", label: "70%"},
+//				{key: "0.8", label: "80%"},
+//				{key: "0.9", label: "90%"},
+//				{key: "1", label: "Completa"}
+//			]
+//		},
                  {name:"template", height:16, type:"template", map_to:"my_template"}, 
 		{name: "time",  height: 50, type: "duration", map_to: "auto"}
 	];
@@ -1011,6 +1021,10 @@ gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
 
 var dp = new gantt.dataProcessor("../Controller/GanttTareasController.php?Op=Modificar");
 dp.init(gantt);
+
+
+
+
     function obtenerEmpleados(){     
         $.ajax({
 //           url:"../Controller/GanttController.php?Op=ListarEmpleados",

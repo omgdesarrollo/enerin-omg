@@ -98,9 +98,10 @@ class TareasDAO{
     {
         try 
         {
-            $query="SELECT tbempleados.id_empleado, CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) 
+            $query="SELECT tbempleados.id_empleado, CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)
                     AS nombre_completo
-                    FROM empleados tbempleados";
+                    FROM usuarios tbusuarios
+                    JOIN  empleados tbempleados ON tbempleados.id_empleado=tbusuarios.id_empleado";    
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
 
