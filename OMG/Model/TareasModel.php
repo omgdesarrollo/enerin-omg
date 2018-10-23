@@ -229,6 +229,36 @@ class TareasModel{
         }        
     }
     
+    public function enviarNotificacionWhenCambioDeStatus($ID_EMPLEADO,$TEMA,$STATUS_TAREA)
+    {
+        try
+        {
+            $contrato= Session::getSesion("s_cont");
+            $id_usuario=Session::getSesion("user");
+            if($STATUS_TAREA==1)
+              $STATUS_TAREA="En Proceso";
+            if($STATUS_TAREA==2)
+              $STATUS_TAREA="Suspendido";
+            if($STATUS_TAREA==3)
+              $STATUS_TAREA="Terminado";
+            $mensaje= "El Tema: ".$TEMA." ha cambiado a Estatus: ".$STATUS_TAREA." por el Usuario: ";
+            $tipo_mensaje=0;
+            $atendido= 'false';
+            $asunto="";
+            $dao=new TareasDAO();
+            $idParaQuien= $dao->obtenerUsuarioPorIdEmpleado($ID_EMPLEADO);
+            $model=new NotificacionesModel();
+            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idParaQuien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+            
+//            echo "este es el valor de status: ".json_encode($STATUS_TAREA);
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }        
+    }
+    
     public function enviarNotificacionWhenRemoveTarea($ID_EMPLEADO,$TAREA)
     {
         try

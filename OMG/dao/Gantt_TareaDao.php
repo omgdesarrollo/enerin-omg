@@ -26,7 +26,7 @@ class Gantt_TareaDao {
         try 
         {
             $query="SELECT tbgantt_tareas.id,tbgantt_tareas.text,tbgantt_tareas.start_date,tbgantt_tareas.duration,tbgantt_tareas.progress,
-                    tbgantt_tareas.parent,tbgantt_tareas.user,tbgantt_tareas.notas,tbgantt_tareas.status,tbgantt_tareas.notificacion_porcentaje_programado 	
+                    tbgantt_tareas.parent,tbgantt_tareas.user,tbgantt_tareas.id_tarea,tbgantt_tareas.notas,tbgantt_tareas.status,tbgantt_tareas.notificacion_porcentaje_programado 	
                     FROM gantt_tareas tbgantt_tareas
                     WHERE tbgantt_tareas.id=$ID";
             $db=  AccesoDB::getInstancia();
@@ -135,7 +135,7 @@ class Gantt_TareaDao {
     {
         try 
         {
-            $query="SELECT tbgantt_tareas.id, tbgantt_tareas.text, tbgantt_tareas.user
+            $query="SELECT tbgantt_tareas.id, tbgantt_tareas.text, tbgantt_tareas.user, tbgantt_tareas.id_tarea
                     FROM gantt_tareas tbgantt_tareas
                     WHERE tbgantt_tareas.id=$id";
             
@@ -262,7 +262,25 @@ class Gantt_TareaDao {
         }
     }
     
-    
+    public function obtenerDatosTema($id_tema)
+    {
+        try 
+        {
+            $query="SELECT tbtareas.tarea
+                    FROM tareas tbtareas
+                    WHERE tbtareas.id_tarea=$id_tema";
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista[0]['tarea'];            
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+
 //    public function calcularPorcentajePorActividad($VALUE)
 //    {
 //        try 

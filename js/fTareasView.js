@@ -331,72 +331,83 @@ function insertarTareas(tareaDatos)
 
 function saveUpdateToDatabase(args)//listo
 {
-        columnas=new Object();
-        id_afectado = args['item']['id_principal'][0];
-        id_empleadoActual=args["item"]["id_empleado"];
-        id_empleadoAnterior=args["previousItem"]["id_empleado"];
-        tarea=args["item"]["tarea"];
-        verificar = 0;
-        $.each(args['item'],(index,value)=>
-        {
-                if(args['previousItem'][index]!=value && value!="")
-                {
-                        if(index!='id_principal' && !value.includes("<button") && index!="delete")
+    console.log("este es el args: ",args);
+    columnas=new Object();
+    id_afectado = args['item']['id_principal'][0];
+    id_empleadoActual=args["item"]["id_empleado"];
+    id_empleadoAnterior=args["previousItem"]["id_empleado"];
+    statusTemaActual=args["item"]["status_tarea"];
+    statusTemaAnterior=args["previousItem"]["status_tarea"];
+    tarea=args["item"]["tarea"];
+    verificar = 0;
+    $.each(args['item'],(index,value)=>
+    {
+            if(args['previousItem'][index]!=value && value!="")
+            {
+                    if(index!='id_principal' && !value.includes("<button") && index!="delete")
+                    {
+                            columnas[index]=value;
+                    }
+            }
+    });
+
+    if( Object.keys(columnas).length != 0 && verificar==0)
+    {
+
+        $.ajax({
+            url:"../Controller/GeneralController.php?Op=Actualizar",
+            type:"POST",
+            data:'TABLA=tareas'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
+            beforeSend:()=>
+            {
+                    growlWait("Actualización","Espere...");
+            },
+            success:(data)=>
+            {
+                    if(data==1)
+                    {
+                        growlSuccess("Actulización","Se actualizaron los campos");
+                        actualizarTarea(id_afectado.id_tarea);
+
+                        if(id_empleadoActual==id_empleadoAnterior && statusTemaActual==statusTemaAnterior)
                         {
-                                columnas[index]=value;
-                        }
-                }
-        });
-        
-        if( Object.keys(columnas).length != 0 && verificar==0)
-        {
-            
-            $.ajax({
-                url:"../Controller/GeneralController.php?Op=Actualizar",
-                type:"POST",
-                data:'TABLA=tareas'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
-                beforeSend:()=>
-                {
-                        growlWait("Actualización","Espere...");
-                },
-                success:(data)=>
-                {
-                        if(data==1)
-                        {
-                            growlSuccess("Actulización","Se actualizaron los campos");
-                            actualizarTarea(id_afectado.id_tarea);
-                            
-                            if(id_empleadoActual==id_empleadoAnterior)
+                            enviarNotificacionWhenUpdate(id_empleadoActual,tarea);
+                        } else{
+                            if(id_empleadoActual!=id_empleadoAnterior)
                             {
-                                enviarNotificacionWhenUpdate(id_empleadoActual,tarea);
-                            } else{
-                                if(id_empleadoActual!=id_empleadoAnterior)
-                                {
-                                    enviarNotificacionWhenRemoveTarea(id_empleadoAnterior,tarea);
-                                    enviarNotificacionWhenRemoveTareaAlNuevoUsuario(id_empleadoActual,tarea);
-                                }
-                            }                                
+                                enviarNotificacionWhenRemoveTarea(id_empleadoAnterior,tarea);
+                                enviarNotificacionWhenRemoveTareaAlNuevoUsuario(id_empleadoActual,tarea);
+                            }
+                            
+                            if(statusTemaActual!=statusTemaAnterior)
+                            {
+                                enviarNotificacionWhenCambioDeStatus(id_empleadoActual,tarea,statusTemaActual);
+                                console.log("status: ",statusTemaActual);
+                            }
                         }
-                        else
-                        {
-                                growlError("Actualización","No se pudo actualizar");
-                                componerDataGrid();
-                                gridInstance.loadData();
-                        }
-                },
-                error:function()
-                {
-                        componerDataGrid();
-                        gridInstance.loadData();
-                        growlError("Error","Error del servidor");
-                }
-            });
-        }
-        else
-        {
-                componerDataGrid();
-                gridInstance.loadData();
-        }
+
+
+                    }
+                    else
+                    {
+                            growlError("Actualización","No se pudo actualizar");
+                            componerDataGrid();
+                            gridInstance.loadData();
+                    }
+            },
+            error:function()
+            {
+                    componerDataGrid();
+                    gridInstance.loadData();
+                    growlError("Error","Error del servidor");
+            }
+        });
+    }
+    else
+    {
+            componerDataGrid();
+            gridInstance.loadData();
+    }
 }
 
 function actualizarTarea(id_tarea)
@@ -812,6 +823,23 @@ function enviarNotificacionWhenUpdate(id_empleado,tarea)
             {
 //            growlError("Error Notificación","Error en el servidor");
             // swalError("Error en el servidor");
+            }
+        });
+}
+
+function enviarNotificacionWhenCambioDeStatus(id_empleado,tarea,status_tarea)
+
+{
+        $.ajax({
+            url:"../Controller/TareasController.php?Op=enviarNotificacionWhenCambioDeStatus",
+            data: "ID_EMPLEADO="+id_empleado+"&TAREA="+tarea+"&STATUS_TAREA="+status_tarea,
+            success:function(response)
+            {
+            
+            },
+            error:function()
+            {
+                
             }
         });
 }

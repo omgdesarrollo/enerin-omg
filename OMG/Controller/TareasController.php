@@ -93,6 +93,14 @@ switch ($Op) {
         
         break;
     
+    case'enviarNotificacionWhenCambioDeStatus':
+        $Lista= $model->enviarNotificacionWhenCambioDeStatus($_REQUEST['ID_EMPLEADO'],$_REQUEST['TAREA'],$_REQUEST['STATUS_TAREA']);
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+        return $Lista;
+        
+        break;
+    
     case 'enviarNotificacionWhenRemoveTarea':
         $Lista= $model->enviarNotificacionWhenRemoveTarea($_REQUEST['ID_EMPLEADO'],$_REQUEST['TAREA']);
         header('Content-type: application/json; charset=utf-8');

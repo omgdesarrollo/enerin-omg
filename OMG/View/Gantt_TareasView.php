@@ -936,7 +936,7 @@ var opcionstatus=[
 
 
         gantt.locale.labels["section_progress"] = "Progreso";
-        gantt.locale.labels["section_notificacion_porcentaje_programado"] = "Aviso Avance";
+        gantt.locale.labels["section_notificacion_porcentaje_programado"] = "Alerta por Avance";
         gantt.locale.labels["section_parent"] = "Seleccione Tarea Padre";
         gantt.config.lightbox.sections = [
 		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
@@ -945,7 +945,7 @@ var opcionstatus=[
 		{name: "owner", height: 33, map_to: "user", type: "select", options:dataEmpleados},
                   {
 			name: "notificacion_porcentaje_programado", height: 33, map_to: "notificacion_porcentaje_programado", type: "select", options: [
-                                {key: "-1", label: "Selecciones el Porcentaje"},
+                                {key: "-1", label: "Seleccione el Porcentaje"},
 				{key: "50", label: "50%"},
 				{key: "60", label: "60%"},
 				{key: "70", label: "70%"},
