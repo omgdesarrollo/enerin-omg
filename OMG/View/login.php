@@ -310,8 +310,8 @@ clock();
         </div>
         <div id="terminosycondiciones">
             
-            
-            TERMINOS  CONDICIONES
+            <b>  Bienvenido a OMG Apps, opera por medio de Energía Integral S.A. de C.V. bajo la licencia del Autor Javier M. Dávila Bartoluchi. (La “Compañía”, “nosotros” o “nos”). Nos permite ofrecerle acceso al Servicio (como se define más abajo), sujeto a estos términos y condiciones, así como a la Política de Privacidad de la empresa. Al ingresar y utilizar el Servicio, usted da su aprobación, acuerdo y entendimiento de los Términos y condiciones.</b> 
+            <p><b> 1. Generalidades sobre los Términos de Servicio.</b></p>
             
             
         </div>
@@ -499,19 +499,19 @@ clock();
       <img class="activator" src="../../images/base/grafica.png">
     </div>
     <div class="card-content">
-      <span class="card-title activator grey-text text-darken-4">Visualiza el proceso de tus tareas
+      <span class="card-title activator grey-text text-darken-4">Visualiza el proceso de tus temas.
 <i class="material-icons right">more_vert</i></span>
       <p><a href="#">....</a></p>
     </div>
     <div class="card-reveal">
-      <span class="card-title grey-text text-darken-4">Visualiza el proceso de tus tareas<i class="material-icons right">close</i></span>
-      <p>Visualiza el proceso de tus tareas
-Una gráfica de pastel es una circunferencia ("pastel") que se divide en segmentos ("rebanadas") para representar la proporción de observaciones que están en cada categoría.
-
-Para interpretar una gráfica de pastel, compare los grupos.
-Cuando usted interprete una gráfica de pastel, busque las diferencias en el tamaños de las rebanadas. El tamaño de una rebanada muestra la proporción de observaciones que están en ese grupo.
-Cuando usted compare múltiples gráficas de pastel, busque las diferencis en el tamaños de las rebanadas para la misma categoría en todas las gráficas de pastel.
-</p>
+      <span class="card-title grey-text text-darken-4">Visualiza el proceso de tus temas.<i class="material-icons right">close</i></span>
+    <p>Visualiza el proceso de tus tareas
+        Por medio de un gráfico circular, dividido en segmentos en un primer nivel puede visualizar el proceso de los temas de acuerdo a la clasificación predeterminada por el sistema, basada en
+        Temas suspendidos, en proceso – en tiempo, con alerta vencida y con Tiempo Vencido.
+    </p>
+    <p>
+        En un nivel de detalle 2, al seleccionar un segmento podrá visualizar el Nombre del responsable o responsables y si requiere más detalle podrá ver los temas asignados a dichos responsables.
+    </p>
     </div>
   </div>
            </div>
