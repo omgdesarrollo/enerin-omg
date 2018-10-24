@@ -193,8 +193,14 @@ function reconstruir(value,index)
     tempData["fecha_cumplimiento"]= getSinFechaFormato(value.fecha_cumplimiento);
     tempData["status_tarea"]=value.status_tarea;
     tempData["observaciones"]=value.observaciones;
-    tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_tarea+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
-    tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar</button>";
+    if(value.archivosUpload[0].length==0)
+    {
+        tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_tarea+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
+        tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar - "+value.archivosUpload[0].length+"</button>";
+    }else{
+        tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_tarea+")' type='button' class='btn btn-danger botones_vista_tabla2' data-toggle='modal' data-target='#create-itemUrls'>";
+        tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar - "+value.archivosUpload[0].length+"</button>";
+    }
     if(value.existe_programa!=0)
         tempData["registrar_programa"]="<button id='btn_cargaGantt' class='btn btn-info botones_vista_tabla' onClick='cargarprogram("+JSON.stringify({"id_t":value.id_tarea,"descripcion":value.tarea})+")'>Vizualizar</button>";
     else
