@@ -409,6 +409,44 @@ function dragElement(elmnt) {
         </div><!-- cierre div class="modal-dialog" -->
 </div><!-- cierre del modal -->
 
+
+
+
+    
+<!-- Inicio de Seccion Modal Informe-->
+<div class="modal draggable fade" id="edicionNotas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+            <div id="loaderModalMostrar"></div>
+		<div class="modal-content">
+                        
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="font-size:inherit" aria-hidden="true" class="closeLetra">×</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Notas</h4>
+		      </div>
+
+		      <div class="modal-body">
+                    
+                           <!--<div id="tree-list">-->
+<!--                             <div id="dx"></div>-->
+                            <!--</div>-->
+                          <div id="tabPanel"></div>
+                                <!--<div sty></div>-->
+                        <!--<div id=""></div>-->
+                      </div><!-- cierre div class-body -->
+                </div><!-- cierre div class modal-content -->
+        </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal -->
+
+
+
+
+
+
+
+
+
+
+
   <script type="text/javascript">  
   var dxtreeList;
    
@@ -675,13 +713,45 @@ var banderaIngresarElPrimerResponsable=true;
 //                        gantt.getTask(id).status = 3;
 
                     }
-                    if(item.manipulacion_tarea=="false"){
-                         gantt.getTask(id).readonly = true;
-                         console.log(gantt);
-//                        alert();
-                    }
+                    
+                   
+//                    if(banderaPrincipioCheckeoParent){
+//                        
+//                        if(item.parent==0){
+//                            if(item.user){
+//                                
+//                            }
+//                             elpadrecoincideConElUsuarioLogeado
+//                        }
+                       if(item.$level==0){
+                         if(item.manipulacion_tarea=="false"){
+                              gantt.getTask(id).readonly = true;
+                              
+                         }else{
+                             elpadrecoincideConElUsuarioLogeado=true;
+                         }
+                             
+                           
+                       }
+                       else{
+                            if(item.manipulacion_tarea=="false"){
+                                if(elpadrecoincideConElUsuarioLogeado==false){
+                                    gantt.getTask(id).readonly = true;
+                                }
+                              
+                         }
+                       }
+                       
+                       
+//                        if(item.manipulacion_tarea=="false"){
+//                            gantt.getTask(id).readonly = true;
+//                        }
+                        
+//                        console.log(gantt.getTaskTop(id));
+//                        console.log(gantt);
+                    
 //                    alert();
-//                    console.log(item)
+                    console.log(item)
                     
 //                    if(item.manipulacion_tarea=="false"){
 //                        alert();
@@ -926,7 +996,8 @@ gantt.config.columns=[
                         template: function (item) {
 //                            console.log("datos de text ",item);
                             if(item.progress==undefined){
-                                      return "sin fecha";
+//                                      return "sin fecha";
+                                       return item.start_date;
                                 }else{
                                     return item.start_date;
                                 }
@@ -1059,8 +1130,11 @@ dp.init(gantt);
 
     var datosTreeList=[]; 
     var ventana_detalles_abierta=false;
+    var banderaPrincipioCheckeoParent=true;
+    var elpadrecoincideConElUsuarioLogeado=false;
     $(function (){
-
+       
+       
        cargarMenuArriba();
         var myToolbar;
 		function cargarMenuArriba() {
@@ -1315,8 +1389,15 @@ construirTreeList();
         width: 200
         },
         onRowClick:(args)=>{
+         
 //            console.log(args);
         },
+        onCellClick:(args)=>{
+            
+//            alert();
+//            $("#edicionNotas").show();
+        }
+        ,
         onRowUpdated:function (args){
             console.log(args);
             if( args.data.hasOwnProperty('notasname') ) {
