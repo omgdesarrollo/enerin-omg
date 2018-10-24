@@ -26,7 +26,7 @@ class TareasDAO{
 //        }
 //    }
     
-    public function listarTareas($id_empleado,$id_usuario)
+    public function listarTareas($id_empleado,$id_usuario,$cumplimiento)
     {
         try
         {
@@ -37,7 +37,7 @@ class TareasDAO{
                     FROM tareas tbtareas
                     LEFT JOIN empleados tbempleados ON tbempleados.id_empleado=tbtareas.id_empleado                  
                     LEFT JOIN gantt_tareas tbgantt_tareas ON tbgantt_tareas.id_tarea=tbtareas.id_tarea                    
-                    WHERE tbtareas.id_empleado=$id_empleado OR tbtareas.creador_tarea=$id_usuario OR tbgantt_tareas.user=$id_empleado  GROUP BY tbtareas.tarea";
+                    WHERE (tbtareas.id_empleado=$id_empleado OR tbtareas.creador_tarea=$id_usuario OR tbgantt_tareas.user=$id_empleado) and tbtareas.cumplimiento=$cumplimiento  GROUP BY tbtareas.tarea";
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
@@ -132,7 +132,7 @@ class TareasDAO{
         }
     }
 
-    public function insertarTarea($referencia,$tarea,$fecha_alarma,$fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado,$creador_tarea)
+    public function insertarTarea($referencia,$tarea,$fecha_alarma,$fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado,$creador_tarea,$contrato)
     {
         try
         {
@@ -148,8 +148,8 @@ class TareasDAO{
                 $id_nuevo=0;
             }
             
-            $query="INSERT INTO tareas(id_tarea,referencia,tarea,fecha_alarma,fecha_cumplimiento,status_tarea,observaciones,id_empleado,creador_tarea)
-				values($id_nuevo,'$referencia','$tarea','$fecha_alarma','$fecha_cumplimiento',$status_tarea,'$observaciones',$id_empleado,$creador_tarea)";
+            $query="INSERT INTO tareas(id_tarea,referencia,tarea,fecha_alarma,fecha_cumplimiento,status_tarea,observaciones,id_empleado,creador_tarea,cumplimiento)
+				values($id_nuevo,'$referencia','$tarea','$fecha_alarma','$fecha_cumplimiento',$status_tarea,'$observaciones',$id_empleado,$creador_tarea,$contrato)";
             
             $db=  AccesoDB::getInstancia();
             $exito = $db->executeUpdateRowsAfected($query);
