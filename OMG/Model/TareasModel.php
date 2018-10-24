@@ -180,6 +180,7 @@ class TareasModel{
         try
         {
             $contrato= Session::getSesion("s_cont");
+            
             $id_usuario=Session::getSesion("user");
             $asunto="";
             $dao=new TareasDAO();

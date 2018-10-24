@@ -11,6 +11,7 @@ $modelArchivo=new ArchivoUploadModel();
 
 switch ($Op) {
     case 'Listar':
+        echo "ff   ".Session::getSesion("s_cont");
         $Lista= $model->listarTareas();
         
         foreach ($Lista as $key => $value) {
