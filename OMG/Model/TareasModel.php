@@ -9,9 +9,11 @@ class TareasModel{
         try
         {
             $id_usuario=Session::getSesion("user");
+            $contrato= Session::getSesion("s_cont");
             $dao=new TareasDAO();
+            
             $id_empleado= $dao->obtenerEmpleadoPorIdUsuario($id_usuario['ID_USUARIO']);
-            $rec= $dao->listarTareas($id_empleado,$id_usuario['ID_USUARIO']);
+            $rec= $dao->listarTareas($id_empleado,$id_usuario['ID_USUARIO'],$contrato);
             
             foreach ($rec as $key => $value) 
             {
@@ -184,7 +186,7 @@ class TareasModel{
             $ID= $dao->obtenerUsuarioPorIdEmpleado($responsable_plan);
             $model=new NotificacionesModel();
             
-            $exito= $dao->insertarTarea($referencia, $tarea, $fecha_alarma, $fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado,$id_usuario['ID_USUARIO']);
+            $exito= $dao->insertarTarea($referencia, $tarea, $fecha_alarma, $fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado,$id_usuario['ID_USUARIO'],$contrato);
             $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $ID, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
             
 //            echo "este es model: ".json_encode($ID);
