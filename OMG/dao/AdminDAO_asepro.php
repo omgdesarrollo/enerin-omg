@@ -64,7 +64,8 @@ class AdminDAO{
         try
         {
            $query="SELECT tbsubmodulos.id_submodulos, tbsubmodulos.nombre
-                   FROM submodulos tbsubmodulos WHERE tbsubmodulos.id_submodulos = 7";
+                   FROM submodulos tbsubmodulos 
+                   WHERE tbsubmodulos.id_submodulos = 6 OR tbsubmodulos.id_submodulos = 7";
            $db= AccesoDB::getInstancia();
            $lista= $db->executeQuery($query);
            
