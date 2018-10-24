@@ -952,7 +952,7 @@ var vistas = [];
 	var inicio=[
         {id:'00',text:'<div id=\'desc\'>contrato(NO SELECCIONADO)</div>' ,items:[
         
-                    {id:'0x1',mode:'cols',text:'Contratos',type:'block',
+                    {id:'0x1',mode:'cols',text:'Cumplimientos',type:'block',
           list:datacontratos
         }
         ]},
@@ -1133,12 +1133,12 @@ var jsonObj = {};
                         }    
         });
                 swal({
-  title: 'Seleccione una Opcion',
+  title: 'Seleccione una Opción',
   input: 'select',
 //  html:s,
 //  html:'<input type=\'text\' disabled>',
   inputOptions:jsonObj,
-  inputPlaceholder: 'Sin cumplimiento seleccionado ',
+  inputPlaceholder: 'Sin opción Seleccionada ',
   showCancelButton: false,
   showLoaderOnConfirm: true,
    allowEscapeKey:false,
@@ -1171,8 +1171,8 @@ var jsonObj = {};
                                 html: 'tu has seleccionado el contrato ' + r.clave_cumplimiento,    
                                 timer: 2000,
                               });
-                                window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
-                                window.top.$("#infocontrato").html("Opcion Seleccionada:<br>("+r.clave_cumplimiento+")");
+                                window.top.$("#desc").html("Opción("+r.clave_cumplimiento+")");
+                                window.top.$("#infocontrato").html("Opción Seleccionada:<br>("+r.clave_cumplimiento+")");
 //                                mostrarTareasEnAlarma();
                                 
                                 
