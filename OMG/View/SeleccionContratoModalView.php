@@ -86,7 +86,7 @@ overflow:hidden;
 <div id="loader"></div>
           
 <button type="button" id="btn-cont" class="btn btn-success" >
-    Seleccione Opcion
+    Seleccione Opción
 </button>
 
 

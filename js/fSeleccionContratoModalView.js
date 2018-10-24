@@ -38,10 +38,10 @@ var jsonObj = {
         });
 
                 swal({
-  title: 'Seleccione una Opcion',
+  title: 'Seleccione una Opción',
   input: 'select',
   inputOptions:jsonObj,
-  inputPlaceholder: 'Sin cumplimiento seleccionado ',
+  inputPlaceholder: 'Sin opción seleccionada ',
   showCancelButton: true,
   showLoaderOnConfirm: true,
   inputValidator: function (value) {
