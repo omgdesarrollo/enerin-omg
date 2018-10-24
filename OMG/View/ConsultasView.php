@@ -28,41 +28,37 @@ $Usuario=  Session::getSesion("user");
 		<!-- <link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" /> -->
 		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
-                <!--Inicia para el spiner cargando-->
-                <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
-                <!--Termina para el spiner cargando-->
+        <!--Inicia para el spiner cargando-->
+        <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
+        <!--Termina para el spiner cargando-->
 
-                <script src="../../js/jquery.js" type="text/javascript"></script>
-                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+        <script src="../../js/jquery.js" type="text/javascript"></script>
+        <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
 
-                <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
-                <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
+        <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
+        <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
 
-                <!-- <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
-                <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
-                <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/> -->
+        <!-- Chart -->
+        <script src="../../assets/chart/loader.js" type="text/javascript"></script>
+        <script src="../../js/fChartComponent.js" type="text/javascript"></script>
 
-                <!-- Chart -->
-                <script src="../../assets/chart/loader.js" type="text/javascript"></script>
-                <script src="../../js/fChartComponent.js" type="text/javascript"></script>
+        <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
+        <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
 
-                <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
-                <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
+        <!-- <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
+        <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script> -->
 
-                <!-- <link href="../../assets/jsgrid/jsgrid-theme.min.css" rel="stylesheet" type="text/css"/>
-                <link href="../../assets/jsgrid/jsgrid.min.css" rel="stylesheet" type="text/css"/>
-                <script src="../../assets/jsgrid/jsgrid.min.js" type="text/javascript"></script> -->
-
-                <!-- <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
-                <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/> -->
-                <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
-                <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
-                
-                <script src="../../js/fConsultasView.js" type="text/javascript"></script>
-                <!-- <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/> -->
-                <script src="../../js/fGridComponent.js" type="text/javascript"></script>
-                
-                <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
+        <!-- <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
+        <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/> -->
+        <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
+        <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+        
+        <script src="../../js/fConsultasView.js" type="text/javascript"></script>
+        <!-- <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/> -->
+        <script src="../../js/fGridComponent.js" type="text/javascript"></script>
+        
+        <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
                 
         <style>
             .jsgrid-header-row>.jsgrid-header-cell {

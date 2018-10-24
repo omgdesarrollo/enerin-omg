@@ -451,7 +451,7 @@ function componerDataListado(value)// id de la vista documento, listo
         $.each(valueList,function(ind,val)
         {
             if(ind == id_string)
-                    ( val==id_vista) ? dataListado[indexList]=value : console.log();
+                ( val==id_vista) ? dataListado[indexList]=value : console.log();
         });
     });
 }
