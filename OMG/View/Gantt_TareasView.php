@@ -675,6 +675,18 @@ var banderaIngresarElPrimerResponsable=true;
 //                        gantt.getTask(id).status = 3;
 
                     }
+                    if(item.manipulacion_tarea=="false"){
+                         gantt.getTask(id).readonly = true;
+                         console.log(gantt);
+//                        alert();
+                    }
+//                    alert();
+//                    console.log(item)
+                    
+//                    if(item.manipulacion_tarea=="false"){
+//                        alert();
+//                          gantt.getTask(id).readonly = true;
+//                    }
 //                    if(item.status==2){
 //                        gantt.getTask(id).readonly = true;
 //                        gantt.getTask(id).progress = 1;
