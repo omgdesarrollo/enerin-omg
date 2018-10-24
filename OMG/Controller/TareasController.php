@@ -11,6 +11,7 @@ $modelArchivo=new ArchivoUploadModel();
 
 switch ($Op) {
     case 'Listar':
+    
         $Lista= $model->listarTareas();
         
         foreach ($Lista as $key => $value) {
