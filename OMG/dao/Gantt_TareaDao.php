@@ -3,11 +3,15 @@ require_once '../ds/AccesoDB.php';
 class Gantt_TareaDao {
     public function listarRegistrosGanttTareas($VALUE) 
     {
+        $usuario=Session::getSesion("user")["ID_USUARIO"];
         try
         {
             $query="SELECT tbgantt_tareas.user,tbgantt_tareas.id, tbgantt_tareas.text, tbgantt_tareas.start_date, tbgantt_tareas.duration,
-            tbgantt_tareas.progress, tbgantt_tareas.parent, tbgantt_tareas.ponderado_programado,tbgantt_tareas.notas,tbgantt_tareas.status,tbgantt_tareas.notificacion_porcentaje_programado
+            tbgantt_tareas.progress, tbgantt_tareas.parent, tbgantt_tareas.ponderado_programado,tbgantt_tareas.notas,tbgantt_tareas.status,tbgantt_tareas.notificacion_porcentaje_programado,
+             IF(tbusuarios.ID_USUARIO=$usuario,'true','false')  as manipulacion_tarea
             FROM gantt_tareas tbgantt_tareas
+            
+            JOIN usuarios tbusuarios  ON tbusuarios.ID_EMPLEADO=tbgantt_tareas.user
             WHERE tbgantt_tareas.id_tarea= $VALUE";
 
             $db=  AccesoDB::getInstancia();
