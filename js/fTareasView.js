@@ -348,6 +348,7 @@ function saveUpdateToDatabase(args)//listo
     statusTemaAnterior=args["previousItem"]["status_tarea"];
     tarea=args["item"]["tarea"];
     verificar = 0;
+//    console.log("Este es el id: ",id_afectado);
     $.each(args['item'],(index,value)=>
     {
             if(args['previousItem'][index]!=value && value!="")
@@ -389,8 +390,8 @@ function saveUpdateToDatabase(args)//listo
                             
                             if(statusTemaActual!=statusTemaAnterior)
                             {
-                                enviarNotificacionWhenCambioDeStatus(id_empleadoActual,tarea,statusTemaActual);
-                                console.log("status: ",statusTemaActual);
+                                enviarNotificacionWhenCambioDeStatus(id_empleadoActual,tarea,statusTemaActual,id_afectado.id_tarea);
+//                                console.log("status: ",statusTemaActual);
                             }
                         }
 
@@ -835,12 +836,12 @@ function enviarNotificacionWhenUpdate(id_empleado,tarea)
         });
 }
 
-function enviarNotificacionWhenCambioDeStatus(id_empleado,tarea,status_tarea)
+function enviarNotificacionWhenCambioDeStatus(id_empleado,tarea,status_tarea,id_tarea)
 
 {
         $.ajax({
             url:"../Controller/TareasController.php?Op=enviarNotificacionWhenCambioDeStatus",
-            data: "ID_EMPLEADO="+id_empleado+"&TAREA="+tarea+"&STATUS_TAREA="+status_tarea,
+            data: "ID_EMPLEADO="+id_empleado+"&TAREA="+tarea+"&STATUS_TAREA="+status_tarea+"&ID_TAREA="+id_tarea,
             success:function(response)
             {
             

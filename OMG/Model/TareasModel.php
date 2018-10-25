@@ -232,12 +232,13 @@ class TareasModel{
         }        
     }
     
-    public function enviarNotificacionWhenCambioDeStatus($ID_EMPLEADO,$TEMA,$STATUS_TAREA)
+    public function enviarNotificacionWhenCambioDeStatus($ID_EMPLEADO,$TEMA,$STATUS_TAREA,$ID_TAREA)
     {
         try
         {
             $contrato= Session::getSesion("s_cont");
             $id_usuario=Session::getSesion("user");
+            $dao=new TareasDAO();
             if($STATUS_TAREA==1)
               $STATUS_TAREA="En Proceso";
             if($STATUS_TAREA==2)
@@ -247,13 +248,14 @@ class TareasModel{
             $mensaje= "El Tema: ".$TEMA." ha cambiado a Estatus: ".$STATUS_TAREA.", por el Usuario: ";
             $tipo_mensaje=0;
             $atendido= 'false';
-            $asunto="";
-            $dao=new TareasDAO();
-            $idParaQuien= $dao->obtenerUsuarioPorIdEmpleado($ID_EMPLEADO);
+            $asunto="";           
+//            $idParaQuien= $dao->obtenerUsuarioPorIdEmpleado($ID_EMPLEADO);
+            $id_empleado_plan= $dao->obtenerResponsablePlanTareaPadre($ID_TAREA);
+            $idResponsablePlan= $dao->obtenerUsuarioPorIdEmpleado($id_empleado_plan);
             $model=new NotificacionesModel();
-            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idParaQuien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsablePlan, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
             
-//            echo "este es el valor de status: ".json_encode($STATUS_TAREA);
+//            echo "este es el id: ".json_encode($ID_TAREA);
             return $rec;
         } catch (Exception $ex)
         {
