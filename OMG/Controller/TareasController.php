@@ -125,6 +125,22 @@ switch ($Op) {
         return $Lista;
         
         break;
+    
+    case 'tareasEnAlarma':
+        $Lista= $model->tareasEnAlarma();
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+        return $Lista;
+
+        break;
+    
+    case 'tareasVencidas':
+        $Lista= $model->tareasVencidas();
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+        return $Lista;
+
+        break;
         
     case'verificarTarea':
         

@@ -215,7 +215,7 @@ class TareasModel{
         {
             $contrato= Session::getSesion("s_cont");
             $id_usuario=Session::getSesion("user");
-            $mensaje= "Se ha actualizado el Tema: ".$TAREA." por el Usuario: ";
+            $mensaje= "Se ha actualizado el Tema: ".$TAREA.", por el Usuario: ";
             $tipo_mensaje=0;
             $atendido= 'false';
             $asunto="";
@@ -244,7 +244,7 @@ class TareasModel{
               $STATUS_TAREA="Suspendido";
             if($STATUS_TAREA==3)
               $STATUS_TAREA="Terminado";
-            $mensaje= "El Tema: ".$TEMA." ha cambiado a Estatus: ".$STATUS_TAREA." por el Usuario: ";
+            $mensaje= "El Tema: ".$TEMA." ha cambiado a Estatus: ".$STATUS_TAREA.", por el Usuario: ";
             $tipo_mensaje=0;
             $atendido= 'false';
             $asunto="";
@@ -268,7 +268,7 @@ class TareasModel{
         {
             $contrato= Session::getSesion("s_cont");
             $id_usuario=Session::getSesion("user");
-            $mensaje= "Se asigno a otro usuario el Tema: ".$TAREA." por el Usuario: ";
+            $mensaje= "Se asigno a otro usuario el Tema: ".$TAREA.", por el Usuario: ";
             $tipo_mensaje=0;
             $atendido= 'false';
             $asunto="";
@@ -292,7 +292,7 @@ class TareasModel{
         {
             $contrato= Session::getSesion("s_cont");
             $id_usuario=Session::getSesion("user");
-            $mensaje= "Se le asigno el Tema: ".$TAREA." por el Usuario: ";
+            $mensaje= "Se le asigno el Tema: ".$TAREA.", por el Usuario: ";
             $tipo_mensaje=0;
             $atendido= 'false';
             $asunto="";
@@ -316,7 +316,7 @@ class TareasModel{
         {
             $contrato= Session::getSesion("s_cont");
             $id_usuario=Session::getSesion("user");
-            $mensaje= "El Tema: ".$TAREA." ha sido Eliminado por el Usuario: ";
+            $mensaje= "El Tema: ".$TAREA." ha sido Eliminado, por el Usuario: ";
             $tipo_mensaje=0;
             $atendido= 'false';
             $asunto="";
@@ -332,7 +332,114 @@ class TareasModel{
             return -1;
         }        
     }
+    
+    public function tareasEnAlarma()
+    {
+        try
+        {
+            $CONTRATO= Session::getSesion("s_cont");
+            $id_usuario=Session::getSesion("user");
+            $dao=new TareasDAO();
+            $tipo_mensaje=0;
+            $atendido= 'false';
+            $asunto="";           
+            $model=new NotificacionesModel();            
+            $rec= $dao->tareasEnAlarma();
+//            echo "Este es el rec: ".json_encode($rec);     
+            foreach ($rec as $value) 
+            {                
+                $TAREA= $value['tarea'];
+                $id_empleado_tema= $value['id_empleado'];
+                $idResponsableTema= $dao->obtenerUsuarioPorIdEmpleado($id_empleado_tema);
+                $id_empleado_plan= $dao->obtenerResponsablePlanTareaPadre($value['id_tarea']);
+                $idResponsablePlan= $dao->obtenerUsuarioPorIdEmpleado($id_empleado_plan);
+                $mensaje= "El Tema: ".$TAREA." esta en Alarma, por el Usuario: ";
+                $resultado= $dao->veriricarSiYaExisteLaNotificacion($mensaje);
+//                echo "este es el resultado: ".$resultado;
+                if($resultado==0)
+                {
+                    if($idResponsableTema==$idResponsablePlan)
+                    {
+                        if($idResponsableTema!=0)
+                        {
+                            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTema, $mensaje, $tipo_mensaje, $atendido,$asunto,$CONTRATO);
+                        }    
+                    }else{
+                        if($idResponsableTema!=0)
+                        {
+                            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTema, $mensaje, $tipo_mensaje, $atendido,$asunto,$CONTRATO);
+                        }
+                        if($idResponsablePlan!=0)
+                        {
+                            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsablePlan, $mensaje, $tipo_mensaje, $atendido,$asunto,$CONTRATO);
+                        }
+                    }   
+                }    
+            }
 
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    public function tareasVencidas()
+    {
+        try
+        {
+            $CONTRATO= Session::getSesion("s_cont");
+            $id_usuario=Session::getSesion("user");
+            $dao=new TareasDAO();
+            $tipo_mensaje=0;
+            $atendido= 'false';
+            $asunto="";            
+            $model=new NotificacionesModel();            
+            $rec= $dao->tareasVencidas();
+            
+//            echo "este es el rec: ".json_encode($rec);
+            foreach ($rec as $value)
+            {
+                $TAREA= $value['tarea'];
+                $id_empleado_tema= $value['id_empleado'];                
+                $idResponsableTema= $dao->obtenerUsuarioPorIdEmpleado($id_empleado_tema);
+                $id_empleado_plan= $dao->obtenerResponsablePlanTareaPadre($value['id_tarea']);
+                $idResponsablePlan= $dao->obtenerUsuarioPorIdEmpleado($id_empleado_plan);                
+                $mensaje= "El Tema: ".$TAREA." esta con Fecha de Cumplimiento Vencida, por el Usuario: ";
+                $resultado= $dao->veriricarSiYaExisteLaNotificacion($mensaje);
+                
+                if($resultado==0)
+                {
+                    if($idResponsableTema==$idResponsablePlan)
+                    {
+                        if($idResponsableTema!=0)
+                        {
+                            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTema, $mensaje, $tipo_mensaje, $atendido,$asunto,$CONTRATO);
+                        }    
+                    }else{
+                        if($idResponsableTema!=0)
+                        {
+                            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsableTema, $mensaje, $tipo_mensaje, $atendido,$asunto,$CONTRATO);
+                        }
+                        if($idResponsablePlan!=0)
+                        {
+                            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idResponsablePlan, $mensaje, $tipo_mensaje, $atendido,$asunto,$CONTRATO);
+                        }
+                    }
+                }
+//                echo "responsables tema: ". json_decode($idResponsableTema);
+//                echo "responsables plan: ". json_decode($idResponsablePlan);
+            }
+            
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 
     public function eliminarTarea($ID_TAREA)
     {

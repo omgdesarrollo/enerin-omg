@@ -160,6 +160,8 @@ function listarDatos()
                     });
                     DataGrid = __datos;
                     gridInstance.loadData();
+                    mostrarTareasEnAlarma();
+                    mostrarTareasVencidas();
                     resolve();
                     
                 }else{
@@ -906,7 +908,7 @@ function enviarNotificacionWhenDeleteTarea(id_empleadoActual,tarea)
  function mostrarTareasEnAlarma()
  {
      $.ajax({
-         url:"../Controller/NotificacionesTareasController.php?Op=tareasEnAlarma",
+         url:"../Controller/TareasController.php?Op=tareasEnAlarma",
          type:"GET",
          success:function()
          {
@@ -919,7 +921,7 @@ function enviarNotificacionWhenDeleteTarea(id_empleadoActual,tarea)
   function mostrarTareasVencidas()
  {
      $.ajax({
-         url:"../Controller/NotificacionesTareasController.php?Op=tareasVencidas",
+         url:"../Controller/TareasController.php?Op=tareasVencidas",
          type:"GET",
          success:function()
          {
