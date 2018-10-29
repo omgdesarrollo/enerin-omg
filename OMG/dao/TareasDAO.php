@@ -4,10 +4,10 @@ require_once '../ds/AccesoDB.php';
 class TareasDAO{
     
     
-    public function listarTareas($id_empleado,$id_usuario,$cumplimiento)
+    public function listarTareas($id_empleado,$id_usuario,$cumplimiento,$checkBoxTerminados)
     {
         try
-        {
+        {            
             $query="SELECT tbtareas.id_tarea, tbtareas.referencia, tbtareas.tarea, tbtareas.fecha_creacion, tbtareas.fecha_alarma,
                     tbtareas.fecha_cumplimiento, tbtareas.status_tarea, tbtareas.observaciones, tbtareas.existe_programa,
                     tbtareas.avance_programa, tbempleados.id_empleado, CONCAT(tbempleados.nombre_empleado,' ', tbempleados.apellido_paterno,' ', tbempleados.apellido_materno) 
@@ -15,14 +15,25 @@ class TareasDAO{
                     FROM tareas tbtareas
                     LEFT JOIN empleados tbempleados ON tbempleados.id_empleado=tbtareas.id_empleado                  
                     LEFT JOIN gantt_tareas tbgantt_tareas ON tbgantt_tareas.id_tarea=tbtareas.id_tarea                    
-                    WHERE (tbtareas.id_empleado=$id_empleado OR tbtareas.creador_tarea=$id_usuario OR tbgantt_tareas.user=$id_empleado) and tbtareas.cumplimiento=$cumplimiento  GROUP BY tbtareas.tarea";
+                    WHERE (tbtareas.id_empleado=$id_empleado OR tbtareas.creador_tarea=$id_usuario OR tbgantt_tareas.user=$id_empleado) AND tbtareas.cumplimiento=$cumplimiento";
+            
+            if($checkBoxTerminados=="false")
+            {
+                $query.=" GROUP BY tbtareas.tarea";
+//                echo "entro al if: ". json_encode($query);
+            }else
+            {
+                if($checkBoxTerminados=="true")
+                {
+                    $query.=" AND tbtareas.status_tarea=3 GROUP BY tbtareas.tarea";
+//                    echo "entro al else: ". json_encode($query);
+                }
+            }
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
 
-//            echo "Este es el Query: ".json_encode($query);
-            return $lista;
-            
+            return $lista;            
         } catch (Exception $ex)
         {
             throw $ex;

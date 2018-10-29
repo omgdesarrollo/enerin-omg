@@ -11,9 +11,9 @@ $modelArchivo=new ArchivoUploadModel();
 
 switch ($Op) {
     case 'Listar':
-    
-        $Lista= $model->listarTareas();
         
+        $Lista= $model->listarTareas($_REQUEST['VALOR']);
+//        echo "valor en el controler: ".json_encode($_REQUEST['VALOR']);
         foreach ($Lista as $key => $value) {
             $url= $_REQUEST['URL'].$value['id_tarea'];
             $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls(-1,$url);

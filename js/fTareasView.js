@@ -1,5 +1,15 @@
+
+var valorChecking="false";
+//noCheck = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true'></i>";
+//yesCheck = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true'></i>";
+
 $(function()
 {
+    $('#checkTerminados').click(function() {
+        valorChecking=$(this).is(':checked');
+        refresh();
+    });
+    
     $("#TAREA").keyup(function()
     {
         var valueTarea=$(this).val();
@@ -120,11 +130,18 @@ function inicializarFiltros()
                 {id:"status_tarea",type: "combobox",descripcion:"descripcion",
                     data:[{"status_tarea":"1","descripcion":"En Proceso"},{"status_tarea":"2","descripcion":"Suspendido"},{"status_tarea":"3","descripcion":"Terminado"}]
                 },
-                {id:"observaciones",type:"text"},
-                {id:"archivo_adjunto",type:"text"},
-                {id:"registrar_programa",type:"text"},
-                {id:"avance_programa",type:"text"},
+//                {id:"status_tarea",type: "combobox",descripcion:"descripcion",
+//                    data:[{"status_tarea":"1","descripcion":"En Proceso"},{"status_tarea":"2","descripcion":"Suspendido"},{"status_tarea":"3","descripcion":"Terminado"}]
+//                },
                 {id:"noneDos",type:"none"},
+//                {id:"observaciones",type:"text"},
+//                {id:"archivo_adjunto",type:"text"},
+//                {id:"registrar_programa",type:"text"},
+//                {id:"avance_programa",type:"text"},
+                
+                {id:"noneTres",type:"none"},
+                {id:"noneCuatro",type:"none"},
+                {id:"noneCinco",type:"none"},
                 {name:"opcion",id:"opcion",type:"opcion"}
         ];
         resolve();
@@ -137,13 +154,13 @@ function listarDatos()
 {
     return new Promise((resolve,reject)=>
     {
-        
-    
+        console.log("valor del check en listarDatos: ",valorChecking);    
         var __datos=[];
         $.ajax(
         {
             url:"../Controller/TareasController.php?Op=Listar&URL=Tareas/",
             type:"GET",
+            data:"VALOR="+valorChecking,
             beforeSend:function()
             {
                 growlWait("Solicitud","Solicitando Datos...");
@@ -190,11 +207,33 @@ function reconstruir(value,index)
     tempData["tarea"]=value.tarea;
     tempData["id_empleado"]=value.id_empleado;
 //    tempData["fecha_creacion"]= getSinFechaFormato(value.fecha_creacion);
-    tempData["fecha_creacion"]= getFechaFormatoH(value.fecha_creacion);
+    tempData["fecha_creacion"]= getSinFechaFormato
+    (value.fecha_creacion);
     tempData["fecha_alarma"]= getSinFechaFormato(value.fecha_alarma);
     tempData["fecha_cumplimiento"]= getSinFechaFormato(value.fecha_cumplimiento);
     tempData["status_tarea"]=value.status_tarea;
-    tempData["observaciones"]=value.observaciones;
+    tempData["semaforo"]="";
+    if(value.status_tarea==1 && value.status_grafica=="En tiempo")
+    {
+        tempData["semaforo"]+="<span class='green'>.</span>";
+    }
+    if(value.status_tarea==1 && value.status_grafica=="Alarma vencida")
+    {
+        tempData["semaforo"]+="<span class='orange'>.</span>";
+    }
+    if(value.status_tarea==1 && value.status_grafica=="Tiempo vencido")
+    {
+        tempData["semaforo"]+="<span class='red'>.</span>";
+    }
+    if(value.status_tarea==2)
+    {
+        tempData["semaforo"]+="<span class='yellow'>.</span>";
+    }
+    if(value.status_tarea==3)
+    {
+        tempData["semaforo"]+="<span class='blue'>.</span>";
+    }
+    tempData["observaciones"]=value.observaciones; 
     if(value.archivosUpload[0].length==0)
     {
         tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_tarea+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";

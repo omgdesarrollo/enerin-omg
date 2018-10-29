@@ -91,18 +91,15 @@ require_once 'EncabezadoUsuarioView.php';
         Agregar
     </button>
 
-<!--    <button onClick="loadChartView(true)" type="button" id="btn_informe" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#informe_tareas">
-        Informe
-    </button>    -->
-
     <button type="button" id="btnAgregarDocumentoEntradaRefrescar" class="btn btn-info btn_refrescar" id="btnrefrescar" onclick="refresh();" >
         <i class="glyphicon glyphicon-repeat"></i>   
     </button>
 
-    <div class="pull-right">    
-<!--        <button onClick="loadChartView(true)" title="Informe" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#informe_tareas">
-            <i class="fa fa-pie-chart"></i>
-        </button>-->
+    <div class="pull-right">        
+        <label class="btn btn-info btn_checkbox">
+            <input style="margin: 6px 0 0;" type="checkbox" name="" id="checkTerminados" autocomplete="off"> Terminados
+        </label>
+        
         <button onClick="graficar()" title="Graficar Circular" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#Grafica">
             <i class="fa fa-pie-chart"></i>
         </button>
@@ -237,7 +234,7 @@ var gridInstance;
 var ultimoNumeroGrid=0;
 var DataGridExcel=[];
 var origenDeDatosVista="tareas";
-
+//var valorChecking=false;
 //google.charts.load('current', {'packages':['corechart']});
 // $('tbody').sortable();
 var activeChart = -1;
@@ -320,6 +317,10 @@ estructuraGrid= [
     { name: "status_tarea", title:"Estatus", type: "select", width:150,valueField:"status_tarea",textField:"descripcion",
         items:[{"status_tarea":"1","descripcion":"En Proceso"},{"status_tarea":"2","descripcion":"Suspendido"},{"status_tarea":"3","descripcion":"Terminado"}]
     },
+//    { name: "semaforo", title:"Semaforo", type: "select", width:150,valueField:"semaforo",textField:"descripcion",
+//        items:[{"status_tarea":"1","descripcion":"En Proceso"},{"status_tarea":"2","descripcion":"Suspendido"},{"status_tarea":"3","descripcion":"Terminado"}]
+//    },
+    { name: "semaforo",title:"Semaforo", type: "text", validate: "required", width:190,editing: false},
     { name: "observaciones",title:"Observaciones", type: "textarea", width:150,},
     { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:150,editing:false },
     { name: "registrar_programa",title:"Programa", type: "text", validate: "required",width:160, editing:false },

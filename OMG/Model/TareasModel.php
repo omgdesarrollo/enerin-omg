@@ -4,7 +4,7 @@ require_once '../Model/NotificacionesModel.php';
 
 class TareasModel{
     
-    public function listarTareas()
+    public function listarTareas($checkBoxTerminados)
     {
         try
         {
@@ -13,7 +13,7 @@ class TareasModel{
             $dao=new TareasDAO();
             
             $id_empleado= $dao->obtenerEmpleadoPorIdUsuario($id_usuario['ID_USUARIO']);
-            $rec= $dao->listarTareas($id_empleado,$id_usuario['ID_USUARIO'],$contrato);
+            $rec= $dao->listarTareas($id_empleado,$id_usuario['ID_USUARIO'],$contrato,$checkBoxTerminados);
             
             foreach ($rec as $key => $value) 
             {
@@ -59,6 +59,7 @@ class TareasModel{
                 $rec[$key]["avance_programa"]=self::avanceProgramaTareas(array("id_tarea"=>$value["id_tarea"]));   
             }
             
+//            echo "valor que llega en model: ".json_encode($checkBoxTerminados);
             return $rec;            
         } catch (Exception $ex)
         {
