@@ -19,7 +19,7 @@ class TareasDAO{
             
             if($checkBoxTerminados=="false")
             {
-                $query.=" GROUP BY tbtareas.tarea";
+                $query.=" AND tbtareas.status_tarea!=3 GROUP BY tbtareas.tarea";
 //                echo "entro al if: ". json_encode($query);
             }else
             {

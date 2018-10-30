@@ -100,6 +100,12 @@ require_once 'EncabezadoUsuarioView.php';
             <input style="margin: 6px 0 0;" type="checkbox" name="" id="checkTerminados" autocomplete="off"> Terminados
         </label>
         
+<!--        <div id="tareasTerminadas"></div>    -->
+
+<!--        <button type="button" class="btn btn-success" id="tareasTerminadas"> 
+            <i class="fa-times-circle-o"></i>
+        </button>-->
+        
         <button onClick="graficar()" title="Graficar Circular" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#Grafica">
             <i class="fa fa-pie-chart"></i>
         </button>

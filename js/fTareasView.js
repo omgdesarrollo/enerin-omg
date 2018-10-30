@@ -9,7 +9,13 @@ $(function()
         valorChecking=$(this).is(':checked');
         refresh();
     });
-    
+
+//    $('#tareasTerminadas').click(function() {
+//        valorChecking=$(this).is(':checked');
+//        refresh();
+//        console.log("este es el valor: ",valorChecking);
+//    });    
+//    
     $("#TAREA").keyup(function()
     {
         var valueTarea=$(this).val();
@@ -174,7 +180,10 @@ function listarDatos()
                     $.each(data,function(index,value)
                     {
                         __datos.push(reconstruir(value,index+1));
-                    });
+                    });                    
+                    
+//                    $("#tareasTerminadas").html("Terminados");
+                    
                     DataGrid = __datos;
                     gridInstance.loadData();
                     mostrarTareasEnAlarma();
