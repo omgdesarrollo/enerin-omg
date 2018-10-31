@@ -17,9 +17,12 @@ class TareasModel{
             
             foreach ($rec as $key => $value) 
             {
+//                echo "fecha alarma: ".json_encode($value['fecha_alarma']);
                 $alarm = new Datetime($value['fecha_alarma']);
                 $alarm = strftime("%d-%B-%y",$alarm -> getTimestamp());
                 $alarm = new Datetime($alarm);
+                
+//                echo "fecha alarma: ".json_encode($alarm);
 
                 $flimite = new Datetime($value['fecha_cumplimiento']);// Guarda en una variable la fecha de la base de datos
                 $flimite = strftime("%d-%B-%y",$flimite -> getTimestamp());// Esta da el formato: dia. mes y año, sin guardar las horas 
