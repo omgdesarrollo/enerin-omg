@@ -221,7 +221,7 @@ and open the template in the editor.
     /*max-height: 90%;*/
 }
 
- .modal-lg{width: 50%;}
+ .modal-lg{width: 100%;}
 
 #mydiv {
     position: absolute;
@@ -430,14 +430,14 @@ function dragElement(elmnt) {
 		      </div>
 
 		      <div class="modal-body">
-                          <div class="form-group">
-                            <label class="control-label" for="title">Notas</label>
-                            <textarea  id="notas" class="form-control" data-error="Ingrese las notas" required></textarea>
                           
+                          <div id="seccionNotas">
+                              
+                              
                           </div>
-                         
                           
-                        
+
+
                            <!--<div id="tree-list">-->
 <!--                             <div id="dx"></div>-->
                             <!--</div>-->
@@ -446,7 +446,7 @@ function dragElement(elmnt) {
                         <!--<div id=""></div>-->
                       </div><!-- cierre div class-body -->
                 </div><!-- cierre div class modal-content -->
-                <button id="btnenviarnotas" class="btn btn-info">Enviar Nota</button>
+                <!--<button id="btnenviarnotas" class="btn btn-info">Enviar Nota</button>-->
                 
                 
         </div><!-- cierre div class="modal-dialog" -->
@@ -1258,7 +1258,16 @@ dp.init(gantt);
                                 }
                            break;
                            case "notas":
-                                window.open("Ganttnotastipochat.php",'_blank');
+                                $('#edicionNotas').draggable();
+//                                window.open("Ganttnotastipochat.php",'_blank');
+                                 $('#edicionNotas').modal({
+                                    show: 'true'
+                                 });
+//                                 $("#seccionNotas").load("Ganttnotastipochat.php");
+                                    $("#seccionNotas").html('<iframe src="Ganttnotastipochat.php" width="100%" height="100%"></iframe>');
+//                                   $("#sidebarObjV").load('InyectarVistasView.php #temas');
+                                
+                                
                            break;
                           
                            case "refresh":
