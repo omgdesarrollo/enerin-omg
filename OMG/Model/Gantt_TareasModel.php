@@ -1038,5 +1038,43 @@ class Gantt_TareasModel{
             return -1;
         }        
     }
-   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    public function notasHistoricas($data){
+      
+        $contrato= Session::getSesion("s_cont");
+        $id_usuario=Session::getSesion("user")["ID_USUARIO"];
+        $id_tarea_general_externa=Session::getSesion("dataGantt_id_tarea");
+        try{
+         $dao=new Gantt_TareaDao(); 
+         return $dao->notasHistoricas(array("id_usuario"=>$id_usuario,"id_tarea_general_externa"=>$id_tarea_general_externa,"id_tarea_gantt_actividad"=>$data["idactividad"]));   
+       
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+    }
+    
+    public function insertarNotasHistoricas($values)
+    {
+        try
+        {
+            $dao=new Gantt_TareaDao();
+            $rec= $dao->insertarNotasHistoricas($values);
+            
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 }

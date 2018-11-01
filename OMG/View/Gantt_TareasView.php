@@ -133,7 +133,7 @@ and open the template in the editor.
     <script src="https://cdn3.devexpress.com/jslib/18.1.6/js/dx.all.js"></script>
     <link href="../../css/PersonalizacionVistasGantt.css" rel="stylesheet" type="text/css"/>
     <!--aqui termina las librerias que no son del gantt-->
-    
+    <!--<link href="../../css/notasgantt.css" rel="stylesheet" type="text/css"/>-->
     
    
  <style type="text/css">
@@ -306,8 +306,13 @@ and open the template in the editor.
   </div>
 
 
- <div class="" id="gantt_here" style='width: 100%;height: 95%;position: absolute'>       </div>
-   
+
+ <div class="" id="gantt_here" style='width: 100%;height: 95%;position: absolute'> 
+ </div>
+
+ 
+ 
+ 
     
 <script>
 //Make the DIV element draggagle:
@@ -355,7 +360,7 @@ function dragElement(elmnt) {
 }
 </script>
 
-    </body>
+  
     
 <!-- Inicio de Seccion Modal Archivos-->
 <div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -425,15 +430,25 @@ function dragElement(elmnt) {
 		      </div>
 
 		      <div class="modal-body">
-                    
+                          <div class="form-group">
+                            <label class="control-label" for="title">Notas</label>
+                            <textarea  id="notas" class="form-control" data-error="Ingrese las notas" required></textarea>
+                          
+                          </div>
+                         
+                          
+                        
                            <!--<div id="tree-list">-->
 <!--                             <div id="dx"></div>-->
                             <!--</div>-->
-                          <div id="tabPanel"></div>
+                          <!--<div id="tabPanel"></div>-->
                                 <!--<div sty></div>-->
                         <!--<div id=""></div>-->
                       </div><!-- cierre div class-body -->
                 </div><!-- cierre div class modal-content -->
+                <button id="btnenviarnotas" class="btn btn-info">Enviar Nota</button>
+                
+                
         </div><!-- cierre div class="modal-dialog" -->
 </div><!-- cierre del modal -->
 
@@ -735,9 +750,20 @@ var banderaIngresarElPrimerResponsable=true;
                        }
                        else{
                             if(item.manipulacion_tarea=="false"){
+                               
                                 if(elpadrecoincideConElUsuarioLogeado==false){
-                                    gantt.getTask(id).readonly = true;
+                                      gantt.getTask(id).readonly = true;
+                                        
+                                }else{
+                                    if(item.user==0){
+                                        gantt.getTask(id).readonly = false;
+                                      }else{
+//                                          gantt.getTask(id).readonly = true;
+                                      }
+                                    
                                 }
+                              
+                                
                               
                          }
                        }
@@ -1133,8 +1159,32 @@ dp.init(gantt);
     var banderaPrincipioCheckeoParent=true;
     var elpadrecoincideConElUsuarioLogeado=false;
     $(function (){
-       
-       
+      
+      
+//      var db = firebase.database();  
+//       db.ref('notasgantttareas-temas').on('child_added', function(data){
+//            console.log(data.val());
+//       });
+      
+      
+      
+      
+//       $('#btnenviarnotas').on('click', function(){
+//            console.log("Funciona!");
+//            var notas=$("#notas").val();
+//            console.log(notas);
+////            set es para actualizar
+//            db.ref('notasgantttareas-temas').push({
+//             id:"2536253625",
+//             id_padre_de_todas_las_tareas_de_gantt:"2",
+//             notas:notas,
+//             origendequegantt:"temas",
+//             responsable:"2"
+//            });
+//            
+//        });
+        
+        
        cargarMenuArriba();
         var myToolbar;
 		function cargarMenuArriba() {
@@ -1395,7 +1445,10 @@ construirTreeList();
         onCellClick:(args)=>{
             
 //            alert();
-//            $("#edicionNotas").show();
+//            $("#edicionNotas").modal("show");
+window.open("Ganttnotastipochat.php",'_blank');
+
+
         }
         ,
         onRowUpdated:function (args){
@@ -1759,6 +1812,28 @@ construirTreeList();
   </script>
   
   
+  
+<!--<script src="https://www.gstatic.com/firebasejs/5.5.5/firebase.js"></script>-->
+<script>
+  // Initialize Firebase
+//  var config = {
+//    apiKey: "AIzaSyAhszpIRh8BBXtzSbu1yhGziYX-uT5pPak",
+//    authDomain: "notasgantttareas-temas.firebaseapp.com",
+//    databaseURL: "https://notasgantttareas-temas.firebaseio.com",
+//    projectId: "notasgantttareas-temas",
+//    storageBucket: "notasgantttareas-temas.appspot.com",
+//    messagingSenderId: "1061411526028"
+//  };
+//  firebase.initializeApp(config);
+</script>
+  
+  
+  
+  
+  
+  
+  
+    </body> 
   <script id="template-upload" type="text/x-tmpl">
         {% for (var i=0, file; file=o.files[i]; i++) { %}
         <tr class="template-upload" style="width:100%">

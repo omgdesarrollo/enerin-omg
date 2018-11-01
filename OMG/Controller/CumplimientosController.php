@@ -17,7 +17,12 @@ $usuarioPojo= new UsuarioPojo();
 
 switch ($Op) {
 	case 'Listar':
+            $lista;
+            if(isset($_REQUEST["ID_USUARIO"])){
 		$lista = $model->listarCumplimientos($_REQUEST["ID_USUARIO"]);
+            }else{
+                $lista=-1;
+            }
 		// foreach($lista as $key=>$value)
 		// {
 		// 	foreach($value as $key2=>$value2)
@@ -37,9 +42,12 @@ switch ($Op) {
 		break;
                 
 	case 'obtenerContrato':
-            
+            $lista;
+            if(isset(Session::getSesion("user")["ID_USUARIO"]))
 		$lista=$model->obtenerContratosPorUsuarioPermiso(Session::getSesion("user")["ID_USUARIO"]);
-		header('Content-type: application/json; charset=utf-8');
+            else
+                $lista=-1;
+            header('Content-type: application/json; charset=utf-8');
 		// foreach($lista as $key=>$value)
 		// {
 		// 	foreach($value as $key2=>$val)
