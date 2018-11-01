@@ -11,7 +11,6 @@
                 <link href="../../assets/firebase/css/style.css" rel="stylesheet" type="text/css"/>
                 
                 <style type="text/css">
-                    
                     .heading {
                         background-color: #006699;
                     }
