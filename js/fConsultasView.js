@@ -237,14 +237,19 @@ function reconstruirExcelDetalles(value,index)
                     tempData["Evidencias por Cumplir"] += "<li>"+EvidenciasPorCumplir+"</li>"; 
                 }else{
                     
-                    if(val2.frecuencia=="POR EVENTO" && val2.evidencias_totales==0)
+//                    if(val2.frecuencia=="POR EVENTO" && val2.evidencias_totales==0)
+//                    {
+//                        tempData["Evidencias por Cumplir"] += "<li>"+0+"</li>";                    
+//                    }else{
+//                        if(val2.frecuencia=="POR EVENTO" && val2.evidencias_totales!=0)
+//                        {
+//                            tempData["Evidencias por Cumplir"] += "<li>"+val2.evidencias_totales+"</li>";
+//                        }
+//                    }
+                    
+                    if(val2.frecuencia=="POR EVENTO")
                     {
-                        tempData["Evidencias por Cumplir"] += "<li>"+0+"</li>";                    
-                    }else{
-                        if(val2.frecuencia=="POR EVENTO" && val2.evidencias_totales!=0)
-                        {
-                            tempData["Evidencias por Cumplir"] += "<li>"+val2.evidencias_totales+"</li>";
-                        }
+                        tempData["Evidencias por Cumplir"] += "<li>"+1+"</li>";                    
                     }
                     
                     if(val2.frecuencia=="INDEFINIDO" && val2.evidencias_proceso==0)

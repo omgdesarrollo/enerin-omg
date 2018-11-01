@@ -1,5 +1,21 @@
+
+var valorChecking="false";
+//noCheck = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true'></i>";
+//yesCheck = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true'></i>";
+
 $(function()
 {
+    $('#checkTerminados').click(function() {
+        valorChecking=$(this).is(':checked');
+        refresh();
+    });
+
+//    $('#tareasTerminadas').click(function() {
+//        valorChecking=$(this).is(':checked');
+//        refresh();
+//        console.log("este es el valor: ",valorChecking);
+//    });    
+//    
     $("#TAREA").keyup(function()
     {
         var valueTarea=$(this).val();
@@ -114,17 +130,31 @@ function inicializarFiltros()
                 {id:"referencia",type:"text"},
                 {id:"tarea",type:"text"},
                 {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
-                {id:"fecha_creacion",type:"date"},
+//                {id:"fecha_creacion",type:"date"},
                 {id:"fecha_alarma",type:"date"},
                 {id:"fecha_cumplimiento",type:"date"},
-                {id:"status_tarea",type: "combobox",descripcion:"descripcion",
-                    data:[{"status_tarea":"1","descripcion":"En Proceso"},{"status_tarea":"2","descripcion":"Suspendido"},{"status_tarea":"3","descripcion":"Terminado"}]
+//                {id:"status_tarea",type: "combobox",descripcion:"descripcion",
+//                    data:[{"status_tarea":"1","descripcion":"En Proceso"},{"status_tarea":"2","descripcion":"Suspendido"},{"status_tarea":"3","descripcion":"Terminado"}]
+//                },
+                {id:"status_grafica",type: "combobox",descripcion:"descripcion",
+                    data:[
+                            {"status_grafica":"Alarma vencida","descripcion":"AL"},
+                            {"status_grafica":"En tiempo","descripcion":"EP"},
+                            {"status_grafica":"Suspendido","descripcion":"SP"},
+                            {"status_grafica":"Terminado","descripcion":"TR"},
+                            {"status_grafica":"Tiempo vencido","descripcion":"TV"},
+                        ]
                 },
-                {id:"observaciones",type:"text"},
-                {id:"archivo_adjunto",type:"text"},
-                {id:"registrar_programa",type:"text"},
-                {id:"avance_programa",type:"text"},
+
                 {id:"noneDos",type:"none"},
+//                {id:"observaciones",type:"text"},
+//                {id:"archivo_adjunto",type:"text"},
+//                {id:"registrar_programa",type:"text"},
+//                {id:"avance_programa",type:"text"},
+                
+                {id:"noneTres",type:"none"},
+                {id:"noneCuatro",type:"none"},
+                {id:"noneCinco",type:"none"},
                 {name:"opcion",id:"opcion",type:"opcion"}
         ];
         resolve();
@@ -137,13 +167,13 @@ function listarDatos()
 {
     return new Promise((resolve,reject)=>
     {
-        
-    
+//        console.log("valor del check en listarDatos: ",valorChecking);    
         var __datos=[];
         $.ajax(
         {
             url:"../Controller/TareasController.php?Op=Listar&URL=Tareas/",
             type:"GET",
+            data:"VALOR="+valorChecking,
             beforeSend:function()
             {
                 growlWait("Solicitud","Solicitando Datos...");
@@ -157,9 +187,14 @@ function listarDatos()
                     $.each(data,function(index,value)
                     {
                         __datos.push(reconstruir(value,index+1));
-                    });
+                    });                    
+                    
+//                    $("#tareasTerminadas").html("Terminados");
+                    
                     DataGrid = __datos;
                     gridInstance.loadData();
+                    mostrarTareasEnAlarma();
+                    mostrarTareasVencidas();
                     resolve();
                     
                 }else{
@@ -188,11 +223,35 @@ function reconstruir(value,index)
     tempData["tarea"]=value.tarea;
     tempData["id_empleado"]=value.id_empleado;
 //    tempData["fecha_creacion"]= getSinFechaFormato(value.fecha_creacion);
-    tempData["fecha_creacion"]= getFechaFormatoH(value.fecha_creacion);
     tempData["fecha_alarma"]= getSinFechaFormato(value.fecha_alarma);
     tempData["fecha_cumplimiento"]= getSinFechaFormato(value.fecha_cumplimiento);
-    tempData["status_tarea"]=value.status_tarea;
-    tempData["observaciones"]=value.observaciones;
+
+    tempData["status_tarea"]= value.status_tarea;
+    tempData["fecha_al"]= value.fecha_alarma;
+    tempData["fecha_cump"]= value.fecha_cumplimiento;
+        
+    tempData["semaforo"]="";
+    if(value.status_tarea==1 && value.status_grafica=="En tiempo")
+    {
+        tempData["semaforo"]+="<span title='En Proceso' class='green'>.</span>";
+    }
+    if(value.status_tarea==1 && value.status_grafica=="Alarma vencida")
+    {
+        tempData["semaforo"]+="<span title='En Alarma' class='orange'>.</span>";
+    }
+    if(value.status_tarea==1 && value.status_grafica=="Tiempo vencido")
+    {
+        tempData["semaforo"]+="<span title='Tiempo Vencido' class='red'>.</span>";
+    }
+    if(value.status_tarea==2)
+    {
+        tempData["semaforo"]+="<span title='Suspendido' class='yellow'>.</span>";
+    }
+    if(value.status_tarea==3)
+    {
+        tempData["semaforo"]+="<span title='Terminado'  class='blue'>.</span>";
+    }
+    tempData["observaciones"]=value.observaciones; 
     if(value.archivosUpload[0].length==0)
     {
         tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_tarea+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
@@ -229,18 +288,18 @@ function reconstruirExcel(value,index)
     tempData["Fecha de Creacion"]= getSinFechaFormato(value.fecha_creacion);
     tempData["Fecha Alarma"]= getSinFechaFormato(value.fecha_alarma);
     tempData["Fecha de Cumplimiento"]= getSinFechaFormato(value.fecha_cumplimiento);
-    if(value.status_tarea==1)
-    {
+    
+    if(value.status_tarea==1 && value.status_grafica=="En tiempo")
         tempData["Status"]="En Proceso";
-    }
+    if(value.status_tarea==1 && value.status_grafica=="Alarma vencida")
+        tempData["Status"]="En Alarma";
+    if(value.status_tarea==1 && value.status_grafica=="Tiempo vencido")
+        tempData["Status"]="Tiempo Vencido";
     if(value.status_tarea==2)
-    {
         tempData["Status"]="Suspendido";
-    }
     if(value.status_tarea==3)
-    {
         tempData["Status"]="Terminado";
-    }
+    
     tempData["Observaciones"]=value.observaciones;
     
     if(value.archivosUpload[0].length==0)
@@ -346,6 +405,7 @@ function saveUpdateToDatabase(args)//listo
     statusTemaAnterior=args["previousItem"]["status_tarea"];
     tarea=args["item"]["tarea"];
     verificar = 0;
+//    console.log("Este es el id: ",id_afectado);
     $.each(args['item'],(index,value)=>
     {
             if(args['previousItem'][index]!=value && value!="")
@@ -387,8 +447,8 @@ function saveUpdateToDatabase(args)//listo
                             
                             if(statusTemaActual!=statusTemaAnterior)
                             {
-                                enviarNotificacionWhenCambioDeStatus(id_empleadoActual,tarea,statusTemaActual);
-                                console.log("status: ",statusTemaActual);
+                                enviarNotificacionWhenCambioDeStatus(id_empleadoActual,tarea,statusTemaActual,id_afectado.id_tarea);
+//                                console.log("status: ",statusTemaActual);
                             }
                         }
 
@@ -833,12 +893,12 @@ function enviarNotificacionWhenUpdate(id_empleado,tarea)
         });
 }
 
-function enviarNotificacionWhenCambioDeStatus(id_empleado,tarea,status_tarea)
+function enviarNotificacionWhenCambioDeStatus(id_empleado,tarea,status_tarea,id_tarea)
 
 {
         $.ajax({
             url:"../Controller/TareasController.php?Op=enviarNotificacionWhenCambioDeStatus",
-            data: "ID_EMPLEADO="+id_empleado+"&TAREA="+tarea+"&STATUS_TAREA="+status_tarea,
+            data: "ID_EMPLEADO="+id_empleado+"&TAREA="+tarea+"&STATUS_TAREA="+status_tarea+"&ID_TAREA="+id_tarea,
             success:function(response)
             {
             
@@ -906,7 +966,7 @@ function enviarNotificacionWhenDeleteTarea(id_empleadoActual,tarea)
  function mostrarTareasEnAlarma()
  {
      $.ajax({
-         url:"../Controller/NotificacionesTareasController.php?Op=tareasEnAlarma",
+         url:"../Controller/TareasController.php?Op=tareasEnAlarma",
          type:"GET",
          success:function()
          {
@@ -919,7 +979,7 @@ function enviarNotificacionWhenDeleteTarea(id_empleadoActual,tarea)
   function mostrarTareasVencidas()
  {
      $.ajax({
-         url:"../Controller/NotificacionesTareasController.php?Op=tareasVencidas",
+         url:"../Controller/TareasController.php?Op=tareasVencidas",
          type:"GET",
          success:function()
          {

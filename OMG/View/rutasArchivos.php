@@ -1,6 +1,7 @@
 <?php
-    $urls["fisica"] = "C:xampp/htdocs/enerin-omg/archivos/";
 //     $urls["logica"] = $_SERVER['HTTP_HOST']."/enerin-omg/archivos/";
+
+    $urls["fisica"] = "C:xampp/htdocs/enerin-omg/archivos/";
     $urls["logica"] = "../../../enerin-omg/archivos/";
 
 //    echo "onter ".$_SERVER["REQUEST_URI"];

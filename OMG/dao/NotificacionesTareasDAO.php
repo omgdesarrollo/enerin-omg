@@ -3,24 +3,7 @@ require_once '../ds/AccesoDB.php';
 
 class NotificacionesTareasDAO{
     
-    public function tareasEnAlarma()
-    {
-        try
-        {
-            $query="SELECT tbtareas.tarea, tbtareas.id_empleado
-                    FROM tareas tbtareas
-                    WHERE tbtareas.fecha_alarma<=CURDATE() AND tbtareas.status_tarea=1";
-            
-            $db=  AccesoDB::getInstancia();
-            $lista=$db->executeQuery($query);
 
-            return $lista;    
-        } catch (Exception $ex)
-        {
-            throw $ex;
-            return -1;
-        }
-    }
     
     
     

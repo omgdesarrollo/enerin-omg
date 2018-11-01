@@ -3,33 +3,11 @@ require_once '../ds/AccesoDB.php';
 
 class TareasDAO{
     
-
-//    public function listarTareas()
-//    {
-//        try
-//        {
-//            $query="SELECT tbtareas.id_tarea, tbtareas.referencia, tbtareas.tarea, tbtareas.fecha_creacion, tbtareas.fecha_alarma,
-//                    tbtareas.fecha_cumplimiento, tbtareas.status_tarea, tbtareas.observaciones, tbtareas.existe_programa,tbtareas.avance_programa,		 
-//                    tbempleados.id_empleado, CONCAT(tbempleados.nombre_empleado,' ', tbempleados.apellido_paterno,' ', tbempleados.apellido_materno) AS nombre_completo
-//                    FROM tareas tbtareas
-//                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbtareas.id_empleado";
-//            
-//            $db=  AccesoDB::getInstancia();
-//            $lista=$db->executeQuery($query);
-//
-//            return $lista;
-//            
-//        } catch (Exception $ex)
-//        {
-//            throw $ex;
-//            return -1;
-//        }
-//    }
     
-    public function listarTareas($id_empleado,$id_usuario,$cumplimiento)
+    public function listarTareas($id_empleado,$id_usuario,$cumplimiento,$checkBoxTerminados)
     {
         try
-        {
+        {            
             $query="SELECT tbtareas.id_tarea, tbtareas.referencia, tbtareas.tarea, tbtareas.fecha_creacion, tbtareas.fecha_alarma,
                     tbtareas.fecha_cumplimiento, tbtareas.status_tarea, tbtareas.observaciones, tbtareas.existe_programa,
                     tbtareas.avance_programa, tbempleados.id_empleado, CONCAT(tbempleados.nombre_empleado,' ', tbempleados.apellido_paterno,' ', tbempleados.apellido_materno) 
@@ -37,14 +15,25 @@ class TareasDAO{
                     FROM tareas tbtareas
                     LEFT JOIN empleados tbempleados ON tbempleados.id_empleado=tbtareas.id_empleado                  
                     LEFT JOIN gantt_tareas tbgantt_tareas ON tbgantt_tareas.id_tarea=tbtareas.id_tarea                    
-                    WHERE (tbtareas.id_empleado=$id_empleado OR tbtareas.creador_tarea=$id_usuario OR tbgantt_tareas.user=$id_empleado) and tbtareas.cumplimiento=$cumplimiento  GROUP BY tbtareas.tarea";
+                    WHERE (tbtareas.id_empleado=$id_empleado OR tbtareas.creador_tarea=$id_usuario OR tbgantt_tareas.user=$id_empleado) AND tbtareas.cumplimiento=$cumplimiento";
+            
+            if($checkBoxTerminados=="false")
+            {
+                $query.=" AND tbtareas.status_tarea!=3 GROUP BY tbtareas.tarea";
+//                echo "entro al if: ". json_encode($query);
+            }else
+            {
+                if($checkBoxTerminados=="true")
+                {
+                    $query.=" AND tbtareas.status_tarea=3 GROUP BY tbtareas.tarea";
+//                    echo "entro al else: ". json_encode($query);
+                }
+            }
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
 
-//            echo "Este es el Query: ".json_encode($query);
-            return $lista;
-            
+            return $lista;            
         } catch (Exception $ex)
         {
             throw $ex;
@@ -242,8 +231,86 @@ class TareasDAO{
       }
     }
     
+//    SECCION NOTIFICACIONES 
+    public function tareasEnAlarma()
+    {
+        try
+        {
+            $query="SELECT tbtareas.id_tarea, tbtareas.tarea, tbtareas.id_empleado
+                    FROM tareas tbtareas
+                    WHERE tbtareas.fecha_alarma<=CURDATE() AND tbtareas.fecha_cumplimiento>CURDATE() AND tbtareas.status_tarea=1";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista;    
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
     
-//    public function 
+    public function veriricarSiYaExisteLaNotificacion($MENSAJE)
+    {
+        try
+        {
+            $query="SELECT COUNT(*) AS resultado
+                    FROM notificaciones tbnotificaciones
+                    WHERE tbnotificaciones.mensaje = '$MENSAJE'";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            
+//            echo "este es el query resultado: ".json_encode($query);
+            return $lista[0]['resultado'];
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    public function obtenerResponsablePlanTareaPadre($id_tarea)
+    {
+        try 
+        {
+            $query="SELECT tbgantt_tareas.user,tbgantt_tareas.fecha_creado 
+                    FROM gantt_tareas tbgantt_tareas
+                    WHERE fecha_creado  = (SELECT MIN(fecha_creado)FROM gantt_tareas WHERE gantt_tareas.id_tarea=$id_tarea)";
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+            
+//            echo "este es el query resultado: ".json_encode($query);
+            return $lista[0]['user'];            
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    
+    public function tareasVencidas()
+    {
+        try
+        {
+            $query="SELECT tbtareas.id_tarea, tbtareas.tarea, tbtareas.id_empleado
+                    FROM tareas tbtareas
+                    WHERE tbtareas.fecha_cumplimiento <= CURDATE() AND tbtareas.status_tarea = 1";
+            
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
+
+            return $lista;            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+
 }
 
 ?>
