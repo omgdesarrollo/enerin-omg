@@ -221,8 +221,8 @@ and open the template in the editor.
     /*max-height: 90%;*/
 }
 
- .modal-lg{width: 100%;}
-
+ .modal-lg{width: 80%;}
+ .modal-body{position:relative;padding:0px}
 #mydiv {
     position: absolute;
     z-index: 9;
@@ -430,21 +430,16 @@ function dragElement(elmnt) {
 		      </div>
 
 		      <div class="modal-body">
-                          
-                          <div id="seccionNotas">
-                              
-                              
-                          </div>
-                          
+                        <div id="seccionNotas" style="">
 
 
-                           <!--<div id="tree-list">-->
-<!--                             <div id="dx"></div>-->
-                            <!--</div>-->
-                          <!--<div id="tabPanel"></div>-->
-                                <!--<div sty></div>-->
-                        <!--<div id=""></div>-->
-                      </div><!-- cierre div class-body -->
+                        </div>
+                       </div>
+<!--                     <div id="seccionNotas" style="">
+
+
+                        </div>-->
+                          
                 </div><!-- cierre div class modal-content -->
                 <!--<button id="btnenviarnotas" class="btn btn-info">Enviar Nota</button>-->
                 

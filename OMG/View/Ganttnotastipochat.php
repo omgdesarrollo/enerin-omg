@@ -25,8 +25,8 @@
                 </style>
 	</head>
 	<body>
-		<div class="container" id="chat-realtime">
-		
+		<!--<div class="container" id="chat-realtime">-->
+		<div class="" id="chat-realtime">
 			<div class="row app-one">
 					<div class="col-sm-4 side">
 						<div class="side-one">
