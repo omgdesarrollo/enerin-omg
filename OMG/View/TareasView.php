@@ -33,6 +33,7 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../assets/chart/loader.js" type="text/javascript"></script>
                 <!--Libreria web, para grafica-->
                 <!--<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>-->
+                
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
@@ -71,6 +72,79 @@ $Usuario=  Session::getSesion("user");
             .modal-lg{width: 60%;}
             .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
             body{overflow:hidden;}
+            
+            /*semaforo*/
+            .semaforoYellow {
+              background: #FFFF00;
+              border-radius: 0.8em;
+              -moz-border-radius: 0.8em;
+              -webkit-border-radius: 0.8em;
+              color: #FFFF00;
+              display: inline-block;
+              font-weight: bold;
+              line-height: 2.5em;
+              margin-right: 15px;
+              text-align: center;
+              width: 2.5em; 
+            }
+
+            .semaforoOrange {
+              background: #FFA500;
+              border-radius: 0.8em;
+              -moz-border-radius: 0.8em;
+              -webkit-border-radius: 0.8em;
+              color: #FFA500;
+              display: inline-block;
+              font-weight: bold;
+              line-height: 2.5em;
+              margin-right: 15px;
+              text-align: center;
+              width: 2.5em; 
+            }/*
+
+*/          .semaforoBlue {
+              background: #5178D0;
+              border-radius: 0.8em;
+              -moz-border-radius: 0.8em;
+              -webkit-border-radius: 0.8em;
+              color: #5178D0;
+              display: inline-block;
+              font-weight: bold;
+              line-height: 2.5em;
+              margin-right: 15px;
+              text-align: center;
+              width: 2.5em; 
+            }
+            
+            /*
+
+*/          .semaforoGreen {
+              background: #5EA226;
+              border-radius: 0.8em;
+              -moz-border-radius: 0.8em;
+              -webkit-border-radius: 0.8em;
+              color: #5EA226;
+              display: inline-block;
+              font-weight: bold;
+              line-height: 2.5em;
+              margin-right: 15px;
+              text-align: center;
+              width: 2.5em; 
+            }
+
+            .semaforoRed {
+              background: red;
+               border-radius: 0.8em;
+              -moz-border-radius: 0.8em;
+              -webkit-border-radius: 0.8em;
+              color: red;
+              display: inline-block;
+              font-weight: bold;
+              line-height: 2.5em;
+              margin-right: 15px;
+              text-align: center;
+              width: 2.5em; 
+            }
         </style>              
                 
  			 
@@ -232,7 +306,6 @@ require_once 'EncabezadoUsuarioView.php';
 <script>
 var DataGrid = [];
 var dataListado = [];
-//EmpleadosCombobox=[];
 var thisEmpleados=[];
 var filtros=[];
 var db={};
@@ -245,13 +318,6 @@ var activeChart = -1;
 var chartsCreados = [];
 var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)},(dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)}];
 
-var statusData = [
-    {status:"AL"},
-    {status:"EP"},
-    {status:"SP"},
-    {status:"TV"},
-    {status:"TR"}                
-];
 
 var MyComboEmpleados = function(config)
 {
@@ -459,7 +525,8 @@ inicializarFiltros().then((resolve)=>
 (error)=>
 {
     growlError("Error!","Error al construir la vista, recargue la página");
-}); 
+});
+
 </script>
 
 

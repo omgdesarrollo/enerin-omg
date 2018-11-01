@@ -2,9 +2,10 @@
 require_once '../ds/AccesoDB.php';
 class CumplimientoDAO{
     //consulta los datos de un empleado por su nombre de usuario
-    public function mostrarCumplimientos($ID_USUARIO){
-        try{
-                        //$query="SELECT ID_CUMPLIMIENTO, CLAVE_CUMPLIMIENTO, CUMPLIMIENTO FROM CUMPLIMIENTOS";
+    public function mostrarCumplimientos($ID_USUARIO)
+    {
+        try
+        {
             $query="SELECT tbcumplimientos.id_cumplimiento, tbcumplimientos.clave_cumplimiento, 
                 tbcumplimientos.cumplimiento,tbusuarios_cumplimientos.acceso
                 FROM cumplimientos tbcumplimientos
@@ -14,12 +15,31 @@ class CumplimientoDAO{
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             
+            return $lista;
+        }  catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    public function mostrarCumplimiento($ID_CUMPLIMIENTO)
+    {
+        try
+        {
+            $query="SELECT tbcumplimientos.id_cumplimiento, tbcumplimientos.clave_cumplimiento, 
+                    tbcumplimientos.cumplimiento
+                    FROM cumplimientos tbcumplimientos
+                    WHERE tbcumplimientos.id_cumplimiento=$ID_CUMPLIMIENTO";
+            $db=  AccesoDB::getInstancia();
+            $lista=$db->executeQuery($query);
 
             return $lista;
-    }  catch (Exception $ex){
-        //throw $rec;
-        throw $ex;
-    }
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
     }
     
     public function mostrarCumplimientosComboBox(){

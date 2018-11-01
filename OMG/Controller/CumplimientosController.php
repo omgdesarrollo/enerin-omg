@@ -17,21 +17,18 @@ $usuarioPojo= new UsuarioPojo();
 
 switch ($Op) {
 	case 'Listar':
-            $lista;
-            if(isset($_REQUEST["ID_USUARIO"])){
-		$lista = $model->listarCumplimientos($_REQUEST["ID_USUARIO"]);
-            }else{
-                $lista=-1;
-            }
-		// foreach($lista as $key=>$value)
-		// {
-		// 	foreach($value as $key2=>$value2)
-		// 		$lista[$key][$key2] = utf8_encode($value2);
-		// }
+                $ID_USUARIO= Session::getSesion("user")["ID_USUARIO"];
+//                $lista = $model->listarCumplimientos($_REQUEST["ID_USUARIO"]);
+                $lista = $model->listarCumplimientos($ID_USUARIO);
 		header('Content-type: application/json; charset=utf-8');
 		echo json_encode($lista);
 		break;
-                
+            
+        case 'ListarCumplimiento':
+                $lista = $model->listarCumplimiento($_REQUEST['ID_CUMPLIMIENTO']);
+		header('Content-type: application/json; charset=utf-8');
+		echo json_encode($lista);
+		break;        
                 
         case 'mostrarcombo':
 		$Lista=$model->listarCumplimientosComboBox();

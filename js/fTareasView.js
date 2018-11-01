@@ -233,23 +233,23 @@ function reconstruir(value,index)
     tempData["semaforo"]="";
     if(value.status_tarea==1 && value.status_grafica=="En tiempo")
     {
-        tempData["semaforo"]+="<span title='En Proceso' class='green'>.</span>";
+        tempData["semaforo"]+="<span title='En Proceso' class='semaforoGreen'>.</span>";
     }
     if(value.status_tarea==1 && value.status_grafica=="Alarma vencida")
     {
-        tempData["semaforo"]+="<span title='En Alarma' class='orange'>.</span>";
+        tempData["semaforo"]+="<span title='En Alarma' class='semaforoOrange'>.</span>";
     }
     if(value.status_tarea==1 && value.status_grafica=="Tiempo vencido")
     {
-        tempData["semaforo"]+="<span title='Tiempo Vencido' class='red'>.</span>";
+        tempData["semaforo"]+="<span title='Tiempo Vencido' class='semaforoRed'>.</span>";
     }
     if(value.status_tarea==2)
     {
-        tempData["semaforo"]+="<span title='Suspendido' class='yellow'>.</span>";
+        tempData["semaforo"]+="<span title='Suspendido' class='semaforoYellow'>.</span>";
     }
     if(value.status_tarea==3)
     {
-        tempData["semaforo"]+="<span title='Terminado'  class='blue'>.</span>";
+        tempData["semaforo"]+="<span title='Terminado'  class='semaforoBlue'>.</span>";
     }
     tempData["observaciones"]=value.observaciones; 
     if(value.archivosUpload[0].length==0)
