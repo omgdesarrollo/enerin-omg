@@ -21,77 +21,7 @@ body{overflow:hidden;}
 
 /*scrollbar*/
 ::-webkit-scrollbar{width: 8px;}
-::-webkit-scrollbar-track{/* background-color: blue; */}
+/*::-webkit-scrollbar-track{ background-color: blue; }*/
 ::-webkit-scrollbar-thumb{background-color: #438eb9;border-radius:20px;}
 ::-webkit-scrollbar-corner{background-color: #e4e6e9;}
 
-/*semaforo*/
-span.yellow {
-  background: #FFFF00;
-  border-radius: 0.8em;
-  -moz-border-radius: 0.8em;
-  -webkit-border-radius: 0.8em;
-  color: #FFFF00;
-  display: inline-block;
-  font-weight: bold;
-  line-height: 2.5em;
-  /*margin-right: 15px;*/
-  text-align: center;
-  width: 2.5em; 
-}
-
-span.orange {
-  background: #FFA500;
-  border-radius: 0.8em;
-  -moz-border-radius: 0.8em;
-  -webkit-border-radius: 0.8em;
-  color: #FFA500;
-  display: inline-block;
-  font-weight: bold;
-  line-height: 2.5em;
-  /*margin-right: 15px;*/
-  text-align: center;
-  width: 2.5em; 
-}
-
-span.blue {
-  background: #5178D0;
-  border-radius: 0.8em;
-  -moz-border-radius: 0.8em;
-  -webkit-border-radius: 0.8em;
-  color: #5178D0;
-  display: inline-block;
-  font-weight: bold;
-  line-height: 2.5em;
-  /*margin-right: 15px;*/
-  text-align: center;
-  width: 2.5em; 
-}
-
-span.green {
-  background: #5EA226;
-  border-radius: 0.8em;
-  -moz-border-radius: 0.8em;
-  -webkit-border-radius: 0.8em;
-  color: #5EA226;
-  display: inline-block;
-  font-weight: bold;
-  line-height: 2.5em;
-  /*margin-right: 15px;*/
-  text-align: center;
-  width: 2.5em; 
-}
-
-span.red {
-  background: red;
-   border-radius: 0.8em;
-  -moz-border-radius: 0.8em;
-  -webkit-border-radius: 0.8em;
-  color: red;
-  display: inline-block;
-  font-weight: bold;
-  line-height: 2.5em;
-  /*margin-right: 15px;*/
-  text-align: center;
-  width: 2.5em; 
-}

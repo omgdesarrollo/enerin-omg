@@ -17,7 +17,9 @@ $usuarioPojo= new UsuarioPojo();
 
 switch ($Op) {
 	case 'Listar':
-		$lista = $model->listarCumplimientos($_REQUEST["ID_USUARIO"]);
+                $ID_USUARIO= Session::getSesion("user")["ID_USUARIO"];
+//                $lista = $model->listarCumplimientos($_REQUEST["ID_USUARIO"]);
+                $lista = $model->listarCumplimientos($ID_USUARIO);
 		// foreach($lista as $key=>$value)
 		// {
 		// 	foreach($value as $key2=>$value2)
