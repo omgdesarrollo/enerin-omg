@@ -606,6 +606,7 @@ a {
   word-wrap:break-word;
   font-weight: 200;
   font-size: 14px;
+  /*background-color: red;*/
 }
 
 .message-text .placeholder {
