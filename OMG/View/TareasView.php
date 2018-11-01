@@ -83,7 +83,7 @@ $Usuario=  Session::getSesion("user");
               display: inline-block;
               font-weight: bold;
               line-height: 2.5em;
-              margin-right: 15px;
+              /*margin-right: 15px;*/
               text-align: center;
               width: 2.5em; 
             }
@@ -97,7 +97,7 @@ $Usuario=  Session::getSesion("user");
               display: inline-block;
               font-weight: bold;
               line-height: 2.5em;
-              margin-right: 15px;
+              /*margin-right: 15px;*/
               text-align: center;
               width: 2.5em; 
             }/*
@@ -111,7 +111,7 @@ $Usuario=  Session::getSesion("user");
               display: inline-block;
               font-weight: bold;
               line-height: 2.5em;
-              margin-right: 15px;
+              /*margin-right: 15px;*/
               text-align: center;
               width: 2.5em; 
             }
@@ -127,7 +127,7 @@ $Usuario=  Session::getSesion("user");
               display: inline-block;
               font-weight: bold;
               line-height: 2.5em;
-              margin-right: 15px;
+              /*margin-right: 15px;*/
               text-align: center;
               width: 2.5em; 
             }
@@ -141,7 +141,7 @@ $Usuario=  Session::getSesion("user");
               display: inline-block;
               font-weight: bold;
               line-height: 2.5em;
-              margin-right: 15px;
+              /*margin-right: 15px;*/
               text-align: center;
               width: 2.5em; 
             }
@@ -498,14 +498,12 @@ estructuraGrid= [
     { name: "id_empleado", title: "Responsable", type: "comboEmpleados", width:250},
 //    { name: "fecha_creacion",title:"Fecha de Creación", type: "text", validate: "required", width:150,editing: false},
     { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required", width:150,},
-    { name: "fecha_cumplimiento",title:"Fecha de Cumplimiento", type: "text", validate: "required", width:190,editing: false},
-    
-    { name: "status_tarea", title:"Estatus", type: "comboStatus", width:150},
+    { name: "fecha_cumplimiento",title:"Fecha de Cumplimiento", type: "text", validate: "required", width:190,editing: false},    
+    { name: "status_tarea", title:"Estatus", type: "comboStatus", width:100},
 //    { name: "status_tarea", title:"Estatus", type: "select", width:150,valueField:"status_tarea",textField:"descripcion",
 //        items:[{"status_tarea":"1","descripcion":"En Proceso"},{"status_tarea":"2","descripcion":"Suspendido"},{"status_tarea":"3","descripcion":"Terminado"}]
 //    },
-
-    { name: "semaforo",title:"ID", type: "text", validate: "required", width:190,editing: false},
+    { name: "semaforo",title:"ID", type: "text", validate: "required", width:80,editing: false},
     { name: "observaciones",title:"Observaciones", type: "textarea", width:150,},
     { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:150,editing:false },
     { name: "registrar_programa",title:"Programa", type: "text", validate: "required",width:160, editing:false },
