@@ -739,8 +739,15 @@ var banderaIngresarElPrimerResponsable=true;
 //                             elpadrecoincideConElUsuarioLogeado
 //                        }
                        if(item.$level==0){
+//                           console.log(item);
+                          
                          if(item.manipulacion_tarea=="false"){
+                             if(item.user=="0"){
+//                               alert();
+                                  gantt.getTask(id).readonly = false;
+                           }else{
                               gantt.getTask(id).readonly = true;
+                           }
                               
                          }else{
                              elpadrecoincideConElUsuarioLogeado=true;
@@ -749,6 +756,7 @@ var banderaIngresarElPrimerResponsable=true;
                            
                        }
                        else{
+//                           alert("else");
                             if(item.manipulacion_tarea=="false"){
                                
                                 if(elpadrecoincideConElUsuarioLogeado==false){
@@ -1050,7 +1058,7 @@ var opcionstatus=[
         gantt.config.lightbox.sections = [
 		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
                 {name: "statusname", height: 38, map_to: "status", type: "select", options:opcionstatus},
-                {name: "notas", height: 38, map_to: "notas", type: "textarea"},
+//                {name: "notas", height: 38, map_to: "notas", type: "textarea"},
 		{name: "owner", height: 33, map_to: "user", type: "select", options:dataEmpleados},
                   {
 			name: "notificacion_porcentaje_programado", height: 33, map_to: "notificacion_porcentaje_programado", type: "select", options: [
@@ -1194,7 +1202,7 @@ dp.init(gantt);
 			});    
 
                         myToolbar.addButton("detalles", 3, "Detalles", "File_Table.png", "save_dis.gif");
-                        
+                         myToolbar.addButton("notas", 3, "Notas", "registrarTareas.png", "save_dis.gif");
                          myToolbar.addButton("refresh", 3, "Recargar", "refresh.png");
 			myToolbar.addSeparator("sep1", 3);
                         
@@ -1249,6 +1257,10 @@ dp.init(gantt);
                                      }
                                 }
                            break;
+                           case "notas":
+                                window.open("Ganttnotastipochat.php",'_blank');
+                           break;
+                          
                            case "refresh":
                                refrescarDatosGantt();
                            break;
@@ -1442,15 +1454,7 @@ construirTreeList();
          
 //            console.log(args);
         },
-        onCellClick:(args)=>{
-            
-//            alert();
-//            $("#edicionNotas").modal("show");
-window.open("Ganttnotastipochat.php",'_blank');
-
-
-        }
-        ,
+        
         onRowUpdated:function (args){
             console.log(args);
             if( args.data.hasOwnProperty('notasname') ) {
@@ -1485,7 +1489,7 @@ window.open("Ganttnotastipochat.php",'_blank');
             { 
                 dataField: "user",
                 caption: "Responsable",
-                 allowEditing:true,
+                 allowEditing:false,
                   lookup: {
                     dataSource:dataEmpleados,
                     valueExpr: "key",
@@ -1507,6 +1511,7 @@ window.open("Ganttnotastipochat.php",'_blank');
             { 
                 dataField: "notasname",
                 caption: "Notas",
+                visible:false,
                  allowEditing:true,
                  allowUpdating:true
             },
