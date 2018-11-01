@@ -40,7 +40,7 @@ ajax("POST", "data=checar_existe_usuario", function(res) {
         id_usuario=a["user"]["ID_USUARIO"];
 //        alert(usuario);
         $.each(a["tareas"],function (index,value){
-            console.log(value);
+//            console.log(value);
             if(value.parent==0){
                 if(value.id_usuario==id_usuario){
                     estareapadre=true;
@@ -53,7 +53,7 @@ ajax("POST", "data=checar_existe_usuario", function(res) {
 //            sideTwoHTML(a);
         });
          $.each(a["tareas"],function (index,value){
-            console.log(value);
+//            console.log(value);
 //             sideTwoHTML(value);
              sideOneHTML(value);
         });
@@ -104,7 +104,7 @@ function sideOneHTMLAnterior(a) {
     
     
     function sideOneHTML(a) {
-        console.log("entro",a);
+//        console.log("entro",a);
         a["avatar"]="https://tustareas.com.co/wp-content/uploads/2017/11/Tus-tareas.png";
         var b = "";
         b += '<div class="row sideBar-body" data-tipe="actividades" data-login="' + a.user + '" data-avatar="' + a.avatar + '" data-status="' +(a.manipulacion_tarea == 'true' ? 'on' : 'off')  + '" data-idactividad="' + a.id + '"  data-manipulacion_tarea="'+a.manipulacion_tarea+'"            id="' + a.text + '">';
@@ -321,8 +321,14 @@ var  limit = 10;
             b += '<div class="row message-body">';
             b += '  <div class="col-sm-12 message-main-receiver">';
             b += '	<div class="receiver">';
-            b += '	  <div class="message-text" ><span class="pull-left"><a title="Usuario quien creo la nota" >'+a.nombre_usario_quien_creo_la_nota+'</a></span><span style="color:#006699" class="pull-right">'+a.fecha_creacion_nota+'</span>' + urltag(htmlEntities(a.historico_notas)) + '</div>';
-            b += '	  <span class="message-time pull-right">' + timeToWords(a.fecha_creacion_nota) + '</span>';
+            if(id_usuario==a.quien_introdujo_el_registro){
+                b += '	  <div class="message-text" ><span class="pull-left"><a title="Usuario quien creo la nota" ><div  class="responsabletarea">'+a.nombre_usario_quien_creo_la_nota+'</div></a></span>' + urltag(htmlEntities(a.historico_notas)) + '</div>';
+            }else{
+                 b += '	  <div class="message-text" ><span class="pull-left"><a title="Usuario quien creo la nota" ><div  class="otrosreponsablesdelaactividad">'+a.nombre_usario_quien_creo_la_nota+'</div></a></span>' + urltag(htmlEntities(a.historico_notas)) + '</div>';
+            }
+            
+//            b += '	  <div class="message-text" ><span class="pull-left"><a title="Usuario quien creo la nota" ><div  class="nota">'+a.nombre_usario_quien_creo_la_nota+'</div></a></span>' + urltag(htmlEntities(a.historico_notas)) + '</div>';
+            b += '	  <span class="message-time pull-right"><span style="color:#006699" class="pull-right">'+a.fecha_creacion_nota+'</span>' + timeToWords(a.fecha_creacion_nota) + '</span>';
             b += '	</div>';
             b += '  </div>';
             b += '</div>';

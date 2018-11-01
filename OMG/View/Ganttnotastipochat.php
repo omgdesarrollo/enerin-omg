@@ -21,6 +21,14 @@
                     #heading-user{
                         color:#ffffff;
                     }
+                    .otrosreponsablesdelaactividad{
+                        color: #cc0000;
+                        font-size: 16;
+                    }
+                    .responsabletarea{
+                        color:#000000;
+                        font-size: 16;
+                    }
                     
                 </style>
 	</head>
