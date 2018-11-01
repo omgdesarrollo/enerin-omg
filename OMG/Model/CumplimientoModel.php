@@ -13,24 +13,31 @@ class CumplimientoModel{
 //    private $Correo='';
 //    private $Fecha_Creacion='NOW()';
     
-    public function  listarCumplimientos($ID_USUARIO){
-        try{
+    public function  listarCumplimientos($ID_USUARIO)
+    {
+        try
+        {
             $dao=new CumplimientoDAO();
             $rec=$dao->mostrarCumplimientos($ID_USUARIO);
             
-            /*if($rec==NULL){
-            throw new Exception("Usuario no existe !!!!!");
-            }
-            if($rec["CONTRA"]!=$clave){
-            throw  new Exception("Clave Incorrecta!!!!!");
-            }*/
+            return $rec;
+        }  catch (Exception $e){
+            throw  $e;
+        }
+    }
+
+    public function  listarCumplimiento($ID_CUMPLIMIENTO)
+    {
+        try
+        {
+            $dao=new CumplimientoDAO();
+            $rec=$dao->mostrarCumplimiento($ID_CUMPLIMIENTO);
             
             return $rec;
-    }  catch (Exception $e){
-        throw  $e;
+        }  catch (Exception $e){
+            throw  $e;
+        }
     }
-    }
-    
     
     public function  listarCumplimientosComboBox(){
         try{

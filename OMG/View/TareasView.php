@@ -525,7 +525,8 @@ inicializarFiltros().then((resolve)=>
 (error)=>
 {
     growlError("Error!","Error al construir la vista, recargue la página");
-}); 
+});
+
 </script>
 
 

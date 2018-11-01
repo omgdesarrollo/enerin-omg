@@ -7,6 +7,20 @@ $(function ()
 
 });
 
+function inicializarFiltros()
+{  
+    return new Promise((resolve,reject)=>
+    {
+        filtros =[
+                {id:"noneUno",type:"none"},
+                {id:"clave_cumplimiento",type:"text"},
+                {id:"cumplimiento",type:"text"},
+                {name:"opcion",id:"opcion",type:"opcion"}
+        ];
+        resolve();
+    });    
+}
+
 
 
 function listarDatos()
@@ -98,8 +112,7 @@ function saveUpdateToDatabase(args)//listo
                     if(data==1)
                     {
                             growlSuccess("Actulización","Se actualizaron los campos");
-//                            actualizarCumplimiento(id_afectado.id_cumplimiento);
-//                            gridInstance.loadData();
+                            actualizarCumplimiento(id_afectado.id_cumplimiento);
                     }
                     else
                     {
@@ -123,37 +136,37 @@ function saveUpdateToDatabase(args)//listo
     }
 }
 
-//function actualizarCumplimiento(id_cumplimiento)
-//{
-//    $.ajax({
-//            url:'../Controller/DocumentosController.php?Op=ListarDocumento',
-//            type: 'GET',
-//            data:'ID_CUMPLIMIENTO='+id_cumplimiento,
-//            success:function(datos)
-//            {
-//                    if(typeof(datos)=="object")
-//                    {
-//                        $.each(datos,function(index,value){
-//                                componerDataListado(value);
-//                        });
-//                        componerDataGrid();
-//                        gridInstance.loadData();
-//                    }
-//                    else
-//                    {
-//                            growlError("Actualizar Vista","No se pudo actualizar la vista, refresque");
-//                            componerDataGrid();
-//                            gridInstance.loadData();
-//                    }
-//            },
-//            error:function()
-//            {
-//                    componerDataGrid();
-//                    gridInstance.loadData();
-//                    growlError("Error","Error del servidor");
-//            }
-//    });
-//}
+function actualizarCumplimiento(id_cumplimiento)
+{
+    $.ajax({
+            url:'../Controller/CumplimientosController.php?Op=ListarCumplimiento',
+            type: 'GET',
+            data:'ID_CUMPLIMIENTO='+id_cumplimiento,
+            success:function(datos)
+            {
+                    if(typeof(datos)=="object")
+                    {
+                        $.each(datos,function(index,value){
+                                componerDataListado(value);
+                        });
+                        componerDataGrid();
+                        gridInstance.loadData();
+                    }
+                    else
+                    {
+                            growlError("Actualizar Vista","No se pudo actualizar la vista, refresque");
+                            componerDataGrid();
+                            gridInstance.loadData();
+                    }
+            },
+            error:function()
+            {
+                    componerDataGrid();
+                    gridInstance.loadData();
+                    growlError("Error","Error del servidor");
+            }
+    });
+}
 
 function componerDataListado(value)// id de la vista documento, listo
 {

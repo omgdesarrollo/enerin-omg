@@ -112,6 +112,7 @@ $Usuario=  Session::getSesion("user");
         <script>
             var DataGrid = [];
             var dataListado = [];
+            var filtros=[];
             var db={};
             var gridInstance;
             var ultimoNumeroGrid=0;
@@ -129,7 +130,16 @@ $Usuario=  Session::getSesion("user");
             ],
                     
             construirGrid();
-            listarDatos();
+            
+            inicializarFiltros().then((resolve)=>
+            { 
+                construirFiltros();
+                listarDatos();
+            },
+            (error)=>
+            {
+                growlError("Error!","Error al construir la vista, recargue la página");
+            });
 
         </script>
 
