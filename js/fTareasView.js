@@ -138,11 +138,11 @@ function inicializarFiltros()
 //                },
                 {id:"status_grafica",type: "combobox",descripcion:"descripcion",
                     data:[
-                            {"status_grafica":"Alarma vencida","descripcion":"AL"},
-                            {"status_grafica":"En tiempo","descripcion":"EP"},
-                            {"status_grafica":"Suspendido","descripcion":"SP"},
-                            {"status_grafica":"Terminado","descripcion":"TR"},
-                            {"status_grafica":"Tiempo vencido","descripcion":"TV"},
+                            {"status_grafica":"Alarma vencida","descripcion":"ALAR"},
+                            {"status_grafica":"En tiempo","descripcion":"EPRO"},
+                            {"status_grafica":"Suspendido","descripcion":"SUSP"},
+                            {"status_grafica":"Terminado","descripcion":"TERM"},
+                            {"status_grafica":"Tiempo vencido","descripcion":"VENC"},
                         ]
                 },
 
