@@ -8,6 +8,7 @@
 		<link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
                 <script src="../../assets/firebase/js/jquery.min.js" type="text/javascript"></script>
+                <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
                 <link href="../../assets/firebase/css/style.css" rel="stylesheet" type="text/css"/>
                 
                 <style type="text/css">
@@ -169,7 +170,6 @@
 					</div>
 			</div>
 		</div>
-            
 		<!-- Firebase -->
 		<script src="//www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
                 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
@@ -196,8 +196,6 @@
                           success:function(datos)
                           {
                               
-                              
-                              
 //                             if(datos.length!=0){
 //                                  document.getElementsByClassName('app-one')[0].style.display = "block";
 //                             }
@@ -205,11 +203,6 @@
                                 document.getElementById("heading-name-meta").innerHTML = "Todas Las Notas";
                                 document.getElementById("heading-online").innerHTML = "Actividades";
                               resolve();
-                              
-                              
-                              
-                              
-
                           },
                           error:function()
                           {
@@ -222,6 +215,11 @@
                     }
                 </script>
                 
+                
+                
+                
+                
+               
                 
 	</body>
 </html>

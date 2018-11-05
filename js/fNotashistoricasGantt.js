@@ -117,7 +117,7 @@ function sideOneHTMLAnterior(a) {
         b += '<div class="col-sm-9 col-xs-9 sideBar-main">';
         b += '  <div class="row">';
         b += '	<div class="col-sm-8 col-xs-8 sideBar-name">';
-        b += '	  <span class="name-meta">' + a.text + '</span>';
+        b += '	  <span class="name-meta" >' + a.text + '</span>';
         b += '	</div>';
         
         
@@ -129,6 +129,7 @@ function sideOneHTMLAnterior(a) {
              b += '	  <span class="time-meta pull-right">Add</span>';
             }
         }
+//         b += '	  <span class=" pull-right">info</span>';
 //        b += '	  <span class="time-meta pull-right">' + timeToWords(a.login) + '</span>';
         b += '	</div>';
         b += '  </div>';
@@ -184,6 +185,7 @@ function sideOneHTMLAnterior(a) {
     });
 var  limit = 10;
   $('body').on('click', '.side-one .sideBar-body', function() {
+      mostrarInfoMasAdetalleActividad();
 //      alert("e");
         var a = $(this).attr('id'),
             tipe = $(this).data('tipe'),
@@ -257,6 +259,12 @@ var  limit = 10;
         $(window).resize(checkWidth);
         return false
     });
+    
+    
+    function mostrarInfoMasAdetalleActividad(){
+
+       
+    }
     
       $("body #conversation").scroll(function() {
         // scroll bottom
