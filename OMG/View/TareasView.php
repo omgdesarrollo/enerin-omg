@@ -201,7 +201,7 @@ require_once 'EncabezadoUsuarioView.php';
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
-                <h4 class="modal-title" id="myModalLabel">Crear Nueva Tarea</h4>
+                <h4 class="modal-title" id="myModalLabel">Crear Nuevo Tema</h4>
             </div>
 
             <div id="validacion_empleado" class="modal-body">
@@ -220,7 +220,7 @@ require_once 'EncabezadoUsuarioView.php';
                     </div>
                 
                     <div class="form-group">
-                        <label class="control-label" for="title">Responsable del Plan:</label>
+                        <label class="control-label" for="title">Responsable:</label>
                         <select id="ID_EMPLEADOMODAL" class="select2">
                         </select>
                         <div class="help-block with-errors"></div>
@@ -448,6 +448,7 @@ MyComboStatus.prototype = new jsGrid.Field
                     temp += "<option value='3' selected>TR</option>";
                 }
                 
+                
                 if(value==2)
                 {
                     temp += "<option value='1' selected>EP</option>";
@@ -494,7 +495,7 @@ estructuraGrid= [
     { name: "fecha_cump",visible:false},
     { name:"no",title:"No",width:50},
     { name: "referencia",title:"Referencia", type: "textarea",width:200},
-    { name: "tarea",title:"Tarea", type: "textarea", validate: "required",width:200 },
+    { name: "tarea",title:"Tema", type: "textarea", validate: "required",width:200 },
     { name: "id_empleado", title: "Responsable", type: "comboEmpleados", width:250},
 //    { name: "fecha_creacion",title:"Fecha de Creación", type: "text", validate: "required", width:150,editing: false},
     { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required", width:150,},
@@ -507,7 +508,7 @@ estructuraGrid= [
     { name: "observaciones",title:"Observaciones", type: "textarea", width:150,},
     { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:150,editing:false },
     { name: "registrar_programa",title:"Programa", type: "text", validate: "required",width:160, editing:false },
-    { name: "avance_programa",title:"Avance del Programa", type: "text", validate: "required",width:180, editing:false },      
+    { name: "avance_programa",title:"Avance", type: "text", validate: "required",width:150, editing:false },      
     { name:"delete", title:"Opción", type:"customControl",sorting:"", width:100}
 ], 
  

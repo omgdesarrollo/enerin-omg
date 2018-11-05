@@ -33,10 +33,10 @@ $(function()
         tareaDatos.status_tarea = $("#STATUS_TAREA").val();
         tareaDatos.observaciones = $("#OBSERVACIONES").val();
 //        tareaDatos.archivo_adjunto = $('#fileupload').fileupload('option', 'url');
-        tareaDatos.mensaje="Se le asigno el Tema: "+$("#TAREA").val()+" por el Usuario: ";
-        tareaDatos.reponsable_plan= $("#ID_EMPLEADOMODAL").val();
-        tareaDatos.tipo_mensaje= 0;
-        tareaDatos.atendido= 'false';
+//        tareaDatos.mensaje="Se le asigno la Tarea: "+$("#TAREA").val()+" por el Usuario: ";
+//        tareaDatos.reponsable_plan= $("#ID_EMPLEADOMODAL").val();
+//        tareaDatos.tipo_mensaje= 0;
+//        tareaDatos.atendido= 'false';
         listo=
             (
 //                tareaDatos.referencia!=""?

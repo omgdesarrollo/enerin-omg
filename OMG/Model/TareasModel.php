@@ -178,27 +178,19 @@ class TareasModel{
         }
     }
 
-    public function insertarTarea($referencia,$tarea,$fecha_alarma,$fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado,$mensaje,
-                                  $responsable_plan,$tipo_mensaje,$atendido)
+    public function insertarTarea($referencia,$tarea,$fecha_alarma,$fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado)
     {
         try
         {
-            $contrato= Session::getSesion("s_cont");
-            
+            $contrato= Session::getSesion("s_cont");            
             $id_usuario=Session::getSesion("user");
-            $asunto="";
             $dao=new TareasDAO();
-            $ID= $dao->obtenerUsuarioPorIdEmpleado($responsable_plan);
-            $model=new NotificacionesModel();
-            
             $exito= $dao->insertarTarea($referencia, $tarea, $fecha_alarma, $fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado,$id_usuario['ID_USUARIO'],$contrato);
-            $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $ID, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
-            
-//            echo "este es model: ".json_encode($ID);
-            
+            $tareasModel=new TareasModel();
             if($exito[0] = 1)
             {
-                $lista = $dao->listarTarea($exito['id_nuevo']);                       
+                $lista = $dao->listarTarea($exito['id_nuevo']);
+                $tareasModel->enviarNotificacionWhenInsert($id_empleado,$tarea);
             }
             else
                 return $exito[0];
@@ -212,18 +204,41 @@ class TareasModel{
         }        
     }
     
-    
+    public function enviarNotificacionWhenInsert($id_empleado,$tarea)
+    {
+        try 
+        {
+            $contrato= Session::getSesion("s_cont");            
+            $id_usuario=Session::getSesion("user");
+            $dao=new TareasDAO();
+            $mensaje= "Se le ha asignado el Tema: ".$tarea.", por el Usuario: ";
+            $tipo_mensaje=0;
+            $atendido= 'false';
+            $asunto="";            
+            $idParQuien= $dao->obtenerUsuarioPorIdEmpleado($id_empleado);
+            $model=new NotificacionesModel();
+            $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $idParQuien, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);
+
+            return $rec;
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+
     public function enviarNotificacionWhenUpdate($ID_EMPLEADO,$TAREA)
     {
         try
         {
             $contrato= Session::getSesion("s_cont");
             $id_usuario=Session::getSesion("user");
+            $dao=new TareasDAO();
             $mensaje= "Se ha actualizado el Tema: ".$TAREA.", por el Usuario: ";
             $tipo_mensaje=0;
             $atendido= 'false';
             $asunto="";
-            $dao=new TareasDAO();
             $ID= $dao->obtenerUsuarioPorIdEmpleado($ID_EMPLEADO);
             $model=new NotificacionesModel();
             $rec= $model->guardarNotificacionHibry($id_usuario['ID_USUARIO'], $ID, $mensaje, $tipo_mensaje, $atendido,$asunto,$contrato);

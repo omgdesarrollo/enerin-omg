@@ -73,7 +73,7 @@ $Usuario=  Session::getSesion("user");
 
         <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;"> 
             <button type="button" id="btn-cont" class="btn btn-success btn_agregar" >
-                Seleccione Opción
+                Seleccione Temática
             </button>
             
             <button type="button" id="btnAgregarDocumentoEntradaRefrescar" class="btn btn-info btn_refrescar" id="btnrefrescar" onclick="refresh();" >
@@ -87,7 +87,7 @@ $Usuario=  Session::getSesion("user");
   
 
         <!-- Inicio de Seccion Modal Tema-->
-        <div class="modal draggable fade" id="change-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!--        <div class="modal draggable fade" id="change-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                    <div class="modal-dialog" role="document">
                      <div class="modal-content">
                        <div class="modal-header">
@@ -103,7 +103,7 @@ $Usuario=  Session::getSesion("user");
                      </div>
 
                    </div>
-        </div>
+        </div>-->
         <!--Final de Seccion Modal-->
                                               
        

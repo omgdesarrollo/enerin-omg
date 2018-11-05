@@ -210,10 +210,10 @@ function cambiarCont()
     });
 
     swal({
-      title: 'Seleccione una Opción',
+      title: 'Seleccione una Temática',
       input: 'select',
       inputOptions:jsonObj,
-      inputPlaceholder: 'Sin opción seleccionada ',
+      inputPlaceholder: 'Sin Temática seleccionada ',
       showCancelButton: true,
       showLoaderOnConfirm: true,
       inputValidator: function (value) {
@@ -221,7 +221,7 @@ function cambiarCont()
           if (value != '') {
             resolve();
           } else {
-            reject('Requiere seleccionar un Cumplimiento');
+            reject('Requiere seleccionar una Temática ');
           }
         });
       },
