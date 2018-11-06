@@ -18,19 +18,49 @@ require_once '../util/Session.php';
 		<!-- Libreria java scritp de bootstrap -->
         <!-- <script src="../../assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script> -->
                 <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
-        <script src="../../js/jquery.min.js" type="text/javascript"></script>
+
+        <script src="../../js/jquery.js" type="text/javascript"></script>
+        <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+
+        <!-- <script src="../../js/jquery.min.js" type="text/javascript"></script> -->
         <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
         <!-- <script src="../../js/is.js" type="text/javascript"></script> -->
         <!-- <script src="../../js/tooltip.js" type="text/javascript"></script> -->
+
+        <noscript><link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
+        <noscript><link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
+        <link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
+        <link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
+
         <script src="../../angular/angular.min.js" type="text/javascript"></script>
 
         <!-- swalAlert -->
         <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
         <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+        <style>
+        #fileupload
+        {
+            text-align:center;
+        }
+        body
+        {
+            height:100%;
+        }
+        table[role="presentation"]
+        {
+            width:100%;
+            text-align:center;
+        }
+        </style>
     </head>
+    <body>
 
+    
+    <div id="filesPhoto"></div>
     <div id="Contenedor" style="margin: 0px auto;">
-        <div class="Icon"><span class="glyphicon glyphicon-user"></span></div>
+        <div id="contenedorFotoPerfil" class="Icon">
+            <!-- <span id="fotoPerfilCambio" class="glyphicon glyphicon-user" style="cursor:pointer"></span> -->
+        </div>
 		<!-- <div class="ContentForm"> -->
         <div class="form-group">
 		 	<!-- <form id="loginform"  method="post" name="FormEntrar"> -->
@@ -68,7 +98,19 @@ require_once '../util/Session.php';
      <script>
         okpass=false;
         okpassN=false;
+        noArchivo = 1;
+        Frame = $(this)[0].frameElement;
+        $(Frame).css("height","100%");
+        var parentFrame = $(Frame).parent();
+        $(parentFrame).css("height","100%")
         
+        // $(()=>{
+        //     $("#fotoPerfilCambio").click(()=>{
+        //         console.log("fotoPerfilCambio click");
+        //         $("input[type='file']").click();
+        //     });
+        // });
+
         function limpiarFormulario()
         {
             no = "<i style='color:red' class='glyphicon glyphicon-remove'></i>";
@@ -253,5 +295,145 @@ require_once '../util/Session.php';
             setTimeout(function(){swal.close();$('#agregarUsuario .close').click()},1500);
             $('#loader').hide();
         }
-     </script>
+
+        function agregarArchivosUrl()
+        {
+            usuario = <?php echo Session::getSesion("user")["ID_USUARIO"] ?>;
+            var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();
+            url = 'filePerfilesUsuario/'+usuario,
+            $.ajax({
+                url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
+                type: 'GET',
+                data: 'URL='+url+"&SIN_CONTRATO=''",
+                success:function(creado)
+                {
+                    if(creado)
+                    {
+                        growlWait("Subir Imagen","Cargando Imagen Espere...");
+                        $('.start').click();
+                    }
+                },
+                error:function()
+                {
+                    growlError("Error","Error en el servidor");
+                }
+            });
+        }
+
+        function mostrar_urls()
+        {
+            let usuario = <?php echo Session::getSesion("user")["ID_USUARIO"] ?>;
+            let tempDocumentolistadoUrl = "";
+            URL = 'filePerfilesUsuario/'+usuario,
+            $.ajax({
+                url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
+                type: 'GET',
+                data: 'URL='+URL+"&SIN_CONTRATO=''",
+                // async:false,
+                success: function(todo)
+                {
+                    if(todo[0].length!=0)
+                    {
+                        ultimo = todo[0].length;
+                        $("#contenedorFotoPerfil").html('<img onclick="fotoPerfilCambio()" src="'+todo[1]+"/"+todo[0][ultimo-1]+'" class="img-circle" style="width:140px;height:140px;margin-top:5px;cursor:pointer">');
+                    }
+                    else
+                        $("#contenedorFotoPerfil").html('<span onclick="fotoPerfilCambio()" class="glyphicon glyphicon-user" style="cursor:pointer"></span></div>');
+
+                    noArchivo=1;
+                    $('#fileupload').fileupload
+                    ({
+                        url: '../View/',
+                    });
+                }
+            });
+            $("#filesPhoto").html("<form id='fileupload' method='POST' enctype='form-data' style='display:none'>"+
+                "<div class='fileupload-buttonbar'><div class='fileupload-buttons'>"+
+                "<span id='fileBtn' class='fileinput-button'><span id='spanAgregarDocumento'><a >Agregar Archivos(Click o Arrastrar)...</a></span>"+
+                "<input type='file' name='files[]' ></span><span class='fileupload-process'></span></div>"+
+                "<div class='fileupload-progress'><div class='progress-extended'>&nbsp;</div></div></div>"+
+                "<table role='presentation'><tbody class='files'></tbody></table></form>");
+        }
+        fotoPerfilCambio = ()=>
+        {
+            $("input[type='file']").click();
+        }
+        mostrar_urls();
+    </script>
+    <script id="template-upload" type="text/x-tmpl">
+    {% let error = 0; %}
+    {%for (var i=0, file; file=o.files[i]; i++) { %}
+        <tr class="template-upload" style="width:100%">
+            <td>
+                {% console.log(file);  %}
+                <span class="preview"></span>
+            </td>
+            <!-- <td> -->
+            <!-- <p class="name">{%=file.name%}</p> -->
+            <!-- <strong class="error"></strong> -->
+            <!-- </td> -->
+            <!-- <td> -->
+            <!-- <p class="size">Processing...</p> -->
+            <!-- <div class="progress"></div> -->
+            <!-- </td> -->
+            <td>
+            {% if (!i && !o.options.autoUpload) { if(noArchivo==1){ if(file.type.split("/")[0]=="image"){ %}
+                    <button class="start" style="display:none;padding: 0px 4px 0px 4px;" disabled>Start</button>
+            {% }else{ error = 1; } } } %}
+            {% if (!i) { %}
+                    <!-- <button class="cancel" style="padding: 0px 4px 0px 4px;color:white">Cancel</button> -->
+            {% } %}
+            </td>
+        </tr>
+        {% if(i==0){ if(error==1) growlError("Error Imagen","Formato de Imagen no Compatible"); else{ $('.fileupload-buttonbar').html(""); agregarArchivosUrl();} } %}
+    <!-- {% noArchivo=1; } %} -->
+</script>
+
+<script id="template-download" type="text/x-tmpl">
+    {% var t = $('#fileupload').fileupload('active'); var i,file; %}
+    {% for (i=0,file; file=o.files[i]; i++) { %}
+        <tr class="template-download" style="width:100%">
+            <td>
+            <span class="preview">
+                    {% if (file.thumbnailUrl) { %}
+                    <!-- <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery> -->
+                    <img src="{%=file.thumbnailUrl%}"></img>
+                    <!-- </a> -->
+                    {% } %}
+            </span>
+            </td>
+            <!-- <td> -->
+            <!-- <p class="name"> -->
+                    <!-- <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a> -->
+                    <!-- <img src="{%=file.thumbnailUrl%}"></img> -->
+            <!-- </p> -->
+            <!-- </td> -->
+            <!-- <td>
+            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+            </td> -->
+            <!-- <td> -->
+            <!-- <button class="delete" style="padding: 0px 4px 0px 4px;" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>Delete</button> -->
+            <!-- <input type="checkbox" name="delete" value="1" class="toggle"> -->
+            <!-- </td> -->
+        </tr>
+    {% } %}
+    {% noArchivo=0; growlSuccess("","Imagen Cargada"); mostrar_urls(); %}
+</script>
+<!-- <script src="../../assets/probando/js/bootstrap.min.js"></script> -->
+
+    <script  src="../../assets/FileUpload/js/tmpl.min.js"></script>
+    <script  src="../../assets/FileUpload/js/load-image.all.min.js"></script>
+    <script  src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>
+    <script  src="../../assets/FileUpload/js/jquery.blueimp-gallery.min.js"></script>
+    <script  src="../../assets/FileUpload/js/jquery.iframe-transport.js"></script>
+    <script  src="../../assets/FileUpload/js/jquery.fileupload.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-process.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-image.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-audio.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-video.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
+    <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
+    <script src="../../assets/FileUpload/js/main.js"></script>
+    <body>
 </html>
