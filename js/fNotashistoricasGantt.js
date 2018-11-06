@@ -518,6 +518,7 @@ document.getElementById("scroll").addEventListener("click", function() {
 //            });
 // f=$(this).data('idactividad');
 //alert(idactividadGlobal);
+        
             var valoresEnviar={"id_actividad":idactividadGlobal,"nota":document.getElementById('comment').value};
             $.ajax({
                 url:"../Controller/GanttTareasController.php?Op=insertarNotasHistoricas",
@@ -528,9 +529,9 @@ document.getElementById("scroll").addEventListener("click", function() {
                     
 //                     var a = JSON.parse(res);
                      document.getElementById('comment').value = "";
-                    
+                     $(".sideBar-body.active").trigger('click');
                      scrollBottom();
-            
+                     
                     
                 }
             })
@@ -542,6 +543,8 @@ document.getElementById("scroll").addEventListener("click", function() {
 //            alert('no puede quedar el campo vacio ')
         }
     });
+    
+  
 //document.getElementsByClassName("newMessage-back")[0].addEventListener("click", function() {
 //    document.getElementsByClassName('side-two')[0].style.left = "-100%";
 //});
