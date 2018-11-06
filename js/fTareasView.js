@@ -24,7 +24,7 @@ $(function()
     $("#btn_crearTarea").click(function()
     {
         tareaDatos=new Object();
-        tareaDatos.referencia = $("#REFERENCIA").val();
+//        tareaDatos.referencia = $("#REFERENCIA").val();
         tareaDatos.tarea = $("#TAREA").val();
         tareaDatos.id_empleado = $("#ID_EMPLEADOMODAL").val();
 //        tareaDatos.fecha_creacion = $("#FECHA_CREACION").val();
@@ -126,8 +126,8 @@ function inicializarFiltros()
     return new Promise((resolve,reject)=>
     {
         filtros =[
-                {id:"noneUno",type:"none"},
-                {id:"referencia",type:"text"},
+//                {id:"noneUno",type:"none"},
+//                {id:"referencia",type:"text"},
                 {id:"tarea",type:"text"},
                 {id:"id_empleado",type:"combobox",data:listarEmpleados(),descripcion:"nombre_completo"},
 //                {id:"fecha_creacion",type:"date"},
@@ -218,8 +218,8 @@ function reconstruir(value,index)
     tempData=new Object();
     ultimoNumeroGrid = index;
     tempData["id_principal"]= [{'id_tarea':value.id_tarea}];
-    tempData["no"]= index;  
-    tempData["referencia"]=value.referencia;
+//    tempData["no"]= index;  
+//    tempData["referencia"]=value.referencia;
     tempData["tarea"]=value.tarea;
     tempData["id_empleado"]=value.id_empleado;
 //    tempData["fecha_creacion"]= getSinFechaFormato(value.fecha_creacion);

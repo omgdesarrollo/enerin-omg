@@ -1326,15 +1326,19 @@ construirTreeList();
     
     function obtenerTareas(){
         return new Promise(function (resolve,reject){
+                id_tarea= <?php echo Session::getSesion("dataGantt_id_tarea")?>;
+                URL = 'gantt/gantt_tareas/'+id_tarea+'/';
                 $.ajax({
                                         url:"../Controller/GanttTareasController.php?Op=ListarTodasLasTareasDetallesPorSuId",
+                                        type:"POST",
+                                        data: 'URL='+URL+'&SIN_CONTRATO=',
                                         async:false,
                                         success:function (res)
                                         {
                                             datosTreeList=[];
                                             
                                             $.each(res.data,function(index,value){
-//                                                console.log(value);
+                                                console.log("Este es el value",value);
                                                 datosTreeObj={};
                                                 datosTreeObj["id"]= value.id;
                                                 datosTreeObj["parent"]= value.parent;
@@ -1344,8 +1348,15 @@ construirTreeList();
                                                 datosTreeObj["porcentaje_por_actividad"]= value.porcentaje_por_actividad;
                                                 datosTreeObj["ponderado_real"]= "value.ponderado_real";
                                                 datosTreeObj["avance"]=Math.round(value.progress*100);
-                                                datosTreeObj["archivo_adjunto"]= "<button onClick='mostrar_urls("+value.id+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
-                                                datosTreeObj["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar</button>";
+                                                if(value.archivosUpload[0].length==0)
+                                                {
+                                                    datosTreeObj["archivo_adjunto"]= "<button onClick='mostrar_urls("+value.id+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
+                                                    datosTreeObj["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar - "+value.archivosUpload[0].length+"</button>";
+                                                }else{
+                                                    datosTreeObj["archivo_adjunto"]= "<button onClick='mostrar_urls("+value.id+")' type='button' class='btn btn-danger botones_vista_tabla2' data-toggle='modal' data-target='#create-itemUrls'>";
+                                                    datosTreeObj["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar - "+value.archivosUpload[0].length+"</button>";
+                                                }
+                                                
                                                 datosTreeObj["status"]= value.status;
                                                 datosTreeList.push(datosTreeObj);
                                             });
@@ -1482,19 +1493,22 @@ construirTreeList();
             {
                 dataField: "id",
                 caption: "ID",
+//                width:170,
                 allowEditing:false
             },
             {
                 dataField: "text",
                 caption: "Descripcion de la Actividad",
-                 allowEditing:false
+//                width:300,
+                allowEditing:false
             },
             
             { 
                 dataField: "user",
                 caption: "Responsable",
-                 allowEditing:false,
-                  lookup: {
+//                width:200,
+                allowEditing:false,
+                lookup: {
                     dataSource:dataEmpleados,
                     valueExpr: "key",
                     displayExpr: "label"
@@ -1503,13 +1517,15 @@ construirTreeList();
             
             { 
                 dataField: "porcentaje_por_actividad",
-                 caption: "Peso de la Actividad",
-                  allowEditing:true
+                caption: "Peso de la Actividad",
+//                width:100,
+                allowEditing:true
             },
              { 
                 dataField: "avance",
-                 caption: "Avance (%)",
-                  allowEditing:false
+                caption: "Avance (%)",
+//                width:80,
+                allowEditing:false
                 
             },
             { 
@@ -1522,8 +1538,9 @@ construirTreeList();
             { 
                 dataField: "status",
                 caption: "Estatus",
-                 allowEditing:false,
-                  lookup: {
+//                width:80,
+                allowEditing:false,
+                lookup: {
                     dataSource:opcionstatus,
                     valueExpr: "key",
                     displayExpr: "label"
@@ -1532,7 +1549,8 @@ construirTreeList();
              { 
                 dataField: "archivo_adjunto",
                  captbion: "Archivo Adjunto",
-                 cellTemplate:archivoAdjuntoCellTemplate,
+//                 width:100,
+                cellTemplate:archivoAdjuntoCellTemplate,
                   allowEditing:false
                   
             }
@@ -1560,12 +1578,14 @@ construirTreeList();
     
     
     }
-   var archivoAdjuntoCellTemplate= function(container, options) {       
+   var archivoAdjuntoCellTemplate= function(container, options) 
+   {       
 //       console.log(options);
       return container.context.innerHTML=options.data.archivo_adjunto;
 };
     
-    function refrescarDatosGantt(){
+    function refrescarDatosGantt()
+    {
         gantt.refreshData();
         gantt.init('gantt_here');
         $.when(gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId")).then(function(){
