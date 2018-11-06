@@ -121,7 +121,7 @@ class TareasDAO{
         }
     }
 
-    public function insertarTarea($referencia,$tarea,$fecha_alarma,$fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado,$creador_tarea,$contrato)
+    public function insertarTarea($tarea,$fecha_alarma,$fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado,$creador_tarea,$contrato)
     {
         try
         {
@@ -137,8 +137,8 @@ class TareasDAO{
                 $id_nuevo=0;
             }
             
-            $query="INSERT INTO tareas(id_tarea,referencia,tarea,fecha_alarma,fecha_cumplimiento,status_tarea,observaciones,id_empleado,creador_tarea,cumplimiento)
-				values($id_nuevo,'$referencia','$tarea','$fecha_alarma','$fecha_cumplimiento',$status_tarea,'$observaciones',$id_empleado,$creador_tarea,$contrato)";
+            $query="INSERT INTO tareas(id_tarea,tarea,fecha_alarma,fecha_cumplimiento,status_tarea,observaciones,id_empleado,creador_tarea,cumplimiento)
+				values($id_nuevo,'$tarea','$fecha_alarma','$fecha_cumplimiento',$status_tarea,'$observaciones',$id_empleado,$creador_tarea,$contrato)";
             
             $db=  AccesoDB::getInstancia();
             $exito = $db->executeUpdateRowsAfected($query);
