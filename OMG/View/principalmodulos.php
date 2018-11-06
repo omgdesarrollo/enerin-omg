@@ -203,7 +203,7 @@ var gantt=[
 
   datacontratos=[
 //         {id:'cambiarcontrato',text:'Cambiar Contrato',img:'contratos.png',type:'button',isbig:true}
-         {id:'cambiarcontrato',text:'<div id=\'infocontrato\'>Opcion Seleccionada:</div>',img:'contratos.png',type:'button',isbig:true}
+         {id:'cambiarcontrato',text:'<div id=\'infocontrato\'>Temática Seleccionada:</div>',img:'contratos.png',type:'button',isbig:true}
   ];
   dataSeccionRibbon=[];
    var listasubmodulos=[];
@@ -471,8 +471,8 @@ function redimencionarLayout()
 //                            loadDataSideBarProcesos();
                         }
 
-                        if(itemIdSeleccion=="Control de Temas Especiales"){
-                            ribbon._items["Control de Temas Especiales"].base.id="seleccion_opcionmenuarriba";
+                        if(itemIdSeleccion=="Gestión de Temas Especiales"){
+                            ribbon._items["Gestión de Temas Especiales"].base.id="seleccion_opcionmenuarriba";
 //                            ribbon._items["Control de Temas Especiales"].base.lastElementChild.id="seleccion_informacion_palabra";
                             var listRegistroTareas=[];
                             $.each(listasubmodulos,function (index,value){
@@ -481,7 +481,7 @@ function redimencionarLayout()
                                 {
 //                                    console.log(value1);
                                     
-                                    if(value1["nombre_contenido_sub"]=="Control de Temas Especiales"){
+                                    if(value1["nombre_contenido_sub"]=="Gestión de Temas Especiales"){
 //                                        console.log(value1["contenido_vista"]);
                                              loadDataSideBarTareas(value1["contenido_vista"]);
                                     }
@@ -597,9 +597,9 @@ function limpiarSeleccionDeRibbon(){
                             ribbon._items["Reportes"].base.id="";
                             ribbon._items["Reportes"].base.lastElementChild.id="";
                         }
-                        if(ribbon._items["Control de Temas Especiales"]!=undefined){
-                            ribbon._items["Control de Temas Especiales"].base.id="";
-                            ribbon._items["Control de Temas Especiales"].base.lastElementChild.id="";
+                        if(ribbon._items["Gestión de Temas Especiales"]!=undefined){
+                            ribbon._items["Gestión de Temas Especiales"].base.id="";
+                            ribbon._items["Gestión de Temas Especiales"].base.lastElementChild.id="";
                         }
                         if(ribbon._items["Catálogos"]!=undefined){
                             ribbon._items["Catálogos"].base.id="";
@@ -950,9 +950,9 @@ var vistas = [];
 
         
 	var inicio=[
-        {id:'00',text:'<div id=\'desc\'>contrato(NO SELECCIONADO)</div>' ,items:[
+        {id:'00',text:'<div id=\'desc\'>Temática(NO SELECCIONADA)</div>' ,items:[
         
-                    {id:'0x1',mode:'cols',text:'Contratos',type:'block',
+                    {id:'0x1',mode:'cols',text:'Temáticas',type:'block',
           list:datacontratos
         }
         ]},
@@ -1133,12 +1133,12 @@ var jsonObj = {};
                         }    
         });
                 swal({
-  title: 'Seleccione una Opcion',
+  title: 'Seleccione una Temática',
   input: 'select',
 //  html:s,
 //  html:'<input type=\'text\' disabled>',
   inputOptions:jsonObj,
-  inputPlaceholder: 'Sin cumplimiento seleccionado ',
+  inputPlaceholder: 'Sin Temática Seleccionada ',
   showCancelButton: false,
   showLoaderOnConfirm: true,
    allowEscapeKey:false,
@@ -1150,7 +1150,7 @@ var jsonObj = {};
       if (value !== '') {
         resolve();
       } else {
-        reject('requieres seleccionar un contrato ');
+        reject('Requiere seleccionar una Temática ');
       }
     });
   },
@@ -1171,8 +1171,8 @@ var jsonObj = {};
                                 html: 'tu has seleccionado el contrato ' + r.clave_cumplimiento,    
                                 timer: 2000,
                               });
-                                window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
-                                window.top.$("#infocontrato").html("Opcion Seleccionada:<br>("+r.clave_cumplimiento+")");
+                                window.top.$("#desc").html("Temática("+r.clave_cumplimiento+")");
+                                window.top.$("#infocontrato").html("Temática Seleccionada:<br>("+r.clave_cumplimiento+")");
 //                                mostrarTareasEnAlarma();
                                 
                                 
@@ -1189,7 +1189,7 @@ var jsonObj = {};
             async:false,
             success: function(r) 
             {
-                window.top.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
+                window.top.$("#desc").html("Temática("+r.clave_cumplimiento+")");
                 window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
             }    
         });

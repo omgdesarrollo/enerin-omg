@@ -3,11 +3,15 @@ require_once '../ds/AccesoDB.php';
 class Gantt_TareaDao {
     public function listarRegistrosGanttTareas($VALUE) 
     {
+        $usuario=Session::getSesion("user")["ID_USUARIO"];
         try
         {
             $query="SELECT tbgantt_tareas.user,tbgantt_tareas.id, tbgantt_tareas.text, tbgantt_tareas.start_date, tbgantt_tareas.duration,
-            tbgantt_tareas.progress, tbgantt_tareas.parent, tbgantt_tareas.ponderado_programado,tbgantt_tareas.notas,tbgantt_tareas.status,tbgantt_tareas.notificacion_porcentaje_programado
+            tbgantt_tareas.progress, tbgantt_tareas.parent, tbgantt_tareas.ponderado_programado,tbgantt_tareas.notas,tbgantt_tareas.status,tbgantt_tareas.notificacion_porcentaje_programado,
+            tbusuarios.id_usuario, IF(tbusuarios.ID_USUARIO=$usuario,'true','false')  as manipulacion_tarea
             FROM gantt_tareas tbgantt_tareas
+            
+            JOIN usuarios tbusuarios  ON tbusuarios.ID_EMPLEADO=tbgantt_tareas.user
             WHERE tbgantt_tareas.id_tarea= $VALUE";
 
             $db=  AccesoDB::getInstancia();
@@ -48,7 +52,7 @@ class Gantt_TareaDao {
         {
             $query="INSERT INTO gantt_tareas (id,text,start_date,duration,progress,parent,user,id_tarea,ponderado_programado,notas,status,notificacion_porcentaje_programado)
                     VALUES('".$VALUES["id"]."','".$VALUES["text"]."','".$VALUES["start_date"]."','".$VALUES["duration"]."',
-                    '".$VALUES["progress"]."','".$VALUES["parent"]."','".$VALUES["user"]."','".$VALUES["id_tarea"]."',-1,'".$VALUES["notas"]."','".$VALUES["status"]."',".$VALUES["notificacion_porcentaje_programado"].")";
+                    '".$VALUES["progress"]."','".$VALUES["parent"]."','".$VALUES["user"]."','".$VALUES["id_tarea"]."',-1,'campo no se usa','".$VALUES["status"]."',".$VALUES["notificacion_porcentaje_programado"].")";
 //            echo "values: ".json_encode($query);
             $db=  AccesoDB::getInstancia();
             $lista = $db->executeQueryUpdate($query);
@@ -445,7 +449,56 @@ class Gantt_TareaDao {
             return -1;
         }
     }
+    
+    
+    
+    //area de notas historicas por actividad
+    public function notasHistoricas($value){
+        
+        try{
+
+           $query=" SELECT  tbgantt_notas_historico_temas.historico_notas,tbgantt_notas_historico_temas.id_tarea, tbgantt_notas_historico_temas.fecha_creacion_nota,
+		    tbgantt_notas_historico_temas.quien_introdujo_el_registro, tbusuario.nombre_usuario as nombre_usario_quien_creo_la_nota   
+                    FROM gantt_tareas tbgantt_tareas       
+                    JOIN gantt_notas_historico_temas tbgantt_notas_historico_temas ON tbgantt_notas_historico_temas.id_tarea=tbgantt_tareas.id
+                    JOIN usuarios tbusuario ON tbusuario.ID_USUARIO=tbgantt_notas_historico_temas.quien_introdujo_el_registro
+                    WHERE tbgantt_tareas.id_tarea=".$value["id_tarea_general_externa"]."  and tbgantt_notas_historico_temas.id_tarea=".$value["id_tarea_gantt_actividad"]."     order by tbgantt_notas_historico_temas.fecha_creacion_nota";
             
+            
+            //            $parametros=array("id_usuario"=>$value["id_usuario"],"id_tarea_general_externa"=>$value["id_tarea_general_externa"]);
+            $db=  AccesoDB::getInstancia();
+
+            $lista=$db->executeQuery($query);
+//              $lista=$db->executeQuery(AccesoDB::prepararConsulta($query, $parametros));
+            return $lista;
+        } catch (Exception $ex) {
+            throw $ex;
+            return -1;
+        }
+   
+    } 
+     public function insertarNotasHistoricas($VALUES)
+    {
+        try
+        {
+            $query="INSERT INTO gantt_notas_historico_temas (id_tarea,historico_notas,quien_introdujo_el_registro)
+                    VALUES('".$VALUES["id_actividad"]."','".$VALUES["nota"]."','".$VALUES["quiencreolanota"]."')";
+
+            $db=  AccesoDB::getInstancia();
+            $lista = $db->executeQueryUpdate($query);
+            
+            return $lista;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    
+    
+    
+    
 }
 
 ?>

@@ -13,22 +13,6 @@ $model=new NotificacionesTareasModel();
 
 switch ($Op) {
             
-            
-        case 'tareasEnAlarma':
-            $Lista= $model->tareasEnAlarma();
-            header('Content-type: application/json; charset=utf-8');
-            echo json_encode($Lista);
-            return $Lista;
-            
-            break;
-            
-//	case 'tareasProximasAVencer':
-//            $Lista= $model->tareasConFechaCumplimientoProximoAVencer();
-//            header('Content-type: application/json; charset=utf-8');
-//            echo json_encode($Lista);
-//            return $Lista;
-//            
-//            break;
         
         case 'tareasVencidas':
             $Lista= $model->tareasVencidas();

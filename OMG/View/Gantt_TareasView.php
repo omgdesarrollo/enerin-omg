@@ -133,7 +133,7 @@ and open the template in the editor.
     <script src="https://cdn3.devexpress.com/jslib/18.1.6/js/dx.all.js"></script>
     <link href="../../css/PersonalizacionVistasGantt.css" rel="stylesheet" type="text/css"/>
     <!--aqui termina las librerias que no son del gantt-->
-    
+    <!--<link href="../../css/notasgantt.css" rel="stylesheet" type="text/css"/>-->
     
    
  <style type="text/css">
@@ -221,8 +221,8 @@ and open the template in the editor.
     /*max-height: 90%;*/
 }
 
- .modal-lg{width: 50%;}
-
+ .modal-lg{width: 80%;}
+ .modal-body{position:relative;padding:0px}
 #mydiv {
     position: absolute;
     z-index: 9;
@@ -306,8 +306,13 @@ and open the template in the editor.
   </div>
 
 
- <div class="" id="gantt_here" style='width: 100%;height: 95%;position: absolute'>       </div>
-   
+
+ <div class="" id="gantt_here" style='width: 100%;height: 95%;position: absolute'> 
+ </div>
+
+ 
+ 
+ 
     
 <script>
 //Make the DIV element draggagle:
@@ -355,7 +360,7 @@ function dragElement(elmnt) {
 }
 </script>
 
-    </body>
+  
     
 <!-- Inicio de Seccion Modal Archivos-->
 <div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -408,6 +413,49 @@ function dragElement(elmnt) {
                 </div><!-- cierre div class modal-content -->
         </div><!-- cierre div class="modal-dialog" -->
 </div><!-- cierre del modal -->
+
+
+
+
+    
+<!-- Inicio de Seccion Modal Informe-->
+<div class="modal draggable fade" id="edicionNotas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+            <div id="loaderModalMostrar"></div>
+		<div class="modal-content">
+                        
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="font-size:inherit" aria-hidden="true" class="closeLetra">×</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Notas</h4>
+		      </div>
+
+		      <div class="modal-body">
+                        <div id="seccionNotas" style="">
+
+
+                        </div>
+                       </div>
+<!--                     <div id="seccionNotas" style="">
+
+
+                        </div>-->
+                          
+                </div><!-- cierre div class modal-content -->
+                <!--<button id="btnenviarnotas" class="btn btn-info">Enviar Nota</button>-->
+                
+                
+        </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal -->
+
+
+
+
+
+
+
+
+
+
 
   <script type="text/javascript">  
   var dxtreeList;
@@ -675,6 +723,69 @@ var banderaIngresarElPrimerResponsable=true;
 //                        gantt.getTask(id).status = 3;
 
                     }
+                    
+                   
+//                    if(banderaPrincipioCheckeoParent){
+//                        
+//                        if(item.parent==0){
+//                            if(item.user){
+//                                
+//                            }
+//                             elpadrecoincideConElUsuarioLogeado
+//                        }
+                       if(item.$level==0){
+//                           console.log(item);
+                          
+                         if(item.manipulacion_tarea=="false"){
+                             if(item.user=="0"){
+//                               alert();
+                                  gantt.getTask(id).readonly = false;
+                           }else{
+                              gantt.getTask(id).readonly = true;
+                           }
+                              
+                         }else{
+                             elpadrecoincideConElUsuarioLogeado=true;
+                         }
+                             
+                           
+                       }
+                       else{
+//                           alert("else");
+                            if(item.manipulacion_tarea=="false"){
+                               
+                                if(elpadrecoincideConElUsuarioLogeado==false){
+                                      gantt.getTask(id).readonly = true;
+                                        
+                                }else{
+                                    if(item.user==0){
+                                        gantt.getTask(id).readonly = false;
+                                      }else{
+//                                          gantt.getTask(id).readonly = true;
+                                      }
+                                    
+                                }
+                              
+                                
+                              
+                         }
+                       }
+                       
+                       
+//                        if(item.manipulacion_tarea=="false"){
+//                            gantt.getTask(id).readonly = true;
+//                        }
+                        
+//                        console.log(gantt.getTaskTop(id));
+//                        console.log(gantt);
+                    
+//                    alert();
+                    console.log(item)
+                    
+//                    if(item.manipulacion_tarea=="false"){
+//                        alert();
+//                          gantt.getTask(id).readonly = true;
+//                    }
 //                    if(item.status==2){
 //                        gantt.getTask(id).readonly = true;
 //                        gantt.getTask(id).progress = 1;
@@ -914,7 +1025,8 @@ gantt.config.columns=[
                         template: function (item) {
 //                            console.log("datos de text ",item);
                             if(item.progress==undefined){
-                                      return "sin fecha";
+//                                      return "sin fecha";
+                                       return item.start_date;
                                 }else{
                                     return item.start_date;
                                 }
@@ -941,7 +1053,7 @@ var opcionstatus=[
         gantt.config.lightbox.sections = [
 		{name: "description", height: 38, map_to: "text", type: "textarea", focus: true},
                 {name: "statusname", height: 38, map_to: "status", type: "select", options:opcionstatus},
-                {name: "notas", height: 38, map_to: "notas", type: "textarea"},
+//                {name: "notas", height: 38, map_to: "notas", type: "textarea"},
 		{name: "owner", height: 33, map_to: "user", type: "select", options:dataEmpleados},
                   {
 			name: "notificacion_porcentaje_programado", height: 33, map_to: "notificacion_porcentaje_programado", type: "select", options: [
@@ -1047,8 +1159,35 @@ dp.init(gantt);
 
     var datosTreeList=[]; 
     var ventana_detalles_abierta=false;
+    var banderaPrincipioCheckeoParent=true;
+    var elpadrecoincideConElUsuarioLogeado=false;
     $(function (){
-
+      
+      
+//      var db = firebase.database();  
+//       db.ref('notasgantttareas-temas').on('child_added', function(data){
+//            console.log(data.val());
+//       });
+      
+      
+      
+      
+//       $('#btnenviarnotas').on('click', function(){
+//            console.log("Funciona!");
+//            var notas=$("#notas").val();
+//            console.log(notas);
+////            set es para actualizar
+//            db.ref('notasgantttareas-temas').push({
+//             id:"2536253625",
+//             id_padre_de_todas_las_tareas_de_gantt:"2",
+//             notas:notas,
+//             origendequegantt:"temas",
+//             responsable:"2"
+//            });
+//            
+//        });
+        
+        
        cargarMenuArriba();
         var myToolbar;
 		function cargarMenuArriba() {
@@ -1058,7 +1197,7 @@ dp.init(gantt);
 			});    
 
                         myToolbar.addButton("detalles", 3, "Detalles", "File_Table.png", "save_dis.gif");
-                        
+                         myToolbar.addButton("notas", 3, "Notas", "registrarTareas.png", "save_dis.gif");
                          myToolbar.addButton("refresh", 3, "Recargar", "refresh.png");
 			myToolbar.addSeparator("sep1", 3);
                         
@@ -1113,6 +1252,19 @@ dp.init(gantt);
                                      }
                                 }
                            break;
+                           case "notas":
+                                $('#edicionNotas').draggable();
+//                                window.open("Ganttnotastipochat.php",'_blank');
+                                 $('#edicionNotas').modal({
+                                    show: 'true'
+                                 });
+//                                 $("#seccionNotas").load("Ganttnotastipochat.php");
+                                    $("#seccionNotas").html('<iframe src="Ganttnotastipochat.php" width="100%" height="100%"></iframe>');
+//                                   $("#sidebarObjV").load('InyectarVistasView.php #temas');
+                                
+                                
+                           break;
+                          
                            case "refresh":
                                refrescarDatosGantt();
                            break;
@@ -1303,8 +1455,10 @@ construirTreeList();
         width: 200
         },
         onRowClick:(args)=>{
+         
 //            console.log(args);
         },
+        
         onRowUpdated:function (args){
             console.log(args);
             if( args.data.hasOwnProperty('notasname') ) {
@@ -1339,7 +1493,7 @@ construirTreeList();
             { 
                 dataField: "user",
                 caption: "Responsable",
-                 allowEditing:true,
+                 allowEditing:false,
                   lookup: {
                     dataSource:dataEmpleados,
                     valueExpr: "key",
@@ -1361,6 +1515,7 @@ construirTreeList();
             { 
                 dataField: "notasname",
                 caption: "Notas",
+                visible:false,
                  allowEditing:true,
                  allowUpdating:true
             },
@@ -1666,6 +1821,28 @@ construirTreeList();
   </script>
   
   
+  
+<!--<script src="https://www.gstatic.com/firebasejs/5.5.5/firebase.js"></script>-->
+<script>
+  // Initialize Firebase
+//  var config = {
+//    apiKey: "AIzaSyAhszpIRh8BBXtzSbu1yhGziYX-uT5pPak",
+//    authDomain: "notasgantttareas-temas.firebaseapp.com",
+//    databaseURL: "https://notasgantttareas-temas.firebaseio.com",
+//    projectId: "notasgantttareas-temas",
+//    storageBucket: "notasgantttareas-temas.appspot.com",
+//    messagingSenderId: "1061411526028"
+//  };
+//  firebase.initializeApp(config);
+</script>
+  
+  
+  
+  
+  
+  
+  
+    </body> 
   <script id="template-upload" type="text/x-tmpl">
         {% for (var i=0, file; file=o.files[i]; i++) { %}
         <tr class="template-upload" style="width:100%">

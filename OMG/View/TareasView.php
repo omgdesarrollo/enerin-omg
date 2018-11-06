@@ -33,6 +33,7 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../assets/chart/loader.js" type="text/javascript"></script>
                 <!--Libreria web, para grafica-->
                 <!--<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>-->
+                
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
@@ -71,6 +72,79 @@ $Usuario=  Session::getSesion("user");
             .modal-lg{width: 60%;}
             .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
             body{overflow:hidden;}
+            
+            /*semaforo*/
+            .semaforoYellow {
+              background: #FFFF00;
+              border-radius: 0.8em;
+              -moz-border-radius: 0.8em;
+              -webkit-border-radius: 0.8em;
+              color: #FFFF00;
+              display: inline-block;
+              font-weight: bold;
+              line-height: 2.5em;
+              /*margin-right: 15px;*/
+              text-align: center;
+              width: 2.5em; 
+            }
+
+            .semaforoOrange {
+              background: #FFA500;
+              border-radius: 0.8em;
+              -moz-border-radius: 0.8em;
+              -webkit-border-radius: 0.8em;
+              color: #FFA500;
+              display: inline-block;
+              font-weight: bold;
+              line-height: 2.5em;
+              /*margin-right: 15px;*/
+              text-align: center;
+              width: 2.5em; 
+            }/*
+
+*/          .semaforoBlue {
+              background: #5178D0;
+              border-radius: 0.8em;
+              -moz-border-radius: 0.8em;
+              -webkit-border-radius: 0.8em;
+              color: #5178D0;
+              display: inline-block;
+              font-weight: bold;
+              line-height: 2.5em;
+              /*margin-right: 15px;*/
+              text-align: center;
+              width: 2.5em; 
+            }
+            
+            /*
+
+*/          .semaforoGreen {
+              background: #5EA226;
+              border-radius: 0.8em;
+              -moz-border-radius: 0.8em;
+              -webkit-border-radius: 0.8em;
+              color: #5EA226;
+              display: inline-block;
+              font-weight: bold;
+              line-height: 2.5em;
+              /*margin-right: 15px;*/
+              text-align: center;
+              width: 2.5em; 
+            }
+
+            .semaforoRed {
+              background: red;
+               border-radius: 0.8em;
+              -moz-border-radius: 0.8em;
+              -webkit-border-radius: 0.8em;
+              color: red;
+              display: inline-block;
+              font-weight: bold;
+              line-height: 2.5em;
+              /*margin-right: 15px;*/
+              text-align: center;
+              width: 2.5em; 
+            }
         </style>              
                 
  			 
@@ -91,18 +165,21 @@ require_once 'EncabezadoUsuarioView.php';
         Agregar
     </button>
 
-<!--    <button onClick="loadChartView(true)" type="button" id="btn_informe" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#informe_tareas">
-        Informe
-    </button>    -->
-
     <button type="button" id="btnAgregarDocumentoEntradaRefrescar" class="btn btn-info btn_refrescar" id="btnrefrescar" onclick="refresh();" >
         <i class="glyphicon glyphicon-repeat"></i>   
     </button>
 
-    <div class="pull-right">    
-<!--        <button onClick="loadChartView(true)" title="Informe" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#informe_tareas">
-            <i class="fa fa-pie-chart"></i>
+    <div class="pull-right">        
+        <label class="btn btn-info btn_checkbox">
+            <input style="margin: 6px 0 0;" type="checkbox" name="" id="checkTerminados" autocomplete="off"> Terminados
+        </label>
+        
+<!--        <div id="tareasTerminadas"></div>    -->
+
+<!--        <button type="button" class="btn btn-success" id="tareasTerminadas"> 
+            <i class="fa-times-circle-o"></i>
         </button>-->
+        
         <button onClick="graficar()" title="Graficar Circular" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#Grafica">
             <i class="fa fa-pie-chart"></i>
         </button>
@@ -143,7 +220,7 @@ require_once 'EncabezadoUsuarioView.php';
                     </div>
                 
                     <div class="form-group">
-                        <label class="control-label" for="title">Responsable del Plan:</label>
+                        <label class="control-label" for="title">Responsable:</label>
                         <select id="ID_EMPLEADOMODAL" class="select2">
                         </select>
                         <div class="help-block with-errors"></div>
@@ -229,7 +306,6 @@ require_once 'EncabezadoUsuarioView.php';
 <script>
 var DataGrid = [];
 var dataListado = [];
-//EmpleadosCombobox=[];
 var thisEmpleados=[];
 var filtros=[];
 var db={};
@@ -238,8 +314,6 @@ var ultimoNumeroGrid=0;
 var DataGridExcel=[];
 var origenDeDatosVista="tareas";
 
-//google.charts.load('current', {'packages':['corechart']});
-// $('tbody').sortable();
 var activeChart = -1;
 var chartsCreados = [];
 var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)},(dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)}];
@@ -290,7 +364,9 @@ MyComboEmpleados.prototype = new jsGrid.Field
                 
         },
         insertValue: function()
-        {},
+        {
+            
+        },
         editValue: function()
         {
                 if( this._inputDate[1] == undefined )
@@ -300,30 +376,139 @@ MyComboEmpleados.prototype = new jsGrid.Field
         }
 });
 
+var MyComboStatus = function(config)
+{
+    jsGrid.Field.call(this, config);
+};
+
+
+MyComboStatus.prototype = new jsGrid.Field
+({
+        align: "center",
+        sorter: function(date1, date2)
+        {
+            
+        },
+        itemTemplate: function(value,todo)
+        {
+//                console.log("Entro al itemTemplate");
+//                console.log("Este es el value: ",value.status_tarea);
+
+                fechaAlarma= todo.fecha_al.split("-");
+                fechaAlarma= new Date(fechaAlarma[0],fechaAlarma[1]-1,fechaAlarma[2],0,0);
+                fechaCumplimiento=  todo.fecha_cump.split("-");
+                fechaCumplimiento= new Date(fechaCumplimiento[0],fechaCumplimiento[1]-1,fechaCumplimiento[2],0,0);
+                hoy= new Date();
+                hoy= new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate(), 0, 0);
+                
+                var res ="";
+                if(value==1)
+                {
+                    if(fechaCumplimiento <= hoy)
+                    {
+                        res= "VENC";                        
+                    }else{
+                        if(fechaAlarma <= hoy)
+                        {
+                            res= "ALAR";
+                        }else{
+                            res= "EPRO";
+                        }
+                    }
+                }
+                
+                if(value==2)
+                {
+                    res= "SUSP";
+                }
+                
+                if(value==3)
+                {
+                    res= "TERM"
+                }
+//                console.log("Valores res: ",res);
+//                console.log("Fecha hoy: ",hoy);
+//                console.log("Fecha alarma: ",fechaAlarma);
+//                console.log("Fecha cumplimiento: ",fechaCumplimiento);
+                return res;
+
+        },
+        insertTemplate: function(value)
+        {
+            
+        },
+        editTemplate: function(value,todo)
+        {
+                console.log("Entro al console");
+                console.log("value en editTemplate: ",value );
+                var temp = "";
+                if(value==1)
+                {
+                    temp += "<option value='2' selected>SP</option>";
+                    temp += "<option value='3' selected>TR</option>";
+                }
+                
+                
+                if(value==2)
+                {
+                    temp += "<option value='1' selected>EP</option>";
+                    temp += "<option value='3' selected>TR</option>";
+                }
+                
+                if(value==3)
+                {
+                    temp += "<option value='1' selected>EP</option>";
+                    temp += "<option value='2' selected>SP</option>";
+                }                
+                
+                this._inputStatus = $("<select>").attr({style:"margin:-5px;width:145px"});
+                $(this._inputStatus[0]).append(temp);
+
+                return this._inputStatus[0];
+                
+        },
+        insertValue: function()
+        {
+            
+        },
+        editValue: function()
+        {
+            
+                if( this._inputStatus[1] == undefined )
+                        return $(this._inputStatus[0]).val();
+                else
+                        return this._inputStatus[1];
+        }
+});
+
  
  var customsFieldsGridData=[
-         {field:"customControl",my_field:MyCControlField},
-//        {field:"porcentaje",my_field:porcentajesFields},
-        {field:"comboEmpleados",my_field:MyComboEmpleados},
+    {field:"customControl",my_field:MyCControlField},
+    {field:"comboEmpleados",my_field:MyComboEmpleados},
+    {field:"comboStatus",my_field:MyComboStatus}
 ];
  
  
 estructuraGrid= [
     { name: "id_principal",visible:false},
+    { name: "fecha_al",visible:false},
+    { name: "fecha_cump",visible:false},
     { name:"no",title:"No",width:50},
     { name: "referencia",title:"Referencia", type: "textarea",width:200},
     { name: "tarea",title:"Tema", type: "textarea", validate: "required",width:200 },
     { name: "id_empleado", title: "Responsable", type: "comboEmpleados", width:250},
-    { name: "fecha_creacion",title:"Fecha de Creación", type: "text", validate: "required", width:150,editing: false},
+//    { name: "fecha_creacion",title:"Fecha de Creación", type: "text", validate: "required", width:150,editing: false},
     { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required", width:150,},
-    { name: "fecha_cumplimiento",title:"Fecha de Cumplimiento", type: "text", validate: "required", width:190,editing: false},
-    { name: "status_tarea", title:"Estatus", type: "select", width:150,valueField:"status_tarea",textField:"descripcion",
-        items:[{"status_tarea":"1","descripcion":"En Proceso"},{"status_tarea":"2","descripcion":"Suspendido"},{"status_tarea":"3","descripcion":"Terminado"}]
-    },
+    { name: "fecha_cumplimiento",title:"Fecha de Cumplimiento", type: "text", validate: "required", width:190,editing: false},    
+    { name: "status_tarea", title:"Estatus", type: "comboStatus", width:100},
+//    { name: "status_tarea", title:"Estatus", type: "select", width:150,valueField:"status_tarea",textField:"descripcion",
+//        items:[{"status_tarea":"1","descripcion":"En Proceso"},{"status_tarea":"2","descripcion":"Suspendido"},{"status_tarea":"3","descripcion":"Terminado"}]
+//    },
+    { name: "semaforo",title:"ID", type: "text", validate: "required", width:80,editing: false},
     { name: "observaciones",title:"Observaciones", type: "textarea", width:150,},
     { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:150,editing:false },
     { name: "registrar_programa",title:"Programa", type: "text", validate: "required",width:160, editing:false },
-    { name: "avance_programa",title:"Avance del Programa", type: "text", validate: "required",width:180, editing:false },      
+    { name: "avance_programa",title:"Avance", type: "text", validate: "required",width:150, editing:false },      
     { name:"delete", title:"Opción", type:"customControl",sorting:"", width:100}
 ], 
  
@@ -339,7 +524,8 @@ inicializarFiltros().then((resolve)=>
 (error)=>
 {
     growlError("Error!","Error al construir la vista, recargue la página");
-}); 
+});
+
 </script>
 
 

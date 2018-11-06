@@ -452,7 +452,7 @@ var listAjusteUsuarios=[];
                 
                 if(value["nombre"]=="UsuarioAjustesView"){
                     if(value["consult"]=="true" ||value["delete"]=="true" ||value["edit"]=="true" ||value["new"]=="true" ){
-                        listAjusteUsuarios.push( {id: "ajustes", text: "Cambiar Contraseña", icon: "ajustes.png"});
+                        listAjusteUsuarios.push( {id: "ajustes", text: "Personalizar", icon: "ajustes.png"});
                     }
                 }
                 

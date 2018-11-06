@@ -253,91 +253,91 @@ function insertarDocumento(documentoDatos)
 
 function saveUpdateToDatabase(args)//listo
 {
-        columnas=new Object();
+    columnas=new Object();
 //        entro=0;
-        id_afectado = args['item']['id_principal'][0];
-        verificar = 0;
-        $.each(args['item'],(index,value)=>
-        {
-                if(args['previousItem'][index]!=value && value!="")
-                {
-                        if(index!='id_principal' && !value.includes("<button") && index!="delete")
-                        {
-                                columnas[index]=value;
-                        }
-                }
+    id_afectado = args['item']['id_principal'][0];
+    verificar = 0;
+    $.each(args['item'],(index,value)=>
+    {
+            if(args['previousItem'][index]!=value && value!="")
+            {
+                    if(index!='id_principal' && !value.includes("<button") && index!="delete")
+                    {
+                            columnas[index]=value;
+                    }
+            }
+    });
+
+    if( Object.keys(columnas).length != 0 && verificar==0)
+    {
+
+        $.ajax({
+            url:"../Controller/GeneralController.php?Op=Actualizar",
+            type:"POST",
+            data:'TABLA=documentos'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
+            beforeSend:()=>
+            {
+                    growlWait("Actualización","Espere...");
+            },
+            success:(data)=>
+            {
+                    if(data==1)
+                    {
+                            growlSuccess("Actulización","Se actualizaron los campos");
+                            actualizarDocumento(id_afectado.id_documento);
+                    }
+                    else
+                    {
+                            growlError("Actualización","No se pudo actualizar");
+                            componerDataGrid();
+                            gridInstance.loadData();
+                    }
+            },
+            error:function()
+            {
+                    componerDataGrid();
+                    gridInstance.loadData();
+                    growlError("Error","Error del servidor");
+            }
         });
-        
-        if( Object.keys(columnas).length != 0 && verificar==0)
-        {
-            
-            $.ajax({
-                url:"../Controller/GeneralController.php?Op=Actualizar",
-                type:"POST",
-                data:'TABLA=documentos'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
-                beforeSend:()=>
-                {
-                        growlWait("Actualización","Espere...");
-                },
-                success:(data)=>
-                {
-                        if(data==1)
-                        {
-                                growlSuccess("Actulización","Se actualizaron los campos");
-                                actualizarDocumento(id_afectado.id_documento);
-                        }
-                        else
-                        {
-                                growlError("Actualización","No se pudo actualizar");
-                                componerDataGrid();
-                                gridInstance.loadData();
-                        }
-                },
-                error:function()
-                {
-                        componerDataGrid();
-                        gridInstance.loadData();
-                        growlError("Error","Error del servidor");
-                }
-            });
-        }
-        else
-        {
-                componerDataGrid();
-                gridInstance.loadData();
-        }
+    }
+    else
+    {
+            componerDataGrid();
+            gridInstance.loadData();
+    }
 }
 
 function actualizarDocumento(id_documento)
 {
-        $.ajax({
-                url:'../Controller/DocumentosController.php?Op=ListarDocumento',
-                type: 'GET',
-                data:'ID_DOCUMENTO='+id_documento,
-                success:function(datos)
-                {
-                        if(typeof(datos)=="object")
-                        {
-                            $.each(datos,function(index,value){
-                                    componerDataListado(value);
-                            });
-                            componerDataGrid();
-                            gridInstance.loadData();
-                        }
-                        else
-                        {
-                                growlError("Actualizar Vista","No se pudo actualizar la vista, refresque");
-                                componerDataGrid();
-                                gridInstance.loadData();
-                        }
-                },
-                error:function()
-                {
+    $.ajax({
+            url:'../Controller/DocumentosController.php?Op=ListarDocumento',
+            type: 'GET',
+            data:'ID_DOCUMENTO='+id_documento,
+            success:function(datos)
+            {
+                    if(typeof(datos)=="object")
+                    {
+                        $.each(datos,function(index,value){
+                                componerDataListado(value);
+                        });
                         componerDataGrid();
                         gridInstance.loadData();
-                        growlError("Error","Error del servidor");
-                }
-        });
+                    }
+                    else
+                    {
+                            growlError("Actualizar Vista","No se pudo actualizar la vista, refresque");
+                            componerDataGrid();
+                            gridInstance.loadData();
+                    }
+            },
+            error:function()
+            {
+                    componerDataGrid();
+                    gridInstance.loadData();
+                    growlError("Error","Error del servidor");
+            }
+    });
 }
 
 

@@ -1,159 +1,253 @@
-  $(function (){
-     
-//              cambiarCont();
-      $("#btn-cont").click(function (){
-          
-          
-        cambiarCont();
-      });
-      
-  });
+$(function ()
+{
+    $("#btn-cont").click(function ()
+    {
+      cambiarCont();
+    });
 
+});
 
- function cambiarCont()
-    { 
-//var jsonObj = {
-//    members: 
-//           {
-//            host: "hostName",
-//            viewers: 
-//            {
-//            }
-//        }
-//}
-var jsonObj = {
-    
-        }
-
-  $contador=1;
-           $.ajax({  
-                     url: "../Controller/CumplimientosController.php?Op=obtenerContrato",  
-                     async:false,
-                     success: function(r) {
-        $.each(r,function(index,value){
-             jsonObj[value.id_cumplimiento] = value.clave_cumplimiento ;
-                                })
-                       
-                        }    
-        });
-
-                swal({
-  title: 'Seleccione una Opcion',
-  input: 'select',
-  inputOptions:jsonObj,
-  inputPlaceholder: 'Sin cumplimiento seleccionado ',
-  showCancelButton: true,
-  showLoaderOnConfirm: true,
-  inputValidator: function (value) {
-    return new Promise(function (resolve, reject) {
-      if (value != '') {
+function inicializarFiltros()
+{  
+    return new Promise((resolve,reject)=>
+    {
+        filtros =[
+                {id:"noneUno",type:"none"},
+                {id:"clave_cumplimiento",type:"text"},
+                {id:"cumplimiento",type:"text"},
+                {name:"opcion",id:"opcion",type:"opcion"}
+        ];
         resolve();
-      } else {
-        reject('Requiere seleccionar un Cumplimiento');
-      }
-    });
-  },
-  preConfirm: function() {
-    return new Promise(function(resolve) {
-      setTimeout(function() {
-        resolve()
-      }, 1000)
-    })
-  }
-}).then(function (result) {
-//  swal({
-//    type: 'success',
-//    html: 'tu has seleccionado el contrato ' + result
-//  });
-//alert("ya");
-
-    $.ajax({  
-                        url: "../Controller/CumplimientosController.php?Op=contratoselec&c="+result+"&obt=false",  
-                        async:false,
-                        success: function(r) {
-//                            alert("dddf");
-//                              window.parent.$("#desc").html("CONTRATO("+r.clave_cumplimiento+")");
-                              $('#desc',window.parent.document).html("CONTRATO("+r.clave_cumplimiento+")");
-                               $('#infocontrato',window.parent.document).html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
-//                                window.parent.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
-//                            alert("si te respondio");
-                          
-                            
-                           }    
-           });
-  });
-    
- } 
-    
+    });    
+}
 
 
-listarCumplimientos();
 
-
-function listarCumplimientos()
+function listarDatos()
 {
-//    alert("Entro al ajax");
-    
-    
-    
-    
-    $.ajax
-    ({
-        url:'../Controller/CumplimientosController.php?Op=obtenerContrato',
-        type:'POST',
-        success:function(datos)
+    return new Promise((resolve,reject)=>
+    {
+        var __datos=[];
+        $.ajax(
         {
-            reconstruirTable(datos)
-        }                  
-        
+            url:"../Controller/CumplimientosController.php?Op=obtenerContrato",
+            type:"GET",
+            beforeSend:function()
+            {
+                growlWait("Solicitud","Solicitando Datos...");
+            },
+            success:function(data)
+            {
+                if(typeof(data)=="object")
+                {
+                    growlSuccess("Solicitud","Registros obtenidos");
+                    dataListado = data;
+                    $.each(data,function(index,value)
+                    {
+                        __datos.push(reconstruir(value,index+1));
+                    }); 
+                    DataGrid = __datos;
+                    gridInstance.loadData();
+                    resolve();
+                }else{
+                    growlSuccess("Solicitud","No Existen Registros");
+                    reject();
+                }               
+            },
+            error:function()
+            {
+                growlError("Error","Error en el servidor");
+                reject();
+            }        
+        });
     });
 }
 
 
-function reconstruirTable(data)
+function reconstruir(value,index)
 {
-    cargaTodo=0;
-    tempData="";
+    tempData=new Object();
+    ultimoNumeroGrid = index;
+    tempData["id_principal"]= [{'id_cumplimiento':value.id_cumplimiento}];
+    tempData["no"]= index;
+    tempData["clave_cumplimiento"]=value.clave_cumplimiento;
+    tempData["cumplimiento"]=value.cumplimiento;
+    tempData["id_principal"].push({eliminar : 0});    
+    tempData["id_principal"].push({editar : 1});
+    tempData["delete"]= tempData["id_principal"] ;
     
-       var c="";
-       
-     $.ajax
-    ({
-        url:'../Controller/CumplimientosController.php?Op=contratoselec&obt=true',
-        type:'POST',
-        async:false,
-        success:function(d)
-        {
-//            reconstruirTable(datos)
-            if(d!=""){
-                c=d;//en esta variable se guarda el contrato seleccionado falta
+    return tempData;
+}
+
+
+function saveUpdateToDatabase(args)//listo
+{
+    columnas=new Object();
+    id_afectado = args['item']['id_principal'][0];
+    verificar = 0;
+    $.each(args['item'],(index,value)=>
+    {
+            if(args['previousItem'][index]!=value && value!="")
+            {
+                    if(index!='id_principal' && !value.includes("<button") && index!="delete")
+                    {
+                            columnas[index]=value;
+                    }
             }
-        }                  
-        
     });
-//    alert("contrato seleccionado  "+c);
-    
-    $.each(data,function(index,value){
-        
-            tempData += reconstruir(value,cargaTodo);
-    });
-     
-    $("#contenido").html(tempData);
-    $("#loader").hide();
+
+    if( Object.keys(columnas).length != 0 && verificar==0)
+    {
+
+        $.ajax({
+            url:"../Controller/GeneralController.php?Op=Actualizar",
+            type:"POST",
+            data:'TABLA=cumplimientos'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
+            beforeSend:()=>
+            {
+                    growlWait("Actualización","Espere...");
+            },
+            success:(data)=>
+            {
+                    if(data==1)
+                    {
+                            growlSuccess("Actulización","Se actualizaron los campos");
+                            actualizarCumplimiento(id_afectado.id_cumplimiento);
+                    }
+                    else
+                    {
+                            growlError("Actualización","No se pudo actualizar");
+                            componerDataGrid();
+                            gridInstance.loadData();
+                    }
+            },
+            error:function()
+            {
+                    componerDataGrid();
+                    gridInstance.loadData();
+                    growlError("Error","Error del servidor");
+            }
+        });
+    }
+    else
+    {
+            componerDataGrid();
+            gridInstance.loadData();
+    }
 }
 
-
-function reconstruir(value,carga)
+function actualizarCumplimiento(id_cumplimiento)
 {
+    $.ajax({
+            url:'../Controller/CumplimientosController.php?Op=ListarCumplimiento',
+            type: 'GET',
+            data:'ID_CUMPLIMIENTO='+id_cumplimiento,
+            success:function(datos)
+            {
+                    if(typeof(datos)=="object")
+                    {
+                        $.each(datos,function(index,value){
+                                componerDataListado(value);
+                        });
+                        componerDataGrid();
+                        gridInstance.loadData();
+                    }
+                    else
+                    {
+                            growlError("Actualizar Vista","No se pudo actualizar la vista, refresque");
+                            componerDataGrid();
+                            gridInstance.loadData();
+                    }
+            },
+            error:function()
+            {
+                    componerDataGrid();
+                    gridInstance.loadData();
+                    growlError("Error","Error del servidor");
+            }
+    });
+}
+
+function componerDataListado(value)// id de la vista documento, listo
+{
+    id_vista = value.id_cumplimiento;
+    id_string = "id_cumplimiento";
+    $.each(dataListado,function(indexList,valueList)
+    {
+        $.each(valueList,function(ind,val)
+        {
+            if(ind == id_string)
+                    ( val==id_vista) ? dataListado[indexList]=value : console.log();
+        });
+    });
+}
+
+function componerDataGrid()//listo
+{
+    __datos = [];
+    $.each(dataListado,function(index,value){
+        __datos.push(reconstruir(value,index+1));
+    });
+    DataGrid = __datos;
+}
+
+function cambiarCont()
+{ 
+    var jsonObj = {    
+    }
+
+    $contador=1;
+    $.ajax({  
+        url: "../Controller/CumplimientosController.php?Op=obtenerContrato",  
+        async:false,
+        success: function(r) 
+        {
+            $.each(r,function(index,value)
+            {
+                jsonObj[value.id_cumplimiento] = value.clave_cumplimiento ;
+            });
+        }    
+    });
+
+    swal({
+      title: 'Seleccione una Temática',
+      input: 'select',
+      inputOptions:jsonObj,
+      inputPlaceholder: 'Sin Temática seleccionada ',
+      showCancelButton: true,
+      showLoaderOnConfirm: true,
+      inputValidator: function (value) {
+        return new Promise(function (resolve, reject) {
+          if (value != '') {
+            resolve();
+          } else {
+            reject('Requiere seleccionar una Temática ');
+          }
+        });
+      },
+      preConfirm: function() {
+        return new Promise(function(resolve) {
+          setTimeout(function() {
+            resolve()
+          }, 1000)
+        })
+      }
+    }).then(function (result) {
+
+        $.ajax({  
+            url: "../Controller/CumplimientosController.php?Op=contratoselec&c="+result+"&obt=false",  
+            async:false,
+            success: function(r) 
+            {
+                $('#desc',window.parent.document).html("CONTRATO("+r.clave_cumplimiento+")");
+                $('#infocontrato',window.parent.document).html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
+            }    
+        });
+    });    
+} 
  
-    tempData = "";
-    
-                if(carga==0)
-                tempData += "<tr  id='registro_"+value.id_cumplimiento+"'>";
-                tempData += "<td class='celda' width='50%'>"+value.clave_cumplimiento+"</td>";
-                tempData += "<td class='celda' width='50%'>"+value.cumplimiento+"</td>";
-                if(carga==0)
-                tempData += "</tr>";
-    
-        return tempData;                                                        
+function refresh()
+{
+   listarDatos();
+   gridInstance.loadData();
 }

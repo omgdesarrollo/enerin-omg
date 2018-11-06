@@ -102,6 +102,73 @@ class AccesoDB {
         $result2 = mysqli_affected_rows($cn);
 		return $result2;
     }
+    
+    
+    
+    
+    
+public static  function  escapar($valor)
+{
+  // Retornamos la cadena escapada. Está solo como ejemplo.
+  return mysql_escape_string($valor);
+}
+
+public static function prepararParametro($param)
+{
+  if(is_string($param))
+  {
+    // Si el parámetro es una cadena retornamos el valor
+    // de la cadena escapado entre ' '.
+    return "'". self::escapar($param)."'";
+  }
+  else if(is_array($param))
+  {
+    // Si es un array devolvemos una lista de los parametros
+    // separados por comas. Cada elemento del array es procesado
+    // por esta función para que tenga el formato correcto.
+    $retorno = '';
+    foreach($param as $p)
+    {
+      // Cuando retorno es vacio ('') quiere decir que no
+      // Tenemos que añadir la coma.
+      if($retorno == '')
+      {
+        $retorno .= prepararParametro($p);
+      }
+      else
+      {
+        $retorno .= ','.prepararParametro($p);
+      }
+    }
+
+    return $retorno;
+  }
+  else if($param == NULL)
+  {
+    // Si es NULL devolvemos la cadena 'NULL'
+    return 'NULL';
+  }
+  else
+  {
+    // Devolvemos el parametro.
+    return $param;
+  }
+}
+
+public static function prepararConsulta($consulta, $parametros = array())
+{
+  // Recorremos los parametros
+  foreach($parametros as $nombre => $parametro)
+  {
+    // Juntamos cada parte con el parametro correspondiente preparado.
+    $consulta = str_replace(":".$nombre, self::prepararParametro($parametro), $consulta);
+  }
+
+  // Devolvemos la consulta preparada
+  return $consulta;
+}
+
+    
 }
 
 

@@ -11,8 +11,9 @@ $modelArchivo=new ArchivoUploadModel();
 
 switch ($Op) {
     case 'Listar':
-        $Lista= $model->listarTareas();
         
+        $Lista= $model->listarTareas($_REQUEST['VALOR']);
+//        echo "valor en el controler: ".json_encode($_REQUEST['VALOR']);
         foreach ($Lista as $key => $value) {
             $url= $_REQUEST['URL'].$value['id_tarea'];
             $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls(-1,$url);
@@ -69,11 +70,11 @@ switch ($Op) {
                 $data['fecha_cumplimiento'],
                 $data['status_tarea'],
                 $data['observaciones'],
-                $data['id_empleado'],
-                $data['mensaje'],
-                $data['reponsable_plan'],
-                $data['tipo_mensaje'],
-                $data['atendido']
+                $data['id_empleado']
+//                $data['mensaje'],
+//                $data['reponsable_plan'],
+//                $data['tipo_mensaje'],
+//                $data['atendido']
                 );
         
         foreach ($Lista as $key => $value) {
@@ -94,7 +95,7 @@ switch ($Op) {
         break;
     
     case'enviarNotificacionWhenCambioDeStatus':
-        $Lista= $model->enviarNotificacionWhenCambioDeStatus($_REQUEST['ID_EMPLEADO'],$_REQUEST['TAREA'],$_REQUEST['STATUS_TAREA']);
+        $Lista= $model->enviarNotificacionWhenCambioDeStatus($_REQUEST['ID_EMPLEADO'],$_REQUEST['TAREA'],$_REQUEST['STATUS_TAREA'],$_REQUEST['ID_TAREA']);
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
         return $Lista;
@@ -123,6 +124,22 @@ switch ($Op) {
         echo json_encode($Lista);
         return $Lista;
         
+        break;
+    
+    case 'tareasEnAlarma':
+        $Lista= $model->tareasEnAlarma();
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+        return $Lista;
+
+        break;
+    
+    case 'tareasVencidas':
+        $Lista= $model->tareasVencidas();
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+        return $Lista;
+
         break;
         
     case'verificarTarea':

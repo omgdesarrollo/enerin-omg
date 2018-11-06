@@ -197,6 +197,73 @@ switch ($Op) {
             echo $modelGantt->verificarParentHijoEnTarea($v);
 //            echo "\'true\'";
         break;
+        case "insertarNotaHistorica":
+            
+            
+        break;
+    
+    
+        case "listarTareasModoChat":
+            
+              if(isset($_POST) and $_SERVER['REQUEST_METHOD'] == "POST"){
+                if(isset(Session::getSesion("user")["ID_USUARIO"])){
+				$data['status'] = 'success';
+				$data['user'] 	= Session::getSesion("user");
+			}else{
+				$data['status'] = 'error';
+			}
+                
+                
+//                $modelGantt->notasHistoricas()
+                        $data["tareas"]=$modelGantt->listarRegistrosGanttTareas(Session::getSesion("dataGantt_id_tarea"));
+                 header('Content-type: application/json; charset=utf-8');
+                echo json_encode($data);
+            }
+            
+            
+        break;
+        case "notasHistoricasxActividad":
+            
+            header('Content-type: application/json; charset=utf-8');
+           $data= json_decode( $_REQUEST["obtenerNotas"],true );
+            
+            echo json_encode($modelGantt->notasHistoricas($data[0]));
+        break;
+    
+        case "insertarNotasHistoricas":
+            header('Content-type: application/json; charset=utf-8');
+           $data= json_decode( $_REQUEST["valoresEnvio"],true );
+           $data["quiencreolanota"]=Session::getSesion("user")["ID_USUARIO"];
+           echo json_encode($modelGantt->insertarNotasHistoricas($data));
+        break;
+        
+        
+        case "mostrarNotasHistoricas":
+            
+            $data;
+            if(isset($_POST) and $_SERVER['REQUEST_METHOD'] == "POST"){
+                if(isset(Session::getSesion("user")["ID_USUARIO"])){
+				$data['status'] = 'success';
+				$data['user'] 	= Session::getSesion("user");
+			}else{
+				$data['status'] = 'error';
+			}
+                
+                
+//                $modelGantt->notasHistoricas()
+                        $data["tareas"]=$modelGantt->notasHistoricas();
+                 header('Content-type: application/json; charset=utf-8');
+                echo json_encode($data);
+            }
+            
+            
+            
+       
+            
+            
+            
+            
+        break;
         
         
         

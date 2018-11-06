@@ -9,8 +9,10 @@ $(function(){
     // $(document).ready(()=>{
         // console.log("function body");
     $("tbody").on('click','tr td',(obj)=>{
+    
         // console.log("function body");
         obj = obj.currentTarget;
+//        console.log(obj);
         if(myPop != undefined)
         {
             myPop.unload();

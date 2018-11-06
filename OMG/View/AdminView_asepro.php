@@ -169,9 +169,9 @@ $Usuario=  Session::getSesion("user");
                                         <th class="jsgrid-header-cell">Menu</th>
                                         <th class="jsgrid-header-cell">Vistas</th>
                                         <th class="jsgrid-header-cell">Ver</th>
-                                        <th class="jsgrid-header-cell">Guardar</th>
+<!--                                        <th class="jsgrid-header-cell">Guardar</th>
                                         <th class="jsgrid-header-cell">Modificar</th>
-                                        <th class="jsgrid-header-cell">Eliminar</th>
+                                        <th class="jsgrid-header-cell">Eliminar</th>-->
                                     </tr>
                                     <tbody id="bodyTablePermisos">
 
@@ -293,14 +293,14 @@ $Usuario=  Session::getSesion("user");
     
     estructuraGrid = [
         { name: "id_principal", visible:false},
-        { name: "no",title:"No.", type: "text", width: 40, editing:false},
+        { name: "no",title:"No.", type: "text", width: 60, editing:false},
         { name: "nombre_usuario",title:"Usuario ", type: "text", width: 180, editing:false},
         { name: "nombre",title:"Nombre", type: "text", width: 180, editing:false},
         { name: "correo",title:"Correo", type: "text", width: 180, editing:false},
-        { name: "categoria",title:"Categoria", type: "text", width: 140, editing:false},
-        { name: "cumplimientos",title:"Cumplimientos", type: "text", width: 140,editing:false},   
-        { name: "permisos",title:"Vistas", type: "text", width: 70, editing:false},
-        { name: "temas",title:"Temas", type: "text", width: 70,editing:false},
+        { name: "categoria",title:"Categoria", type: "text", width: 160, editing:false},
+        { name: "cumplimientos",title:"Cumplimientos", type: "text", width: 100,editing:false},
+        { name: "permisos",title:"Vistas", type: "text", width: 100, editing:false},
+        { name: "temas",title:"Temas", type: "text", width: 100,editing:false},
         { name:"delete", title:"Opción", type:"customControl",sorting:""},
     ];//grid
     
