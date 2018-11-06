@@ -3,11 +3,13 @@
 session_start();
 require_once '../Model/EmpleadoModel.php';
 require_once '../Model/Gantt_TareasModel.php';
+require_once '../Model/ArchivoUploadModel.php';
 require_once '../util/Session.php';
 
 $Op=$_REQUEST["Op"];
 $model=new EmpleadoModel();
 $modelGantt=new Gantt_TareasModel();
+$modelArchivo=new ArchivoUploadModel();
 // $pojo=new GanttPojo();
 switch ($Op) {
         case 'ListarTodasLasTareasPorId':
@@ -24,21 +26,26 @@ switch ($Op) {
           
             header('Content-type: application/json; charset=utf-8');
             echo json_encode(array("data"=>$Lista));
-            break;
+            break;            
             
-            
-         case 'ListarTodasLasTareasDetallesPorSuId':
+        case 'ListarTodasLasTareasDetallesPorSuId':
             $Lista= $modelGantt->listarRegistrosGanttTareas(Session::getSesion("dataGantt_id_tarea"));
              
-             
-          if(Gantt_TareasModel::verificarSiExisteIDTareaEnGanttTareas(array("id_tarea"=>Session::getSesion("dataGantt_id_tarea")))=="true"){
-              Gantt_TareasModel::actualizarExisteProgramaTareas(array("existeprograma"=>1,"id_tarea"=>Session::getSesion("dataGantt_id_tarea")));
-          }else{
-               Gantt_TareasModel::actualizarExisteProgramaTareas(array("existeprograma"=>0,"id_tarea"=>Session::getSesion("dataGantt_id_tarea")));
-          }      
+            if(Gantt_TareasModel::verificarSiExisteIDTareaEnGanttTareas(array("id_tarea"=>Session::getSesion("dataGantt_id_tarea")))=="true"){
+                Gantt_TareasModel::actualizarExisteProgramaTareas(array("existeprograma"=>1,"id_tarea"=>Session::getSesion("dataGantt_id_tarea")));
+            }else{
+                 Gantt_TareasModel::actualizarExisteProgramaTareas(array("existeprograma"=>0,"id_tarea"=>Session::getSesion("dataGantt_id_tarea")));
+            }
+          
+            foreach ($Lista as $key => $value) {
+                $url= $_REQUEST['URL'].$value['id'];
+                $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls(-1,$url);
+            }
+            
             header('Content-type: application/json; charset=utf-8');
             echo json_encode(array("data"=>$Lista));
             break;
+            
         case 'ListarDescripcionEnDondeSeEstanLojandoLasTareas':
             
             header('Content-type: application/json; charset=utf-8');

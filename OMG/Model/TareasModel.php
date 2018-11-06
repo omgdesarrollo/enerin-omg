@@ -178,14 +178,14 @@ class TareasModel{
         }
     }
 
-    public function insertarTarea($referencia,$tarea,$fecha_alarma,$fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado)
+    public function insertarTarea($tarea,$fecha_alarma,$fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado)
     {
         try
         {
             $contrato= Session::getSesion("s_cont");            
             $id_usuario=Session::getSesion("user");
             $dao=new TareasDAO();
-            $exito= $dao->insertarTarea($referencia, $tarea, $fecha_alarma, $fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado,$id_usuario['ID_USUARIO'],$contrato);
+            $exito= $dao->insertarTarea($tarea, $fecha_alarma, $fecha_cumplimiento,$status_tarea,$observaciones,$id_empleado,$id_usuario['ID_USUARIO'],$contrato);
             $tareasModel=new TareasModel();
             if($exito[0] = 1)
             {

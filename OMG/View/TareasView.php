@@ -205,12 +205,11 @@ require_once 'EncabezadoUsuarioView.php';
             </div>
 
             <div id="validacion_empleado" class="modal-body">
-                <!--<div id="ok"></div>-->
-                    <div class="form-group">
+<!--                    <div class="form-group">
                         <label class="control-label" for="title">Referencia:</label>
                         <input type="text"  id="REFERENCIA" class="form-control" data-error="Ingrese el Contrato" required />
                         <div id="mensaje1" class="help-block with-errors" ></div>
-                    </div>
+                    </div>-->
 
                     <div class="form-group">
                         <label class="control-label" for="title"> Tema:</label>
@@ -493,8 +492,8 @@ estructuraGrid= [
     { name: "id_principal",visible:false},
     { name: "fecha_al",visible:false},
     { name: "fecha_cump",visible:false},
-    { name:"no",title:"No",width:50},
-    { name: "referencia",title:"Referencia", type: "textarea",width:200},
+//    { name:"no",title:"No",width:50},
+//    { name: "referencia",title:"Referencia", type: "textarea",width:200},
     { name: "tarea",title:"Tema", type: "textarea", validate: "required",width:200 },
     { name: "id_empleado", title: "Responsable", type: "comboEmpleados", width:250},
 //    { name: "fecha_creacion",title:"Fecha de Creación", type: "text", validate: "required", width:150,editing: false},
