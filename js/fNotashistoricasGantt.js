@@ -56,12 +56,8 @@ ajax("POST", "data=checar_existe_usuario", function(res) {
 //            console.log(value);
 //             sideTwoHTML(value);
              sideOneHTML(value);
-        });
-        
-        
-//        sideTwoHTML(a);
-        
-        
+        });     
+//        sideTwoHTML(a);   
     }else{
         
     }
@@ -243,10 +239,6 @@ var  limit = 10;
         });
         var $window = $(window);
 
-
-
-
-
         function checkWidth() {
             var windowsize = $window.width();
             if (windowsize <= 700) {
@@ -315,7 +307,7 @@ var  limit = 10;
         //m es el usuario
 //        console.log(a.name);
         if (a.name == "") {
-            alert("e");
+//            alert("e");
             b += '<div class="row message-body">';
             b += '  <div class="col-sm-12 message-main-sender">';
             b += '	<div class="sender">';
@@ -507,7 +499,7 @@ document.getElementById("scroll").addEventListener("click", function() {
 //    });
     document.getElementById("send").addEventListener("click", function() {
 //        alert("D");
-  
+ 
         var a = new Date(),
             b = a.getDate(),
             c = (a.getMonth() + 1),
@@ -526,19 +518,19 @@ document.getElementById("scroll").addEventListener("click", function() {
 //            });
 // f=$(this).data('idactividad');
 //alert(idactividadGlobal);
+        
             var valoresEnviar={"id_actividad":idactividadGlobal,"nota":document.getElementById('comment').value};
             $.ajax({
                 url:"../Controller/GanttTareasController.php?Op=insertarNotasHistoricas",
                 type:"POST",
                 data:"data=send&valoresEnvio="+JSON.stringify(valoresEnviar),
                 success:function (res){
-//                    alert("termino");
-                    
+
 //                     var a = JSON.parse(res);
                      document.getElementById('comment').value = "";
-                    
+                     $(".sideBar-body.active").trigger('click');
                      scrollBottom();
-            
+                     
                     
                 }
             })
@@ -550,6 +542,8 @@ document.getElementById("scroll").addEventListener("click", function() {
 //            alert('no puede quedar el campo vacio ')
         }
     });
+    
+  
 //document.getElementsByClassName("newMessage-back")[0].addEventListener("click", function() {
 //    document.getElementsByClassName('side-two')[0].style.left = "-100%";
 //});
