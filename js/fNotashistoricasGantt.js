@@ -1,18 +1,15 @@
 apis="../Controller/GanttTareasController.php?Op=listarTareasModoChat";
 idactividadGlobal=-1;
 function ajax(method, send, callback) {
-//    alert("s");
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             callback(this.responseText);
         }
     };
-//    alert("entro ajax");
     xmlhttp.open(method, apis, true);
     xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     if (send) {
-		
         xmlhttp.send(send);
     } else {
         xmlhttp.send();
@@ -527,13 +524,10 @@ document.getElementById("scroll").addEventListener("click", function() {
                 type:"POST",
                 data:"data=send&valoresEnvio="+JSON.stringify(valoresEnviar),
                 success:function (res){
-
 //                     var a = JSON.parse(res);
                      document.getElementById('comment').value = "";
                      $(".sideBar-body.active").trigger('click');
-                     scrollBottom();
-                     
-                    
+                     scrollBottom();   
                 }
             })
             
