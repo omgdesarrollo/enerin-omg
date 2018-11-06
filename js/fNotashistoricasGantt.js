@@ -525,8 +525,7 @@ document.getElementById("scroll").addEventListener("click", function() {
                 type:"POST",
                 data:"data=send&valoresEnvio="+JSON.stringify(valoresEnviar),
                 success:function (res){
-//                    alert("termino");
-                    
+
 //                     var a = JSON.parse(res);
                      document.getElementById('comment').value = "";
                      $(".sideBar-body.active").trigger('click');

@@ -10,7 +10,6 @@ if(isset($_REQUEST["id_tarea"])){
     $dataGantt=Session::getSesion("dataGantt_id_tarea");
 }
 
-
 if(isset($_REQUEST["descripcion"])){
    Session::setSesion("dataGantt_descripcion",$_REQUEST["descripcion"]);
    $dataGanttDescripcion=Session::getSesion("dataGantt_descripcion");
