@@ -32,7 +32,7 @@ require_once '../util/Session.php';
         <link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
         <link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
 
-        <script src="../../angular/angular.min.js" type="text/javascript"></script>
+        <!-- <script src="../../angular/angular.min.js" type="text/javascript"></script> -->
 
         <!-- swalAlert -->
         <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
@@ -392,16 +392,16 @@ require_once '../util/Session.php';
 <script id="template-download" type="text/x-tmpl">
     {% var t = $('#fileupload').fileupload('active'); var i,file; %}
     {% for (i=0,file; file=o.files[i]; i++) { %}
-        <tr class="template-download" style="width:100%">
-            <td>
-            <span class="preview">
-                    {% if (file.thumbnailUrl) { %}
+        <!-- <tr class="template-download" style="width:100%"> -->
+            <!-- <td>
+            <span class="preview"> -->
+                    <!-- {% if (file.thumbnailUrl) { %} -->
                     <!-- <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery> -->
-                    <img src="{%=file.thumbnailUrl%}"></img>
+                    <!-- <img src="{%=file.thumbnailUrl%}"></img> -->
                     <!-- </a> -->
                     {% } %}
-            </span>
-            </td>
+            <!-- </span>
+            </td> -->
             <!-- <td> -->
             <!-- <p class="name"> -->
                     <!-- <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a> -->
@@ -409,13 +409,13 @@ require_once '../util/Session.php';
             <!-- </p> -->
             <!-- </td> -->
             <!-- <td>
-            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+            <!-- <span class="size">{%=o.formatFileSize(file.size)%}</span> -->
             </td> -->
             <!-- <td> -->
             <!-- <button class="delete" style="padding: 0px 4px 0px 4px;" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>Delete</button> -->
             <!-- <input type="checkbox" name="delete" value="1" class="toggle"> -->
             <!-- </td> -->
-        </tr>
+        <!-- </tr> -->
     {% } %}
     {% noArchivo=0; growlSuccess("","Imagen Cargada"); mostrar_urls(); %}
 </script>

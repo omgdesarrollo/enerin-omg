@@ -188,6 +188,11 @@ $(function()
         $("#OBSERVACIONES").val("");
     });
 
+    $("#subirArchivos").click(function()
+        {
+                agregarArchivosUrl();
+        });
+
     // $("tbody").on('click','tr td',(obj)=>{
     //     popup(obj);
     // });
@@ -821,10 +826,7 @@ var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/
                 ModalCargaArchivo += "</div></div>";
                 ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
                 
-$("#subirArchivos").click(function()
-{
-        agregarArchivosUrl();
-});
+
 months = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 
 function mostrar_urls(id_documento_entrada)
@@ -936,7 +938,6 @@ function borrarArchivo(url)
                         }
                 });
 }
-
                 
 function CambioStatusDocumentoEntrada()
 {
