@@ -55,9 +55,10 @@ require_once '../util/Session.php';
     </head>
     <body>
 
-    
+    <div class="bfh-colorpicker" data-name="colorpicker1"></div>
+    <input id="colorPicker" type="color"></input>
     <div id="filesPhoto"></div>
-    <div id="Contenedor" style="margin: 0px auto;">
+    <div id="Contenedor" style="margin: 0px auto;height:fit-content">
         <div id="contenedorFotoPerfil" class="Icon">
             <!-- <span id="fotoPerfilCambio" class="glyphicon glyphicon-user" style="cursor:pointer"></span> -->
         </div>
@@ -102,14 +103,17 @@ require_once '../util/Session.php';
         Frame = $(this)[0].frameElement;
         $(Frame).css("height","100%");
         var parentFrame = $(Frame).parent();
-        $(parentFrame).css("height","100%")
+        $(parentFrame).css("height","100%");
         
-        // $(()=>{
+        $(()=>{
         //     $("#fotoPerfilCambio").click(()=>{
         //         console.log("fotoPerfilCambio click");
         //         $("input[type='file']").click();
         //     });
-        // });
+            // $("#colorPicker").onChange(()=>{
+            //     alert("");
+            // })
+        });
 
         function limpiarFormulario()
         {
@@ -307,7 +311,7 @@ require_once '../util/Session.php';
                 data: 'URL='+url+"&SIN_CONTRATO=''",
                 success:function(creado)
                 {
-                    if(creado)
+                    if(creado==1)
                     {
                         growlWait("Subir Imagen","Cargando Imagen Espere...");
                         $('.start').click();
@@ -322,43 +326,42 @@ require_once '../util/Session.php';
 
         function mostrar_urls()
         {
-            let usuario = <?php echo Session::getSesion("user")["ID_USUARIO"] ?>;
-            let tempDocumentolistadoUrl = "";
-            URL = 'filePerfilesUsuario/'+usuario,
-            $.ajax({
-                url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
-                type: 'GET',
-                data: 'URL='+URL+"&SIN_CONTRATO=''",
-                // async:false,
-                success: function(todo)
-                {
-                    if(todo[0].length!=0)
+            return new Promise((resolve,reject)=>{
+                let usuario = <?php echo Session::getSesion("user")["ID_USUARIO"] ?>;
+                let tempDocumentolistadoUrl = "";
+                URL = 'filePerfilesUsuario/'+usuario,
+                $.ajax({
+                    url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
+                    type: 'GET',
+                    data: 'URL='+URL+"&SIN_CONTRATO=''",
+                    // async:false,
+                    success: function(todo)
                     {
-                        ultimo = todo[0].length;
-                        $("#contenedorFotoPerfil").html('<img onclick="fotoPerfilCambio()" src="'+todo[1]+"/"+todo[0][ultimo-1]+'" class="img-circle" style="width:140px;height:140px;margin-top:5px;cursor:pointer">');
-                    }
-                    else
-                        $("#contenedorFotoPerfil").html('<span onclick="fotoPerfilCambio()" class="glyphicon glyphicon-user" style="cursor:pointer"></span></div>');
+                        if(todo[0].length!=0)
+                        {
+                            ultimo = todo[0].length;
+                            $("#contenedorFotoPerfil").html('<img onclick="fotoPerfilCambio()" src="'+todo[1]+"/"+todo[0][ultimo-1]+'" class="img-circle" style="width:140px;height:140px;margin-top:5px;cursor:pointer">');
+                        }
+                        else
+                            $("#contenedorFotoPerfil").html('<span onclick="fotoPerfilCambio()" class="glyphicon glyphicon-user" style="cursor:pointer"></span></div>');
 
-                    noArchivo=1;
-                    $('#fileupload').fileupload
-                    ({
-                        url: '../View/',
-                    });
-                }
+                        noArchivo=1;
+                        $("#filesPhoto").html("<form id='fileupload' method='POST' enctype='form-data' style='display:none'>"+
+                        "<div class='fileupload-buttonbar'><div class='fileupload-buttons'>"+
+                        "<span id='fileBtn' class='fileinput-button'><span id='spanAgregarDocumento'><a >Agregar Archivos(Click o Arrastrar)...</a></span>"+
+                        "<input type='file' name='files[]' ></span><span class='fileupload-process'></span></div>"+
+                        "<div class='fileupload-progress'><div class='progress-extended'>&nbsp;</div></div></div>"+
+                        "<table role='presentation'><tbody class='files'></tbody></table></form>");
+                        resolve();
+                    }
+                });
             });
-            $("#filesPhoto").html("<form id='fileupload' method='POST' enctype='form-data' style='display:none'>"+
-                "<div class='fileupload-buttonbar'><div class='fileupload-buttons'>"+
-                "<span id='fileBtn' class='fileinput-button'><span id='spanAgregarDocumento'><a >Agregar Archivos(Click o Arrastrar)...</a></span>"+
-                "<input type='file' name='files[]' ></span><span class='fileupload-process'></span></div>"+
-                "<div class='fileupload-progress'><div class='progress-extended'>&nbsp;</div></div></div>"+
-                "<table role='presentation'><tbody class='files'></tbody></table></form>");
         }
         fotoPerfilCambio = ()=>
         {
             $("input[type='file']").click();
         }
-        mostrar_urls();
+        mostrar_urls().then(()=>{ $('#fileupload').fileupload({url: '../View/'}) });
     </script>
     <script id="template-upload" type="text/x-tmpl">
     {% let error = 0; %}
@@ -377,7 +380,7 @@ require_once '../util/Session.php';
             <!-- <div class="progress"></div> -->
             <!-- </td> -->
             <td>
-            {% if (!i && !o.options.autoUpload) { if(noArchivo==1){ if(file.type.split("/")[0]=="image"){ %}
+            {% if (!i && !o.options.autoUpload) { if(noArchivo==1){ if(file.type.split("/")[0]=="image"){ noArchivo=0; %}
                     <button class="start" style="display:none;padding: 0px 4px 0px 4px;" disabled>Start</button>
             {% }else{ error = 1; } } } %}
             {% if (!i) { %}
@@ -386,7 +389,7 @@ require_once '../util/Session.php';
             </td>
         </tr>
         {% if(i==0){ if(error==1) growlError("Error Imagen","Formato de Imagen no Compatible"); else{ $('.fileupload-buttonbar').html(""); agregarArchivosUrl();} } %}
-    <!-- {% noArchivo=1; } %} -->
+    <!-- {%  } %} -->
 </script>
 
 <script id="template-download" type="text/x-tmpl">
@@ -417,7 +420,7 @@ require_once '../util/Session.php';
             <!-- </td> -->
         <!-- </tr> -->
     {% } %}
-    {% noArchivo=0; growlSuccess("","Imagen Cargada"); mostrar_urls(); %}
+    {% growlSuccess("","Imagen Cargada"); mostrar_urls().then(()=>{ $('#fileupload').fileupload({url: '../View/'}); }); %}
 </script>
 <!-- <script src="../../assets/probando/js/bootstrap.min.js"></script> -->
 
