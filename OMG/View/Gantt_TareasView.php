@@ -258,8 +258,8 @@ and open the template in the editor.
   <div class="card">
     <div class="card-header" id="headingTwo">
       <h5 class="mb-0">
-        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-           Mostrar
+        <button id="btnMostrarOcultar" class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            <div id="textoMostrar_o_Ocultar_Menu"> Ocultar</div>
         </button>
       </h5>
     </div>
@@ -1160,7 +1160,26 @@ dp.init(gantt);
     var ventana_detalles_abierta=false;
     var banderaPrincipioCheckeoParent=true;
     var elpadrecoincideConElUsuarioLogeado=false;
+    var mostrar_ocultar_menu=true;
     $(function (){
+        
+      $("#btnMostrarOcultar").click(function(){
+     
+         if(mostrar_ocultar_menu==true){
+             $("#textoMostrar_o_Ocultar_Menu").html("Ocultar");
+             mostrar_ocultar_menu=false;
+         }else{
+             if(mostrar_ocultar_menu==false){
+                 $("#textoMostrar_o_Ocultar_Menu").html("Mostrar");
+                 mostrar_ocultar_menu=true;
+             }
+         }
+         
+         
+      });
+       $("#btnMostrarOcultar").trigger("click");
+      
+      
       
       
 //      var db = firebase.database();  
@@ -1212,7 +1231,7 @@ dp.init(gantt);
                                                 Array('tiempoaño','obj', 'Año' , '663.png'));
                         
                         
-                        myToolbar.addButtonSelect("visualizacionTiempo", 13, "Visualizacion Barras ", visualizacionBarras, "670.png");
+                        myToolbar.addButtonSelect("visualizacionTiempo", 13, "Periodo de visualizacion", visualizacionBarras, "670.png");
                         
                         myToolbar.addSeparator("sep4", 8);
                         

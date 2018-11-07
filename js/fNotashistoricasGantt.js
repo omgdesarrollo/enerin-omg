@@ -11,11 +11,10 @@ function ajax(method, send, callback) {
     xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     if (send) {
         xmlhttp.send(send);
-    } else {
+    }else {
         xmlhttp.send();
     }
 }
-
 
 
 var id_usuario=-1,estareapadre=false;
