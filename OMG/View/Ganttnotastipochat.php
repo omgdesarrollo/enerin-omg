@@ -11,6 +11,10 @@
                 <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
                 <link href="../../assets/firebase/css/style.css" rel="stylesheet" type="text/css"/>
                 
+                <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
+                <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
+                <link href="../../assets/dhtmlxSuite_v51_std/skins/web/dhtmlx.css" rel="stylesheet" type="text/css"/>
+                
                 <style type="text/css">
                     .heading {
                         background-color: #006699;
@@ -29,7 +33,18 @@
                         color:#000000;
                         font-size: 16;
                     }
-                    
+                    div.dhx_popup_dhx_web div.dhx_popup_area {
+                        position: relative;
+                        margin: 10px;
+                        padding: 3px 0;
+                        border: 1px solid #fff;
+                        box-shadow: 0 0 6px rgba(0,0,0,0.35);
+                        *border: 1px solid #c6c6c6;
+                        background-color: #f4f4f4;
+                        left: 34%;
+                        height: 60px;
+                    }
+                  
                 </style>
 	</head>
 	<body>
@@ -184,9 +199,14 @@
 //                      obtenerActividadesTodasLasQuePertenezco().then(function (){
 //                          alert("exitoso");
 //                      });
-                        
-                        
-                        
+                    var myPop = new dhtmlXPopup();
+                  
+
+                    function showPopup(text) {
+                        myPop.attachHTML(text);
+                        myPop.show(90,1,7,-12); //params are: x, y, width, height
+                       
+                    }
                         
                     function obtenerActividadesTodasLasQuePertenezco(){
                         return new Promise(function(resolve,reject){

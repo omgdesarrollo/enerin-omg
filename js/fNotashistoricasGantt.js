@@ -181,6 +181,7 @@ function sideOneHTMLAnterior(a) {
     });
 var  limit = 10;
   $('body').on('click', '.side-one .sideBar-body', function() {
+      
       mostrarInfoMasAdetalleActividad();
 //      alert("e");
         var a = $(this).attr('id'),
@@ -189,6 +190,7 @@ var  limit = 10;
             st = $(this).data('status'),
             idactividad=$(this).data('idactividad'),
             manipulacion_tarea=$(this).data('manipulacion_tarea');
+            showPopup(a);
 //            alert(manipulacion_tarea);
              if(estareapadre==true){
                 $("#campoParaEnviarNota").html('<textarea class="form-control" data-emojiable="true" rows="1" id="comment"></textarea>');
