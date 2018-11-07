@@ -239,8 +239,12 @@ and open the template in the editor.
     background-color: #2196F3;
     color: #fff;
 }
-
-   
+/*start encabezado seccion carga archivo-->*/
+th {
+    text-align: left;
+    width: 48%;
+}
+/*<--end*/
 
 
 </style> 	
@@ -1392,10 +1396,9 @@ construirTreeList();
          parentIdExpr: "parent",
         showRowLines: true,
         showBorders: true,
-        columnAutoWidth: true,
         autoExpandAll: true,
         allowColumnResizing: true,
-        columnAutoWidth: true,
+        columnAutoWidth: false,
         allowColumnReordering: true,
         height:700,
         columnChooser: {
@@ -1472,7 +1475,6 @@ construirTreeList();
         searchVisibleColumnsOnly: false,
         text: "",
         visible: true,
-        width: 160
         },
         loadPanel: {
         enabled: true,
@@ -1481,7 +1483,6 @@ construirTreeList();
         showIndicator: true,
         showPane: true,
         text: "Loading...",
-        width: 200
         },
         onRowClick:(args)=>{
          
@@ -1511,20 +1512,20 @@ construirTreeList();
             {
                 dataField: "id",
                 caption: "ID",
-//                width:170,
+                width:95,
                 allowEditing:false
             },
             {
                 dataField: "text",
                 caption: "Descripcion de la Actividad",
-//                width:300,
+                width:300,
                 allowEditing:false
             },
             
             { 
                 dataField: "user",
                 caption: "Responsable",
-//                width:200,
+                width:100,
                 allowEditing:false,
                 lookup: {
                     dataSource:dataEmpleados,
@@ -1536,13 +1537,13 @@ construirTreeList();
             { 
                 dataField: "porcentaje_por_actividad",
                 caption: "Peso de la Actividad",
-//                width:100,
+                width:90,
                 allowEditing:true
             },
              { 
                 dataField: "avance",
                 caption: "Avance (%)",
-//                width:80,
+                width:62,
                 allowEditing:false
                 
             },
@@ -1556,7 +1557,7 @@ construirTreeList();
             { 
                 dataField: "status",
                 caption: "Estatus",
-//                width:80,
+                width:65,
                 allowEditing:false,
                 lookup: {
                     dataSource:opcionstatus,
@@ -1567,7 +1568,7 @@ construirTreeList();
              { 
                 dataField: "archivo_adjunto",
                  captbion: "Archivo Adjunto",
-//                 width:100,
+                 width:100,
                 cellTemplate:archivoAdjuntoCellTemplate,
                   allowEditing:false
                   
@@ -1762,7 +1763,7 @@ construirTreeList();
                     {
                             if(todo[0].length!=0)
                             {
-                                    tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
+                                    tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header' >Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
                                     $.each(todo[0], function (index,value)
                                     {
                                             nametmp = value.split("^-O-^-M-^-G-^");
