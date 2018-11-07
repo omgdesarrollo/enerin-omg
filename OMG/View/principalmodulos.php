@@ -144,8 +144,8 @@ $Usuario=  Session::getSesion("user");
         $color = Session::getSesion("colorFondo_Vista");
     echo "'$color'";
     ?>;
-    console.log(colorView);
-    $("style").append("::-webkit-scrollbar-thumb{ background-color:"+colorView+" !important;} .dhxlayout_base_material div.dhx_cell_layout div.dhx_cell_hdr{background-color:"+colorView+" !important;opacity:0.8 !important; }");
+    // console.log(colorView);
+    $("style").append("::-webkit-scrollbar-thumb{ background-color:"+colorView+" !important;} .dhxlayout_base_material div.dhx_cell_layout div.dhx_cell_hdr{background-color:"+colorView+" !important;opacity:0.8 !important; } .dhxrb_block_label{ background:"+colorView+" !important; opacity:0.8; } ");
                 
             
 		var dhxWins, w1,w , myLayout, mySidebar,ribbon,layout;

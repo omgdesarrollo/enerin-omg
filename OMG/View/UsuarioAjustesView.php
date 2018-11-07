@@ -145,6 +145,16 @@ require_once '../util/Session.php';
         $(parentFrame).css("height","100%");
 
         $(document).ready(()=>{
+            var colorView = <?php
+            $color = "";
+            if(Session:: NoExisteSeSion("colorFondo_Vista"))
+                $color = Session::getSesion("user")["FONDO_COLOR"];
+            else
+                $color = Session::getSesion("colorFondo_Vista");
+            echo "'$color'";
+            ?>;
+            // console.log(colorView);
+            $("style").append("::-webkit-scrollbar-thumb{ background-color:"+colorView+" !important;} .dhxlayout_base_material div.dhx_cell_layout div.dhx_cell_hdr{background-color:"+colorView+" !important;opacity:0.8 !important; }");
             $('#demo').wheelColorPicker();
         });
         
