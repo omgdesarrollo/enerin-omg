@@ -144,9 +144,48 @@ $Usuario=  Session::getSesion("user");
         $color = Session::getSesion("colorFondo_Vista");
     echo "'$color'";
     ?>;
-    // console.log(colorView);
-    $("style").append("::-webkit-scrollbar-thumb{ background-color:"+colorView+" !important;} .dhxlayout_base_material div.dhx_cell_layout div.dhx_cell_hdr{background-color:"+colorView+" !important;opacity:0.8 !important; } .dhxrb_block_label{ background:"+colorView+" !important; opacity:0.8; } ");
-                
+    var colorLeter = hexToRgb(colorView);
+    console.log(colorLeter);
+    colorLeter = invertirRgb(colorLeter)==2?"#ffffff":"#000000";
+    // colorLeter = rgbToHex( colorLeter["r"], colorLeter["g"], colorLeter["b"] );
+    console.log(colorView);
+    $("style").append("::-webkit-scrollbar-thumb{ background-color:"+colorView+" !important;}");
+    $("style").append(".dhxlayout_base_material div.dhx_cell_layout div.dhx_cell_hdr{background-color:"+colorView+" !important;opacity:0.8 !important; color:"+colorLeter+" }");
+    $("style").append(".dhxrb_block_label{ background:"+colorView+" !important; opacity:0.8; color:"+colorLeter+" !important }");
+
+    function hexToRgb(hex)
+    {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : null;
+    }
+
+    function rgbToHex(r, g, b)
+    {
+        return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+    }
+
+    function componentToHex(c)
+    {
+        var hex = c.toString(16);
+        return hex.length == 1 ? "0" + hex : hex;
+    }
+
+    function invertirRgb(data)
+    {
+        // obj = new Object();
+        obj = 0;
+        $.each(data,(index,value)=>{
+            if(value<120 && data["r"]>160 && index!="r")
+                obj++;
+            // obj[index] = Math.abs(value-250);
+        });
+        return obj;
+    }
+
             
 		var dhxWins, w1,w , myLayout, mySidebar,ribbon,layout;
                 var arr = [];
