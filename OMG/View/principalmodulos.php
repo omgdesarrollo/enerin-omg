@@ -8,6 +8,7 @@ if (Session:: NoExisteSeSion("user")){
     header("location: login.php");
     return;
 }
+// var_dump( Session::getSesion("user") );
 //para hallar ruta fisica tanto web como local
 //echo dirname(__FILE__);
 //$urls["fisica"] = "/home/fpa9q09nzhnx/public_html/oficina/archivos/";
@@ -43,12 +44,12 @@ $Usuario=  Session::getSesion("user");
 
         <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
         <style>
-                .modal-body{
-                      color:#888;
-                      max-height: calc(100vh - 110px);
-                      overflow-y: auto;
-                     
-                    } 
+
+        .modal-body{
+                color:#888;
+                max-height: calc(100vh - 110px);
+                overflow-y: auto;
+            }
             
 		div#sidebarObj {
 			position: relative;
@@ -134,6 +135,17 @@ $Usuario=  Session::getSesion("user");
                 
 	</style>
 	<script>
+
+    var colorView = <?php
+    $color = "";
+    if(Session:: NoExisteSeSion("colorFondo_Vista"))
+        $color = Session::getSesion("user")["FONDO_COLOR"];
+    else
+        $color = Session::getSesion("colorFondo_Vista");
+    echo "'$color'";
+    ?>;
+    console.log(colorView);
+    $("style").append("::-webkit-scrollbar-thumb{ background-color:"+colorView+" !important;} .dhxlayout_base_material div.dhx_cell_layout div.dhx_cell_hdr{background-color:"+colorView+" !important;opacity:0.8 !important; }");
                 
             
 		var dhxWins, w1,w , myLayout, mySidebar,ribbon,layout;

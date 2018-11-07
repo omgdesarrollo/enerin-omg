@@ -173,7 +173,15 @@ switch ($Op)
     case 'CambiarPermisoCumplimiento':
         $exito = $model->cambiarPermisoCumplimiento($_REQUEST["ID_USUARIO"],$_REQUEST["ID_CUMPLIMIENTO"],$_REQUEST["VALOR"]);
         echo $exito;
-        break;
+    break;
+
+    case 'CambiarColor':
+        $usuario = Session::getSesion("user");
+        $exito = $model->cambiarColor($usuario["ID_USUARIO"],$_REQUEST["COLOR"]);
+        if($exito>0)
+            Session::setSesion("colorFondo_Vista",$_REQUEST["COLOR"]);
+        echo $exito;
+    break;
 
     default:
     return false;

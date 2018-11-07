@@ -24,6 +24,12 @@ require_once '../util/Session.php';
 
         <!-- <script src="../../js/jquery.min.js" type="text/javascript"></script> -->
         <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
+
+        <script src="../../assets/colorPicker2/jquery.wheelcolorpicker.js" type="text/javascript"></script>
+        <link href="../../assets/colorPicker2/css/wheelcolorpicker.css" rel="stylesheet" type="text/css"/>
+
+        <!-- <script src="../../assets/colorPicker/jquery.mousewheel.min.js" type="text/javascript"></script> -->
+        <!-- <script src="../../assets/colorPicker/colorPicker.min.js" type="text/javascript"></script> -->
         <!-- <script src="../../js/is.js" type="text/javascript"></script> -->
         <!-- <script src="../../js/tooltip.js" type="text/javascript"></script> -->
 
@@ -38,25 +44,42 @@ require_once '../util/Session.php';
         <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
         <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
         <style>
-        #fileupload
+        /* #fileupload
         {
             text-align:center;
-        }
+        } */
         body
         {
             height:100%;
         }
-        table[role="presentation"]
+        .jQWCP-wWidget
+        {
+            top:45px !important;
+            left:5px !important;
+            width:auto !important;
+            /* display:table !important; */
+        }
+        /* td,th{padding:10px} */
+        /* table[role="presentation"]
         {
             width:100%;
             text-align:center;
-        }
+        } */
         </style>
     </head>
     <body>
 
-    <div class="bfh-colorpicker" data-name="colorpicker1"></div>
-    <input id="colorPicker" type="color"></input>
+    <!-- <div style="width:128px;">
+   <input style="width:100px;" id="mycolor" class="colorPicker evo-cp0" />
+   <div class="evo-colorind" style="background-color:#8db3e2"></div>
+</div> -->
+    <!-- <input id="colorPicker" type="color"></input> -->
+    <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
+        <button id="cambiarFondoBtn" type="button" class="btn btn-success btn_agregar">Cambiar Fondo</button>
+        <button id="cambiarFondoAccionBtn" type="button" class="btn btn-success btn_agregar" disabled>Guardar Fondo</button>
+    </div>
+    <input type="text" id="demo" data-wheelcolorpicker>
+
     <div id="filesPhoto"></div>
     <div id="Contenedor" style="margin: 0px auto;height:fit-content">
         <div id="contenedorFotoPerfil" class="Icon">
@@ -104,16 +127,64 @@ require_once '../util/Session.php';
         $(Frame).css("height","100%");
         var parentFrame = $(Frame).parent();
         $(parentFrame).css("height","100%");
+
+        $(document).ready(()=>{
+            $('#demo').wheelColorPicker();
+        });
         
         $(()=>{
-        //     $("#fotoPerfilCambio").click(()=>{
-        //         console.log("fotoPerfilCambio click");
-        //         $("input[type='file']").click();
-        //     });
-            // $("#colorPicker").onChange(()=>{
-            //     alert("");
-            // })
+
+            $("#cambiarFondoBtn").click(()=>{
+                $("#demo").focus();
+            });
+
+            $("#demo").focus(()=>{
+                $(".jQWCP-wWidget").css("display","table");
+            });
+
+            $("#demo").on("change",()=>{
+                let color = $("#demo").wheelColorPicker('getValue');
+                $("#cambiarFondoAccionBtn").removeAttr("disabled");
+                $("#cambiarFondoAccionBtn").css("background","#"+color);
+            });
+
+            $("#cambiarFondoAccionBtn").click(()=>{
+                let color = $("#demo").wheelColorPicker('getValue');
+                cambiarColorDB(color);
+            });
         });
+
+        cambiarColorDB = (newColor)=>
+        {
+            $.ajax({
+                url: '../Controller/AdminController.php?Op=CambiarColor',
+                type: 'POST',
+                data: 'COLOR=#'+newColor,
+                beforeSend:()=>
+                {
+                    growlWait("Cambiar Color Fondo","...");
+                },
+                success:(resp)=>
+                {
+                    if(resp==1)
+                    {
+                        growlSuccess("Cambiar Color Fondo","Cambiado.<br>Recarga en breve");
+                        $("#cambiarFondoAccionBtn").attr("disabled",true);
+                        setTimeout(() => {
+                            window.parent.location.reload();
+                        }, 2000);
+                    }
+                    else
+                    {
+                        growlError("Error Cambiar Color Fondo","No se pudo cambiar el color de fondo");
+                    }
+                },
+                error:()=>
+                {
+                    growlError("Error","Error en el servidor");
+                }
+            });
+        }
 
         function limpiarFormulario()
         {
@@ -437,6 +508,6 @@ require_once '../util/Session.php';
     <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
     <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
     <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
-    <script src="../../assets/FileUpload/js/main.js"></script>
+    <!-- <script src="../../assets/FileUpload/js/main.js"></script> -->
     <body>
 </html>
