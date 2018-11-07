@@ -59,6 +59,22 @@ require_once '../util/Session.php';
             width:auto !important;
             /* display:table !important; */
         }
+        #demo:focus
+        {
+            /* border:0px;
+            background:transparent;
+            color:transparent; */
+        }
+        #demo
+        {
+            width:0px;
+            height:0px;
+            top:10px;
+            left:10px;
+            /* border:0px;
+            background:transparent;
+            color:transparent; */
+        }
         /* td,th{padding:10px} */
         /* table[role="presentation"]
         {
@@ -79,7 +95,7 @@ require_once '../util/Session.php';
         <button id="cambiarFondoAccionBtn" type="button" class="btn btn-success btn_agregar" disabled>Guardar Fondo</button>
     </div>
     <input type="text" id="demo" data-wheelcolorpicker>
-
+    <br><br><br>
     <div id="filesPhoto"></div>
     <div id="Contenedor" style="margin: 0px auto;height:fit-content">
         <div id="contenedorFotoPerfil" class="Icon">
@@ -168,7 +184,7 @@ require_once '../util/Session.php';
                 {
                     if(resp==1)
                     {
-                        growlSuccess("Cambiar Color Fondo","Cambiado.<br>Recarga en breve");
+                        growlSuccess("Cambiar Color Fondo","Cambiado.<br>Recarga en breve...");
                         $("#cambiarFondoAccionBtn").attr("disabled",true);
                         setTimeout(() => {
                             window.parent.location.reload();
