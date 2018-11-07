@@ -171,7 +171,7 @@ require_once '../util/Session.php';
             $("#demo").on("change",()=>{
                 let color = $("#demo").wheelColorPicker('getValue');
                 $("#cambiarFondoAccionBtn").removeAttr("disabled");
-                $("#cambiarFondoAccionBtn").css("background","#"+color);
+                $("#cambiarFondoAccionBtn").css({"background":"#"+color,"opacity":0.8});
             });
 
             $("#cambiarFondoAccionBtn").click(()=>{
@@ -441,6 +441,11 @@ require_once '../util/Session.php';
                         }
                         else
                             $("#contenedorFotoPerfil").html('<span onclick="fotoPerfilCambio()" class="glyphicon glyphicon-user" style="cursor:pointer"></span></div>');
+                        $.ajax({
+                            url: '../Controller/AdminController.php?Op=CrearSesionVarPhoto',
+                            type: 'POST',
+                            data: 'URL='+todo[1]+"/"+todo[0][ultimo-1]
+                        });
 
                         noArchivo=1;
                         $("#filesPhoto").html("<form id='fileupload' method='POST' enctype='form-data' style='display:none'>"+

@@ -183,6 +183,10 @@ switch ($Op)
         echo $exito;
     break;
 
+    case 'CrearSesionVarPhoto':
+        Session::setSesion("fotoPerfilActual",$_REQUEST["URL"]);
+    break;
+
     default:
     return false;
     break;
