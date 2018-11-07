@@ -299,7 +299,7 @@ clock();
                              <div class="row">
                                  <div class="input-field col s12 light-blue-text text-darken-3">
                                      <i class="material-icons prefix">vpn_key</i>
-                                     <input id="contrasenaInput" name="pass" type="password" id="pass-input" class="autocomplete" autocomplete="off">
+                                     <input id="contrasenaInput" name="pass" type="password" id="pass-input">
                                      <label for="contrasenaInput">CONTRASEÑA</label>
                                  </div>
                              </div>
