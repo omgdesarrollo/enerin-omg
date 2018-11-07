@@ -114,13 +114,13 @@ function lol()
         let val = $('.jsgrid-filter-row').css("display");
         if(val != "none")
         {
-            $(".jsgrid-grid-body").css("height", (t + 235) + "px");
-            gridInstance._body[0].style.height = (t + 235) +"px";
+            $(".jsgrid-grid-body").css("height", (t + 225) + "px");
+            gridInstance._body[0].style.height = (t + 225) +"px";
         }
         else
         {
-            $(".jsgrid-grid-body").css("height", (t + 293.8) +"px");
-            gridInstance._body[0].style.height = (t + 293.8) +"px";
+            $(".jsgrid-grid-body").css("height", (t + 253.8) +"px");
+            gridInstance._body[0].style.height = (t + 253.8) +"px";
         }
         $(".jsgrid-pager-container").css({
             top: t + 445 + "px",
@@ -400,7 +400,6 @@ function aceptarEdicion()
 function cancelarEdicion()
 {
     $("#jsGrid").jsGrid("cancelEdit");
-    
 }
 
 function modoEditar()

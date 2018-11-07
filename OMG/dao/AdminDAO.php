@@ -319,12 +319,24 @@ class AdminDAO{
             return false;
         }
     }
-    
-    
+
+    public function cambiarColor($ID_USUARIO,$COLOR)
+    {
+        try
+        {
+            $query = "UPDATE usuarios SET fondo_color = '$COLOR' WHERE ID_USUARIO = $ID_USUARIO";
+            $db= AccesoDB::getInstancia();
+            $exito= $db->executeUpdateRowsAfected($query);
+            return $exito;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
     
     //lo de aqui para abajo es para mostrar estructura principal tomand en cuenta permisos no borrar
-    
-       public function listarUsuarioVistasAsignadasPorLoMenosUnTipoDePermisoParaMostrarVista($param)
+    public function listarUsuarioVistasAsignadasPorLoMenosUnTipoDePermisoParaMostrarVista($param)
     {
         try
         {
@@ -345,9 +357,7 @@ class AdminDAO{
             throw $ex;
             return false;
         }
-    }
-    
-    //aqui termina para mostrar estructura principal tomand en cuenta permisos
+    }//aqui termina para mostrar estructura principal tomand en cuenta permisos
 }
 
 

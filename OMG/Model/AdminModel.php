@@ -251,11 +251,18 @@ class AdminModel{
                 return false;
         }
     }
-    
-    
-    
-    
-    
+
+    public function cambiarColor($ID_USUARIO,$COLOR)
+    {
+        try{
+            $dao = new AdminDAO();
+            $exito = $dao->cambiarColor($ID_USUARIO,$COLOR);
+            return $exito;
+        } catch (Exception $ex) {
+            throw $ex;
+            return false;
+        }
+    }
 }
 
 ?>
