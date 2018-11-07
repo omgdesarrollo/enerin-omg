@@ -237,6 +237,7 @@ foreach($Alarmas as $alarma)
 	$("style").append("::-webkit-scrollbar-thumb{ background-color:"+colorView+" !important;} .dhxlayout_base_material div.dhx_cell_layout div.dhx_cell_hdr{background-color:"+colorView+" !important;opacity:0.8 !important; }");
 	$("#navbar").css("background-color",colorView);
 	$(".navbar-brand").css("color",colorLeter);
+	
 	listarNotificaciones();
 	setInterval(function(){listarNotificaciones();},25000);
 

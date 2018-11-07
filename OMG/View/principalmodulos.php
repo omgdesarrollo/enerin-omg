@@ -154,7 +154,8 @@ $Usuario=  Session::getSesion("user");
     $("style").append("::-webkit-scrollbar-thumb{ background-color:"+colorView+" !important;}");
     $("style").append(".dhxlayout_base_material div.dhx_cell_layout div.dhx_cell_hdr{background-color:"+colorView+" !important;opacity:0.8 !important; color:"+colorLeter+" }");
     $("style").append(".dhxrb_block_label{ background:"+colorView+" !important; opacity:0.8; color:"+colorLeter+" !important }");
-
+    // $("style").append("#seleccion_opcionmenuarriba{ background-color:"+colorView+" !important; }");
+    // $("#seleccion_opcionmenuarriba").css("background-color",colorView+" !important");
     function hexToRgb(hex)
     {
         var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
