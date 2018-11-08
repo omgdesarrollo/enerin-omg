@@ -421,7 +421,7 @@ require_once '../util/Session.php';
             });
         }
 
-        function mostrar_urls()
+        mostrar_urls = ()=>
         {
             return new Promise((resolve,reject)=>{
                 let usuario = <?php echo Session::getSesion("user")["ID_USUARIO"] ?>;
@@ -434,6 +434,12 @@ require_once '../util/Session.php';
                     // async:false,
                     success:(todo)=>
                     {
+                        $("#filesPhoto").html("<form id='fileupload' method='POST' enctype='form-data' style='display:none'>"+
+                        "<div class='fileupload-buttonbar'><div class='fileupload-buttons'>"+
+                        "<span id='fileBtn' class='fileinput-button'><span id='spanAgregarDocumento'><a >Agregar Archivos(Click o Arrastrar)...</a></span>"+
+                        "<input type='file' name='files[]' ></span><span class='fileupload-process'></span></div>"+
+                        "<div class='fileupload-progress'><div class='progress-extended'>&nbsp;</div></div></div>"+
+                        "<table role='presentation'><tbody class='files'></tbody></table></form>");
                         if(todo[0].length!=0)
                         {
                             ultimo = todo[0].length;
@@ -444,12 +450,6 @@ require_once '../util/Session.php';
                             $("#contenedorFotoPerfil").html('<span onclick="fotoPerfilCambio()" class="glyphicon glyphicon-user" style="cursor:pointer"></span></div>');
 
                         noArchivo=1;
-                        $("#filesPhoto").html("<form id='fileupload' method='POST' enctype='form-data' style='display:none'>"+
-                        "<div class='fileupload-buttonbar'><div class='fileupload-buttons'>"+
-                        "<span id='fileBtn' class='fileinput-button'><span id='spanAgregarDocumento'><a >Agregar Archivos(Click o Arrastrar)...</a></span>"+
-                        "<input type='file' name='files[]' ></span><span class='fileupload-process'></span></div>"+
-                        "<div class='fileupload-progress'><div class='progress-extended'>&nbsp;</div></div></div>"+
-                        "<table role='presentation'><tbody class='files'></tbody></table></form>");
                         resolve();
                     }
                 });
@@ -459,7 +459,7 @@ require_once '../util/Session.php';
         {
             $("input[type='file']").click();
         }
-        mostrar_urls().then(()=>{ $('#fileupload').fileupload({url: '../View/'}) });
+        mostrar_urls().then(()=>{ $('#fileupload').fileupload({url: '../View/'});});
     </script>
     <script id="template-upload" type="text/x-tmpl">
     {% let error = 0; %}
