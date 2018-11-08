@@ -432,12 +432,13 @@ require_once '../util/Session.php';
                     type: 'GET',
                     data: 'URL='+URL+"&SIN_CONTRATO=''",
                     // async:false,
-                    success: function(todo)
+                    success:(todo)=>
                     {
                         if(todo[0].length!=0)
                         {
                             ultimo = todo[0].length;
-                            $("#contenedorFotoPerfil").html('<img onclick="fotoPerfilCambio()" src="'+todo[1]+"/"+todo[0][ultimo-1]+'" class="img-circle" style="width:140px;height:140px;margin-top:5px;cursor:pointer">');
+                            let inp = '<img onclick="fotoPerfilCambio()" src="'+todo[1]+"/"+todo[0][ultimo-1]+'" class="img-circle" style="width:140px;height:140px;margin-top:5px;cursor:pointer">';
+                            $("#contenedorFotoPerfil").html(inp);
                         }
                         else
                             $("#contenedorFotoPerfil").html('<span onclick="fotoPerfilCambio()" class="glyphicon glyphicon-user" style="cursor:pointer"></span></div>');
