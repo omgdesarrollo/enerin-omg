@@ -203,9 +203,41 @@ foreach($Alarmas as $alarma)
     else
         $color = Session::getSesion("colorFondo_Vista");
     echo "'$color'";
-    ?>;
+	?>;
+	var colorLeter = hexToRgb(colorView);
+    colorLeter = invertirRgb(colorLeter)==1?"#ffffff":"#000000";
+	function hexToRgb(hex)
+	{
+		var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+		return result ? {
+			r: parseInt(result[1], 16),
+			g: parseInt(result[2], 16),
+			b: parseInt(result[3], 16)
+		} : null;
+	}
+	function invertirRgb(data)
+    {
+        // obj = new Object();
+        let obj = 0;
+        if(data.g<=200)
+        {
+            if(data.b<=150 && data.r>=100)
+                obj = 1;
+            else
+                if(data.g<=40)
+                    obj = 1;
+                else
+                    if(data.r<=200)
+                        obj = 1;
+                    else
+                        obj = 0;
+        }
+        return obj;
+    }
 	$("style").append("::-webkit-scrollbar-thumb{ background-color:"+colorView+" !important;} .dhxlayout_base_material div.dhx_cell_layout div.dhx_cell_hdr{background-color:"+colorView+" !important;opacity:0.8 !important; }");
 	$("#navbar").css("background-color",colorView);
+	$(".navbar-brand").css("color",colorLeter);
+	
 	listarNotificaciones();
 	setInterval(function(){listarNotificaciones();},25000);
 

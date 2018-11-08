@@ -171,7 +171,7 @@ require_once '../util/Session.php';
             $("#demo").on("change",()=>{
                 let color = $("#demo").wheelColorPicker('getValue');
                 $("#cambiarFondoAccionBtn").removeAttr("disabled");
-                $("#cambiarFondoAccionBtn").css("background","#"+color);
+                $("#cambiarFondoAccionBtn").css({"background":"#"+color,"opacity":0.8});
             });
 
             $("#cambiarFondoAccionBtn").click(()=>{

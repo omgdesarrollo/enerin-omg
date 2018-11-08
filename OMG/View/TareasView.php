@@ -170,16 +170,11 @@ require_once 'EncabezadoUsuarioView.php';
     </button>
 
     <div class="pull-right">        
-        <label class="btn btn-info btn_checkbox">
+        <label class="btn btn-info btn_checkbox" style="display: none">
+        <!--<label class="btn btn-info btn_checkbox">-->
             <input style="margin: 6px 0 0;" type="checkbox" name="" id="checkTerminados" autocomplete="off"> Terminados
         </label>
-        
-<!--        <div id="tareasTerminadas"></div>    -->
-
-<!--        <button type="button" class="btn btn-success" id="tareasTerminadas"> 
-            <i class="fa-times-circle-o"></i>
-        </button>-->
-        
+                
         <button onClick="graficar()" title="Graficar Circular" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#Grafica">
             <i class="fa fa-pie-chart"></i>
         </button>
@@ -438,8 +433,8 @@ MyComboStatus.prototype = new jsGrid.Field
         },
         editTemplate: function(value,todo)
         {
-                console.log("Entro al console");
-                console.log("value en editTemplate: ",value );
+//                console.log("Entro al console");
+//                console.log("value en editTemplate: ",value );
                 var temp = "";
                 if(value==1)
                 {
@@ -499,7 +494,7 @@ estructuraGrid= [
 //    { name: "fecha_creacion",title:"Fecha de Creación", type: "text", validate: "required", width:150,editing: false},
     { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required", width:150,},
     { name: "fecha_cumplimiento",title:"Fecha de Cumplimiento", type: "text", validate: "required", width:190,editing: false},    
-    { name: "status_tarea", title:"Estatus", type: "comboStatus", width:100},
+    { name: "status_tarea", title:"Estatus", type: "comboStatus", width:120},
 //    { name: "status_tarea", title:"Estatus", type: "select", width:150,valueField:"status_tarea",textField:"descripcion",
 //        items:[{"status_tarea":"1","descripcion":"En Proceso"},{"status_tarea":"2","descripcion":"Suspendido"},{"status_tarea":"3","descripcion":"Terminado"}]
 //    },

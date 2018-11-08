@@ -146,13 +146,16 @@ $Usuario=  Session::getSesion("user");
     ?>;
     var colorLeter = hexToRgb(colorView);
     console.log(colorLeter);
-    colorLeter = invertirRgb(colorLeter)==2?"#ffffff":"#000000";
+    colorLeter = invertirRgb(colorLeter)==1?"#ffffff":"#000000";
+    // colorLeter = invertirRgb(colorLeter);
+    // console.log(colorLeter);
     // colorLeter = rgbToHex( colorLeter["r"], colorLeter["g"], colorLeter["b"] );
-    console.log(colorView);
+    // console.log(colorView);
     $("style").append("::-webkit-scrollbar-thumb{ background-color:"+colorView+" !important;}");
     $("style").append(".dhxlayout_base_material div.dhx_cell_layout div.dhx_cell_hdr{background-color:"+colorView+" !important;opacity:0.8 !important; color:"+colorLeter+" }");
     $("style").append(".dhxrb_block_label{ background:"+colorView+" !important; opacity:0.8; color:"+colorLeter+" !important }");
-
+    // $("style").append("#seleccion_opcionmenuarriba{ background-color:"+colorView+" !important; }");
+    // $("#seleccion_opcionmenuarriba").css("background-color",colorView+" !important");
     function hexToRgb(hex)
     {
         var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -177,12 +180,20 @@ $Usuario=  Session::getSesion("user");
     function invertirRgb(data)
     {
         // obj = new Object();
-        obj = 0;
-        $.each(data,(index,value)=>{
-            if(value<120 && data["r"]>160 && index!="r")
-                obj++;
-            // obj[index] = Math.abs(value-250);
-        });
+        let obj = 0;
+        if(data.g<=200)
+        {
+            if(data.b<=150 && data.r>=100)
+                obj = 1;
+            else
+                if(data.g<=40)
+                    obj = 1;
+                else
+                    if(data.r<=200)
+                        obj = 1;
+                    else
+                        obj = 0;
+        }
         return obj;
     }
 
