@@ -465,9 +465,7 @@ function redimencionarLayout()
                                             console.log("esto esdd ",todo);
 //                                             ribbon.conf.icons_path=todo[1];
 //                                             ribbon._items.Bienvenido.conf.icons_path=todo[1];
-//                                             ultimo = todo[0].length;
 //                                             ribbon._items.Bienvenido.conf.img=todo[0][ultimo-1];
-                                             ribbon._items.Bienvenido.base.innerHTML="";
                                      });
                     
                    
