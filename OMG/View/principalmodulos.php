@@ -269,6 +269,7 @@ var gantt=[
   ];
   dataSeccionRibbon=[];
    var listasubmodulos=[];
+   var nombre_contenido_sub_usuario;
   
    loadDataNotificaciones();
 
@@ -455,6 +456,7 @@ function redimencionarLayout()
             redimencionarLayout();
         });
 
+
                     detallescontratosiahyseleccionado();
 //                  loadDataMenuArriba("","NO SELECCIONADO");
                    
@@ -466,6 +468,13 @@ function redimencionarLayout()
 //                                             ribbon.conf.icons_path=todo[1];
 //                                             ribbon._items.Bienvenido.conf.icons_path=todo[1];
 //                                             ribbon._items.Bienvenido.conf.img=todo[0][ultimo-1];
+//                                               ribbon._items.Bienvenido.base.innerHTML="d";
+                                              ultimo = todo[0].length;
+                                              if(todo[0].length!=0)
+                                              {
+                                                    ribbon._items.Bienvenido.base.innerHTML='<img class="dhxrb_image" src="'+todo[1]+"/"+todo[0][ultimo-1]+'"><div class="dhxrb_label_button">\n\
+                                                                                       <div id="infousuario">'+nombre_contenido_sub_usuario+'<br><?php echo  $Usuario["NOMBRE_USUARIO"]; ?> </div></div>';
+                                              }
                                      });
                     
                    
@@ -956,7 +965,7 @@ var vistas = [];
                                 var quieniniciosesion="";
                                 if(value1["nombre_contenido_sub"]=="Bienvenido"){
                                   
-                                   
+                                   nombre_contenido_sub_usuario=value1["nombre_contenido_sub"];
                                      datosSeccionesRibbon[contadoresSeccionesArriba]["list"].push({id:value1["nombre_contenido_sub"], text:'<div id="infousuario">'+value1["nombre_contenido_sub"]+"<br><?php echo  $Usuario["NOMBRE_USUARIO"]; ?>",img:value1["imagen"],type:'button',isbig:true});
                                 }else{
 //                                    alert(value1["nombre_contenido_sub");
