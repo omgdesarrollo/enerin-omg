@@ -459,7 +459,18 @@ function redimencionarLayout()
 //                  loadDataMenuArriba("","NO SELECCIONADO");
                    
                     loadDataMenuRibbonSeccionArriba();
-                  
+                      mostrar_urls().then(function (todo){
+                                         
+                                         
+                                            console.log("esto esdd ",todo);
+//                                             ribbon.conf.icons_path=todo[1];
+                                             ribbon._items.Bienvenido.conf.icons_path=todo[1];
+                                             ultimo = todo[0].length;
+                                             ribbon._items.Bienvenido.conf.img=todo[0][ultimo-1];
+                                     });
+                    
+                   
+                     console.log("ri  ",ribbon);
                     ribbon.setSizes();
                     ribbon.attachEvent("onClick", function(itemIdSeleccion, bId){
                        limpiarSeleccionDeRibbon();
@@ -945,14 +956,9 @@ var vistas = [];
                                 
                                 var quieniniciosesion="";
                                 if(value1["nombre_contenido_sub"]=="Bienvenido"){
-                                     mostrar_urls().then(function (todo){
-                                         
-                                         
-                                            console.log("esto es ",todo);
-                                             datosSeccionesRibbon[contadoresSeccionesArriba]["list"].push({id:value1["nombre_contenido_sub"], text:'<div id="infousuario">'+value1["nombre_contenido_sub"]+"<br><?php echo  $Usuario["NOMBRE_USUARIO"]; ?>",img:todo[1]+"/"+todo[0][ultimo-1],type:'button',isbig:true});
-//                                            value1["imagen"] es el nombre de la imagen
-                                     });
-                                    
+                                  
+                                   
+                                     datosSeccionesRibbon[contadoresSeccionesArriba]["list"].push({id:value1["nombre_contenido_sub"], text:'<div id="infousuario">'+value1["nombre_contenido_sub"]+"<br><?php echo  $Usuario["NOMBRE_USUARIO"]; ?>",img:value1["imagen"],type:'button',isbig:true});
                                 }else{
 //                                    alert(value1["nombre_contenido_sub");
                                         console.log(value1);
