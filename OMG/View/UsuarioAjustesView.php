@@ -405,7 +405,7 @@ require_once '../util/Session.php';
             $.ajax({
                 url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
                 type: 'GET',
-                data: 'URL='+url+"&SIN_CONTRATO=''",
+                data: 'URL='+url+"&SIN_CONTRATO=X",
                 success:function(creado)
                 {
                     if(creado==1)
@@ -485,21 +485,22 @@ require_once '../util/Session.php';
             {% } %}
             </td>
         </tr>
-        {% if(i==0){ if(error==1) growlError("Error Imagen","Formato de Imagen no Compatible"); else{ $('.fileupload-buttonbar').html(""); agregarArchivosUrl();} } %}
+        {% if(i==0){ if(error==1) growlError("Error Imagen","Formato de Imagen no Compatible"); else{ agregarArchivosUrl();} } %}
     <!-- {%  } %} -->
 </script>
 
 <script id="template-download" type="text/x-tmpl">
-    {% var t = $('#fileupload').fileupload('active'); var i,file; %}
+    {% growlError("HEY","HEY"); var t = $('#fileupload').fileupload('active'); var i,file; %}
     {% for (i=0,file; file=o.files[i]; i++) { %}
         <!-- <tr class="template-download" style="width:100%"> -->
             <!-- <td>
             <span class="preview"> -->
+            <!-- {% console.log(file); %} -->
                     <!-- {% if (file.thumbnailUrl) { %} -->
                     <!-- <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery> -->
                     <!-- <img src="{%=file.thumbnailUrl%}"></img> -->
                     <!-- </a> -->
-                    {% } %}
+                    <!-- {% } %} -->
             <!-- </span>
             </td> -->
             <!-- <td> -->
