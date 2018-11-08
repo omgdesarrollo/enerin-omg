@@ -421,7 +421,7 @@ require_once '../util/Session.php';
             });
         }
 
-        function mostrar_urls()
+        mostrar_urls = ()=>
         {
             return new Promise((resolve,reject)=>{
                 let usuario = <?php echo Session::getSesion("user")["ID_USUARIO"] ?>;
@@ -434,6 +434,12 @@ require_once '../util/Session.php';
                     // async:false,
                     success:(todo)=>
                     {
+                        $("#filesPhoto").html("<form id='fileupload' method='POST' enctype='form-data' style='display:none'>"+
+                        "<div class='fileupload-buttonbar'><div class='fileupload-buttons'>"+
+                        "<span id='fileBtn' class='fileinput-button'><span id='spanAgregarDocumento'><a >Agregar Archivos(Click o Arrastrar)...</a></span>"+
+                        "<input type='file' name='files[]' ></span><span class='fileupload-process'></span></div>"+
+                        "<div class='fileupload-progress'><div class='progress-extended'>&nbsp;</div></div></div>"+
+                        "<table role='presentation'><tbody class='files'></tbody></table></form>");
                         if(todo[0].length!=0)
                         {
                             ultimo = todo[0].length;
@@ -444,29 +450,24 @@ require_once '../util/Session.php';
                             $("#contenedorFotoPerfil").html('<span onclick="fotoPerfilCambio()" class="glyphicon glyphicon-user" style="cursor:pointer"></span></div>');
 
                         noArchivo=1;
-                        $("#filesPhoto").html("<form id='fileupload' method='POST' enctype='form-data' style='display:none'>"+
-                        "<div class='fileupload-buttonbar'><div class='fileupload-buttons'>"+
-                        "<span id='fileBtn' class='fileinput-button'><span id='spanAgregarDocumento'><a >Agregar Archivos(Click o Arrastrar)...</a></span>"+
-                        "<input type='file' name='files[]' ></span><span class='fileupload-process'></span></div>"+
-                        "<div class='fileupload-progress'><div class='progress-extended'>&nbsp;</div></div></div>"+
-                        "<table role='presentation'><tbody class='files'></tbody></table></form>");
                         resolve();
                     }
                 });
             });
         }
+       
         fotoPerfilCambio = ()=>
         {
             $("input[type='file']").click();
         }
-        mostrar_urls().then(()=>{ $('#fileupload').fileupload({url: '../View/'}) });
+        mostrar_urls().then((resolve)=>{ $('#fileupload').fileupload({url: '../View/'});console.log("primera");},(error)=>{  console.log("d");}        );
+       
     </script>
     <script id="template-upload" type="text/x-tmpl">
     {% let error = 0; %}
     {%for (var i=0, file; file=o.files[i]; i++) { %}
         <tr class="template-upload" style="width:100%">
             <td>
-                {% console.log(file);  %}
                 <span class="preview"></span>
             </td>
             <!-- <td> -->
@@ -486,17 +487,17 @@ require_once '../util/Session.php';
             {% } %}
             </td>
         </tr>
-        {% if(i==0){ if(error==1) growlError("Error Imagen","Formato de Imagen no Compatible"); else{ agregarArchivosUrl();} } %}
+        {% if(i==0){ if(error==1) growlError("Error Imagen","Formato de Imagen no Compatible"); else{  setTimeout(agregarArchivosUrl,200);         } } %}
     <!-- {%  } %} -->
 </script>
 
 <script id="template-download" type="text/x-tmpl">
-    {% growlError("HEY","HEY"); var t = $('#fileupload').fileupload('active'); var i,file; %}
+    {%  var t = $('#fileupload').fileupload('active'); var i,file; %}
     {% for (i=0,file; file=o.files[i]; i++) { %}
         <!-- <tr class="template-download" style="width:100%"> -->
             <!-- <td>
             <span class="preview"> -->
-            <!-- {% console.log(file); %} -->
+            <!-- {%  %} -->
                     <!-- {% if (file.thumbnailUrl) { %} -->
                     <!-- <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery> -->
                     <!-- <img src="{%=file.thumbnailUrl%}"></img> -->
