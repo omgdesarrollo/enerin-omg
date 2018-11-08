@@ -472,7 +472,7 @@ function redimencionarLayout()
                                               ultimo = todo[0].length;
                                               if(todo[0].length!=0)
                                               {
-                                                    ribbon._items.Bienvenido.base.innerHTML='<img class="dhxrb_image" src="'+todo[1]+"/"+todo[0][ultimo-1]+'"><div class="dhxrb_label_button">\n\
+                                                    ribbon._items.Bienvenido.base.innerHTML='<img class="img-circle dhxrb_image" src="'+todo[1]+"/"+todo[0][ultimo-1]+'"><div class="dhxrb_label_button">\n\
                                                                                        <div id="infousuario">'+nombre_contenido_sub_usuario+'<br><?php echo  $Usuario["NOMBRE_USUARIO"]; ?> </div></div>';
                                               }
                                      });
