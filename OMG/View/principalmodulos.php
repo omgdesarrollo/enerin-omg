@@ -634,10 +634,6 @@ function redimencionarLayout()
 
 function limpiarSeleccionDeRibbon(){
     
-                            
-    
-    
-                       
                         if(ribbon._items["Información"]!=undefined){
                            ribbon._items["Información"].base.id="";
                             ribbon._items["Información"].base.lastElementChild.id="";
@@ -1282,6 +1278,12 @@ var jsonObj = {};
          }
      });
  }
+ 
+ 
+ 
+ 
+ 
+ 
 
 </script>
 

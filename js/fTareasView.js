@@ -1,21 +1,23 @@
 
 var valorChecking="false";
-//noCheck = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true'></i>";
-//yesCheck = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true'></i>";
 
 $(function()
 {
+    //Boton oculto que funciona para mostrar tareas terminadas-no borrar!!! 
     $('#checkTerminados').click(function() {
-        valorChecking=$(this).is(':checked');
+//        valorChecking=$(this).is(':checked');
+//       console.log("asi llega: ",valorChecking); 
+       if(valorChecking=="false")
+       {
+           valorChecking="true";
+       }else
+       {
+           valorChecking="false";
+       }
+//       console.log("asi sale: ",valorChecking);
         refresh();
     });
-
-//    $('#tareasTerminadas').click(function() {
-//        valorChecking=$(this).is(':checked');
-//        refresh();
-//        console.log("este es el valor: ",valorChecking);
-//    });    
-//    
+  
     $("#TAREA").keyup(function()
     {
         var valueTarea=$(this).val();
@@ -33,10 +35,7 @@ $(function()
         tareaDatos.status_tarea = $("#STATUS_TAREA").val();
         tareaDatos.observaciones = $("#OBSERVACIONES").val();
 //        tareaDatos.archivo_adjunto = $('#fileupload').fileupload('option', 'url');
-//        tareaDatos.mensaje="Se le asigno la Tarea: "+$("#TAREA").val()+" por el Usuario: ";
-//        tareaDatos.reponsable_plan= $("#ID_EMPLEADOMODAL").val();
-//        tareaDatos.tipo_mensaje= 0;
-//        tareaDatos.atendido= 'false';
+
         listo=
             (
 //                tareaDatos.referencia!=""?
@@ -49,9 +48,8 @@ $(function()
 //                tareaDatos.observaciones!=""?
                 true: false: false: false: false: false                                                               
             );
-        console.log(tareaDatos);
-        console.log("termino");
-//        console
+//        console.log(tareaDatos);
+//        console.log("termino");
             listo ? insertarTareas(tareaDatos):swalError("Completar campos");
     });
     
@@ -72,11 +70,6 @@ $(function()
         agregarArchivosUrl();
     });
     
-//    $("#btn_informe").click(function()
-//    {
-//        loadChartView(true);
-//    });
-
 
     var $btnDLtoExcel = $('#toExcel'); 
     $btnDLtoExcel.on('click', function () 
@@ -96,26 +89,15 @@ $(function()
         });
     });
     
-//        $("#BTN_ANTERIOR_GRAFICAMODAL").click(function()
-//    {
-//        activeChart = -1;
-//        graficar();
-//        if(activeChart>1)
-//        {
-////            console.log("entro al primero");
-//            activeChart-=2;
-//            selectChart();
-//        }
-//        else
-//        {
-////            console.log("entro al else");
-//            activeChart = -1;
-//            graficar();
-//        }
-
-//        activeChart = -1;
-//        graficar();
-//    });
+    $('#status_grafica_combobox').on('change', function() 
+    {
+        a = $("#status_grafica_combobox option:selected" ).text();
+      
+        if(a=="TERM")
+        {
+            $('#checkTerminados').trigger('click');         
+        }      
+    });
 
 }); //CIERRA $(FUNCTION())
 
@@ -857,7 +839,6 @@ function preguntarEliminar(data)
  }
 
 
-
 function refresh()
 {
    listarEmpleados();
@@ -865,6 +846,25 @@ function refresh()
    inicializarFiltros();
    construirFiltros();
    gridInstance.loadData();
+   valorChecking="false";
+   
+    $('#status_grafica_combobox').on('change', function() {
+      a = $("#status_grafica_combobox option:selected" ).text();      
+      if(valorChecking=="true")
+      {
+        valorChecking="false";          
+      }else{
+        if(a=="TERM")
+        {
+            $('#checkTerminados').trigger('click');         
+        }else{            
+            valorChecking="false";
+        }
+          
+      }      
+    });
+   
+//   valorChecking="false"
 //   $(".jsgrid-grid-body").css({"height":"171px"});
 }
 
