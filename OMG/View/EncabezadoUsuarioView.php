@@ -159,7 +159,7 @@ foreach($Alarmas as $alarma)
                         
                         
                         <!--seccion de info usuario-->
-                <li class="light-blue dropdown-modal">
+                <!-- <li class="light-blue dropdown-modal">
 				<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 					<img class="nav-user-photo" src="../../assets/probando/images/avatars/user.jpg" alt="<?php echo $Usuario["NOMBRE_USUARIO"]; ?>" />
 					<span class="user-info">
@@ -173,13 +173,13 @@ foreach($Alarmas as $alarma)
                                                     <input id="user" type="hidden" value="<?php  echo $obuser ?> "> 
                                                     <input id="ts" type="hidden" value="<?php  echo $Usuario['tokenseguridad'] ?> "> 
                                                    
-					</span>
+					</span> -->
 
 <!--								<i class="ace-icon fa fa-caret-down"></i>-->
-				</a>
+				<!-- </a> -->
 
 					
-			    </li>
+			    <!-- </li> -->
                         <!--fin de seccion de info usuario-->
                         
                         
