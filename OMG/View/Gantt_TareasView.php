@@ -220,7 +220,7 @@ and open the template in the editor.
     /*max-height: 90%;*/
 }
 
- .modal-lg{width: 80%;}
+ .modal-lg{width: 60%;}
  .modal-body{position:relative;padding:0px}
 #mydiv {
     position: absolute;
@@ -241,12 +241,34 @@ and open the template in the editor.
 }
 /*start encabezado seccion carga archivo-->*/
 th {
-    text-align: left;
-    width: 48%;
+    text-align: center;
+    width: 38%;
+    /*padding-left: 10px;*/
 }
 /*<--end*/
 
-
+#DocumentolistadoUrl {
+    padding-left: 15%;
+    /* text-align: center; */
+}
+.fileinput-button {
+    /*padding-left: 33%;*/
+     text-align: center;
+}
+.form-group {
+    margin-bottom: 15px;
+    text-align: center;
+}
+table {
+    background-color: blanchedalmond;
+}
+td, th {
+    padding: 0;
+    text-align: center;
+}
+tbody {
+  border: black 2px solid;
+}
 </style> 	
 		    
   </head>
