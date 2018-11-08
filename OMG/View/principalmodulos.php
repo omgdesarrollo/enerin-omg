@@ -392,7 +392,29 @@ function redimencionarLayout()
     // console.log($("#sidebarObjV").parent().parent().css("width", tamW+"px"));
     // myLayout.setAutoSize("a;b;e");
 }
-
+  function mostrar_urls()
+        {
+            return new Promise((resolve,reject)=>{
+                let usuario = <?php echo Session::getSesion("user")["ID_USUARIO"] ?>;
+                let tempDocumentolistadoUrl = "";
+                URL = 'filePerfilesUsuario/'+usuario,
+                $.ajax({
+                    url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
+                    type: 'GET',
+                    data: 'URL='+URL+"&SIN_CONTRATO=''",
+                    // async:false,
+                    success: function(todo)
+                    {
+                        if(todo[0].length!=0)
+                        {
+                           console.log("todo ",todo);
+                        }
+                        
+                        resolve(todo);
+                    }
+                });
+            });
+        }
     $(function()
     {
        $(document).ready(()=>{
@@ -923,8 +945,14 @@ var vistas = [];
                                 
                                 var quieniniciosesion="";
                                 if(value1["nombre_contenido_sub"]=="Bienvenido"){
-                                   
-                                     datosSeccionesRibbon[contadoresSeccionesArriba]["list"].push({id:value1["nombre_contenido_sub"], text:'<div id="infousuario">'+value1["nombre_contenido_sub"]+"<br><?php echo  $Usuario["NOMBRE_USUARIO"]; ?>",img:value1["imagen"],type:'button',isbig:true});
+                                     mostrar_urls().then(function (todo){
+                                         
+                                         
+                                            console.log("esto es ",todo);
+                                             datosSeccionesRibbon[contadoresSeccionesArriba]["list"].push({id:value1["nombre_contenido_sub"], text:'<div id="infousuario">'+value1["nombre_contenido_sub"]+"<br><?php echo  $Usuario["NOMBRE_USUARIO"]; ?>",img:todo[1]+"/"+todo[0][ultimo-1],type:'button',isbig:true});
+//                                            value1["imagen"] es el nombre de la imagen
+                                     });
+                                    
                                 }else{
 //                                    alert(value1["nombre_contenido_sub");
                                         console.log(value1);
