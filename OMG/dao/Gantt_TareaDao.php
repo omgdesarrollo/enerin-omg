@@ -462,7 +462,7 @@ class Gantt_TareaDao {
                     FROM gantt_tareas tbgantt_tareas       
                     JOIN gantt_notas_historico_temas tbgantt_notas_historico_temas ON tbgantt_notas_historico_temas.id_tarea=tbgantt_tareas.id
                     JOIN usuarios tbusuario ON tbusuario.ID_USUARIO=tbgantt_notas_historico_temas.quien_introdujo_el_registro
-                    WHERE tbgantt_tareas.id_tarea=".$value["id_tarea_general_externa"]."  and tbgantt_notas_historico_temas.id_tarea=".$value["id_tarea_gantt_actividad"]."     order by tbgantt_notas_historico_temas.fecha_creacion_nota";
+                    WHERE tbgantt_tareas.id_tarea=".$value["id_tarea_general_externa"]."  and tbgantt_notas_historico_temas.id_tarea=".$value["id_tarea_gantt_actividad"]."     order by tbgantt_notas_historico_temas.fecha_creacion_nota DESC";
             
             
             //            $parametros=array("id_usuario"=>$value["id_usuario"],"id_tarea_general_externa"=>$value["id_tarea_general_externa"]);
