@@ -76,6 +76,9 @@ $Usuario=  Session::getSesion("user");
             /*semaforo*/
             .semaforoYellow {
               background: #FFFF00;
+/*              background-size: 40px 40px;
+              background-image: radial-gradient(circle, #000000 1px, rgba(0, 0, 0, 0) 1px);*/
+
               border-radius: 0.8em;
               -moz-border-radius: 0.8em;
               -webkit-border-radius: 0.8em;
@@ -145,6 +148,7 @@ $Usuario=  Session::getSesion("user");
               text-align: center;
               width: 2.5em; 
             }
+            
         </style>              
                 
  			 
