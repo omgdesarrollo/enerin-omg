@@ -226,9 +226,9 @@ var  limit = 10;
             console.log("me  ",messages);
             if (messages.length > 1) {
 //                $("#mensajePrevio").html("<a>Cargando</a>");
-//                $(".message-previous").show();
+                $(".message-previous").show();
             } else {
-//                $(".message-previous").hide();
+                $(".message-previous").hide();
             }
             var opsid = 0;
             messages.forEach(function(a) {
@@ -273,7 +273,7 @@ var  limit = 10;
             if (no >= messages.length) {
                 $("body .message-previous").hide();
             } else {
-//                $("body .message-previous").show();
+                $("body .message-previous").show();
             }
             return false;
         } else {

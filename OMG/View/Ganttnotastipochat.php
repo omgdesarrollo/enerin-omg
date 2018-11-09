@@ -197,7 +197,8 @@ require_once '../util/Session.php';
 								<div id="mensajePrevio" class="col-sm-12 previous">
 									<a>
 									<!--Show Previous Message!-->
-                                                                        Bienvenido a la seccion de notas
+                                                                        Mostrar Mensajes Previos
+                                                                        <!--Bienvenido a la seccion de notas-->
 <!--                                                                                Cargando-->
 									</a>
 								</div>
