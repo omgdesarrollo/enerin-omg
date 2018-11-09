@@ -222,6 +222,9 @@ and open the template in the editor.
 
  .modal-lg{width: 50%;}
  .modal-body{position:relative;padding:0px}
+ .modal-title {
+    text-align: center;
+}
 #mydiv {
     position: absolute;
     z-index: 9;
@@ -254,6 +257,7 @@ th {
 .fileinput-button {
     /*padding-left: 33%;*/
      text-align: center;
+     height: 3%;
 }
 .form-group {
     margin-bottom: 15px;
@@ -271,7 +275,7 @@ td, th {
     text-align: center;
 }
 tbody {
-  border: black 2px solid;
+/*  border: black 2px solid;*/
   width: 100%;
 }
 .btn-info:focus {
@@ -299,6 +303,7 @@ tbody {
     font-size: 15px;
     width: 70%
 }
+
 
 </style> 	
 		    
