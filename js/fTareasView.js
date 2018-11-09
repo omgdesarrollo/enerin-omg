@@ -98,6 +98,9 @@ $(function()
             $('#checkTerminados').trigger('click');         
         }      
     });
+    
+    
+//    $("#myCanvas").canvas()
 
 }); //CIERRA $(FUNCTION())
 
@@ -216,6 +219,7 @@ function reconstruir(value,index)
     if(value.status_tarea==1 && value.status_grafica=="En tiempo")
     {
         tempData["semaforo"]+="<span title='En Proceso' class='semaforoGreen'>.</span>";
+//        tempData["semaforo"]+="<span title='En Proceso' class='semaforoGreen'><canvas class='enProceso' height='25'></span>";
     }
     if(value.status_tarea==1 && value.status_grafica=="Alarma vencida")
     {
