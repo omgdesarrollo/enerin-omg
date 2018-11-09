@@ -260,7 +260,7 @@ th {
      height: 3%;
 }
 .form-group {
-    margin-bottom: 15px;
+    /*margin-bottom: 15px;*/
     text-align: center;
 }
 table {
@@ -1665,22 +1665,16 @@ construirTreeList();
     {
         gantt.refreshData();
         gantt.init('gantt_here');
-        $.when(gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId")).then(function(){
-                
-                
-            obtenerTareas().then(function (){
-                construirTreeList();
-
-            });
-
-
-                
-                
-                
-                
-                
-                
-        });
+//        $.when(gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId")).then(function(){
+//                
+//                
+//            obtenerTareas().then(function (){
+//                construirTreeList();
+//
+//            });        
+//        });
+        
+        
     }
     function detallesActividadesCompletasGantt(){
         if( $("#detallesInformacion").css("display")!="none"){
@@ -1688,7 +1682,6 @@ construirTreeList();
         }else{
             $("#detallesInformacion").css("display","");
         }
-
 } 
     var datosModificadosActividadesPonderado_ProgramadoTemp=[];
     var id_padreTareaPonderado_programadoTemp=-1;
