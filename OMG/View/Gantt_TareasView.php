@@ -220,7 +220,8 @@ and open the template in the editor.
     /*max-height: 90%;*/
 }
 
- .modal-lg{width: 50%;}
+ .modal-lg{width: 100%;}
+ .modal-lgfile{width: 50%;}
  .modal-body{position:relative;padding:0px}
  .modal-title {
     text-align: center;
@@ -425,7 +426,7 @@ function dragElement(elmnt) {
     
 <!-- Inicio de Seccion Modal Archivos-->
 <div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog modal-lg" role="document">
+	<div class="modal-dialog modal-lgfile" role="document">
         <div id="loaderModalMostrar"></div>
 		<div class="modal-content">
                         
@@ -1673,7 +1674,7 @@ construirTreeList();
 //
 //            });        
 //        });
-        
+        console.log("dxtree list  ",dxtreeList)
         
     }
     function detallesActividadesCompletasGantt(){
