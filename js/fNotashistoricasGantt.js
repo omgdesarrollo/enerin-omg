@@ -225,7 +225,7 @@ var  limit = 10;
             document.getElementsByClassName('messages')[0].innerHTML = "";
             console.log("me  ",messages);
             if (messages.length > 1) {
-//                $("#mensajePrevio").html("<a>Cargando</a>");
+                $("#mensajePrevio").html("<a>Mostrar Notas Previas</a>");
                 $(".message-previous").show();
             } else {
                 $(".message-previous").hide();
