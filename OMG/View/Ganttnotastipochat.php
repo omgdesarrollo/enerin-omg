@@ -1,10 +1,14 @@
+<?php
+session_start();
+require_once '../util/Session.php';
+?>
 <html>
 	<head>
 		
 		<title>Gantt Notas</title>
                
                 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-		<link href="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css" rel="stylesheet">
+		<!--<link href="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css" rel="stylesheet">-->
 		<link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
                 <script src="../../assets/firebase/js/jquery.min.js" type="text/javascript"></script>
@@ -44,6 +48,47 @@
                         left: 34%;
                         height: 60px;
                     }
+                    #heading-name-meta {
+                      font-weight: 1;
+                      font-size: 100%;
+                      padding: 0px;
+                      text-align: left;
+                      text-overflow: ellipsis;
+                      white-space: nowrap;
+                      color: #fff;
+                      display: block;
+                      padding-bottom: 0px !important;
+                      margin-bottom: 0px !important;
+                    }
+                    .informacioncorta{
+                        /*width:200px;*/
+                        /*height:20px;*/
+                        text-overflow:ellipsis;
+                        white-space:nowrap; 
+                        overflow:hidden;
+                        -webkit-transition: all 1s;
+                        -moz-transition: all 1s;
+                        transition: all 1s;
+                        -webkit-box-sizing: border-box;
+                        -moz-box-sizing: border-box;
+                        box-sizing: border-box;
+                    }
+                    .sideBar-body:hover .informacioncorta{
+                        width: 100%;
+                        white-space: initial;
+                        overflow:visible;
+                        cursor: pointer;
+                    }
+/*                    .informacioncorta:hover {
+                        width: 100%;
+                        white-space: initial;
+                        overflow:visible;
+                        cursor: pointer;
+                    }*/
+                    .sideBar-name {
+                        /*padding: 0px 10px 0px 10px!important;*/
+                        height: auto !important;
+                     }
                   
                 </style>
 	</head>
@@ -57,7 +102,7 @@
                                                            
 								<div class="col-sm-3 col-xs-2 heading-avatar">
 									<div class="heading-avatar-icon">
-										<img class="me" src="../../images/base/user.jpg">
+                                                                            <div id="fotoPerfil"></div>
                                                                              
 									</div>                                        
 								</div>
@@ -95,7 +140,7 @@
 							</div>
 							<div class="row sideBar">
 								<!-- side1 -->
-                                                         
+                                                        
                                                                 
 							</div>
 						</div>
@@ -107,7 +152,7 @@
 										<i class="fa fa-arrow-left" aria-hidden="true"></i>
 									</div>
 									<div class="col-sm-10 col-xs-10 newMessage-title">
-										Mensaje Privado
+										<!--Mensaje Privado-->
 									</div>
 								</div>
 							</div>
@@ -134,7 +179,7 @@
 									<img class="you" src="">
 								</div>
 							</div>-->
-							<div class="col-sm-6 col-xs-4 heading-name">
+							<div class="col-sm-12 col-xs-12 heading-name">
 								<p id="heading-name-meta"></p>
 								<span id="heading-online"></span>
                                                                 <!--<span id="heading-online">En Linea</span>-->
@@ -149,10 +194,11 @@
 								<!-- message -->
 							</p>
 							<div class="row message-previous">
-								<div class="col-sm-12 previous">
+								<div id="mensajePrevio" class="col-sm-12 previous">
 									<a>
 									<!--Show Previous Message!-->
-                                                                        Mostrar Mensaje Previos
+                                                                        Bienvenido a la seccion de notas
+<!--                                                                                Cargando-->
 									</a>
 								</div>
 							</div>
@@ -186,11 +232,11 @@
 			</div>
 		</div>
 		<!-- Firebase -->
-		<script src="//www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+		<!--<script src="//www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>-->
                 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
                 <!--<script src="../../assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>-->
                 <script src="../../js/fNotashistoricasGantt.js" type="text/javascript"></script>
-                <script src="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+                <!--<script src="//cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>-->
                 
                 
                 <script>
@@ -206,8 +252,8 @@
                         myPop.attachHTML(text);
                         myPop.show(90,1,7,-12); //params are: x, y, width, height
                        
-                    }
-                        
+                    }    
+                
                     function obtenerActividadesTodasLasQuePertenezco(){
                         return new Promise(function(resolve,reject){
                        $.ajax({
@@ -233,6 +279,45 @@
                       
                         });
                     }
+
+                    
+                     function mostrar_urls()
+                    {
+                        return new Promise((resolve,reject)=>{
+                            let usuario = <?php echo Session::getSesion("user")["ID_USUARIO"] ?>;
+                            let tempDocumentolistadoUrl = "";
+                            URL = 'filePerfilesUsuario/'+usuario,
+                            $.ajax({
+                                url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
+                                type: 'GET',
+                                data: 'URL='+URL+"&SIN_CONTRATO=''",
+                                success: function(todo)
+                                {
+                                    if(todo[0].length!=0)
+                                    {
+                                       console.log("todo ",todo);
+                                    }
+
+                                    resolve(todo);
+                                }
+                            });
+                        });
+                    }
+                    mostrar_urls().then(function (todo){
+
+                        
+                           console.log("esto esdd ",todo);
+                             ultimo = todo[0].length;
+                             if(todo[0].length!=0)
+                             {
+//                                   ribbon._items.Bienvenido.base.innerHTML='<img class="img-circle dhxrb_image" src="'+todo[1]+"/"+todo[0][ultimo-1]+'"><div class="dhxrb_label_button">\n\
+//                                                                      <div id="infousuario">'+nombre_contenido_sub_usuario+'<br></div></div>';
+                                $("#fotoPerfil").html('<img class="me" src="'+todo[1]+"/"+todo[0][ultimo-1]+'">');
+
+                                    console.log("entro");
+                             }
+                    });
+                    
                 </script>
                 
                 

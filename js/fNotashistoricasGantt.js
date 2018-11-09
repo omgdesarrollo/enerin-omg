@@ -19,6 +19,7 @@ function ajax(method, send, callback) {
 
 var id_usuario=-1,estareapadre=false;
 obtenerNotasHistoricas();
+
 function obtenerNotasHistoricas(){
 ajax("POST", "data=checar_existe_usuario", function(res) {
     var a = JSON.parse(res);
@@ -61,9 +62,12 @@ ajax("POST", "data=checar_existe_usuario", function(res) {
 
 }
 
+
+
+
 function sideOneHTMLAnterior(a) {
         var b = "";
-        b += '<div class="row sideBar-body" data-tipe="actividades" data-login="' + a.date + '" data-avatar="' + a.avatar + '" data-status="online" id="' + a.name + '">';
+        b += '<div class="row sideBar-body "  data-tipe="actividades" data-login="' + a.date + '" data-avatar="' + a.avatar + '" data-status="online" id="' + a.name + '">';
         b += '	<div class="col-sm-3 col-xs-3 sideBar-avatar">';
         b += '  	<div class="avatar-icon">';
         b += '			<span class="contact-status ' + (a.status == 'online' ? 'on' : 'off') + '"></span>';
@@ -109,7 +113,7 @@ function sideOneHTMLAnterior(a) {
         b += '<div class="col-sm-9 col-xs-9 sideBar-main">';
         b += '  <div class="row">';
         b += '	<div class="col-sm-8 col-xs-8 sideBar-name">';
-        b += '	  <span class="name-meta" >' + a.text + '</span>';
+        b += '	  <div class="informacioncorta" >' + a.text + '</div>';
         b += '	</div>';
         
         
@@ -186,7 +190,7 @@ var  limit = 10;
             st = $(this).data('status'),
             idactividad=$(this).data('idactividad'),
             manipulacion_tarea=$(this).data('manipulacion_tarea');
-            showPopup(a);
+//            showPopup(a);
 //            alert(manipulacion_tarea);
              if(estareapadre==true){
                 $("#campoParaEnviarNota").html('<textarea class="form-control" data-emojiable="true" rows="1" id="comment"></textarea>');
@@ -200,6 +204,8 @@ var  limit = 10;
                      $("#campoParaEnviarNota").html('<textarea class="form-control" data-emojiable="true" rows="1" id="comment" readonly></textarea>');
                 }
              }
+             
+             
              
 //            id_Actividad=$(this).data('id_Actividad');
 
@@ -219,9 +225,10 @@ var  limit = 10;
             document.getElementsByClassName('messages')[0].innerHTML = "";
             console.log("me  ",messages);
             if (messages.length > 1) {
-                $(".message-previous").show();
+//                $("#mensajePrevio").html("<a>Cargando</a>");
+//                $(".message-previous").show();
             } else {
-                $(".message-previous").hide();
+//                $(".message-previous").hide();
             }
             var opsid = 0;
             messages.forEach(function(a) {
@@ -266,11 +273,11 @@ var  limit = 10;
             if (no >= messages.length) {
                 $("body .message-previous").hide();
             } else {
-                $("body .message-previous").show();
+//                $("body .message-previous").show();
             }
             return false;
         } else {
-            $("body .message-previous").hide();
+//            $("body .message-previous").hide();
             $("body .message-scroll").show();
             return false;
         }

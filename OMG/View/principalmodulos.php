@@ -394,28 +394,28 @@ function redimencionarLayout()
     // myLayout.setAutoSize("a;b;e");
 }
   function mostrar_urls()
-        {
-            return new Promise((resolve,reject)=>{
-                let usuario = <?php echo Session::getSesion("user")["ID_USUARIO"] ?>;
-                let tempDocumentolistadoUrl = "";
-                URL = 'filePerfilesUsuario/'+usuario,
-                $.ajax({
-                    url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
-                    type: 'GET',
-                    data: 'URL='+URL+"&SIN_CONTRATO=''",
-                    // async:false,
-                    success: function(todo)
+    {
+        return new Promise((resolve,reject)=>{
+            let usuario = <?php echo Session::getSesion("user")["ID_USUARIO"] ?>;
+            let tempDocumentolistadoUrl = "";
+            URL = 'filePerfilesUsuario/'+usuario,
+            $.ajax({
+                url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
+                type: 'GET',
+                data: 'URL='+URL+"&SIN_CONTRATO=''",
+                // async:false,
+                success: function(todo)
+                {
+                    if(todo[0].length!=0)
                     {
-                        if(todo[0].length!=0)
-                        {
-                           console.log("todo ",todo);
-                        }
-                        
-                        resolve(todo);
+                       console.log("todo ",todo);
                     }
-                });
+
+                    resolve(todo);
+                }
             });
-        }
+        });
+    }
     $(function()
     {
        $(document).ready(()=>{
