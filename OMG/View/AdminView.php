@@ -169,9 +169,9 @@ $Usuario=  Session::getSesion("user");
                                         <th class="jsgrid-header-cell">Menu</th>
                                         <th class="jsgrid-header-cell">Vistas</th>
                                         <th class="jsgrid-header-cell">Ver</th>
-                                        <th class="jsgrid-header-cell">Guardar</th>
+                                        <!-- <th class="jsgrid-header-cell">Guardar</th>
                                         <th class="jsgrid-header-cell">Modificar</th>
-                                        <th class="jsgrid-header-cell">Eliminar</th>
+                                        <th class="jsgrid-header-cell">Eliminar</th> -->
                                     </tr>
                                     <tbody id="bodyTablePermisos">
 
@@ -241,7 +241,7 @@ $Usuario=  Session::getSesion("user");
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Cumplimientos</h4>
+                        <h4 class="modal-title" id="myModalLabel">Temáticas</h4>
                     </div>
 
                     <div class="modal-body" style="width: -webkit-fill-available;">
@@ -251,8 +251,8 @@ $Usuario=  Session::getSesion("user");
                                 <table style="width:100%" class="jsgrid-table">
                                     <tr class="jsgrid-header-row">
                                         <th class="jsgrid-header-cell">No.</th>
-                                        <th class="jsgrid-header-cell">Clave Cumplimiento</th>
-                                        <th class="jsgrid-header-cell">Cumplimiento</th>
+                                        <th class="jsgrid-header-cell">Clave Temática</th>
+                                        <th class="jsgrid-header-cell">Temática</th>
                                         <th class="jsgrid-header-cell">Ver</th>
                                     </tr>
                                     <tbody id="bodyTableContratos">
@@ -298,7 +298,7 @@ $Usuario=  Session::getSesion("user");
         { name: "nombre",title:"Nombre", type: "text", width: 180, editing:false},
         { name: "correo",title:"Correo", type: "text", width: 180, editing:false},
         { name: "categoria",title:"Categoria", type: "text", width: 140, editing:false},
-        { name: "cumplimientos",title:"Cumplimientos", type: "text", width: 140,editing:false},   
+        { name: "cumplimientos",title:"Temática", type: "text", width: 140,editing:false},   
         { name: "permisos",title:"Vistas", type: "text", width: 70, editing:false},
         { name: "temas",title:"Temas", type: "text", width: 70,editing:false},
         { name:"delete", title:"Opción", type:"customControl",sorting:""},

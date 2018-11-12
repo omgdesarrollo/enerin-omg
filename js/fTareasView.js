@@ -115,20 +115,7 @@ drawCanvasAll = ()=>
 
 drawCanvasRed = ()=>
 {
-    // console.log("ejecutando drawCanvasRed");
     return new Promise((resolve,reject)=>{
-        // $('canvas.semaforoRed').drawLine({
-        //     strokeStyle: '#000',
-        //     strokeWidth: 10,
-        //     x1: 0, y1: 30,
-        //     x2: 350, y2: 30,
-        //     x3: 350, y3: 60,
-        //     x4: 0, y4: 60,
-        //     x5: 0, y5: 90,
-        //     x6: 350, y6: 90,
-        //     x7: 350, y7: 120,
-        //     x8: 0, y8: 120,
-        // });
         let obj = new Object();
         let x=-10;
         let bandera = true;
@@ -289,6 +276,7 @@ function inicializarFiltros()
                 {id:"noneTres",type:"none"},
                 {id:"noneCuatro",type:"none"},
                 {id:"noneCinco",type:"none"},
+                {id:"noneSeis",type:"none"},
                 {name:"opcion",id:"opcion",type:"opcion"}
         ];
         resolve();
