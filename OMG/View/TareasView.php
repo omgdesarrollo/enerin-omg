@@ -547,11 +547,68 @@ MySemaforoField.prototype = new jsGrid.Field
                         return this._inputDate[1];
         }
 });
+
+var MyDateField = function(config)
+{
+    jsGrid.Field.call(this, config);
+};
+ 
+MyDateField.prototype = new jsGrid.Field
+({
+        css: "date-field",
+        align: "center",
+        sorter: function(date1, date2)
+        {
+                console.log("haber cuando entra aqui");
+                console.log(date1);
+                console.log(date2);
+        },
+        itemTemplate: function(value)
+        {
+            console.log(value);
+                return getSinFechaFormato(value);
+                // fecha="0000-00-00";
+                // // console.log(this);
+                // this[this.name] = value;
+                // // console.log(data);
+                // if(value!=fecha)
+                // {
+                //         date = new Date(value);
+                //         fecha = date.getDate()+1 +" "+ months[date.getMonth()] +" "+ date.getFullYear().toString().slice(2,4);
+                //         return fecha;
+                // }
+                // else
+                //         return "Sin fecha";
+        },
+        insertTemplate: function(value)
+        {},
+        editTemplate: function(value)
+        {
+                // console.log(this);
+                fecha="0000-00-00";
+                if(value!=fecha)
+                {
+                        fecha=value;
+                }
+                return this._inputDate = $("<input>").attr({type:"date",value:fecha,style:"margin:-5px;width:145px"});
+        },
+        insertValue: function()
+        {},
+        editValue: function(val)
+        {
+                value = this._inputDate[0].value;
+                if(value=="")
+                        return "0000-00-00";
+                else
+                        return $(this._inputDate).val();
+        }
+});
  
  var customsFieldsGridData=[
     {field:"customControl",my_field:MyCControlField},
     {field:"comboEmpleados",my_field:MyComboEmpleados},
     {field:"comboStatus",my_field:MyComboStatus},
+    {field:"date",my_field:MyDateField},
     // {field:"fieldSemaforo",my_field:MySemaforoField}
     
 ];
@@ -566,7 +623,7 @@ estructuraGrid= [
     { name: "tarea",title:"Tema", type: "textarea", validate: "required",width:200 },
     { name: "id_empleado", title: "Responsable", type: "comboEmpleados", width:250},
 //    { name: "fecha_creacion",title:"Fecha de Creación", type: "text", validate: "required", width:150,editing: false},
-    { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required", width:150,},
+    { name: "fecha_alarma",title:"Fecha de Alarma", type: "date", validate: "required", width:150,},
     { name: "fecha_cumplimiento",title:"Fecha de Cumplimiento", type: "text", validate: "required", width:190,editing: false},    
     { name: "status_tarea", title:"Estatus", type: "text", width:120},
 //    { name: "status_tarea", title:"Estatus", type: "select", width:150,valueField:"status_tarea",textField:"descripcion",
