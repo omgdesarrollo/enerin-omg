@@ -45,7 +45,7 @@ $(function(){
             }
         // }
     });
-    console.log($("tbody"));
+    // console.log($("tbody"));
     // });
 });
 
@@ -208,6 +208,12 @@ function construirGrid()
         },
         onDataLoaded:(args)=>
         {
+            // console.log(args);
+            console.log(gridInstance.data);
+            if(gridInstance["customFunctionAuto"]!=undefined && gridInstance.data.length!=0)
+                $.each(gridInstance["customFunctionAuto"],(index,value)=>{
+                    value();
+                });
             // alert("3");
             // setTimeout(function(){lol();},200);
             $('.jsgrid-filter-row').removeAttr("style",'display:none');

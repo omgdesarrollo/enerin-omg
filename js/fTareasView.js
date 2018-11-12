@@ -51,6 +51,7 @@ $(function()
 //        console.log(tareaDatos);
 //        console.log("termino");
             listo ? insertarTareas(tareaDatos):swalError("Completar campos");
+        
     });
     
     $("#btn_limpiarModalTarea").click(function()
@@ -69,7 +70,6 @@ $(function()
     {
         agregarArchivosUrl();
     });
-    
 
     var $btnDLtoExcel = $('#toExcel'); 
     $btnDLtoExcel.on('click', function () 
@@ -101,7 +101,156 @@ $(function()
 
 }); //CIERRA $(FUNCTION())
 
+drawCanvasAll = ()=>
+{
+    drawCanvasRed();
+    drawCanvasGreen();
+    drawCanvasOrange();
+    drawCanvasBlue();
+    drawCanvasYellow();
+}
 
+drawCanvasRed = ()=>
+{
+    // console.log("ejecutando drawCanvasRed");
+    return new Promise((resolve,reject)=>{
+        // $('canvas.semaforoRed').drawLine({
+        //     strokeStyle: '#000',
+        //     strokeWidth: 10,
+        //     x1: 0, y1: 30,
+        //     x2: 350, y2: 30,
+        //     x3: 350, y3: 60,
+        //     x4: 0, y4: 60,
+        //     x5: 0, y5: 90,
+        //     x6: 350, y6: 90,
+        //     x7: 350, y7: 120,
+        //     x8: 0, y8: 120,
+        // });
+        let obj = new Object();
+        let x=-10;
+        let bandera = true;
+        for(i=0;i<10;)
+        {
+            obj["y"+i] = x;
+            obj["x"+i] = bandera == true ? -10 : 350 ;
+            bandera = !bandera;
+            obj["y"+(i+1)] = x;
+            obj["x"+(i+1)] = bandera == true ? -10 : 350 ;
+            i+=2;
+            x+=34;
+        }
+        obj["strokeStyle"] = '#ff9f9f';
+        obj["strokeWidth"] = 6;
+        // console.log(obj);
+        $('canvas.semaforoRed').drawLine(obj);
+    });
+}
+
+drawCanvasOrange = ()=>
+{
+    // console.log("ejecutando drawCanvasOrange");
+    return new Promise((resolve,reject)=>{
+        let obj = new Object();
+        let x=-10,y=30;
+        let bandera = true;
+        for(i=0;i<20;)
+        {
+            if(bandera==true)
+            {
+                obj["x"+i] = x;
+                obj["y"+i] = y ;
+                obj["y"+(i+1)] = x;
+                obj["x"+(i+1)] = y ;
+            }else
+            {
+                obj["y"+i] = x;
+                obj["x"+i] = y ;
+                obj["x"+(i+1)] = x;
+                obj["y"+(i+1)] = y ;
+            }
+            i+=2;
+            y+=50;
+            bandera = !bandera;
+        }
+        obj["strokeStyle"] = '#fcdca3';
+        obj["strokeWidth"] = 10;
+        // console.log(obj);
+        $('canvas.semaforoOrange').drawLine(obj);
+    });
+}
+
+drawCanvasGreen = ()=>
+{
+    return new Promise((resolve,reject)=>{
+        let obj = new Object();
+        let x=-10;
+        let bandera = true;
+        for(i=0;i<10;)
+        {
+            obj["x"+i] = x;
+            obj["y"+i] = bandera == true ? -10 : 350 ;
+            bandera = !bandera;
+            obj["x"+(i+1)] = x;
+            obj["y"+(i+1)] = bandera == true ? -10 : 350 ;
+            i+=2;
+            x+=69;
+        }
+        obj["strokeStyle"] = '#73ff00';
+        obj["strokeWidth"] = 10;
+        $('canvas.semaforoGreen').drawLine(obj);
+    });
+}
+
+drawCanvasBlue = ()=>
+{
+    $('canvas.semaforoBlue').drawLine({
+        strokeStyle: '#93aed3',
+        strokeWidth: 20,
+        strokeDash: [20],
+        strokeDashOffset: 100,
+        x1: 100, y1: -10,
+        x2: 100, y2: 350,
+        x3: 200, y3: 350,
+        x4: 200, y4: -10
+    });
+
+    $('canvas.semaforoBlue').drawLine({
+        strokeStyle: '#93aed3',
+        strokeWidth: 6,
+        strokeDash: [35],
+        strokeDashOffset: 100,
+        y1: 50, x1: -10,
+        y2: 50, x2: 350,
+        y3: 100, x3: 350,
+        y4: 100, x4: -10
+    });
+}
+
+drawCanvasYellow = ()=>
+{
+    return new Promise((resolve,reject)=>{
+        $('canvas.semaforoYellow').drawLine({
+            strokeStyle: '#f8f893',
+            strokeWidth: 10,
+            x1: 60, y1: 150,
+            x2: -10, y2: 90,
+            x3: -10, y3: 50,
+            x4: 120, y4: 160,
+            x5: 170, y5: 160,
+            x6: -20, y6: 0,
+            x7: 30, y7: 0,
+            x8: 220, y8: 160,
+            x9: 270, y9: 160,
+            x10:70, y10:-10,
+            x11:120, y11:-10,
+            x12:320, y12:160,
+            x13:320, y13:120,
+            x14:170, y14:-10,
+            x15:220, y15:-10,
+            x16:320, y16:80
+        });
+    });
+}
 
 function inicializarFiltros()
 {  
@@ -149,7 +298,6 @@ function listarDatos()
 {
     return new Promise((resolve,reject)=>
     {
-//        console.log("valor del check en listarDatos: ",valorChecking);    
         var __datos=[];
         $.ajax(
         {
@@ -169,9 +317,7 @@ function listarDatos()
                     $.each(data,function(index,value)
                     {
                         __datos.push(reconstruir(value,index+1));
-                    });                    
-                    
-//                    $("#tareasTerminadas").html("Terminados");
+                    });
                     
                     DataGrid = __datos;
                     gridInstance.loadData();
@@ -209,30 +355,38 @@ function reconstruir(value,index)
     tempData["fecha_cumplimiento"]= getSinFechaFormato(value.fecha_cumplimiento);
 
     tempData["status_tarea"]= value.status_tarea;
+    tempData["status_grafica"]= value.status_grafica;
     tempData["fecha_al"]= value.fecha_alarma;
     tempData["fecha_cump"]= value.fecha_cumplimiento;
         
     tempData["semaforo"]="";
     if(value.status_tarea==1 && value.status_grafica=="En tiempo")
     {
-        tempData["semaforo"]+="<span title='En Proceso' class='semaforoGreen'>.</span>";
+        tempData["semaforo"]+="<canvas title='En Proceso' class='semaforoGreen'>.</canvas>";
+
+        // tempData["semaforo"]+="<span title='En Proceso' class='semaforoGreen'>.</span>";        
     }
     if(value.status_tarea==1 && value.status_grafica=="Alarma vencida")
     {
-        tempData["semaforo"]+="<span title='En Alarma' class='semaforoOrange'>.</span>";
+        tempData["semaforo"]+="<canvas title='En Alarma' class='semaforoOrange'>.</canvas>";
     }
     if(value.status_tarea==1 && value.status_grafica=="Tiempo vencido")
     {
-        tempData["semaforo"]+="<span title='Tiempo Vencido' class='semaforoRed'>.</span>";
+        tempData["semaforo"]+="<canvas title='Tiempo Vencido' class='semaforoRed'>.</canvas>";
+        // tempData["semaforo"]+="<span title='Tiempo Vencido' class='semaforoRed'>.</span>";
     }
+
     if(value.status_tarea==2)
     {
-        tempData["semaforo"]+="<span title='Suspendido' class='semaforoYellow'>.</span>";
+        tempData["semaforo"]+="<canvas title='Suspendido' class='semaforoYellow'>.</span>";
     }
     if(value.status_tarea==3)
     {
-        tempData["semaforo"]+="<span title='Terminado'  class='semaforoBlue'>.</span>";
+        tempData["semaforo"]+="<canvas title='Terminado'  class='semaforoBlue'>.</canvas>";
     }
+
+    // tempData["semaforo"] = value.status_tarea;
+
     tempData["observaciones"]=value.observaciones; 
     if(value.archivosUpload[0].length==0)
     {
@@ -324,8 +478,6 @@ function archivoyComboboxparaModal()
 
 function insertarTareas(tareaDatos)
 {
-    console.log(tareaDatos);
-    
     $.ajax({
         url:"../Controller/TareasController.php?Op=Guardar",
         type:"POST",
@@ -333,20 +485,14 @@ function insertarTareas(tareaDatos)
         async:false,
         success:function(datos)
         {
-//            alert("valor datos: "+datos);
-//            console.log(datos);
             if(typeof(datos) == "object")
             {
-                
-//                console.log(datos);
                 tempData;
                 swalSuccess("Tarea Creada");                
                 $.each(datos,function(index,value)
                 {
-                   tempData= reconstruir(value,ultimoNumeroGrid+1);  
-//                   console.log(value.id_empleado); 
+                   tempData= reconstruir(value,ultimoNumeroGrid+1);
                 });
-//                console.log(tempData);
                 
                 $("#jsGrid").jsGrid("insertItem",tempData).done(function()
                 {
@@ -387,7 +533,6 @@ function saveUpdateToDatabase(args)//listo
     statusTemaAnterior=args["previousItem"]["status_tarea"];
     tarea=args["item"]["tarea"];
     verificar = 0;
-//    console.log("Este es el id: ",id_afectado);
     $.each(args['item'],(index,value)=>
     {
             if(args['previousItem'][index]!=value && value!="")
@@ -430,7 +575,6 @@ function saveUpdateToDatabase(args)//listo
                             if(statusTemaActual!=statusTemaAnterior)
                             {
                                 enviarNotificacionWhenCambioDeStatus(id_empleadoActual,tarea,statusTemaActual,id_afectado.id_tarea);
-//                                console.log("status: ",statusTemaActual);
                             }
                         }
 
@@ -555,7 +699,6 @@ function listarThisEmpleados()
 
 function verificarExiste(dataString,cualverificar)
 {
-
 $.ajax({
     url: "../Controller/TareasController.php?Op=verificarTarea&cualverificar="+cualverificar,
     type: "POST",
@@ -841,27 +984,32 @@ function preguntarEliminar(data)
 
 function refresh()
 {
-   listarEmpleados();
-   listarDatos();
-   inicializarFiltros();
-   construirFiltros();
-   gridInstance.loadData();
-   valorChecking="false";
+    inicializarFiltros().then((resolve)=>
+    { 
+        construirFiltros();
+        listarThisEmpleados();
+        listarDatos();
+        valorChecking="false";
    
-    $('#status_grafica_combobox').on('change', function() {
-      a = $("#status_grafica_combobox option:selected" ).text();      
-      if(valorChecking=="true")
-      {
-        valorChecking="false";          
-      }else{
-        if(a=="TERM")
+        $('#status_grafica_combobox').on('change', function() {
+        a = $("#status_grafica_combobox option:selected" ).text();      
+        if(valorChecking=="true")
         {
-            $('#checkTerminados').trigger('click');         
-        }else{            
-            valorChecking="false";
-        }
-          
-      }      
+            valorChecking="false";          
+        }else{
+            if(a=="TERM")
+            {
+                $('#checkTerminados').trigger('click');         
+            }else{            
+                valorChecking="false";
+            }
+            
+        }      
+        });
+    },
+    (error)=>
+    {
+        growlError("Error!","Error al construir la vista, recargue la página");
     });
    
 //   valorChecking="false"

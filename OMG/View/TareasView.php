@@ -23,6 +23,8 @@ $Usuario=  Session::getSesion("user");
                 <!--jquery-->
                 <script src="../../js/jquery.js" type="text/javascript"></script>
                 <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+                <script src="../../assets/canvas/jcanvas.min.js" type="text/javascript"></script>
+
                 <!--Para abrir alertas de aviso, success,warning, error--> 
                 <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
                 <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
@@ -75,7 +77,7 @@ $Usuario=  Session::getSesion("user");
             
             /*semaforo*/
             .semaforoYellow {
-              background: #FFFF00;
+              background: #e1e100;
               border-radius: 0.8em;
               -moz-border-radius: 0.8em;
               -webkit-border-radius: 0.8em;
@@ -86,6 +88,7 @@ $Usuario=  Session::getSesion("user");
               /*margin-right: 15px;*/
               text-align: center;
               width: 2.5em; 
+              height: 2.5em;
             }
 
             .semaforoOrange {
@@ -100,6 +103,7 @@ $Usuario=  Session::getSesion("user");
               /*margin-right: 15px;*/
               text-align: center;
               width: 2.5em; 
+              height: 2.5em;
             }/*
 
 */          .semaforoBlue {
@@ -114,6 +118,7 @@ $Usuario=  Session::getSesion("user");
               /*margin-right: 15px;*/
               text-align: center;
               width: 2.5em; 
+              height: 2.5em;
             }
             
             /*
@@ -130,6 +135,7 @@ $Usuario=  Session::getSesion("user");
               /*margin-right: 15px;*/
               text-align: center;
               width: 2.5em; 
+              height: 2.5em;
             }
 
             .semaforoRed {
@@ -143,7 +149,8 @@ $Usuario=  Session::getSesion("user");
               line-height: 2.5em;
               /*margin-right: 15px;*/
               text-align: center;
-              width: 2.5em; 
+              width: 2.5em;
+              height: 2.5em;
             }
         </style>              
                 
@@ -298,6 +305,11 @@ require_once 'EncabezadoUsuarioView.php';
 <div id="jsChart"></div>
 
 <script>
+
+// var canvasRed = document.getElementsByClassName("semaforoRed");
+// var ctxRed = canvasRed.getContext("2d");
+// console.log(ctxRed);
+
 var DataGrid = [];
 var dataListado = [];
 var thisEmpleados=[];
@@ -311,7 +323,6 @@ var origenDeDatosVista="tareas";
 var activeChart = -1;
 var chartsCreados = [];
 var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)},(dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)}];
-
 
 var MyComboEmpleados = function(config)
 {
@@ -475,11 +486,73 @@ MyComboStatus.prototype = new jsGrid.Field
         }
 });
 
+var MySemaforoField = function(config)
+{
+    jsGrid.Field.call(this, config);
+};
+ 
+MySemaforoField.prototype = new jsGrid.Field
+({
+        align: "center",
+        sorter: function(date1, date2)
+        {},
+        itemTemplate: function(value,todo)
+        {
+            let res ="";
+            // console.log(value);
+            // console.log(todo.status_grafica);
+            if(value==1 && todo.status_grafica=="En tiempo")
+                res = "<canvas title='En Proceso' class='semaforoGreen'>.</canvas>";
+            if(value==1 && todo.status_grafica=="Alarma vencida")
+                res = "<canvas title='Alarma Vencida' class='semaforoOrange'>.</canvas>";
+            if(value==1 && todo.status_grafica=="Tiempo vencido")
+                res = "<canvas title='Tiempo Vencido' class='semaforoRed'>.</canvas>";
+            if(value==2)
+                res = "<canvas title='Suspendido' class='semaforoYellow'>.</canvas>";
+            if(value==3)
+                res = "<canvas title='Terminado' class='semaforoBlue'>.</canvas>";
+            return res;
+        },
+        insertTemplate: function(value)
+        {
+            gridInstance["customFunctionAuto"] = {fnCanvas:drawCanvasAll};
+        },
+        editTemplate: function(value,todo)
+        {
+                var temp = "";
+                
+                $.each(thisEmpleados,(index,val)=>
+                {
+                        if(val.id_empleado == value)
+                        {
+                            temp += "<option value='"+val.id_empleado+"' selected>"+val.nombre_completo+"</option>";
+                        }
+                        else
+                            temp += "<option value='"+val.id_empleado+"'>"+val.nombre_completo+"</option>";
+                })
+                this._inputDate = $("<select>").attr({style:"margin:-5px;width:145px"});
+                $(this._inputDate[0]).append(temp);
+
+                return this._inputDate[0];
+                
+        },
+        insertValue: function()
+        {},
+        editValue: function()
+        {
+                if( this._inputDate[1] == undefined )
+                        return $(this._inputDate[0]).val();
+                else
+                        return this._inputDate[1];
+        }
+});
  
  var customsFieldsGridData=[
     {field:"customControl",my_field:MyCControlField},
     {field:"comboEmpleados",my_field:MyComboEmpleados},
-    {field:"comboStatus",my_field:MyComboStatus}
+    {field:"comboStatus",my_field:MyComboStatus},
+    // {field:"fieldSemaforo",my_field:MySemaforoField}
+    
 ];
  
  
@@ -494,11 +567,11 @@ estructuraGrid= [
 //    { name: "fecha_creacion",title:"Fecha de Creación", type: "text", validate: "required", width:150,editing: false},
     { name: "fecha_alarma",title:"Fecha de Alarma", type: "text", validate: "required", width:150,},
     { name: "fecha_cumplimiento",title:"Fecha de Cumplimiento", type: "text", validate: "required", width:190,editing: false},    
-    { name: "status_tarea", title:"Estatus", type: "comboStatus", width:120},
+    { name: "status_tarea", title:"Estatus", type: "text", width:120},
 //    { name: "status_tarea", title:"Estatus", type: "select", width:150,valueField:"status_tarea",textField:"descripcion",
 //        items:[{"status_tarea":"1","descripcion":"En Proceso"},{"status_tarea":"2","descripcion":"Suspendido"},{"status_tarea":"3","descripcion":"Terminado"}]
 //    },
-    { name: "semaforo",title:"ID", type: "text", validate: "required", width:80,editing: false},
+    { name: "semaforo",title:"ID", type: "fieldSemaforo", validate: "required", width:80,editing: false},
     { name: "observaciones",title:"Observaciones", type: "textarea", width:150,},
     { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:150,editing:false },
     { name: "registrar_programa",title:"Programa", type: "text", validate: "required",width:160, editing:false },
@@ -508,9 +581,10 @@ estructuraGrid= [
  
 construirGrid();
 inicializaChartjs();
- 
+
 inicializarFiltros().then((resolve)=>
-{ 
+{
+    gridInstance["customFunctionAuto"] = {fnCanvas:drawCanvasAll};
     construirFiltros();
     listarThisEmpleados();
     listarDatos();
