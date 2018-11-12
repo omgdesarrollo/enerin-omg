@@ -98,6 +98,9 @@ $(function()
             $('#checkTerminados').trigger('click');         
         }      
     });
+    
+    
+//    $("#myCanvas").canvas()
 
 }); //CIERRA $(FUNCTION())
 

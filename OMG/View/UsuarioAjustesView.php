@@ -455,18 +455,19 @@ require_once '../util/Session.php';
                 });
             });
         }
+       
         fotoPerfilCambio = ()=>
         {
             $("input[type='file']").click();
         }
-        mostrar_urls().then(()=>{ $('#fileupload').fileupload({url: '../View/'});});
+        mostrar_urls().then((resolve)=>{ $('#fileupload').fileupload({url: '../View/'});console.log("primera");},(error)=>{  console.log("d");}        );
+       
     </script>
     <script id="template-upload" type="text/x-tmpl">
     {% let error = 0; %}
     {%for (var i=0, file; file=o.files[i]; i++) { %}
         <tr class="template-upload" style="width:100%">
             <td>
-                {% console.log(file);  %}
                 <span class="preview"></span>
             </td>
             <!-- <td> -->
@@ -486,17 +487,17 @@ require_once '../util/Session.php';
             {% } %}
             </td>
         </tr>
-        {% if(i==0){ if(error==1) growlError("Error Imagen","Formato de Imagen no Compatible"); else{ agregarArchivosUrl();} } %}
+        {% if(i==0){ if(error==1) growlError("Error Imagen","Formato de Imagen no Compatible"); else{  setTimeout(agregarArchivosUrl,200);         } } %}
     <!-- {%  } %} -->
 </script>
 
 <script id="template-download" type="text/x-tmpl">
-    {% growlError("HEY","HEY"); var t = $('#fileupload').fileupload('active'); var i,file; %}
+    {%  var t = $('#fileupload').fileupload('active'); var i,file; %}
     {% for (i=0,file; file=o.files[i]; i++) { %}
         <!-- <tr class="template-download" style="width:100%"> -->
             <!-- <td>
             <span class="preview"> -->
-            <!-- {% console.log(file); %} -->
+            <!-- {%  %} -->
                     <!-- {% if (file.thumbnailUrl) { %} -->
                     <!-- <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery> -->
                     <!-- <img src="{%=file.thumbnailUrl%}"></img> -->

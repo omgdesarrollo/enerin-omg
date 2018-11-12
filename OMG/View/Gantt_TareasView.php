@@ -220,8 +220,12 @@ and open the template in the editor.
     /*max-height: 90%;*/
 }
 
- .modal-lg{width: 80%;}
+ .modal-lg{width: 100%;}
+ .modal-lgfile{width: 50%;}
  .modal-body{position:relative;padding:0px}
+ .modal-title {
+    text-align: center;
+}
 #mydiv {
     position: absolute;
     z-index: 9;
@@ -241,10 +245,65 @@ and open the template in the editor.
 }
 /*start encabezado seccion carga archivo-->*/
 th {
-    text-align: left;
-    width: 48%;
+    text-align: center;
+    width: 38%;
+    /*padding-left: 10px;*/
 }
 /*<--end*/
+
+/*#DocumentolistadoUrl {*/
+    /*padding-left: 15%;*/
+    /* text-align: center; */
+/*}*/
+.fileinput-button {
+    /*padding-left: 33%;*/
+     text-align: center;
+     height: 3%;
+}
+.form-group {
+    /*margin-bottom: 15px;*/
+    text-align: center;
+}
+table {
+    background-color: blanchedalmond;
+}
+table {
+    background-color: blanchedalmond;
+    width: 100%;
+}
+td, th {
+    padding: 0;
+    text-align: center;
+}
+tbody {
+/*  border: black 2px solid;*/
+  width: 100%;
+}
+.btn-info:focus {
+    background-color: #2786c5!important;
+    border-color: #6FB3E0;
+}
+
+/*.btn_agregar {
+    border-radius: 3px;
+    border: 3px #49986d solid;
+    height: 44px;
+    background-color: #87B87F!important;
+    border-color: #87B87F;
+}*/
+
+.btn_agregar{
+    background-color: #6FB3E0!important;
+    border-color: #87B87F;
+    border-radius: 3px;
+    border: 3px #49986d solid;
+    height: 44px;
+    border-radius: 5px;
+    border: 3px #3399cc solid;
+    color: white;
+    font-size: 15px;
+    width: 70%
+}
 
 
 </style> 	
@@ -367,7 +426,7 @@ function dragElement(elmnt) {
     
 <!-- Inicio de Seccion Modal Archivos-->
 <div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog modal-lg" role="document">
+	<div class="modal-dialog modal-lgfile" role="document">
         <div id="loaderModalMostrar"></div>
 		<div class="modal-content">
                         
@@ -385,7 +444,7 @@ function dragElement(elmnt) {
 			</div>
 
                         <div class="form-group" method="post" >
-                                <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Archivo</button>
+                                <button type="submit" id="subirArchivos"  class="btn_agregar">Adjuntar Archivo</button>
                         </div>
                       </div><!-- cierre div class-body -->
                 </div><!-- cierre div class modal-content -->
@@ -1607,22 +1666,16 @@ construirTreeList();
     {
         gantt.refreshData();
         gantt.init('gantt_here');
-        $.when(gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId")).then(function(){
-                
-                
-            obtenerTareas().then(function (){
-                construirTreeList();
-
-            });
-
-
-                
-                
-                
-                
-                
-                
-        });
+//        $.when(gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId")).then(function(){
+//                
+//                
+//            obtenerTareas().then(function (){
+//                construirTreeList();
+//
+//            });        
+//        });
+        console.log("dxtree list  ",dxtreeList)
+        
     }
     function detallesActividadesCompletasGantt(){
         if( $("#detallesInformacion").css("display")!="none"){
@@ -1630,7 +1683,6 @@ construirTreeList();
         }else{
             $("#detallesInformacion").css("display","");
         }
-
 } 
     var datosModificadosActividadesPonderado_ProgramadoTemp=[];
     var id_padreTareaPonderado_programadoTemp=-1;
@@ -1763,7 +1815,7 @@ construirTreeList();
                     {
                             if(todo[0].length!=0)
                             {
-                                    tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header' >Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
+                                    tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header' >Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'>Opcion</th></tr><tbody>";
                                     $.each(todo[0], function (index,value)
                                     {
                                             nametmp = value.split("^-O-^-M-^-G-^");
