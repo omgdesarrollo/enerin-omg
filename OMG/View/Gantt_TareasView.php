@@ -1668,14 +1668,15 @@ construirTreeList();
         gantt.init('gantt_here');
 //        $.when(gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId")).then(function(){
 //                
-//                
+//                dxtreeList.context.location.reload(function (){
+//                  console.log("re  ");  
+//                });
 //            obtenerTareas().then(function (){
 //                construirTreeList();
 //
 //            });        
 //        });
-        console.log("dxtree list  ",dxtreeList)
-        
+        console.log("dxtree list  ",dxtreeList);
     }
     function detallesActividadesCompletasGantt(){
         if( $("#detallesInformacion").css("display")!="none"){
