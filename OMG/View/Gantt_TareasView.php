@@ -1567,7 +1567,7 @@ construirTreeList();
                 dataField: "id",
                 caption: "ID",
                 allowEditing:false,
-//                width:100,
+                width:90,
             },
             {
                 dataField: "text",
@@ -1622,7 +1622,7 @@ construirTreeList();
              { 
                 dataField: "archivo_adjunto",
                  captbion: "Archivo Adjunto",
-                 width:100,
+                 width:160,
                 cellTemplate:archivoAdjuntoCellTemplate,
                   allowEditing:false
                   
