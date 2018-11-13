@@ -108,21 +108,25 @@ switch ($Op)
             {
                 $cont++;
                 $vista = explode("-",$val['descripcion']);
-                echo $vista[1];
+                // echo $vista[1];
                 if($cont==1)
                 {
                     //ver/consultar/editar/eliminar
                     if($usuario["ID_USUARIO"]<=1)
                     {
+                        $tempData2 .= "<tr>";
                         $tempData2 = "<td style='border-top: 1px solid;border-right: 1px solid;'>$vista[1]</td>";
                         $tempData2 .= "<td onClick=\"saveCheckBoxToDataBase(this,'consult','$val[id_estructura]')\" id='consult_$val[id_estructura]' style='border-top: 1px solid;border-right: 1px solid;cursor:pointer;'></td>";
+                        $tempData2 .= "</tr>";
                     }
                     else
                     {
                         if($vista[1] != "Permisos" && $vista[1] != "Control Temas")
                         {
+                            $tempData2 .= "<tr>";
                             $tempData2 = "<td style='border-top: 1px solid;border-right: 1px solid;'>$vista[1]</td>";
                             $tempData2 .= "<td onClick=\"saveCheckBoxToDataBase(this,'consult','$val[id_estructura]')\" id='consult_$val[id_estructura]' style='border-top: 1px solid;border-right: 1px solid;cursor:pointer;'></td>";
+                            $tempData2 .= "<tr>";
                         }
                     }
 
@@ -132,7 +136,6 @@ switch ($Op)
 
                     // $tempData2 .= "<td onClick=\"saveCheckBoxToDataBase(this,'delete','$val[id_estructura]')\" id='delete_$val[id_estructura]' style='border-top: 1px solid;cursor:pointer;border-right: 1px solid'></td>";
                     
-                    $tempData2 .= "</tr>";
 
                 }
                 else
@@ -141,6 +144,7 @@ switch ($Op)
                     {
                         $tempData3 .= "<tr><td style='border-right: 1px solid'>$vista[1]</td>";
                         $tempData3 .= "<td onClick=\"saveCheckBoxToDataBase(this,'consult','$val[id_estructura]')\" id='consult_$val[id_estructura]' style='cursor:pointer;border-right:1px solid;'></td>";
+                        $tempData3 .= "</tr>";
                     }
                     else
                     {
@@ -148,6 +152,7 @@ switch ($Op)
                         {
                             $tempData3 .= "<tr><td style='border-right: 1px solid'>$vista[1]</td>";
                             $tempData3 .= "<td onClick=\"saveCheckBoxToDataBase(this,'consult','$val[id_estructura]')\" id='consult_$val[id_estructura]' style='cursor:pointer;border-right:1px solid;'></td>";
+                            $tempData3 .= "</tr>";
                         }
                     }
 
@@ -156,8 +161,6 @@ switch ($Op)
                     // $tempData3 .= "<td onClick=\"saveCheckBoxToDataBase(this,'edit','$val[id_estructura]')\" id='edit_$val[id_estructura]' style='cursor:pointer;border-right: 1px solid'></td>";
 
                     // $tempData3 .= "<td onClick=\"saveCheckBoxToDataBase(this,'delete','$val[id_estructura]')\" id='delete_$val[id_estructura]' style='cursor:pointer;border-right: 1px solid'></td>";
-                    
-                    $tempData3 .= "</tr>";
                 }
                 $idEstruct++;
             };
