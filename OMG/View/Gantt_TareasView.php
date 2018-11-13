@@ -1457,7 +1457,7 @@ construirTreeList();
         showBorders: true,
         autoExpandAll: true,
         allowColumnResizing: true,
-        columnAutoWidth: false,
+        columnAutoWidth: true,
         allowColumnReordering: true,
         height:700,
         columnChooser: {
@@ -1571,20 +1571,20 @@ construirTreeList();
             {
                 dataField: "id",
                 caption: "ID",
-                width:95,
-                allowEditing:false
+                allowEditing:false,
+//                width:100,
             },
             {
                 dataField: "text",
                 caption: "Descripcion de la Actividad",
-                width:300,
-                allowEditing:false
+                allowEditing:false,
+                 width:500,
             },
             
             { 
                 dataField: "user",
                 caption: "Responsable",
-                width:100,
+                width:150,
                 allowEditing:false,
                 lookup: {
                     dataSource:dataEmpleados,
@@ -1596,13 +1596,13 @@ construirTreeList();
             { 
                 dataField: "porcentaje_por_actividad",
                 caption: "Peso de la Actividad",
-                width:90,
+                width:100,
                 allowEditing:true
             },
              { 
                 dataField: "avance",
                 caption: "Avance (%)",
-                width:62,
+                width:100,
                 allowEditing:false
                 
             },
@@ -1616,7 +1616,7 @@ construirTreeList();
             { 
                 dataField: "status",
                 caption: "Estatus",
-                width:65,
+                width:90,
                 allowEditing:false,
                 lookup: {
                     dataSource:opcionstatus,
