@@ -4,13 +4,13 @@ session_start();
 require_once '../Model/NotificacionesModel.php';
 require_once '../dao/ValidacionDocumentoDAO.php';
 require_once '../Model/ValidacionDocumentoModel.php';
-
 require_once '../util/Session.php';
-
-
+require_once '../Model/ArchivoUploadModel.php';
 
 $Op=$_REQUEST["Op"];
+
 $model=new NotificacionesModel();
+$modelArchivo = new ArchivoUploadModel();
 
 $modelValidacionDocumentos= new ValidacionDocumentoModel();
 switch ($Op) {
@@ -47,7 +47,15 @@ switch ($Op) {
             
         case "mostrarNotificaciones->Responsable":
             $USUARIO = Session::getSesion("user");
-            $lista=$model->mostrarNotificacionesCompletas($USUARIO["ID_USUARIO"]);
+            $CONTRATO = -1;
+            $lista = $model->mostrarNotificacionesCompletas($USUARIO["ID_USUARIO"]);
+
+            foreach($lista as $key => $value)
+            {
+                $url = "filePerfilesUsuario/".$value["id_de"];
+                $lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
+            }
+
             Session::setSesion("notificacionescompletas",$lista);
             header('Content-type: application/json; charset=utf-8');
             echo json_encode($lista);
