@@ -3,7 +3,7 @@ require_once '../ds/AccesoDB.php';
 
 class AdminDAO{
     
-    public function listarUsuarios()
+    public function listarUsuarios($ID_USUARIO)
     {
         try
         {
@@ -12,7 +12,7 @@ class AdminDAO{
             AS nombre, tbempleados.categoria, tbempleados.correo
             FROM usuarios tbusuarios
             JOIN empleados tbempleados ON tbempleados.id_empleado=tbusuarios.id_empleado
-            WHERE tbusuarios.id_empleado != 0";
+            WHERE tbusuarios.id_usuario > 1 && tbusuarios.id_usuario != $ID_USUARIO";
             
             $db= AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);

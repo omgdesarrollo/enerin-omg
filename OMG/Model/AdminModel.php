@@ -3,12 +3,12 @@ require_once '../dao/AdminDAO.php';
 
 class AdminModel{
     
-    public function listarUsuarios()
+    public function listarUsuarios($ID_USUARIO)
     {
         try
         {
            $dao=new AdminDAO();
-           $rec=$dao->listarUsuarios();          
+           $rec=$dao->listarUsuarios($ID_USUARIO);
            
            return $rec;
            

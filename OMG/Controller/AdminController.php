@@ -21,7 +21,8 @@ $modelEmpleado=new EmpleadoModel();
 switch ($Op)
 {
     case 'Listar':
-        $lista = $model->listarUsuarios();
+        $usuario = Session::getSesion("user")["ID_USUARIO"];
+        $lista = $model->listarUsuarios($usuario);
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($lista);
     break;
