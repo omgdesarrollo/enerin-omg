@@ -260,9 +260,15 @@ foreach($Alarmas as $alarma)
 		$.each(notificaciones,function(index,value)
 		{
 			// direcciones = value.dir;
+			let ultimo
 			tempData2 += "<a style='cursor:pointer;text-decoration:none;float:left;padding:5px;width:90%;border-bottom:1px #6FB3E0 solid' onClick='irAVista(\""+value.asunto+"\",\""+value.id_contrato+"\")'>";
 			tempData2 += "<li style='padding-top:5px;'>";
-			tempData2 += "<img src='../../assets/probando/images/avatars/user.jpg' class='msg-photo' alt='admin' />";
+			
+			value.archivosUpload[0].length > 0 ?(
+				ultimo = value.archivosUpload[0].length -1,
+				tempData2 += "<img src='"+value.archivosUpload[1]+"/"+value.archivosUpload[0][ultimo]+"' class='msg-photo' alt='admin' />"
+			) : tempData2 += "<img src='../../images/base/user.png' class='msg-photo' alt='admin' />";
+
 			tempData2 += "<span class='msg-body'><span class='msg-title'><span class='blue'>"+value.mensaje+" "+value.nombre;
 			tempData2 += "</span></span>";
 			tempData2 += "<span class='msg-time'><i class='ace-icon fa fa-clock-o'></i><span>"+getFechaFormatoH(value.fecha_envio)+"(Enviado)</span>";
