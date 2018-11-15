@@ -277,7 +277,7 @@ class TareasDAO{
         {
             $query="SELECT tbgantt_tareas.user,tbgantt_tareas.fecha_creado 
                     FROM gantt_tareas tbgantt_tareas
-                    WHERE fecha_creado  = (SELECT MIN(fecha_creado)FROM gantt_tareas WHERE gantt_tareas.id_tarea=$id_tarea)";
+                    WHERE fecha_creado  = (SELECT MIN(fecha_creado) FROM gantt_tareas WHERE gantt_tareas.id_tarea=$id_tarea)";
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             
