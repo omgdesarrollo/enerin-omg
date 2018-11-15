@@ -1373,16 +1373,19 @@ dp.init(gantt);
                                   gantt.render();
                             break;
                             case "exportar_excel":
+                                alert("g");
                             gantt.exportToExcel({
                                 name:"document.xlsx", 
-                                columns:[
-                                    { id:"text",  header:"Tarea", width:100 },
-                                    { id:"start_date",  header:"Fecha de Inicio", width:50, type:"date" }
-                                ],
+//                                columns:[
+//                                    { id:"text",  header:"Descripcion", width:200 },
+//                                    { id:"progress",  header:"Progreso", width:100 }
+////                                    { id:"start_date",  header:"Fecha de Inicio", width:50, type:"date" }
+//                                ],
                                 server:"https://export.dhtmlx.com/gantt",
                                 visual:true,
                                 cellColors:true
-                            })
+                            });
+//                            gantt.exportToExcel();
                             break;
                             case "exportar_pdf":
                                 gantt.exportToPDF();
