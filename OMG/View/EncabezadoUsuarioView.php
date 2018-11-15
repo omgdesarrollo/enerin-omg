@@ -239,7 +239,7 @@ foreach($Alarmas as $alarma)
 	$(".navbar-brand").css("color",colorLeter);
 	
 	listarNotificaciones();
-	setInterval(function(){listarNotificaciones();},25000);
+	// setInterval(function(){listarNotificaciones();},25000);
 
 	function listarNotificaciones()
 	{
@@ -261,20 +261,24 @@ foreach($Alarmas as $alarma)
 		{
 			// direcciones = value.dir;
 			let ultimo
-			tempData2 += "<a style='cursor:pointer;text-decoration:none;float:left;padding:5px;width:90%;border-bottom:1px #6FB3E0 solid' onClick='irAVista(\""+value.asunto+"\",\""+value.id_contrato+"\")'>";
+			tempData2 += "<div class='row' style='margin:0px;'>";
+			tempData2 += "<a class='col-xs-10 col-sd-10 col-md-10 col-lg-10' style='cursor:pointer;text-decoration:none;float:left;padding:5px;width:90%;border-bottom:1px #6FB3E0 solid;'>";
+			// tempData2 += "<a style='cursor:pointer;text-decoration:none;float:left;padding:5px;width:90%;border-bottom:1px #6FB3E0 solid' onClick='irAVista(\""+value.asunto+"\",\""+value.id_contrato+"\")'>";
 			tempData2 += "<li style='padding-top:5px;'>";
-			
+
+			tempData2 += "<div class='col-xs-3 col-sd-3 col-md-3 col-lg-3'></div>";
+
 			value.archivosUpload[0].length > 0 ?(
 				ultimo = value.archivosUpload[0].length -1,
-				tempData2 += "<img src='"+value.archivosUpload[1]+"/"+value.archivosUpload[0][ultimo]+"' class='msg-photo' alt='admin' />"
+				tempData2 += "<img src='"+value.archivosUpload[1]+"/"+value.archivosUpload[0][ultimo]+"' class='img-circle col-xs-6 col-sd-6 col-md-6 col-lg-6' alt='admin' />"
 			) : tempData2 += "<img src='../../images/base/user.png' class='msg-photo' alt='admin' />";
 
-			tempData2 += "<span class='msg-body'><span class='msg-title'><span class='blue'>"+value.mensaje+" "+value.nombre;
+			tempData2 += "<span class='col-xs-12 col-sd-12 col-md-12 col-lg-12'><span class='msg-title'><span class='blue'>"+value.mensaje+" "+value.nombre;
 			tempData2 += "</span></span>";
-			tempData2 += "<span class='msg-time'><i class='ace-icon fa fa-clock-o'></i><span>"+getFechaFormatoH(value.fecha_envio)+"(Enviado)</span>";
+			tempData2 += "<span class='msg-time' style='line-height:normal'><i class='ace-icon fa fa-clock-o'></i><span>"+getFechaFormatoH(value.fecha_envio)+"(Enviado)</span>";
 			tempData2 += "</span></span></li></a>";
-			tempData2 += "<i style='color:red;background:transparent;border:none;cursor:pointer;float:left;font-size:x-large;padding:5px'";
-			tempData2 += "onClick=\"borrarNotificacion("+value.id_notificaciones+")\" class='ace-icon fa fa-times-circle'></i>";
+			tempData2 += "<i class='col-xs-1 col-sd-1 col-md-1 col-lg-1 ace-icon fa fa-times-circle' style='color:red;background:transparent;border:none;cursor:pointer;font-size:x-large;padding-top:5px;padding-left:1px'";
+			tempData2 += "onClick=\"borrarNotificacion("+value.id_notificaciones+")\"></i></div>";
 			cantidad++;
 		});
 		$("#CANTIDAD_NOTIFICACIONES").html("<i class='ace-icon fa fa-envelope-o'></i>Cantidad de Mensajes("+cantidad+")");
