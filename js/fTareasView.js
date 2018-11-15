@@ -350,31 +350,36 @@ function reconstruir(value,index)
     tempData["status_grafica"]= value.status_grafica;
     tempData["fecha_al"]= value.fecha_alarma;
     tempData["fecha_cump"]= value.fecha_cumplimiento;
+
         
     tempData["semaforo"]="";
     if(value.status_tarea==1 && value.status_grafica=="En tiempo")
     {
         tempData["semaforo"]+="<canvas title='En Proceso' class='semaforoGreen'>.</canvas>";
-
+        // tempData["status_tarea"] = "EPRO";
         // tempData["semaforo"]+="<span title='En Proceso' class='semaforoGreen'>.</span>";        
     }
     if(value.status_tarea==1 && value.status_grafica=="Alarma vencida")
     {
         tempData["semaforo"]+="<canvas title='En Alarma' class='semaforoOrange'>.</canvas>";
+        // tempData["status_tarea"] = "ALAR";
     }
     if(value.status_tarea==1 && value.status_grafica=="Tiempo vencido")
     {
         tempData["semaforo"]+="<canvas title='Tiempo Vencido' class='semaforoRed'>.</canvas>";
+        // tempData["status_tarea"] = "VENC";
         // tempData["semaforo"]+="<span title='Tiempo Vencido' class='semaforoRed'>.</span>";
     }
 
     if(value.status_tarea==2)
     {
         tempData["semaforo"]+="<canvas title='Suspendido' class='semaforoYellow'>.</span>";
+        // tempData["status_tarea"] = "SUSP";
     }
     if(value.status_tarea==3)
     {
         tempData["semaforo"]+="<canvas title='Terminado'  class='semaforoBlue'>.</canvas>";
+        // tempData["status_tarea"] = "TERM";
     }
 
     // tempData["semaforo"] = value.status_tarea;
