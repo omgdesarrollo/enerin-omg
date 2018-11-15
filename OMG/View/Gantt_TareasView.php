@@ -1547,7 +1547,6 @@ construirTreeList();
          
 //            console.log(args);
         },
-        
         onRowUpdated:function (args){
             console.log(args);
             if( args.data.hasOwnProperty('notasname') ) {
@@ -1561,18 +1560,14 @@ construirTreeList();
             }
             if(args.data.hasOwnProperty('porcentaje_por_actividad')){
                 saberSiSumanPorcentajePonderadoProgramado100loshijos(args);
-            }
-            
-            
-            
-            
+            }    
         },
         columns:[
             {
                 dataField: "id",
                 caption: "ID",
                 allowEditing:false,
-//                width:100,
+                width:90,
             },
             {
                 dataField: "text",
@@ -1627,7 +1622,7 @@ construirTreeList();
              { 
                 dataField: "archivo_adjunto",
                  captbion: "Archivo Adjunto",
-                 width:100,
+                 width:160,
                 cellTemplate:archivoAdjuntoCellTemplate,
                   allowEditing:false
                   
