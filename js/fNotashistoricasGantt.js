@@ -16,7 +16,6 @@ function ajax(method, send, callback) {
     }
 }
 
-
 var id_usuario=-1,estareapadre=false;
 obtenerNotasHistoricas();
 
