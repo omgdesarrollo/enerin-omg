@@ -277,12 +277,17 @@ class TareasDAO{
         {
             $query="SELECT tbgantt_tareas.user,tbgantt_tareas.fecha_creado 
                     FROM gantt_tareas tbgantt_tareas
-                    WHERE fecha_creado  = (SELECT MIN(fecha_creado)FROM gantt_tareas WHERE gantt_tareas.id_tarea=$id_tarea)";
+                    WHERE fecha_creado  = (SELECT MIN(fecha_creado) FROM gantt_tareas WHERE gantt_tareas.id_tarea = $id_tarea)";
+            // echo $query;
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             
-//            echo "este es el query resultado: ".json_encode($query);
-            return $lista[0]['user'];            
+        //    echo $query;
+        //    $tam = sizeof($lista);
+        //    if($tam!=0)
+                return $lista[0]['user'];
+            // else
+            //     return -2;
         } catch (Exception $ex) 
         {
             throw $ex;
@@ -297,6 +302,7 @@ class TareasDAO{
         {
             $query="SELECT tbtareas.id_tarea, tbtareas.tarea, tbtareas.id_empleado
                     FROM tareas tbtareas
+                    JOIN gantt_tareas tbgantt_tareas ON tbgantt_tareas.id_tarea = tbtareas.id_tarea
                     WHERE tbtareas.fecha_cumplimiento <= CURDATE() AND tbtareas.status_tarea = 1";
             
             $db=  AccesoDB::getInstancia();

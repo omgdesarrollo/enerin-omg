@@ -419,7 +419,7 @@ class TareasModel{
             $model=new NotificacionesModel();            
             $rec= $dao->tareasVencidas();
             
-//            echo "este es el rec: ".json_encode($rec);
+            // var_dump($rec);
             foreach ($rec as $value)
             {
                 $TAREA= $value['tarea'];
@@ -427,8 +427,8 @@ class TareasModel{
                 $idResponsableTema= $dao->obtenerUsuarioPorIdEmpleado($id_empleado_tema);
                 $id_empleado_plan= $dao->obtenerResponsablePlanTareaPadre($value['id_tarea']);
                 $idResponsablePlan= $dao->obtenerUsuarioPorIdEmpleado($id_empleado_plan);                
-                $mensaje= "El Tema: ".$TAREA." esta con Fecha de Cumplimiento Vencida, por el Usuario: ";
-                $resultado= $dao->veriricarSiYaExisteLaNotificacion($mensaje);
+                $mensaje = "El Tema: ".$TAREA." esta con Fecha de Cumplimiento Vencida, por el Usuario: ";
+                $resultado = $dao->veriricarSiYaExisteLaNotificacion($mensaje);
                 
                 if($resultado==0)
                 {
@@ -452,8 +452,6 @@ class TareasModel{
 //                echo "responsables tema: ". json_decode($idResponsableTema);
 //                echo "responsables plan: ". json_decode($idResponsablePlan);
             }
-            
-            
             return $rec;
         } catch (Exception $ex)
         {
