@@ -266,19 +266,25 @@ foreach($Alarmas as $alarma)
 			// tempData2 += "<a style='cursor:pointer;text-decoration:none;float:left;padding:5px;width:90%;border-bottom:1px #6FB3E0 solid' onClick='irAVista(\""+value.asunto+"\",\""+value.id_contrato+"\")'>";
 			tempData2 += "<li style='padding-top:5px;'>";
 
-			tempData2 += "<div class='col-xs-3 col-sd-3 col-md-3 col-lg-3'></div>";
+			// tempData2 += "<div class='col-xs-3 col-sd-3 col-md-3 col-lg-3'></div>";
 
 			value.archivosUpload[0].length > 0 ?(
 				ultimo = value.archivosUpload[0].length -1,
-				tempData2 += "<img src='"+value.archivosUpload[1]+"/"+value.archivosUpload[0][ultimo]+"' class='img-circle col-xs-6 col-sd-6 col-md-6 col-lg-6' alt='admin' />"
-			) : tempData2 += "<img src='../../images/base/user.png' class='msg-photo' alt='admin' />";
+				tempData2 += "<img src='"+value.archivosUpload[1]+"/"+value.archivosUpload[0][ultimo]+"' class='img-circle col-xs-4 col-sd-4 col-md-4 col-lg-4' alt='admin' />"
+			// ) : tempData2 += "<img src='../../images/base/user.png' class='img-circle col-xs-6 col-sd-6 col-md-6 col-lg-6' alt='admin' />";
+			):
+			tempData2 += "<img src='../../images/base/user.png' class='img-circle col-xs-4 col-sd-4 col-md-4 col-lg-4' alt='admin' />";
 
-			tempData2 += "<span class='col-xs-12 col-sd-12 col-md-12 col-lg-12'><span class='msg-title'><span class='blue'>"+value.mensaje+" "+value.nombre;
+			tempData2 += "<span class='col-xs-8 col-sd-8 col-md-8 col-lg-8' style='padding:0px'><span class='msg-title'><span class='blue'>"+value.mensaje+" "+value.nombre;
 			tempData2 += "</span></span>";
-			tempData2 += "<span class='msg-time' style='line-height:normal'><i class='ace-icon fa fa-clock-o'></i><span>"+getFechaFormatoH(value.fecha_envio)+"(Enviado)</span>";
-			tempData2 += "</span></span></li></a>";
+			tempData2 += "</li>";
+			tempData2 += "<span class='col-xs-12 col-sd-12 col-md-12 col-lg-12 msg-time' style='line-height:normal'><i class='ace-icon fa fa-clock-o'></i><span> "+getFechaFormatoH(value.fecha_envio)+"(Enviado)</span>";
+			tempData2 += "</a>";
 			tempData2 += "<i class='col-xs-1 col-sd-1 col-md-1 col-lg-1 ace-icon fa fa-times-circle' style='color:red;background:transparent;border:none;cursor:pointer;font-size:x-large;padding-top:5px;padding-left:1px'";
-			tempData2 += "onClick=\"borrarNotificacion("+value.id_notificaciones+")\"></i></div>";
+			tempData2 += "onClick=\"borrarNotificacion("+value.id_notificaciones+")\"></i>";
+
+			tempData2 += "</span></span>";
+			tempData2 += "</div>";
 			cantidad++;
 		});
 		$("#CANTIDAD_NOTIFICACIONES").html("<i class='ace-icon fa fa-envelope-o'></i>Cantidad de Mensajes("+cantidad+")");
