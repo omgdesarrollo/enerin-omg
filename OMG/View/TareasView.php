@@ -625,11 +625,11 @@ estructuraGrid= [
 //    { name: "fecha_creacion",title:"Fecha de Creación", type: "text", validate: "required", width:150,editing: false},
     { name: "fecha_alarma",title:"Fecha de Alarma", type: "date", validate: "required", width:160},
     { name: "fecha_cumplimiento",title:"Fecha de Cumplimiento", type: "text", validate: "required", width:190,editing: false},    
-    { name: "status_tarea", title:"Estatus", type: "text", width:120},
+    { name: "status_tarea", title:"Estatus", type: "comboStatus", width:120},
 //    { name: "status_tarea", title:"Estatus", type: "select", width:150,valueField:"status_tarea",textField:"descripcion",
 //        items:[{"status_tarea":"1","descripcion":"En Proceso"},{"status_tarea":"2","descripcion":"Suspendido"},{"status_tarea":"3","descripcion":"Terminado"}]
 //    },
-    { name: "semaforo",title:"ID", type: "fieldSemaforo", validate: "required", width:80,editing: false},
+    { name: "semaforo",title:"ID", type: "text", validate: "required", width:80,editing: false},
     { name: "observaciones",title:"Observaciones", type: "textarea", width:150,},
     { name: "archivo_adjunto",title:"Archivo Adjunto", type: "text", validate: "required",width:150,editing:false },
     { name: "registrar_programa",title:"Programa", type: "text", validate: "required",width:160, editing:false },
