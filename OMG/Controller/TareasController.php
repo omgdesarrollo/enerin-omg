@@ -126,19 +126,21 @@ switch ($Op) {
         
         break;
     
-    case 'tareasEnAlarma':
+    case 'tareas_EnAlarma_Venciadas':
         $Lista= $model->tareasEnAlarma();
+        $Lista= $model->tareasVencidas();
         header('Content-type: application/json; charset=utf-8');
-        echo json_encode($Lista);
-        return $Lista;
+        echo "NO SE VERIFICA LA SALIDA";
+        // echo json_encode($Lista);
+        // return $Lista;
 
         break;
     
     case 'tareasVencidas':
         $Lista= $model->tareasVencidas();
-        header('Content-type: application/json; charset=utf-8');
-        echo json_encode($Lista);
-        return $Lista;
+        // header('Content-type: application/json; charset=utf-8');
+        // echo json_encode($Lista);
+        // return $Lista;
 
         break;
         

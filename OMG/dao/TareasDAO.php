@@ -45,12 +45,21 @@ class TareasDAO{
     {
         try
         {
+            // $query="SELECT tbtareas.id_tarea, tbtareas.referencia, tbtareas.tarea, tbtareas.fecha_creacion, tbtareas.fecha_alarma,
+            //         tbtareas.fecha_cumplimiento, tbtareas.status_tarea, tbtareas.observaciones, tbtareas.existe_programa, tbtareas.avance_programa,		 
+            //         tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno
+            //         FROM tareas tbtareas
+            //         JOIN empleados tbempleados ON tbempleados.id_empleado=tbtareas.id_empleado
+            //         WHERE tbtareas.id_tarea=$ID_TAREA";
+
             $query="SELECT tbtareas.id_tarea, tbtareas.referencia, tbtareas.tarea, tbtareas.fecha_creacion, tbtareas.fecha_alarma,
-                    tbtareas.fecha_cumplimiento, tbtareas.status_tarea, tbtareas.observaciones, tbtareas.existe_programa, tbtareas.avance_programa,		 
-                    tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno
-                    FROM tareas tbtareas
-                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbtareas.id_empleado
-                    WHERE tbtareas.id_tarea=$ID_TAREA";
+            tbtareas.fecha_cumplimiento, tbtareas.status_tarea, tbtareas.observaciones, tbtareas.existe_programa,
+            tbtareas.avance_programa, tbempleados.id_empleado, CONCAT(tbempleados.nombre_empleado,' ', tbempleados.apellido_paterno,' ', tbempleados.apellido_materno) 
+            AS nombre_completo                    
+            FROM tareas tbtareas
+            LEFT JOIN empleados tbempleados ON tbempleados.id_empleado=tbtareas.id_empleado                  
+            LEFT JOIN gantt_tareas tbgantt_tareas ON tbgantt_tareas.id_tarea=tbtareas.id_tarea                    
+            WHERE tbtareas.id_tarea = $ID_TAREA ";
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
@@ -238,6 +247,7 @@ class TareasDAO{
         {
             $query="SELECT tbtareas.id_tarea, tbtareas.tarea, tbtareas.id_empleado
                     FROM tareas tbtareas
+                    JOIN gantt_tareas tbgantt_tareas ON tbgantt_tareas.id_tarea = tbtareas.id_tarea
                     WHERE tbtareas.fecha_alarma<=CURDATE() AND tbtareas.fecha_cumplimiento>CURDATE() AND tbtareas.status_tarea=1";
             
             $db=  AccesoDB::getInstancia();
@@ -300,7 +310,7 @@ class TareasDAO{
     {
         try
         {
-            $query="SELECT tbtareas.id_tarea, tbtareas.tarea, tbtareas.id_empleado
+            $query="SELECT DISTINCT tbtareas.id_tarea, tbtareas.tarea, tbtareas.id_empleado
                     FROM tareas tbtareas
                     JOIN gantt_tareas tbgantt_tareas ON tbgantt_tareas.id_tarea = tbtareas.id_tarea
                     WHERE tbtareas.fecha_cumplimiento <= CURDATE() AND tbtareas.status_tarea = 1";

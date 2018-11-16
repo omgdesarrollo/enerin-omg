@@ -432,6 +432,7 @@ MyComboStatus.prototype = new jsGrid.Field
                 {
                     res= "TERM"
                 }
+                // this._MyComboStatus = res;
 //                console.log("Valores res: ",res);
 //                console.log("Fecha hoy: ",hoy);
 //                console.log("Fecha alarma: ",fechaAlarma);
@@ -445,26 +446,29 @@ MyComboStatus.prototype = new jsGrid.Field
         },
         editTemplate: function(value,todo)
         {
-//                console.log("Entro al console");
-//                console.log("value en editTemplate: ",value );
+               console.log(todo);
+            //    console.log("value en editTemplate: ",value );
+            //     console.log(this._MyComboStatus);
                 var temp = "";
                 if(value==1)
                 {
-                    temp += "<option value='2' selected>SP</option>";
-                    temp += "<option value='3' selected>TR</option>";
+                    temp += todo.status_grafica=="Alarma vencida"? "<option value='1' selected>ALAR</option>" : "<option value='1' selected>VENC</option>"; ;
+                    temp += "<option value='2'>SUSP</option>";
+                    temp += "<option value='3'>TERM</option>";
                 }
-                
-                
+
                 if(value==2)
                 {
-                    temp += "<option value='1' selected>EP</option>";
-                    temp += "<option value='3' selected>TR</option>";
+                    temp += "<option value='2' selected>SUSP</option>";
+                    temp += "<option value='1'>EPRO</option>";
+                    temp += "<option value='3'>TERM</option>";
                 }
                 
                 if(value==3)
                 {
-                    temp += "<option value='1' selected>EP</option>";
-                    temp += "<option value='2' selected>SP</option>";
+                    temp += "<option value='3' selected>TERM</option>";
+                    temp += "<option value='1'>EPRO</option>";
+                    temp += "<option value='2'>SUSP</option>";
                 }                
                 
                 this._inputStatus = $("<select>").attr({style:"margin:-5px;width:145px"});
