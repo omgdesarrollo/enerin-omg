@@ -239,7 +239,7 @@ foreach($Alarmas as $alarma)
 	$(".navbar-brand").css("color",colorLeter);
 	
 	listarNotificaciones();
-	// setInterval(function(){listarNotificaciones();},25000);
+	setInterval(function(){listarNotificaciones();},25000);
 
 	function listarNotificaciones()
 	{
