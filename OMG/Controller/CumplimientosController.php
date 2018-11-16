@@ -17,11 +17,12 @@ $usuarioPojo= new UsuarioPojo();
 
 switch ($Op) {
 	case 'Listar':
-                $ID_USUARIO= Session::getSesion("user")["ID_USUARIO"];
-//                $lista = $model->listarCumplimientos($_REQUEST["ID_USUARIO"]);
+				$ID_USUARIO= Session::getSesion("user")["ID_USUARIO"];
+				isset($_REQUEST["ID_USUARIO"])?
+               	$lista = $model->listarCumplimientos($_REQUEST["ID_USUARIO"]):
                 $lista = $model->listarCumplimientos($ID_USUARIO);
-		header('Content-type: application/json; charset=utf-8');
-		echo json_encode($lista);
+				header('Content-type: application/json; charset=utf-8');
+				echo json_encode($lista);
 		break;
             
         case 'ListarCumplimiento':
