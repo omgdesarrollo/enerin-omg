@@ -413,6 +413,7 @@ class TareasModel{
             $model=new NotificacionesModel();            
             $rec= $dao->tareasEnAlarma();
 //            echo "Este es el rec: ".json_encode($rec);     
+            // var_dump($rec);
             foreach ($rec as $value) 
             {                
                 $TAREA= $value['tarea'];

@@ -313,7 +313,7 @@ function listarDatos()
                     DataGrid = __datos;
                     gridInstance.loadData();
                     mostrarTareasEnAlarma();
-                    mostrarTareasVencidas();
+                    // mostrarTareasVencidas();
                     resolve();
                     
                 }else{
@@ -499,7 +499,7 @@ function insertarTareas(tareaDatos)
                 DataGrid.push(tempData),
                 $("#crea_tarea .close ").click();
                 mostrarTareasEnAlarma();
-                mostrarTareasVencidas();
+                // mostrarTareasVencidas();
                 
             } else{
                 if(datos==0)
@@ -1111,7 +1111,7 @@ function enviarNotificacionWhenDeleteTarea(id_empleadoActual,tarea)
  function mostrarTareasEnAlarma()
  {
      $.ajax({
-         url:"../Controller/TareasController.php?Op=tareasEnAlarma",
+         url:"../Controller/TareasController.php?Op=tareas_EnAlarma_Venciadas",
          type:"GET",
          success:function()
          {
@@ -1121,17 +1121,17 @@ function enviarNotificacionWhenDeleteTarea(id_empleadoActual,tarea)
  }
  
  
-  function mostrarTareasVencidas()
- {
-     $.ajax({
-         url:"../Controller/TareasController.php?Op=tareasVencidas",
-         type:"GET",
-         success:function()
-         {
+//   function mostrarTareasVencidas()
+//  {
+//      $.ajax({
+//          url:"../Controller/TareasController.php?Op=tareasVencidas",
+//          type:"GET",
+//          success:function()
+//          {
              
-         }
-     });
- }
+//          }
+//      });
+//  }
 
 
 //area de gantt

@@ -247,6 +247,7 @@ class TareasDAO{
         {
             $query="SELECT tbtareas.id_tarea, tbtareas.tarea, tbtareas.id_empleado
                     FROM tareas tbtareas
+                    JOIN gantt_tareas tbgantt_tareas ON tbgantt_tareas.id_tarea = tbtareas.id_tarea
                     WHERE tbtareas.fecha_alarma<=CURDATE() AND tbtareas.fecha_cumplimiento>CURDATE() AND tbtareas.status_tarea=1";
             
             $db=  AccesoDB::getInstancia();
@@ -309,7 +310,7 @@ class TareasDAO{
     {
         try
         {
-            $query="SELECT tbtareas.id_tarea, tbtareas.tarea, tbtareas.id_empleado
+            $query="SELECT DISTINCT tbtareas.id_tarea, tbtareas.tarea, tbtareas.id_empleado
                     FROM tareas tbtareas
                     JOIN gantt_tareas tbgantt_tareas ON tbgantt_tareas.id_tarea = tbtareas.id_tarea
                     WHERE tbtareas.fecha_cumplimiento <= CURDATE() AND tbtareas.status_tarea = 1";
