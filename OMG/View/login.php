@@ -61,7 +61,7 @@ function clock()
 //   basicclock.innerHTML = "2";
 //   setTimeout("clock()", 1000);
 }
-clock();
+//clock();
 
 
 
@@ -85,13 +85,13 @@ clock();
 //        var instances = M.Sidenav.init(elems, options);
 //        });
 
-        $(()=>{
-            $(".btn-menu").click((t)=>{
-                
-                $(".btn-menu").css("background","transparent");
-                $(t.currentTarget).css("background","burlywood");
-            });
-        });
+//        $(()=>{
+//            $(".btn-menu").click((t)=>{
+//                
+//                $(".btn-menu").css("background","transparent");
+//                $(t.currentTarget).css("background","burlywood");
+//            });
+//        });
         
         
 //     floating components
@@ -139,8 +139,8 @@ clock();
                 color: white;
                 text-align: center;
             }
-        .animacion {
--webkit-animation:fa-spin 20s infinite linear;animation:fa-spin 24s infinite linear;
+/*        .animacion {
+-webkit-animation:fa-spin 20s infinite linear;animation:fa-spin 24s infinite linear;*/
 
 /*@media only screen and (max-width:320px){
 #Contenedor{

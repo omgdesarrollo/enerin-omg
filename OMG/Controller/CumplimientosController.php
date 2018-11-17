@@ -51,6 +51,8 @@ switch ($Op) {
 		// 	foreach($value as $key2=>$val)
 		// 		$lista[$key][$key2] = utf8_encode($val);
 		// }
+                
+            
 			echo json_encode($lista);
 		break;
          
