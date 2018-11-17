@@ -140,7 +140,27 @@ $Usuario=  Session::getSesion("user");
             {
                 growlError("Error!","Error al construir la vista, recargue la página");
             });
+            function reconstruir(value,index)
+            {
+                tempData=new Object();
+                ultimoNumeroGrid = index;
+                puedeEditarSoloAdmin=<?php echo Session::getSesion("user")["ID_USUARIO"]; ?>;
+                tempData["id_principal"]= [{'id_cumplimiento':value.id_cumplimiento}];
+                tempData["no"]= index;
+                tempData["clave_cumplimiento"]=value.clave_cumplimiento;
+                tempData["cumplimiento"]=value.cumplimiento;
+                tempData["id_principal"].push({eliminar : 0});
+                if(puedeEditarSoloAdmin==0)
+                tempData["id_principal"].push({editar : 1});
+                else
+                  tempData["id_principal"].push({editar : 0});  
+                tempData["delete"]= tempData["id_principal"] ;
 
+                return tempData;
+            }
+
+            
+            
         </script>
 
         <!--Bootstrap-->

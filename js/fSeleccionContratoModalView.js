@@ -64,21 +64,7 @@ function listarDatos()
 }
 
 
-function reconstruir(value,index)
-{
-    tempData=new Object();
-    ultimoNumeroGrid = index;
-    tempData["id_principal"]= [{'id_cumplimiento':value.id_cumplimiento}];
-    tempData["no"]= index;
-    tempData["clave_cumplimiento"]=value.clave_cumplimiento;
-    tempData["cumplimiento"]=value.cumplimiento;
-    tempData["id_principal"].push({eliminar : 0});    
-    tempData["id_principal"].push({editar : 1});
-    tempData["delete"]= tempData["id_principal"] ;
-    
-    return tempData;
-}
-
+//aqui iva el reconstruir
 
 function saveUpdateToDatabase(args)//listo
 {
