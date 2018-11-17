@@ -541,7 +541,7 @@ function graficar()
 
     if(bandera == 0)
     {
-        dataGrafica.push([ "NO EXISTEN DOCUMENTOS",1,"SIN DOCUMENTOS","[]"]);
+        dataGrafica.push([ "NO EXISTEN DOCUMENTOS",1,"SIN DOCUMENTOS","[]","0"]);
         tituloGrafica = "NO EXISTEN DOCUMENTOS";
     }
     construirGrafica(dataGrafica,tituloGrafica);
