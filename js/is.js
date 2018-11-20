@@ -9,7 +9,7 @@ $(function(){
         $.ajax({
             type: "POST",
             url: "../Controller/LoginController.php",
-            data: formData,
+            data:formData,
             success: function(r)
             {
                 if(r.success==true)

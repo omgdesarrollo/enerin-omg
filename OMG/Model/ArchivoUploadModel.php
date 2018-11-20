@@ -77,6 +77,7 @@ class ArchivoUploadModel{
 		}
 
 		$carpetaDestino = "../../archivos/".$url;
+//                $carpetaDestino = "../../archivos/".Session::getSesion("tipo")."/".$url;
 		$creado=true;
 		if(!file_exists($carpetaDestino))
 		{

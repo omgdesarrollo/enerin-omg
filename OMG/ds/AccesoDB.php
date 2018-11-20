@@ -1,5 +1,6 @@
 <?php
 require_once '../util/Util.php';
+require_once '../Pojo/ConexionesBDPojo.php';
 class AccesoDB {
 
     // Variable que representa la conexion  con el servidor
@@ -18,7 +19,10 @@ class AccesoDB {
     // Metodo privado que retorna la conexion con el servidor
     private function getConnection() {
         // Datos de conexion
-        $parametros = parse_ini_file("../conf/conexion.ini");
+//        $parametros = parse_ini_file("../conf/conexion.ini");
+         
+         $parametros=ConexionesBDPojo::dataBD(Session::getSesion("tipo"));
+                
         $server = $parametros["01"];
         $user = $parametros["02"];
         $pass=$parametros["03"];

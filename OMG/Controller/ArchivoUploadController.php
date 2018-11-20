@@ -66,9 +66,11 @@ switch ($Op) {
 		else
 		{
 			$CONTRATO = Session::getSesion("s_cont");
-			$url = $CONTRATO."/".$URL;
+			$url = Session::getSesion("tipo")."/".$CONTRATO."/".$URL;
+//                        $url = $CONTRATO."/".$URL;
 		}
 		$carpetaDestino = "../../archivos/".$url;
+//                $carpetaDestino = "../../archivos/".Session::getSesion("tipo")."/".$url;
 		$creado=true;
 		if(!file_exists($carpetaDestino))
 		{

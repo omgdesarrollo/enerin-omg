@@ -5,6 +5,7 @@ require_once 'rutasArchivos.php';
 //$error=Session::eliminarSesion("error");
 //$usuario=Session::eliminarSesion("usuario");
 if (Session:: NoExisteSeSion("user")){
+    
     header("location: login.php");
     return;
 }
@@ -16,7 +17,7 @@ if (Session:: NoExisteSeSion("user")){
 // $urls[""] = ;
 
 $Usuario=  Session::getSesion("user");
-
+//echo Session::getSesion("tipo");
 //$tokenseguridad=  Session::getSesion("token");
 //$tse=$tokenseguridad["tokenseguridad"];
 ?>
