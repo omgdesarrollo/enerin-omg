@@ -75,7 +75,7 @@ class ArchivoUploadModel{
 			// $contrato = Session::getSesion("s_cont");
 			$url = $CONTRATO."/".$URL;	
 		}
-
+                $url = Session::getSesion("tipo")."/".$url;
 		$carpetaDestino = "../../archivos/".$url;
 //                $carpetaDestino = "../../archivos/".Session::getSesion("tipo")."/".$url;
 		$creado=true;

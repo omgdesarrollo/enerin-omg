@@ -9,16 +9,26 @@ require_once '../util/Session.php';
 //     echo "logica".$_SERVER['HTTP_HOST'];
 //     echo "fisica".$_SERVER['DOCUMENT_ROOT'];
 //     
-//     if($_SERVER["SERVER_NAME"] == "localhost")
-//     {
-//         
-//     }else{
-////         echo "no estas en local";
-//     }
+     if(isset($_REQUEST["t"])){
+//        echo $_REQUEST["t"];
+    }else{
+     if($_SERVER["SERVER_NAME"] != "localhost")
+     {
+//         echo "d";
+            header("location:error.php");
+                
+     }
+     }
+     
+     
+     
+     
 //}else{
      if (Session:: existeSesion("user")){
+         
 //         if(Session::getSesion("user")["ID_USUARIO"]!="NOTUSER"){
             header("location: principalmodulos.php");
+//            header("location: principalmodulos.php?type=".Session::getSesion("tipo"));
             return;
 //         }else{
 //             
@@ -328,7 +338,15 @@ function clock()
                              <input name="t" type="hidden" value="<?php 
                                    if(isset($_REQUEST["t"])){
                                        echo $_REQUEST["t"];
-                                   }else{ echo "interno";}?>">   
+                                   }else{
+                                    if($_SERVER["SERVER_NAME"] == "localhost")
+                                    {
+                                       echo "interno";      
+                                    }
+                                      
+                                       
+                                   }
+                                       ?>">   
                              <div class="row">
                                  <div class="input-field col s12">
                                      <button data-placement="right" title="Haga clic aquí para iniciar sesión" class="btn btn-lg btn-primary btn-block btn-signin" id="IngresoLog" type="submit">Entrar</button>

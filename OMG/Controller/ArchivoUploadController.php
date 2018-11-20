@@ -47,11 +47,11 @@ switch ($Op) {
 	case 'EliminarArchivo':
 		$urlTemp = Session::getSesion("URLS");
 		if(isset($_REQUEST["SIN_CONTRATO"]))
-			$url = $urlTemp["fisica"].$_REQUEST["URL"];
+			$url = $urlTemp["fisica"].Session::getSesion("tipo")."/".$_REQUEST["URL"];
 		else
 		{
 			$contrato = Session::getSesion("s_cont");
-			$url = $urlTemp["fisica"].$contrato."/".$_REQUEST["URL"];
+			$url = $urlTemp["fisica"].Session::getSesion("tipo")."/".$contrato."/".$_REQUEST["URL"];
 		}
 
 		$eliminado = $model->eliminar_archivoFisico($url);
@@ -66,9 +66,11 @@ switch ($Op) {
 		else
 		{
 			$CONTRATO = Session::getSesion("s_cont");
-			$url = Session::getSesion("tipo")."/".$CONTRATO."/".$URL;
-//                        $url = $CONTRATO."/".$URL;
+//			$url = Session::getSesion("tipo")."/".$CONTRATO."/".$URL;
+                        $url = $CONTRATO."/".$URL;
 		}
+                $url = Session::getSesion("tipo")."/".$url;
+                
 		$carpetaDestino = "../../archivos/".$url;
 //                $carpetaDestino = "../../archivos/".Session::getSesion("tipo")."/".$url;
 		$creado=true;
