@@ -113,7 +113,7 @@ switch ($Op)
                 if($cont==1)
                 {
                     //ver/consultar/editar/eliminar
-                    if($usuario["ID_USUARIO"]<=1)
+                    if($usuario["ID_USUARIO"]<1)
                     {
                         $tempData2 .= "<tr>";
                         $tempData2 = "<td style='border-top: 1px solid;border-right: 1px solid;'>$vista[1]</td>";
@@ -141,7 +141,7 @@ switch ($Op)
                 }
                 else
                 {
-                    if($usuario["ID_USUARIO"]<=1)
+                    if($usuario["ID_USUARIO"]<1)
                     {
                         $tempData3 .= "<tr><td style='border-right: 1px solid'>$vista[1]</td>";
                         $tempData3 .= "<td onClick=\"saveCheckBoxToDataBase(this,'consult','$val[id_estructura]')\" id='consult_$val[id_estructura]' style='cursor:pointer;border-right:1px solid;'></td>";

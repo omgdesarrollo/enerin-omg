@@ -198,12 +198,30 @@ var customsFieldsGridData=[
        {field:"date",my_field:MyDateField},
 ];
 
+var objFieldEdit="";
+
+// editTemplateCust = (value,data)=>
+// {
+//     console.log(value,data);
+//     let temp = "";
+//     temp = data.no == "2"? $("<input>").attr({value:value}) : value;
+//     objFieldEdit = temp;
+//      return temp;
+// }
+
+// editvalueCust = ()=>
+// {
+//     let val = $(objFieldEdit).val();
+//     console.log(val);
+//      return val;
+// }
 
 estructuraGrid = [
 //        { name: "id_principal",visible:false},
         { name:"no",title:"No Tema",width:40,editing:false},
         { name: "nombre",title:"Tema", type: "text",width:180,editing:false},
-        { name: "descripcion",title:"Descripcion", type: "text",width:160,editing:false},
+        { name: "descripcion",title:"Descripcion", type: "text",width:160, editing:false},
+        // { name: "descripcion",title:"Descripcion", type: "text",width:160, editTemplate:editTemplateCust,editValue:editvalueCust},
         { name: "fecha_inicio",title:"Fecha de Inicio", type: "date",editing:true},
         { name: "estado",title:"Registros", type: "text",editing:false},
         { name:"delete", title:"Opción", type:"customControl",sorting:""},

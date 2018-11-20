@@ -12,7 +12,7 @@ class AdminDAO{
             AS nombre, tbempleados.categoria, tbempleados.correo
             FROM usuarios tbusuarios
             JOIN empleados tbempleados ON tbempleados.id_empleado=tbusuarios.id_empleado
-            WHERE tbusuarios.id_usuario > 1 && tbusuarios.id_usuario != $ID_USUARIO";
+            WHERE tbusuarios.id_usuario > 0 && tbusuarios.id_usuario != $ID_USUARIO";
             
             $db= AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);

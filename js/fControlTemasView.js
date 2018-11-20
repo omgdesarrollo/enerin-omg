@@ -177,7 +177,8 @@ function saveUpdateToDatabase(args)
             // }
         }
     });
-    console.log(columnas.fecha_inicio[0].fecha);
+    // console.log(columnas);
+    // console.log(columnas.fecha_inicio[0].fecha);
     if( Object.keys(columnas).length != 0)
     {
         $.ajax({
