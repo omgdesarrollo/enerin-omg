@@ -27,8 +27,8 @@ require_once '../util/Session.php';
      if (Session:: existeSesion("user")){
          
 //         if(Session::getSesion("user")["ID_USUARIO"]!="NOTUSER"){
-            header("location: principalmodulos.php");
-//            header("location: principalmodulos.php?type=".Session::getSesion("tipo"));
+//            header("location: principalmodulos.php");
+            header("location: principalmodulos.php?type=".Session::getSesion("tipo"));
             return;
 //         }else{
 //             
@@ -145,6 +145,7 @@ function clock()
      direction: 'top',
       hoverEnabled: false
   })
+  
 //  end floating components
 
          document.addEventListener('DOMContentLoaded', function() {
@@ -335,7 +336,7 @@ function clock()
                                      <label for="contrasenaInput">CONTRASEÑA</label>
                                  </div>
                              </div>
-                             <input name="t" type="hidden" value="<?php 
+                             <input id="t" name="t" type="hidden" value="<?php 
                                    if(isset($_REQUEST["t"])){
                                        echo $_REQUEST["t"];
                                    }else{
@@ -652,8 +653,6 @@ Revisa sus avance, las anotaciones, integra a tu equipo para trabajar en un mism
 
 
     </body> 
-    
-    
     
     
 </html>

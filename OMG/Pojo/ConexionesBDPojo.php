@@ -24,17 +24,18 @@ class ConexionesBDPojo {
         "02"=>"useromgbd",
         "03"=>"enerinomg1*:*",
         "04"=>"databaseomgcliente",
-        "05"=>"cliente"
+        "05"=>"asepro"
     );
     //Conexion web cliente1
     private static $dataWeb1=array(
         "01"=>"198.71.228.11",
         "02"=>"useromgbd",
         "03"=>"enerinomg1*:*",
-        "04"=>"databaseomgweb1",
+        "04"=>"databaseomg1",
         "05"=>"web1"
     );
    
+    
     //Conexion web Cliente2
     private static $dataWeb2=array(
         "01"=>"198.71.228.11",
@@ -51,7 +52,7 @@ class ConexionesBDPojo {
         if($valueBD=="oficina"){
          return self::$dataOficina;
         }
-        if($valueBD=="cliente"){
+        if($valueBD=="asepro"){
          return self::$dataCliente;
         }
         if($valueBD=="web1"){
@@ -61,7 +62,6 @@ class ConexionesBDPojo {
          return self::$dataWeb2;
         }
     }
-    
     
     
     

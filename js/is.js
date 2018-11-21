@@ -23,7 +23,7 @@ $(function(){
                                 $.jGrowl("Cargando  Porfavor Espere......", { sticky: true,theme:"themeG-wait" });
                                 $.jGrowl("Bienvenido", { header: 'Acceso Permitido',theme:"themeG-success" });
                                 var delay = 1000;
-                                setTimeout(function(){ window.location = 'principalmodulos.php'  }, delay);  
+                                setTimeout(function(){ window.location = 'principalmodulos.php?type='+$("#t").val() }, delay);  
                         }else{
                                 $.jGrowl("Error no  tiene contrato asignado", { header: 'Error acceso contratos',theme:"themeG-error" });
                                 var delay = 1000;
