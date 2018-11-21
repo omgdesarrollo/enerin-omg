@@ -1,7 +1,6 @@
 <?php
 
 class ConexionesBDPojo {
-
     
 //conexion local
     private static $dataLocal=array(
