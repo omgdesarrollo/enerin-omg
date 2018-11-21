@@ -7,3 +7,5 @@ OMG/conf/*.ini
 OMG/log/omg.log
 OMG/View/rutasArchivos.php
 nbproject/private/private.xml
+OMG/Pojo/ConexionesBDPojo.*
+

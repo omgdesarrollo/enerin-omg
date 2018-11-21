@@ -19,7 +19,9 @@ $(function()
         });
     });      
     
-    
+    $("#iniciarTematica").on(click,()=>{
+        console.log($("#fechaInicioTematica").val());
+    });
 }); //CIERRA EL $(FUNCTION())
 
 
