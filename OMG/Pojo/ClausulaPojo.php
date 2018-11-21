@@ -11,6 +11,7 @@
  *
  * @author francisco
  */
+
 class ClausulaPojo {
     //put your code here
     private $id_clausula;
