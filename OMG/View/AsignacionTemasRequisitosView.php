@@ -28,7 +28,7 @@ $Usuario=  Session::getSesion("user");
        
         
         
-        <script src="../../js/tools.js" type="text/javascript"></script>
+        <!--<script src="../../js/tools.js" type="text/javascript"></script>-->
       
         <script src="../../js/dhtmlxExtGrid.js" type="text/javascript"></script>
         <script src="../../js/dhtmlxFunctions.js" type="text/javascript"></script>
