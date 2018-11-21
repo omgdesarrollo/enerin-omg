@@ -3,10 +3,42 @@ session_start();
 require_once '../util/Session.php';
 //$error=Session::eliminarSesion("error");
 //$usuario=Session::eliminarSesion("usuario");
-if (Session:: existeSesion("user")){
-    header("location: principalmodulos.php");
-    return;
-}
+
+//if(!isset($_REQUEST["t"])){
+//    echo "no se tiene acceso ";  
+//     echo "logica".$_SERVER['HTTP_HOST'];
+//     echo "fisica".$_SERVER['DOCUMENT_ROOT'];
+//     
+     if(isset($_REQUEST["t"])){
+//        echo $_REQUEST["t"];
+    }else{
+     if($_SERVER["SERVER_NAME"] != "localhost")
+     {
+//         echo "d";
+            header("location:error.php");
+                
+     }
+     }
+     
+     
+     
+     
+//}else{
+     if (Session:: existeSesion("user")){
+         
+//         if(Session::getSesion("user")["ID_USUARIO"]!="NOTUSER"){
+            header("location: principalmodulos.php");
+//            header("location: principalmodulos.php?type=".Session::getSesion("tipo"));
+            return;
+//         }else{
+//             
+//         }
+        
+    } 
+    
+   
+    
+    
 ?>
 
 <?php // echo "el error es "+$error;  ?>
@@ -303,7 +335,18 @@ function clock()
                                      <label for="contrasenaInput">CONTRASEÑA</label>
                                  </div>
                              </div>
-
+                             <input name="t" type="hidden" value="<?php 
+                                   if(isset($_REQUEST["t"])){
+                                       echo $_REQUEST["t"];
+                                   }else{
+                                    if($_SERVER["SERVER_NAME"] == "localhost")
+                                    {
+                                       echo "interno";      
+                                    }
+                                      
+                                       
+                                   }
+                                       ?>">   
                              <div class="row">
                                  <div class="input-field col s12">
                                      <button data-placement="right" title="Haga clic aquí para iniciar sesión" class="btn btn-lg btn-primary btn-block btn-signin" id="IngresoLog" type="submit">Entrar</button>
@@ -614,3 +657,6 @@ Revisa sus avance, las anotaciones, integra a tu equipo para trabajar en un mism
     
     
 </html>
+//<?php
+//}
+//?>

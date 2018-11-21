@@ -4,12 +4,15 @@
 session_start();
 require_once '../Model/LoginModel.php';
 require_once '../util/Session.php';
+require_once '../Pojo/ConexionesBDPojo.php';
 try {
     //datos
     $usuario=$_REQUEST["usuario"];
     $clave=$_REQUEST["pass"];
-   
+    $tipoUrl=$_REQUEST["t"] ;
     //proceso
+    Session::setSesion("tipo",$tipoUrl);
+    ConexionesBDPojo::dataBD($tipoUrl);
     $model=new LoginModel();
     $recUser=$model->validar($usuario,$clave);
    
@@ -31,7 +34,7 @@ try {
 //    Session::setSesion("userAcceso",$recUser["accesos"]);
     Session::setSesion("token",$recUser["tokenseguridad"]);
 //    Session::setSesion("contratoAcceso",$recUser["contrato"]);
-    
+    Session::setSesion("tipo",$tipoUrl);
 //  $jsonToken["tokenseguridad"]=$token;
 //    Session::setSesion("token",$jsonToken);
 //    Session::setSesion("user", $token);
