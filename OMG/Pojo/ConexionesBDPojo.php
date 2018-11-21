@@ -2,6 +2,7 @@
 
 class ConexionesBDPojo {
     
+    
 //conexion local
     private static $dataLocal=array(
         "01"=>"localhost",
