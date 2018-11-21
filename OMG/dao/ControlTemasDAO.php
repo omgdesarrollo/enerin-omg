@@ -19,7 +19,7 @@ class ControlTemasDAO {
             LEFT JOIN requisitos_registros tbrequisitos_registros ON tbrequisitos_registros.id_requisito = tbrequisitos.id_requisito
             LEFT JOIN registros tbregistros ON tbregistros.id_registro = tbrequisitos_registros.id_registro
             LEFT JOIN evidencias tbevidencias ON tbevidencias.id_registro = tbregistros.id_registro
-            WHERE tbtemas.padre= 0 AND tbtemas.contrato = 1 AND tbtemas.identificador LIKE '%catalogo%'";
+            WHERE tbtemas.padre= 0 AND tbtemas.contrato = $CONTRATO AND tbtemas.identificador LIKE '%catalogo%'";
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);

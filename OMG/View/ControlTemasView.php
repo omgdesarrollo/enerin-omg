@@ -30,10 +30,10 @@
     <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
     <link async href="../../css/modal.css" rel="stylesheet" type="text/css"/>
 
-    <noscript><link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
+    <!-- <noscript><link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-noscript.css"></noscript>
     <noscript><link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
     <link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
-    <link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">
+    <link async rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css"> -->
     
     <!--jquery-->
     
@@ -55,7 +55,7 @@
 
     <!-- <script src="../../js/tools.js" type="text/javascript"></script> marca un error al agregarse -->
 
-    <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
+    <!-- <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script> -->
     <script src="../../js/fControlTemasView.js" type="text/javascript"></script>
     <!-- <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/> -->
     <script src="../../js/fGridComponent.js" type="text/javascript"></script>
@@ -102,16 +102,17 @@
     require_once 'EncabezadoUsuarioView.php';
 ?>
     
-<div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;"> 
-<!--    <button onClick="limpiarNuevaEvidenciaModal()" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#nuevaEvidenciaModal">
-        Agregar Nuevo Registro
-    </button>-->
+<div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
+    <input id="fechaInicioTematica" type="date"></input>
+    <button id="iniciarTematica" type="button" class="btn btn-success btn_agregar">
+        Iniciar Tematica
+    </button>
 
     <button id="btnAgregarEvidenciasRefrescar" type="button" class="btn btn-info btn_refrescar" onclick="refresh();" >
-        <i class="glyphicon glyphicon-repeat"></i> 
+        <i class="glyphicon glyphicon-repeat"></i>
     </button>
     
-    <div class="pull-right">    
+    <div class="pull-right">
         <button style="width:48px;height:42px" type="button"  class="btn_agregar" id="toExcel">
             <img src="../../images/base/_excel.png" width="30px" height="30px">
         </button>
@@ -249,13 +250,13 @@ inicializarFiltros().then((resolve2)=>
     <!--Bootstrap-->
     <script src="../../assets/probando/js/bootstrap.min.js"></script>
     <!--Para abrir alertas de aviso, success,warning, error-->
-    <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+    <!-- <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script> -->
 
     <!--Para abrir alertas del encabezado-->
     <script src="../../assets/probando/js/ace-elements.min.js"></script>
     <script src="../../assets/probando/js/ace.min.js"></script>
 
-    <!-- js cargar archivo -->
+    <!-- js cargar archivo
     <script  src="../../assets/FileUpload/js/tmpl.min.js"></script>
     <script  src="../../assets/FileUpload/js/load-image.all.min.js"></script>
     <script  src="../../assets/FileUpload/js/canvas-to-blob.min.js"></script>
@@ -269,7 +270,7 @@ inicializarFiltros().then((resolve2)=>
     <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
     <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
     <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
-    <script src="../../assets/FileUpload/js/main.js"></script>
+    <script src="../../assets/FileUpload/js/main.js"></script> -->
 </body>
 </html>
 
