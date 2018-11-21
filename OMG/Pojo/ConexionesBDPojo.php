@@ -5,8 +5,8 @@ class ConexionesBDPojo {
 //conexion local
     private static $dataLocal=array(
         "01"=>"localhost",
-        "02"=>"useromgbd",
-        "03"=>"123",
+        "02"=>"root",
+        "03"=>"",
         "04"=>"databaseomg",
         "05"=>"interno"
     );
