@@ -5,6 +5,7 @@
 session_start();
 require_once '../Model/TemaModel.php';
 require_once '../Pojo/TemaPojo.php';
+require_once '../dao/AsignacionTemaRequisitoDAO.php';
 require_once '../util/Session.php';
 
 
@@ -12,16 +13,22 @@ require_once '../util/Session.php';
 $Op=$_REQUEST["Op"];
 $model=new TemaModel();
 $pojo= new TemaPojo();
-
+$daoAsignacionTemaRequisito= new AsignacionTemaRequisitoDAO();
 switch ($Op) {
 	case 'Listar':
-
-            $Lista=$model->mostrarTemas("catalogo", Session::getSesion("s_cont"));                  
+            $Lista=$model->mostrarTemas("catalogo", Session::getSesion("s_cont"));
+            foreach($Lista as $value){  
+//                echo json_encode( $value);
+                $existeTemasAndSubtema=$daoAsignacionTemaRequisito->verificarSiExistenTemasSubtemasandEnTemaRequisito(array("id_tema_and_subtema"=>$value[0]));
+                  if($existeTemasAndSubtema[0]["cantidad"]==0){
+                       $daoAsignacionTemaRequisito->insertarTemasSubtemasSiNoExitenEnTemaRequisito(array("id_tema_and_sub"=>$value[0]));
+                  }
+            }
+            
             header('Content-type: application/json; charset=utf-8'); 
             echo json_encode($Lista);
             return $Lista;
          break;
-	
 	case 'ListarHijos':
             
             $Lista= $model->listarHijos("catalogo", Session::getSesion("s_cont"), $_REQUEST['ID']);
