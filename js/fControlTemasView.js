@@ -184,7 +184,7 @@ function listarDatos()
                 {
                     data.length == 0 ? growlSuccess("Solicitud","No existen registros") :(
                         growlSuccess("Solicitud","Registros obtenidos"),
-                        data[0]["estado"]==0?(
+                        data[0]["modo_trabajo"]==1 ?(
                             $("#fechaInicioTematica").css("display",""),
                             $("#iniciarTematica").css("display","")
                         ):console.log(""),

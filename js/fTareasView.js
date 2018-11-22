@@ -3,21 +3,17 @@ var valorChecking="false";
 
 $(function()
 {
-    //Boton oculto que funciona para mostrar tareas terminadas-no borrar!!! 
-    $('#checkTerminados').click(function() {
-//        valorChecking=$(this).is(':checked');
-//       console.log("asi llega: ",valorChecking); 
-       if(valorChecking=="false")
-       {
-           valorChecking="true";
-       }else
-       {
-           valorChecking="false";
-       }
-//       console.log("asi sale: ",valorChecking);
-        refresh();
+    $("button[title='Limpiar Filtro']").on("click",()=>
+    {
+        if(opcionSeleccionadaComboBoxEstatus == 1)
+        {
+            valorChecking="false";
+            opcionSeleccionadaComboBoxEstatus = 0;
+            listarDatos();
+        }
     });
-  
+
+
     $("#TAREA").keyup(function()
     {
         var valueTarea=$(this).val();
@@ -77,7 +73,7 @@ $(function()
         __datosExcel=[];
         $.each(dataListado,function(index,value)
         {
-            console.log("Entro al datosExcel");
+            // console.log("Entro al datosExcel");
             __datosExcel.push(reconstruirExcel(value,index+1));
         });
         DataGridExcel= __datosExcel;        
@@ -89,16 +85,25 @@ $(function()
         });
     });
     
-    $('#status_grafica_combobox').on('change', function() 
+    $("select[id='status_grafica_combobox'").on('change',()=>
     {
         a = $("#status_grafica_combobox option:selected" ).text();
-      
         if(a=="TERM")
         {
-            $('#checkTerminados').trigger('click');         
-        }      
+            opcionSeleccionadaComboBoxEstatus = 1;
+            valorChecking = "true";
+            listarDatos();
+        }
+        else
+        {
+            if(opcionSeleccionadaComboBoxEstatus == 1)
+            {
+                opcionSeleccionadaComboBoxEstatus = 0;
+                valorChecking = "false";
+                listarDatos();
+            }
+        }
     });
-    
     
 //    $("#myCanvas").canvas()
 
@@ -283,9 +288,7 @@ function inicializarFiltros()
     });    
 }
 
-
-
-function listarDatos()
+function listarDatos(msj)
 {
     return new Promise((resolve,reject)=>
     {
@@ -295,15 +298,17 @@ function listarDatos()
             url:"../Controller/TareasController.php?Op=Listar&URL=Tareas/",
             type:"GET",
             data:"VALOR="+valorChecking,
-            beforeSend:function()
+            beforeSend:()=>
             {
-                growlWait("Solicitud","Solicitando Datos...");
+                if(msj!=undefined)
+                    growlWait("Solicitud","Solicitando Datos...");
             },
-            success:function(data)
+            success:(data)=>
             {
                 if(typeof(data)=="object")
                 {
-                    growlSuccess("Solicitud","Registros obtenidos");
+                    if(msj!=undefined)
+                        growlSuccess("Solicitud","Registros obtenidos");
                     dataListado = data;
                     $.each(data,function(index,value)
                     {
@@ -317,11 +322,12 @@ function listarDatos()
                     resolve();
                     
                 }else{
-                    growlSuccess("Solicitud","No Existen Registros");
+                    if(msj!=undefined)
+                        growlSuccess("Solicitud","No Existen Registros");
                     reject();
                 }
             },
-            error:function()
+            error:()=>
             {
                 growlError("Error","Error en el servidor");
                 reject();
@@ -330,7 +336,6 @@ function listarDatos()
         });
     });    
 }
-
 
 function reconstruir(value,index)
 {
@@ -445,7 +450,6 @@ function reconstruirExcel(value,index)
     return tempData;
 }
 
-
 function archivoyComboboxparaModal()
 {
   $('#DocumentolistadoUrl').html(" ");
@@ -517,7 +521,6 @@ function insertarTareas(tareaDatos)
             }
     });
 }
-
 
 function saveUpdateToDatabase(args)//listo
 {
@@ -691,9 +694,6 @@ function listarThisEmpleados()
     });
 }
 
-
-
-
 function verificarExiste(dataString,cualverificar)
 {
 $.ajax({
@@ -719,7 +719,6 @@ $.ajax({
     }
     })
 }
-
 
 function mostrar_urls(id_tarea)
 {
@@ -780,7 +779,6 @@ var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/
 
 months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 
-
 function agregarArchivosUrl()
 {
         var ID_TAREA = $('#tempInputIdDocumento').val();
@@ -800,7 +798,6 @@ function agregarArchivosUrl()
                 }
         });
 }
-
 
 function borrarArchivo2(url)
 {
@@ -849,7 +846,6 @@ function borrarArchivo2(url)
                 });
 }
 
-
 function borrarArchivo(url)
 {
         swal({
@@ -897,7 +893,6 @@ function borrarArchivo(url)
                         }
                 });
 }
-
 
 function preguntarEliminar(data)
 {
@@ -982,27 +977,47 @@ function preguntarEliminar(data)
 function refresh()
 {
     inicializarFiltros().then((resolve)=>
-    { 
+    {
+        valorChecking="false";
         construirFiltros();
         listarThisEmpleados();
-        listarDatos();
-        valorChecking="false";
+        listarDatos("");
    
-        $('#status_grafica_combobox').on('change', function() {
-        a = $("#status_grafica_combobox option:selected" ).text();      
-        if(valorChecking=="true")
+        // $('#status_grafica_combobox').on('change', function(){
+        // a = $("#status_grafica_combobox option:selected" ).text();
+        // if(valorChecking=="true")
+        // {
+        //     valorChecking="false";          
+        // }else{
+        //     if(a=="TERM")
+        //     {
+        //         $('#checkTerminados').trigger('click');         
+        //     }else{            
+        //         valorChecking="false";
+        //     }
+            
+        // }
+        // });
+        $('#status_grafica_combobox').on('change',()=>
         {
-            valorChecking="false";          
-        }else{
+            a = $("#status_grafica_combobox option:selected" ).text();
             if(a=="TERM")
             {
-                $('#checkTerminados').trigger('click');         
-            }else{            
-                valorChecking="false";
+                opcionSeleccionadaComboBoxEstatus = 1;
+                valorChecking = "true";
+                listarDatos();
             }
-            
-        }      
+            else
+            {
+                if(opcionSeleccionadaComboBoxEstatus == 1)
+                {
+                    opcionSeleccionadaComboBoxEstatus = 0;
+                    valorChecking = "false";
+                    listarDatos();
+                }
+            }
         });
+
     },
     (error)=>
     {
