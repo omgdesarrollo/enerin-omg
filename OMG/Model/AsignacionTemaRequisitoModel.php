@@ -19,7 +19,7 @@ class AsignacionTemaRequisitoModel {
                 $rec[$key]['detalles_requisitos']= $model->obtenerDetallesRequisitoConIdAsignacion($value['id_asignacion_tema_requisito']);                                
 //                $rec[$key]['detalles_registros']= $dao->obtenerDetallesRegistrosConIdAsignacion($value['id_asignacion_tema_requisito']);
             }
-            
+       
             return $rec;
     }  catch (Exception $e){
         throw  $e;

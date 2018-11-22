@@ -11,11 +11,14 @@ require_once '../util/Session.php';
 $Op=$_REQUEST["Op"];
 $model=new AsignacionTemaRequisitoModel();
 $pojo= new AsignacionTemaRequisitoPojo();
+$dao= new AsignacionTemaRequisitoDAO();
+
 
 switch ($Op) {
 	case 'Listar':
-
-	$Lista=$model->listarAsignacionTemasRequisitos("catalogo", Session::getSesion("s_cont"));
+          $Lista=$model->listarAsignacionTemasRequisitos("catalogo", Session::getSesion("s_cont"));
+          
+	
     	// Session::setSesion("listarAsignacionTemasRequisitos",$Lista);
 //    	$tarjet="../view/principalmodulos.php";
                 

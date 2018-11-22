@@ -446,5 +446,34 @@ public function actualizarAsignacionTemaRequisito($id_asignacion_tema_requisito,
              return -1;
         }
     }
+    public function insertarTemasSubtemasSiNoExitenEnTemaRequisito($value){
+        try {
+             $query="insert into asignacion_tema_requisito set asignacion_tema_requisito.ID_ASIGNACION_TEMA_REQUISITO=
+                    (select  IFNULL(MAX(tbasig.ID_ASIGNACION_TEMA_REQUISITO)+1,0)   from asignacion_tema_requisito tbasig), asignacion_tema_requisito.ID_DOCUMENTO=-1
+                    ,asignacion_tema_requisito.ID_TEMA=".$value["id_tema_and_sub"];
+
+             $db=  AccesoDB::getInstancia();
+             return $db->executeQueryUpdate($query);  
+             
+        } catch (Exception $ex) {
+            throw $ex;
+            return -1;
+        }
+        }
+        
+        public function verificarSiExistenTemasSubtemasandEnTemaRequisito($value){
+            try{
+                $query="select count(*) as cantidad from asignacion_tema_requisito where asignacion_tema_requisito.ID_TEMA= ".$value["id_tema_and_subtema"];
+                $db= AccesoDB::getInstancia();
+                return $db->executeQuery($query);
+            } catch (Exception $ex) {
+                throw $ex;
+                return -1;
+            }
+            
+        }
+    
+    
+    
     
 }
