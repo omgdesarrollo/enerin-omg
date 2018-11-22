@@ -982,22 +982,6 @@ function refresh()
         construirFiltros();
         listarThisEmpleados();
         listarDatos("");
-   
-        // $('#status_grafica_combobox').on('change', function(){
-        // a = $("#status_grafica_combobox option:selected" ).text();
-        // if(valorChecking=="true")
-        // {
-        //     valorChecking="false";          
-        // }else{
-        //     if(a=="TERM")
-        //     {
-        //         $('#checkTerminados').trigger('click');         
-        //     }else{            
-        //         valorChecking="false";
-        //     }
-            
-        // }
-        // });
         $('#status_grafica_combobox').on('change',()=>
         {
             a = $("#status_grafica_combobox option:selected" ).text();
@@ -1023,9 +1007,6 @@ function refresh()
     {
         growlError("Error!","Error al construir la vista, recargue la página");
     });
-   
-//   valorChecking="false"
-//   $(".jsgrid-grid-body").css({"height":"171px"});
 }
 
 
