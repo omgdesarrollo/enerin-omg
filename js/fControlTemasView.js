@@ -17,10 +17,18 @@ $(function()
             , dataset: DataGridExcel
             , columns: getColumns(DataGridExcel)
         });
-    });      
+    });
     
-    $("#iniciarTematica").on(click,()=>{
-        console.log($("#fechaInicioTematica").val());
+    $("#iniciarTematica").on("click",()=>{
+        let fecha = $("#fechaInicioTematica").val();
+        // fecha!=""? iniciarTematicaCompletaFecha(fecha) : growlError("Error Fecha","Formato de fecha no valido") ;
+        fecha==""? iniciarTematicaCompletaFecha("0000-00-00") : iniciarTematicaCompletaFecha(fecha);
+    });
+
+    $("#fechaInicioTematica").on("click",()=>{
+        let fecha = new Date().getFullYear();
+        $("#fechaInicioTematica").attr("min",fecha-1+"-01-01");
+        $("#fechaInicioTematica").attr("max",fecha+100+"-01-01");
     });
 }); //CIERRA EL $(FUNCTION())
 
@@ -42,11 +50,62 @@ function inicializarFiltros()
     });
 }
 
+iniciarTematicaCompletaFecha = (fecha)=>
+{
+    swal({
+        title: "",
+        text: "Confirme Para Iniciar Temática Con Fecha "+fecha,
+        type: "warning",
+        showCancelButton: true,
+        // closeOnConfirm: false,
+        showLoaderOnConfirm: true,
+        preConfirm:()=>
+        {
+            return new Promise((resolve)=>
+            {
+                // setTimeout(function()
+                // {
+                    resolve();
+                // }, 1000);
+            });
+        }
+        },()=>{}
+    ).then((result)=>
+    {
+        iniciarTematicaListo(fecha);
+    });
+}
+
+iniciarTematicaListo = (fecha)=>
+{
+    $.ajax({
+        url: '../Controller/ControlTemasController.php?Op=IniciarTematica',
+        type: 'POST',
+        data: 'FECHA='+fecha+"&dataListado="+JSON.stringify(dataListado),
+        beforeSend:()=>
+        {
+            growlWait("Iniciando Temática","...");
+        },
+        success:(resp)=>
+        {
+            resp==1
+            ?(
+                growlSuccess("Iniciar Temática","Temática Iniciada"),
+                refresh()
+            ):growlSuccess("Iniciar Temática","No se aplicarón cambios");
+        },
+        error:()=>
+        {
+            growlError("Error","Erro en el servidor");
+        }
+    });
+}
 
 function reconstruir(value,index)
 {
     no = "fa-times-circle-o";
     yes = "fa-check-circle-o";
+    ultimoNumeroGrid = index;
     tempData = new Object();
     tempData["id_principal"]=[];
     tempData["id_principal"].push({'id_tema':value.id_tema});
@@ -102,10 +161,15 @@ function reconstruirExcel(value,index)
 //    return tempData;
 //}
 
+// $("#headerOpciones").append( '<input id="fechaInicioTematica" type="date" class="btn btn-success btn_agregar" style="margin-right:5px;border-radius:3px !important"></input>'+
+                        //                             '<button id="iniciarTematica" type="button" class="btn btn-success btn_agregar">Iniciar Tematica</button>'):console.log(),
+
 function listarDatos()
 {
     return new Promise((resolve,reject)=>
     {
+        // $("#fechaInicioTematica").css("display","");
+        // $("#iniciarTematica").css("display","");
         var __datos=[];
         $.ajax({
             url:"../Controller/ControlTemasController.php?Op=Listar",
@@ -118,15 +182,21 @@ function listarDatos()
             {
                 if(typeof(data)=="object")
                 {
-                    growlSuccess("Solicitud","Registros obtenidos");
-                    dataListado = data;
-                    $.each(data,function (index,value)
-                    {
-                        __datos.push( reconstruir(value,index+1) );
-                    });
-                    DataGrid = __datos;
-                    gridInstance.loadData();                    
-                    resolve();
+                    data.length == 0 ? growlSuccess("Solicitud","No existen registros") :(
+                        growlSuccess("Solicitud","Registros obtenidos"),
+                        data[0]["estado"]==0 && ultimoNumeroGrid == 0?(
+                            $("#fechaInicioTematica").css("display",""),
+                            $("#iniciarTematica").css("display","")
+                        ):console.log(""),
+                        dataListado = data,
+                        $.each(data,function (index,value)
+                        {
+                            __datos.push( reconstruir(value,index+1) );
+                        }),
+                        DataGrid = __datos,
+                        gridInstance.loadData(),
+                        resolve()
+                    );
                 }
                 else
                 {

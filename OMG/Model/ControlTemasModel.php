@@ -80,6 +80,24 @@ class ControlTemasModel {
             return -1;
         }
     }
+
+    public function iniciarTematica($CONTRATO,$DATALISTADO,$FECHA)
+    {
+        try
+        {
+            $dao = new ControlTemasDAO();
+            foreach($DATALISTADO as $key => $value)
+            {
+                if($value["estado"]=="0")
+                    $rec = $dao->iniciarTematica($value["id_tema"],$FECHA);
+            }
+            return $rec > 0 ? 1 : 0;
+        }catch(Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
     
 }
 
