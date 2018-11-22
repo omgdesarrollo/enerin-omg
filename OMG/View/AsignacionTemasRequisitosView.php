@@ -208,8 +208,10 @@ $Usuario=  Session::getSesion("user");
             var id_real_arbol_seleccionado=-1;
             myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
 	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
+            myTree.enableDragAndDrop(true);
             myTreeIzquierda = new dhtmlXTreeObject('treeboxbox_treeIzquierda', '100%', '100%',0);
             myTreeIzquierda.setImagePath("../../codebase/imgs/dhxtree_material/");
+            myTreeIzquierda.enableDragAndDrop(true); 
 //            myCombo = new dhtmlXCombo({
 //				parent: "comboclave_descripcion",
 //				width: 230,
@@ -587,6 +589,11 @@ idTree=-1;
 });
 
 
+
+
+
+
+
 function evaluarToolbarSeccionB(id)
 {
     if(id_asignacion_t==-1){
@@ -793,35 +800,17 @@ function contruirArbol(dataArbol)
         }
     }
 myTreeIzquierda.attachEvent("onClick", function(id){
-//    obtenerHijos(id);
-//    alert("le has  "+id);d
-    
-    
-    
-    
-    
-//    $.each(dataIds_req,function(index,value){
-//            if(value.padre==id_seleccionado){
-//               idTree= value.id_requisito;
-//            }
-//        });
 
      obtenerDatosArbol(id);   
 //    id_seleccionado=id;
     return true;
 });
 
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
+
+
+
+
+
      myLayout.cells("c").attachObject("contenidoDetalles");
     // obtenerDatosArbol(1);
     function obtenerDatosArbol(id_asignacion)
@@ -833,7 +822,7 @@ myTreeIzquierda.attachEvent("onClick", function(id){
     var datosEnviarParaPoderGenerarElArbol={"id_asignacion":id_asignacion,"id_tema_subtema":id_tema_subtema};
         banderaPrimeraIteracion=false;
         $.each(dataTemasSubtemasEnAsignacion,function (index,value){
-            console.log(value);
+//            console.log(value);
             if(banderaPrimeraIteracion==false){
                 if(value["id_tema"]==id_asignacion){
                     

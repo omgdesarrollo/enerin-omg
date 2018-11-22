@@ -4,6 +4,30 @@ require_once '../util/Session.php';
 require_once 'rutasArchivos.php';
 //$error=Session::eliminarSesion("error");
 //$usuario=Session::eliminarSesion("usuario");
+
+if(!isset($_REQUEST["type"])){
+      header("location: login.php");
+    return;
+}else{
+    if($_REQUEST["type"]==""){
+        header("location: login.php");
+//        if($_REQUEST["type"]!= Session::getSesion("tipo")){
+//           header("location: login.php");
+//           return;
+//        }
+    }else{
+         if($_REQUEST["type"]!= Session::getSesion("tipo")){
+           header("location: login.php");
+           return;
+        }
+    }
+}
+
+
+    
+
+
+
 if (Session:: NoExisteSeSion("user")){
     
     header("location: login.php");
