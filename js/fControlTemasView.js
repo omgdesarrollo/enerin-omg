@@ -184,7 +184,7 @@ function listarDatos()
                 {
                     data.length == 0 ? growlSuccess("Solicitud","No existen registros") :(
                         growlSuccess("Solicitud","Registros obtenidos"),
-                        data[0]["estado"]==0 && ultimoNumeroGrid == 0?(
+                        data[0]["estado"]==0?(
                             $("#fechaInicioTematica").css("display",""),
                             $("#iniciarTematica").css("display","")
                         ):console.log(""),
