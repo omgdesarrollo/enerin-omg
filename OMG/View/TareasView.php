@@ -178,10 +178,10 @@ require_once 'EncabezadoUsuarioView.php';
     </button>
 
     <div class="pull-right">        
-        <label class="btn btn-info btn_checkbox" style="display: none">
+        <!-- <label class="btn btn-info btn_checkbox" style="display: none"> -->
         <!--<label class="btn btn-info btn_checkbox">-->
-            <input style="margin: 6px 0 0;" type="checkbox" name="" id="checkTerminados" autocomplete="off"> Terminados
-        </label>
+            <!-- <input style="margin: 6px 0 0;" type="checkbox" name="" id="checkTerminados" autocomplete="off"> Terminados -->
+        <!-- </label> -->
                 
         <button onClick="graficar()" title="Graficar Circular" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#Grafica">
             <i class="fa fa-pie-chart"></i>
@@ -325,6 +325,8 @@ var activeChart = -1;
 var chartsCreados = [];
 var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)},(dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)}];
 
+var opcionSeleccionadaComboBoxEstatus = 0;
+
 var MyComboEmpleados = function(config)
 {
     jsGrid.Field.call(this, config);
@@ -387,7 +389,6 @@ var MyComboStatus = function(config)
     jsGrid.Field.call(this, config);
 };
 
-
 MyComboStatus.prototype = new jsGrid.Field
 ({
         align: "center",
@@ -397,9 +398,6 @@ MyComboStatus.prototype = new jsGrid.Field
         },
         itemTemplate: function(value,todo)
         {
-//                console.log("Entro al itemTemplate");
-//                console.log("Este es el value: ",value.status_tarea);
-
                 fechaAlarma= todo.fecha_al.split("-");
                 fechaAlarma= new Date(fechaAlarma[0],fechaAlarma[1]-1,fechaAlarma[2],0,0);
                 fechaCumplimiento=  todo.fecha_cump.split("-");
@@ -432,11 +430,6 @@ MyComboStatus.prototype = new jsGrid.Field
                 {
                     res= "TERM"
                 }
-                // this._MyComboStatus = res;
-//                console.log("Valores res: ",res);
-//                console.log("Fecha hoy: ",hoy);
-//                console.log("Fecha alarma: ",fechaAlarma);
-//                console.log("Fecha cumplimiento: ",fechaCumplimiento);
                 return res;
 
         },
@@ -617,7 +610,6 @@ MyDateField.prototype = new jsGrid.Field
     
 ];
  
- 
 estructuraGrid= [
     { name: "id_principal",visible:false},
     { name: "fecha_al",visible:false},
@@ -649,7 +641,7 @@ inicializarFiltros().then((resolve)=>
     gridInstance["customFunctionAuto"] = {fnCanvas:drawCanvasAll};
     construirFiltros();
     listarThisEmpleados();
-    listarDatos();
+    listarDatos("");
 },
 (error)=>
 {
