@@ -22,7 +22,10 @@
     <script src="../../js/jquery.js" type="text/javascript"></script>
     <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
 
-    <link async href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+    <!-- <link async href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/> -->
+
+    <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
     
     <link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
     <link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
@@ -103,8 +106,8 @@
 ?>
     
 <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
-    <input id="fechaInicioTematica" type="date"></input>
-    <button id="iniciarTematica" type="button" class="btn btn-success btn_agregar">
+    <input id="fechaInicioTematica" type="date" class="btn btn-success btn_agregar" style="display:none;border-radius:3px !important;"></input>
+    <button id="iniciarTematica" type="button" class="btn btn-success btn_agregar" style="display:none">
         Iniciar Tematica
     </button>
 

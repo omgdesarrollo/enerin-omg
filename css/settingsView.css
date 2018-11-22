@@ -1,6 +1,6 @@
 body{overflow:hidden;}
 
-.btn_agregar{border-radius:3px;border:3px #49986d solid;height:44px;}
+.btn_agregar{border-radius:3px !important;border:3px #49986d solid !important;height:44px !important;}
 
 .btn_exportarpdf{border-radius:3px;border:3px #D15B47 solid;height:44px;}
 
