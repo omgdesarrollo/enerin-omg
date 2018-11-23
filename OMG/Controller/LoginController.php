@@ -12,6 +12,7 @@ try {
     $tipoUrl=$_REQUEST["t"] ;
     //proceso
     Session::setSesion("tipo",$tipoUrl);
+    
     ConexionesBDPojo::dataBD($tipoUrl);
     $model=new LoginModel();
     $recUser=$model->validar($usuario,$clave);
