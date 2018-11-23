@@ -1241,6 +1241,8 @@ cambiarCont();
 mostrarTareasEnAlarma();
 mostrarTareasVencidas();
 
+//setInterval(security_session,2000);
+
 function cambiarCont()
     { 
 
@@ -1346,13 +1348,40 @@ var jsonObj = {};
      });
  }
  
- 
+ function security_session(){
+     var tipoU=<?php echo "'".$_REQUEST["type"]."'"?>;
+     var sactual=<?php echo "'".Session::getSesion("tipo")."'" ?>;
+     var tok=<?php echo "'".Session::getSesion("token")."'"  ?>;
+     var t=$("#gom").val();
+     if(t!=tok){
+         console.log("es diferente");
+     }
+     console.log("t de vista"+t+"-- token actual real "+tok);
+//console.log("f  "+sactual+"-- "+tipoU,);
+//     if(sactual!=tipoU){
+//         console.log("es diferente");
+//     }else
+//     {
+//         console.log("es igual");
+//     }
+ }
  
  
  
  
 
 </script>
+<?php  
+//$_SESSION=array();
+//echo session_id();
+//if(isset($_COOKIE[session_name()])){
+//    setcookie(session_name(),'', time()-100,'/');
+//}
+//session_destroy();
+
+?>
+
+
 
 </body>
 </html>

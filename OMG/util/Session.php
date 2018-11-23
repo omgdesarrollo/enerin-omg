@@ -1,4 +1,6 @@
 <?php
+
+
 class Session{
     public static function  existeSesion($name){
         $rpta=FALSE;

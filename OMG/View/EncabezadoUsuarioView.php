@@ -240,7 +240,7 @@ foreach($Alarmas as $alarma)
 	
 	listarNotificaciones();
 	setInterval(function(){listarNotificaciones();},25000);
-
+        
 	function listarNotificaciones()
 	{
 		$.ajax({
