@@ -45,8 +45,8 @@ class AdminDAO{
             JOIN estructura tbestructura ON tbusuarios_vistas.id_estructura = tbestructura.id_estructura
             JOIN vistas tbvistas ON tbvistas.id_vistas = tbestructura.id_vistas
             JOIN submodulos tdsubmodulos ON tdsubmodulos.id_submodulos = tbestructura.id_submodulos
-            WHERE tbusuarios_vistas.id_usuario=$ID_USUARIO ";
-
+            WHERE tbusuarios_vistas.id_usuario=$ID_USUARIO";
+            // echo $query;
             $db= AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
             
@@ -64,7 +64,7 @@ class AdminDAO{
         try
         {
            $query="SELECT tbsubmodulos.id_submodulos, tbsubmodulos.nombre
-                   FROM submodulos tbsubmodulos WHERE tbsubmodulos.id_submodulos != 1";
+                   FROM submodulos tbsubmodulos WHERE tbsubmodulos.id_submodulos != 1  AND tbsubmodulos.adquirido = 1";
            $db= AccesoDB::getInstancia();
            $lista= $db->executeQuery($query);
            
@@ -346,7 +346,7 @@ class AdminDAO{
             JOIN estructura tbestructura ON tbusuarios_vistas.id_estructura = tbestructura.id_estructura
             JOIN vistas tbvistas ON tbvistas.id_vistas = tbestructura.id_vistas
             JOIN submodulos tdsubmodulos ON tdsubmodulos.id_submodulos = tbestructura.id_submodulos
-            WHERE tbusuarios_vistas.id_usuario='".$param['id_usuario']."'     order by tbestructura.ordenar asc";
+            WHERE tdsubmodulos.adquirido = 1 AND tbusuarios_vistas.id_usuario='".$param['id_usuario']."'     order by tbestructura.ordenar asc";
 
             $db= AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);

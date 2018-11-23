@@ -67,30 +67,31 @@ function reconstruir(value,index)
     // if(value[0].cumplimiento_contrato!=undefined)
         // $("#cumplimiento_contrato_show").html("% Cumplimiento General: "+value[0].cumplimiento_contrato.toFixed(2));
     tempData["id_principal"] = [{'id_tema':value[0].id_tema}];
-    tempData["no_tema"] = value[0].no_tema;
-    tempData["nombre_tema"] = value[0].nombre_tema;
+    tempData["no_tema"] = value.no_tema;
+    tempData["nombre_tema"] = value.nombre_tema;
     // tempData["id_responsable"] = value.id_responsable;
-    tempData["responsable_tema"] = value[0].responsable_tema;
+    tempData["responsable_tema"] = value.responsable_tema;
     bandara = 0;
     // tempData["cumplimiento_tema"] = value[0].cumplimiento_tema;
 
-    tempData["requisitos_tema"] = 0;
+    tempData["requisitos_tema"] = value.requisitos_tema;
     
-    tempData["requisitos_cumplidos"] = 0;
-    $.each(value,(ind,val)=>
-    {
-        bandera = 0;
-        if(val["estado_requisito"] == "CUMPLIDO")
-            tempData["requisitos_cumplidos"]++;
-        $.each(val.detalles_requisito,(i,v)=>{
-            if(v.id_registro != null)
-                bandera = 1;
-        });
-        if(bandera==1)
-            tempData["requisitos_tema"]++;
-    });
-    
-    tempData["cumplimiento_tema"] = (tempData["requisitos_cumplidos"]/tempData["requisitos_tema"])*100;
+    tempData["requisitos_cumplidos"] = value.requisitos_cumplidos;
+    // $.each(value,(ind,val)=>
+    // {
+    //     bandera = 0;
+    //     if(val["estado_requisito"] == "CUMPLIDO")
+    //         tempData["requisitos_cumplidos"]++;
+    //     $.each(val.detalles_requisito,(i,v)=>{
+    //         if(v.id_registro != null)
+    //             bandera = 1;
+    //     });
+    //     if(bandera==1)
+    //         tempData["requisitos_tema"]++;
+    // });
+    tempData["cumplimiento_tema"] = value.cumplimiento_tema;
+    // (tempData["requisitos_tema"]==0)?
+    //  (tempData["requisitos_cumplidos"]/tempData["requisitos_tema"])*100 : 0;
 
     // cumplimiento_contrato = $("#cumplimiento_contrato_show").html();
     // $("#cumplimiento_contrato_show").html("% Cumplimiento General: "+value[0].cumplimiento_contrato.toFixed(2));
@@ -269,7 +270,6 @@ function reconstruirExcelDetalles(value,index)
             }
         });
     });
-        
     return tempData;
 }
 
@@ -548,7 +548,7 @@ function graficar4(datos,concepto)
                 }
                 if(value.estado_requisito=="EN PROCESO" && val.estado_evidencias == "EN PROCESO")
                 {
-                    if(val.frecuencia == "INDEFINIDO")
+                    if(val.frecuencia == "TIEMPO INDEFINIDO")
                     {
                         // especial = 1;
                         evidencias = 1;

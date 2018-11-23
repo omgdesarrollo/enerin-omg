@@ -10,6 +10,7 @@ class ConsultasModel{
             date_default_timezone_set("America/Mexico_city");
             $dao=new ConsultasDAO();
             $lista= $dao->listarConsultas($CONTRATO);
+            // var_dump($lista);
             $hoy = new Datetime();
 	        $al = strftime("%d - %B - %y");
             $hoy = new Datetime($al);
@@ -143,7 +144,7 @@ class ConsultasModel{
                         }
                         $lista[$key]["evidencias_realizar"] = $cantidad_a_realizar;
                     }
-                    if($frecuencia == "INDEFINIDO")
+                    if($frecuencia == "TIEMPO INDEFINIDO")
                     {
                         $lista[$key]["evidencias_realizar"] = -1;
                     }
@@ -245,7 +246,7 @@ class ConsultasModel{
 
                     // if($lista[$i]["fecha_inicio"]!="0000-00-00")
                     // {
-                    if( $lista2[$contador]["detalles_requisito"][$contador2]["frecuencia"]=="INDEFINIDO" || $lista2[$contador]["detalles_requisito"][$contador2]["frecuencia"]=="POR EVENTO" )
+                    if( $lista2[$contador]["detalles_requisito"][$contador2]["frecuencia"]=="TIEMPO INDEFINIDO" || $lista2[$contador]["detalles_requisito"][$contador2]["frecuencia"]=="POR EVENTO" )
                     {
                         if( $lista2[$contador]["detalles_requisito"][$contador2]["cumplimiento_evidencias"]==100 )
                             $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"]= "CUMPLIDO";
@@ -259,7 +260,7 @@ class ConsultasModel{
                                     $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] = "EN PROCESO";
                                 else
                                 {
-                                    if( $lista2[$contador]["detalles_requisito"][$contador2]["frecuencia"]=="INDEFINIDO" )
+                                    if( $lista2[$contador]["detalles_requisito"][$contador2]["frecuencia"]=="TIEMPO INDEFINIDO" )
                                         $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] = "NO APLICA";
                                     else
                                     {
@@ -1065,6 +1066,56 @@ class ConsultasModel{
         }
     }
     
+    public function limpiar($lista)
+    {
+        $posicionesBorrar = array();
+        foreach($lista as $key => $value)
+        {
+            $lista[$key]["requisitos_cumplidos"]=0;
+            $lista[$key]["requisitos_tema"]=0;
+            foreach($value as $ind => $val)
+            {
+                $lista[$key]["responsable_tema"]=$val["responsable_tema"];
+                $lista[$key]["nombre_tema"]=$val["nombre_tema"];
+                $lista[$key]["no_tema"]=$val["no_tema"];
+                $bandera = 0;
+                if($val["estado_requisito"] == "CUMPLIDO")
+                    $lista[$key]["requisitos_cumplidos"]++;
+                foreach($val["detalles_requisito"] as $i => $v)
+                {
+                    if($v["id_registro"] != null)
+                        $bandera = 1;
+                }
+                if($bandera==1)
+                    $lista[$key]["requisitos_tema"]++;
+            }
+            $lista[$key]["requisitos_tema"]==0? $posicionesBorrar[$key]=0: $lista[$key]["cumplimiento_tema"] = $lista[$key]["requisitos_cumplidos"]/$lista[$key]["requisitos_tema"] ;
+        }
+        foreach($posicionesBorrar as $key=>$val)
+        {
+            unset($lista[$key]);
+        }
+        return $lista;
+    }
+    // {
+    // tempData["cumplimiento_tema"] = (tempData["requisitos_tema"]==0)?
+    // }
+    // tempData["requisitos_tema"] = 0;
+    
+    // tempData["requisitos_cumplidos"] = 0;
+    // $.each(value,(ind,val)=>
+    // {
+    //     bandera = 0;
+    //     if(val["estado_requisito"] == "CUMPLIDO")
+    //         tempData["requisitos_cumplidos"]++;
+    //     $.each(val.detalles_requisito,(i,v)=>{
+    //         if(v.id_registro != null)
+    //             bandera = 1;
+    //     });
+    //     if(bandera==1)
+    //         tempData["requisitos_tema"]++;
+    // });
+    // tempData["cumplimiento_tema"] = (tempData["requisitos_tema"]==0)?
 }
 
 
