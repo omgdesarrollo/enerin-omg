@@ -378,9 +378,12 @@ class EvidenciasDAO
     {
         try 
         {
+            $db= AccesoDB::getInstancia();
+            $query="UPDATE temas SET padre_general = id_tema, resposable_general = id_emplado WHERE padre = 0";
+            $db->executeQueryUpdate($query);
+            
             $query="SELECT tbtemas.id_tema,tbtemas.id_empleado
                     FROM temas tbtemas WHERE tbtemas.padre = 0";
-            $db= AccesoDB::getInstancia();
             $lista= $db->executeQuery($query);
             return $lista;
 
