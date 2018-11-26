@@ -11,22 +11,23 @@ $(function()
     {
         claveRegistro = $("#IDREGISTRO_NUEVAEVIDENCIAMODAL").val();
         claveTema = $("#IDTEMA_NUEVAEVIDENCIAMODAL").val();
-        fecha = $("#FECHA_NUEVAEVIDENCIAMODAL").val();
+        fecha = '0000-00-00';
+        // $("#FECHA_NUEVAEVIDENCIAMODAL").val();
         // console.log(fecha);
         if(claveTema!=-1 && claveRegistro!=-1 && fecha!="")
         {
-            $.ajax({
-                url:'../Controller/EvidenciasController.php?Op=ChecarDisponiblidad',
-                type:'GET',
-                data: "ID_REGISTRO="+dataRegistro.id_registro+"&FECHA="+fecha,
-                beforeSend:function()
-                {
-                    growlWait("Crear Evidencia","Creando evidencia");
-                },
-                success:function(disponible)
-                {
-                    if(disponible == 0)
-                    {
+            // $.ajax({
+            //     url:'../Controller/EvidenciasController.php?Op=ChecarDisponiblidad',
+            //     type:'GET',
+            //     data: "ID_REGISTRO="+dataRegistro.id_registro+"&FECHA="+fecha,
+            //     beforeSend:function()
+            //     {
+            //         growlWait("Crear Evidencia","Creando evidencia");
+            //     },
+            //     success:function(disponible)
+            //     {
+            //         if(disponible == 0)
+            //         {
                         URL = 'filesEvidenciaDocumento/';
                         $.ajax
                         ({
@@ -60,20 +61,20 @@ $(function()
                                 growlError("Error Crear Evidencia","Error en el servidor");
                             }
                         });
-                    }
-                    if(disponible > 0)
-                    {
-                        swalInfo("Ya se ha cargado esta evidencia hoy");
-                        growlError("Crear Evidencia","Ya se ha cargado esta evidencia hoy");
-                    }
-                    if(disponible < 0)
-                        growlError("Error Crear Evidencia","Error al hacer eso cambiar nombre que no se como ponerle");
-                },
-                error:function()
-                {
-                    growlError("Error Crear Evidencia","Error en el servidor");
-                }
-            });
+                    // }
+                    // if(disponible > 0)
+                    // {
+                    //     swalInfo("Ya se ha cargado esta evidencia hoy");
+                    //     growlError("Crear Evidencia","Ya se ha cargado esta evidencia hoy");
+                    // }
+                    // if(disponible < 0)
+                    //     growlError("Error Crear Evidencia","Error al hacer eso cambiar nombre que no se como ponerle");
+                // },
+                // error:function()
+                // {
+                //     growlError("Error Crear Evidencia","Error en el servidor");
+                // }
+            // });
         }
         else
         {

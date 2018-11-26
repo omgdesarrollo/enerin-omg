@@ -182,13 +182,13 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="control-label">Fecha de la evidencia: </label>
-                    <div class="dropdown">
-                        <input type="date" id="FECHA_NUEVAEVIDENCIAMODAL" />
-                    </div>
+                <!-- <div class="form-group"> -->
+                    <!-- <label class="control-label">Fecha de la evidencia: </label> -->
+                    <!-- <div class="dropdown"> -->
+                        <!-- <input type="date" id="FECHA_NUEVAEVIDENCIAMODAL" /> -->
+                    <!-- </div> -->
                     <!-- <input type="date" id="FECHA_ALARMA" class="form-control" data-error="Ingrese la Fecha de Alarma" required/> -->
-                </div>
+                <!-- </div> -->
 
                 <div class="form-group">
                     <strong>Frecuencia: </strong><label id="FRECUENCIA_NUEVAEVIDENCIAMODAL" class="control-label" for="title"></label>
@@ -335,7 +335,7 @@
         { name: "registro",title:"Registro", type: "text", width: 150, editing:false  },
         { name: "frecuencia",title:"Frecuencia", type: "text", width: 130, editing:false  },
         { name: "clave_documento",title:"Clave del Documento", type: "text",  width: 180, editing:false },
-        { name: "fecha_creacion",title:"Fecha Evidencia", type: "text",  width: 160, editing:false },
+        // { name: "fecha_creacion",title:"Fecha Evidencia", type: "text",  width: 160, editing:false },
         { name: "fecha_registro",title:"Fecha Registro", type: "text", width: 160, editing:false },
         { name: "adjuntar_evidencia",title:"Adjuntar Evidencia", type: "text",  width: 150, editing:false },
         { name: "usuario",title:"Usuario", type: "text", width:250, editing:false },

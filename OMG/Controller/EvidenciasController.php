@@ -125,6 +125,11 @@ switch ($Op)
         echo $disponiblidad;
     break;
 
+    case 'especialComponerTemas':
+        $resp = $model->componerTablaTemas();
+        echo $resp;
+    break;
+
 	default:
 		echo false;
         break;
