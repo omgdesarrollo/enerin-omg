@@ -10,7 +10,26 @@ class EvidenciasModel
         try
         {
             $dao = new EvidenciasDAO();
+            $bandera = true;
             $rec = $dao->listarEvidencias($ID_USUARIO,$CONTRATO);
+            // foreach($rec as $key => $value)
+            // {
+            //     $tempInf = $dao->obtenerPadreTema($vale["id_tema"]);
+            //     if(sizeof($tempInf)!=0)
+            //     {
+            //         while($bandera)
+            //         {
+            //             $tempInf[];
+            //             $tempInf = $dao->obtenerPadreTema($vale["id_tema"]);
+            //             if(sizeof($tempInf)!=0)
+            //             {
+                            
+            //             }
+            //             else
+            //                 $bandera = false;
+            //         }
+            //     }
+            // }
             
             foreach ($rec as $key => $value) 
             {
@@ -39,7 +58,6 @@ class EvidenciasModel
         }
     }
 
-
     public function getClavesDocumentos($cadena)
     {
         try
@@ -52,6 +70,7 @@ class EvidenciasModel
             throw $e;
         }
     }
+
     public function crearEvidencia($ID_USUARIO,$ID_REGISTRO,$FECHA_CREACION)
     {
         try
@@ -65,7 +84,6 @@ class EvidenciasModel
             return false;
         }
     }
-    
     
     public function iniciarEnVacio($id_evidencias)
     {
@@ -81,8 +99,6 @@ class EvidenciasModel
             return false;
         }
     }
-
-    
 
     public function actualizarPorColumna($COLUMNA,$CONTEXTO,$ID_EVIDENCIAS,$VALOR)
     {
@@ -122,8 +138,69 @@ class EvidenciasModel
         try
         {
             $dao=new EvidenciasDAO();
-            $result = $dao->listarRegistros($CADENA,$ID_TEMA);            
-            return $result;
+            $data = array();
+            $hijos = $dao->obtenerHijosTema($ID_TEMA);
+            // var_dump($hijos);
+            $data = $dao->listarRegistros($CADENA,$ID_TEMA);
+            $bandera = true;
+            $key = 0;
+            while( $bandera )
+            {
+                // var_dump($hijos);
+                $value = $hijos[$key];
+                // var_dump($value["id_tema"]);
+                $hijosTemp = $dao->obtenerHijosTema($value["id_tema"]);
+                // var_dump($hijosTemp);
+                if( sizeof($hijosTemp)!=0 )
+                    array_push($hijos,$hijosTemp[0]);
+
+                $dataTemp = $dao->listarRegistros($CADENA,$value["id_tema"]);
+                // var_dump($dataTemp);
+                if( sizeof($dataTemp)!=0 )
+                    array_push($data,$dataTemp[0]);
+                // echo $key;
+                $key++;
+                if( sizeof($hijos) == $key)
+                    $bandera = false;
+            }
+            // var_dump($hijos);
+            return $data;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
+    public function componerTablaTemas()
+    {
+        try
+        {
+            $dao=new EvidenciasDAO();
+            $data = array();
+            $temas = $dao->listarTodosTemas();
+            foreach($temas as $key => $value)
+            {
+                $hijos = $dao->obtenerHijosTema($value["id_tema"]);
+                if( sizeof($hijos)!=0 )
+                {
+                    $tmp = array();
+                    $bandera = true;
+                    $key = 0;
+                    while($bandera)
+                    {
+                        $v = $hijos[$key];
+                        $dao->cambiarDatosTema($v["id_tema"],$value["id_tema"],$value["id_empleado"]);
+                        $temp = $dao->obtenerHijosTema($v["id_tema"]);
+                        if( sizeof($temp)!=0 )
+                            array_push($hijos,$temp[0]);
+                        $key++;
+                        if( sizeof($hijos) == $key)
+                            $bandera = false;
+                    }
+                }
+            }
+            return "TERMINO BIEN";
         }catch (Exception $ex)
         {
             throw $ex;

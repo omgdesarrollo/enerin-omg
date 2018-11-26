@@ -3,15 +3,63 @@
 require_once '../ds/AccesoDB.php';
 class EvidenciasDAO
 {
+    public function obtenerPadreTema($ID_TEMA)
+    {
+        try
+        {
+            $query = "SELECT tbtemas.padre,tb FROM temas tbtemas WHERE tbtemas.id_tema = $ID_TEMA";
+            $db = AccesoDB::getInstancia();
+            $lista = $db->executeQuery($query);
+            return $lista;
+        }
+        catch(Exception $ex)
+        {
+            throw $ex;
+        }
+    }
+    // $query = "SELECT tbtemas.id_tema, tbusuarios.id_empleado,tbrequisitos.id_requisito,tbrequisitos.requisito,
+    // tbregistros.id_registro,tbregistros.registro,tbregistros.frecuencia,
+    // tbdocumentos.clave_documento,tbevidencias.desviacion,
+    // tbevidencias.id_evidencias,tbevidencias.id_usuario,tbevidencias.accion_correctiva,tbevidencias.validacion_supervisor,tbevidencias.fecha_creacion,
+    // tbempleados.id_empleado,(SELECT tbusuario2.id_usuario FROM usuarios tbusuario2 WHERE tbusuario2.id_empleado=tbempleados.id_empleado)AS id_responsable ,
+
+    // (SELECT tbtemas2.nombre FROM temas tbtemas2 WHERE tbtemas.padre_general = tbtemas2.id_tema) as nombre,
+
+    // (SELECT CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)
+    //         FROM empleados tbempleados
+    //         JOIN usuarios tbusuariosU ON tbusuariosU.id_empleado = tbempleados.id_empleado
+    //         WHERE tbusuariosU.id_usuario = tbevidencias.id_usuario) AS usuario,
+            
+    //         (SELECT IF(tbevidencias.id_usuario=$ID_USUARIO,1,0) ) AS validador,
+    //     ( SELECT IF( tbempleados.id_empleado = (SELECT tbempleado.id_empleado FROM usuarios tbusuario,empleados tbempleado 
+    //         WHERE tbusuario.id_empleado = tbempleado.id_empleado AND tbusuario.id_usuario = $ID_USUARIO),1,0) ) AS responsable
+    
+    // FROM temas tbtemas
+    // LEFT JOIN asignacion_tema_requisito tbasignacion_tema_requisito ON tbasignacion_tema_requisito.id_tema=tbtemas.id_tema
+    // LEFT JOIN asignacion_tema_requisito_requisitos tbasignacion_tema_requisito_requisitos
+    // ON tbasignacion_tema_requisito_requisitos.id_asignacion_tema_requisito = tbasignacion_tema_requisito.id_asignacion_tema_requisito
+    // LEFT JOIN requisitos tbrequisitos ON tbrequisitos.id_requisito = tbasignacion_tema_requisito_requisitos.id_requisito
+    // LEFT JOIN requisitos_registros tbrequisitos_registros ON tbrequisitos_registros.id_requisito = tbrequisitos.id_requisito
+    // LEFT JOIN registros tbregistros ON tbregistros.id_registro = tbrequisitos_registros.id_registro
+    // LEFT JOIN evidencias tbevidencias ON tbevidencias.id_registro = tbregistros.id_registro
+    // LEFT JOIN empleados tbempleados ON tbempleados.id_empleado = tbtemas.id_empleado
+    // LEFT JOIN usuarios tbusuarios ON tbusuarios.id_empleado = tbempleados.id_empleado
+    // LEFT JOIN documentos tbdocumentos ON tbdocumentos.id_documento = tbregistros.id_documento
+    
+    // WHERE tbtemas.contrato=$CONTRATO AND (tbregistros.registro<>'NULL' AND tbevidencias.validacion_supervisor<>'NULL' AND tbusuarios.id_usuario = $ID_USUARIO AND LOWER(tbtemas.identificador) 
+    // LIKE '%catalogo%' OR tbevidencias.id_usuario = $ID_USUARIO)";
     public function listarEvidencias($ID_USUARIO,$CONTRATO)
     {
         try
         {
-            $query = "SELECT tbtemas.id_tema,tbtemas.nombre, tbusuarios.id_empleado,tbrequisitos.id_requisito,tbrequisitos.requisito,
+            $query = "SELECT tbtemas.id_tema, tbusuarios.id_empleado,tbrequisitos.id_requisito,tbrequisitos.requisito,
             tbregistros.id_registro,tbregistros.registro,tbregistros.frecuencia,
             tbdocumentos.clave_documento,tbevidencias.desviacion,
             tbevidencias.id_evidencias,tbevidencias.id_usuario,tbevidencias.accion_correctiva,tbevidencias.validacion_supervisor,tbevidencias.fecha_creacion,
             tbempleados.id_empleado,(SELECT tbusuario2.id_usuario FROM usuarios tbusuario2 WHERE tbusuario2.id_empleado=tbempleados.id_empleado)AS id_responsable ,
+
+            (SELECT tbtemas2.nombre FROM temas tbtemas2 WHERE tbtemas.padre_general = tbtemas2.id_tema) as nombre,
+
             (SELECT CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)
                     FROM empleados tbempleados
                     JOIN usuarios tbusuariosU ON tbusuariosU.id_empleado = tbempleados.id_empleado
@@ -29,7 +77,7 @@ class EvidenciasDAO
 			LEFT JOIN requisitos_registros tbrequisitos_registros ON tbrequisitos_registros.id_requisito = tbrequisitos.id_requisito
             LEFT JOIN registros tbregistros ON tbregistros.id_registro = tbrequisitos_registros.id_registro
 	    	LEFT JOIN evidencias tbevidencias ON tbevidencias.id_registro = tbregistros.id_registro
-			LEFT JOIN empleados tbempleados ON tbempleados.id_empleado = tbtemas.id_empleado
+			LEFT JOIN empleados tbempleados ON tbempleados.id_empleado = tbtemas.responsable_general
 			LEFT JOIN usuarios tbusuarios ON tbusuarios.id_empleado = tbempleados.id_empleado
             LEFT JOIN documentos tbdocumentos ON tbdocumentos.id_documento = tbregistros.id_documento
             
@@ -38,7 +86,6 @@ class EvidenciasDAO
             
             $db = AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
-            
             return $lista;
         }
         catch(Exception $ex)
@@ -46,7 +93,6 @@ class EvidenciasDAO
             throw $ex;
         }
     }
-    
     
     public function listarEvidencia($ID_EVIDENCIA,$ID_USUARIO)
     {
@@ -93,8 +139,6 @@ class EvidenciasDAO
         }
     }
 
-
-    
     public function getClavesDocumentos($cadena)
     {
         try
@@ -113,6 +157,7 @@ class EvidenciasDAO
             throw $ex;
         }
     }
+
     public function crearEvidencia($ID_USUARIO,$ID_REGISTRO,$FECHA_CREACION)
     {
         try
@@ -132,7 +177,6 @@ class EvidenciasDAO
             return false;
         }
     }
-    
     
     public function iniciarEnVacio($id_evidencias)
     {
@@ -154,8 +198,6 @@ class EvidenciasDAO
             throw $ex;
         }
     }
-
-    
 
     public function actualizarEvidenciaPorColumna($COLUMNA,$CONTEXTO,$ID_EVIDENCIAS,$VALOR)
     {     
@@ -190,6 +232,26 @@ class EvidenciasDAO
             return false;
         }
     }
+
+    public function obtenerHijosTema($ID_TEMA)
+    {
+        try
+        {
+            $query="SELECT tbtemas.id_tema
+            FROM temas tbtemas
+            WHERE tbtemas.padre = $ID_TEMA";
+            // echo $query;
+
+            $db= AccesoDB::getInstancia();
+            $result= $db->executeQuery($query);
+            return $result;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
     public function listarRegistros($CADENA,$ID_TEMA)
     {
         try
@@ -206,6 +268,7 @@ class EvidenciasDAO
             JOIN asignacion_tema_requisito tbasignacion_tr ON tbasignacion_tr.id_asignacion_tema_requisito = tbasignacion_trr.id_asignacion_tema_requisito
             JOIN temas tbtemas ON tbasignacion_tr.id_tema = tbtemas.id_tema
             WHERE  tbtemas.id_tema = $ID_TEMA AND LOWER(tbregistros.registro) LIKE '%$CADENA%'";
+            // echo $query;
 
             $db= AccesoDB::getInstancia();
             $result= $db->executeQuery($query);
@@ -310,5 +373,38 @@ class EvidenciasDAO
             return -1;
         }
     }
+
+    public function listarTodosTemas()
+    {
+        try 
+        {
+            $query="SELECT tbtemas.id_tema,tbtemas.id_empleado
+                    FROM temas tbtemas WHERE tbtemas.padre = 0";
+            $db= AccesoDB::getInstancia();
+            $lista= $db->executeQuery($query);
+            return $lista;
+
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
     
+    public function cambiarDatosTema($ID_TEMA,$PADRE,$RESP)
+    {
+        try 
+        {
+            $query="UPDATE temas SET padre_general = $PADRE, responsable_general = $RESP
+                    WHERE id_tema = $ID_TEMA";
+            $db= AccesoDB::getInstancia();
+            $lista= $db->executeQueryUpdate($query);
+            return $lista;
+
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 }
