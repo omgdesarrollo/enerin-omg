@@ -1,6 +1,6 @@
 obtenerDatosArbol();  
 id_seleccionado="";
-
+var dataArbolGlobal=[];
  $(function(){
      
      $("#btn_guardar").click(function(e)
@@ -8,7 +8,8 @@ id_seleccionado="";
          e.preventDefault();
 //         $("#btn_guardar").attr("disabled", "disabled");
          var formData = {"NO":$('#NO').val(),"NOMBRE":$('#NOMBRE').val(),"DESCRIPCION":$('#DESCRIPCION').val(),
-                         "PLAZO":$('#PLAZO').val(),"NODO":0,"ID_EMPLEADOMODAL":$('#ID_EMPLEADOMODAL').val()};            
+                         "PLAZO":$('#PLAZO').val(),"NODO":0,"ID_EMPLEADOMODAL":$('#ID_EMPLEADOMODAL').val(),
+                         "ID_PADRE_GENERAL":$('#ID_EMPLEADOMODAL').val()};            
          
          $.ajax({
              url:'../Controller/TemasController.php?Op=GuardarNodo',
@@ -41,6 +42,12 @@ id_seleccionado="";
      
      $("#btn_guardarSub").click(function(e){
          e.preventDefault();
+         
+//         var parentId = myTree.getParentId(id_seleccionado);
+        
+           
+//        var  myTree
+         
 //         $("#btn_guardarSub").attr("disabled", "disabled");
          var formData = {"NO":$('#NO_SUBTEMA').val(),"NOMBRE":$('#NOMBRE_SUBTEMA').val(),"DESCRIPCION":$('#DESCRIPCION_SUBTEMA').val(),
                          "PLAZO":$('#PLAZO_SUBTEMA').val(),"NODO":id_seleccionado,"ID_EMPLEADOMODAL":"0"};            
@@ -129,6 +136,9 @@ function evaluarToolbarSeccionA(id)
 {
     if(id=="agregar")
     {
+        
+        
+        
         $('#create-itemTema').modal('show');
     } 
     if(id=="eliminar")
@@ -182,6 +192,7 @@ function obtenerDatosArbol()
             url:'../Controller/TemasController.php?Op=Listar',
             success:function(data)
             { 
+             
              contruirArbol(data);      
             },error:function (){
             }
@@ -193,8 +204,10 @@ function contruirArbol(dataArbol)
         myTree.deleteChildItems(0);
         if(dataArbol.length>0){
         myTree.parse(dataArbol, "jsarray");
+        dataArbolGlobal=dataArbol;
         }
     }
+
 
 myTree.attachEvent("onClick", function(id){
     obtenerHijos(id);
@@ -226,6 +239,7 @@ function evaluarToolbarSeccionB(id)
     } else {
     if(id=="agregar")
     {
+         obtenerPadreGeneral(dataArbolGlobal);
         $('#create-itemSubTema').modal('show');
     } 
     if(id=="eliminar")
@@ -245,9 +259,12 @@ function evaluarToolbarSeccionB(id)
             {
                 construirSubDirectorio(data.datosHijos);//esta seccion construye la seccion de enmedio
                 construirDetalleSeleccionado(data,id);//esta seccion construye la seccion ultima derecha
+//                 console.log("todos los datos",dataArbolGlobal);
+              
             }
         });
     }
+    
     function construirSubDirectorio(data)
     {   
         tempData1="<div  style='overflow-y:auto;' class='table-responsive altotablascrollbar'><table class='table table-bordered'><thead><tr class='info' id='registro_' name='registro_'>\n\
@@ -335,6 +352,24 @@ function load(carga){
         $("#loader").hide();
     }
 }
+
+    function obtenerPadreGeneral(ar){
+        
+        //array id,parentid,text
+	var z=[];
+	for (var i=0; i<ar.length; i++){
+		if (!z[ar[i][1]]) z[ar[i][1]]=[];
+		z[ar[i][1]].push({id:ar[i][0],text:ar[i][2]});
+	}
+        console.log(id_seleccionado);  
+        console.log(z);
+        
+    }
+    
+
+
+
+
 
 
 
