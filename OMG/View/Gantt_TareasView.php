@@ -138,6 +138,7 @@ and open the template in the editor.
  <style type="text/css">
     html, body{
       height: 100%;
+      overflow: visible;
     }
     a{
         color: #337ab7;

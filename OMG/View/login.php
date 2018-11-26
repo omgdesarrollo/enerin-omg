@@ -381,8 +381,6 @@ function clock()
         </div>
         <div id="registroalsistema">
             
-            <!--ESTA ES LA SECCION DE DONDE SE EXPLICARA Y SE GUIARA DE COMO ADQUIRIR ESTE SOFTWARE-->
-            
             <video  width="640" height="480" src="../../movies/base/Tutorial Esquematico 121118.mp4" controls></video>
             <video  width="640" height="480" src="../../movies/base/Tutorial APP alta resolucion.mp4" controls></video>
             

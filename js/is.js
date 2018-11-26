@@ -4,6 +4,7 @@ $(function(){
     $("#loginform").submit(function(e){
 //        jQuery("#loginform").submit(function(e){
 //                                    alert("ya entro aqui ");
+        $("#IngresoLog").attr("disabled",true);
         e.preventDefault();
         var formData = $(this).serialize();
         $.ajax({
@@ -27,11 +28,13 @@ $(function(){
                         }else{
                                 $.jGrowl("Error no  tiene contrato asignado", { header: 'Error acceso contratos',theme:"themeG-error" });
                                 var delay = 1000;
+                                $("#IngresoLog").attr("disabled",false);
                         }
                     }else
                     {
                             $.jGrowl("Error no tiene acceso al menos en una vista", { header: 'Error acceso a la vista' });
                                 var delay = 1000;
+                                $("#IngresoLog").attr("disabled",false);
                     }
                 }
                 else
@@ -39,12 +42,14 @@ $(function(){
                     if(r.success==false){
                             $.jGrowl("Porfavor checa tu Usuario y Password", { header: 'Error de inicio de sesion',theme:"themeG-error" });
                             var delay = 1000;
+                            $("#IngresoLog").attr("disabled",false);
                     }
                 }
         },
                                     error:function(){
 //                                                            alert("hubo un error al tratar de realizar la peticion ajax ");
                                         $.jGrowl("Error......", { sticky: true });
+                                        $("#IngresoLog").attr("disabled",false);
                                     }
             });
                     return false;
