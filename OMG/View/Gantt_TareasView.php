@@ -1575,7 +1575,7 @@ construirTreeList();
             },
             {
                 dataField: "text",
-                caption: "Descripcion de la Actividad",
+                caption: "Descripcion de la Tarea",
                 allowEditing:false,
                  width:500,
             },
