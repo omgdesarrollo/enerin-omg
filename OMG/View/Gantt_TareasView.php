@@ -138,6 +138,7 @@ and open the template in the editor.
  <style type="text/css">
     html, body{
       height: 100%;
+      overflow: visible;
     }
     a{
         color: #337ab7;
@@ -1574,7 +1575,7 @@ construirTreeList();
             },
             {
                 dataField: "text",
-                caption: "Descripcion de la Actividad",
+                caption: "Descripcion de la Tarea",
                 allowEditing:false,
                  width:500,
             },
