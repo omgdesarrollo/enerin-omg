@@ -45,7 +45,7 @@ $(function()
                                     tempData = new Object(),
                                     $.each(data,function(index,value){
                                         tempData = reconstruir(value,ultimoNumeroGrid+1);
-                                        enviar_notificacion("Tiene una Evidencia por Validar",value.id_responsable,0,false,"EvidenciasView.php?accion="+value.id_evidencias);//msj,para,tipomsj,atendido,asunto
+                                        enviar_notificacion("Nueva evidencia: \""+value["registro"]+"\"",value.id_responsable,0,false,"EvidenciasView.php?accion="+value.id_evidencias);// msj,para,tipomsj,atendido,asunto
                                     }),
                                     $("#jsGrid").jsGrid("insertItem",tempData).done(function(){
 
@@ -109,7 +109,6 @@ $(function()
 
 });//CIERRA EL $(FUNCTION())
 
-
 function inicializarFiltros()
 {
     return new Promise((resolve,reject)=>
@@ -120,7 +119,7 @@ function inicializarFiltros()
             { id: "registro",name:"Registro", type: "text"},
             { id: "frecuencia",name:"Frecuencia", type: "combobox",data:frecuenciaData,descripcion:"frecuencia"},
             { id: "clave_documento",name:"Clave Documento", type: "text"},
-            { id: "fecha_creacion",name:"Fecha Creación", type: "date"},
+            // { id: "fecha_creacion",name:"Fecha Creación", type: "date"},
             // { id: "adjuntar_evidencia",name:"Adjuntar Evidencia", type: "text"},
             { id: "fecha_registro",name:"Fecha Registro", type: "date"},
             { id:"noneDos", type:"none"},
@@ -1000,7 +999,6 @@ function reconstruir(value,index)//listo jsgrid
     tempData["delete"]=tempData["id_principal"];
     return tempData;
 }
-
 
 function reconstruirExcel(value,index)
 {

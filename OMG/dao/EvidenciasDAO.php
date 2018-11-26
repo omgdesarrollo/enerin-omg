@@ -98,18 +98,22 @@ class EvidenciasDAO
     {
         try
         {
-            $query = "SELECT tbtemas.id_tema,tbtemas.nombre, tbusuarios.id_empleado,tbrequisitos.id_requisito,tbrequisitos.requisito,
+            $query = "SELECT tbtemas.id_tema, tbusuarios.id_empleado,tbrequisitos.id_requisito,tbrequisitos.requisito,
             tbregistros.id_registro,tbregistros.registro,tbregistros.frecuencia,
             tbdocumentos.clave_documento,tbevidencias.desviacion,
             tbevidencias.id_evidencias,tbevidencias.id_usuario,tbevidencias.accion_correctiva,tbevidencias.validacion_supervisor,tbevidencias.fecha_creacion,
             tbempleados.id_empleado,(SELECT tbusuario2.id_usuario FROM usuarios tbusuario2 WHERE tbusuario2.id_empleado=tbempleados.id_empleado)AS id_responsable,
+
+            (SELECT tbtemas2.nombre FROM temas tbtemas2 WHERE tbtemas.padre_general = tbtemas2.id_tema) as nombre,
+
             (
-                SELECT CONCAT(tbempleados.nombre_empleado,' ',
-                    tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)
+                SELECT CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)
                     FROM empleados tbempleados
                     JOIN usuarios tbusuariosU ON tbusuariosU.id_empleado = tbempleados.id_empleado
                     WHERE tbusuariosU.id_usuario = tbevidencias.id_usuario
-                ) AS usuario, (SELECT IF(tbevidencias.id_usuario=$ID_USUARIO,1,0) ) AS validador,
+                ) AS usuario,
+                
+                (SELECT IF(tbevidencias.id_usuario=$ID_USUARIO,1,0) ) AS validador,
                 ( SELECT IF( tbempleados.id_empleado = (SELECT tbempleado.id_empleado FROM usuarios tbusuario,empleados tbempleado 
 				    WHERE tbusuario.id_empleado = tbempleado.id_empleado AND tbusuario.id_usuario = $ID_USUARIO),1,0) ) AS responsable
             
@@ -121,7 +125,7 @@ class EvidenciasDAO
 			LEFT JOIN requisitos_registros tbrequisitos_registros ON tbrequisitos_registros.id_requisito = tbrequisitos.id_requisito
             LEFT JOIN registros tbregistros ON tbregistros.id_registro = tbrequisitos_registros.id_registro
 	    	LEFT JOIN evidencias tbevidencias ON tbevidencias.id_registro = tbregistros.id_registro
-			LEFT JOIN empleados tbempleados ON tbempleados.id_empleado = tbtemas.id_empleado
+			LEFT JOIN empleados tbempleados ON tbempleados.id_empleado = tbtemas.responsable_general
 			LEFT JOIN usuarios tbusuarios ON tbusuarios.id_empleado = tbempleados.id_empleado
             LEFT JOIN documentos tbdocumentos ON tbdocumentos.id_documento = tbregistros.id_documento
             
@@ -381,7 +385,7 @@ class EvidenciasDAO
             $db= AccesoDB::getInstancia();
             $query="UPDATE temas SET padre_general = id_tema, resposable_general = id_emplado WHERE padre = 0";
             $db->executeQueryUpdate($query);
-            
+
             $query="SELECT tbtemas.id_tema,tbtemas.id_empleado
                     FROM temas tbtemas WHERE tbtemas.padre = 0";
             $lista= $db->executeQuery($query);
