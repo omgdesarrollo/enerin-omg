@@ -1621,7 +1621,7 @@ construirTreeList();
                 dataField: "avance",
                 caption: "Avance (%)",
                 allowEditing:false,
-                width:60
+                width:80
             },
             { 
                 dataField: "status",
