@@ -1593,19 +1593,16 @@ construirTreeList();
                 dataField: "id",
                 caption: "ID",
                 allowEditing:false,
-                width:100,
             },
             {
                 dataField: "text",
                 caption: "Descripcion de la Tarea",
                 allowEditing:false,
-                 width:1050,
             },
             
             { 
                 dataField: "user",
                 caption: "Responsable",
-                width:150,
                 allowEditing:false,
                 lookup: {
                     dataSource:dataEmpleados,
@@ -1617,20 +1614,17 @@ construirTreeList();
             { 
                 dataField: "porcentaje_por_actividad",
                 caption: "Peso de la Actividad",
-                width:100,
                 allowEditing:true
             },
              { 
                 dataField: "avance",
                 caption: "Avance (%)",
-                width:100,
                 allowEditing:false
                 
             },
             { 
                 dataField: "status",
                 caption: "Estatus",
-                width:90,
                 allowEditing:false,
                 lookup: {
                     dataSource:opcionstatus,
@@ -1641,7 +1635,6 @@ construirTreeList();
              { 
                 dataField: "archivo_adjunto",
                  captbion: "Archivo Adjunto",
-                 width:160,
                 cellTemplate:archivoAdjuntoCellTemplate,
                   allowEditing:false
                   
