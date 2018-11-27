@@ -218,8 +218,10 @@ and open the template in the editor.
     color: white;
 }               
 #dx {
-    /*max-height: 90%;*/
+    /*width: 60% !important ;*/
 }
+
+/*.configTable{width:95% !important;height:60% ;position: fixed;z-index: 2;};*/
 
  .modal-lg{width: 100%;}
  .modal-lgfile{width: 50%;}
@@ -228,12 +230,13 @@ and open the template in the editor.
     text-align: center;
 }
 #mydiv {
-    position: absolute;
+    position: fixed;
     z-index: 9;
     padding-left: 5%;
-    background-color: #f1f1f1;
+    /*background-color: #f1f1f1;*/
     text-align: center;
-    border: 1px solid #d3d3d3;
+    /*border: 1px solid #d3d3d3;*/
+    width: 100%;
 }
 
 #mydivheader {
@@ -353,7 +356,7 @@ tbody {
 <div id="mydiv">
   <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
   
-  <div  class="" id="detallesInformacion" style="width:94%;height:60% ;position: fixed;z-index: 2;">
+  <div  class="configtable" id="detallesInformacion" >
                 <div id="mydivheader" style="position: absolute">Click Para Mover</div>   
                 <!--<div class="" id="tree-list"  >-->
                     <div id="dx" ></div>
@@ -1405,6 +1408,9 @@ construirTreeList();
 
 });
 
+
+
+
     })
 
     
@@ -1420,7 +1426,8 @@ construirTreeList();
                                         async:false,
                                         success:function (res)
                                         {
-                                            datosTreeList=[];
+//                                            datosTreeList=[];
+                                            datosTreListTemp=[];
                                             
                                             $.each(res.data,function(index,value){
                                                 console.log("Este es el value",value);
@@ -1429,7 +1436,7 @@ construirTreeList();
                                                 datosTreeObj["parent"]= value.parent;
                                                 datosTreeObj["text"]= value.text;
                                                 datosTreeObj["user"]= value.user;
-                                                datosTreeObj["notasname"]= value.notas;
+//                                                datosTreeObj["notasname"]= value.notas;
                                                 datosTreeObj["porcentaje_por_actividad"]= value.porcentaje_por_actividad;
                                                 datosTreeObj["ponderado_real"]= "value.ponderado_real";
                                                 datosTreeObj["avance"]=Math.round(value.progress*100);
@@ -1443,36 +1450,51 @@ construirTreeList();
                                                 }
                                                 
                                                 datosTreeObj["status"]= value.status;
+                                                datosTreListTemp.push(datosTreeObj);
                                                 datosTreeList.push(datosTreeObj);
+                                                
+                                                return datosTreListTemp
                                             });
-                                         resolve();
+                                         resolve(datosTreListTemp);
                                         }
                                       });
                                       
                                   })
         }  
   function construirTreeList(){
+  console.log("empezo el contruir el tree list");
    dxtreeList= $("#dx").dxTreeList({
-        dataSource: datosTreeList,
+//        dataSource: datosTreeList,
+        dataSource:{
+            load:function (options){
+//                console.log("teiene options",options);
+//                this.datasource.load=function (){
+//                    return obtenerTareas();
+//                }
+                return obtenerTareas();
+            }
+            
+        },
         keyExpr: "id",
 //        parentIdExpr: "Head_ID",
          parentIdExpr: "parent",
         showRowLines: true,
         showBorders: true,
-        autoExpandAll: true,
+        autoExpandAll: false,
         allowColumnResizing: true,
-        columnAutoWidth: true,
+//        columnAutoWidth: true,
         allowColumnReordering: true,
         height:700,
+//        max-width:1500,
         columnChooser: {
         allowSearch: false,
         emptyPanelText: "Seleccionar Columna ",
-        enabled: true,
+        enabled: false,
         height: 360,
         mode: "dragAndDrop",
         searchTimeout: 500,
         title: "Columna A Ocultar",
-        width: 300
+        width: 100
         },
         columnResizingMode: "nextColumn",
         columnFixing: {
@@ -1571,19 +1593,17 @@ construirTreeList();
                 dataField: "id",
                 caption: "ID",
                 allowEditing:false,
-                width:90,
             },
             {
                 dataField: "text",
                 caption: "Descripcion de la Tarea",
                 allowEditing:false,
-                 width:500,
+                width:400
             },
             
             { 
                 dataField: "user",
                 caption: "Responsable",
-                width:150,
                 allowEditing:false,
                 lookup: {
                     dataSource:dataEmpleados,
@@ -1595,27 +1615,17 @@ construirTreeList();
             { 
                 dataField: "porcentaje_por_actividad",
                 caption: "Peso de la Actividad",
-                width:100,
                 allowEditing:true
             },
              { 
                 dataField: "avance",
                 caption: "Avance (%)",
-                width:100,
                 allowEditing:false
                 
             },
             { 
-                dataField: "notasname",
-                caption: "Notas",
-                visible:false,
-                 allowEditing:true,
-                 allowUpdating:true
-            },
-            { 
                 dataField: "status",
                 caption: "Estatus",
-                width:90,
                 allowEditing:false,
                 lookup: {
                     dataSource:opcionstatus,
@@ -1626,7 +1636,6 @@ construirTreeList();
              { 
                 dataField: "archivo_adjunto",
                  captbion: "Archivo Adjunto",
-                 width:160,
                 cellTemplate:archivoAdjuntoCellTemplate,
                   allowEditing:false
                   
@@ -1665,6 +1674,9 @@ construirTreeList();
     {
         gantt.refreshData();
         gantt.init('gantt_here');
+        obtenerTareas().then(function (){
+            construirTreeList();
+        });
 //        $.when(gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId")).then(function(){
 //                
 //                dxtreeList.context.location.reload(function (){
@@ -1675,7 +1687,19 @@ construirTreeList();
 //
 //            });        
 //        });
-        console.log("dxtree list  ",dxtreeList);
+//                dxtreeList[0].datasource.load();
+//    dxtreeList.context.onload=function(){
+//    
+//}
+//dxtreeList.context.onload();
+//        console.log("dxtree list  ",dxtreeList);
+//    }
+    }
+    
+    function refreshDetallesGantt(){
+        obtenerTareas().then(function (){
+            construirTreeList();
+        });
     }
     function detallesActividadesCompletasGantt(){
         if( $("#detallesInformacion").css("display")!="none"){

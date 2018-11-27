@@ -64,8 +64,6 @@ require_once '../util/Session.php';
          <script type="text/javascript" src="../../assets/materialize/js/materialize.min.js"></script>
         <!--end materialize-->
          <link href="../../assets/googleApi/icon.css" rel="stylesheet">
-       
-       
         
          <!--<link href="//cdn.shopify.com/s/files/1/1775/8583/t/1/assets/admin-materialize.min.css?701317015908805120" rel="stylesheet">-->
         <!--<script src="../../js/tooltip.js" type="text/javascript"></script>-->
@@ -94,6 +92,7 @@ function clock()
 //   basicclock.innerHTML = "2";
 //   setTimeout("clock()", 1000);
 }
+
 //clock();
 
 
