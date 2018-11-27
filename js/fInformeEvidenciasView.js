@@ -72,7 +72,7 @@ function inicializarFiltros()
         { id: "frecuencia",title:"Frecuencia", type: "combobox",data:frecuenciaData,descripcion:"frecuencia"},
         { id: "clave_documento",title:"Clave Documento", type: "text"},
         // { id: "documento_responsable",title:"Responsable Documento",type:"text"},
-        { id: "fecha_creacion",title:"Fecha Evidencia", type: "date"},
+        // { id: "fecha_creacion",title:"Fecha Evidencia", type: "date"},
         { id: "fecha_registro",title:"Fecha Registro", type: "none"},
         { id: "evidencia",title:"Evidencia", type: "none"},
         // { name: "usuario",title:"Usuario", type: "text", width:250, editing:false }
@@ -81,7 +81,7 @@ function inicializarFiltros()
         { id: "accion_correctiva",title:"Accion Correctiva", type: "none"},
         { id: "avance_plan",title:"Avance del Plan", type: "text"},
         { id: "estatus",title:"Estatus", type: "combobox",data:estatusFiltro,descripcion:"estatus"},
-        { id:"delete", name:"Opción", type:"opcion",sorting:""},
+        // { id:"delete", name:"Opción", type:"opcion",sorting:""},
         ];
         resolve();
     });

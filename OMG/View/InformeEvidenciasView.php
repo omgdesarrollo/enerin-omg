@@ -286,7 +286,7 @@ $Usuario=  Session::getSesion("user");
         { name: "frecuencia",title:"Frecuencia", type: "text", width: 140, editing:false  },
         { name: "clave_documento",title:"Clave Documento", type: "text",  width: 150, editing:false },
         // { name: "documento_responsable",title:"Responsable Documento", type: "text",  width: 150, editing:false },
-        { name: "fecha_creacion",title:"Fecha Evidencia", type: "text",  width: 160, editing:false },
+        // { name: "fecha_creacion",title:"Fecha Evidencia", type: "text",  width: 160, editing:false },
         { name: "fecha_registro",title:"Fecha Registro", type: "text", width: 160, editing:false },
         { name: "evidencia",title:"Evidencia", type: "text",  width: 150, editing:false },
         // { name: "usuario",title:"Usuario", type: "text", width:250, editing:false },
@@ -296,11 +296,11 @@ $Usuario=  Session::getSesion("user");
         { name: "accion_correctiva",title:"Acción Correctiva", type: "text", width: 150, editing:false},
         { name: "avance_plan",title:"Avance del Plan", type: "text", width: 100, editing:false},
         {name: "estatus",title:"Estatus", type: "text", width: 150, editing:false },
-        { name:"delete", title:"Opción", type:"customControl",sorting:""},
+        // { name:"delete", title:"Opción", type:"customControl",sorting:""},
     ];
 
     var customsFieldsGridData=[
-            {field:"customControl",my_field:MyCControlField},
+            // {field:"customControl",my_field:MyCControlField},
             // {field:"porcentaje",my_field:porcentajesFields},
         ];
 

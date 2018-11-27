@@ -21,10 +21,16 @@ class InformeEvidenciasDAO{
         
         try
         {
-            $query="SELECT tbtemas.id_tema,tbtemas.no no_tema, tbtemas.nombre tema, tbusuarios.id_empleado id_empleado_tema,
+            $query="SELECT tbtemas.id_tema,
+            -- tbtemas.no no_tema,
+            --  tbtemas.nombre tema,
+             tbusuarios.id_empleado id_empleado_tema,
             (SELECT CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) ) as tema_responsable,
             tbrequisitos.id_requisito,tbrequisitos.requisito, tbregistros.id_registro,tbregistros.registro,tbregistros.frecuencia,
             tbdocumentos.id_documento, tbdocumentos.clave_documento, tbdocumentos.id_empleado id_empleado_documento,
+
+            (SELECT tbtemas2.nombre FROM temas tbtemas2 WHERE tbtemas2.id_tema = tbtemas.padre_general ) AS tema,
+            (SELECT tbtemas2.no FROM temas tbtemas2 WHERE tbtemas2.id_tema = tbtemas.padre_general ) AS no_tema,
             
             (select concat(tbempleados2.nombre_empleado,' ',tbempleados2.apellido_paterno,'',tbempleados2.apellido_materno) from empleados tbempleados2
             where tbdocumentos.id_empleado = tbempleados2.id_empleado) as documento_responsable,
@@ -45,7 +51,7 @@ class InformeEvidenciasDAO{
             JOIN requisitos_registros tbrequisitos_registros ON tbrequisitos_registros.id_requisito = tbrequisitos.id_requisito
             JOIN registros tbregistros ON tbregistros.id_registro = tbrequisitos_registros.id_registro
             JOIN evidencias tbevidencias ON tbevidencias.id_registro = tbregistros.id_registro
-            JOIN empleados tbempleados ON tbempleados.id_empleado = tbtemas.id_empleado
+            JOIN empleados tbempleados ON tbempleados.id_empleado = tbtemas.responsable_general
             JOIN usuarios tbusuarios ON tbusuarios.id_empleado = tbempleados.id_empleado
             JOIN documentos tbdocumentos ON tbdocumentos.id_documento = tbregistros.id_documento
             
