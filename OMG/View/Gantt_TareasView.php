@@ -1598,6 +1598,7 @@ construirTreeList();
                 dataField: "text",
                 caption: "Descripcion de la Tarea",
                 allowEditing:false,
+                width:400
             },
             
             { 
