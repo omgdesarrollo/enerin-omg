@@ -1598,7 +1598,7 @@ construirTreeList();
                 dataField: "text",
                 caption: "Descripcion de la Tarea",
                 allowEditing:false,
-                width:400
+                width:500
             },
             
             { 
@@ -1620,8 +1620,8 @@ construirTreeList();
              { 
                 dataField: "avance",
                 caption: "Avance (%)",
-                allowEditing:false
-                
+                allowEditing:false,
+                width:60
             },
             { 
                 dataField: "status",
