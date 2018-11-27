@@ -414,4 +414,21 @@ class EvidenciasDAO
             return -1;
         }
     }
+
+    public function iniciarConformidad($ID_EVIDENCIA,$VALOR)
+    {
+        try 
+        {
+            $query="UPDATE evidencias SET validacion_supervisor = '$VALOR'
+                    WHERE id_evidencias = $ID_EVIDENCIA";
+            $db= AccesoDB::getInstancia();
+            $lista = $db->executeUpdateRowsAfected($query);
+            return $lista;
+
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 }

@@ -338,11 +338,11 @@
         // { name: "fecha_creacion",title:"Fecha Evidencia", type: "text",  width: 160, editing:false },
         { name: "fecha_registro",title:"Fecha Registro", type: "text", width: 160, editing:false },
         { name: "adjuntar_evidencia",title:"Adjuntar Evidencia", type: "text",  width: 150, editing:false },
-        { name: "usuario",title:"Usuario", type: "text", width:250, editing:false },
+        { name: "usuario", title:"Usuario", type: "text", width:250, editing:false },
+        { name: "conforme", title:"Conforme", type: "text", width: 100, editing:false },
         { name: "accion_correctiva",title:"Acción Correctiva", type: "text", width: 150, editing:false},
         { name: "plan_accion",title:"Plan Acción", type: "text", width: 110, editing:false },
         { name: "desviacion",title:"Desviación", type: "text", width: 100, editing:false},
-        {name: "validacion",title:"Validación", type: "text", width: 100, editing:false },
         { name:"delete", title:"Opción", type:"customControl",sorting:""},
         // {name:"delete", title:"Opcion", type: "customControl" },
         // {name:"eliminar",title:"Opcion",visible:false}
@@ -461,7 +461,7 @@
     <script src="../../assets/FileUpload/js/jquery.fileupload-validate.js"></script>
     <script src="../../assets/FileUpload/js/jquery.fileupload-ui.js"></script>
     <script src="../../assets/FileUpload/js/jquery.fileupload-jquery-ui.js"></script>
-    <script src="../../assets/FileUpload/js/main.js"></script>
+    <!-- <script src="../../assets/FileUpload/js/main.js"></script> -->
 </body>
 </html>
 
