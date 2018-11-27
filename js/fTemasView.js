@@ -356,12 +356,16 @@ function load(carga){
     function obtenerPadreGeneral(ar){
         
         //array id,parentid,text
-	var z=[];
+	var z={};
+        var contador=0;
 	for (var i=0; i<ar.length; i++){
 		if (!z[ar[i][1]]) z[ar[i][1]]=[];
 		z[ar[i][1]].push({id:ar[i][0],text:ar[i][2]});
-	}
-        console.log(id_seleccionado);  
+        }
+//        console.log(id_seleccionado);
+        console.log(z);
+        //113-> 251->  458
+        
         console.log(z);
         
     }
