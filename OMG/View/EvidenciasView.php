@@ -429,7 +429,7 @@
             <!-- </td> -->
         </tr>
     {% } %}
-    {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();var ID_PARA_DOCUMENTO = $('#tempInputIdParaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO,'1',false,ID_PARA_DOCUMENTO); growlSuccess("Subir Archivo","Archivo Cargado"); actualizarEvidencia(ID_EVIDENCIA_DOCUMENTO); noArchivo=0; } } %}
+    {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();var ID_PARA_DOCUMENTO = $('#tempInputIdParaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO,'1',false,ID_PARA_DOCUMENTO); growlSuccess("Subir Archivo","Archivo Cargado"); actualizarEvidencia(ID_EVIDENCIA_DOCUMENTO,1); noArchivo=0; } } %}
 </script>
 
     <!--Inicia para el spiner cargando-->

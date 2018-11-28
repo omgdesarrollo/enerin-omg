@@ -1353,12 +1353,12 @@ function mostrar_urls(id_evidencia,validador,validado,id_para)
                     tempDocumentolistadoUrl += "<a download='"+name+"' href=\""+todo[1]+"/"+value+"\" target='blank'>"+name+"</a></td><td>";
                     if(validador=="1")
                     {
-                        if(validado==false)
-                        {
+                        // if(validado==false)
+                        // {
                             tempDocumentolistadoUrl += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
                             tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
                             tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button>";
-                        }
+                        // }
                     }
                     tempDocumentolistadoUrl += "</td></tr>";
                 });
@@ -1369,10 +1369,10 @@ function mostrar_urls(id_evidencia,validador,validado,id_para)
                 tempDocumentolistadoUrl = " No hay archivos agregados ";
                 if(validador=="1")
                 {
-                    if(validado==false)
-                    {
+                    // if(validado==false)
+                    // {
                         $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
-                    }
+                    // }
                 }
             }
             else
