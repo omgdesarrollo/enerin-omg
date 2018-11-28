@@ -275,7 +275,7 @@ foreach($Alarmas as $alarma)
 			):
 			tempData2 += "<img src='../../images/base/user.png' class='img-circle col-xs-4 col-sd-4 col-md-4 col-lg-4' alt='admin' />";
 
-			tempData2 += "<span class='col-xs-8 col-sd-8 col-md-8 col-lg-8' style='padding:0px'><span class='msg-title'><span class='blue'>"+value.mensaje+" "+value.nombre;
+			tempData2 += "<span class='col-xs-8 col-sd-8 col-md-8 col-lg-8' style='padding:0px'><span class='msg-title'><span class='blue'>"+value.mensaje+"<span style='color:green'>"+value.nombre+"</span>";
 			tempData2 += "</span></span>";
 			tempData2 += "</li>";
 			tempData2 += "<span class='col-xs-12 col-sd-12 col-md-12 col-lg-12 msg-time' style='line-height:normal'><i class='ace-icon fa fa-clock-o'></i><span> "+getFechaFormatoH(value.fecha_envio)+"(Enviado)</span>";

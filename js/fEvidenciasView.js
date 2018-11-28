@@ -956,12 +956,12 @@ function reconstruir(value,index)//listo jsgrid
             }
 
             if(value.validacion_supervisor == "-1")
-                tempData["conforme"] = "<button onClick='siConforme("+value.responsable+","+value.id_evidencias+","+value.registro+")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+noCheck+"</button>";
+                tempData["conforme"] = "<button onClick='siConforme("+value.id_responsable+","+value.id_evidencias+",\""+value.registro+"\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+noCheck+"</button>";
 
             // if(value.validacion_supervisor == "0")
 
             if(value.validacion_supervisor == "1")
-                tempData["conforme"] = "<button onClick='noConforme("+value.responsable+","+value.id_evidencias+","+value.registro+")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+yesCheck+"</button>";
+                tempData["conforme"] = "<button onClick='noConforme("+value.id_responsable+","+value.id_evidencias+",\""+value.registro+"\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+yesCheck+"</button>";
             
             // if(value.responsable=="1")
             // {                    
@@ -1014,13 +1014,14 @@ function reconstruir(value,index)//listo jsgrid
 
 siConforme = (idPara,id,registro) =>
 {
-    enviar_notificacion("Evidencia Conforme \""+registro+"\"",idPara,0,false,"EvidenciasView.php?accion="+id);
+    enviar_notificacion("Evidencia Conforme <span style=\"color:green;font-style:italic;\">\""+registro+"\"</span><br>De: ",idPara,0,false,"EvidenciasView.php?accion="+id);
     actualizarEvidencia(id,1);
 }
 
 noConforme =(idPara,id,registro) =>
 {
-    enviar_notificacion("Evidencia No Conforme \""+registro+"\"",idPara,0,false,"EvidenciasView.php?accion="+id);
+    console.log("idPara",idPara);
+    enviar_notificacion("Evidencia <span style=\"color:red\">No</span> Conforme <span style=\"color:green;font-style:italic;\"> \""+registro+"\"</span><br>De: ",idPara,0,false,"EvidenciasView.php?accion="+id);
     actualizarEvidencia(id,-1);
 }
 
