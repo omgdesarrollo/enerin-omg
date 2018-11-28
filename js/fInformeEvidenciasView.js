@@ -72,7 +72,7 @@ function inicializarFiltros()
         { id: "frecuencia",title:"Frecuencia", type: "combobox",data:frecuenciaData,descripcion:"frecuencia"},
         { id: "clave_documento",title:"Clave Documento", type: "text"},
         // { id: "documento_responsable",title:"Responsable Documento",type:"text"},
-        { id: "fecha_creacion",title:"Fecha Evidencia", type: "date"},
+        // { id: "fecha_creacion",title:"Fecha Evidencia", type: "date"},
         { id: "fecha_registro",title:"Fecha Registro", type: "none"},
         { id: "evidencia",title:"Evidencia", type: "none"},
         // { name: "usuario",title:"Usuario", type: "text", width:250, editing:false }
@@ -81,7 +81,7 @@ function inicializarFiltros()
         { id: "accion_correctiva",title:"Accion Correctiva", type: "none"},
         { id: "avance_plan",title:"Avance del Plan", type: "text"},
         { id: "estatus",title:"Estatus", type: "combobox",data:estatusFiltro,descripcion:"estatus"},
-        { id:"delete", name:"Opción", type:"opcion",sorting:""},
+        // { id:"delete", name:"Opción", type:"opcion",sorting:""},
         ];
         resolve();
     });
@@ -209,47 +209,45 @@ function mostrar_urls(id_evidencia)
 
 function listarDatos()
 {
-    return new Promise((resolve,reject)=>
-    {
-        URL = 'filesEvidenciaDocumento/';
-        __datos=[];
-        $.ajax({
-            url: '../Controller/InformeEvidenciasController.php?Op=Listar',
-            type: 'GET',
-            data:"URL="+URL,
-            beforeSend:function()
-            {
-                growlWait("Solicitud","Solicitando Datos...");
-            },
-            success:function(data)
-            {
-                if(typeof(data)=="object")
-                {
-                    growlSuccess("Solicitud","Registros obtenidos");
-                    dataListado = data;
-                    $.each(data,function (index,value)
-                    {
-                        __datos.push( reconstruir(value,index+1) );
-                    });
-                    // console.log(__datos);
-                    DataGrid = __datos;
-                    gridInstance.loadData();
-                    resolve();
-                }
-                else
-                {
-                    growlSuccess("Solicitud","No Existen Registros de Evidencias");
-                    reject();
-                }
-            },
-            error:function(e)
-            {
-                // console.log(e);
-                growlError("Error","Error en el servidor");
-                reject();
-            }
-        });
-    });
+    // return new Promise((resolve,reject)=>
+    // {
+    //     URL = 'filesEvidenciaDocumento/';
+    //     __datos=[];
+    //     $.ajax({
+    //         url: '../Controller/InformeEvidenciasController.php?Op=Listar',
+    //         type: 'GET',
+    //         data:"URL="+URL,
+    //         beforeSend:function()
+    //         {
+    //             growlWait("Solicitud","Solicitando Datos...");
+    //         },
+    //         success:function(data)
+    //         {
+    //             if(typeof(data)=="object")
+    //             {
+    //                 growlSuccess("Solicitud","Registros obtenidos");
+    //                 dataListado = data;
+    //                 $.each(data,function (index,value)
+    //                 {
+    //                     __datos.push( reconstruir(value,index+1) );
+    //                 });
+    //                 DataGrid = __datos;
+    //                 gridInstance.loadData();
+    //                 resolve();
+    //             }
+    //             else
+    //             {
+    //                 growlSuccess("Solicitud","No Existen Registros de Evidencias");
+    //                 reject();
+    //             }
+    //         },
+    //         error:function(e)
+    //         {
+    //             growlError("Error","Error en el servidor");
+    //             reject();
+    //         }
+    //     });
+    // });
 }
 
 function mostrarMensajes(msj,num)

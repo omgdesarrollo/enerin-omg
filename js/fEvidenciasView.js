@@ -893,6 +893,8 @@ function reconstruir(value,index)//listo jsgrid
     tempArchivo="";
     noCheck = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true'></i>";
     yesCheck = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true'></i>";
+    nuloCheck = "<i class='fa fa-minus-circle' style='font-size: xx-large;color:#8a8a8a;cursor:pointer' aria-hidden='true'></i>";
+
     noMsj = "<i class='fa fa-file-o' style='font-size: xx-large;color:#6FB3E0;cursor:pointer' aria-hidden='true'></i>";
     yesMsj = "<i class='ace-icon fa fa-file-text-o icon-animated-bell' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true'></i>";
     denegado = "<i class='fa fa-ban' style='font-size: xx-large;color:red;' aria-hidden='true'></i>";
@@ -952,37 +954,47 @@ function reconstruir(value,index)//listo jsgrid
             {
                 tempData["desviacion"] += noMsj+"</button>";
             }
+
+            if(value.validacion_supervisor == "-1")
+                tempData["conforme"] = "<button onClick='siConforme("+value.id_responsable+","+value.id_evidencias+",\""+value.registro+"\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+noCheck+"</button>";
+
+            // if(value.validacion_supervisor == "0")
+
+            if(value.validacion_supervisor == "1")
+                tempData["conforme"] = "<button onClick='noConforme("+value.id_responsable+","+value.id_evidencias+",\""+value.registro+"\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+yesCheck+"</button>";
             
-            if(value.responsable=="1")
-            {                    
-                tempData["validacion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='validarEvidencia(this,\"evidencias\",\"validacion_supervisor\",\"id_evidencias\","+value.id_evidencias+","+value.id_usuario+")'>";
-                if(value.validacion_supervisor=="true")
-                    tempData["validacion"] += yesCheck+"</button>";
-                else
-                    tempData["validacion"] += noCheck+"</button>";
-            }
-            else
-            {
-                if(value.validacion_supervisor=='true')
-                {
-                    tempData["validacion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='swalInfo(\"Validadopor el responsable\")'>";
-                    tempData["validacion"] += yesCheck+"</button>";
-                }
-                else
-                {
-                    tempData["validacion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;'  onClick='swalInfo(\"Aun no validado\")'>";
-                    tempData["validacion"] += noCheck+"</button>";
-                }
-            }
+            // if(value.responsable=="1")
+            // {                    
+            //     tempData["validacion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='validarEvidencia(this,\"evidencias\",\"validacion_supervisor\",\"id_evidencias\","+value.id_evidencias+","+value.id_usuario+")'>";
+            //     if(value.validacion_supervisor=="true")
+            //         tempData["validacion"] += yesCheck+"</button>";
+            //     else
+            //         tempData["validacion"] += noCheck+"</button>";
+            // }
+            // else
+            // {
+            //     if(value.validacion_supervisor=='true')
+            //     {
+            //         tempData["validacion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='swalInfo(\"Validadopor el responsable\")'>";
+            //         tempData["validacion"] += yesCheck+"</button>";
+            //     }
+            //     else
+            //     {
+            //         tempData["validacion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;'  onClick='swalInfo(\"Aun no validado\")'>";
+            //         tempData["validacion"] += noCheck+"</button>";
+            //     }
+            // }
         });
         if(tempArchivo=="")
         {
-                tempData["fecha_registro"]="";
-                tempData["usuario"]=value.usuario;
-                tempData["accion_correctiva"]="";
-                tempData["plan_accion"]="";
-                tempData["desviacion"]="";
-                tempData["validacion"]="";
+                tempData["fecha_registro"] = "";
+                tempData["usuario"] = value.usuario;
+                tempData["accion_correctiva"] = "";
+                tempData["plan_accion"] = "";
+                tempData["desviacion"] = "";
+                // tempData["conforme"] = "";
+                tempData["conforme"] = "<button onClick='swalInfo(\"ESPERA... \\nNecesitas Adjuntar Evidencia\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+nuloCheck+"</button>";
+                // tempData["validacion"]="";
                 if(value.validador=="1")
                     tempData["id_principal"].push({eliminar:1});
                     // tempData["delete"]=tempData["id_principal"];
@@ -998,6 +1010,19 @@ function reconstruir(value,index)//listo jsgrid
     tempData["id_principal"].push({editar:0});//si quieres que edite 1, si no 0
     tempData["delete"]=tempData["id_principal"];
     return tempData;
+}
+
+siConforme = (idPara,id,registro) =>
+{
+    enviar_notificacion("Evidencia Conforme <span style=\"color:green;font-style:italic;\">\""+registro+"\"</span><br>De: ",idPara,0,false,"EvidenciasView.php?accion="+id);
+    actualizarEvidencia(id,1);
+}
+
+noConforme =(idPara,id,registro) =>
+{
+    console.log("idPara",idPara);
+    enviar_notificacion("Evidencia <span style=\"color:red\">No</span> Conforme <span style=\"color:green;font-style:italic;\"> \""+registro+"\"</span><br>De: ",idPara,0,false,"EvidenciasView.php?accion="+id);
+    actualizarEvidencia(id,-1);
 }
 
 function reconstruirExcel(value,index)
@@ -1127,24 +1152,41 @@ function validarEvidencia(checkbox,tabla,column,context,id,idPara)
         });
 }
 
-function actualizarEvidencia(id)
+function actualizarEvidencia(id,valor)
 {
     URL = 'filesEvidenciaDocumento/';
     $.ajax({
-        url: "../Controller/EvidenciasController.php?Op=ListarEvidencia",
-        type: 'GET',
-        data: 'ID_EVIDENCIA='+id+"&URL="+URL,
-        success:function(datos)
+        url: "../Controller/EvidenciasController.php?Op=IniciarConformidad",
+        type: 'POST',
+        data: 'ID_EVIDENCIA='+id+'&VALOR='+valor,
+        success:function(resp)
         {
-            $.each(datos,function(index,value){
-                componerDataListado(value);
-            });
-            componerDataGrid();
-            gridInstance.loadData();
+            if(resp>0)
+            {
+                $.ajax({
+                    url: "../Controller/EvidenciasController.php?Op=ListarEvidencia",
+                    type: 'GET',
+                    data: 'ID_EVIDENCIA='+id+"&URL="+URL,
+                    success:function(datos)
+                    {
+                        $.each(datos,function(index,value){
+                            componerDataListado(value);
+                        });
+                        componerDataGrid();
+                        gridInstance.loadData();
+                    },
+                    error:function()
+                    {
+                        growlError("Error al refrescar la vista","Error en el servidor, actualize la vista");
+                    }
+                });
+            }
+            else
+                growlError("Error","Error en el servidor, actualize la vista");
         },
         error:function()
         {
-            growlError("Error al refrescar la vista","Error en el servidor, actualize la vista");
+            growlError("Error","Error en el servidor");
         }
     });
 }
@@ -1394,7 +1436,7 @@ function borrarArchivo(url,id_para)
             {
                 growlSuccess("Eliminacion de Archivo","Archivo Eliminado");
                 mostrar_urls(ID_EVIDENCIA_DOCUMENTO,"1",false,id_para);
-                actualizarEvidencia(ID_EVIDENCIA_DOCUMENTO);
+                actualizarEvidencia(ID_EVIDENCIA_DOCUMENTO,0);
                 // setTimeout(function(){
                     swal.close();
                 // },1000);

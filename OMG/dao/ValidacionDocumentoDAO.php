@@ -43,13 +43,17 @@ class ValidacionDocumentoDAO{
             return false;
         }
     }
-    function listarValidacionDocumento($USUARIO,$CONTRATO,$ID_VALIDACION_D)
+    public function listarValidacionDocumento($USUARIO,$CONTRATO,$ID_VALIDACION_D)
     {
         try{
             $query="SELECT DISTINCT tbdocumentos.id_documento,tbdocumentos.clave_documento,tbdocumentos.documento, tbempleados.id_empleado id_empleadoD,tbusuarios.id_usuario id_usuarioD,
             CONCAT (tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)AS responsable_documento,
             tbusua2.id_usuario id_usuarioT, tbemplea2.id_empleado id_empleadoT,
-            CONCAT (tbemplea2.nombre_empleado,' ',tbemplea2.apellido_paterno,' ',tbemplea2.apellido_materno)AS responsable_tema,tbtemas.nombre nombre_tema,
+            CONCAT (tbemplea2.nombre_empleado,' ',tbemplea2.apellido_paterno,' ',tbemplea2.apellido_materno)AS responsable_tema,
+
+            -- tbtemas.nombre nombre_tema,
+            ( SELECT tbtemas2.nombre FROM temas tbtemas2 WHERE tbtemas2.id_tema = tbtemas.padre_general ) as nombre_tema,
+
             IF(tbempleados.id_empleado=tbemplea2.id_empleado,1,0) AS permiso_total,
             IF( tbusua2.id_usuario=$USUARIO,1,0 ) AS soy_responsable,
             tbvalidacion_documento.id_validacion_documento,tbvalidacion_documento.validacion_documento_responsable,
@@ -76,6 +80,7 @@ class ValidacionDocumentoDAO{
                         tbusua2.id_usuario = $USUARIO AND
                         tbtemas.id_empleado = tbusua2.id_empleado
                 )";
+            // echo $query;
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
 
@@ -137,8 +142,11 @@ class ValidacionDocumentoDAO{
     public function obtenerTemayResponsable($ID_DOCUMENTO,$CONTRATO)
     {
         try{
-            $query="SELECT DISTINCT tbusuarios.id_usuario,tbtemas.nombre,
-            CONCAT (tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)AS responsable_tema
+            $query="SELECT DISTINCT tbusuarios.id_usuario,
+            -- tbtemas.nombre,
+            CONCAT (tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)AS responsable_tema,
+            ( SELECT tbtemas2.nombre FROM temas tbtemas2 WHERE tbtemas2.id_tema = tbtemas.padre_general ) as nombre
+
             FROM validacion_documento tbvalidacion_documento
             JOIN documentos tbdocumentos ON tbdocumentos.id_documento=tbvalidacion_documento.id_documento
             JOIN registros tbregistros ON tbregistros.id_documento=tbdocumentos.id_documento
@@ -149,7 +157,7 @@ class ValidacionDocumentoDAO{
             JOIN asignacion_tema_requisito tbasignacion_tema_requisito ON 
             tbasignacion_tema_requisito.id_asignacion_tema_requisito=tbasignacion_tema_requisito_requisitos.id_asignacion_tema_requisito
             JOIN temas tbtemas ON tbtemas.id_tema=tbasignacion_tema_requisito.id_tema
-            JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
+            JOIN empleados tbempleados ON tbempleados.id_empleado = tbtemas.responsable_general
             JOIN usuarios tbusuarios ON tbusuarios.id_empleado = tbempleados.id_empleado
             WHERE tbdocumentos.id_documento=$ID_DOCUMENTO AND tbtemas.contrato=$CONTRATO";
             

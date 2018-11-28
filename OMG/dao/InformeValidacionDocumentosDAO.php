@@ -15,6 +15,7 @@ class InformeValidacionDocumentosDAO{
                  JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumentos.id_empleado 
                  JOIN registros tbregistros ON tbregistros.id_documento = tbdocumentos.id_documento
                  WHERE tbdocumentos.contrato = ".$v["param"]["contrato"];
+                //  echo $query;
             $db= AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);   
             return $lista;    
@@ -27,9 +28,15 @@ class InformeValidacionDocumentosDAO{
     public function obtenerTemayResponsable ($id_documento)
     {
         try{
-            $query="SELECT tbtemas.nombre as nombre_tema,tbasignacion_tema_requisito.id_tema, tbtemas.no, 
+            $query="SELECT DISTINCT
+            -- tbtemas.nombre as nombre_tema,
+                    -- tbasignacion_tema_requisito.id_tema,
+                    -- tbtemas.no, 
                     tbempleados.id_empleado, CONCAT(tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno)
-                    AS nombre_completotema
+                    AS nombre_completotema,
+                    (SELECT tbtemas2.nombre FROM temas tbtemas2 WHERE tbtemas2.id_tema = tbtemas.padre_general) AS nombre_tema,
+                    (SELECT tbtemas2.no FROM temas tbtemas2 WHERE tbtemas2.id_tema = tbtemas.padre_general) AS no
+
                     FROM validacion_documento tbvalidacion_documento
                     JOIN documentos tbdocumentos ON tbdocumentos.id_documento=tbvalidacion_documento.id_documento
                     JOIN registros tbregistros ON tbregistros.id_documento=tbdocumentos.id_documento
@@ -40,8 +47,9 @@ class InformeValidacionDocumentosDAO{
                     JOIN asignacion_tema_requisito tbasignacion_tema_requisito ON 
                     tbasignacion_tema_requisito.id_asignacion_tema_requisito=tbasignacion_tema_requisito_requisitos.id_asignacion_tema_requisito
                     JOIN temas tbtemas ON tbtemas.id_tema=tbasignacion_tema_requisito.id_tema
-                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
+                    JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.responsable_general
                     WHERE tbdocumentos.id_documento=$id_documento GROUP BY tbtemas.no";    
+                    // echo $query;
             
             $db= AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);          

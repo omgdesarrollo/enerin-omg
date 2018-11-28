@@ -67,48 +67,45 @@ function inicializarFiltros()
 function listarDatos()
 {
 
-    return new Promise((resolve,reject)=>
-    {
-        URL = 'filesValidacionDocumento/';
-        __datos=[];
-        $.ajax({
-//            url: '../Controller/EvidenciasController.php?Op=Listar',
-            url:'../Controller/InformeValidacionDocumentosController.php?Op=listarparametros(v,nv,sd)',
-            type: 'GET',
-            data:'URL='+URL,
-            beforeSend:function()
-            {
-                growlWait("Solicitud","Solicitando Datos...");
-            },
-            success:function(data)
-            {
-                if(typeof(data)=="object")
-                {
-                    growlSuccess("Solicitud","Registros obtenidos");
-                    dataListado = data.info;
-                    $.each(data.info,function (index,value)
-                    {
-                        __datos.push( reconstruir(value,index+1) );
-                    });
-                    // console.log(__datos);
-                    DataGrid = __datos;
-                    gridInstance.loadData();
-                    resolve();
-                }
-                else
-                {
-                    growlSuccess("Solicitud","No Existen Registros De Validacion Documentos");
-                    reject();
-                }
-            },
-            error:function(e)
-            {
-                // console.log(e);
-                growlError("Error","Error en el servidor");
-                reject();
-            }
-        });
-    });
+    // return new Promise((resolve,reject)=>
+    // {
+    //     URL = 'filesValidacionDocumento/';
+    //     __datos=[];
+    //     $.ajax({
+    //         url:'../Controller/InformeValidacionDocumentosController.php?Op=listarparametros(v,nv,sd)',
+    //         type: 'GET',
+    //         data:'URL='+URL,
+    //         beforeSend:function()
+    //         {
+    //             growlWait("Solicitud","Solicitando Datos...");
+    //         },
+    //         success:function(data)
+    //         {
+    //             if(typeof(data)=="object")
+    //             {
+    //                 growlSuccess("Solicitud","Registros obtenidos");
+    //                 dataListado = data.info;
+    //                 $.each(data.info,function (index,value)
+    //                 {
+    //                     __datos.push( reconstruir(value,index+1) );
+    //                 });
+    //                 DataGrid = __datos;
+    //                 gridInstance.loadData();
+    //                 resolve();
+    //             }
+    //             else
+    //             {
+    //                 growlSuccess("Solicitud","No Existen Registros De Validacion Documentos");
+    //                 reject();
+    //             }
+    //         },
+    //         error:function(e)
+    //         {
+    //             growlError("Error","Error en el servidor");
+    //             reject();
+    //         }
+    //     });
+    // });
 }
 
    var gridInstance,db={};

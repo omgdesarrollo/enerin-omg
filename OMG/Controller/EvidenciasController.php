@@ -130,6 +130,11 @@ switch ($Op)
         echo $resp;
     break;
 
+    case 'IniciarConformidad':
+        $resp = $model->iniciarConformidad($_REQUEST["ID_EVIDENCIA"],$_REQUEST["VALOR"]);
+        echo 1;
+    break;
+
 	default:
 		echo false;
         break;

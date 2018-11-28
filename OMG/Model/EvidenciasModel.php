@@ -249,6 +249,20 @@ class EvidenciasModel
             return false;
         }
     }
+
+    public function iniciarConformidad($ID_EVIDENCIA,$VALOR)
+    {
+        try
+        {
+            $dao=new EvidenciasDAO();
+            $rec = $dao->iniciarConformidad($ID_EVIDENCIA,$VALOR);
+            return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
     
 //    public function actualizarFechaValidacion($ID_EVIDENCIAS, $VALIDACION)
 //    {
