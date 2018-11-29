@@ -19,7 +19,8 @@ body{overflow:hidden;}
 .modal-lg{width: 80%;}
 .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
 /* cehcar */
-.modal-content { width:fit-content !important};
+/* .modal-content { width: !important;} */
+/* .modal-dialog { width: -webkit-fill-available;padding:15px} */
 
 /*scrollbar*/
 ::-webkit-scrollbar{width: 8px;}

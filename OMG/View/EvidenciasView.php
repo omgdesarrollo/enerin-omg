@@ -74,17 +74,18 @@
     <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
    
     <style>
-        .jsgrid-header-row>.jsgrid-header-cell
-        {
-                background-color:#307ECC ;      /* orange */
-                font-family: "Roboto Slab";
+        /* .jsgrid-header-row>.jsgrid-header-cell
+        { */
+                /* background-color:#307ECC ;      orange */
+                /* font-family: "Roboto Slab";
                 font-size: 1.2em;
                 color: white;
-                font-weight: normal;
-        }
+                font-weight: normal; */
+        /* } */
             /* .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                    
             .modal-lg{width: 100%;}
-            .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
+            .modal {/*En caso de que quieras modificar el modal*/
+                /* z-index: 1050 !important;} */
             /* body{overflow:hidden;} */
        
         
@@ -296,6 +297,45 @@
     </div> 
 </div> 
 
+<div class="modal draggable fade" id="mostrar_notificaciones" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog modal-lg" role="document" style="text-align:-webkit-center">
+        <div id="loaderModalMostrar"></div>
+		<div class="modal-content" style="max-width:640px;">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"  class="closeLetra">X</span></button>
+          <h4 class="modal-title" id="myModalLabel">Notificaciones</h4>
+        </div>
+        <div class="modal-body" style="padding:0px 15px 0px 15px">
+            <div class="div-observacion-msjs" id="notificacion_msjs">
+                <div class="row" style="border:2px solid #3399cc;height:300px;padding:top5px">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" style="text-align:left;float:left">
+                            <div style="background:red;width:min-content;padding:5px 10px 5px 10px;border-radius:3px 15px 15px 3px;float:left">
+                                <span>AAAAAAAAA</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" style="text-align:right;float:right">
+                            <div style="background:red;width:min-content;padding:5px 10px 5px 10px;border-radius:15px 3px 3px 15px;float:right">
+                                <span>BBBBBBBBB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- estilos en vista validacion documentos view php -->
+            <div class="row">
+                <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10" style="padding:0px">
+                    <textarea class="area-observaciones" style="border:2px solid #3399cc;width:100%"></textarea>
+                </div>
+                <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2" style="padding:0px">
+                    <button click="enviarObservacion()" class="btn-observaciones" style="background:#3399cc;border:2px solid #3399cc;font-size:xx-large;width:100%;height:56px"><i class="fa fa-paper-plane" style="color:#ffffff;border-radius:100%"></i></button>
+                </div>
+            </div>
+        </div><!-- cierre div class-body -->
+      </div><!-- cierre div class modal-content -->
+    </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal-->
+
 <!--cierre del modal Mensaje-->
 <script>
     // construirFiltros();
@@ -340,9 +380,9 @@
         { name: "adjuntar_evidencia",title:"Adjuntar Evidencia", type: "text",  width: 150, editing:false },
         { name: "usuario", title:"Usuario", type: "text", width:250, editing:false },
         { name: "conforme", title:"Conforme", type: "text", width: 100, editing:false },
-        { name: "accion_correctiva",title:"Acción Correctiva", type: "text", width: 150, editing:false},
+        { name: "notificacion",title:"Notificación", type: "text", width: 150, editing:false},
         { name: "plan_accion",title:"Plan Acción", type: "text", width: 110, editing:false },
-        { name: "desviacion",title:"Desviación", type: "text", width: 100, editing:false},
+        // { name: "desviacion",title:"Desviación", type: "text", width: 100, editing:false},
         { name:"delete", title:"Opción", type:"customControl",sorting:""},
         // {name:"delete", title:"Opcion", type: "customControl" },
         // {name:"eliminar",title:"Opcion",visible:false}

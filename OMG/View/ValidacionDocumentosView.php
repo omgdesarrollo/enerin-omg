@@ -58,14 +58,15 @@ $Usuario=  Session::getSesion("user");
                 
                 
 <style>
-.jsgrid-header-row>.jsgrid-header-cell 
-{
-    background-color:#307ECC ;      /* orange */
-    font-family: "Roboto Slab";
+/* .jsgrid-header-row>.jsgrid-header-cell 
+{ */
+    /* background-color:#307ECC ; */
+          /* orange */
+    /* font-family: "Roboto Slab";
     font-size: 1.2em;
     color: white;
     font-weight: normal;
-}
+} */
 .div-observacion-msjs
 {
     width: 100%;

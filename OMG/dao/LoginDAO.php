@@ -7,8 +7,9 @@ class LoginDAO{
         try{
             $query="call iniciarSesion('$_paramUsuario','$_paramPassword')";
             
-            $db=  AccesoDB::getInstancia();
+            $db = AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
+            // var_dump($lista);
             $rec = NULL;
             if (count($lista)==1){
                 $rec=$lista[0];
