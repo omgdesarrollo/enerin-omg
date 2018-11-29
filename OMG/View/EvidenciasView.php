@@ -298,16 +298,16 @@
 </div> 
 
 <div class="modal draggable fade" id="mostrar_notificaciones" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog modal-lg" role="document">
+	<div class="modal-dialog modal-lg" role="document" style="text-align:-webkit-center">
         <div id="loaderModalMostrar"></div>
-		<div class="modal-content" style="width: 500px;">                
+		<div class="modal-content" style="max-width:640px;">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"  class="closeLetra">X</span></button>
           <h4 class="modal-title" id="myModalLabel">Notificaciones</h4>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" style="padding:0px 15px 0px 15px">
             <div class="div-observacion-msjs" id="notificacion_msjs">
-                <div class="row" style="border:1px solid #3399cc;height:300px">
+                <div class="row" style="border:2px solid #3399cc;height:300px;padding:top5px">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" style="text-align:left;float:left">
                             <div style="background:red;width:min-content;padding:5px 10px 5px 10px;border-radius:3px 15px 15px 3px;float:left">
@@ -321,10 +321,15 @@
                         </div>
                     </div>
                 </div>
-            </div>estilos en vista validacion documentos view php
-            <div id="div_observacion_btn" class="div-observacion-btn">
-                <textarea class="area-observaciones"></textarea>
-                <button click="enviarObservacion()" class="btn-observaciones">Enviar</button>
+            </div>
+            <!-- estilos en vista validacion documentos view php -->
+            <div class="row">
+                <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10" style="padding:0px">
+                    <textarea class="area-observaciones" style="border:2px solid #3399cc;width:100%"></textarea>
+                </div>
+                <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2" style="padding:0px">
+                    <button click="enviarObservacion()" class="btn-observaciones" style="background:#3399cc;border:2px solid #3399cc;font-size:xx-large;width:100%;height:56px"><i class="fa fa-paper-plane" style="color:#ffffff;border-radius:100%"></i></button>
+                </div>
             </div>
         </div><!-- cierre div class-body -->
       </div><!-- cierre div class modal-content -->
