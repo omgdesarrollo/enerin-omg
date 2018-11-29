@@ -38,9 +38,30 @@ switch ($Op) {
             
 	break;
 	case 'GuardarNodo':
+            header('Content-type: application/json; charset=utf-8'); 
+                $ES_TEMA_OR_SUBTEMA="";
+               $DATOS_GENERALES=array("padre_general"=>"NO EXISTE","reponsable_general"=>"NO EXISTE");
+                if(isset($_REQUEST["ES_TEMA_PRINCIPAL"])){
+                
+                        if($_REQUEST["ES_TEMA_PRINCIPAL"]=="SI"){
+                            $ES_TEMA_OR_SUBTEMA="TEMA";
+                        }else{
+                           if($_REQUEST["ES_TEMA_PRINCIPAL"]=="NO"){
+                            $ES_TEMA_OR_SUBTEMA="SUBTEMA";
+//                           $DATOS_PADRE_GENERAL= json_decode($_REQUEST["datos_generales"]);
+                            $DATOS_GENERALES= json_decode($_REQUEST["datos_generales"]);
+                            
+                            
+                        } 
+                        }
+                    
+                }else{
+                    $ES_TEMA_OR_SUBTEMA="NO EXISTE";
+                }
+                
 		# code...
 //                $json = json_decode($_POST['json']);//linea donde convierte el json string a objeto  proxima mejora
-                $Lista= $model->insertarNodo($_REQUEST['NO'],$_REQUEST['NOMBRE'],$_REQUEST['DESCRIPCION'],$_REQUEST['PLAZO'],$_REQUEST['NODO'],$_REQUEST['ID_EMPLEADOMODAL'],"catalogo", Session::getSesion("s_cont"));
+                $Lista= $model->insertarNodo($_REQUEST['NO'],$_REQUEST['NOMBRE'],$_REQUEST['DESCRIPCION'],$_REQUEST['PLAZO'],$_REQUEST['NODO'],$_REQUEST['ID_EMPLEADOMODAL'],"catalogo", Session::getSesion("s_cont"),$ES_TEMA_OR_SUBTEMA,$DATOS_GENERALES);
                 header('Content-type: application/json; charset=utf-8'); 
                 echo json_encode($Lista);
 //                echo "con se ". Session::getSesion("s_cont");
@@ -59,10 +80,12 @@ switch ($Op) {
             header('Content-type: application/json; charset=utf-8'); 
             echo json_encode($Lista);
             return $Lista;
+            break;	
+//            recomponer los temas su padre y responsable general
+        case 'RTAndPGeneral':
+            echo $model->componerTablaTemasPadreandReponsaleGeneral();
             
-		break;	
-
-
+        break;
 	default:
 		# code...
 		break;
