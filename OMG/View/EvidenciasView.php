@@ -74,17 +74,18 @@
     <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
    
     <style>
-        .jsgrid-header-row>.jsgrid-header-cell
-        {
-                background-color:#307ECC ;      /* orange */
-                font-family: "Roboto Slab";
+        /* .jsgrid-header-row>.jsgrid-header-cell
+        { */
+                /* background-color:#307ECC ;      orange */
+                /* font-family: "Roboto Slab";
                 font-size: 1.2em;
                 color: white;
-                font-weight: normal;
-        }
+                font-weight: normal; */
+        /* } */
             /* .modal-body{color:#888;max-height: calc(100vh - 110px);overflow-y: auto;}                    
             .modal-lg{width: 100%;}
-            .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
+            .modal {/*En caso de que quieras modificar el modal*/
+                /* z-index: 1050 !important;} */
             /* body{overflow:hidden;} */
        
         
@@ -296,6 +297,40 @@
     </div> 
 </div> 
 
+<div class="modal draggable fade" id="mostrar_notificaciones" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+        <div id="loaderModalMostrar"></div>
+		<div class="modal-content" style="width: 500px;">                
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"  class="closeLetra">X</span></button>
+          <h4 class="modal-title" id="myModalLabel">Notificaciones</h4>
+        </div>
+        <div class="modal-body">
+            <div class="div-observacion-msjs" id="notificacion_msjs">
+                <div class="row" style="border:1px solid #3399cc;height:300px">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" style="text-align:left;float:left">
+                            <div style="background:red;width:min-content;padding:5px 10px 5px 10px;border-radius:3px 15px 15px 3px;float:left">
+                                <span>AAAAAAAAA</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" style="text-align:right;float:right">
+                            <div style="background:red;width:min-content;padding:5px 10px 5px 10px;border-radius:15px 3px 3px 15px;float:right">
+                                <span>BBBBBBBBB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>estilos en vista validacion documentos view php
+            <div id="div_observacion_btn" class="div-observacion-btn">
+                <textarea class="area-observaciones"></textarea>
+                <button click="enviarObservacion()" class="btn-observaciones">Enviar</button>
+            </div>
+        </div><!-- cierre div class-body -->
+      </div><!-- cierre div class modal-content -->
+    </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal-->
+
 <!--cierre del modal Mensaje-->
 <script>
     // construirFiltros();
@@ -340,9 +375,9 @@
         { name: "adjuntar_evidencia",title:"Adjuntar Evidencia", type: "text",  width: 150, editing:false },
         { name: "usuario", title:"Usuario", type: "text", width:250, editing:false },
         { name: "conforme", title:"Conforme", type: "text", width: 100, editing:false },
-        { name: "accion_correctiva",title:"Acción Correctiva", type: "text", width: 150, editing:false},
+        { name: "notificacion",title:"Notificación", type: "text", width: 150, editing:false},
         { name: "plan_accion",title:"Plan Acción", type: "text", width: 110, editing:false },
-        { name: "desviacion",title:"Desviación", type: "text", width: 100, editing:false},
+        // { name: "desviacion",title:"Desviación", type: "text", width: 100, editing:false},
         { name:"delete", title:"Opción", type:"customControl",sorting:""},
         // {name:"delete", title:"Opcion", type: "customControl" },
         // {name:"eliminar",title:"Opcion",visible:false}

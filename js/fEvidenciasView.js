@@ -127,7 +127,7 @@ function inicializarFiltros()
             { id:"noneTres", type:"none"},
             { id:"noneCuatro", type:"none"},
             { id:"noneCinco", type:"none"},
-            { id:"noneSeis", type:"none"},
+            // { id:"noneSeis", type:"none"},
             // { id: "accion_correctiva",name:"Accion Correctiva", type: "text"},
             // { id: "plan_accion",name:"Plan Accion", type: "text"},
             // { id: "desviacion",name:"Desviacion", type: "text"},
@@ -927,15 +927,15 @@ function reconstruir(value,index)//listo jsgrid
 
             tempData["usuario"] = value.usuario;
 
-            tempData["accion_correctiva"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='MandarNotificacion("+value.id_responsable+","+value.responsable+",\""+value.accion_correctiva+"\","+value.id_evidencias+","+value.validador+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
-            if(value.accion_correctiva!="")
-            {
-                tempData["accion_correctiva"] += yesMsj+"</button>";
-            }
-            else
-            {
-                tempData["accion_correctiva"] += noMsj+"</button>";
-            }
+            // tempData["accion_correctiva"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='MandarNotificacion("+value.id_responsable+","+value.responsable+",\""+value.accion_correctiva+"\","+value.id_evidencias+","+value.validador+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
+            // if(value.accion_correctiva!="")
+            // {
+            //     tempData["accion_correctiva"] += yesMsj+"</button>";
+            // }
+            // else
+            // {
+            //     tempData["accion_correctiva"] += noMsj+"</button>";
+            // }
             
             tempData["plan_accion"] = "<button id='btn_cargaGantt' class='botones_vista_tabla' onClick='cargarprogram("+value.id_evidencias+","+value.validacion_supervisor+");'>";
             if(value.validacion_supervisor=="true")
@@ -945,15 +945,15 @@ function reconstruir(value,index)//listo jsgrid
             
             tempData["plan_accion"] += "</button>";
 
-            tempData["desviacion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='MandarNotificacionDesviacion("+value.id_usuario+","+value.responsable+",\""+value.desviacion+"\","+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
-            if(value.desviacion!="")
-            {
-                tempData["desviacion"] += yesMsj+"</button>";
-            }
-            else
-            {
-                tempData["desviacion"] += noMsj+"</button>";
-            }
+            // tempData["desviacion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='MandarNotificacionDesviacion("+value.id_usuario+","+value.responsable+",\""+value.desviacion+"\","+value.id_evidencias+");' data-toggle='modal' data-target='#MandarNotificacionModal'>";
+            // if(value.desviacion!="")
+            // {
+            //     tempData["desviacion"] += yesMsj+"</button>";
+            // }
+            // else
+            // {
+            //     tempData["desviacion"] += noMsj+"</button>";
+            // }
 
             if(value.validacion_supervisor == "-1")
                 tempData["conforme"] = "<button onClick='siConforme("+value.id_responsable+","+value.id_evidencias+",\""+value.registro+"\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+noCheck+"</button>";
@@ -963,6 +963,9 @@ function reconstruir(value,index)//listo jsgrid
             if(value.validacion_supervisor == "1")
                 tempData["conforme"] = "<button onClick='noConforme("+value.id_responsable+","+value.id_evidencias+",\""+value.registro+"\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+yesCheck+"</button>";
             
+            tempData["notificacion"] = "<button onClick='abrirNotificaciones(\""+value.accion_correctiva+"\")' style='font-size:x-large;color:#39c;background:transparent;border:none;'>"+
+                    "<i class='fa fa-comments' style='font-size: xx-large;cursor:pointer' aria-hidden='true'></i></button>";
+
             // if(value.responsable=="1")
             // {                    
             //     tempData["validacion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='validarEvidencia(this,\"evidencias\",\"validacion_supervisor\",\"id_evidencias\","+value.id_evidencias+","+value.id_usuario+")'>";
@@ -1010,6 +1013,15 @@ function reconstruir(value,index)//listo jsgrid
     tempData["id_principal"].push({editar:0});//si quieres que edite 1, si no 0
     tempData["delete"]=tempData["id_principal"];
     return tempData;
+}
+
+abrirNotificaciones = (msjs)=>
+{
+    console.log(msjs);
+    growlSuccess("","Abrir Modal");
+    $("#mostrar_notificaciones").modal();
+    $("#notificacion_msjs")[0]["dataCustom"] = "{data nueva}"
+    console.log($("#notificacion_msjs"));
 }
 
 siConforme = (idPara,id,registro) =>
