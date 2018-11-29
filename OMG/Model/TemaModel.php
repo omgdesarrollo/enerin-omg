@@ -16,7 +16,7 @@ class TemaModel{
             $contador=0;
             foreach ($rec as $value)
             {  
-                $resultadoArbol[$contador]=array($value['id_tema'],$value['padre'],$value['no']."-".$value['nombre']);                
+                $resultadoArbol[$contador]=array($value['id_tema'],$value['padre'],$value['no']."-".$value['nombre'],$value["padre_general"],$value["responsable_general"]);                
                 $contador++;
             }    
             if($contador!=0)
@@ -72,7 +72,7 @@ class TemaModel{
         {
             $dao=new TemaDAO();
             $rec= $dao->insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO,$IDENTIFICADOR,$CONTRATO);
-            
+//            self::componerTablaTemasPadreandReponsaleGeneral();
             return $rec;
             
         } catch (Exception $ex)
@@ -121,6 +121,46 @@ class TemaModel{
             return false;
         }
     }
+    
+        public static function componerTablaTemasPadreandReponsaleGeneral()
+    {
+        try
+        {
+            $dao=new TemaDAO();
+            $data = array();
+            $temas = $dao->listarTodosTemas();
+            foreach($temas as $key => $value)
+            {
+                $hijos = $dao->obtenerHijosTema($value["id_tema"]);
+                if( sizeof($hijos)!=0 )
+                {
+                    $tmp = array();
+                    $bandera = true;
+                    $key = 0;
+                    while($bandera)
+                    {
+                        $v = $hijos[$key];
+                        $dao->cambiarDatosTema($v["id_tema"],$value["id_tema"],$value["id_empleado"]);
+                        $temp = $dao->obtenerHijosTema($v["id_tema"]);
+                        if( sizeof($temp)!=0 )
+                            array_push($hijos,$temp[0]);
+                        $key++;
+                        if( sizeof($hijos) == $key)
+                            $bandera = false;
+                    }
+                }
+            }
+            return "TERMINO BIEN";
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
+    
+    
+    
     
     
     

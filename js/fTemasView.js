@@ -1,6 +1,7 @@
 obtenerDatosArbol();  
 id_seleccionado="";
 var dataArbolGlobal=[];
+var datos_generales={};
  $(function(){
      
      $("#btn_guardar").click(function(e)
@@ -8,8 +9,7 @@ var dataArbolGlobal=[];
          e.preventDefault();
 //         $("#btn_guardar").attr("disabled", "disabled");
          var formData = {"NO":$('#NO').val(),"NOMBRE":$('#NOMBRE').val(),"DESCRIPCION":$('#DESCRIPCION').val(),
-                         "PLAZO":$('#PLAZO').val(),"NODO":0,"ID_EMPLEADOMODAL":$('#ID_EMPLEADOMODAL').val(),
-                         "ID_PADRE_GENERAL":$('#ID_EMPLEADOMODAL').val()};            
+                         "PLAZO":$('#PLAZO').val(),"NODO":0,"ID_EMPLEADOMODAL":$('#ID_EMPLEADOMODAL').val()};            
          
          $.ajax({
              url:'../Controller/TemasController.php?Op=GuardarNodo',
@@ -239,7 +239,7 @@ function evaluarToolbarSeccionB(id)
     } else {
     if(id=="agregar")
     {
-         obtenerPadreGeneral(dataArbolGlobal);
+        
         $('#create-itemSubTema').modal('show');
     } 
     if(id=="eliminar")
@@ -250,6 +250,7 @@ function evaluarToolbarSeccionB(id)
 }
     function obtenerHijos(id)
     {
+       obtenerPadreandResponsableGeneral(dataArbolGlobal);
        $("#contenido").html("<div style='font-size:30px' class='fa fa-refresh fa-spin'></div>"); 
         $.ajax({
             url:'../Controller/TemasController.php?Op=ListarHijos',
@@ -353,20 +354,16 @@ function load(carga){
     }
 }
 
-    function obtenerPadreGeneral(ar){
-        
-        //array id,parentid,text
-	var z={};
-        var contador=0;
-	for (var i=0; i<ar.length; i++){
-		if (!z[ar[i][1]]) z[ar[i][1]]=[];
-		z[ar[i][1]].push({id:ar[i][0],text:ar[i][2]});
-        }
-//        console.log(id_seleccionado);
-        console.log(z);
-        //113-> 251->  458
-        
-        console.log(z);
+
+    function obtenerPadreandResponsableGeneral(ar){
+
+        console.log(ar);
+                $.each(ar,function(index,value){
+                    if(value[0]==id_seleccionado){
+                       datos_generales["padre_general"]=value[3];
+                       datos_generales["reponsable_general"]=value[4];
+                    }
+                });
         
     }
     
