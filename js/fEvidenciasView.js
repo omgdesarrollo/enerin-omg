@@ -1036,18 +1036,30 @@ abrirNotificaciones = (msjs,responsableTema,responsableEvidencia)=>
                 // $("#mostrar_notificaciones").modal();
                 // $("#notificacion_msjs")[0]["dataCustom"] = "{data nueva}"
                 // console.log($("#notificacion_msjs"));
+                let var1 = 0;
+                let var2 = 0;
+                if(data[0].id_usuario==responsableEvidencia)
+                {
+                    var1 = 0;
+                    var1 = 1;
+                }
+                else
+                {
+                    var1 = 1;
+                    var2 = 0;
+                }
                 let tempData = '<div class="row" style="border:2px solid #3399cc;padding:5px 15px 5px 15px;background:tan">'+
                     '<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="background:red;padding:5px 10px 5px 10px;border-radius:25px 10px 10px 25px;float:left;background:#ffffff">'+
                         '<img src="'+ (data[0]["archivosUpload"][0].length!=0?
-                        (  data[0]["archivosUpload"][1]+"/"+data[0]["archivosUpload"][0][data[0]["archivosUpload"][0].length+1] ) :
+                        (  data[var1]["archivosUpload"][1]+"/"+data[var1]["archivosUpload"][0][data[var1]["archivosUpload"][0].length+1] ) :
                          ("../../images/base/user.png"))+'" class="img-circle" style="height:35px;float:left">'+
-                        '<span>'+data[0].nombre_completo+'</span></div>'+
+                        '<span>'+data[var1].nombre_completo+'</span></div>'+
 
                     '<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="background:red;padding:5px 10px 5px 10px;border-radius:10px 25px 25px 10px;float:right;background:lightgreen">'+
                     '<img src="'+ (data[1]["archivosUpload"][0].length!=0?
-                        (  data[1]["archivosUpload"][1]+"/"+data[1]["archivosUpload"][0][data[1]["archivosUpload"][0].length+1] ) :
+                        (  data[var2]["archivosUpload"][1]+"/"+data[var2]["archivosUpload"][0][data[var2]["archivosUpload"][0].length+1] ) :
                         ("../../images/base/user.png"))+'" class="img-circle" style="height:35px;float:float:right">'+
-                        '<span>'+data[1].nombre_completo+'</span></div></div>';
+                        '<span>'+data[var2].nombre_completo+'</span></div></div>';
                 $("#notificacion_msjs").html(tempData);
                 growlSuccess("","Abrir Modal");
                 $("#mostrar_notificaciones").modal();
