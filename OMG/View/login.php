@@ -379,10 +379,11 @@ function clock()
             </div>
         </div>
         <div id="registroalsistema">
-            
-            <video  width="640" height="480" src="../../movies/base/Tutorial Esquematico 121118.mp4" controls></video>
-            <video  width="640" height="480" src="../../movies/base/Tutorial APP alta resolucion.mp4" controls></video>
-            
+            <center>
+             <video  width="33%" height="" src="../../movies/base/GTE PRESENTACION DINAMICA29111801.mp4" controls></video>
+            <video  width="33%" height="" src="../../movies/base/Tutorial Esquematico 121118.mp4" controls></video>
+            <video  width="33%" height="" src="../../movies/base/Tutorial APP alta resolucion.mp4" controls></video>
+            </center>
             
             
         </div>
@@ -642,7 +643,19 @@ Revisa sus avance, las anotaciones, integra a tu equipo para trabajar en un mism
               <img src="../../images/base/enerinLogo.png" height="100%">
             </a>
             <ul>
-              <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+                
+                <li><a class="btn-floating red"><i class="material-icons" >insert_chart</i>
+                 
+                   
+                   
+                   
+                   </a></li> 
+                
+                
+                
+                
+                
+              <!--<li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>-->
               <!--<li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>-->
               <!--<li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>-->
               <!--<li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>-->
