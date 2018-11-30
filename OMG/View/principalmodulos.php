@@ -1132,7 +1132,7 @@ function loadDataNotificaciones(){
              {
                  if(dato!="")
                  {
-                    contrato += '<div>"El contrato es:"</div>';
+                    contrato += '<div>"Temática Seleccionada :"</div>';
                  }
                  return contrato;
              }
@@ -1295,7 +1295,7 @@ var jsonObj = {};
                         success: function(r) {
                               swal({
                                 type: 'success',
-                                html: 'tu has seleccionado el contrato ' + r.clave_cumplimiento,    
+                                html: 'Tematica Seleccionada:' + r.clave_cumplimiento,    
                                 timer: 2000,
                               });
                                 window.top.$("#desc").html("Temática("+r.clave_cumplimiento+")");
@@ -1317,7 +1317,7 @@ var jsonObj = {};
             success: function(r) 
             {
                 window.top.$("#desc").html("Temática("+r.clave_cumplimiento+")");
-                window.top.$("#infocontrato").html("Contrato Seleccionado:<br>("+r.clave_cumplimiento+")");
+                window.top.$("#infocontrato").html("Temática Seleccionada::<br>("+r.clave_cumplimiento+")");
             }    
         });
  }

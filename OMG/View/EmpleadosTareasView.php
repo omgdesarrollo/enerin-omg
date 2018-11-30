@@ -162,7 +162,7 @@ estructuraGrid = [
     { name: "nombre_empleado",title:"Nombre", type: "textarea", width: 150, validate: "required" },
     { name: "apellido_paterno",title:"Apellido Paterno", type: "textarea", width: 150, validate: "required" },
     { name: "apellido_materno",title:"Apellido Materno", type: "textarea", width: 150, validate: "required" },
-    { name: "categoria",title:"Categoría", type: "textarea", width: 150, validate: "required" },
+    { name: "categoria",title:"Puesto", type: "textarea", width: 150, validate: "required" },
     { name: "correo",title:"Correo Electrónico", type: "textarea", width: 150, validate: "required" },
     { name: "fecha_creacion",title:"Fecha Creación", type: "text", width: 150, validate: "required",editing: false},
 //    {name:"cancel", type:"control"}
