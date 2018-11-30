@@ -263,6 +263,21 @@ class EvidenciasModel
             return false;
         }
     }
+
+    public function obtenerParticipantesUsuarios($R_TEMA,$R_EVIDENCIA)
+    {
+        try
+        {
+            $dao=new EvidenciasDAO();
+            $lista = $dao->obtenerParticipantesUsuarios($R_TEMA,$R_EVIDENCIA);
+            return $lista;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
     
 //    public function actualizarFechaValidacion($ID_EVIDENCIAS, $VALIDACION)
 //    {

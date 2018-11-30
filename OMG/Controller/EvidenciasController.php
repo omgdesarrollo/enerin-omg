@@ -135,6 +135,18 @@ switch ($Op)
         echo 1;
     break;
 
+    case 'ObtenerParticipantesUsuarios':
+        $CONTRATO = -1;
+        $lista = $model->obtenerParticipantesUsuarios($_REQUEST["R_TEMA"],$_REQUEST["R_EVIDENCIA"]);
+        foreach($lista as $key => $value)
+        {
+            $url = "filePerfilesUsuario/".$value["id_usuario"];
+            $lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
+        }
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($lista);
+    break;
+
 	default:
 		echo false;
         break;

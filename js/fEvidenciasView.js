@@ -963,7 +963,7 @@ function reconstruir(value,index)//listo jsgrid
             if(value.validacion_supervisor == "1")
                 tempData["conforme"] = "<button onClick='noConforme("+value.id_responsable+","+value.id_evidencias+",\""+value.registro+"\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+yesCheck+"</button>";
             
-            tempData["notificacion"] = "<button onClick='abrirNotificaciones(\""+value.accion_correctiva+"\")' style='font-size:x-large;color:#39c;background:transparent;border:none;'>"+
+            tempData["notificacion"] = "<button onClick='abrirNotificaciones(\""+value.accion_correctiva+"\","+value.id_responsable+","+value.id_empleado+")' style='font-size:x-large;color:#39c;background:transparent;border:none;'>"+
                     "<i class='fa fa-comments' style='font-size: xx-large;cursor:pointer' aria-hidden='true'></i></button>";
 
             // if(value.responsable=="1")
@@ -1015,13 +1015,45 @@ function reconstruir(value,index)//listo jsgrid
     return tempData;
 }
 
-abrirNotificaciones = (msjs)=>
+abrirNotificaciones = (msjs,responsableTema,responsableEvidencia)=>
 {
-    console.log(msjs);
-    growlSuccess("","Abrir Modal");
-    $("#mostrar_notificaciones").modal();
-    $("#notificacion_msjs")[0]["dataCustom"] = "{data nueva}"
-    console.log($("#notificacion_msjs"));
+    $.ajax({
+        url: '../Controller/EvidenciasController.php?Op=ObtenerParticipantesUsuarios',
+        type: 'POST',
+        data: 'R_TEMA='+responsableTema+'&R_EVIDENCIA='+responsableEvidencia,
+        success:function(data)
+        {
+            if(typeof(data)=="object")
+            {
+                
+                // $.each(data,(index,value)=>{
+                //     $("#notificacion_msjs");
+                // });
+                // growlSuccess("Eliminar","Se elimino la evidencia");
+                // growlSuccess("","Abrir Modal");
+                // $("#mostrar_notificaciones").modal();
+                // $("#notificacion_msjs")[0]["dataCustom"] = "{data nueva}"
+                // console.log($("#notificacion_msjs"));
+                let tempData = '<div class="row" style="border:2px solid #3399cc;padding:5px 15px 5px 15px;background:tan">'+
+                    '<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="background:red;padding:5px 10px 5px 10px;border-radius:25px 10px 10px 25px;float:left;background:#ffffff">'+
+                        '<img src="../../images/base/user.png" class="img-circle" style="height:35px;float:left">'+
+                        '<span>Humberto Tahuada Jimenez Gomez</span></div>'+
+                    '<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="background:red;padding:5px 10px 5px 10px;border-radius:10px 25px 25px 10px;float:right;background:lightgreen">'+
+                        '<img src="../../images/base/user.png" class="img-circle" style="height:35px;float:right"></img>'+
+                        '<span>Humberto Tahuada Jimenez Gomez</span></div></div>';
+                        
+                console.log(data);
+            }
+            else
+            {
+                growlError("Error Eliminar","No se pudo eliminar la evidencia");
+            }
+        },
+        error:function()
+        {
+            growlError("Error Eliminar","Error en el servidor");
+        }
+    });
 }
 
 siConforme = (idPara,id,registro) =>

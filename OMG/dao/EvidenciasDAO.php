@@ -293,7 +293,8 @@ class EvidenciasDAO
                 WHERE tbusuarios_temas.id_usuario = $ID_USUARIO AND
                 LOWER(tbtemas.nombre) LIKE '%$CADENA%' AND tbtemas.padre = 0
                 AND tbtemas.contrato=$CONTRATO AND tbtemas.identificador LIKE '%catalogo%'
-                AND tbtemas.fecha_inicio!='0000-00-00' AND tbtemas.responsable_regeneral != 0";
+                AND (SELECT tbtemas2.padre_general FROM temas tbtemas2 WHERE tbtemas2.id_tema = tbtemas.padre_general AND tbtemas2.fecha_inicio!='0000-00-00') = tbtemas.padre_general
+                AND tbtemas.responsable_general != 0";
             // echo $query;
             $db= AccesoDB::getInstancia();        
             $lista= $db->executeQuery($query);
@@ -423,6 +424,27 @@ class EvidenciasDAO
                     WHERE id_evidencias = $ID_EVIDENCIA";
             $db= AccesoDB::getInstancia();
             $lista = $db->executeUpdateRowsAfected($query);
+            return $lista;
+
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+    public function obtenerParticipantesUsuarios($R_TEMA,$R_EVIDENCIA)
+    {
+        try 
+        {
+            $db= AccesoDB::getInstancia();
+            $query="SELECT tbusuarios.id_usuario,
+                    CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) as nombre_completo
+                    FROM usuarios tbusuarios
+                    JOIN empleados tbempleados ON tbusuarios.id_empleado = tbempleados.id_empleado
+                    WHERE tbusuarios.id_usuario = $R_TEMA OR tbusuarios.id_usuario = $R_EVIDENCIA";
+                    // WHERE tbempleados.id_empleado = $R_TEMA OR tbempleados.id_empleado = $R_EVIDENCIA";
+            $lista= $db->executeQuery($query);
             return $lista;
 
         } catch (Exception $ex) 

@@ -301,34 +301,50 @@
 	<div class="modal-dialog modal-lg" role="document" style="text-align:-webkit-center">
         <div id="loaderModalMostrar"></div>
 		<div class="modal-content" style="max-width:640px;">
-        <div class="modal-header">
+        <div class="modal-header" style="border-bottom:0px">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"  class="closeLetra">X</span></button>
           <h4 class="modal-title" id="myModalLabel">Notificaciones</h4>
         </div>
         <div class="modal-body" style="padding:0px 15px 0px 15px">
             <div class="div-observacion-msjs" id="notificacion_msjs">
-                <div class="row" style="border:2px solid #3399cc;height:300px;padding:top5px">
+                <!-- <div class="row" style="border:2px solid #3399cc;padding:5px 15px 5px 15px;background:tan">
+                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="background:red;padding:5px 10px 5px 10px;border-radius:25px 10px 10px 25px;float:left;background:#ffffff">
+                        <img src="../../images/base/user.png" class="img-circle" style="height:35px;float:left">
+                        <span>Humberto Tahuada Jimenez Gomez</span>
+                    </div>
+                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="background:red;padding:5px 10px 5px 10px;border-radius:10px 25px 25px 10px;float:right;background:lightgreen">
+                        <img src="../../images/base/user.png" class="img-circle" style="height:35px;float:right"></img>
+                        <span>Humberto Tahuada Jimenez Gomez</span>
+                    </div>
+                </div> -->
+
+                <div class="row" style="border:2px solid #3399cc;height:300px;padding-top:5px;background:tan">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" style="text-align:left;float:left">
-                            <div style="background:red;width:min-content;padding:5px 10px 5px 10px;border-radius:3px 15px 15px 3px;float:left">
+                            <div style="background:#ffffff;padding:5px 10px 5px 10px;border-radius:3px 15px 15px 3px;float:left">
                                 <span>AAAAAAAAA</span>
+                                <br>
+                                <span class="fecha_message" style="font-size:10px">24-AGO-2018 15:32:23</span>
                             </div>
                         </div>
                         <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" style="text-align:right;float:right">
-                            <div style="background:red;width:min-content;padding:5px 10px 5px 10px;border-radius:15px 3px 3px 15px;float:right">
-                                <span>BBBBBBBBB</span>
+                            <div style="background:lightgreen;padding:5px 10px 5px 10px;border-radius:15px 3px 3px 15px;float:right">
+                                <span class="body_message" style="color:black">BBBBBBBBB</span>
+                                <br>
+                                <span class="fecha_message" style="font-size:10px">24-AGO-2018 15:32:23</span>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
             <!-- estilos en vista validacion documentos view php -->
             <div class="row">
                 <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10" style="padding:0px">
-                    <textarea class="area-observaciones" style="border:2px solid #3399cc;width:100%"></textarea>
+                    <textarea class="area-observaciones" placeholder="Escribe tu mensaje" style="border:2px solid #3399cc;width:100%;background:tan;color:black;resize:none"></textarea>
                 </div>
                 <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2" style="padding:0px">
-                    <button click="enviarObservacion()" class="btn-observaciones" style="background:#3399cc;border:2px solid #3399cc;font-size:xx-large;width:100%;height:56px"><i class="fa fa-paper-plane" style="color:#ffffff;border-radius:100%"></i></button>
+                    <button click="enviarObservacion()" class="btn-observaciones" style="background:#3399cc;border:2px solid #3399cc;font-size:xx-large;width:100%;height:57px"><i class="fa fa-paper-plane" style="color:#ffffff;border-radius:100%"></i></button>
                 </div>
             </div>
         </div><!-- cierre div class-body -->
