@@ -147,6 +147,12 @@ switch ($Op)
         echo json_encode($lista);
     break;
 
+    case 'ObtenerMensajes':
+        header('Content-type: application/json; charset=utf-8');
+        $lista = $model->obtenerMensajes($_REQUEST["ID_EVIDENCIA"]);
+        echo json_encode($lista);
+    break;
+
 	default:
 		echo false;
         break;

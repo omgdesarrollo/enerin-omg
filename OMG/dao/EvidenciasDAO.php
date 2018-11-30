@@ -456,4 +456,22 @@ class EvidenciasDAO
             return -1;
         }
     }
+
+    public function obtenerMensajes($ID_EVIDENCIA)
+    {
+        try 
+        {
+            $db= AccesoDB::getInstancia();
+            $query="SELECT tbevidencias.accion_correctiva
+                    FROM evidencias tbevidencias
+                    WHERE tbevidencias.id_evidencias = $ID_EVIDENCIA";
+            $lista= $db->executeQuery($query);
+            return $lista;
+
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 }

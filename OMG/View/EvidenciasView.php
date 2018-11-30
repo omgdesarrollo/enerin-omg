@@ -306,7 +306,7 @@
           <h4 class="modal-title" id="myModalLabel">Notificaciones</h4>
         </div>
         <div class="modal-body" style="padding:0px 15px 0px 15px">
-            <div class="div-observacion-msjs" id="notificacion_msjs">
+            <div class="div-observacion-msjs" id="usuarios_notificaciones">
                 <!-- <div class="row" style="border:2px solid #3399cc;padding:5px 15px 5px 15px;background:tan">
                     <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="background:red;padding:5px 10px 5px 10px;border-radius:25px 10px 10px 25px;float:left;background:#ffffff">
                         <img src="../../images/base/user.png" class="img-circle" style="height:35px;float:left">
@@ -317,9 +317,9 @@
                         <span>Humberto Tahuada Jimenez Gomez</span>
                     </div>
                 </div> -->
-
-                <div class="row" style="border:2px solid #3399cc;height:300px;padding-top:5px;background:tan">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            </div>
+            <div class="row" style="border:2px solid #3399cc;height:300px;padding-top:5px;background:tan">
+                    <div id="mensajes_notificaciones" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" style="text-align:left;float:left">
                             <div style="background:#ffffff;padding:5px 10px 5px 10px;border-radius:3px 15px 15px 3px;float:left">
                                 <span>AAAAAAAAA</span>
