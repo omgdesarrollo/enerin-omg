@@ -144,7 +144,7 @@ class ConsultasModel{
                         }
                         $lista[$key]["evidencias_realizar"] = $cantidad_a_realizar;
                     }
-                    if($frecuencia == "TIEMPO INDEFINIDO")
+                    if($frecuencia == "INDEFINIDO")
                     {
                         $lista[$key]["evidencias_realizar"] = -1;
                     }
@@ -246,7 +246,7 @@ class ConsultasModel{
 
                     // if($lista[$i]["fecha_inicio"]!="0000-00-00")
                     // {
-                    if( $lista2[$contador]["detalles_requisito"][$contador2]["frecuencia"]=="TIEMPO INDEFINIDO" || $lista2[$contador]["detalles_requisito"][$contador2]["frecuencia"]=="POR EVENTO" )
+                    if( $lista2[$contador]["detalles_requisito"][$contador2]["frecuencia"]=="INDEFINIDO" || $lista2[$contador]["detalles_requisito"][$contador2]["frecuencia"]=="POR EVENTO" )
                     {
                         if( $lista2[$contador]["detalles_requisito"][$contador2]["cumplimiento_evidencias"]==100 )
                             $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"]= "CUMPLIDO";
@@ -260,7 +260,7 @@ class ConsultasModel{
                                     $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] = "EN PROCESO";
                                 else
                                 {
-                                    if( $lista2[$contador]["detalles_requisito"][$contador2]["frecuencia"]=="TIEMPO INDEFINIDO" )
+                                    if( $lista2[$contador]["detalles_requisito"][$contador2]["frecuencia"]=="INDEFINIDO" )
                                         $lista2[$contador]["detalles_requisito"][$contador2]["estado_evidencias"] = "NO APLICA";
                                     else
                                     {

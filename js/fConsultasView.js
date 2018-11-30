@@ -548,7 +548,7 @@ function graficar4(datos,concepto)
                 }
                 if(value.estado_requisito=="EN PROCESO" && val.estado_evidencias == "EN PROCESO")
                 {
-                    if(val.frecuencia == "TIEMPO INDEFINIDO")
+                    if(val.frecuencia == "INDEFINIDO")
                     {
                         // especial = 1;
                         evidencias = 1;
