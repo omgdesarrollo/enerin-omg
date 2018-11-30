@@ -140,29 +140,40 @@ class EvidenciasModel
             $dao=new EvidenciasDAO();
             $data = array();
             $hijos = $dao->obtenerHijosTema($ID_TEMA);
-            // var_dump($hijos);
-            $data = $dao->listarRegistros($CADENA,$ID_TEMA);
-            $bandera = true;
-            $key = 0;
-            while( $bandera )
+            // var_dump($hijos);  
+            foreach($hijos as $key => $value)
             {
-                // var_dump($hijos);
-                $value = $hijos[$key];
-                // var_dump($value["id_tema"]);
-                $hijosTemp = $dao->obtenerHijosTema($value["id_tema"]);
-                // var_dump($hijosTemp);
-                if( sizeof($hijosTemp)!=0 )
-                    array_push($hijos,$hijosTemp[0]);
-
-                $dataTemp = $dao->listarRegistros($CADENA,$value["id_tema"]);
-                // var_dump($dataTemp);
-                if( sizeof($dataTemp)!=0 )
-                    array_push($data,$dataTemp[0]);
-                // echo $key;
-                $key++;
-                if( sizeof($hijos) == $key)
-                    $bandera = false;
+                $temporal = $dao->listarRegistros($CADENA,$value["id_tema"]);
+                if(sizeof($temporal)!=0)
+                {
+                    // var_dump($temporal);
+                    foreach($temporal as $k=>$v)
+                    {
+                        array_push($data,$v);
+                    }
+                }
             }
+            // $bandera = true;
+            // $key = 0;
+            // while( $bandera )
+            // {
+            //     // var_dump($hijos);
+            //     $value = $hijos[$key];
+            //     // var_dump($value["id_tema"]);
+            //     $hijosTemp = $dao->obtenerHijosTema($value["id_tema"]);
+            //     // var_dump($hijosTemp);
+            //     if( sizeof($hijosTemp)!=0 )
+            //         array_push($hijos,$hijosTemp[0]);
+
+            //     $dataTemp = $dao->listarRegistros($CADENA,$value["id_tema"]);
+            //     // var_dump($dataTemp);
+            //     if( sizeof($dataTemp)!=0 )
+            //         array_push($data,$dataTemp[0]);
+            //     // echo $key;
+            //     $key++;
+            //     if( sizeof($hijos) == $key)
+            //         $bandera = false;
+            // }
             // var_dump($hijos);
             return $data;
         }catch (Exception $ex)
