@@ -963,7 +963,7 @@ function reconstruir(value,index)//listo jsgrid
             if(value.validacion_supervisor == "1")
                 tempData["conforme"] = "<button onClick='noConforme("+value.id_responsable+","+value.id_evidencias+",\""+value.registro+"\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+yesCheck+"</button>";
             
-            tempData["notificacion"] = "<button onClick='abrirNotificaciones(\""+value.accion_correctiva+"\","+value.id_responsable+","+value.id_empleado+")' style='font-size:x-large;color:#39c;background:transparent;border:none;'>"+
+            tempData["notificacion"] = "<button onClick='abrirNotificaciones(\""+value.accion_correctiva+"\","+value.id_usuario+","+value.id_responsable+")' style='font-size:x-large;color:#39c;background:transparent;border:none;'>"+
                     "<i class='fa fa-comments' style='font-size: xx-large;cursor:pointer' aria-hidden='true'></i></button>";
 
             // if(value.responsable=="1")
@@ -1029,6 +1029,8 @@ abrirNotificaciones = (msjs,responsableTema,responsableEvidencia)=>
                 // $.each(data,(index,value)=>{
                 //     $("#notificacion_msjs");
                 // });
+                // console.log(data[0]["archivosUpload"]);
+                // console.log(data[1]["archivosUpload"]);
                 // growlSuccess("Eliminar","Se elimino la evidencia");
                 // growlSuccess("","Abrir Modal");
                 // $("#mostrar_notificaciones").modal();
@@ -1036,12 +1038,19 @@ abrirNotificaciones = (msjs,responsableTema,responsableEvidencia)=>
                 // console.log($("#notificacion_msjs"));
                 let tempData = '<div class="row" style="border:2px solid #3399cc;padding:5px 15px 5px 15px;background:tan">'+
                     '<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="background:red;padding:5px 10px 5px 10px;border-radius:25px 10px 10px 25px;float:left;background:#ffffff">'+
-                        '<img src="../../images/base/user.png" class="img-circle" style="height:35px;float:left">'+
-                        '<span>Humberto Tahuada Jimenez Gomez</span></div>'+
+                        '<img src="'+ (data[0]["archivosUpload"][0].length!=0?
+                        (  data[0]["archivosUpload"][1]+"/"+data[0]["archivosUpload"][0][data[0]["archivosUpload"][0].length+1] ) :
+                         ("../../images/base/user.png"))+'" class="img-circle" style="height:35px;float:left">'+
+                        '<span>'+data[0].nombre_completo+'</span></div>'+
+
                     '<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="background:red;padding:5px 10px 5px 10px;border-radius:10px 25px 25px 10px;float:right;background:lightgreen">'+
-                        '<img src="../../images/base/user.png" class="img-circle" style="height:35px;float:right"></img>'+
-                        '<span>Humberto Tahuada Jimenez Gomez</span></div></div>';
-                        
+                    '<img src="'+ (data[1]["archivosUpload"][0].length!=0?
+                        (  data[1]["archivosUpload"][1]+"/"+data[1]["archivosUpload"][0][data[1]["archivosUpload"][0].length+1] ) :
+                        ("../../images/base/user.png"))+'" class="img-circle" style="height:35px;float:float:right">'+
+                        '<span>'+data[1].nombre_completo+'</span></div></div>';
+                $("#notificacion_msjs").html(tempData);
+                growlSuccess("","Abrir Modal");
+                $("#mostrar_notificaciones").modal();
                 console.log(data);
             }
             else

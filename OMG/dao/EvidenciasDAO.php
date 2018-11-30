@@ -241,10 +241,13 @@ class EvidenciasDAO
     {
         try
         {
+            // $query="SELECT tbtemas.id_tema
+            // FROM temas tbtemas
+            // WHERE tbtemas.padre = $ID_TEMA";
+            // echo $query;
             $query="SELECT tbtemas.id_tema
             FROM temas tbtemas
-            WHERE tbtemas.padre = $ID_TEMA";
-            // echo $query;
+            WHERE tbtemas.padre_general = $ID_TEMA";
 
             $db= AccesoDB::getInstancia();
             $result= $db->executeQuery($query);
