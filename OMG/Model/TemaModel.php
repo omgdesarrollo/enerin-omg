@@ -66,14 +66,41 @@ class TemaModel{
             return false;
         }
     }
-    public function insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO,$IDENTIFICADOR,$CONTRATO)
+    public function insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO,$IDENTIFICADOR,$CONTRATO,$ES_TEMA_OR_SUBTEMA,$DATOS_GENERALES)
     {
+        
+//        echo json_encode($DATOS_GENERALES);
         try
         {
             $dao=new TemaDAO();
-            $rec= $dao->insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO,$IDENTIFICADOR,$CONTRATO);
+            $rec;
+         if($ES_TEMA_OR_SUBTEMA!="NO EXISTE"){
+            if($ES_TEMA_OR_SUBTEMA=="TEMA"){
+                 $rec= $dao->insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO,$IDENTIFICADOR,$CONTRATO);
+//                 echo "E".$rec;
+                 self::componerTablaTemasPadreandReponsaleGeneral(array("id_tema"=>$rec));
+                 
+                 
+            }else{
+               if($ES_TEMA_OR_SUBTEMA=="SUBTEMA"){
+                   
+                   
+//                   echo json_encode($DATOS_GENERALES);
+                    $rec= $dao->insertarNodoHijos($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO,$IDENTIFICADOR,$CONTRATO,$DATOS_GENERALES);
+//                 echo "E".$rec;
+                    
+                    self::componerTablaTemasPadreandReponsaleGeneral(array("id_tema"=>$rec));
+                   
+//                  $rec= $dao->insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO,$IDENTIFICADOR,$CONTRATO);
+            } 
+            }
+         }else{
+             //para mantener funcionando la seccion de temas de oficios
+              $rec= $dao->insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO,$IDENTIFICADOR,$CONTRATO);
+         }
 //            self::componerTablaTemasPadreandReponsaleGeneral();
-            return $rec;
+        
+            return true;
             
         } catch (Exception $ex)
         {
@@ -81,6 +108,8 @@ class TemaModel{
             return false;        
         }
     }
+    
+
     
     
     public function eliminarNodo($ID)
@@ -122,15 +151,15 @@ class TemaModel{
         }
     }
     
-        public static function componerTablaTemasPadreandReponsaleGeneral()
+        private  static function componerTablaTemasPadreandReponsaleGeneral($value)
     {
         try
         {
             $dao=new TemaDAO();
             $data = array();
             $temas = $dao->listarTodosTemas();
-            foreach($temas as $key => $value)
-            {
+//            foreach($temas as $key => $value)
+//            {
                 $hijos = $dao->obtenerHijosTema($value["id_tema"]);
                 if( sizeof($hijos)!=0 )
                 {
@@ -149,7 +178,7 @@ class TemaModel{
                             $bandera = false;
                     }
                 }
-            }
+//            }
             return "TERMINO BIEN";
         }catch (Exception $ex)
         {

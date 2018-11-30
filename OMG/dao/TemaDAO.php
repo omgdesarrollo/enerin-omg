@@ -74,7 +74,7 @@ public function listarDetallesSeleccionados($ID)
         $query="SELECT tbtemas.id_tema, tbtemas.no, tbtemas.nombre, tbtemas.descripcion, tbtemas.plazo,
                 tbempleados.id_empleado,tbempleados.nombre_empleado, tbempleados.apellido_paterno, tbempleados.apellido_materno	
                 FROM temas tbtemas
-                JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
+                JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.responsable_general
                 WHERE tbtemas.id_tema=$ID";
         
         $db=  AccesoDB::getInstancia();
@@ -94,13 +94,17 @@ public function insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO,
 {
     try
     {
-        $query="INSERT INTO temas (no,nombre,descripcion,plazo,padre,id_empleado,identificador,contrato) 
-                VALUES ('$NO','$NOMBRE','$DESCRIPCION','$PLAZO',$NODO,'$ID_EMPLEADO','$IDENTIFICADOR',$CONTRATO)";
+        $query="INSERT INTO temas (no,nombre,descripcion,plazo,padre,id_empleado,identificador,contrato,fecha_inicio,padre_general,responsable_general) 
+                VALUES ('$NO','$NOMBRE','$DESCRIPCION','$PLAZO',$NODO,'$ID_EMPLEADO','$IDENTIFICADOR',$CONTRATO,'0000-00-00','0',$ID_EMPLEADO)";
         $db= AccesoDB::getInstancia();
-        $lista= $db->executeQueryUpdate($query);
-        
-//        echo "valor lista: ".json_encode($lista);
-        return $lista;
+        $exito= $db->executeQueryUpdate($query);
+            if($exito==1)
+                $exito = $db->executeQuery("SELECT LAST_INSERT_ID()")[0]["LAST_INSERT_ID()"];
+            else
+                $exito = -2;
+            return $exito;
+
+        return $exito;
         
     } catch (Exception $ex)
     {
@@ -108,6 +112,36 @@ public function insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO,
         return false;
     }
 }
+public function insertarNodoHijos($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO,$IDENTIFICADOR,$CONTRATO,$DATOS_GENERALES)
+{
+//    echo json_encode($DATOS_GENERALES);
+    $padre_general=$DATOS_GENERALES->padre_general;
+    $responsable_general=$DATOS_GENERALES->reponsable_general;
+    try
+    {
+        $query="INSERT INTO temas (no,nombre,descripcion,plazo,padre,id_empleado,identificador,contrato,fecha_inicio,padre_general,responsable_general) 
+                VALUES ('$NO','$NOMBRE','$DESCRIPCION','$PLAZO',$NODO,'$ID_EMPLEADO','$IDENTIFICADOR',$CONTRATO,'0000-00-00','$padre_general',$responsable_general)";
+        $db= AccesoDB::getInstancia();
+        $exito= $db->executeQueryUpdate($query);
+            if($exito==1)
+                $exito = $db->executeQuery("SELECT LAST_INSERT_ID()")[0]["LAST_INSERT_ID()"];
+            else
+                $exito = -2;
+            return $exito;
+
+        return $exito;
+        
+    } catch (Exception $ex)
+    {
+        throw $ex;
+        return false;
+    }
+}
+
+
+
+
+
 
 public function eliminarNodo($ID)
 {
@@ -152,7 +186,7 @@ public function eliminarNodo($ID)
         try 
         {
             $db= AccesoDB::getInstancia();
-            $query="UPDATE temas SET padre_general = id_tema, resposable_general = id_emplado WHERE padre = 0";
+            $query="UPDATE temas SET padre_general = id_tema, responsable_general = id_empleado WHERE padre = 0";
             $db->executeQueryUpdate($query);
 
             $query="SELECT tbtemas.id_tema,tbtemas.id_empleado
@@ -201,6 +235,11 @@ public function eliminarNodo($ID)
             return -1;
         }
     }
+    
+    
+    
+    
+      
     
 
 }

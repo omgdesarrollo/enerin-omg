@@ -9,7 +9,7 @@ var datos_generales={};
          e.preventDefault();
 //         $("#btn_guardar").attr("disabled", "disabled");
          var formData = {"NO":$('#NO').val(),"NOMBRE":$('#NOMBRE').val(),"DESCRIPCION":$('#DESCRIPCION').val(),
-                         "PLAZO":$('#PLAZO').val(),"NODO":0,"ID_EMPLEADOMODAL":$('#ID_EMPLEADOMODAL').val()};            
+                         "PLAZO":$('#PLAZO').val(),"NODO":0,"ID_EMPLEADOMODAL":$('#ID_EMPLEADOMODAL').val(),"ES_TEMA_PRINCIPAL":"SI"};            
          
          $.ajax({
              url:'../Controller/TemasController.php?Op=GuardarNodo',
@@ -44,13 +44,14 @@ var datos_generales={};
          e.preventDefault();
          
 //         var parentId = myTree.getParentId(id_seleccionado);
-        
-           
+        obtenerPadreandResponsableGeneral(dataArbolGlobal);
+//             datos_generales["padre_general"]
+//                       datosdatos_generales_generales["reponsable_general"]
 //        var  myTree
          
 //         $("#btn_guardarSub").attr("disabled", "disabled");
          var formData = {"NO":$('#NO_SUBTEMA').val(),"NOMBRE":$('#NOMBRE_SUBTEMA').val(),"DESCRIPCION":$('#DESCRIPCION_SUBTEMA').val(),
-                         "PLAZO":$('#PLAZO_SUBTEMA').val(),"NODO":id_seleccionado,"ID_EMPLEADOMODAL":"0"};            
+                         "PLAZO":$('#PLAZO_SUBTEMA').val(),"NODO":id_seleccionado,"ID_EMPLEADOMODAL":"0","ES_TEMA_PRINCIPAL":"NO","datos_generales":JSON.stringify(datos_generales)};            
          
          $.ajax({
              url:'../Controller/TemasController.php?Op=GuardarNodo',
@@ -250,7 +251,7 @@ function evaluarToolbarSeccionB(id)
 }
     function obtenerHijos(id)
     {
-       obtenerPadreandResponsableGeneral(dataArbolGlobal);
+       
        $("#contenido").html("<div style='font-size:30px' class='fa fa-refresh fa-spin'></div>"); 
         $.ajax({
             url:'../Controller/TemasController.php?Op=ListarHijos',

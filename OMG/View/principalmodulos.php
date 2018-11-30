@@ -1365,7 +1365,21 @@ var jsonObj = {};
 //         console.log("es igual");
 //     }
  }
- 
+  function RTAndPGeneral()
+ {
+     return new Promise(function (resolve,reject){
+        $.ajax({
+            url:"../Controller/TemasController.php?Op=RTAndPGeneral",
+            success:function()
+            {
+                resolve();
+            }
+        })
+    })
+ }
+// RTAndPGeneral().then(function(){
+//     console.log("ya termino");
+// });
  
  
  

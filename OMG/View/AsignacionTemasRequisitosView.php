@@ -322,7 +322,15 @@ $(function()
                      {
                          swal("","Guardado Exitoso","success");
                          setTimeout(function(){swal.close();},1500);
-                         obtenerDatosArbol(id_asignacion_t);
+                        
+                         
+                         
+                         
+                         
+                         
+                         obtenerDatosArbol(id_temporal_dinamico_para_los_nodos_del_arbol);
+                         
+                         
 //                         $("#btn_guardar_req").removeAttr("disabled")
                         $('#create-itemRequisito .close').click();
                      }
@@ -379,7 +387,7 @@ $(function()
                         {
                             swal("","Guardado Exitoso","success");
                             setTimeout(function(){swal.close();$("#create-itemRegistro . close").click();},1500);
-                            obtenerDatosArbol(id_asignacion_t);
+                            obtenerDatosArbol(id_temporal_dinamico_para_los_nodos_del_arbol);
 //                            $("#btn_guardar_reg").removeAttr("disabled")
                             $('#create-itemRegistro .close').click();
                         }
@@ -403,7 +411,7 @@ $(function()
                  if(r==true){
                     swal("","Edicion Exitosa","success");
                     setTimeout(function(){swal.close();},1500);
-                    obtenerDatosArbol(id_asignacion_t);
+                    obtenerDatosArbol(id_temporal_dinamico_para_los_nodos_del_arbol);
                     $('#create-itemRegistro .close').click();
                  }else{
                     swal("","Actualizacion no Realizada","error");
@@ -718,7 +726,7 @@ function evaluarToolbarSeccionB(id)
             data:"ID_REQUISITO="+id_nodo,
             success:function(data)
             {
-                obtenerDatosArbol(id_asignacion_t);
+                obtenerDatosArbol(id_temporal_dinamico_para_los_nodos_del_arbol);
             }
         });
     }
@@ -735,7 +743,7 @@ function evaluarToolbarSeccionB(id)
 //                    alert("Este es el data: "+data)
                     swal("","Se elimino correctamente el Registro","success");
                     setTimeout(function(){swal.close();},1500);
-                    obtenerDatosArbol(id_asignacion_t);
+                    obtenerDatosArbol(id_temporal_dinamico_para_los_nodos_del_arbol);
                 } else{
 //                    alert("Este es el data: "+data)
                     if(data==0)
@@ -799,8 +807,11 @@ function contruirArbol(dataArbol)
         myTreeIzquierda.parse(dataArbol, "jsarray");
         }
     }
+    
+    var id_temporal_dinamico_para_los_nodos_del_arbol=-1;
 myTreeIzquierda.attachEvent("onClick", function(id){
-
+console.log("el falso  ",id);
+    id_temporal_dinamico_para_los_nodos_del_arbol=id;
      obtenerDatosArbol(id);   
 //    id_seleccionado=id;
     return true;
@@ -815,9 +826,13 @@ myTreeIzquierda.attachEvent("onClick", function(id){
     // obtenerDatosArbol(1);
     function obtenerDatosArbol(id_asignacion)
     {
+//        id_asignacion_t=0;
+        
+//   if(ayuda==undefined){     
         //el id asigancion cambio a ser el tema como tal para poder manipular el cambio solicitado pero abajo se vuelve a mapear par aque lleve el id
         // asignacion tema requisito y el id del tema 
 //        alert("funcion que tiene parametro");
+//    id_asignacion_t=id_asignacion;
     var id_tema_subtema=id_asignacion; 
     var datosEnviarParaPoderGenerarElArbol={"id_asignacion":id_asignacion,"id_tema_subtema":id_tema_subtema};
         banderaPrimeraIteracion=false;
@@ -836,6 +851,8 @@ myTreeIzquierda.attachEvent("onClick", function(id){
         });
         
         id_asignacion_t=datosEnviarParaPoderGenerarElArbol["id_asignacion"];
+      
+        console.log("ff",id_asignacion_t);
         selec_tema=0;
         levelv=0;
         cadenaReq="";
@@ -888,6 +905,10 @@ myTreeIzquierda.attachEvent("onClick", function(id){
                 
             }
         });
+//    }else{
+//        
+//     alert();   
+//    }
     }
     
 
