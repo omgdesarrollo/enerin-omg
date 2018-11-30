@@ -702,7 +702,7 @@ Revisa sus avance, las anotaciones, integra a tu equipo para trabajar en un mism
     <!--<div class="modal-content">-->
      
       <p>
-          <iframe width="100%" height="100%" src="../../movies/base/GestiÃ³n de Temas Especiales  Apuntes.html"></iframe>
+          <iframe width="100%" height="100%" src="../../movies/base/GestiTemas EspecialesApuntes.html"></iframe>
         
       </p>
     <!--</div>-->

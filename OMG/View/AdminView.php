@@ -584,11 +584,12 @@ $Usuario=  Session::getSesion("user");
                                     EmpleadoDataObj['categoria']=EmpleadoDataG[2];
                                     EmpleadoDataObj['nombre_usuario']=usuario;
 
-                                    tempData = "<tr id='registro_"+creado.id_usuario+"'>";
-                                    tempData += construirTablaAgregar(EmpleadoDataObj);
-                                    tempData += "</tr>";
+//                                    tempData = "<tr id='registro_"+creado.id_usuario+"'>";
+//                                    tempData += construirTablaAgregar(EmpleadoDataObj);
+//                                    tempData += "</tr>";
 
-                                    $('#bodyTableAgregar').append(tempData);
+//                                    $('#bodyTableAgregar').append(tempData);
+                                    refresh();
                                     swalSuccess('Usuario Creado');
                                     $('#agregarUsuario .close').click()
                                 }
