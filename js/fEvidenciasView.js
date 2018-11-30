@@ -963,7 +963,7 @@ function reconstruir(value,index)//listo jsgrid
             if(value.validacion_supervisor == "1")
                 tempData["conforme"] = "<button onClick='noConforme("+value.id_responsable+","+value.id_evidencias+",\""+value.registro+"\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+yesCheck+"</button>";
             
-            tempData["notificacion"] = "<button onClick='abrirNotificaciones(\""+value.accion_correctiva+"\","+value.id_usuario+","+value.id_responsable+")' style='font-size:x-large;color:#39c;background:transparent;border:none;'>"+
+            tempData["notificacion"] = "<button onClick='abrirNotificaciones("+value.id_evidencias+","+value.id_usuario+","+value.id_responsable+")' style='font-size:x-large;color:#39c;background:transparent;border:none;'>"+
                     "<i class='fa fa-comments' style='font-size: xx-large;cursor:pointer' aria-hidden='true'></i></button>";
 
             // if(value.responsable=="1")
@@ -1015,66 +1015,112 @@ function reconstruir(value,index)//listo jsgrid
     return tempData;
 }
 
-abrirNotificaciones = (msjs,responsableTema,responsableEvidencia)=>
+abrirNotificaciones = (idEvidencia,responsableTema,responsableEvidencia)=>
 {
     $.ajax({
         url: '../Controller/EvidenciasController.php?Op=ObtenerParticipantesUsuarios',
-        type: 'POST',
+        type: 'GET',
         data: 'R_TEMA='+responsableTema+'&R_EVIDENCIA='+responsableEvidencia,
+        beforesend:()=>
+        {
+            growlWait("Espere","Cargando Mensajes...");
+        },
         success:function(data)
         {
             if(typeof(data)=="object")
             {
-                
-                // $.each(data,(index,value)=>{
-                //     $("#notificacion_msjs");
-                // });
-                // console.log(data[0]["archivosUpload"]);
-                // console.log(data[1]["archivosUpload"]);
-                // growlSuccess("Eliminar","Se elimino la evidencia");
-                // growlSuccess("","Abrir Modal");
-                // $("#mostrar_notificaciones").modal();
-                // $("#notificacion_msjs")[0]["dataCustom"] = "{data nueva}"
-                // console.log($("#notificacion_msjs"));
-                let var1 = 0;
-                let var2 = 0;
-                if(data[0].id_usuario==responsableEvidencia)
+                if(data.length!=0)
                 {
-                    var1 = 0;
-                    var1 = 1;
+                    let var1 = 0;
+                    let var2 = 0;
+                    if(data[0].id_usuario==responsableEvidencia)
+                    {
+                        var1 = 0;
+                        var1 = 1;
+                    }
+                    else
+                    {
+                        var1 = 1;
+                        var2 = 0;
+                    }
+                    let tempData = '<div class="row" style="border:2px solid #3399cc;padding:5px 15px 5px 15px;background:tan">'+
+                        '<div class="col-xs-6 col-sm-5 col-md-5 col-lg-5" style="padding:5px;border-radius:25px 10px 10px 25px;float:left;background:#ffffff">'+
+                            '<div class="col-xs-3 col-sm-3 col-md-2 col-lg-2" style="padding:0px;float:left;">'+
+                                '<img src="'+ (data[var1]["archivosUpload"][0].length!=0?
+                                (  data[var1]["archivosUpload"][1]+"/"+data[var1]["archivosUpload"][0][data[var1]["archivosUpload"][0].length-1] ) :
+                                ("../../images/base/user.png"))+'" class="img-circle" style="height:35px;float:left">'+
+                            '</div>'+
+
+                            '<div class="col-xs-9 col-sm-9 col-md-10 col-lg-10" style="padding:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+
+                                '<span title="'+data[var1].nombre_completo+'">'+data[var1].nombre_completo+'</span></div>'+
+                            '</div>'+
+                        '<div class="col-xs-0 col-sm-2 col-md-2 col-lg-2" style="padding:5px;border-radius:25px 10px 10px 25px;float:left;">'+
+                            '<i class="fa fa-arrows-h" style="font-size:xx-large;color:#3399cc"></i>'+
+                        '</div>'+
+
+                        '<div class="col-xs-6 col-sm-5 col-md-5 col-lg-5" style="padding:5px;border-radius:10px 25px 25px 10px;float:right;background:lightgreen">'+
+                            '<div class="col-xs-9 col-sm-9 col-md-10 col-lg-10" style="padding:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+
+                            '<span title="'+data[var2].nombre_completo+'">'+data[var2].nombre_completo+'</span>'+
+                            '</div>'+
+                            '<div class="col-xs-3 col-sm-3 col-md-2 col-lg-2" style="padding:0px;float:right;">'+
+                                '<img src="'+ (data[var2]["archivosUpload"][0].length!=0?
+                                (  data[var2]["archivosUpload"][1]+"/"+data[var2]["archivosUpload"][0][data[var2]["archivosUpload"][0].length-1] ) :
+                                ("../../images/base/user.png"))+'" class="img-circle" style="height:35px;float:right">'+
+                            '</div>'+
+                        '</div></div>';
+                    cargarMensajes(idEvidencia,responsableTema,responsableEvidencia,1);
+                    // mensajes_notificaciones
                 }
                 else
                 {
-                    var1 = 1;
-                    var2 = 0;
+                    growlError("Error","No se pudieron cargar los mensajes reintente");
                 }
-                let tempData = '<div class="row" style="border:2px solid #3399cc;padding:5px 15px 5px 15px;background:tan">'+
-                    '<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="background:red;padding:5px 10px 5px 10px;border-radius:25px 10px 10px 25px;float:left;background:#ffffff">'+
-                        '<img src="'+ (data[0]["archivosUpload"][0].length!=0?
-                        (  data[var1]["archivosUpload"][1]+"/"+data[var1]["archivosUpload"][0][data[var1]["archivosUpload"][0].length+1] ) :
-                         ("../../images/base/user.png"))+'" class="img-circle" style="height:35px;float:left">'+
-                        '<span>'+data[var1].nombre_completo+'</span></div>'+
-
-                    '<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="background:red;padding:5px 10px 5px 10px;border-radius:10px 25px 25px 10px;float:right;background:lightgreen">'+
-                    '<img src="'+ (data[1]["archivosUpload"][0].length!=0?
-                        (  data[var2]["archivosUpload"][1]+"/"+data[var2]["archivosUpload"][0][data[var2]["archivosUpload"][0].length+1] ) :
-                        ("../../images/base/user.png"))+'" class="img-circle" style="height:35px;float:float:right">'+
-                        '<span>'+data[var2].nombre_completo+'</span></div></div>';
-                $("#notificacion_msjs").html(tempData);
-                growlSuccess("","Abrir Modal");
-                $("#mostrar_notificaciones").modal();
-                console.log(data);
             }
             else
             {
-                growlError("Error Eliminar","No se pudo eliminar la evidencia");
+                growlError("Error","Error al cargar mensajes");
             }
         },
         error:function()
         {
-            growlError("Error Eliminar","Error en el servidor");
+            growlError("Error","Error en el servidor");
         }
     });
+}
+
+cargarMensajes = (idEvidencia,responsableTema,responsableEvidencia,tipo)=>
+{
+    $.ajax({
+        url: '../Controller/EvidenciasController.php?Op=ObtenerMensajes',
+        type: 'GET',
+        data: 'ID_EVIDENCIA='+idEvidencia,
+        beforesend:()=>
+        {
+            if(tipo==0)
+                growlWait("Espere","Cargando Mensajes...");
+        },
+        success:function(data)
+        {
+            if(typeof(data)=="object")
+            {
+                growlSuccess("","");
+            }
+            else
+            {
+                growlError("Error","Error al recibir mensajes");
+            }
+        },
+        error:function()
+        {
+            growlError("Error ","Error en el servidor");
+        }
+    });
+    $("#notificacion_msjs").html("usuarios_notificaciones");
+    $("#mostrar_notificaciones").modal();
+}
+
+enviarMensajes = (texto)=>
+{
 }
 
 siConforme = (idPara,id,registro) =>

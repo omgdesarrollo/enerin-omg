@@ -288,6 +288,20 @@ class EvidenciasModel
             return false;
         }
     }
+
+    public function obtenerMensajes($ID_EVIDENCIA)
+    {
+        try
+        {
+            $dao=new EvidenciasDAO();
+            $lista = $dao->obtenerMensajes($ID_EVIDENCIA);
+            return $lista;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
     
     
 //    public function actualizarFechaValidacion($ID_EVIDENCIAS, $VALIDACION)
