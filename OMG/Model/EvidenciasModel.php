@@ -143,7 +143,9 @@ class EvidenciasModel
             // var_dump($hijos);  
             foreach($hijos as $key => $value)
             {
-                array_push($data,$dao->listarRegistros($CADENA,$value["id_tema"])[0]);
+                $temporal = $dao->listarRegistros($CADENA,$value["id_tema"]);
+                if(sizeof($temporal)!=0)
+                    array_push($data,$temporal[0]);
             }
             // $bandera = true;
             // $key = 0;
