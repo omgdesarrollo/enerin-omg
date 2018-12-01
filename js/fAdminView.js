@@ -52,6 +52,8 @@ function listarDatos()
 {
     return new Promise((resolve,reject)=>
     {
+        
+        console.log("valoes:  ",window.top.variables_super_globales);
         __datos=[];
         $.ajax({
             url: '../Controller/AdminController.php?Op=Listar',
