@@ -116,7 +116,7 @@ require_once 'EncabezadoUsuarioView.php';
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label" for="title">Categoria:</label>
+                        <label class="control-label" for="title">Puesto:</label>
                         <textarea  id="CATEGORIA" class="form-control" data-error="Ingrese Categoria." required></textarea>
                         <div id="mensaje4" class="help-block with-errors"></div>
                     </div>
@@ -161,7 +161,7 @@ estructuraGrid = [
     { name: "nombre_empleado",title:"Nombre", type: "textarea", width: 150, validate: "required" },
     { name: "apellido_paterno",title:"Apellido Paterno", type: "textarea", width: 150, validate: "required" },
     { name: "apellido_materno",title:"Apellido Materno", type: "textarea", width: 150, validate: "required" },
-    { name: "categoria",title:"Categoría", type: "textarea", width: 150, validate: "required" },
+    { name: "categoria",title:"Puesto", type: "textarea", width: 150, validate: "required" },
     { name: "correo",title:"Correo Electrónico", type: "textarea", width: 150, validate: "required" },
     { name: "fecha_creacion",title:"Fecha Creación", type: "text", width: 150, validate: "required",editing: false},
 //    {name:"cancel", type:"control"}

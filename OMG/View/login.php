@@ -49,6 +49,7 @@ require_once '../util/Session.php';
         <title>OMG</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        
         <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="../../css/estilo.css">
         <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
@@ -111,6 +112,16 @@ function clock()
             console.log($('.tabs').tabs());
             
 //            alert();
+//                $("#iconoRayoderechaabajo").click(()=>{
+//                      alert("d");
+//                      $(".modal").modal();
+//                      
+//                      
+//                      
+//                });
+                     $(".modal").modal();
+
+
         });
 //        document.addEventListener('DOMContentLoaded', function() {
 //        var elems = document.querySelectorAll('.sidenav');
@@ -130,16 +141,7 @@ function clock()
 
   // Or with jQuery
 
-  $(document).ready(function(){
-   
-   
-   
-   
-   
-   
-   
-  });
-
+  
   $('.fixed-action-btn').floatingActionButton({
 //    toolbarEnabled: true,
      direction: 'top',
@@ -171,6 +173,13 @@ function clock()
                 background-color:#009999 ;
                 color: white;
                 text-align: center;
+            }
+            .modal{
+                width: 90% !important;
+                height: 100% !important;
+            }
+            .icon-animated-rayo{
+                animation-duration: 3s;
             }
 /*        .animacion {
 -webkit-animation:fa-spin 20s infinite linear;animation:fa-spin 24s infinite linear;*/
@@ -213,7 +222,10 @@ function clock()
             
 </style>
     </head>
-    
+    <div class="icon-animated-rayo">
+        <!--dasdsadadaasd-->
+        
+    </div>
     <body class="has-fixed-sidenav">
 <!--      
         <div id="" style="position:absolute;left:10px;top:1px;width:175px;height:315px;z-index:0;">
@@ -292,7 +304,7 @@ function clock()
       <ul class="tabs tabs-fixed-width">
           <li class="tab" style="border-style: solid;border-color: #006699"><a class="active" href="#accesologin" style="color:black;background: gray;">Acceso Al Sistema</a></li>
         <li class="tab" style="border-style: solid;border-color: #006699"><a  href="#terminosycondiciones" style="color:black;background: gray;">Terminos Y Condiciones</a></li>
-        <li class="tab" style="border-style: solid;border-color: #006699"><a href="#registroalsistema" style="color:black;background: gray;">Registro Al Sistema</a></li>
+        <li class="tab" style="border-style: solid;border-color: #006699"><a href="#registroalsistema" style="color:black;background: gray;">INFORMACION DE APP</a></li>
       </ul>
     </div>
     <div class="card-content grey lighten-4">
@@ -381,7 +393,7 @@ function clock()
         <div id="registroalsistema">
             <center>
              <video  width="33%" height="" src="../../movies/base/GTE PRESENTACION DINAMICA29111801.mp4" controls></video>
-            <video  width="33%" height="" src="../../movies/base/Tutorial Esquematico 121118.mp4" controls></video>
+            <!--<video  width="33%" height="" src="../../movies/base/Tutorial Esquematico 121118.mp4" controls></video>-->
             <video  width="33%" height="" src="../../movies/base/Tutorial APP alta resolucion.mp4" controls></video>
             </center>
             
@@ -637,20 +649,29 @@ Revisa sus avance, las anotaciones, integra a tu equipo para trabajar en un mism
       
 
 
-        <div class="fixed-action-btn">
-            <a class="btn-floating btn-large" style="background-color:#006699">
+        <div class=" fixed-action-btn">
+            <a class="icon-animated-rayo btn-floating btn-large   waves-effect waves-light btn modal-trigger" id="iconoRayoderechaabajo" style="background-color:#006699" href="#modal1">
+                <!--<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>-->
               <!--<i class="large material-icons">mode_edit</i>-->
               <img src="../../images/base/enerinLogo.png" height="100%">
             </a>
-            <ul>
-                
-                <li><a class="btn-floating red"><i class="material-icons" >insert_chart</i>
+            <!--<ul style="">-->
+                <!--<div style="width: 100% !important">-->
+                    <!--right: 1800%; padding-right: 1800%; padding-top: 800%;-->
+                    <!--<li style=""><a class="btn-floating"   style="right:100px;  border-radius: 40px; opacity: 1; transform: scale(1) translateY(0px) translateX(0px); background-color: white;">-->
+                        
+                        <!--<i class="material-icons" >insert_chart</i>-->
+                        <!--<i class="" >-->
+                          
+                            
+                        <!--</i>-->
+                        
+                 
                  
                    
                    
-                   
-                   </a></li> 
-                
+                   <!--</a></li>--> 
+<!--                </div>-->
                 
                 
                 
@@ -659,7 +680,7 @@ Revisa sus avance, las anotaciones, integra a tu equipo para trabajar en un mism
               <!--<li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>-->
               <!--<li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>-->
               <!--<li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>-->
-            </ul>
+            <!--</ul>-->
         </div>
 
 
@@ -671,6 +692,24 @@ Revisa sus avance, las anotaciones, integra a tu equipo para trabajar en un mism
     
     
 </html>
+
+
+  <!-- Modal Trigger -->
+<!--  <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>-->
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <!--<div class="modal-content">-->
+     
+      <p>
+          <iframe width="100%" height="100%" src="../../movies/base/GestiTemas EspecialesApuntes.html"></iframe>
+        
+      </p>
+    <!--</div>-->
+<!--    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+    </div>-->
+  </div>
 //<?php
 //}
 //?>

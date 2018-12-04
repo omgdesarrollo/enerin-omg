@@ -206,7 +206,7 @@ function insertarEmpleado(empleadoDatos)
                 if( typeof(datos) == "object")
                 {
                     tempData;
-                    swalSuccess("Empleado Creado");
+                    swalSuccess("Persona Agregada");
                     $.each(datos,function(index,value)
                     {
                         tempData = reconstruir(value,ultimoNumeroGrid+1);

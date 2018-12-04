@@ -290,7 +290,6 @@ $Usuario=  Session::getSesion("user");
     var customsFieldsGridData=[
         {field:"customControl",my_field:MyCControlField}
     ];//grid
-    
     estructuraGrid = [
         { name: "id_principal", visible:false},
         { name: "no",title:"No.", type: "text", width: 40, editing:false},
@@ -300,14 +299,20 @@ $Usuario=  Session::getSesion("user");
         { name: "categoria",title:"Categoria", type: "text", width: 140, editing:false},
         { name: "cumplimientos",title:"Temática", type: "text", width: 140,editing:false},   
         { name: "permisos",title:"Vistas", type: "text", width: 70, editing:false},
-        { name: "temas",title:"Temas", type: "text", width: 70,editing:false},
+        { name: "temas",title:"Temas", type: "text", width: 70,editing:false,visible:false},
         { name:"delete", title:"Opción", type:"customControl",sorting:""},
     ];//grid
+    if(window.top.variables_super_globales["cumplimientos"]==true){
+     estructuraGrid[8].visible=true;
+    }  
+   
+    
     
     construirGrid();//grid
 
     inicializarFiltros().then((resolve2)=>
     {
+     
         construirFiltros();
         listarDatos();
     },(error)=>
@@ -584,11 +589,12 @@ $Usuario=  Session::getSesion("user");
                                     EmpleadoDataObj['categoria']=EmpleadoDataG[2];
                                     EmpleadoDataObj['nombre_usuario']=usuario;
 
-                                    tempData = "<tr id='registro_"+creado.id_usuario+"'>";
-                                    tempData += construirTablaAgregar(EmpleadoDataObj);
-                                    tempData += "</tr>";
+//                                    tempData = "<tr id='registro_"+creado.id_usuario+"'>";
+//                                    tempData += construirTablaAgregar(EmpleadoDataObj);
+//                                    tempData += "</tr>";
 
-                                    $('#bodyTableAgregar').append(tempData);
+//                                    $('#bodyTableAgregar').append(tempData);
+                                    refresh();
                                     swalSuccess('Usuario Creado');
                                     $('#agregarUsuario .close').click()
                                 }
