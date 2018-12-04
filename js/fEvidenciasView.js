@@ -1143,7 +1143,10 @@ cargarMensajes = ()=>
                     $("#mensajes_notificaciones").html(tempData);
                 }
                 else
+                {
                     growlSuccess("","Sin mensajes para mostrar");
+                    $("#mensajes_notificaciones").html("");
+                }
             }
             else
             {
