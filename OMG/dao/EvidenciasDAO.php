@@ -475,4 +475,20 @@ class EvidenciasDAO
             return -1;
         }
     }
+
+    public function agregarMensaje($ID_EVIDENCIA,$MENSAJE)
+    {
+        try 
+        {
+            $db= AccesoDB::getInstancia();
+            $query="UPDATE evidencias SET accion_correctiva = '$MENSAJE' WHERE id_evidencias = $ID_EVIDENCIA";
+            $exito= $db->executeUpdateRowsAfected($query);
+            return $exito;
+
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 }

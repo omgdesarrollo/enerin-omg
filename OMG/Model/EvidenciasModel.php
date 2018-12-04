@@ -308,6 +308,30 @@ class EvidenciasModel
             return false;
         }
     }
+
+    public function  agregarMensaje($ID_USUARIO,$ID_EVIDENCIA,$MENSAJE,$FECHA)
+    {
+        try
+        {
+            $dao=new EvidenciasDAO();
+            $mensaje = array();
+            $mensaje["id"] = $ID_USUARIO;
+            $mensaje["mensaje"] = $MENSAJE;
+            $mensaje["fecha"] = $FECHA;
+            // $mensajes = array();
+            // $mensaje = "{ 'id':$ID_USUARIO,'mensaje':'$MENSAJE','fecha':'$FECHA' }";
+            // echo $mensaje;
+            $lista = $dao->obtenerMensajes($ID_EVIDENCIA);
+            $mensajes = json_decode( $lista[0]["accion_correctiva"],true );
+            array_push($mensajes,$mensaje);
+            $exito = $dao->agregarMensaje($ID_EVIDENCIA,json_encode($mensajes));
+            return $exito;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
     
     
 //    public function actualizarFechaValidacion($ID_EVIDENCIAS, $VALIDACION)

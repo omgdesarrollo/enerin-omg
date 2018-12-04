@@ -352,7 +352,7 @@
                     <textarea id="mensajeTexto_notificaciones" class="area-observaciones" placeholder="Escribe tu mensaje" style="border:2px solid #3399cc;width:100%;background:tan;color:black;resize:none"></textarea>
                 </div>
                 <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2" style="padding:0px">
-                    <button click="enviarMensajes()" class="btn-observaciones" style="background:#3399cc;border:2px solid #3399cc;font-size:xx-large;width:100%;height:57px"><i class="fa fa-paper-plane" style="color:#ffffff;border-radius:100%"></i></button>
+                    <button onClick="enviarMensajes()" class="btn-observaciones" style="background:#3399cc;border:2px solid #3399cc;font-size:xx-large;width:100%;height:56px;margin-bottom:1px"><i class="fa fa-paper-plane" style="color:#ffffff;border-radius:100%"></i></button>
                 </div>
             </div>
         </div><!-- cierre div class-body -->

@@ -1042,7 +1042,7 @@ abrirNotificaciones = (idEvidencia,responsableTema,responsableEvidencia)=>
                             $("#usuarios_notificaciones")[0]["dataCustom"] = {"ID_EVIDENCIA":idEvidencia,"R_TEMA":responsableTema,"R_EVIDENCIA":responsableEvidencia,"TIPO":1,"ENVIAR":1,"USUARIO":value.id_usuario};
                             tempData += '<div class="col-xs-6 col-sm-5 col-md-5 col-lg-5" style="padding:5px;border-radius:10px 25px 25px 10px;float:right;background:lightgreen">'+
                                             '<div class="col-xs-9 col-sm-9 col-md-10 col-lg-10" style="padding:0px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+
-                                            '<span title="'+value.nombre_completo+'">'+value.nombre_completo+'</span><br>'+
+                                            '<span style="color:black;" title="'+value.nombre_completo+'">'+value.nombre_completo+'</span><br>'+
                                             '<span style="font-size:8px;float:left">Responsable '+ ( responsableEvidencia==value.id_usuario&&responsableTema==value.id_usuario? "Evidencia/Tema":
                                             responsableEvidencia==value.id_usuario? "Evidencia" : "Tema")+'</span>'+
                                             '</div>'+
@@ -1062,7 +1062,7 @@ abrirNotificaciones = (idEvidencia,responsableTema,responsableEvidencia)=>
                                             '</div>'+
 
                                             '<div class="col-xs-9 col-sm-9 col-md-10 col-lg-10" style="padding:0px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+
-                                                '<span title="'+value.nombre_completo+'">'+value.nombre_completo+'</span><br>'+
+                                                '<span style="color:black;" title="'+value.nombre_completo+'">'+value.nombre_completo+'</span><br>'+
                                                 '<span style="font-size:8px;float:right">Responsable '+ ( responsableEvidencia==value.id_usuario&&responsableTema==value.id_usuario? "Evidencia/Tema":
                                                 responsableEvidencia==value.id_usuario? "Evidencia" : "Tema")+'</span>'+
                                             '</div>'+
@@ -1103,7 +1103,7 @@ cargarMensajes = ()=>
     // tipo = $("#usuarios_notificaciones")[0]["dataCustom"]["TIPO"];
     $.ajax({
         url: '../Controller/EvidenciasController.php?Op=ObtenerMensajes',
-        type: 'GET',
+        type: 'POST',
         data: 'ID_EVIDENCIA='+idEvidencia,
         beforesend:()=>
         {
@@ -1121,7 +1121,7 @@ cargarMensajes = ()=>
                     $.each(data,(index,value)=>{
                         if(value.id == idUsuario)
                         {
-                            tempData += '<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" style="text-align:right;float:right">'+
+                            tempData += '<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" style="text-align:right;float:right;margin-bottom:5px">'+
                                 '<div style="background:lightgreen;padding:5px 10px 5px 10px;border-radius:15px 3px 3px 15px;float:right">'+
                                     '<span style="color:black;font-size:13px">'+value.mensaje+'</span>'+
                                     '<br>'+
@@ -1131,7 +1131,7 @@ cargarMensajes = ()=>
                         }
                         else
                         {
-                            tempData += '<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" style="text-align:left;float:left">'+
+                            tempData += '<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" style="text-align:left;float:left;margin-bottom:5px">'+
                                 '<div style="background:#ffffff;padding:5px 10px 5px 10px;border-radius:3px 15px 15px 3px;float:left">'+
                                     '<span style="color:black;font-size:13px">'+value.mensaje+'</span>'+
                                     '<br>'+
@@ -1160,21 +1160,25 @@ cargarMensajes = ()=>
 
 enviarMensajes = ()=>
 {
-    ID_EVIDENCIA = $("#usuarios_notificaciones")[0]["dataCustom"]["ID_EVIDENCIA"];
-    TEXTO = $("#mensajeTexto_notificaciones").val();
-    $.ajax({
-        url: '../Controller/EvidenciasController.php?Op=agregarMensaje',
-        type: 'POST',
-        data: 'ID_EVIDENCIA='+ID_EVIDENCIA+"&MENSAJE="+TEXTO,
-        success:(exito)=>
-        {
-            exito==1? cargarMensajes() : growlError("Error","Ocurrio un error al enviar el mensaje, Reintente");
-        },
-        error:()=>
-        {
-            growlError("Error","Error en el servidor al enviar el mensaje");
-        }
-    });
+    let ID_EVIDENCIA = $("#usuarios_notificaciones")[0]["dataCustom"]["ID_EVIDENCIA"];
+    let TEXTO = $("#mensajeTexto_notificaciones").val();
+    if(TEXTO!="")
+    {
+        let FECHA = getFechaStamp( Math.floor(new Date()/1000) );
+        $.ajax({
+            url: '../Controller/EvidenciasController.php?Op=AgregarMensaje',
+            type: 'POST',
+            data: 'ID_EVIDENCIA='+ID_EVIDENCIA+"&MENSAJE="+TEXTO+"&FECHA="+FECHA,
+            success:(exito)=>
+            {
+                exito==1? ( cargarMensajes(),$("#mensajeTexto_notificaciones").val("") ) : growlError("Error","Ocurrio un error al enviar el mensaje, Reintente");
+            },
+            error:()=>
+            {
+                growlError("Error","Error en el servidor al enviar el mensaje");
+            }
+        });
+    }
 }
 
 siConforme = (idPara,id,registro) =>

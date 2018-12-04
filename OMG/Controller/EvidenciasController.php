@@ -162,6 +162,13 @@ switch ($Op)
         echo json_encode(json_decode($lista,true));
     break;
 
+    case 'AgregarMensaje':
+        header('Content-type: application/json; charset=utf-8');
+        $USUARIO = Session::getSesion("user");
+        $exito = $model->agregarMensaje($USUARIO["ID_USUARIO"],$_REQUEST["ID_EVIDENCIA"],trim($_REQUEST["MENSAJE"]),$_REQUEST["FECHA"]);
+        echo json_decode($exito);
+    break;
+
 	default:
 		echo false;
         break;
