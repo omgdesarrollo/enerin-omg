@@ -166,8 +166,8 @@ class EvidenciasDAO
     {
         try
         {
-            $query = "INSERT INTO evidencias (id_registro,id_usuario,fecha_creacion)
-                     VALUES ($ID_REGISTRO,$ID_USUARIO,'$FECHA_CREACION')";
+            $query = "INSERT INTO evidencias (id_registro,id_usuario,fecha_creacion,accion_correctiva)
+                     VALUES ($ID_REGISTRO,$ID_USUARIO,'$FECHA_CREACION','[]')";
             $db = AccesoDB::getInstancia();
             $exito = $db->executeQueryUpdate($query);
             if($exito==1)

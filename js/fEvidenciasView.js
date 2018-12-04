@@ -1035,7 +1035,7 @@ abrirNotificaciones = (idEvidencia,responsableTema,responsableEvidencia)=>
                 {
                     // let var1 = 1;
                     // let var2 = 0;
-                    let tempData = '<div class="row" style="border:2px solid #3399cc;padding:5px 15px 5px 15px;background:tan">';
+                    let tempData = '<div class="row" style="border:2px solid #3399cc;padding:5px 15px 5px 15px;background:#c0c0c0b0;">';
                     $.each(data,(index,value)=>{
                         if(value.usuario!=undefined)
                         {
@@ -1043,7 +1043,7 @@ abrirNotificaciones = (idEvidencia,responsableTema,responsableEvidencia)=>
                             tempData += '<div class="col-xs-6 col-sm-5 col-md-5 col-lg-5" style="padding:5px;border-radius:10px 25px 25px 10px;float:right;background:lightgreen">'+
                                             '<div class="col-xs-9 col-sm-9 col-md-10 col-lg-10" style="padding:0px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+
                                             '<span style="color:black;" title="'+value.nombre_completo+'">'+value.nombre_completo+'</span><br>'+
-                                            '<span style="font-size:8px;float:left">Responsable '+ ( responsableEvidencia==value.id_usuario&&responsableTema==value.id_usuario? "Evidencia/Tema":
+                                            '<span style="font-size:10px;float:left">Responsable '+ ( responsableEvidencia==value.id_usuario&&responsableTema==value.id_usuario? "Evidencia/Tema":
                                             responsableEvidencia==value.id_usuario? "Evidencia" : "Tema")+'</span>'+
                                             '</div>'+
                                             '<div class="col-xs-3 col-sm-3 col-md-2 col-lg-2" style="padding:0px;float:right;">'+
@@ -1063,7 +1063,7 @@ abrirNotificaciones = (idEvidencia,responsableTema,responsableEvidencia)=>
 
                                             '<div class="col-xs-9 col-sm-9 col-md-10 col-lg-10" style="padding:0px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+
                                                 '<span style="color:black;" title="'+value.nombre_completo+'">'+value.nombre_completo+'</span><br>'+
-                                                '<span style="font-size:8px;float:right">Responsable '+ ( responsableEvidencia==value.id_usuario&&responsableTema==value.id_usuario? "Evidencia/Tema":
+                                                '<span style="font-size:10px;float:right">Responsable '+ ( responsableEvidencia==value.id_usuario&&responsableTema==value.id_usuario? "Evidencia/Tema":
                                                 responsableEvidencia==value.id_usuario? "Evidencia" : "Tema")+'</span>'+
                                             '</div>'+
                                             '</div>'+

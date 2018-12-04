@@ -326,7 +326,7 @@
                     </div>
                 </div> -->
             </div>
-            <div class="row" style="border:2px solid #3399cc;height:300px;padding-top:5px;background:tan">
+            <div class="row" style="border:2px solid #3399cc;height:300px;padding-top:5px;background:#c0c0c0b0;overflow-y:auto">
                 <div id="mensajes_notificaciones" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <!-- <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" style="text-align:left;float:left">
                         <div style="background:#ffffff;padding:5px 10px 5px 10px;border-radius:3px 15px 15px 3px;float:left">
@@ -349,7 +349,7 @@
             <!-- estilos en vista validacion documentos view php -->
             <div class="row">
                 <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10" style="padding:0px">
-                    <textarea id="mensajeTexto_notificaciones" class="area-observaciones" placeholder="Escribe tu mensaje" style="border:2px solid #3399cc;width:100%;background:tan;color:black;resize:none"></textarea>
+                    <textarea id="mensajeTexto_notificaciones" class="area-observaciones" placeholder="Escribe tu mensaje" style="border:2px solid #3399cc;width:100%;background:#c0c0c0b0;color:black;resize:none"></textarea>
                 </div>
                 <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2" style="padding:0px">
                     <button onClick="enviarMensajes()" class="btn-observaciones" style="background:#3399cc;border:2px solid #3399cc;font-size:xx-large;width:100%;height:56px;margin-bottom:1px"><i class="fa fa-paper-plane" style="color:#ffffff;border-radius:100%"></i></button>
