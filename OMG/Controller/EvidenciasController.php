@@ -136,6 +136,7 @@ switch ($Op)
     break;
 
     case 'ObtenerParticipantesUsuarios':
+        $USUARIO = Session::getSesion("user");
         $CONTRATO = -1;
         $lista = $model->obtenerParticipantesUsuarios($_REQUEST["R_TEMA"],$_REQUEST["R_EVIDENCIA"]);
         foreach($lista as $key => $value)
@@ -143,14 +144,22 @@ switch ($Op)
             $url = "filePerfilesUsuario/".$value["id_usuario"];
             $lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
         }
+        foreach($lista as $key => $value)
+        {
+            if($value["id_usuario"]==$USUARIO["ID_USUARIO"])
+            {
+                $lista[$key]["usuario"] = 1;
+            }
+        }
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($lista);
     break;
 
     case 'ObtenerMensajes':
         header('Content-type: application/json; charset=utf-8');
+        $USUARIO = Session::getSesion("user");
         $lista = $model->obtenerMensajes($_REQUEST["ID_EVIDENCIA"]);
-        echo json_encode($lista);
+        echo json_encode(json_decode($lista,true));
     break;
 
 	default:

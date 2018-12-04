@@ -241,13 +241,13 @@ class EvidenciasDAO
     {
         try
         {
+            $query="SELECT tbtemas.id_tema,tbtemas.padre_general
+            FROM temas tbtemas
+            WHERE tbtemas.padre = $ID_TEMA";
+            // echo $query;
             // $query="SELECT tbtemas.id_tema
             // FROM temas tbtemas
-            // WHERE tbtemas.padre = $ID_TEMA";
-            // echo $query;
-            $query="SELECT tbtemas.id_tema
-            FROM temas tbtemas
-            WHERE tbtemas.padre_general = $ID_TEMA";
+            // WHERE tbtemas.padre_general = $ID_TEMA";
 
             $db= AccesoDB::getInstancia();
             $result= $db->executeQuery($query);
@@ -387,7 +387,7 @@ class EvidenciasDAO
         try 
         {
             $db= AccesoDB::getInstancia();
-            $query="UPDATE temas SET padre_general = id_tema, resposable_general = id_emplado WHERE padre = 0";
+            $query="UPDATE temas SET padre_general = id_tema, responsable_general = id_empleado WHERE padre = 0";
             $db->executeQueryUpdate($query);
 
             $query="SELECT tbtemas.id_tema,tbtemas.id_empleado
@@ -466,6 +466,7 @@ class EvidenciasDAO
                     FROM evidencias tbevidencias
                     WHERE tbevidencias.id_evidencias = $ID_EVIDENCIA";
             $lista= $db->executeQuery($query);
+            // var_dump ($lista[0]["accion_correctiva"]);
             return $lista;
 
         } catch (Exception $ex) 
