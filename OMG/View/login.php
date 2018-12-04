@@ -393,7 +393,7 @@ function clock()
         <div id="registroalsistema">
             <center>
              <video  width="33%" height="" src="../../movies/base/GTE PRESENTACION DINAMICA29111801.mp4" controls></video>
-            <video  width="33%" height="" src="../../movies/base/Tutorial Esquematico 121118.mp4" controls></video>
+            <!--<video  width="33%" height="" src="../../movies/base/Tutorial Esquematico 121118.mp4" controls></video>-->
             <video  width="33%" height="" src="../../movies/base/Tutorial APP alta resolucion.mp4" controls></video>
             </center>
             
