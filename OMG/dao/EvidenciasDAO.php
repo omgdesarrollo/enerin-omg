@@ -166,8 +166,8 @@ class EvidenciasDAO
     {
         try
         {
-            $query = "INSERT INTO evidencias (id_registro,id_usuario,fecha_creacion)
-                     VALUES ($ID_REGISTRO,$ID_USUARIO,'$FECHA_CREACION')";
+            $query = "INSERT INTO evidencias (id_registro,id_usuario,fecha_creacion,accion_correctiva)
+                     VALUES ($ID_REGISTRO,$ID_USUARIO,'$FECHA_CREACION','[]')";
             $db = AccesoDB::getInstancia();
             $exito = $db->executeQueryUpdate($query);
             if($exito==1)
@@ -241,9 +241,12 @@ class EvidenciasDAO
     {
         try
         {
-            // $query="SELECT tbtemas.id_tema
+            //query para componer temas en url
+            // $query="SELECT tbtemas.id_tema,tbtemas.padre_general
             // FROM temas tbtemas
             // WHERE tbtemas.padre = $ID_TEMA";
+
+            //query para obtener registros
             // echo $query;
             $query="SELECT tbtemas.id_tema
             FROM temas tbtemas
@@ -387,7 +390,7 @@ class EvidenciasDAO
         try 
         {
             $db= AccesoDB::getInstancia();
-            $query="UPDATE temas SET padre_general = id_tema, resposable_general = id_emplado WHERE padre = 0";
+            $query="UPDATE temas SET padre_general = id_tema, responsable_general = id_empleado WHERE padre = 0";
             $db->executeQueryUpdate($query);
 
             $query="SELECT tbtemas.id_tema,tbtemas.id_empleado
@@ -466,7 +469,24 @@ class EvidenciasDAO
                     FROM evidencias tbevidencias
                     WHERE tbevidencias.id_evidencias = $ID_EVIDENCIA";
             $lista= $db->executeQuery($query);
+            // var_dump ($lista[0]["accion_correctiva"]);
             return $lista;
+
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+    public function agregarMensaje($ID_EVIDENCIA,$MENSAJE)
+    {
+        try 
+        {
+            $db= AccesoDB::getInstancia();
+            $query="UPDATE evidencias SET accion_correctiva = '$MENSAJE' WHERE id_evidencias = $ID_EVIDENCIA";
+            $exito= $db->executeUpdateRowsAfected($query);
+            return $exito;
 
         } catch (Exception $ex) 
         {

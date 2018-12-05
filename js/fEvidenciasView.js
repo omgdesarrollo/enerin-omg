@@ -956,14 +956,16 @@ function reconstruir(value,index)//listo jsgrid
             // }
 
             if(value.validacion_supervisor == "-1")
-                tempData["conforme"] = "<button onClick='siConforme("+value.id_responsable+","+value.id_evidencias+",\""+value.registro+"\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+noCheck+"</button>";
+                tempData["conforme"] = "<button onClick='siConforme("+value.validador+","+value.id_responsable+","+value.id_evidencias+",\""+value.registro+"\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+noCheck+"</button>";
 
             // if(value.validacion_supervisor == "0")
 
             if(value.validacion_supervisor == "1")
-                tempData["conforme"] = "<button onClick='noConforme("+value.id_responsable+","+value.id_evidencias+",\""+value.registro+"\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+yesCheck+"</button>";
+                tempData["conforme"] = "<button onClick='noConforme("+value.validador+","+value.id_responsable+","+value.id_evidencias+",\""+value.registro+"\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+yesCheck+"</button>";
+            // else
+            //     tempData["conforme"] = "<button onClick='siConforme("+value.id_responsable+","+value.id_evidencias+",\""+value.registro+"\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+noCheck+"</button>";
             
-            tempData["notificacion"] = "<button onClick='abrirNotificaciones("+value.id_evidencias+","+value.id_usuario+","+value.id_responsable+")' style='font-size:x-large;color:#39c;background:transparent;border:none;'>"+
+            tempData["notificacion"] = "<button onClick='abrirNotificaciones("+value.id_evidencias+","+value.id_responsable+","+value.id_usuario+")' style='font-size:x-large;color:#39c;background:transparent;border:none;'>"+
                     "<i class='fa fa-comments' style='font-size: xx-large;cursor:pointer' aria-hidden='true'></i></button>";
 
             // if(value.responsable=="1")
@@ -1017,6 +1019,8 @@ function reconstruir(value,index)//listo jsgrid
 
 abrirNotificaciones = (idEvidencia,responsableTema,responsableEvidencia)=>
 {
+    $("#usuarios_notificaciones")[0]["dataCustom"] = {"ID_EVIDENCIA":0,"R_TEMA":0,"R_EVIDENCIA":0,"TIPO":1,"ENVIAR":0};
+
     $.ajax({
         url: '../Controller/EvidenciasController.php?Op=ObtenerParticipantesUsuarios',
         type: 'GET',
@@ -1031,45 +1035,49 @@ abrirNotificaciones = (idEvidencia,responsableTema,responsableEvidencia)=>
             {
                 if(data.length!=0)
                 {
-                    let var1 = 0;
-                    let var2 = 0;
-                    if(data[0].id_usuario==responsableEvidencia)
-                    {
-                        var1 = 0;
-                        var1 = 1;
-                    }
-                    else
-                    {
-                        var1 = 1;
-                        var2 = 0;
-                    }
-                    let tempData = '<div class="row" style="border:2px solid #3399cc;padding:5px 15px 5px 15px;background:tan">'+
-                        '<div class="col-xs-6 col-sm-5 col-md-5 col-lg-5" style="padding:5px;border-radius:25px 10px 10px 25px;float:left;background:#ffffff">'+
-                            '<div class="col-xs-3 col-sm-3 col-md-2 col-lg-2" style="padding:0px;float:left;">'+
-                                '<img src="'+ (data[var1]["archivosUpload"][0].length!=0?
-                                (  data[var1]["archivosUpload"][1]+"/"+data[var1]["archivosUpload"][0][data[var1]["archivosUpload"][0].length-1] ) :
-                                ("../../images/base/user.png"))+'" class="img-circle" style="height:35px;float:left">'+
-                            '</div>'+
+                    // let var1 = 1;
+                    // let var2 = 0;
+                    let tempData = '<div class="row" style="border:2px solid #3399cc;padding:5px 15px 5px 15px;background:#c0c0c0b0;">';
+                    $.each(data,(index,value)=>{
+                        if(value.usuario!=undefined)
+                        {
+                            $("#usuarios_notificaciones")[0]["dataCustom"] = {"ID_EVIDENCIA":idEvidencia,"R_TEMA":responsableTema,"R_EVIDENCIA":responsableEvidencia,"TIPO":1,"ENVIAR":1,"USUARIO":value.id_usuario};
+                            tempData += '<div class="col-xs-6 col-sm-5 col-md-5 col-lg-5" style="padding:5px;border-radius:10px 25px 25px 10px;float:right;background:lightgreen">'+
+                                            '<div class="col-xs-9 col-sm-9 col-md-10 col-lg-10" style="padding:0px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+
+                                            '<span style="color:black;" title="'+value.nombre_completo+'">'+value.nombre_completo+'</span><br>'+
+                                            '<span style="font-size:10px;float:left">Responsable '+ ( responsableEvidencia==value.id_usuario&&responsableTema==value.id_usuario? "Evidencia/Tema":
+                                            responsableEvidencia==value.id_usuario? "Evidencia" : "Tema")+'</span>'+
+                                            '</div>'+
+                                            '<div class="col-xs-3 col-sm-3 col-md-2 col-lg-2" style="padding:0px;float:right;">'+
+                                                '<img src="'+ (value["archivosUpload"][0].length!=0?
+                                                (  value["archivosUpload"][1]+"/"+value["archivosUpload"][0][value["archivosUpload"][0].length-1] ) :
+                                                ("../../images/base/user.png"))+'" class="img-circle" style="height:35px;float:right">'+
+                                            '</div></div>';
+                        }
+                        else
+                        {
+                            tempData += '<div class="col-xs-6 col-sm-5 col-md-5 col-lg-5" style="padding:5px;border-radius:25px 10px 10px 25px;float:left;background:#ffffff">'+
+                                            '<div class="col-xs-3 col-sm-3 col-md-2 col-lg-2" style="padding:0px;float:left;">'+
+                                                '<img src="'+ (value["archivosUpload"][0].length!=0?
+                                                (  value["archivosUpload"][1]+"/"+value["archivosUpload"][0][value["archivosUpload"][0].length-1] ) :
+                                                ("../../images/base/user.png"))+'" class="img-circle" style="height:35px;float:left">'+
+                                            '</div>'+
 
-                            '<div class="col-xs-9 col-sm-9 col-md-10 col-lg-10" style="padding:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+
-                                '<span title="'+data[var1].nombre_completo+'">'+data[var1].nombre_completo+'</span></div>'+
-                            '</div>'+
-                        '<div class="col-xs-0 col-sm-2 col-md-2 col-lg-2" style="padding:5px;border-radius:25px 10px 10px 25px;float:left;">'+
-                            '<i class="fa fa-arrows-h" style="font-size:xx-large;color:#3399cc"></i>'+
-                        '</div>'+
-
-                        '<div class="col-xs-6 col-sm-5 col-md-5 col-lg-5" style="padding:5px;border-radius:10px 25px 25px 10px;float:right;background:lightgreen">'+
-                            '<div class="col-xs-9 col-sm-9 col-md-10 col-lg-10" style="padding:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+
-                            '<span title="'+data[var2].nombre_completo+'">'+data[var2].nombre_completo+'</span>'+
-                            '</div>'+
-                            '<div class="col-xs-3 col-sm-3 col-md-2 col-lg-2" style="padding:0px;float:right;">'+
-                                '<img src="'+ (data[var2]["archivosUpload"][0].length!=0?
-                                (  data[var2]["archivosUpload"][1]+"/"+data[var2]["archivosUpload"][0][data[var2]["archivosUpload"][0].length-1] ) :
-                                ("../../images/base/user.png"))+'" class="img-circle" style="height:35px;float:right">'+
-                            '</div>'+
-                        '</div></div>';
-                    cargarMensajes(idEvidencia,responsableTema,responsableEvidencia,1);
-                    // mensajes_notificaciones
+                                            '<div class="col-xs-9 col-sm-9 col-md-10 col-lg-10" style="padding:0px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+
+                                                '<span style="color:black;" title="'+value.nombre_completo+'">'+value.nombre_completo+'</span><br>'+
+                                                '<span style="font-size:10px;float:right">Responsable '+ ( responsableEvidencia==value.id_usuario&&responsableTema==value.id_usuario? "Evidencia/Tema":
+                                                responsableEvidencia==value.id_usuario? "Evidencia" : "Tema")+'</span>'+
+                                            '</div>'+
+                                            '</div>'+
+                                        '<div class="col-xs-0 col-sm-2 col-md-2 col-lg-2" style="padding:5px;border-radius:25px 10px 10px 25px;float:left;">'+
+                                            '<i class="fa fa-arrows-h" style="font-size:xx-large;color:#3399cc"></i>'+
+                                        '</div>';
+                        }
+                    });
+                    tempData += '</div>';
+                    cargarMensajes();
+                    $("#usuarios_notificaciones").html(tempData);
+                    console.log($("#usuarios_notificaciones"));
                 }
                 else
                 {
@@ -1088,22 +1096,59 @@ abrirNotificaciones = (idEvidencia,responsableTema,responsableEvidencia)=>
     });
 }
 
-cargarMensajes = (idEvidencia,responsableTema,responsableEvidencia,tipo)=>
+cargarMensajes = ()=>
 {
+    idEvidencia = $("#usuarios_notificaciones")[0]["dataCustom"]["ID_EVIDENCIA"];
+    idUsuario = $("#usuarios_notificaciones")[0]["dataCustom"]["USUARIO"];
+    // responsableTema = $("#usuarios_notificaciones")[0]["dataCustom"]["R_TEMA"];
+    // responsableEvidencia = $("#usuarios_notificaciones")[0]["dataCustom"]["R_EVIDENCIA"];
+    // tipo = $("#usuarios_notificaciones")[0]["dataCustom"]["TIPO"];
     $.ajax({
         url: '../Controller/EvidenciasController.php?Op=ObtenerMensajes',
-        type: 'GET',
+        type: 'POST',
         data: 'ID_EVIDENCIA='+idEvidencia,
         beforesend:()=>
         {
-            if(tipo==0)
-                growlWait("Espere","Cargando Mensajes...");
+            // $("#usuarios_notificaciones")[0]["dataCustom"]["TIPO"] = 0;
+            // if(tipo==0)
+            //     growlWait("Espere"," Mensajes...");
         },
         success:function(data)
         {
             if(typeof(data)=="object")
             {
-                growlSuccess("","");
+                let tempData = "";
+                if(data.length!=0)
+                {
+                    $.each(data,(index,value)=>{
+                        if(value.id == idUsuario)
+                        {
+                            tempData += '<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" style="text-align:right;float:right;margin-bottom:5px">'+
+                                '<div style="background:lightgreen;padding:5px 10px 5px 10px;border-radius:15px 3px 3px 15px;float:right">'+
+                                    '<span style="color:black;font-size:13px">'+value.mensaje+'</span>'+
+                                    '<br>'+
+                                    '<span style="font-size:9px">'+value.fecha+'</span>'+
+                                '</div>'+
+                            '</div>';
+                        }
+                        else
+                        {
+                            tempData += '<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" style="text-align:left;float:left;margin-bottom:5px">'+
+                                '<div style="background:#ffffff;padding:5px 10px 5px 10px;border-radius:3px 15px 15px 3px;float:left">'+
+                                    '<span style="color:black;font-size:13px">'+value.mensaje+'</span>'+
+                                    '<br>'+
+                                    '<span style="font-size:9px">'+value.fecha+'</span>'+
+                                '</div>'+
+                            '</div>';
+                        }
+                    });
+                    $("#mensajes_notificaciones").html(tempData);
+                }
+                else
+                {
+                    growlSuccess("","Sin mensajes para mostrar");
+                    $("#mensajes_notificaciones").html("");
+                }
             }
             else
             {
@@ -1115,25 +1160,57 @@ cargarMensajes = (idEvidencia,responsableTema,responsableEvidencia,tipo)=>
             growlError("Error ","Error en el servidor");
         }
     });
-    $("#notificacion_msjs").html("usuarios_notificaciones");
     $("#mostrar_notificaciones").modal();
 }
 
-enviarMensajes = (texto)=>
+enviarMensajes = ()=>
 {
+    let ID_EVIDENCIA = $("#usuarios_notificaciones")[0]["dataCustom"]["ID_EVIDENCIA"];
+    let TEXTO = $("#mensajeTexto_notificaciones").val();
+    if(TEXTO!="")
+    {
+        let FECHA = getFechaStamp( Math.floor(new Date()/1000) );
+        $.ajax({
+            url: '../Controller/EvidenciasController.php?Op=AgregarMensaje',
+            type: 'POST',
+            data: 'ID_EVIDENCIA='+ID_EVIDENCIA+"&MENSAJE="+TEXTO+"&FECHA="+FECHA,
+            success:(exito)=>
+            {
+                exito==1? ( cargarMensajes(),$("#mensajeTexto_notificaciones").val("") ) : growlError("Error","Ocurrio un error al enviar el mensaje, Reintente");
+            },
+            error:()=>
+            {
+                growlError("Error","Error en el servidor al enviar el mensaje");
+            }
+        });
+    }
 }
 
-siConforme = (idPara,id,registro) =>
+siConforme = (permiso,idPara,id,registro) =>
 {
-    enviar_notificacion("Evidencia Conforme <span style=\"color:green;font-style:italic;\">\""+registro+"\"</span><br>De: ",idPara,0,false,"EvidenciasView.php?accion="+id);
-    actualizarEvidencia(id,1);
+    if(permiso==1 )
+    {
+        enviar_notificacion("Evidencia Conforme <span style=\"color:green;font-style:italic;\">\""+registro+"\"</span><br>De: ",idPara,0,false,"EvidenciasView.php?accion="+id);
+        actualizarEvidencia(id,1);
+    }
+    else
+    {
+        swalInfo("Debes ser responsable de evidencia");
+    }
 }
 
-noConforme =(idPara,id,registro) =>
+noConforme =(permiso,idPara,id,registro) =>
 {
-    console.log("idPara",idPara);
-    enviar_notificacion("Evidencia <span style=\"color:red\">No</span> Conforme <span style=\"color:green;font-style:italic;\"> \""+registro+"\"</span><br>De: ",idPara,0,false,"EvidenciasView.php?accion="+id);
-    actualizarEvidencia(id,-1);
+    // console.log("idPara",idPara);
+    if(permiso==1)
+    {
+        enviar_notificacion("Evidencia <span style=\"color:red\">No</span> Conforme <span style=\"color:green;font-style:italic;\"> \""+registro+"\"</span><br>De: ",idPara,0,false,"EvidenciasView.php?accion="+id);
+        actualizarEvidencia(id,-1);
+    }
+    else
+    {
+        swalInfo("Debes ser responsable de evidencia");
+    }
 }
 
 function reconstruirExcel(value,index)

@@ -137,7 +137,7 @@ class EvidenciasModel
     {
         try
         {
-            $dao=new EvidenciasDAO();
+            $dao = new EvidenciasDAO();
             $data = array();
             $hijos = $dao->obtenerHijosTema($ID_TEMA);
             // var_dump($hijos);  
@@ -201,7 +201,10 @@ class EvidenciasModel
                     while($bandera)
                     {
                         $v = $hijos[$key];
-                        $dao->cambiarDatosTema($v["id_tema"],$value["id_tema"],$value["id_empleado"]);
+                        if($v["padre_general"]==0)
+                        {
+                            $dao->cambiarDatosTema($v["id_tema"],$value["id_tema"],$value["id_empleado"]);
+                        }
                         $temp = $dao->obtenerHijosTema($v["id_tema"]);
                         if( sizeof($temp)!=0 )
                             array_push($hijos,$temp[0]);
@@ -295,7 +298,34 @@ class EvidenciasModel
         {
             $dao=new EvidenciasDAO();
             $lista = $dao->obtenerMensajes($ID_EVIDENCIA);
-            return $lista;
+            if($lista[0]["accion_correctiva"]!="")
+                return $lista[0]["accion_correctiva"];
+            else
+                return "{}";
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+
+    public function  agregarMensaje($ID_USUARIO,$ID_EVIDENCIA,$MENSAJE,$FECHA)
+    {
+        try
+        {
+            $dao=new EvidenciasDAO();
+            $mensaje = array();
+            $mensaje["id"] = $ID_USUARIO;
+            $mensaje["mensaje"] = $MENSAJE;
+            $mensaje["fecha"] = $FECHA;
+            // $mensajes = array();
+            // $mensaje = "{ 'id':$ID_USUARIO,'mensaje':'$MENSAJE','fecha':'$FECHA' }";
+            // echo $mensaje;
+            $lista = $dao->obtenerMensajes($ID_EVIDENCIA);
+            $mensajes = json_decode( $lista[0]["accion_correctiva"],true );
+            array_push($mensajes,$mensaje);
+            $exito = $dao->agregarMensaje($ID_EVIDENCIA,json_encode($mensajes));
+            return $exito;
         } catch (Exception $ex)
         {
             throw $ex;
