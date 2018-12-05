@@ -956,12 +956,14 @@ function reconstruir(value,index)//listo jsgrid
             // }
 
             if(value.validacion_supervisor == "-1")
-                tempData["conforme"] = "<button onClick='siConforme("+value.id_responsable+","+value.id_evidencias+",\""+value.registro+"\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+noCheck+"</button>";
+                tempData["conforme"] = "<button onClick='siConforme("+value.responsable+","+value.id_responsable+","+value.id_evidencias+",\""+value.registro+"\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+noCheck+"</button>";
 
             // if(value.validacion_supervisor == "0")
 
             if(value.validacion_supervisor == "1")
-                tempData["conforme"] = "<button onClick='noConforme("+value.id_responsable+","+value.id_evidencias+",\""+value.registro+"\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+yesCheck+"</button>";
+                tempData["conforme"] = "<button onClick='noConforme("+value.responsable+","+value.id_responsable+","+value.id_evidencias+",\""+value.registro+"\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+yesCheck+"</button>";
+            // else
+            //     tempData["conforme"] = "<button onClick='siConforme("+value.id_responsable+","+value.id_evidencias+",\""+value.registro+"\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+noCheck+"</button>";
             
             tempData["notificacion"] = "<button onClick='abrirNotificaciones("+value.id_evidencias+","+value.id_responsable+","+value.id_usuario+")' style='font-size:x-large;color:#39c;background:transparent;border:none;'>"+
                     "<i class='fa fa-comments' style='font-size: xx-large;cursor:pointer' aria-hidden='true'></i></button>";
@@ -1184,17 +1186,31 @@ enviarMensajes = ()=>
     }
 }
 
-siConforme = (idPara,id,registro) =>
+siConforme = (permiso,idPara,id,registro) =>
 {
-    enviar_notificacion("Evidencia Conforme <span style=\"color:green;font-style:italic;\">\""+registro+"\"</span><br>De: ",idPara,0,false,"EvidenciasView.php?accion="+id);
-    actualizarEvidencia(id,1);
+    if(permiso==0)
+    {
+        enviar_notificacion("Evidencia Conforme <span style=\"color:green;font-style:italic;\">\""+registro+"\"</span><br>De: ",idPara,0,false,"EvidenciasView.php?accion="+id);
+        actualizarEvidencia(id,1);
+    }
+    else
+    {
+        swalInfo("Debes ser responsable de evidencia");
+    }
 }
 
-noConforme =(idPara,id,registro) =>
+noConforme =(permiso,idPara,id,registro) =>
 {
-    console.log("idPara",idPara);
-    enviar_notificacion("Evidencia <span style=\"color:red\">No</span> Conforme <span style=\"color:green;font-style:italic;\"> \""+registro+"\"</span><br>De: ",idPara,0,false,"EvidenciasView.php?accion="+id);
-    actualizarEvidencia(id,-1);
+    // console.log("idPara",idPara);
+    if(permiso==0)
+    {
+        enviar_notificacion("Evidencia <span style=\"color:red\">No</span> Conforme <span style=\"color:green;font-style:italic;\"> \""+registro+"\"</span><br>De: ",idPara,0,false,"EvidenciasView.php?accion="+id);
+        actualizarEvidencia(id,-1);
+    }
+    else
+    {
+        swalInfo("Debes ser responsable de evidencia");
+    }
 }
 
 function reconstruirExcel(value,index)
