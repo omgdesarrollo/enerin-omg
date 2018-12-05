@@ -241,13 +241,16 @@ class EvidenciasDAO
     {
         try
         {
-            $query="SELECT tbtemas.id_tema,tbtemas.padre_general
-            FROM temas tbtemas
-            WHERE tbtemas.padre = $ID_TEMA";
-            // echo $query;
-            // $query="SELECT tbtemas.id_tema
+            //query para componer temas en url
+            // $query="SELECT tbtemas.id_tema,tbtemas.padre_general
             // FROM temas tbtemas
-            // WHERE tbtemas.padre_general = $ID_TEMA";
+            // WHERE tbtemas.padre = $ID_TEMA";
+
+            //query para obtener registros
+            // echo $query;
+            $query="SELECT tbtemas.id_tema
+            FROM temas tbtemas
+            WHERE tbtemas.padre_general = $ID_TEMA";
 
             $db= AccesoDB::getInstancia();
             $result= $db->executeQuery($query);

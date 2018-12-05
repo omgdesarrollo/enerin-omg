@@ -77,10 +77,10 @@ function inicializarFiltros()
         { id: "evidencia",title:"Evidencia", type: "none"},
         // { name: "usuario",title:"Usuario", type: "text", width:250, editing:false }
         // { name: "plan_accion",title:"Plan Accion", type: "text", width: 160, editing:false },
-        { id: "desviacion",title:"Desviacion", type: "none"},
-        { id: "accion_correctiva",title:"Accion Correctiva", type: "none"},
+        // { id: "desviacion",title:"Desviacion", type: "none"},
+        { id: "notificacion",title:"Accion Correctiva", type: "none"},
         { id: "avance_plan",title:"Avance del Plan", type: "text"},
-        { id: "estatus",title:"Estatus", type: "combobox",data:estatusFiltro,descripcion:"estatus"},
+        { id: "estatus",title:"Estatus", type: "combobox",data:estatusFiltro,descripcion:"des_estatus"},
         // { id:"delete", name:"Opción", type:"opcion",sorting:""},
         ];
         resolve();
@@ -299,24 +299,27 @@ function reconstruir(value,index)
     }
     tempData["fecha_creacion"] = getSinFechaFormato(value.fecha_creacion);
 
-    tempData["desviacion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;'";
-    tempData["desviacion"] += "onClick='mostrarMensajes(\""+value.desviacion+"\",0);' data-toggle='modal'";
-    if(value.desviacion=="")
-        tempData["desviacion"] += "data-target='#MandarNotificacionModal'>"+noMsj+"</button>";
-    else
-        tempData["desviacion"] += "data-target='#MandarNotificacionModal'>"+yesMsj+"</button>";
+    // tempData["desviacion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;'";
+    // tempData["desviacion"] += "onClick='mostrarMensajes(\""+value.desviacion+"\",0);' data-toggle='modal'";
+    // if(value.desviacion=="")
+    //     tempData["desviacion"] += "data-target='#MandarNotificacionModal'>"+noMsj+"</button>";
+    // else
+    //     tempData["desviacion"] += "data-target='#MandarNotificacionModal'>"+yesMsj+"</button>";
     // value.desviacion;
     // tempData["accion_correctiva"] = value.accion_correctiva;
-    tempData["accion_correctiva"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;'";
-    tempData["accion_correctiva"] += "onClick='mostrarMensajes(\""+value.accion_correctiva+"\",1);' data-toggle='modal'";
-    if(value.accion_correctiva=="")
-        tempData["accion_correctiva"] += "data-target='#MandarNotificacionModal'>"+noMsj+"</button>";
-    else
-        tempData["accion_correctiva"] += "data-target='#MandarNotificacionModal'>"+yesMsj+"</button>";
+    // tempData["accion_correctiva"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;'";
+    // tempData["accion_correctiva"] += "onClick='mostrarMensajes(\""+value.accion_correctiva+"\",1);' data-toggle='modal'";
+    // if(value.accion_correctiva=="")
+    //     tempData["accion_correctiva"] += "data-target='#MandarNotificacionModal'>"+noMsj+"</button>";
+    // else
+    //     tempData["accion_correctiva"] += "data-target='#MandarNotificacionModal'>"+yesMsj+"</button>";
+
+    tempData["notificacion"] = "<button onClick='abrirNotificaciones("+value.accion_correctiva+","+value.id_usuario_tema+","+value.id_usuario+")' style='font-size:x-large;color:#39c;background:transparent;border:none;'>"+
+            "<i class='fa fa-comments' style='font-size: xx-large;cursor:pointer' aria-hidden='true'></i></button>";
 
     // tempData["avance_plan"]=(value.avance_plan*100).toFixed(2)+"%";
     tempData["avance_plan"] = value.avance_plan;
-    tempData["estatus"] = value.estatus;
+    tempData["estatus"] = value.estatus=="VALIDADO"? "CONFORME" : "NO CONFORME" ;
     // tempData["delete"] = [];
     tempData["delete"]=tempData["id_principal"];
     tempData["delete"].push({eliminar:0});
@@ -324,6 +327,124 @@ function reconstruir(value,index)
     return tempData;
 }
 
+abrirNotificaciones = (mensajes,responsableTema,responsableEvidencia)=>
+{
+    $("#usuarios_notificaciones")[0]["dataCustom"] = {"IZQ":0,"DER":0};
+    $.ajax({
+        url: '../Controller/EvidenciasController.php?Op=ObtenerParticipantesUsuarios',
+        type: 'GET',
+        data: 'R_TEMA='+responsableTema+'&R_EVIDENCIA='+responsableEvidencia,
+        beforesend:()=>
+        {
+            growlWait("Espere","Cargando Mensajes...");
+        },
+        success:function(data)
+        {
+            if(typeof(data)=="object")
+            {
+                if(data.length!=0)
+                {
+                    let bandera = 1;
+                    // let var2 = 0;
+                    let tempData = '<div class="row" style="border:2px solid #3399cc;padding:5px 15px 5px 15px;background:#c0c0c0b0;">';
+                    $.each(data,(index,value)=>{
+                        if(bandera==1)
+                        {
+                            // $("#usuarios_notificaciones")[0]["dataCustom"] = {"R_TEMA":responsableTema,"R_EVIDENCIA":responsableEvidencia};
+                            $("#usuarios_notificaciones")[0]["dataCustom"]["DER"] = value.id_usuario;
+                            tempData += '<div class="col-xs-6 col-sm-5 col-md-5 col-lg-5" style="padding:5px;border-radius:10px 25px 25px 10px;float:right;background:lightgreen">'+
+                                            '<div class="col-xs-9 col-sm-9 col-md-10 col-lg-10" style="padding:0px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+
+                                            '<span style="color:black;" title="'+value.nombre_completo+'">'+value.nombre_completo+'</span><br>'+
+                                            '<span style="font-size:10px;float:left">Responsable '+ ( responsableEvidencia==value.id_usuario&&responsableTema==value.id_usuario? "Evidencia/Tema":
+                                            responsableEvidencia==value.id_usuario? "Evidencia" : "Tema")+'</span>'+
+                                            '</div>'+
+                                            '<div class="col-xs-3 col-sm-3 col-md-2 col-lg-2" style="padding:0px;float:right;">'+
+                                                '<img src="'+ (value["archivosUpload"][0].length!=0?
+                                                (  value["archivosUpload"][1]+"/"+value["archivosUpload"][0][value["archivosUpload"][0].length-1] ) :
+                                                ("../../images/base/user.png"))+'" class="img-circle" style="height:35px;float:right">'+
+                                            '</div></div>';
+                            bandera = 0;
+                        }
+                        else
+                        {
+                            $("#usuarios_notificaciones")[0]["dataCustom"]["IZQ"] = value.id_usuario;
+                            tempData += '<div class="col-xs-6 col-sm-5 col-md-5 col-lg-5" style="padding:5px;border-radius:25px 10px 10px 25px;float:left;background:#ffffff">'+
+                                            '<div class="col-xs-3 col-sm-3 col-md-2 col-lg-2" style="padding:0px;float:left;">'+
+                                                '<img src="'+ (value["archivosUpload"][0].length!=0?
+                                                (  value["archivosUpload"][1]+"/"+value["archivosUpload"][0][value["archivosUpload"][0].length-1] ) :
+                                                ("../../images/base/user.png"))+'" class="img-circle" style="height:35px;float:left">'+
+                                            '</div>'+
+
+                                            '<div class="col-xs-9 col-sm-9 col-md-10 col-lg-10" style="padding:0px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+
+                                                '<span style="color:black;" title="'+value.nombre_completo+'">'+value.nombre_completo+'</span><br>'+
+                                                '<span style="font-size:10px;float:right">Responsable '+ ( responsableEvidencia==value.id_usuario&&responsableTema==value.id_usuario? "Evidencia/Tema":
+                                                responsableEvidencia==value.id_usuario? "Evidencia" : "Tema")+'</span>'+
+                                            '</div>'+
+                                            '</div>'+
+                                        '<div class="col-xs-0 col-sm-2 col-md-2 col-lg-2" style="padding:5px;border-radius:25px 10px 10px 25px;float:left;">'+
+                                            '<i class="fa fa-arrows-h" style="font-size:xx-large;color:#3399cc"></i>'+
+                                        '</div>';
+                        }
+                    });
+                    tempData += '</div>';
+                    cargarMensajes(mensajes);
+                    $("#usuarios_notificaciones").html(tempData);
+                    // console.log($("#usuarios_notificaciones"));
+                }
+                else
+                {
+                    growlError("Error","No se pudieron cargar los mensajes reintente");
+                }
+            }
+            else
+            {
+                growlError("Error","Error al cargar mensajes");
+            }
+        },
+        error:()=>
+        {
+            growlError("Error","Error en el servidor");
+        }
+    });
+}
+
+cargarMensajes = (data)=>
+{
+    let idUsuario = $("#usuarios_notificaciones")[0]["dataCustom"]["DER"];
+    let tempData = "";
+    if(data.length!=0)
+    {
+        $.each(data,(index,value)=>{
+            if(value.id == idUsuario)
+            {
+                tempData += '<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" style="text-align:right;float:right;margin-bottom:5px">'+
+                    '<div style="background:lightgreen;padding:5px 10px 5px 10px;border-radius:15px 3px 3px 15px;float:right">'+
+                        '<span style="color:black;font-size:13px">'+value.mensaje+'</span>'+
+                        '<br>'+
+                        '<span style="font-size:9px">'+value.fecha+'</span>'+
+                    '</div>'+
+                '</div>';
+            }
+            else
+            {
+                tempData += '<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" style="text-align:left;float:left;margin-bottom:5px">'+
+                    '<div style="background:#ffffff;padding:5px 10px 5px 10px;border-radius:3px 15px 15px 3px;float:left">'+
+                        '<span style="color:black;font-size:13px">'+value.mensaje+'</span>'+
+                        '<br>'+
+                        '<span style="font-size:9px">'+value.fecha+'</span>'+
+                    '</div>'+
+                '</div>';
+            }
+        });
+        $("#mensajes_notificaciones").html(tempData);
+    }
+    else
+    {
+        growlSuccess("","Sin mensajes para mostrar");
+        $("#mensajes_notificaciones").html("");
+    }
+    $("#mostrar_notificaciones").modal();
+}
 
 function reconstruirExcel(value,index)
 {
@@ -502,9 +623,9 @@ function graficar()
     });
     
     if(proceso!=0)
-        dataGrafica.push(["Validados",validados,">> Evidencias:"+validados.toString(),JSON.stringify(validados_data),1]);
+        dataGrafica.push(["Conforme",validados,">> Evidencias:"+validados.toString(),JSON.stringify(validados_data),1]);
     if(proceso!=0)
-        dataGrafica.push(["En Proceso",proceso,">> Evidencias:"+proceso.toString(),JSON.stringify(proceso_data),1]);
+        dataGrafica.push(["No Conforme",proceso,">> Evidencias:"+proceso.toString(),JSON.stringify(proceso_data),1]);
     
     $.each(dataGrafica,function(index,value){
         if(value[1] != 0)
@@ -527,7 +648,7 @@ function graficar2(temas,concepto)
     let bandera = 0;
     let dataGrafica = [];
 
-    tituloGrafica = concepto != "En Proceso" ? "EVIDENCIAS VALIDADAS" : "EVIDENCIAS EN PROCESO";
+    tituloGrafica = concepto != "No Conforme" ? "EVIDENCIAS CONFORMES" : "EVIDENCIAS NO CONFORMES";
     temas = JSON.parse(temas);
     $.each(temas,(index,value)=>
     {
@@ -547,7 +668,7 @@ function graficar3(datos,concepto)
     let lista = new Object();
 
     datos = JSON.parse(datos);
-    tituloGrafica = datos[0].estatus == "VALIDADO" ? "DETALLES EVIDENCIAS VALIDADAS" : "DETALLES EVIDENCIAS EN PROCESO";
+    tituloGrafica = datos[0].estatus == "VALIDADO" ? "DETALLES EVIDENCIAS CONFORMES" : "DETALLES EVIDENCIAS NO CONFORMES";
     
     $.each(datos,(index,value)=>{
         if(lista[value.id_registro]==undefined)
@@ -558,4 +679,15 @@ function graficar3(datos,concepto)
         dataGrafica.push([value[0].registro,value.length,">> Responsable Registro:\n"+value[0].resp+"\n>> Frecuencia:\n"+value[0].frecuencia+"\n>> Evidencias:"+value.length,"[]",-1]);
     });
     construirGrafica(dataGrafica,tituloGrafica);
+}
+
+refresh = ()=>
+{
+    // construirGrid();
+    // inicializaChartjs();
+    // inicializarFiltros().then((resolve2)=>
+    // {
+        construirFiltros();
+        listarDatos();
+    // });
 }

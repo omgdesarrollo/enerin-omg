@@ -238,6 +238,34 @@ $Usuario=  Session::getSesion("user");
     </div>
 </div> -->
 <div id="jsChart"></div>
+<div class="modal draggable fade" id="mostrar_notificaciones" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog modal-lg" role="document" style="text-align:-webkit-center">
+        <div id="loaderModalMostrar"></div>
+		<div class="modal-content" style="max-width:640px;">
+        <div class="modal-header" style="border-bottom:0px">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"  class="closeLetra">X</span></button>
+          <h4 class="modal-title" id="myModalLabel">Notificaciones</h4>
+        </div>
+        <div class="modal-body" style="padding:0px 15px 0px 15px">
+            <div class="div-observacion-msjs" id="usuarios_notificaciones">
+            </div>
+            <div class="row" style="border:2px solid #3399cc;height:300px;padding-top:5px;background:#c0c0c0b0;overflow-y:auto">
+                <div id="mensajes_notificaciones" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10" style="padding:0px">
+                    <textarea id="mensajeTexto_notificaciones" class="area-observaciones" placeholder="Escribe tu mensaje" style="border:2px solid #3399cc;width:100%;background:#c0c0c0b0;color:black;resize:none"></textarea>
+                </div> -->
+                <!-- <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2" style="padding:0px">
+                    <button onClick="enviarMensajes()" class="btn-observaciones" style="background:#3399cc;border:2px solid #3399cc;font-size:xx-large;width:100%;height:56px;margin-bottom:1px"><i class="fa fa-paper-plane" style="color:#ffffff;border-radius:100%"></i></button>
+                </div> -->
+            </div>
+        </div><!-- cierre div class-body -->
+      </div><!-- cierre div class modal-content -->
+    </div><!-- cierre div class="modal-dialog" -->
+</div><!-- cierre del modal-->
 <script>
 
 // $(function(){
@@ -273,8 +301,8 @@ $Usuario=  Session::getSesion("user");
     ];        
     
     var estatusFiltro = [
-        {estatus:"EN PROCESO"},{estatus:"VALIDADO"}
-    ]
+        {estatus:"EN PROCESO",des_estatus:"NO CONFORME"},{estatus:"VALIDADO",des_estatus:"CONFORME"}
+    ];
 
     var estructuraGrid = [
         { name: "id_principal", type: "text",visible:false },
@@ -292,8 +320,8 @@ $Usuario=  Session::getSesion("user");
         // { name: "usuario",title:"Usuario", type: "text", width:250, editing:false },
         
         // { name: "plan_accion",title:"Plan Accion", type: "text", width: 160, editing:false },
-        { name: "desviacion",title:"Desviación", type: "text", width: 100, editing:false},
-        { name: "accion_correctiva",title:"Acción Correctiva", type: "text", width: 150, editing:false},
+        // { name: "desviacion",title:"Desviación", type: "text", width: 100, editing:false},
+        { name: "notificacion",title:"Notificación", type: "text", width: 150, editing:false},
         { name: "avance_plan",title:"Avance del Plan", type: "text", width: 100, editing:false},
         {name: "estatus",title:"Estatus", type: "text", width: 150, editing:false },
         // { name:"delete", title:"Opción", type:"customControl",sorting:""},

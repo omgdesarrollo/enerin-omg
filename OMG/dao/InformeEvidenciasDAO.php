@@ -24,7 +24,7 @@ class InformeEvidenciasDAO{
             $query="SELECT tbtemas.id_tema,
             -- tbtemas.no no_tema,
             --  tbtemas.nombre tema,
-             tbusuarios.id_empleado id_empleado_tema,
+             tbusuarios.id_empleado id_empleado_tema, tbusuarios.id_usuario id_usuario_tema,
             (SELECT CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) ) as tema_responsable,
             tbrequisitos.id_requisito,tbrequisitos.requisito, tbregistros.id_registro,tbregistros.registro,tbregistros.frecuencia,
             tbdocumentos.id_documento, tbdocumentos.clave_documento, tbdocumentos.id_empleado id_empleado_documento,
@@ -41,7 +41,7 @@ class InformeEvidenciasDAO{
             where tbevidencias.id_usuario = tbusuarios2.id_usuario) as resp,
             
             tbevidencias.accion_correctiva,tbevidencias.fecha_creacion,
-            tbevidencias.desviacion, if(tbevidencias.validacion_supervisor='true','VALIDADO','EN PROCESO') estatus
+            tbevidencias.desviacion, if(tbevidencias.validacion_supervisor='1','VALIDADO','EN PROCESO') estatus
             
             FROM temas tbtemas
             LEFT JOIN asignacion_tema_requisito tbasignacion_tema_requisito ON tbasignacion_tema_requisito.id_tema=tbtemas.id_tema

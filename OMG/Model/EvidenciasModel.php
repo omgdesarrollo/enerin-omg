@@ -137,7 +137,7 @@ class EvidenciasModel
     {
         try
         {
-            $dao=new EvidenciasDAO();
+            $dao = new EvidenciasDAO();
             $data = array();
             $hijos = $dao->obtenerHijosTema($ID_TEMA);
             // var_dump($hijos);  
