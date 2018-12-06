@@ -199,7 +199,7 @@ function reconstruirExcel(value,index)//listo jsgrid
 
 function mostrarTemaResponsable(id_documento)
 {
-    ValoresTemaResponsable = "<table class='tbl-qa'>\n\
+    ValoresTemaResponsable = "<table class='tbl-qa' style='width:100%'>\n\
                                 <tr>\n\
                                     <th class='table-header'>Tema</th>\n\
                                     <th class='table-header'>Responsable del Tema</th>\n\
@@ -227,7 +227,7 @@ function mostrarTemaResponsable(id_documento)
 
 function mostrarRequisitos(id_documento)
 {
-        ValoresRequisitos = "<ul>";
+        ValoresRequisitos = "<ul style='margin:0px'>";
 
         $.ajax ({
             url: "../Controller/InformeValidacionDocumentosController.php?Op=MostrarRequisitosPorDocumento",
@@ -236,8 +236,10 @@ function mostrarRequisitos(id_documento)
             success:function(datosRequisitos)
             {
                $.each(datosRequisitos,function(index,value){
-                
-                ValoresRequisitos+="<li>"+value.requisito+"</li>";                                       
+                // ValoresRequisitos+="<li>"+value.requisito+"</li>";
+                ValoresRequisitos+= '<div class="panel-group" style="margin:0px">'+
+                            '<div class="panel panel-info">'+
+                                '<div class="panel-heading" style="font-size:11px;font-weight:bold;"><i class="fa fa-angle-right" style="color:#3399cc;margin-right:10px;font-size:large"></i>'+value.requisito+'</div></div></div>';
 
                });
            ValoresRequisitos += "</ul>";     
