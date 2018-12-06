@@ -319,6 +319,7 @@ function saveToDatabase(ObjetoThis,columna,id)
             $(ObjetoThis).css("background","#FFF url(../../images/base/loaderIcon.gif) no-repeat right");
             $.ajax({
                     url: "../Controller/GeneralController.php?Op=ModificarColumna",
+//                      url: "../Controller/TemasController.php?Op=updateColumnas",
                     type: "POST",
                     data:'TABLA=temas &COLUMNA='+columna+' &VALOR='+ObjetoThis.innerHTML+' &ID='+id+' &ID_CONTEXTO=id_tema',
                     success: function(data)
@@ -332,10 +333,11 @@ function saveToDatabase(ObjetoThis,columna,id)
 function saveComboToDatabase(column,val,idTema)
 {
     valorobjeto= val[val.selectedIndex].value;
-    console.log(valorobjeto);
+    console.log("d",valorobjeto);
     
     $.ajax({
-        url: "../Controller/GeneralController.php?Op=ModificarColumna",
+//        url: "../Controller/GeneralController.php?Op=ModificarColumna",
+         url: "../Controller/TemasController.php?Op=ModificarColumna",
         type: "POST",
         data:'TABLA=temas &COLUMNA='+column+' &VALOR='+valorobjeto+' &ID='+idTema+' &ID_CONTEXTO=id_tema',
         success: function(data){   

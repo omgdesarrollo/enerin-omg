@@ -86,6 +86,17 @@ switch ($Op) {
             echo $model->componerTablaTemasPadreandReponsaleGeneral();
             
         break;
+        case 'ModificarColumna':
+        $resultado = $model->actualizarPorColumna($_REQUEST["TABLA"],$_REQUEST["COLUMNA"],$_REQUEST["VALOR"],$_REQUEST["ID"],$_REQUEST["ID_CONTEXTO"]);
+        echo $resultado;
+        break;
+        case'updateColumnas':
+        $resultado = $model->actualizarColumnas($_REQUEST['TABLA'],$_REQUEST['COLUMNAS'],$_REQUEST['ID'],Session::getSesion("s_cont")); 
+        
+        break;
+    
+    
+    
 	default:
 		# code...
 		break;

@@ -188,6 +188,66 @@ class TemaModel{
     }
     
     
+       public function actualizarColumnas($TABLA, $COLUMNAS,$ID,$CONTRATO)
+    {
+        try
+        {
+            $ROWS="";
+            $columna_id="";
+            $valor_id="";
+                    
+            $CADENA="UPDATE $TABLA SET $ROWS,contrato=$CONTRATO  
+                     WHERE $ID";
+            
+            $prueba=$ID[0][0];
+            
+            echo "valores del ID: ".json_encode($prueba);
+
+//            $ID = json_decode($columna_id);        
+//            echo "valor ID: ".json_decode($columna_id);
+            
+            $dao=new TemaDAO();
+            $rec= $dao->actualizarColumnas($CADENA);
+            
+            foreach ($COLUMNAS as $index => $value) {
+                
+            echo "El valor de".$index[0]."es:".$value[0];
+            }
+//            echo "Valores Columnas: ".json_encode($COLUMNAS);
+            echo "valor foreach: ".json_encode($value);
+//            return $CADENA;
+            
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+    
+    
+     public function actualizarPorColumna($TABLA,$COLUMNA,$VALOR,$ID,$ID_CONTEXT) {
+        try
+        {
+            $dao=new TemaDAO();
+            $value=array("id_tema"=>$ID);
+            $data=$dao->obtenerPadreGeneralPorElTemasOrSubtemaQueSeMande($value);
+            
+            $ID_CONTEXT="padre_general";
+            $ID=$data[0]["padre_general"];
+            $COLUMNA="responsable_general";
+            $rec= $dao->actualizarColumnaPorTabla($TABLA, $COLUMNA, $VALOR, $ID,$ID_CONTEXT);
+            
+           
+            return $rec;
+            
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }    
+    }
+    
+    
     
     
     
