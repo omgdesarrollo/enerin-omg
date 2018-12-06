@@ -205,7 +205,7 @@ $Usuario=  Session::getSesion("user");
     });
 
     var customsFieldsGridData=[
-        {field:"customControl",my_field:MyCControlField},
+        // {field:"customControl",my_field:MyCControlField},
         {field:"porcentaje",my_field:porcentajesFields},
     ];//grid
     
@@ -225,7 +225,7 @@ $Usuario=  Session::getSesion("user");
         // { name: "penalizacion",title:"Penalizacion", type: "text", width: 110,editing:false},
         // { name: "cumplimiento_requisito",title:"% Cumplimiento Requisito", type: "porcentaje", width: 140,editing:false},
         // { name: "estado_requisito",title:"Estado Requisito", type: "text", width: 100,editing:false},
-        { name:"delete", title:"Opción", type:"customControl",sorting:""},
+        // { name:"delete", title:"Opción", type:"customControl",sorting:""},
         // { title:"Opción", type:"",sorting:""},
         
     ];//grid

@@ -56,7 +56,7 @@ function inicializarFiltros()
 //            { id: "status",name:"status", type: "text"},
             { id: "estatus",name:"validacion_tema_responsable", type: "combobox",
                 data:[{estatus:0,descripcion:"Sin Asignar"},{estatus:1,descripcion:"En Proceso"},{estatus:2,descripcion:"Validado"}],descripcion:"descripcion"},
-            {name:"opcion",id:"opcion",type:"opcion"}
+            // {name:"opcion",id:"opcion",type:"opcion"}
             // 3075264647556791394195
             // { id:"delete", name:"Opción", type:"customControl",sorting:""},
         ];
@@ -199,7 +199,7 @@ function reconstruirExcel(value,index)//listo jsgrid
 
 function mostrarTemaResponsable(id_documento)
 {
-    ValoresTemaResponsable = "<table class='tbl-qa' style='width:100%'>\n\
+    let ValoresTemaResponsable = "<table class='tbl-qa' style='width:100%'>\n\
                                 <tr>\n\
                                     <th class='table-header'>Tema</th>\n\
                                     <th class='table-header'>Responsable del Tema</th>\n\
@@ -227,7 +227,7 @@ function mostrarTemaResponsable(id_documento)
 
 function mostrarRequisitos(id_documento)
 {
-        ValoresRequisitos = "<ul style='margin:0px'>";
+        let ValoresRequisitos = "<ul style='margin:0px'>";
 
         $.ajax ({
             url: "../Controller/InformeValidacionDocumentosController.php?Op=MostrarRequisitosPorDocumento",
@@ -252,7 +252,7 @@ function mostrar_urls(id_validacion_documento)//listo
 {
     // $('#div_subirArchivos').html("");
     $("#subirArchivos").attr("style","display:none");
-    var tempDocumentolistadoUrl = "";
+    let tempDocumentolistadoUrl = "";
     URL = 'filesValidacionDocumento/'+id_validacion_documento;   
     $.ajax({
         url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
@@ -358,7 +358,7 @@ function borrarArchivo(url,id_para)
 
 function agregarArchivosUrl()
 {
-    var id_validacion_documento = $('#tempInputIdEvidenciaDocumento').val();
+    let id_validacion_documento = $('#tempInputIdEvidenciaDocumento').val();
     url = 'filesEvidenciaDocumento/'+id_validacion_documento,
     $.ajax({
         url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",

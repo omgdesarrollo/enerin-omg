@@ -55,7 +55,7 @@ function inicializarFiltros()
             //     {estado_requisito:"EN PROCESO",descripcion:"EN PROCESO"},
             //     {estado_requisito:"NO INICIADO",descripcion:"NO INICIADO"}
             // ],descripcion:"descripcion"},
-            {name:"opcion",id:"opcion",type:"opcion"}
+            // {name:"opcion",id:"opcion",type:"opcion"}
         ];
         resolve();
     });

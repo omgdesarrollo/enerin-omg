@@ -893,7 +893,7 @@ function componerDataGrid()
 
 function mostrarRequisitos(id_documento)//listo
 {
-    ValoresRequisitos = "<ul style='margin:0px'>";
+    let ValoresRequisitos = "<ul style='margin:0px'>";
 
     $.ajax ({
         url: "../Controller/ValidacionDocumentosController.php?Op=MostrarRequisitosPorDocumento",
@@ -918,7 +918,7 @@ function mostrarRequisitos(id_documento)//listo
 
 function mostrarRegistros(id_documento)//listo
 {
-    ValoresRegistros = "<ul style='margin:0px'>";
+    let ValoresRegistros = "<ul style='margin:0px'>";
     $.ajax ({
         url:"../Controller/ValidacionDocumentosController.php?Op=MostrarRegistrosPorDocumento",
         type: 'POST',
@@ -940,14 +940,14 @@ function mostrarRegistros(id_documento)//listo
 
 function mostrarTemaResponsable(idDocumento)//listo
 {
-    tempData = "";
+    let tempData = "";
     $.ajax({
         url:'../Controller/ValidacionDocumentosController.php?Op=ObtenerTemayResponsable',
         type:'GET',
         data:'ID_DOCUMENTO='+idDocumento,
-        success:function(responsables)
+        success:(responsables)=>
         {
-            $.each(responsables,function(index,value)
+            $.each(responsables,(index,value)=>
             {
                 // if(value.nombre!=null)
                 // {
