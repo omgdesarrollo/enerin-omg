@@ -461,7 +461,11 @@ function reconstruir(documento,index)//listo
     // tempData["validacion_tema_responsable"]+="></i>";
 
     // tempData+="<td>";
-    tempData["observaciones"] = "<i data-toggle='modal' data-target='#mostrar-observaciones' onClick='mostrarObservacionesInicio("+documento.id_validacion_documento+")' class='ace-icon fa fa-comments' style='font-size:20px;cursor:pointer'></i>";
+    // tempData["observaciones"] = "<i data-toggle='modal' data-target='#mostrar-observaciones' onClick='mostrarObservacionesInicio("+documento.id_validacion_documento+")' class='ace-icon fa fa-comments' style='font-size:20px;cursor:pointer'></i>";
+    
+    tempData["observaciones"] = "<button onClick='mostrarObservacionesInicio("+documento.id_validacion_documento+")' style='font-size:x-large;color:#39c;background:transparent;border:none;'>"+
+                    "<i class='fa fa-comments' style='font-size: xx-large;cursor:pointer' aria-hidden='true'></i></button>";
+
     tempData["desviacion_mayor"] = "X";
     tempData["id_principal"].push({eliminar:0});
     tempData["id_principal"].push({editar:0});//si quieres que edite 1, si no 0
@@ -889,7 +893,7 @@ function componerDataGrid()
 
 function mostrarRequisitos(id_documento)//listo
 {
-    ValoresRequisitos = "<ul>";
+    let ValoresRequisitos = "<ul style='margin:0px'>";
 
     $.ajax ({
         url: "../Controller/ValidacionDocumentosController.php?Op=MostrarRequisitosPorDocumento",
@@ -900,7 +904,10 @@ function mostrarRequisitos(id_documento)//listo
             $.each(responserequisitos,function(index,value)
             {
                 //alert("Hast aqui"+value.requisito);
-            ValoresRequisitos+="<li>"+value.requisito+"</li>";                                       
+            ValoresRequisitos+= '<div class="panel-group" style="margin:0px">'+
+                            '<div class="panel panel-info">'+
+                                '<div class="panel-heading" style="font-size:11px;font-weight:bold;"><i class="fa fa-angle-right" style="color:#3399cc;margin-right:10px;font-size:large"></i>'+value.requisito+'</div></div></div>';
+            // ValoresRequisitos+="<li>"+value.requisito+"</li>";                                       
 
             });
             ValoresRequisitos += "</ul>";     
@@ -911,7 +918,7 @@ function mostrarRequisitos(id_documento)//listo
 
 function mostrarRegistros(id_documento)//listo
 {
-    ValoresRegistros = "<ul>";
+    let ValoresRegistros = "<ul style='margin:0px'>";
     $.ajax ({
         url:"../Controller/ValidacionDocumentosController.php?Op=MostrarRegistrosPorDocumento",
         type: 'POST',
@@ -919,7 +926,11 @@ function mostrarRegistros(id_documento)//listo
         success:function(responseregistros)
         {
             $.each(responseregistros,function(index,value){
-                ValoresRegistros+="<li>"+value.registro+"</li>"; 
+
+                ValoresRegistros += '<div class="panel-group" style="margin:0px">'+
+                            '<div class="panel panel-info">'+
+                                '<div class="panel-heading" style="font-size:11px;font-weight:bold;"><i class="fa fa-angle-right" style="color:#3399cc;margin-right:10px;font-size:large"></i>'+value.registro+'</div></div></div>';
+                // ValoresRegistros+="<li>"+value.registro+"</li>"; 
             });
             ValoresRegistros += "</ul>";
             $('#RegistrosListado').html(ValoresRegistros);
@@ -929,14 +940,14 @@ function mostrarRegistros(id_documento)//listo
 
 function mostrarTemaResponsable(idDocumento)//listo
 {
-    tempData = "";
+    let tempData = "";
     $.ajax({
         url:'../Controller/ValidacionDocumentosController.php?Op=ObtenerTemayResponsable',
         type:'GET',
         data:'ID_DOCUMENTO='+idDocumento,
-        success:function(responsables)
+        success:(responsables)=>
         {
-            $.each(responsables,function(index,value)
+            $.each(responsables,(index,value)=>
             {
                 // if(value.nombre!=null)
                 // {

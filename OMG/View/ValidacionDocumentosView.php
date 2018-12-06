@@ -267,12 +267,12 @@ if(isset($_REQUEST["accion"]))
 <div class="modal draggable fade" id="mostrar-observaciones" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
         <div id="loaderModalMostrar"></div>
-		<div class="modal-content" style="width: 500px;">                
+		<div class="modal-content" style="width: 500px;">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"  class="closeLetra">X</span></button>
           <h4 class="modal-title" id="myModalLabel">Observaciones</h4>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" style="padding:10px 1px 1px 1px">
             <div class="div-observacion-msjs" id="observacion_msjs"></div>
 
             <div id="div_observacion_btn" class="div-observacion-btn">
@@ -636,6 +636,7 @@ if(isset($_REQUEST["accion"]))
 
     function mostrarObservacionesInicio(idDocumento)
     {
+        $("#mostrar-observaciones").modal();
         $("#div_observacion_btn").html("<textarea id='textarea_msj' class='area-observaciones'></textarea><button onClick='enviarObservacion("+idDocumento+")' class='btn-observaciones'>Enviar</button>");
         mostrarObservaciones(idDocumento);
     }

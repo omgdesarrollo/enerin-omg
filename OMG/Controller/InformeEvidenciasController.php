@@ -18,14 +18,21 @@ switch ($Op)
         // $v["param"]["s_d"]=$_REQUEST["sin_documento"];
         $CONTRATO = Session::getSesion("s_cont");
         $Lista=$model->listarEvidencias($CONTRATO);
+        $nuevo = array();
         foreach($Lista as $key => $value)
         {
             $url = $_REQUEST["URL"].$value["id_evidencias"];
-            $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
+            $archivos = $modelArchivo->listar_urls($CONTRATO,$url);
+            if(sizeof($archivos[0])!=0)
+            {
+                $Lista[$key]["archivosUpload"] = $archivos;
+                array_push($nuevo,$Lista[$key]);
+            }
+                // $Lista[$key]["archivosUpload"] = $archivos;
         }
 
         header('Content-type: application/json; charset=utf-8');
-        echo json_encode($Lista);
+        echo json_encode($nuevo);
         break;
     
     case 'MostrarTemayResponsable':

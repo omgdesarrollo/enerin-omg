@@ -254,11 +254,11 @@
         { name: "requisitosmodal",  title:"Requisito",type: "text", width: 90, editing:false },
         { name: "archivoAdjunto",title:"Archivo Adjunto", width: 100, editing:false },
         { name: "estatus",title:"Estatus", type: "text", width: 120, editing:false },
-        { name:"delete", title:"Opción", type:"customControl",sorting:"",editing:false}
+        // { name:"delete", title:"Opción", type:"customControl",sorting:"",editing:false}
 ];
 
     var customsFieldsGridData=[
-            {field:"customControl",my_field:MyCControlField},
+            // {field:"customControl",my_field:MyCControlField},
             // {field:"porcentaje",my_field:porcentajesFields},
         ];
 
