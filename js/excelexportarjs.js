@@ -1,3 +1,4 @@
+
 (function ($) {
     var $defaults = {
         containerid: null
@@ -31,6 +32,7 @@
                     }
                     if(origenDeDatosVista=="consultas")
                     {
+                     
                         excelData = Export(ConvertDataStructureToTableConsultas());
                     }
                     if(origenDeDatosVista=="controlTemas")

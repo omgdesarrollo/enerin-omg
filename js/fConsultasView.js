@@ -7,7 +7,8 @@ $(function()
     {   
         reporteSeleccionado= $("#REPORTES").val();
 //        console.log("valor reporte select: ",reporteSeleccionado);        
-        __datosExcel=[]
+        __datosExcel=[];
+        console.log("los datos de datalistado ",dataListado);
         $.each(dataListado,function (index,value)
             {
                 // console.log("Entro al datosExcel");
@@ -22,6 +23,7 @@ $(function()
                 }                
             });
             DataGridExcel= __datosExcel;
+            console.log("los datos nuevos  ",DataGridExcel);
 //            console.log("Entro al excelexportHibrido");
         $("#listjson").excelexportHibrido({
             containerid: "listjson"
@@ -29,6 +31,7 @@ $(function()
             , dataset: DataGridExcel
             , columns: getColumns(DataGridExcel)
         });
+        
     });
 }); //SE CIERRA EL $(FUNCTION())
 
@@ -133,7 +136,7 @@ function reconstruirExcel(value,index)
     tempData["Nombre Tema"] = value[0].nombre_tema;
     tempData["Responsable del Tema"] = value[0].responsable_tema;
     tempData["% Cumplimiento Tema"]= 0;            
-    tempData["Requisitos por Tema"] = value.length;
+    tempData["Requisitos por Tema"] = value.requisitos_tema;
     tempData["Requisitos Cumplidos"]= 0;
     $.each(value,(ind,val)=>
     {
