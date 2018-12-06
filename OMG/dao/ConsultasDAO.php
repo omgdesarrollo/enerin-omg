@@ -11,10 +11,10 @@ class ConsultasDAO{
                 concat (tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) as responsable,
                 tbrequisitos.id_requisito, tbrequisitos.requisito,tbrequisitos.penalizacion,
                 tbregistros.id_registro,tbregistros.registro, tbregistros.frecuencia, tbtemas.padre cumplimiento_requisito,
-                (select count(*) as evidencias_validadas from evidencias tbevidencias where tbevidencias.validacion_supervisor ='true' and tbevidencias.id_registro = tbregistros.id_registro ) evidencias_validadas,
+                (select count(*) as evidencias_validadas from evidencias tbevidencias where tbevidencias.validacion_supervisor ='1' and tbevidencias.id_registro = tbregistros.id_registro ) evidencias_validadas,
                 (select count(*) as evidencias_validadas from evidencias tbevidencias where tbevidencias.id_registro = tbregistros.id_registro ) evidencias_totales
                 from temas tbtemas
-                join empleados tbempleados on tbempleados.id_empleado = tbtemas.id_empleado
+                join empleados tbempleados on tbempleados.id_empleado = tbtemas.responsable_general
                 join asignacion_tema_requisito tbasignacion_tema_requisito
                 on tbasignacion_tema_requisito.id_tema = tbtemas.id_tema
                 join asignacion_tema_requisito_requisitos tbasignacion_tema_requisito_requisitos
