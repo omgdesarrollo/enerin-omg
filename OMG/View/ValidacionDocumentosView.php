@@ -190,7 +190,7 @@ if(isset($_REQUEST["accion"]))
           </div>
 
           <div class="form-group" method="post">
-                  <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info">Adjuntar Archivo</button>
+                  <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info btn-block">Adjuntar Archivo</button>
           </div>
         </div><!-- cierre div class-body -->
       </div><!-- cierre div class modal-content -->
@@ -294,7 +294,7 @@ if(isset($_REQUEST["accion"]))
     var DataGridExcel=[],origenDeDatosVista="validacionDocumentos";
 
     var customsFieldsGridData=[
-        {field:"customControl",my_field:MyCControlField},
+        // {field:"customControl",my_field:MyCControlField},
         // {field:"porcentaje",my_field:porcentajesFields},
         {field:"FValidacionDocumento",my_field:fieldValidacionDocumento},
         {field:"FValidacionTema",my_field:fieldValidacionTema},
@@ -319,7 +319,7 @@ if(isset($_REQUEST["accion"]))
         { name: "observaciones", title:"Observación", type: "text", width: 110, editing:false},
         // { name: "desviacion_mayor", title:"Desviación Mayor", type: "text", width: 90, editing:false},
 
-        { name:"delete", title:"Opción", type:"customControl",sorting:""},
+        // { name:"delete", title:"Opción", type:"customControl",sorting:""},
     ];
 
     // filtros = 
