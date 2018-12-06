@@ -208,10 +208,10 @@ $Usuario=  Session::getSesion("user");
             var id_real_arbol_seleccionado=-1;
             myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
 	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
-            myTree.enableDragAndDrop(true);
+            myTree.enableDragAndDrop(false);
             myTreeIzquierda = new dhtmlXTreeObject('treeboxbox_treeIzquierda', '100%', '100%',0);
             myTreeIzquierda.setImagePath("../../codebase/imgs/dhxtree_material/");
-            myTreeIzquierda.enableDragAndDrop(true); 
+            myTreeIzquierda.enableDragAndDrop(false); 
 //            myCombo = new dhtmlXCombo({
 //				parent: "comboclave_descripcion",
 //				width: 230,
