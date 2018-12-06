@@ -204,6 +204,8 @@ $Usuario=  Session::getSesion("user");
         }
     });
 
+    
+
     var customsFieldsGridData=[
         // {field:"customControl",my_field:MyCControlField},
         {field:"porcentaje",my_field:porcentajesFields},
