@@ -545,6 +545,7 @@ function mostrar_urls(id_validacion_documento,detenerCargas)//listo
         {
             if(todo[0].length!=0)
             {
+                $(objecto).css({background:"red"});
                 tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
                 $.each(todo[0], function (index,value)
                 {
