@@ -52,6 +52,8 @@ $Usuario=  Session::getSesion("user");
 	<title>OMG APPS</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link rel="shortcut icon" href="../../images/base/enerinLogo.png">
+    
 	<link rel="stylesheet" type="text/css" href="../../codebase/fonts/font_roboto/roboto.css"/>
 	<link rel="stylesheet" type="text/css" href="../../codebase/dhtmlx.css"/>
         <link href="../../codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
