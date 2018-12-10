@@ -17,7 +17,7 @@ function inicializarFiltros()
             { id: "validacion_tema_responsable", name:"Validación Resposable Tema", type: "none"},
             { id: "observaciones", name:"Observaciones", type: "none"},
             // { id: "desviacion_mayor", name:"Desviación Mayor", type: "none"},
-            {name:"opcion",id:"opcion",type:"opcion"}
+            // {name:"opcion",id:"opcion",type:"opcion"}
 //             construirValidacionDCombo
 // construirValidacionTCombo
         ];
@@ -309,7 +309,7 @@ function listarDatos()//listo
     });
 }
 
-function listarUno(idValidacionDocumento)//aun no
+function listarUno(idValidacionDocumento)//ya no se usa
 {
     tempData="";
     $.ajax({
@@ -340,10 +340,11 @@ function listarUno(idValidacionDocumento)//aun no
 
 function actualizarValidacionDocumento(idValidacionDocumento)//listo
 {
+    URL = 'filesValidacionDocumento/';
     $.ajax({
         url: '../Controller/ValidacionDocumentosController.php?Op=ListarUno',
         type:'GET',
-        data:'ID_VALIDACION_DOCUMENTO='+idValidacionDocumento,
+        data:'ID_VALIDACION_DOCUMENTO='+idValidacionDocumento+"&URL="+URL,
         success:function(datos)
         {
             $.each(datos,function(index,value){
@@ -383,9 +384,15 @@ function reconstruir(documento,index)//listo
     tempData["tema_responsableBTN"] += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>";
 
     if(documento.permiso_total == 1 || documento.soy_responsable == 0)
-        tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\""+documento.validacion_documento_responsable+"\");' type='button' class='botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls' style='width:100%'>";
+        tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\""+documento.validacion_documento_responsable+"\",this);' type='button' class='botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'";
+        // style='width:100%'>";
     else
-        tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\"true\");' type='button' class=' botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls' style='width:100%'>";
+        tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\"true\",this);' type='button' class=' botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'";
+
+    if(documento.archivosUpload[0].length != 0)
+        tempData["mostrar_urlsBTN"] += "style='width:100%;background:#D15B47'>";
+    else
+        tempData["mostrar_urlsBTN"] += "style='width:100%;'>";
     
     // console.log(tempData["mostrar_urlsBTN"]);
     // if(documento.soy_reponsable == "1")
@@ -531,12 +538,22 @@ function reconstruirExcel(documento,index)//listo
 //     $("#loader").hide();
 // }
 
-function mostrar_urls(id_validacion_documento,detenerCargas)//listo
+function mostrar_urls(id_validacion_documento,detenerCargas,objeto)//listo
 {
     // $('#div_subirArchivos').html("");
+    // console.log();
+    if(detenerCargas!=undefined)
+        $('#DocumentolistadoUrlModal')[0]["denerCargasCustom"] = detenerCargas;
+    else
+        detenerCargas = $('#DocumentolistadoUrlModal')[0]["denerCargasCustom"];
+    if(objeto!=undefined)
+        $('#DocumentolistadoUrlModal')[0]["objectoCustom"] = objeto;
+    else
+        objeto = $('#DocumentolistadoUrlModal')[0]["objectoCustom"];
+
     $("#subirArchivos").attr("style","display:none");
     var tempDocumentolistadoUrl = "";
-    URL = 'filesValidacionDocumento/'+id_validacion_documento;   
+    URL = 'filesValidacionDocumento/'+id_validacion_documento;
     $.ajax({
         url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
         type: 'GET',
@@ -545,8 +562,8 @@ function mostrar_urls(id_validacion_documento,detenerCargas)//listo
         {
             if(todo[0].length!=0)
             {
-                $(objecto).css({background:"red"});
-                tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
+                $(objeto).attr("style","background:#D15B47");
+                tempDocumentolistadoUrl = "<table class='tbl-qa' style='width:100%'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
                 $.each(todo[0], function (index,value)
                 {
                     nametmp = value.split("^-O-^-M-^-G-^");
@@ -566,6 +583,8 @@ function mostrar_urls(id_validacion_documento,detenerCargas)//listo
                 });
                 tempDocumentolistadoUrl += "</tbody></table>";
             }
+            else
+                $(objeto).attr("style","background:#3399CC");
             if(tempDocumentolistadoUrl == "")
             {
                     tempDocumentolistadoUrl = " No hay archivos agregados ";
@@ -787,7 +806,6 @@ function validar(idValidacionDocumento,columna,Obj)
                 success:function(exito)
                 {
                     // exitoT = valor;
-                    resolve(valor);
                     if(exito)
                     {
                         // $(Obj).removeClass( (valor)?no:yes );
@@ -795,6 +813,7 @@ function validar(idValidacionDocumento,columna,Obj)
                         // $(Obj).css("color", (valor)?"#02ff00":"red" );
                         swalSuccess( (valor) ? ("Validación","Validado") : ("Desvalidación","Desvalidado") );
                         actualizarValidacionDocumento(idValidacionDocumento);
+                        resolve(valor);
                         // listarValidacionDocumento(idValidacionDocumento,no);
                         //aqui mandar notificacion
                     }

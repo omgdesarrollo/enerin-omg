@@ -28,13 +28,12 @@ switch ($Op) {
 		$USUARIO = Session::getSesion("user");
 		$CONTRATO = Session::getSesion("s_cont");
 		$Lista=$model->listarValidacionDocumentos($USUARIO["ID_USUARIO"],$CONTRATO);
-                foreach($Lista as $key => $value)
-                {
-                    $url = $_REQUEST["URL"].$value["id_validacion_documento"];
-                    $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
-                }
-                
-                header('Content-type: application/json; charset=utf-8');
+		foreach($Lista as $key => $value)
+		{
+			$url = $_REQUEST["URL"].$value["id_validacion_documento"];
+			$Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
+		}
+		header('Content-type: application/json; charset=utf-8');
 		echo json_encode($Lista);
 	break;
 
@@ -42,6 +41,11 @@ switch ($Op) {
 		$USUARIO = Session::getSesion("user");
 		$CONTRATO = Session::getSesion("s_cont");
 		$Lista=$model->listarValidacionDocumento($USUARIO["ID_USUARIO"],$CONTRATO,$_REQUEST["ID_VALIDACION_DOCUMENTO"]);
+		foreach($Lista as $key => $value)
+		{
+			$url = $_REQUEST["URL"].$value["id_validacion_documento"];
+			$Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
+		}
 		header('Content-type: application/json; charset=utf-8');
 		echo json_encode( $Lista);
 	break;
