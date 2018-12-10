@@ -207,7 +207,6 @@
         
         function ConvertDataStructureToTableConsultas() 
         {
-//            alert("d");
             months = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
             fecha="0000-00-00";
             date = new Date();

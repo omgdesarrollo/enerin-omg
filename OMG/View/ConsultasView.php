@@ -5,28 +5,34 @@ $Usuario=  Session::getSesion("user");
 ?>
 
 
-<!DOCTYPE html>
-<html lang="en">
+        <!DOCTYPE html>
+        <html lang="en" manifest="">
 	<head>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-		<meta charset="utf-8" />
-		<title>OMG APPS</title>
+		<!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />-->
+        <!--<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">-->
+        
+        
+<!--        <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE"> 
+        <META HTTP-EQUIV="EXPIRES">-->
+        
+        <meta charset="utf-8" />
+        <title>OMG APPS</title>
 
-		<meta name="description" content="overview &amp; stats" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta name="description" content="overview &amp; stats" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
         <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
         <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
-		<!-- bootstrap & fontawesome -->
-                <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-                <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-                <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
+        <!-- bootstrap & fontawesome -->
+        <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../../assets/bootstrap/css/sweetalert.css" rel="stylesheet" type="text/css"/>
 
-		<!-- ace styles -->
-		<link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+        <!-- ace styles -->
+        <link rel="stylesheet" href="../../assets/probando/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
 
-		<!-- <link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" /> -->
-		<link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
+        <!-- <link rel="stylesheet" href=".../../assets/probando/css/ace-skins.min.css" /> -->
+        <link rel="stylesheet" href="../../assets/probando/css/ace-rtl.min.css" />
                 
         <!--Inicia para el spiner cargando-->
         <link href="../../css/loaderanimation.css" rel="stylesheet" type="text/css"/>
@@ -54,12 +60,12 @@ $Usuario=  Session::getSesion("user");
         <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
         <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
         
-        <script src="../../js/fConsultasView.js" type="text/javascript"></script>
+        <script src="../../js/fConsultasView.js?v=6" type="text/javascript"></script>
         <!-- <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/> -->
         <script src="../../js/fGridComponent.js" type="text/javascript"></script>
         
-        <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
-                
+        <script src="../../js/excelexportarjs.js?v=2" type="text/javascript"></script>
+        <script src="../../js/update_cache.js" type="text/javascript"></script>
         <style>
             .jsgrid-header-row>.jsgrid-header-cell {
                 background-color:#307ECC ;      /* orange */
@@ -263,6 +269,21 @@ $Usuario=  Session::getSesion("user");
             growlError("Error!","Error al construir la vista, recargue la página");
         });
         
+        //limpiar la cache
+        
+        
+        
+        
+        
+        
+//        checkForUpdate();
+//function inyectar_librerias()
+//{
+//    var  librerias = "";
+//    librerias += "<script src='../../js/fConsultasView.js' type='text/javascript'><\/script>";
+//    $("head").append(librerias);
+//}
+//   inyectar_librerias();
 </script>
         <!--Inicia para el spiner cargando-->
         <script src="../../js/loaderanimation.js" type="text/javascript"></script>

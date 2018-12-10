@@ -8,7 +8,7 @@ $(function()
         reporteSeleccionado= $("#REPORTES").val();
 //        console.log("valor reporte select: ",reporteSeleccionado);        
         __datosExcel=[];
-        console.log("los datos de datalistado ",dataListado);
+        console.log("los datos de datalistado-> ",dataListado);
         $.each(dataListado,function (index,value)
             {
                 // console.log("Entro al datosExcel");
@@ -18,6 +18,7 @@ $(function()
                 }else{
                     if(reporteSeleccionado == 2)
                     {
+//                        alert("se");
                         __datosExcel.push( reconstruirExcelDetalles(value,index+1) );
                     }
                 }                
@@ -25,6 +26,7 @@ $(function()
             DataGridExcel= __datosExcel;
             console.log("los datos nuevos  ",DataGridExcel);
 //            console.log("Entro al excelexportHibrido");
+
         $("#listjson").excelexportHibrido({
             containerid: "listjson"
             , datatype: 'json'
@@ -151,7 +153,75 @@ function reconstruirExcel(value,index)
 
 function reconstruirExcelDetalles(value,index)
 {
+    console.log("Entro en reconstruir excel detalles  ",value);
+    tempData= new Object();
+    detallesReqTemp={};
+    tempData["No. Tema"]=value.no_tema;
+    tempData["Nombre Tema"] = value.nombre_tema;
+    tempData["Responsable del Tema"] = value.responsable_tema;
+    tempData["% Cumplimiento Tema"]= value[0].cumplimiento_tema;
+    tempData["Requisitos por Tema"]= value.requisitos_tema; 
+    tempData["Requisitos Cumplidos"]= value.requisitos_cumplidos; 
+    tempData["% De Cumplimiento por Requisitos"]=value[0].cumplimiento_requisito;
+    tempData["Estado del Requisito"]= "";
+    tempData["Requisito"]="";
+    tempData["Registros"]="";
+    tempData["Frecuencia"]="";
+    tempData["Evidencias por Cumplir"]="";
+    tempData["Evidencias Cumplidas"]="";
+//    bandera=0;
+    $.each(value,(index1,value1)=>{
+        console.log("entro en el primer foreach ",value1);
+        
+        bandera=0;
+        
+        if(value1["detalles_requisito"]!=undefined){
+             console.log("detalles requisito  ",value1["detalles_requisito"]);
+             $.each(value1["detalles_requisito"],(index2,value2)=>{
+                 
+                 if(value2["id_registro"]!=null){
+                     console.log("dentro del value2   ",value2);
+//                     tempData["Registros"] += "<li>"+value2.registro+"</li></br>";
+//                     tempData["Frecuencia"] += "<li>"+value2.frecuencia+"</li>";
+                     bandera=1;
+                 }
+                 
+                 
+                 if(bandera==1)
+            {
+                console.log(value2["frecuencia"]);
+                if(value2["frecuencia"]!=undefined){
+                    tempData["Registros"] += "<li>"+value2.registro+"</li></br>";
+                    tempData["Frecuencia"] += "<li>"+value2.frecuencia+"</li>";
+                    tempData["Evidencias por Cumplir"] += "<li>"+value2.evidencias_proceso+"</li>";
+                     tempData["Evidencias Cumplidas"] += "<li>"+value2.evidencias_validadas+"</li>";
+                }
+            }
+                 
+             })  
+            if(bandera==1)
+            {
+                console.log("entro en bandera 1   ",value1);
+                tempData["Estado del Requisito"] += "<li>"+value1.estado_requisito+"</li>";
+                tempData["Requisito"]+="<li>"+value1.requisito+"</li>";  
+               
+            }
+        }  
+        
+    });
+ 
+ 
+ 
+ 
+    return tempData;
+}
+
+
+function reconstruirExcelDetallesTemporal(value,index)
+{
+    console.log("detro   ",value);
     tempData = new Object();
+    
     tempData["No. Tema"] = value[0].no_tema;
     tempData["Nombre Tema"] = value[0].nombre_tema;
     tempData["Responsable del Tema"] = value[0].responsable_tema;
@@ -162,10 +232,14 @@ function reconstruirExcelDetalles(value,index)
     $.each(value,(ind,val)=>
     {
         bandera=0;
+        
+    if(val["detalles_requisito"]!=undefined){
         $.each(val['detalles_requisito'],(ind2,val2)=>
         {
+//            console.log("detalle requisito   ",val2);
             if(val2.id_registro!=null)
             {
+//                console.log("entro en bandera:  ",val2.id_registro);
                 bandera=1;
             }
         });
@@ -173,6 +247,11 @@ function reconstruirExcelDetalles(value,index)
         {
             tempData["Requisitos por Tema"]++;
         }
+        
+    }
+        
+        
+        
     });  
     
     tempData["Requisitos Cumplidos"]= 0;    
@@ -186,14 +265,22 @@ function reconstruirExcelDetalles(value,index)
     cumplimientoRequisitos= 0;
     $.each(value,(ind,val)=>
     {
-        $.each(val['detalles_requisito'],(ind2,val2)=>
-        {
-            if(val2.id_registro!=null)
+        
+        
+      if(val["detalles_requisito"]!=undefined){
+            $.each(val['detalles_requisito'],(ind2,val2)=>
             {
-//                tempData["cumplimientoRequisitos"]+= val.cumplimiento_requisito;
-                cumplimientoRequisitos+= val.cumplimiento_requisito;
-            }
-        });
+                if(val2.id_registro!=null)
+                {
+    //                tempData["cumplimientoRequisitos"]+= val.cumplimiento_requisito;
+                    cumplimientoRequisitos+= val.cumplimiento_requisito;
+                }
+            });
+        
+        }
+        
+        
+        
     });    
     tempData["% De Cumplimiento por Requisitos"]= (cumplimientoRequisitos/tempData["Requisitos por Tema"]).toFixed(2)+("%");
     
@@ -201,6 +288,7 @@ function reconstruirExcelDetalles(value,index)
     $.each(value,(ind,val)=>
     {
         bandera=0;
+    if(val["detalles_requisito"]!=undefined){
         $.each(val['detalles_requisito'],(ind2,val2)=>
         {
             if(val2['id_registro']!=null)
@@ -213,6 +301,7 @@ function reconstruirExcelDetalles(value,index)
         {
             tempData["Estado del Requisito"] += "<li>"+val.estado_requisito+"</li>";
         }
+    }
     });
     
     tempData["Registros"]= "";
@@ -221,6 +310,7 @@ function reconstruirExcelDetalles(value,index)
     tempData["Evidencias Cumplidas"]= "";
     $.each(value,(ind,val)=>
     {
+        if(val["detalles_requisito"]!=undefined){
         $.each(val['detalles_requisito'],(ind2,val2)=>
         {
             bandera=0;
@@ -272,7 +362,11 @@ function reconstruirExcelDetalles(value,index)
 //                console.log(tempData["Registros"]);
             }
         });
+        
+    }
+        
     });
+    console.log("termino");
     return tempData;
 }
 
@@ -591,3 +685,7 @@ function refresh()
         growlError("Error!","Error al construir la vista, recargue la página");
     });
 }
+
+
+
+
