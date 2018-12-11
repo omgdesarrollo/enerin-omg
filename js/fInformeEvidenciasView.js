@@ -457,6 +457,8 @@ function reconstruirExcel(value,index)
     tempData["Frecuencia"] = value.frecuencia;
     tempData["Clave del Documento"] = value.clave_documento;
     tempData["Fecha Evidencia"] = getSinFechaFormato(value.fecha_creacion);
+     tempData["Fecha Registro"] ="";
+    tempData["Estatus"]="";
     if(value.archivosUpload[0].length==0)
     {
         tempData["Fecha Registro"] ="";
