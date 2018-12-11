@@ -470,10 +470,15 @@ function reconstruirExcel(value,index)
             tempData["Evidencia"] = "Si";   
         });        
     }
-    tempData["Desviacion"] = value.desviacion;
-    tempData["Accion Correctiva"] = value.accion_correctiva;
+//    tempData["Desviacion"] = value.desviacion;
+//    tempData["Accion Correctiva"] = value.accion_correctiva;
     tempData["Avance del Plan"] = value.avance_plan;
-    tempData["Estatus"] = value.estatus;
+if( value.estatus=="EN PROCESO"){
+     tempData["Estatus"] ="NO CONFORME";
+}
+ if( value.estatus=="VALIDADO"){
+     tempData["Estatus"] ="CONFORME";
+}  
     
     return tempData;
 }

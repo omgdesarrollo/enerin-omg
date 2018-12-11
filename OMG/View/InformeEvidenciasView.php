@@ -56,7 +56,7 @@ $Usuario=  Session::getSesion("user");
         <!-- <script src="../../js/tools.js" type="text/javascript"></script> marca un error al agregarse -->
         <script src="../ajax/ajaxHibrido.js" type="text/javascript"></script>
 
-        <script src="../../js/fInformeEvidenciasView.js" type="text/javascript"></script>
+        <script src="../../js/fInformeEvidenciasView.js?v=1" type="text/javascript"></script>
         <!-- <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/> -->
         <script src="../../js/fGridComponent.js" type="text/javascript"></script>
         <script src="../../js/fChartComponent.js" type="text/javascript"></script>
