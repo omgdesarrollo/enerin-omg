@@ -456,7 +456,7 @@ function reconstruirExcel(value,index)
     tempData["Registro"] = value.registro;
     tempData["Frecuencia"] = value.frecuencia;
     tempData["Clave del Documento"] = value.clave_documento;
-    tempData["Fecha Evidencia"] = getSinFechaFormato(value.fecha_creacion);
+//    tempData["Fecha Evidencia"] = getSinFechaFormato(value.fecha_creacion);
      tempData["Fecha Registro"] ="";
     tempData["Estatus"]="";
     if(value.archivosUpload[0].length==0)
@@ -469,7 +469,7 @@ function reconstruirExcel(value,index)
             fecha = getFechaStamp(nametmp[0]);
             
             tempData["Fecha Registro"] = fecha;
-            tempData["Evidencia"] = "Si";   
+//            tempData["Evidencia"] = "Si";   
         });        
     }
 //    tempData["Desviacion"] = value.desviacion;
