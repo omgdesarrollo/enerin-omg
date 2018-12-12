@@ -152,7 +152,7 @@ function reconstruirExcel(value,index)
     return tempData;
 }
 
-function reconstruirExcelDetalles(value,index)
+function reconstruirExcelDetallest(value,index)
 {
     console.log("Entro en reconstruir excel detalles  ",value);
     tempData= new Object();
@@ -160,7 +160,7 @@ function reconstruirExcelDetalles(value,index)
     tempData["No. Tema"]=value.no_tema;
     tempData["Nombre Tema"] = value.nombre_tema;
     tempData["Responsable del Tema"] = value.responsable_tema;
-    tempData["% Cumplimiento Tema"]= value.cumplimiento_tema.toFixed(2);
+    tempData["% Cumplimiento Tema"]= value.cumplimiento_tema.toFixed(2)*100;
     tempData["Requisitos por Tema"]= value.requisitos_tema; 
     tempData["Requisitos Cumplidos"]= value.requisitos_cumplidos; 
     tempData["% De Cumplimiento por Requisitos"]=value[0].cumplimiento_requisito.toFixed(2);
@@ -237,7 +237,7 @@ function reconstruirExcelDetalles(value,index)
 }
 
 
-function reconstruirExcelDetallesTemp(value,index)
+function reconstruirExcelDetalles(value,index)
 {
     console.log("detro   ",value);
     tempData = new Object();
@@ -293,6 +293,7 @@ function reconstruirExcelDetallesTemp(value,index)
                 if(val2.id_registro!=null)
                 {
     //                tempData["cumplimientoRequisitos"]+= val.cumplimiento_requisito;
+                    if(val.cumplimiento_requisito!="X")
                     cumplimientoRequisitos+= val.cumplimiento_requisito;
                 }
             });
@@ -302,6 +303,7 @@ function reconstruirExcelDetallesTemp(value,index)
         
         
     });    
+    
     tempData["% De Cumplimiento por Requisitos"]= (cumplimientoRequisitos/tempData["Requisitos por Tema"]).toFixed(2)+("%");
     
     tempData["Estado del Requisito"]= "";
@@ -347,6 +349,7 @@ function reconstruirExcelDetallesTemp(value,index)
                 
                 if(val2.frecuencia!="POR EVENTO" && val2.frecuencia!="INDEFINIDO")
                 {
+                    //evidencias_a_realizar esta mal
                     EvidenciasPorCumplir=parseInt(val2.evidencias_realizar)-parseInt(val2.evidencias_validadas);
                     tempData["Evidencias por Cumplir"] += "<li>"+EvidenciasPorCumplir+"</li>"; 
                 }else{
