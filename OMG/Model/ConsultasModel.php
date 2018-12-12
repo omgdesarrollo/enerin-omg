@@ -117,8 +117,8 @@ class ConsultasModel{
                     if($frecuencia == "ANUAL")
                     {
                         $cantidad_a_realizar = 1;
-                        // $yearInicio = strftime("%Y",$fecha_inicio->getTimestamp());
-                        // $yearHoy = strftime("%Y",$hoy->getTimestamp());
+                        $yearInicio = strftime("%Y",$fecha_inicio->getTimestamp());
+                        $yearHoy = strftime("%Y",$hoy->getTimestamp());
                         // $diasInicio = strftime("%d",$fecha_inicio->getTimestamp());
                         // $diasHoy = strftime("%d",$hoy->getTimestamp());
                         // if($diasInicio < $diasHoy)
@@ -143,7 +143,7 @@ class ConsultasModel{
                                 $cantidad_a_realizar++;
                             }
                         }
-                        // $lista[$key]["evidencias_realizar"] = $cantidad_a_realizar;
+                        $lista[$key]["evidencias_realizar"] = $cantidad_a_realizar;
                         // echo $diasInicio."\n";
                         // echo $diasHoy."\n";
                         // echo $yearInicio."\n";
