@@ -20,6 +20,7 @@ class ConsultasModel{
                 // if($value["fecha_inicio"] != "0000-00-00")
                 // {
                     $fecha_inicio = new Datetime($value["fecha_inicio"]);
+                    // var_dump($fecha_inicio);
                     $frecuencia = $value["frecuencia"];
                     if($frecuencia == "DIARIO")
                     {
@@ -115,20 +116,20 @@ class ConsultasModel{
                     }
                     if($frecuencia == "ANUAL")
                     {
-                        $cantidad_a_realizar = 0;
+                        $cantidad_a_realizar = 1;
                         $yearInicio = strftime("%Y",$fecha_inicio->getTimestamp());
                         $yearHoy = strftime("%Y",$hoy->getTimestamp());
-                        $diasInicio = strftime("%d",$fecha_inicio->getTimestamp());
-                        $diasHoy = strftime("%d",$hoy->getTimestamp());
-                        if($diasInicio < $diasHoy)
-                        {
-                            $cantidad_a_realizar++;
-                            $yearInicio++;
-                        }
-                        if($diasInicio == $diasHoy)
-                        {
-                            $cantidad_a_realizar++;
-                        }
+                        // $diasInicio = strftime("%d",$fecha_inicio->getTimestamp());
+                        // $diasHoy = strftime("%d",$hoy->getTimestamp());
+                        // if($diasInicio < $diasHoy)
+                        // {
+                        //     $cantidad_a_realizar++;
+                        //     $yearInicio++;
+                        // }
+                        // if($diasInicio == $diasHoy)
+                        // {
+                        //     $cantidad_a_realizar++;
+                        // }
                         $finWhile=true;
                         while($finWhile)
                         {
@@ -143,6 +144,11 @@ class ConsultasModel{
                             }
                         }
                         $lista[$key]["evidencias_realizar"] = $cantidad_a_realizar;
+                        // echo $diasInicio."\n";
+                        // echo $diasHoy."\n";
+                        // echo $yearInicio."\n";
+                        // echo $yearHoy."\n";
+                        // echo $cantidad_a_realizar."\n";
                     }
                     if($frecuencia == "INDEFINIDO")
                     {
