@@ -19,6 +19,7 @@ $(function()
                     if(reporteSeleccionado == 2)
                     {
 //                        alert("se");
+                        
                         __datosExcel.push( reconstruirExcelDetalles(value,index+1) );
                     }
                 }                
@@ -159,10 +160,10 @@ function reconstruirExcelDetalles(value,index)
     tempData["No. Tema"]=value.no_tema;
     tempData["Nombre Tema"] = value.nombre_tema;
     tempData["Responsable del Tema"] = value.responsable_tema;
-    tempData["% Cumplimiento Tema"]= value[0].cumplimiento_tema;
+    tempData["% Cumplimiento Tema"]= value.cumplimiento_tema.toFixed(2);
     tempData["Requisitos por Tema"]= value.requisitos_tema; 
     tempData["Requisitos Cumplidos"]= value.requisitos_cumplidos; 
-    tempData["% De Cumplimiento por Requisitos"]=value[0].cumplimiento_requisito;
+    tempData["% De Cumplimiento por Requisitos"]=value[0].cumplimiento_requisito.toFixed(2);
     tempData["Estado del Requisito"]= "";
     tempData["Requisito"]="";
     tempData["Registros"]="";
@@ -170,45 +171,64 @@ function reconstruirExcelDetalles(value,index)
     tempData["Evidencias por Cumplir"]="";
     tempData["Evidencias Cumplidas"]="";
 //    bandera=0;
-    $.each(value,(index1,value1)=>{
-        console.log("entro en el primer foreach ",value1);
+//    $.each(value,(index1,value1)=>{
+//        console.log("entro en el primer foreach ",value1);
         
         bandera=0;
         
-        if(value1["detalles_requisito"]!=undefined){
-             console.log("detalles requisito  ",value1["detalles_requisito"]);
-             $.each(value1["detalles_requisito"],(index2,value2)=>{
+//        if(value1["detalles_requisito"]!=undefined){
+//             console.log("detalles requisito  ",value1["detalles_requisito"]);
+//             $.each(value1["detalles_requisito"],(index2,value2)=>{
+//                 
+//                 if(value2["id_registro"]!=null){
+//                     console.log("dentro del value2   ",value2);
+////                     tempData["Registros"] += "<li>"+value2.registro+"</li></br>";
+////                     tempData["Frecuencia"] += "<li>"+value2.frecuencia+"</li>";
+//                     bandera=1;
+//                 }
+//                 if(bandera==1)
+//                {
+//                    console.log(value2["frecuencia"]);
+//                    if(value2["frecuencia"]!=undefined){
+//                        tempData["Registros"] += "<li>"+value2.registro+"</li></br>";
+//                        tempData["Frecuencia"] += "<li>"+value2.frecuencia+"</li>";
+//                        tempData["Evidencias por Cumplir"] += "<li>"+value2.evidencias_proceso+"</li>";
+//                         tempData["Evidencias Cumplidas"] += "<li>"+value2.evidencias_validadas+"</li>";
+//                    }
+//                }
                  
-                 if(value2["id_registro"]!=null){
-                     console.log("dentro del value2   ",value2);
-//                     tempData["Registros"] += "<li>"+value2.registro+"</li></br>";
-//                     tempData["Frecuencia"] += "<li>"+value2.frecuencia+"</li>";
-                     bandera=1;
-                 }
-                 
-                 
-                 if(bandera==1)
-            {
-                console.log(value2["frecuencia"]);
-                if(value2["frecuencia"]!=undefined){
-                    tempData["Registros"] += "<li>"+value2.registro+"</li></br>";
-                    tempData["Frecuencia"] += "<li>"+value2.frecuencia+"</li>";
-                    tempData["Evidencias por Cumplir"] += "<li>"+value2.evidencias_proceso+"</li>";
-                     tempData["Evidencias Cumplidas"] += "<li>"+value2.evidencias_validadas+"</li>";
-                }
-            }
-                 
-             })  
-            if(bandera==1)
-            {
-                console.log("entro en bandera 1   ",value1);
-                tempData["Estado del Requisito"] += "<li>"+value1.estado_requisito+"</li>";
-                tempData["Requisito"]+="<li>"+value1.requisito+"</li>";  
+//             })  
+//            if(bandera==1)
+//            {
+//                console.log("entro en bandera 1   ",value1);
+//                if(value1.estado_requisito=="ATRASADO"){
+//                if(value1.estado_requisito=="")
+//                 if(value1.estado_requisito=="EN PROCESO")
+//                 {
+//                   tempData["Estado del Requisito"] = "<li>"+value1.estado_requisito+"</li>";   
+//                 }else{
+//                      tempData["Estado del Requisito"] += "<li>"+value1.estado_requisito+"</li>";   
+//                 }
+                
+//                 if(value1.estado_requisito=="ATRASADO")
+//                 {
+//                   tempData["Estado del Requisito"] = "<li>"+value1.estado_requisito+"</li>";   
+//                 }else{
+//                      tempData["Estado del Requisito"] += "<li>"+value1.estado_requisito+"</li>";   
+//                 }
+                
+                
+                
+                
+//                }else{
+//                 tempData["Estado del Requisito"] += "<li>"+value1.estado_requisito+"</li>";
+//                }
+//                tempData["Requisito"]+="<li>"+value1.requisito+"</li>";  
                
-            }
-        }  
+//            }
+//        }  
         
-    });
+//    });
  
  
  
@@ -217,7 +237,7 @@ function reconstruirExcelDetalles(value,index)
 }
 
 
-function reconstruirExcelDetallesTemporal(value,index)
+function reconstruirExcelDetallesTemp(value,index)
 {
     console.log("detro   ",value);
     tempData = new Object();

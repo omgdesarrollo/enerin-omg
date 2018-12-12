@@ -457,6 +457,8 @@ function reconstruirExcel(value,index)
     tempData["Frecuencia"] = value.frecuencia;
     tempData["Clave del Documento"] = value.clave_documento;
     tempData["Fecha Evidencia"] = getSinFechaFormato(value.fecha_creacion);
+     tempData["Fecha Registro"] ="";
+    tempData["Estatus"]="";
     if(value.archivosUpload[0].length==0)
     {
         tempData["Fecha Registro"] ="";
@@ -470,10 +472,15 @@ function reconstruirExcel(value,index)
             tempData["Evidencia"] = "Si";   
         });        
     }
-    tempData["Desviacion"] = value.desviacion;
-    tempData["Accion Correctiva"] = value.accion_correctiva;
+//    tempData["Desviacion"] = value.desviacion;
+//    tempData["Accion Correctiva"] = value.accion_correctiva;
     tempData["Avance del Plan"] = value.avance_plan;
-    tempData["Estatus"] = value.estatus;
+if( value.estatus=="EN PROCESO"){
+     tempData["Estatus"] ="NO CONFORME";
+}
+ if( value.estatus=="VALIDADO"){
+     tempData["Estatus"] ="CONFORME";
+}  
     
     return tempData;
 }
