@@ -304,9 +304,10 @@ function reconstruirExcelDetalles(value,index)
         
     });    
     
-    tempData["% De Cumplimiento por Requisitos"]= (cumplimientoRequisitos/tempData["Requisitos por Tema"]).toFixed(2)+("%");
+    tempData["% De Cumplimiento  Requisitos"]= (cumplimientoRequisitos/tempData["Requisitos por Tema"]).toFixed(2)+("%");
     
     tempData["Estado del Requisito"]= "";
+//    tempData["Requisito"]= "";
     $.each(value,(ind,val)=>
     {
         bandera=0;
@@ -321,7 +322,9 @@ function reconstruirExcelDetalles(value,index)
         
         if(bandera==1)
         {
-            tempData["Estado del Requisito"] += "<li>"+val.estado_requisito+"</li>";
+            //esto esta comentando y si sirve
+            tempData["Estado del Requisito"]+= "<li>"+val.estado_requisito+"</li>";
+//            tempData["Requisito"]+= "<li>"+val.requisito+"</li>";
         }
     }
     });
