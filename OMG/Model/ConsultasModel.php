@@ -10,7 +10,7 @@ class ConsultasModel{
             date_default_timezone_set("America/Mexico_city");
             $dao=new ConsultasDAO();
             $lista= $dao->listarConsultas($CONTRATO);
-            // var_dump($lista);
+            var_dump($lista);
             $hoy = new Datetime();
 	        $al = strftime("%d - %B - %y");
             $hoy = new Datetime($al);
