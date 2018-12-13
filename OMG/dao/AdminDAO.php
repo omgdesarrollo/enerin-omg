@@ -39,6 +39,7 @@ class AdminDAO{
 //            JOIN vistas tbvistas ON tbvistas.id_vistas = tbestructura.id_vistas
 //            JOIN submodulos tdsubmodulos ON tdsubmodulos.id_submodulos = tbestructura.id_submodulos
 //            WHERE tbusuarios_vistas.id_usuario=$ID_USUARIO ";
+
             $query="SELECT tbestructura.id_estructura, tbestructura.id_submodulos,tdsubmodulos.nombre nombre_submodulo ,tbestructura.descripcion, tbestructura.id_vistas,tbvistas.nombre,tbestructura.vista_nombre_logico,tbestructura.nombre_contenido_dentro_submodulos nombre_contenido_sub,tbestructura.imagen_seccion_up,tbestructura.imagen_seccion_izquierda, tbusuarios_vistas.EDIT,
             tbusuarios_vistas.delete, tbusuarios_vistas.new,tbusuarios_vistas.consult 
             FROM usuarios_vistas tbusuarios_vistas
@@ -46,6 +47,22 @@ class AdminDAO{
             JOIN vistas tbvistas ON tbvistas.id_vistas = tbestructura.id_vistas
             JOIN submodulos tdsubmodulos ON tdsubmodulos.id_submodulos = tbestructura.id_submodulos
             WHERE tbusuarios_vistas.id_usuario=$ID_USUARIO";
+
+            // $query="SELECT tbestructura.id_estructura, tbestructura.id_submodulos,tdsubmodulos.nombre nombre_submodulo,
+            // tbestructura.descripcion, tbestructura.id_vistas,tbvistas.nombre,tbestructura.vista_nombre_logico,
+            // tbestructura.nombre_contenido_dentro_submodulos nombre_contenido_sub,tbestructura.imagen_seccion_up,
+            // tbestructura.imagen_seccion_izquierda, tbusuarios_vistas.EDIT,
+            // tbusuarios_vistas.delete, tbusuarios_vistas.new,tbusuarios_vistas.consult 
+            //             FROM usuarios_vistas tbusuarios_vistas
+            //             JOIN estructura tbestructura ON tbusuarios_vistas.id_estructura = tbestructura.id_estructura
+            //             JOIN vistas tbvistas ON tbvistas.id_vistas = tbestructura.id_vistas
+            //             JOIN submodulos tdsubmodulos ON tdsubmodulos.id_submodulos = tbestructura.id_submodulos
+            //             WHERE tbusuarios_vistas.id_usuario = $ID_USUARIO AND tbvistas.id_vistas = (IF(tbvistas.id_vistas = 24,
+            //                 IF(
+            //                     (SELECT tbsubmodulos.adquirido FROM submodulos tbsubmodulos WHERE tbsubmodulos.id_submodulos=3)=0,
+            //                     -1,tbvistas.id_vistas
+            //                 )
+            //                 ,tbvistas.id_vistas))";
             // echo $query;
             $db= AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
@@ -83,8 +100,15 @@ class AdminDAO{
         try
         {
           $query="SELECT tbestructura.id_submodulos,tbestructura.id_estructura, tbestructura.descripcion  
-                  FROM estructura tbestructura
-                  WHERE  tbestructura.id_submodulos=$ID_SUBMODULOS";
+                FROM estructura tbestructura
+                WHERE  tbestructura.id_submodulos=$ID_SUBMODULOS AND
+                tbestructura.id_vistas = (IF(tbestructura.id_vistas = 24,
+                    IF(
+                        (SELECT tbsubmodulos.adquirido FROM submodulos tbsubmodulos WHERE tbsubmodulos.id_submodulos=3)=0,
+                        -1,tbestructura.id_vistas
+                    )
+                    ,tbestructura.id_vistas)
+                )";
                   
           $db= AccesoDB::getInstancia();        
           $lista= $db->executeQuery($query);
