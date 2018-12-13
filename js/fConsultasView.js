@@ -266,10 +266,11 @@ function reconstruirExcelDetalles(value,index)
         if(bandera==1)
         {
             tempData["Requisitos por Tema"]++;
+            
         }
         
     }
-        
+        console.log("tem requisitos por tema",tempData["Requisitos por Tema"]);
         
         
     });  
@@ -295,16 +296,18 @@ function reconstruirExcelDetalles(value,index)
     //                tempData["cumplimientoRequisitos"]+= val.cumplimiento_requisito;
                     if(val.cumplimiento_requisito!="X")
                     cumplimientoRequisitos+= val.cumplimiento_requisito;
+                console.log("cr",cumplimientoRequisitos);
+//                if(val.cumplimiento_requisito=="X"){
+//                     cumplimientoRequisitos+= 0;
+//                }
                 }
-            });
-        
+            });      
         }
-        
-        
-        
     });    
     
-    tempData["% De Cumplimiento  Requisitos"]= (cumplimientoRequisitos/tempData["Requisitos por Tema"]).toFixed(2)+("%");
+    tempData["% De Cumplimiento  Requisitos"]= "";
+     tempData["% De Cumplimiento  Requisitos"]= (cumplimientoRequisitos/tempData["Requisitos por Tema"]).toFixed(2)+("%");
+      tempData["% separados por requisito"]= "";
     
     tempData["Estado del Requisito"]= "";
 //    tempData["Requisito"]= "";
@@ -323,6 +326,9 @@ function reconstruirExcelDetalles(value,index)
         if(bandera==1)
         {
             //esto esta comentando y si sirve
+//            tempData["% De Cumplimiento  Requisitos"]+= "<li>"+(cumplimientoRequisitos/tempData["Requisitos por Tema"]).toFixed(2)+("%");+"</li>";
+//            if()
+//            tempData["% separados por requisito"]+="<li>"+tempData["Requisitos por Tema"]+"</li>";
             tempData["Estado del Requisito"]+= "<li>"+val.estado_requisito+"</li>";
 //            tempData["Requisito"]+= "<li>"+val.requisito+"</li>";
         }
