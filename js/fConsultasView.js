@@ -239,7 +239,7 @@ function reconstruirExcelDetallest(value,index)
 
 function reconstruirExcelDetalles(value,index)
 {
-    console.log("detro   ",value);
+    console.log("inicio dentro  de reconstruir  excelDetalles--->  ",value);
     tempData = new Object();
     
     tempData["No. Tema"] = value[0].no_tema;
@@ -256,10 +256,8 @@ function reconstruirExcelDetalles(value,index)
     if(val["detalles_requisito"]!=undefined){
         $.each(val['detalles_requisito'],(ind2,val2)=>
         {
-//            console.log("detalle requisito   ",val2);
             if(val2.id_registro!=null)
             {
-//                console.log("entro en bandera:  ",val2.id_registro);
                 bandera=1;
             }
         });
@@ -270,9 +268,7 @@ function reconstruirExcelDetalles(value,index)
         }
         
     }
-        console.log("tem requisitos por tema",tempData["Requisitos por Tema"]);
-        
-        
+//        console.log("tem requisitos por tema",tempData["Requisitos por Tema"]);      
     });  
     
     tempData["Requisitos Cumplidos"]= 0;    
@@ -284,41 +280,46 @@ function reconstruirExcelDetalles(value,index)
     tempData["% Cumplimiento Tema"] = ((tempData["Requisitos Cumplidos"]/tempData["Requisitos por Tema"])*100).toFixed(2)+("%");
      
     cumplimientoRequisitos= 0;
-    $.each(value,(ind,val)=>
-    {
-        
-        
-      if(val["detalles_requisito"]!=undefined){
-            $.each(val['detalles_requisito'],(ind2,val2)=>
-            {
-                if(val2.id_registro!=null)
-                {
-    //                tempData["cumplimientoRequisitos"]+= val.cumplimiento_requisito;
-                    if(val.cumplimiento_requisito!="X")
-                    cumplimientoRequisitos+= val.cumplimiento_requisito;
-                console.log("cr",cumplimientoRequisitos);
-//                if(val.cumplimiento_requisito=="X"){
-//                     cumplimientoRequisitos+= 0;
+     tempData["% De Cumplimiento  Requisitos"]= "";
+//    $.each(value,(ind,val)=>
+//    {   
+//       
+//      if(val["detalles_requisito"]!=undefined){
+//            $.each(val['detalles_requisito'],(ind2,val2)=>
+//            {
+//                if(val2.id_registro!=null)
+//                {
+//                    if(val.cumplimiento_requisito!="X"){
+//                        cumplimientoRequisitos+= val.cumplimiento_requisito;
+//                    }
 //                }
-                }
-            });      
-        }
-    });    
-    
-    tempData["% De Cumplimiento  Requisitos"]= "";
-     tempData["% De Cumplimiento  Requisitos"]= (cumplimientoRequisitos/tempData["Requisitos por Tema"]).toFixed(2)+("%");
-      tempData["% separados por requisito"]= "";
-    
+//                
+//                
+//                
+//                
+//                
+//                
+//            });       
+//            
+//        }
+//    });    
     tempData["Estado del Requisito"]= "";
 //    tempData["Requisito"]= "";
     $.each(value,(ind,val)=>
     {
         bandera=0;
+        cumplimientoRequisitos=0;
+//         tempData["Estado del Requisito"]+= "<li>"+val.estado_requisito+"</li>";
+//        tempData["Requisito"]+= "<li>"+val.requisito+"</li>";
     if(val["detalles_requisito"]!=undefined){
+       
+        
+        
         $.each(val['detalles_requisito'],(ind2,val2)=>
         {
             if(val2['id_registro']!=null)
             {
+               cumplimientoRequisitos+= val.cumplimiento_requisito;
                bandera=1; 
             }                       
         });
@@ -326,7 +327,7 @@ function reconstruirExcelDetalles(value,index)
         if(bandera==1)
         {
             //esto esta comentando y si sirve
-//            tempData["% De Cumplimiento  Requisitos"]+= "<li>"+(cumplimientoRequisitos/tempData["Requisitos por Tema"]).toFixed(2)+("%");+"</li>";
+            tempData["% De Cumplimiento  Requisitos"]+= "<li>"+(cumplimientoRequisitos/tempData["Requisitos por Tema"]).toFixed(2)+("%");+"</li>";
 //            if()
 //            tempData["% separados por requisito"]+="<li>"+tempData["Requisitos por Tema"]+"</li>";
             tempData["Estado del Requisito"]+= "<li>"+val.estado_requisito+"</li>";
@@ -349,6 +350,7 @@ function reconstruirExcelDetalles(value,index)
             {
                 bandera=1;
             }
+            
             
             if(bandera==1)
             {
