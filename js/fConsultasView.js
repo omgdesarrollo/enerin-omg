@@ -359,7 +359,7 @@ function reconstruirExcelDetalles(value,index)
 //            tempData["% De Cumplimiento  Requisitos"]+= "<li>"+(cumplimientoRequisitos/tempData["Requisitos por Tema"]).toFixed(2)+("%");+"</li>";
 //            tempData["% De Cumplimiento  Requisitos"]+= "<li>"+(suma_todos_registros_porcentaje/saber_cantidad_registros_dentro_requisito)+"</li>"
 //            cumplimiento_requisito
-            tempData["% De Cumplimiento  Requisitos"]+="<li>"+val.cumplimiento_requisito+"</li>";
+            tempData["% De Cumplimiento  Requisitos"]+="<li>"+(val.cumplimiento_requisito).toFixed(2)+"</li>";
 //            if()
 //            tempData["% separados por requisito"]+="<li>"+tempData["Requisitos por Tema"]+"</li>";
             tempData["Estado del Requisito"]+= "<li>"+val.estado_requisito+"</li>";
