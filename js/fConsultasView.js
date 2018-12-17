@@ -95,7 +95,7 @@ function reconstruir(value,index)
     //     if(bandera==1)
     //         tempData["requisitos_tema"]++;
     // });
-    tempData["cumplimiento_tema"] = value.cumplimiento_tema;
+    tempData["cumplimiento_tema"] = value.cumplimiento_tema*100;
     // (tempData["requisitos_tema"]==0)?
     //  (tempData["requisitos_cumplidos"]/tempData["requisitos_tema"])*100 : 0;
 
@@ -478,7 +478,7 @@ function listarDatos()
                         $.each(__datos,(index,value)=>{
                             cumplimiento_contrato += value.cumplimiento_tema;
                         });
-                        $("#cumplimiento_contrato_show").html("% Cumplimiento General: "+(cumplimiento_contrato/__datos.length).toFixed(2));
+                        $("#cumplimiento_contrato_show").html("% Cumplimiento General: "+((cumplimiento_contrato/__datos.length)*100).toFixed(2));
                         DataGrid = __datos;
                         gridInstance.loadData();
                     }
