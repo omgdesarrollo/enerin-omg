@@ -322,10 +322,23 @@ function reconstruirExcelDetalles(value,index)
         {
             if(val2['id_registro']!=null)
             {
-               var total_de_envidencias= parseInt(val2.evidencias_realizar);
-               console.log("total de evidencias ",total_de_envidencias);
-               var resultado=parseInt((val2.evidencias_validadas)*100)/total_de_envidencias;
-                suma_todos_registros_porcentaje+=resultado;
+                
+                
+                if(val2.frecuencia=="POR EVENTO")
+                {
+                    
+                    if(val2.evidencias_validadas>0){
+                        suma_todos_registros_porcentaje=100;
+                    }
+//                     var resultado=parseInt((val2.evidencias_validadas)*100)/total_de_envidencias;
+//                  suma_todos_registros_porcentaje+=resultado;    
+                }
+                else{    
+                    var total_de_envidencias= parseInt(val2.evidencias_realizar);
+                    console.log("total de evidencias ",total_de_envidencias);
+                    var resultado=parseInt((val2.evidencias_validadas)*100)/total_de_envidencias;
+                     suma_todos_registros_porcentaje+=resultado;
+               }
             }  
             
             
@@ -407,7 +420,10 @@ function reconstruirExcelDetalles(value,index)
                     
                     if(val2.frecuencia=="POR EVENTO")
                     {
-                        tempData["Evidencias por Cumplir"] += "<li>"+1+"</li>";                    
+                        if(val2.evidencias_validadas>0)
+                        tempData["Evidencias por Cumplir"] += "<li>"+0+"</li>";
+                        else
+                        tempData["Evidencias por Cumplir"] += "<li>"+1+"</li>";
                     }
                     
                     if(val2.frecuencia=="INDEFINIDO" && val2.evidencias_proceso==0)
