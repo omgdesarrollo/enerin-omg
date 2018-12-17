@@ -451,7 +451,7 @@ class ConsultasModel{
                 // if($cumplimiento_tema[$value["id_tema"]]["cumplimiento"]!="X")
                 //     $lista2[$key]["cumplimiento_tema"] = number_format(floatval($cumplimiento_tema[$value["id_tema"]]["cumplimiento"]),2,".","");
                 // else
-                    $lista2[$key]["cumplimiento_tema"] = $cumplimiento_tema[$value["id_tema"]]["cumplimiento"];
+                    $lista2[$key]["cumplimiento_tema"] = $cumplimiento_tema[$value["id_tema"]]["cumplimiento"]*100;
                     // if(gettype($cumplimiento_tema[$value["id_tema"]]["cumplimiento"])!="string")
                     // {
                         // $total += $cumplimiento_tema[$value["id_tema"]]["cumplimiento"];
@@ -459,7 +459,7 @@ class ConsultasModel{
                         // $cumplimiento_contrato = $total/$contador;
                     // }
             }
-            $lista2[0]["cumplimiento_contrato"] = $total/$contador;
+            $lista2[0]["cumplimiento_contrato"] = ($total/$contador)*100;
             // var_dump($lista2);
             // var_dump($cumplimiento_tema);
             // foreach($lista as $key=>$value)
