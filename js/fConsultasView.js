@@ -239,7 +239,7 @@ function reconstruirExcelDetallest(value,index)
 
 function reconstruirExcelDetalles(value,index)
 {
-    console.log("inicio dentro  de reconstruir  excelDetalles--->  ",value);
+//    console.log("inicio dentro  de reconstruir  excelDetalles--->  ",value);
     tempData = new Object();
     
     tempData["No. Tema"] = value[0].no_tema;
@@ -304,7 +304,9 @@ function reconstruirExcelDetalles(value,index)
 //        }
 //    });    
     tempData["Estado del Requisito"]= "";
-//    tempData["Requisito"]= "";
+    tempData["Requisito"]= "";
+    tempData["Registros"]= "";
+    tempData["Frecuencia"]= "";
     $.each(value,(ind,val)=>
     {
         bandera=0;
@@ -313,15 +315,23 @@ function reconstruirExcelDetalles(value,index)
 //        tempData["Requisito"]+= "<li>"+val.requisito+"</li>";
     if(val["detalles_requisito"]!=undefined){
        
-        
+        var saber_cantidad_registros_dentro_requisito=0;
         
         $.each(val['detalles_requisito'],(ind2,val2)=>
         {
             if(val2['id_registro']!=null)
             {
                cumplimientoRequisitos+= val.cumplimiento_requisito;
+               tempData["Requisito"]+="<li></li>"
                bandera=1; 
-            }                       
+               saber_cantidad_registros_dentro_requisito++;
+            }  
+            
+             if(bandera==1)
+            {
+                tempData["Registros"] += "<li>"+val2.registro+"</li></br>";
+                tempData["Frecuencia"] += "<li>"+val2.frecuencia+"</li>";
+            }
         });
         
         if(bandera==1)
@@ -331,13 +341,25 @@ function reconstruirExcelDetalles(value,index)
 //            if()
 //            tempData["% separados por requisito"]+="<li>"+tempData["Requisitos por Tema"]+"</li>";
             tempData["Estado del Requisito"]+= "<li>"+val.estado_requisito+"</li>";
-//            tempData["Requisito"]+= "<li>"+val.requisito+"</li>";
+            tempData["Requisito"]+= "<li>"+val.requisito+"</li>";
+            
+            for(i=1;i<saber_cantidad_registros_dentro_requisito;i++){
+                tempData["% De Cumplimiento  Requisitos"]+="<li>_</li>";
+                tempData["Estado del Requisito"]+= "<li>_</li>";
+                 tempData["Requisito"]+="<li>_</li>"
+            }
+            
+            
+            
+            
+            
+            
         }
     }
     });
-    
-    tempData["Registros"]= "";
-    tempData["Frecuencia"]= "";
+   
+//    tempData["Registros"]= "";
+//    tempData["Frecuencia"]= "";
     tempData["Evidencias por Cumplir"]= "";
     tempData["Evidencias Cumplidas"]= "";
     $.each(value,(ind,val)=>
@@ -354,8 +376,8 @@ function reconstruirExcelDetalles(value,index)
             
             if(bandera==1)
             {
-                tempData["Registros"] += "<li>"+val2.registro+"</li></br>";
-                tempData["Frecuencia"] += "<li>"+val2.frecuencia+"</li>";
+//                tempData["Registros"] += "<li>"+val2.registro+"</li></br>";
+//                tempData["Frecuencia"] += "<li>"+val2.frecuencia+"</li>";
                 
                 
                 if(val2.frecuencia!="POR EVENTO" && val2.frecuencia!="INDEFINIDO")
