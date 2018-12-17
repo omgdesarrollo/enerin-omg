@@ -478,7 +478,7 @@ function listarDatos()
                         $.each(__datos,(index,value)=>{
                             cumplimiento_contrato += value.cumplimiento_tema;
                         });
-                        $("#cumplimiento_contrato_show").html("% Cumplimiento General: "+((cumplimiento_contrato/__datos.length)*100).toFixed(2));
+                        $("#cumplimiento_contrato_show").html("% Cumplimiento General: "+((cumplimiento_contrato/__datos.length)).toFixed(2));
                         DataGrid = __datos;
                         gridInstance.loadData();
                     }
