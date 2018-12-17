@@ -239,7 +239,7 @@ function reconstruirExcelDetallest(value,index)
 
 function reconstruirExcelDetalles(value,index)
 {
-    console.log("detro   ",value);
+//    console.log("inicio dentro  de reconstruir  excelDetalles--->  ",value);
     tempData = new Object();
     
     tempData["No. Tema"] = value[0].no_tema;
@@ -256,10 +256,8 @@ function reconstruirExcelDetalles(value,index)
     if(val["detalles_requisito"]!=undefined){
         $.each(val['detalles_requisito'],(ind2,val2)=>
         {
-//            console.log("detalle requisito   ",val2);
             if(val2.id_registro!=null)
             {
-//                console.log("entro en bandera:  ",val2.id_registro);
                 bandera=1;
             }
         });
@@ -270,9 +268,7 @@ function reconstruirExcelDetalles(value,index)
         }
         
     }
-        console.log("tem requisitos por tema",tempData["Requisitos por Tema"]);
-        
-        
+//        console.log("tem requisitos por tema",tempData["Requisitos por Tema"]);      
     });  
     
     tempData["Requisitos Cumplidos"]= 0;    
@@ -284,59 +280,107 @@ function reconstruirExcelDetalles(value,index)
     tempData["% Cumplimiento Tema"] = ((tempData["Requisitos Cumplidos"]/tempData["Requisitos por Tema"])*100).toFixed(2)+("%");
      
     cumplimientoRequisitos= 0;
-    $.each(value,(ind,val)=>
-    {
-        
-        
-      if(val["detalles_requisito"]!=undefined){
-            $.each(val['detalles_requisito'],(ind2,val2)=>
-            {
-                if(val2.id_registro!=null)
-                {
-    //                tempData["cumplimientoRequisitos"]+= val.cumplimiento_requisito;
-                    if(val.cumplimiento_requisito!="X")
-                    cumplimientoRequisitos+= val.cumplimiento_requisito;
-                console.log("cr",cumplimientoRequisitos);
-//                if(val.cumplimiento_requisito=="X"){
-//                     cumplimientoRequisitos+= 0;
-//                }
-                }
-            });      
-        }
-    });    
-    
-    tempData["% De Cumplimiento  Requisitos"]= "";
-     tempData["% De Cumplimiento  Requisitos"]= (cumplimientoRequisitos/tempData["Requisitos por Tema"]).toFixed(2)+("%");
-      tempData["% separados por requisito"]= "";
-    
+//    cumplimientoregistro
+     tempData["% De Cumplimiento  Requisitos"]= "";
+  
     tempData["Estado del Requisito"]= "";
-//    tempData["Requisito"]= "";
+    tempData["Requisito"]= "";
+    tempData["Registros"]= "";
+    tempData["Frecuencia"]= "";
     $.each(value,(ind,val)=>
     {
         bandera=0;
+        cumplimientoRequisitos=0;
+//         tempData["Estado del Requisito"]+= "<li>"+val.estado_requisito+"</li>";
+//        tempData["Requisito"]+= "<li>"+val.requisito+"</li>";
     if(val["detalles_requisito"]!=undefined){
+       
+        var saber_cantidad_registros_dentro_requisito=0;
+        
         $.each(val['detalles_requisito'],(ind2,val2)=>
         {
             if(val2['id_registro']!=null)
             {
+//               if(val.cumplimiento_requisito!="X"){
+                 cumplimientoRequisitos+= val.cumplimiento_requisito;
+//                }
+               tempData["Requisito"]+="<li></li>"
                bandera=1; 
-            }                       
+               saber_cantidad_registros_dentro_requisito++;
+            }  
+            
+             if(bandera==1)
+            {
+                tempData["Registros"] += "<li>"+val2.registro+"</li></br>";
+                tempData["Frecuencia"] += "<li>"+val2.frecuencia+"</li>";   
+            }
         });
+        var suma_todos_registros_porcentaje=0;
+       //aqui empieza la operacion del cacluo de registros
+       
+          $.each(val['detalles_requisito'],(ind2,val2)=>
+        {
+            if(val2['id_registro']!=null)
+            {
+                
+                
+                if(val2.frecuencia=="POR EVENTO")
+                {
+                    
+                    if(val2.evidencias_validadas>0){
+                        suma_todos_registros_porcentaje=100;
+                    }
+//                     var resultado=parseInt((val2.evidencias_validadas)*100)/total_de_envidencias;
+//                  suma_todos_registros_porcentaje+=resultado;    
+                }
+                else{    
+                    var total_de_envidencias= parseInt(val2.evidencias_realizar);
+                    console.log("total de evidencias ",total_de_envidencias);
+                    var resultado=parseInt((val2.evidencias_validadas)*100)/total_de_envidencias;
+                     suma_todos_registros_porcentaje+=resultado;
+               }
+            }  
+            
+            
+        });
+       
+       
+       //aui termina
+       
+        
+        
+        
+        
+        
         
         if(bandera==1)
         {
             //esto esta comentando y si sirve
 //            tempData["% De Cumplimiento  Requisitos"]+= "<li>"+(cumplimientoRequisitos/tempData["Requisitos por Tema"]).toFixed(2)+("%");+"</li>";
+//            tempData["% De Cumplimiento  Requisitos"]+= "<li>"+(suma_todos_registros_porcentaje/saber_cantidad_registros_dentro_requisito)+"</li>"
+//            cumplimiento_requisito
+            tempData["% De Cumplimiento  Requisitos"]+="<li>"+(val.cumplimiento_requisito).toFixed(2)+"</li>";
 //            if()
 //            tempData["% separados por requisito"]+="<li>"+tempData["Requisitos por Tema"]+"</li>";
             tempData["Estado del Requisito"]+= "<li>"+val.estado_requisito+"</li>";
-//            tempData["Requisito"]+= "<li>"+val.requisito+"</li>";
+            tempData["Requisito"]+= "<li>"+val.requisito+"</li>";
+            
+            
+            
+          
+            
+            
+            for(i=1;i<saber_cantidad_registros_dentro_requisito;i++){
+                tempData["% De Cumplimiento  Requisitos"]+="<li>_</li>";
+                tempData["Estado del Requisito"]+= "<li>_</li>";
+                 tempData["Requisito"]+="<li>_</li>"
+            }   
         }
     }
     });
-    
-    tempData["Registros"]= "";
-    tempData["Frecuencia"]= "";
+   
+//    tempData["Registros"]= "";
+//    tempData["Frecuencia"]= "";
     tempData["Evidencias por Cumplir"]= "";
     tempData["Evidencias Cumplidas"]= "";
     $.each(value,(ind,val)=>
@@ -350,10 +394,11 @@ function reconstruirExcelDetalles(value,index)
                 bandera=1;
             }
             
+            
             if(bandera==1)
             {
-                tempData["Registros"] += "<li>"+val2.registro+"</li></br>";
-                tempData["Frecuencia"] += "<li>"+val2.frecuencia+"</li>";
+//                tempData["Registros"] += "<li>"+val2.registro+"</li></br>";
+//                tempData["Frecuencia"] += "<li>"+val2.frecuencia+"</li>";
                 
                 
                 if(val2.frecuencia!="POR EVENTO" && val2.frecuencia!="INDEFINIDO")
@@ -375,7 +420,10 @@ function reconstruirExcelDetalles(value,index)
                     
                     if(val2.frecuencia=="POR EVENTO")
                     {
-                        tempData["Evidencias por Cumplir"] += "<li>"+1+"</li>";                    
+                        if(val2.evidencias_validadas>0)
+                        tempData["Evidencias por Cumplir"] += "<li>"+0+"</li>";
+                        else
+                        tempData["Evidencias por Cumplir"] += "<li>"+1+"</li>";
                     }
                     
                     if(val2.frecuencia=="INDEFINIDO" && val2.evidencias_proceso==0)
