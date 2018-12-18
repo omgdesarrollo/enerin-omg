@@ -641,8 +641,8 @@ function graficar()
 
     if(bandera == 0)
     {
-        dataGrafica.push([ "NO EXISTEN DOCUMENTOS",1,"SIN DOCUMENTOS","[]",0]);
-        tituloGrafica = "NO EXISTEN DOCUMENTOS";
+        dataGrafica.push([ "NO EXISTEN EVIDENCIAS",1,"SIN EVIDENCIAS","[]",0]);
+        tituloGrafica = "NO EXISTEN EVIDENCIAS";
     }
     construirGrafica(dataGrafica,tituloGrafica);
     $("#BTN_ANTERIOR_GRAFICAMODAL").html("Recargar");
