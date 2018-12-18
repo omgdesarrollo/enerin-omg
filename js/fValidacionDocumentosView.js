@@ -384,10 +384,10 @@ function reconstruir(documento,index)//listo
     tempData["tema_responsableBTN"] += "<i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button>";
 
     if(documento.permiso_total == 1 || documento.soy_responsable == 0)
-        tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\""+documento.validacion_documento_responsable+"\",this);' type='button' class='botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'";
+        tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\""+documento.validacion_documento_responsable+"\",this);' type='button' class='botones_vista_tabla_validacion_documentos_archivo_adjunto' data-toggle='modal' data-target='#create-itemUrls'";
         // style='width:100%'>";
     else
-        tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\"true\",this);' type='button' class=' botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'";
+        tempData["mostrar_urlsBTN"] = "<button onClick='mostrar_urls("+documento.id_validacion_documento+",\"true\",this);' type='button' class='botones_vista_tabla_validacion_documentos_archivo_adjunto' data-toggle='modal' data-target='#create-itemUrls'";
 
     if(documento.archivosUpload[0].length != 0)
         tempData["mostrar_urlsBTN"] += "style='width:100%;background:#D15B47'>";
