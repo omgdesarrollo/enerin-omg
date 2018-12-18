@@ -629,7 +629,7 @@ function graficar()
         }
     });
     
-    if(proceso!=0)
+    if(validados!=0)
         dataGrafica.push(["Conforme",validados,">> Evidencias:"+validados.toString(),JSON.stringify(validados_data),1]);
     if(proceso!=0)
         dataGrafica.push(["No Conforme",proceso,">> Evidencias:"+proceso.toString(),JSON.stringify(proceso_data),1]);
