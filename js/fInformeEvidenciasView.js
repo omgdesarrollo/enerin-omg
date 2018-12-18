@@ -613,7 +613,7 @@ function graficar()
     let proceso = 0;
     let proceso_data = [];
     let dataGrafica = [];
-    let tituloGrafica = "VALIDACIÓN DE EVIDENCIAS";
+    let tituloGrafica = "INFORME DE EVIDENCIAS";
     let bandera = 0;
 
     $.each(dataListado,(index,value)=>{

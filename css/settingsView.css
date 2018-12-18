@@ -10,8 +10,10 @@ body{overflow:hidden;}
 
 .btn_checkbox{margin-right: 5px;border-radius:5px;border:3px #3399cc solid;width:120px;height:44px;background:#6fb3e0;color:white}
 
-.botones_vista_tabla{border-radius:5px;border:3px #3399cc solid;width:100%;height:44px;background:#6fb3e0;color:white}
+.botones_vista_tabla{border-radius:5px;border:3px #ff3333 solid;width:100%;height:44px;background:#6fb3e0;color:white}
+/*.botones_vista_tabla{border-radius:5px;border:3px #3399cc solid;width:100%;height:44px;background:#6fb3e0;color:white}*/
 .botones_vista_tabla2{border-radius:5px;border:3px #013650 solid;width:100%;height:44px;background:#6fb3e0;color:white}
+/*.botones_vista_tabla_validacion_documentos_archivo_adjunto{border-radius:5px;border:3px #b1000f solid;width:100%;height:44px;background:#6fb3e0;color:white}*/
 
 .btn_porcentaje{border-radius:3px;border:3px #49986d solid;height:44px;}
 

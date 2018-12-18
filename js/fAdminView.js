@@ -14,6 +14,9 @@ function inicializarFiltros()
             { id: "cumplimientos", title:"Contratos", type: "none"},
             { id:"opcion",type:"opcion"}
         ];
+       
+        
+        
         resolve();
     });
 }
