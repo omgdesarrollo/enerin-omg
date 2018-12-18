@@ -297,7 +297,7 @@ $Usuario=  Session::getSesion("user");
         { name: "nombre",title:"Nombre", type: "text", width: 180, editing:false},
         { name: "correo",title:"Correo", type: "text", width: 180, editing:false},
         { name: "categoria",title:"Categoria", type: "text", width: 140, editing:false},
-        { name: "cumplimientos",title:"Temática", type: "text", width: 140,editing:false},   
+        { name: "cumplimientos",title:"Temática", type: "text", width: 70,editing:false},   
         { name: "permisos",title:"Vistas", type: "text", width: 70, editing:false},
         { name: "temas",title:"Temas", type: "text", width: 70,editing:false,visible:false},
         { name:"delete", title:"Opción", type:"customControl",sorting:""},
