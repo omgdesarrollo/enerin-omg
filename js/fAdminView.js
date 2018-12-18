@@ -14,6 +14,9 @@ function inicializarFiltros()
             { id: "cumplimientos", title:"Contratos", type: "none"},
             { id:"opcion",type:"opcion"}
         ];
+         if(window.top.variables_super_globales["cumplimientos"]!=true){
+            filtros.splice(6,1); 
+         }
        
         
         
