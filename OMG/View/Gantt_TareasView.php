@@ -1426,7 +1426,7 @@ construirTreeList();
                                         async:false,
                                         success:function (res)
                                         {
-//                                            datosTreeList=[];
+                                            datosTreeList=[];
                                             datosTreListTemp=[];
                                             
                                             $.each(res.data,function(index,value){
@@ -1438,6 +1438,9 @@ construirTreeList();
                                                 datosTreeObj["user"]= value.user;
 //                                                datosTreeObj["notasname"]= value.notas;
                                                 datosTreeObj["porcentaje_por_actividad"]= value.porcentaje_por_actividad;
+                                                
+//                                                 datosTreeObj["pt"]= "<input type='text' style=' width:100%;background:transparent !important;border:none'  name='porcentajexactividad' value='"+value.porcentaje_por_actividad+"' > ";
+                                                
                                                 datosTreeObj["ponderado_real"]= "value.ponderado_real";
                                                 datosTreeObj["avance"]=Math.round(value.progress*100);
                                                 if(value.archivosUpload[0].length==0)
@@ -1453,7 +1456,7 @@ construirTreeList();
                                                 datosTreListTemp.push(datosTreeObj);
                                                 datosTreeList.push(datosTreeObj);
                                                 
-                                                return datosTreListTemp
+//                                                return datosTreListTemp
                                             });
                                          resolve(datosTreListTemp);
                                         }
@@ -1464,17 +1467,17 @@ construirTreeList();
   function construirTreeList(){
   console.log("empezo el contruir el tree list");
    dxtreeList= $("#dx").dxTreeList({
-//        dataSource: datosTreeList,
-        dataSource:{
-            load:function (options){
+        dataSource: datosTreeList,
+//        dataSource:{
+//            load:function (options){
 //                console.log("teiene options",options);
 //                this.datasource.load=function (){
 //                    return obtenerTareas();
 //                }
-                return obtenerTareas();
-            }
-            
-        },
+//                return obtenerTareas();
+//            }
+//            
+//        },
         keyExpr: "id",
 //        parentIdExpr: "Head_ID",
          parentIdExpr: "parent",
@@ -1570,20 +1573,25 @@ construirTreeList();
         text: "Loading...",
         },
         onRowClick:(args)=>{
-         
-//            console.log(args);
+            console.log("row click ",args);
+        },
+        onCellClick:(args)=>{
+//            console.log("cell click ",args);
+            
+            
+           console.log("la instancia de dxtreelist  ",dxtreeList);
         },
         onRowUpdated:function (args){
-            console.log(args);
-            if( args.data.hasOwnProperty('notasname') ) {
-                actualizarDeTablaDetalles("notas",args.data["notasname"],args.key);   
-            }
-            if( args.data.hasOwnProperty('user') ) {
-                actualizarDeTablaDetalles("user",args.data["user"],args.key);
-            }
-            if(args.data.hasOwnProperty('status')){
-                actualizarDeTablaDetalles("status",args.data["status"],args.key);
-            }
+//            console.log(args);
+//            if( args.data.hasOwnProperty('notasname') ) {
+//                actualizarDeTablaDetalles("notas",args.data["notasname"],args.key);   
+//            }
+//            if( args.data.hasOwnProperty('user') ) {
+//                actualizarDeTablaDetalles("user",args.data["user"],args.key);
+//            }
+//            if(args.data.hasOwnProperty('status')){
+//                actualizarDeTablaDetalles("status",args.data["status"],args.key);
+//            }
             if(args.data.hasOwnProperty('porcentaje_por_actividad')){
                 saberSiSumanPorcentajePonderadoProgramado100loshijos(args);
             }    
@@ -1617,6 +1625,12 @@ construirTreeList();
                 caption: "Peso de la Actividad",
                 allowEditing:true
             },
+//            { 
+//                dataField: "pt",
+//                caption: "pt",
+//                cellTemplate:ptCellTemplate,
+//                allowEditing:false
+//            },
              { 
                 dataField: "avance",
                 caption: "Avance (%)",
@@ -1668,8 +1682,17 @@ construirTreeList();
    {       
 //       console.log(options);
       return container.context.innerHTML=options.data.archivo_adjunto;
-};
-    
+   };
+   var ptCellTemplate=function (container, options){
+       console.log("con    ",container);
+       
+       
+       
+       
+     return container.context.innerHTML=options.data.pt;  
+   };
+//console.log("ptcell  ",ptCellTemplate);
+
     function refrescarDatosGantt()
     {
         gantt.refreshData();
