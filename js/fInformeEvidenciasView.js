@@ -46,42 +46,27 @@ function inicializarFiltros()
     {
         filtros = [
             { id:"noneUno", type:"none"},
-        //     { id: "tema",name:"Tema", type: "text"},
-        //     { id: "registro",name:"Registro", type: "text"},
-        //     { id: "frecuencia",name:"Frecuencia", type: "combobox",data:frecuenciaData,descripcion:"frecuencia"},
-        //     { id: "clave_documento",name:"Clave Documento", type: "text"},
-        //     { id: "fecha_creacion",name:"Fecha Creación", type: "date"},
-        //     // { id: "adjuntar_evidencia",name:"Adjuntar Evidencia", type: "text"},
-        //     { id:"noneDos", type:"none"},
-        //     { id: "fecha_registro",name:"Fecha Registro", type: "date"},
-        //     { id: "usuario",name:"Usuario", type: "text"},
-        //     { id:"noneTres", type:"none"},
-        //     { id:"noneCuatro", type:"none"},
-        //     { id:"noneCinco", type:"none"},
-        //     { id:"noneSeis", type:"none"},
-        //     // { id: "accion_correctiva",name:"Accion Correctiva", type: "text"},
-        //     // { id: "plan_accion",name:"Plan Accion", type: "text"},
-        //     // { id: "desviacion",name:"Desviacion", type: "text"},
-        //     // { id: "validacion",name:"Validacion", type: "text"},
-        //     {name:"opcion",id:"opcion",type:"opcion"}
-        //     // { id:"delete", name:"Opción", type:"customControl",sorting:""},
-        { id: "tema",title:"Tema", type: "text"},
-        { id: "tema_responsable",title:"Responsable del Tema",type:"text"},
-        { id: "requisito",title:"Requisito", type: "text"},
-        { id: "registro",title:"Registro", type: "text"},
-        { id: "frecuencia",title:"Frecuencia", type: "combobox",data:frecuenciaData,descripcion:"frecuencia"},
-        { id: "clave_documento",title:"Clave Documento", type: "text"},
-        // { id: "documento_responsable",title:"Responsable Documento",type:"text"},
-        // { id: "fecha_creacion",title:"Fecha Evidencia", type: "date"},
-        { id: "fecha_registro",title:"Fecha Registro", type: "none"},
-        { id: "evidencia",title:"Evidencia", type: "none"},
-        // { name: "usuario",title:"Usuario", type: "text", width:250, editing:false }
-        // { name: "plan_accion",title:"Plan Accion", type: "text", width: 160, editing:false },
-        // { id: "desviacion",title:"Desviacion", type: "none"},
-        { id: "notificacion",title:"Accion Correctiva", type: "none"},
-        { id: "avance_plan",title:"Avance del Plan", type: "text"},
-        { id: "estatus",title:"Estatus", type: "combobox",data:estatusFiltro,descripcion:"des_estatus"},
-        // { id:"delete", name:"Opción", type:"opcion",sorting:""},
+            { id: "nombre",title:"Tema",type:"text"},
+            { id: "nombre_empleado",title:"Usuario", type: "text"},
+            { id: "registro",title:"Registro", type: "text"},
+            { id: "fecha_logica",title:"Fecha Actualización", type: "date"},
+            { id: "fecha_fisica",title:"Fecha Corte", type: "date"},
+            { id: "ext_anterior",title:"Ext. Anterior", type: "none"},
+            { id: "cantidad_comprada",title:"Cant. Comprada", type: "none"},
+            { id: "cantidad_vendida",title:"Cant. Vendida", type: "none"},
+            { id: "ext_actual",title:"Ext. Actual", type: "none"},
+            { id: "adjuntos",title:"Adjuntos", type: "none"},
+        
+        // { name: "nombre",title:"Tema", type: "text", width: 150, editing:false },
+        // { name: "nombre_empleado", title:"Usuario", type: "text", width:250, editing:false },
+        // { name: "registro",title:"Registro", type: "text", width: 150, editing:false  },
+        // { name: "fecha_logica",title:"Fecha Actualización", type: "text", width: 160, editing:false },
+        // { name: "fecha_fisica",title:"Fecha Corte", type: "text", width: 160, editing:false },
+        // { name: "ext_anterior", title:"Ext. Anterior", type: "text", width: 100, editing:false },
+        // { name: "cantidad_comprada",title:"Cant. Comprada", type: "text", width: 150, editing:false},
+        // { name: "cantidad_vendida",title:"Cant. Vendida", type: "text", width: 110, editing:false },
+        // { name: "ext_actual",title:"Ext. Actual", type: "text", width: 100, editing:false},
+        // { name: "adjuntos",title:"Adjuntos", type: "text", width: 100, editing:false},
         ];
         resolve();
     });
@@ -211,7 +196,7 @@ function listarDatos()
 {
     return new Promise((resolve,reject)=>
     {
-        URL = 'filesEvidenciaDocumento/';
+        URL = 'fileEvidencias/';
         __datos=[];
         $.ajax({
             url: '../Controller/InformeEvidenciasController.php?Op=Listar',
@@ -269,61 +254,43 @@ function reconstruir(value,index)
     tempData["no"] = ultimoNumeroGrid;
     tempData["id_principal"] = [];
     tempData["id_principal"].push({'id_evidencias':value.id_evidencias});
-    
-    tempData["tema"] = value.tema;
-    tempData["tema_responsable"] = value.tema_responsable;
 
-    //  tempData["requisito"] = "<span tooltiptext><span></span></span><p>"+value.requisito+"</p>";
-    tempData["requisito"] = value.requisito;
-//     "<div class='stat-item tooltip' data-stat='95' data-soft='Photoshop' data-color='#C0DCF1'>\n\
-//        <span tooltiptext><span></span></span>\n\
-//        <p>'Hola Mundo'</p>\n\
-//      </div>";
-//    tempData["requisito"] = "<td class='celda' width='10%' style='font-size: -webkit-xxx-large'><button type='button' class='btn btn-success'><i class='ace-icon fa fa-book' style='font-size: 20px;'></i>Ver</button></td>";
+    tempData["nombre"] = value.nombre;
+    tempData["nombre_empleado"] = value.nombre_empleado;
     tempData["registro"] = value.registro;
-    tempData["frecuencia"] = value.frecuencia;
+    tempData["fecha_logica"] = getSinFechaFormato(value.fecha_logica);
+    tempData["fecha_fisica"] = getSinFechaFormato(value.fecha_fisica);
 
-    tempData["clave_documento"] = value.clave_documento;
-    tempData["documento_responsable"] = value.documento_responsable;
-
-    if(value.archivosUpload[0].length != 0)
+    if(value.primero == 1 && value.ext_anterior==null)
     {
-            todoArchivo = value.archivosUpload[0][0].split("^-O-^-M-^-G-^");
-            tempData["evidencia"] = "<a href='"+value.archivosUpload[1]+"' download='"+todoArchivo[1]+"'>"+todoArchivo[1]+"</a>";
-            tempData["fecha_registro"] = getFechaStamp(todoArchivo[0]);
+        let ext_anterior = $("<button>",{style:"font-size:x-large;color:#39c;background:transparent;border:none;",onclick:"abrirModalAgregarExtAnterior(this)"});
+        $(ext_anterior)[0]["customData"] = value;
+        // tempData["ext_anterior"] = "<button onClick='' style=''>";
+        $(ext_anterior).append("<i class='fa fa-pencil' style='font-size: xx-large;cursor:pointer' aria-hidden='true'></i>")
+        // tempData["ext_anterior"] += "</button>";
+        tempData["ext_anterior"] = ext_anterior;
+
+        tempData["corte"] = "<button onClick='swalError(\"Debe agregar Ext. Anterior\");' style='font-size:x-large;color:#39c;background:transparent;border:none;'>";
+        tempData["corte"] += "<i class='fa fa-times' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true'></i></button>";
     }
     else
     {
-        tempData["evidencia"] = "Sin Archivo";
-        tempData["fecha_registro"] = "Sin Fecha";
+        tempData["ext_anterior"] = value.ext_anterior;
+        let corte = $("<button>",{style:"font-size:x-large;color:#39c;background:transparent;border:none;",onclick:"abrirModalCorte(this)"});
+        $(corte)[0]["customData"] = value;
+        $(corte).append("<i class='fa fa-dollar' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true'></i>");
+        tempData["corte"] = corte;
     }
-    tempData["fecha_creacion"] = getSinFechaFormato(value.fecha_creacion);
 
-    // tempData["desviacion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;'";
-    // tempData["desviacion"] += "onClick='mostrarMensajes(\""+value.desviacion+"\",0);' data-toggle='modal'";
-    // if(value.desviacion=="")
-    //     tempData["desviacion"] += "data-target='#MandarNotificacionModal'>"+noMsj+"</button>";
-    // else
-    //     tempData["desviacion"] += "data-target='#MandarNotificacionModal'>"+yesMsj+"</button>";
-    // value.desviacion;
-    // tempData["accion_correctiva"] = value.accion_correctiva;
-    // tempData["accion_correctiva"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;'";
-    // tempData["accion_correctiva"] += "onClick='mostrarMensajes(\""+value.accion_correctiva+"\",1);' data-toggle='modal'";
-    // if(value.accion_correctiva=="")
-    //     tempData["accion_correctiva"] += "data-target='#MandarNotificacionModal'>"+noMsj+"</button>";
-    // else
-    //     tempData["accion_correctiva"] += "data-target='#MandarNotificacionModal'>"+yesMsj+"</button>";
+    tempData["ext_actual"] = value.ext_actual;
+    tempData["cantidad_comprada"] = value.cantidad_comprada;
+    tempData["cantidad_vendida"] = value.cantidad_vendida;
 
-    tempData["notificacion"] = "<button onClick='abrirNotificaciones("+value.accion_correctiva+","+value.id_usuario_tema+","+value.id_usuario+")' style='font-size:x-large;color:#39c;background:transparent;border:none;'>"+
-            "<i class='fa fa-comments' style='font-size: xx-large;cursor:pointer' aria-hidden='true'></i></button>";
+    if(value.archivosUpload.length!=0)
+        tempData["adjuntos"]="A";
+    else
+        tempData["adjuntos"]="B";
 
-    // tempData["avance_plan"]=(value.avance_plan*100).toFixed(2)+"%";
-    tempData["avance_plan"] = value.avance_plan;
-    tempData["estatus"] = value.estatus=="VALIDADO"? "CONFORME" : "NO CONFORME" ;
-    // tempData["delete"] = [];
-    tempData["delete"]=tempData["id_principal"];
-    tempData["delete"].push({eliminar:0});
-    tempData["delete"].push({editar:0});
     return tempData;
 }
 
