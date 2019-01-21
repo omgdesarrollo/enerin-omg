@@ -139,7 +139,7 @@ function inicializarFiltros()
 function mostrar_urls(id_evidencia)
 {
     var tempData=[];
-    URL = 'filesEvidenciaDocumento/'+id_evidencia;
+    URL = 'fileEvidencias/'+id_evidencia;
     // $.ajax({
     //     url: '../Controller/ArchivoUploadController.php?Op=CrearUrl',
     //     type: 'GET',
@@ -261,37 +261,41 @@ function reconstruir(value,index)
     tempData["fecha_logica"] = getSinFechaFormato(value.fecha_logica);
     tempData["fecha_fisica"] = getSinFechaFormato(value.fecha_fisica);
 
-    if(value.primero == 1 && value.ext_anterior==null)
-    {
-        let ext_anterior = $("<button>",{style:"font-size:x-large;color:#39c;background:transparent;border:none;",onclick:"abrirModalAgregarExtAnterior(this)"});
-        $(ext_anterior)[0]["customData"] = value;
-        // tempData["ext_anterior"] = "<button onClick='' style=''>";
-        $(ext_anterior).append("<i class='fa fa-pencil' style='font-size: xx-large;cursor:pointer' aria-hidden='true'></i>")
-        // tempData["ext_anterior"] += "</button>";
-        tempData["ext_anterior"] = ext_anterior;
-
-        tempData["corte"] = "<button onClick='swalError(\"Debe agregar Ext. Anterior\");' style='font-size:x-large;color:#39c;background:transparent;border:none;'>";
-        tempData["corte"] += "<i class='fa fa-times' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true'></i></button>";
-    }
-    else
-    {
-        tempData["ext_anterior"] = value.ext_anterior;
-        let corte = $("<button>",{style:"font-size:x-large;color:#39c;background:transparent;border:none;",onclick:"abrirModalCorte(this)"});
-        $(corte)[0]["customData"] = value;
-        $(corte).append("<i class='fa fa-dollar' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true'></i>");
-        tempData["corte"] = corte;
-    }
-
+    tempData["ext_anterior"] = value.ext_anterior;
     tempData["ext_actual"] = value.ext_actual;
     tempData["cantidad_comprada"] = value.cantidad_comprada;
     tempData["cantidad_vendida"] = value.cantidad_vendida;
 
     if(value.archivosUpload.length!=0)
-        tempData["adjuntos"]="A";
+    {
+        let archivos = $("<button>",{style:"font-size:x-large;color:#39c;background:transparent;border:none;",onclick:"abrirModalArchivos(this)"});
+        $(archivos)[0]["customData"] = value.archivosUpload;
+        $(archivos).append("<i class='fa fa-cloud' style='font-size: xx-large;color:#3399cc;cursor:pointer' aria-hidden='true'></i>");
+        tempData["adjuntos"] = archivos;
+    }
     else
-        tempData["adjuntos"]="B";
-
+    {
+        let noArchivos = $("<button>",{style:"font-size:x-large;color:#39c;background:transparent;border:none;",onclick:"swal('Sin Archivos','','info')"});
+        $(noArchivos).append("<i class='fa fa-times' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true'></i>");
+        tempData["adjuntos"] = noArchivos;
+    }
     return tempData;
+}
+
+abrirModalArchivos = (obj)=>//componer el listado de los archivos
+{
+    let data = $(obj)[0]["customData"];
+    let tempData  = "";
+    $("#create-itemUrls").modal();
+    console.log(data.length);
+    $.each(data[0],(index,value)=>
+    {
+        // nametmp = value.split("^-O-^-M-^-G-^");
+        // fecha = new Date(nametmp[0]*1000);
+        // fecha = fecha.getDay() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+        // tempData["name"] = "<a href=\""+todo[1]+"/"+value+"\" download='"+nametmp[1]+"'>"+nametmp[1]+"</a>";
+        // tempData["fecha"] = fecha;
+    });
 }
 
 abrirNotificaciones = (mensajes,responsableTema,responsableEvidencia)=>
