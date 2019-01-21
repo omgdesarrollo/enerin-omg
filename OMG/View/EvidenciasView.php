@@ -565,7 +565,7 @@
         </tr>
     {% } %}
     {% if(t == 1){ %}
-    {%  %}
+    {% $("#realizarCorte .close").click(); listarDatos(); %}
     {% } %}
 </script>
 <!-- {% if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { %}

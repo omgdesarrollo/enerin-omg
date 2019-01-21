@@ -73,7 +73,7 @@ class InformeEvidenciasDAO{
             JOIN temas tbtemas ON tbtemas.id_tema = tbasignacion_tema_requisito.id_tema
             JOIN usuarios tbusuarios ON tbusuarios.id_usuario = tbevidencias.id_usuario
             JOIN empleados tbempleados ON tbempleados.id_empleado = tbusuarios.id_empleado
-            WHERE tbtemas.contrato = $CONTRATO AND tbevidencias.primero = 0";
+            WHERE tbtemas.contrato = $CONTRATO AND tbevidencias.primero = 0 ORDER BY tbevidencias.fecha_fisica DESC";
             // -- JOIN usuarios_temas tbusuarios_temas ON tbtemas.contrato = $CONTRATO";
             
             $db= AccesoDB::getInstancia();

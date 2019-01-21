@@ -992,7 +992,10 @@ realizarCorte = ()=>
                 beforeSend:()=>{},
                 success:(data)=>
                 {
-                    mandarCorte(data);
+                    if(typeof(data)=="object")
+                        mandarCorte(data);
+                    else
+                        growlError("Error","Ocurrio un error al realizar corte reintente");
                 },
                 error:()=>
                 {
@@ -1007,7 +1010,8 @@ realizarCorte = ()=>
 
 mandarCorte = (data)=>
 {
-    url = 'fileEvidencias/'+data.id_evidencias,
+
+    url = 'fileEvidencias/'+data[0].id_evidencias;
     $.ajax({
         url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
         type: 'GET',

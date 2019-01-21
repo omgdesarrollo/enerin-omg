@@ -24,11 +24,11 @@ switch ($Op)
         $CONTRATO = Session::getSesion("s_cont");
 
         $Lista=$model->listarEvidencias($USUARIO["ID_USUARIO"],$CONTRATO);
-        foreach($Lista as $key => $value)
-        {
-            $url = $_REQUEST["URL"].$value["id_evidencias"];
-            $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
-        }
+        // foreach($Lista as $key => $value)
+        // {
+        //     $url = $_REQUEST["URL"].$value["id_evidencias"];
+        //     $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
+        // }
 
     	Session::setSesion("listarOperaciones",$Lista);//no se de que es esto JR
         header('Content-type: application/json; charset=utf-8');
