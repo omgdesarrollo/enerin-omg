@@ -619,6 +619,7 @@ function evaluarToolbarSeccionB(id)
 //                   else{
                    
                         if(levelv==1){
+                            
                             $('#create-itemRegistro').modal('show');
                              $("#textoHeaderRegistro").html("Guardar Registro");
 
