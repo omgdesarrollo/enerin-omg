@@ -1007,7 +1007,7 @@ realizarCorte = ()=>
                 {
                     growlError("Error","Ocurrio un error en el servidor");
                 }
-            }););
+            }));
         }
         else
         {
