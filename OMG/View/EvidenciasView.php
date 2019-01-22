@@ -485,16 +485,16 @@
         { name: "id_principal", type: "text",visible:false },
         { name: "validador", type: "text",visible:false },
         { name: "no", title:"No",type: "text", width: 50, editing:false },
-        { name: "nombre",title:"Tema", type: "text", width: 150, editing:false },
-        { name: "registro",title:"Registro", type: "text", width: 150, editing:false  },
+        { name: "nombre",title:"Estación Servicio", type: "text", width: 150, editing:false },
+        { name: "registro",title:"Producto", type: "text", width: 150, editing:false  },
         { name: "fecha_logica",title:"Fecha Actualización", type: "text", width: 160, editing:false },
         { name: "nombre_empleado", title:"Usuario", type: "text", width:250, editing:false },
 
         { name: "ext_anterior", title:"Exist. Anterior", type: "text", width: 100, editing:false },
-        { name: "cantidad_comprada",title:"Cant. Comprada", type: "text", width: 150, editing:false},
+        { name: "cantidad_comprada",title:"Cant. Comprada", type: "text", width: 110, editing:false},
         { name: "cantidad_vendida",title:"Cant. Vendida", type: "text", width: 110, editing:false },
         { name: "ext_actual",title:"Exist. Actual", type: "text", width: 100, editing:false},
-        { name: "corte",title:"Corte", type: "text", width: 100, editing:false},
+        { name: "corte",title:"Realizar Corte", type: "text", width: 100, editing:false},
     ];
 
     var customsFieldsGridData=[

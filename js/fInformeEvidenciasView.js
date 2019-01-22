@@ -583,6 +583,46 @@ if( value.estatus=="EN PROCESO"){
 //  })
 // }
 
+graficaLineal = ()=>
+{
+    function drawLineColors() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('date', 'x');
+    data.addColumn('number', 'Existencia');
+    data.addColumn('number', 'Comprada');
+
+    data.addRows([
+        [new Date(2019, 0, 19), 8000, 0],
+        [new Date(2019, 0, 20), 5000, 5000],
+        [new Date(2019, 0, 21), 7000, 3000],
+        [new Date(2019, 0, 22), 6000, 2000],
+        [new Date(2019, 0, 23), 9300, 1200],
+        [new Date(2019, 0, 24), 8900, 1700],
+        [new Date(2019, 0, 25), 6900, 4000]
+    ]);
+
+    var options = {
+        width:700,
+        height:600,
+        pointSize:5,
+        legend:{
+            position:"top",alignment:"start",
+            textStyle:{color:"black",fontSize:14,bold:true}
+        },
+        hAxis: {
+            title: 'Fecha',format: 'M-d-yy'
+        },
+        vAxis: {
+            title: 'Gasolina'
+        },
+        colors: ['blue', '#097138']
+    };
+    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+
+    }
+}
+
 function graficar()
 {
     chartsCreados = [];

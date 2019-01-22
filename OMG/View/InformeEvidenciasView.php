@@ -268,6 +268,9 @@ $Usuario=  Session::getSesion("user");
 </div><!-- cierre del modal-->
 <script>
 
+google.charts.load('current', {packages: ['corechart', 'line']});
+google.charts.setOnLoadCallback(drawLineColors);
+
 // $(function(){
 //     $("td").mouseenter((event)=>{
 //         console.log(event);

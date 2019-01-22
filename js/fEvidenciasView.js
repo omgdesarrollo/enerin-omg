@@ -965,8 +965,8 @@ realizarCorte = ()=>
     data = $("#realizarCorte")[0]["customData"];
     
     let fecha = $("#input_fechaCorte_ModalRealizarCorte").val();
-    let cantidadComprada = $("#input_cantidadComprada_ModalRealizarCorte").val();
-    let cantidadVendida = $("#input_cantidadVendida_ModalRealizarCorte").val();
+    let cantidadComprada = Number($("#input_cantidadComprada_ModalRealizarCorte").val());
+    let cantidadVendida = Number($("#input_cantidadVendida_ModalRealizarCorte").val());
     // let extAcutal = $("#input_extActual_ModalRealizarCorte").val();
 
     if(fecha=="")
@@ -983,8 +983,14 @@ realizarCorte = ()=>
         growlError("Campos Requeridos",mensaje);
     else
     {
-        if(new Date(fecha)<fechaT)
+        if(!cantidadComprada)
+            mensaje="*Cantidad Comprada<br>";
+        if(!cantidadVendida)
+            mensaje="*Cantidad Vendida<br>";
+        if(new Date(fecha)<fechaT && mensaje=="")
         {
+            let total = Number(data.ext_actual) + cantidadComprada - cantidadVendida;
+            total<0?growlError("Existencia Actual En Resultado Negativo","Revise sus datos"):(
             $.ajax({
                 url:"../Controller/EvidenciasController.php?Op=RealizarCorte",
                 type:"POST",
@@ -1001,10 +1007,12 @@ realizarCorte = ()=>
                 {
                     growlError("Error","Ocurrio un error en el servidor");
                 }
-            });
+            }););
         }
         else
-        {}
+        {
+            mensaje!=""?growlError("Se requiere valor numerico",mensaje):growlError("","Fecha fuera de rango");
+        }
     }
 }
 
