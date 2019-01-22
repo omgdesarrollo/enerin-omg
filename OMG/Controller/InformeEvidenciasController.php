@@ -23,8 +23,6 @@ switch ($Op)
         {
             $url = $_REQUEST["URL"].$value["id_evidencias"];
             $archivos = $modelArchivo->listar_urls($CONTRATO,$url);
-            echo json_encode($archivos);
-            echo json_encode('\n');
             if(sizeof($archivos[0])!=0)
             {
                 $Lista[$key]["archivosUpload"] = $archivos;

@@ -366,14 +366,14 @@
 		<div class="modal-content" style="max-width:640px;">
         <div class="modal-header" style="border-bottom:0px">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"  class="closeLetra">X</span></button>
-          <h4 class="modal-title" id="myModalLabel">Ext. Anterior</h4>
+          <h4 class="modal-title" id="myModalLabel">Existencia Anterior</h4>
         </div>
         <div class="modal-body" style="padding:0px 15px 0px 15px">
             <!-- <div class="row"> -->
                 <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding:0px"> -->
                     <div class="form-group">
                         <br>
-                        <label class="control-label" for="title">Ext. Anterior:</label>
+                        <label class="control-label" for="title">Exist. Anterior:</label>
                         <input id="btn_extAnterior_modalAgregarExtAnterior" type="text" autocomplete="off"></input>
                         <!-- <textarea id="" class="form-control" ></textarea> -->
                     </div>
@@ -490,10 +490,10 @@
         { name: "fecha_logica",title:"Fecha Actualización", type: "text", width: 160, editing:false },
         { name: "nombre_empleado", title:"Usuario", type: "text", width:250, editing:false },
 
-        { name: "ext_anterior", title:"Ext. Anterior", type: "text", width: 100, editing:false },
+        { name: "ext_anterior", title:"Exist. Anterior", type: "text", width: 100, editing:false },
         { name: "cantidad_comprada",title:"Cant. Comprada", type: "text", width: 150, editing:false},
         { name: "cantidad_vendida",title:"Cant. Vendida", type: "text", width: 110, editing:false },
-        { name: "ext_actual",title:"Ext. Actual", type: "text", width: 100, editing:false},
+        { name: "ext_actual",title:"Exist. Actual", type: "text", width: 100, editing:false},
         { name: "corte",title:"Corte", type: "text", width: 100, editing:false},
     ];
 

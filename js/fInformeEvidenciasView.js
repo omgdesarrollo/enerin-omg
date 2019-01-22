@@ -51,7 +51,7 @@ function inicializarFiltros()
             { id: "registro",title:"Registro", type: "text"},
             { id: "fecha_logica",title:"Fecha Actualización", type: "date"},
             { id: "fecha_fisica",title:"Fecha Corte", type: "date"},
-            { id: "ext_anterior",title:"Ext. Anterior", type: "none"},
+            { id: "ext_anterior",title:"Ext. Anterior", type: "text"},
             { id: "cantidad_comprada",title:"Cant. Comprada", type: "none"},
             { id: "cantidad_vendida",title:"Cant. Vendida", type: "none"},
             { id: "ext_actual",title:"Ext. Actual", type: "none"},
@@ -285,17 +285,24 @@ function reconstruir(value,index)
 abrirModalArchivos = (obj)=>//componer el listado de los archivos
 {
     let data = $(obj)[0]["customData"];
-    let tempData  = "";
-    $("#create-itemUrls").modal();
-    console.log(data.length);
+    let tempData = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th></tr><tbody>";
     $.each(data[0],(index,value)=>
     {
-        // nametmp = value.split("^-O-^-M-^-G-^");
-        // fecha = new Date(nametmp[0]*1000);
-        // fecha = fecha.getDay() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-        // tempData["name"] = "<a href=\""+todo[1]+"/"+value+"\" download='"+nametmp[1]+"'>"+nametmp[1]+"</a>";
+        nametmp = value.split("^-O-^-M-^-G-^");
+        fecha = new Date(nametmp[0]*1000);
+        fecha = fecha.getDate() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+        // name = "<a href=\""+todo[1]+"/"+value+"\" download='"+nametmp[1]+"'>"+nametmp[1]+"</a>";
+        tempData += "<tr class='table-row'><td>"+fecha+"</td><td>";
+        tempData += "<a href=\""+data[1]+"/"+value+"\" download='"+nametmp[1]+"'>"+nametmp[1]+"</a></td>";
+        // tempData += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
+        // tempData += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
+        // tempData += "<i class=\"fa fa-trash\"></i></button></td></tr>";
         // tempData["fecha"] = fecha;
+        tempData += "</td></tr>";
     });
+    tempData += "</tbody></table>";
+    $("#create-itemUrls").modal();
+    $("#DocumentolistadoUrl").html(tempData);
 }
 
 abrirNotificaciones = (mensajes,responsableTema,responsableEvidencia)=>

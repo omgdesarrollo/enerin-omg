@@ -132,17 +132,17 @@ function inicializarFiltros()
             // { id: "clave_documento",name:"Clave Documento", type: "text"},
             // { id: "fecha_creacion",name:"Fecha Creación", type: "date"},
             // { id: "adjuntar_evidencia",name:"Adjuntar Evidencia", type: "text"},
-            { id: "fecha_registro",name:"Fecha Registro", type: "date"},
+            { id: "fecha_logica",name:"Fecha Registro", type: "date"},
             // { id:"noneDos", type:"none"},
-            { id: "usuario",name:"Usuario", type: "text"},
+            { id: "nombre_empleado",name:"nombre_empleado", type: "text"},
             // { id:"noneTres", type:"none"},
             // { id:"noneCuatro", type:"none"},
             // { id:"noneCinco", type:"none"},
             // { id:"noneSeis", type:"none"},
-            { id: "ext_anterior",name:"Ext. Anterior", type: "text"},
+            { id: "ext_anterior",name:"Exist. Anterior", type: "text"},
             { id: "cant_comprada",name:"Cant. Comprada", type: "text"},
             { id: "cant_vendida",name:"Cant. Vendida", type: "text"},
-            { id: "ext_actual",name:"Ext. Actual", type: "text"},
+            { id: "ext_actual",name:"Exist. Actual", type: "text"},
             { id:"noneSeis", type:"none"},
             // {name:"opcion",id:"opcion",type:"opcion"}
             // { id:"delete", name:"Opción", type:"customControl",sorting:""},
@@ -1045,7 +1045,7 @@ enviarExtAnterior = ()=>//listo
     let data = $("#agregarExtAnterior")[0]["customData"];
     // console.log(data);
     let extAnterior = Number($("#btn_extAnterior_modalAgregarExtAnterior").val());
-    extAnterior?llenarExtAnterior(data,extAnterior):growlError("","El campo:<br>'Ext. Anterior'<br> No es valor numerico correcto");
+    extAnterior?llenarExtAnterior(data,extAnterior):growlError("","El campo:<br>'Exist. Anterior'<br> No es valor numerico correcto");
 }
 
 llenarExtAnterior = (data,extAnterior)=>//listo
@@ -1060,7 +1060,7 @@ llenarExtAnterior = (data,extAnterior)=>//listo
         },
         success:(datos)=>
         {
-            growlSuccess("Agregar Ext. Anterior","Ext. Anterior Agregado");
+            growlSuccess("Agregar Exist. Anterior","Exist. Anterior Agregado");
             if(typeof(datos)=="object")
             {
                 $("#agregarExtAnterior .close").click();
@@ -1072,8 +1072,8 @@ llenarExtAnterior = (data,extAnterior)=>//listo
             }
             else
                 datos==-1?
-                growlError("Error Agregar Ext. Anterior","Ocurrio un error al intentar agregar Ext. Anterior"):
-                growlError("Error Agregar Ext. Anterior","Se modifico pero no se pudo actualizar la vista. Recargue la vista");
+                growlError("Error Agregar Exist. Anterior","Ocurrio un error al intentar agregar Exist. Anterior"):
+                growlError("Error Agregar Exist. Anterior","Se modifico pero no se pudo actualizar la vista. Recargue la vista");
         },
         error:(error)=>
         {
