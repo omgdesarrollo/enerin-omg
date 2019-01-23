@@ -968,15 +968,13 @@ realizarCorte = ()=>
     let cantidadComprada = $("#input_cantidadComprada_ModalRealizarCorte").val();
     let cantidadVendida = $("#input_cantidadVendida_ModalRealizarCorte").val();
     // let extAcutal = $("#input_extActual_ModalRealizarCorte").val();
-    console.log(cantidadComprada);
+    
     if(fecha=="")
         mensaje = "*Fecha Corte<br>";
     if(cantidadComprada=="")
         mensaje += "*Cantidad Comprada<br>";
     if(cantidadVendida=="")
         mensaje += "*Cantidad Vendida<br>";
-    // if(extAcutal=="")
-    //     mensaje += "*Ext. Actual<br>";
 
     // console.log(fecha);
     if(mensaje!="")
@@ -1010,9 +1008,7 @@ realizarCorte = ()=>
             }));
         }
         else
-        {
             mensaje!=""?growlError("Se requiere valor numerico",mensaje):growlError("","Fecha fuera de rango");
-        }
     }
 }
 
