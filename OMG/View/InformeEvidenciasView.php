@@ -103,7 +103,7 @@ $Usuario=  Session::getSesion("user");
     </button>
     
     <div class="pull-right">
-        <button onClick="graficar()" title="Graficar Circular" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#Grafica">
+        <button onClick="graficaLineal()" title="Graficar Circular" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#Grafica">
             <i class="fa fa-pie-chart"></i>
         </button>
 
@@ -237,7 +237,7 @@ $Usuario=  Session::getSesion("user");
         </div>
     </div>
 </div> -->
-<div id="jsChart"></div>
+<!-- <div id="jsChart"></div> -->
 <div class="modal draggable fade" id="mostrar_notificaciones" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog modal-lg" role="document" style="text-align:-webkit-center">
         <div id="loaderModalMostrar"></div>
@@ -266,10 +266,30 @@ $Usuario=  Session::getSesion("user");
       </div><!-- cierre div class modal-content -->
     </div><!-- cierre div class="modal-dialog" -->
 </div><!-- cierre del modal-->
+
+<div class="modal draggable fade" id="Grafica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog sizeChart" role="document" style="text-align: -webkit-center;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="closeLetra">X</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabelNuevaEvidencia">Indicador</h4>
+            </div>
+            <div class="modal-body">
+                <div id="graficaLine" ></div>
+            </div>
+            <!-- <div class="form-group" method="post" style="text-align:center" id="BTNS_GRAFICAMODAL">
+                <button type="submit" id="BTN_ANTERIOR_GRAFICAMODAL" class="btn crud-submit btn-info" style="width:90%" >Recargar</button>
+            </div> -->
+        </div>
+    </div>
+</div>
+
 <script>
 
 google.charts.load('current', {packages: ['corechart', 'line']});
-google.charts.setOnLoadCallback(drawLineColors);
+// google.charts.setOnLoadCallback(drawLineColors);
 
 // $(function(){
 //     $("td").mouseenter((event)=>{
@@ -289,8 +309,8 @@ google.charts.setOnLoadCallback(drawLineColors);
     var activeChart = -1;
     var chartsCreados = [];
     // var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)},(dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)}];
-    var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)},
-    (dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)}];
+    // var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)},
+    // (dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)}];
                 
     var frecuenciaData = [
         {frecuencia:"ANUAL"},
@@ -328,7 +348,7 @@ google.charts.setOnLoadCallback(drawLineColors);
         ];
 
     construirGrid();
-    inicializaChartjs();
+    // inicializaChartjs();
     inicializarFiltros().then((resolve2)=>
     {
         construirFiltros();

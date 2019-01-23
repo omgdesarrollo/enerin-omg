@@ -585,21 +585,34 @@ if( value.estatus=="EN PROCESO"){
 
 graficaLineal = ()=>
 {
-    function drawLineColors() {
-    var data = new google.visualization.DataTable();
-    data.addColumn('date', 'x');
-    data.addColumn('number', 'Existencia');
-    data.addColumn('number', 'Comprada');
+    // function drawLineColors() {
+    let data = new google.visualization.DataTable();
+    let tempData = [];
+    $.each(dataListado,(index,value)=>
+    {
+        let fecha = value.fecha_fisica.split("-");
+        console.log(value);
+        tempData.push([new Date(fecha[0],fecha[1]-1,fecha[2]), Number(value.cantidad_vendida),Number(value.cantidad_comprada),Number(value.ext_actual)]);
+    });
 
-    data.addRows([
-        [new Date(2019, 0, 19), 8000, 0],
-        [new Date(2019, 0, 20), 5000, 5000],
-        [new Date(2019, 0, 21), 7000, 3000],
-        [new Date(2019, 0, 22), 6000, 2000],
-        [new Date(2019, 0, 23), 9300, 1200],
-        [new Date(2019, 0, 24), 8900, 1700],
-        [new Date(2019, 0, 25), 6900, 4000]
-    ]);
+    console.log(tempData);
+
+    data.addColumn('date', 'x');
+    data.addColumn('number', 'Vendida');
+    data.addColumn('number', 'Comprada');
+    data.addColumn('number', 'Existencia');
+
+    data.addRows(tempData);
+
+    // data.addRows([
+    //     [new Date(2019, 0, 19), 8000, 0],
+    //     [new Date(2019, 0, 20), 5000, 5000],
+    //     [new Date(2019, 0, 21), 7000, 3000],
+    //     [new Date(2019, 0, 22), 6000, 2000],
+    //     [new Date(2019, 0, 23), 9300, 1200],
+    //     [new Date(2019, 0, 24), 8900, 1700],
+    //     [new Date(2019, 0, 25), 6900, 4000]
+    // ]);
 
     var options = {
         width:700,
@@ -610,17 +623,17 @@ graficaLineal = ()=>
             textStyle:{color:"black",fontSize:14,bold:true}
         },
         hAxis: {
-            title: 'Fecha',format: 'M-d-yy'
+            title: 'Fecha',format: 'd-M-yy'
         },
         vAxis: {
             title: 'Gasolina'
         },
         colors: ['blue', '#097138']
     };
-    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+    var chart = new google.visualization.LineChart(document.getElementById('graficaLine'));
     chart.draw(data, options);
 
-    }
+    // }
 }
 
 function graficar()

@@ -965,10 +965,10 @@ realizarCorte = ()=>
     data = $("#realizarCorte")[0]["customData"];
     
     let fecha = $("#input_fechaCorte_ModalRealizarCorte").val();
-    let cantidadComprada = Number($("#input_cantidadComprada_ModalRealizarCorte").val());
-    let cantidadVendida = Number($("#input_cantidadVendida_ModalRealizarCorte").val());
+    let cantidadComprada = $("#input_cantidadComprada_ModalRealizarCorte").val();
+    let cantidadVendida = $("#input_cantidadVendida_ModalRealizarCorte").val();
     // let extAcutal = $("#input_extActual_ModalRealizarCorte").val();
-
+    console.log(cantidadComprada);
     if(fecha=="")
         mensaje = "*Fecha Corte<br>";
     if(cantidadComprada=="")
@@ -978,18 +978,18 @@ realizarCorte = ()=>
     // if(extAcutal=="")
     //     mensaje += "*Ext. Actual<br>";
 
-    console.log(fecha);
+    // console.log(fecha);
     if(mensaje!="")
         growlError("Campos Requeridos",mensaje);
     else
     {
-        if(!cantidadComprada)
+        if(isNaN(cantidadComprada))
             mensaje="*Cantidad Comprada<br>";
-        if(!cantidadVendida)
+        if(isNaN(cantidadVendida))
             mensaje="*Cantidad Vendida<br>";
         if(new Date(fecha)<fechaT && mensaje=="")
         {
-            let total = Number(data.ext_actual) + cantidadComprada - cantidadVendida;
+            let total = Number(data.ext_actual) + Number(cantidadComprada) - Number(cantidadVendida);
             total<0?growlError("Existencia Actual En Resultado Negativo","Revise sus datos"):(
             $.ajax({
                 url:"../Controller/EvidenciasController.php?Op=RealizarCorte",
