@@ -103,7 +103,7 @@ $Usuario=  Session::getSesion("user");
     </button>
     
     <div class="pull-right">
-        <button onClick="graficaLineal()" title="Graficar Circular" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#Grafica">
+        <button onClick="graficarPrincipal()" title="Graficar Circular" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#Grafica">
             <i class="fa fa-pie-chart"></i>
         </button>
 
@@ -237,7 +237,7 @@ $Usuario=  Session::getSesion("user");
         </div>
     </div>
 </div> -->
-<!-- <div id="jsChart"></div> -->
+<div id="jsChart"></div>
 <div class="modal draggable fade" id="mostrar_notificaciones" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog modal-lg" role="document" style="text-align:-webkit-center">
         <div id="loaderModalMostrar"></div>
@@ -267,7 +267,7 @@ $Usuario=  Session::getSesion("user");
     </div><!-- cierre div class="modal-dialog" -->
 </div><!-- cierre del modal-->
 
-<div class="modal draggable fade" id="Grafica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!-- <div class="modal draggable fade" id="Grafica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog sizeChart" role="document" style="text-align: -webkit-center;">
         <div class="modal-content">
             <div class="modal-header">
@@ -277,14 +277,14 @@ $Usuario=  Session::getSesion("user");
                 <h4 class="modal-title" id="myModalLabelNuevaEvidencia">Indicador</h4>
             </div>
             <div class="modal-body">
-                <div id="graficaLine" ></div>
+                <div id="graficaPie" ></div>
             </div>
-            <!-- <div class="form-group" method="post" style="text-align:center" id="BTNS_GRAFICAMODAL">
+            <div class="form-group" method="post" style="text-align:center" id="BTNS_GRAFICAMODAL">
                 <button type="submit" id="BTN_ANTERIOR_GRAFICAMODAL" class="btn crud-submit btn-info" style="width:90%" >Recargar</button>
-            </div> -->
+            </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <script>
 
@@ -348,7 +348,7 @@ google.charts.load('current', {packages: ['corechart', 'line']});
         ];
 
     construirGrid();
-    // inicializaChartjs();
+    inicializaChartjs();
     inicializarFiltros().then((resolve2)=>
     {
         construirFiltros();
