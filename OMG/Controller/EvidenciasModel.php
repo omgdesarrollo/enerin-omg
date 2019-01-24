@@ -324,7 +324,7 @@ class EvidenciasModel
             $lista = $dao->obtenerMensajes($ID_EVIDENCIA);
             $mensajes = json_decode( $lista[0]["accion_correctiva"],true );
             array_push($mensajes,$mensaje);
-            $exito = $dao->agregarMensaje($ID_EVIDENCIA,json_encode($mensajes));
+            $exito = $dao->agregarMensaje($ID_EVIDENCIA,json_encode($mensajes,JSON_UNESCAPED_UNICODE));
             return $exito;
         } catch (Exception $ex)
         {
