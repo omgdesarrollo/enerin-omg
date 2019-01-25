@@ -7,7 +7,11 @@ class ConsultasDAO{
     {
         try
         {
-          $query="SELECT distinct tbtemas.id_tema, tbtemas.no, tbtemas.nombre, tbtemas.fecha_inicio,tbtemas.id_empleado,
+          $query="SELECT distinct
+                (SELECT tbtemas2.id_tema FROM temas tbtemas2 WHERE tbtemas2.id_tema = tbtemas.padre_general ) AS id_tema,
+				(SELECT tbtemas2.nombre FROM temas tbtemas2 WHERE tbtemas2.id_tema = tbtemas.padre_general ) AS nombre,
+                (SELECT tbtemas2.no FROM temas tbtemas2 WHERE tbtemas2.id_tema = tbtemas.padre_general ) AS no,
+                tbtemas.fecha_inicio,tbtemas.id_empleado,
                 concat (tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) as responsable,
                 tbrequisitos.id_requisito, tbrequisitos.requisito,tbrequisitos.penalizacion,
                 tbregistros.id_registro,tbregistros.registro, tbregistros.frecuencia, tbtemas.padre cumplimiento_requisito,
