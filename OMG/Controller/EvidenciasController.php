@@ -169,6 +169,11 @@ switch ($Op)
         echo json_decode($exito);
     break;
 
+    case 'componerFechaSubtemas':
+        $exito = $model->componerFechaSubtemas();
+        echo $exito;
+    break;
+
 	default:
 		echo false;
         break;

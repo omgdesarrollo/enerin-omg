@@ -494,4 +494,37 @@ class EvidenciasDAO
             return -1;
         }
     }
+
+    public function listarTemas2()
+    {
+        try 
+        {
+            $db= AccesoDB::getInstancia();
+            $query="SELECT tbtemas.id_tema,tbtemas.fecha_inicio
+                    FROM temas tbtemas WHERE tbtemas.padre = 0";
+            $lista= $db->executeQuery($query);
+            return $lista;
+
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
+
+    public function modificarFecha_inicioSubtemas($ID_TEMA,$FECHA_INICIO)
+    {
+        try 
+        {
+            $db= AccesoDB::getInstancia();
+            $query="UPDATE temas SET fecha_inicio = '$FECHA_INICIO' WHERE padre_general = $ID_TEMA";
+            $exito= $db->executeUpdateRowsAfected($query);
+            return $exito;
+
+        } catch (Exception $ex) 
+        {
+            throw $ex;
+            return -1;
+        }
+    }
 }

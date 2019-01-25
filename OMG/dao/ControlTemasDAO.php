@@ -37,7 +37,7 @@ class ControlTemasDAO {
     {
         try
         {
-            $query = "UPDATE temas set fecha_inicio = '$FECHA' WHERE id_tema = $ID_TEMA";
+            $query = "UPDATE temas set fecha_inicio = '$FECHA' WHERE padre_general = $ID_TEMA";
             $db = AccesoDB::getInstancia();
             // echo $query;
             $exito = $db->executeUpdateRowsAfected($query);

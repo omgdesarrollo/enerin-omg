@@ -365,6 +365,46 @@ class EvidenciasModel
             return false;
         }
     }
+
+    public function componerFechaSubtemas()
+    {
+        try
+        {
+            $dao=new EvidenciasDAO();
+            $data = array();
+            $temas = $dao->listarTemas2();
+            foreach($temas as $key => $value)
+            {
+                $dao->modificarFecha_inicioSubtemas($value["id_tema"],$value["fecha_inicio"]);
+                // $hijos = $dao->obtenerHijosTema($value["id_tema"]);
+            //     if( sizeof($hijos)!=0 )
+            //     {
+            //         $tmp = array();
+            //         $bandera = true;
+            //         $key = 0;
+            //         while($bandera)
+            //         {
+            //             $v = $hijos[$key];
+            //             if($v["padre_general"]==0)
+            //             {
+            //                 $dao->cambiarDatosTema($v["id_tema"],$value["id_tema"],$value["id_empleado"]);
+            //             }
+            //             $temp = $dao->obtenerHijosTema($v["id_tema"]);
+            //             if( sizeof($temp)!=0 )
+            //                 array_push($hijos,$temp[0]);
+            //             $key++;
+            //             if( sizeof($hijos) == $key)
+            //                 $bandera = false;
+            //         }
+            //     }
+            }
+            return "TERMINO BIEN";
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
     
     
 //    public function actualizarFechaValidacion($ID_EVIDENCIAS, $VALIDACION)
