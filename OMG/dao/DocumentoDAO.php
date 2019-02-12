@@ -2,7 +2,8 @@
 <?php
 
 require_once '../ds/AccesoDB.php';
-class DocumentoDAO{
+class DocumentoDAO
+{
     //consulta los datos de un empleado por su nombre de usuario
     public function mostrarDocumentos($CONTRATO){
         try{
