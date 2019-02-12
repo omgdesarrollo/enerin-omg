@@ -1,13 +1,12 @@
-
 <?php
 
 require_once '../ds/AccesoDB.php';
 class DocumentoDAO
 {
-    //consulta los datos de un empleado por su nombre de usuario
-    public function mostrarDocumentos($CONTRATO){
+    // lista los documentos por contrato
+    public function mostrarDocumentos($CONTRATO)
+    {
         try{
-            
             $query="SELECT tbdocumentos.id_documento, tbdocumentos.clave_documento, tbdocumentos.documento,
                     tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno,tbempleados.apellido_materno 
                     FROM documentos tbdocumentos
@@ -18,16 +17,14 @@ class DocumentoDAO
             
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-        
             return $lista;
-    
-            
-    }  catch (Exception $e){
-        //throw $rec;
-        throw $e;
-    }
+        }  catch (Exception $e){
+            //throw $rec;
+            throw $e;
+        }
     }
     
+    // lista los datos de un documento en especifico (ID_DOCUMENTO)
     public function mostrarDocumento($ID_DOCUMENTO,$CONTRATO)
     {
         try
@@ -35,16 +32,13 @@ class DocumentoDAO
             $query="SELECT tbdocumentos.id_documento, tbdocumentos.clave_documento, tbdocumentos.documento,
                     tbempleados.id_empleado, tbempleados.nombre_empleado, tbempleados.apellido_paterno,
                     tbempleados.apellido_materno FROM documentos tbdocumentos
-
                     JOIN empleados tbempleados ON tbempleados.id_empleado=tbdocumentos.id_empleado
                     WHERE tbdocumentos.id_documento=$ID_DOCUMENTO AND tbdocumentos.contrato=$CONTRATO
                     ORDER BY  tbdocumentos.clave_documento";
-            
+
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-        
             return $lista;
-            
         } catch (Exception $ex)
         {
             throw $ex;
@@ -52,9 +46,9 @@ class DocumentoDAO
         }
     }
 
-
-
-    public function mostrarDocumentosComboBox(){
+    // lista el ids y claves de todos los documentos
+    public function mostrarDocumentosComboBox()
+    {
         try{
 //            $query="SELECT ID_DOCUMENTO, CLAVE_DOCUMENTO, DOCUMENTO FROM DOCUMENTOS";
             $query="SELECT id_documento, clave_documento, documento FROM documentos";
@@ -62,7 +56,6 @@ class DocumentoDAO
 //            $query="SELECT ID_EMPLEADO  FROM EMPLEADOS";
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-            
             /*$rec = NULL;
             if (count($lista)==1){
                 $rec=$lista[0];
@@ -70,13 +63,13 @@ class DocumentoDAO
             return $rec;*/
 
             return $lista;
-    }  catch (Exception $ex){
-        //throw $rec;
-        throw $ex;
-    }
+        }  catch (Exception $ex){
+            //throw $rec;
+            throw $ex;
+        }
     }
     
-        
+    // lista los nombres de todos los empleados
     public function nombresCompletosCombobox()
     {
         try
@@ -97,6 +90,7 @@ class DocumentoDAO
         }
     }
     
+    // lista los nombres de todos los empleados
     public function responsableDelDocumento()
     {
         try
@@ -116,27 +110,24 @@ class DocumentoDAO
         }
     }
     
-    
-    
-    public function verificacionExisteClaveandDocumento($cadena,$cualverificar){
+    // verifica si existe la clave o el documento
+    public function verificacionExisteClaveandDocumento($cadena,$cualverificar)
+    {
         try{
            $query="SELECT tbdocumentos.clave_documento  FROM documentos tbdocumentos WHERE tbdocumentos.$cualverificar ='$cadena'";
-
-            
 //            $query="SELECT ID_EMPLEADO  FROM EMPLEADOS";
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-        
             return $lista;
-            
-        } catch (Exception $ex) {
+        }catch (Exception $ex) {
             throw $ex;
         }
     }
    
-    
-    public function insertarDocumentos($clave_documento,$documento,$id_empleado,$contrato){
-//        echo "aqui en el dao lo tiene  ".$contrato;
+    // obtiene el ultimo ID insertado en documentos
+    // inserta un nuevo documento
+    public function insertarDocumentos($clave_documento,$documento,$id_empleado,$contrato)
+    {
         try{
             
             $query_obtenerMaximo_mas_uno="SELECT max(id_documento)+1 as id_documento FROM documentos";
@@ -165,15 +156,12 @@ class DocumentoDAO
         }   
     }
     
-    
-    
+    // actualiza el documento por cualquier columna que se haya modificado en la vista
     public function actualizarDocumentoPorColumna($COLUMNA,$VALOR,$ID_DOCUMENTO){
          
         try{
             $query="UPDATE documentos SET ".$COLUMNA."='".$VALOR."'  WHERE id_documento=$ID_DOCUMENTO";
-//            echo "l aconsulta  : ".$query;
 //             $query="UPDATE EMPLEADOS SET CORREO='$Correo' WHERE ID_EMPLEADO=$Id_Empleado";
-     
             $db= AccesoDB::getInstancia();
            $result= $db->executeQueryUpdate($query);
 //            $db->executeQuery($query);
@@ -183,8 +171,7 @@ class DocumentoDAO
         }
     }
     
-    
-    
+    // elimina el documento por su identificador (ID)
     public function eliminarDocumento($ID_DOCUMENTO){
         try{
             $query="DELETE FROM documentos WHERE id_documento=$ID_DOCUMENTO";
@@ -198,7 +185,8 @@ class DocumentoDAO
                 return -1;
         }
     }
-    
+
+    // verifica si un documento (ID) esta asignado a un registro(Tabla registros)
     public function verificarExistenciadeDocumentoEnRegistros($ID_DOCUMENTO)
     {
         try
@@ -211,7 +199,6 @@ class DocumentoDAO
             $lista=$db->executeQuery($query);
 
             return $lista[0]['reg'];
-//            echo "Este es el query registros: ".json_encode($query);                        
         } catch (Exception $ex)
         {
             throw $ex;
@@ -220,6 +207,7 @@ class DocumentoDAO
         
     }
 
+    // verifica si el documento esta validado o no
     public function verificarSiDocumentoEstaValidado($ID_DOCUMENTO)
     {
         try
@@ -230,18 +218,12 @@ class DocumentoDAO
                     OR tbvalidacion_documento.validacion_tema_responsable='true' ";
             $db= AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-            
-//            echo "Este es el query validado: ".json_encode($query);                        
-
             return $lista[0]['validado'];
-                    
         } catch (Exception $ex)
         {
             throw $ex;
             return -1;
         }
     }
-    
-
 }
 ?>
