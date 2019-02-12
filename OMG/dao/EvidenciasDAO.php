@@ -3,6 +3,7 @@
 require_once '../ds/AccesoDB.php';
 class EvidenciasDAO
 {
+    // pendiente de verificar funcionamiento
     public function obtenerPadreTema($ID_TEMA)
     {
         try
@@ -17,6 +18,7 @@ class EvidenciasDAO
             throw $ex;
         }
     }
+
     // $query = "SELECT tbtemas.id_tema, tbusuarios.id_empleado,tbrequisitos.id_requisito,tbrequisitos.requisito,
     // tbregistros.id_registro,tbregistros.registro,tbregistros.frecuencia,
     // tbdocumentos.clave_documento,tbevidencias.desviacion,
@@ -48,6 +50,8 @@ class EvidenciasDAO
     
     // WHERE tbtemas.contrato=$CONTRATO AND (tbregistros.registro<>'NULL' AND tbevidencias.validacion_supervisor<>'NULL' AND tbusuarios.id_usuario = $ID_USUARIO AND LOWER(tbtemas.identificador) 
     // LIKE '%catalogo%' OR tbevidencias.id_usuario = $ID_USUARIO)";
+
+    // lista todas las evidencias mientras que el usuario sea responsable de la evidencia o del tema de la evidencias, por contrato
     public function listarEvidencias($ID_USUARIO,$CONTRATO)
     {
         try
@@ -94,6 +98,7 @@ class EvidenciasDAO
         }
     }
     
+    // lista una evidencia en especifico
     public function listarEvidencia($ID_EVIDENCIA,$ID_USUARIO)
     {
         try
@@ -143,6 +148,7 @@ class EvidenciasDAO
         }
     }
 
+    // listo los documentos de acuerdo a la cadena de busqueda
     public function getClavesDocumentos($cadena)
     {
         try
@@ -162,6 +168,8 @@ class EvidenciasDAO
         }
     }
 
+    // crea una nueva evidencia
+    // retorna el ultimo ID de la evidencia creada por el usuario actual
     public function crearEvidencia($ID_USUARIO,$ID_REGISTRO,$FECHA_CREACION)
     {
         try
@@ -182,6 +190,7 @@ class EvidenciasDAO
         }
     }
     
+    // actualiza alguno de los campos de la evidencia a vacios
     public function iniciarEnVacio($id_evidencias)
     {
         try
@@ -203,6 +212,7 @@ class EvidenciasDAO
         }
     }
 
+    // 
     public function actualizarEvidenciaPorColumna($COLUMNA,$CONTEXTO,$ID_EVIDENCIAS,$VALOR)
     {     
         try
