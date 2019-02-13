@@ -190,7 +190,7 @@ class EvidenciasDAO
         }
     }
     
-    // actualiza alguno de los campos de la evidencia a vacios
+    // actualiza una evidencia en algunos campos a vacios
     public function iniciarEnVacio($id_evidencias)
     {
         try
@@ -212,7 +212,7 @@ class EvidenciasDAO
         }
     }
 
-    // 
+    // actualiza algun campo de la una evidencia
     public function actualizarEvidenciaPorColumna($COLUMNA,$CONTEXTO,$ID_EVIDENCIAS,$VALOR)
     {     
         try
@@ -228,6 +228,7 @@ class EvidenciasDAO
         }
     }
     
+    // elimina una evidencia
     public function eliminarEvidencia($id_evidencias)
     {
         try
@@ -247,6 +248,7 @@ class EvidenciasDAO
         }
     }
 
+    // obtiene los subtemas (hijos) de un tema
     public function obtenerHijosTema($ID_TEMA)
     {
         try
@@ -272,6 +274,7 @@ class EvidenciasDAO
         }
     }
 
+    // 
     public function listarRegistros($CADENA,$ID_TEMA)
     {
         try
@@ -299,6 +302,8 @@ class EvidenciasDAO
             return false;
         }
     }
+
+    // lista los temas de la busqueda $CADENA que tengan responsable y no sean subtemas
     public function listarTemas($CADENA,$ID_USUARIO,$CONTRATO)
     {
         try
@@ -311,11 +316,9 @@ class EvidenciasDAO
                 AND tbtemas.contrato=$CONTRATO AND tbtemas.identificador LIKE '%catalogo%'
                 AND (SELECT tbtemas2.padre_general FROM temas tbtemas2 WHERE tbtemas2.id_tema = tbtemas.padre_general AND tbtemas2.fecha_inicio!='0000-00-00') = tbtemas.padre_general
                 AND tbtemas.responsable_general != 0";
-            // echo $query;
             $db= AccesoDB::getInstancia();        
             $lista= $db->executeQuery($query);
             return $lista;
-            // var_dump($lista);
         } catch (Exception $ex)
         {
             throw $ex;
@@ -323,6 +326,7 @@ class EvidenciasDAO
         }
     }
 
+    // actualiza la columna de accion correctiva
     public function mandarAccionCorrectiva($ID_EVIDENCIA,$MENSAJE,$COLUMNA)
     {
         try
@@ -339,6 +343,7 @@ class EvidenciasDAO
         }
     }
     
+    // actualiza la columna de fecha de validacion de la evidencia
     public function actualizarFechaValidacion($ID_EVIDENCIAS)
     {
         try
@@ -357,6 +362,7 @@ class EvidenciasDAO
         }
     }
 
+    // busca si existe una evidencia creada con la misma fecha y registro
     public function checarDisponiblidad($ID_REGISTRO,$FECHA)
     {
         try
@@ -376,6 +382,7 @@ class EvidenciasDAO
         }
     }
     
+    // verifica si existe cargado un programa gantt
     public function verificarSiHayCargadoProgramaGantt($ID_EVIDENCIAS)
     {
         try 
@@ -395,6 +402,8 @@ class EvidenciasDAO
         }
     }
 
+    // actualiza todos los temas que no sean subtemas
+    // lista todos los temas que no sean temas
     public function listarTodosTemas()
     {
         try 
@@ -415,6 +424,7 @@ class EvidenciasDAO
         }
     }
     
+    // actualiza un tema o subtema
     public function cambiarDatosTema($ID_TEMA,$PADRE,$RESP)
     {
         try 
@@ -432,6 +442,7 @@ class EvidenciasDAO
         }
     }
 
+    // actualiza la validacion para conformidad de la evidencia
     public function iniciarConformidad($ID_EVIDENCIA,$VALOR)
     {
         try 
@@ -449,6 +460,7 @@ class EvidenciasDAO
         }
     }
 
+    // lista el usuario de la evidencia, verificar si se usa
     public function obtenerParticipantesUsuarios($R_TEMA,$R_EVIDENCIA)
     {
         try 
@@ -470,6 +482,7 @@ class EvidenciasDAO
         }
     }
 
+    // obtiene los mensaje en el campo accion_corectiva de una evidencia
     public function obtenerMensajes($ID_EVIDENCIA)
     {
         try 
@@ -489,6 +502,7 @@ class EvidenciasDAO
         }
     }
 
+    // actualiza accion_correctiva de una evidencia (agrega mensaje)
     public function agregarMensaje($ID_EVIDENCIA,$MENSAJE)
     {
         try 
@@ -505,6 +519,7 @@ class EvidenciasDAO
         }
     }
 
+    // lista los temas que no sean subtemas
     public function listarTemas2()
     {
         try 
@@ -522,6 +537,7 @@ class EvidenciasDAO
         }
     }
 
+    // actualiza la fecha de inicio de un tema y sus subtemas
     public function modificarFecha_inicioSubtemas($ID_TEMA,$FECHA_INICIO)
     {
         try 
