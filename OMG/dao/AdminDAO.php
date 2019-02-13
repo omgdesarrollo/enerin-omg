@@ -1,8 +1,8 @@
 <?php
-require_once '../ds/AccesoDB.php';
 
-class AdminDAO{
-    
+require_once '../ds/AccesoDB.php';
+class AdminDAO
+{    
     // Lista todos los usuarios menos el administrador y el usuario que haya iniciado sesion
     public function listarUsuarios($ID_USUARIO)
     {
@@ -393,7 +393,4 @@ class AdminDAO{
         }
     }//aqui termina para mostrar estructura principal tomand en cuenta permisos
 }
-
-
 ?>
-

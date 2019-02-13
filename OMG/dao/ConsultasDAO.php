@@ -1,8 +1,9 @@
 <?php
+
 require_once '../ds/AccesoDB.php';
-
-class ConsultasDAO{
-
+class ConsultasDAO
+{
+    // lista temas (no subtemas) -> requisitos -> registros -> evidencias, de acuerdo a la fecha de inicio (fecha_inicio) y al contrato
     public function listarConsultas($CONTRATO)
     {
         try
@@ -28,7 +29,6 @@ class ConsultasDAO{
                 left join registros tbregistros on tbregistros.id_registro = tbrequisitos_registros.id_registro
                 left join evidencias tbevidencias on tbevidencias.id_registro = tbregistros.id_registro
                 where tbtemas.padre = 0 and tbtemas.fecha_inicio != '0000-00-00' and tbtemas.contrato = $CONTRATO order by tbtemas.no";
-                // echo $query;
           $db=  AccesoDB::getInstancia();
           $lista=$db->executeQuery($query);
           return $lista;
@@ -39,6 +39,7 @@ class ConsultasDAO{
         }
     }
 
+    // obtiene si tiene penalizacion o no, de acuerdo al identificador de asignacion de tema ($ID_ASIGNACION_TEMA) y penalizacion verdadero (true)
     public function listarRequisitosConPenalizacion($ID_ASIGNACION_TEMA)
     {
         try
@@ -48,22 +49,14 @@ class ConsultasDAO{
                     JOIN asignacion_tema_requisito_requisitos tbasignacion_tema_requisito_requisitos 
                     ON tbasignacion_tema_requisito_requisitos.id_requisito=tbrequisitos.id_requisito
                     WHERE tbasignacion_tema_requisito_requisitos.id_asignacion_tema_requisito=$ID_ASIGNACION_TEMA AND tbrequisitos.penalizacion='true'";
-            
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-          
             return $lista;            
         } catch (Exception $ex)
         {
             throw $ex;
             return -1;
         }
-    }
-
-
-    
-} 
-
-
+    }   
+}
 ?>
-

@@ -1,4 +1,5 @@
 <?php
+
 require_once '../ds/AccesoDB.php';
 class ValidacionDocumentoDAO
 {
@@ -406,5 +407,4 @@ class ValidacionDocumentoDAO
         }
     }
 }
-
 ?>
