@@ -1,8 +1,10 @@
 <?php
 
 require_once '../ds/AccesoDB.php';
-class ControlTemasDAO {
-    //put your code here
+class ControlTemasDAO
+{
+
+    // Lista todos los temas principales de acuerdo al contrato o cumplimiento (Sin subtemas)
     public function listarTemas($CONTRATO,$CADENA)
     {
         try 
@@ -33,13 +35,13 @@ class ControlTemasDAO {
         }
     }
 
+    // actualiza la fecha de inicio del tema y de todos los subtemas que pertencezcan al mismo
     public function actualizar($ID_TEMA,$FECHA)
     {
         try
         {
             $query = "UPDATE temas set fecha_inicio = '$FECHA' WHERE padre_general = $ID_TEMA";
             $db = AccesoDB::getInstancia();
-            // echo $query;
             $exito = $db->executeUpdateRowsAfected($query);
             return $exito;
         }catch(Exception $ex)
@@ -49,6 +51,7 @@ class ControlTemasDAO {
         }
     }
 
+    // Inicia la fecha del tema, para ser utilizados los temas por evidencias
     public function iniciarTematica($ID_TEMA, $FECHA)
     {
         try

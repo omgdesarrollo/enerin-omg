@@ -1,8 +1,10 @@
 <?php
 require_once '../ds/AccesoDB.php';
-class ValidacionDocumentoDAO{
-
-    public function listarValidacionDocumentos($USUARIO,$CONTRATO){
+class ValidacionDocumentoDAO
+{
+    // Lista los registros validacion de documentos de acuerdo a sus respectivos responsables (documento,tema) y de acuerdo al contrato o cumplimiento
+    public function listarValidacionDocumentos($USUARIO,$CONTRATO)
+    {
         try{
             $query="SELECT DISTINCT tbdocumentos.id_documento,tbdocumentos.clave_documento,tbdocumentos.documento, tbempleados.id_empleado id_empleadoD,tbusuarios.id_usuario id_usuarioD,
             CONCAT (tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)AS responsable_documento,
@@ -43,8 +45,11 @@ class ValidacionDocumentoDAO{
             return false;
         }
     }
+
+    // Lista igual que el anterior solo que este lista un solo registro especifico
     public function listarValidacionDocumento($USUARIO,$CONTRATO,$ID_VALIDACION_D)
     {
+        // Lo mimo que listarValidacionDocumentos, solo que lista uno en especifico
         try{
             $query="SELECT DISTINCT tbdocumentos.id_documento,tbdocumentos.clave_documento,tbdocumentos.documento, tbempleados.id_empleado id_empleadoD,tbusuarios.id_usuario id_usuarioD,
             CONCAT (tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno)AS responsable_documento,
@@ -91,7 +96,8 @@ class ValidacionDocumentoDAO{
             return false;
         }
     }
-    
+
+    // obtiene informacion de documento por el identificador (ID).
     public function obtenerInfoPorIdValidacionDocumento($id_validacion_documento)
     {
         try
@@ -138,7 +144,8 @@ class ValidacionDocumentoDAO{
      }
          
     }
- 
+
+    // obtiene tema y responsable del tema de acuerdo al documento
     public function obtenerTemayResponsable($ID_DOCUMENTO,$CONTRATO)
     {
         try{
@@ -171,6 +178,7 @@ class ValidacionDocumentoDAO{
         }
     }
     
+    // obtiene requisitos de acuerdo al documento
     public function obtenerRequisitosporDocumento($id_documento)
     {
         try
@@ -195,6 +203,7 @@ class ValidacionDocumentoDAO{
         }
     }
 
+    // obtiene registros de acuerdo al documento
     public function obtenerRegistrosPorDocumento($id_documento)
     {
         try
@@ -215,7 +224,8 @@ class ValidacionDocumentoDAO{
             return false;
         }
     }
-    
+
+    // ni idea
     public function insertar($id_documento_entrada)//Checar este insertar para que es
     {
         try{
@@ -241,12 +251,13 @@ class ValidacionDocumentoDAO{
 
         }
     }
-    
+
+    // actualiza un campo de forma dinamica seleccionado para cambio por el usuario de acuerdo al identificador
     public function actualizarPorColumna($COLUMNA,$VALOR,$ID_VALIDACION_DOCUMENTO)
     {
         try{
             $query="UPDATE validacion_documento SET ".$COLUMNA."='".$VALOR."'  "
-                 . "WHERE id_validacion_documento=$ID_VALIDACION_DOCUMENTO";
+                 . "WHERE id_validacion_documento = $ID_VALIDACION_DOCUMENTO";
 //             $query="UPDATE EMPLEADOS SET CORREO='$Correo' WHERE ID_EMPLEADO=$Id_Empleado";
             $db= AccesoDB::getInstancia();
            $result= $db->executeQueryUpdate($query);
@@ -259,6 +270,7 @@ class ValidacionDocumentoDAO{
         }
     }
 
+    // elimina todo el registro de validacion documento
     public function eliminarValidacionDocumento($id_validacion_documento)
     {
         try{
@@ -270,6 +282,7 @@ class ValidacionDocumentoDAO{
         }
     }
 
+    // obtiene si es o no responsble del tema que corresponde a la validacion documento
     public function getValidacionTema($ID_VALIDACION_D)//listo
     {
         try
@@ -287,6 +300,7 @@ class ValidacionDocumentoDAO{
         }
     }
 
+    // obtiene si es o no responsable de la validacion documento
     public function getValidacionDocumento($ID_VALIDACION_D)//listo
     {
         try
@@ -304,6 +318,7 @@ class ValidacionDocumentoDAO{
         }
     }
 
+    // obtiene si existe o no algun archivo cargado a la validacion documento
     public function getExisteArchivo($ID_VALIDACION_D)//listo
     {
         try
@@ -321,6 +336,7 @@ class ValidacionDocumentoDAO{
         }
     }
 
+    // Aumenta el campo de archivos de acuerdo al numero de archivos cargados a la validacion documento
     public function modificarArchivos($ID_VALIDACION_D,$VALOR)
     {
         try
@@ -338,6 +354,7 @@ class ValidacionDocumentoDAO{
         }
     }
 
+    // lista la observacion correspondiente a la validacion de documento
     public function listarObservaciones($ID_VALIDACION_D)
     {
         try
@@ -353,6 +370,8 @@ class ValidacionDocumentoDAO{
             return -1;
         }
     }
+
+    // ontiene el nombre de empleado de acuerdo al identificador del usuario
     public function getNombreUSuario($ID_USUARIO)
     {
         try
@@ -369,6 +388,8 @@ class ValidacionDocumentoDAO{
             return -1;
         }
     }
+
+    // inserta un nuevo mensaje a la observacin
     public function enviarObservacion($ID_VALIDACION_DOCUMENTO,$MENSAJE)
     {
         try

@@ -3,6 +3,7 @@ require_once '../ds/AccesoDB.php';
 
 class AdminDAO{
     
+    // Lista todos los usuarios menos el administrador y el usuario que haya iniciado sesion
     public function listarUsuarios($ID_USUARIO)
     {
         try
@@ -26,10 +27,9 @@ class AdminDAO{
         }
     }
     
-    
+    // Lista todos los usuario con todas las visatas con sus recpectivos permisos
     public function listarUsuarioVistas($ID_USUARIO)
     {
-//        echo "s";
         try
         {
 //            $query="SELECT tbestructura.id_estructura, tbestructura.id_submodulos,tdsubmodulos.nombre nombre_submodulo ,tbestructura.descripcion, tbestructura.id_vistas,tbvistas.nombre,tbestructura.vista_nombre_logico,tbestructura.nombre_contenido_dentro_submodulos nombre_contenido_sub,tbestructura.imagen_seccion_up,tbestructura.imagen_seccion_izquierda,
@@ -75,7 +75,7 @@ class AdminDAO{
         }
     }
     
-    
+    // Lista los submodulos adquiridos con excepcion del principal (cerrar sesion) que no lo trae.
     public function listarSubmodulos()
     {
         try
@@ -94,7 +94,7 @@ class AdminDAO{
         }
     }
     
-    
+    // lista las vistas con sus respectivo submodulo
     public function listarVistasDeSubmodulos($ID_SUBMODULOS)
     {
         try
@@ -145,6 +145,7 @@ class AdminDAO{
 //        }
 //    }
     
+    // Lista todos los temas dependiendo el contrato y el catalago mientras no se encuentren asignados al usuario
     public function listarTemas($CADENA,$ID_USUARIO,$CONTRATO)
     {
         try
@@ -168,6 +169,7 @@ class AdminDAO{
         }
     }
         
+    // lista los temas que el usuario tiene asignado
     public function listarTemasPorUsuario($ID_USUARIO,$CONTRATO)
     {
         try
@@ -188,6 +190,8 @@ class AdminDAO{
         }
     }
 
+    // obtiene el ultimo ID insertado;
+    // inserta un nuevo usuario a la base de datos, con su correo como contraseña;
     public function insertarUsuario($ID_EMPLEADO, $NOMBRE_USUARIO)
     {
         try
@@ -217,6 +221,7 @@ class AdminDAO{
         }
     }
     
+    // asigna (agrega a la tabla) un tema a un usuario
     public function insertarUsuarioTema($ID_USUARIO, $ID_TEMA)
     {
         try
@@ -233,8 +238,7 @@ class AdminDAO{
         }
     }
 
-    
-
+    // actualiza tabla usuarios_vistas por cualquier columna modificada en la vista
     public function actualizarUsuariosVistasPorColumna($COLUMNA,$VALOR,$ID_USUARIO,$ID_ESTRUCTURA)
     {
         try
@@ -253,7 +257,7 @@ class AdminDAO{
         }
     }
     
-    
+    // elimina el tema asignado a un usuario
     public function eliminarUsuarioTema($ID_USUARIO,$ID_TEMA)
     {
         try
@@ -271,6 +275,7 @@ class AdminDAO{
         }
     }
 
+    // verifica si el nombre de usuario esta en uso o no
     public function ConsultarExisteUsuario($USUARIO)
     {
         try
@@ -289,6 +294,7 @@ class AdminDAO{
         }
     }
 
+    // verifica si la contraseña escrita es la correcta
     public function verificarPass($USUARIO,$CONTRASENA)
     {
         try
@@ -308,6 +314,8 @@ class AdminDAO{
             return false;
         }
     }
+
+    // cambia la contraseña actual por una nueva
     public function cambiarPass($USUARIO,$CONTRASENA,$VALOR)
     {
         try
@@ -326,6 +334,7 @@ class AdminDAO{
         }
     }
 
+    // actualiza los permisos del cumplimiento de un usuario
     public function cambiarPermisoCumplimiento($ID_USUARIO,$ID_CUMPLIMIENTO,$VALOR)
     {
         try
@@ -344,6 +353,7 @@ class AdminDAO{
         }
     }
 
+    // guarda el color que sera utilizado como fondo configurable
     public function cambiarColor($ID_USUARIO,$COLOR)
     {
         try
