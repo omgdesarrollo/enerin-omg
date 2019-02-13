@@ -1,7 +1,8 @@
 <?php
 require_once '../ds/AccesoDB.php';
-class DocumentoEntradaDAO{
-
+class DocumentoEntradaDAO
+{
+    // 
     public function getFechaAlarma()
     {
         try
@@ -24,6 +25,7 @@ class DocumentoEntradaDAO{
         }
     }
     
+    // 
     public function mostrarDocumentosEntrada($CONTRATO){
         try{
             $query="SELECT
