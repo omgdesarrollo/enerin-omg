@@ -1,8 +1,8 @@
 <?php
 require_once '../ds/AccesoDB.php';
 
-class InformeEvidenciasDAO{
-    
+class InformeEvidenciasDAO
+{
     public function listarEvidencias($CONTRATO)
     {
         // $query_concat="";
