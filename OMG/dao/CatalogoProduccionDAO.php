@@ -1,9 +1,9 @@
 <?php
-require_once '../ds/AccesoDB.php';
 
-class CatalogoProduccionDAO{
-    
-    
+require_once '../ds/AccesoDB.php';
+class CatalogoProduccionDAO
+{
+    // lista registros catalago de produccion de acuerdo al contrato (cumplimiento)
     public function listarCatalogo($CONTRATO)//listo
     {
         try
@@ -26,8 +26,7 @@ class CatalogoProduccionDAO{
         }
     }
 
-    
-
+    // lista registros de catalago de produccion de acuerdo al identificador de catalago
     public function listarUno($ID_CONTRATO)
     {
         try
@@ -50,6 +49,7 @@ class CatalogoProduccionDAO{
         }
     }
 
+    // lista registros de catalogo de produccion pertenecientes a un contratado de asignacion ($ID_ASIGNACION)
     public function listarPorAsignacion($ID_ASIGNACION)
     {
         try
@@ -72,6 +72,8 @@ class CatalogoProduccionDAO{
         }
     }
 
+    // la sentencia (query) viene del modelo
+    // obtiene el ultimo ID insertado por la sesion de coneccion actual
     public function guardarCatalogo($QUERY)
     {
         try
@@ -90,6 +92,7 @@ class CatalogoProduccionDAO{
         }
     }
 
+    // lista registros de asignaciones de contrato de acuerdo a la busqueda($CADENA) y al contrato (cumplimiento)
     public function buscarID($CADENA,$CONTRATO)//listo ahora si
     {
         try
@@ -108,6 +111,7 @@ class CatalogoProduccionDAO{
         }
     }
 
+    // obtiene el id_asignacion de catalogo produccion de acuerdo al identificador de catalogo produccion($ID_CATALOGOP)
     public function buscarID_asignacionPorID_Catalogo($ID_CATALOGOP)//listo
     {
         try
@@ -127,6 +131,7 @@ class CatalogoProduccionDAO{
         }
     }
 
+    // lista las regiones fiscales de asignaciones contrato de acuerdo al contrato (cumplimiento)
     public function buscarRegionesFiscales($CONTRATO)//listo
     {
         try
@@ -144,6 +149,7 @@ class CatalogoProduccionDAO{
         }
     }
 
+    // lista la existencia de acuerdo a la cadena $TAG_MEDIDOR y al contrato (cumplimiento)
     public function buscarTagMedidor($CONTRATO,$TAG_MEDIDOR)
     {
         try
@@ -163,6 +169,7 @@ class CatalogoProduccionDAO{
         }
     }
 
+    // francisco -> este fn es tuya
     public function permisoDeEliminar($ID_CONTRATO)
     {
         try
@@ -178,7 +185,9 @@ class CatalogoProduccionDAO{
         }
     }
     
-    public function obtenerConceptos($CUMPLIMIENTO){
+    // francisco -> este fn es tuya
+    public function obtenerConceptos($CUMPLIMIENTO)
+    {
         try{
             $query="SELECT tbconceptos_reportes.id_concepto_reportes,"
                   ."tbconceptos_reportes.concepto,tbconceptos_reportes.vista FROM concepto_reportes tbconceptos_reportes WHERE tbconceptos_reportes.cumplimientos=$CUMPLIMIENTO";
@@ -192,7 +201,10 @@ class CatalogoProduccionDAO{
 //            return -1;
         }
     }
-      public function obtenerVista_Concepto_Seleccionado($value){
+
+    // francisco -> este fn es tuya
+    public function obtenerVista_Concepto_Seleccionado($value)
+    {
         try{
             $query="SELECT tbconceptos_reportes.id_concepto_reportes,"
                   ."tbconceptos_reportes.concepto,tbconceptos_reportes.vista FROM concepto_reportes tbconceptos_reportes WHERE tbconceptos_reportes.id_concepto_reportes=$value";
@@ -201,10 +213,11 @@ class CatalogoProduccionDAO{
             return $lista[0];
         } catch (Exception $ex) {
             throw $ex;
-//            return -1;
+            // return -1;
         }
     }
 
+    // elimina el registro de catalogo de produccin de acuerdo al identificador ($ID_CONTRATO)
     public function eliminarRegistro($ID_CONTRATO)
     {
         try
@@ -220,11 +233,12 @@ class CatalogoProduccionDAO{
         }
     }
     
+    // la sentencia (query) viene del modelo
     public function actualizar($QUERY)
     {
         try 
         {
-            $db=  AccesoDB::getInstancia();
+            $db =  AccesoDB::getInstancia();
             $update = $db->executeUpdateRowsAfected($QUERY);
             return $update;
         } catch (Exception $ex) 
@@ -233,11 +247,5 @@ class CatalogoProduccionDAO{
             return -1;
         }
     }
-
-    
-
 }
-
-
 ?>
-

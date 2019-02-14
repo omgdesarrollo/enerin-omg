@@ -1,6 +1,9 @@
 <?php
+
 require_once '../ds/AccesoDB.php';
-class InformeValidacionDocumentosDAO{
+class InformeValidacionDocumentosDAO
+{
+    // lista validacion documentos, de acuerdo al contrato (cumplimiento)
     public function listarValidaciones($v)
     {
         try
@@ -25,6 +28,8 @@ class InformeValidacionDocumentosDAO{
             return $ex;
         }
     }
+
+    // lista temas y responsables ligados a documentos y documentos ligado a validacion documento
     public function obtenerTemayResponsable ($id_documento)
     {
         try{
@@ -48,9 +53,7 @@ class InformeValidacionDocumentosDAO{
                     tbasignacion_tema_requisito.id_asignacion_tema_requisito=tbasignacion_tema_requisito_requisitos.id_asignacion_tema_requisito
                     JOIN temas tbtemas ON tbtemas.id_tema=tbasignacion_tema_requisito.id_tema
                     JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.responsable_general
-                    WHERE tbdocumentos.id_documento=$id_documento GROUP BY tbtemas.no";    
-                    // echo $query;
-            
+                    WHERE tbdocumentos.id_documento=$id_documento GROUP BY tbtemas.no";
             $db= AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);          
             return $lista;            
@@ -58,14 +61,15 @@ class InformeValidacionDocumentosDAO{
             throw $ex;
             return false;
         }
-    }   
+    }  
+    
+    // lista requisitos por un documento (documentos -> registros -> requisitos)
     public function obtenerRequisitosporDocumento($id_documento)
     {
         try
         {     
             $query="SELECT tbrequisitos.id_requisito, tbrequisitos.requisito
                     FROM documentos tbdocumentos
-
                     JOIN registros tbregistros ON tbregistros.id_documento=tbdocumentos.id_documento
                     JOIN requisitos_registros tbrequisitos_registros ON tbrequisitos_registros.id_registro=tbregistros.id_registro
                     JOIN requisitos tbrequisitos ON tbrequisitos.id_requisito=tbrequisitos_registros.id_requisito
@@ -77,7 +81,9 @@ class InformeValidacionDocumentosDAO{
             throw $ex;
             return false;
         }
-    } 
+    }
+
+    // lista registros por un documento (documentos -> registros)
     public function obtenerRegistrosPorDocumento($id_documento)
     {
         try
@@ -95,7 +101,7 @@ class InformeValidacionDocumentosDAO{
         }
     }
     
-    
+    // lista un contrato (cumplimiento) de acuerdo al identificador ($ID_CUMPLIMIENTO)
     public function obtenerContratos($ID_CUMPLIMIENTO)
     {
         try
@@ -103,12 +109,9 @@ class InformeValidacionDocumentosDAO{
             $query="SELECT tbcumplimientos.id_cumplimiento,tbcumplimientos.clave_cumplimiento,tbcumplimientos.cumplimiento
                     FROM cumplimientos tbcumplimientos
                     WHERE tbcumplimientos.id_cumplimiento=$ID_CUMPLIMIENTO";
-            
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-
             return $lista[0];
-            
         } catch (Exception $ex)
         {
             throw $ex;
@@ -118,7 +121,8 @@ class InformeValidacionDocumentosDAO{
     
     /*no borrar preguntar antes de hacerlo si se requiere modificar de aqui para abajo */ 
     
-     public function obtenerTodosLosEmpleadosQueSonResponsableDelDocumento(){
+    // francisco <-
+    public function obtenerTodosLosEmpleadosQueSonResponsableDelDocumento(){
          try{
              $query="SELECT tbempleados.id_empleado, concat(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) nombrecompleto
                      FROM validacion_documento tbvalidacion_documento
@@ -128,16 +132,9 @@ class InformeValidacionDocumentosDAO{
              $db=  AccesoDB::getInstancia();
              $lista=$db->executeQuery($query);
                 return $lista;
-         } catch (Exception $ex) {
-
+         } catch (Exception $ex)
+         {
          }
      }
-      
-     
-    
-    
-    
 }
-
 ?>
-

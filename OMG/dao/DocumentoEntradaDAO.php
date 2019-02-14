@@ -1,7 +1,9 @@
 <?php
-require_once '../ds/AccesoDB.php';
-class DocumentoEntradaDAO{
 
+require_once '../ds/AccesoDB.php';
+class DocumentoEntradaDAO
+{
+    // 
     public function getFechaAlarma()
     {
         try
@@ -24,7 +26,9 @@ class DocumentoEntradaDAO{
         }
     }
     
-    public function mostrarDocumentosEntrada($CONTRATO){
+    // 
+    public function mostrarDocumentosEntrada($CONTRATO)
+    {
         try{
             $query="SELECT
                     tbdocumento_entrada.id_documento_entrada, tbdocumento_entrada.folio_referencia,
@@ -64,7 +68,8 @@ class DocumentoEntradaDAO{
         }
     }
 
-    public function listarDocumentoEntrada($ID_DOCUMENTO_ENTRADA){
+    public function listarDocumentoEntrada($ID_DOCUMENTO_ENTRADA)
+    {
         try{
             $query="SELECT tbdocumento_entrada.id_documento_entrada, tbdocumento_entrada.folio_referencia,
             tbdocumento_entrada.folio_entrada, tbdocumento_entrada.fecha_recepcion,
@@ -102,21 +107,16 @@ class DocumentoEntradaDAO{
     }
     
     
-    public function listarCumplimientoPorId_Entrada($id_entrada){
+    public function listarCumplimientoPorId_Entrada($id_entrada)
+    {
         try{
-            
-        
             $query="documento_entrada.id_cumplimiento from documento_entrada  where documento_entrada.id_documento_entrada=$id_entrada";
-
-
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-            
-
             return $lista;
-            } catch (Exception $ex) {
+            }catch (Exception $ex){
                 throw $ex;
-        }
+            }
     }
     
     
@@ -147,97 +147,79 @@ class DocumentoEntradaDAO{
     }
     
     
-    public function verificarSiExisteFolioEntrada($cadena,$cualverificar){
+    public function verificarSiExisteFolioEntrada($cadena,$cualverificar)
+    {
         try{
-           $query="SELECT tbdocumento_entrada.folio_entrada  FROM documento_entrada tbdocumento_entrada WHERE tbdocumento_entrada.$cualverificar ='$cadena'";
-
-            
+           $query="SELECT tbdocumento_entrada.folio_entrada  FROM documento_entrada tbdocumento_entrada WHERE tbdocumento_entrada.$cualverificar ='$cadena'";        
 //            $query="SELECT ID_EMPLEADO  FROM EMPLEADOS";
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-        
             return $lista;
-            
-        } catch (Exception $ex) {
+        }catch (Exception $ex){
             throw $ex;
         }
     }
     
     
     
-    public function loadAutoComplete($cadena){
-    try{
-            $query="SELECT tbdocumento_entrada.remitente FROM documento_entrada tbdocumento_entrada WHERE tbdocumento_entrada.id_documento_entrada = '$cadena'";
-
-            
+    public function loadAutoComplete($cadena)
+    {
+        try{
+            $query="SELECT tbdocumento_entrada.remitente FROM documento_entrada tbdocumento_entrada WHERE tbdocumento_entrada.id_documento_entrada = '$cadena'";    
 //            $query="SELECT ID_EMPLEADO  FROM EMPLEADOS";
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-        
             return $lista;
-            
-    } catch (Exception $ex) {
-
+        } catch (Exception $ex)
+        {
+        }
     }
-}
     
-    
-    public function traer_ultimo_insertado(){
-         $query_obtenerMaximo_mas_uno="SELECT max(id_documento_entrada) as id_documento_entrada FROM documento_entrada";
-            $db_obtenerMaximo_mas_uno=AccesoDB::getInstancia();
-            $lista_id_nuevo_autoincrementado=$db_obtenerMaximo_mas_uno->executeQuery($query_obtenerMaximo_mas_uno);
+    // 
+    public function traer_ultimo_insertado()
+    {
+        $query_obtenerMaximo_mas_uno="SELECT max(id_documento_entrada) as id_documento_entrada FROM documento_entrada";
+        $db_obtenerMaximo_mas_uno=AccesoDB::getInstancia();
+        $lista_id_nuevo_autoincrementado=$db_obtenerMaximo_mas_uno->executeQuery($query_obtenerMaximo_mas_uno);
+        $id_nuevo=0;
+            
+        foreach ($lista_id_nuevo_autoincrementado as $value)
+        {
+            $id_nuevo= $value["id_documento_entrada"];
+        }
+        if($id_nuevo==null)
+        {
             $id_nuevo=0;
-            
-            foreach ($lista_id_nuevo_autoincrementado as $value) {
-               $id_nuevo= $value["id_documento_entrada"];
-            }
-            
-            
-            if($id_nuevo==null){
-                $id_nuevo=0;
-            } 
-            return $id_nuevo; 
+        } 
+        return $id_nuevo; 
     }
     
-    
-    
+    // 
     public function insertarDocumentosEntrada($id_cumplimiento,$folio_referencia,$folio_entrada,$fecha_recepcion,$asunto,$remitente,$id_autoridad,
-                                             $id_tema,$clasificacion,$status_doc,$fecha_asignacion,$fecha_limite_atencion,$fecha_alarma,
-                                             $documento,$observaciones,$mensaje_alerta){
-        
+        $id_tema,$clasificacion,$status_doc,$fecha_asignacion,$fecha_limite_atencion,$fecha_alarma,
+        $documento,$observaciones,$mensaje_alerta)
+    {    
         try{
-            
             $query_obtenerMaximo_mas_uno="SELECT max(id_documento_entrada)+1 as id_documento_entrada from documento_entrada";
             $db_obtenerMaximo_mas_uno=AccesoDB::getInstancia();
             $lista_id_nuevo_autoincrementado=$db_obtenerMaximo_mas_uno->executeQuery($query_obtenerMaximo_mas_uno);
             $id_nuevo=0;
-            
-            foreach ($lista_id_nuevo_autoincrementado as $value) {
+            foreach ($lista_id_nuevo_autoincrementado as $value)
+            {
                $id_nuevo= $value["id_documento_entrada"];
             }
-            
-            if($id_nuevo==NULL){
+            if($id_nuevo==NULL)
+            {
                 $id_nuevo=0;
             }
-            
-                                                   
             $query="INSERT INTO documento_entrada (id_documento_entrada,id_cumplimiento,folio_referencia,folio_entrada,fecha_recepcion,asunto,remitente,
-					           id_autoridad,id_tema,clasificacion,status_doc,fecha_asignacion,fecha_limite_atencion,fecha_alarma,
-					           documento,observaciones,mensaje_alerta)
-
-                    
-                                    VALUES($id_nuevo,$id_cumplimiento,'$folio_referencia','$folio_entrada','$fecha_recepcion','$asunto','$remitente',$id_autoridad,
-                                           $id_tema,'$clasificacion','$status_doc','$fecha_asignacion','$fecha_limite_atencion',
-                                          '$fecha_alarma','$documento','$observaciones','$mensaje_alerta');";
-            
+                    id_autoridad,id_tema,clasificacion,status_doc,fecha_asignacion,fecha_limite_atencion,fecha_alarma,
+                    documento,observaciones,mensaje_alerta)                    
+                    VALUES($id_nuevo,$id_cumplimiento,'$folio_referencia','$folio_entrada','$fecha_recepcion','$asunto','$remitente',$id_autoridad,
+                    $id_tema,'$clasificacion','$status_doc','$fecha_asignacion','$fecha_limite_atencion',
+                    '$fecha_alarma','$documento','$observaciones','$mensaje_alerta');";
             $db=  AccesoDB::getInstancia();
-//            try{
-           $exito_inserccion= $db->executeQueryUpdate($query); 
-//            } catch (Exception $ex) {
-//
-//            }
-           
-           
+            $exito_inserccion= $db->executeQueryUpdate($query); 
         } catch (Exception $ex) {
                 throw $ex;
         }
@@ -257,21 +239,20 @@ class DocumentoEntradaDAO{
         
     }*/
     
-    
+    // 
     public function actualizarDocumentoEntradaPorColumna($COLUMNA,$VALOR,$ID_DOCUMENTO_ENTRADA){
          
         try{
             $query="UPDATE documento_entrada SET ".$COLUMNA."='".$VALOR."'  "
-                 . "WHERE id_documento_entrada=$ID_DOCUMENTO_ENTRADA";
-            
+                 . "WHERE id_documento_entrada=$ID_DOCUMENTO_ENTRADA";     
 //             $query="UPDATE EMPLEADOS SET CORREO='$Correo' WHERE ID_EMPLEADO=$Id_Empleado";
-     
             $db= AccesoDB::getInstancia();
            $result= $db->executeQueryUpdate($query);
 //            $db->executeQuery($query);
             // echo $result;
            return $result;
-        } catch (Exception $ex) {
+        } catch (Exception $ex)
+        {
            throw $ex; 
         }
     }
@@ -288,21 +269,21 @@ class DocumentoEntradaDAO{
 //        }
 //    }
     
-    
+    // 
     public function eliminarDocumentoEntrada($ID_DOCUMENTO_ENTRADA){
         try{
             $query="DELETE FROM documento_entrada WHERE id_documento_entrada=$ID_DOCUMENTO_ENTRADA";
             $db=  AccesoDB::getInstancia();
             $lista= $db->executeQueryUpdate($query);
-
             return $lista;
-        } catch (Exception $ex) {
+        } catch (Exception $ex)
+        {
                 throw $ex;
                 return -1;
         }
     }
     
-    
+    // 
     public function verificarExistenciadeDocumentoEntradaEnDocumentoSalida($ID_DOCUMENTO_ENTRADA)
     {
         try
