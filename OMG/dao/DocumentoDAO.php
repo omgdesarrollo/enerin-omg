@@ -3,7 +3,7 @@
 require_once '../ds/AccesoDB.php';
 class DocumentoDAO
 {
-    // lista los documentos por contrato
+    // lista los documentos por contrato (cumplimiento)
     public function mostrarDocumentos($CONTRATO)
     {
         try{
@@ -186,7 +186,7 @@ class DocumentoDAO
         }
     }
 
-    // verifica si un documento (ID) esta asignado a un registro(Tabla registros)
+    // lista la existencia de un documento asignado a un registro(Tabla registros)
     public function verificarExistenciadeDocumentoEnRegistros($ID_DOCUMENTO)
     {
         try
@@ -194,10 +194,8 @@ class DocumentoDAO
             $query="SELECT COUNT(*) AS reg
                     FROM registros tbregistros
                     WHERE tbregistros.id_documento=$ID_DOCUMENTO";
-            
             $db= AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-
             return $lista[0]['reg'];
         } catch (Exception $ex)
         {
@@ -207,7 +205,7 @@ class DocumentoDAO
         
     }
 
-    // verifica si el documento esta validado o no
+    // lista la existencia de documentos validados de acuerdo al identificador de documento ($ID_DOCUMENTO)
     public function verificarSiDocumentoEstaValidado($ID_DOCUMENTO)
     {
         try

@@ -3,7 +3,8 @@
 require_once '../ds/AccesoDB.php';
 class ValidacionDocumentoDAO
 {
-    // Lista los registros validacion de documentos de acuerdo a sus respectivos responsables (documento,tema) y de acuerdo al contrato o cumplimiento
+    // Lista los registros validacion de documentos de acuerdo a sus respectivos responsables (documento,tema) y de acuerdo al contrato (cumplimiento)
+    // id_documento igual -1 pertence a sin documento
     public function listarValidacionDocumentos($USUARIO,$CONTRATO)
     {
         try{

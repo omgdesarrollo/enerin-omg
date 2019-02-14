@@ -4,7 +4,7 @@ require_once '../ds/AccesoDB.php';
 class ControlTemasDAO
 {
 
-    // Lista todos los temas principales de acuerdo al contrato o cumplimiento (Sin subtemas)
+    // Lista todos los temas (sin subtemas) de acuerdo al contrato (cumplimiento)
     public function listarTemas($CONTRATO,$CADENA)
     {
         try 
@@ -51,7 +51,7 @@ class ControlTemasDAO
         }
     }
 
-    // Inicia la fecha del tema, para ser utilizados los temas por evidencias
+    // actualiza la fecha de inicio de un tema ($ID_TEMA), para ser utilizados los temas por evidencias
     public function iniciarTematica($ID_TEMA, $FECHA)
     {
         try

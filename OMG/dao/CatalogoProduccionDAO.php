@@ -3,7 +3,7 @@
 require_once '../ds/AccesoDB.php';
 class CatalogoProduccionDAO
 {
-    // lista registros catalago de produccion de acuerdo al contrato
+    // lista registros catalago de produccion de acuerdo al contrato (cumplimiento)
     public function listarCatalogo($CONTRATO)//listo
     {
         try
@@ -92,7 +92,7 @@ class CatalogoProduccionDAO
         }
     }
 
-    // lista registros de asignaciones de contrato de acuerdo a la busqueda($CADENA) y al contrato
+    // lista registros de asignaciones de contrato de acuerdo a la busqueda($CADENA) y al contrato (cumplimiento)
     public function buscarID($CADENA,$CONTRATO)//listo ahora si
     {
         try
@@ -131,7 +131,7 @@ class CatalogoProduccionDAO
         }
     }
 
-    // lista las regiones fiscales de asignaciones contrato de acuerdo al contrato
+    // lista las regiones fiscales de asignaciones contrato de acuerdo al contrato (cumplimiento)
     public function buscarRegionesFiscales($CONTRATO)//listo
     {
         try
@@ -149,7 +149,7 @@ class CatalogoProduccionDAO
         }
     }
 
-    // lista la existencia de acuerdo a la cadena $TAG_MEDIDOR y al contrato
+    // lista la existencia de acuerdo a la cadena $TAG_MEDIDOR y al contrato (cumplimiento)
     public function buscarTagMedidor($CONTRATO,$TAG_MEDIDOR)
     {
         try

@@ -3,7 +3,7 @@
 require_once '../ds/AccesoDB.php';
 class ConsultasDAO
 {
-    // lista temas (no subtemas) -> requisitos -> registros -> evidencias, de acuerdo a la fecha de inicio (fecha_inicio) y al contrato
+    // lista temas (no subtemas) -> requisitos -> registros -> evidencias, de acuerdo a la fecha de inicio (fecha_inicio) y al contrato (cumplimiento)
     public function listarConsultas($CONTRATO)
     {
         try
