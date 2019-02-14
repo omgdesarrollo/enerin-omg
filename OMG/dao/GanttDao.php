@@ -1,11 +1,18 @@
 <?php
-
 require_once '../ds/AccesoDB.php';
-class GanttDao {
-    //put your code here
-    
-    
-    
+
+//para llevar el control de las tareas del gantt de documento de  entrada para que halla un seguimiento debe haber un documento 
+//de entrada
+/*
+ * obtenerTareasCompletasPorFolioEntrada($VALUE);
+ * insertarTareasGantt($value);
+ */
+class GanttDao { 
+    /*
+    lista las actividades por id se seguimimiento de entrada 
+    *@param $VALUE : El id del seguimiento de entrada, format: INT
+        
+    */
     public function obtenerTareasCompletasPorFolioEntrada($VALUE){
         try
         { 
@@ -27,7 +34,10 @@ class GanttDao {
         }
     }
     
-    
+   /*
+    @param $value
+        el formato es string 
+    */
     public function insertarTareasGantt($value){
         try{
            $query="INSERT INTO gantt_tasks(id, text, start_date, duration, progress, parent, ponderado_programado, notas, status)
@@ -43,7 +53,11 @@ class GanttDao {
         }
     }
     
-        public function actualizarGanttTareas($QUERY)
+    /*
+    @param $value
+        el formato es string 
+    */
+    public function actualizarGanttTareas($QUERY)
     {
         try
         {
