@@ -51,7 +51,10 @@ class EvidenciasDAO
     // WHERE tbtemas.contrato=$CONTRATO AND (tbregistros.registro<>'NULL' AND tbevidencias.validacion_supervisor<>'NULL' AND tbusuarios.id_usuario = $ID_USUARIO AND LOWER(tbtemas.identificador) 
     // LIKE '%catalogo%' OR tbevidencias.id_usuario = $ID_USUARIO)";
 
-    // lista todas las evidencias mientras que el usuario sea responsable de la evidencia o del tema de la evidencias, por contrato
+
+
+
+    // lista todas las evidencias mientras que el usuario sea responsable de la evidencia o del tema al que pertenece la evidencia, de acuerdo al contrato (cumplimiento)
     public function listarEvidencias($ID_USUARIO,$CONTRATO)
     {
         try
@@ -98,7 +101,7 @@ class EvidenciasDAO
         }
     }
     
-    // lista una evidencia en especifico
+    // lista una evidencia en especifico con informacion igualada al metodo anterior (listarEvidencias)
     public function listarEvidencia($ID_EVIDENCIA,$ID_USUARIO)
     {
         try
@@ -148,7 +151,7 @@ class EvidenciasDAO
         }
     }
 
-    // listo los documentos de acuerdo a la cadena de busqueda
+    // lista documentos de acuerdo a la cadena de busqueda ($cadena)
     public function getClavesDocumentos($cadena)
     {
         try
@@ -196,12 +199,9 @@ class EvidenciasDAO
         try
         {
             $query="UPDATE evidencias
-
                     SET clasificacion='',desviacion='',accion_correctiva='',validacion_supervisor='false',plan_accion='',
                     ingresar_oficio_atencion='',oficio_atencion=''
-
                     WHERE id_evidencias=$id_evidencias";
-            
             $db=  AccesoDB::getInstancia();
             $lista = $db->executeQueryUpdate($query);            
             return $lista;
@@ -212,7 +212,7 @@ class EvidenciasDAO
         }
     }
 
-    // actualiza algun campo de la una evidencia
+    // actualiza un campo definido por $COLUMNA y con el valor ($VALOR) de la una evidencia
     public function actualizarEvidenciaPorColumna($COLUMNA,$CONTEXTO,$ID_EVIDENCIAS,$VALOR)
     {     
         try
@@ -228,18 +228,14 @@ class EvidenciasDAO
         }
     }
     
-    // elimina una evidencia
     public function eliminarEvidencia($id_evidencias)
     {
         try
         {
             $query="DELETE FROM evidencias
-
             WHERE id_evidencias=$id_evidencias";
-            
             $db= AccesoDB::getInstancia();
             $result= $db->executeQueryUpdate($query);
-            
             return $result;
         } catch (Exception $ex)
         {

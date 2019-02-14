@@ -1,9 +1,9 @@
 <?php
 
 require_once '../ds/AccesoDB.php';
-
 class ArchivoUploadDAO
 {
+    // ya no se utilizar (JR)
     public function insertar_archivos($id_documento,$url)
     {
         try
@@ -19,6 +19,8 @@ class ArchivoUploadDAO
             throw $ex;
         }
     }
+
+    // ya no se utiliza (JR)
     public function listar_archivos($id_documento)
     {
         try
@@ -32,6 +34,8 @@ class ArchivoUploadDAO
             throw $ex;
         }
     }
+
+    // ya no se utiliza (JR)
     public function eliminar_archivo($id_documento,$nombre_archivo)
     {
         try
