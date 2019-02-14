@@ -1,12 +1,8 @@
 <?php
+
 require_once '../ds/AccesoDB.php';
-
-class NotificacionesTareasDAO{
-    
-
-    
-    
-    
+class NotificacionesTareasDAO
+{
 //    public function tareasConFechaCumplimientoProximoAVencer($CONTRATO)
 //    {
 //        try
@@ -27,7 +23,7 @@ class NotificacionesTareasDAO{
 //        }
 //    }
     
-    
+    // lista las tareas que en fecha cumplimiento sean menor o igual de la fecha actual y el estatu de la tarea sea 1 (tiempo vencido)
     public function tareasVencidas()
     {
         try
@@ -47,7 +43,7 @@ class NotificacionesTareasDAO{
         }
     }
     
-    
+    // obtiene el identificador de usuario de acuerdo al identificador de empleado ($ID_EMPLEADO)
     public function obtenerUsuarioPorIdEmpleado($ID_EMPLEADO)
     {
         try
@@ -55,11 +51,8 @@ class NotificacionesTareasDAO{
             $query="SELECT tbusuarios.id_usuario
                     FROM usuarios tbusuarios
                     WHERE tbusuarios.id_empleado=$ID_EMPLEADO";
-            
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-            
-//            echo "este es el query id_usuario: ".json_encode($query);
             return $lista[0]['id_usuario'];
         } catch (Exception $ex)
         {
@@ -69,7 +62,7 @@ class NotificacionesTareasDAO{
         
     }
     
-    
+    // lista la existencia de notificaciones buscado por $MENSAJE
     public function veriricarSiYaExisteLaNotificacion($MENSAJE)
     {
         try
@@ -77,11 +70,8 @@ class NotificacionesTareasDAO{
             $query="SELECT COUNT(*) AS resultado
                     FROM notificaciones tbnotificaciones
                     WHERE tbnotificaciones.mensaje = '$MENSAJE'";
-            
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-            
-//            echo "este es el query resultado: ".json_encode($query);
             return $lista[0]['resultado'];
         } catch (Exception $ex)
         {
@@ -89,7 +79,5 @@ class NotificacionesTareasDAO{
             return -1;
         }
     }
-    
 }
-
 ?>

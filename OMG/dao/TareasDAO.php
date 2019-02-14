@@ -1,9 +1,8 @@
 <?PHP
-require_once '../ds/AccesoDB.php';
 
-class TareasDAO{
-    
-    
+require_once '../ds/AccesoDB.php';
+class TareasDAO
+{    
     public function listarTareas($id_empleado,$id_usuario,$cumplimiento,$checkBoxTerminados)
     {
         try
@@ -325,8 +324,5 @@ class TareasDAO{
             return -1;
         }
     }
-    
-
 }
-
 ?>

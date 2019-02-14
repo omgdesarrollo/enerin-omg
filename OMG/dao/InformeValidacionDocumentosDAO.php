@@ -63,14 +63,13 @@ class InformeValidacionDocumentosDAO
         }
     }  
     
-    // 
+    // lista requisitos por un documento (documentos -> registros -> requisitos)
     public function obtenerRequisitosporDocumento($id_documento)
     {
         try
         {     
             $query="SELECT tbrequisitos.id_requisito, tbrequisitos.requisito
                     FROM documentos tbdocumentos
-
                     JOIN registros tbregistros ON tbregistros.id_documento=tbdocumentos.id_documento
                     JOIN requisitos_registros tbrequisitos_registros ON tbrequisitos_registros.id_registro=tbregistros.id_registro
                     JOIN requisitos tbrequisitos ON tbrequisitos.id_requisito=tbrequisitos_registros.id_requisito
@@ -84,7 +83,7 @@ class InformeValidacionDocumentosDAO
         }
     }
 
-    // 
+    // lista registros por un documento (documentos -> registros)
     public function obtenerRegistrosPorDocumento($id_documento)
     {
         try
@@ -102,7 +101,7 @@ class InformeValidacionDocumentosDAO
         }
     }
     
-    
+    // lista un contrato (cumplimiento) de acuerdo al identificador ($ID_CUMPLIMIENTO)
     public function obtenerContratos($ID_CUMPLIMIENTO)
     {
         try
@@ -110,12 +109,9 @@ class InformeValidacionDocumentosDAO
             $query="SELECT tbcumplimientos.id_cumplimiento,tbcumplimientos.clave_cumplimiento,tbcumplimientos.cumplimiento
                     FROM cumplimientos tbcumplimientos
                     WHERE tbcumplimientos.id_cumplimiento=$ID_CUMPLIMIENTO";
-            
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-
             return $lista[0];
-            
         } catch (Exception $ex)
         {
             throw $ex;
@@ -125,7 +121,8 @@ class InformeValidacionDocumentosDAO
     
     /*no borrar preguntar antes de hacerlo si se requiere modificar de aqui para abajo */ 
     
-     public function obtenerTodosLosEmpleadosQueSonResponsableDelDocumento(){
+    // francisco <-
+    public function obtenerTodosLosEmpleadosQueSonResponsableDelDocumento(){
          try{
              $query="SELECT tbempleados.id_empleado, concat(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) nombrecompleto
                      FROM validacion_documento tbvalidacion_documento
