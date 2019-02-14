@@ -1,6 +1,9 @@
 <?php
+
 require_once '../ds/AccesoDB.php';
-class InformeValidacionDocumentosDAO{
+class InformeValidacionDocumentosDAO
+{
+    // lista validacion documentos, de acuerdo al contrato (cumplimiento)
     public function listarValidaciones($v)
     {
         try
@@ -25,6 +28,8 @@ class InformeValidacionDocumentosDAO{
             return $ex;
         }
     }
+
+    // lista temas y responsables ligados a documentos y documentos ligado a validacion documento
     public function obtenerTemayResponsable ($id_documento)
     {
         try{
@@ -48,9 +53,7 @@ class InformeValidacionDocumentosDAO{
                     tbasignacion_tema_requisito.id_asignacion_tema_requisito=tbasignacion_tema_requisito_requisitos.id_asignacion_tema_requisito
                     JOIN temas tbtemas ON tbtemas.id_tema=tbasignacion_tema_requisito.id_tema
                     JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.responsable_general
-                    WHERE tbdocumentos.id_documento=$id_documento GROUP BY tbtemas.no";    
-                    // echo $query;
-            
+                    WHERE tbdocumentos.id_documento=$id_documento GROUP BY tbtemas.no";
             $db= AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);          
             return $lista;            
@@ -58,7 +61,9 @@ class InformeValidacionDocumentosDAO{
             throw $ex;
             return false;
         }
-    }   
+    }  
+    
+    // 
     public function obtenerRequisitosporDocumento($id_documento)
     {
         try
@@ -77,7 +82,9 @@ class InformeValidacionDocumentosDAO{
             throw $ex;
             return false;
         }
-    } 
+    }
+
+    // 
     public function obtenerRegistrosPorDocumento($id_documento)
     {
         try
@@ -128,16 +135,9 @@ class InformeValidacionDocumentosDAO{
              $db=  AccesoDB::getInstancia();
              $lista=$db->executeQuery($query);
                 return $lista;
-         } catch (Exception $ex) {
-
+         } catch (Exception $ex)
+         {
          }
      }
-      
-     
-    
-    
-    
 }
-
 ?>
-

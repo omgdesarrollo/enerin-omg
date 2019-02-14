@@ -1,8 +1,9 @@
 <?php
-require_once '../ds/AccesoDB.php';
 
+require_once '../ds/AccesoDB.php';
 class InformeEvidenciasDAO
 {
+    // lista evidencias desde temas -> requisitos -> registros -> evidencias (puede tener o no), de acuerdo al contrato (cumplimiento)
     public function listarEvidencias($CONTRATO)
     {
         // $query_concat="";
@@ -69,6 +70,7 @@ class InformeEvidenciasDAO
         }
     }
     
+    // lista temas y sus responsables ligados desde documentos ($ID_DOCUMENTO), de acuerdo al contrato (cumplimiento)
     public function obtenerTemayResponsable ($ID_DOCUMENTO,$CONTRATO)
     {
         try
@@ -87,7 +89,6 @@ class InformeEvidenciasDAO
                     JOIN temas tbtemas ON tbtemas.id_tema=tbasignacion_tema_requisito.id_tema
                     JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado
                     WHERE tbdocumentos.id_documento=$ID_DOCUMENTO AND tbdocumentos.contrato=$CONTRATO GROUP BY tbtemas.no";
-//            echo json_encode($query);
             $db= AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
             
@@ -99,6 +100,8 @@ class InformeEvidenciasDAO
         }
     }
     
+    // lista los requisitos ligados al documento ($ID_DOCUMENTO),
+    // NOTA: al parecer esta de mas la condicion de contrato = $CONTRATO
     public function obtenerRequisitosporDocumento($ID_DOCUMENTO,$CONTRATO)
     {
         try
@@ -109,10 +112,8 @@ class InformeEvidenciasDAO
                     JOIN requisitos_registros tbrequisitos_registros ON tbrequisitos_registros.id_registro=tbregistros.id_registro
                     JOIN requisitos tbrequisitos ON tbrequisitos.id_requisito=tbrequisitos_registros.id_requisito
                     WHERE tbdocumentos.id_documento=$ID_DOCUMENTO AND tbdocumentos.contrato=$CONTRATO GROUP BY tbrequisitos.requisito";
-            
             $db= AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
-            
             return $lista;            
         } catch (Exception $ex)
         {
@@ -121,7 +122,8 @@ class InformeEvidenciasDAO
         }
     }
     
-    
+    // lista los registros ligados al documento ($ID_DOCUMENTO)
+    // NOTA: al parecer esta de mas la condicion de contrato = $CONTRATO
     public function obtenerRegistrosporDocumento($ID_DOCUMENTO,$CONTRATO)
     {
         try
@@ -130,10 +132,8 @@ class InformeEvidenciasDAO
                     FROM documentos tbdocumentos
                     JOIN registros tbregistros ON tbregistros.id_documento=tbdocumentos.id_documento
                     WHERE tbdocumentos.id_documento=$ID_DOCUMENTO AND tbdocumentos.contrato=$CONTRATO GROUP BY tbregistros.registro";
-            
             $db= AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
-            
             return $lista;
         } catch (Exception $ex)
         {
@@ -142,6 +142,8 @@ class InformeEvidenciasDAO
         }
     }
     
+    // lista el avance del plan (gantt) de una evidencia ($ID_EVIDENCIAS)
+    // francisco <-
     public function avancePlanPorcentaje($ID_EVIDENCIAS)
     {
         try 
@@ -149,10 +151,8 @@ class InformeEvidenciasDAO
             $query="SELECT SUM(tbgantt_evidencias.progress)/COUNT(tbgantt_evidencias.progress) AS total_avance
                     FROM gantt_evidencias tbgantt_evidencias
                     WHERE tbgantt_evidencias.id_evidencias=$ID_EVIDENCIAS AND tbgantt_evidencias.parent=0";
-            
             $db= AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
-            
             return $lista[0]["total_avance"];            
         } catch (Exception $ex) 
         {
@@ -162,7 +162,4 @@ class InformeEvidenciasDAO
     }
     
 }
-
 ?>
-
-

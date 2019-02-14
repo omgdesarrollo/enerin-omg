@@ -227,7 +227,7 @@ class ValidacionDocumentoDAO
         }
     }
 
-    // ni idea
+    // francisco <-
     public function insertar($id_documento_entrada)//Checar este insertar para que es
     {
         try{
