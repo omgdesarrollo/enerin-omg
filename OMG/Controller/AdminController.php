@@ -1,25 +1,20 @@
 <?php
 
-
 session_start();
 require_once '../Model/AdminModel.php';
 require_once '../Model/EmpleadoModel.php';
-// require_once '../Pojo/DocumentoEntradaPojo.php';
-// require_once '../Pojo/SeguimientoEntradaPojo.php';
 require_once '../util/Session.php';
-
- 
 
 $Op=$_REQUEST["Op"];
 $model = new AdminModel();
 $modelEmpleado=new EmpleadoModel();
-
 // $pojo= new DocumentoEntradaPojo();
 // $modelSeguimientoEntrada=new SeguimientoEntradaModel();
 // $pojoSeguimientoEntrada= new SeguimientoEntradaPojo();
 
 switch ($Op)
 {
+    // lista usuarios
     case 'Listar':
         $usuario = Session::getSesion("user")["ID_USUARIO"];
         $lista = $model->listarUsuarios($usuario);
@@ -27,19 +22,21 @@ switch ($Op)
         echo json_encode($lista);
     break;
 
+    // lista empleados resultado de una busqueda ($_REQUEST["CADENA"])
 	case 'BusquedaEmpleado':
 		$lista=$modelEmpleado->BusquedaEmpleado($_REQUEST["CADENA"]);
     	header('Content-type: application/json; charset=utf-8');
 		echo json_encode($lista);
-        // return $lista;
     break;
 
+    // lista vistas con permisos por usuario ($_REQUEST["ID_USUARIO"])
     case 'ListarPermisos':
         $lista=$model->listarUsuarioVistas($_REQUEST["ID_USUARIO"]);
     	header('Content-type: application/json; charset=utf-8');
 		echo json_encode($lista);
     break;
 
+    // 
     case 'ListarUsuario':
         $lista = $model->listarUsuario($_REQUEST["ID_EMPLEADO"]);
         
@@ -47,33 +44,35 @@ switch ($Op)
 		// echo json_encode($lista);
         break;
 
+    // lista temas resultado de una busqueda ($_REQUEST["CADENA"])
     case 'ListarTemas':
-
         $lista = $model->listarTemas(trim($_REQUEST["CADENA"]),$_REQUEST["ID_USUARIO"],Session::getSesion("s_cont"));
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($lista);
-        break;
+    break;
 
+    // lista temas asignados a un usuario ($_REQUEST["ID_USUARIO"]) de acuerdo al contrato (Session::getSesion("s_cont"))
     case 'ListarTemasPorUsuario':
         $lista = $model->listarTemasPorUsuario($_REQUEST["ID_USUARIO"],Session::getSesion("s_cont"));
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($lista);
-        
-        break;
+    break;
     
+    // crea un nuevo usuario
     case 'AgregarUsuario':
         $result = $model->InsertarUsuario($_REQUEST["ID_EMPLEADO"],$_REQUEST["NOMBRE_USUARIO"]);
         header('Content-type: application/json; charset=utf-8');
 		echo json_encode($result);
     break;
 
+    // asigna un tema ($_REQUEST['ID_TEMA']) a un usuario ($_REQUEST['ID_USUARIO'])
     case 'AgregarUsuarioTema':
         $result = $model->insertarUsuarioTema($_REQUEST['ID_USUARIO'],$_REQUEST['ID_TEMA']);
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($result);
-        break;
+    break;
 
-    
+    // lista los submodulos para crear la tabla para permisos de vistas por usuario (codigo HTML-javascript) 
     case 'CrearTablaPermisos':
         $lista = $model->listarSubmodulos();
         $usuario = Session::getSesion("user");
@@ -181,23 +180,25 @@ switch ($Op)
         echo $tempData;
     break;
 
+    // 
     case 'ModificarPermiso':
         $exito = $model->actualizarUsuariosVistasPorColumna($_REQUEST['COLUMNA'], $_REQUEST['VALOR'], $_REQUEST['ID_USUARIO'], $_REQUEST['ID_ESTRUCTURA']);
         echo $exito;
     break;
 
+    // elimina (desasigna) un tema ($_REQUEST['ID_TEMA']) de un usuario ($_REQUEST['ID_USUARIO'])
     case 'EliminarUsuarioTema':
         $result = $model->eliminarUsuarioTema($_REQUEST['ID_USUARIO'],$_REQUEST['ID_TEMA']);
-        // header('Content-type: application/json; charset=utf-8');//federico si lees esto es para que sepas que esto no va ya que la consulta no regresara una lista, regresara un true o false, recuerdalo
-        // echo json_encode($result);
         echo $result;
-        break;
-        
+    break;
+    
+    // cunsulta si existe un nombre de usuario ($_REQUEST["NOMBRE_USUARIO"])
     case 'ConsultarExisteUsuario':
         $existe = $model->ConsultarExisteUsuario($_REQUEST["NOMBRE_USUARIO"]);
         echo $existe;
     break;
 
+    // 
     case 'VerificarPass':
         $usuario = Session::getSesion("user");
         $existe = $model->verificarPass($usuario["ID_USUARIO"],$_REQUEST["PASS"]);
@@ -210,6 +211,7 @@ switch ($Op)
         echo $exito;
     break;
 
+    // 
     case 'CambiarPermisoCumplimiento':
         $exito = $model->cambiarPermisoCumplimiento($_REQUEST["ID_USUARIO"],$_REQUEST["ID_CUMPLIMIENTO"],$_REQUEST["VALOR"]);
         echo $exito;
@@ -223,6 +225,7 @@ switch ($Op)
         echo $exito;
     break;
 
+    // crea una variable de sesion para guardar la url del archivo de foto
     case 'CrearSesionVarPhoto':
         Session::setSesion("fotoPerfilActual",$_REQUEST["URL"]);
     break;

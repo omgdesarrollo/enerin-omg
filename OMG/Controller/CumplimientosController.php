@@ -15,29 +15,33 @@ $model=new CumplimientoModel();
 $cumplimientoPojo= new CumplimientoPojo();
 $usuarioPojo= new UsuarioPojo();
 
-switch ($Op) {
+switch ($Op)
+{
+	// lista los cumplimientos por contrato
 	case 'Listar':
-				$ID_USUARIO= Session::getSesion("user")["ID_USUARIO"];
-				isset($_REQUEST["ID_USUARIO"])?
-               	$lista = $model->listarCumplimientos($_REQUEST["ID_USUARIO"]):
-                $lista = $model->listarCumplimientos($ID_USUARIO);
-				header('Content-type: application/json; charset=utf-8');
-				echo json_encode($lista);
-		break;
-            
-        case 'ListarCumplimiento':
-                $lista = $model->listarCumplimiento($_REQUEST['ID_CUMPLIMIENTO']);
-		header('Content-type: application/json; charset=utf-8');
-		echo json_encode($lista);
-		break;        
-                
-        case 'mostrarcombo':
-		$Lista=$model->listarCumplimientosComboBox();
-    	Session::setSesion("listarCumplimientosComboBox",$Lista);
-    	header('Content-type: application/json; charset=utf-8');
-		echo json_encode($Lista);
-		return $Lista;
-		break;
+			$ID_USUARIO= Session::getSesion("user")["ID_USUARIO"];
+			isset($_REQUEST["ID_USUARIO"])?
+			$lista = $model->listarCumplimientos($_REQUEST["ID_USUARIO"]):
+			$lista = $model->listarCumplimientos($ID_USUARIO);
+			header('Content-type: application/json; charset=utf-8');
+			echo json_encode($lista);
+	break;
+	
+	// lista un cumplimiento en especifico ($_REQUEST['ID_CUMPLIMIENTO'])
+	case 'ListarCumplimiento':
+			$lista = $model->listarCumplimiento($_REQUEST['ID_CUMPLIMIENTO']);
+			header('Content-type: application/json; charset=utf-8');
+			echo json_encode($lista);
+	break;
+
+
+	case 'mostrarcombo':
+			$Lista=$model->listarCumplimientosComboBox();
+			Session::setSesion("listarCumplimientosComboBox",$Lista);
+			header('Content-type: application/json; charset=utf-8');
+			echo json_encode($Lista);
+		// return $Lista;
+	break;
                 
 	case 'obtenerContrato':
             $lista;

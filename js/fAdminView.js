@@ -108,6 +108,4 @@ function refresh()
     {
         growlError("Error!","Error al construir la vista, recargue la página");
     });
-    // console.log(gridInstance);
-    // console.log($(gridInstance));
 }
