@@ -5,7 +5,15 @@ class GanttEvidenciasDao {
     //put your code here
     
     
-    
+    /*
+      *============================================================================
+         *@comment obtener datos de las tareas  
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo  
+		 *@param $v : id de  evidencias
+         *@return $lista  
+      *============================================================================
+    */    
     public function obtenerT($v){
         try
         { 
@@ -21,7 +29,16 @@ class GanttEvidenciasDao {
               return false;
         }
     }
-    
+    /*
+      *============================================================================
+         *@comment verifica si tiene descendencia el id del padre   
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo  
+		 *@param $v
+         *@return $lista  
+      *============================================================================
+    */
+	
     public function verificarsitienedescendencia($v){
          try
         { 
@@ -39,7 +56,15 @@ class GanttEvidenciasDao {
     }
     
     
-    
+        /*
+      *============================================================================
+         *@comment obtiene todos los padres de evidencias no duplicados que esten en el gantt  
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo  
+		 *@param $VALUE
+         *@return $lista  
+      *============================================================================
+    */ 
      public function totalDeDiasPorTarea($VALUE)
     {
         try 
@@ -64,7 +89,15 @@ class GanttEvidenciasDao {
     }
     
     
-    
+    /*
+      *============================================================================
+         *@comment cantidad de todas las tareas padres del gantt 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo  
+		 *@param $VALUE
+         *@return $lista  
+      *============================================================================
+    */     
     public function totalPadreCero($VALUE)
     {
         try 
@@ -176,6 +209,15 @@ class GanttEvidenciasDao {
 //            throw $ex;
 //        }
 //    }
+    /*
+      *============================================================================
+         *@comment empty 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo  
+		 *@param $value
+         *@return $list  
+      *============================================================================
+    */ 
     public function verificarTareaExiste($value){
         try{
             $query="select count(*) as cantidad from gantt_evidencias tb_gantt_evidencias  where tb_gantt_evidencias.id='".$value["id"]."'";
@@ -308,7 +350,15 @@ class GanttEvidenciasDao {
         }
    }
    
-   
+    /*
+      *============================================================================
+         *@comment obtener validacion del supervisor de evidencias    seleccionada  
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo  
+		 *@param $v
+         *@return $lista  
+      *============================================================================
+    */ 
    public function obtenerValidacionSupervisorEvidencias($v)
    {
        try
@@ -367,6 +417,15 @@ class GanttEvidenciasDao {
             return -1;
         }
     }
+	/*
+      *============================================================================
+         *@comment empty  
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method pendiente  
+		 *@param $ID_EMPLEADO
+         *@return $lista  
+      *============================================================================
+    */ 
      public function guardarStatus($Lista)
     {
         try 
