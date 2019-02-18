@@ -1,9 +1,8 @@
 <?php
-session_start();
-require_once '../util/Session.php';
-$Usuario=  Session::getSesion("user");
+    session_start();
+    require_once '../util/Session.php';
+    $Usuario=  Session::getSesion("user");
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -99,15 +98,12 @@ $Usuario=  Session::getSesion("user");
                  height:450px; 
             }*/
 
-        </style>              
-                
- 			 
+        </style>
 </head>
 
 <body class="no-skin">
 
 <!-- <div id="loader"></div>  -->
-       
 
 <?php
     require_once 'EncabezadoUsuarioView.php';
@@ -226,11 +222,13 @@ $Usuario=  Session::getSesion("user");
     // var ws;
     // var thisjGrowl;
 
+    // objecto de los tipos de datos custom para el jsGrid
     var customsFieldsGridData=[
         {field:"customControl",my_field:MyCControlField},
         // {field:"porcentaje",my_field:porcentajesFields},
     ];
-    // var estructuraGrid=[];
+
+    // objeto para la estructura de la tabla (jsGrid)
     estructuraGrid = [
         { name:"id_principal", visible:false},
         { name:"no", title:"No",width:60},
@@ -247,8 +245,8 @@ $Usuario=  Session::getSesion("user");
     ];
     
     // $.when(
-        var abrir=false;
-        var intervalFunc;
+    var abrir=false;
+    var intervalFunc;
         // function abrirSocket()
         // {
         //     // setTimeout( function(){abrir.abort();}, 1500);
@@ -282,81 +280,81 @@ $Usuario=  Session::getSesion("user");
 
         // construirGridPromise = new Promise((resolve,reject)=>
         // {
-            construirGrid();
-            RegionesFiscalesComboDhtml = new dhtmlXCombo({
-                parent: "INPUT_REGIONFISCAL_NUEVOREGISTRO",
-                width: 540,
-                filter: true,
-                name: "combo",
-                index:"2000",
-                items:[],
-            });
+    construirGrid();
 
-            contratoComboDhtml = new dhtmlXCombo({
-                parent: "INPUT_CONTRATO_NUEVOREGISTRO",
-                width: 540,
-                filter: true,
-                name: "combo",
-                items:[],
-            });
+    // combo de regiones fiscales
+    RegionesFiscalesComboDhtml = new dhtmlXCombo({
+        parent: "INPUT_REGIONFISCAL_NUEVOREGISTRO",
+        width: 540,
+        filter: true,
+        name: "combo",
+        index:"2000",
+        items:[],
+    });
 
-            ubicacionComboDhtml = new dhtmlXCombo({
-                parent: "INPUT_UBICACION_NUEVOREGISTRO",
-                width: 540,
-                filter: true,
-                name: "combo",
-                items:[],
-            });
+    // combo de contratos
+    contratoComboDhtml = new dhtmlXCombo({
+        parent: "INPUT_CONTRATO_NUEVOREGISTRO",
+        width: 540,
+        filter: true,
+        name: "combo",
+        items:[],
+    });
 
-            RegionesFiscalesComboDhtml.attachEvent("onChange", function(value, text)
-            {
-                    region_fiscal=text;
-                    selectItemCombo(value,text);
-            });
-            
-            contratoComboDhtml.attachEvent("onChange", function(value, text)
-            {
-                clave_contrato=text;
-            });
-            
-            ubicacionComboDhtml.attachEvent("onChange", function(value, text)
-            {
-                ubicacion=text;
-            });
+    // combo de ubicaciones
+    ubicacionComboDhtml = new dhtmlXCombo({
+        parent: "INPUT_UBICACION_NUEVOREGISTRO",
+        width: 540,
+        filter: true,
+        name: "combo",
+        items:[],
+    });
 
-            contratoComboDhtml.attachEvent("onOpen",function()
-            {
-                this.DOMlist.style.zIndex = 2000;
-            });
+    RegionesFiscalesComboDhtml.attachEvent("onChange",(value, text)=>
+    {
+            region_fiscal=text;
+            selectItemCombo(value,text);
+    });
+    
+    contratoComboDhtml.attachEvent("onChange",(value, text)=>
+    {
+        clave_contrato=text;
+    });
+    
+    ubicacionComboDhtml.attachEvent("onChange", (value, text)=>
+    {
+        ubicacion=text;
+    });
 
-            ubicacionComboDhtml.attachEvent("onOpen",function()
-            {
-                this.DOMlist.style.zIndex = 2000;
-            });
+    // evento hecho porque la lista del objecto(HTML) del combo no se visualiza al estar en un modal
+    contratoComboDhtml.attachEvent("onOpen",()=>
+    {
+        this.DOMlist.style.zIndex = 2000;
+    });
 
-            RegionesFiscalesComboDhtml.attachEvent("onOpen", function()
-            {
-                this.DOMlist.style.zIndex = 2000;
-            });
+    ubicacionComboDhtml.attachEvent("onOpen",()=>
+    {
+        this.DOMlist.style.zIndex = 2000;
+    });
 
-            buscarRegionesFiscales().then((resolve)=>
-            {
-                inicializarFiltros().then((resolve2)=>
-                {
-                    construirFiltros();
-                });
-                listarDatos();
-            },(error)=>
-            {
-                growlError("Error!","Error al construir la vista, recargue la página");
-            });
-                // resolve();   
-            // },(error)=>{
-            //     // reject();
-            //     growlError("Error!","Error al construir la vista, recargue la página");
-            // });
+    RegionesFiscalesComboDhtml.attachEvent("onOpen",()=>
+    {
+        this.DOMlist.style.zIndex = 2000;
+    });
 
-    function inicializarVariablesModal()
+    buscarRegionesFiscales().then((resolve)=>
+    {
+        inicializarFiltros().then((resolve2)=>
+        {
+            construirFiltros();
+        });
+        listarDatos();
+    },(error)=>
+    {
+        growlError("Error!","Error al construir la vista, recargue la página");
+    });
+
+    inicializarVariablesModal = ()=>
     {
         region_fiscal="";
         ubicacion="";
@@ -364,7 +362,8 @@ $Usuario=  Session::getSesion("user");
         tag_medidor="";
     }
 
-    $("#BTN_CREAR_NUEVOREGISTROMODAL").click(function()
+    // prepara que los datos del formulario sean correctos antes de crear un registro de produccion
+    $("#BTN_CREAR_NUEVOREGISTROMODAL").click(()=>
     {
         //NO SE PUEDEN CAMBIAR LOS NOMBRES DE LOS KEY DEL OBJECTO DATOS YA QUE ESTAN LIGADOS A LA BASE DE DATOS
         datos=new Object();
@@ -381,8 +380,6 @@ $Usuario=  Session::getSesion("user");
         datos.clasificacion = $("#INPUT_CLASIFICACION_NUEVOREGISTRO").val();
         datos.hidrocarburo = $("#INPUT_HIDROCARBURO_NUEVOREGISTRO ").val();
 
-        console.log(datos);
-
         listo = ( datos.clave_contrato!=""?
         datos.region_fiscal!=""?
         datos.ubicacion!=""?
@@ -395,7 +392,8 @@ $Usuario=  Session::getSesion("user");
         listo ? insertarRegistro(datos) : swalInfo("Campos requeridos");
     });
 
-    $("#BTN_LIMPIAR_NUEVOREGISTROMODAL").click(function()
+    // limpia (inicializa a vacio) el formulario de crear nuevo registro produccion
+    $("#BTN_LIMPIAR_NUEVOREGISTROMODAL").click(()=>
     {
         RegionesFiscalesComboDhtml.setComboText("");
         contratoComboDhtml.setComboText("");
@@ -408,47 +406,48 @@ $Usuario=  Session::getSesion("user");
         $("#INPUT_HIDROCARBURO_NUEVOREGISTRO ").val("");
     });
 
-    $("#INPUT_TAGMEDIDOR_NUEVOREGISTRO").blur(function()
+    // verifica si el tag de medidor esta disponible
+    $("#INPUT_TAGMEDIDOR_NUEVOREGISTRO").blur(()=>
     {
         val = $(this).val();
         tag_medidor = "";
-        $.ajax({
-            url:'../Controller/CatalogoProduccionController.php?Op=BuscarTagMedidor',
-            type:'GET',
-            data:'CADENA='+val,
-            success:function(existe)
-            {
-                if(existe==0)
+        if(val!="")
+        {
+            $.ajax({
+                url:'../Controller/CatalogoProduccionController.php?Op=BuscarTagMedidor',
+                type:'GET',
+                data:'CADENA='+val,
+                success:(existe)=>
                 {
-                    // configuracionJgrowl.header = "Verificación";
-                    // configuracionJgrowl.theme = "themeG-success";
-                    // $.jGrowl("Tag del Medidor correcto", configuracionJgrowl);
-                    growlSuccess("Verificación","Tag del Medidor correcto");
-                    tag_medidor = val;
-                }
-                else
+                    if(existe==0)
+                    {
+                        // configuracionJgrowl.header = "Verificación";
+                        // configuracionJgrowl.theme = "themeG-success";
+                        // $.jGrowl("Tag del Medidor correcto", configuracionJgrowl);
+                        growlSuccess("Verificación","Tag del Medidor correcto");
+                        tag_medidor = val;
+                    }
+                    else
+                    {
+                        tag_medidor = "";
+                        swalInfo("El Tag del Medidor ya ha sido cargado, verifique");
+                        $("#INPUT_TAGMEDIDOR_NUEVOREGISTRO").val(val.slice(0,-1));
+                    }
+                },
+                error:()=>
                 {
+                    // configuracionJgrowl.header = "Error en el servidor";
+                    // configuracionJgrowl.theme = "themeG-error";
+                    // $.jGrowl("No se pudo verificar el Tag del Medidor", configuracionJgrowl);
+                    growlError("Error en el servidor","No se pudo verificar el Tag del Medidor");
                     tag_medidor = "";
-                    swalInfo("El Tag del Medidor ya ha sido cargado, verifique");
-                    $("#INPUT_TAGMEDIDOR_NUEVOREGISTRO").val(val.slice(0,-1));
                 }
-            },
-            error:function()
-            {
-                // configuracionJgrowl.header = "Error en el servidor";
-                // configuracionJgrowl.theme = "themeG-error";
-                // $.jGrowl("No se pudo verificar el Tag del Medidor", configuracionJgrowl);
-                growlError("Error en el servidor","No se pudo verificar el Tag del Medidor");
-                tag_medidor = "";
-            }
-        });
+            });
+        }
+        else
+            growlError("Campo Vacio","*Tag Medidor");
     });
 
-    
-    
-    
-    
-    
 </script>
         <script src="../../js/socket.js" type="text/javascript"></script>
             <!-- <script src="../../js/fCatalogoPrduccionView.js" type="text/javascript"></script> -->
