@@ -304,6 +304,15 @@ class AsignacionTemaRequisitoDAO {
             return false;
         }
     }
+    /*
+      *============================================================================
+         *@comment obtener detalles del requisito
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+	     *@param $value
+         *@return $lista  
+      *============================================================================
+    */ 
 public function obtenerDetalles_Req($value){
     try{
         $query="select tbrequisitos.id_requisito,tbrequisitos.requisito from requisitos tbrequisitos where tbrequisitos.id_requisito=".$value["id"];
@@ -356,7 +365,15 @@ public function obtenerDetallesRegistrosConIdAsignacion($ID_REQUISITO)
         
     }
 }
-
+    /*
+      *============================================================================
+         *@comment obtener detalles del registro 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+	     *@param $value
+         *@return $lista  
+      *============================================================================
+    */ 
 public function obtenerDetalles_Reg($value){
     try{
       $query="select tbregistros.id_registro,tbregistros.registro,tbregistros.frecuencia,tbdocumentos.clave_documento,
@@ -374,7 +391,17 @@ public function obtenerDetalles_Reg($value){
     }
 }
  
-    
+    /*
+      *============================================================================
+         *@comment empty
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+	     *@param $id_asignacion_tema_requisito
+		 *@param $id_clausula :id del tema 
+		 *@param $requisito
+         *@return $lista  
+      *============================================================================
+    */     
 public function actualizarAsignacionTemaRequisito($id_asignacion_tema_requisito, $id_clausula,$requisito){
         try{
              $query="UPDATE asignacion_tema_requisito SET id_clausula='$id_clausula', requisito='$requisito',"
@@ -456,7 +483,15 @@ public function actualizarAsignacionTemaRequisito($id_asignacion_tema_requisito,
         }
     }
     
-    
+    /*
+      *============================================================================
+         *@comment cantidad de evidencias dependiendo el ID registro 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+	     *@param $ID_REGISTRO
+         *@return $lista  
+      *============================================================================
+    */     
     public function obtenerRegistrodeEvidencia($ID_REGISTRO)
     {
         try
@@ -475,6 +510,15 @@ public function actualizarAsignacionTemaRequisito($id_asignacion_tema_requisito,
             return false;
         }
     }
+    /*
+      *============================================================================
+         *@comment verificar si el registro que existe en documento esta validado
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+	     *@param $data
+         *@return $lista  
+      *============================================================================
+    */ 
     public function verificarRegistroExisteEnDocumentoandEstaValidadoPorDelDocumentoYTema($data){
         try{
             $query="select  tbvalidaciondocumento.VALIDACION_DOCUMENTO_RESPONSABLE as validacion_documento_responsable from registros tbregistros join documentos tbdocumentos 
@@ -491,7 +535,15 @@ public function actualizarAsignacionTemaRequisito($id_asignacion_tema_requisito,
                  return -1;
         }
     }
-    
+    /*
+      *============================================================================
+         *@comment verificar si el registro tiene evidencias
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+	     *@param $data
+         *@return $lista  
+      *============================================================================
+    */     
     public function verificarRegistroExisteEnEvidencias($data){
         try{
             $query="select  count(*) as totalevidencias from evidencias tbevidencias
@@ -504,6 +556,15 @@ public function actualizarAsignacionTemaRequisito($id_asignacion_tema_requisito,
              return -1;
         }
     }
+    /*
+      *============================================================================
+         *@comment empty
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+	     *@param $value :es una array asociativo  con los key  id_tema_and_sub
+         *@return si retorna   
+      *============================================================================
+    */ 
     public function insertarTemasSubtemasSiNoExitenEnTemaRequisito($value){
         try {
              $query="insert into asignacion_tema_requisito set asignacion_tema_requisito.ID_ASIGNACION_TEMA_REQUISITO=
@@ -518,7 +579,15 @@ public function actualizarAsignacionTemaRequisito($id_asignacion_tema_requisito,
             return -1;
         }
         }
-        
+    /*
+      *============================================================================
+         *@comment verificar si existe el tema or subtemas en la la tabla asignacion tema requisito
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+	     *@param $value
+         *@return $lista  
+      *============================================================================
+    */        
         public function verificarSiExistenTemasSubtemasandEnTemaRequisito($value){
             try{
                 $query="select count(*) as cantidad from asignacion_tema_requisito where asignacion_tema_requisito.ID_TEMA= ".$value["id_tema_and_subtema"];
