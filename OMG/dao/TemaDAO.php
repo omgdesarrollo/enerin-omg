@@ -4,7 +4,16 @@ require_once '../ds/AccesoDB.php';
 class TemaDAO{
     
 
-   
+    /*
+      *============================================================================
+         *@comment listar todos los temas dependiento el identificador  y de igual manera por el cumplimiento
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+	     *@param $cadena
+		 *@param $contrato
+         *@return $lista  
+      *============================================================================
+    */   
 public function mostrarTemas($cadena,$contrato)
 {
     try
@@ -24,7 +33,16 @@ public function mostrarTemas($cadena,$contrato)
     }
 }
 
-
+    /*
+      *============================================================================
+         *@comment mostrar temas  y para saber que son temas padres se le compara con el 0, el identificador  y el contrato 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+	     *@param $cadena
+		 *@param $contrato
+         *@return $lista  
+      *============================================================================
+    */ 
 public function mostrarTemasComboBox($cadena,$contrato)
 {
     try
@@ -44,7 +62,17 @@ public function mostrarTemasComboBox($cadena,$contrato)
     }
 }
 
-
+    /*
+      *============================================================================
+         *@comment mostrar todos los hijos pero de un nivel para abajo del tema seleccionado
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+	     *@param $CADENA
+		 *@param $CONTRATO
+		 *@param $ID
+         *@return $lista  
+      *============================================================================
+    */ 
 public function listarHijos($CADENA,$CONTRATO,$ID)
 {
     try
@@ -66,7 +94,15 @@ public function listarHijos($CADENA,$CONTRATO,$ID)
         return false;
     }
 }
-
+    /*
+      *============================================================================
+         *@comment mostrar detalles dependiendo la seleccion del tema,subtema
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+		 *@param $ID
+         *@return $lista  
+      *============================================================================
+    */ 
 public function listarDetallesSeleccionados($ID)
 {
     try
@@ -166,7 +202,15 @@ public function eliminarNodo($ID)
         return false;
     }
 }
-
+    /*
+      *============================================================================
+         *@comment conocer si esta el tema en el documento de entrada
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+	     *@param $ID_TEMA
+         *@return $lista  
+      *============================================================================
+    */ 
     public function verificarSiTemaEstaEnDocumentoDeEntrada($ID_TEMA)
     {
         try 
@@ -186,7 +230,17 @@ public function eliminarNodo($ID)
         }
 
     }
-
+    /*
+      *============================================================================
+         *@comment actualizar todos lo temas para conocer los temas principales se compara con el 0  de igual manera se muestran todos los temas principales
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+	     *@param $CADENA
+		 *@param $CONTRATO
+		 *@param $ID
+         *@return $lista  
+      *============================================================================
+    */ 
         public function listarTodosTemas()
     {
         try 

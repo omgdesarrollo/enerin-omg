@@ -3,6 +3,18 @@
 require_once '../ds/AccesoDB.php';
 class TareasDAO
 {    
+    /*
+      *============================================================================
+         *@comment lista  todas las tareas pero dependiendo si esta terminado o no la tarea 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+	     *@param $id_empleado
+		 *@param $id_usuario
+		 *@param $cumplimiento
+		 *@param $checkBoxTerminados
+         *@return $lista  
+      *============================================================================
+    */ 
     public function listarTareas($id_empleado,$id_usuario,$cumplimiento,$checkBoxTerminados)
     {
         try
