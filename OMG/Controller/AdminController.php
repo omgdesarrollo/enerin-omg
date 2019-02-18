@@ -180,7 +180,7 @@ switch ($Op)
         echo $tempData;
     break;
 
-    // 
+    // modifca el permiso de la vista de un usuario ($_REQUEST['ID_USUARIO'])
     case 'ModificarPermiso':
         $exito = $model->actualizarUsuariosVistasPorColumna($_REQUEST['COLUMNA'], $_REQUEST['VALOR'], $_REQUEST['ID_USUARIO'], $_REQUEST['ID_ESTRUCTURA']);
         echo $exito;

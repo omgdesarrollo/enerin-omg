@@ -287,10 +287,12 @@ $Usuario=  Session::getSesion("user");
     var EmpleadoTemasG;
     var idUsuario;
 
+    // objecto de los tipos de datos custom para el jsGrid
     var customsFieldsGridData=[
         {field:"customControl",my_field:MyCControlField}
     ];//grid
 
+    // objeto para la estructura de la tabla (jsGrid)
     estructuraGrid = [
         { name: "id_principal", visible:false},
         { name: "no",title:"No.", type: "text", width: 40, editing:false},
@@ -331,9 +333,9 @@ $Usuario=  Session::getSesion("user");
             url:'../Controller/CumplimientosController.php?Op=Listar',
             type:'GET',
             data:'ID_USUARIO='+idUsuario,
-            success:function(contratos)
+            success:(contratos)=>
             {
-                $.each(contratos,function(index,value)
+                $.each(contratos,(index,value)=>
                 {
                     tempData+= "<tr id='registroContrato_"+value.id_cumplimiento+"'>";
                     tempData+= construirCumplimientos(value,index);
@@ -341,7 +343,7 @@ $Usuario=  Session::getSesion("user");
                 });
                 $("#bodyTableContratos").html(tempData);
             },
-            error:function()
+            error:()=>
             {
                 swalError("Error en el servidor");
             }
@@ -358,7 +360,7 @@ $Usuario=  Session::getSesion("user");
                 url: '../Controller/AdminController.php?Op=CambiarPermisoCumplimiento',
                 type: 'POST',
                 data: 'ID_USUARIO='+idUsuario+'&ID_CUMPLIMIENTO='+idCumplimiento+'&VALOR='+valor,
-                success:function(exito)
+                success:(exito)=>
                 {
                     if(exito)
                     {
@@ -368,7 +370,7 @@ $Usuario=  Session::getSesion("user");
                         swalSuccess("Cambio aceptado");
                     }
                 },
-                error:function()
+                error:()=>
                 {
                     swalError("Error en el servidor");
                 }
@@ -405,9 +407,9 @@ $Usuario=  Session::getSesion("user");
                 type: 'GET',
                 data: 'CADENA='+cadena,
                 async:false,
-                success:function(usuarios)
+                success:(usuarios)=>
                 {
-                    $.each(usuarios,function(index,value)
+                    $.each(usuarios,(index,value)=>
                     {
                         // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
                         datos = value.correo+"^_^"+value.nombre+"^_^"+value.categoria+"^_^"+value.id_empleado;
@@ -425,7 +427,7 @@ $Usuario=  Session::getSesion("user");
     buscarTemas = (data)=>
     {
         cadena = $(data).val().toLowerCase();
-        console.log("valor cadena: ",cadena);
+        // console.log("valor cadena: ",cadena);
         tempData="";
         if(cadena!="")
         {
@@ -434,10 +436,10 @@ $Usuario=  Session::getSesion("user");
                 type: 'GET',
                 data: 'CADENA='+cadena+"&ID_USUARIO="+idUsuario,
                 async:false,
-                success:function(temas)
+                success:(temas)=>
                 {
                     // console.log(temas);
-                    $.each(temas,function(index,value)
+                    $.each(temas,(index,value)=>
                     {
                         // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
 //                        datos = value.id_tema+"^_^"+value.no+"^_^"+value.nombre+"^_^"+value.descripcion+"^_^"+value.identificador;
@@ -576,7 +578,7 @@ $Usuario=  Session::getSesion("user");
                 url: '../Controller/AdminController.php?Op=ConsultarExisteUsuario',
                 type: 'POST',
                 data: "NOMBRE_USUARIO="+usuario,
-                success:function(disponible)
+                success:(disponible)=>
                 {
                     if(disponible==true)
                     {
@@ -584,11 +586,11 @@ $Usuario=  Session::getSesion("user");
                             url: '../Controller/AdminController.php?Op=AgregarUsuario',
                             type: 'POST',
                             data: 'ID_EMPLEADO='+EmpleadoDataG[3]+"&NOMBRE_USUARIO="+usuario,
-                            beforeSend:function()
+                            beforeSend:()=>
                             {
                                 $('#loader').show();
                             },
-                            success:function(creado)
+                            success:(creado)=>
                             {
 
                                 if(creado.resultado==true)
@@ -612,7 +614,7 @@ $Usuario=  Session::getSesion("user");
                                 else
                                     swalError('No creado, Error en el servidor');
                             },
-                            error:function(error)
+                            error:(error)=>
                             {
                                 swalError('No creado, Error en el servidor');
                             }
@@ -621,7 +623,7 @@ $Usuario=  Session::getSesion("user");
                     else
                         swal("","El nombre de usuario no esta disponible","info");
                 },
-                error:function()
+                error:()=>
                 {
                     swalError("Erro en el servidor");
                 }
@@ -643,7 +645,7 @@ $Usuario=  Session::getSesion("user");
                 showConfirmButton: false,
                 type:"success"
             });
-        setTimeout(function(){swal.close();},1500);
+        setTimeout(()=>{swal.close();},1500);
         $('#loader').hide();
     }
 
@@ -657,7 +659,7 @@ $Usuario=  Session::getSesion("user");
                 showConfirmButton: false,
                 type:"error"
             });
-        setTimeout(function(){swal.close();$('#agregarUsuario .close').click()},1500);
+        setTimeout(()=>{swal.close();$('#agregarUsuario .close').click()},1500);
         $('#loader').hide();
     }
 
@@ -670,17 +672,17 @@ $Usuario=  Session::getSesion("user");
             url: '../Controller/AdminController.php?Op=ListarPermisos',
             type:'GET',
             data: "ID_USUARIO="+id,
-            beforeSend:function()
+            beforeSend:()=>
             {
                 $('#loader').show();
             },
-            success:function(permisos)
+            success:(permisos)=>
             {
                 // tempData = "";
                 construirTablaPermisosDatos(permisos);
                 $('#loader').hide();
             },
-            error:function()
+            error:()=>
             {
                 swalError('Error del servidor');
             }
@@ -696,17 +698,16 @@ $Usuario=  Session::getSesion("user");
     //     textCheckBox = "<input type='checkbox' style='width:40px;height:40px;margin:7px 0 0;'";
 
 
-// -> aqui
-    // construye la tabla de permisos 
+    // llama al contralador que se encarga de contruir la tabla de permisos
     construirTablaPermisosDatos = (permisos)=>
     {
         $.ajax({
             url: '../Controller/AdminController.php?Op=CrearTablaPermisos',
             type: 'GET',
-            success:function(tabla)
+            success:(tabla)=>
             {
                 $('#bodyTablePermisos').html(tabla);
-                console.log("tabla");
+                // console.log("tabla");
                 asignarPermisosTabla(permisos);
             }
         });
@@ -779,9 +780,9 @@ $Usuario=  Session::getSesion("user");
         // });
     }
 
-    function asignarPermisosTabla(permisos)
+    // distribuye los permisos del usuario a la tabla creada (construirTablaPermisosDatos)
+    asignarPermisosTabla = (permisos)=>
     {
-        // console.log("permisos");
         idEstructura=2;
         no = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;' aria-hidden='true'></i>";
         yes = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00' aria-hidden='true'></i>";
@@ -806,12 +807,12 @@ $Usuario=  Session::getSesion("user");
                 $('#delete_'+value.id_estructura).html(yes);
             else
                 $('#delete_'+value.id_estructura).html(no);
-
             idEstructura++;
         });
     }
 
-    function saveCheckBoxToDataBase(Obj,column,idEstructura)
+    // modifca el permiso de la vista de un usuario
+    saveCheckBoxToDataBase = (Obj,column,idEstructura)=>
     {
         //el id de usuario obtenerlo desde afuera
         no = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;' aria-hidden='true'></i>";

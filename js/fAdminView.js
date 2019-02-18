@@ -1,5 +1,6 @@
 
-function inicializarFiltros()
+// inicializa el objeto de estructura de filtros
+inicializarFiltros = ()=>
 {
     return new Promise((resolve,reject)=>
     {
@@ -14,17 +15,16 @@ function inicializarFiltros()
             { id: "cumplimientos", title:"Contratos", type: "none"},
             { id:"opcion",type:"opcion"}
         ];
-         if(window.top.variables_super_globales["cumplimientos"]!=true){
+        if(window.top.variables_super_globales["cumplimientos"]!=true)
+        {
             filtros.splice(6,1); 
-         }
-       
-        
-        
+        }
         resolve();
     });
 }
 
-function reconstruir(value,index)
+// construye el objceto de la fila de la tabla (jsGrid)
+reconstruir = (value,index)=>
 {
     tempData = new Object();
     ultimoNumeroGrid = index;
@@ -54,27 +54,27 @@ function reconstruir(value,index)
     return tempData;
 }
 
-function listarDatos()
+// lista y construye el cuerpo de la tabla (jsGrid)
+listarDatos = ()=>
 {
     return new Promise((resolve,reject)=>
     {
-        
-        console.log("valoes:  ",window.top.variables_super_globales);
+        // console.log("valoes:  ",window.top.variables_super_globales);
         __datos=[];
         $.ajax({
             url: '../Controller/AdminController.php?Op=Listar',
             type:"GET",
-            beforeSend:function()
+            beforeSend:()=>
             {
                 growlWait("Solicitud","Solicitando Datos...");
             },
-            success:function(data)
+            success:(data)=>
             {
                 if(typeof(data)=="object")
                 {
                     growlSuccess("Solicitud","Registros obtenidos");
                     dataListado = data;
-                    $.each(data,function (index,value)
+                    $.each(data,(index,value)=>
                     {
                         __datos.push( reconstruir(value,index+1) );
                     });
@@ -88,9 +88,8 @@ function listarDatos()
                     reject();
                 }
             },
-            error:function(e)
+            error:(e)=>
             {
-                console.log(e);
                 growlError("Error","Error en el servidor");
                 reject();
             }
@@ -98,7 +97,8 @@ function listarDatos()
     });
 }
 
-function refresh()
+// reconstruye los datos de la vista
+refresh = ()=>
 {
     inicializarFiltros().then((resolve)=>
     {

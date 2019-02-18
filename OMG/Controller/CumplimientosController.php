@@ -8,7 +8,6 @@ require_once '../Pojo/UsuarioPojo.php';
 require_once '../util/Session.php';
 
 
-
 $Op=$_REQUEST["Op"];
 @$operacionarealizar=$_REQUEST["TipoOperacion"];
 $model=new CumplimientoModel();
@@ -122,10 +121,11 @@ switch ($Op)
 
 	case 'Eliminar':
 		# code...
-		break;	
+	break;
+
 	default:
 		# code...
-		break;
+	break;
 }
 
 ?>
