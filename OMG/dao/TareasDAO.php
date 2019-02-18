@@ -51,7 +51,15 @@ class TareasDAO
             return -1;
         }
     }
-    
+    /*
+      *============================================================================
+         *@comment empty
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method pendiente de revisar  
+	     *@param $ID_TAREA
+         *@return $lista  
+      *============================================================================
+    */     
     public function listarTarea($ID_TAREA)
     {
         try
