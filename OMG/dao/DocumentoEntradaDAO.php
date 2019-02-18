@@ -3,21 +3,19 @@
 require_once '../ds/AccesoDB.php';
 class DocumentoEntradaDAO
 {
-    // 
+    // obtiene la fecha de alarma de documento de entrada
+    // status_doc = 1 = "proceso"
     public function getFechaAlarma()
     {
         try
         {
-            
             $query = "SELECT tbdocumento_entrada.folio_entrada,tbcumplimientos.clave_cumplimiento,
             tbdocumento_entrada.fecha_limite_atencion,tbdocumento_entrada.fecha_alarma, tbdocumento_entrada.mensaje_alerta
             FROM documento_entrada tbdocumento_entrada
-            
-            JOIN cumplimientos tbcumplimientos ON tbcumplimientos.id_cumplimiento = tbdocumento_entrada.id_cumplimiento where tbdocumento_entrada.status_doc = 1";
-
+            JOIN cumplimientos tbcumplimientos ON tbcumplimientos.id_cumplimiento = tbdocumento_entrada.id_cumplimiento
+            where tbdocumento_entrada.status_doc = 1";
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-            
             return $lista;
         }
         catch(Exception $ex)
@@ -26,7 +24,8 @@ class DocumentoEntradaDAO
         }
     }
     
-    // 
+    // lista documentos de entrada de acuerdo al contrato (cumplimiento)
+    // id_documento_entrada = -1 = "SIN DOCUMENTO DE ENTRADA(SIN FOLIO)"
     public function mostrarDocumentosEntrada($CONTRATO)
     {
         try{
@@ -41,10 +40,13 @@ class DocumentoEntradaDAO
                     tbdocumento_entrada.fecha_asignacion, tbdocumento_entrada.fecha_limite_atencion,
                     tbdocumento_entrada.fecha_alarma, tbdocumento_entrada.documento,
                     tbdocumento_entrada.observaciones,
+
+                    -- si esta ligado a un documento salida
                     ( SELECT COUNT(*) AS resultado FROM documento_salida tbdocumento_salida
                         WHERE tbdocumento_salida.id_documento_entrada = tbdocumento_entrada.id_documento_entrada
                     ) AS salida,
                     
+                    -- si tiene seguimiento (gantt)
                     IF( ( SELECT COUNT(*)
                             FROM seguimiento_entrada tbseguimiento_entrada
                             JOIN gantt_seguimiento_entrada tbgantt_seguimiento_entrada ON
@@ -68,6 +70,7 @@ class DocumentoEntradaDAO
         }
     }
 
+    // lista como el anterior (mostrarDocumentosEntrada) de acuerdo al identificador de documento entrada ($ID_DOCUMENTO_ENTRADA)
     public function listarDocumentoEntrada($ID_DOCUMENTO_ENTRADA)
     {
         try{
@@ -106,7 +109,7 @@ class DocumentoEntradaDAO
         }
     }
     
-    
+    // pendiente de verificar si es utilizado
     public function listarCumplimientoPorId_Entrada($id_entrada)
     {
         try{
@@ -114,22 +117,19 @@ class DocumentoEntradaDAO
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             return $lista;
-            }catch (Exception $ex){
+            }catch (Exception $ex)
+            {
                 throw $ex;
             }
     }
     
-    
-    
+    // pendiente de verificar si es utilizado
     public function mostrarDocumentosEntradaComboBox($CONTRATO)
     {
         try{
-           
             $query="SELECT tbdocumento_entrada.id_documento_entrada, tbdocumento_entrada.folio_entrada
                     FROM documento_entrada tbdocumento_entrada
                     WHERE tbdocumento_entrada.id_cumplimiento=$CONTRATO OR tbdocumento_entrada.id_documento_entrada=-1";
-            
-            
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             
@@ -138,13 +138,13 @@ class DocumentoEntradaDAO
                 $rec=$lista[0];
             }
             return $rec;*/
-
             return $lista;
-    }  catch (Exception $ex){
-        //throw $rec;
-        throw $ex;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+        }
     }
-    }
+
     /*
       *============================================================================
          *@comment verificar existe folio de entrada 
@@ -158,8 +158,7 @@ class DocumentoEntradaDAO
     public function verificarSiExisteFolioEntrada($cadena,$cualverificar)
     {
         try{
-           $query="SELECT tbdocumento_entrada.folio_entrada  FROM documento_entrada tbdocumento_entrada WHERE tbdocumento_entrada.$cualverificar ='$cadena'";        
-//            $query="SELECT ID_EMPLEADO  FROM EMPLEADOS";
+           $query="SELECT tbdocumento_entrada.folio_entrada  FROM documento_entrada tbdocumento_entrada WHERE tbdocumento_entrada.$cualverificar ='$cadena'";
             $db=  AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
             return $lista;
@@ -168,8 +167,7 @@ class DocumentoEntradaDAO
         }
     }
     
-    
-    
+    // 
     public function loadAutoComplete($cadena)
     {
         try{
@@ -183,7 +181,7 @@ class DocumentoEntradaDAO
         }
     }
     
-    // 
+    // obtiene el id_documento_entrada maximo de la tabla
     public function traer_ultimo_insertado()
     {
         $query_obtenerMaximo_mas_uno="SELECT max(id_documento_entrada) as id_documento_entrada FROM documento_entrada";
@@ -202,7 +200,8 @@ class DocumentoEntradaDAO
         return $id_nuevo; 
     }
     
-    // 
+    // obtiene el id_documento_entrada maximo de la tabla
+    // agrega un nuevo documento de entrada
     public function insertarDocumentosEntrada($id_cumplimiento,$folio_referencia,$folio_entrada,$fecha_recepcion,$asunto,$remitente,$id_autoridad,
         $id_tema,$clasificacion,$status_doc,$fecha_asignacion,$fecha_limite_atencion,$fecha_alarma,
         $documento,$observaciones,$mensaje_alerta)
@@ -247,21 +246,18 @@ class DocumentoEntradaDAO
         
     }*/
     
-    // 
-    public function actualizarDocumentoEntradaPorColumna($COLUMNA,$VALOR,$ID_DOCUMENTO_ENTRADA){
-         
+    // actualiza un documento de entrada ($ID_DOCUMENTO_ENTRADA) en la columna definida por $COLUMNA
+    public function actualizarDocumentoEntradaPorColumna($COLUMNA,$VALOR,$ID_DOCUMENTO_ENTRADA)
+    {
         try{
             $query="UPDATE documento_entrada SET ".$COLUMNA."='".$VALOR."'  "
-                 . "WHERE id_documento_entrada=$ID_DOCUMENTO_ENTRADA";     
-//             $query="UPDATE EMPLEADOS SET CORREO='$Correo' WHERE ID_EMPLEADO=$Id_Empleado";
+                 . "WHERE id_documento_entrada=$ID_DOCUMENTO_ENTRADA";
             $db= AccesoDB::getInstancia();
            $result= $db->executeQueryUpdate($query);
-//            $db->executeQuery($query);
-            // echo $result;
            return $result;
         } catch (Exception $ex)
         {
-           throw $ex; 
+           throw $ex;
         }
     }
     
@@ -277,7 +273,6 @@ class DocumentoEntradaDAO
 //        }
 //    }
     
-    // 
     public function eliminarDocumentoEntrada($ID_DOCUMENTO_ENTRADA){
         try{
             $query="DELETE FROM documento_entrada WHERE id_documento_entrada=$ID_DOCUMENTO_ENTRADA";
@@ -291,7 +286,7 @@ class DocumentoEntradaDAO
         }
     }
     
-    // 
+    // lista la existencia de documentos de salida ligados a documentos de entrada ($ID_DOCUMENTO_ENTRADA)
     public function verificarExistenciadeDocumentoEntradaEnDocumentoSalida($ID_DOCUMENTO_ENTRADA)
     {
         try
@@ -299,20 +294,15 @@ class DocumentoEntradaDAO
             $query="SELECT COUNT(*) AS resultado
                     FROM documento_salida tbdocumento_salida
                     WHERE tbdocumento_salida.id_documento_entrada=$ID_DOCUMENTO_ENTRADA";
-            
             $db= AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-
             return $lista[0]['resultado'];
-            
         } catch (Exception $ex)
         {
             throw $ex;
             return -1;
         }
-        
     }
-    
     
         /*
       *============================================================================

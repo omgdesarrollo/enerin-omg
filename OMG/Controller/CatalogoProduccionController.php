@@ -89,6 +89,7 @@ switch ($Op)
         echo json_encode($Lista);
     break;
 
+    // realiza una busqueda ($_REQUEST["CADENA"]) sobre el tag medidor
     case 'BuscarTagMedidor':
         $CONTRATO = Session::getSesion("s_cont");
         $CADENA = $_REQUEST["CADENA"];
@@ -96,6 +97,7 @@ switch ($Op)
         echo $exito;
     break;
 
+    // 
     case 'EliminarRegistro':
         $ID_CONTRATO = $_REQUEST["ID_CONTRATO"];
         $exito = $model->eliminarRegistro($ID_CONTRATO);
