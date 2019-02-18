@@ -145,8 +145,16 @@ class DocumentoEntradaDAO
         throw $ex;
     }
     }
-    
-    
+    /*
+      *============================================================================
+         *@comment verificar existe folio de entrada 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+	     *@param $cadena
+		 *@param $cualverificar
+         *@return $lista  
+      *============================================================================
+    */ 
     public function verificarSiExisteFolioEntrada($cadena,$cualverificar)
     {
         try{
@@ -306,7 +314,15 @@ class DocumentoEntradaDAO
     }
     
     
-    
+        /*
+      *============================================================================
+         *@comment  obtner el cumlipimiento por id de documento de entrada
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+		 *@param $ID_DOCUMENTO_ENTRADA
+         *@return $dato  
+      *============================================================================
+    */ 
     public function getIdCumplimiento($ID_DOCUMENTO_ENTRADA)
     {
         try

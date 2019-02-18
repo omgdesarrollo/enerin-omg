@@ -1,6 +1,4 @@
 <?php
-
-
 session_start();
 require_once '../Model/DocumentoEntradaModel.php';
 require_once '../Pojo/DocumentoEntradaPojo.php';

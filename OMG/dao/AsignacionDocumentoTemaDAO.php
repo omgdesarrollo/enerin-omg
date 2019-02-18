@@ -1,7 +1,12 @@
 <?php
 
 require_once '../ds/AccesoDB.php';
-
+  /*
+      *============================================================================
+         *@comment
+         *@class ya no se utiliza
+      *============================================================================
+  */   
 class AsignacionDocumentoTemaDAO {
     //put your code here
     public function mostrarAsignacionDocumentosTemas(){
@@ -44,7 +49,16 @@ class AsignacionDocumentoTemaDAO {
     }
     }
     
-    
+    /*
+      *============================================================================
+         *@comment inserta el documento al tema
+         *@method ya no se utiliza 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@param $id_documento : el id del documento, format: int
+         *@param $id_asignacion_tema_requisito : el password , format: string  
+         *@return $rec : no retorna 
+      *============================================================================
+    */   
     public function insertarAsignacionDocumentoTema($id_documento,$id_asignacion_tema_requisito){
         
         try{

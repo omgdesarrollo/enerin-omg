@@ -3,8 +3,15 @@ require_once '../dao/LoginDAO.php';
 require_once '../Model/AdminModel.php';
 
 class LoginModel{
-    //valida los datos del usuario.
-    //retorna el registro del usuario como un arreglo asociativo
+    /*
+      *============================================================================
+        valida los datos del usuario 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@param $usuario : El id del seguimiento de entrada, format: INT
+         *@param $clave : el password , format: string  
+         *@return $rec : retorna el registro del usuario como un arreglo asociativo 
+      *============================================================================
+    */     
     public function  validar($usuario,$clave){
         try{
             $dao=new LoginDAO();
@@ -40,7 +47,15 @@ class LoginModel{
         throw  $e;
     }
     }
-    
+     /*
+      *============================================================================
+        obtener contratos por id del usuario  que tengas permisos a true
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@param $ID_USUARIO : El id del usuario, format: INT
+         *@param $clave : el password , format: string  
+         *@return $rec : retorna los ccumplimientos o contratos el el cuat tenga permido el usuario
+      *============================================================================
+    */     
     public function validarContratoPorUsuario($ID_USUARIO)
     {
         try

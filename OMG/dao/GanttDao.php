@@ -9,10 +9,13 @@ require_once '../ds/AccesoDB.php';
  */
 class GanttDao { 
     /*
-    lista las actividades por id se seguimimiento de entrada 
-    *@param $VALUE : El id del seguimiento de entrada, format: INT
-        
-    */
+      *============================================================================
+         *@comment empty
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo  
+         *@return $lista  
+      *============================================================================
+    */ 
     public function obtenerTareasCompletasPorFolioEntrada($VALUE){
         try
         { 
@@ -34,10 +37,7 @@ class GanttDao {
         }
     }
     
-   /*
-    @param $value
-        el formato es string 
-    */
+   
     public function insertarTareasGantt($value){
         try{
            $query="INSERT INTO gantt_tasks(id, text, start_date, duration, progress, parent, ponderado_programado, notas, status)
@@ -249,7 +249,15 @@ class GanttDao {
         }
     }
     
-    
+     /*
+      *============================================================================
+         *@comment empty
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+		 *@param $VALUE
+         *@method activo  
+         *@return $lista  
+      *============================================================================
+    */ 
     public function totalDeDiasPorTarea($VALUE)
     {
         try 
