@@ -49,18 +49,15 @@ switch ($Op) {
             $USUARIO = Session::getSesion("user");
             $CONTRATO = -1;
             $lista = $model->mostrarNotificacionesCompletas($USUARIO["ID_USUARIO"]);
-
             foreach($lista as $key => $value)
             {
                 $url = "filePerfilesUsuario/".$value["id_de"];
                 $lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
             }
-
             Session::setSesion("notificacionescompletas",$lista);
             header('Content-type: application/json; charset=utf-8');
             echo json_encode($lista);
 //            Session::setSesion("notify", $);
-            
         break;
 
         case 'EliminarNotificacion':

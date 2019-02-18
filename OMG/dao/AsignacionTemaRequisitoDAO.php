@@ -18,7 +18,15 @@ class AsignacionTemaRequisitoDAO {
 //        }
 //    }
     
-    
+    /*
+      *============================================================================
+         *@comment muestra los temas con sus requisitos dentro de ellos  y el identificador dice de que seccion es su procedencia 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@param $CADENA : el identificador origen, format: string
+         *@param $CONTRATO : el id del contrato , format: string  
+         *@return $lista : retorna lista con temas y requisito 
+      *============================================================================
+    */   
     public function mostrarAsignacionTemasRequisitos($CADENA,$CONTRATO){
         try{
 
@@ -42,7 +50,14 @@ class AsignacionTemaRequisitoDAO {
     }
     }
     
-    
+    /*
+      *============================================================================
+         *@comment empty
+         *@author empty
+         *@method no se utiliza
+         *@return $lista : retorna lista con temas y requisito 
+      *============================================================================
+    */
     public function mostrarAsignacionTemasRequisitosComboBox(){
         try{
 
@@ -70,7 +85,15 @@ class AsignacionTemaRequisitoDAO {
     }
     }
     
-       
+    /*
+      *============================================================================
+         *@comment obtiene el id del tema por el id del requisito 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method pendiente aun viendo si se utiliza  cuando se testee se cambiara
+         *@param  $ID_ASIGNACION 
+         *@return $lista : retorna el id del tema 
+      *============================================================================
+    */   
     public function obtenerIdTema($ID_ASIGNACION)
     {
         try
@@ -91,7 +114,17 @@ class AsignacionTemaRequisitoDAO {
         }
     }
 
-
+    /*
+      *============================================================================
+         *@comment empty
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method pendiente aun viendo si se utiliza  cuando se testee se cambiara  
+         *@param  $id_clausula
+         *@param  $requisito
+         *@param  $id_documento
+         *@return no retorna 
+      *============================================================================
+    */   
     public function insertarAsignacionTemaRequisito($id_clausula,$requisito,$id_documento){
         
         try{
@@ -117,6 +150,15 @@ class AsignacionTemaRequisitoDAO {
                 throw $ex;
         }   
     }
+    /*
+      *============================================================================
+         *@comment empty
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo
+         *@param $data   
+         *@return $lista  
+      *============================================================================
+    */ 
      public function actualizarRegistro($data)
     {
         try
@@ -136,7 +178,16 @@ class AsignacionTemaRequisitoDAO {
     
     
     
-    
+    /*
+      *============================================================================
+         *@comment se ingresa el requisito hacia un tema en este caso el requisito se ingresa por separado 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+         *@param  $requisito
+         *@param  $penalizacion
+         *@return $lista 
+      *============================================================================
+    */  
     public function insertarRequisito($requisito,$penalizacion)
     {
         try
@@ -155,7 +206,14 @@ class AsignacionTemaRequisitoDAO {
             return false;
         }
     }
-    
+    /*
+      *============================================================================
+         *@comment obtener EL id mayor 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo  
+         *@return $lista  
+      *============================================================================
+    */ 
     public function obtenerMaximoRequisito()
     {
         try

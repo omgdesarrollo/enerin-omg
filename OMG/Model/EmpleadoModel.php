@@ -24,7 +24,14 @@ class EmpleadoModel{
     }
     }
     
-    
+     /*
+      *============================================================================
+        obtener contratos por id del usuario  que tengas permisos a true
+         *@author desconocido
+         *@param $ID_EMPLEADO : El id del empleado, format: INT
+         *@return $rec : retorna los datos del empleado 
+      *============================================================================
+    */
     public function listarEmpleado($ID_EMPLEADO){
         try
         {

@@ -1,6 +1,16 @@
 <?php
 require_once '../ds/AccesoDB.php';
 class LoginDAO{
+    
+    /*
+      *============================================================================
+         *@comment accede al procedimiento para poder autenticarse como usuario
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@param $_paramUsuario : el usuario, format: string
+         *@param $_paramPassword : el password , format: string  
+         *@return $rec : retorna los datos del usuario 
+      *============================================================================
+    */     
     public function consultarPorUsuario($_paramUsuario,$_paramPassword)
     {
         
@@ -19,8 +29,14 @@ class LoginDAO{
                 throw $e;
             }
     }
-    
-    
+    /*
+      *============================================================================
+         *@comment empty   
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@param $ID_USUARIO : el id del usuario, format: INT
+         *@return $lista 
+      *============================================================================
+    */
     public function validarExistenciaDePermisoParaUsuario($ID_USUARIO)
     {
         try
@@ -42,7 +58,14 @@ class LoginDAO{
             return $ex;
         }
     }
-    
+    /*
+      *============================================================================
+         *@comment obtiene cantidad de cumplimientos o contratos  por usuario 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@param $ID_USUARIO : el id del usuario , format: INT
+         *@return $lista 
+      *============================================================================
+    */
     public function validarContratoPorUsuario($ID_USUARIO)
     {
         try

@@ -144,8 +144,17 @@ class DocumentoEntradaDAO
             throw $ex;
         }
     }
-    
-    // lista folios de entrada resultado de la busqueda ($cadena) de una columna ($cualverificar)
+
+    /*
+      *============================================================================
+         *@comment verificar existe folio de entrada 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+	     *@param $cadena
+		 *@param $cualverificar
+         *@return $lista  
+      *============================================================================
+    */ 
     public function verificarSiExisteFolioEntrada($cadena,$cualverificar)
     {
         try{
@@ -293,10 +302,17 @@ class DocumentoEntradaDAO
             throw $ex;
             return -1;
         }
-        
     }
     
-    // obtiene el id_cumplimiento ligado al documento de entrada de acuerdo al identificador ($ID_DOCUMENTO_ENTRADA)
+        /*
+      *============================================================================
+         *@comment  obtner el cumlipimiento por id de documento de entrada
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+		 *@param $ID_DOCUMENTO_ENTRADA
+         *@return $dato  
+      *============================================================================
+    */ 
     public function getIdCumplimiento($ID_DOCUMENTO_ENTRADA)
     {
         try

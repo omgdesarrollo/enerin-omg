@@ -20,7 +20,15 @@ class AutoridadRemitenteDAO{
     }
     }
     
-    
+    /*
+      *============================================================================
+         *@comment obtener datos de la autoridad seleccionada
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo  
+		 *@param $ID_AUTORIDAD
+         *@return $lista  
+      *============================================================================
+    */ 
     public function listarAutoridadRemitente($ID_AUTORIDAD)
     {
         try
@@ -127,7 +135,15 @@ class AutoridadRemitenteDAO{
             return -1;
         }
     }
-    
+    /*
+      *============================================================================
+         *@comment cantidad de  existencias  de autoridad en en documento de entrada
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo  
+		 *@param $ID_AUTORIDAD
+         *@return $lista  
+      *============================================================================
+    */ 
     public function verificarExistenciadeAutoridadenDocumentoEntrada($ID_AUTORIDAD)
     {
         try
@@ -147,7 +163,15 @@ class AutoridadRemitenteDAO{
             return -1;
         }
     }
-    
+    /*
+      *============================================================================
+         *@comment cantidad de  existencias  de autoridad en en documento de salida
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo  
+		 *@param $ID_AUTORIDAD
+         *@return $lista  
+      *============================================================================
+    */ 
         public function verificarExistenciadeAutoridadenDocumentoSalidaSinFolio($ID_AUTORIDAD)
     {
         try
