@@ -1,6 +1,17 @@
 <?php
 require_once '../ds/AccesoDB.php';
 class GeneradorReporteDao {
+	/*
+      *============================================================================
+         *@comment mostrar reportes entre fechas de inicio  y fechas final de acuerdo al cumplimiento   
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo  
+		 *@param $FECHA_INICIO 
+		 *@param $FECHA_FINAL
+		 *@param $CUMPLIMIENTO
+         *@return $lista  
+      *============================================================================
+    */ 
         public function listarReportesporFecha($FECHA_INICIO,$FECHA_FINAL,$CUMPLIMIENTO)
     {
             

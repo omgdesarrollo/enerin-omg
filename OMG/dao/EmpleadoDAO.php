@@ -20,7 +20,15 @@ class EmpleadoDAO{
     }
     }
     
-    
+    /*
+      *============================================================================
+         *@comment obtener datos del empleado seleccionado 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo  
+		 *@param $ID_EMPLEADO
+         *@return $lista  
+      *============================================================================
+    */ 
     public function listarEmpleado ($ID_EMPLEADO){
         try
         {
@@ -118,7 +126,16 @@ class EmpleadoDAO{
         }
     }
     
-
+    /*
+      *============================================================================
+         *@comment obtener identificador seleccionado por submodulo
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo  
+		 *@param $id : id del empleado
+		 *@param $cadena : identificador  con las primeras letras 
+         *@return $lista  
+      *============================================================================
+    */
     public function verificarIdentificadorSubmodulo($id,$cadena)
     {
         try
@@ -198,7 +215,15 @@ class EmpleadoDAO{
                 throw $ex;
         }
     }
-
+    /*
+      *============================================================================
+         *@comment obtener datos del empleado ya sea nombre, apellido paterno o materno en mayuscula o minuscula 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo  
+		 *@param $cadena
+         *@return $lista  
+      *============================================================================
+    */
     public function BusquedaEmpleado($cadena)
     {
         try

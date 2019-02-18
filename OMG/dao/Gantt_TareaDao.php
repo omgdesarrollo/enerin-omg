@@ -172,7 +172,15 @@ class Gantt_TareaDao {
             return -1;
         }
     }
-    
+    /*
+      *============================================================================
+         *@comment verifica si ahy hijos en tareas del gantt  
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo  
+		 *@param $VALUES
+         *@return $lista  
+      *============================================================================
+    */ 
     public function verificarParentHijoEnTarea($VALUES)
     {
         try
@@ -191,7 +199,15 @@ class Gantt_TareaDao {
             return -1;
         }
     }
-    
+    /*
+      *============================================================================
+         *@comment  mostrar el avance del programa de todas las tareas
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo  
+		 *@param $VALUES
+         *@return $lista  
+      *============================================================================
+    */     
     public function AvanceProgramaTareas($VALUES)
     {
         try

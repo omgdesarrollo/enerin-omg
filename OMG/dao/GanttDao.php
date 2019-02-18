@@ -198,7 +198,15 @@ class GanttDao {
     }
     
     
-    
+    /*
+      *============================================================================
+         *@comment calcular avance de programa en general  por el id del seguimiento
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo  
+		 *@param $id_seguimiento_que_lleva_al_folio_de_entrada
+         *@return $lista  
+      *============================================================================
+    */    
     public function calculoAvanceProgramaGeneral($id_seguimiento_que_lleva_al_folio_de_entrada)
     {
         try
@@ -231,7 +239,14 @@ class GanttDao {
             throw $ex;
         }
    }
-   
+    /*
+      *============================================================================
+         *@comment mostrar nombres de empleados concatenados 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo  
+         *@return $lista  
+      *============================================================================
+    */ 
    public function listarEmpleadosNombreCompleto()
     {
         try
@@ -281,6 +296,15 @@ class GanttDao {
             return -1;
         }
     }
+	/*
+      *============================================================================
+         *@comment mostrar el total de padre pero solo los principales que no tienen un padre 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo  
+		 *@param $VALUE
+         *@return $lista  
+      *============================================================================
+    */ 
        public function totalPadreCero($VALUE)
     {
         try 
