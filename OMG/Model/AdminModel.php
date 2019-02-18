@@ -1,17 +1,15 @@
 <?php
-require_once '../dao/AdminDAO.php';
 
-class AdminModel{
-    
+require_once '../dao/AdminDAO.php';
+class AdminModel
+{    
     public function listarUsuarios($ID_USUARIO)
     {
         try
         {
            $dao=new AdminDAO();
            $rec=$dao->listarUsuarios($ID_USUARIO);
-           
            return $rec;
-           
         } catch (Exception $ex)
         {
             throw $ex;
@@ -26,7 +24,6 @@ class AdminModel{
         {
             $dao=new AdminDAO();
             $rec= $dao->listarUsuarioVistas($ID_USUARIO);
-            
             return $rec;
         } catch (Exception $ex)
         {
@@ -34,7 +31,6 @@ class AdminModel{
             return false;
         }
     }
-    
     
     public function listarSubmodulos()
     {
@@ -77,14 +73,13 @@ class AdminModel{
 //        }
 //    }
     
-        public function listarTemas($CADENA,$ID_USUARIO,$CONTRATO)
+    public function listarTemas($CADENA,$ID_USUARIO,$CONTRATO)
     {
         try
         {
             $dao=new AdminDAO();
             $rec = $dao->listarTemas($CADENA,$ID_USUARIO,$CONTRATO);
             return $rec;
-            // var_dump($rec);
         } catch (Exception $ex)
         {
             throw $ex;
@@ -112,7 +107,6 @@ class AdminModel{
         {
             $dao=new AdminDAO();
             $rec= $dao->insertarUsuario($ID_EMPLEADO, $NOMBRE_USUARIO);
-            
             return $rec;
         } catch (Exception $ex)
         {
@@ -127,9 +121,7 @@ class AdminModel{
         {
             $dao=new AdminDAO();
             $rec= $dao->insertarUsuarioTema($ID_USUARIO, $ID_TEMA);
-            
             return $rec;
-            
         } catch (Exception $ex)
         {
             throw $ex;
@@ -137,16 +129,13 @@ class AdminModel{
         }
     }
 
-    
     public function actualizarUsuariosVistasPorColumna($COLUMNA, $VALOR, $ID_USUARIO, $ID_ESTRUCTURA)
     {
         try
         {
             $dao=new AdminDAO();
             $rec= $dao->actualizarUsuariosVistasPorColumna($COLUMNA, $VALOR, $ID_USUARIO, $ID_ESTRUCTURA);
-            
             return $rec;
-            
         } catch (Exception $ex)
         {
             throw $ex;
@@ -167,6 +156,7 @@ class AdminModel{
             return false;
         }
     }
+
     public function ConsultarExisteUsuario($USUARIO)
     {
         try
@@ -226,6 +216,7 @@ class AdminModel{
             return false;
         }
     }
+
     public function cambiarPermisoCumplimiento($ID_USUARIO,$ID_CUMPLIMIENTO,$VALOR)
     {
         try
@@ -241,14 +232,16 @@ class AdminModel{
         }
     }
     
-    public function listarUsuarioVistasAsignadasPorLoMenosUnTipoDePermisoParaMostrarVista($param) {
+    public function listarUsuarioVistasAsignadasPorLoMenosUnTipoDePermisoParaMostrarVista($param)
+    {
         try{
             $dao = new AdminDAO();
             $rec = $dao->listarUsuarioVistasAsignadasPorLoMenosUnTipoDePermisoParaMostrarVista($param);
             return $rec;
-        } catch (Exception $ex) {
-                 throw $ex;
-                return false;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
         }
     }
 
@@ -264,6 +257,4 @@ class AdminModel{
         }
     }
 }
-
 ?>
-

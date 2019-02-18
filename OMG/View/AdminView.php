@@ -287,9 +287,12 @@ $Usuario=  Session::getSesion("user");
     var EmpleadoTemasG;
     var idUsuario;
 
+    // objecto de los tipos de datos custom para el jsGrid
     var customsFieldsGridData=[
         {field:"customControl",my_field:MyCControlField}
     ];//grid
+
+    // objeto para la estructura de la tabla (jsGrid)
     estructuraGrid = [
         { name: "id_principal", visible:false},
         { name: "no",title:"No.", type: "text", width: 40, editing:false},
@@ -302,17 +305,16 @@ $Usuario=  Session::getSesion("user");
         { name: "temas",title:"Temas", type: "text", width: 70,editing:false,visible:false},
         { name:"delete", title:"Opción", type:"customControl",sorting:""},
     ];//grid
-    if(window.top.variables_super_globales["cumplimientos"]==true){
-     estructuraGrid[8].visible=true;
-    }  
-   
-    
-    
+
+    if(window.top.variables_super_globales["cumplimientos"]==true)
+    {
+        estructuraGrid[8].visible=true;
+    }
+
     construirGrid();//grid
 
     inicializarFiltros().then((resolve2)=>
-    {
-     
+    { 
         construirFiltros();
         listarDatos();
     },(error)=>
@@ -321,7 +323,9 @@ $Usuario=  Session::getSesion("user");
     });
 
     // console.log($('#NOMBREESCRITURA_AGREGARUSUARIO').left());
-    function abrirCumplimientos(id_Usuario)
+
+    // contruye el cuerpo y las filas de la tabla de cumplimientos(contratos o tematicas) para cada usuario
+    abrirCumplimientos = (id_Usuario)=>
     {
         idUsuario=id_Usuario;//GLOBAL
         tempData="";
@@ -329,9 +333,9 @@ $Usuario=  Session::getSesion("user");
             url:'../Controller/CumplimientosController.php?Op=Listar',
             type:'GET',
             data:'ID_USUARIO='+idUsuario,
-            success:function(contratos)
+            success:(contratos)=>
             {
-                $.each(contratos,function(index,value)
+                $.each(contratos,(index,value)=>
                 {
                     tempData+= "<tr id='registroContrato_"+value.id_cumplimiento+"'>";
                     tempData+= construirCumplimientos(value,index);
@@ -339,25 +343,24 @@ $Usuario=  Session::getSesion("user");
                 });
                 $("#bodyTableContratos").html(tempData);
             },
-            error:function()
+            error:()=>
             {
                 swalError("Error en el servidor");
             }
         });
     }
     
-    function asignarPermisoCumplimiento(Obj,idCumplimiento)
+    // da permiso a cada usuario para poder utilizar el cumplimiento(contrato o tematica)
+    asignarPermisoCumplimiento = (Obj,idCumplimiento)=>
     {
         no = "fa-times-circle-o";
         yes = "fa-check-circle-o";
-        console.log(Obj);
-        console.log($(Obj).hasClass(no));
         ($(Obj).hasClass(no))?valor=true:valor=false;
         $.ajax({
                 url: '../Controller/AdminController.php?Op=CambiarPermisoCumplimiento',
                 type: 'POST',
                 data: 'ID_USUARIO='+idUsuario+'&ID_CUMPLIMIENTO='+idCumplimiento+'&VALOR='+valor,
-                success:function(exito)
+                success:(exito)=>
                 {
                     if(exito)
                     {
@@ -367,14 +370,15 @@ $Usuario=  Session::getSesion("user");
                         swalSuccess("Cambio aceptado");
                     }
                 },
-                error:function()
+                error:()=>
                 {
                     swalError("Error en el servidor");
                 }
         });
     }
 
-    function construirCumplimientos(cumplimiento,numero)
+    // construye las columnas de la tabla que muestra los cumplimientos para cada usuario
+    construirCumplimientos = (cumplimiento,numero)=>
     {
         no = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;cursor:pointer' aria-hidden='true' onClick='asignarPermisoCumplimiento(this,"+cumplimiento.id_cumplimiento+")'></i>";
         yes = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true' onClick='asignarPermisoCumplimiento(this,"+cumplimiento.id_cumplimiento+")'></i>";
@@ -391,7 +395,8 @@ $Usuario=  Session::getSesion("user");
         return tempData;
     }
 
-    function buscarEmpleados(data)
+    // construye una lista de empleados resultado de una busqueda previa
+    buscarEmpleados = (data)=>
     {
         cadena = $(data).val().toLowerCase();
         tempData="";
@@ -402,9 +407,9 @@ $Usuario=  Session::getSesion("user");
                 type: 'GET',
                 data: 'CADENA='+cadena,
                 async:false,
-                success:function(usuarios)
+                success:(usuarios)=>
                 {
-                    $.each(usuarios,function(index,value)
+                    $.each(usuarios,(index,value)=>
                     {
                         // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
                         datos = value.correo+"^_^"+value.nombre+"^_^"+value.categoria+"^_^"+value.id_empleado;
@@ -418,10 +423,11 @@ $Usuario=  Session::getSesion("user");
         }
     }
 
-    function buscarTemas(data)
+    // contruye una lista de temas resultado de una busqueda previa
+    buscarTemas = (data)=>
     {
         cadena = $(data).val().toLowerCase();
-        console.log("valor cadena: ",cadena);
+        // console.log("valor cadena: ",cadena);
         tempData="";
         if(cadena!="")
         {
@@ -430,10 +436,10 @@ $Usuario=  Session::getSesion("user");
                 type: 'GET',
                 data: 'CADENA='+cadena+"&ID_USUARIO="+idUsuario,
                 async:false,
-                success:function(temas)
+                success:(temas)=>
                 {
                     // console.log(temas);
-                    $.each(temas,function(index,value)
+                    $.each(temas,(index,value)=>
                     {
                         // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
 //                        datos = value.id_tema+"^_^"+value.no+"^_^"+value.nombre+"^_^"+value.descripcion+"^_^"+value.identificador;
@@ -449,7 +455,8 @@ $Usuario=  Session::getSesion("user");
         }
     }
 
-    function seleccionarItemTemas(usuarioTemas)
+    // asigna el tema seleccionado de la lista contruida (buscarTemas) a un usuario
+    seleccionarItemTemas = (usuarioTemas)=>
     {
         $('#NOMBRETEMA_MODIFICARTEMAS').val(usuarioTemas.no+" - "+usuarioTemas.nombre);
         // if(val!="")
@@ -480,7 +487,8 @@ $Usuario=  Session::getSesion("user");
         // }
     }
 
-    function construirTablaTemas(usuarioTemas)
+    // construye la fila y las columnas con la informacion de los temas asignados a un usuario
+    construirTablaTemas = (usuarioTemas)=>
     {
         tempData = "<tr class= id='idTema_"+usuarioTemas.id_tema+"' >";
         tempData += "<td>"+usuarioTemas.no+"</td>";
@@ -494,7 +502,8 @@ $Usuario=  Session::getSesion("user");
         return tempData;
     }
     
-    function seleccionarItem(usuarioDatos)
+    // remplaza parte del formulario de agregar usuario con informacion del usuario seleccionada de una lista (buscarEmpleados)
+    seleccionarItem = (usuarioDatos)=>
     {
         datos = usuarioDatos.split("^_^");
         EmpleadoDataG = datos;
@@ -507,7 +516,9 @@ $Usuario=  Session::getSesion("user");
         textoHTML += "type='submit' class='btn crud-submit btn-info'>Agregar Usuario</button></div>*La contraseña es el correo del empleado";
         $("#INFO_AGREGARUSUARIO").html(textoHTML);
     }
-    function modificarTemas(id)
+
+    // reconstruye la tabla de temas asignados a un usuario
+    modificarTemas = (id)=>
     {
         idUsuario = id;
         $.ajax({
@@ -532,7 +543,8 @@ $Usuario=  Session::getSesion("user");
         });
     }
 
-    function eliminarTema(idTema)
+    // elimina (desasignar) un tema de un usuario
+    eliminarTema = (idTema)=>
     {
         swalSuccess(idUsuario+" Eliminado tema "+idTema);
         $.ajax({
@@ -556,7 +568,8 @@ $Usuario=  Session::getSesion("user");
         });
     }
 
-    function agregarUsuarioBtn()
+    // crea un nuevo usuario que no exista su nombre de usuario
+    agregarUsuarioBtn = ()=>
     {
         usuario = $('#NOMBREESCRITURA_AGREGARUSUARIO').val();
         if(usuario!="")
@@ -565,7 +578,7 @@ $Usuario=  Session::getSesion("user");
                 url: '../Controller/AdminController.php?Op=ConsultarExisteUsuario',
                 type: 'POST',
                 data: "NOMBRE_USUARIO="+usuario,
-                success:function(disponible)
+                success:(disponible)=>
                 {
                     if(disponible==true)
                     {
@@ -573,11 +586,11 @@ $Usuario=  Session::getSesion("user");
                             url: '../Controller/AdminController.php?Op=AgregarUsuario',
                             type: 'POST',
                             data: 'ID_EMPLEADO='+EmpleadoDataG[3]+"&NOMBRE_USUARIO="+usuario,
-                            beforeSend:function()
+                            beforeSend:()=>
                             {
                                 $('#loader').show();
                             },
-                            success:function(creado)
+                            success:(creado)=>
                             {
 
                                 if(creado.resultado==true)
@@ -599,22 +612,18 @@ $Usuario=  Session::getSesion("user");
                                     $('#agregarUsuario .close').click()
                                 }
                                 else
-                                {
                                     swalError('No creado, Error en el servidor');
-                                }
                             },
-                            error:function(error)
+                            error:(error)=>
                             {
                                 swalError('No creado, Error en el servidor');
                             }
                         });
                     }
                     else
-                    {
                         swal("","El nombre de usuario no esta disponible","info");
-                    }
                 },
-                error:function()
+                error:()=>
                 {
                     swalError("Erro en el servidor");
                 }
@@ -626,7 +635,8 @@ $Usuario=  Session::getSesion("user");
         }
     }
 
-    function swalSuccess(msj)
+    // alerta sin errores
+    swalSuccess = (msj)=>
     {
         swal({
                 title: '',
@@ -635,11 +645,12 @@ $Usuario=  Session::getSesion("user");
                 showConfirmButton: false,
                 type:"success"
             });
-        setTimeout(function(){swal.close();},1500);
+        setTimeout(()=>{swal.close();},1500);
         $('#loader').hide();
     }
 
-    function swalError(msj)
+    // alerta con error
+    swalError = (msj)=>
     {
         swal({
                 title: '',
@@ -648,11 +659,12 @@ $Usuario=  Session::getSesion("user");
                 showConfirmButton: false,
                 type:"error"
             });
-        setTimeout(function(){swal.close();$('#agregarUsuario .close').click()},1500);
+        setTimeout(()=>{swal.close();$('#agregarUsuario .close').click()},1500);
         $('#loader').hide();
     }
 
-    function modificarPermisos(id)
+    // prepara los datos para contruir la tabla de vistas - permisos
+    modificarPermisos = (id)=>
     {
         // construirTablaPermisos();
         idUsuario=id;
@@ -660,17 +672,17 @@ $Usuario=  Session::getSesion("user");
             url: '../Controller/AdminController.php?Op=ListarPermisos',
             type:'GET',
             data: "ID_USUARIO="+id,
-            beforeSend:function()
+            beforeSend:()=>
             {
                 $('#loader').show();
             },
-            success:function(permisos)
+            success:(permisos)=>
             {
                 // tempData = "";
                 construirTablaPermisosDatos(permisos);
                 $('#loader').hide();
             },
-            error:function()
+            error:()=>
             {
                 swalError('Error del servidor');
             }
@@ -684,15 +696,18 @@ $Usuario=  Session::getSesion("user");
     //     };
     //     console.log(submodulo);
     //     textCheckBox = "<input type='checkbox' style='width:40px;height:40px;margin:7px 0 0;'";
-    function construirTablaPermisosDatos(permisos)
+
+
+    // llama al contralador que se encarga de contruir la tabla de permisos
+    construirTablaPermisosDatos = (permisos)=>
     {
         $.ajax({
             url: '../Controller/AdminController.php?Op=CrearTablaPermisos',
             type: 'GET',
-            success:function(tabla)
+            success:(tabla)=>
             {
                 $('#bodyTablePermisos').html(tabla);
-                console.log("tabla");
+                // console.log("tabla");
                 asignarPermisosTabla(permisos);
             }
         });
@@ -765,9 +780,9 @@ $Usuario=  Session::getSesion("user");
         // });
     }
 
-    function asignarPermisosTabla(permisos)
+    // distribuye los permisos del usuario a la tabla creada (construirTablaPermisosDatos)
+    asignarPermisosTabla = (permisos)=>
     {
-        // console.log("permisos");
         idEstructura=2;
         no = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;' aria-hidden='true'></i>";
         yes = "<i class='fa fa-check-circle-o' style='font-size: xx-large;color:#02ff00' aria-hidden='true'></i>";
@@ -792,12 +807,12 @@ $Usuario=  Session::getSesion("user");
                 $('#delete_'+value.id_estructura).html(yes);
             else
                 $('#delete_'+value.id_estructura).html(no);
-
             idEstructura++;
         });
     }
 
-    function saveCheckBoxToDataBase(Obj,column,idEstructura)
+    // modifca el permiso de la vista de un usuario
+    saveCheckBoxToDataBase = (Obj,column,idEstructura)=>
     {
         //el id de usuario obtenerlo desde afuera
         no = "<i class='fa fa-times-circle-o' style='font-size: xx-large;color:red;' aria-hidden='true'></i>";

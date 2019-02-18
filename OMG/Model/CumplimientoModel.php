@@ -2,7 +2,8 @@
 
 require_once '../dao/CumplimientoDAO.php';
 require_once '../Pojo/CumplimientoPojo.php';
-class CumplimientoModel{
+class CumplimientoModel
+{
     //valida los datos del usuario.
     //retorna el registro del usuario como un arreglo asociativo
 //    private $idEmpleado;
@@ -13,15 +14,15 @@ class CumplimientoModel{
 //    private $Correo='';
 //    private $Fecha_Creacion='NOW()';
     
-    public function  listarCumplimientos($ID_USUARIO)
+    public function listarCumplimientos($ID_USUARIO)
     {
         try
         {
             $dao=new CumplimientoDAO();
             $rec=$dao->mostrarCumplimientos($ID_USUARIO);
-            
             return $rec;
-        }  catch (Exception $e){
+        }catch(Exception $e)
+        {
             throw  $e;
         }
     }
