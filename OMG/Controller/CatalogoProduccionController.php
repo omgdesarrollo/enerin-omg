@@ -15,8 +15,8 @@ $model = new CatalogoProduccionModel();
 
 switch ($Op)
 {
+    // lista registros
     case 'listar':
-        // $socket = $modelSocket->socketInstance();
         $CONTRATO = Session::getSesion("s_cont");
         $Lista = $model->listarCatalogo($CONTRATO);
         // $val = 0/0;
@@ -32,9 +32,9 @@ switch ($Op)
         // }
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
-        // socket_close($socket);
     break;
 
+    // lista un registro de acuerdo al identificador de catalogo produccion ($_REQUEST["ID_CONTRATO"])
     case 'listarUno':
         $CONTRATO = Session::getSesion("s_cont");
         $Lista = $model->listarUno($_REQUEST["ID_CONTRATO"]);
@@ -97,13 +97,14 @@ switch ($Op)
         echo $exito;
     break;
 
-    // 
+    // elimina un registro de catalogo produccion
     case 'EliminarRegistro':
         $ID_CONTRATO = $_REQUEST["ID_CONTRATO"];
         $exito = $model->eliminarRegistro($ID_CONTRATO);
         echo $exito;
     break;
 
+    // 
     case 'Actualizar':
         header('Content-type: application/json; charset=utf-8'); 
         $COLUMNAS = json_decode($_REQUEST["COLUMNAS_VALOR"],true);

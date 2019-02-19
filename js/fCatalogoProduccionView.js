@@ -2,7 +2,8 @@
 // configuracionJgrowl = { pool:0, position:" bottom-right", sticky:true, corner:"0px",openDuration:"fast", closeDuration:"slow",theme:"",header:"",themeState:"", glue:"before"};
 // openDuration,closeDuration : slow, normal, fast
 
-function inicializarFiltros()
+// inicializa el objeto de estructura de filtros
+inicializarFiltros = ()=>
 {
     return new Promise((resolve,reject)=>
     {
@@ -22,7 +23,8 @@ function inicializarFiltros()
     });
 }
 
-function reconstruir(value,index)
+// construye el objeto de la fila de la tabla (jsGrid)
+reconstruir = (value,index)=>
 {
     tempData = new Object();
     ultimoNumeroGrid = index;
@@ -55,27 +57,26 @@ function reconstruir(value,index)
 //    construirGrid(__datos);
 //}
 
-function listarDatos()
+// lista registro de catalogo produccion y contruye el cuerpo de la tabla (jsGrid)
+listarDatos = ()=>
 {
     return new Promise((resolve,reject)=>{
         __datos=[];
-        // var intervalFunc;
-        // intervalFunc = setInterval(function(){console.log("jjajasd");conexionSocketC();},100);
         $.ajax({
             url:"../Controller/CatalogoProduccionController.php?Op=listar",
             type:"GET",
             async:true,
-            beforeSend:function()
+            beforeSend:()=>
             {
                 growlWait("Solicitud","Solicitando Datos de Catalogo");
             },
-            success:function(data)
+            success:(data)=>
             {
                 if(typeof(data)=="object")
                 {
                     growlSuccess("Solicitud","Registros obtenidos");
                     dataListado = data;
-                    $.each(data,function (index,value)
+                    $.each(data,(index,value)=>
                     {
                         __datos.push( reconstruir(value,index+1) );
                     });
@@ -89,9 +90,8 @@ function listarDatos()
                     reject("no");
                 }
             },
-            error:function(e)
+            error:(e)=>
             {
-                // console.log(e);
                 growlError("Error","Error en el servidor");
                 reject("no");
             }
@@ -117,24 +117,25 @@ function listarDatos()
     // ajaxHibrido(datosParamAjaxValues,listfunciones);
 }
 
-function listarUno(ID_insertado)
+// lista un registro de catalogo produccion y agrega el registro a la tabla (jsGrid)
+listarUno = (ID_insertado)=>
 {
     $.ajax({
         url:'../Controller/CatalogoProduccionController.php?Op=listarUno',
         type:'GET',
         data:'ID_CONTRATO='+ID_insertado,
-        success:function(datos)
+        success:(datos)=>
         {
             tempData = new Object();
-            $.each(datos,function(index,value){
+            $.each(datos,(index,value)=>{
                 tempData = reconstruir(value,ultimoNumeroGrid+1);
             });
-            $("#jsGrid").jsGrid("insertItem",tempData).done(function(){});
+            $("#jsGrid").jsGrid("insertItem",tempData).done(()=>{});
             dataListado.push(datos[0]);
             DataGrid.push(tempData);
             growlSuccess("Construir","Registro agregado a la vista");
         },
-        error:function()
+        error:()=>
         {
             growlError("Error","Error en el servidor al intentar agregar el registro a la vista");
             // swalError("Error en el servidor al intentar agregar el registro a la vista");
@@ -142,9 +143,10 @@ function listarUno(ID_insertado)
     });
 }
 
-function preguntarEliminar(data)
+// ejecuta una pregunta para confirmar la eliminacion de un registro de catalogo producccion
+preguntarEliminar = (data)=>
 {
-    console.log(data);
+    // console.log(data);
     swal({
         title: "",
         text: "¿Eliminar Registro?",
@@ -155,20 +157,21 @@ function preguntarEliminar(data)
         confirmButtonText: "Eliminar",
         cancelButtonText: "Cancelar",
         },
-        function(confirmacion)
+        (confirmacion)=>
         {
             if(confirmacion)
-            {
+            // {
                 eliminarRegistro(data.id_catalogoP);
-            }
-            else
-            {
-            }
+            // }
+            // else
+            // {
+            // }
         });
         // return eliminarRegistro(data.id_principal[0].id_contrato);
 }
 
-function eliminarRegistro(id)
+// elimina el registro de catalogo produccion y reconstruye los datos en la tabla (jsGrid)
+eliminarRegistro = (id)=>
 {
     // val = true;
     $.ajax({
@@ -176,11 +179,11 @@ function eliminarRegistro(id)
         type:'GET',
         data:'ID_CONTRATO='+id,
         async:false,
-        beforeSend:function()
+        beforeSend:()=>
         {
             growlWait("Eliminación","Eliminando registro espere...");
         },
-        success:function(respuesta)
+        success:(respuesta)=>
         {
             if(respuesta==-2)
             {
@@ -190,28 +193,28 @@ function eliminarRegistro(id)
             {
                 if(respuesta==1)
                 {
-                            dataListadoTemp=[];
-                            dataItem = [];
-                            numeroEliminar=0;
-                            itemEliminar={};
-                    
-                            $.each(dataListado,function(index,value)
-                            {
-                                value.id_catalogoP != id ? dataListadoTemp.push(value) : (dataItem.push(value), numeroEliminar=index+1);
-                                // JSON.stringify(value).indexOf( JSON.stringify(datos[0]) ) != -1 ? console.log() : dataListadoTemp.push(value);
-                            });
-                            // console.log(dataListado);
-                            itemEliminar = reconstruir(dataItem[0],numeroEliminar);
-                            // console.log(itemEliminar);
-                            DataGrid = [];
-                            dataListado = dataListadoTemp;
-                            $.each(dataListado,function(index,value)
-                            {
-                                DataGrid.push( reconstruir(value,index+1) );
-                            });
-                            gridInstance.loadData();
-                            growlSuccess("Eliminación","Registro Eliminado");
-                            swal.close();
+                    dataListadoTemp=[];
+                    dataItem = [];
+                    numeroEliminar=0;
+                    itemEliminar={};
+            
+                    $.each(dataListado,(index,value)=>
+                    {
+                        value.id_catalogoP != id ? dataListadoTemp.push(value) : (dataItem.push(value), numeroEliminar=index+1);
+                        // JSON.stringify(value).indexOf( JSON.stringify(datos[0]) ) != -1 ? console.log() : dataListadoTemp.push(value);
+                    });
+                    // console.log(dataListado);
+                    itemEliminar = reconstruir(dataItem[0],numeroEliminar);
+                    // console.log(itemEliminar);
+                    DataGrid = [];
+                    dataListado = dataListadoTemp;
+                    $.each(dataListado,(index,value)=>
+                    {
+                        DataGrid.push( reconstruir(value,index+1) );
+                    });
+                    gridInstance.loadData();
+                    growlSuccess("Eliminación","Registro Eliminado");
+                    swal.close();
                 }
                 else
                 {
@@ -220,7 +223,7 @@ function eliminarRegistro(id)
                 }
             }
         },
-        error:function()
+        error:()=>
         {
             growlError("Error","Error en el servidor al eliminar");
             swal.close();
@@ -229,13 +232,14 @@ function eliminarRegistro(id)
     // return false;
 }
 
-function insertarRegistro(datos)
+// manda los datos para agregar un nuevo registro de catalogo produccion
+insertarRegistro = (datos)=>
 {
     $.ajax({
         url:'../Controller/CatalogoProduccionController.php?Op=Guardar',
         type:'POST',
         data:'DATOS='+JSON.stringify(datos),
-        success:function(exito)
+        success:(exito)=>
         {
             if(exito!=-2 && exito!=-1)
             {
@@ -247,21 +251,21 @@ function insertarRegistro(datos)
                 swalError("Error al crear");
             }
         },
-        error:function()
+        error:()=>
         {
             swalError("Error en el servidor");
         }
     });
 }
 
-function saveUpdateToDatabase(args)//listo
+// obtiene el objeto de los cambios, manda los datos para actualizar y reconstruye los datos en la tabla (jsGrid)
+saveUpdateToDatabase = (args)=>//listo
 {
-    console.log(args);
     columnas=new Object();
     entro=0;
     id_afectado = args['item']['id_principal'][0];
     region_fiscalTemp = args['previousItem']['region_fiscal'];
-    $.each(args['item'],function(index,value)
+    $.each(args['item'],(index,value)=>
     {
         if(args['previousItem'][index]!=value && value!="")
         {
@@ -272,25 +276,22 @@ function saveUpdateToDatabase(args)//listo
         }
     });
 
-    console.log(columnas);
-
     if( Object.keys(columnas).length != 0)
     {
         $.ajax({
             url:"../Controller/CatalogoProduccionController.php?Op=Actualizar",
             type:"POST",
             data:'TABLA=catalogo_reporte'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado)+"&REGION="+region_fiscalTemp,
-            beforeSend:function()
+            beforeSend:()=>
             {
                 growlWait("Actualización","Espere...");
             },
-            success:function(data)
+            success:(data)=>
             {
-                console.log("resultado actualizacion: ",data);
                 if(typeof(data)=="object")
                 {
                     growlSuccess("Actulización","Se actualizaron los campos");
-                    $.each(data,function(index,value){
+                    $.each(data,(index,value)=>{
                         componerDataListado(value);
                     });
                     componerDataGrid();
@@ -299,7 +300,7 @@ function saveUpdateToDatabase(args)//listo
                 else
                     growlError("Actualización","No se pudo actualizar");
             },
-            error:function()
+            error:()=>
             {
                 growlError("Error","Error del servidor");
             }
@@ -307,23 +308,26 @@ function saveUpdateToDatabase(args)//listo
     }
 }
 
-function componerDataListado(value)// id de la vista documento, listo
+// sustituye uno de los registros de los datos de catalogo produccion (dataListado)
+componerDataListado = (value)=>// id de la vista documento, listo
 {
     id_vista = value.id_catalogoP;
     id_string = "id_catalogoP";
-    $.each(dataListado,function(indexList,valueList)
+    $.each(dataListado,(indexList,valueList)=>
     {
-        $.each(valueList,function(ind,val)
+        $.each(valueList,(ind,val)=>
         {
             if(ind == id_string)
-                    ( val==id_vista) ? dataListado[indexList]=value : console.log();
+                ( val==id_vista) ? dataListado[indexList]=value : console.log();
         });
     });
 }
-function componerDataGrid()//listo
+
+// recontruye los datos (DataGrid) para la tabla (jsGrid)
+componerDataGrid = ()=>//listo
 {
     __datos = [];
-    $.each(dataListado,function(index,value){
+    $.each(dataListado,(index,value)=>{
         __datos.push(reconstruir(value,index+1));
     });
     DataGrid = __datos;
@@ -333,9 +337,9 @@ var RegionesFiscalesComboDhtml;
 var contratoComboDhtml;
 var ubicacionComboDhtml;
 
-$(function(){
+$(()=>{
     primera = true;
-    RegionesFiscalesComboDhtml.attachEvent("onChange", function(value, text)
+    RegionesFiscalesComboDhtml.attachEvent("onChange",(value, text)=>
     {
         if(primera)
         {
@@ -347,7 +351,8 @@ $(function(){
             primera = true;
     });
     
-    RegionesFiscalesComboDhtml.attachEvent("onOpen", function()
+    // evento hecho porque la lista del objecto(HTML) del combo no se visualiza al estar en un modal
+    RegionesFiscalesComboDhtml.attachEvent("onOpen",()=>
     {
         this.DOMlist.style.zIndex = 2000;
     });
@@ -364,12 +369,13 @@ $(function(){
 //     $(".dhxcombolist_material").css(index);
 // }
 
-function selectItemCombo(value,text)
+selectItemCombo = (value,text)=>
 {
     buscarPorRegionFiscal(text);
 }
 
-function buscarPorRegionFiscal(cadena)
+// 
+buscarPorRegionFiscal(cadena)
 {
     datosDhtmlContrato=[];
     datosDhtmlUbicacion=[];
@@ -378,11 +384,11 @@ function buscarPorRegionFiscal(cadena)
         type:'GET',
         data:'CADENA='+cadena,
         async:false,
-        success:function(datos)
+        success:(datos)=>
         {
             if(typeof(datos)=="object")
             {
-                $.each(datos,function(index,value)
+                $.each(datos,(index,value)=>
                 {
                     if(index==0)
                     datosDhtmlContrato.push({value:index,text:value.clave_contrato});
@@ -392,14 +398,13 @@ function buscarPorRegionFiscal(cadena)
                     }
                 });
             }
-            // else
-
         },
-        error:function()
+        error:()=>
         {
             swalError("Error en el servidor");
         }
     });
+
     contratoComboDhtml.clearAll();
     contratoComboDhtml.addOption(datosDhtmlContrato);
     ubicacionComboDhtml.clearAll();
