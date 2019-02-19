@@ -6,7 +6,15 @@ require_once '../Model/NotificacionesModel.php';
 // require_once '../Pojo/GanttPojo.php';
 class Gantt_TareasModel{
     //put your code here
-    
+        /*
+      *============================================================================
+         *@comment mostrar detalles este metodo  se le solicitan  de donde quiere los detalles si es de requisito o de registro 
+         *@author jose ramirez lopez 
+         *@method activo 
+	     *@param $VALUE 
+         *@return $rec  
+      *============================================================================
+    */
     public function listarRegistrosGanttTareas($VALUE)
     {
         try
@@ -18,7 +26,7 @@ class Gantt_TareasModel{
             $bandera=1;
             $array = array();
             $cont=0;
-            $id_tarea = $dao->totalDeDiasPorTarea($VALUE);//obtener todo s los padres
+            $id_tarea = $dao->totalDeDiasPorTarea($VALUE);//obtener todos los padres
             $totalPadreCero = $dao->totalPadreCero($VALUE);
             // $total['total']= $dao->totalDeDiasPorTarea($VALUE);
             // foreach ($rec as $key => $value)
