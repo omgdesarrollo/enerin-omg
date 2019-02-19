@@ -72,7 +72,20 @@ class AutoridadRemitenteDAO{
     }
     }
     
-
+    /*
+      *============================================================================
+         *@comment empty
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@param $clave_autoridad 
+         *@param $descripcion
+	     *@param $direccion
+		 *@param $telefono
+		 *@param $extension
+		 *@param $email
+		 *@param $direccion_web
+         *@return si retorna  
+      *============================================================================
+    */ 
     public function insertarAutoridadRemitente($clave_autoridad,$descripcion,$direccion,$telefono,$extension,$email,$direccion_web)
     {
         

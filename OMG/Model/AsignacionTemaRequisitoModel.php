@@ -6,7 +6,15 @@ require_once '../Model/AsignacionTemaRequisitoModel.php';
 
 class AsignacionTemaRequisitoModel {
     //put your code here
-    
+    /*
+      *============================================================================
+         *@comment  listar detalles del requisito
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@param $CADENA 
+         *@param $CONTRATO 
+         *@return $rec 
+      *============================================================================
+    */     
     public function  listarAsignacionTemasRequisitos($CADENA,$CONTRATO){
         try{
             $dao=new AsignacionTemaRequisitoDAO();
