@@ -1,7 +1,13 @@
 <?php
 require_once '../ds/AccesoDB.php';
 class AutoridadRemitenteDAO{
-
+    /*
+      *============================================================================
+         *@comment lista todas las autoridades remitentes
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@return $lista : retorna lista con temas y requisito 
+      *============================================================================
+    */
     public function mostrarAutoridadesRemitentes()
     {
         try{

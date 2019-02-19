@@ -108,7 +108,14 @@ class EmpleadoDAO{
                 return -1;
         }   
     }
-    
+    /*
+      *============================================================================
+         *@comment checar la existencia del correo  
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@param $correo : el identificador origen, format: string 
+         *@return $lista : retorna lista con temas y requisito 
+      *============================================================================
+    */    
     public function verificaCorreo($correo)
     {
         try

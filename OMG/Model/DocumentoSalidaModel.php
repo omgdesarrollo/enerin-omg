@@ -5,6 +5,14 @@ require_once '../Pojo/DocumentoSalidaPojo.php';
 
 class DocumentoSalidaModel {
     //put your code here
+    /*
+      *============================================================================
+         *@comment listar documentos de salida con folio de entrada y sin folio de entrada
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@param $CONTRATO : el id del contrato , format: INT  
+         *@return $lista  
+      *============================================================================
+    */
     public function  listarDocumentosSalida($CONTRATO){
         try{
             $lista=[];

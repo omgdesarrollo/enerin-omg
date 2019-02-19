@@ -14,8 +14,7 @@ class InformeValidacionDocumentosModel{
             {
                 $rec["info"][$key]["temas_responsables"]= $dao->obtenerTemayResponsable($value["id_documento"]);
                 $rec["info"][$key]["requisitos"]= $dao->obtenerRequisitosporDocumento($value["id_documento"]);
-            }            
-            
+            } 
             return $rec;
         } catch (Exception $ex)
         {
