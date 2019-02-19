@@ -26,7 +26,6 @@ class AsignacionTemaRequisitoModel {
     }
     }
     
-    
     public function  listarAsignacionTemasRequisitosComboBox(){
         try{
             $dao=new AsignacionTemaRequisitoDAO();
