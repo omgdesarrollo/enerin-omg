@@ -1,6 +1,14 @@
 <?php
 require_once '../ds/AccesoDB.php';
 class Gantt_TareaDao {
+    /*
+      *============================================================================
+         *@comment listar tareas del usuario que tenga la sesion iniciada 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@param $VALUE   
+         *@return $lista  
+      *============================================================================
+    */ 
     public function listarRegistrosGanttTareas($VALUE) 
     {
         $usuario=Session::getSesion("user")["ID_USUARIO"];
@@ -320,7 +328,15 @@ class Gantt_TareaDao {
 //            return -1;
 //        }
 //    }
-    
+
+    /*
+      *============================================================================
+         *@comment mostrar los id padre de  las tareas gantt 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@param $VALUE 
+         *@return $lista 
+      *============================================================================
+    */     
     public function totalDeDiasPorTarea($VALUE)
     {
         try 

@@ -6,7 +6,15 @@ require_once '../Model/AsignacionTemaRequisitoModel.php';
 
 class AsignacionTemaRequisitoModel {
     //put your code here
-    
+    /*
+      *============================================================================
+         *@comment  listar detalles del requisito
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@param $CADENA 
+         *@param $CONTRATO 
+         *@return $rec 
+      *============================================================================
+    */     
     public function  listarAsignacionTemasRequisitos($CADENA,$CONTRATO){
         try{
             $dao=new AsignacionTemaRequisitoDAO();
@@ -25,7 +33,6 @@ class AsignacionTemaRequisitoModel {
         throw  $e;
     }
     }
-    
     
     public function  listarAsignacionTemasRequisitosComboBox(){
         try{
@@ -52,7 +59,15 @@ class AsignacionTemaRequisitoModel {
 //        throw  $e;
 //    }
 //    }        
-    
+    /*
+      *============================================================================
+         *@comment obtener id del tema dependiendo el id de asigancion tema requisito
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+	     *@param $ID_ASIGNACION
+         *@return $REC  
+      *============================================================================
+    */     
     public function obtenerIdTema($ID_ASIGNACION)
     {
         try
@@ -75,8 +90,8 @@ class AsignacionTemaRequisitoModel {
          *@comment mostrar detalles este metodo  se le solicitan  de donde quiere los detalles si es de requisito o de registro 
          *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
          *@method activo 
-	     *@param $id
-		 *@param $tipo : indica si es requisito o registro 
+	     *@param $id : id del  requisito o id del registro O si el registro se esta editando desde el modal 
+		 *@param $tipo : indica si es requisito o registro pero en letras abreviado
          *@return $rec  
       *============================================================================
     */     
