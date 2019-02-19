@@ -21,27 +21,27 @@ class DocumentoSalidaDAO
         //             JOIN temas tbtemas ON
         //             tbtemas.id_tema=tbdocumento_entrada.id_tema
         //             JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado";
-        $query = "SELECT tbdocumento_salida.id_documento_salida, tbdocumento_entrada.id_documento_entrada,
-        tbdocumento_entrada.folio_entrada, tbdocumento_salida.folio_salida,
-        tbdocumento_salida.fecha_envio, tbdocumento_salida.asunto,
-        tbautoridad_remitente.id_autoridad, tbautoridad_remitente.clave_autoridad,
-        tbdocumento_salida.destinatario, tbempleados.id_empleado,
-        CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) AS nombre_empleado,
-        tbdocumento_salida.observaciones 
-        
-        FROM documento_salida tbdocumento_salida
-        
-        JOIN documento_entrada tbdocumento_entrada ON
-        tbdocumento_entrada.id_documento_entrada=tbdocumento_salida.id_documento_entrada
-        JOIN autoridad_remitente tbautoridad_remitente ON
-        tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad
-        JOIN temas tbtemas ON
-        tbtemas.id_tema=tbdocumento_entrada.id_tema
-        JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado 
-        WHERE tbdocumento_salida.id_cumplimiento = $CONTRATO";
+			$query = "SELECT tbdocumento_salida.id_documento_salida, tbdocumento_entrada.id_documento_entrada,
+			tbdocumento_entrada.folio_entrada, tbdocumento_salida.folio_salida,
+			tbdocumento_salida.fecha_envio, tbdocumento_salida.asunto,
+			tbautoridad_remitente.id_autoridad, tbautoridad_remitente.clave_autoridad,
+			tbdocumento_salida.destinatario, tbempleados.id_empleado,
+			CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) AS nombre_empleado,
+			tbdocumento_salida.observaciones 
+			
+			FROM documento_salida tbdocumento_salida
+			
+			JOIN documento_entrada tbdocumento_entrada ON
+			tbdocumento_entrada.id_documento_entrada=tbdocumento_salida.id_documento_entrada
+			JOIN autoridad_remitente tbautoridad_remitente ON
+			tbautoridad_remitente.id_autoridad=tbdocumento_entrada.id_autoridad
+			JOIN temas tbtemas ON
+			tbtemas.id_tema=tbdocumento_entrada.id_tema
+			JOIN empleados tbempleados ON tbempleados.id_empleado=tbtemas.id_empleado 
+			WHERE tbdocumento_salida.id_cumplimiento = $CONTRATO";
 
-        $db=  AccesoDB::getInstancia();
-        $lista=$db->executeQuery($query);
+			$db=  AccesoDB::getInstancia();
+			$lista=$db->executeQuery($query);
         return $lista;
         }  catch (Exception $ex){
             //throw $rec;

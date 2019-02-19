@@ -9,7 +9,7 @@ class Gantt_TareasModel{
         /*
       *============================================================================
          *@comment mostrar detalles este metodo  se le solicitan  de donde quiere los detalles si es de requisito o de registro 
-         *@author jose ramirez lopez 
+         *@author jose ramirez lopez   jose_jesus-15@hotmail.com
          *@method activo 
 	     *@param $VALUE 
          *@return $rec  
