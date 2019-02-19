@@ -325,16 +325,8 @@ $(function()
                      if(r==true)
                      {
                          swal("","Guardado Exitoso","success");
-                         setTimeout(function(){swal.close();},1500);
-                        
-                         
-                         
-                         
-                         
-                         
-                         obtenerDatosArbol(id_temporal_dinamico_para_los_nodos_del_arbol);
-                         
-                         
+                         setTimeout(function(){swal.close();},1500); 
+                         obtenerDatosArbol(id_temporal_dinamico_para_los_nodos_del_arbol);   
 //                         $("#btn_guardar_req").removeAttr("disabled")
                         $('#create-itemRequisito .close').click();
                      }
