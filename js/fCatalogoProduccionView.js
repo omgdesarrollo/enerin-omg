@@ -374,8 +374,8 @@ selectItemCombo = (value,text)=>
     buscarPorRegionFiscal(text);
 }
 
-// 
-buscarPorRegionFiscal(cadena)
+// realiza una busqueda de acuerdo a la region fiscal
+buscarPorRegionFiscal = (cadena)=>
 {
     datosDhtmlContrato=[];
     datosDhtmlUbicacion=[];
@@ -414,7 +414,8 @@ buscarPorRegionFiscal(cadena)
     ( contratoComboDhtml.selectOption(0),contratoComboDhtml.disable(),clave_contrato = contratoComboDhtml.getSelectedText()) : (clave_contrato="",contratoComboDhtml.enable());
 }
 
-function buscarRegionesFiscales()
+// realiza una busqueda de regiones fiscales
+buscarRegionesFiscales = ()=>
 {
     return new Promise((resolve,reject)=>{
         datosDhtmlRegiones=[];
@@ -422,9 +423,9 @@ function buscarRegionesFiscales()
             url:'../Controller/CatalogoProduccionController.php?Op=BuscarRegionesFiscales',
             type:'GET',
             // async:false,
-            success:function(datos)
+            success:(datos)=>
             {
-                $.each(datos,function(index,value)
+                $.each(datos,(index,value)=>
                 {
                     datosDhtmlRegiones.push({value:index,text:value.region_fiscal});
                 });
@@ -432,7 +433,7 @@ function buscarRegionesFiscales()
                 RegionesFiscalesComboDhtml.addOption(datosDhtmlRegiones);
                 resolve();
             },
-            error:function()
+            error:()=>
             {
                 swalError("Error en el servidor");
                 reject();
@@ -441,7 +442,8 @@ function buscarRegionesFiscales()
     });
 }
 
-function refresh()
+// reinica valores y refresca datos de la vista
+refresh = ()=>
 {
     $("#btnrefrescar").attr("disabled",true);
     promesaBuscarRegionesFiscales = buscarRegionesFiscales();

@@ -49,6 +49,7 @@ switch ($Op)
         echo json_encode($Lista);
     break;
     
+    // guarda un nuevo registro
     case 'Guardar':
         header('Content-type: application/json; charset=utf-8');
         $datos = json_decode($_REQUEST["DATOS"],true);
@@ -61,6 +62,7 @@ switch ($Op)
         echo $exito;
     break;
 
+    // lista registros asignaciones contrato de la busqueda ($_REQUEST["CADENA"])
     case 'BuscarID':
         $CONTRATO = Session::getSesion("s_cont");
         $Lista = $model->buscarID($_REQUEST["CADENA"],$CONTRATO);
@@ -75,6 +77,7 @@ switch ($Op)
         echo json_encode($Lista);
     break;
 
+    // lista registros regiones fiscales
     case 'BuscarRegionesFiscales':
         $CONTRATO = Session::getSesion("s_cont");
         $Lista = $model->buscarRegionesFiscales($CONTRATO);

@@ -92,7 +92,7 @@ class CatalogoProduccionDAO
         }
     }
 
-    // lista registros de asignaciones de contrato de acuerdo a la busqueda($CADENA) y al contrato (cumplimiento)
+    // lista registros de asignaciones de contrato con ubicaciones unicos, de acuerdo a la busqueda($CADENA) y al contrato (cumplimiento)
     public function buscarID($CADENA,$CONTRATO)//listo ahora si
     {
         try
@@ -169,7 +169,8 @@ class CatalogoProduccionDAO
         }
     }
 
-    // francisco -> este fn es tuya
+    // lista la existencia de acuerdo al identificador de catalogo produccion
+    // $ID_CONTRATO = identificador de catalogo produccion
     public function permisoDeEliminar($ID_CONTRATO)
     {
         try

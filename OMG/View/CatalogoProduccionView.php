@@ -310,34 +310,36 @@
         items:[],
     });
 
-    RegionesFiscalesComboDhtml.attachEvent("onChange",(value, text)=>
+    // al poner funcion anonima ()=> deja de funcionar
+    RegionesFiscalesComboDhtml.attachEvent("onChange",function(value, text)
     {
             region_fiscal=text;
             selectItemCombo(value,text);
     });
     
-    contratoComboDhtml.attachEvent("onChange",(value, text)=>
+    contratoComboDhtml.attachEvent("onChange",function(value, text)
     {
         clave_contrato=text;
     });
     
-    ubicacionComboDhtml.attachEvent("onChange", (value, text)=>
+    ubicacionComboDhtml.attachEvent("onChange",function(value, text)
     {
         ubicacion=text;
     });
 
     // evento hecho porque la lista del objecto(HTML) del combo no se visualiza al estar en un modal
-    contratoComboDhtml.attachEvent("onOpen",()=>
+    // al poner funcion anonima ()=> deja de funcionar
+    contratoComboDhtml.attachEvent("onOpen",function()
     {
         this.DOMlist.style.zIndex = 2000;
     });
 
-    ubicacionComboDhtml.attachEvent("onOpen",()=>
+    ubicacionComboDhtml.attachEvent("onOpen",function()
     {
         this.DOMlist.style.zIndex = 2000;
     });
 
-    RegionesFiscalesComboDhtml.attachEvent("onOpen",()=>
+    RegionesFiscalesComboDhtml.attachEvent("onOpen",function()
     {
         this.DOMlist.style.zIndex = 2000;
     });

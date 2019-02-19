@@ -33,6 +33,7 @@ class CatalogoProduccionModel
         }
     }
 
+    // obtiene el 
     public function guardarCatalogo($CONTRATO,$DATOS)
     {
         try
@@ -167,6 +168,7 @@ class CatalogoProduccionModel
     }
 
     // verifica si tiene permisos para eliminar
+    // elimina un registro de catalogo produccion
     public function eliminarRegistro($ID_CONTRATO)
     {
         try
