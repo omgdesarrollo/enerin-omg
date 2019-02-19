@@ -202,12 +202,16 @@ $Usuario=  Session::getSesion("user");
 	<script>
             var myLayout, myTree, myToolbar,myToolbarExportar,id_asignacion_t=-1,levelv=0,id_asignacion_r=-1,selec_tema=-1,id_seleccionado=-1,dataIds_req=[],dataIds_reg=[];
             var cualModoModalAgregarEdicioRegistro="agregarregistro";
+			//lista donde estan los datos para llenar la tabla
             var dataListado=[];
+			//lista donde estan los datos pero dirigiso hacia exportar excel 
             var DataGridExcel=[];
+			//para indicar de  que vista  va a exportar esto se utiliza en la libreria  de  excelexportarjs   
             var origenDeDatosVista="asignacionTemaRequisito";
             var id_real_arbol_seleccionado=-1;
+			//objetos  para la generacion del directorio de carpetas en forma de arbol
             myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
-	    myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
+			myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
             myTree.enableDragAndDrop(false);
             myTreeIzquierda = new dhtmlXTreeObject('treeboxbox_treeIzquierda', '100%', '100%',0);
             myTreeIzquierda.setImagePath("../../codebase/imgs/dhxtree_material/");
