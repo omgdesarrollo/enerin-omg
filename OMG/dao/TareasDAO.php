@@ -3,6 +3,18 @@
 require_once '../ds/AccesoDB.php';
 class TareasDAO
 {    
+    /*
+      *============================================================================
+         *@comment lista  todas las tareas pero dependiendo si esta terminado o no la tarea 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+	     *@param $id_empleado
+		 *@param $id_usuario
+		 *@param $cumplimiento
+		 *@param $checkBoxTerminados
+         *@return $lista  
+      *============================================================================
+    */ 
     public function listarTareas($id_empleado,$id_usuario,$cumplimiento,$checkBoxTerminados)
     {
         try
@@ -39,7 +51,15 @@ class TareasDAO
             return -1;
         }
     }
-    
+    /*
+      *============================================================================
+         *@comment empty
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method pendiente de revisar  
+	     *@param $ID_TAREA
+         *@return $lista  
+      *============================================================================
+    */     
     public function listarTarea($ID_TAREA)
     {
         try
@@ -220,7 +240,16 @@ class TareasDAO
         }
         
     }
-    
+    /*
+      *============================================================================
+         *@comment empty
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method pendiente de revisar 
+	     *@param $cualverificar
+		 *@param $cadena
+         *@return $lista  
+      *============================================================================
+    */ 
     public function verificarSiYaExisteLaTarea($cualverificar,$cadena)
     {
       try
@@ -259,7 +288,15 @@ class TareasDAO
             return -1;
         }
     }
-    
+    /*
+      *============================================================================
+         *@comment verificar si la notificacion existe dependiendo el texto  que viene con el que esta la base de datos  
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activos 
+	     *@param $MENSAJE
+         *@return $lista  
+      *============================================================================
+    */     
     public function veriricarSiYaExisteLaNotificacion($MENSAJE)
     {
         try

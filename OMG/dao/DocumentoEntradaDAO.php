@@ -167,7 +167,16 @@ class DocumentoEntradaDAO
         }
     }
     
-    // 
+    /*
+      *============================================================================
+         *@comment obtener el remitente  dependiendo el id del documento de entrada 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+	     *@param $cadena
+		 *@param $cualverificar
+         *@return $lista  
+      *============================================================================
+    */ 
     public function loadAutoComplete($cadena)
     {
         try{

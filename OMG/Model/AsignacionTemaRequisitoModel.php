@@ -70,7 +70,16 @@ class AsignacionTemaRequisitoModel {
     }
     
     
-    
+    /*
+      *============================================================================
+         *@comment mostrar detalles este metodo  se le solicitan  de donde quiere los detalles si es de requisito o de registro 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+	     *@param $id
+		 *@param $tipo : indica si es requisito o registro 
+         *@return $rec  
+      *============================================================================
+    */     
     public function obtenerDetallesHidrid($id,$tipo){
         try{
             $dao= new AsignacionTemaRequisitoDAO();

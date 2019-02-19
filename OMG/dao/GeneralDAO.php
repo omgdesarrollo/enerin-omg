@@ -53,7 +53,15 @@ class GeneralDAO{
             return false;
         }
     }
-
+    /*
+      *============================================================================
+         *@comment se solicita por parametro el query en este caso de actualizacion 
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+	     *@param $QUERY
+         *@return $update  
+      *============================================================================
+    */ 
     public function actualizar($QUERY)
     {
         try 
