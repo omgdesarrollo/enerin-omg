@@ -1,13 +1,13 @@
 <?php
-session_start();
-require_once '../util/Session.php';
-$Usuario=  Session::getSesion("user");
+    session_start();
+    require_once '../util/Session.php';
+    $Usuario=  Session::getSesion("user");
 ?>
 
 
         <!DOCTYPE html>
         <html lang="en" manifest="">
-	<head>
+	    <head>
 		<!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />-->
         <!--<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">-->
         
@@ -79,10 +79,8 @@ $Usuario=  Session::getSesion("user");
             .modal {/*En caso de que quieras modificar el modal*/z-index: 1050 !important;}
             
             body{overflow:hidden;}
-        </style>              
-                
- 			 
-</head>
+        </style>
+    </head>
 
         
 <body class="no-skin">
@@ -166,15 +164,20 @@ $Usuario=  Session::getSesion("user");
 
     var activeChart = -1;//chart
     var chartsCreados = [];//chart
+
+    // objeto de las funciones para graficar de ChartComponent.js
     var chartsFunciones = [()=>{graficar()},(dataNextGrafica,concepto)=>{graficar2(dataNextGrafica,concepto)},
     (dataNextGrafica,concepto)=>{graficar3(dataNextGrafica,concepto)},(dataNextGrafica,concepto)=>{graficar4(dataNextGrafica,concepto)}];//chart
 
-    var porcentajesFields = function(config)//grid
+    // configuracion de tipos de datos (jsGrid)
+    // no se puede cambiar con funcion anonima ()=>
+    var porcentajesFields = function (config)
     {
-        jsGrid.Field.call(this, config);
+        jsGrid.Field.call(this,config);
     };
     
-    porcentajesFields.prototype = new jsGrid.Field//grid
+    // funciones de los tipos de datos personalizados (jsGrid)
+    porcentajesFields.prototype = new jsGrid.Field
     ({
         css: "date-field",
         align: "center",
@@ -210,13 +213,13 @@ $Usuario=  Session::getSesion("user");
         }
     });
 
-    
-
+    // objeto de los tipos de datos personalizados para ser agregados al jsGrid
     var customsFieldsGridData=[
         // {field:"customControl",my_field:MyCControlField},
         {field:"porcentaje",my_field:porcentajesFields},
-    ];//grid
+    ];
     
+    // objeto para la estructura de la tabla (jsGrid)
     estructuraGrid = [
         { name: "id_principal",visible:false},
         { name: "no_tema",title:"No. Tema", type: "text", width: 60,editing:false},
@@ -234,11 +237,11 @@ $Usuario=  Session::getSesion("user");
         // { name: "cumplimiento_requisito",title:"% Cumplimiento Requisito", type: "porcentaje", width: 140,editing:false},
         // { name: "estado_requisito",title:"Estado Requisito", type: "text", width: 100,editing:false},
         // { name:"delete", title:"Opción", type:"customControl",sorting:""},
-        // { title:"Opción", type:"",sorting:""},
-        
-    ];//grid
+        // { title:"Opción", type:"",sorting:""},  
+    ];
     
     construirGrid();//grid
+
     gridInstance.loadData();
             // RegionesFiscalesComboDhtml = new dhtmlXCombo({
             //     parent: "INPUT_REGIONFISCAL_NUEVOREGISTRO",
@@ -259,23 +262,18 @@ $Usuario=  Session::getSesion("user");
             // {
             //     this.DOMlist.style.zIndex = 2000;
             // });
-        inicializaChartjs();
-        inicializarFiltros().then((resolve2)=>
-        {
-            construirFiltros();
-            listarDatos();
-        },(error)=>
-        {
-            growlError("Error!","Error al construir la vista, recargue la página");
-        });
-        
-        //limpiar la cache
-        
-        
-        
-        
-        
-        
+    inicializaChartjs();
+    inicializarFiltros().then((resolve2)=>
+    {
+        construirFiltros();
+        listarDatos();
+    },(error)=>
+    {
+        growlError("Error!","Error al construir la vista, recargue la página");
+    });    
+    //limpiar la cache
+
+
 //        checkForUpdate();
 //function inyectar_librerias()
 //{
@@ -300,7 +298,3 @@ $Usuario=  Session::getSesion("user");
 	</body>
      
 </html>
-
-
-
-
