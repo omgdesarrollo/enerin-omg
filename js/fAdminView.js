@@ -23,7 +23,7 @@ inicializarFiltros = ()=>
     });
 }
 
-// construye el objceto de la fila de la tabla (jsGrid)
+// construye el objeto de la fila de la tabla (jsGrid)
 reconstruir = (value,index)=>
 {
     tempData = new Object();

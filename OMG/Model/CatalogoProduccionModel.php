@@ -1,8 +1,8 @@
 <?php
+
 require_once '../dao/CatalogoProduccionDAO.php';
-
-class CatalogoProduccionModel{
-
+class CatalogoProduccionModel
+{
     public function listarCatalogo($CONTRATO)
     {
         try
@@ -166,6 +166,7 @@ class CatalogoProduccionModel{
         }
     }
 
+    // verifica si tiene permisos para eliminar
     public function eliminarRegistro($ID_CONTRATO)
     {
         try
