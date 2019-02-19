@@ -52,7 +52,15 @@ class AsignacionTemaRequisitoModel {
 //        throw  $e;
 //    }
 //    }        
-    
+    /*
+      *============================================================================
+         *@comment obtener id del tema dependiendo el id de asigancion tema requisito
+         *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
+         *@method activo 
+	     *@param $ID_ASIGNACION
+         *@return $REC  
+      *============================================================================
+    */     
     public function obtenerIdTema($ID_ASIGNACION)
     {
         try
@@ -75,8 +83,8 @@ class AsignacionTemaRequisitoModel {
          *@comment mostrar detalles este metodo  se le solicitan  de donde quiere los detalles si es de requisito o de registro 
          *@author francisco reyes vazconcelos fvazconcelos@enerin.mx
          *@method activo 
-	     *@param $id
-		 *@param $tipo : indica si es requisito o registro 
+	     *@param $id : id del  requisito o id del registro O si el registro se esta editando desde el modal 
+		 *@param $tipo : indica si es requisito o registro pero en letras abreviado
          *@return $rec  
       *============================================================================
     */     
