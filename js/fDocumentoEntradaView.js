@@ -1,5 +1,5 @@
 
-$(function()
+$(()=>
 {
     $("#FOLIO_ENTRADA").keyup(function()
     {
@@ -189,59 +189,53 @@ $(function()
     });
 
     $("#subirArchivos").click(function()
-        {
-                agregarArchivosUrl();
-        });
+    {
+        agregarArchivosUrl();
+    });
 
     // $("tbody").on('click','tr td',(obj)=>{
     //     popup(obj);
     // });
 });
 
-function inicializarFiltros()
+inicializarFiltros = ()=>
 {
     return new Promise((resolve,reject)=>
     {
         filtros = [
-                // { id:"noneUno", type:"none"},
-                // { id: "id_principal", visible:false },
-                { id: "folio_referencia", name: "Referencia", type: "text"},
-                { id: "folio_entrada", name: "Folio Entrada", type: "text"},
-                // { name: "fecha_recepcion", title: "Fecha Recepción", type: "text", width, validate: "required" },
-                { id: "fecha_recepcion", name: "Fecha Recepción", type: "date"},
-
-                { id: "asunto", name: "Asunto", type: "text"},
-                { id: "remitente", name: "Remitente", type: "text"},
-
-                { id: "id_autoridad", name: "Autoridad Remitente", type: "combobox",data:thisAutoridad,descripcion:"clave_autoridad"},
-
-                { id: "id_tema", name: "Numero Tema", type: "combobox", data:thisTemas,descripcion:"no" },
-
-                { id: "nombre", name: "Nombre Tema", type: "text"},
-                { id: "nombre_empleado", name: "Responsable Tema", type: "text"},
-
-                { id: "clasificacion", name: "Clasificación", type: "combobox",descripcion:"descripcion",
-                        data:[{"clasificacion":1,"descripcion":"Con limite de tiempo"},{"clasificacion":2,"descripcion":"Sin limite de tiempo"},{"clasificacion":3,"descripcion":"Informativo"}]},
-
-                { id: "status_doc",name:"Estatus", type: "combobox", descripcion:"descripcion",
-                        data:[{status_doc:"1",descripcion:"PROCESO"},{status_doc:"2",descripcion:"SUSPENDIDO"},{status_doc:"3",descripcion:"TERMINADO"}]
-                },
-
-                { id: "fecha_asignacion", name: "Fecha Asignación", type: "date"},
-                { id: "fecha_limite_atencion", name: "Fecha Limite Atención", type: "date"},
-                { id: "fecha_alarma", name: "Fecha Alarma", type: "date"},
-                // { id: "adjuntar_archivo", name: "Adjuntar Archivos", type: "text"},
-                { id:"noneDos", type:"none"},
-                { id: "observaciones", name: "Observaciones", type: "text"},
-                // { id:"delete", name:"Opción", type:"option",sorting:""},
-                { id:"opcion",type:"opcion"}
-                // { id:"delete", name:"Opción", type:"customControl",sorting:""},
+            // { id:"noneUno", type:"none"},
+            // { id: "id_principal", visible:false },
+            { id: "folio_referencia", name: "Referencia", type: "text"},
+            { id: "folio_entrada", name: "Folio Entrada", type: "text"},
+            // { name: "fecha_recepcion", title: "Fecha Recepción", type: "text", width, validate: "required" },
+            { id: "fecha_recepcion", name: "Fecha Recepción", type: "date"},
+            { id: "asunto", name: "Asunto", type: "text"},
+            { id: "remitente", name: "Remitente", type: "text"},
+            { id: "id_autoridad", name: "Autoridad Remitente", type: "combobox",data:thisAutoridad,descripcion:"clave_autoridad"},
+            { id: "id_tema", name: "Numero Tema", type: "combobox", data:thisTemas,descripcion:"no" },
+            { id: "nombre", name: "Nombre Tema", type: "text"},
+            { id: "nombre_empleado", name: "Responsable Tema", type: "text"},
+            { id: "clasificacion", name: "Clasificación", type: "combobox",descripcion:"descripcion",
+                data:[{"clasificacion":1,"descripcion":"Con limite de tiempo"},{"clasificacion":2,"descripcion":"Sin limite de tiempo"},{"clasificacion":3,"descripcion":"Informativo"}]},
+            { id: "status_doc",name:"Estatus", type: "combobox", descripcion:"descripcion",
+                data:[{status_doc:"1",descripcion:"PROCESO"},{status_doc:"2",descripcion:"SUSPENDIDO"},{status_doc:"3",descripcion:"TERMINADO"}]
+            },
+            { id: "fecha_asignacion", name: "Fecha Asignación", type: "date"},
+            { id: "fecha_limite_atencion", name: "Fecha Limite Atención", type: "date"},
+            { id: "fecha_alarma", name: "Fecha Alarma", type: "date"},
+            // { id: "adjuntar_archivo", name: "Adjuntar Archivos", type: "text"},
+            { id:"noneDos", type:"none"},
+            { id: "observaciones", name: "Observaciones", type: "text"},
+            // { id:"delete", name:"Opción", type:"option",sorting:""},
+            { id:"opcion",type:"opcion"}
+            // { id:"delete", name:"Opción", type:"customControl",sorting:""},
         ];
         resolve();
     });
 }
 
-function listarDatos()
+// lista los datos para contruir el cuerpo de la tabla
+listarDatos = ()=>
 {
     return new Promise((resolve,reject)=>
     {
@@ -251,21 +245,20 @@ function listarDatos()
                 url:'../Controller/DocumentosEntradaController.php?Op=Listar',
                 type: 'GET',
                 data:"URL="+URL,
-                beforeSend:function()
+                beforeSend:()=>
                 {
                         growlWait("Solicitud","Solicitando Datos...");
                 },
-                success:function(data)
+                success:(data)=>
                 {
                         if(typeof(data)=="object")
                         {
                                 growlSuccess("Solicitud","Registros obtenidos");
                                 dataListado = data;
-                                $.each(data,function (index,value)
+                                $.each(data,(index,value)=>
                                 {
                                         __datos.push( reconstruir(value,index+1) );
                                 });
-                                console.log(__datos);
                                 DataGrid = __datos;
                                 gridInstance.loadData();
                                 resolve();
@@ -276,9 +269,8 @@ function listarDatos()
                                 reject();
                         }
                 },
-                error:function(e)
+                error:(e)=>
                 {
-                        console.log(e);
                         growlError("Error","Error en el servidor");
                         reject();
                 }
@@ -286,7 +278,8 @@ function listarDatos()
     });
 }
 
-function listarAutoridades()
+// lista autoridades remitente
+listarAutoridades = ()=>
 {
         return new Promise((resolve,reject)=>
         {
@@ -309,7 +302,8 @@ function listarAutoridades()
         
 }
 
-function listarTemas()
+// 
+listarTemas = ()=>
 {
         return new Promise((resolve,reject)=>{
                 $.ajax({

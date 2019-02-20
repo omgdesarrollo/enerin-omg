@@ -1,5 +1,4 @@
 // configuracionJgrowl = { pool:0, position:" bottom-right", sticky:true, corner:"0px",openDuration:"fast", closeDuration:"slow",theme:"",header:"",themeState:"", glue:"before"};
-
 $(()=>
 {   
     var $btnDLtoExcel = $('#btn_exportar');
@@ -433,7 +432,8 @@ reconstruirExcelDetalles = (value,index)=>
     return tempData;
 }
 
-function listarDatos()
+// lista y contruye el cuerpo de datos de la tabla
+listarDatos = ()=>
 {
     return new Promise((resolve,reject)=>
     {
@@ -441,11 +441,11 @@ function listarDatos()
         $.ajax({
             url:"../Controller/ConsultasController.php?Op=Listar",
             type:"GET",
-            beforeSend:function()
+            beforeSend:()=>
             {
                 growlWait("Solicitud","Solicitando Registros...");
             },
-            success:function(data)
+            success:(data)=>
             {
                 if(typeof(data)=="object")
                 {
@@ -453,7 +453,7 @@ function listarDatos()
                     {
                         growlSuccess("Solicitud","Registros obtenidos");
                         dataListado = data;
-                        $.each(data,function (index,value)
+                        $.each(data,(index,value)=>
                         {
                             __datos.push( reconstruir(value,index+1) );
                         });
@@ -477,9 +477,8 @@ function listarDatos()
                     reject();
                 }
             },
-            error:function(e)
+            error:(e)=>
             {
-//                console.log(e);
                 gridInstance.loadData();
                 growlError("Error","Error en el servidor");
                 reject();
@@ -488,7 +487,8 @@ function listarDatos()
     });
 }
 
-function graficar()
+// contruccion de la grafica 1
+graficar = ()=>
 {
     let dataGrafica=[];
     let tituloGrafica = "CUMPLIMIENTO DE REQUISITOS";
@@ -537,6 +537,7 @@ function graficar()
             }
         });
     });
+
     if(requisitos_cumplidos!=0)
         dataGrafica.push(["Cumplido",requisitos_cumplidos,">> Requisitos:"+requisitos_cumplidos.toString(),JSON.stringify(data_requisitos_cumplidos),2]);
     if(requisitos_atrasados!=0)
@@ -556,7 +557,7 @@ function graficar()
     construirGrafica(dataGrafica,tituloGrafica);
 }
 
-function graficar2(datos,concepto)
+graficar2 = (datos,concepto)=>
 {
     let atrasados = 0;
     let atrasados_penalizados = 0;
@@ -566,10 +567,9 @@ function graficar2(datos,concepto)
     let dataGrafica = [];
 
     datos = JSON.parse(datos);
-    // console.log("graficar 2");
-    // console.log(datos);
     tituloGrafica += concepto.toUpperCase();
-    $.each(datos,(index,value)=>{
+    $.each(datos,(index,value)=>
+    {
         if(value.penalizacion == "true")
         {
             atrasados_penalizados++;
@@ -590,7 +590,7 @@ function graficar2(datos,concepto)
     construirGrafica(dataGrafica,tituloGrafica);
 }
 
-function graficar3(datos,concepto)
+graficar3 = (datos,concepto)=>
 {
     let tituloGrafica = "CUMPLIMIENTO POR TEMA";
     let lista = new Object();
@@ -600,9 +600,6 @@ function graficar3(datos,concepto)
     let bandera=0;
 
     datos = JSON.parse(datos);
-    // console.log("Graficar 3");
-    // console.log(datos);
-    // console.log(concepto);
     if(concepto == "Cumplido")
     {
         estado = "CUMPLIDO";
@@ -636,8 +633,6 @@ function graficar3(datos,concepto)
             lista[value.id_tema]=[];
         lista[value.id_tema].push(value);
     });
-    // console.log("list");
-    // console.log(lista);
 
     $.each(lista,(index,value)=>{
         bandera=0;
@@ -669,11 +664,10 @@ function graficar3(datos,concepto)
             dataGrafica.push(["Tema: "+value[0].no_tema,value.length,
                 ">> Tema:\n"+value[0].nombre_tema+" \n>> Responsable:\n"+value[0].responsable_tema+"\n>> Requisitos: "+value.length+"\n>> Evidencias:"+evidencias_tema, JSON.stringify(value),3]);
     });
-    // console.log(dataGrafica);
     construirGrafica(dataGrafica,tituloGrafica);
 }
 
-function graficar4(datos,concepto)
+graficar4 = (datos,concepto)=>
 {
     let lista = new Object();
     let dataGrafica = [];
@@ -688,12 +682,11 @@ function graficar4(datos,concepto)
     let especial = 0;
 
     datos = JSON.parse(datos);
-    // console.log("Grafica 4");
-    console.log(datos);
-    // console.log(concepto);
 
-    $.each(datos,(index,value)=>{
-        $.each(value.detalles_requisito,(ind,val)=>{
+    $.each(datos,(index,value)=>
+    {
+        $.each(value.detalles_requisito,(ind,val)=>
+        {
             evidencias=0;
             especial=0;
             if(val.id_registro != null)
@@ -737,7 +730,7 @@ function graficar4(datos,concepto)
     construirGrafica(dataGrafica,tituloGrafica);
 }
 
-function refresh()
+refresh = ()=>
 {
     inicializarFiltros().then((resolve2)=>
     {

@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 require_once '../Model/DocumentoEntradaModel.php';
 require_once '../Pojo/DocumentoEntradaPojo.php';
@@ -6,7 +7,6 @@ require_once '../Model/SeguimientoEntradaModel.php';
 require_once '../Pojo/SeguimientoEntradaPojo.php';
 require_once '../util/Session.php';
 require_once '../Model/ArchivoUploadModel.php';
-
 
 $Op=$_REQUEST["Op"];
 $model=new DocumentoEntradaModel();
@@ -16,21 +16,23 @@ $modelSeguimientoEntrada=new SeguimientoEntradaModel();
 $pojoSeguimientoEntrada= new SeguimientoEntradaPojo();
 $modelArchivo = new ArchivoUploadModel();
 
-switch ($Op) {
+switch ($Op)
+{
+	// lista registros documentos de entrada
+	// el ciclo agrega los documentos (archivos) cargados fisicamente a cada registro documento entrada
 	case 'Listar':
-			$CONTRATO = Session::getSesion("s_cont");
-			$Lista=$model->listarDocumentosEntrada($CONTRATO);
-                        Session::setSesion("listarDocumentosEntrada",$Lista); //Atencion Jose: Se esta ocupando para las graficas de informe gerencial
-                        
-			foreach($Lista as $key => $value)
-			{
-				$url = $_REQUEST["URL"].$value["id_documento_entrada"];
-				$Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
-			}
-							
-			header('Content-type: application/json; charset=utf-8');
-			echo json_encode( $Lista);
-		break;
+		$CONTRATO = Session::getSesion("s_cont");
+		$Lista=$model->listarDocumentosEntrada($CONTRATO);
+		Session::setSesion("listarDocumentosEntrada",$Lista); //Atencion se esta ocupando para las graficas de informe gerencial
+
+		foreach($Lista as $key => $value)
+		{
+			$url = $_REQUEST["URL"].$value["id_documento_entrada"];
+			$Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
+		}
+		header('Content-type: application/json; charset=utf-8');
+		echo json_encode( $Lista);
+	break;
 
 	case 'ListarUno':
 		$CONTRATO = Session::getSesion("s_cont");

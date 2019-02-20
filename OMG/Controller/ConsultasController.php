@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 require_once '../Model/ConsultasModel.php';
 require_once '../util/Session.php';
@@ -6,8 +7,9 @@ require_once '../util/Session.php';
 $Op=$_REQUEST["Op"];
 $model=new ConsultasModel();
 
-
-switch ($Op) {
+switch ($Op)
+{
+    // lista los datos y regresa los datos cumpuestos para la vista
     case 'Listar':
         $Lista = $model->listarConsultas(Session::getSesion("s_cont"));
         // var_dump($Lista);
@@ -21,7 +23,4 @@ switch ($Op) {
     default:
         break;
 }
-
-
 ?>
-

@@ -8,7 +8,8 @@
 
 require_once '../dao/DocumentoEntradaDAO.php';
 require_once '../Pojo/DocumentoEntradaPojo.php';
-class DocumentoEntradaModel{
+class DocumentoEntradaModel
+{
     
     public function getFechaAlarma()
     {
@@ -204,9 +205,5 @@ class DocumentoEntradaModel{
             return -1;
         }
     }
-    
-    
-    
 }
-
 ?>

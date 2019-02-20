@@ -82,26 +82,18 @@ class AutoridadRemitenteModel{
         
     }
 
-
     public function  listarAutoridadesRemitentesComboBox()
     {
         try{
-            
             $dao=new AutoridadRemitenteDAO();
             $rec=$dao->mostrarAutoridadesRemitentesComboBox();
-                       
             return $rec;
-    }  catch (Exception $ex)
-    {
-        throw  $ex;
-        return -1;
+        }catch (Exception $ex)
+        {
+            throw  $ex;
+            return -1;
+        }
     }
-    }
-    
-    
-    
-    
-
 
     public function insertar($pojo)
     {
