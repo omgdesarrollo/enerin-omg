@@ -36,9 +36,7 @@ class TemaModel{
         {
             $dao=new TemaDAO();
             $lista= $dao->mostrarTemasComboBox($cadena, $contrato);
-            
             return $lista;
-            
         } catch (Exception $ex)
         {
             throw $ex;

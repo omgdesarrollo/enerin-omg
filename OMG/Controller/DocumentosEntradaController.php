@@ -34,6 +34,8 @@ switch ($Op)
 		echo json_encode( $Lista);
 	break;
 
+	// lista un documento de entrada especifico ($_REQUEST["ID_DOCUMENTO"])
+	// agrega al registro sus archivos cargados
 	case 'ListarUno':
 		$CONTRATO = Session::getSesion("s_cont");
 		$Lista=$model->listarDocumentoEntrada($_REQUEST["ID_DOCUMENTO"]);
@@ -42,7 +44,6 @@ switch ($Op)
 			$url = $_REQUEST["URL"].$value["id_documento_entrada"];
 			$Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
 		}
-
 		header('Content-type: application/json; charset=utf-8');
 		echo json_encode( $Lista);
 	break;
@@ -73,6 +74,7 @@ switch ($Op)
 		# code...
 		break;	
 
+	// inserta documento entrada, obtiene el id e inserta en seguimiento de entrada
 	case 'Guardar':
                   
 # code...
@@ -149,17 +151,14 @@ switch ($Op)
 		echo json_encode($data);
 	break;
 
+	// lista el folio de entrada de registro ($_REQUEST["registro"];) de acuerdo a su columna dinamica ($_REQUEST["cualverificar"])
 	case 'verificacionexisteregistro':
-            
-		$registro=$_REQUEST["registro"];
-		$cualverificar=$_REQUEST["cualverificar"];
-		
+		$registro = $_REQUEST["registro"];
+		$cualverificar = $_REQUEST["cualverificar"];
 		$data= $model->verificarSiExisteFolioEntrada($registro,$cualverificar);
-		
 		header('Content-type: application/json; charset=utf-8');
 		echo json_encode($data);
-		
-		break;
+	break;
 
 	case 'Alarmas':
 
@@ -168,15 +167,16 @@ switch ($Op)
 		header('Content-type: application/json; charset=utf-8');
 		// echo json_encode($Lista);
 		break;
-                            
+					
+	// elimina un registro documento entrada
 	case 'Eliminar':
 		# code...
-                header('Content-type: application/json; charset=utf-8'); 
-                $data= json_decode($_REQUEST['ID_DOCUMENTO_ENTRADA'],true);
-                $Lista= $model->eliminarDocumentoEntrada($data['id_documento_entrada']);
-                echo json_encode($Lista);
-                return $Lista;
-		break;
+		header('Content-type: application/json; charset=utf-8'); 
+		$data= json_decode($_REQUEST['ID_DOCUMENTO_ENTRADA'],true);
+		$Lista= $model->eliminarDocumentoEntrada($data['id_documento_entrada']);
+		echo json_encode($Lista);
+		return $Lista;
+	break;
             
 	case 'getIdCumplimiento':
 		$Id_cumplimiento="";

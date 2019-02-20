@@ -115,7 +115,7 @@ class DocumentoEntradaModel
      
      
  }
-    
+    // obtiene los datos de $pojo para insertar nuevo documento entrada
     public function insertar($pojo){
         $data=array();        
         try{
@@ -184,7 +184,7 @@ class DocumentoEntradaModel
         }
     }
     
-    
+    // verficia si existeun documento de salida antes de eliminar
     public function eliminarDocumentoEntrada($ID_DOCUMENTO_ENTRADA){
         try{
             $dao= new DocumentoEntradaDAO();
