@@ -2,8 +2,8 @@
 
 require_once '../dao/DocumentoSalidaDAO.php';
 require_once '../Pojo/DocumentoSalidaPojo.php';
-
-class DocumentoSalidaModel {
+class DocumentoSalidaModel
+{
     //put your code here
     /*
       *============================================================================
@@ -188,7 +188,9 @@ class DocumentoSalidaModel {
         }
     }
 
-    
+    // lista empleados responsables de tema ligados a documento salida
+    // lista empleados responsables de tema ligados a documento salida sin folio
+    // une las listas en una sola lista y se eliminan las filas(registros) repetidas
     public function responsableDelTemaParaFiltro($CONTRATO)
     {
         try 
@@ -207,6 +209,10 @@ class DocumentoSalidaModel {
         }
     }
     
+
+    // lista autoridades remitente de documento de entrada ligados a documento de salida con folio
+    // lista autoridades remitente de documento de entrada ligados a documento de salida sin folio
+    // une las listas en una sola lista y se eliminan las filas(registros) repetidas
     public function autoridadRemitenteParaFiltro($CONTRATO)
     {
         try 
@@ -244,10 +250,6 @@ class DocumentoSalidaModel {
             throw $ex;
             return -1;
         }
-    }
-    
-    
-    
+    }   
 }
-
 ?>
