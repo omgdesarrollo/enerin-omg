@@ -721,7 +721,8 @@
                 });
         }
 
-        function eliminarDocumentoSalidaRegistro(id_afectado)
+        // elimina un documento salida con o sin folio
+        eliminarDocumentoSalidaRegistro = (id_afectado)=>
         {
                 $.ajax({
                         url:"../Controller/DocumentosSalidaController.php?Op=EliminarDocumentoSalida",
@@ -733,7 +734,6 @@
                         },
                         success:(res)=>
                         {
-                                // console.log(data);
                                 if(res >= 0)
                                 {
                                         dataListadoTemp=[];
@@ -741,17 +741,16 @@
                                         numeroEliminar=0;
                                         itemEliminar={};
                                         id = id_afectado.id_documento_salida;
-                                        $.each(dataListado,function(index,value)
+                                        $.each(dataListado,(index,value)=>
                                         {
                                                 value.id_documento_salida != id ? dataListadoTemp.push(value) : (dataItem.push(value), numeroEliminar=index+1);
                                         });
-                                        // console.log(dataListadoTemp);
                                         // itemEliminar = reconstruir(dataItem[0],numeroEliminar);este esra para el eliminar directo en grid
                                         DataGrid = [];
                                         dataListado = dataListadoTemp;
                                         if(dataListado.length == 0 )
                                                 ultimoNumeroGrid=0;
-                                        $.each(dataListado,function(index,value)
+                                        $.each(dataListado,(index,value)=>
                                         {
                                                 DataGrid.push( reconstruir(value,index+1) );
                                         });
@@ -769,19 +768,21 @@
                 });
         }
         
-        function actualizarDocumentoSalida(id_salida,tabla)
+        // lista un documento de salida actualizado
+        actualizarDocumentoSalida = (id_salida,tabla)=>
         {
                 url = "filesDocumento/Salida/";
                 $.ajax({
                         url:'../Controller/DocumentosSalidaController.php?Op=ListarUno',
                         type: 'GET',
                         data:"URL="+url+"&TABLA="+tabla+"&ID_DOCUMENTO_SALIDA="+id_salida,
-                        success:function(datos)
+                        success:(datos)=>
                         {
                                 if(typeof(datos)=="object")
                                 {
                                         // growlSuccess("Actulización","Se actualizaron los campos");
-                                        $.each(datos,function(index,value){
+                                        $.each(datos,(index,value)=>
+                                        {
                                                 componerDataListado(value);
                                         });
                                         componerDataGrid();
@@ -794,7 +795,7 @@
                                         gridInstance.loadData();
                                 }
                         },
-                        error:function()
+                        error:()=>
                         {
                                 componerDataGrid();
                                 gridInstance.loadData();
@@ -803,7 +804,8 @@
                 });
         }
 
-        function saveUpdateToDatabase(args)//listo
+        // actualiza los campos modificados
+        saveUpdateToDatabase = (args)=>
         {
                 // console.log(args);
                 columnas=new Object();
@@ -879,7 +881,7 @@
                                                 gridInstance.loadData();
                                         }
                                 },
-                                error:function()
+                                error:()=>
                                 {
                                         componerDataGrid();
                                         gridInstance.loadData();
@@ -905,7 +907,7 @@
         //                                                        $('#create-item .close').click();
         //                                                        refresh();
         
-        function refresh()
+        refresh = ()=>
         {
                 reiniciar();
         //      inicializarEstructuraGrid().then(()=>{
@@ -919,10 +921,7 @@
         //  });
         }
 
-
 </script>
-
-
 
 <!-- INICIA SECCION PARA CARGAR ARCHIVOS--> 
  <script id="template-upload" type="text/x-tmpl">
@@ -980,8 +979,6 @@
 </script>
 <!-- FINALIZA SECCION PARA CARGAR ARCHIVOS-->
 
-
-
     <!--Inicia para el spiner cargando-->
     <!--<script src="../../js/loaderanimation.js" type="text/javascript"></script>-->
     <!--Termina para el spiner cargando-->
@@ -1017,14 +1014,6 @@
         <noscript><link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui-noscript.css"></noscript>
         <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload.css">
         <link rel="stylesheet" href="../../assets/FileUpload/css/jquery.fileupload-ui.css">-->
-
-
-
-            
-	</body>
      
+	</body>
 </html>
-
-
-
-

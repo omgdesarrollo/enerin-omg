@@ -1,10 +1,12 @@
-$(function()
+
+$(()=>
 {
     $("#subirArchivos").click(function()
     {
-//        alert("es");
         agregarArchivosUrl();
     });
+
+    // verifica que los datos esten llenos
     $("#btn_guardar").click(function()
     {
         documentoSalidaDatos=new Object();
@@ -25,8 +27,7 @@ $(function()
                documentoSalidaDatos.observaciones!=""?
                true: false: false: false: false: false: false
             );
-
-               listo ?  insertarDocumentoSalida(documentoSalidaDatos):swalError("Completar campos");
+        listo ?  insertarDocumentoSalida(documentoSalidaDatos):swalError("Completar campos");
     });
 
     $("#btn_limpiar").click(function()
@@ -323,36 +324,33 @@ $(function()
 //    return tempData;
 //}
 
-function documentosEntradaComboboxparaModal()
+// lista documentos de entrada, si no existen trae sin documento entrada
+documentosEntradaComboboxparaModal = ()=>
 {
   $.ajax({
       url:"../Controller/DocumentosEntradaController.php?Op=mostrarcombo",
       type:"GET",
-      success:function(documentosEntrada)
+      success:(documentosEntrada)=>
       {
           tempData="";
           tempData+="<option value='-1'>SIN FOLIO DE ENTRADA</option>";
-          $.each(documentosEntrada,function(index,value)
+          $.each(documentosEntrada,(index,value)=>
           {
               tempData+="<option value='"+value.id_documento_entrada+"'>"+value.folio_entrada+"</option>";
-
-          }); 
-          
+          });
           $("#ID_DOCUMENTO_ENTRADA").html(tempData);
       }
   });  
 }
 
-
-
-function listarFoliosDeEntrada()
+// lista folios de documento de entrada
+listarFoliosDeEntrada = ()=>
 {
-//    alert("listarFoliosDeEntrada");
     $.ajax({
         url:"../Controller/DocumentosSalidaController.php?Op=listarFoliosEntrada",
         type:"GET",
         async:false,
-        success:function(foliosEntrada)
+        success:(foliosEntrada)=>
         {
             DocumentoEntradasComboBox=foliosEntrada;
         }
@@ -360,10 +358,9 @@ function listarFoliosDeEntrada()
     return DocumentoEntradasComboBox;
 }
 
-
-function insertarDocumentoSalida(documentoSalidaDatos)
+// agrega nuevo documento salida, agrega el nuevo registro a la tabla (jsGrid)
+insertarDocumentoSalida = (documentoSalidaDatos)=>
 {
-//    alert("Entro a la funcion guardar");
         URL = "filesDocumento/Salida/";
         $.ajax({
         url:"../Controller/DocumentosSalidaController.php?Op=Guardar",
@@ -374,19 +371,14 @@ function insertarDocumentoSalida(documentoSalidaDatos)
         {
             growlWait("Crear Documento Salida","Guardando Registro...");
         },
-        success:function(datos)
+        success:(datos)=>
         {
-//            alert("valor datos: "+datos);
-//            console.log(datos);
             if(typeof(datos) == "object")
             {
                 growlSuccess("Crear Documento Salida","Registro Creado");
                 tempData = new Object();
-//                 swalSuccess("Documento Creado");
-                // console.log(datos);
                 $.each(datos,function(index,val)
                 {
-                //   console.log(val.archivosUpload[0].length); 
                    tempData = reconstruir(val,ultimoNumeroGrid+1);
                 });
                 
@@ -411,15 +403,14 @@ function insertarDocumentoSalida(documentoSalidaDatos)
                 }
             }
         },
-        error:function()
-            {
-                // swalError("Error en el servidor");
-                growlError("Error Creando Documento Salida","Error en el servidor");
-            }
+        error:()=>
+        {
+            // swalError("Error en el servidor");
+            growlError("Error Creando Documento Salida","Error en el servidor");
+        }
     });
     
 }
-
 
 
 var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/form-data'>";
@@ -438,56 +429,52 @@ var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/
 months = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 
   
-  
-  function mostrar_urls(id_documento_salida)
+// contruye la tabla de los archivos subidos
+mostrar_urls = (id_documento_salida)=>
 {
-        var tempDocumentolistadoUrl = "";
-        URL = 'filesDocumento/Salida/'+id_documento_salida;
-        $.ajax({
-                url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
-                type: 'GET',
-                data: 'URL='+URL,
-                async:false,
-                success: function(todo)
+    var tempDocumentolistadoUrl = "";
+    URL = 'filesDocumento/Salida/'+id_documento_salida;
+    $.ajax({
+            url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
+            type: 'GET',
+            data: 'URL='+URL,
+            async:false,
+            success:(todo)=>
+            {
+                if(todo[0].length!=0)
                 {
-                        if(todo[0].length!=0)
-                        {
-                                tempDocumentolistadoUrl = "<table class='tbl-qa' style='width:100%'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
-                                $.each(todo[0], function (index,value)
-                                {
-                                        nametmp = value.split("^-O-^-M-^-G-^");
-                                        // fecha = new Date(nametmp[0]*1000);
-                                        // fecha = fecha.getDate() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-                                        fecha = getFechaStamp(nametmp[0]);
-                                        
-                                        tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
-                                        tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\" download='"+nametmp[1]+"'>"+nametmp[1]+"</a></td>";
-                                        tempDocumentolistadoUrl += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
-                                        tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
-                                        tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";
-                                });
-                                tempDocumentolistadoUrl += "</tbody></table>";
-                        }
-                        if(tempDocumentolistadoUrl == " ")
-                        {
-                                tempDocumentolistadoUrl = " No hay archivos agregados ";
-                        }
-                        tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdDocumentoSalida' type='text' style='display:none;' value='"+id_documento_salida+"'>";
-                        // alert(tempDocumentolistadoUrl);
-                        $('#DocumentoEntradaAgregarModal').html(" ");
-                        $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
-                        $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
-                        // $('#fileupload').fileupload();
-                        $('#fileupload').fileupload({
-                        url: '../View/',
-                        });
+                    tempDocumentolistadoUrl = "<table class='tbl-qa' style='width:100%'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
+                    $.each(todo[0],(index,value)=>
+                    {
+                            nametmp = value.split("^-O-^-M-^-G-^");
+                            // fecha = new Date(nametmp[0]*1000);
+                            // fecha = fecha.getDate() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+                            fecha = getFechaStamp(nametmp[0]);
+                            
+                            tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
+                            tempDocumentolistadoUrl += "<a href=\""+todo[1]+"/"+value+"\" download='"+nametmp[1]+"'>"+nametmp[1]+"</a></td>";
+                            tempDocumentolistadoUrl += "<td><button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
+                            tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
+                            tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button></td></tr>";
+                    });
+                    tempDocumentolistadoUrl += "</tbody></table>";
                 }
-        });
+                if(tempDocumentolistadoUrl == " ")
+                {
+                    tempDocumentolistadoUrl = " No hay archivos agregados ";
+                }
+                tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdDocumentoSalida' type='text' style='display:none;' value='"+id_documento_salida+"'>";
+                $('#DocumentoEntradaAgregarModal').html(" ");
+                $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
+                $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
+                $('#fileupload').fileupload({
+                    url: '../View/',
+                });
+            }
+    });
 }
-
-
   
-  function agregarArchivosUrl()
+agregarArchivosUrl = ()=>
 {
   
         var ID_DOCUMENTO_SALIDA = $('#tempInputIdDocumentoSalida').val();
@@ -496,71 +483,65 @@ months = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic
                 url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
                 type: 'GET',
                 data: 'URL='+url,
-                success:function(creado)
+                success:(creado)=>
                 {
                     if(creado==true)
                         $('.start').click();
                 },
-                error:function()
+                error:()=>
                 {
                         swalError("Error del servidor");
                 }
         });
 }
-  
-  
-  
-    function borrarArchivo(url)
-    {
-            swal({
-                title: "ELIMINAR",
-                text: "Confirme para eliminar el documento de salida",
-                type: "warning",
-                showCancelButton: true,
-                // closeOnConfirm: false,
-                // showLoaderOnConfirm: true
-                confirmButtonText:'SI'
-                }).then((res)=>
-                {
-                        if(res)
+
+// elimina el archivo cargado para el documento de salida
+borrarArchivo = (url)=>
+{
+    swal({
+        title: "ELIMINAR",
+        text: "Confirme para eliminar el documento de salida",
+        type: "warning",
+        showCancelButton: true,
+        // closeOnConfirm: false,
+        // showLoaderOnConfirm: true
+        confirmButtonText:'SI'
+        }).then((res)=>
+        {
+            if(res)
+            {
+                var ID_DOCUMENTO= $('#tempInputIdDocumentoSalida').val();
+                // var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
+                $.ajax({
+                        url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
+                        type: 'GET',
+                        data: 'URL='+url,
+                        beforeSend:()=>
                         {
-                             var ID_DOCUMENTO= $('#tempInputIdDocumentoSalida').val();
-//                                var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
-                                $.ajax({
-                                        url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
-                                        type: 'GET',
-                                        data: 'URL='+url,
-                                        beforeSend:()=>
-                                        {
-                                                growlWait("Eliminar Archivo","Eliminando Archivo...");
-                                        },
-                                        success: function(eliminado)
-                                        {
-                                                // eliminar = eliminado;
-                                                if(eliminado)
-                                                {
-                                                        growlSuccess("Eliminar Archivo","Archivo Eliminado");
-                                                        mostrar_urls(ID_DOCUMENTO);
-                                                        actualizarDocumentoEntrada(ID_DOCUMENTO);
-                                                        // swal("","Archivo eliminado");
-                                                        setTimeout(function(){swal.close();},1000);
-                                                }
-                                                else
-                                                        growlError("Error Eliminar","Ocurrio un error al eliminar el archivo");
-                                        },
-                                        error:function()
-                                        {
-                                                growlError("Error","Error en el servidor");
-                                        }
-                                });
+                            growlWait("Eliminar Archivo","Eliminando Archivo...");
+                        },
+                        success:(eliminado)=>
+                        {
+                            // eliminar = eliminado;
+                            if(eliminado)
+                            {
+                                growlSuccess("Eliminar Archivo","Archivo Eliminado");
+                                mostrar_urls(ID_DOCUMENTO);
+                                actualizarDocumentoEntrada(ID_DOCUMENTO);
+                                setTimeout(function(){swal.close();},1000);
+                            }
+                            else
+                                growlError("Error Eliminar","Ocurrio un error al eliminar el archivo");
+                        },
+                        error:()=>
+                        {
+                            growlError("Error","Error en el servidor");
                         }
                 });
-        
-        
-        
-        
-        
-        
+            }
+        });
+}
+
 //        
 //      swal({
 //          title: "ELIMINAR",
@@ -593,5 +574,4 @@ months = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic
 //            }
 //          });
 //        });
-    }
-
+    // }

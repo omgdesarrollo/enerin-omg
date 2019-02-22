@@ -37,6 +37,7 @@ class DocumentoSalidaModel
         }
     }
 
+    // ver los Dao
     public function listarDocumentoSalida($ID_DOCUMENTO_SALIDA,$TABLA)
     {
         try
@@ -64,8 +65,6 @@ class DocumentoSalidaModel
         try{
             $dao=new DocumentoSalidaDAO();
             $rec=$dao->listarFoliosDeEntrada();
-            
-            
             return $rec;
         }  catch (Exception $ex){
             throw  $ex;
@@ -74,6 +73,8 @@ class DocumentoSalidaModel
         
     }
 
+    // obtiene el identificador mayor de documento salida con o sin folio
+    // inserta el documento de salida de acuerdo a la tabla de guardado, y lista los datos de un registro nuevo
     public function insertar($pojo,$CONTRATO)
     {
         try{
@@ -121,7 +122,6 @@ class DocumentoSalidaModel
             }
             else
                return $exito[0];
-            // echo $rec;
             return $rec;
            
         } catch (Exception $ex) {
@@ -156,14 +156,12 @@ class DocumentoSalidaModel
     }
     
     
-    
     public function eliminarDocumentoSalidaConFolio($ID_DOCUMENTO)
     {
         try
         {
             $dao=new DocumentoSalidaDAO();
             $rec= $dao->eliminarDocumentoSalidaConFolio($ID_DOCUMENTO);
-
             return $rec;
         } catch (Exception $ex) 
         {
@@ -171,7 +169,6 @@ class DocumentoSalidaModel
             return -1;
         }
     }
-    
     
     public function responsablesDelTemaCombobox()
     {
@@ -236,6 +233,7 @@ class DocumentoSalidaModel
 
     //    AREA DEL DOCUMENTO DE SALIA SIN FOLIO DE ENTRADA
     
+    // elimina documento de salida con y sin folio
     public function eliminarDocumento($ID_DOCUMENTO)
     {
         try

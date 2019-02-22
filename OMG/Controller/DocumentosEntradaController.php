@@ -48,26 +48,24 @@ switch ($Op)
 		echo json_encode( $Lista);
 	break;
 
-        case 'mostrarcombo':
+	// lista documentos de entrada
+	case 'mostrarcombo':
 		$Lista=$model->listarDocumentosEntradaComboBox(Session::getSesion("s_cont"));
     	Session::setSesion("listarDocumentosEntradaComboBox",$Lista);
 //    	$tarjet="../view/principalmodulos.php";
     	header('Content-type: application/json; charset=utf-8');
-//		echo json_encode($Lista);
-                echo json_encode($Lista);
-//	$filas=array();	
-//        foreach ($Lista as $filas)
-//            //$sentencia="SELECT * FROM empleados";
-//            //$resultado=mysql_query($sentencia);
-//            //while($filas=mysql_fetch_assoc($resultado))
-//              
-//            {
-//            echo json_encode($filas['ID_EMPLEADO']);	
-//            }
-		//header("location: login.php");
-//echo $json = json_encode(array("n" => "".$Lista.NOMBRE_EMPLEADO, "a" => "apellido",  "c" => "test"));
-		return $Lista;
-		break;    
+		echo json_encode($Lista);
+		//	$filas=array();	
+		//        foreach ($Lista as $filas)
+		//            //$sentencia="SELECT * FROM empleados";
+		//            //$resultado=mysql_query($sentencia);
+		//            //while($filas=mysql_fetch_assoc($resultado))
+		//              
+		//            {
+		//            echo json_encode($filas['ID_EMPLEADO']);	
+		//            }
+		//echo $json = json_encode(array("n" => "".$Lista.NOMBRE_EMPLEADO, "a" => "apellido",  "c" => "test"));
+	break;    
             
 	
 	case 'Nuevo':
