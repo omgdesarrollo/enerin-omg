@@ -341,26 +341,18 @@ $Usuario=  Session::getSesion("user");
     });
 
 </script>
-
-            
-            <!--Inicia para el spiner cargando-->
-            <script src="../../js/loaderanimation.js" type="text/javascript"></script>
-            <!--Termina para el spiner cargando-->
-           
-            <!--Bootstrap-->
-            <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
-            <!--Para abrir alertas de aviso, success,warning, error-->       
-            <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
-            
-            <!--Para abrir alertas del encabezado-->
-            <script src="../../assets/probando/js/ace-elements.min.js"></script>
-            <script src="../../assets/probando/js/ace.min.js"></script>
+    <!--Inicia para el spiner cargando-->
+    <script src="../../js/loaderanimation.js" type="text/javascript"></script>
+    <!--Termina para el spiner cargando-->
     
-
-           
-                
-	</body>
+    <!--Bootstrap-->
+    <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
+    <!--Para abrir alertas de aviso, success,warning, error-->       
+    <script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>
+    
+    <!--Para abrir alertas del encabezado-->
+    <script src="../../assets/probando/js/ace-elements.min.js"></script>
+    <script src="../../assets/probando/js/ace.min.js"></script>     
+</body>
      
 </html>
-
-

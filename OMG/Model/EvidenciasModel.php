@@ -133,6 +133,8 @@ class EvidenciasModel
         }
     }
     
+    // lista subtemas de los temas
+    // lista registro dentro de temas -> subtemas
     public function listarRegistros($CADENA,$ID_TEMA)
     {
         try
@@ -309,6 +311,7 @@ class EvidenciasModel
         }
     }
 
+    // obtiene los mensaje, transforma los datos a objecto(array) agrega el nuevo mensaje, transforma el objecto a string y lo guarda
     public function  agregarMensaje($ID_USUARIO,$ID_EVIDENCIA,$MENSAJE,$FECHA)
     {
         try

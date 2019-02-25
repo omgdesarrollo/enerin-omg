@@ -1,8 +1,8 @@
 <?php
+ 
  require_once '../dao/InformeEvidenciasDAO.php';
-
- class InformeEvidenciasModel{
-     
+ class InformeEvidenciasModel
+ {    
      public function listarEvidencias($CONTRATO)
      {
          try

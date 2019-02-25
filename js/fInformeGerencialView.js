@@ -60,7 +60,7 @@ function inicializarFiltros()
     });
 }
 
-function listarDatos()
+listarDatos = ()=>
 {
     return new Promise((resolve,reject)=>
     {
@@ -72,15 +72,13 @@ function listarDatos()
             {
                 growlWait("Solicitud","Solicitando Datos...");
             },
-            success:function(data)
+            success:(data)=>
             {
-//                console.log(data);
                 if(typeof(data)=="object")
                 {
-//                    console.log(data);
                     growlSuccess("Solicitud","Registros obtenidos");
                     dataListado = data;
-                    $.each(data,function (index,value)
+                    $.each(data,(index,value)=>
                     {
                         __datos.push( reconstruir(value,index+1) );
                     });
@@ -93,9 +91,8 @@ function listarDatos()
                     reject();
                 }
             },
-            error:function(e)
+            error:(e)=>
             {
-                console.log(e);
                 growlError("Error","Error en el servidor");
                 reject();
             }
@@ -104,7 +101,7 @@ function listarDatos()
     });
 }
 
-function reconstruir(value,index)
+reconstruir = (value,index)=>
 {
     tempData = new Object();
 //    tempData["id_principal"] = [{'id_tema':value.id_tema}],
@@ -224,7 +221,7 @@ function graficar()
     let tituloGrafica = "DOCUMENTOS DE ENTRADA";
     let bandera = 0;
     
-    $.each(dataListado,function(index,value)
+    $.each(dataListado,(index,value)=>
     {
         if(value.condicion=="Alarma Vencida")
         {
@@ -264,7 +261,7 @@ function graficar()
     if(tiempoVencido!=0)
         dataGrafica.push(["En Proceso-Tiempo Vencido",tiempoVencido,">> Documentos de Entrada:"+tiempoVencido.toString(),JSON.stringify(tiempoVencido_data),1]);
     
-    $.each(dataGrafica,function(index,value)
+    $.each(dataGrafica,(index,value)=>
     {
         if(value[1] != 0)
             bandera=1;
@@ -326,7 +323,6 @@ function graficar3(documentosEntrada,concepto)
     
     $.each(documentosEntrada,(index,value)=>
     {
-//        console.log("Estos son los datos: ",datos);
         if(lista[value.id_documento_entrada]==undefined)
             lista[value.id_documento_entrada]=[];
         lista[value.id_documento_entrada].push(value);

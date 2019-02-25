@@ -40,7 +40,6 @@ $(function()
                             {
                                 (typeof(data)=="object")?
                                 (
-                                    // console.log(data),
                                     growlSuccess("Crear Evidencia","Evidencia Creada"),
                                     tempData = new Object(),
                                     $.each(data,function(index,value){
@@ -109,7 +108,7 @@ $(function()
 
 });//CIERRA EL $(FUNCTION())
 
-function inicializarFiltros()
+inicializarFiltros = ()=>
 {
     return new Promise((resolve,reject)=>
     {
@@ -139,7 +138,7 @@ function inicializarFiltros()
     });
 }
 
-function listarDatos()
+listarDatos = ()=>
 {
     return new Promise((resolve,reject)=>
     {
@@ -149,17 +148,17 @@ function listarDatos()
             url: '../Controller/EvidenciasController.php?Op=Listar',
             type: 'GET',
             data:"URL="+URL,
-            beforeSend:function()
+            beforeSend:()=>
             {
                 growlWait("Solicitud","Solicitando Datos...");
             },
-            success:function(data)
+            success:(data)=>
             {
                 if(typeof(data)=="object")
                 {
                     growlSuccess("Solicitud","Registros obtenidos");
                     dataListado = data;
-                    $.each(data,function (index,value)
+                    $.each(data,(index,value)=>
                     {
                         __datos.push( reconstruir(value,index+1) );
                     });
@@ -174,7 +173,7 @@ function listarDatos()
                     reject();
                 }
             },
-            error:function(e)
+            error:(e)=>
             {
                 // console.log(e);
                 growlError("Error","Error en el servidor");
@@ -295,7 +294,8 @@ function limpiarNuevaEvidenciaModal()
     //     myFunction();
     // }
 
-    function buscarTemas(data)
+    // construye la filas para la lista de la busqueda de temas
+    buscarTemas = (data)=>
     {
         cadena = $(data).val().toLowerCase();        
         tempData="";
@@ -306,10 +306,10 @@ function limpiarNuevaEvidenciaModal()
                 type: 'GET',
                 data: 'CADENA='+cadena,
                 async:false,
-                success:function(temas)
+                success:(temas)=>
                 {
                     // console.log(temas);
-                    $.each(temas,function(index,value)
+                    $.each(temas,(index,value)=>
                     {
                         // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
                         // datos = value.id_tema+"^_^"+value.no+"^_^"+value.nombre+"^_^"+value.descripcion;
@@ -329,13 +329,13 @@ function limpiarNuevaEvidenciaModal()
         $("#dropdownEventRegistroEvidencia").html("");
     }
 
-    function seleccionarItemTemas(usuarioTemas)
+    seleccionarItemTemas = (usuarioTemas)=>
     {
         $('#NOMBRETEMA_NUEVAEVIDENCIA').val(usuarioTemas.no+" - "+usuarioTemas.nombre);
         $("#IDTEMA_NUEVAEVIDENCIAMODAL").val(usuarioTemas.id_tema);
     }
 
-    function seleccionarItemRegistro(Registros)
+    seleccionarItemRegistro = (Registros)=>
     {
         $('#NOMBREREGISTRO_NUEVAEVIDENCIA').val(Registros.registro);
         $('#NOMBRETEMA_NUEVAEVIDENCIA').attr("disabled","true");
@@ -344,10 +344,10 @@ function limpiarNuevaEvidenciaModal()
         $("#DOCUMENTO_NUEVAEVIDENCIAMODAL").html(Registros.documento);
         $("#NOMBRE_NUEVAEVIDENCIAMODAL").html(Registros.nombre);
         dataRegistro=Registros;
-        // console.log(dataRegistro);
     }
 
-    function buscarRegistros(Obj)
+    // crontruye las filas de todos registros listados de un tema
+    buscarRegistros = (Obj)=>
     {
         idTema = $("#IDTEMA_NUEVAEVIDENCIAMODAL").val();
         cadena = $(Obj).val().toLowerCase();
@@ -362,9 +362,9 @@ function limpiarNuevaEvidenciaModal()
                     type: 'GET',
                     data: 'ID_TEMA='+idTema+"&CADENA="+cadena,
                     async:false,
-                    success:function(registros)
+                    success:(registros)=>
                     {
-                        $.each(registros,function(index,value)
+                        $.each(registros,(index,value)=>
                         {
                             // nombre = value.nombre_empleado+" "+value.apellido_paterno+" "+value.apellido_materno;
                             // datos = value.id_tema+"^_^"+value.no+"^_^"+value.nombre+"^_^"+value.descripcion;
@@ -374,7 +374,7 @@ function limpiarNuevaEvidenciaModal()
                         });
                         $("#dropdownEventRegistroEvidencia").html(tempData);
                     },
-                    error:function()
+                    error:()=>
                     {
                         swalError("Error en el servidor");
                     }
@@ -701,7 +701,9 @@ function limpiarNuevaEvidenciaModal()
 //         }
 // });
 
-function preguntarEliminar(data)
+
+// peticion para confirmar eliminar una evidencia
+preguntarEliminar = (data)=>
 {
     // console.log(data);
     swal({
@@ -723,7 +725,7 @@ function preguntarEliminar(data)
         });
 }
 
-function refresh()
+refresh = ()=>
 {
     promesaInicializarFiltros = inicializarFiltros();
     promesaInicializarFiltros.then((resolve)=>
@@ -1017,6 +1019,7 @@ function reconstruir(value,index)//listo jsgrid
     return tempData;
 }
 
+// contruye el encabezado que contiene a los involucrados de las notificaciones (mensajes)
 abrirNotificaciones = (idEvidencia,responsableTema,responsableEvidencia)=>
 {
     $("#usuarios_notificaciones")[0]["dataCustom"] = {"ID_EVIDENCIA":0,"R_TEMA":0,"R_EVIDENCIA":0,"TIPO":1,"ENVIAR":0};
@@ -1029,7 +1032,7 @@ abrirNotificaciones = (idEvidencia,responsableTema,responsableEvidencia)=>
         {
             growlWait("Espere","Cargando Mensajes...");
         },
-        success:function(data)
+        success:(data)=>
         {
             if(typeof(data)=="object")
             {
@@ -1077,7 +1080,7 @@ abrirNotificaciones = (idEvidencia,responsableTema,responsableEvidencia)=>
                     tempData += '</div>';
                     cargarMensajes();
                     $("#usuarios_notificaciones").html(tempData);
-                    console.log($("#usuarios_notificaciones"));
+                    // console.log($("#usuarios_notificaciones"));
                 }
                 else
                 {
@@ -1089,13 +1092,14 @@ abrirNotificaciones = (idEvidencia,responsableTema,responsableEvidencia)=>
                 growlError("Error","Error al cargar mensajes");
             }
         },
-        error:function()
+        error:()=>
         {
             growlError("Error","Error en el servidor");
         }
     });
 }
 
+// contruye el cuerpo que contiene los mensajes de las notificaciones
 cargarMensajes = ()=>
 {
     idEvidencia = $("#usuarios_notificaciones")[0]["dataCustom"]["ID_EVIDENCIA"];
@@ -1113,7 +1117,7 @@ cargarMensajes = ()=>
             // if(tipo==0)
             //     growlWait("Espere"," Mensajes...");
         },
-        success:function(data)
+        success:(data)=>
         {
             if(typeof(data)=="object")
             {
@@ -1155,7 +1159,7 @@ cargarMensajes = ()=>
                 growlError("Error","Error al recibir mensajes");
             }
         },
-        error:function()
+        error:()=>
         {
             growlError("Error ","Error en el servidor");
         }
@@ -1163,6 +1167,7 @@ cargarMensajes = ()=>
     $("#mostrar_notificaciones").modal();
 }
 
+// guarda nuevo mensaje
 enviarMensajes = ()=>
 {
     let ID_EVIDENCIA = $("#usuarios_notificaciones")[0]["dataCustom"]["ID_EVIDENCIA"];
@@ -1186,6 +1191,7 @@ enviarMensajes = ()=>
     }
 }
 
+// si es responsable de la evidencia envia notificacion al segundo usuario, agrega la conformidad a la evidencia
 siConforme = (permiso,idPara,id,registro) =>
 {
     if(permiso==1 )
@@ -1199,6 +1205,7 @@ siConforme = (permiso,idPara,id,registro) =>
     }
 }
 
+// si es responsable de la evidencia envia notificacion al segundo usuario, quita la conformidad a la evidencia
 noConforme =(permiso,idPara,id,registro) =>
 {
     // console.log("idPara",idPara);
@@ -1258,13 +1265,14 @@ function reconstruirExcel(value,index)
     return tempData
 }
 
-function eliminarEvidencia(id_evidencias)
+// elimina la evidencia
+eliminarEvidencia = (id_evidencias)=>
 {
     $.ajax({
         url: '../Controller/EvidenciasController.php?Op=EliminarEvidencia',
         type: 'POST',
         data: 'ID_EVIDENCIA='+id_evidencias,
-        success:function(eliminado)
+        success:(eliminado)=>
         {
             if(eliminado==true)
             {
@@ -1272,7 +1280,7 @@ function eliminarEvidencia(id_evidencias)
                 dataItem = [];
                 numeroEliminar=0;
                 itemEliminar={};
-                $.each(dataListado,function(index,value)
+                $.each(dataListado,(index,value)=>
                 {
                     value.id_evidencias != id_evidencias ? dataListadoTemp.push(value) : (dataItem.push(value), numeroEliminar=index+1);//en el primer value.id_xxxx es el id por el cual se elimino la evidencia, id_evidencias es el que se recibe por parametro entrada
                 });
@@ -1281,7 +1289,7 @@ function eliminarEvidencia(id_evidencias)
                 dataListado = dataListadoTemp;
                 if(dataListado.length == 0 )
                     ultimoNumeroGrid=0;
-                $.each(dataListado,function(index,value)
+                $.each(dataListado,(index,value)=>
                 {
                     DataGrid.push( reconstruir(value,index+1) );
                 });
@@ -1295,7 +1303,7 @@ function eliminarEvidencia(id_evidencias)
                 swal.close();
             }
         },
-        error:function()
+        error:()=>
         {
             growlError("Error Eliminar","Error en el servidor");
             swal.close();
@@ -1307,6 +1315,8 @@ function eliminarEvidencia(id_evidencias)
     // {
 
     // }
+
+// pendiente de verificar si esta en uso
 function validarEvidencia(checkbox,tabla,column,context,id,idPara)
 {
     Obj = $(checkbox);
@@ -1340,7 +1350,8 @@ function validarEvidencia(checkbox,tabla,column,context,id,idPara)
         });
 }
 
-function actualizarEvidencia(id,valor)
+// actualiza la conformidad de la evidencias, lista los nuevos datos y actualiza los datos (jsGrid) de la vista
+actualizarEvidencia = (id,valor)=>
 {
     URL = 'filesEvidenciaDocumento/';
     $.ajax({
@@ -1379,6 +1390,7 @@ function actualizarEvidencia(id,valor)
     });
 }
 
+// pendiente de verificar si esta en uso
 function MandarNotificacionDesviacion(idPara,responsable,msj,idEvidencia)
 {
     if(responsable==1)
@@ -1396,6 +1408,7 @@ function MandarNotificacionDesviacion(idPara,responsable,msj,idEvidencia)
     }
 }
 
+// pendiente de verificar si esta en uso
 function MandarNotificacion(idPara,responsable,msj,idEvidencia,validador)
 {
     if(responsable!=1 || validador==1)
@@ -1413,6 +1426,7 @@ function MandarNotificacion(idPara,responsable,msj,idEvidencia,validador)
     }
 }
 
+// pendiente de verificar si esta en uso
 function notificar(idPara,idEvidencia,columna)
 {
     mensaje = $("#textAreaNotificacionModal").val();
@@ -1439,12 +1453,13 @@ function notificar(idPara,idEvidencia,columna)
         });
 }
 
+// guarda notificaciones (mensajes) para uno o varios remitentes
 function enviar_notificacion(mensaje,para,tipoMensaje,atendido,asunto)
 {
     $.ajax({
         url:"../Controller/NotificacionesController.php?Op=EnviarNotificacionHibry",
         data: "PARA="+para+"&MENSAJE="+mensaje+"&ATENDIDO="+atendido+"&TIPO_MENSAJE="+tipoMensaje+"&ASUNTO="+asunto,
-        success:function(response)
+        success:(response)=>
         {
         (response==true)?(
             growlSuccess("Notificación","Se ha notificado")
@@ -1454,7 +1469,7 @@ function enviar_notificacion(mensaje,para,tipoMensaje,atendido,asunto)
         :growlError("Error Notificación","No se pudo notificar");
         
         },
-        error:function()
+        error:()=>
         {
         growlError("Error Notificación","Error en el servidor");
         // swalError("Error en el servidor");
@@ -1691,6 +1706,7 @@ function agregarArchivosUrl()
 //     })
 // }
 
+// no se usa actualmente
 intervalA="";
 timeOutA="";
 mover = '<?php echo $accion; ?>';
@@ -1698,7 +1714,8 @@ mover = '<?php echo $accion; ?>';
 cambio=1;
 ejecutando=false;
 ejecutarPrimeraVez=true;
-    
+
+// no se usa actualmente
 function moverA()
 {
     if(mover!="-1" && ejecutando==false && ejecutarPrimeraVez==true)
@@ -1737,6 +1754,7 @@ function moverA()
     }
 }
 
+
 function swalError(msj)
 {
     swal({
@@ -1749,6 +1767,7 @@ function swalError(msj)
     setTimeout(function(){swal.close();$('#agregarUsuario .close').click()},1500);
     $('#loader').hide();
 }
+
 
 function componerDataListado(value)// id de la vista documento, listo
 {
@@ -1772,11 +1791,9 @@ function componerDataGrid()//listo
     });
     DataGrid = __datos;
 }
-//    listarDatosGrid();
-//    construirGrid(dataTodo);
-//    listarDatos();
 
-//      construir(dataTodo);
+
+// abre una nueva ventana(pestaña) para el gantt
 function cargarprogram(v,validado)
 {
 //    alert("el valor de la evidencia es "+v);
