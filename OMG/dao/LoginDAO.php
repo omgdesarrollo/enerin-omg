@@ -19,7 +19,7 @@ class LoginDAO{
             
             $db = AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
-            // var_dump($lista);
+//             var_dump($query);
             $rec = NULL;
             if (count($lista)==1){
                 $rec=$lista[0];

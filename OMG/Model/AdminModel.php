@@ -185,6 +185,7 @@ class AdminModel
         try
         {
             $dao = new AdminDAO();
+            
             $rec = $dao->verificarPAss($USUARIO,$CONTRASENA);
             if($rec['res']!=0)
             {

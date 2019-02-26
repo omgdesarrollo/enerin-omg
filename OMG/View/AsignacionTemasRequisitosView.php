@@ -207,9 +207,9 @@ $Usuario=  Session::getSesion("user");
 			//lista donde estan los datos pero dirigiso hacia exportar excel 
             var DataGridExcel=[];
 			//para indicar de  que vista  va a exportar esto se utiliza en la libreria  de  excelexportarjs   
-            var origenDeDatosVista="asignacionTemaRequisito";
+            var 	="asignacionTemaRequisito";
             var id_real_arbol_seleccionado=-1;
-			//objetos  para la generacion del directorio de carpetas en forma de arbol
+			//objeto  para la generacion del directorio de carpetas en forma de arbol este se encuentra en la celda "a" del objeto myLayout 
             myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);
 			myTree.setImagePath("../../codebase/imgs/dhxtree_material/");
             myTree.enableDragAndDrop(false);
@@ -238,6 +238,11 @@ $Usuario=  Session::getSesion("user");
 //	      combo = new dhtmlXCombo("comboclave_descripcion");	
 //obtenerTemasEnAsignacion();
 obtenerDatosArbolIzquierda();
+/*
+	*Buscar Documento 
+	*@param {string} data - La descripcion del documento
+*/
+
 function buscarDocumento(data)
 {
     cadena = $(data).val().toLowerCase();
@@ -258,6 +263,7 @@ function buscarDocumento(data)
                     tempData += "onClick='seleccionarItemDocumentos("+JSON.stringify(value)+")'>";
                     tempData += value.clave_documento+" - "+value.documento+"</a></li>";
                 });
+				//agrega en la vista el html construido en la parte de arriba
                 $("#dropdownEvent").html(tempData);
             }
         });
@@ -432,8 +438,9 @@ $(function()
          $("#REGISTRO").val("");
      });
      
-     
-    var $btnDLtoExcel = $('#toExcel'); 
+    
+    var $btnDLtoExcel = $('#toExcel');
+//reconstruye los datos en lista de objetos json  para la generacion del excel  	
     $btnDLtoExcel.on('click', function () 
     {   
         __datosExcel=[]
@@ -444,6 +451,7 @@ $(function()
             });
             DataGridExcel= __datosExcel;
 //            console.log("Entro al excelexportHibrido");
+//exporta los datos a excel 
         $("#listjson").excelexportHibrido({
             containerid: "listjson"
             , datatype: 'json'
@@ -518,7 +526,6 @@ function reconstruirExcel(value,index)
     
     return tempData;    
 }
-
 
 
 var myLayout = new dhtmlXLayoutObject({
@@ -597,7 +604,7 @@ idTree=-1;
 
 
 
-
+//el toolbar de la seccion de en medio del layout en la cell "a" del layout
 function evaluarToolbarSeccionB(id)
 {
     if(id_asignacion_t==-1){
