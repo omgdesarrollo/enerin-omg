@@ -1,7 +1,7 @@
 <?php
 require_once '../dao/LoginDAO.php';
 require_once '../Model/AdminModel.php';
-
+require_once '../Model/SeguridadModel.php';
 class LoginModel{
     /*
       *============================================================================
@@ -16,10 +16,12 @@ class LoginModel{
         try{
             $dao=new LoginDAO();
             $modelAdmin=new AdminModel();
-
+            $modelSeguridad= new SeguridadModel();
+            $values=array("password"=>$clave);
+            
+            $clave=$modelSeguridad->encriptarPassword($values);
             
             $rec["usuario"]=$dao->consultarPorUsuario($usuario,$clave);
-            
             
 //            echo "valor rec:".json_encode($rec["usuario"]);
             
