@@ -11,6 +11,7 @@ $modelArchivo = new ArchivoUploadModel();
 
 switch ($Op)
 {
+    // lista evidencias y agrega a cada registro los archivos cargados
     case 'Listar':
         
         // $v["param"]["v"]=$_REQUEST["validado"];
@@ -33,31 +34,29 @@ switch ($Op)
 
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($nuevo);
-        break;
+    break;
     
+    // verificar uso, en la vista informeEvidencias no se utiliza
+    // lista temas y responsables respectivos, ligados a evidencias
     case 'MostrarTemayResponsable':
         $Lista=$model->obtenerTemayResponsable($_REQUEST['ID_DOCUMENTO'], Session::getSesion("s_cont"));
         header('Content-type: application/json; charset=utf-8');
-        echo json_encode($Lista);
-        return $Lista;
-        
-        break;
+        echo json_encode($Lista);        
+    break;
     
+    // verificar uso, en la vista informeEvidencias no se utiliza
     case'MostrarRequisitosPorDocumento':
         $Lista= $model->obtenerRequisitosporDocumento($_REQUEST['ID_DOCUMENTO'], Session::getSesion("s_cont"));
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
-        return $Lista;
-        
-        break;
+    break;
     
+    // verificar uso, en la vista informeEvidencias no se utiliza
     case'MostrarRegistrosPorDocumento':
         $Lista= $model->obtenerRegistrosporDocumento($_REQUEST['ID_DOCUMENTO'], Session::getSesion("s_cont"));
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($Lista);
-        return $Lista;
-        
-        break;
+    break;
 
     default:
         break;

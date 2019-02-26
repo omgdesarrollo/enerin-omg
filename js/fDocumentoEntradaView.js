@@ -1,5 +1,4 @@
-
-$(function()
+$(()=>
 {
     $("#FOLIO_ENTRADA").keyup(function()
     {
@@ -189,59 +188,53 @@ $(function()
     });
 
     $("#subirArchivos").click(function()
-        {
-                agregarArchivosUrl();
-        });
+    {
+        agregarArchivosUrl();
+    });
 
     // $("tbody").on('click','tr td',(obj)=>{
     //     popup(obj);
     // });
 });
 
-function inicializarFiltros()
+inicializarFiltros = ()=>
 {
     return new Promise((resolve,reject)=>
     {
         filtros = [
-                // { id:"noneUno", type:"none"},
-                // { id: "id_principal", visible:false },
-                { id: "folio_referencia", name: "Referencia", type: "text"},
-                { id: "folio_entrada", name: "Folio Entrada", type: "text"},
-                // { name: "fecha_recepcion", title: "Fecha Recepción", type: "text", width, validate: "required" },
-                { id: "fecha_recepcion", name: "Fecha Recepción", type: "date"},
-
-                { id: "asunto", name: "Asunto", type: "text"},
-                { id: "remitente", name: "Remitente", type: "text"},
-
-                { id: "id_autoridad", name: "Autoridad Remitente", type: "combobox",data:thisAutoridad,descripcion:"clave_autoridad"},
-
-                { id: "id_tema", name: "Numero Tema", type: "combobox", data:thisTemas,descripcion:"no" },
-
-                { id: "nombre", name: "Nombre Tema", type: "text"},
-                { id: "nombre_empleado", name: "Responsable Tema", type: "text"},
-
-                { id: "clasificacion", name: "Clasificación", type: "combobox",descripcion:"descripcion",
-                        data:[{"clasificacion":1,"descripcion":"Con limite de tiempo"},{"clasificacion":2,"descripcion":"Sin limite de tiempo"},{"clasificacion":3,"descripcion":"Informativo"}]},
-
-                { id: "status_doc",name:"Estatus", type: "combobox", descripcion:"descripcion",
-                        data:[{status_doc:"1",descripcion:"PROCESO"},{status_doc:"2",descripcion:"SUSPENDIDO"},{status_doc:"3",descripcion:"TERMINADO"}]
-                },
-
-                { id: "fecha_asignacion", name: "Fecha Asignación", type: "date"},
-                { id: "fecha_limite_atencion", name: "Fecha Limite Atención", type: "date"},
-                { id: "fecha_alarma", name: "Fecha Alarma", type: "date"},
-                // { id: "adjuntar_archivo", name: "Adjuntar Archivos", type: "text"},
-                { id:"noneDos", type:"none"},
-                { id: "observaciones", name: "Observaciones", type: "text"},
-                // { id:"delete", name:"Opción", type:"option",sorting:""},
-                { id:"opcion",type:"opcion"}
-                // { id:"delete", name:"Opción", type:"customControl",sorting:""},
+            // { id:"noneUno", type:"none"},
+            // { id: "id_principal", visible:false },
+            { id: "folio_referencia", name: "Referencia", type: "text"},
+            { id: "folio_entrada", name: "Folio Entrada", type: "text"},
+            // { name: "fecha_recepcion", title: "Fecha Recepción", type: "text", width, validate: "required" },
+            { id: "fecha_recepcion", name: "Fecha Recepción", type: "date"},
+            { id: "asunto", name: "Asunto", type: "text"},
+            { id: "remitente", name: "Remitente", type: "text"},
+            { id: "id_autoridad", name: "Autoridad Remitente", type: "combobox",data:thisAutoridad,descripcion:"clave_autoridad"},
+            { id: "id_tema", name: "Numero Tema", type: "combobox", data:thisTemas,descripcion:"no" },
+            { id: "nombre", name: "Nombre Tema", type: "text"},
+            { id: "nombre_empleado", name: "Responsable Tema", type: "text"},
+            { id: "clasificacion", name: "Clasificación", type: "combobox",descripcion:"descripcion",
+                data:[{"clasificacion":1,"descripcion":"Con limite de tiempo"},{"clasificacion":2,"descripcion":"Sin limite de tiempo"},{"clasificacion":3,"descripcion":"Informativo"}]},
+            { id: "status_doc",name:"Estatus", type: "combobox", descripcion:"descripcion",
+                data:[{status_doc:"1",descripcion:"PROCESO"},{status_doc:"2",descripcion:"SUSPENDIDO"},{status_doc:"3",descripcion:"TERMINADO"}]
+            },
+            { id: "fecha_asignacion", name: "Fecha Asignación", type: "date"},
+            { id: "fecha_limite_atencion", name: "Fecha Limite Atención", type: "date"},
+            { id: "fecha_alarma", name: "Fecha Alarma", type: "date"},
+            // { id: "adjuntar_archivo", name: "Adjuntar Archivos", type: "text"},
+            { id:"noneDos", type:"none"},
+            { id: "observaciones", name: "Observaciones", type: "text"},
+            // { id:"delete", name:"Opción", type:"option",sorting:""},
+            { id:"opcion",type:"opcion"}
+            // { id:"delete", name:"Opción", type:"customControl",sorting:""},
         ];
         resolve();
     });
 }
 
-function listarDatos()
+// lista los datos para contruir el cuerpo de la tabla
+listarDatos = ()=>
 {
     return new Promise((resolve,reject)=>
     {
@@ -251,21 +244,20 @@ function listarDatos()
                 url:'../Controller/DocumentosEntradaController.php?Op=Listar',
                 type: 'GET',
                 data:"URL="+URL,
-                beforeSend:function()
+                beforeSend:()=>
                 {
                         growlWait("Solicitud","Solicitando Datos...");
                 },
-                success:function(data)
+                success:(data)=>
                 {
                         if(typeof(data)=="object")
                         {
                                 growlSuccess("Solicitud","Registros obtenidos");
                                 dataListado = data;
-                                $.each(data,function (index,value)
+                                $.each(data,(index,value)=>
                                 {
                                         __datos.push( reconstruir(value,index+1) );
                                 });
-                                console.log(__datos);
                                 DataGrid = __datos;
                                 gridInstance.loadData();
                                 resolve();
@@ -276,9 +268,8 @@ function listarDatos()
                                 reject();
                         }
                 },
-                error:function(e)
+                error:(e)=>
                 {
-                        console.log(e);
                         growlError("Error","Error en el servidor");
                         reject();
                 }
@@ -286,7 +277,8 @@ function listarDatos()
     });
 }
 
-function listarAutoridades()
+// lista autoridades remitente
+listarAutoridades = ()=>
 {
         return new Promise((resolve,reject)=>
         {
@@ -309,7 +301,8 @@ function listarAutoridades()
         
 }
 
-function listarTemas()
+// lista los registro de temas de oficios
+listarTemas = ()=>
 {
         return new Promise((resolve,reject)=>{
                 $.ajax({
@@ -328,7 +321,8 @@ function listarTemas()
         });
 }
 
-function DocumentoArchivoAgregarModalF()
+// lista autoridades remitentes y temas de oficios
+DocumentoArchivoAgregarModalF = ()=>
 {
         $('#DocumentolistadoUrl').html(" ");
         $('#DocumentolistadoUrlModal').html(" ");
@@ -337,10 +331,10 @@ function DocumentoArchivoAgregarModalF()
         $.ajax({
                 url:'../Controller/AutoridadesRemitentesController.php?Op=mostrarCombo',
                 type: 'GET',
-                success:function(autoridades)
+                success:(autoridades)=>
                 {
                         tempData = "";
-                        $.each(autoridades,function(index,value)
+                        $.each(autoridades,(index,value)=>
                         {
                                 tempData += "<option value='"+value.id_autoridad+"'>"+value.clave_autoridad+"</option>";
                         });
@@ -351,23 +345,23 @@ function DocumentoArchivoAgregarModalF()
         $.ajax({
                 url:'../Controller/TemasOficiosController.php?Op=mostrarCombo',
                 type:'GET',
-                success:function(temas)
+                success:(temas)=>
                 {
                         tempData = "";
-                        $.each(temas,function(index,value)
+                        $.each(temas,(index,value)=>
                         {
                                 tempData += "<option value='"+value.id_tema+"'>"+value.nombre+"</option>";
                         });
                         $("#ID_TEMAMODAL").html(tempData);
                 }
         });
-        // $('#fileupload').fileupload();
         $('#fileupload').fileupload({
                 url: '../View/'
         });
 }
 
-function reconstruir(value,index)//listoooo
+// construye las columnas de cada registro para la tabla (jsGrid)
+reconstruir = (value,index)=>
 {
         tempData = new Object();
 
@@ -419,7 +413,8 @@ function reconstruir(value,index)//listoooo
         return tempData;
 }
 
-function compararFechaAsignacion(val,flimite,falarma)//listo
+// compara la fecha de asignacion contra la fecha de alarma y la fecha limite
+compararFechaAsignacion = (val,flimite,falarma)=>
 {
         limiteF = new Date(flimite);
         limiteF = new Date(limiteF.getFullYear(),limiteF.getMonth(),limiteF.getDate());
@@ -446,14 +441,16 @@ function compararFechaAsignacion(val,flimite,falarma)//listo
                 alarmaF = new Date(alarmaF.getFullYear(),alarmaF.getMonth(),alarmaF.getDate());
                 if(asignacionF>alarmaF)
                 {
-                        swal("D'oh!", "La fecha de asignacion sobrepasa la fecha de alarma, VERIFICA", "error");
+                        // swal("D'oh!", "La fecha de asignacion sobrepasa la fecha de alarma, VERIFICA", "error");
+                        swal("", "La fecha de asignacion sobrepasa la fecha de alarma, VERIFICA", "error");
                         return false;
                 }
         }
         return true;
 }
 
-function compararFechaLimite(val,fasignacion,falarma)//listo
+// compara la fecha limite contra la fecha de asignacion y fecha de alarma
+compararFechaLimite = (val,fasignacion,falarma)=>
 {
         limiteF = new Date(val);
         limiteF = new Date(limiteF.getFullYear(),limiteF.getMonth(),limiteF.getDate());
@@ -477,7 +474,8 @@ function compararFechaLimite(val,fasignacion,falarma)//listo
         return true;
 }
 
-function compararFechaAlarma(val,fasignacion,flimite)//listo
+// compara la fecha de alarma contra la fecha de asignacion y la fecha limite
+compararFechaAlarma = (val,fasignacion,flimite)=>
 {
         alarmaF = new Date(val);
         alarmaF = new Date(alarmaF.getFullYear(),alarmaF.getMonth(),alarmaF.getDate());
@@ -497,11 +495,10 @@ function compararFechaAlarma(val,fasignacion,flimite)//listo
         }
         return true;
 }
-                
 
-function saveUpdateToDatabase(args)//listo
+// actualiza los datos modificados de la fila (jsGrid) y recarga los datos nuevos
+saveUpdateToDatabase = (args)=>
 {
-        console.log(args);
         columnas=new Object();
         entro=0;
         id_afectado = args['item']['id_principal'][0];
@@ -569,7 +566,7 @@ function saveUpdateToDatabase(args)//listo
                                         gridInstance.loadData();
                                 }
                         },
-                        error:function()
+                        error:()=>
                         {
                                 componerDataGrid();
                                 gridInstance.loadData();
@@ -590,7 +587,7 @@ function saveUpdateToDatabase(args)//listo
         }
 }
 
-function componerDataListado(value)// id de la vista documento, listo
+componerDataListado = (value)=>// id de la vista documento, listo
 {
     id_vista = value.id_documento_entrada;
     id_string = "id_documento_entrada";
@@ -604,7 +601,7 @@ function componerDataListado(value)// id de la vista documento, listo
     });
 }
 
-function componerDataGrid()//listo
+componerDataGrid = ()=>
 {
     __datos = [];
     $.each(dataListado,function(index,value){
@@ -613,9 +610,9 @@ function componerDataGrid()//listo
     DataGrid = __datos;
 }
 
-function preguntarEliminar(data)
+// peticion para confirmar el eliminar el registro documento de entrada
+preguntarEliminar = (data) =>
 {
-    console.log("jajaja",data);
     swal({
         title: "",
         text: "¿Eliminar Documento Entrada?",
@@ -633,14 +630,15 @@ function preguntarEliminar(data)
         });
 }
 
- function eliminarDocumentoEntrada(id_afectado)
- {
+// elimina un registro documento entrada y reconstruye los datos de la tabla (jsGrid)
+eliminarDocumentoEntrada = (id_afectado)=>
+{
         $.ajax({
                 url:"../Controller/DocumentosEntradaController.php?Op=Eliminar",
                 type:"POST",
                 data:"ID_DOCUMENTO_ENTRADA="+JSON.stringify(id_afectado),
                 // beforeSend
-                success:function(data)
+                success:(data)=>
                 {
                         if(data)
                         {
@@ -667,26 +665,28 @@ function preguntarEliminar(data)
                         else
                                 growlError("Error Eliminación","Error al Rliminar Registro");
                 },
-                error:function()        
+                error:()=>
                 {
                         growlError("Error Eliminación","Error del servidor");
                 }
         });
- }
+}
 
-function actualizarDocumentoEntrada(id)
+// lista un registro documento entrada (id) y modifica los datos del registro listado en los datos de la tabla (jsGrid)
+actualizarDocumentoEntrada = (id)=>
 {
         url = "filesDocumento/Entrada/";
         $.ajax({
                 url:'../Controller/DocumentosEntradaController.php?Op=ListarUno',
                 type: 'GET',
                 data:'ID_DOCUMENTO='+id+"&URL="+url,
-                success:function(datos)
+                success:(datos)=>
                 {
                         if(typeof(datos)=="object")
                         {
                                 // growlSuccess("Actulización","Se actualizaron los campos");
-                                $.each(datos,function(index,value){
+                                $.each(datos,(index,value)=>
+                                {
                                         componerDataListado(value);
                                 });
                                 componerDataGrid();
@@ -699,7 +699,7 @@ function actualizarDocumentoEntrada(id)
                                 gridInstance.loadData();
                         }
                 },
-                error:function()
+                error:()=>
                 {
                         componerDataGrid();
                         gridInstance.loadData();
@@ -707,8 +707,8 @@ function actualizarDocumentoEntrada(id)
                 }
         });
 }
-        
-function refresh()
+
+refresh = ()=>
 {
         // consultarDatos("../Controller/DocumentosEntradaController.php?Op=Listar");
         // listarDatos(-1);
@@ -727,15 +727,16 @@ function refresh()
         inicioDocumentoEntrada();
 }
 
-function verificarExiste(dataString,cualverificar)
+// lista si existe un folio de entrada, muestra en el formulario y en mensajes del Growl si existe el folio
+verificarExiste = (dataString,cualverificar)=>
 {
         // return new Promise((resolve,reject)=>
         // {
                 contador=0;
                 $.ajax({
                         type: "POST",
-                        url: "../Controller/DocumentosEntradaController.php?Op=verificacionexisteregistro&cualverificar="+cualverificar,
-                        data: "registro="+dataString,
+                        url: "../Controller/DocumentosEntradaController.php?Op=verificacionexisteregistro",
+                        data: "registro="+dataString+"&cualverificar="+cualverificar,
                         async:false,
                         success:(data)=>
                         {
@@ -768,7 +769,9 @@ function verificarExiste(dataString,cualverificar)
         // });
 }
 
-function saveToDatabaseDatosFormulario(datos)
+// crea nuevo registro documento entrada, crea la url de subida del archivo y sube el archivo
+// al final aplica refresh() para pedir y mostrar todos los datos
+saveToDatabaseDatosFormulario = (datos)=>
 {
         $.ajax({
                 url: "../Controller/DocumentosEntradaController.php?Op=Guardar",
@@ -778,7 +781,7 @@ function saveToDatabaseDatosFormulario(datos)
                         +'&STATUS_DOC='+datos[9]+'&FECHA_ASIGNACION='+datos[10]+'&FECHA_LIMITE_ATENCION='+datos[11]+'&FECHA_ALARMA='+datos[12]
                         +'&DOCUMENTO='+datos[13]+'&OBSERVACIONES='+datos[14]+'&MENSAJE_ALERTA='+datos[15],
                 // async: false,
-                success: function(valores)
+                success: (valores)=>
                 {
                         // consultarInformacion("../Controller/DocumentosEntradaController.php?Op=Listar");
                         if(valores != -1 && valores !=false)
@@ -787,7 +790,7 @@ function saveToDatabaseDatosFormulario(datos)
                                         url: '../Controller/ArchivoUploadController.php?Op=CrearUrl',//crea las carpetas y la sesion url
                                         type: 'GET',
                                         data: 'URL='+valores,
-                                        success:function(creado)
+                                        success:(creado)=>
                                         {
                                                 if(creado)
                                                 {
@@ -797,7 +800,7 @@ function saveToDatabaseDatosFormulario(datos)
                                                         refresh();
                                                 }
                                         },
-                                        error:function()
+                                        error:()=>
                                         {
                                                 swalError("Error en el servidor");
                                         }
@@ -806,13 +809,14 @@ function saveToDatabaseDatosFormulario(datos)
                         else
                                 swalError("Error al crear");
                 },
-                error:function()
+                error:()=>
                 {
                         swalError("Error en el servidor");
                 }
         });
 }
 
+// variable de la estructura (HTML) para la seleccion y carga de archivos
 var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/form-data'>";
                 ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
                 ModalCargaArchivo += "<div class='fileupload-buttons'>";
@@ -829,21 +833,23 @@ var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='multipart/
 
 months = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 
-function mostrar_urls(id_documento_entrada)
+// contruye la tabla de los archivos subidos para un registro
+mostrar_urls = (id_documento_entrada)=>
 {
-        var tempDocumentolistadoUrl = "";
+        let tempDocumentolistadoUrl = "";
         URL = 'filesDocumento/Entrada/'+id_documento_entrada;
         $.ajax({
                 url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
                 type: 'GET',
                 data: 'URL='+URL,
-                success: function(todo)
+                success:(todo)=>
                 {
                         if(todo[0].length!=0)
                         {
                                 tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
-                                $.each(todo[0], function (index,value)
+                                $.each(todo[0],(index,value)=>
                                 {
+                                        // hacer cambio para el calculo de la fecha con formato del js
                                         nametmp = value.split("^-O-^-M-^-G-^");
                                         fecha = new Date(nametmp[0]*1000);
                                         fecha = fecha.getDate() +" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
@@ -861,11 +867,9 @@ function mostrar_urls(id_documento_entrada)
                                 tempDocumentolistadoUrl = " No hay archivos agregados ";
                         }
                         tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdDocumento' type='text' style='display:none;' value='"+id_documento_entrada+"'>";
-                        // alert(tempDocumentolistadoUrl);
                         $('#DocumentoEntradaAgregarModal').html(" ");
                         $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
                         $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
-                        // $('#fileupload').fileupload();
                         $('#fileupload').fileupload({
                         url: '../View/',
                         });
@@ -873,27 +877,30 @@ function mostrar_urls(id_documento_entrada)
         });
 }
 
-function agregarArchivosUrl()
+// crear la url y sube archivos a esa url
+agregarArchivosUrl = ()=>
 {
-        var ID_DOCUMENTO = $('#tempInputIdDocumento').val();
+        let ID_DOCUMENTO = $('#tempInputIdDocumento').val();
         url = 'filesDocumento/Entrada/'+ID_DOCUMENTO,
         $.ajax({
                 url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
                 type: 'GET',
                 data: 'URL='+url,
-                success:function(creado)
+                success:(creado)=>
                 {
                         if(creado==true)
                                 $('.start').click();
                 },
-                error:function()
+                error:()=>
                 {
                         swalError("Error del servidor");
                 }
         });
 }
 
-function borrarArchivo(url)
+// muestra una pregunta para confirmar la eliminacion
+// elimina el archivo fisico
+borrarArchivo = (url)=>
 {
         swal({
                 title: "ELIMINAR",
@@ -916,7 +923,7 @@ function borrarArchivo(url)
                                         {
                                                 growlWait("Eliminar Archivo","Eliminando Archivo...");
                                         },
-                                        success: function(eliminado)
+                                        success:(eliminado)=>
                                         {
                                                 // eliminar = eliminado;
                                                 if(eliminado)
@@ -930,7 +937,7 @@ function borrarArchivo(url)
                                                 else
                                                         growlError("Error Eliminar","Ocurrio un error al eliminar el archivo");
                                         },
-                                        error:function()
+                                        error:()=>
                                         {
                                                 growlError("Error","Error en el servidor");
                                         }
@@ -938,8 +945,9 @@ function borrarArchivo(url)
                         }
                 });
 }
-                
-function CambioStatusDocumentoEntrada()
+
+// de acuerdo al estado del documento entrada ejecuta Habilitar_DesabilitarFechas()
+CambioStatusDocumentoEntrada = ()=>
 {
         if ($("#STATUS_DOC").val() == 3)
         {       
@@ -958,7 +966,8 @@ function CambioStatusDocumentoEntrada()
         }
 }
 
-function Habilitar_DesabilitarFechas(accion)
+// habilita o deshabilita del formulario las fechas
+Habilitar_DesabilitarFechas = (accion)=>
 {
         $("#FECHA_ASIGNACION").prop("disabled",accion);
         $("#FECHA_LIMITE_ATENCION").prop("disabled",accion);

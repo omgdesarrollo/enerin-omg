@@ -276,7 +276,8 @@ class EvidenciasDAO
         try
         {
             // tbregistros.frecuencia,
-            $query="SELECT tbtemas.nombre, tbtemas.id_tema, tbregistros.id_registro, tbregistros.registro, tbdocumentos.documento, tbregistros.frecuencia, tbdocumentos.clave_documento, tbrequisitos.id_requisito, tbrequisitos.requisito,
+            $query="SELECT tbtemas.nombre, tbtemas.id_tema, tbregistros.id_registro, tbregistros.registro, tbdocumentos.documento,
+            tbregistros.frecuencia, tbdocumentos.clave_documento, tbrequisitos.id_requisito, tbrequisitos.requisito,
             CONCAT(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,' ',tbempleados.apellido_materno) AS nombre
             FROM registros tbregistros
             JOIN documentos tbdocumentos ON tbregistros.id_documento = tbdocumentos.id_documento
@@ -299,7 +300,7 @@ class EvidenciasDAO
         }
     }
 
-    // lista los temas de la busqueda $CADENA que tengan responsable y no sean subtemas
+    // lista los temas de la busqueda $CADENA, que esten asignados a el usuario ($ID_USUARIO) actual y no sean subtemas, de acuerdo al contrato $CONTRATO
     public function listarTemas($CADENA,$ID_USUARIO,$CONTRATO)
     {
         try
@@ -498,7 +499,7 @@ class EvidenciasDAO
         }
     }
 
-    // actualiza accion_correctiva de una evidencia (agrega mensaje)
+    // actualiza accion_correctiva de una evidencia (agrega mensaje = notificacion)
     public function agregarMensaje($ID_EVIDENCIA,$MENSAJE)
     {
         try 

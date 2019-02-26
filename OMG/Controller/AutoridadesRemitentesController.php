@@ -6,45 +6,37 @@ require_once '../Model/AutoridadRemitenteModel.php';
 require_once '../Pojo/AutoridadRemitentePojo.php';
 require_once '../util/Session.php';
 
-
-
 $Op=$_REQUEST["Op"];
 $model=new AutoridadRemitenteModel();
 $pojo= new AutoridadRemitentePojo();
 
-switch ($Op) {
-	case 'Listar':
+switch ($Op)
+{
+     case 'Listar':
+        $Lista=$model->listarAutoridadesRemitentes();
+        header('Content-type: application/json; charset=utf-8');       
+        echo json_encode($Lista);
+        return $Lista;
+     break;
 
-		$Lista=$model->listarAutoridadesRemitentes();
-                header('Content-type: application/json; charset=utf-8');       
-                echo json_encode($Lista);        
+     case 'listarAutoridad':        
+        $Lista=$model->listarAutoridadRemitente($_REQUEST['ID_AUTORIDAD']);
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+     break;
 
-		return $Lista;
-		break;
-            
-        case 'listarAutoridad':
-            
-                $Lista=$model->listarAutoridadRemitente($_REQUEST['ID_AUTORIDAD']);
-                header('Content-type: application/json; charset=utf-8');
-                echo json_encode($Lista);
-            
-            break;
-            
-            
-        case 'mostrarCombo':
-		$Lista=$model->listarAutoridadesRemitentesComboBox();
+     // lista las autoridades remitente
+     case 'mostrarCombo':
+        $Lista=$model->listarAutoridadesRemitentesComboBox();
     	Session::setSesion("listarAutoridadesRemitentesComboBox",$Lista);
     	header('Content-type: application/json; charset=utf-8');
-                echo json_encode($Lista);
-                
-		return $Lista;
-		break;    
-            
-            
-	
-	case 'Nuevo':
-		# code...
-		break;	
+        echo json_encode($Lista);
+        return $Lista;
+     break;
+     
+     case 'Nuevo':
+                # code...
+     break;
 
 	case 'Guardar':
 		# code...

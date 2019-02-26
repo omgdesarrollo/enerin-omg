@@ -205,18 +205,20 @@ switch ($Op)
         echo $existe;
     break;
 
+    // actualiza la contraseña por una nueva ($_REQUEST["NEW_PASS"]) de un usuario ($usuario["ID_USUARIO"])
     case 'CambiarPass':
         $usuario = Session::getSesion("user");
         $exito = $model->cambiarPass($usuario["ID_USUARIO"],$_REQUEST["PASS"],$_REQUEST["NEW_PASS"]);
         echo $exito;
     break;
 
-    // 
+    // verifica si la contraseña actual es correcta
     case 'CambiarPermisoCumplimiento':
         $exito = $model->cambiarPermisoCumplimiento($_REQUEST["ID_USUARIO"],$_REQUEST["ID_CUMPLIMIENTO"],$_REQUEST["VALOR"]);
         echo $exito;
     break;
 
+    // actualiza el color para las vistas
     case 'CambiarColor':
         $usuario = Session::getSesion("user");
         $exito = $model->cambiarColor($usuario["ID_USUARIO"],$_REQUEST["COLOR"]);
@@ -234,4 +236,3 @@ switch ($Op)
     return false;
     break;
 }
-            

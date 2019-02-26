@@ -1,10 +1,8 @@
 <?php
-session_start();
-require_once '../util/Session.php';
-$Usuario=  Session::getSesion("user");
+    session_start();
+    require_once '../util/Session.php';
+    $Usuario=  Session::getSesion("user");
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -334,11 +332,14 @@ if(isset($_REQUEST["accion"]))
     // construirFiltros();
     // listarDatos();
 
-    function construirValidacionDCombo()
+    // construye un objeto de validacion responsable documento
+    construirValidacionDCombo = ()=>
     {
         return [{ validacion_documento_responsable:"true",descripcion:"Validado"},{validacion_documento_responsable:"false",descripcion:"No Validado"}];
     }
-    function construirValidacionTCombo()
+
+    // construye un objeto de validacion responsable tema
+    construirValidacionTCombo = ()=>
     {
         return [{ validacion_tema_responsable:"true",descripcion:"Validado"},{validacion_tema_responsable:"false",descripcion:"No Validado"}];
     }
@@ -405,22 +406,22 @@ if(isset($_REQUEST["accion"]))
    
     });//CIERRA $(function()) 
 
-    function listarValidacionDocumentos()//listo
+    listarValidacionDocumentos = ()=>
     {
         tempData="";
         $.ajax({
             url: '../Controller/ValidacionDocumentosController.php?Op=ListarTodo',
             type:'POST',
             async:false,
-            success:function(documentos)
+            success:(documentos)=>
             {
-                $.each(documentos,function(index,value)
+                $.each(documentos,(index,value)=>
                 {
                     tempData += "<tr id='registroDocumento_"+value.id_validacion_documento+"'>"+construirValidacionDocumento(value,index++)+"</tr>";
                 });
                 $("#tbodyValidacionDocumentos").html(tempData);
             },
-            error:function()
+            error:()=>
             {
                 swalError("Error en el servidor");
             }
@@ -428,7 +429,6 @@ if(isset($_REQUEST["accion"]))
         moverA();
     }
 
-    
 
     // function construirValidacionDocumento(documento,numero)//listo
     // {
@@ -596,7 +596,8 @@ if(isset($_REQUEST["accion"]))
     intervalObservaciones = setInterval(0);
     // clearInterval(intervalObservaciones);
 
-    function mostrarObservaciones(idDocumento)
+    // obtiene observaciones y crea la estructura de los mensajes, muestra los mensajes (observaciones)
+    mostrarObservaciones = (idDocumento)=>
     {
         clearInterval(intervalObservaciones);
         tempData = "";
@@ -604,10 +605,10 @@ if(isset($_REQUEST["accion"]))
             url:'../Controller/ValidacionDocumentosController.php?Op=ListarObservaciones',
             type:'GET',
             data:'ID_VALIDACION_DOCUMENTO='+idDocumento,
-            success:function(observaciones)
+            success:(observaciones)=>
             {
                 // console.log(observaciones);
-                $.each(JSON.parse(observaciones.observaciones),function(index,value)
+                $.each(JSON.parse(observaciones.observaciones),(index,value)=>
                 {
                     tempData += construirObservacion(value,observaciones.idUsuario);   
                 });
@@ -627,14 +628,15 @@ if(isset($_REQUEST["accion"]))
                     // $("#observacion_msjs").fadeIn(2000);
                 // });
             },
-            error:function()
+            error:()=>
             {
                 swalError("Error en el servidor al cargar las observaciones")
             }
         });
     }
 
-    function mostrarObservacionesInicio(idDocumento)
+    // abre modal de obervaciones, agrega boton para enviar las observaciones
+    mostrarObservacionesInicio = (idDocumento)=>
     {
         $("#mostrar-observaciones").modal();
         $("#div_observacion_btn").html("<textarea id='textarea_msj' class='area-observaciones'></textarea><button onClick='enviarObservacion("+idDocumento+")' class='btn-observaciones'>Enviar</button>");
@@ -643,8 +645,8 @@ if(isset($_REQUEST["accion"]))
     
     // $.when(mostrarObservaciones()).then(alert("A"));
 
-
-    function construirObservacion(value,idUsuario)
+    // construye mensaje alineando de acuerdo al usuario
+    construirObservacion = (value,idUsuario)=>
     {
         tempData = "<div class='container' style='width:100%;padding-bottom:5px'><div style='";
         if(idUsuario == value.idU)//flotar a la derecha
@@ -667,7 +669,8 @@ if(isset($_REQUEST["accion"]))
         return tempData;
     }
 
-    function enviarObservacion(idValidacionDocumento)
+    // guarda un nuevo mensaje (observacion)
+    enviarObservacion(idValidacionDocumento)
     {
         msj = $("#textarea_msj").val();
         msj = msj.trim();
@@ -677,13 +680,13 @@ if(isset($_REQUEST["accion"]))
                 url:'../Controller/ValidacionDocumentosController.php?Op=EnviarObservacion',
                 type:'POST',
                 data:'ID_VALIDACION_DOCUMENTO='+idValidacionDocumento+'&MENSAJE='+msj,
-                success:function(exito)
+                success:(exito)=>
                 {
                     if(exito.data!=false)
                     {
                         tempData="";
                         // console.log(JSON.parse(exito.data));
-                        $.each(JSON.parse(exito.data),function(index,value)
+                        $.each(JSON.parse(exito.data),(index,value)=>
                         {
                             tempData = construirObservacion(value,exito.idUsuario);
                         });
@@ -696,7 +699,7 @@ if(isset($_REQUEST["accion"]))
                     else
                     swalError("Error al enviar la observación");
                 },
-                error:function()
+                error:()=>
                 {
                     swalError("Error en el servidor");
                 }
@@ -718,22 +721,21 @@ if(isset($_REQUEST["accion"]))
     // }
 
     
-
-    function envioCorreo (para,asunto,mensaje)
+    // pendiente de verificar uso
+    envioCorreo = (para,asunto,mensaje)=>
     {
         $.ajax({
                 url:"../Controller/EmailController.php?Op=envioCorreo",
                 data:"para="+para+"&asunto="+asunto+"&mensaje="+mensaje,
-                success:function(response){
-                        $("#loader").hide();
+                success:(response)=>
+                {
+                    $("#loader").hide();
                 },
-                beforesend:function(){
+                beforesend:()=>
+                {
                     $("#loader").show();
                 },
-                error:function (){
-                    
-                }
-                
+                error:()=>{}
                 });
     }
       

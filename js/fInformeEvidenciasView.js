@@ -36,8 +36,6 @@ $(function()
 }); //SE CIERRA EL $(FUNCTION())
 
 
-
-
 parametroscheck={"validado":"false","no_validado":"false","sin_documento":"false"};
 
 function inicializarFiltros()
@@ -151,7 +149,7 @@ function inicializarFiltros()
 // }
 // months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 
-function mostrar_urls(id_evidencia)
+mostrar_urls = (id_evidencia)=>
 {
     var tempData=[];
     URL = 'filesEvidenciaDocumento/'+id_evidencia;
@@ -207,7 +205,7 @@ function mostrar_urls(id_evidencia)
     // });
 }
 
-function listarDatos()
+listarDatos = ()=>
 {
     return new Promise((resolve,reject)=>
     {
@@ -217,17 +215,17 @@ function listarDatos()
             url: '../Controller/InformeEvidenciasController.php?Op=Listar',
             type: 'GET',
             data:"URL="+URL,
-            beforeSend:function()
+            beforeSend:()=>
             {
                 growlWait("Solicitud","Solicitando Datos...");
             },
-            success:function(data)
+            success:(data)=>
             {
                 if(typeof(data)=="object")
                 {
                     growlSuccess("Solicitud","Registros obtenidos");
                     dataListado = data;
-                    $.each(data,function (index,value)
+                    $.each(data,(index,value)=>
                     {
                         __datos.push( reconstruir(value,index+1) );
                     });
@@ -241,7 +239,7 @@ function listarDatos()
                     reject();
                 }
             },
-            error:function(e)
+            error:(e)=>
             {
                 growlError("Error","Error en el servidor");
                 reject();
@@ -250,7 +248,8 @@ function listarDatos()
     });
 }
 
-function mostrarMensajes(msj,num)
+// agrega titulo al modal
+mostrarMensajes = (msj,num)=>
 {
     $("#areaMensaje").html(msj);
     if(num == 0)
@@ -259,7 +258,7 @@ function mostrarMensajes(msj,num)
         $("#myModalLabelMandarNotificacion").html("Acción Correctiva");
 }
 
-function reconstruir(value,index)
+reconstruir = (value,index)=>
 {
     noMsj = "<i class='fa fa-file-o' style='font-size: xx-large;color:#6FB3E0;cursor:pointer' aria-hidden='true'></i>";
     yesMsj = "<i class='ace-icon fa fa-file-text-o icon-animated-bell' style='font-size: xx-large;color:#02ff00;cursor:pointer' aria-hidden='true'></i>";
@@ -408,6 +407,7 @@ abrirNotificaciones = (mensajes,responsableTema,responsableEvidencia)=>
     });
 }
 
+// contruye el cuerpo y muestra los mensajes (notificaciones) 
 cargarMensajes = (data)=>
 {
     let idUsuario = $("#usuarios_notificaciones")[0]["dataCustom"]["DER"];
@@ -446,7 +446,7 @@ cargarMensajes = (data)=>
     $("#mostrar_notificaciones").modal();
 }
 
-function reconstruirExcel(value,index)
+reconstruirExcel = (value,index)=>
 {
     tempData = new Object();
     tempData["No"] = index;
@@ -605,7 +605,7 @@ if( value.estatus=="EN PROCESO"){
 //  })
 // }
 
-function graficar()
+graficar = ()=>
 {
     chartsCreados = [];
     let validados = 0;
@@ -616,7 +616,8 @@ function graficar()
     let tituloGrafica = "INFORME DE EVIDENCIAS";
     let bandera = 0;
 
-    $.each(dataListado,(index,value)=>{
+    $.each(dataListado,(index,value)=>
+    {
         if(value.estatus == "EN PROCESO")
         {
             proceso++;
@@ -634,7 +635,8 @@ function graficar()
     if(proceso!=0)
         dataGrafica.push(["No Conforme",proceso,">> Evidencias:"+proceso.toString(),JSON.stringify(proceso_data),1]);
     
-    $.each(dataGrafica,function(index,value){
+    $.each(dataGrafica,(index,value)=>
+    {
         if(value[1] != 0)
             bandera=1;
     });
@@ -648,7 +650,7 @@ function graficar()
     $("#BTN_ANTERIOR_GRAFICAMODAL").html("Recargar");
 }
 
-function graficar2(temas,concepto)
+graficar2 = (temas,concepto)=>
 {
     let lista = new Object();
     let id_tema;
@@ -663,13 +665,14 @@ function graficar2(temas,concepto)
             lista[value.id_tema]=[];
         lista[value.id_tema].push(value);
     });
-    $.each(lista,(index,value)=>{
+    $.each(lista,(index,value)=>
+    {
         dataGrafica.push(["Tema: "+value[0].no_tema,value.length,">> Tema:\n"+value[0].tema+"\n>> Responsable:\n"+value[0].tema_responsable+"\n>> Evidencias:"+value.length,JSON.stringify(value),2]);
     });
     construirGrafica(dataGrafica,tituloGrafica);
 }
 
-function graficar3(datos,concepto)
+graficar3 = (datos,concepto)=>
 {
     let dataGrafica = [];
     let lista = new Object();
@@ -677,12 +680,14 @@ function graficar3(datos,concepto)
     datos = JSON.parse(datos);
     tituloGrafica = datos[0].estatus == "VALIDADO" ? "DETALLES EVIDENCIAS CONFORMES" : "DETALLES EVIDENCIAS NO CONFORMES";
     
-    $.each(datos,(index,value)=>{
+    $.each(datos,(index,value)=>
+    {
         if(lista[value.id_registro]==undefined)
             lista[value.id_registro]=[];
         lista[value.id_registro].push(value);
     });
-    $.each(lista,(index,value)=>{
+    $.each(lista,(index,value)=>
+    {
         dataGrafica.push([value[0].registro,value.length,">> Responsable Registro:\n"+value[0].resp+"\n>> Frecuencia:\n"+value[0].frecuencia+"\n>> Evidencias:"+value.length,"[]",-1]);
     });
     construirGrafica(dataGrafica,tituloGrafica);

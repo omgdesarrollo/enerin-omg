@@ -8,7 +8,8 @@
 
 require_once '../dao/DocumentoEntradaDAO.php';
 require_once '../Pojo/DocumentoEntradaPojo.php';
-class DocumentoEntradaModel{
+class DocumentoEntradaModel
+{
     
     public function getFechaAlarma()
     {
@@ -114,7 +115,7 @@ class DocumentoEntradaModel{
      
      
  }
-    
+    // obtiene los datos de $pojo para insertar nuevo documento entrada
     public function insertar($pojo){
         $data=array();        
         try{
@@ -183,7 +184,7 @@ class DocumentoEntradaModel{
         }
     }
     
-    
+    // verficia si existeun documento de salida antes de eliminar
     public function eliminarDocumentoEntrada($ID_DOCUMENTO_ENTRADA){
         try{
             $dao= new DocumentoEntradaDAO();
@@ -204,9 +205,5 @@ class DocumentoEntradaModel{
             return -1;
         }
     }
-    
-    
-    
 }
-
 ?>

@@ -15,22 +15,20 @@ $pojo= new TemaPojo();
 
 switch ($Op) {
 	case 'Listar':
-
             $Lista=$model->mostrarTemas("oficios", Session::getSesion("s_cont"));                  
             header('Content-type: application/json; charset=utf-8'); 
             echo json_encode($Lista);
             return $Lista;
-
-         break;
+    break;
      
-     
-        case 'mostrarCombo':
+    //  lista temas pertenecientes a oficios
+    case 'mostrarCombo':
             $Lista=$model->listarTemasComboBox("oficios", Session::getSesion("s_cont"));
             // Session::setSesion("listarTemasComboBox",$Lista);
             header('Content-type: application/json; charset=utf-8'); 
             echo json_encode($Lista);
             return $Lista;
-        break;
+    break;
 	
 	case 'ListarHijos':
             

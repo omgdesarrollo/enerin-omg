@@ -1,8 +1,8 @@
 <?php
-require_once '../dao/InformeValidacionDocumentosDAO.php';
 
-class InformeValidacionDocumentosModel{
-        
+require_once '../dao/InformeValidacionDocumentosDAO.php';
+class InformeValidacionDocumentosModel
+{        
     public function listarValidaciones($v)
     {
         try
@@ -70,16 +70,14 @@ class InformeValidacionDocumentosModel{
     }
 //    NO BORRAR AQUI PARA ABAJO SI SE HACE CONSULTAR PARA SABER SI NO LE AFECTA EN OTRAS PARTES 
       
-     public function obtenerTodosLosEmpleadosQueSonResponsableDelDocumento(){
-         try{
+    public function obtenerTodosLosEmpleadosQueSonResponsableDelDocumento()
+    {
+        try{
             $informeValidacionDocumentosDAO= new InformeValidacionDocumentosDAO();
             return $informeValidacionDocumentosDAO->obtenerTodosLosEmpleadosQueSonResponsableDelDocumento();          
-         } catch (Exception $ex) {
+        } catch (Exception $ex) {
 
-         }
-     }   
-    
+        }
+     }
 }
-
 ?>
-

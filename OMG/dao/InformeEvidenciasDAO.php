@@ -70,7 +70,7 @@ class InformeEvidenciasDAO
         }
     }
     
-    // lista temas y sus responsables ligados desde documentos ($ID_DOCUMENTO), de acuerdo al contrato (cumplimiento)
+    // lista temas y sus responsables ligados desde evidencias, de acuerdo al contrato (cumplimiento)
     public function obtenerTemayResponsable ($ID_DOCUMENTO,$CONTRATO)
     {
         try

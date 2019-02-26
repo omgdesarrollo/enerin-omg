@@ -57,9 +57,7 @@ class AutoridadRemitenteDAO{
         }
     }
 
-
-
-
+    // lista las autoridades remitentes
     public function mostrarAutoridadesRemitentesComboBox()
     {
         try{

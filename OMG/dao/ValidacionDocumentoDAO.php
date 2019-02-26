@@ -284,7 +284,7 @@ class ValidacionDocumentoDAO
         }
     }
 
-    // obtiene si es o no responsble del tema que corresponde a la validacion documento
+    // obtiene si esta o no validado el documento por el responsable del tema
     public function getValidacionTema($ID_VALIDACION_D)//listo
     {
         try
@@ -302,7 +302,7 @@ class ValidacionDocumentoDAO
         }
     }
 
-    // obtiene si es o no responsable de la validacion documento
+    // obtiene si esta o no validado el documento por el responsable de documento
     public function getValidacionDocumento($ID_VALIDACION_D)//listo
     {
         try

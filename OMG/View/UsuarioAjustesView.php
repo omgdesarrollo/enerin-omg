@@ -153,7 +153,6 @@ require_once '../util/Session.php';
                 $color = Session::getSesion("colorFondo_Vista");
             echo "'$color'";
             ?>;
-            // console.log(colorView);
             $("style").append("::-webkit-scrollbar-thumb{ background-color:"+colorView+" !important;} .dhxlayout_base_material div.dhx_cell_layout div.dhx_cell_hdr{background-color:"+colorView+" !important;opacity:0.8 !important; }");
             $('#demo').wheelColorPicker();
         });
@@ -180,6 +179,7 @@ require_once '../util/Session.php';
             });
         });
 
+        // cambia el color de los menu, barra de desplazamientos y encabezados, recarga la pagina
         cambiarColorDB = (newColor)=>
         {
             $.ajax({
@@ -212,7 +212,7 @@ require_once '../util/Session.php';
             });
         }
 
-        function limpiarFormulario()
+        limpiarFormulario = ()=>
         {
             no = "<i style='color:red' class='glyphicon glyphicon-remove'></i>";
             clearInterval(outTime);
@@ -232,7 +232,8 @@ require_once '../util/Session.php';
                     }
                 );
         }
-        function limpiar()
+
+        limpiar = ()=>
         {
             $("#contraActual").val("");
             $("#contraNueva").val("");
@@ -247,7 +248,8 @@ require_once '../util/Session.php';
         }
         outTime = setInterval(function(){limpiarFormulario();},30000);
 
-        function cambiarPass()
+        // actualiza la contraseña del usuario, y se cierra la sesion
+        cambiarPass = ()=>
         {
             contraA = $("#contraActual").val();
             contraN = $("#contraNueva").val();
@@ -259,7 +261,7 @@ require_once '../util/Session.php';
                         url: '../Controller/AdminController.php?Op=CambiarPass',
                         type: 'POST',
                         data: 'PASS='+contraA+"&NEW_PASS="+contraN,
-                        success:function(exito)
+                        success:(exito)=>
                         {
                             if(exito==true)
                             {
@@ -272,7 +274,7 @@ require_once '../util/Session.php';
                                     closeOnConfirm: false,
                                     showLoaderOnConfirm: true,
                                     confirmButtonText: "Salir",
-                                    }, function()
+                                    },()=>
                                     {
                                         window.parent.location.href="Logout.php";
                                     }
@@ -284,7 +286,7 @@ require_once '../util/Session.php';
                                 swalError("No se pudo hacer el cambio de contraseña");
                             }
                         },
-                        error:function()
+                        error:()=>
                         {
                             swalError("Error en el servidor");
                         }
@@ -311,9 +313,10 @@ require_once '../util/Session.php';
         //     {
         //     }
         // }
-        function checarPass(Obj)
+        
+        // verifica que contraseña nueva y repetir contraseña nueva sean iguales
+        checarPass = (Obj)=>
         {
-            console.log("aq");
             pass = $("#contraNueva").val();
             passN = $("#contraNueva2").val();
             yes = "<i style='color:#02ff00' class='glyphicon glyphicon-ok'></i>";
@@ -341,7 +344,8 @@ require_once '../util/Session.php';
             }
         }
 
-        function verificarPass(Obj)
+        // verifica si la contraseña actual es correcta
+        verificarPass = (Obj)=>
         {
             contrasena = $(Obj).val();
             yes = "<i style='color:#02ff00' class='glyphicon glyphicon-ok'></i>";
@@ -397,7 +401,7 @@ require_once '../util/Session.php';
             $('#loader').hide();
         }
 
-        function agregarArchivosUrl()
+        agregarArchivosUrl = ()=>
         {
             usuario = <?php echo Session::getSesion("user")["ID_USUARIO"] ?>;
             var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();
@@ -406,7 +410,7 @@ require_once '../util/Session.php';
                 url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
                 type: 'GET',
                 data: 'URL='+url+"&SIN_CONTRATO=X",
-                success:function(creado)
+                success:(creado)=>
                 {
                     if(creado==1)
                     {
@@ -414,7 +418,7 @@ require_once '../util/Session.php';
                         $('.start').click();
                     }
                 },
-                error:function()
+                error:()=>
                 {
                     growlError("Error","Error en el servidor");
                 }

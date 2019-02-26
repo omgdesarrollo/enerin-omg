@@ -14,7 +14,10 @@ $modelEntrada=new DocumentoEntradaModel();
 $pojo= new DocumentoSalidaPojo();
 $modelArchivo=new ArchivoUploadModel();
 
-switch ($Op) {
+switch ($Op)
+{
+        // lista documentos de salida con folio y sin folio
+        // agrega los archivos cargados de cada registro documentos de salida
         case 'Listar':
             $CONTRATO = Session::getSesion("s_cont");
             $Lista = $model->listarDocumentosSalida($CONTRATO);
@@ -23,12 +26,12 @@ switch ($Op) {
                 $url = $_REQUEST['URL'].$value['id_documento_salida'];
                 $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
             }
-        //     Session::setSesion("listarDocumentosSalida",$Lista);
-            
+            //  Session::setSesion("listarDocumentosSalida",$Lista); 
             header('Content-type: application/json; charset=utf-8');
             echo json_encode( $Lista);
         break;
         
+        // ver modelo
         case 'ListarUno':
             $CONTRATO = Session::getSesion("s_cont");
             $ID_DOCUMENTO_SALIDA = $_REQUEST["ID_DOCUMENTO_SALIDA"];
@@ -42,12 +45,13 @@ switch ($Op) {
             header('Content-type: application/json; charset=utf-8');
             echo json_encode( $Lista);
         break;
-                
+        
+        // lista folios documentos de entrada
         case 'listarFoliosEntrada':
             $Lista= $model->listarFoliosDeEntrada();
             header('Content-type: application/json; charset=utf-8');
             echo json_encode( $Lista);
-            break;
+        break;
                 
 
 //	case 'Guardar':
@@ -62,14 +66,13 @@ switch ($Op) {
 //                           
 //                  $model->insertar($pojo);            
 //		break;
-            
+        
+        // inserta un nuevo documento de salida con o sin folio, y regreso los datos nuevos
         case 'Guardar':
             $CONTRATO = Session::getSesion("s_cont");
             header('Content-type: application/json; charset=utf-8');
             $data= json_decode($_REQUEST['documentoSalidaDatos'],true);
             
-            // echo $data['id_documento_entrada'];
-
             $pojo->setId_documento_entrada($data['id_documento_entrada']);
             $pojo->setFolio_salida($data['folio_salida']);
             $pojo->setFecha_envio($data['fecha_envio']);
@@ -85,31 +88,22 @@ switch ($Op) {
             }
             header('Content-type: application/json; charset=utf-8');
             echo json_encode($Lista);
-            break;
-            
+        break;
+
 
 	case 'Modificar':
-   					
         $model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );          
-                  
 	break;
-    
-    
                     
-        case 'loadAutoComplete':
-            
-              $cadenafolioentrada=$_REQUEST["FOLIOENTRADA"];  
-              $data= $modelEntrada->loadAutoComplete($cadenafolioentrada);
-               	header('Content-type: application/json; charset=utf-8');
-                echo json_encode($data);
-            
-        break;
+    case 'loadAutoComplete':
+            $cadenafolioentrada=$_REQUEST["FOLIOENTRADA"];  
+            $data= $modelEntrada->loadAutoComplete($cadenafolioentrada);
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($data);
+    break;
     
-    
-    
-
+    // elimina documento de salida ($_REQUEST['ID_DOCUMENTO_SALIDA']) con o sin folio
 	case 'EliminarDocumentoSalida':
-		# code...
         $Lista = $model->eliminarDocumento($_REQUEST['ID_DOCUMENTO_SALIDA']);
         header('Content-type: application/json; charset=utf-8');
         echo json_encode( $Lista);
@@ -122,32 +116,32 @@ switch ($Op) {
         //     echo json_encode( $Lista);
         //     return $Lista;
         // break;
-        
-        case'responsablesDelTema':
-            $Lista= $model->responsablesDelTemaCombobox();
-            header('Content-type: application/json; charset=utf-8');
-            echo json_encode( $Lista);
-            
-            break;
-        
-        case 'responsablesDelTemaFiltro':
-            $CONTRATO = Session::getSesion("s_cont");
-            $Lista= $model->responsableDelTemaParaFiltro($CONTRATO);
-            // sleep(4);
-            header('Content-type: application/json; charset=utf-8');
-            echo json_encode( $Lista);
-            break;
-        
-        case 'autoridadRemitenteFiltro':
-            $CONTRATO= Session::getSesion("s_cont");
-            $Lista= $model->autoridadRemitenteParaFiltro($CONTRATO);
-            header('Content-type: application/json; charset=utf-8');
-            echo json_encode( $Lista);
-            break;
-            
+
+    // lista empleados
+    case'responsablesDelTema':
+        $Lista= $model->responsablesDelTemaCombobox();
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode( $Lista);
+    break;
+    
+    // lista responsables de temas ligados a documento de salida con folio y sin folio
+    case 'responsablesDelTemaFiltro':
+        $CONTRATO = Session::getSesion("s_cont");
+        $Lista= $model->responsableDelTemaParaFiltro($CONTRATO);
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode( $Lista);
+    break;
+
+    case 'autoridadRemitenteFiltro':
+        $CONTRATO= Session::getSesion("s_cont");
+        $Lista= $model->autoridadRemitenteParaFiltro($CONTRATO);
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode( $Lista);
+    break;
+
 	default:
 		# code...
-		break;
+    break;
 }
 
 ?>

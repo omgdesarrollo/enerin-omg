@@ -123,7 +123,8 @@ class DocumentoEntradaDAO
             }
     }
     
-    // pendiente de verificar si es utilizado
+    // lista documento de entrada de acuerdo al contrato (cumplimiento)
+    // si no encuentra en ese contrato trae el registro sin documento
     public function mostrarDocumentosEntradaComboBox($CONTRATO)
     {
         try{
@@ -281,7 +282,8 @@ class DocumentoEntradaDAO
 //                throw $ex;
 //        }
 //    }
-    
+
+    // lista un documento de entrada de acuerdo al identificador ($ID_DOCUMENTO_ENTRADA)
     public function eliminarDocumentoEntrada($ID_DOCUMENTO_ENTRADA){
         try{
             $query="DELETE FROM documento_entrada WHERE id_documento_entrada=$ID_DOCUMENTO_ENTRADA";

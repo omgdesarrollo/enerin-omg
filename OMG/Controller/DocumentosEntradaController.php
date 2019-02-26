@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 require_once '../Model/DocumentoEntradaModel.php';
 require_once '../Pojo/DocumentoEntradaPojo.php';
@@ -6,7 +7,6 @@ require_once '../Model/SeguimientoEntradaModel.php';
 require_once '../Pojo/SeguimientoEntradaPojo.php';
 require_once '../util/Session.php';
 require_once '../Model/ArchivoUploadModel.php';
-
 
 $Op=$_REQUEST["Op"];
 $model=new DocumentoEntradaModel();
@@ -16,22 +16,26 @@ $modelSeguimientoEntrada=new SeguimientoEntradaModel();
 $pojoSeguimientoEntrada= new SeguimientoEntradaPojo();
 $modelArchivo = new ArchivoUploadModel();
 
-switch ($Op) {
+switch ($Op)
+{
+	// lista registros documentos de entrada
+	// el ciclo agrega los documentos (archivos) cargados fisicamente a cada registro documento entrada
 	case 'Listar':
-			$CONTRATO = Session::getSesion("s_cont");
-			$Lista=$model->listarDocumentosEntrada($CONTRATO);
-                        Session::setSesion("listarDocumentosEntrada",$Lista); //Atencion Jose: Se esta ocupando para las graficas de informe gerencial
-                        
-			foreach($Lista as $key => $value)
-			{
-				$url = $_REQUEST["URL"].$value["id_documento_entrada"];
-				$Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
-			}
-							
-			header('Content-type: application/json; charset=utf-8');
-			echo json_encode( $Lista);
-		break;
+		$CONTRATO = Session::getSesion("s_cont");
+		$Lista=$model->listarDocumentosEntrada($CONTRATO);
+		Session::setSesion("listarDocumentosEntrada",$Lista); //Atencion se esta ocupando para las graficas de informe gerencial
 
+		foreach($Lista as $key => $value)
+		{
+			$url = $_REQUEST["URL"].$value["id_documento_entrada"];
+			$Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
+		}
+		header('Content-type: application/json; charset=utf-8');
+		echo json_encode( $Lista);
+	break;
+
+	// lista un documento de entrada especifico ($_REQUEST["ID_DOCUMENTO"])
+	// agrega al registro sus archivos cargados
 	case 'ListarUno':
 		$CONTRATO = Session::getSesion("s_cont");
 		$Lista=$model->listarDocumentoEntrada($_REQUEST["ID_DOCUMENTO"]);
@@ -40,37 +44,35 @@ switch ($Op) {
 			$url = $_REQUEST["URL"].$value["id_documento_entrada"];
 			$Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
 		}
-
 		header('Content-type: application/json; charset=utf-8');
 		echo json_encode( $Lista);
 	break;
 
-        case 'mostrarcombo':
+	// lista documentos de entrada
+	case 'mostrarcombo':
 		$Lista=$model->listarDocumentosEntradaComboBox(Session::getSesion("s_cont"));
     	Session::setSesion("listarDocumentosEntradaComboBox",$Lista);
 //    	$tarjet="../view/principalmodulos.php";
     	header('Content-type: application/json; charset=utf-8');
-//		echo json_encode($Lista);
-                echo json_encode($Lista);
-//	$filas=array();	
-//        foreach ($Lista as $filas)
-//            //$sentencia="SELECT * FROM empleados";
-//            //$resultado=mysql_query($sentencia);
-//            //while($filas=mysql_fetch_assoc($resultado))
-//              
-//            {
-//            echo json_encode($filas['ID_EMPLEADO']);	
-//            }
-		//header("location: login.php");
-//echo $json = json_encode(array("n" => "".$Lista.NOMBRE_EMPLEADO, "a" => "apellido",  "c" => "test"));
-		return $Lista;
-		break;    
+		echo json_encode($Lista);
+		//	$filas=array();	
+		//        foreach ($Lista as $filas)
+		//            //$sentencia="SELECT * FROM empleados";
+		//            //$resultado=mysql_query($sentencia);
+		//            //while($filas=mysql_fetch_assoc($resultado))
+		//              
+		//            {
+		//            echo json_encode($filas['ID_EMPLEADO']);	
+		//            }
+		//echo $json = json_encode(array("n" => "".$Lista.NOMBRE_EMPLEADO, "a" => "apellido",  "c" => "test"));
+	break;    
             
 	
 	case 'Nuevo':
 		# code...
 		break;	
 
+	// inserta documento entrada, obtiene el id e inserta en seguimiento de entrada
 	case 'Guardar':
                   
 # code...
@@ -147,17 +149,14 @@ switch ($Op) {
 		echo json_encode($data);
 	break;
 
+	// lista el folio de entrada de registro ($_REQUEST["registro"];) de acuerdo a su columna dinamica ($_REQUEST["cualverificar"])
 	case 'verificacionexisteregistro':
-            
-		$registro=$_REQUEST["registro"];
-		$cualverificar=$_REQUEST["cualverificar"];
-		
+		$registro = $_REQUEST["registro"];
+		$cualverificar = $_REQUEST["cualverificar"];
 		$data= $model->verificarSiExisteFolioEntrada($registro,$cualverificar);
-		
 		header('Content-type: application/json; charset=utf-8');
 		echo json_encode($data);
-		
-		break;
+	break;
 
 	case 'Alarmas':
 
@@ -166,15 +165,16 @@ switch ($Op) {
 		header('Content-type: application/json; charset=utf-8');
 		// echo json_encode($Lista);
 		break;
-                            
+					
+	// elimina un registro documento entrada
 	case 'Eliminar':
 		# code...
-                header('Content-type: application/json; charset=utf-8'); 
-                $data= json_decode($_REQUEST['ID_DOCUMENTO_ENTRADA'],true);
-                $Lista= $model->eliminarDocumentoEntrada($data['id_documento_entrada']);
-                echo json_encode($Lista);
-                return $Lista;
-		break;
+		header('Content-type: application/json; charset=utf-8'); 
+		$data= json_decode($_REQUEST['ID_DOCUMENTO_ENTRADA'],true);
+		$Lista= $model->eliminarDocumentoEntrada($data['id_documento_entrada']);
+		echo json_encode($Lista);
+		return $Lista;
+	break;
             
 	case 'getIdCumplimiento':
 		$Id_cumplimiento="";

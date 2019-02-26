@@ -1,33 +1,27 @@
-
 // configuracionJgrowl = { pool:0, position:" bottom-right", sticky:true, corner:"0px",openDuration:"fast", closeDuration:"slow",theme:"",header:"",themeState:"", glue:"before"};
-$(function()
+$(()=>
 {   
-    var $btnDLtoExcel = $('#btn_exportar'); 
+    var $btnDLtoExcel = $('#btn_exportar');
+
+    // al dar click al boton exportar
     $btnDLtoExcel.on('click', function () 
     {   
         reporteSeleccionado= $("#REPORTES").val();
-//        console.log("valor reporte select: ",reporteSeleccionado);        
         __datosExcel=[];
-        console.log("los datos de datalistado-> ",dataListado);
         $.each(dataListado,function (index,value)
+        {
+            if(reporteSeleccionado == 1)
             {
-                // console.log("Entro al datosExcel");
-                if(reporteSeleccionado == 1)
+                __datosExcel.push( reconstruirExcel(value,index+1) );
+            }else
+            {
+                if(reporteSeleccionado == 2)
                 {
-                    __datosExcel.push( reconstruirExcel(value,index+1) );
-                }else{
-                    if(reporteSeleccionado == 2)
-                    {
-//                        alert("se");
-                        
-                        __datosExcel.push( reconstruirExcelDetalles(value,index+1) );
-                    }
-                }                
-            });
-            DataGridExcel= __datosExcel;
-            console.log("los datos nuevos  ",DataGridExcel);
-//            console.log("Entro al excelexportHibrido");
-
+                    __datosExcel.push( reconstruirExcelDetalles(value,index+1) );
+                }
+            }                
+        });
+        DataGridExcel= __datosExcel;
         $("#listjson").excelexportHibrido({
             containerid: "listjson"
             , datatype: 'json'
@@ -38,8 +32,7 @@ $(function()
     });
 }); //SE CIERRA EL $(FUNCTION())
 
-
-function inicializarFiltros()
+inicializarFiltros = ()=>
 {
     return new Promise((resolve,reject)=>
     {
@@ -67,7 +60,7 @@ function inicializarFiltros()
     });
 }
 
-function reconstruir(value,index)
+reconstruir = (value,index)=>
 {
     tempData = new Object();    
     // if(value[0].cumplimiento_contrato!=undefined)
@@ -131,9 +124,9 @@ function reconstruir(value,index)
 //    return tempData;
 //}
 
-function reconstruirExcel(value,index)
+// federico <-
+reconstruirExcel = (value,index)=>
 {
-//    console.log(value);
     tempData = new Object();
     tempData["No. Tema"] = value[0].no_tema;
     tempData["Nombre Tema"] = value[0].nombre_tema;
@@ -148,13 +141,12 @@ function reconstruirExcel(value,index)
     });
     tempData["% Cumplimiento Tema"]= ((tempData["Requisitos Cumplidos"]/tempData["Requisitos por Tema"])*100).toFixed(2)+("%");
     
-//    console.log("Cumplimiento Tema: ",tempData["% Cumplimiento Tema"]);
     return tempData;
 }
 
-function reconstruirExcelDetallest(value,index)
+// federico <-
+reconstruirExcelDetallest = (value,index)=>
 {
-    console.log("Entro en reconstruir excel detalles  ",value);
     tempData= new Object();
     detallesReqTemp={};
     tempData["No. Tema"]=value.no_tema;
@@ -229,19 +221,13 @@ function reconstruirExcelDetallest(value,index)
 //        }  
         
 //    });
- 
- 
- 
- 
     return tempData;
 }
 
-
-function reconstruirExcelDetalles(value,index)
+// federico <-
+reconstruirExcelDetalles = (value,index)=>
 {
-//    console.log("inicio dentro  de reconstruir  excelDetalles--->  ",value);
-    tempData = new Object();
-    
+    tempData = new Object();   
     tempData["No. Tema"] = value[0].no_tema;
     tempData["Nombre Tema"] = value[0].nombre_tema;
     tempData["Responsable del Tema"] = value[0].responsable_tema;
@@ -252,23 +238,21 @@ function reconstruirExcelDetalles(value,index)
     $.each(value,(ind,val)=>
     {
         bandera=0;
-        
-    if(val["detalles_requisito"]!=undefined){
-        $.each(val['detalles_requisito'],(ind2,val2)=>
+        if(val["detalles_requisito"]!=undefined)
         {
-            if(val2.id_registro!=null)
+            $.each(val['detalles_requisito'],(ind2,val2)=>
             {
-                bandera=1;
+                if(val2.id_registro!=null)
+                {
+                    bandera=1;
+                }
+            });
+            if(bandera==1)
+            {
+                tempData["Requisitos por Tema"]++;
             }
-        });
-        if(bandera==1)
-        {
-            tempData["Requisitos por Tema"]++;
-            
-        }
         
-    }
-//        console.log("tem requisitos por tema",tempData["Requisitos por Tema"]);      
+        }
     });  
     
     tempData["Requisitos Cumplidos"]= 0;    
@@ -443,14 +427,13 @@ function reconstruirExcelDetalles(value,index)
             }
         });
         
-    }
-        
+    } 
     });
-    console.log("termino");
     return tempData;
 }
 
-function listarDatos()
+// lista y contruye el cuerpo de datos de la tabla
+listarDatos = ()=>
 {
     return new Promise((resolve,reject)=>
     {
@@ -458,11 +441,11 @@ function listarDatos()
         $.ajax({
             url:"../Controller/ConsultasController.php?Op=Listar",
             type:"GET",
-            beforeSend:function()
+            beforeSend:()=>
             {
                 growlWait("Solicitud","Solicitando Registros...");
             },
-            success:function(data)
+            success:(data)=>
             {
                 if(typeof(data)=="object")
                 {
@@ -470,7 +453,7 @@ function listarDatos()
                     {
                         growlSuccess("Solicitud","Registros obtenidos");
                         dataListado = data;
-                        $.each(data,function (index,value)
+                        $.each(data,(index,value)=>
                         {
                             __datos.push( reconstruir(value,index+1) );
                         });
@@ -494,9 +477,8 @@ function listarDatos()
                     reject();
                 }
             },
-            error:function(e)
+            error:(e)=>
             {
-//                console.log(e);
                 gridInstance.loadData();
                 growlError("Error","Error en el servidor");
                 reject();
@@ -505,7 +487,8 @@ function listarDatos()
     });
 }
 
-function graficar()
+// contruccion de la grafica 1
+graficar = ()=>
 {
     let dataGrafica=[];
     let tituloGrafica = "CUMPLIMIENTO DE REQUISITOS";
@@ -554,6 +537,7 @@ function graficar()
             }
         });
     });
+
     if(requisitos_cumplidos!=0)
         dataGrafica.push(["Cumplido",requisitos_cumplidos,">> Requisitos:"+requisitos_cumplidos.toString(),JSON.stringify(data_requisitos_cumplidos),2]);
     if(requisitos_atrasados!=0)
@@ -573,7 +557,7 @@ function graficar()
     construirGrafica(dataGrafica,tituloGrafica);
 }
 
-function graficar2(datos,concepto)
+graficar2 = (datos,concepto)=>
 {
     let atrasados = 0;
     let atrasados_penalizados = 0;
@@ -583,10 +567,9 @@ function graficar2(datos,concepto)
     let dataGrafica = [];
 
     datos = JSON.parse(datos);
-    // console.log("graficar 2");
-    // console.log(datos);
     tituloGrafica += concepto.toUpperCase();
-    $.each(datos,(index,value)=>{
+    $.each(datos,(index,value)=>
+    {
         if(value.penalizacion == "true")
         {
             atrasados_penalizados++;
@@ -607,7 +590,7 @@ function graficar2(datos,concepto)
     construirGrafica(dataGrafica,tituloGrafica);
 }
 
-function graficar3(datos,concepto)
+graficar3 = (datos,concepto)=>
 {
     let tituloGrafica = "CUMPLIMIENTO POR TEMA";
     let lista = new Object();
@@ -617,9 +600,6 @@ function graficar3(datos,concepto)
     let bandera=0;
 
     datos = JSON.parse(datos);
-    // console.log("Graficar 3");
-    // console.log(datos);
-    // console.log(concepto);
     if(concepto == "Cumplido")
     {
         estado = "CUMPLIDO";
@@ -653,8 +633,6 @@ function graficar3(datos,concepto)
             lista[value.id_tema]=[];
         lista[value.id_tema].push(value);
     });
-    // console.log("list");
-    // console.log(lista);
 
     $.each(lista,(index,value)=>{
         bandera=0;
@@ -686,11 +664,10 @@ function graficar3(datos,concepto)
             dataGrafica.push(["Tema: "+value[0].no_tema,value.length,
                 ">> Tema:\n"+value[0].nombre_tema+" \n>> Responsable:\n"+value[0].responsable_tema+"\n>> Requisitos: "+value.length+"\n>> Evidencias:"+evidencias_tema, JSON.stringify(value),3]);
     });
-    // console.log(dataGrafica);
     construirGrafica(dataGrafica,tituloGrafica);
 }
 
-function graficar4(datos,concepto)
+graficar4 = (datos,concepto)=>
 {
     let lista = new Object();
     let dataGrafica = [];
@@ -705,12 +682,11 @@ function graficar4(datos,concepto)
     let especial = 0;
 
     datos = JSON.parse(datos);
-    // console.log("Grafica 4");
-    console.log(datos);
-    // console.log(concepto);
 
-    $.each(datos,(index,value)=>{
-        $.each(value.detalles_requisito,(ind,val)=>{
+    $.each(datos,(index,value)=>
+    {
+        $.each(value.detalles_requisito,(ind,val)=>
+        {
             evidencias=0;
             especial=0;
             if(val.id_registro != null)
@@ -754,7 +730,7 @@ function graficar4(datos,concepto)
     construirGrafica(dataGrafica,tituloGrafica);
 }
 
-function refresh()
+refresh = ()=>
 {
     inicializarFiltros().then((resolve2)=>
     {
@@ -765,7 +741,3 @@ function refresh()
         growlError("Error!","Error al construir la vista, recargue la página");
     });
 }
-
-
-
-

@@ -1,8 +1,9 @@
 <?php
-require_once '../dao/ConsultasDAO.php';
 
-class ConsultasModel{
-    
+require_once '../dao/ConsultasDAO.php';
+class ConsultasModel
+{
+    // a los datos listados se le agregan los totales de evidencias que deberian tener de acuerdo a la frecuencia del registro
     public function listarConsultas($CONTRATO)
     {
         try
@@ -10,7 +11,6 @@ class ConsultasModel{
             date_default_timezone_set("America/Mexico_city");
             $dao=new ConsultasDAO();
             $lista= $dao->listarConsultas($CONTRATO);
-            // var_dump($lista);
             $hoy = new Datetime();
 	        $al = strftime("%d - %B - %y");
             $hoy = new Datetime($al);
@@ -19,150 +19,157 @@ class ConsultasModel{
                 // $dias = 0;
                 // if($value["fecha_inicio"] != "0000-00-00")
                 // {
-                    $fecha_inicio = new Datetime($value["fecha_inicio"]);
-                    // var_dump($fecha_inicio);
-                    $frecuencia = $value["frecuencia"];
-                    if($frecuencia == "DIARIO")
+                $fecha_inicio = new Datetime($value["fecha_inicio"]);
+                $frecuencia = $value["frecuencia"];
+                
+                if($frecuencia == "DIARIO")
+                {
+                    $dias = strtotime(strftime("%d-%B-%y",$hoy -> getTimestamp())) - strtotime(strftime("%d-%B-%y",$fecha_inicio -> getTimestamp()));
+                    $diario = $dias / 86400;
+                    // $lista[$key]["CANTIDAD_REALIZAR"] = $year;
+                    $lista[$key]["evidencias_realizar"] = $diario+1;
+                }
+
+                if($frecuencia == "SEMANAL")
+                {
+                    $dias = strtotime(strftime("%d-%B-%y",$hoy -> getTimestamp())) - strtotime(strftime("%d-%B-%y",$fecha_inicio -> getTimestamp()));
+                    $dias = $dias / 86400;
+                    $semanas = $dias/7;
+                    $lista[$key]["evidencias_realizar"] = floor($semanas);
+                }
+
+                if($frecuencia == "MENSUAL")
+                {
+                    $cantidad_a_realizar = 0;
+                    $dias = strtotime(strftime("%d-%B-%y",$hoy -> getTimestamp())) - strtotime(strftime("%d-%B-%y",$fecha_inicio -> getTimestamp()));
+                    $dias = $dias / 86400;
+                    $mesInicio = strftime("%m",$fecha_inicio->getTimestamp());
+                    $yearInicio = strftime("%Y",$fecha_inicio->getTimestamp());
+                    $finWhile=true;
+                    while($finWhile)
                     {
-                        $dias = strtotime(strftime("%d-%B-%y",$hoy -> getTimestamp())) - strtotime(strftime("%d-%B-%y",$fecha_inicio -> getTimestamp()));
-                        $diario = $dias / 86400;
-                        // $lista[$key]["CANTIDAD_REALIZAR"] = $year;
-                        $lista[$key]["evidencias_realizar"] = $diario+1;
-                    }
-                    if($frecuencia == "SEMANAL")
-                    {
-                        $dias = strtotime(strftime("%d-%B-%y",$hoy -> getTimestamp())) - strtotime(strftime("%d-%B-%y",$fecha_inicio -> getTimestamp()));
-                        $dias = $dias / 86400;
-                        $semanas = $dias/7;
-                        $lista[$key]["evidencias_realizar"] = floor($semanas);
-                    }
-                    if($frecuencia == "MENSUAL")
-                    {
-                        $cantidad_a_realizar = 0;
-                        $dias = strtotime(strftime("%d-%B-%y",$hoy -> getTimestamp())) - strtotime(strftime("%d-%B-%y",$fecha_inicio -> getTimestamp()));
-                        $dias = $dias / 86400;
-                        $mesInicio = strftime("%m",$fecha_inicio->getTimestamp());
-                        $yearInicio = strftime("%Y",$fecha_inicio->getTimestamp());
-                        $finWhile=true;
-                        while($finWhile)
+                        $mensual = cal_days_in_month(CAL_GREGORIAN,$mesInicio,$yearInicio);
+                        if($mesInicio==12)
                         {
-                            $mensual = cal_days_in_month(CAL_GREGORIAN,$mesInicio,$yearInicio);
+                            $mesInicio=0;
+                            $yearInicio++;
+                        }
+                        if($dias > 0)
+                        {
+                            $cantidad_a_realizar++;
+                        }
+                        if($dias < 0)
+                        {
+                            $finWhile=false;
+                        }
+                        if($dias == 0)
+                        {
+                            $finWhile=false;
+                            $cantidad_a_realizar++;
+                        }
+                        $mesInicio++;
+                        $dias = $dias - $mensual;
+                    };
+                    $lista[$key]["evidencias_realizar"] = $cantidad_a_realizar;
+                }
+
+                if($frecuencia == "BIMESTRAL")
+                {
+                    $cantidad_a_realizar = 0;
+                    $dias = strtotime(strftime("%d-%B-%y",$hoy -> getTimestamp())) - strtotime(strftime("%d-%B-%y",$fecha_inicio -> getTimestamp()));
+                    $dias = $dias / 86400;
+                    $mesInicio = strftime("%m",$fecha_inicio->getTimestamp());
+                    $yearInicio = strftime("%Y",$fecha_inicio->getTimestamp());
+                    $finWhile=true;
+                    while($finWhile)
+                    {
+                        $mensual = cal_days_in_month(CAL_GREGORIAN,$mesInicio,$yearInicio);
+                        $mensual = $mensual + cal_days_in_month(CAL_GREGORIAN,$mesInicio+1,$yearInicio);
+
+                        if($mesInicio==11)
+                        {
+                            $mesInicio=-1;
+                            $yearInicio++;
+                        }
+                        else
+                        {
                             if($mesInicio==12)
                             {
                                 $mesInicio=0;
                                 $yearInicio++;
                             }
-                            if($dias > 0)
-                            {
-                                $cantidad_a_realizar++;
-                            }
-                            if($dias < 0)
-                            {
-                                $finWhile=false;
-                            }
-                            if($dias == 0)
-                            {
-                                $finWhile=false;
-                                $cantidad_a_realizar++;
-                            }
-                            $mesInicio++;
-                            $dias = $dias - $mensual;
-                        };
-                        $lista[$key]["evidencias_realizar"] = $cantidad_a_realizar;
-                    }
-                    if($frecuencia == "BIMESTRAL")
-                    {
-                        $cantidad_a_realizar = 0;
-                        $dias = strtotime(strftime("%d-%B-%y",$hoy -> getTimestamp())) - strtotime(strftime("%d-%B-%y",$fecha_inicio -> getTimestamp()));
-                        $dias = $dias / 86400;
-                        $mesInicio = strftime("%m",$fecha_inicio->getTimestamp());
-                        $yearInicio = strftime("%Y",$fecha_inicio->getTimestamp());
-                        $finWhile=true;
-                        while($finWhile)
-                        {
-                            $mensual = cal_days_in_month(CAL_GREGORIAN,$mesInicio,$yearInicio);
-                            $mensual = $mensual + cal_days_in_month(CAL_GREGORIAN,$mesInicio+1,$yearInicio);
-
-                            if($mesInicio==11)
-                            {
-                                $mesInicio=-1;
-                                $yearInicio++;
-                            }
-                            else
-                            {
-                                if($mesInicio==12)
-                                {
-                                    $mesInicio=0;
-                                    $yearInicio++;
-                                }
-                            }
-                            if($dias > 0)
-                            {
-                                $cantidad_a_realizar++;
-                            }
-                            if($dias < 0)
-                            {
-                                $finWhile=false;
-                            }
-                            if($dias == 0)
-                            {
-                                $finWhile=false;
-                                $cantidad_a_realizar++;
-                            }
-                            $mesInicio+=2;
-                            $dias = $dias - $mensual;
-                        };
-                        $lista[$key]["evidencias_realizar"] = $cantidad_a_realizar;
-                    }
-                    if($frecuencia == "ANUAL")
-                    {
-                        $cantidad_a_realizar = 1;
-                        $yearInicio = strftime("%Y",$fecha_inicio->getTimestamp());
-                        $yearHoy = strftime("%Y",$hoy->getTimestamp());
-                        // $diasInicio = strftime("%d",$fecha_inicio->getTimestamp());
-                        // $diasHoy = strftime("%d",$hoy->getTimestamp());
-                        // if($diasInicio < $diasHoy)
-                        // {
-                        //     $cantidad_a_realizar++;
-                        //     $yearInicio++;
-                        // }
-                        // if($diasInicio == $diasHoy)
-                        // {
-                        //     $cantidad_a_realizar++;
-                        // }
-                        $finWhile=true;
-                        while($finWhile)
-                        {
-                            if($yearInicio >= $yearHoy)
-                            {
-                                $finWhile=false;
-                            }
-                            else
-                            {
-                                $yearInicio++;
-                                $cantidad_a_realizar++;
-                            }
                         }
-                        $lista[$key]["evidencias_realizar"] = $cantidad_a_realizar;
-                        // echo $diasInicio."\n";
-                        // echo $diasHoy."\n";
-                        // echo $yearInicio."\n";
-                        // echo $yearHoy."\n";
-                        // echo $cantidad_a_realizar."\n";
-                    }
-                    if($frecuencia == "INDEFINIDO")
+                        if($dias > 0)
+                        {
+                            $cantidad_a_realizar++;
+                        }
+                        if($dias < 0)
+                        {
+                            $finWhile=false;
+                        }
+                        if($dias == 0)
+                        {
+                            $finWhile=false;
+                            $cantidad_a_realizar++;
+                        }
+                        $mesInicio+=2;
+                        $dias = $dias - $mensual;
+                    };
+                    $lista[$key]["evidencias_realizar"] = $cantidad_a_realizar;
+                }
+
+                if($frecuencia == "ANUAL")
+                {
+                    $cantidad_a_realizar = 1;
+                    $yearInicio = strftime("%Y",$fecha_inicio->getTimestamp());
+                    $yearHoy = strftime("%Y",$hoy->getTimestamp());
+                    // $diasInicio = strftime("%d",$fecha_inicio->getTimestamp());
+                    // $diasHoy = strftime("%d",$hoy->getTimestamp());
+                    // if($diasInicio < $diasHoy)
+                    // {
+                    //     $cantidad_a_realizar++;
+                    //     $yearInicio++;
+                    // }
+                    // if($diasInicio == $diasHoy)
+                    // {
+                    //     $cantidad_a_realizar++;
+                    // }
+                    $finWhile=true;
+                    while($finWhile)
                     {
-                        $lista[$key]["evidencias_realizar"] = -1;
+                        if($yearInicio >= $yearHoy)
+                        {
+                            $finWhile=false;
+                        }
+                        else
+                        {
+                            $yearInicio++;
+                            $cantidad_a_realizar++;
+                        }
                     }
-                    if($frecuencia == "POR EVENTO")
-                    {
-                        $lista[$key]["evidencias_realizar"] = -1;
-                    }
+                    $lista[$key]["evidencias_realizar"] = $cantidad_a_realizar;
+                    // echo $diasInicio."\n";
+                    // echo $diasHoy."\n";
+                    // echo $yearInicio."\n";
+                    // echo $yearHoy."\n";
+                    // echo $cantidad_a_realizar."\n";
+                }
+
+                if($frecuencia == "INDEFINIDO")
+                {
+                    $lista[$key]["evidencias_realizar"] = -1;
+                }
+
+                if($frecuencia == "POR EVENTO")
+                {
+                    $lista[$key]["evidencias_realizar"] = -1;
+                }
                 // }
                 // else
                 // {
                 //     $lista[$key]["evidencias_realizar"] = "X";
                 // }
+                
                 if($value["id_registro"]==null)
                 {
                     $lista[$key]["evidencias_realizar"] = "X";
@@ -199,6 +206,8 @@ class ConsultasModel{
         }
     }
 
+    // de la mano con los datos generados en listarConsultas
+    // se hacen los conteos para tener porcentaje de cumplimiento desde registros, requisitos y del tema
     public function calcular($lista)
     {
         try
@@ -1072,6 +1081,8 @@ class ConsultasModel{
         }
     }
     
+    // de la mano con los datos generados en calcular
+    // compone los datos para poder ser utilizados en la vista
     public function limpiar($lista)
     {
         $posicionesBorrar = array();
@@ -1123,6 +1134,4 @@ class ConsultasModel{
     // });
     // tempData["cumplimiento_tema"] = (tempData["requisitos_tema"]==0)?
 }
-
-
 ?>

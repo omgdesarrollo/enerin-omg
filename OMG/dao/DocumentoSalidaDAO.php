@@ -186,6 +186,7 @@ class DocumentoSalidaDAO
         }
     }
     
+    // lista todos los empleados
     public function responsablesDelTemaCombobox()
     {
         try 

@@ -1,5 +1,4 @@
-
-function inicializarFiltros()
+inicializarFiltros = ()=>
 {
     return new Promise((resolve,reject)=>
     {
@@ -265,26 +264,27 @@ fieldValidacionTema.prototype = new jsGrid.Field
         }
 });
 
-function listarDatos()//listo
+listarDatos = ()=>
 {
-    return new Promise((resolve,reject)=>{
+    return new Promise((resolve,reject)=>
+    {
         URL = 'filesValidacionDocumento/';
         var __datos=[];
         $.ajax({
             url:'../Controller/ValidacionDocumentosController.php?Op=ListarTodo',
             type:"GET",
             data:'URL='+URL,
-            beforeSend:function()
+            beforeSend:()=>
             {
                 growlWait("Solicitud","Solicitando Datos Validación Documentos");
             },
-            success:function(data)
+            success:(data)=>
             {
                 if(typeof(data)=="object")
                 {
                     growlSuccess("Solicitud","Registros obtenidos");
                     dataListado = data;
-                    $.each(data,function (index,value)
+                    $.each(data,(index,value)=>
                     {
                         __datos.push( reconstruir(value,index+1) );
                     });
@@ -299,9 +299,8 @@ function listarDatos()//listo
                     reject();
                 }
             },
-            error:function(e)
+            error:(e)=>
             {
-                // console.log(e);
                 growlError("Error","Error en el servidor");
                 reject();
             }
@@ -338,29 +337,31 @@ function listarUno(idValidacionDocumento)//ya no se usa
     });
 }
 
-function actualizarValidacionDocumento(idValidacionDocumento)//listo
+// lista una validacion documento y modifica los datos del registro listado, muestra los nuevos datos en la vista
+actualizarValidacionDocumento = (idValidacionDocumento)=>
 {
     URL = 'filesValidacionDocumento/';
     $.ajax({
         url: '../Controller/ValidacionDocumentosController.php?Op=ListarUno',
         type:'GET',
         data:'ID_VALIDACION_DOCUMENTO='+idValidacionDocumento+"&URL="+URL,
-        success:function(datos)
+        success:(datos)=>
         {
-            $.each(datos,function(index,value){
+            $.each(datos,(index,value)=>
+            {
                 componerDataListado(value);
             });
             componerDataGrid();
             gridInstance.loadData();
         },
-        error:function()
+        error:()=>
         {
             growlError("Error al refrescar la vista","Error en el servidor, actualize la vista");
         }
     });
 }
 
-function reconstruir(documento,index)//listo
+reconstruir = (documento,index)=>
 {
     no = "fa-times-circle-o";
     yes = "fa-check-circle-o";
@@ -480,7 +481,6 @@ function reconstruir(documento,index)//listo
     return tempData;
 }
 
-
 function reconstruirExcel(documento,index)//listo
 {
     tempData = new Object();
@@ -538,7 +538,7 @@ function reconstruirExcel(documento,index)//listo
 //     $("#loader").hide();
 // }
 
-function mostrar_urls(id_validacion_documento,detenerCargas,objeto)//listo
+mostrar_urls = (id_validacion_documento,detenerCargas,objeto)=>
 {
     // $('#div_subirArchivos').html("");
     // console.log();
@@ -612,7 +612,7 @@ function mostrar_urls(id_validacion_documento,detenerCargas,objeto)//listo
     });
 }
 
-function agregarArchivosUrl()//listo
+agregarArchivosUrl = ()=>
 {
     var ID_VALIDACION_DOCUMENTO = $('#tempInputIdValidacionDocumento').val();
     url = 'filesValidacionDocumento/'+ID_VALIDACION_DOCUMENTO,
@@ -620,19 +620,19 @@ function agregarArchivosUrl()//listo
         url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
         type: 'GET',
         data: 'URL='+url,
-        success:function(creado)
+        success:(creado)=>
         {
             if(creado)
             $('.start').click();
         },
-        error:function()
+        error:()=>
         {
             growlError("Error Agregar Archivo","Error en el servidor");
         }
     });
 }
 
-function borrarArchivo(url)//listo
+borrarArchivo = (url)=>
 {
     swal({
         title: "ELIMINAR",
@@ -641,14 +641,14 @@ function borrarArchivo(url)//listo
         showCancelButton: true,
         closeOnConfirm: true,
         showLoaderOnConfirm: true
-    },function()
+    },()=>
     {
         var ID_VALIDACION_DOCUMENTO = $('#tempInputIdValidacionDocumento').val();
         $.ajax({
         url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
         type: 'POST',
         data: 'URL='+url,
-        success: function(eliminado)
+        success:(eliminado)=>
         {
             if(eliminado)
             {
@@ -662,7 +662,7 @@ function borrarArchivo(url)//listo
             else
                 growlError("Error Eliminar Archivo","Ocurrio un error al elimiar el documento");
         },
-        error:function()
+        error:()=>
         {
             growlError("Error Elimnar Archivo","Error en el servidor");
         }
@@ -670,7 +670,11 @@ function borrarArchivo(url)//listo
     });
 }
 
-function validarDocumentoR(Obj,columna,idValidacionDocumento,idDocumento)
+// verifica si esta validado por el responsable de tema
+// obtiene si tiene archivo cargado el registro validacion documento
+// aplica validacion responsable de documento
+// obtiene temas y responsables de temas y envia notificaciones a esos responsables
+validarDocumentoR = (Obj,columna,idValidacionDocumento,idDocumento)=>
 {
     GetValidacionTema = ({
         url:'../Controller/ValidacionDocumentosController.php?Op=GetValidacionTema',
@@ -684,11 +688,11 @@ function validarDocumentoR(Obj,columna,idValidacionDocumento,idDocumento)
         data:'ID_VALIDACION_DOCUMENTO='+idValidacionDocumento,
     });
     
-    $.ajax(GetValidacionTema).done(function(validado)
+    $.ajax(GetValidacionTema).done((validado)=>
     {
         if(validado==false)
         {
-                $.ajax(GetExisteArchivo).done(function(existenArchivos)
+                $.ajax(GetExisteArchivo).done((existenArchivos)=>
                 {
                     if(existenArchivos==true)
                     {
@@ -698,9 +702,9 @@ function validarDocumentoR(Obj,columna,idValidacionDocumento,idDocumento)
                                 url:'../Controller/ValidacionDocumentosController.php?Op=ObtenerTemayResponsable',
                                 type:'GET',
                                 data:'ID_DOCUMENTO='+idDocumento,
-                                success:function(responsables)
+                                success:(responsables)=>
                                 {
-                                    $.each(responsables,function(index,value)
+                                    $.each(responsables,(index,value)=>
                                     {
                                         (validarR)?
                                         enviar_notificacion("Ha sido validado un documento por el responsable del documento",value.id_usuario,0,false,"ValidacionDocumentosView.php?accion="+idValidacionDocumento)//msj,para,tipomsj,atendido,asunto
@@ -728,13 +732,17 @@ function validarDocumentoR(Obj,columna,idValidacionDocumento,idDocumento)
         if(validado==-1)
             growlError("Error Validación","Error en el servidor");
     })
-    .fail(function()
+    .fail(()=>
     {
         growlError("Error validación","Error en el servidor");
     });
 }
 
-function validarTemaR(Obj,columna,idValidacionDocumento,idDocumento,idPara)
+// obtiene si esta o no validado por el responsable de documento
+// aplica validacion responsable de tema
+// obtiene temas y responsables de temas y envia notificaciones a esos responsables
+// envia notificacion al responsable de documento
+validarTemaR = (Obj,columna,idValidacionDocumento,idDocumento,idPara)=>
 {
     getValidacionDocumento = $.ajax({
         url:'../Controller/ValidacionDocumentosController.php?Op=GetValidacionDocumento',
@@ -742,7 +750,7 @@ function validarTemaR(Obj,columna,idValidacionDocumento,idDocumento,idPara)
         data:'ID_VALIDACION_DOCUMENTO='+idValidacionDocumento,
     });
     
-    getValidacionDocumento.done(function(validado)
+    getValidacionDocumento.done((validado)=>
     {
         if(validado==true)
         {
@@ -752,9 +760,9 @@ function validarTemaR(Obj,columna,idValidacionDocumento,idDocumento,idPara)
                     url:'../Controller/ValidacionDocumentosController.php?Op=ObtenerTemayResponsable',
                     type:'GET',
                     data:'ID_DOCUMENTO='+idDocumento,
-                    success:function(responsables)
+                    success:(responsables)=>
                     {
-                        $.each(responsables,function(index,value)
+                        $.each(responsables,(index,value)=>
                         {
                             if(value.id_usuario!=idUsuario)
                             {
@@ -783,13 +791,14 @@ function validarTemaR(Obj,columna,idValidacionDocumento,idDocumento,idPara)
         if(validado==-1)
             alert("Error en el servidor");
     })
-    .fail(function()
+    .fail(()=>
     {
         swalError("Error en el servidor");
     });
 }
 
-function validar(idValidacionDocumento,columna,Obj)
+// valida el registro, ya sea por el responsable de documento y por responsable de tema
+validar = (idValidacionDocumento,columna,Obj)=>
 {
     return new Promise((resolve,reject)=>
     {
@@ -803,7 +812,7 @@ function validar(idValidacionDocumento,columna,Obj)
                 type: 'POST',
                 data: 'ID_VALIDACION_DOCUMENTO='+idValidacionDocumento+'&COLUMNA='+columna+'&VALOR='+valor,
                 async:false,
-                success:function(exito)
+                success:(exito)=>
                 {
                     // exitoT = valor;
                     if(exito)
@@ -818,7 +827,7 @@ function validar(idValidacionDocumento,columna,Obj)
                         //aqui mandar notificacion
                     }
                 },
-                error:function()
+                error:()=>
                 {
                     swalError("Error en el servidor");
                     reject();
@@ -827,23 +836,25 @@ function validar(idValidacionDocumento,columna,Obj)
     });
 }
 
-function enviar_notificacion(mensaje,para,tipoMensaje,atendido,asunto)//listo, pero se puede hacer mas factible, mandado todo en un solo ajax sin ejecutar tantos
+// envia notificacion
+enviar_notificacion = (mensaje,para,tipoMensaje,atendido,asunto)=>//listo, pero se puede hacer mas factible, mandado todo en un solo ajax sin ejecutar tantos
 {
     $.ajax({
         url:"../Controller/NotificacionesController.php?Op=EnviarNotificacionHibry",
         data: "PARA="+para+"&MENSAJE="+mensaje+"&ATENDIDO="+atendido+"&TIPO_MENSAJE="+tipoMensaje+"&ASUNTO="+asunto,
-        success:function(response)
+        success:(response)=>
         {
             growlSuccess("Notificar", (response==true)? "Se notifico del cambio" : "No se pudo notificar");
         },
-        error:function()
+        error:()=>
         {
             growlError("Error Notificación","Error en el servidor");
         }
     });
 }
 
-function noAcceso(Obj)
+// 
+noAcceso = (Obj)=>
 {
     no = "fa-times-circle-o";
     yes = "fa-check-circle-o";
@@ -852,7 +863,8 @@ function noAcceso(Obj)
     swalInfo( ((valor)?"Validado por el responsable del documento":"Esperando la validación del responsable del documento") );
 }
 
-function modificarArchivos(idValidacionDocumento,valor)//listo
+// actualiza el contador de archivos de base de datos
+modificarArchivos = (idValidacionDocumento,valor)=>//listo
 {
     $.ajax({
         url:'../Controller/ValidacionDocumentosController.php?Op=ModificarArchivos',
@@ -861,7 +873,7 @@ function modificarArchivos(idValidacionDocumento,valor)//listo
     });
 }
 
-function refresh()
+refresh = ()=>
 {
     inicializarFiltros().then((resolve2)=>
     {
@@ -888,13 +900,13 @@ function refresh()
     // enviarWB();
 }
 
-function componerDataListado(value)// id de la vista documento, listo
+componerDataListado = (value)=>// id de la vista documento, listo
 {
     id_vista = value.id_validacion_documento;
     id_string = "id_validacion_documento";
-    $.each(dataListado,function(indexList,valueList)
+    $.each(dataListado,(indexList,valueList)=>
     {
-        $.each(valueList,function(ind,val)
+        $.each(valueList,(ind,val)=>
         {
             if(ind == id_string)
                     ( val==id_vista) ? dataListado[indexList]=value : console.log();
@@ -902,16 +914,17 @@ function componerDataListado(value)// id de la vista documento, listo
     });
 }
 
-function componerDataGrid()
+componerDataGrid = ()=>
 {
     __datos = [];
-    $.each(dataListado,function(index,value){
+    $.each(dataListado,(index,value)=>
+    {
         __datos.push(reconstruir(value,index+1));
     });
     DataGrid = __datos;
 }
 
-function mostrarRequisitos(id_documento)//listo
+mostrarRequisitos = (id_documento)=>//listo
 {
     let ValoresRequisitos = "<ul style='margin:0px'>";
 
@@ -919,9 +932,9 @@ function mostrarRequisitos(id_documento)//listo
         url: "../Controller/ValidacionDocumentosController.php?Op=MostrarRequisitosPorDocumento",
         type: 'POST',
         data: 'ID_DOCUMENTO='+id_documento,
-        success:function(responserequisitos)
+        success:(responserequisitos)=>
         {
-            $.each(responserequisitos,function(index,value)
+            $.each(responserequisitos,(index,value)=>
             {
                 //alert("Hast aqui"+value.requisito);
             ValoresRequisitos+= '<div class="panel-group" style="margin:0px">'+
@@ -936,16 +949,17 @@ function mostrarRequisitos(id_documento)//listo
     });
 }
 
-function mostrarRegistros(id_documento)//listo
+mostrarRegistros = (id_documento)=>//listo
 {
     let ValoresRegistros = "<ul style='margin:0px'>";
     $.ajax ({
         url:"../Controller/ValidacionDocumentosController.php?Op=MostrarRegistrosPorDocumento",
         type: 'POST',
         data: 'ID_DOCUMENTO='+id_documento,
-        success:function(responseregistros)
+        success:(responseregistros)=>
         {
-            $.each(responseregistros,function(index,value){
+            $.each(responseregistros,(index,value)=>
+            {
 
                 ValoresRegistros += '<div class="panel-group" style="margin:0px">'+
                             '<div class="panel panel-info">'+
@@ -958,7 +972,8 @@ function mostrarRegistros(id_documento)//listo
     });
 }
 
-function mostrarTemaResponsable(idDocumento)//listo
+// construye el cuerpo de temas y sus responsables
+mostrarTemaResponsable = (idDocumento)=>//listo
 {
     let tempData = "";
     $.ajax({

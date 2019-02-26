@@ -101,6 +101,7 @@ switch ($Op)
 		echo $data;
 	break;
 
+    // lista temas por busqueda
     case 'BuscarTema':
         $USUARIO = Session::getSesion("user");
         $lista = $model->listarTemas($_REQUEST['CADENA'],$USUARIO["ID_USUARIO"], Session::getSesion("s_cont"));
@@ -108,6 +109,7 @@ switch ($Op)
         echo json_encode($lista);
     break;
 
+    // lista los registros pertenecientes a un tema
     case 'BuscarRegistro':
         $lista = $model->listarRegistros($_REQUEST['CADENA'],$_REQUEST['ID_TEMA']);
         header('Content-type: application/json; charset=utf-8');
@@ -162,6 +164,7 @@ switch ($Op)
         echo json_encode(json_decode($lista,true));
     break;
 
+    // agrega un nuevo mensaje
     case 'AgregarMensaje':
         header('Content-type: application/json; charset=utf-8');
         $USUARIO = Session::getSesion("user");

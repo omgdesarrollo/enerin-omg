@@ -10,61 +10,52 @@ $Op=$_REQUEST["Op"];
 $model=new InformeValidacionDocumentosModel();
 $modelArchivo = new ArchivoUploadModel();
 
-switch ($Op) {
-
+switch ($Op)
+{
+    // lista documentos con sus temas y responsables de tema, requisitos, ligados
+    case 'listarparametros(v,nv,sd)':
+        $CONTRATO = Session::getSesion("s_cont");
+        $v["param"]["contrato"]= Session::getSesion("s_cont");
+        $Lista= $model->listarValidaciones($v);
+        foreach($Lista["info"] as $key => $value)
+        {
+            $url = $_REQUEST["URL"].$value["id_validacion_documento"];
+            $Lista["info"][$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
+        }
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+    break;
     
-        case 'listarparametros(v,nv,sd)':
-            $CONTRATO = Session::getSesion("s_cont");
-            $v["param"]["contrato"]= Session::getSesion("s_cont");
-            $Lista= $model->listarValidaciones($v);
-            foreach($Lista["info"] as $key => $value)
-            {
-                $url = $_REQUEST["URL"].$value["id_validacion_documento"];
-                $Lista["info"][$key]["archivosUpload"] = $modelArchivo->listar_urls($CONTRATO,$url);
-            }
-            header('Content-type: application/json; charset=utf-8');
-            echo json_encode($Lista);
-        //        echo $v["param"]["v"];
-        break;
-        
-        case 'obtenerResponsablesDocumentos':
-            $Lista=$model->obtenerTodosLosEmpleadosQueSonResponsableDelDocumento();
-            header("Content-type:application/json;charset=utf-8");
-            echo json_encode($Lista);
-            
-        break;
+    // pendiente de verificar su uso
+    case 'obtenerResponsablesDocumentos':
+        $Lista=$model->obtenerTodosLosEmpleadosQueSonResponsableDelDocumento();
+        header("Content-type:application/json;charset=utf-8");
+        echo json_encode($Lista);
+    break;
     
-    
-        case 'MostrarTemayResponsable':
+    // lista temas y responsables de temas ligados a un documento
+    case 'MostrarTemayResponsable':
+        $Lista=$model->obtenerTemayResponsable($_REQUEST['ID_DOCUMENTO']);
+//      Session::setSesion("obtenerTemayResponsable", $lista);
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+    break;
 
-                    $Lista=$model->obtenerTemayResponsable($_REQUEST['ID_DOCUMENTO']);
+    // listar requisitos por documento
+    case 'MostrarRequisitosPorDocumento':
+        $Lista= $model->obtenerRequisitosporDocumento($_REQUEST['ID_DOCUMENTO']);
+//      Session::setSesion("obtenerRequisitosporDocumento",$Lista);
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode( $Lista);
+    break;
 
-    //                Session::setSesion("obtenerTemayResponsable", $lista);                        
-                    header('Content-type: application/json; charset=utf-8');
-                    echo json_encode($Lista);
-                    return $Lista;
-        break;
-            
-        case 'MostrarRequisitosPorDocumento':
-
-
-                $Lista= $model->obtenerRequisitosporDocumento($_REQUEST['ID_DOCUMENTO']);
-//                Session::setSesion("obtenerRequisitosporDocumento",$Lista);        
-                header('Content-type: application/json; charset=utf-8');
-                echo json_encode( $Lista);
-                return $Lista;
-                break;	
-
-
-        case 'MostrarRegistrosPorDocumento':
-                  
-                $Lista= $model->obtenerRegistrosPorDocumento($_REQUEST['ID_DOCUMENTO']);
-//                Session::setSesion("obtenerRegistrosPorDocumento",$Lista);                 
-                header('Content-type: application/json; charset=utf-8');
-                echo json_encode($Lista);
-                return $Lista;
-            
-		break;
+    // pendiente de verificar su uso
+    case 'MostrarRegistrosPorDocumento':
+        $Lista= $model->obtenerRegistrosPorDocumento($_REQUEST['ID_DOCUMENTO']);
+//      Session::setSesion("obtenerRegistrosPorDocumento",$Lista);   
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($Lista);
+    break;
     
     default:
         break;
