@@ -41,7 +41,7 @@ $(function()
 }); //SE CIERRA EL $(FUNCTION())
 
 
-function inicializarFiltros()
+inicializarFiltros = ()=>
 {
     return new Promise((resolve,reject)=>
     {
@@ -64,9 +64,9 @@ function inicializarFiltros()
     });
 }
 
-function listarDatos()
+// lista documentos con temas y responsables de tema, requisitos
+listarDatos = ()=>
 {
-
     return new Promise((resolve,reject)=>
     {
         URL = 'filesValidacionDocumento/';
@@ -75,17 +75,17 @@ function listarDatos()
             url:'../Controller/InformeValidacionDocumentosController.php?Op=listarparametros(v,nv,sd)',
             type: 'GET',
             data:'URL='+URL,
-            beforeSend:function()
+            beforeSend:()=>
             {
                 growlWait("Solicitud","Solicitando Datos...");
             },
-            success:function(data)
+            success:(data)=>
             {
                 if(typeof(data)=="object")
                 {
                     growlSuccess("Solicitud","Registros obtenidos");
                     dataListado = data.info;
-                    $.each(data.info,function (index,value)
+                    $.each(data.info,(index,value)=>
                     {
                         __datos.push( reconstruir(value,index+1) );
                     });
@@ -99,7 +99,7 @@ function listarDatos()
                     reject();
                 }
             },
-            error:function(e)
+            error:(e)=>
             {
                 growlError("Error","Error en el servidor");
                 reject();
@@ -110,17 +110,14 @@ function listarDatos()
 
    var gridInstance,db={};
 
-
-    var si_hay_cambio=false;
-    dataRegistro="";
-    dataListado=[];
-    dataTodo=[];
-    __refresh=false;
-
+   var si_hay_cambio=false;
+   dataRegistro="";
+   dataListado=[];
+   dataTodo=[];
+   __refresh=false;
 
 
-
-function refresh()
+refresh = ()=>
 {
     promesaInicializarFiltros = inicializarFiltros();
     promesaInicializarFiltros.then((resolve)=>
@@ -129,8 +126,8 @@ function refresh()
         listarDatos();
     });
 }
-  
-function reconstruir(value,index)//listo jsgrid
+
+reconstruir = (value,index)=>
 {
     ultimoNumeroGrid = index;
     tempData = new Object();
@@ -197,7 +194,9 @@ function reconstruirExcel(value,index)//listo jsgrid
     return tempData;
 }
 
-function mostrarTemaResponsable(id_documento)
+// lista los temas y responsables de tema ligados un documento
+// construye una tabla que muestra tema y responsable
+mostrarTemaResponsable = (id_documento)=>
 {
     let ValoresTemaResponsable = "<table class='tbl-qa' style='width:100%'>\n\
                                 <tr>\n\
@@ -216,39 +215,39 @@ function mostrarTemaResponsable(id_documento)
               ValoresTemaResponsable+="<td>"+value.nombre_completotema+"</td></tr>";  
 
             });
-
             ValoresTemaResponsable += "</tbody></table>";
             $('#TemayResponsableListado').html(ValoresTemaResponsable);
         }
-
-    })
-
+    });
 }
 
-function mostrarRequisitos(id_documento)
+// listar requisitos por documento
+// construye y muestra los requisitos
+mostrarRequisitos = (id_documento)=>
 {
-        let ValoresRequisitos = "<ul style='margin:0px'>";
-
-        $.ajax ({
-            url: "../Controller/InformeValidacionDocumentosController.php?Op=MostrarRequisitosPorDocumento",
-            type: 'POST',
-            data: 'ID_DOCUMENTO='+id_documento,
-            success:function(datosRequisitos)
+    let ValoresRequisitos = "<ul style='margin:0px'>";
+    $.ajax ({
+        url: "../Controller/InformeValidacionDocumentosController.php?Op=MostrarRequisitosPorDocumento",
+        type: 'POST',
+        data: 'ID_DOCUMENTO='+id_documento,
+        success:(datosRequisitos)=>
+        {
+            $.each(datosRequisitos,(index,value)=>
             {
-               $.each(datosRequisitos,function(index,value){
-                // ValoresRequisitos+="<li>"+value.requisito+"</li>";
+            // ValoresRequisitos+="<li>"+value.requisito+"</li>";
                 ValoresRequisitos+= '<div class="panel-group" style="margin:0px">'+
-                            '<div class="panel panel-info">'+
-                                '<div class="panel-heading" style="font-size:11px;font-weight:bold;"><i class="fa fa-angle-right" style="color:#3399cc;margin-right:10px;font-size:large"></i>'+value.requisito+'</div></div></div>';
-
-               });
-           ValoresRequisitos += "</ul>";     
-               $('#RequisitosListado').html(ValoresRequisitos);
-            }
-        });
+                    '<div class="panel panel-info">'+
+                    '<div class="panel-heading" style="font-size:11px;font-weight:bold;">'+
+                    '<i class="fa fa-angle-right" style="color:#3399cc;margin-right:10px;font-size:large"></i>'+value.requisito+'</div></div></div>';
+            });
+        ValoresRequisitos += "</ul>";     
+            $('#RequisitosListado').html(ValoresRequisitos);
+        }
+    });
 }
 
-function mostrar_urls(id_validacion_documento)//listo
+
+mostrar_urls = (id_validacion_documento)=>
 {
     // $('#div_subirArchivos').html("");
     $("#subirArchivos").attr("style","display:none");
@@ -309,7 +308,8 @@ function mostrar_urls(id_validacion_documento)//listo
     //     });
     // }
     // valor = 8;
-function borrarArchivo(url,id_para)
+
+borrarArchivo = (url,id_para)=>
 {
     // setInterval(aumentador(), 3000);
     swal({
@@ -321,14 +321,14 @@ function borrarArchivo(url,id_para)
         showLoaderOnConfirm: true,
         confirmButtonText: "Eliminar",
         cancelButtonText: "Cancelar",
-    },function()
+    },()=>
     {
         var id_validacion_documento = $('#tempInputIdEvidenciaDocumento').val();
         $.ajax({
             url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
             type: 'POST',
             data: 'URL='+url,
-            success: function(eliminado)
+            success:(eliminado)=>
             {
             if(eliminado)
             {
@@ -347,7 +347,7 @@ function borrarArchivo(url,id_para)
                 //porner los growl
                 // swal("","Ocurrio un error al elimiar el documento", "error");
             },
-            error:function()
+            error:()=>
             {
                 growlError("Error Eliminar Archivo","Error en el servidor");
             //   swal("","Ocurrio un error al elimiar el documento", "error");
@@ -356,7 +356,7 @@ function borrarArchivo(url,id_para)
     });
 }
 
-function agregarArchivosUrl()
+agregarArchivosUrl = ()=>
 {
     let id_validacion_documento = $('#tempInputIdEvidenciaDocumento').val();
     url = 'filesEvidenciaDocumento/'+id_validacion_documento,
@@ -386,7 +386,7 @@ function agregarArchivosUrl()
 //         //alert("Registros"+id_documento);
 //     $.ajax
 //     ({
-//         url:"../Controller/EvidenciasController.php?Op=MostrarRegistrosPorDocumento",
+//         url:"../Controller/EvidenciasController.php?Op=|",
 //         type: 'POST',
 //         data: 'ID_DOCUMENTO='+id_documento,
 //         success:function(responseregistros)
@@ -460,7 +460,7 @@ function swalError(msj)
     $('#loader').hide();
 }
 
-function componerDataListado(value)// id de la vista documento, listo
+componerDataListado = (value)=>// id de la vista documento, listo
 {
     id_vista = value.id_evidencias;
     id_string = "id_evidencias";
@@ -474,7 +474,7 @@ function componerDataListado(value)// id de la vista documento, listo
     });
 }
 
-function componerDataGrid()//listo
+componerDataGrid = ()=>//listo
 {
     __datos = [];
     $.each(dataListado,function(index,value){
@@ -483,14 +483,12 @@ function componerDataGrid()//listo
     DataGrid = __datos;
 }
 
-function cargarprogram(v,validado)
+cargarprogram = (v,validado)=>
 {
-//    alert("el valor de la evidencia es "+v);
-//alert("e:  "+validado);
     window.location.href="GanttEvidenciaView.php?id_evid="+v;
 }
 
-function graficar()
+graficar = ()=>
 {
     let dataGrafica=[];
     let validados = 0;
@@ -546,7 +544,7 @@ function graficar()
     construirGrafica(dataGrafica,tituloGrafica);
 }
 
-function graficar2(datos,concepto)
+graficar2 = (datos,concepto)=>
 {
     let lista = new Object();
     let dataGrafica = [];

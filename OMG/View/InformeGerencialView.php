@@ -250,7 +250,3 @@ inicializarFiltros().then((resolve2)=>
 	</body>
      
 </html>
-
-
-
-
