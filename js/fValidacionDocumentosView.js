@@ -924,10 +924,11 @@ componerDataGrid = ()=>
     DataGrid = __datos;
 }
 
+
+// construye el cuerpo de requisitos
 mostrarRequisitos = (id_documento)=>//listo
 {
     let ValoresRequisitos = "<ul style='margin:0px'>";
-
     $.ajax ({
         url: "../Controller/ValidacionDocumentosController.php?Op=MostrarRequisitosPorDocumento",
         type: 'POST',
@@ -936,12 +937,10 @@ mostrarRequisitos = (id_documento)=>//listo
         {
             $.each(responserequisitos,(index,value)=>
             {
-                //alert("Hast aqui"+value.requisito);
             ValoresRequisitos+= '<div class="panel-group" style="margin:0px">'+
                             '<div class="panel panel-info">'+
                                 '<div class="panel-heading" style="font-size:11px;font-weight:bold;"><i class="fa fa-angle-right" style="color:#3399cc;margin-right:10px;font-size:large"></i>'+value.requisito+'</div></div></div>';
-            // ValoresRequisitos+="<li>"+value.requisito+"</li>";                                       
-
+            // ValoresRequisitos+="<li>"+value.requisito+"</li>";
             });
             ValoresRequisitos += "</ul>";     
             $('#RequisitosListado').html(ValoresRequisitos);
@@ -949,6 +948,7 @@ mostrarRequisitos = (id_documento)=>//listo
     });
 }
 
+// construye el cuerpo de registros
 mostrarRegistros = (id_documento)=>//listo
 {
     let ValoresRegistros = "<ul style='margin:0px'>";
@@ -960,7 +960,6 @@ mostrarRegistros = (id_documento)=>//listo
         {
             $.each(responseregistros,(index,value)=>
             {
-
                 ValoresRegistros += '<div class="panel-group" style="margin:0px">'+
                             '<div class="panel panel-info">'+
                                 '<div class="panel-heading" style="font-size:11px;font-weight:bold;"><i class="fa fa-angle-right" style="color:#3399cc;margin-right:10px;font-size:large"></i>'+value.registro+'</div></div></div>';
