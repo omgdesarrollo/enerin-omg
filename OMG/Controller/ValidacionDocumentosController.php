@@ -53,7 +53,7 @@ switch ($Op)
 		echo json_encode( $Lista);
 	break;
 	
-	// lista tema y responsable de tema
+	// lista tema y responsable de tema por identificador documento
 	case 'ObtenerTemayResponsable':
 		$CONTRATO = Session::getSesion("s_cont");
 		$Lista=$model->obtenerTemayResponsable($_REQUEST['ID_DOCUMENTO'],$CONTRATO);
@@ -61,30 +61,25 @@ switch ($Op)
 		echo json_encode($Lista);
 		return $Lista;
 	break;
-            
-        case 'MostrarRequisitosPorDocumento':
-            
-                
-                $Lista= $model->obtenerRequisitosporDocumento($_REQUEST['ID_DOCUMENTO']);
+	
+	// lista requisitos por identificador de documneto
+	case 'MostrarRequisitosPorDocumento':
+		$Lista= $model->obtenerRequisitosporDocumento($_REQUEST['ID_DOCUMENTO']);
 //                Session::setSesion("obtenerRequisitosporDocumento",$Lista);        
-                header('Content-type: application/json; charset=utf-8');
-				echo json_encode( $Lista);
-                return $Lista;
-		break;	
-	  
-            
-        case 'MostrarRegistrosPorDocumento':
-                  
-                $Lista= $model->obtenerRegistrosPorDocumento($_REQUEST['ID_DOCUMENTO']);
+		header('Content-type: application/json; charset=utf-8');
+		echo json_encode( $Lista);
+	break;
+
+	// lista registros por identificador de documento
+	case 'MostrarRegistrosPorDocumento':
+		$Lista= $model->obtenerRegistrosPorDocumento($_REQUEST['ID_DOCUMENTO']);
 //                Session::setSesion("obtenerRegistrosPorDocumento",$Lista);                 
-                header('Content-type: application/json; charset=utf-8');
-                echo json_encode($Lista);
-                return $Lista;
-            
-		break;    
+		header('Content-type: application/json; charset=utf-8');
+		echo json_encode($Lista);
+	break;
 
 	case 'Modificar':
-                echo $model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );         
+		echo $model->actualizarPorColumna($_REQUEST["column"],$_REQUEST["editval"],$_REQUEST["id"] );         
 	break;
 
 	case 'Eliminar':
