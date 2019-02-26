@@ -294,7 +294,7 @@ class AdminDAO
         }
     }
 
-    // verifica si la contraseña escrita es la correcta
+    // lista existencia de acuerdo al usuario ($USUARIO) y contraseña ($CONTRASENA)
     public function verificarPass($USUARIO,$CONTRASENA)
     {
         try
@@ -303,7 +303,6 @@ class AdminDAO
                   FROM usuarios tbusuarios
                   WHERE tbusuarios.id_usuario=$USUARIO
                   AND tbusuarios.contra='$CONTRASENA'";
-            // echo $query;
             $db= AccesoDB::getInstancia();
             $lista= $db->executeQuery($query);
             // echo $lista[0]['res'];
@@ -315,7 +314,7 @@ class AdminDAO
         }
     }
 
-    // cambia la contraseña actual por una nueva
+    // actualiza la contraseña del usuario
     public function cambiarPass($USUARIO,$CONTRASENA,$VALOR)
     {
         try
@@ -353,7 +352,7 @@ class AdminDAO
         }
     }
 
-    // guarda el color que sera utilizado como fondo configurable
+    // guarda el color que sera utilizado por usuario como fondo
     public function cambiarColor($ID_USUARIO,$COLOR)
     {
         try

@@ -23,7 +23,9 @@ $modelDocumento=new DocumentoModel();
 $modelArchivo = new ArchivoUploadModel();
 $pojo= new ValidacionDocumentoPojo();
 
-switch ($Op) {
+switch ($Op)
+{
+	// lista validacion documentos y agrega a cada regitro sus respectivos archivos
 	case 'ListarTodo':
 		$USUARIO = Session::getSesion("user");
 		$CONTRATO = Session::getSesion("s_cont");
@@ -37,6 +39,7 @@ switch ($Op) {
 		echo json_encode($Lista);
 	break;
 
+	// lista una validacion documento ($_REQUEST["ID_VALIDACION_DOCUMENTO"])
 	case 'ListarUno':
 		$USUARIO = Session::getSesion("user");
 		$CONTRATO = Session::getSesion("s_cont");
@@ -49,7 +52,8 @@ switch ($Op) {
 		header('Content-type: application/json; charset=utf-8');
 		echo json_encode( $Lista);
 	break;
-            
+	
+	// lista tema y responsable de tema
 	case 'ObtenerTemayResponsable':
 		$CONTRATO = Session::getSesion("s_cont");
 		$Lista=$model->obtenerTemayResponsable($_REQUEST['ID_DOCUMENTO'],$CONTRATO);
@@ -110,16 +114,19 @@ switch ($Op) {
 			echo json_encode($existe);
 	break;
 
+	// obtiene si esta o no validado el documento por el responsable de tema
 	case 'GetValidacionTema':
 		$valor = $model->getValidacionTema($_REQUEST["ID_VALIDACION_DOCUMENTO"]);
 		echo $valor;
 	break;
 
+	// obtiene si esta o no validado por el responsable de documento
 	case 'GetValidacionDocumento':
 		$valor = $model->getValidacionDocumento($_REQUEST["ID_VALIDACION_DOCUMENTO"]);
 		echo $valor;
 	break;
 
+	// obtiene si existe o no algun archivo en el registro de validacion documento
 	case 'GetExisteArchivo':
 		$valor = $model->getExisteArchivo($_REQUEST["ID_VALIDACION_DOCUMENTO"]);
 		echo $valor;
@@ -134,6 +141,7 @@ switch ($Op) {
 		echo $res;
 	break;
 
+	// lista observaciones de una validacion documento ($_REQUEST["ID_VALIDACION_DOCUMENTO"])
 	case 'ListarObservaciones':
 		$lista["idUsuario"] = Session::getSesion("user")["ID_USUARIO"];
 		$lista["observaciones"]=$model->listarObservaciones($_REQUEST["ID_VALIDACION_DOCUMENTO"]);
@@ -141,6 +149,7 @@ switch ($Op) {
 		echo json_encode($lista);
 	break;
 
+	// agrega un nuevo mensaje (observacion) a validacion documento ($_REQUEST["ID_VALIDACION_DOCUMENTO"])
 	case 'EnviarObservacion':
 		date_default_timezone_set("America/Mexico_city");
 		$FECHA = strftime("%d/%B/%y %X");
