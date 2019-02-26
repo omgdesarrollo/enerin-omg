@@ -19,8 +19,9 @@ class LoginModel{
             $modelSeguridad= new SeguridadModel();
             $values=array("password"=>$clave);
             
-            $clave=$modelSeguridad->encriptarPassword($values);
-            
+//            $clave=$modelSeguridad->encriptarPassword($values);
+//            echo "d".$clave;
+                    
             $rec["usuario"]=$dao->consultarPorUsuario($usuario,$clave);
             
 //            echo "valor rec:".json_encode($rec["usuario"]);
