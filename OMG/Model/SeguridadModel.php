@@ -4,9 +4,6 @@ class SeguridadModel {
 
 
 public function encriptarPassword($value){
-  return md5($value["password"]); 
+  return sha1(md5($value["password"])); 
 }
-
-
-
 }

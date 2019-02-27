@@ -17,10 +17,11 @@ class LoginModel{
             $dao=new LoginDAO();
             $modelAdmin=new AdminModel();
             $modelSeguridad= new SeguridadModel();
-            $values=array("password"=>$clave);
+//            $values=array("password"=>$clave);
             
-            $clave=$modelSeguridad->encriptarPassword($values);
-            
+//            $clave=$modelSeguridad->encriptarPassword($values);
+//            echo "d".$clave;
+                    
             $rec["usuario"]=$dao->consultarPorUsuario($usuario,$clave);
             
 //            echo "valor rec:".json_encode($rec["usuario"]);
@@ -28,9 +29,9 @@ class LoginModel{
             if($rec["usuario"]==NULL){
             throw new Exception("Usuario no existe !!!!!");
             }
-            if($rec["usuario"]["CONTRA"]!=$clave){
-            throw  new Exception("Clave Incorrecta!!!!!");
-            }
+//            if($rec["usuario"]["CONTRA"]!=$modelSeguridad->encriptarPassword($clave)){
+//            throw  new Exception("Clave Incorrecta!!!!!");
+//            }
             
         if($dao->validarExistenciaDePermisoParaUsuario($rec["usuario"]["ID_USUARIO"])["Res"]!=0){
                 $rec["accesos"]= $modelAdmin->listarUsuarioVistas($rec["usuario"]["ID_USUARIO"]);
