@@ -16,14 +16,17 @@ class LoginDAO{
         
         try{
             $query="call iniciarSesion('$_paramUsuario','$_paramPassword')";
-            
+           
             $db = AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
+//             echo "dd".json_encode($lista);
 //             var_dump($query);
             $rec = NULL;
             if (count($lista)==1){
                 $rec=$lista[0];
+//                echo "entro aqui ";
             }
+//            echo "mandara ".json_encode($rec);
             return $rec;
             } catch (Exception $e){
                 throw $e;
