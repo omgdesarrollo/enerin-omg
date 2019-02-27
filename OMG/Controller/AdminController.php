@@ -232,6 +232,7 @@ switch ($Op)
         Session::setSesion("fotoPerfilActual",$_REQUEST["URL"]);
     break;
 
+
     default:
     return false;
     break;
