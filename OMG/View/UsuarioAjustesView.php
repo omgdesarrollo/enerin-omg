@@ -348,20 +348,20 @@
                         else
                         {
                             // swalError("No se pudo hacer el cambio de contraseña");
-                            growError("Error","No se pudo cambiar la contraseña.<br>Reintente");
+                            growlError("Error","No se pudo cambiar la contraseña.<br>Reintente");
                         }
                     },
                     error:()=>
                     {
                         // swalError("Error en el servidor");
-                        growError("Error","Error en el servidor")
+                        growlError("Error","Error en el servidor")
                     }
                 });
             }
             else
             {
                 // swal("","No puedes utilizar tu misma contraseña","info");
-                growError("Aviso","No puedes utilizar la contraseña anterior")
+                growlError("Aviso","No puedes utilizar la contraseña anterior")
             }
         }
 
@@ -402,7 +402,7 @@
                     // $("#iconPassNueva").html(no);
                     // $("#iconPassNueva2").html(no);
                     // okpassN=false;
-                    growError("Contraseña Incorrecta","Las Contraseñas No Coinciden");
+                    growlError("Contraseña Incorrecta","Las Contraseñas No Coinciden");
                 }
             }
             else
@@ -414,7 +414,7 @@
                 // $("#iconPassNueva").html(no);
                 // $("#iconPassNueva2").html(no);
                 // okpassN=false;
-                growError("Campos Vacios",msj);
+                growlError("Campos Vacios",msj);
             }
         }
 
@@ -447,7 +447,7 @@
                     }
                     else
                     {
-                        growError("Verificar","La contraseña No Es Correcta");
+                        growlError("Verificar","La contraseña No Es Correcta");
                         // okpass=false;
                         // $("#iconPassActual").html(no);
                     }
@@ -455,7 +455,7 @@
                 error:()=>
                 {
                     okpass=false;
-                    growErrror("Error","Error en el servidor");
+                    growlErrror("Error","Error en el servidor");
                 }
             });
         }
