@@ -10,7 +10,10 @@ try {
     $usuario=$_REQUEST["usuario"];
     $clave=$_REQUEST["pass"];
     $tipoUrl=$_REQUEST["t"] ;
+//    curl_exec($ch);
+//    
     //proceso
+    
     Session::setSesion("tipo",$tipoUrl);
     
     ConexionesBDPojo::dataBD($tipoUrl);
