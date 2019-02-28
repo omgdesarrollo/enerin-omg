@@ -307,6 +307,7 @@ function clock()
         <li class="tab" style="border-style: solid;border-color: #006699"><a href="#registroalsistema" style="color:black;background: gray;">INFORMACION DE APP</a></li>
       </ul>
     </div>
+     
     <div class="card-content grey lighten-4">
         <div id="accesologin">
             
@@ -314,7 +315,7 @@ function clock()
                 <!--<div id="container">-->
                 <div style="padding-left: 20%;padding-right: 20%">
             <div class="Icon"><span class="glyphicon glyphicon-user"></span>  </div>
-            
+            <div class="card-panel hoverable">
             <div class="ContentForm">
                
 
@@ -359,13 +360,18 @@ function clock()
                                       
                                        
                                    }
-                                       ?>">   
+                                       ?>">
+                           
                              <div class="row">
                                  <div class="input-field col s12">
                                      <button data-placement="right" title="Haga clic aquí para iniciar sesión" class="btn btn-lg btn-primary btn-block btn-signin" id="IngresoLog" type="submit">Entrar</button>
                                  </div>
                              </div>
-                        
+<!--                             <div class="row">
+                                 <div class="input-field col s12">
+                                     <button data-placement="right" title="Olvido Contraseña" class="btn btn-lg btn-danger btn-block btn-info" id="recuperarContraseña" type="submit">Recuperar Contraseña</button>
+                                 </div>
+                             </div>-->
                        
                         <!--<div class="opcioncontra "><a href="">Olvidaste tu contraseña?</a></div>-->
                         
@@ -375,6 +381,7 @@ function clock()
                         
                 </form>   
 
+            </div>
             </div>
          </div>
             
