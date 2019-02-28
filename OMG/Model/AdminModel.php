@@ -203,12 +203,12 @@ class AdminModel
         }
     }
 
-    public function cambiarPass($USUARIO,$CONTRASENA,$VALOR)
+    public function cambiarPass($USUARIO,$CONTRASENA)
     {
         try
         {
             $dao = new AdminDAO();
-            $rec = $dao->cambiarPass($USUARIO,$CONTRASENA,$VALOR);
+            $rec = $dao->cambiarPass($USUARIO,$CONTRASENA);
             return $rec;
         }
         catch(Exception $ex)

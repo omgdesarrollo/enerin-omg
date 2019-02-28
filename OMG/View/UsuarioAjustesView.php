@@ -1,6 +1,6 @@
 <?php
-session_start();
-require_once '../util/Session.php';
+    session_start();
+    require_once '../util/Session.php';
 //$error=Session::eliminarSesion("error");
 //$usuario=Session::eliminarSesion("usuario");
 // if (Session:: existeSesion("user")){
@@ -15,12 +15,15 @@ require_once '../util/Session.php';
         <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
         <link rel="stylesheet" type="text/css" href="../../css/estilo.css">
         <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
+
+        <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 		<!-- Libreria java scritp de bootstrap -->
         <!-- <script src="../../assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script> -->
                 <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
 
         <script src="../../js/jquery.js" type="text/javascript"></script>
         <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
+
 
         <!-- <script src="../../js/jquery.min.js" type="text/javascript"></script> -->
         <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
@@ -104,15 +107,16 @@ require_once '../util/Session.php';
 		<!-- <div class="ContentForm"> -->
         <div class="form-group">
 		 	<!-- <form id="loginform"  method="post" name="FormEntrar"> -->
-            <label class="control-label">Contraseña Actual: </label>
+            <!-- <label class="control-label">Contraseña Actual: </label>
             <div class="input-group input-group-lg">
-                <span class="input-group-addon" id=""><i class="glyphicon glyphicon-lock"></i></span>
-                <input onBlur="verificarPass(this)" id="contraActual" type="password" class="form-control" placeholder="******" required>
-                <span class="input-group-addon" id="iconPassActual"><i style="color:red" class="glyphicon glyphicon-remove"></i></span>
-            </div>
-            <br>
+                <span class="input-group-addon" id=""><i class="glyphicon glyphicon-lock"></i></span> -->
+                <!-- <input onBlur="verificarPass(this)" id="contraActual" type="password" class="form-control" placeholder="******" required> -->
+                <!-- <input id="contraActual" type="password" class="form-control" placeholder="******" required>
+                <span class="input-group-addon" id="iconPassActual"><i style="color:red" class="glyphicon glyphicon-remove"></i></span> -->
+            <!-- </div> -->
+            <!-- <br> -->
 
-            <label class="control-label">Contraseña Nueva: </label>
+            <!-- <label class="control-label">Contraseña Nueva: </label>
             <div class="input-group input-group-lg">
                 <span class="input-group-addon" id=""><i class="glyphicon glyphicon-lock"></i></span>
                 <input onKeyup="checarPass(this)" id="contraNueva" type="password" class="form-control" placeholder="******" required>
@@ -126,18 +130,79 @@ require_once '../util/Session.php';
                 <input onKeyup="checarPass(this)" id="contraNueva2" type="password" class="form-control" placeholder="******" required>
                 <span class="input-group-addon" id="iconPassNueva2"><i style="color:red" class="glyphicon glyphicon-remove"></i></span>
             </div>
-            <br>
+            <br> -->
 
-            <button onClick="cambiarPass()" title="Haga clic aquí para cambiar contraseña" class="btn btn-lg btn-primary btn-block btn-signin">
-            Cambiar Contraseña</button>
+            <div id="inputs_pass" style="margin-bottom:10px">
+            <!-- <div id="label"></div>
+                <label class="control-label">Contraseña Actual: </label>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input id="contraActual" type="password" class="form-control" placeholder="******" required>
+                    <span class="input-group-addon" id="iconPassActual"><i style="color:red" class="glyphicon glyphicon-remove"></i></span>
+                </div> -->
+            </div>
+            
+            <!-- <div class="input-group input-group-lg">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span> -->
+                <!-- <input onBlur="verificarPass(this)" id="contraActual" type="password" class="form-control" placeholder="******" required> -->
+                <!-- <input id="contraActual" type="password" class="form-control" placeholder="******" required>
+                <span class="input-group-addon" id="iconPassActual"><i style="color:red" class="glyphicon glyphicon-remove"></i></span>
+            </div> -->
+            <div id="botones"></div>
+
+            <!-- <button onClick="cambiarPass()" title="Haga clic aquí para cambiar contraseña" class="btn btn-lg btn-primary btn-block btn-signin">
+            Cambiar Contraseña</button> -->
 				<!--<div class="opcioncontra"><a href="">Olvidaste tu contraseña?</a></div>-->
             <!-- </form> -->
-    </div>
+        </div>
 
      </div>
      <script>
-        okpass=false;
-        okpassN=false;
+
+        var btn_cambiarPass = $("<button>",{onClick:"cambiarPass()",title:"Haga click aquí para cambiar contraseña",
+            class:"btn btn-lg btn-primary btn-block btn-signin"}).append('Cambiar Contraseña <i class="fa fa-paper-plane-o" aria-hidden="true"></i>');
+
+        var btn_siguiente = $("<button>",{title:"Haga click aquí para introducir nueva contraseña",class:"btn btn-lg btn-primary btn-block btn-signin"})
+        .append('Siguiente <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>');
+
+        var inp_passActual = $("<input>",{type:"password",class:"form-control",placeholder:"******"});
+        var inp_passNueva1 = $("<input>",{type:"password",class:"form-control",placeholder:"******"});
+        var inp_passNueva2 = $("<input>",{type:"password",class:"form-control",placeholder:"******"});
+
+        // crea un objecto parte del formulario para introducir contraseña actual, nuevo o repetir
+        crearObjectoPass = (obj)=>
+        {
+            let objTemp = $("<div>",{class:"input-group input-group-lg"});
+            let obj2Temp = $("<span>",{class:"input-group-addon"}).append('<i class="fa fa-key" aria-hidden="true"></i>');
+            $(objTemp).append(obj2Temp);
+            $(objTemp).append(obj);
+            return objTemp;
+        }
+
+        // crea la primera parte del formulario, peticion de contraseña actual
+        iniciarFormulario = ()=>
+        {
+            console.log($("#botones"));
+            $("#inputs_pass").html('<label class="control-label">Contraseña Actual:</label>');
+            $("#inputs_pass").append(crearObjectoPass(inp_passActual));
+            $("#botones").html(btn_siguiente);
+        }
+
+        $(btn_siguiente)[0]["onclick"] = ()=>
+        {
+            $(inp_passActual).val()!=""?
+                verificarPass(inp_passActual)
+            :growlError("Campo Vacio","*Contraseña Actual");
+        };
+
+        $(btn_cambiarPass)[0]["onclick"] = ()=>
+        {
+            checarPass();
+        };
+
+        // okpass=false;
+        // okpassN=false;
+        iniciarFormulario();
         noArchivo = 1;
         Frame = $(this)[0].frameElement;
         $(Frame).css("height","100%");
@@ -214,7 +279,7 @@ require_once '../util/Session.php';
 
         limpiarFormulario = ()=>
         {
-            no = "<i style='color:red' class='glyphicon glyphicon-remove'></i>";
+            // no = "<i style='color:red' class='glyphicon glyphicon-remove'></i>";
             clearInterval(outTime);
             swal({
                     title:"",
@@ -224,78 +289,79 @@ require_once '../util/Session.php';
                     closeOnConfirm: false,
                     showLoaderOnConfirm: true,
                     confirmButtonText: "Recargar",
-                    }, function()
+                    },()=>
                     {
                         outTime = setInterval(function(){limpiarFormulario();},35000);
-                        swal.close();
                         limpiar();
+                        iniciarFormulario();
+                        swal.close();
                     }
                 );
         }
 
         limpiar = ()=>
         {
-            $("#contraActual").val("");
-            $("#contraNueva").val("");
-            $("#contraNueva2").val("");
+            $(inp_passActual).val("");
+            $(inp_passNueva1).val("");
+            $(inp_passNueva2).val("");
 
-            $("#iconPassActual").html(no);
-            $("#iconPassNueva").html(no);
-            $("#iconPassNueva2").html(no);
-            
-            okpass=false;
-            okpassN=false;
+            // $("#iconPassActual").html(no);
+            // $("#iconPassNueva").html(no);
+            // $("#iconPassNueva2").html(no);
+
+            // okpass=false;
+            // okpassN=false;
         }
-        outTime = setInterval(function(){limpiarFormulario();},30000);
+        outTime = setInterval(function(){limpiarFormulario();},35000);
 
         // actualiza la contraseña del usuario, y se cierra la sesion
         cambiarPass = ()=>
         {
-            contraA = $("#contraActual").val();
-            contraN = $("#contraNueva").val();
-            if(okpass==true && okpassN==true)
+            contraA = $(inp_passActual).val();
+            contraN = $(inp_passNueva1).val();
+            if(contraA != contraN)
             {
-                if(contraA != contraN)
-                {
-                    $.ajax({
-                        url: '../Controller/AdminController.php?Op=CambiarPass',
-                        type: 'POST',
-                        data: 'PASS='+contraA+"&NEW_PASS="+contraN,
-                        success:(exito)=>
+                $.ajax({
+                    url: '../Controller/AdminController.php?Op=CambiarPass',
+                    type: 'POST',
+                    data: "NEW_PASS="+contraN,
+                    success:(exito)=>
+                    {
+                        if(exito>0)
                         {
-                            if(exito==true)
-                            {
-                                clearInterval(outTime);
-                                swal({
-                                    title:"",
-                                    text: "La contraseña se cambio. Inicie sesion de nuevo",
-                                    type: "info",
-                                    showCancelButton: false,
-                                    closeOnConfirm: false,
-                                    showLoaderOnConfirm: true,
-                                    confirmButtonText: "Salir",
-                                    },()=>
-                                    {
-                                        window.parent.location.href="Logout.php";
-                                    }
-                                );
-                                setTimeout(function(){swal.close();window.parent.location.href="Logout.php";},7000);
-                            }
-                            else
-                            {
-                                swalError("No se pudo hacer el cambio de contraseña");
-                            }
-                        },
-                        error:()=>
-                        {
-                            swalError("Error en el servidor");
+                            clearInterval(outTime);
+                            swal({
+                                title:"",
+                                text: "La contraseña se ha cambiado. Inicie sesion de nuevo",
+                                type: "info",
+                                showCancelButton: false,
+                                closeOnConfirm: false,
+                                showLoaderOnConfirm: true,
+                                confirmButtonText: "Salir",
+                                },()=>
+                                {
+                                    window.parent.location.href="Logout.php";
+                                }
+                            );
+                            setTimeout(function(){swal.close();window.parent.location.href="Logout.php";},7000);
                         }
-                    });
-                }
-                else
-                {
-                    swal("","No puedes utilizar tu misma contraseña","info");
-                }
+                        else
+                        {
+                            // swalError("No se pudo hacer el cambio de contraseña");
+                            growError("Error","No se pudo cambiar la contraseña.<br>Reintente");
+                        }
+                    },
+                    error:()=>
+                    {
+                        // swalError("Error en el servidor");
+                        growError("Error","Error en el servidor")
+                    }
+                });
+            }
+            else
+            {
+                // swal("","No puedes utilizar tu misma contraseña","info");
+                growError("Aviso","No puedes utilizar la contraseña anterior")
             }
         }
 
@@ -315,32 +381,40 @@ require_once '../util/Session.php';
         // }
         
         // verifica que contraseña nueva y repetir contraseña nueva sean iguales
-        checarPass = (Obj)=>
+        checarPass = ()=>
         {
-            pass = $("#contraNueva").val();
-            passN = $("#contraNueva2").val();
-            yes = "<i style='color:#02ff00' class='glyphicon glyphicon-ok'></i>";
-            no = "<i style='color:red' class='glyphicon glyphicon-remove'></i>";
+            let msj = "";
+            let pass = $(inp_passNueva1).val();
+            let passN = $(inp_passNueva2).val();
+            // yes = "<i style='color:#02ff00' class='glyphicon glyphicon-ok'></i>";
+            // no = "<i style='color:red' class='glyphicon glyphicon-remove'></i>";
             if(pass!="" && passN!="")
             {                
                 if(pass == passN)
                 {
-                    $("#iconPassNueva").html(yes);
-                    $("#iconPassNueva2").html(yes);
-                    okpassN=true;
+                    // $("#iconPassNueva").html(yes);
+                    // $("#iconPassNueva2").html(yes);
+                    // okpassN=true;
+                    cambiarPass();
                 }
                 else
                 {
-                    $("#iconPassNueva").html(no);
-                    $("#iconPassNueva2").html(no);
-                    okpassN=false;
+                    // $("#iconPassNueva").html(no);
+                    // $("#iconPassNueva2").html(no);
+                    // okpassN=false;
+                    growError("Contraseña Incorrecta","Las Contraseñas No Coinciden");
                 }
             }
             else
             {
-                $("#iconPassNueva").html(no);
-                $("#iconPassNueva2").html(no);
-                okpassN=false;
+                if(pass=="")
+                    msj = "*Nueva Contraseña<br>";
+                if(passN=="")
+                    msj += "*Respetir Contraseña";
+                // $("#iconPassNueva").html(no);
+                // $("#iconPassNueva2").html(no);
+                // okpassN=false;
+                growError("Campos Vacios",msj);
             }
         }
 
@@ -354,23 +428,34 @@ require_once '../util/Session.php';
                 url: '../Controller/AdminController.php?Op=VerificarPass',
                 type: 'GET',
                 data: 'PASS='+contrasena,
-                success:function(correcta)
+                beforeSend:()=>
+                {
+                    growlWait("Verificar","Esperando Verificación Contraseña...");
+                },
+                success:(correcta)=>
                 {
                     if(correcta==true)
                     {
-                        $("#iconPassActual").html(yes);
-                        okpass=true;
+                        // $("#iconPassActual").html(yes);
+                        // okpass=true;
+                        growlSuccess("Verificar","Contraseña Verificada Con Exito...");
+                        $("#inputs_pass").html('<label class="control-label">Nueva Contraseña:</label>');
+                        $("#inputs_pass").append(crearObjectoPass(inp_passNueva1));
+                        $("#inputs_pass").append('<label class="control-label">Respetir Contraseña:</label>');
+                        $("#inputs_pass").append(crearObjectoPass(inp_passNueva2));
+                        $("#botones").html(btn_cambiarPass);
                     }
                     else
                     {
-                        okpass=false;
-                        $("#iconPassActual").html(no);
+                        growError("Verificar","La contraseña No Es Correcta");
+                        // okpass=false;
+                        // $("#iconPassActual").html(no);
                     }
                 },
-                error:function()
+                error:()=>
                 {
                     okpass=false;
-                    swalError("Error en el servidor");
+                    growErrror("Error","Error en el servidor");
                 }
             });
         }

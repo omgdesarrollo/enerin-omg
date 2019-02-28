@@ -306,7 +306,7 @@ class AdminDAO
             $query="SELECT COUNT(*) AS res 
                   FROM usuarios tbusuarios
                   WHERE tbusuarios.id_usuario=$USUARIO
-                  AND tbusuarios.contra='$CONTRASENA'";
+                  AND tbusuarios.contra=SHA1(MD5('$CONTRASENA'))";
             $db= AccesoDB::getInstancia();
             $lista= $db->executeQuery($query);
             // echo $lista[0]['res'];
@@ -319,16 +319,15 @@ class AdminDAO
     }
 
     // actualiza la contraseña del usuario
-    public function cambiarPass($USUARIO,$CONTRASENA,$VALOR)
+    public function cambiarPass($USUARIO,$CONTRASENA)
     {
         try
         {
             $query="UPDATE usuarios tbusuarios
-                SET tbusuarios.contra= '$VALOR'
-                WHERE tbusuarios.id_usuario=$USUARIO
-                AND tbusuarios.contra='$CONTRASENA'";
+                SET tbusuarios.contra = SHA1(MD5('$CONTRASENA'))
+                WHERE tbusuarios.id_usuario=$USUARIO";
             $db= AccesoDB::getInstancia();
-            $lista= $db->executeQueryUpdate($query);
+            $lista= $db->executeUpdateRowsAfected($query);
             return $lista;
         }catch (Exception $ex)
         {

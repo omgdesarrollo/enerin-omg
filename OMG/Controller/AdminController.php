@@ -198,7 +198,7 @@ switch ($Op)
         echo $existe;
     break;
 
-    // 
+    // verifica contraseña actual
     case 'VerificarPass':
         $usuario = Session::getSesion("user");
         $existe = $model->verificarPass($usuario["ID_USUARIO"],$_REQUEST["PASS"]);
@@ -208,7 +208,7 @@ switch ($Op)
     // actualiza la contraseña por una nueva ($_REQUEST["NEW_PASS"]) de un usuario ($usuario["ID_USUARIO"])
     case 'CambiarPass':
         $usuario = Session::getSesion("user");
-        $exito = $model->cambiarPass($usuario["ID_USUARIO"],$_REQUEST["PASS"],$_REQUEST["NEW_PASS"]);
+        $exito = $model->cambiarPass($usuario["ID_USUARIO"],$_REQUEST["NEW_PASS"]);
         echo $exito;
     break;
 
