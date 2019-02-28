@@ -204,9 +204,13 @@ class AdminDAO
                $id_nuevo= $value["id_usuario"];
             }
             
+            // $query ="INSERT INTO usuarios (id_usuario, nombre_usuario, contra, id_empleado) VALUES($id_nuevo,'$NOMBRE_USUARIO',
+            //         (SELECT tbempleados.correo FROM empleados tbempleados
+            //         WHERE tbempleados.id_empleado=$ID_EMPLEADO),$ID_EMPLEADO)";
+
             $query ="INSERT INTO usuarios (id_usuario, nombre_usuario, contra, id_empleado) VALUES($id_nuevo,'$NOMBRE_USUARIO',
-                    (SELECT tbempleados.correo FROM empleados tbempleados
-                    WHERE tbempleados.id_empleado=$ID_EMPLEADO),$ID_EMPLEADO)";
+                    SHA1(MD5((SELECT tbempleados.correo FROM empleados tbempleados
+                    WHERE tbempleados.id_empleado=$ID_EMPLEADO))),$ID_EMPLEADO)";
             
             $db= AccesoDB::getInstancia();
             $lista['resultado'] = $db->executeQueryUpdate($query);
