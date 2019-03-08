@@ -50,5 +50,20 @@ class ArchivoUploadDAO
             throw $ex;
         }
     }
+
+    public function obtener_limite_archivos()
+    {
+        try
+        {
+            $query = "SELECT tbmodulos.limite_archivos FROM modulos tbmodulos";
+            $db= AccesoDB::getInstancia();
+            $exito= $db->executeQuery($query);
+            return $exito;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
 }
 ?>

@@ -161,8 +161,9 @@ $Usuario=  Session::getSesion("user");
                 }*/
                 
 	</style>
+    <style id="estilos_colores"></style>
 	<script>
-
+    var colorLeter;
     var colorView = <?php
     $color = "";
     if(Session:: NoExisteSeSion("colorFondo_Vista"))
@@ -171,16 +172,16 @@ $Usuario=  Session::getSesion("user");
         $color = Session::getSesion("colorFondo_Vista");
     echo "'$color'";
     ?>;
-    var colorLeter = hexToRgb(colorView);
-    console.log(colorLeter);
-    colorLeter = invertirRgb(colorLeter)==1?"#ffffff":"#000000";
+    // var colorLeter = hexToRgb(colorView);
+    // // console.log(colorLeter);
+    // colorLeter = invertirRgb(colorLeter)==1?"#ffffff":"#000000";
+
+    obligar_color_principal(colorView);
     // colorLeter = invertirRgb(colorLeter);
     // console.log(colorLeter);
     // colorLeter = rgbToHex( colorLeter["r"], colorLeter["g"], colorLeter["b"] );
     // console.log(colorView);
-    $("style").append("::-webkit-scrollbar-thumb{ background-color:"+colorView+" !important;}");
-    $("style").append(".dhxlayout_base_material div.dhx_cell_layout div.dhx_cell_hdr{background-color:"+colorView+" !important;opacity:0.8 !important; color:"+colorLeter+" }");
-    $("style").append(".dhxrb_block_label{ background:"+colorView+" !important; opacity:0.8; color:"+colorLeter+" !important }");
+    
     // $("style").append("#seleccion_opcionmenuarriba{ background-color:"+colorView+" !important; }");
     // $("#seleccion_opcionmenuarriba").css("background-color",colorView+" !important");
     function hexToRgb(hex)
@@ -191,6 +192,15 @@ $Usuario=  Session::getSesion("user");
             g: parseInt(result[2], 16),
             b: parseInt(result[3], 16)
         } : null;
+    }
+
+    function obligar_color_principal(color)
+    {
+        colorLeter = hexToRgb(color);
+        colorLeter = invertirRgb(colorLeter)==1?"#ffffff":"#000000";
+        $("#estilos_colores").html("::-webkit-scrollbar-thumb{ background-color:"+color+" !important;}");
+        $("#estilos_colores").append(".dhxlayout_base_material div.dhx_cell_layout div.dhx_cell_hdr{background-color:"+color+" !important;opacity:0.8 !important; color:"+colorLeter+" }");
+        $("#estilos_colores").append(".dhxrb_block_label{ background:"+color+" !important; opacity:0.8; color:"+colorLeter+" !important }");
     }
 
     function rgbToHex(r, g, b)

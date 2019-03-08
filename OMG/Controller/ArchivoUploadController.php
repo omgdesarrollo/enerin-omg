@@ -11,23 +11,10 @@ $Op=$_REQUEST["Op"];
 $model=new ArchivoUploadModel();
 $modelDocumentoEntrada= new DocumentoEntradaModel();
 
-switch ($Op) {
+switch ($Op)
+{
 	case 'Guardar':
-		// echo $urls;
-		// foreach($urls as $url)
-		// {
-		// 	echo $url;
-		// }
-		// $urls = Session::getSesion("archivos_urls");
-		// $total = Session::getSesion("archivos_urls_contador");
-		// echo "total de registros: ".$total;
-		$model->insertar_archivos($_REQUEST['ID_DOCUMENTO'],$urls);
-		// $newArray = array();
-		// Session::setSesion("archivos_urls",null);
-		
-		// header('Content-type: application/json; charset=utf-8');
-		// echo json_encode( $Lista);
-		
+		$model->insertar_archivos($_REQUEST['ID_DOCUMENTO'],$urls);		
 		// return $Lista;
 		break;
 		
@@ -57,7 +44,7 @@ switch ($Op) {
 		$eliminado = $model->eliminar_archivoFisico($url);
 		header('Content-type: application/json; charset=utf-8');
 		echo $eliminado;
-		break;
+	break;
 
 	case 'CrearUrl':
 		$URL = $_REQUEST["URL"];
@@ -84,10 +71,64 @@ switch ($Op) {
 		}
 		header('Content-type: application/json; charset=utf-8');
 		echo $creado;
+	break;
+
+	case 'contadorGlobal':
+		header('Content-type: application/json; charset=utf-8');
+		$url = Session::getSesion("tipo");
+		$urls = Session::getSesion("URLS");
+		$urlIR = $urls["fisica"].$url;
+		$data = array();
+		$files = $model->listar_archivosGlobales($urlIR);
+		$bandera = true;
+		$contador = 0;
+		while($bandera)
+		{
+			// $data = array_merge( $files,$model->listar_archivosGlobales($urlIR."/".$value));
+			// while($bandera)
+			// {
+				if(!strpos($files[$contador],"."))
+				{
+					// $data = $model->listar_archivosGlobales($urlIR."/".$value);
+					// echo "Es carpeta = ".$value.'<br>';
+					$files = array_merge( $files,$model->listar_archivosGlobales($files[$contador]));
+					// $files = $model->agregar_archivos($files);
+					// array_push($files,$data);
+				}
+			// }
+			// echo $value."\n";
+			// echo $value."\n";
+			if(!isset($files[$contador+1]))
+					$bandera = false;
+			// echo $files[$contador]."\n";
+			$contador++;
+		}
+		foreach($files as $value)
+		{
+			// echo $value."\n";
+			if(strpos($value,"."))
+			{
+				$tmp = explode("/",$value);
+				// echo json_encode($tmp[sizeof($tmp)-1]);
+				array_push($data,$tmp[sizeof($tmp)-1]);
+			}
+				// $contador;
+		}
+		foreach($data as $value)
+		{
+			// $tmp = explode("/",$value);
+			// echo json_encode($tmp[sizeof($tmp)-1]);
+			// echo $value."\n";
+		}
+		$tamp_data = array();
+		array_push($tamp_data,$data);
+		array_push($tamp_data,$model->obtener_limite_archivos()[0]);
+		echo json_encode($tamp_data);
+	break;
 
 	default:
 		header('Content-type: application/json; charset=utf-8');
-		echo false;
+		echo -1;
 	break;
 }
 ?>

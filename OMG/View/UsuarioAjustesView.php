@@ -85,6 +85,8 @@
             text-align:center;
         } */
         </style>
+        <style id="estilo_pagina">
+        </style>
     </head>
     <body>
 
@@ -218,7 +220,7 @@
                 $color = Session::getSesion("colorFondo_Vista");
             echo "'$color'";
             ?>;
-            $("style").append("::-webkit-scrollbar-thumb{ background-color:"+colorView+" !important;} .dhxlayout_base_material div.dhx_cell_layout div.dhx_cell_hdr{background-color:"+colorView+" !important;opacity:0.8 !important; }");
+            // $("style").append("::-webkit-scrollbar-thumb{ background-color:"+colorView+" !important;} .dhxlayout_base_material div.dhx_cell_layout div.dhx_cell_hdr{background-color:"+colorView+" !important;opacity:0.8 !important; }");
             $('#demo').wheelColorPicker();
         });
         
@@ -232,17 +234,61 @@
                 $(".jQWCP-wWidget").css("display","table");
             });
 
-            $("#demo").on("change",()=>{
-                let color = $("#demo").wheelColorPicker('getValue');
-                $("#cambiarFondoAccionBtn").removeAttr("disabled");
-                $("#cambiarFondoAccionBtn").css({"background":"#"+color,"opacity":0.8});
+            $("#demo").on("change",()=>
+            {
+                permiso_jqwcp=0;
+            //     let color = $("#demo").wheelColorPicker('getValue');
+            //     $("#cambiarFondoAccionBtn").removeAttr("disabled");
+            //     $("#cambiarFondoAccionBtn").css({"background":"#"+color,"opacity":0.8});
             });
 
             $("#cambiarFondoAccionBtn").click(()=>{
                 let color = $("#demo").wheelColorPicker('getValue');
                 cambiarColorDB(color);
             });
+
+            $(".jQWCP-wWidget").on("change",()=>
+            {
+                // console.log("yo4");
+                // window.parent.obligar_color_principal(window.parent.colorView);
+            });
+
+            var permiso_jqwcp = 0;
+            $(".jQWCP-wWidget").mouseup(()=>
+            {
+                permiso_jqwcp=0;
+            });
+
+            $(".jQWCP-wWidget").on("click",()=>
+            {
+                pinta_botones_color();
+            });
+
+            $(".jQWCP-wWidget").mousedown(()=>
+            {
+                permiso_jqwcp=1;
+            });
+
+            $(".jQWCP-wWidget").mousemove(()=>
+            {
+                if(permiso_jqwcp==1)
+                {
+                    pinta_botones_color();
+                }
+            });
         });
+
+        pinta_botones_color = ()=>
+        {
+            let color = $("#demo").wheelColorPicker('getValue');
+            $("#cambiarFondoAccionBtn").removeAttr("disabled");
+            $("#cambiarFondoAccionBtn").css({"background":"#"+color,"opacity":0.8});
+            window.parent.obligar_color_principal("#"+color);
+            // console.log(window.parent);
+            // $(window).append("::-webkit-scrollbar-thumb{ background-color:#"+color+" !important;} .dhxlayout_base_material div.dhx_cell_layout div.dhx_cell_hdr{background-color:#"+color+" !important;opacity:0.8 !important; }");
+            // $("#estilo_pagina").append("::-webkit-scrollbar-thumb{ background-color:#"+color+" !important;} .dhxlayout_base_material div.dhx_cell_layout div.dhx_cell_hdr{background-color:#"+color+" !important;opacity:0.8 !important; }");
+            // console.log($("style"));
+        }
 
         // cambia el color de los menu, barra de desplazamientos y encabezados, recarga la pagina
         cambiarColorDB = (newColor)=>
@@ -259,20 +305,23 @@
                 {
                     if(resp==1)
                     {
-                        growlSuccess("Cambiar Color Fondo","Cambiado.<br>Recarga en breve...");
+                        growlSuccess("Cambiar Color Fondo","Cambios Agregados.");
                         $("#cambiarFondoAccionBtn").attr("disabled",true);
-                        setTimeout(() => {
-                            window.parent.location.reload();
-                        }, 2000);
+                        window.parent.colorView = "#"+newColor;
+                        // setTimeout(() => {
+                        //     window.parent.location.reload();
+                        // }, 2000);
                     }
                     else
                     {
                         growlError("Error Cambiar Color Fondo","No se pudo cambiar el color de fondo");
+                        window.parent.obligar_color_principal(window.parent.colorView);
                     }
                 },
                 error:()=>
                 {
                     growlError("Error","Error en el servidor");
+                    window.parent.obligar_color_principal(window.parent.colorView);
                 }
             });
         }
