@@ -84,43 +84,22 @@ switch ($Op)
 		$contador = 0;
 		while($bandera)
 		{
-			// $data = array_merge( $files,$model->listar_archivosGlobales($urlIR."/".$value));
-			// while($bandera)
-			// {
-				if(!strpos($files[$contador],"."))
-				{
-					// $data = $model->listar_archivosGlobales($urlIR."/".$value);
-					// echo "Es carpeta = ".$value.'<br>';
-					$files = array_merge( $files,$model->listar_archivosGlobales($files[$contador]));
-					// $files = $model->agregar_archivos($files);
-					// array_push($files,$data);
-				}
-			// }
-			// echo $value."\n";
-			// echo $value."\n";
+			if(!strpos($files[$contador],"."))
+			{
+				$files = array_merge( $files,$model->listar_archivosGlobales($files[$contador]));
+			}
 			if(!isset($files[$contador+1]))
-					$bandera = false;
-			// echo $files[$contador]."\n";
+				$bandera = false;
 			$contador++;
 		}
 		foreach($files as $value)
 		{
-			// echo $value."\n";
 			if(strpos($value,"."))
 			{
 				$tmp = explode("/",$value);
-				// echo json_encode($tmp[sizeof($tmp)-1]);
 				array_push($data,$tmp[sizeof($tmp)-1]);
 			}
-				// $contador;
 		}
-		foreach($data as $value)
-		{
-			// $tmp = explode("/",$value);
-			// echo json_encode($tmp[sizeof($tmp)-1]);
-			// echo $value."\n";
-		}
-		// $a = 2/0;
 		$tamp_data = array();
 		array_push($tamp_data,$data);
 		array_push($tamp_data,$model->obtener_limite_archivos()[0]);
