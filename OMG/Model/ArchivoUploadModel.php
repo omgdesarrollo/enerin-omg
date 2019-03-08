@@ -2,26 +2,23 @@
 
 require_once '../dao/ArchivoUploadDAO.php';
 require_once 'DocumentoEntradaModel.php';
-
-class ArchivoUploadModel{
-    
+class ArchivoUploadModel
+{
     public function insertar_archivos($id_documento,$urls)
     {
         try
         {
             $dao = new ArchivoUploadDAO();
-            // echo $urls;
             foreach($urls as $url)
             {
-                // $rec = 
                 $dao->insertar_archivos($id_documento,$url);
             }
-            // return $rec;
         }catch(Exception $e)
         {
             throw $e;
         }
     }
+
     public function obtener_urls($id_documento)
     {
         try
@@ -34,6 +31,7 @@ class ArchivoUploadModel{
             throw $ex;
         }
     }
+
     public function eliminar_archivo($id_documento,$nombre_archivo)
     {
         try
@@ -46,6 +44,7 @@ class ArchivoUploadModel{
             throw $ex;
         }
     }
+
     public function eliminar_archivoFisico($url)
     {
         // if($data==true)
@@ -115,6 +114,32 @@ class ArchivoUploadModel{
 			$todo[1] = $urlLogica;
             return $todo;
 		}
+    }
+
+    public function listar_archivosGlobales($url)
+    {
+        $files = scandir($url);
+		unset($files[0]);
+        unset($files[1]);
+        $data = array();
+        foreach($files as $value)
+        {
+            array_push($data,$url."/".$value);
+        }
+        return $data;
+    }
+
+    public function obtener_limite_archivos()
+    {
+        try
+        {
+            $dao = new ArchivoUploadDAO();
+            $data = $dao->obtener_limite_archivos();
+            return $data;
+        }catch (Exception $ex)
+        {
+            throw $ex;
+        }
     }
 }
 ?>

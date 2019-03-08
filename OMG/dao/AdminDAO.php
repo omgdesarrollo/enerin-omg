@@ -394,5 +394,6 @@ class AdminDAO
             return false;
         }
     }//aqui termina para mostrar estructura principal tomand en cuenta permisos
+
 }
 ?>
