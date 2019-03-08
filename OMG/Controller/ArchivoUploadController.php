@@ -120,6 +120,7 @@ switch ($Op)
 			// echo json_encode($tmp[sizeof($tmp)-1]);
 			// echo $value."\n";
 		}
+		// $a = 2/0;
 		$tamp_data = array();
 		array_push($tamp_data,$data);
 		array_push($tamp_data,$model->obtener_limite_archivos()[0]);

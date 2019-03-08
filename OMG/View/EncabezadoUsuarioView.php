@@ -108,8 +108,7 @@
 					
 					<ul class="dropdown-menu-right dropdown-navbar navbar-blue dropdown-menu dropdown-caret dropdown-close" 
 						style="overflow:hidden;width:320px;height:350px;left:414px;right:auto;top:20px;overflow-y:scroll">
-						<li class="dropdown-header">
-							<i class="ace-icon fa fa-exclamation-triangle"></i>CONTADOR ARCHIVOS
+						<li class="dropdown-header" id="titulo_contador_archivos">
 						</li>
 						<li class="dropdown-content" >
 							<ul class="dropdown-menu dropdown-navbar navbar-blue" id="LISTADO_ARCHIVOS">
@@ -321,12 +320,15 @@
 			type: 'GET',
 			success:(data)=>
 			{
+				let color = 2;
+				let valor = 0;
+				let tam = 0;
+				let limite = 0;
 				if(typeof(data[0])=="object")
 				{
 					$("#barra_contador_archivos").html("");
-					let tam = data[0].length;
-					let limite = data[1]["limite_archivos"];
-					let color = 0;
+					tam = data[0].length;
+					limite = data[1]["limite_archivos"];
 					$("#LISTADO_ARCHIVOS").html(
 					'<li><div class="clearfix"><span class="pull-left"><i class="fa fa-files-o" style="font-size:21px;color:#00739b"></i> Capacidad: '+limite+
 					'</span></div>'+
@@ -351,8 +353,12 @@
 					}
 					else
 						color=2;
+					$("#titulo_contador_archivos").html('<i class="ace-icon fa fa-exclamation-triangle"></i>CONTADOR ARCHIVOS. '+valor.toFixed(2)+"%");
 					$("#style2").html("progress::-moz-progress-bar { background:"+color_barra[color]+"} progress::-webkit-progress-value { background:"+color_barra[color]+"}");
 				}
+				else
+					$("#barra_contador_archivos").append('<i class="ace-icon fa fa-archive"></i>');
+				
 			},
 			error:()=>
 			{
