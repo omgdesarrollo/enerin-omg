@@ -626,3 +626,13 @@ function stringToDate(fecha){
 	 }catch(ex){}
 	return resp;
 }
+function avisoImportanteParaConsolaDesarrollador(){
+    console.log("%c¡Detente!", "font-family: ';Arial';, serif; font-weight: bold; color: red; font-size: 45px");
+    console.log("%cEsta función del navegador está pensada para desarrolladores. Si alguien te indicó que copiaras y pegaras algo aquí para habilitar una función de NochesDeCode o para PIRATEAR la cuenta de alguien, se trata de un fraude.", "font-family: ';Arial';, serif; color: black; font-size: 20px");
+    console.log("%cSi lo haces, esta persona podrá acceder a tu cuenta y datos personales.", "font-family: ';Arial';, serif; color: black; font-size: 20px");
+    console.log("%cPara obtener más información, consulta a ", "font-family: ';Arial';, serif; color: black; font-size: 20px");
+}
+
+
+
+
