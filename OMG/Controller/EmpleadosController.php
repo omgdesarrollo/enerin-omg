@@ -5,9 +5,6 @@ session_start();
 require_once '../Model/EmpleadoModel.php';
 require_once '../Pojo/EmpleadoPojo.php';
 require_once '../util/Session.php';
-
-
-
 $Op=$_REQUEST["Op"];
 $model=new EmpleadoModel();
 $pojo= new EmpleadoPojo();
@@ -20,8 +17,8 @@ switch ($Op) {
             header('Content-type: application/json; charset=utf-8');
             echo json_encode($Lista);
 
-		return $Lista;
-		break;
+	    return $Lista;
+	break;
         
         case 'ListarEmpleado':
             $resultado = $model->listarEmpleado($_REQUEST['ID_EMPLEADO']);

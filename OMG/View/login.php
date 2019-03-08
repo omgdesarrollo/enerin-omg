@@ -65,7 +65,7 @@ require_once '../util/Session.php';
          <script type="text/javascript" src="../../assets/materialize/js/materialize.min.js"></script>
         <!--end materialize-->
          <link href="../../assets/googleApi/icon.css" rel="stylesheet">
-        
+         <script src="../../js/tools.js" type="text/javascript"></script>
          <!--<link href="//cdn.shopify.com/s/files/1/1775/8583/t/1/assets/admin-materialize.min.css?701317015908805120" rel="stylesheet">-->
         <!--<script src="../../js/tooltip.js" type="text/javascript"></script>-->
         <!--<script src="../../angular/angular.min.js" type="text/javascript"></script>-->
@@ -222,6 +222,7 @@ function clock()
             
 </style>
     </head>
+    <div id="informacion"></div>
     <div class="icon-animated-rayo">
         <!--dasdsadadaasd-->
         
@@ -341,7 +342,7 @@ function clock()
                                     
                                  </div>
                              </div>
-
+                        <div  id="divPassword">   
                              <div class="row">
                                  <div class="input-field col s12 light-blue-text text-darken-3">
                                      <i class="material-icons prefix">vpn_key</i>
@@ -349,6 +350,7 @@ function clock()
                                      <label for="contrasenaInput">CONTRASEÑA</label>
                                  </div>
                              </div>
+                        </div>
                              <input id="t" name="t" type="hidden" value="<?php 
                                    if(isset($_REQUEST["t"])){
                                        echo $_REQUEST["t"];
@@ -356,15 +358,17 @@ function clock()
                                     if($_SERVER["SERVER_NAME"] == "localhost")
                                     {
                                        echo "interno";      
-                                    }
-                                      
-                                       
+                                    }                                                                             
                                    }
                                        ?>">
-                           
-                             <div class="row">
-                                 <div class="input-field col s12">
+
+                             <div class="row" id="divPassword">
+<!--                                  <span class="card-title">Card Title</span>-->
+                                 <div class="input-field col s6">
                                      <button data-placement="right" title="Haga clic aquí para iniciar sesión" class="btn btn-lg btn-primary btn-block btn-signin" id="IngresoLog" type="submit">Entrar</button>
+                                 </div>
+                                  <div class="input-field col s6">
+                                     <button data-placement="right" title="Recuperar Contraseña" class="btn btn-lg btn-primary btn-block btn-signin" id="recuperarPassword"  >Recuperar Password</button>
                                  </div>
                              </div>
 <!--                             <div class="row">
@@ -381,6 +385,7 @@ function clock()
                         
                 </form>   
 
+                </div>
             </div>
             </div>
          </div>
@@ -411,11 +416,11 @@ function clock()
 
 
 
-  </div>
+  <!--</div>-->
 
 
 
-        <div class="col s12 m7">
+        <!--<div class="col s12 m7">-->
             
            
             
@@ -558,17 +563,6 @@ function clock()
 
 <!--end segunda opcion del tab-->
 
-
-
-
-
-
-
-
-
-
-
-
          </div>
           </div>
         </div>
@@ -698,7 +692,7 @@ Revisa sus avance, las anotaciones, integra a tu equipo para trabajar en un mism
     </body> 
     
     
-</html>
+<!--</html>-->
 
 
   <!-- Modal Trigger -->
@@ -720,3 +714,31 @@ Revisa sus avance, las anotaciones, integra a tu equipo para trabajar en un mism
 //<?php
 //}
 //?>
+
+  <!-- Modal Trigger -->
+  <!--<a class="waves-effect waves-light btn modal-trigger" href="#modalRecuperarPassword">Modal</a>-->
+
+  <!-- Modal Structure -->
+  <div id="modalRecuperarPassword" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h5>Recuperar Contraseña</h5>
+      <h7>  Podemos ayudarte a Recuperar tu cuenta  mediante tu nombre de usuario de la aplicacion en este caso es tu correo </h7>
+         <div class="row">
+                                 <div class="input-field col s12 light-blue-text text-darken-3">
+                                     <i class="material-icons prefix">person</i>
+                                     <label for="usuarioRecuperar" accesskey="u">Ingrese Usuario</label>
+                                        <input id="usuarioRecuperar" name="usuariorecuperar" type="text"  class="autocomplete light-blue-text text-darken-4" autocomplete="off">                               
+                                 </div>
+          </div>
+
+    </div>
+    <div class="modal-footer">
+        <a href="" class="waves-effect waves-green btn-flat" id="aceptarRecuperar">Aceptar</a>
+        <!--<a href="" class="modal-close waves-effect waves-green btn-flat" id="cancelar">Cancelar</a>-->
+    </div>
+  </div>
+
+  
+  
+  
+        </html>

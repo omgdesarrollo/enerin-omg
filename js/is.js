@@ -1,12 +1,20 @@
 $(function(){
-
-    
-    $("#loginform").submit(function(e){
+   let cualbotonPresiono="ninguno";
+//    $('.modal').modal();
+//    var instance = M.Modal.getInstance("modalRecuperarPassword");
+//    loginform
+    $("#IngresoLog").click(function(e){
+        
+// console.log("da  ",$("#datosDiv").serialize());
+//        alert();
 //        jQuery("#loginform").submit(function(e){
 //                                    alert("ya entro aqui ");
+//para introducir mas datos al objeto serializado se le asigna por  ejemplo  +&b= 2
+//los name son los que se obtiene cuando serializas los datos del form
         $("#IngresoLog").attr("disabled",true);
         e.preventDefault();
-        var formData = $(this).serialize();
+        
+        var formData = $("#loginform").serialize();
         $.ajax({
             type: "POST",
             url: "../Controller/LoginController.php",
@@ -54,8 +62,45 @@ $(function(){
             });
                     return false;
                 });
-            });
-            
-            
-            
-            
+                
+   $("#recuperarPassword").click(function(e){
+     cualbotonPresiono="btnRecuperarPassword";
+     e.preventDefault();
+      $("#modalRecuperarPassword").modal('open');
+   });  
+   
+   $("#aceptarRecuperar").click(function(e){
+//        alert("ace"); 
+        e.preventDefault();
+        var d={"type":"POST","url":"../Controller/EmailController.php?Op=recuperarPassword","tipoDatos":"json","dataSend":[{"usuario":$("#usuarioRecuperar").val(),"t":$("#t").val(),"baseUri":$("#informacion")["0"]["baseURI"]}]};
+        $("#informacion")[0]["listaDatos"]=d;
+
+          console.log("f ", $("#informacion"));
+          recuperarPassword(d).then(function (){
+              console.log("ya termino");
+          });   
+   })       
+ //este metodo se le agregara otra funcion que sera una general para varios tipos de peticiones de datos  aun se anda viendo si se le agregara la otra funcion 
+    function recuperarPassword(){
+        return new Promise(function(resolve,reject){ 
+            $.ajax({
+                     type:    ""+$("#informacion")[0]["listaDatos"]["type"], // POST, GET, PUT, DELETE
+                     url:     ""+$("#informacion")[0]["listaDatos"]["url"], //http:/ /www.ejemplo.com/peticion
+                     dataType:""+$("#informacion")[0]["listaDatos"]["tipoDatos"], // html, xml, json
+                     data:{"listaDatos":JSON.stringify($("#informacion")[0]["listaDatos"]["dataSend"])},
+                     success: function(r){
+                         resolve();
+                     } ,
+                     error: function(){
+                         reject();
+//                                                     console.log("Ha ocurrido un error! :(");	 			
+                     }
+                     });    
+        })
+    }
+    
+
+    avisoImportanteParaConsolaDesarrollador();
+    
+});
+           

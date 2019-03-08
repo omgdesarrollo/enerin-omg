@@ -22,6 +22,11 @@ class Session{
         $value=NULL;
         if(self::existeSesion($name)){
             $value=$_SESSION[$name];
+        }else{
+//            echo "<script> window.parent.location.href='login.php';</script>";
+//            echo "<script> window.location.href='SessionExpiroView.php';</script>";
+            header('Location:SessionExpiroView.php');
+            exit();
         }
         return $value;
     }

@@ -162,7 +162,7 @@ $Usuario=  Session::getSesion("user");
                 
 	</style>
 	<script>
-
+    var typePorSiLaSeSessionExpira="<?php  echo $_REQUEST["type"] ?>"; 
     var colorView = <?php
     $color = "";
     if(Session:: NoExisteSeSion("colorFondo_Vista"))
@@ -1254,6 +1254,7 @@ function loadDataNotificaciones(){
 </head>
 <!--<body>-->
 <body onload="consultarInformacion('../Controller/DocumentosEntradaController.php?Op=Alarmas')">
+    <div id="informacion"></div>
 <div id="ribbonObj" style="position: relative;width: 100%;"></div>
    
     
@@ -1275,7 +1276,7 @@ function loadDataNotificaciones(){
   
     </div>
     <input id="gom" type="hidden" value="<?php echo Session::getSesion("token")?>"/>
-
+        <input id="typePorSiLaSeSessionExpira" type="text" value="<?php echo $_REQUEST["type"]?>"/>
 <script>
 
 cambiarCont();
