@@ -24,8 +24,6 @@ if(!isset($_REQUEST["type"])){
 }
 
 
-    
-
 
 
 if (Session:: NoExisteSeSion("user")){
@@ -1286,7 +1284,7 @@ function loadDataNotificaciones(){
   
     </div>
     <input id="gom" type="hidden" value="<?php echo Session::getSesion("token")?>"/>
-        <input id="typePorSiLaSeSessionExpira" type="text" value="<?php echo $_REQUEST["type"]?>"/>
+    <input id="typePorSiLaSeSessionExpira" type="hidden" value="<?php echo $_REQUEST["type"]?>"/>
 <script>
 
 cambiarCont();
