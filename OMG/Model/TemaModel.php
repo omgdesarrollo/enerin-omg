@@ -95,6 +95,7 @@ class TemaModel{
          }else{
              //para mantener funcionando la seccion de temas de oficios
               $rec= $dao->insertarNodo($NO,$NOMBRE,$DESCRIPCION,$PLAZO,$NODO,$ID_EMPLEADO,$IDENTIFICADOR,$CONTRATO);
+              echo "entro aqio ";
          }
 //            self::componerTablaTemasPadreandReponsaleGeneral();
         

@@ -1,13 +1,14 @@
 obtenerDatosArbol();  
 id_seleccionado="";
-
+var dataArbolGlobal=[];
+var datos_generales={};
  $(function(){
      
      $("#btn_guardar").click(function(e){
          e.preventDefault();
          
          var formData = {"NO":$('#NO').val(),"NOMBRE":$('#NOMBRE').val(),"DESCRIPCION":$('#DESCRIPCION').val(),
-                         "PLAZO":$('#PLAZO').val(),"NODO":0,"ID_EMPLEADOMODAL":$('#ID_EMPLEADOMODAL').val()};            
+                         "PLAZO":$('#PLAZO').val(),"NODO":0,"ID_EMPLEADOMODAL":$('#ID_EMPLEADOMODAL').val(),"ES_TEMA_PRINCIPAL":"SI"};            
          
          $.ajax({
              url:'../Controller/TemasOficiosController.php?Op=GuardarNodo',
@@ -27,9 +28,9 @@ id_seleccionado="";
      
      $("#btn_guardar_SubTema").click(function(e){
          e.preventDefault();
-         
+         obtenerPadreandResponsableGeneral(dataArbolGlobal);
          var formData = {"NO":$('#NO_SUBTEMA').val(),"NOMBRE":$('#NOMBRE_SUBTEMA').val(),"DESCRIPCION":$('#DESCRIPCION_SUBTEMA').val(),
-                         "PLAZO":$('#PLAZO_SUBTEMA').val(),"NODO":id_seleccionado,"ID_EMPLEADOMODAL":""};            
+                         "PLAZO":$('#PLAZO_SUBTEMA').val(),"NODO":id_seleccionado,"ID_EMPLEADOMODAL":"","ES_TEMA_PRINCIPAL":"NO","datos_generales":JSON.stringify(datos_generales)};            
          
          $.ajax({
              url:'../Controller/TemasOficiosController.php?Op=GuardarNodo',
@@ -176,6 +177,7 @@ function contruirArbol(dataArbol)
         myTree.deleteChildItems(0);
         if(dataArbol.length>0){
         myTree.parse(dataArbol, "jsarray");
+        dataArbolGlobal=dataArbol;
         }
     }
 
@@ -345,6 +347,17 @@ function load(carga){
     if(carga==2){
         $("#loader").hide();
     }
+}
+function obtenerPadreandResponsableGeneral(ar){
+
+    console.log(ar);
+            $.each(ar,function(index,value){
+                if(value[0]==id_seleccionado){
+                   datos_generales["padre_general"]=value[3];
+                   datos_generales["reponsable_general"]=value[4];
+                }
+            });
+
 }
 
 

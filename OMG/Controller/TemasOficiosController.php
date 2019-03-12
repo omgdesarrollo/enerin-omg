@@ -51,11 +51,29 @@ switch ($Op) {
 
 	case 'GuardarNodo':
 		# code...
-         
-                $Lista= $model->insertarNodo($_REQUEST['NO'],$_REQUEST['NOMBRE'],$_REQUEST['DESCRIPCION'],$_REQUEST['PLAZO'],$_REQUEST['NODO'],$_REQUEST['ID_EMPLEADOMODAL'],"oficios",Session::getSesion("s_cont"));
                 header('Content-type: application/json; charset=utf-8'); 
+                $ES_TEMA_OR_SUBTEMA="";
+                $Lista;
+               $DATOS_GENERALES=array("padre_general"=>"NO EXISTE","reponsable_general"=>"NO EXISTE");
+                 if(isset($_REQUEST["ES_TEMA_PRINCIPAL"])){
+                      if($_REQUEST["ES_TEMA_PRINCIPAL"]=="SI"){
+                            $ES_TEMA_OR_SUBTEMA="TEMA";
+                        }else{
+                           if($_REQUEST["ES_TEMA_PRINCIPAL"]=="NO"){
+                            $ES_TEMA_OR_SUBTEMA="SUBTEMA";
+//                           $DATOS_PADRE_GENERAL= json_decode($_REQUEST["datos_generales"]);
+                            $DATOS_GENERALES= json_decode($_REQUEST["datos_generales"]);
+                            
+                            
+                        } 
+                        }
+                }else{
+                    $ES_TEMA_OR_SUBTEMA="NO EXISTE";
+                }
+                
+                 $Lista= $model->insertarNodo($_REQUEST['NO'],$_REQUEST['NOMBRE'],$_REQUEST['DESCRIPCION'],$_REQUEST['PLAZO'],$_REQUEST['NODO'],$_REQUEST['ID_EMPLEADOMODAL'],"oficios",Session::getSesion("s_cont"),$ES_TEMA_OR_SUBTEMA,$DATOS_GENERALES);
+                
                 echo json_encode($Lista);
-                return $Lista;
                 
 		break;
 

@@ -42,6 +42,7 @@ class EmailModel {
                 $content= ob_get_clean();
                 //echo json_encode( Session::getSesion("user"));
                 mail($correo,$subject,$content, $headers);
+                
              
          } catch (Exception $ex) {
              throw $ex;

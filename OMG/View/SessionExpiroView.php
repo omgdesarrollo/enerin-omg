@@ -10,9 +10,9 @@ and open the template in the editor.
         <title></title>
          <script src="../../js/jquery.js" type="text/javascript"></script>
         <script>
-//            console.log("el valo "+window.top.$("#typePorSiLaSeSessionExpira").val());
+            console.log("el valo "+window.top.$("#typePorSiLaSeSessionExpira").val());
             console.log("E  ",window.top.typePorSiLaSeSessionExpira);
-//            console.log("d ",$("#informacion").parent().context.referrer);
+            console.log("d ",$("#informacion").parent().context.referrer);
 //             window.location.href=""+$("#informacion").parent().context.referrer;
                 window.parent.location.href="login.php?t="+window.top.typePorSiLaSeSessionExpira;
         </script>

@@ -25,7 +25,7 @@ class Session{
         }else{
 //            echo "<script> window.parent.location.href='login.php';</script>";
 //            echo "<script> window.location.href='SessionExpiroView.php';</script>";
-            header('Location:SessionExpiroView.php');
+            header('Location:../View/SessionExpiroView.php');
             exit();
         }
         return $value;

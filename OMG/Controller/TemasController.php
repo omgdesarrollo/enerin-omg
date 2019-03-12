@@ -49,8 +49,7 @@ switch ($Op) {
                            if($_REQUEST["ES_TEMA_PRINCIPAL"]=="NO"){
                             $ES_TEMA_OR_SUBTEMA="SUBTEMA";
 //                           $DATOS_PADRE_GENERAL= json_decode($_REQUEST["datos_generales"]);
-                            $DATOS_GENERALES= json_decode($_REQUEST["datos_generales"]);
-                            
+                            $DATOS_GENERALES= json_decode($_REQUEST["datos_generales"]);   
                             
                         } 
                         }
