@@ -670,7 +670,7 @@ if(isset($_REQUEST["accion"]))
     }
 
     // guarda un nuevo mensaje (observacion)
-    enviarObservacion(idValidacionDocumento)
+    enviarObservacion = (idValidacionDocumento)=>
     {
         msj = $("#textarea_msj").val();
         msj = msj.trim();

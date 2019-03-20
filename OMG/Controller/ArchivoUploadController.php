@@ -17,7 +17,15 @@ switch ($Op)
 		$model->insertar_archivos($_REQUEST['ID_DOCUMENTO'],$urls);		
 		// return $Lista;
 		break;
-		
+	
+	case 'xxx':
+		header('Access-Control-Allow-Origin: *');
+		header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
+		header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+		header("Allow: GET, POST, OPTIONS, PUT, DELETE");
+		echo json_encode("oh my god!!!!");
+	break;
+
 	case 'listarUrls':
 		$CONTRATO;
 		if(isset($_REQUEST["SIN_CONTRATO"]))
@@ -47,30 +55,39 @@ switch ($Op)
 	break;
 
 	case 'CrearUrl':
-		$URL = $_REQUEST["URL"];
-		if(isset($_REQUEST["SIN_CONTRATO"]))
-			$url = $URL;
-		else
-		{
-			$CONTRATO = Session::getSesion("s_cont");
-//			$url = Session::getSesion("tipo")."/".$CONTRATO."/".$URL;
-                        $url = $CONTRATO."/".$URL;
-		}
-                $url = Session::getSesion("tipo")."/".$url;
-                
-		$carpetaDestino = "../../archivos/".$url;
-//                $carpetaDestino = "../../archivos/".Session::getSesion("tipo")."/".$url;
-		$creado=true;
-		if(!file_exists($carpetaDestino))
-		{
-			$creado = mkdir($carpetaDestino,0777,true);
-		}
-		if($creado)
-		{
-			Session::setSesion("newUrl",$url);
-		}
 		header('Content-type: application/json; charset=utf-8');
-		echo $creado;
+		Session::setSesion("newUrl","");
+		// if(Session::getSesion("DETENER_CARGAS")!=0)
+		// {
+			$URL = $_REQUEST["URL"];
+			if(isset($_REQUEST["SIN_CONTRATO"]))
+				$url = $URL;
+			else
+			{
+				$CONTRATO = Session::getSesion("s_cont");
+	//			$url = Session::getSesion("tipo")."/".$CONTRATO."/".$URL;
+							$url = $CONTRATO."/".$URL;
+			}
+					$url = Session::getSesion("tipo")."/".$url;
+					
+			$carpetaDestino = "../../archivos/".$url;
+	//                $carpetaDestino = "../../archivos/".Session::getSesion("tipo")."/".$url;
+			$creado=true;
+			if(!file_exists($carpetaDestino))
+			{
+				$creado = mkdir($carpetaDestino,0777,true);
+			}
+			if($creado)
+			{
+				Session::setSesion("newUrl",$url);
+				$creado = "true";
+			}
+			else
+				$creado = "false";
+			echo $creado;
+		// }
+		// else
+		// 	echo "false";
 	break;
 
 	case 'contadorGlobal':
@@ -103,6 +120,8 @@ switch ($Op)
 		$tamp_data = array();
 		array_push($tamp_data,$data);
 		array_push($tamp_data,$model->obtener_limite_archivos()[0]);
+		// if(sizeof($tamp_data)==0)
+			// Session::setSesion("DETENER_CARGAS",0);
 		echo json_encode($tamp_data);
 	break;
 

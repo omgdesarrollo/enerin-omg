@@ -60,6 +60,8 @@
     <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
     <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/> -->
 
+    <script src="../../js/fArchivoUploadComponent.js" type="text/javascript"></script>
+
     <!-- <script src="../../js/fechas_formato.js" type="text/javascript"></script> -->
     <!-- <script src="../../js/filtroSupremo.js" type="text/javascript"></script>
     <link href="../../css/filtroSupremo.css" rel="stylesheet" type="text/css"/> -->
@@ -150,9 +152,6 @@
     <br><br><br>
     <div id="jsGrid"></div>
 
-</body>
-
-
 <!-- Inicio de Seccion Modal Crear nueva Evidencia-->
 <div class="modal draggable fade" id="nuevaEvidenciaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -240,11 +239,13 @@
 </div> 
 <!--cierre del modal Registros-->
 
+<div id="jsFileUpload"></div>
 <!-- Inicio de Seccion Modal Archivos-->
-<div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog " role="document">
+
+<!-- <div class="modal draggable fade" id="create-itemUrls" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog " role="document"> -->
         <!-- <div id="loaderModalMostrar"></div> -->
-		<div class="modal-content">
+		<!-- <div class="modal-content">
                         
             <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="closeLetra">X</span></button>
@@ -261,11 +262,11 @@
 
                 <div class="form-group" method="post" >
                     <button type="submit" id="subirArchivos"  class="btn crud-submit btn-info botones_vista_tabla" style="width:100%">Adjuntar Archivo</button>
-                </div>
-            </div><!-- cierre div class-body -->
-        </div><!-- cierre div class modal-content -->
-    </div><!-- cierre div class="modal-dialog" -->
-</div><!-- cierre del modal -->
+                </div> -->
+            <!-- </div>cierre div class-body -->
+        <!-- </div>cierre div class modal-content -->
+    <!-- </div>cierre div class="modal-dialog" -->
+<!-- </div>cierre del modal -->
 
 <!-- Inicio modal Mensaje -->
 <div class="modal draggable fade" id="MandarNotificacionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -361,6 +362,90 @@
 
 <!--cierre del modal Mensaje-->
 <script>
+    // var file1 = $fileUpload[{}];
+    // var archivoEvidencias = new fileUpload2(3);
+    // var archivoEvidencias2 = new fileUpload2(4);
+    // console.log(archivoEvidencias);
+    // archivoEvidencias.yo();
+    // archivoEvidencias2.yo();
+
+    // var file = $fileUpload.new("filesEvidenciaDocumento","Archivos");//url,title
+    // var file2 = $fileUpload["new"]("hey","adjunta nada");//url,title
+    const file = new fileUpload({"url":"filesEvidenciaDocumento","title_modal":"Archivos","limite_upload_activado":true});
+    file.after_delete = (data)=>
+    {
+        listarUnDato(file.url+"/",data.id).then((resolve)=>
+        {
+            $.each(DataGrid,(index,value)=>
+            {
+                if(value["id_principal"][0]["id_evidencias"] == data.id)
+                {
+                    $(value["adjuntar_evidencia"]).click();
+                }
+            });
+        });
+    };
+
+    file.before_upload = ()=>
+    {
+        return new Promise((resolve,reject)=>
+        {
+            $.ajax({
+                url: "../Controller/ArchivoUploadController.php?Op=contadorGlobal",
+                type: 'POST',
+                success:(data)=>
+                {
+                    if(typeof(data)=="object")
+                    {
+                        let archivos_cargados = $($("#fileupload").fileupload()[0]).find(".start");
+                        let quedan = parseInt(data[1]["limite_archivos"]) - data[0].length - archivos_cargados.length;
+                        // let quedan = 15 - data[0].length - archivos_cargados.length;
+                        quedan>=0?resolve():(
+                            (data[1].limite_archivos - data[0].length)<=0?growlError("Error Limite","El Sistema Alcanzo El Limite De Archivos"):
+                            growlError("Error limite","Solo queda espacio para subir "+
+                            ((data[1].limite_archivos - data[0].length)==1?" 1 archivo":(data[1].limite_archivos - data[0].length)+" archivos")),
+                            reject()
+                        );
+                        // quedan>=0?resolve():(
+                        //     (17 - data[0].length)<=0?growlError("Limite","Limite De Archivos Alcanzado"):
+                        //     growlError("Error limite","Solo queda espacio para subir "+
+                        //     ((17 - data[0].length)==1?" 1 archivo":(17 - data[0].length)+" archivos")),
+                        //     reject()
+                        // );
+
+                        reject();
+                    }
+                    else
+                    {
+                        growlError("Error","Ocurrio Un Error Al Intentar Subir Archivo");
+                        reject();
+                    }
+                },
+                error:()=>
+                {
+                    growlError("Error Eliminar Archivo","Error en el servidor");
+                    reject();
+                }
+            });
+        });
+    }
+
+    file.after_upload = (data)=>
+    {
+        listarUnDato(file.url+"/",data.id).then((resolve)=>
+        {
+            $.each(DataGrid,(index,value)=>
+            {
+                if(value["id_principal"][0]["id_evidencias"] == data.id)
+                {
+                    $(value["adjuntar_evidencia"]).click();
+                }
+            });
+        });
+    }
+
+    file.before
+
     // construirFiltros();
     // construir();
     var DataGrid=[];
@@ -437,63 +522,9 @@
         construirFiltros();
         listarDatos();
     });
-
 </script>
-
-<script id="template-upload" type="text/x-tmpl">
-    {% for (var i=0, file; file=o.files[i]; i++) { %}
-        <tr class="template-upload" style="width:100%">
-            <td>
-            <span class="preview"></span>
-            </td>
-            <td>
-            <p class="name">{%=file.name%}</p>
-            <strong class="error"></strong>
-            </td>
-            <td>
-            <p class="size">Processing...</p>
-            <!-- <div class="progress"></div> -->
-            </td>
-            <td>
-            {% if (!i && !o.options.autoUpload) { if(noArchivo==0){ %}
-                    <button class="start" style="display:none;padding: 0px 4px 0px 4px;" disabled>Start</button>
-            {% } } %}
-            {% if (!i) { %}
-                    <button class="cancel" style="padding: 0px 4px 0px 4px;color:white">Cancel</button>
-            {% } %}
-            </td>
-        </tr>
-        {% if(i==0){ $('.fileupload-buttonbar').html(""); } %}
-    {% noArchivo=1; } %}
-</script>
-
-<script id="template-download" type="text/x-tmpl">
-    {% var t = $('#fileupload').fileupload('active'); var i,file;%}
-    {% for (i=0,file; file=o.files[i]; i++) { %}
-        <tr class="template-download">
-            <td>
-            <span class="preview">
-                    {% if (file.thumbnailUrl) { %}
-                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
-                    {% } %}
-            </span>
-            </td>
-            <td>
-            <p class="name">
-                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
-            </p>
-            </td>
-            <td>
-            <span class="size">{%=o.formatFileSize(file.size)%}</span>
-            </td>
-            <!-- <td> -->
-            <!-- <button class="delete" style="padding: 0px 4px 0px 4px;" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>Delete</button> -->
-            <!-- <input type="checkbox" name="delete" value="1" class="toggle"> -->
-            <!-- </td> -->
-        </tr>
-    {% } %}
-    {% if(t == 1){ if( $('#tempInputIdEvidenciaDocumento').length > 0 ) { var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();var ID_PARA_DOCUMENTO = $('#tempInputIdParaDocumento').val(); mostrar_urls(ID_EVIDENCIA_DOCUMENTO,'1',false,ID_PARA_DOCUMENTO); growlSuccess("Subir Archivo","Archivo Cargado"); actualizarEvidencia(ID_EVIDENCIA_DOCUMENTO,1); noArchivo=0; } } %}
-</script>
+<!-- <div id="jsScriptUpload"></div> -->
+<!-- <script> $("#jsScriptUpload").html("this.script_add_jsFileUpload"); </script> -->
 
     <!--Inicia para el spiner cargando-->
     <script src="../../js/loaderanimation.js" type="text/javascript"></script>

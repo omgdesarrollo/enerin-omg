@@ -914,11 +914,17 @@ function reconstruir(value,index)//listo jsgrid
         tempData["clave_documento"] = value.clave_documento;
         tempData["fecha_creacion"] = getSinFechaFormato(value.fecha_creacion);
         
-        tempData["adjuntar_evidencia"] = "<button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
-        tempData["adjuntar_evidencia"] += " type='button' class='botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
-        tempData["adjuntar_evidencia"] += "<i class='fa fa-cloud-upload' style='font-size: 22px'></i></button>";
-        
-        $.each(value.archivosUpload[0],function(index2,value2)
+        // tempData["adjuntar_evidencia"] = "<button onClick='mostrar_urls("+value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario+");'";
+        // tempData["adjuntar_evidencia"] += " type='button' class='botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
+        // tempData["adjuntar_evidencia"] += "<i class='fa fa-cloud-upload' style='font-size: 22px'></i></button>";
+
+        // crear boton de adjuntar evidencia con jquery para control de los archivos
+        let btn_adjuntarEvidencia = $("<button>",{'type':'button','class':'botones_vista_tabla','data-toggle':'modal','data-target':'#create-itemUrls'});
+        $(btn_adjuntarEvidencia).append("<i class='fa fa-cloud-upload' style='font-size: 22px'></i>");
+        // btn_adjuntarEvidencia[0]["onclick"] = ()=>{file["mostrar_urls"](value.id_evidencias+","+value.validador+","+value.validacion_supervisor+","+value.id_usuario)};        
+        tempData["adjuntar_evidencia"] = btn_adjuntarEvidencia;
+
+        $.each(value.archivosUpload[0],(index2,value2)=>
         {
             tempArchivo="a";
             nametmp = value2.split("^-O-^-M-^-G-^");
@@ -958,12 +964,18 @@ function reconstruir(value,index)//listo jsgrid
             // }
 
             if(value.validacion_supervisor == "-1")
+            {
                 tempData["conforme"] = "<button onClick='siConforme("+value.validador+","+value.id_responsable+","+value.id_evidencias+",\""+value.registro+"\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+noCheck+"</button>";
+                // btn_adjuntarEvidencia[0]["onclick"] = ()=>{file["mostrar_urls"](value.id_evidencias,0,0)};
+            }
 
             // if(value.validacion_supervisor == "0")
 
             if(value.validacion_supervisor == "1")
+            {
                 tempData["conforme"] = "<button onClick='noConforme("+value.validador+","+value.id_responsable+","+value.id_evidencias+",\""+value.registro+"\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+yesCheck+"</button>";
+                // btn_adjuntarEvidencia[0]["onclick"] = ()=>{file["mostrar_urls"](value.id_evidencias,1)};
+            }
             // else
             //     tempData["conforme"] = "<button onClick='siConforme("+value.id_responsable+","+value.id_evidencias+",\""+value.registro+"\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+noCheck+"</button>";
             
@@ -972,47 +984,55 @@ function reconstruir(value,index)//listo jsgrid
 
             // if(value.responsable=="1")
             // {                    
-            //     tempData["validacion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='validarEvidencia(this,\"evidencias\",\"validacion_supervisor\",\"id_evidencias\","+value.id_evidencias+","+value.id_usuario+")'>";
-            //     if(value.validacion_supervisor=="true")
-            //         tempData["validacion"] += yesCheck+"</button>";
-            //     else
-            //         tempData["validacion"] += noCheck+"</button>";
+                // tempData["validacion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='validarEvidencia(this,\"evidencias\",\"validacion_supervisor\",\"id_evidencias\","+value.id_evidencias+","+value.id_usuario+")'>";
+                // if(value.validacion_supervisor=="1")
+                    // tempData["validacion"] += yesCheck+"</button>";
+                // else
+                    // btn_adjuntarEvidencia[0]["onclick"] = ()=>{file["mostrar_urls"](value.id_evidencias,0,1)};
+                    // tempData["validacion"] += noCheck+"</button>";
             // }
             // else
             // {
+            //     btn_adjuntarEvidencia[0]["onclick"] = ()=>{file["mostrar_urls"](value.id_evidencias,0,0)};
             //     if(value.validacion_supervisor=='true')
             //     {
-            //         tempData["validacion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='swalInfo(\"Validadopor el responsable\")'>";
-            //         tempData["validacion"] += yesCheck+"</button>";
-            //     }
-            //     else
-            //     {
-            //         tempData["validacion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;'  onClick='swalInfo(\"Aun no validado\")'>";
-            //         tempData["validacion"] += noCheck+"</button>";
-            //     }
+                    // tempData["validacion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;' onClick='swalInfo(\"Validadopor el responsable\")'>";
+                    // tempData["validacion"] += yesCheck+"</button>";
+                // }
+                // else
+                // {
+                    // tempData["validacion"] = "<button style='font-size:x-large;color:#39c;background:transparent;border:none;'  onClick='swalInfo(\"Aun no validado\")'>";
+                    // tempData["validacion"] += noCheck+"</button>";
+                // }
             // }
         });
         if(tempArchivo=="")
         {
-                tempData["fecha_registro"] = "";
-                tempData["usuario"] = value.usuario;
-                tempData["accion_correctiva"] = "";
-                tempData["plan_accion"] = "";
-                tempData["desviacion"] = "";
-                // tempData["conforme"] = "";
-                tempData["conforme"] = "<button onClick='swalInfo(\"ESPERA... \\nNecesitas Adjuntar Evidencia\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+nuloCheck+"</button>";
-                // tempData["validacion"]="";
-                if(value.validador=="1")
-                    tempData["id_principal"].push({eliminar:1});
-                    // tempData["delete"]=tempData["id_principal"];
-                else
-                    tempData["id_principal"].push({eliminar:0});
-                    // tempData["delete"]=tempData["id_principal"];
+            // btn_adjuntarEvidencia[0]["onclick"] = ()=>{file["mostrar_urls"](value.id_evidencias,1,parseInt(value.validador))};
+            btn_adjuntarEvidencia[0]["onclick"] = ()=>{file["mostrar_urls"](value.id_evidencias,parseInt(value.validador),parseInt(value.validador))};
+
+            tempData["fecha_registro"] = "";
+            tempData["usuario"] = value.usuario;
+            tempData["accion_correctiva"] = "";
+            tempData["plan_accion"] = "";
+            tempData["desviacion"] = "";
+            // tempData["conforme"] = "";
+            tempData["conforme"] = "<button onClick='swalInfo(\"ESPERA... \\nNecesitas Adjuntar Evidencia\")' style='font-size:x-large;color:#39c;background:transparent;border:none;' >"+nuloCheck+"</button>";
+            // tempData["validacion"]="";
+            if(value.validador=="1")
+                tempData["id_principal"].push({eliminar:1});
+                // tempData["delete"]=tempData["id_principal"];
+            else
+                tempData["id_principal"].push({eliminar:0});
+                // tempData["delete"]=tempData["id_principal"];
         }
         else
+        {
+            btn_adjuntarEvidencia[0]["onclick"] = ()=>{file["mostrar_urls"](value.id_evidencias,0,parseInt(value.validador))};
             // tempData["opcion"]="";
             tempData["id_principal"].push({eliminar:0});
             // tempData["delete"]=tempData["id_principal"];
+        }
 
     tempData["id_principal"].push({editar:0});//si quieres que edite 1, si no 0
     tempData["delete"]=tempData["id_principal"];
@@ -1080,7 +1100,6 @@ abrirNotificaciones = (idEvidencia,responsableTema,responsableEvidencia)=>
                     tempData += '</div>';
                     cargarMensajes();
                     $("#usuarios_notificaciones").html(tempData);
-                    // console.log($("#usuarios_notificaciones"));
                 }
                 else
                 {
@@ -1208,7 +1227,6 @@ siConforme = (permiso,idPara,id,registro) =>
 // si es responsable de la evidencia envia notificacion al segundo usuario, quita la conformidad a la evidencia
 noConforme =(permiso,idPara,id,registro) =>
 {
-    // console.log("idPara",idPara);
     if(permiso==1)
     {
         enviar_notificacion("Evidencia <span style=\"color:red\">No</span> Conforme <span style=\"color:green;font-style:italic;\"> \""+registro+"\"</span><br>De: ",idPara,0,false,"EvidenciasView.php?accion="+id);
@@ -1311,11 +1329,6 @@ eliminarEvidencia = (id_evidencias)=>
     });
 }
 
-    // function validarEvidencia(checkbox,tabla,column,context,id,idPara)
-    // {
-
-    // }
-
 // pendiente de verificar si esta en uso
 function validarEvidencia(checkbox,tabla,column,context,id,idPara)
 {
@@ -1350,7 +1363,32 @@ function validarEvidencia(checkbox,tabla,column,context,id,idPara)
         });
 }
 
-// actualiza la conformidad de la evidencias, lista los nuevos datos y actualiza los datos (jsGrid) de la vista
+// lista los nuevos datos y actualiza los datos (jsGrid) de la vista
+listarUnDato = (URL,id)=>
+{
+    return new Promise((resolve,reject)=>{
+        $.ajax({
+            url: "../Controller/EvidenciasController.php?Op=ListarEvidencia",
+            type: 'GET',
+            data: 'ID_EVIDENCIA='+id+"&URL="+URL,
+            success:(datos)=>
+            {
+                $.each(datos,(index,value)=>{
+                    componerDataListado(value);
+                });
+                componerDataGrid();
+                gridInstance.loadData();
+                resolve();
+            },
+            error:()=>
+            {
+                growlError("Error al refrescar la vista","Error en el servidor, actualize la vista");
+            }
+        });
+    });
+}
+
+// actualiza la conformidad de la evidencias
 actualizarEvidencia = (id,valor)=>
 {
     URL = 'filesEvidenciaDocumento/';
@@ -1362,23 +1400,7 @@ actualizarEvidencia = (id,valor)=>
         {
             if(resp>0)
             {
-                $.ajax({
-                    url: "../Controller/EvidenciasController.php?Op=ListarEvidencia",
-                    type: 'GET',
-                    data: 'ID_EVIDENCIA='+id+"&URL="+URL,
-                    success:function(datos)
-                    {
-                        $.each(datos,function(index,value){
-                            componerDataListado(value);
-                        });
-                        componerDataGrid();
-                        gridInstance.loadData();
-                    },
-                    error:function()
-                    {
-                        growlError("Error al refrescar la vista","Error en el servidor, actualize la vista");
-                    }
-                });
+                listarUnDato(URL,id);
             }
             else
                 growlError("Error","Error en el servidor, actualize la vista");
@@ -1433,8 +1455,8 @@ function notificar(idPara,idEvidencia,columna)
     if(columna=='accion_correctiva')
         enviar_notificacion("Ha recibido una Acción Correctiva de ",idPara,0,false,"EvidenciasView.php?accion="+idEvidencia);//msj,para,tipomsj,atendido,asunto
     else
-//        enviar_notificacion("Ha recibido una Desviación de ",idPara,0,false,"EvidenciasView.php?accion="+idEvidencia);//msj,para,tipomsj,atendido,asunto
-        enviar_notificacion("Tiene una Evidencia por Validar ",idPara,0,false,"EvidenciasView.php?accion="+idEvidencia);//msj,para,tipomsj,atendido,asunto
+//  enviar_notificacion("Ha recibido una Desviación de ",idPara,0,false,"EvidenciasView.php?accion="+idEvidencia);//msj,para,tipomsj,atendido,asunto
+    enviar_notificacion("Tiene una Evidencia por Validar ",idPara,0,false,"EvidenciasView.php?accion="+idEvidencia);//msj,para,tipomsj,atendido,asunto
     $.ajax({
             url: '../Controller/EvidenciasController.php?Op=MandarAccionCorrectiva',
             type: 'GET',
@@ -1513,87 +1535,87 @@ function enviar_notificacion(mensaje,para,tipoMensaje,atendido,asunto)
 
     // }
 
-    var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='form-data'>";
-        ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
-        ModalCargaArchivo += "<div class='fileupload-buttons'>";
-        ModalCargaArchivo += "<span class='fileinput-button'>";
-        ModalCargaArchivo += "<span id='spanAgregarDocumento'><a >Agregar Archivos(Click o Arrastrar)...</a></span>";
-        ModalCargaArchivo += "<input type='file' name='files[]' ></span>";
-        ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
-        ModalCargaArchivo += "<div class='fileupload-progress' >";
-        // ModalCargaArchivo += "<div class='progress' role='progressbar' aria-valuemin='0' aria-valuemax='100'></div>";
-        ModalCargaArchivo += "<div class='progress-extended'>&nbsp;</div>";
-        ModalCargaArchivo += "</div></div>";
-        ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
+//     var ModalCargaArchivo = "<form id='fileupload' method='POST' enctype='form-data'>";
+//         ModalCargaArchivo += "<div class='fileupload-buttonbar'>";
+//         ModalCargaArchivo += "<div class='fileupload-buttons'>";
+//         ModalCargaArchivo += "<span class='fileinput-button'>";
+//         ModalCargaArchivo += "<span id='spanAgregarDocumento'><a >Agregar Archivos(Click o Arrastrar)...</a></span>";
+//         ModalCargaArchivo += "<input type='file' name='files[]' ></span>";
+//         ModalCargaArchivo += "<span class='fileupload-process'></span></div>";
+//         ModalCargaArchivo += "<div class='fileupload-progress' >";
+//         // ModalCargaArchivo += "<div class='progress' role='progressbar' aria-valuemin='0' aria-valuemax='100'></div>";
+//         ModalCargaArchivo += "<div class='progress-extended'>&nbsp;</div>";
+//         ModalCargaArchivo += "</div></div>";
+//         ModalCargaArchivo += "<table role='presentation'><tbody class='files'></tbody></table></form>";
 
-function mostrar_urls(id_evidencia,validador,validado,id_para)
-{
-    var tempDocumentolistadoUrl = "";
-    URL = 'filesEvidenciaDocumento/'+id_evidencia;
-    $.ajax({
-        url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
-        type: 'GET',
-        data: 'URL='+URL,
-        async:false,
-        success: function(todo)
-        {
-            if(todo[0].length!=0)
-            {
-                tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
-                $.each(todo[0], function (index,value)
-                {
-                    nametmp = value.split("^-O-^-M-^-G-^");
-                    name = nametmp[1];
-                    fecha = getFechaStamp(nametmp[0]);
-                    // fecha = new Date(nametmp[0]*1000);
-                    // fecha = fecha.getDate()+" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
-                    // $.each(nametmp, function(index,value)
-                    // {
-                    //     if(index!=0)
-                    //         (index==1)?name=value:name+="-"+value;
-                    // });
-                    tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
-                    tempDocumentolistadoUrl += "<a download='"+name+"' href=\""+todo[1]+"/"+value+"\" target='blank'>"+name+"</a></td><td>";
-                    if(validador=="1")
-                    {
-                        // if(validado==false)
-                        // {
-                            tempDocumentolistadoUrl += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
-                            tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
-                            tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button>";
-                        // }
-                    }
-                    tempDocumentolistadoUrl += "</td></tr>";
-                });
-                tempDocumentolistadoUrl += "</tbody></table>";
-            }
-            if(tempDocumentolistadoUrl == "")
-            {
-                tempDocumentolistadoUrl = " No hay archivos agregados ";
-                if(validador=="1")
-                {
-                    // if(validado==false)
-                    // {
-                        $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
-                    // }
-                }
-            }
-            else
-            {
-                $('#DocumentolistadoUrlModal').html("");
-            }
-            tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdEvidenciaDocumento' type='text' style='display:none;' value='"+id_evidencia+"'>"
-            tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdParaDocumento' type='text' style='display:none;' value='"+id_para+"'>";
-            // console.log(tempDocumentolistadoUrl);
-            $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
-            $('#fileupload').fileupload
-            ({
-                url: '../View/',
-            });
-            $("#subirArchivos").removeAttr("disabled");
-        }
-    });
-}
+// function mostrar_urls(id_evidencia,validador,validado,id_para)
+// {
+//     var tempDocumentolistadoUrl = "";
+//     URL = 'filesEvidenciaDocumento/'+id_evidencia;
+//     $.ajax({
+//         url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
+//         type: 'GET',
+//         data: 'URL='+URL,
+//         async:false,
+//         success: function(todo)
+//         {
+//             if(todo[0].length!=0)
+//             {
+//                 tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>Fecha de subida</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
+//                 $.each(todo[0], function (index,value)
+//                 {
+//                     nametmp = value.split("^-O-^-M-^-G-^");
+//                     name = nametmp[1];
+//                     fecha = getFechaStamp(nametmp[0]);
+//                     // fecha = new Date(nametmp[0]*1000);
+//                     // fecha = fecha.getDate()+" "+ months[fecha.getMonth()] +" "+ fecha.getFullYear() +" "+fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+//                     // $.each(nametmp, function(index,value)
+//                     // {
+//                     //     if(index!=0)
+//                     //         (index==1)?name=value:name+="-"+value;
+//                     // });
+//                     tempDocumentolistadoUrl += "<tr class='table-row'><td>"+fecha+"</td><td>";
+//                     tempDocumentolistadoUrl += "<a download='"+name+"' href=\""+todo[1]+"/"+value+"\" target='blank'>"+name+"</a></td><td>";
+//                     if(validador=="1")
+//                     {
+//                         // if(validado==false)
+//                         // {
+//                             tempDocumentolistadoUrl += "<button style=\"font-size:x-large;color:#39c;background:transparent;border:none;\"";
+//                             tempDocumentolistadoUrl += "onclick='borrarArchivo(\""+URL+"/"+value+"\");'>";
+//                             tempDocumentolistadoUrl += "<i class=\"fa fa-trash\"></i></button>";
+//                         // }
+//                     }
+//                     tempDocumentolistadoUrl += "</td></tr>";
+//                 });
+//                 tempDocumentolistadoUrl += "</tbody></table>";
+//             }
+//             if(tempDocumentolistadoUrl == "")
+//             {
+//                 tempDocumentolistadoUrl = " No hay archivos agregados ";
+//                 if(validador=="1")
+//                 {
+//                     // if(validado==false)
+//                     // {
+//                         $('#DocumentolistadoUrlModal').html(ModalCargaArchivo);
+//                     // }
+//                 }
+//             }
+//             else
+//             {
+//                 $('#DocumentolistadoUrlModal').html("");
+//             }
+//             tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdEvidenciaDocumento' type='text' style='display:none;' value='"+id_evidencia+"'>"
+//             tempDocumentolistadoUrl = tempDocumentolistadoUrl + "<br><input id='tempInputIdParaDocumento' type='text' style='display:none;' value='"+id_para+"'>";
+//             // console.log(tempDocumentolistadoUrl);
+//             $('#DocumentolistadoUrl').html(tempDocumentolistadoUrl);
+//             $('#fileupload').fileupload
+//             ({
+//                 url: '../View/',
+//             });
+//             $("#subirArchivos").removeAttr("disabled");
+//         }
+//     });
+// }
     //         else
     //         {
     //           swal("","Error del servidor","error");
@@ -1614,76 +1636,76 @@ function mostrar_urls(id_evidencia,validador,validado,id_para)
     //     });
     // }
     // valor = 8;
-function borrarArchivo(url,id_para)
-{
-    // setInterval(aumentador(), 3000);
-    swal({
-        title: "ELIMINAR",
-        text: "Al eliminar este documento se eliminara toda la evidencia registrada. ¿Desea continuar?",
-        type: "warning",
-        showCancelButton: true,
-        closeOnConfirm: false,
-        showLoaderOnConfirm: true,
-        confirmButtonText: "Eliminar",
-        cancelButtonText: "Cancelar",
-    },function()
-    {
-        var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();
-        $.ajax({
-            url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
-            type: 'POST',
-            data: 'URL='+url,
-            success: function(eliminado)
-            {
-            if(eliminado)
-            {
-                growlSuccess("Eliminacion de Archivo","Archivo Eliminado");
-                mostrar_urls(ID_EVIDENCIA_DOCUMENTO,"1",false,id_para);
-                actualizarEvidencia(ID_EVIDENCIA_DOCUMENTO,0);
-                // setTimeout(function(){
-                    swal.close();
-                // },1000);
-                //  refresh();
-            }
-            else
-            {
-                growlError("Error Rliminar Archivo","No se pudo eliminar el archivo");
-            }
-                //porner los growl
-                // swal("","Ocurrio un error al elimiar el documento", "error");
-            },
-            error:function()
-            {
-                growlError("Error Eliminar Archivo","Error en el servidor");
-            //   swal("","Ocurrio un error al elimiar el documento", "error");
-            }
-        });
-    });
-}
+// function borrarArchivo(url,id_para)
+// {
+//     // setInterval(aumentador(), 3000);
+//     swal({
+//         title: "ELIMINAR",
+//         text: "Al eliminar este documento se eliminara toda la evidencia registrada. ¿Desea continuar?",
+//         type: "warning",
+//         showCancelButton: true,
+//         closeOnConfirm: false,
+//         showLoaderOnConfirm: true,
+//         confirmButtonText: "Eliminar",
+//         cancelButtonText: "Cancelar",
+//     },function()
+//     {
+//         var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();
+//         $.ajax({
+//             url: "../Controller/ArchivoUploadController.php?Op=EliminarArchivo",
+//             type: 'POST',
+//             data: 'URL='+url,
+//             success: function(eliminado)
+//             {
+//             if(eliminado)
+//             {
+//                 growlSuccess("Eliminacion de Archivo","Archivo Eliminado");
+//                 mostrar_urls(ID_EVIDENCIA_DOCUMENTO,"1",false,id_para);
+//                 actualizarEvidencia(ID_EVIDENCIA_DOCUMENTO,0);
+//                 // setTimeout(function(){
+//                     swal.close();
+//                 // },1000);
+//                 //  refresh();
+//             }
+//             else
+//             {
+//                 growlError("Error Rliminar Archivo","No se pudo eliminar el archivo");
+//             }
+//                 //porner los growl
+//                 // swal("","Ocurrio un error al elimiar el documento", "error");
+//             },
+//             error:function()
+//             {
+//                 growlError("Error Eliminar Archivo","Error en el servidor");
+//             //   swal("","Ocurrio un error al elimiar el documento", "error");
+//             }
+//         });
+//     });
+// }
 
-function agregarArchivosUrl()
-{
-    var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();
-    url = 'filesEvidenciaDocumento/'+ID_EVIDENCIA_DOCUMENTO,
-    $.ajax({
-        url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
-        type: 'GET',
-        data: 'URL='+url,
-        success:function(creado)
-        {
-            if(creado)
-            {
-                growlWait("Subir Archivo","Cargando Archivo Espere...");
-                $('.start').click();
-            }
-        },
-        error:function()
-        {
-            // swal("","Error del servidor","error");
-            growlError("Error Eliminar Archivo","Error en el servidor");
-        }
-      });
-}
+// function agregarArchivosUrl()
+// {
+//     var ID_EVIDENCIA_DOCUMENTO = $('#tempInputIdEvidenciaDocumento').val();
+//     url = 'filesEvidenciaDocumento/'+ID_EVIDENCIA_DOCUMENTO,
+//     $.ajax({
+//         url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",
+//         type: 'GET',
+//         data: 'URL='+url,
+//         success:function(creado)
+//         {
+//             if(creado)
+//             {
+//                 growlWait("Subir Archivo","Cargando Archivo Espere...");
+//                 $('.start').click();
+//             }
+//         },
+//         error:function()
+//         {
+//             // swal("","Error del servidor","error");
+//             growlError("Error Eliminar Archivo","Error en el servidor");
+//         }
+//       });
+// }
 
 // function mostrarRegistros(id_documento)
 // {
