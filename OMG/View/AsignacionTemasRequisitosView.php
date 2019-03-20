@@ -207,7 +207,7 @@ $Usuario=  Session::getSesion("user");
 			//lista donde estan los datos pero dirigiso hacia exportar excel 
             var DataGridExcel=[];
 			//para indicar de  que vista  va a exportar esto se utiliza en la libreria  de  excelexportarjs   
-            var 	="asignacionTemaRequisito";
+            var origenDeDatosVista="asignacionTemaRequisito";
             var id_real_arbol_seleccionado=-1;
 			//objeto  para la generacion del directorio de carpetas en forma de arbol este se encuentra en la celda "a" del objeto myLayout 
             myTree = new dhtmlXTreeObject('treeboxbox_tree', '100%', '100%',0);

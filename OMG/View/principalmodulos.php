@@ -24,8 +24,6 @@ if(!isset($_REQUEST["type"])){
 }
 
 
-    
-
 
 
 if (Session:: NoExisteSeSion("user")){
@@ -62,6 +60,7 @@ $Usuario=  Session::getSesion("user");
          <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 	<script src="../../codebase/dhtmlx.js"></script>
         <script src="../../js/jquery.js" type="text/javascript"></script>
+        <!--<script src="../../js/jqueryTranslator.js" type="text/javascript"></script>-->
         <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
         <!--<script src="../../assets/bootstrap/js/sweetalert.js" type="text/javascript"></script>-->
         <script src="../../js/funcionessidebar.js" type="text/javascript"></script>
@@ -69,7 +68,8 @@ $Usuario=  Session::getSesion("user");
         <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
         <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
 
-        <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
+        <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>    
+     
         <style>
 
         .modal-body{
@@ -163,7 +163,7 @@ $Usuario=  Session::getSesion("user");
 	</style>
     <style id="estilos_colores"></style>
 	<script>
-    var colorLeter;
+    var typePorSiLaSeSessionExpira="<?php  echo $_REQUEST["type"] ?>"; 
     var colorView = <?php
     $color = "";
     if(Session:: NoExisteSeSion("colorFondo_Vista"))
@@ -1264,6 +1264,7 @@ function loadDataNotificaciones(){
 </head>
 <!--<body>-->
 <body onload="consultarInformacion('../Controller/DocumentosEntradaController.php?Op=Alarmas')">
+    <div id="informacion"></div>
 <div id="ribbonObj" style="position: relative;width: 100%;"></div>
    
     
@@ -1285,7 +1286,7 @@ function loadDataNotificaciones(){
   
     </div>
     <input id="gom" type="hidden" value="<?php echo Session::getSesion("token")?>"/>
-
+    <input id="typePorSiLaSeSessionExpira" type="text" value="<?php echo $_REQUEST["type"]?>"/>
 <script>
 
 cambiarCont();
@@ -1369,6 +1370,7 @@ var jsonObj = {};
             {
                 window.top.$("#desc").html("Temática("+r.clave_cumplimiento+")");
                 window.top.$("#infocontrato").html("Temática Seleccionada::<br>("+r.clave_cumplimiento+")");
+//                $("[data-translate]").jqTranslate('../../json/index',{defaultlang:'es' });
             }    
         });
  }
@@ -1432,7 +1434,7 @@ var jsonObj = {};
 //     console.log("ya termino");
 // });
  
- 
+   
  
 
 </script>
@@ -1449,4 +1451,6 @@ var jsonObj = {};
 
 
 </body>
+
+<!--<div data-translate="texto" ></div>-->
 </html>
