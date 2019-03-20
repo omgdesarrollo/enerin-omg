@@ -1,41 +1,34 @@
 // para usar este complemento
-// 1. agregar etiqueta <div id="jsFileUpload"></div>
-// 2. inicializar componente crea el modal para mostrar los archivos cargados (Opcional)
-// 3. definir la ruta donde se guardaran los archivos antes de la carpeta final ($fileUpload["url"])
+// 1. agregar etiqueta <div id="jsFileUpload"></div> donde se creara el modal de archivos
+// 2. crea la instancia con = new fileUpload({"url":"","title_modal":"",""}); definiendo la ruta(url) y el titulo del modal(title_modal)
+// 3. 
 // 
-// 
-// var _limite_upload_activado_jsUpload = true;
 
 class fileUpload
 {
     constructor(data)
     {
-        this.url = data.url;//ruta de archivos antes de la carpeta final definida por el identificador del registro ligado a un archivo
-        this.title_modal = data.title_modal;//titulo del modal de archivos
-        this.title_date = "Fecha de Subida";//
-        this.title_name_file = "Nombre";
-        this.limite_upload_activado = false;//limita si se sube un archivo o varios archivos (false,true)
+        this.url = data.url;//ruta de archivos antes de la carpeta final definida por el identificador del registro ligado a un archivo.
+        this.title_modal = data.title_modal;//titulo del modal de archivos.
+        this.title_date = "Fecha de Subida";//titulo de la columna(tabla de archivos cargados) referida a la fecha de subida del archivo. Defecto = "Fecha de Subida"
+        this.title_name_file = "Nombre";//titulo de la columna(tabla de archivos cargados) referida. Defecto = "Nombre"
+        this.limite_upload_activado = false;//limita el numero de archivos para agregar, false = n archivos, true = 1 archivo. Defecto = false
 
-        this.tabla_archivos;
-        this.seccion_carga;
-        this.btn_carga;
+        this.tabla_archivos;//objeto que guarda la estructura de la tabla de los archivos cargados
+        this.seccion_carga;//objeto que guarda la seccion para agregar archivos
+        this.btn_carga;//objeto que guarda la estructura del boton "ajuntar archivo"
 
-        this.objModal;
-        this.update_modal = true;
-        this.after_delete = ()=>{};
+        this.objModal;//objeto que guarda la estructura completa del todo el modal
+        this.update_modal = true;//no se usa, para crear modal de archivos, cambiar para solo regresar objeto de los archivos existentes
+        this.after_delete = ()=>{};//funcion que se ejecuta despues de eliminar
 
-        this.before_upload = ()=>{return new Promise((resolve,reject)=>{resolve()});};
-        this.after_upload = ()=>{};
-        this.modal_upload_file = "";
+        this.contrato = true;//defecto true
 
-        // if(data.berofe_upload!=undefined)
-        //     this.berofe_upload = data.berofe_upload;
-        // if(data.after_upload!=undefined)
-        //     this.after_upload = data.after_upload;
-        // if(data.update_modal!=undefined)
-        //     this.update_modal = data.update_modal;
-        // if(data.after_delete!=undefined)
-        //     this.after_delete = data.after_delete;
+        this.before_upload = ()=>{return new Promise((resolve,reject)=>{resolve()});};//funcion promesa que se ejecuta antes de subir archivo (editable desde la instancia)
+        this.after_upload = ()=>{};////funcion que se ejecuta despues de subir archivo
+
+        if(data.contrato!=undefined)
+            this.contrato = data.contrato;
         if(data.limite_upload_activado!=undefined)
             this.limite_upload_activado = data.limite_upload_activado;
         if(data.title_date!=undefined)
@@ -43,6 +36,7 @@ class fileUpload
         if(data.title_name_file!=undefined)
             this.title_name_file = data.title_name_file;
 
+        // codigo de carga de archivos
         this.modal_upload_file = "<form id='fileupload' method='POST' enctype='multipart/form-data'>"+
         "<div class='fileupload-buttonbar'>"+
         "<div class='fileupload-buttons'>"+
@@ -56,8 +50,8 @@ class fileUpload
         "</div></div>"+
         "<table role='presentation'><tbody class='files'></tbody></table></form>";
 
-
-        this.script_add_jsFileUpload = 
+        // script de carga en pagina del archivo
+        this.script_add_jsFileUpload =
         // '<div>'+
         '<script id="template-upload" type="text/x-tmpl">'+
             // '{% %}'+
@@ -98,7 +92,8 @@ class fileUpload
             '{% if(o.options.limite_upload_activado) { o.options.archivos_tam = 0; } %}'+
             '</script>';
 
-
+        
+        // script de subida de archivo
         this.script_upload_jsFileUpload = 
         '<script id="template-download" type="text/x-tmpl">'+
             '{% var t = $("#fileupload").fileupload("active"); var i,file; %}'+
@@ -135,6 +130,7 @@ class fileUpload
         this.init();
     }
 
+    // inicializa el objecto de la clase, crea la estructura y todos los componentes a utilizar
     init()
     {
         let obj = $("<div>",{"class":"modal fade"});
@@ -150,8 +146,7 @@ class fileUpload
         let obj7 = $("<div>");//DocumentolistadoUrlModal
         let obj8 = $("<div>",{"class":"form-group","method":"post"});
         let btn = $('<button>',{"type":"submit","class":"btn crud-submit btn-info botones_vista_tabla","style":"width:100%"});
-        //agregar evento al botton para subir archivos, verificar si hay espacio para mas archivos y verificar si existe un archivo para evidencia,
-        // intentar que sea el usuario que limite el numero de archivos por registro
+        
         $(btn).html("Adjuntar Archivo");
         $(obj8).html(btn);
         $(obj6).html(obj7);
@@ -176,6 +171,7 @@ class fileUpload
         // $("body").append("<script id='template-download' type='text/x-tmpl'></script>");
     }
     
+    //obtiene los archivos existentes en la ruta, crea la estructura de la tabla de archivos, da permiso para borrar o subir archivos, abre el modal
     mostrar_urls(carpeta,detener,permiso)
     {
         // $("#template-upload").html(this.script_add_jsFileUpload);
@@ -188,11 +184,13 @@ class fileUpload
         $(this.seccion_carga).html("");
         $(this.btn_carga).css("display","none");
         $(this.btn_carga)[0]["onclick"] = ()=>{this.subir_Archivo(carpeta);};
-        console.log("1");
+        let temp_data = 'URL='+this.url+"/"+carpeta;
+        if(!this.contrato)
+            temp_data += "&SIN_CONTRATO";
         $.ajax({
             url: '../Controller/ArchivoUploadController.php?Op=listarUrls',
             type: 'GET',
-            data: 'URL='+this.url+"/"+carpeta,
+            data: temp_data,
             success:(todo)=>
             {
                 if(todo[0].length!=0)
@@ -205,6 +203,7 @@ class fileUpload
                     // tempDocumentolistadoUrl = "<table class='tbl-qa'><tr><th class='table-header'>"+this.titulo_fecha+"</th><th class='table-header'>Nombre</th><th class='table-header'></th></tr><tbody>";
                     $.each(todo[0],(index,value)=>
                     {
+                        // this.getFilesInfo(value,index,todo[1]);
                         let nametmp = value.split("^-O-^-M-^-G-^");
                         let name = nametmp[1];
                         let fecha = getFechaStamp(nametmp[0]);
@@ -262,6 +261,14 @@ class fileUpload
         });
     }
 
+    // getFilesInfo = (value,index,url)=>
+    // {
+    //     console.log(value);
+    //     console.log(index);
+    //     console.log(url);
+    // }
+
+    // peticion para eliminar el archivo correspondiente, al eliminar ejecuta after_delete()
     borrarArchivo = (url,id)=>
     {
         swal({
@@ -299,9 +306,12 @@ class fileUpload
         });
     }
 
+    // ejecuta before_upload como funcion promesa, al resolverse hace una peticion para crear la ruta donde se guardara el archivo y sube el archivo
     subir_Archivo = (carpeta)=>
     {
         let url = this.url+'/'+carpeta;
+        if(!this.contrato)
+            url += "&SIN_CONTRATO=X";
         this.before_upload().then((resolve)=>{
             $.ajax({
                 url: "../Controller/ArchivoUploadController.php?Op=CrearUrl",

@@ -81,11 +81,11 @@ $(function()
         }
     });
 
-    $("#subirArchivos").click(function()
-    {
-        agregarArchivosUrl();
-        $("#subirArchivos").attr("disabled",true);
-    });
+    // $("#subirArchivos").click(function()
+    // {
+    //     agregarArchivosUrl();
+    //     $("#subirArchivos").attr("disabled",true);
+    // });
     
     var $btnDLtoExcel = $('#toExcel'); 
     $btnDLtoExcel.on('click', function () 

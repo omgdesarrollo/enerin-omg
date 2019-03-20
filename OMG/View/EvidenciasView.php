@@ -413,7 +413,7 @@
                         //     reject()
                         // );
 
-                        reject();
+                        // reject();
                     }
                     else
                     {
@@ -443,8 +443,6 @@
             });
         });
     }
-
-    file.before
 
     // construirFiltros();
     // construir();
