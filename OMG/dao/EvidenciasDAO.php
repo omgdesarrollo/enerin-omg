@@ -300,7 +300,7 @@ class EvidenciasDAO
         }
     }
 
-    // lista los temas de la busqueda $CADENA, que esten asignados a el usuario ($ID_USUARIO) actual y no sean subtemas, de acuerdo al contrato $CONTRATO
+    // lista los temas de la busqueda $CADENA, que esten asignados a el usuario ($ID_USUARIO) actual y no sean subtemas, de acuerdo al contrato $CONTRATO y tengan responsable de tema
     public function listarTemas($CADENA,$ID_USUARIO,$CONTRATO)
     {
         try
