@@ -432,7 +432,8 @@
 
     file.after_upload = (data)=>
     {
-        listarUnDato(file.url+"/",data.id).then((resolve)=>
+        actualizarEvidencia(data.id,1).then((resolve)=>
+        // listarUnDato(file.url+"/",data.id).then((resolve)=>
         {
             $.each(DataGrid,(index,value)=>
             {

@@ -1391,24 +1391,26 @@ listarUnDato = (URL,id)=>
 // actualiza la conformidad de la evidencias
 actualizarEvidencia = (id,valor)=>
 {
-    URL = 'filesEvidenciaDocumento/';
-    $.ajax({
-        url: "../Controller/EvidenciasController.php?Op=IniciarConformidad",
-        type: 'POST',
-        data: 'ID_EVIDENCIA='+id+'&VALOR='+valor,
-        success:function(resp)
-        {
-            if(resp>0)
+    return new Promise((resolve,reject)=>{
+        URL = 'filesEvidenciaDocumento/';
+        $.ajax({
+            url: "../Controller/EvidenciasController.php?Op=IniciarConformidad",
+            type: 'POST',
+            data: 'ID_EVIDENCIA='+id+'&VALOR='+valor,
+            success:(resp)=>
             {
-                listarUnDato(URL,id);
+                if(resp>0)
+                {
+                    listarUnDato(URL,id).then((resolve)=>{resolve()});
+                }
+                else
+                    growlError("Error","Error en el servidor, actualize la vista");
+            },
+            error:function()
+            {
+                growlError("Error","Error en el servidor");
             }
-            else
-                growlError("Error","Error en el servidor, actualize la vista");
-        },
-        error:function()
-        {
-            growlError("Error","Error en el servidor");
-        }
+        });
     });
 }
 
