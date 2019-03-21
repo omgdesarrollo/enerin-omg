@@ -8,16 +8,12 @@ class PermisosModel{
         try {
             
             $dao=new PermisosDAO();
-            $rec=$dao->obtenerPermisos();
-            
-            return $rec;
-            
+            $rec=$dao->obtenerPermisos();           
+            return $rec;           
         } catch (Exception $ex){
             throw $ex;
         }
-    }
-    
-            
+    }          
 }
 
 
