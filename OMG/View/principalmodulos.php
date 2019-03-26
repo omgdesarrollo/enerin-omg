@@ -1286,7 +1286,7 @@ function loadDataNotificaciones(){
   
     </div>
     <input id="gom" type="hidden" value="<?php echo Session::getSesion("token")?>"/>
-    <input id="typePorSiLaSeSessionExpira" type="text" value="<?php echo $_REQUEST["type"]?>"/>
+    <input id="typePorSiLaSeSessionExpira" type="hidden" value="<?php echo $_REQUEST["type"]?>"/>
 <script>
 
 cambiarCont();
@@ -1342,8 +1342,7 @@ var jsonObj = {};
   }
 }).then(function (result) {
     $.ajax({  
-                        url: "../Controller/CumplimientosController.php?Op=contratoselec&c="+result+"&obt=false",  
-                        async:true,
+                        url: "../Controller/CumplimientosController.php?Op=contratoselec&c="+result+"&obt=false",      
                         success: function(r) {
                               swal({
                                 type: 'success',

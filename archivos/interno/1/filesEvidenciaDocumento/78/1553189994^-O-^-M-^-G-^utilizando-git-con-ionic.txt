@@ -1,0 +1,130 @@
+nota 1. Todos los comandos son sin comilla simple.
+nota 2. Recomiendo para estos pasos tener una carpeta principal para el proyecto y dentro de esa carpeta sera creado el proyecto.Ionic.
+nota 3. Configuracion modo local por proyecto.
+nota 4. Estas configuracion es por si usamos 2 o mas usuarios con git.
+
+1.-	Crear proyecto de Ionic en la carpeta principal
+
+2.-	Configurando Git por proyecto //esta configuracion se guarda en el directorio del proyecto creado de Ionic en '.git\config' creado para solo ese proyecto
+2.1	Ejecutar Git Bash y ejecuta 'cd' seguido de directorio de tu carpeta de proyecto' //por default el Git bash se inicia en tu carpera de usuario o puede ejecutar Git Bash directamente en la carpeta de proyecto
+2.1.-	Ejecutar comandos 'git config user.name "Aqui tu nombre"' y 'git config user.email "ejemplo@ejemplo.com"'
+2.2.-	Ejecuta 'git config --list' para ver la configuracion con tu respectivo nombre y correo
+
+3.-	Creacion de llave SSH (publica y privada)
+3.1.-	Hacer el paso 2.1 solo que el directorio es la carpeta principal
+3.2.-	Ejecute 'ssh-keygen -f username', le perdira passphrase(frase de contraseña) puede dejarla vacio para que no le pida la frase cada vez que inicie una sesion de terminal. //puede cambiar username por el nombre con el que quiera guardar el archivo
+3.3.-	Su clave esta guardada en el archivo username y su clave publica en username.pub
+
+4.-	Conectar ionic (Visual Studio Code) a cuenta ionic Pro
+4.1.-	Ejecutar cmd o Terminal de Visual Studio Code y ejecuta 'cd' seguido de directorio de tu carpeta proyecto
+4.1.-	Ejecutar comando 'ionic login' , pedira email y contraseña //si ya hay una sesion la cambiara por la nueva
+4.2.-	Le preguntara como quiere conectarse a Ionic Pro, seleccione "Use an existing SSH key pair" con las teclas de direccion 
+	-Despues le preguntara la localizacion del archivo donde esta la clave SSH, si ha construido conforme a la nota 2 solo agrege a la peticion de la localizacion '..\username.pub',
+	-Despues preguntara si quiere usar esta llave por default para Ionic,
+		-Si trabaja con un solo usuario de Git selecciona "yes" (esto hara que cualquier proyecto creado de Ionic utilize esa llave de usuario y solo tendra que repetir los puntos 1 y 2),
+		-Si utiliza mas de 1 usuario Git selecciona "no" y en cada nuevo proyecto deberas repetir todos los pasos junto con las notas
+
+5.-	Conectar Ionic a Ionic Dashboard
+5.1.-	Ejecuta en el directorio de tu proyecto 'Ionic link',
+	-Si su app tiene ya un ID le preguntara si quieres enlazar una app diferente selecciona "yes"
+	-Le preguntara cual aplicacion quieren enlazar, seleccione "Create a new app" suponiendo que no existe la app en su Ionic Dashboard,
+	-Ingresa el nombre de tu app con el que se creara en el Ionic Dashboard
+
+6.-	Creando el repositorio Git para la aplicacion Ionic
+
+
+
+creacion de usuarios para git sin importar donde se guardara el repo
+
+Nota:	La carpeta .git del repositorio puede estar oculta.
+
+1.	Configurar el repositorio creado o clonado //si se clona tendra la url para el paso 3.1, si no se clona, al inicializar el proyecto necesita configurar la url donde estara, ayudese de la documentacion de cada tipo de servidor (github, ionic, entre otros mas) donde se pueden configurar automanticamente para la url, solo necesita la configuracion hasta obtener la url en su archivo config en la carpeta .git.
+
+1.1	Ejecutar en gitBash abierto en la carpeta del repositorio, 
+	git config user.name "John Doe"
+	git config user.email johndoe@example.com
+	//no se usa --global para que se configure por repositorio
+1.2	Ejecutando git config --list puede ver la configuracion global
+
+2.-	Creacion de llave SSH (publica y privada) // estas claves son unicas y personales
+2.1	Abra gitBash desde programas
+2.2.-	Ejecute 'ssh-keygen -f username', donde username es el nombre con el que se guardara el archivo, le perdira passphrase(frase de contraseña) puede dejarla vacio para que no le pida la frase cada vez que inicie una sesion de terminal. Al ejecutar este comando el archivo se guardara en carpeta .shh que esta en la carpeta principal del usuario. Es preferible hacer este paso de la siguiente manera y despues del paso 1:
+	Ejecute el comando el la carpeta del repositorio creado o clonado, se crearan los archivos necesarios, despues los mueve a otro localizacion que no queden dentro del repositorio, de preferencia en .ssh
+2.3.-	Su clave esta guardada en el archivo username o el que se uso recpectivamente y su clave publica en el archivo .pub respectivamente.
+
+3.	Configuracion de los host para evitar problemas con otros hosts y usuarios.
+3.1	Lo siguiente muestra un de como debe quedar la configuracion del archivo config de la carpeta .ssh, junto a la configuracion del archivo config que se encuentra en la carpeta .git de su repositorio local ya fuera clonado o inicializado:
+
+".ssh config"
+
+Host git.ionicjs.com
+
+	IdentityFile C:\Users\equipos\.ssh\id_rsa
+ //este es de una configuracion global asi que si es la primera vez que configura git no debera tener el global
+
+Host legend-git.ionicjs.com
+
+	HostName git.ionicjs.com
+
+	IdentityFile C:\Users\equipos\.ssh\legend
+ // en el "Host" escribe una palabra con la que querra identificar este repositorio seguido de "-" y despues la direccion del Host respectivo, y en "IdentityFile" es la url señalando sus llaves del paso 2,
+Nota:"legend" de la url es el nombre del archivo
+
+Host legend-github.com
+	HostName github.com
+
+	IdentityFile C:\xampp\htdocs\consultoriakey\consultoria //En este ejemplo las llaves estan en otro carpeta y como ve puede utilizar el mismo identificador "legend" pero con otra direccion de Host
+
+".git config" //asi deberia quedar la configuracion del archivo config de la carpeta .git de su repositorio
+
+opcion 1: configurar desde archivo:
+[core]
+
+	repositoryformatversion = 0
+
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+
+[remote "ionic"]
+ // esto es lo que importa
+	url = git@git.ionicjs.com:legend41/gagl.git
+
+	fetch = +refs/heads/*:refs/remotes/ionic/*
+
+	//en "url" se agrega el nombre del identificador que utilizo en el .ssh quedando en la linea url = git@legend-git.ionicjs.com:legend41/gagl.git
+
+[user]
+
+	name = legend41
+
+	email = jose_jesus-15@hotmail.com
+
+[gui]
+
+	wmstate = normal
+
+	geometry = 893x435+2044+220 175 196
+
+
+opcion 2: configurar con linea de comando
+Abra el gitBash en la carpeta del repositorio ejecute git remote -v para ver las urls de origen aparecenran dos
+	ionic   git@git.ionicjs.com:legend41/gagl.git (fetch)
+	ionic   git@git.ionicjs.com:legend41/gagl.git (push)
+
+ejecute git remote set-url origin git@legend-git.ionicjs.com:legend41/gagl.git
+
+para validar que se cambio ejecute nuevamente git remote -v
+	ionic   git@legend-git.ionicjs.com:legend41/gagl.git (fetch)
+	ionic   git@legend-git.ionicjs.com:legend41/gagl.git (push)
+
+Eso es todo para la configuracion, solo falta una cosa:
+
+a) Si realizo una clonacion y quiere contribuir(editar) al proyecto, debera proporcionar la llave ssh publica (.pub) o el archvio, para ser agregada al servidor de repositorios.
+
+b) Si subira su propio proyecto, debera hacer la primera carga
+	git add . //agrega todos los archivos que sean necesario, si ve que no se agregan todos no tengas prisa, es normal por la configuracion para no tener problemas
+	git commit -m "version 1" //hace el commit para crear el punto de cambio
+	git push ionic master //sube todos los cambios realizados
