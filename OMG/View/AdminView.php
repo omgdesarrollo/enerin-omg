@@ -3,10 +3,7 @@ session_start();
 require_once '../util/Session.php';
 $Usuario=  Session::getSesion("user");
 ?>
-
-
 <!DOCTYPE html>
-
 <html lang="en">
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -26,7 +23,7 @@ $Usuario=  Session::getSesion("user");
 
         <script src="../../js/jquery.js" type="text/javascript"></script>
         <script src="../../js/jquery-ui.min.js" type="text/javascript"></script>
-
+        <!--<link href="../../css/jquery-ui.css" rel="stylesheet" type="text/css"/>-->
         <link href="../../assets/vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css"/>
         <script src="../../assets/vendors/jGrowl/jquery.jgrowl.js" type="text/javascript"></script>
 
@@ -125,12 +122,20 @@ $Usuario=  Session::getSesion("user");
 
                     <div class="modal-body">
                         <div class="form-group">
-                            <label class="control-label">Empleado/Usuario: </label>
+                           <label class="control-label">Empleado/Usuario: </label>
+                           <div class="ui-widget">
+                            <label for="birds">Birds: </label>
+                            <input id="birds">
+                           </div>
+<!--                            <input list="personal" id="personal">
+                            <datalist list="personal">
+                                <option value="completo"></option>
+                            </datalist>-->
                             <div class="dropdown">
                                 <input style="width:60%" type="text" class="dropdown-toggle" id="NOMBREESCRITURA_AGREGARUSUARIO" data-toggle="dropdown" onkeyup="buscarEmpleados(this)" autocomplete="off"/>
                                     <ul style="width:60%;cursor:pointer;" class="dropdown-menu" id="dropdownEvent" role="menu" 
                                     aria-labelledby="menu1"></ul>* Este sera el nombre de usuario.
-                            </div>
+                            </div>  
                         </div>
                         <div id="INFO_AGREGARUSUARIO">
                             <div class="form-group">
@@ -296,7 +301,7 @@ $Usuario=  Session::getSesion("user");
     estructuraGrid = [
         { name: "id_principal", visible:false},
         { name: "no",title:"No.", type: "text", width: 40, editing:false},
-        { name: "nombre_usuario",title:"Usuario ", type: "text", width: 180, editing:false},
+        { name: "nombre_usuario",title:"Usuario ", type: "textarea", width: 180, editing:true},
         { name: "nombre",title:"Nombre", type: "text", width: 180, editing:false},
         { name: "correo",title:"Correo", type: "text", width: 180, editing:false},
         { name: "categoria",title:"Categoria", type: "text", width: 140, editing:false},
@@ -609,7 +614,9 @@ $Usuario=  Session::getSesion("user");
 //                                    $('#bodyTableAgregar').append(tempData);
                                     refresh();
                                     swalSuccess('Usuario Creado');
-                                    $('#agregarUsuario .close').click()
+                                    $('#agregarUsuario .close').click();
+                                    //inicializa la lista de nuevo para que no contenga los datos del usuario agregado anteriormente
+                                    EmpleadoDataG=[];
                                 }
                                 else
                                     swalError('No creado, Error en el servidor');
@@ -901,6 +908,8 @@ $Usuario=  Session::getSesion("user");
                 }
             });
     }
+ 
+ 
 
 </script>
 <script src="../../js/loaderanimation.js" type="text/javascript"></script>
@@ -913,4 +922,5 @@ $Usuario=  Session::getSesion("user");
     <!--Para abrir alertas del encabezado-->
     <script src="../../assets/probando/js/ace-elements.min.js"></script>
     <script src="../../assets/probando/js/ace.min.js"></script>
-</script>
+    
+    

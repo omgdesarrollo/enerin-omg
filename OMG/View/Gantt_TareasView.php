@@ -36,8 +36,8 @@ and open the template in the editor.
 
 <html>
     <head>
-        <meta charset="UTF-8">
-        <!--<meta charset="UTF-8" name="viewport" content="width=500, initial-scale=1, maximum-scale=1">-->
+        <!--<meta charset="UTF-8">-->
+        <meta charset="UTF-8" name="viewport" content="width=500, initial-scale=1, maximum-scale=1">
         <title></title>
         
     <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
@@ -115,12 +115,15 @@ and open the template in the editor.
     <script src="../../assets/probando/js/bootstrap.min.js" type="text/javascript"></script>
 
     
-    
+    <!--<link href="../../assets/gantt_5.1.2_com/codebase/dhtmlxgantt.css" rel="stylesheet" type="text/css"/>-->
     <link href="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.css" rel="stylesheet" type="text/css"/>
+    <!--<script src="../../assets/gantt_5.1.2_com/codebase/dhtmlxgantt.js" type="text/javascript"></script>-->
     <script src="../../assets/dhtmlxSuite_v51_std/codebase/dhtmlx.js" type="text/javascript"></script>
     <link href="../../assets/dhtmlxSuite_v51_std/codebase/fonts/font_roboto/roboto.css" rel="stylesheet" type="text/css"/>
     
     <link href="../../assets/dhtmlxSuite_v51_std/skins/material/dhtmlx.css" rel="stylesheet" type="text/css"/>
+    
+    
     <!--<link href="../../assets/dhtmlxSuite_v51_std/skins/skyblue/dhtmlx.css" rel="stylesheet" type="text/css"/>-->
     <!--<link href="../../assets/dhtmlxSuite_v51_std/skins/terrace/dhtmlx.css" rel="stylesheet" type="text/css"/>-->
     <!--<link href="../../assets/dhtmlxSuite_v51_std/skins/web/dhtmlx.css" rel="stylesheet" type="text/css"/>-->
@@ -133,6 +136,11 @@ and open the template in the editor.
     <link href="../../css/PersonalizacionVistasGantt.css" rel="stylesheet" type="text/css"/>
     <!--aqui termina las librerias que no son del gantt-->
     <!--<link href="../../css/notasgantt.css" rel="stylesheet" type="text/css"/>-->
+    <!--start librerias intro js-->
+    <script src="../../assets/intro/intro.js" type="text/javascript"></script>
+    <link href="../../assets/intro/introjs.css" rel="stylesheet" type="text/css"/>
+    <!--end librerias intro-->
+    
     
    
  <style type="text/css">
@@ -677,15 +685,24 @@ var banderaIngresarElPrimerResponsable=true;
 			}
 		}
 
-		gantt.attachEvent("onParse", function () {
+		gantt.attachEvent("onParse", function (task) {
+//                    console.log("ttt ",task);
+//                    var listaTareas=[];
+//                    var objetoConKeyQueContendraLaLista={"data":""};
 			gantt.eachTask(function (task) {
 				setTaskType(task);
+//                                listaTareas.push(task);
 			});
-//                        gantt.updateTask(id)
+//                       objetoConKeyQueContendraLaLista["data"]=listaTareas;
+//                        console.log("ttt ",objetoConKeyQueContendraLaLista);
+//                         gantt.parse(objetoConKeyQueContendraLaLista);
+//                        gantt.updateTask(id);
 		});
 
 		gantt.attachEvent("onAfterTaskAdd", function onAfterTaskAdd(id) {
-			gantt.batchUpdate(checkParents(id));
+                    console.log("aqui inicia el agregado ");
+//			gantt.batchUpdate(checkParents(id));
+                        console.log("aqui termina el agregado ");
 		});
 
 		gantt.attachEvent("onBeforeTaskDelete", function onBeforeTaskDelete(id, task) {
@@ -716,19 +733,22 @@ var banderaIngresarElPrimerResponsable=true;
                              $.ajax({
                                 url:"../Controller/GanttTareasController.php?Op=EliminarTarea&deleteidtarea="+id,
                                 success:function (res){
-
+                                            console.log("trae res ",res);
                                 }
            
                               });
                                  
+                                 console.log("d",delTaskParent);
                                 if (delTaskParent != gantt.config.root_id) {
-				gantt.batchUpdate(checkParents(delTaskParent));       
+//				gantt.batchUpdate(checkParents(delTaskParent));       
                          }
 		});
-	})();            
+	})();   
+        // recalculate progress of summary tasks when the progress of subtasks changes
       	(function dynamicProgress() {
 
 		function calculateSummaryProgress(task) {
+//                    console.log("el calculo ",task);
 			if (task.type != gantt.config.types.project){
 				return task.progress;
                             }
@@ -749,7 +769,9 @@ var banderaIngresarElPrimerResponsable=true;
 		}
 
 		function refreshSummaryProgress(id, submit) {
+                    console.log("id  ",id+"-- submit  ",submit);
 			if (!gantt.isTaskExists(id)){
+                            console.log("si existe y es ",id);
 				return;
                             }
 
@@ -773,15 +795,12 @@ var banderaIngresarElPrimerResponsable=true;
 			});
 		});
 		gantt.attachEvent("onAfterTaskUpdate", function (id,item) {
-
+                    console.log("despues de actualizar");
+                       
                     if(item.progress==1){
                         gantt.getTask(id).readonly = true;
                         gantt.getTask(id).status = 3;
                     }
-                    
-//                    if(item.status==2){
-////                        gantt.getTask(id).readonly = true;
-//                    }
 
                     if(item.status==3){
                         gantt.getTask(id).readonly = true;
@@ -789,16 +808,7 @@ var banderaIngresarElPrimerResponsable=true;
 //                        gantt.getTask(id).status = 3;
 
                     }
-                    
-                   
-//                    if(banderaPrincipioCheckeoParent){
-//                        
-//                        if(item.parent==0){
-//                            if(item.user){
-//                                
-//                            }
-//                             elpadrecoincideConElUsuarioLogeado
-//                        }
+
                        if(item.$level==0){
 //                           console.log(item);
                           
@@ -837,57 +847,30 @@ var banderaIngresarElPrimerResponsable=true;
                          }
                        }
                        
-                       
-//                        if(item.manipulacion_tarea=="false"){
-//                            gantt.getTask(id).readonly = true;
-//                        }
-                        
-//                        console.log(gantt.getTaskTop(id));
-//                        console.log(gantt);
-                    
-//                    alert();
-                    console.log(item)
-                    
-//                    if(item.manipulacion_tarea=="false"){
-//                        alert();
-//                          gantt.getTask(id).readonly = true;
-//                    }
-//                    if(item.status==2){
-//                        gantt.getTask(id).readonly = true;
-//                        gantt.getTask(id).progress = 1;
-//                        gantt.getTask(id).status = 3;
-
-//                    }
-                    
-//                    console.log("entro en ");
-                    
-                    
-//			gantt.updateTask(id)
-                    
-                    
-//                    console.log(gantt.getTask(id));
-			refreshSummaryProgress(gantt.getParent(id), true);
-		});
+		 refreshSummaryProgress(gantt.getParent(id), true);	
+		 });
 
 		gantt.attachEvent("onTaskDrag", function (id) {
 			refreshSummaryProgress(gantt.getParent(id), false);
 		});
 		gantt.attachEvent("onAfterTaskAdd", function (id) {
+                    console.log("en ofafter task  ",id+" -- quien es el padre  ",gantt.getParent(id));                    
 			refreshSummaryProgress(gantt.getParent(id), true);
 		});
 
 		(function () {
 			var idParentBeforeDeleteTask = 0;
-			gantt.attachEvent("onBeforeTaskDelete", function (id) {
+			gantt.attachEvent("onBeforeTaskDelete", function (id){
 				idParentBeforeDeleteTask = gantt.getParent(id);
 			});
 			gantt.attachEvent("onAfterTaskDelete", function () {
 				refreshSummaryProgress(idParentBeforeDeleteTask, true);
 			});
 		})();
+                
 	})();
         
-//esta seccion es cuando abre seleccionas la tarea con click  te trae la informacion de esa tarea--->
+//esta seccion es cuando  seleccionas la tarea con click  te trae la informacion de esa tarea en el formulario--->
         gantt.attachEvent("onBeforeLightbox", function(id) {
 //console.log(gantt.getTask(id));
             var task = gantt.getTask(id);
@@ -896,7 +879,12 @@ var banderaIngresarElPrimerResponsable=true;
 //			return false;
 //		}
 //            var task;
-            task.my_template ="<span id='title2'>Progreso: </span>"+Math.round(task.progress*100) +" %";
+              if(task.progress==undefined)
+                task.my_template ="<span id='title2'>Progreso: 0 </span>%";
+              else 
+                  task.my_template ="<span id='title2'>Progreso: </span>"+Math.round(task.progress*100) +" %";
+                
+                
             return true;
            
         });
@@ -953,16 +941,13 @@ gantt.templates.task_class = function (start, end, task) {
 //                    alert("d");
                     return "task_suspendida";
                 }
-                
-                
                     if(task.progress==1){
                         return "completed_task";
                     }else{
                         return "";
                     }
-                
 	};
-        
+        //cuando creas una actividad y le das guardar se ejecuta y se muestra en lado derecho en las barras de linea de tiempo  
         gantt.templates.task_text=function (t,e,task) {
             
              var taskLocal = gantt.getTask(task.id);
@@ -978,9 +963,12 @@ gantt.templates.task_class = function (start, end, task) {
                  }
 //            }else{
                   if(task.progress==undefined){
+                      console.log("entro en undefined");
+//                      console.log("esta indefinido");
                    taskLocal ="<span id='title2'></span>0 %";
                     return taskLocal; 
                   }
+                  console.log("fuera de undefined");
                   taskLocal ="<span id='title2'></span>"+Math.round(task.progress*100) +" %";
                   return taskLocal; 
 //            }
@@ -1031,7 +1019,8 @@ gantt.templates.task_class = function (start, end, task) {
 	}
         
  var responsableQueTienenTareas=[];
- var textEditor = {type: "text", map_to: "text"};   
+ var textEditor = {type: "text", map_to: "text"};
+ //esto es el encargado de mostrar la seccion  izquierda donde por medio se columna se muestra la informacion  de cada actividad
 gantt.config.columns=[
 //    {name:"id",   label:"id",   align:"center"},
 		{name: "text", label: "Descripcion", tree: true,resize: true,
@@ -1057,8 +1046,10 @@ gantt.config.columns=[
 					return "Completa";
 				if (item.progress == 0)
 					return "No Iniciada";
+                                    
                                 if(item.progress==undefined){
-                                    return "";
+                                    return "No Iniciada";
+                                    
                                 }
 //                                console.log(item);
                                 
@@ -1095,9 +1086,7 @@ gantt.config.columns=[
                                        return item.start_date;
                                 }else{
                                     return item.start_date;
-                                }
-                            
-                           
+                                } 
                         } 
                 },
 //                {name: "status", label: "Status",resize: true},
@@ -1196,7 +1185,7 @@ gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
     gantt.init("gantt_here");
     gantt.load("../Controller/GanttTareasController.php?Op=ListarTodasLasTareasPorId");
 
-
+//esto si va pero lo quite para que no mande a llamar por cada actividad lo ando checando 
 var dp = new gantt.dataProcessor("../Controller/GanttTareasController.php?Op=Modificar");
 dp.init(gantt);
 
@@ -1228,6 +1217,7 @@ dp.init(gantt);
     var banderaPrincipioCheckeoParent=true;
     var elpadrecoincideConElUsuarioLogeado=false;
     var mostrar_ocultar_menu=true;
+    var myToolbar;
     $(function (){
         
       $("#btnMostrarOcultar").click(function(){
@@ -1247,34 +1237,18 @@ dp.init(gantt);
        $("#btnMostrarOcultar").trigger("click");
       
       
-      
-      
-//      var db = firebase.database();  
-//       db.ref('notasgantttareas-temas').on('child_added', function(data){
-//            console.log(data.val());
-//       });
-      
-      
-      
-      
-//       $('#btnenviarnotas').on('click', function(){
-//            console.log("Funciona!");
-//            var notas=$("#notas").val();
-//            console.log(notas);
-////            set es para actualizar
-//            db.ref('notasgantttareas-temas').push({
-//             id:"2536253625",
-//             id_padre_de_todas_las_tareas_de_gantt:"2",
-//             notas:notas,
-//             origendequegantt:"temas",
-//             responsable:"2"
-//            });
-//            
-//        });
-        
-        
+
+         
        cargarMenuArriba();
-        var myToolbar;
+      startIntro("tutorialPrincipio");
+      
+      
+      
+      $("#opcionDetalles").click(function(){
+          
+          
+      });
+      
 		function cargarMenuArriba() {
 			myToolbar = new dhtmlXToolbarObject({
 				parent: "toolbarObj",
@@ -1310,7 +1284,8 @@ dp.init(gantt);
 			console.log(printOpts);
 			myToolbar.addButtonSelect("exportar", 13, "Exportar", printOpts, "descargar.png");
                    
-                        myToolbar.addSeparator("sep5", 8);                     
+                        myToolbar.addSeparator("sep5", 8);    
+                        myToolbar.addButton("tutorial", 13, "Tutorial", "ayuda.png");
                           
                                   
                         
@@ -1318,7 +1293,9 @@ dp.init(gantt);
                                 myToolbar.addButton("descripcion", 8, "<?php echo $dataGanttDescripcion; ?>", "infodescripciongantt.png");
 //                        })
                         
-			
+			console.log("esta en cream menu arriba ",myToolbar);
+                        //se le inyecta un identificador para poder seleccionar el elemento en la opcions Detalles
+                        myToolbar.base.childNodes["0"].id="opcionDetalles";
                 }
                 
                 myToolbar.attachEvent("onClick", function(id){
@@ -1409,8 +1386,6 @@ construirTreeList();
 });
 
 
-
-
     })
 
     
@@ -1463,7 +1438,9 @@ construirTreeList();
                                       });
                                       
                                   })
-        }  
+        }
+        
+        //de aqui para abajo es la tabla ,subir y bajada de archivos en la tabla y el intro 
   function construirTreeList(){
   console.log("empezo el contruir el tree list");
    dxtreeList= $("#dx").dxTreeList({
@@ -1954,6 +1931,28 @@ construirTreeList();
                         });
                 });
     }
+    
+    
+   function startIntro(tipo){
+       console.log("aqui esta el toolbar",myToolbar);
+//       tutorialPrincipio  <--- con el cual comprar el if
+       if(tipo=="matenimiento"){
+              var introTutorialGantt = introJs();
+                     introTutorialGantt.setOptions({
+                       steps:[
+                         {element:'#opcionDetalles',
+                           intro: "Observa los detalles de cada tarea (peso de la tarea, avance, estatus) "
+                         }
+                       ]
+                     });
+                     introTutorialGantt["_options"]["doneLabel"]="Entendido";
+                    
+                        introTutorialGantt.start();
+                        introTutorialGantt["introjs-instance"]=2;
+                        introTutorialGantt["_introItems"]["0"]["intro"]="dato";
+                         console.log("tutorial del gantt  ",introTutorialGantt);                                              
+        }
+   } 
 
     
   </script>
@@ -1973,9 +1972,6 @@ construirTreeList();
 //  };
 //  firebase.initializeApp(config);
 </script>
-  
-  
-  
   
   
   

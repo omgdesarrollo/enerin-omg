@@ -21,10 +21,15 @@ switch ($Op)
         header('Content-type: application/json; charset=utf-8');
         echo json_encode($lista);
     break;
-
+    case 'ListarUsuario':
+        $resultado = $model->listarUsuario($_REQUEST['ID_USUARIO']);
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($resultado);
+    break;    
     // lista empleados resultado de una busqueda ($_REQUEST["CADENA"])
-	case 'BusquedaEmpleado':
+    case 'BusquedaEmpleado':
 		$lista=$modelEmpleado->BusquedaEmpleado($_REQUEST["CADENA"]);
+//            $lista =$model->
     	header('Content-type: application/json; charset=utf-8');
 		echo json_encode($lista);
     break;

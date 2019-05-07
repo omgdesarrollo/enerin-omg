@@ -13,6 +13,10 @@ $modelArchivo=new ArchivoUploadModel();
 // $pojo=new GanttPojo();
 switch ($Op) {
         case 'ListarTodasLasTareasPorId':
+            header('Content-type: application/json; charset=utf-8');
+//            header("Access-Control-Allow-Origin");
+//            header("Access-Control-Allow-Headers: Content-Type, origin");
+//            header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token'); 
             $Lista= $modelGantt->listarRegistrosGanttTareas(Session::getSesion("dataGantt_id_tarea"));
           if(Gantt_TareasModel::verificarSiExisteIDTareaEnGanttTareas(array("id_tarea"=>Session::getSesion("dataGantt_id_tarea")))=="true"){
               Gantt_TareasModel::actualizarExisteProgramaTareas(array("existeprograma"=>1,"id_tarea"=>Session::getSesion("dataGantt_id_tarea")));
@@ -24,7 +28,7 @@ switch ($Op) {
 //            $Lista[$key]["archivosUpload"] = $modelArchivo->listar_urls(-1,$url);
 //            }
           
-            header('Content-type: application/json; charset=utf-8');
+           
             echo json_encode(array("data"=>$Lista));
             break;            
             

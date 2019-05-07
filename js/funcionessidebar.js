@@ -358,16 +358,22 @@ function loadDataSideBarOficiosDocumentacion(lista)
         mySidebar.attachEvent("onSelect", function(id, value){
                   switch(id){
                       case "empleadosTareas":
-                            $("#sidebarObjV").load('InyectarVistasView.php #empleadosTareas'); 
+                            $("#sidebarObjV").load('InyectarVistasView.php #empleadosTareas');
+                              mySidebar.t.tareas.item.id="";
                       break;  
 
 
                       case "tareas":
+                          
                            $("#sidebarObjV").load('InyectarVistasView.php #tareas');
                       break;
 
                   }
       });
+      
+//       startIntro("seccionesSidebar","Gestión de Temas Especiales","Registros de Tema");
+//      $(".introjs-helperLayer").css({"position":"relative!important"});;
+      
     }
     
             
@@ -485,6 +491,7 @@ var listAjusteUsuarios=[];
                                        break;  
                                        
                                        case "ajustes":
+                                           
                                             $("#sidebarObjV").load('InyectarVistasView.php #ajustesUsuario');
                                        break;
                                        
@@ -495,7 +502,10 @@ var listAjusteUsuarios=[];
                                    }
       });
       
-                        
+        
+        
+//         startIntro("seccionesSidebar","Bienvenido","Permisos");
+        
     }
     
     

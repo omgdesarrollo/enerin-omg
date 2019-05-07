@@ -4,11 +4,22 @@ var dataRegistro="";
 var dataListado=[];
 var dataTodo=[];
 var __refresh=false;
-
 $(function()
 {
+//    forma para crear un objeto json con valores y key ojo su key primaria que engloba a las demas key  seria el nombre de la funcion en este caso checar es la key primari
+    function checar(nombre){
+        this.datoPrueba=nombre;
+        this.dato2="m";
+        console.log("lo que el this ",this);
+    }
+    checar("nuevo dato");
+//    const temporal= new checar("nuevo dato ");
+    
     $('#BTN_CREAR_NUEVAEVIDENCIAMODAL').click(function()
-    {
+    {    
+//       winndow es el objeto principal en la jerarquia y contiene las propiedades y metodos de el dependen todos los demas objetos de la jerarquia 
+//        console.log("dentro del agregar  ",window);
+
         claveRegistro = $("#IDREGISTRO_NUEVAEVIDENCIAMODAL").val();
         claveTema = $("#IDTEMA_NUEVAEVIDENCIAMODAL").val();
         fecha = '0000-00-00';
@@ -44,7 +55,7 @@ $(function()
                                     tempData = new Object(),
                                     $.each(data,function(index,value){
                                         tempData = reconstruir(value,ultimoNumeroGrid+1);
-                                        enviar_notificacion("Nueva evidencia: \""+value["registro"]+"\"",value.id_responsable,0,false,"EvidenciasView.php?accion="+value.id_evidencias);// msj,para,tipomsj,atendido,asunto
+                                        enviar_notificacion("Nueva evidencia: \""+value["registro"]+"\" De:  ",value.id_responsable,0,false,"EvidenciasView.php?accion="+value.id_evidencias);// msj,para,tipomsj,atendido,asunto
                                     }),
                                     $("#jsGrid").jsGrid("insertItem",tempData).done(function(){
 

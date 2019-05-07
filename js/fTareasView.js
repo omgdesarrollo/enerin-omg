@@ -3,6 +3,15 @@ var valorChecking="false";
 
 $(function()
 {
+    
+//    $("#btnAyuda").on("click",()=>
+//    {
+//      alert("d");
+//    });
+    
+    
+    
+    
     $("button[title='Limpiar Filtro']").on("click",()=>
     {
         if(opcionSeleccionadaComboBoxEstatus == 1)
@@ -165,7 +174,9 @@ drawCanvasOrange = ()=>
             }
             i+=2;
             y+=50;
+            //alert(bandera);
             bandera = !bandera;
+           // alert(bandera);
         }
         obj["strokeStyle"] = '#fcdca3';
         obj["strokeWidth"] = 10;
@@ -305,8 +316,13 @@ function listarDatos(msj)
             },
             success:(data)=>
             {
-                if(typeof(data)=="object")
+                console.log("el data   ",data.length);
+                
+//              if(typeof(data)=="object")
+//                {
+                if(data.length>0)
                 {
+                    contadorRegistros=1;
                     if(msj!=undefined)
                         growlSuccess("Solicitud","Registros obtenidos");
                     dataListado = data;
@@ -322,10 +338,12 @@ function listarDatos(msj)
                     resolve();
                     
                 }else{
+                    contadorRegistros=0;
                     if(msj!=undefined)
                         growlSuccess("Solicitud","No Existen Registros");
                     reject();
                 }
+                console.log("tiene f ",contadorRegistros);
             },
             error:()=>
             {
@@ -347,9 +365,10 @@ function reconstruir(value,index)
     tempData["tarea"]=value.tarea;
     tempData["id_empleado"]=value.id_empleado;
 //    tempData["fecha_creacion"]= getSinFechaFormato(value.fecha_creacion);
-    tempData["fecha_alarma"] = getSinFechaFormato(value.fecha_alarma);
+//    tempData["fecha_alarma"] = getSinFechaFormato(value.fecha_alarma);
     tempData["fecha_alarma"] = value.fecha_alarma;
-    tempData["fecha_cumplimiento"]= getSinFechaFormato(value.fecha_cumplimiento);
+     tempData["fecha_cumplimiento"]= value.fecha_cumplimiento;
+//    tempData["fecha_cumplimiento"]= getSinFechaFormato(value.fecha_cumplimiento);
 
     tempData["status_tarea"]= value.status_tarea;
     tempData["status_grafica"]= value.status_grafica;
@@ -358,8 +377,10 @@ function reconstruir(value,index)
 
         
     tempData["semaforo"]="";
+    console.log("el status "+value["status_tarea"]);
     if(value.status_tarea==1 && value.status_grafica=="En tiempo")
     {
+//        console.log()
         tempData["semaforo"]+="<canvas title='En Proceso' class='semaforoGreen'>.</canvas>";
         // tempData["status_tarea"] = "EPRO";
         // tempData["semaforo"]+="<span title='En Proceso' class='semaforoGreen'>.</span>";        
@@ -392,10 +413,10 @@ function reconstruir(value,index)
     tempData["observaciones"]=value.observaciones; 
     if(value.archivosUpload[0].length==0)
     {
-        tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_tarea+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
+        tempData["archivo_adjunto"] = "<button id='btnAjuntarArchivo' onClick='mostrar_urls("+value.id_tarea+")' type='button' class='btn btn-info botones_vista_tabla' data-toggle='modal' data-target='#create-itemUrls'>";
         tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar - "+value.archivosUpload[0].length+"</button>";
     }else{
-        tempData["archivo_adjunto"] = "<button onClick='mostrar_urls("+value.id_tarea+")' type='button' class='btn btn-danger botones_vista_tabla2' data-toggle='modal' data-target='#create-itemUrls'>";
+        tempData["archivo_adjunto"] = "<button id='btnAjuntarArchivo' onClick='mostrar_urls("+value.id_tarea+")' type='button' class='btn btn-danger botones_vista_tabla2' data-toggle='modal' data-target='#create-itemUrls'>";
         tempData["archivo_adjunto"] += "<i class='fa fa-cloud-upload' style='font-size: 20px'></i> Adjuntar - "+value.archivosUpload[0].length+"</button>";
     }
     if(value.existe_programa!=0)
@@ -489,18 +510,20 @@ function insertarTareas(tareaDatos)
             if(typeof(datos) == "object")
             {
                 tempData;
-                swalSuccess("Tarea Creada");                
-                $.each(datos,function(index,value)
-                {
-                   tempData= reconstruir(value,ultimoNumeroGrid+1);
-                });
+                swalSuccess("Tarea Creada"); 
+                refresh();
                 
-                $("#jsGrid").jsGrid("insertItem",tempData).done(function()
-                {
-                    
-                });
-                dataListado.push(datos[0]),
-                DataGrid.push(tempData),
+//                $.each(datos,function(index,value)
+//                {
+//                   tempData= reconstruir(value,ultimoNumeroGrid+1);
+//                });
+                
+//                $("#jsGrid").jsGrid("insertItem",tempData).done(function()
+//                {
+//                    
+//                });
+//                dataListado.push(datos[0]),
+//                DataGrid.push(tempData),
                 $("#crea_tarea .close ").click();
                 mostrarTareasEnAlarma();
                 // mostrarTareasVencidas();
@@ -559,7 +582,7 @@ function saveUpdateToDatabase(args)//listo
             {
                     if(data==1)
                     {
-                        growlSuccess("Actulización","Se actualizaron los campos");
+                        growlSuccess("Actualización","Se actualizaron los campos");
                         actualizarTarea(id_afectado.id_tarea);
 
                         if(id_empleadoActual==id_empleadoAnterior && statusTemaActual==statusTemaAnterior)
@@ -939,6 +962,7 @@ function preguntarEliminar(data)
                         // console.log(data);
                         if(res >= 0)
                         {
+                                
                                 dataListadoTemp=[];
                                 dataItem = [];
                                 numeroEliminar=0;
@@ -954,6 +978,7 @@ function preguntarEliminar(data)
                                 dataListado = dataListadoTemp;
                                 if(dataListado.length == 0 )
                                         ultimoNumeroGrid=0;
+                              
                                 $.each(dataListado,function(index,value)
                                 {
                                         DataGrid.push( reconstruir(value,index+1) );
@@ -978,6 +1003,7 @@ function refresh()
 {
     inicializarFiltros().then((resolve)=>
     {
+        valorRefresh=false;
         valorChecking="false";
         construirFiltros();
         listarThisEmpleados();

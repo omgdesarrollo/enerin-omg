@@ -11,6 +11,8 @@ function construirFiltros()
         $("#headerOpciones").append("<button type='button' title='Buscar Filtro ' class='btn btn-info style-filter' onClick='filtroSupremo()'><i class='ace-icon fa fa-search'></i></button>");
         $("#headerOpciones").append("<button type='button' title='Limpiar Filtro' class='btn btn-info style-filter' onClick='limpiarFiltros()'><i class='ace-icon fa fa-filter'></i></button>");
         $("#headerOpciones").append("<button type='button' title='Registro de Sucesos' class='btn btn-info style-filter' onClick='mostrarOcultarGrowl()'><i class='ace-icon fa fa-exchange'></i></button>");
+//        $("#headerOpciones").append("<button type='button' title='Ampliar Ventana' class='btn btn-info style-filter' onClick='mostrarVentanaAmplia()'><i class='ace-icon fa fa-up'></i></button>");
+        
         primero=false;
     }
     $.each(filtros,function(index,value)

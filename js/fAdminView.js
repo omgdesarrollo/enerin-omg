@@ -1,4 +1,33 @@
 
+$( function() {
+	function log( message ) {
+      $( "<div>" ).text( message ).prependTo( "#log" );
+      $( "#log" ).scrollTop( 0 );
+    }
+ 
+    $( "#birds" ).autocomplete({
+      source: function( request, response ) {
+        $.ajax( {
+          url: "../Controller/AdminController.php?Op=BusquedaEmpleado",
+//          dataType: "jsonp",
+          data: {
+            CADENA: request.term,
+            fa:"d"
+          },
+          success: function( data ) {
+            response( data );
+          }
+        } );
+
+//            buscarEmpleados(request.term);
+      },
+      minLength: 1,
+      select: function( event, ui ) {
+        log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+      }
+    } );
+	} );
+	
 // inicializa el objeto de estructura de filtros
 inicializarFiltros = ()=>
 {
@@ -50,7 +79,8 @@ reconstruir = (value,index)=>
 
     tempData["delete"] = tempData["id_principal"];
     tempData["delete"].push({eliminar:0});
-    tempData["delete"].push({editar:0});
+    tempData["delete"].push({editar:1});
+    
     return tempData;
 }
 
@@ -97,6 +127,178 @@ listarDatos = ()=>
     });
 }
 
+function saveUpdateToDatabase(args)//listo
+{
+//    console.log("argumetnso  ",args);
+        columnas=new Object();
+        entro=0;
+        id_afectado = args['item']['id_principal'][0];
+        
+//        console.log("trae el id afectado ",id_afectado);
+        verificar = 0;
+        
+    
+//        console.log("dentro de then ",resolve);
+        $.each(args['item'],(index,value)=>
+        {
+                if(args['previousItem'][index]!=value && value!="")
+                {
+                        if(index!='id_principal' && !value.includes("<button") && index!="delete")
+                        {
+                                columnas[index]=value;
+                        }
+                }
+        });
+        
+        if(Object.keys(columnas).length != 0 && verificar==0)
+        {
+         verificarUsuarioExiste({"nombre_usuario":args.item.nombre_usuario}).then(function(resolve){  
+        if(resolve["repetido"]=="no"){//valida si el nombre de usuario esta repetido
+            $.ajax({
+                url:"../Controller/GeneralController.php?Op=Actualizar",
+                type:"POST",
+                data:'TABLA=usuarios'+'&COLUMNAS_VALOR='+JSON.stringify(columnas)+"&ID_CONTEXTO="+JSON.stringify(id_afectado),
+                beforeSend:()=>
+                {
+                        growlWait("Actualización","Espere...");
+                },
+                success:(data)=>
+                {
+                        if(data==1)
+                        {
+                                growlSuccess("Actualización","Se actualizaron los campos");
+                                 
+                                    actualizarUsuario(id_afectado.id_usuario);
+                            
+                        }
+                        else
+                        {
+                                growlError("Actualización","No se pudo actualizar");
+                                componerDataGrid();
+                                gridInstance.loadData();
+                        }
+                },
+                error:function()
+                {
+                        componerDataGrid();
+                        gridInstance.loadData();
+                        growlError("Error","Error del servidor");
+                }
+            });
+             }
+             else
+             {
+                 growlError("Actualización","No se pudo actualizar debido a que el usuario ya existe");
+                                componerDataGrid();
+                                gridInstance.loadData();
+             }
+         });//aqui va el cierre del then    
+        }
+        else
+        {
+                componerDataGrid();
+                gridInstance.loadData();
+        }
+        
+        
+//        }//cierra el if de donde compara si el nombre de usuario existe
+//        else{
+////            growlError("Actualización","No se pudo actualizar debido a que el usuario ya existe");
+////                                componerDataGrid();
+////                                gridInstance.loadData();
+//        }
+        
+//         });//aqui cierra la funcion del then    
+}
+
+
+
+function actualizarUsuario(id_usuario)
+{
+    console.log("es  ",id_usuario);
+        $.ajax({
+                url:'../Controller/AdminController.php?Op=ListarUsuario',
+                type: 'GET',
+                data:'ID_USUARIO='+id_usuario,
+                success:function(datos)
+                {
+                        if(typeof(datos)=="object")
+                        {
+                            $.each(datos,function(index,value){
+                                    componerDataListado(value);
+                            });
+                            componerDataGrid();
+                            gridInstance.loadData();
+                        }
+                        else
+                        {
+                                growlError("Actualizar Vista","No se pudo actualizar la vista, refresque");
+                                componerDataGrid();
+                                gridInstance.loadData();
+                        }
+                },
+                error:function()
+                {
+                        componerDataGrid();
+                        gridInstance.loadData();
+                        growlError("Error","Error del servidor");
+                }
+        });
+}
+
+function verificarUsuarioExiste(args){
+    console.log("tiene ",args);
+    return new Promise(function(resolve,reject){
+      $.ajax({
+                url:'../Controller/AdminController.php?Op=ConsultarExisteUsuario',
+                type: 'GET',
+                data:'NOMBRE_USUARIO='+args["nombre_usuario"],
+                success:function(data)
+                {
+                    
+                    //1 : es que no esta repetido  
+                    if(data==1){
+                        
+                        resolve({"repetido":"no"});
+                    }
+                    else{
+                        resolve({"repetido":"si"});
+                    }
+//                    console.log("devolvio  ",data);
+                },
+                error:function()
+                {
+                    reject();   
+                }
+        });
+    });
+    
+}
+
+
+function componerDataGrid()//listo
+{
+    __datos = [];
+    $.each(dataListado,function(index,value){
+        __datos.push(reconstruir(value,index+1));
+    });
+    DataGrid = __datos;
+}
+
+
+function componerDataListado(value)// id de la vista documento, listo
+{
+    id_vista = value.id_usuario;
+    id_string = "id_usuario";
+    $.each(dataListado,function(indexList,valueList)
+    {
+        $.each(valueList,function(ind,val)
+        {
+            if(ind == id_string)
+                    ( val==id_vista) ? dataListado[indexList]=value : console.log();
+        });
+    });
+}
 // reconstruye los datos de la vista
 refresh = ()=>
 {

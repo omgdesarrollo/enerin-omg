@@ -49,7 +49,8 @@ $Usuario=  Session::getSesion("user");
 <head>
 	<title>OMG APPS</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--<meta http-equiv="X-UA-Compatible" content="IE=edge"/>-->
     <link rel="shortcut icon" href="../../images/base/enerinLogo.png">
     
 	<link rel="stylesheet" type="text/css" href="../../codebase/fonts/font_roboto/roboto.css"/>
@@ -67,11 +68,19 @@ $Usuario=  Session::getSesion("user");
         <link href="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.css" rel="stylesheet"/>
         <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
         <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
-
-        <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>    
-     
+        <!--librerias intro js-->
+        <script src="../../assets/intro/intro.js" type="text/javascript"></script>
+        <link href="../../assets/intro/introjs.css" rel="stylesheet" type="text/css"/>
+        <!--librerias materialize-->
+        <link type="text/css" rel="stylesheet" href="../../assets/materialize/css/materialize.min.css"  media="screen,projection"/>
+         <script type="text/javascript" src="../../assets/materialize/js/materialize.min.js"></script>
+         <link href="../../assets/googleApi/icon.css" rel="stylesheet">
+        <!--personalizacion de configuracion vista -->
+        <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>  
         <style>
-
+            body{
+                 /*zoom: 80%;*/
+            }
         .modal-body{
                 color:#888;
                 max-height: calc(100vh - 110px);
@@ -84,8 +93,8 @@ $Usuario=  Session::getSesion("user");
 			/*margin-top: 50px;*/
 			/*width: 100%    ;*/
                         overflow:auto ;
-			height: 450px;
-                        height: 100%;
+			/*height: 450px;*/
+                        /*height: 100%;*/
                         /*background-color: #ffff33;*/
 			/*box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.09);*/
                         box-shadow: 0 1px 3px rgba(0,0,0,90.05), 0 1px 3px rgba(0,0,0,0.09);
@@ -105,8 +114,10 @@ $Usuario=  Session::getSesion("user");
                         box-shadow: 0 1px 3px rgba(0,0,0,90.05), 0 1px 3px rgba(0,0,0,0.09);
 		}
                 div#arbolprincipal{
-/*                  position: relative;*/
+                  /*position: relative;*/
                     height:800px;
+                    /*zoom: 80%;*/
+                     /*height:100%;*/
                 }
 
                 .dhtmlxribbon_material .dhxrb_block_base{
@@ -148,6 +159,108 @@ $Usuario=  Session::getSesion("user");
                 }
                 
                 
+                
+                .introjs-helperNumberLayer{
+                    left: 9px;
+                     visibility: hidden;
+                }
+                .introjs-helperLayer{
+                    position: absolute;
+                    /*left: 9px;*/
+                    /*visibility: hidden;*/
+                }
+                .introjs-relativePosition, tr.introjs-showElement > td, tr.introjs-showElement > th{
+                    background-color: white;
+                }
+                
+                
+/*                .introjs-overlay{
+                    
+                    z-index: 0;
+                    
+                }*/
+/*                .introjs-tooltip{
+                   visibility: hidden; 
+                }*/
+                /*modalIntroduccion*/
+                .collection .collection-item{
+                    color:black;
+                }
+                .informacionA_QueseSeRefiere{
+                    color:#0a0a9e;
+                }
+                .modal{
+                    max-height: 95% ;
+                    overflow-y:hidden ;
+                    position: fixed !important;
+                    display:none;
+                    /*background: #dfdfdf ;*/
+                    
+                }
+                .modal .modal-content{
+                    padding: 0px;
+                }
+                #opacar{
+/*                    display: block; opacity: 1;
+                    background: black;
+                    width: 100%;
+                    height: 100%;
+                    position: fixed;
+                    opacity: 20px;
+                    z-index: 999999;*/
+                }
+                
+              
+/*                .select-wrapper input.select-dropdown{
+                     background-color: white;
+                }*/
+                
+                .fondoTransparente {
+                    position: absolute;
+                    top: 0px;
+                    left: 0px;
+                    width: 100%;
+                    height: 100%;
+                    background-color: #fff;
+                    filter: alpha(opacity=50);
+                    opacity: .5;
+                }
+
+/*                .dhxtabbar_tab_actv{
+                 background: red !important;   
+                }*/
+        
+/*                .introjs-fixParent{
+                    background-color: red;
+                }*/
+/*                    .dhxtabbar_tab_actv introjs-fixParent{
+                            background-color: red;
+                    }*/
+/*                .introjs-overlay{
+                    z-index: 0;
+                }*/
+/*                .introjs-helperNumberLayer{
+                    left: 9px;
+                    visibility: hidden;
+                }*/
+                /*configuracion responnsiva manua*/
+                /* esto funcionará si la resolución de pantalla está entre 300 y 800 pixeles de ancho */
+                @media (max-width: 1000px) and (min-width: 200px) {
+                #nombremenu{ 
+                    /*background: antiquewhite;*/ 
+                }
+                }
+                @media (min-width: 1200px) {
+                #nombremenu{ 
+                    /*background: red;*/ 
+                }
+                }
+                /* esto funcionará si la resolución mínima de la pantalla es de 1600 pixeles de ancho */
+                @media (min-width: 1600px) {}
+                
+                @media (device-aspect-ratio: 16/9) {  } /* para pantallas de tipo widescreen */
+                @media (orientation:portrait) {  } /* para pantallas más altas que anchas */
+                @media (orientation:landscape) {  } /* para pantallas más anchas que altas */
                 
                 
 /*                body{
@@ -305,11 +418,15 @@ var gantt=[
          {id:'cambiarcontrato',text:'<div id=\'infocontrato\'>Temática Seleccionada:</div>',img:'contratos.png',type:'button',isbig:true}
   ];
   dataSeccionRibbon=[];
-   var listasubmodulos=[];
-   var nombre_contenido_sub_usuario;
+  var listasubmodulos=[];
+  var nombre_contenido_sub_usuario;
   var variables_super_globales={};
   variables_super_globales["cumplimientos"]=false;
-  
+  var elems ;
+  var   options;
+  var  instances; 
+  var opcionProyectoId=-1;
+  variables_super_globales["abrio_seguimiento"]=false;//opcion de oficios llamado seguimiento para saber si ya se le dio click y ya no abrir la ventana cerrara y volverla abrir seria lo optimo
    loadDataNotificaciones();
 
   
@@ -432,6 +549,12 @@ function redimencionarLayout()
     // console.log($("#sidebarObjV").parent().parent().css("width", tamW+"px"));
     // myLayout.setAutoSize("a;b;e");
 }
+
+function redimencionaCuandoSeUtilizaZoom(){
+    
+}
+
+
   function mostrar_urls()
     {
         return new Promise((resolve,reject)=>{
@@ -455,13 +578,232 @@ function redimencionarLayout()
             });
         });
     }
+// start constructor materialize
+
+   document.addEventListener('DOMContentLoaded', function() {
+//    elems = document.querySelectorAll('select');
+//    options = document.querySelectorAll('option');
+//    instances = M.FormSelect.init(elems, options);
+       
+    
+    
+    })
+  
+   
+   
+   
+// end contructor materialize
+//  $('select:not([multiple])').material_select();
     $(function()
     {
+       
+//        $('.modal').modal(); 
+        //start constructor materialize
+
+//      $('select:not([multiple])').material_select();
+        //end contructor materialize
+        cambiarProyecto().then(function(){
+            
+            
+           startIntro("ventanaIntroduccionAlPrincipio");
+//           ;
+        });
+        
+//     $(".dhxtabbar_tab dhxtabbar_tab_actv").change(function(){
+////         alert("se detecto cambio ");
+//
+//     });
+//cuando se le da click al a de Aceptar Introduccion
+     $("#enlaceAceptarIntroduccion").click(function(){
+            
+            
+            startIntro("modalSeleccionProyectos","","");
+            
+            
+            
+            
+            
+            $("#modalIntroduccion").hide();
+            $("#modalSeleccionarProyecto").show();
+            $(".modal").css({"max-height": "65%","overflow-y": "hidden"});
+
+console.log("datos del select ",$("#opcionesProyectos"));
+//$("#opcionesProyectos")[
+console.log("intancia del select ",instances);
+ $("#opcionesProyectos").html("");
+ $("#opcionesProyectos").append("<option value='-1'>No seleccionado</option>");
+           $.ajax({  
+                     url: "../Controller/CumplimientosController.php?Op=obtenerContrato",  
+                     async:false,
+                     success: function(r) {
+                        $.each(r,function(index,value){
+//                             jsonObj[value.id_cumplimiento] = value.clave_cumplimiento ;
+//                               objectOpciones[objectOpciones.length] = new Option( value.clave_cumplimiento, value.id_cumplimiento);
+                             $("#opcionesProyectos").append("<option value='"+value.id_cumplimiento+"'>"+value.clave_cumplimiento+"</option>");
+//                               htmlOpcionesProyectos+="<option value='"+value.id_cumplimiento+"'>"+value.clave_cumplimiento+"</option>";                         
+                        })
+//                        $("#opcionesProyectos").append("<option >fd</option>");
+//                            htmlOpcionesProyectos+="</select>";
+                        elems = document.querySelectorAll('select');
+                        options = document.querySelectorAll('option');
+                        instances = M.FormSelect.init(elems, options);
+                     }    
+                  });
+            
+               
+            
+           
+            
+//            $("#opcionesProyectos").html(htmlOpcionesProyectos);
+            
+            
+           
+     });
+     
+     //cuando se desea regresar a intriduccion
+     $("#enlaceRegresarA_Introduccion").click(function(){
+         $("#modalSeleccionarProyecto").hide();
+         
+        $("#mensajeSeleccionProyecto").html("");
+        $("#mensajeSeleccionProyecto").removeClass();
+          
+         $("#modalIntroduccion").show();
+         //start quitar el borde 
+         $(".modal").css({"border-style":""});
+         //end quitar el borde
+         $(".modal").css({"background":""});
+         $(".modal").css({"max-height": "95%","overflow-y": "hidden"});
+     });
+     //cuando se selecciona el proyecto 
+     $("#enlaceAceptarProyectoSeleccionado").click(function(){
+       if(opcionProyectoId!=-1){
+//         $("#fondoTransparente"). 
+      $("#ribbonObj").css({"opacity": ""});
+      $("#fondoTransparente").removeClass();
+         seleccionarProyecto(opcionProyectoId);
+         $("#modalSeleccionarProyecto").hide();
+          $("#divAyuda").css("display","inherit");
+        }else{
+            $("#mensajeSeleccionProyecto").html("Error Seleccione una tematica");
+//             $("#mensajeSeleccionProyecto").removeClass();
+            $("#mensajeSeleccionProyecto").addClass("alert alert-warning");
+//            $(".dhxtabbar_tab.dhxtabbar_tab_actv").addClass("alert alert-warning");
+            
+            
+        }
+         //actual1
+         
+         
+         
+     });
+     
+  
+     
+     
+    
+     
+     //cuando seleccionar una nueva opcion de proyecto
+     $('select#opcionesProyectos').on('change',function(){
+        var valor = $(this).val();
+        opcionProyectoId=valor;
+        if(opcionProyectoId!=-1){
+         $("#mensajeSeleccionProyecto").html("");
+         $("#mensajeSeleccionProyecto").removeClass();
+        }
+         if(opcionProyectoId==-1){
+//         $("#mensajeSeleccionProyecto").html("Error Seleccione una tematica");
+//         $("#mensajeSeleccionProyecto").addClass("alert alert-warning");
+        }
+    });
+     
+     
+     $("#irTutorialProyectos").click(function(){ 
+        $("#modalSeleccionCualTutorial").hide();
+        ribbon._items["cambiarcontrato"].base.id="seleccion_opcionmenuarriba";
+        startIntro("partedearriba");
+     });
+     $("#cerrarModalTutoriales").click(function(){
+          $("#modalSeleccionCualTutorial").hide();
+     });
+     $("#irTutorialRollAdministrador").click(function(){
+         
+         
+        $("#modalSeleccionCualTutorial").hide();
+//        ribbon._items["cambiarcontrato"].base.id="";
+         limpiarSeleccionDeRibbon();
+        ribbon._items["Bienvenido"].base.id="seleccion_opcionmenuarriba";
+         startIntro("seccionesSidebar","Bienvenido","Permisos");
+     });
+     $("#irTutorialGestionTemas").click(function(){
+         $("#modalSeleccionCualTutorial").hide();
+         limpiarSeleccionDeRibbon();
+//          ribbon._items["Gestión de Temas Especiales"].base.id="";
+        ribbon._items["Gestión de Temas Especiales"].base.id="seleccion_opcionmenuarriba";
+         startIntro("seccionesSidebar","Gestión de Temas Especiales","Registros de Tema");
+     });
+     
+//     btnInformacionIntroduccion
        $(document).ready(()=>{
+          
+//        alert("d");   
            redimencionarLayout();
+           $("#informacion")["0"]["funciones"]={"desatascar":function(){
+                   desatascarCelda("b");
+           }};
+//       console.log("ijj  ",$("#informacion"));
+//           desbloquearVentana();
        });
+       seleccionarProyecto=(result)=>{
+             $.ajax({  
+                        url: "../Controller/CumplimientosController.php?Op=contratoselec&c="+result+"&obt=false",      
+                        success: function(r) {
+                              swal({
+                                type: 'success',
+                                html: 'Tematica Seleccionada:' + r.clave_cumplimiento,    
+                                timer: 2000,
+                              });
+//                                window.top.$("#desc").html("Temática("+r.clave_cumplimiento+")");
+                                window.top.$("#desc").html(" Visualizar Tematicas");
+                                window.top.$("#infocontrato").html("Temática Seleccionada:<br>("+r.clave_cumplimiento+")");
+                                $("#divAyuda").css("display","inherit");
+//                                clave_cumplimient_global=r.clave_cumplimiento;
+//                                mostrarTareasEnAlarma();
+                                
+                                
+                        }    
+           });
+           
+       }
+       function desatascarCelda(celda){
+//            myLayout.cells(celda).undock(550,20,400,300);
+            myLayout.cells(celda).undock(550,400,400,300);
+            redimencionarLayout();
+       }
+        function expand() {
+                myLayout.cells(getId()).expand();
+	}
+	function collapse() {
+                myLayout.cells(getId()).collapse();
+	}
+        $("#btnAyuda").click(function(elements){
+//            startIntro("partedearriba");
+            
+            $("#modalSeleccionCualTutorial").show();
+            
+            
+        });
+//        $("#btnAyudaSwal").click(function(elements){
+////            $(".swal2-select")
+////            $(".swal2-select").click(function(){
+////                alert("swal");
+////            });
+//            startIntroSwalCargaSeleccionTematica();
+//        });
+       
+        
 
        $(window).resize(()=>{
+//           redimencionaCuandoSeUtilizaZoom();
            // $(window).height();
            // tam1 = $(window).height() - 200;
            // tam2 = tam1 + 42;
@@ -487,9 +829,17 @@ function redimencionarLayout()
 
         myLayout.attachEvent("onExpand", function(name){
             // alert("Z");
+//            alert(name)
+//            myLayout.cells(name).undock(550,20,400,300);
             redimencionarLayout();
         });
-
+        
+        
+          myLayout.attachEvent("onCollapse", function(name){
+//             alert("Z");
+            redimencionarLayout();
+        });
+        
         myLayout.attachEvent("onPanelResizeFinish", function(names){
             // alert("X");
             redimencionarLayout();
@@ -566,8 +916,10 @@ function redimencionarLayout()
                            alert("le has picado a excel ");
                         
                         if(itemIdSeleccion=="cambiarcontrato"){
-                             ribbon._items["cambiarcontrato"].base.lastElementChild.id="seleccion_informacion_palabra"
+//                             ribbon._items["cambiarcontrato"].base.lastElementChild.id="seleccion_informacion_palabra"
                              ribbon._items["cambiarcontrato"].base.id="seleccion_opcionmenuarriba";
+//                                 startIntro("seccionesSidebar");
+                             console.log("aqui es  ",ribbon);
                                  loadDataSideBarContratos();  
                         }
                           
@@ -584,6 +936,7 @@ function redimencionarLayout()
                        }   
                         if(itemIdSeleccion=="Validación"){
                             ribbon._items["Validación"].base.id="seleccion_opcionmenuarriba";
+                       
 //                            ribbon._items["Validación"].base.lastElementChild.id="seleccion_informacion_palabra";
                           
                            loadDataSideBarCumplimientosDocumentos();
@@ -618,6 +971,7 @@ function redimencionarLayout()
 
                         if(itemIdSeleccion=="Gestión de Temas Especiales"){
                             ribbon._items["Gestión de Temas Especiales"].base.id="seleccion_opcionmenuarriba";
+                                   
 //                            ribbon._items["Control de Temas Especiales"].base.lastElementChild.id="seleccion_informacion_palabra";
                             var listRegistroTareas=[];
                             $.each(listasubmodulos,function (index,value){
@@ -771,16 +1125,16 @@ function limpiarSeleccionDeRibbon(){
     }
  function loadDataMenuArriba(iniciodinamic,info){	
 
-     
+//     alert();
 	var inicio=[
-        {id:'00',text:'<div id=\'desc\'>contrato(NO SELECCIONADO)</div>' ,items:[
+        {id:'00',text:'<div id=\'desc\'>contrato(NO SELECCIONADO)</div>',type:'block',active:true ,items:[
         
-                    {id:'0x1',mode:'cols',text:'Contratos',type:'block',
+                    {id:'0x1',mode:'cols',text:'Contratos'/*type:'block'*/,
           list:datacontratos
         }
         ]},
     
-	{id:'0',text:'OMG', active:true, items:[
+	{id:'0',text:'OMG', active:false, items:[
 	{id:'0x2',mode:'cols',text:'Principal',type:'block', 
 		list:[
 		    {id:'logout',text:'Cerrar',img:'cerrarsesion.png', type:'button',isbig:true}
@@ -807,16 +1161,19 @@ function limpiarSeleccionDeRibbon(){
         ];
     
     
-ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: "../../images/base/",tabs:inicio});
+//ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: "../../images/base/",tabs:inicio});
+//evento de cambios de tabs del ribbon
+
+
 
     }
     
     
     
-    
+  
     
      function loadDataMenuRibbonSeccionArriba(){	
-
+ 
          var datosSeccionesRibbon=[];
                 
         //aqui empieza este siempre va por que es el que permite cerrar sesion 
@@ -1125,18 +1482,88 @@ var vistas = [];
 
         
 	var inicio=[
-        {id:'00',text:'<div id=\'desc\'>Temática(NO SELECCIONADA)</div>' ,items:[
+        {id:'00',text:'<div id=\'desc\'>Temática(NO SELECCIONADA)</div>',active:false ,items:[
         
                     {id:'0x1',mode:'cols',text:'Temáticas',type:'block',
           list:datacontratos
         }
         ]},
-	{id:'0',text:'OMG', active:true, items:datosSeccionesRibbon }
+	{id:'0',text:'<div id=\'nombremenu\'>MENU PRINCIPAL </div>', active:true, items:datosSeccionesRibbon,width:"" }
         ];
-    
-    
-ribbon = new dhtmlXRibbon({	parent: "ribbonObj",arrows_mode: "none",icons_path: "../../images/base/",tabs:inicio});
 
+ribbon = new dhtmlXRibbon({parent: "ribbonObj",arrows_mode: "none",icons_path: "../../images/base/",tabs:inicio});
+// console.log("procuri el click  ",ribbon);
+ 
+ 
+ //creo la funcion dentro del ribbon 00= PROYECTOS
+ ribbon["_items"]["00"].base.onclick=function(elements){
+ 
+                
+//     setInterval(function(){
+//          $(".dhxtabbar_tab dhxtabbar_tab_actv").removeClass();
+//          console.log("seleccion del click mas adentro");
+//     }
+//     ,2000);  
+//        
+ }
+ 
+ 
+// $("div.dhxtabbar_tab.dhxtabbar_tab_actv")["1"].style.width="800px!important";
+//para colocarte por defecto 
+ribbon._items["cambiarcontrato"].base.id="seleccion_opcionmenuarriba";
+
+ribbon.attachEvent("onSelect", function(id, lastId){
+  console.log("dd  "+id+"----  "+lastId);
+//   console.log("riboon dentro de select  ",ribbon);
+  console.log("intro overlay  ",$(".introjs-overlay"));
+//    ribbon._items["cambiarcontrato"].base.id="seleccion_opcionmenuarriba";
+  if(id=="00"){//00=id tabs de seccion de edicion o visualizacion de tematica
+      $("#nombremenu").html("REGRESAR AL MENU");
+//       $("#nombremenu").addClass("fa fa-cloud");
+//     $('.images').addClass('col-md-6');
+//         ribbon._items["cambiarcontrato"].base.id="seleccion_opcionmenuarriba";
+        $("#desc").html("VISUALIZAR TEMATICAS");
+        //para saber el elemento existe en el DOM se lee su tamaño
+        if($(".introjs-helperLayer").length>0){
+           $(".introjs-helperLayer")["0"].style["opacity"]="0.4"; 
+        }
+        if($(".introjs-overlay").hasClass()==true){
+            alert("paso verificacion clase");
+            $(".introjs-overlay")["0"].style["position"]="relative"; 
+            $(".introjs-helperLayer")["0"].style["z-index"]="0";
+//            $(".introjs-helperLayer")["0"].style["opacity"]="0.4";
+        }
+//        ribbon["_items"]["00"].base.onclick();
+//          $(".dhxtabbar_base_material div.dhxtabbar_tabs div.dhxtabbar_tabs_base div.dhxtabbar_tab div.dhxtabbar_tab_text").css({
+//              "background-color": "#172a84"
+//            });  
+//            $(".dhxtabbar_tab.dhxtabbar_tab_actv").css({"z-index":"9999999"});
+//            $("#desc").css({"background": "#090452"});
+//            $(".dhxtabbar_tab.dhxtabbar_tab_actv")["1"].id="idTabbarActivado";
+          
+//            console.log("div  ",$(".dhxtabbar_tab.dhxtabbar_tab_actv"));
+//           console.log("d  ", $("div.dhxtabbar_tab.dhxtabbar_tab_actv")["1"].style["zIndex"]);
+//            $(".dhxtabbar_tab.dhxtabbar_tab_actv").style.zIndex="9999999";
+//            $("div.dhxtabbar_tab.dhxtabbar_tab_actv")["1"].style.width="800px";
+//           $(".dhxtabbar_tab.dhxtabbar_tab_actv")["1"].style["z-index"]="9999999";
+//            style.zoom
+//            console.log("eso es ribbon de tematicas  ",ribbon);
+//        $(".dhxtabbar_tab.dhxtabbar_tab_actv").addClass("alert alert-danger");
+        
+  }
+  if(id=="0"){//0=id tabs de seccion de menu principal
+             $("#desc").html("VISUALIZAR TEMATICAS");
+             $("#nombremenu").html("MENU PRINCIPAL");  
+//              ribbon._items["cambiarcontrato"].base.id="";
+//      console.log("re");
+  }
+//  console.log("saber  ",ribbon._items);
+//      console.log("ribbon seleccion tabs ",ribbon);
+//   $(".dhxtabbar_tab_text").html("dfdsfdfsdfdfsdfdfdsfsdfdfsd");
+//   ribbon._items["0"].conf.text="dsdsa";
+
+    return true;
+});
     }
     function consultarInformacion(url){
                $.ajax({  
@@ -1227,7 +1654,7 @@ function loadDataNotificaciones(){
        var dhxWins = new dhtmlXWindows();
         //var layoutWin = dhxWins.createWindow("w1", 20, 20, 600, 400);
          dhxWins.attachViewportTo("arbolprincipal");
-         var layoutWin=dhxWins.createWindow({id:"emp", text:"OMG", left: 20, top: 30,width:1338,  height:505,  center:true,resize: true,park:true,modal:true	});
+         var layoutWin=dhxWins.createWindow({id:"emp", text:"OMG", left: 20, top: 30,width:1338,  height:605,  center:true,resize: true,park:true,modal:true	});
          layoutWin.attachURL("SeguimientoEntradaView.php", null, true);
  
         dhxWins.attachEvent("onMinimize", function(win){
@@ -1237,19 +1664,19 @@ function loadDataNotificaciones(){
         dhxWins.attachEvent("onShow", function(win){
             // alert("show");
         });
-    dhxWins.attachEvent("onHide", function(win){
-             alert("en onhide");
-});
- dhxWins.attachEvent("onClose", function(win){
-//             alert("en c");
-             ribbon._items["Seguimiento"].base.lastElementChild.id="";
-             return 1;
-});
-
-
+        dhxWins.attachEvent("onHide", function(win){
+                 alert("en onhide");
+        });
+        dhxWins.attachEvent("onClose", function(win){
+            console.log("e  ",win);
+       //             ribbon._items["Seguimiento"].base.lastElementChild.id="";
+                    ribbon._items["Seguimiento"].base.id="";
+                    return 1;
+        });
+// console.log("es ",dhxWins);
     }
     
-    
+   
     
     function cerrarSesion(bclose){
             var dhxWins = new dhtmlXWindows();
@@ -1282,18 +1709,73 @@ function loadDataNotificaciones(){
     
     
  
-    <div id="sidebarObjV">
+    <div id="sidebarObjV" style="height: 100%">
   
     </div>
     <input id="gom" type="hidden" value="<?php echo Session::getSesion("token")?>"/>
     <input id="typePorSiLaSeSessionExpira" type="hidden" value="<?php echo $_REQUEST["type"]?>"/>
 <script>
+ var objetoSwal,  introOpciones;
 
-cambiarCont();
+//var clave_cumplimient_global=-1;
+//cambiarCont();
+//cambiarProyecto();
 mostrarTareasEnAlarma();
 mostrarTareasVencidas();
+//alert("en");
+
+//var myRibbon = new dhtmlXRibbon("ribbonObj");
+ 
+
+
 
 //setInterval(security_session,2000);
+//este metodo muestra la introducción  y descripciones en general de lo que trata
+function cambiarProyecto(){
+    
+    
+//    var jsonObj = {};
+//
+//           $.ajax({  
+//                     url: "../Controller/CumplimientosController.php?Op=obtenerContrato",  
+//                     success: function(r) {
+//        $.each(r,function(index,value){
+//             jsonObj[value.id_cumplimiento] = value.clave_cumplimiento ;
+//             
+//         })
+//         
+//        
+//                       
+//                        }    
+//        });
+     return new Promise(function (resolve, reject) {
+//       $("#modalIntroduccion").show();
+         //opacar secciones de arriba 
+        $("#ribbonObj").css({"opacity": ".5"});
+        
+        //opacar seccion de abajo 
+
+        $("#modalIntroduccion").fadeIn("10000");
+//       $(".modal").fadeIn("300");
+       
+        resolve();
+      } );
+     
+   
+    
+//    $("#modalIntroduccion").hide();
+    
+    
+    
+}
+ 
+function seleccionarOpcionesProyecto(){
+    
+    
+    
+    $("#modalSeleccionarProyecto").show();
+}
+
 
 function cambiarCont()
     { 
@@ -1311,10 +1793,14 @@ var jsonObj = {};
                        
                         }    
         });
-                swal({
+        
+//   var htmlBoton="<a class='btn-floating btn-large halfway-fab waves-effect waves-light teal pulse'  id='btnAyudaSwal' style='bottom: 68%;right:-3%' >";
+//       htmlBoton+="<i class='material-icons'>help</i>";                 
+//       htmlBoton+="</a>";
+  objetoSwal=  swal({
   title: 'Seleccione una Temática',
   input: 'select',
-//  html:s,
+//  html:""+htmlBoton,
 //  html:'<input type=\'text\' disabled>',
   inputOptions:jsonObj,
   inputPlaceholder: 'Sin Temática Seleccionada ',
@@ -1349,8 +1835,11 @@ var jsonObj = {};
                                 html: 'Tematica Seleccionada:' + r.clave_cumplimiento,    
                                 timer: 2000,
                               });
-                                window.top.$("#desc").html("Temática("+r.clave_cumplimiento+")");
+//                                window.top.$("#desc").html("Temática("+r.clave_cumplimiento+")");
+                                window.top.$("#desc").html(" Visualizar Tematicas");
                                 window.top.$("#infocontrato").html("Temática Seleccionada:<br>("+r.clave_cumplimiento+")");
+                                $("#divAyuda").css("display","inherit");
+//                                clave_cumplimient_global=r.clave_cumplimiento;
 //                                mostrarTareasEnAlarma();
                                 
                                 
@@ -1433,9 +1922,299 @@ var jsonObj = {};
 //     console.log("ya termino");
 // });
  
-   
- 
+   /*
+    * secciones  : es la parte fisica del componente de que lado se encuentra
+    */
+    function startIntro(secciones,nombre,nombreSidebar){
 
+        if(secciones=="partedearriba"){
+//        ribbon._items["cambiarcontrato"].base.id="seleccion_sinestilos";
+//                    ribbon._items["cambiarcontrato"].base.id="seleccion_sinestilos";
+                           console.log("entro ");
+//                             introLocal = introJs();
+//                              introLocal.setOptions({
+//                              hints: [
+//                                 {
+//                                   element: document.querySelector('#desc'),
+//                                   hint: "Para Editar el nombre de las tematicas (si eres el administrador), o cambiarte de tematica sin refrescar la aplicación (si eres usuario)",
+//                                   hintPosition: 'top-middle'
+//
+//                                 },
+//                                 {
+//                                   element: document.querySelector('#nombremenu'),
+//                                   hint: "Menu principal  donde se muestran los submodulos de navegación",
+//                                   hintPosition: 'top-middle'  
+//                                 }
+//                             ]
+//                             });
+//                             console.log("estoy aqui ",ribbon._items["cambiarcontrato"].base.id);
+//                   //           ribbon._items["cambiarcontrato"].base.id="seleccion_opcionmenuarriba"; 
+//                              introLocal.addHints();   
+//                             ribbon._items["cambiarcontrato"].base.id="seleccion_opcionmenuarriba"
+                             //start seccion de tabs
+//                             console.log(sidebarObjV);
+                    var introParteArribaTabs = introJs();
+                     introParteArribaTabs.setOptions({
+                       steps:[
+                         {element:'#desc',
+                           intro: "Para Editar el nombre de las tematicas (si eres el administrador), o cambiarte de tematica sin refrescar la aplicación (si eres usuario) "
+                         },
+                         {
+                           element:"#seleccion_opcionmenuarriba",
+                           intro: "Indica en que temática estamos navegando y al seleccionarlo nos presenta en la pantalla de visualización todas las temáticas"   
+                         },
+                         {
+                          element:"#sidebarObjV",
+                           intro: "Guarda la temática (si eres el administrador) o  cambia de temática sin salir de la aplicación (si eres usuario) ."     
+                         }
+                       ]
+                     });
+                     introParteArribaTabs["_options"]["doneLabel"]="Entendido";
+                        introParteArribaTabs.start();      
+                              //end seccion tabs                
+//          introOpciones.start();        
+    }
+    
+//     startIntro("seccionesSidebar","Gestión de Temas Especiales");
+    if(secciones=="seccionesSidebar"){
+        
+        
+        if(nombre=="Gestión de Temas Especiales"){
+//             var idnombrecompleto="seleccionIntro"+nombreSidebar.replace(/ /g, "");
+//            mySidebar.t.tareas.item.id=idnombrecompleto
+           
+//            $("#"+idnombrecompleto).css({"border-color": "#bf0505","background": "#adadad","color": "black"});
+                
+//       var intro = introJs();
+//          intro.setOptions({
+//            steps:[
+//              {element:'#'+ mySidebar.t.tareas.item.id,
+//                intro: "Registra tus temas especiales en la pantalla de visualizacion que se encuentra a la derecha"
+//              }
+//            ]
+//          });
+            var intro = introJs();
+          intro.setOptions({
+            steps:[
+              {element:'#seleccion_opcionmenuarriba',
+                intro: "Seccion de gestion de temas especiales"
+              },
+              {element:'#sidebarObj',
+                intro: "1.  Personal : Carga de personal\n\
+                        <br>\n\
+                        2.Registros de Temas: Registra,Edita,Borra Temas Especiales "
+              },
+              {element:'#sidebarObjV',
+                intro: "1.  Personal : Vista donde se Carga el personal y se actualizan sus datos \n\
+                        <br>\n\
+                        2.Registros de Temas:Vista donde se Registra,Edita,Borra Temas Especiales  "
+              }
+            ]
+          });
+          intro["_options"]["doneLabel"]="Entendido";
+//          intro["_options"]["prevLabel"]="Atras";
+//          intro["_options"]["nextLabel"]="Siguiente";
+//          intro["_options"]["skipLabel"]="Saltar";
+//          $(".introjs-helperLayer introjs-fixedTooltip").css({"background-color": "rgba(238, 76, 18, 0)!important"});
+          intro.start();
+//               $("#sidebarObjV").load('InyectarVistasView.php #tareas');
+//                console.log("sirbadar ", window);
+//                window.frames.parent.datacontratos["0"].text="d"
+//                console.log("elemtno esa  ",window.frames.parent.datacontratos["0"]);
+//               console.log(InyectarVistasView.php #tareas);
+                
+//                console.log("es my  ",mySidebar.t.tareas.item);
+                    
+            
+        }
+//         startIntro("seccionesSidebar","Bienvenido","Permisos");
+        if(nombre=="Bienvenido"){
+//            alert("entro a ben");
+        
+                            var introParteBienvenido = introJs();
+                     introParteBienvenido.setOptions({
+                       steps:[
+                         {element:'#seleccion_opcionmenuarriba',
+                           intro: "Seccion de Configuracion  "
+                         },
+                         {
+                          element:"#sidebarObj",
+                          intro:"1.Permisos (Asigna Usuario Y Contraseñas,define  niveles de permisos)\n\
+                                 <br>2.Personalizar (Cambio de Contraseña,Color)"
+                         },
+                         {
+                          element:"#sidebarObjV",
+                          intro:"PERMISOS : Asigna usuarios del personal existente,proprciona permisos a vistas y tematica\n\
+                                 <br><br>\n\
+                                 PERSONALIZAR:   Cambiar fondo o Contraseña"
+                         }
+                       ]
+                     });
+                     introParteBienvenido["_options"]["doneLabel"]="Entendido";
+                        introParteBienvenido.start(); 
+           
+                
+        }
+      
+        
+        
+    }
+//    
+    
+    if(secciones=="ventanaIntroduccionAlPrincipio"){
+        
+//              var introVentanaIntroduccion = introJs();
+//          introVentanaIntroduccion.setOptions({
+//            steps:[
+//              {element:'#datos',
+//                intro: "Registra tus temas especiales en la pantalla de visualizacion que se encuentra a la derecha"
+//              }
+//            ]
+//          });
+//          introVentanaIntroduccion["_options"]["doneLabel"]="Hecho";
+//          introVentanaIntroduccion["_options"]["prevLabel"]="Atras";
+//          introVentanaIntroduccion["_options"]["nextLabel"]="Siguiente";
+//          introVentanaIntroduccion["_options"]["skipLabel"]="Saltar";
+//          $(".introjs-helperLayer introjs-fixedTooltip").css({"background-color": "rgba(238, 76, 18, 0)!important"});
+//          introVentanaIntroduccion.start();
+    }
+    
+    if(secciones=="modalSeleccionProyectos"){
+//        var introSelecionProyecto = introJs();
+//          introSelecionProyecto.setOptions({
+//            steps:[
+//              {element:'#m1',
+//                intro: ""
+//              }
+//            ]
+//          });
+//        
+//        introSelecionProyecto.start();
+        
+        $(".modal").css({"border-style":"double"});
+//        $(".modal").css({"background":"#00000087"});
+//        $(".select-dropdown dropdown-trigger").css({"background-color":"#ffebeb"});
+        
+        
+    }
+    
+    if(secciones=="rollAdministrador"){
+        
+//        
+//                 var introParteRollAdministrador = introJs();
+//                     introParteRollAdministrador.setOptions({
+//                       steps:[
+//                         {element:'#seleccion_opcionmenuarriba',
+//                           intro: "Seccion de Configuracion  "
+//                         }
+//                       ]
+//                     });
+//                     introParteRollAdministrador["_options"]["doneLabel"]="Entendido";
+//                        introParteRollAdministrador.start();     
+        
+        
+        
+    }
+//    
+    
+    
+    
+    
+    
+    
+    
+    }
+
+    
+    
+    
+    
+      function startIntroSwalCargaSeleccionTematica(){
+//           var intro = introJs();
+//           intro.setOptions({
+//            steps: [
+//              {
+//                element: '.swal2-select',
+//                intro: "Despliegue para seleccionar tematica"
+//              }
+//            ]
+//          });
+////          intro["_options"]["doneLabel"]="Hecho";
+//          intro.addHints();
+          var intro = introJs();
+          intro.setOptions({
+            steps:[
+              {element:'.swal2-select',
+                intro: "Despliega el combo para ver las opciones"
+              },
+              {elemen:'.swal2-confirm swal2-styled',
+               intro:'Presione la opcion seleccionar para confirmar'
+              }
+            ]
+          });
+          intro["_options"]["doneLabel"]="Hecho";
+          intro["_options"]["prevLabel"]="Atras";
+          intro["_options"]["nextLabel"]="Siguiente";
+          intro["_options"]["skipLabel"]="Saltar";
+          $(".introjs-helperLayer introjs-fixedTooltip").css({"background-color": "rgba(238, 76, 18, 0)!important"});
+          intro.start();
+//     console.log("objeto swal  ",objetoSwal);
+//          $(".swal2-modal .swal2-select").css({"border-color": "#bf0505","background": "palevioletred"});
+//          $(".swal2-modal .swal2-select")on('click', function(){
+//                var value = $(this).attr('rel'); //get the value
+//                value++; //increment value for the nth-child selector to work
+//                var value=1;
+//                console.log("el value  ",value);
+//                value++;
+                
+//                var value="1";
+                
+//                $('.swal2-modal .swal2-select')
+//                  .find('option:nth-child('+value+')')
+//                  .prop('selected',true)
+//                  .trigger('change');
+//            return false;
+//      }
+
+
+//$("#btnAyuda").css("bottom","67%!important");
+//$("#btnAyuda")["context"]["all"]["btnAyuda"]["style"]="67%!important";
+//console.log("lo que esta dentro ",$("#btnAyuda")["context"]["all"]);
+//$("#btnAyuda").context.styleSheets["0"].cssRules["0"].style.bottom="67%";
+console.log("ay  ",$("#btnAyuda"));
+//  $("#btnAyuda").s({"bottom":"67%"});
+// $("#divAyuda").css({"bottom":"67%"});
+
+//.btn-floating.btn-large.halfway-fab {
+//    bottom: -28px;
+}
+
+function introTematicaOpcionDentroDeTabs(){
+//    introOpciones
+//    #seleccion_opcionmenuarriba
+console.log("intro opcionesd ",introOpciones);
+
+//$("#seleccion_opcionmenuarriba").css({"border-color": "#bf0505","background": "palevioletred","color": "black"});
+// introOpciones.setOptions({
+//            steps: [
+//              {
+//                element: document.querySelector('#seleccion_opcionmenuarriba'),
+//                intro: "Indica en que tematica estamos navegando  y al seleccionarlo nos presenta en la pantalla de visualizacion todas las tematicas"
+//              }
+//            ]
+//          });
+//introOpciones._introItems.push({"d":"2"});
+// introOpciones.start();
+
+
+
+
+
+
+}
+ 
+// $(".swal2-modal .swal2-select").css({"border-color": "#bf0505","background": "palevioletred","color": "black"});
+ 
 </script>
 <?php  
 //$_SESSION=array();
@@ -1453,3 +2232,132 @@ var jsonObj = {};
 
 <!--<div data-translate="texto" ></div>-->
 </html>
+   <ul id="nav-mobile" class="right">
+               <ul class="right hide-on-med-and-down">
+<!--                    <li><a href="sass.html"><i class="material-icons">search</i></a></li>
+                    <li><a href="badges.html"><i class="material-icons">view_module</i></a></li>
+                    <li><a href="collapsible.html"><i class="material-icons">refresh</i></a></li>-->
+                    <!--<li><a href=""><i class="material-icons">more_vert</i></a></li>-->
+                   
+                 
+
+                </ul>
+       <div class="nav-content" id="divAyuda" style="display:none ">
+                    <span class="nav-title">  </span>
+                    <a class="btn-floating btn-large halfway-fab waves-effect waves-light teal pulse"  id="btnAyuda" style="bottom: 68%;right:5%" >
+                        <i class="material-icons">help</i>        
+                    </a>
+                </div>
+    </ul>
+
+
+
+
+  <!-- Modal Trigger -->
+  <!--<a class="waves-effect waves-light btn modal-trigger" href="#modalIntroduccion">Modal</a>-->
+
+  <!-- Modal Structure -->
+  <div id="modalIntroduccion" class="modal">
+    <div class="modal-content">
+        <center><h5>Introducción</h5></center>
+    </div>
+      
+      
+      <div class="modal-body">
+           <div class="collection">
+               <div  class="collection-item"> <p class="informacionA_QueseSeRefiere"> Nombre de la Aplicación :</p>OMG-APPS-GESTIÓN DE TEMAS ESPECIALES.</div>
+            <div  class="collection-item "><p class="informacionA_QueseSeRefiere"> Objetivo de la Aplicación :</p>CONTROL DE TEMAS ESPECIALES.</div>
+            <div  class="collection-item"> <p class="informacionA_QueseSeRefiere"> Que es una Temática:</p>ES EL PROYECTO PRINCIPAL DEL CUAL SE DERIVAN UNA GRAN DIVERSIDAD DE TEMAS ESPECIALES.</div>
+            <div class="collection-item"><p class="informacionA_QueseSeRefiere"> Ejemplos de temáticas :</p>COMERCIALIZACIÓN, PLANEACIÓN ESTRATEGICA, FINANZAS, OTROS.</div>
+            <div class="collection-item"> <p class="informacionA_QueseSeRefiere" > Roll de Administrador  </p>ASIGNA USUARIOS Y CONTRASEÑAS, DEFINE NIVELES DE PERMISOS DE USUARIOS, CREA NOMBRE DE TEMATICAS E INGRESA AL PERSONAL. </div>
+            <div class="collection-item"> <p class="informacionA_QueseSeRefiere"> Roll de Usuario:</p>INGRESA TEMAS, DEFINE ALARMAS, ESTABLECE FECHAS LIMITE PARA SU ATENCIÓN, ANOTA OBSERVACIONES, REGISTRA AVANCES, ADJUNTA ARCHIVOS COMO EVIDENCIAS Y PLANEA TAREAS POR MEDIO DE UN DIAGRAMA DE GANTT.</div> 
+           </div>
+            
+         <div class="modal-footer">
+            <a  class="modal-close waves-effect waves-green btn-flat" id="enlaceAceptarIntroduccion">Aceptar</a>
+         </div>
+          
+         
+      </div>
+  </div>
+  
+  
+    <!-- Modal Structure  seleccion de proyecto -->
+  <div id="modalSeleccionarProyecto" class="modal">
+    <div class="modal-content">
+        <center><h5>Clasifica tus Temas Según Temática</h5></center>
+    </div>
+      
+      
+      <div class="modal-body" style="width: 100%" >
+          
+          <center>  
+              <!--<label><div style="font-size:25px;color: black">Seleccione una opcion</div></label>-->
+              <!--<div id="seccionSelectSeleccionProyecto" class="cssToolTip"  title="Selecciona una opcion">-->
+                <select id="opcionesProyectos" > 
+                  </select>
+              <!--</div>-->
+              <div id="mensajeObervacionSeleccionProyecto" class="alert alert-info"> 
+                  Obervacion:
+                 <p >1. Si estas visualizando este recordatorio es por que  debes guardar las tematicas que se manejaran, selecciona una opcion  
+                        y luego confirme en "ACEPTAR" para avanzar, despues  en la parte de atras aparecera un boton parpadeando con el icono de ayuda debera presionarlo para ver los tipos de tutoriales a seguir en caso de ser nuevo se resaltara   lo que debe realizar primero antes de continuar con el flujo de trabajo normal como sugerencia</p>
+                
+<!--                  <p >1. Si estas visualizando este recordatorio es por que eres administrador y debes guardar las tematicas que se manejaran, es obligatorio para poder continuar
+                          selecciona de la lista de opciones en la parte de arriba cualquiera para poder seguir</p>-->
+                 
+                 
+                 
+                 
+              </div>
+                  <!--<div style="width: 100%">-->
+<!--                  <div id="opcionesProyectos">
+                      
+                  </div>-->
+                </div>
+          <!--</center>-->    
+<!--           <div class="modal-footer">
+            <a  class="modal-close waves-effect waves-green btn-flat" id="enlaceAceptarProyecto">Aceptar</a>
+           </div>-->
+
+           <div style="padding-bottom: 6%"></div>
+              <div class=""  id="mensajeSeleccionProyecto"></div>
+          <div class="modal-footer" style="">
+           <!--<div class="alert alert-warning"  id="mensajeSeleccionProyecto">dsfdsf</div>-->
+               <a  class="modal-close waves-effect waves-green btn-flat" id="enlaceRegresarA_Introduccion">Regresar</a>
+                <a  class="modal-close waves-effect waves-green btn-flat" id="enlaceAceptarProyectoSeleccionado">Aceptar</a>
+          </div>
+      </div>
+     
+    
+       <!-- Modal Structure  cualTutorial -->
+      <div id="modalSeleccionCualTutorial" class="modal">
+    <div class="modal-content">
+        <center><h5>Tutorial</h5></center>
+        <div>
+           
+        </div>
+    </div>
+      
+      
+      <div class="modal-body">
+          <div  class="glyphicon glyphicon-eye-open " style="color: black"></div>   : Visualizar Tutorial    
+           <div class="collection">
+               <div class="collection-item" style="background: lightblue;"><p class="informacionA_QueseSeRefiere">1. Configuración de Tematicas  *Si no haz guardado tus tematicas debera seleccionar esta opcion  para seguir los pasos.  </p>GUARDA LAS TEMATICAS O CAMBIA<i id="irTutorialProyectos" class="glyphicon glyphicon-eye-open pull-right" style=""></i><br>   </div>
+            <div class="collection-item"> <p class="informacionA_QueseSeRefiere" >2.  Roll de Administrador (Observacion): En caso de no visualizar debera irse a la aprte de arriba y donde dice REGRESAR AL MENU debera presionarlo y volver al picarle al ojito:</p>ASIGNA USUARIOS Y CONTRASEÑAS, DEFINE NIVELES DE PERMISOS DE USUARIOS, CREA NOMBRE DE TEMATICAS E INGRESA AL PERSONAL.<i id="irTutorialRollAdministrador" class="glyphicon glyphicon-eye-open pull-right" style=""></i>  </div>
+            <div class="collection-item"> <p class="informacionA_QueseSeRefiere"> 3. Roll de Usuario(Gestion Temas Especiales):</p>INGRESA TEMAS, DEFINE ALARMAS, ESTABLECE FECHAS LIMITE PARA SU ATENCIÓN, ANOTA OBSERVACIONES, REGISTRA AVANCES, ADJUNTA ARCHIVOS COMO EVIDENCIAS Y PLANEA TAREAS POR MEDIO DE UN DIAGRAMA DE GANTT.<i id="irTutorialGestionTemas" class="glyphicon glyphicon-eye-open pull-right" style=""></i> </div> 
+           </div>
+            
+         <div class="modal-footer">
+            <a  class="modal-close waves-effect waves-green btn-flat" id="cerrarModalTutoriales">Cerrar</a>
+         </div>
+          
+         
+      </div>
+  </div>
+    
+    
+    
+ 
+    <div id="fondoTransparente" class="fondoTransparente"></div>
+    <!--<div class="dhxtabbar_tab dhxtabbar_tab_actv" style="">ee</div>-->
+

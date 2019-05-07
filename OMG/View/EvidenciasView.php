@@ -73,7 +73,7 @@
     <!-- <link href="../../css/jsgridconfiguration.css" rel="stylesheet" type="text/css"/> -->
     <script src="../../js/fGridComponent.js" type="text/javascript"></script>
     <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
-   
+
     <style>
         /* .jsgrid-header-row>.jsgrid-header-cell
         { */
@@ -130,13 +130,24 @@
         // array("No.","Requisito","Registro","Frecuencia","Clave Documento",
         //     "Adjuntar Evidencia","Fecha de Registro","Usuario","Acción Correctiva","Plan de Acción","Desviación","Validación","Opcion");
 ?>
+    <!--var objeto={nombre:"f"};-->
     
 <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">
     <!-- <div style="position: fixed;"> -->
+  
+    <?php if(Session::getSesion("user")["ID_USUARIO"]!=0){ ?>
     <button onClick="limpiarNuevaEvidenciaModal()" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#nuevaEvidenciaModal">
+       <?php if(Session::getSesion("user")["ID_USUARIO"]!=0){ ?>
         Agregar Nuevo Registro
+       <?php }else{?>
+          No permitido
+       <?php } ?>       
     </button>
-
+    <?php } ?>
+    
+    
+    
+    
     <button id="btnAgregarEvidenciasRefrescar" type="button" class="btn btn-info btn_refrescar" onclick="refresh();" >
         <i class="glyphicon glyphicon-repeat"></i> 
     </button>

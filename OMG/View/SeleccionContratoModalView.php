@@ -110,6 +110,7 @@ $Usuario=  Session::getSesion("user");
                         
                 
         <script>
+//            alert("e");
             var DataGrid = [];
             var dataListado = [];
             var filtros=[];
@@ -124,7 +125,7 @@ $Usuario=  Session::getSesion("user");
             estructuraGrid= [
                 { name: "id_principal",visible:false},
                 { name:"no",title:"No",width:50},
-                { name: "clave_cumplimiento",title:"Clave", type: "textarea",width:150},
+                { name: "clave_cumplimiento",title:"Nombre de la Tematica", type: "textarea",width:150},
                 { name: "cumplimiento",title:"Descripción", type: "textarea",width:200},
                 { name:"delete", title:"Opción", type:"customControl",sorting:"", width:50}
             ],

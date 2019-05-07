@@ -261,7 +261,6 @@ class EmpleadoDAO{
                         OR LOWER(tbempleados.apellido_paterno) like '%$cadena%' 
                         OR LOWER(tbempleados.apellido_materno) like '%$cadena%'
                    )";
-
             $db = AccesoDB::getInstancia();
             $lista = $db->executeQuery($query);
             return $lista;
@@ -271,6 +270,14 @@ class EmpleadoDAO{
             throw $er;
         }
     }
+    /*@comment obtener todos los empleados para luego compara sobre todo su nombre completo ya que estan guardados en diferentes campos
+     * 
+     * 
+     * 
+     */
+   
+    
+    
 }
 
 ?>

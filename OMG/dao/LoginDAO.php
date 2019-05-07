@@ -12,15 +12,19 @@ class LoginDAO{
       *============================================================================
     */     
     public function consultarPorUsuario($_paramUsuario,$_paramPassword)
-    {
-        
+    {     
         try{
-            $query="call iniciarSesion('$_paramUsuario','$_paramPassword')";
-           
+//            $query="call iniciarSesion('$_paramUsuario','$_paramPassword')";
+           $query="SELECT tbusuarios.NOMBRE_USUARIO ,tbusuarios.CONTRA,tbusuarios.ID_USUARIO,tbusuarios.FONDO_COLOR   
+                from usuarios tbusuarios  
+                WHERE 
+                tbusuarios.NOMBRE_USUARIO='$_paramUsuario'
+                AND 
+                tbusuarios.CONTRA=SHA1(MD5('$_paramPassword'))";
             $db = AccesoDB::getInstancia();
             $lista=$db->executeQuery($query);
 //             echo "dd".json_encode($lista);
-//             var_dump($query);
+//            echo  var_dump($query);
             $rec = NULL;
             if (count($lista)==1){
                 $rec=$lista[0];
@@ -28,7 +32,7 @@ class LoginDAO{
             }
 //            echo "mandara ".json_encode($rec);
             return $rec;
-            } catch (Exception $e){
+        } catch (Exception $e){
                 throw $e;
             }
     }

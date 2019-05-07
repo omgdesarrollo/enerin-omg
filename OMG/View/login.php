@@ -54,6 +54,7 @@ require_once '../util/Session.php';
     <head>
         <title>OMG</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <link rel="shortcut icon" href="../../images/base/enerinLogo.png">
         <link href="../../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
         
         <link href="../../assets/bootstrap/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
@@ -69,11 +70,13 @@ require_once '../util/Session.php';
         <!--materialize-->
         <link type="text/css" rel="stylesheet" href="../../assets/materialize/css/materialize.min.css"  media="screen,projection"/>
          <script type="text/javascript" src="../../assets/materialize/js/materialize.min.js"></script>
+        <link href="../../assets/googleApi/icon.css" rel="stylesheet">
         <!--end materialize-->
-         <link href="../../assets/googleApi/icon.css" rel="stylesheet">
-         <script src="../../js/tools.js" type="text/javascript"></script>
-         <script src="../../app/angular.min.js" type="text/javascript"></script>
+        
          
+         <script src="../../js/tools.js" type="text/javascript"></script>
+         <link href="../../assets/intro/introjs.css" rel="stylesheet" type="text/css"/>
+         <script src="../../assets/intro/intro.js" type="text/javascript"></script>
          <!--<link href="//cdn.shopify.com/s/files/1/1775/8583/t/1/assets/admin-materialize.min.css?701317015908805120" rel="stylesheet">-->
         <!--<script src="../../js/tooltip.js" type="text/javascript"></script>-->
         <!--<script src="../../angular/angular.min.js" type="text/javascript"></script>-->
@@ -128,26 +131,12 @@ function clock()
 //                      
 //                });
                      $(".modal").modal();
-
+                     $("#btnAyuda").click(function(){
+                            startIntro();
+                     } );
 
         });
-//        document.addEventListener('DOMContentLoaded', function() {
-//        var elems = document.querySelectorAll('.sidenav');
-//        var instances = M.Sidenav.init(elems, options);
-//        });
 
-//        $(()=>{
-//            $(".btn-menu").click((t)=>{
-//                
-//                $(".btn-menu").css("background","transparent");
-//                $(t.currentTarget).css("background","burlywood");
-//            });
-//        });
-        
-        
-//     floating components
-
-  // Or with jQuery
 
   
   $('.fixed-action-btn').floatingActionButton({
@@ -166,7 +155,11 @@ function clock()
     });
   });
        
-       
+     
+  
+  
+  
+    
        
         
     </script>         
@@ -279,9 +272,9 @@ function clock()
                 </ul>
                 <div class="nav-content">
                     <span class="nav-title">  </span>
-                    <a class="btn-floating btn-large halfway-fab waves-effect waves-light teal">
+                    <a class="btn-floating btn-large halfway-fab waves-effect waves-light teal"  id="btnAyuda">
                       <!--<i class="material-icons">add</i>-->
-                        <i class="material-icons">business_center</i>
+                        <i class="material-icons">help</i>
                         <!--<img src="../../images/base/omgapps.png" height="90%">-->                  
                     </a>
                 </div>
@@ -379,6 +372,7 @@ function clock()
                                      <button data-placement="right" title="Recuperar Contraseña" class="btn btn-lg btn-primary btn-block btn-signin" id="recuperarPassword"  >Recuperar Password</button>
                                  </div>
                              </div>
+                             <!--<a class="btn btn-large btn-success" href="javascript:void(0);" onclick="startIntro();">Mostrar tutorial</a>-->
 <!--                             <div class="row">
                                  <div class="input-field col s12">
                                      <button data-placement="right" title="Olvido Contraseña" class="btn btn-lg btn-danger btn-block btn-info" id="recuperarContraseña" type="submit">Recuperar Contraseña</button>
@@ -745,8 +739,48 @@ Revisa sus avance, las anotaciones, integra a tu equipo para trabajar en un mism
         <!--<a href="" class="modal-close waves-effect waves-green btn-flat" id="cancelar">Cancelar</a>-->
     </div>
   </div>
+  
+  
+    <script type="text/javascript">
+      function startIntro(){
+        var intro = introJs();
+        console.log("el intro ",intro);
+          intro.setOptions({
+            steps: [
+              { 
+                intro: "Bienvenido a la seccion de Acceso"
+              },
+              {
+                element: document.querySelector('#divPassword'),
+                intro: "Es esta seccion va su contraseña"
+              }
+//              {
+//                element: document.querySelectorAll('#step2')[0],
+//                intro: "aqui va algo ",
+//                position: 'right'
+//              },
+//              {
+//                element: '#step3',
+//                intro: 'vaa algo',
+//                position: 'left'
+//              },
+//              {
+//                element: '#step4',
+//                intro: "aqui va algo ",
+//                position: 'bottom'
+//              },
+//              {
+//                element: '#step5',
+//                intro: 'aqui va algo '
+//              }
+            ]
+          });
 
+          intro.start();
+      }
+    </script> 
   
   
   
-        </html>
+  
+</html>

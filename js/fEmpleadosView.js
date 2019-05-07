@@ -219,16 +219,18 @@ function insertarEmpleado(empleadoDatos)
                 {
                     tempData;
                     swalSuccess("Persona Agregada");
-                    $.each(datos,function(index,value)
-                    {
-                        tempData = reconstruir(value,ultimoNumeroGrid+1);
-                    });
-                    console.log(tempData);
+                    gridInstance.loadData();
+                    //se comento lo de abajo por que cuando inserta lo no ordena lo mete hasta lo ultimo asi que por cuestiones de tiempo se decidio obtener todos los datos de nuevo 
+//                    $.each(datos,function(index,value)
+//                    {
+//                        tempData = reconstruir(value,ultimoNumeroGrid+1);
+//                    });
+//                    console.log(tempData);
                     
-                    $("#jsGrid").jsGrid("insertItem",tempData).done(function()
-                    {
-//                        $("#crea_empleado .close ").click();
-                    });
+//                    $("#jsGrid").jsGrid("insertItem",tempData).done(function()
+//                    {
+////                        $("#crea_empleado .close ").click();
+//                    });
                     dataListado.push(datos[0]),
                     DataGrid.push(tempData),
                     $("#crea_empleado .close ").click();

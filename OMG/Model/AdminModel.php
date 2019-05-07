@@ -18,6 +18,19 @@ class AdminModel
         
     }
     
+    public function listarUsuario($ID_USUARIO){
+        try
+        {
+           $dao=new AdminDAO();
+           $rec=$dao->listarUsuario($ID_USUARIO);
+           return $rec;
+        } catch (Exception $ex)
+        {
+            throw $ex;
+            return false;
+        }
+    }
+    
     public function listarUsuarioVistas($ID_USUARIO)
     {
         try

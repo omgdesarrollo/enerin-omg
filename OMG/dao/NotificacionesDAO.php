@@ -28,11 +28,11 @@ class NotificacionesDAO
         try{
             $query = "SELECT tbnotificaciones.id_notificaciones,tbnotificaciones.id_de, tbnotificaciones.id_para, tbnotificaciones.tipo_mensaje, tbnotificaciones.mensaje,
                 tbnotificaciones.atendido, tbnotificaciones.asunto,tbnotificaciones.fecha_envio,tbnotificaciones.id_contrato,
-                (SELECT CONCAT(tbempleado.nombre_empleado,' ',tbempleado.apellido_paterno,' ',
+                if(tbnotificaciones.id_de>0 ,(SELECT CONCAT(tbempleado.nombre_empleado,' ',tbempleado.apellido_paterno,' ',
                 tbempleado.apellido_materno) AS nombre 
                 FROM usuarios tbusuarios 
                 JOIN empleados tbempleado ON tbempleado.id_empleado = tbusuarios.id_empleado
-                WHERE tbusuarios.id_usuario = tbnotificaciones.id_de) AS nombre
+                WHERE tbusuarios.id_usuario = tbnotificaciones.id_de),'administrador principal') AS nombre
                 from notificaciones tbnotificaciones
                 JOIN usuarios tbusuarios ON tbusuarios.id_usuario = tbnotificaciones.id_para
                 JOIN empleados tbempleados ON tbempleados.id_empleado = tbusuarios.id_empleado

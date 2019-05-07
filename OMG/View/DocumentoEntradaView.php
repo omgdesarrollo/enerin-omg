@@ -147,7 +147,7 @@
 
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="control-label" for="title"><?php echo "Contrato: ".Session::getSesion("s_cont"); ?></label>
+                        <!--<label class="control-label" for="title"><?php //echo "Contrato: ".Session::getSesion("s_cont"); ?></label>-->
                         <div class="help-block with-errors"></div>
                         <div id="ValidarContratoModal" ></div>
                     </div>
@@ -187,10 +187,11 @@
                         <div id="ValidarRemitenteModal" ></div>
                     </div>
                         
-                   <div class="form-group">
+                   <div class="form-group" >
                         <label class="control-label" for="title">Autoridad Remitente:</label>
                         <select id="ID_AUTORIDADMODAL" class="select">
                         </select>
+                        
                         <!--<div class="help-block with-errors"></div>-->
                    </div>
         

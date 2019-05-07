@@ -191,6 +191,19 @@ class EmpleadoModel{
             throw $er;
         }
     }
+    
+    
+    public static function obtenerTodosEmpleadosParaBuscarPorLetraEnTodosLosEmpleados(){
+        try{
+            
+            
+            
+        }catch(Exception $ex){
+            
+        }
+        
+        
+    }
 }
 
 ?>

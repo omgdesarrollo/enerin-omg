@@ -354,17 +354,17 @@ class Gantt_TareasModel{
                                              if(isset($value["notificacion_porcentaje_programado"])){
 //                                                 echo "el  ".$value["progress"];
 //                                                 if(!empty($value["progress"]))
-                                                  self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>$value["notas"],"status"=>$value["status"],"notificacion_porcentaje_programado"=>$value["notificacion_porcentaje_programado"]), $value["id"]);
+                                                  self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>"","status"=>$value["status"],"notificacion_porcentaje_programado"=>$value["notificacion_porcentaje_programado"]), $value["id"]);
 //                                                 else 
 //                                                   self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>$value["notas"],"status"=>$value["status"],"notificacion_porcentaje_programado"=>$value["notificacion_porcentaje_programado"]), $value["id"]);  
                                                      
                                              }else{
-                                                  self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>$value["notas"],"status"=>$value["status"]), $value["id"]);
+                                                  self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>"","status"=>$value["status"]), $value["id"]);
                                              }
                                          }else{
 //                                             este else ya no es necesario pero se esta pensando para removerlo en la proxima actualizacion
                                              echo "entro";
-                                            self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>$value["notas"]), $value["id"]);
+                                            self::actualizarGanttTareas(array("text"=>$value["text"],"start_date"=>$value["start_date"],"duration"=>$value["duration"],"progress"=>$value["progress"],"parent"=>$value["parent"],"user"=>$value["user"],"notas"=>""), $value["id"]);
                                          }
 //                                         $model->actualizarGanttTareas
 //                                         $dao->updateTareasId_EmpleadoXIdGantt_En_Tabla_Seguimiento_entrada($value);
@@ -610,9 +610,9 @@ class Gantt_TareasModel{
 
                     if
                     ( 
-                        $value2['text']!=$value['text'] ||
+                       $value2['text']!=$value['text'] /*||*/
 //                            $value2['user']!=$value['user'] ||
-                        $value2['notas']!=$value['notas']                            
+                       // $value2['notas']!=$value['notas']  //se quito esta linea por que notas como solo un campo ya no existe                            
 //                        $value2['status']!=$value['status']                                
                     )
                     {

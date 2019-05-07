@@ -702,7 +702,9 @@
         }
 
         // peticion para confirmar eliminar el documento de salida
-        preguntarEliminar(data)
+//         = (data) =>
+//       preguntarEliminar(data)
+       preguntarEliminar=(data)=>
         {
                 swal({
                         title: "",

@@ -225,7 +225,7 @@ function cambiarCont()
             async:false,
             success: function(r) 
             {
-                $('#desc',window.parent.document).html("TEMÁTICA("+r.clave_cumplimiento+")");
+//                $('#desc',window.parent.document).html("TEMÁTICA("+r.clave_cumplimiento+")");
                 $('#infocontrato',window.parent.document).html("Tematica  Seleccionada:<br>("+r.clave_cumplimiento+")");
             }    
         });

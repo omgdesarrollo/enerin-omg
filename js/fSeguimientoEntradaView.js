@@ -92,6 +92,7 @@ function listarDatos()
                     });
                     DataGrid = __datos;
                     gridInstance.loadData();
+                     growlSuccess("Solicitud","Registros Obtenidos");
                     resolve();
                     
                 }else{

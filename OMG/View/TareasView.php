@@ -35,7 +35,11 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../assets/chart/loader.js" type="text/javascript"></script>
                 <!--Libreria web, para grafica-->
                 <!--<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>-->
-                
+                 <!--librerias intro js-->
+                <script src="../../assets/intro/intro.js" type="text/javascript"></script>
+                <link href="../../assets/intro/introjs.css" rel="stylesheet" type="text/css"/>
+                 <link href="../../assets/googleApi/icon.css" rel="stylesheet">
+                 
                 <link href="../../css/modal.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/paginacion.css" rel="stylesheet" type="text/css"/>
                 <link href="../../css/settingsView.css" rel="stylesheet" type="text/css"/>
@@ -45,7 +49,7 @@ $Usuario=  Session::getSesion("user");
                 <script src="../../js/fGridComponent.js" type="text/javascript"></script>
                 <script src="../../js/excelexportarjs.js" type="text/javascript"></script>
                 <script src="../../js/fechas_formato.js" type="text/javascript"></script>
-    
+                
 
                 
         <style>
@@ -153,6 +157,40 @@ $Usuario=  Session::getSesion("user");
               height: 2.5em;
             }
             
+            .animated {
+             -webkit-animation-duration: 100s;
+             animation-duration: 2s;
+             -webkit-animation-fill-mode: both;
+             animation-fill-mode: both;
+            }
+            @-webkit-keyframes flash {
+             0%, 50%, 100% {
+             opacity: 1;
+             }
+            25%, 75% {
+             opacity: 0;
+             }
+            }
+            @keyframes flash {
+             0%, 50%, 100% {
+             opacity: 1;
+             }
+            25%, 75% {
+             opacity: 0;
+             }
+            }
+            .flash {
+             -webkit-animation-name: flash;
+             animation-name: flash;
+            }
+            .introjs-helperNumberLayer{
+                    /*left: 9px;*/
+                    visibility: hidden;
+                }
+                .introjs-fixedTooltip {
+                    /*position: ""!important;*/
+                    background-color: #0080ff1f!important;
+                }
         </style>              
                 
  			 
@@ -167,22 +205,32 @@ require_once 'EncabezadoUsuarioView.php';
 
 ?>
 
-<div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;">             
+    <div id="headerOpciones" style="position:fixed;width:100%;margin: 10px 0px 0px 0px;padding: 0px 25px 0px 5px;" >             
 
-    <button onClick="archivoyComboboxparaModal();" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#crea_tarea">
+    <button onClick="archivoyComboboxparaModal();" type="button" class="btn btn-success btn_agregar" data-toggle="modal" data-target="#crea_tarea" id="idbtnAgregar">
         Agregar
     </button>
-
+    
+    
+    
     <button type="button" id="btnAgregarDocumentoEntradaRefrescar" class="btn btn-info btn_refrescar" id="btnrefrescar" onclick="refresh();" >
         <i class="glyphicon glyphicon-repeat"></i>   
     </button>
-
+    
+   
     <div class="pull-right">        
         <!-- <label class="btn btn-info btn_checkbox" style="display: none"> -->
         <!--<label class="btn btn-info btn_checkbox">-->
             <!-- <input style="margin: 6px 0 0;" type="checkbox" name="" id="checkTerminados" autocomplete="off"> Terminados -->
         <!-- </label> -->
-                
+        <button type="button"  class="btn btn-danger style-filter animated flash" id="btnAyuda " onclick="ayuda()"  >
+          <!--<a class="btn-floating btn-large halfway-fab waves-effect waves-light teal pulse"  id="btnAyuda" style="" >-->
+          <i class="fa fa-question" style="font-size: 25px"></i>        
+                    <!--</a>-->
+        </button>
+        <button onClick="desatascarCelda()" title="desplegar ventana" type="button" class="btn btn-success style-filter"  >
+            <i class="fa fa-upload"></i>
+        </button>       
         <button onClick="graficar()" title="Graficar Circular" type="button" class="btn btn-success style-filter" data-toggle="modal" data-target="#Grafica">
             <i class="fa fa-pie-chart"></i>
         </button>
@@ -193,6 +241,7 @@ require_once 'EncabezadoUsuarioView.php';
     </div>
     
 </div>
+    
 
 <br><br><br>
 
@@ -310,7 +359,6 @@ require_once 'EncabezadoUsuarioView.php';
 // var canvasRed = document.getElementsByClassName("semaforoRed");
 // var ctxRed = canvasRed.getContext("2d");
 // console.log(ctxRed);
-
 var DataGrid = [];
 var dataListado = [];
 var thisEmpleados=[];
@@ -320,6 +368,7 @@ var gridInstance;
 var ultimoNumeroGrid=0;
 var DataGridExcel=[];
 var origenDeDatosVista="tareas";
+var contadorRegistros=0;
 
 var activeChart = -1;
 var chartsCreados = [];
@@ -562,7 +611,9 @@ MyDateField.prototype = new jsGrid.Field
         },
         itemTemplate: function(value)
         {
-            console.log(value);
+            console.log("es   ",value);
+            
+            
                 return getSinFechaFormato(value);
                 // fecha="0000-00-00";
                 // // console.log(this);
@@ -600,14 +651,15 @@ MyDateField.prototype = new jsGrid.Field
                         return $(this._inputDate).val();
         }
 });
+
+
  
  var customsFieldsGridData=[
     {field:"customControl",my_field:MyCControlField},
     {field:"comboEmpleados",my_field:MyComboEmpleados},
     {field:"comboStatus",my_field:MyComboStatus},
-    {field:"date",my_field:MyDateField},
-    // {field:"fieldSemaforo",my_field:MySemaforoField}
-    
+    {field:"date",my_field:MyDateField}
+    // {field:"fieldSemaforo",my_field:MySemaforoField}   
 ];
  
 estructuraGrid= [
@@ -620,7 +672,8 @@ estructuraGrid= [
     { name: "id_empleado", title: "Responsable", type: "comboEmpleados", width:250},
 //    { name: "fecha_creacion",title:"Fecha de Creación", type: "text", validate: "required", width:150,editing: false},
     { name: "fecha_alarma",title:"Fecha de Alarma", type: "date", validate: "required", width:160},
-    { name: "fecha_cumplimiento",title:"Fecha de Cumplimiento", type: "text", validate: "required", width:190,editing: false},    
+    { name: "fecha_cumplimiento",title:"Fecha de Cumplimiento", type: "date", validate: "required", width:190}, 
+//    { name: "fecha_cumplimiento",title:"Fecha de Cumplimiento", type: "text", validate: "required", width:190,editing: false}, 
     { name: "status_tarea", title:"Estatus", type: "comboStatus", width:120},
 //    { name: "status_tarea", title:"Estatus", type: "select", width:150,valueField:"status_tarea",textField:"descripcion",
 //        items:[{"status_tarea":"1","descripcion":"En Proceso"},{"status_tarea":"2","descripcion":"Suspendido"},{"status_tarea":"3","descripcion":"Terminado"}]
@@ -647,6 +700,91 @@ inicializarFiltros().then((resolve)=>
 {
     growlError("Error!","Error al construir la vista, recargue la página");
 });
+
+function desatascarCelda(){
+window.top.$("#informacion")["0"].funciones.desatascar();
+//console.log("ee  ",window.top.$("#informacion"));
+
+}
+function ayuda(){
+
+    var intro = introJs();
+//         console.log("ddd:  ",ultimoNumeroGrid);     
+    if(ultimoNumeroGrid>0){                         
+                             
+          intro.setOptions({
+            steps:[
+              {element:'#idbtnAgregar',
+                intro: "Agrega tus temas especiales asignales responsables,alarmas,fechas de cumplimiento y status"
+              },
+               {element:'#barra_contador_archivos',
+                intro: "Observa cuantos archivos tienes almacenados"
+              },
+//              {
+//                element:'.jsgrid-row',
+//                intro: "Registro de tema"
+//              },
+              {
+                element:'#btnAjuntarArchivo',
+                intro:"Adjunta tus documentos para que tengas el soporte de tus temas"
+              },
+              {
+                  element:'#btn_cargaGantt',
+                  intro:'Crea un programa con tus actividades y sub actividades para dar cumplimento con el tema asignado'
+              }
+            ]
+          });
+//             intro["_options"]["doneLabel"]="Hecho";
+                    
+     }else{
+               intro.setOptions({
+            steps:[
+              {element:'#idbtnAgregar',
+                intro: "Agrega tus temas especiales asignales responsables,alarmas,fechas de cumplimiento y status"
+              },
+               {element:'#barra_contador_archivos',
+                intro: "Observa cuantos archivos tienes almacenados"
+              },
+//              {
+//                element:'.jsgrid-row',
+//                intro: "Registro de tema"
+//              },
+              {
+                element:'.jsgrid-nodata-row',
+                intro:"No ahy datos cargados cuando lo haga  aqui se visualizaran "
+              }
+              
+            ]
+          });
+     }
+      intro.start(); 
+//                     $('html, body').animate({scrollX:30}, 'slow')
+//                     $("#btn_cargaGantt").animate({ scrollTop: $('#btn_cargaGantt')[0].scrollHeight}, 1000);
+//                   $("html, body").animate({scrollTop: $('#botones_vista_tabla2').offset().top }, 1000);   
+//                      var intro2 = introJs();
+////                             console.log("intro:  ",intro);
+//          intro2.setOptions({
+//            steps:[
+//              {element:'#barra_contador_archivos',
+//                intro: "Observa cuantos archivos tienes almacenados"
+//              }
+//            ]
+//          });
+//             intro2["_options"]["doneLabel"]="Hecho";
+//                     intro2.start(); 
+                     
+                     
+                     
+//                       $(".introjs-showElement").css({"background-color": "rgba(255, 255, 255, 0.13)"});
+                             
+                             
+//                             console.log("estoy aqui ",ribbon._items["cambiarcontrato"].base.id);
+                   //           ribbon._items["cambiarco
+
+}
+
+
+
 
 </script>
 
@@ -739,6 +877,8 @@ inicializarFiltros().then((resolve)=>
 	</body>
      
 </html>
+
+   
 
 
 

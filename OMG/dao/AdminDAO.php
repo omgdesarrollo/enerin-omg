@@ -1,5 +1,4 @@
 <?php
-
 require_once '../ds/AccesoDB.php';
 class AdminDAO
 {    
@@ -27,6 +26,23 @@ class AdminDAO
         }
     }
     
+    
+    public function listarUsuario($id_usuario){
+        try{
+             $query = "SELECT tbusuarios.id_usuario,concat(tbempleados.nombre_empleado,' ',tbempleados.apellido_paterno,'  ',tbempleados.apellido_materno) as nombre,tbusuarios.nombre_usuario,tbempleados.correo,tbempleados.categoria
+                        FROM usuarios tbusuarios join empleados 
+                        tbempleados on  tbempleados.id_empleado=tbusuarios.id_empleado 
+                        WHERE tbusuarios.id_usuario=$id_usuario";
+            $db = AccesoDB::getInstancia();
+            $lista = $db->executeQuery($query);
+            return $lista;
+        } catch (Exception $ex){
+            throw $ex;
+            return -1;
+        }
+    }
+
+
     // Lista todos los usuario con todas las visatas con sus recpectivos permisos
     public function listarUsuarioVistas($ID_USUARIO)
     {
@@ -385,8 +401,7 @@ class AdminDAO
             WHERE tdsubmodulos.adquirido = 1 AND tbusuarios_vistas.id_usuario='".$param['id_usuario']."'     order by tbestructura.ordenar asc";
 
             $db= AccesoDB::getInstancia();
-            $lista = $db->executeQuery($query);
-            
+            $lista = $db->executeQuery($query);            
             return $lista;
         } catch (Exception $ex)
         {
@@ -394,6 +409,5 @@ class AdminDAO
             return false;
         }
     }//aqui termina para mostrar estructura principal tomand en cuenta permisos
-
 }
 ?>

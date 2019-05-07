@@ -1,6 +1,7 @@
 <?php
 
 require_once '../dao/TemaDAO.php';
+require_once '../dao/TemasOficioDao.php';
 require_once '../dao/EmpleadoDAO.php';
 class TemaModel{
     
@@ -51,11 +52,23 @@ class TemaModel{
     {
         try
         {
-            $dao= new TemaDAO();
-            $daoEmpleado=new EmpleadoDAO();
-            $rec['datosHijos']= $dao->listarHijos($CADENA,$CONTRATO,$ID);
-            $rec['detalles']= $dao->listarDetallesSeleccionados($ID);
-            $rec['comboEmpleados']=$daoEmpleado->mostrarEmpleadosComboBox();
+            $rec;
+            
+            if($CADENA=="oficios"){
+                $dao= new TemaDAO();
+                $daoOficios= new TemasOficioDao();
+                $daoEmpleado=new EmpleadoDAO();
+                $rec['datosHijos']= $dao->listarHijos($CADENA,$CONTRATO,$ID);
+                $rec['detalles']= $daoOficios->listarDetallesSeleccionados($ID);
+                $rec['comboEmpleados']=$daoEmpleado->mostrarEmpleadosComboBox();
+            }
+            if($CADENA=="catalogo"){
+                $dao= new TemaDAO();
+                $daoEmpleado=new EmpleadoDAO();
+                $rec['datosHijos']= $dao->listarHijos($CADENA,$CONTRATO,$ID);
+                $rec['detalles']= $dao->listarDetallesSeleccionados($ID);
+                $rec['comboEmpleados']=$daoEmpleado->mostrarEmpleadosComboBox();
+            }
             return $rec;
             
         } catch (Exception $ex)
